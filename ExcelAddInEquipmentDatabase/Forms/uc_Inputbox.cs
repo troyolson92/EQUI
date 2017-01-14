@@ -19,6 +19,8 @@ namespace ExcelAddInEquipmentDatabase.Forms
 
         private void enable_CheckedChanged(object sender, EventArgs e)
         {
+            if (rb_enable.Checked) rb_enable.Checked = false;
+            if (!rb_enable.Checked) rb_enable.Checked = true;
             tb_1.Enabled = rb_enable.Checked;
         }
 
@@ -34,11 +36,12 @@ namespace ExcelAddInEquipmentDatabase.Forms
             set { tb_1.Text = value; }
         }
 
-        public bool enable
+        public bool active
         {
             get { return rb_enable.Checked; }
             set { rb_enable.Checked = value; }
         }
+
 
 
     }

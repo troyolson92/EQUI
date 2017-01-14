@@ -88,7 +88,7 @@ namespace ExcelAddInEquipmentDatabase
         }
 
 
-        private Excel.WorkbookConnection get_Connection(string connectionname)
+        public Excel.WorkbookConnection get_Connection(string connectionname)
         { 
             Excel._Workbook activeWorkbook = Globals.ThisAddIn.Application.ActiveWorkbook as Excel.Workbook;
             foreach (var connection in activeWorkbook.Connections.Cast<Excel.WorkbookConnection>())

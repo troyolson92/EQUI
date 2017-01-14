@@ -11,8 +11,6 @@ using Excel = Microsoft.Office.Interop.Excel;
 
 namespace ExcelAddInEquipmentDatabase
 {
-
-
     public partial class EquipmentDBRibbon
     {
         //connection to gadata
@@ -191,15 +189,10 @@ namespace ExcelAddInEquipmentDatabase
             }
 
         }
-        
-
-        private void button1_Click(object sender, RibbonControlEventArgs e)
+        private void btn_EditProcedure_Click(object sender, RibbonControlEventArgs e)
         {
-           StoredProcedureManger ProcMngr = new StoredProcedureManger();
-           ProcMngr.Show();
+            StoredProcedureManger ProcMngr = new StoredProcedureManger(cb_activeConnection.Text);
+            ProcMngr.Show();
         }
     }
-
-
-
 }

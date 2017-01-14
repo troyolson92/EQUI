@@ -119,7 +119,7 @@ namespace ExcelAddInEquipmentDatabase
 
         public SqlCommand get_GADATA_sp_parameters(string sp_name)
         {
-            SqlCommand cmd = new SqlCommand("volvo."+sp_name, Gadataconn);
+            SqlCommand cmd = new SqlCommand(sp_name, Gadataconn);
             cmd.CommandType = CommandType.StoredProcedure;
             try
             {
