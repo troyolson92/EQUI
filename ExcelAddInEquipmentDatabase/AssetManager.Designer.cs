@@ -198,6 +198,7 @@
             this.Controls.Add(this.CB_LOCHIERARCHY);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.CB_ASSET);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Name = "AssetManager";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "AssetManager";

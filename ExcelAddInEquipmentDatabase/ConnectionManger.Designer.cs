@@ -178,10 +178,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(513, 358);
             this.Controls.Add(this.t_connections);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ConnectionManger";
-            this.Opacity = 0.8D;
             this.ShowIcon = false;
             this.Text = "ConnectionManger";
             this.t_connections.ResumeLayout(false);
