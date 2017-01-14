@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="GADATA" Class="DataClassesGADATADataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=sqla001.gen.volvocars.net;Initial Catalog=GADATA;Integrated Security=True" SettingsObjectName="ExcelAddInEquipmentDatabase.Properties.Settings" SettingsPropertyName="GADATAConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="Volvo.Robots" Member="Robots">
+    <Type Name="Robot">
+      <Column Name="controller_type" Type="System.String" DbType="VarChar(32)" CanBeNull="true" />
+      <Column Name="[table]" Member="table" Type="System.String" DbType="VarChar(23) NOT NULL" CanBeNull="false" />
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="controller_name" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="location" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
+      <Column Name="ownership" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
+      <Column Name="Plant" Type="System.String" DbType="VarChar(3)" CanBeNull="true" />
+      <Column Name="Area" Type="System.String" DbType="VarChar(25)" CanBeNull="true" />
+      <Column Name="SubArea" Type="System.String" DbType="VarChar(25)" CanBeNull="true" />
+      <Column Name="server" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="Volvo.ASSETS_fromMX7" Member="ASSETS_fromMX7s">
+    <Type Name="ASSETS_fromMX7">
+      <Column Name="SYSTEMID" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="LOCATION" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="LocationDescription" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="ASSETNUM" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="AssetDescription" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="LocationTree" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="Volvo.ASSETS" Member="ASSETs">
+    <Type Name="ASSET">
+      <Column Name="SYSTEMID" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="LOCATION" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="ASSETNUM" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="AssetDescription" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="LocationTree" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="controller_name" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="controller_type" Type="System.String" DbType="VarChar(32)" CanBeNull="true" />
+      <Column Name="controller_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+</Database>

@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="DataClassesGADATA">
+  <DataContextMoniker Name="/DataClassesGADATADataContext" />
+  <nestedChildShapes>
+    <classShape Id="bcccae47-5f15-463f-aa8a-ad138f0e2fd9" absoluteBounds="5.25, 0.5, 2, 2.7324039713541666">
+      <DataClassMoniker Name="/DataClassesGADATADataContext/Robot" />
+      <nestedChildShapes>
+        <elementListCompartment Id="80d5cd1e-44ff-48cf-b50b-84714713b3bc" absoluteBounds="5.265, 0.96, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="45762c5d-fcd5-4e29-83ad-60609d327d0e" absoluteBounds="2.75, 3.125, 2, 1.9631982421875">
+      <DataClassMoniker Name="/DataClassesGADATADataContext/ASSETS_fromMX7" />
+      <nestedChildShapes>
+        <elementListCompartment Id="0703ff9c-0255-4224-a084-0a512428d77b" absoluteBounds="2.7650000000000006, 3.585, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="fb1066f4-e1e0-4c05-8cd9-1f45563d2207" absoluteBounds="2.75, 0.5, 2, 2.3478011067708335">
+      <DataClassMoniker Name="/DataClassesGADATADataContext/ASSET" />
+      <nestedChildShapes>
+        <elementListCompartment Id="90291ecb-a884-4e0c-935c-929626edb4b9" absoluteBounds="2.7649999999999997, 0.96, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>
