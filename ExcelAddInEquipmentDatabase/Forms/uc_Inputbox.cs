@@ -11,6 +11,9 @@ namespace ExcelAddInEquipmentDatabase.Forms
 {
     public partial class uc_Inputbox : UserControl
     {
+        //this indicates that this box is used for varchar or integers. (needed for rebuilding the qurery)
+        bool lIntOnly = false;
+
         public uc_Inputbox()
         {
             InitializeComponent();
@@ -19,9 +22,16 @@ namespace ExcelAddInEquipmentDatabase.Forms
 
         private void enable_CheckedChanged(object sender, EventArgs e)
         {
-            if (rb_enable.Checked) rb_enable.Checked = false;
-            if (!rb_enable.Checked) rb_enable.Checked = true;
-            tb_1.Enabled = rb_enable.Checked;
+            if (tb_1.Enabled)
+            {
+                rb_enable.Checked = false;
+                tb_1.Enabled = false;
+            }
+            else
+            {
+                rb_enable.Checked = true;
+                tb_1.Enabled = true;
+            }
         }
 
         public string label
@@ -39,7 +49,18 @@ namespace ExcelAddInEquipmentDatabase.Forms
         public bool active
         {
             get { return rb_enable.Checked; }
-            set { rb_enable.Checked = value; }
+            set 
+            { 
+                rb_enable.Checked = value;
+                tb_1.Enabled = value;
+            }
+        }
+
+        public bool intOnly
+        {
+            get { return lIntOnly; }
+            set { lIntOnly = value; }
+        
         }
 
 
