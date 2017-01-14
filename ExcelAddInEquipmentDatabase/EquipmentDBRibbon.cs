@@ -192,65 +192,6 @@ namespace ExcelAddInEquipmentDatabase
 
         }
         
-        
-        //test
-        //werkt niet omdat ribbon read only word na het laden ... GRRR 
-        void testBuildRibon()
-        {
-            build_Ribbon_sp_parameters(lGadataComm.get_GADATA_sp_parameters("gadata.volvo.sp_GADATAfront"));
-        }
-
-        void build_Ribbon_sp_parameters(SqlCommand cmd)
-        {
-            foreach (SqlParameter p in cmd.Parameters)
-            {
-                try
-                {
-                    //Debug.WriteLine("pName:{0} pSqlDbType: {1}", p.ParameterName, p.SqlDbType);
-                    switch (p.SqlDbType)
-                    {
-                        case SqlDbType.DateTime:
-
-                            break;
-                        case SqlDbType.Bit:
-                            // in case of bit create a checkbox for it
-                            Microsoft.Office.Tools.Ribbon.RibbonCheckBox cb;
-                            cb = this.Factory.CreateRibbonCheckBox();
-                            cb.Name = p.ParameterName;
-                            cb.Label = p.ParameterName;
-                            this.proc_parameters.Items.Add(cb);
-                            //cb.Dispose();
-                            break;
-                        case SqlDbType.Int:
-                            // in case of bit create a editbox for it
-                            Microsoft.Office.Tools.Ribbon.RibbonEditBox Ieb;
-                            Ieb = this.Factory.CreateRibbonEditBox();
-                            Ieb.Name = p.ParameterName;
-                            Ieb.Label = p.ParameterName;
-                            this.proc_parameters.Items.Add(Ieb);
-                            //  Ieb.Dispose();
-                            break;
-                        case SqlDbType.VarChar:
-                            // in case of bit create a editbox for it
-                            Microsoft.Office.Tools.Ribbon.RibbonEditBox Teb;
-                            Teb = this.Factory.CreateRibbonEditBox();
-                            Teb.Name = p.ParameterName;
-                            Teb.Label = p.ParameterName;
-                            this.proc_parameters.Items.Add(Teb);
-                            //  Teb.Dispose();
-                            break;
-                        default:
-                            Debug.WriteLine("Type not handeld: pName:{0} pSqlDbType: {1}", p.ParameterName, p.SqlDbType);
-                            break;
-                    }
-
-                }
-                catch (Exception e)
-                {
-                    Debug.WriteLine(e.Message);
-                }
-            }
-        }
 
         private void button1_Click(object sender, RibbonControlEventArgs e)
         {

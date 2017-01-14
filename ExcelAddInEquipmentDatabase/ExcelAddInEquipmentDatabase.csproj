@@ -158,16 +158,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>applData.xsd</DependentUpon>
     </Compile>
-    <Compile Include="AssetManager.cs">
+    <Compile Include="Forms\AssetManager.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AssetManager.Designer.cs">
+    <Compile Include="Forms\AssetManager.Designer.cs">
       <DependentUpon>AssetManager.cs</DependentUpon>
     </Compile>
-    <Compile Include="ConnectionManger.cs">
+    <Compile Include="Forms\ConnectionManger.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ConnectionManger.Designer.cs">
+    <Compile Include="Forms\ConnectionManger.Designer.cs">
       <DependentUpon>ConnectionManger.cs</DependentUpon>
     </Compile>
     <Compile Include="DataClassesGADATA.cs">
@@ -178,10 +178,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DataClassesGADATA.dbml</DependentUpon>
     </Compile>
-    <Compile Include="dtPicker.cs">
+    <Compile Include="Forms\uc_Checkbox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\uc_Checkbox.Designer.cs">
+      <DependentUpon>uc_Checkbox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\dtPicker.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="dtPicker.Designer.cs">
+    <Compile Include="Forms\dtPicker.Designer.cs">
       <DependentUpon>dtPicker.cs</DependentUpon>
     </Compile>
     <Compile Include="EquipmentDBRibbon.cs">
@@ -190,11 +196,20 @@
     <Compile Include="EquipmentDBRibbon.Designer.cs">
       <DependentUpon>EquipmentDBRibbon.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\uc_Inputbox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\uc_Inputbox.Designer.cs">
+      <DependentUpon>uc_Inputbox.cs</DependentUpon>
+    </Compile>
     <Compile Include="GadataComm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <EmbeddedResource Include="StoredProcedureManger.resx">
+    <EmbeddedResource Include="Forms\uc_Checkbox.resx">
+      <DependentUpon>uc_Checkbox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\StoredProcedureManger.resx">
       <DependentUpon>StoredProcedureManger.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
@@ -209,21 +224,23 @@
     <None Include="applData.xss">
       <DependentUpon>applData.xsd</DependentUpon>
     </None>
-    <None Include="ClassDiagram1.cd" />
     <None Include="DataClassesGADATA.dbml.layout">
       <DependentUpon>DataClassesGADATA.dbml</DependentUpon>
     </None>
-    <EmbeddedResource Include="AssetManager.resx">
+    <EmbeddedResource Include="Forms\AssetManager.resx">
       <DependentUpon>AssetManager.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ConnectionManger.resx">
+    <EmbeddedResource Include="Forms\ConnectionManger.resx">
       <DependentUpon>ConnectionManger.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="dtPicker.resx">
+    <EmbeddedResource Include="Forms\dtPicker.resx">
       <DependentUpon>dtPicker.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EquipmentDBRibbon.resx">
       <DependentUpon>EquipmentDBRibbon.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\uc_Inputbox.resx">
+      <DependentUpon>uc_Inputbox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -249,10 +266,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="StoredProcedureManger.cs">
+    <Compile Include="Forms\StoredProcedureManger.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="StoredProcedureManger.Designer.cs">
+    <Compile Include="Forms\StoredProcedureManger.Designer.cs">
       <DependentUpon>StoredProcedureManger.cs</DependentUpon>
     </Compile>
     <Compile Include="ThisAddIn.cs">
