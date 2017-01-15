@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Data;
 using System.Data.SqlClient;
 using Excel = Microsoft.Office.Interop.Excel;
+using System.Windows.Forms;
 
 namespace ExcelAddInEquipmentDatabase
 {
@@ -161,12 +162,12 @@ namespace ExcelAddInEquipmentDatabase
         }
         private void btn_StartDate_Click(object sender, RibbonControlEventArgs e)
         {
-            dtPicker StartDatePicker = new dtPicker();
+            dtPicker StartDatePicker = new dtPicker("@StartDate");
             StartDatePicker.Show();
         }
         private void btn_EndDate_Click(object sender, RibbonControlEventArgs e)
         {
-            dtPicker EndDatePicker = new dtPicker();
+            dtPicker EndDatePicker = new dtPicker("@EndDate");
             EndDatePicker.Show();
         }
         private void cb_activeConnection_ItemsLoading(object sender, RibbonControlEventArgs e)
@@ -191,8 +192,20 @@ namespace ExcelAddInEquipmentDatabase
         }
         private void btn_EditProcedure_Click(object sender, RibbonControlEventArgs e)
         {
-            StoredProcedureManger ProcMngr = new StoredProcedureManger(cb_activeConnection.Text);
-            ProcMngr.Show();
+            if (cb_activeConnection.Text == "RefreshAll") //this is not a connection to van not be edited
+            {
+               MessageBox.Show("Please select an other connection. 'RefreshAll' is not a connection", "Sorry", MessageBoxButtons.OK);
+            }
+            else
+            {
+                StoredProcedureManger ProcMngr = new StoredProcedureManger(cb_activeConnection.Text);
+                ProcMngr.Show();
+            }
+        }
+
+        private void btn_nDays_Click(object sender, RibbonControlEventArgs e)
+        {
+            MessageBox.Show("not done", "OEPS", MessageBoxButtons.OK);
         }
     }
 }

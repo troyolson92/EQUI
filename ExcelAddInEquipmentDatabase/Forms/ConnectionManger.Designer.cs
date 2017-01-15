@@ -36,12 +36,18 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.lb_procParms = new System.Windows.Forms.ListBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.btn_Create = new System.Windows.Forms.Button();
+            this.btn_GADATA_Create = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.cb_procedures = new System.Windows.Forms.ComboBox();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.btn_MX7_create = new System.Windows.Forms.Button();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.btn_MX3_create = new System.Windows.Forms.Button();
             this.t_connections.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.tabPage3.SuspendLayout();
+            this.tabPage4.SuspendLayout();
             this.SuspendLayout();
             // 
             // t_connections
@@ -51,6 +57,8 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.t_connections.Controls.Add(this.tabPage1);
             this.t_connections.Controls.Add(this.tabPage2);
+            this.t_connections.Controls.Add(this.tabPage3);
+            this.t_connections.Controls.Add(this.tabPage4);
             this.t_connections.Location = new System.Drawing.Point(12, 12);
             this.t_connections.Name = "t_connections";
             this.t_connections.SelectedIndex = 0;
@@ -108,7 +116,7 @@
             // 
             this.tabPage2.Controls.Add(this.lb_procParms);
             this.tabPage2.Controls.Add(this.label2);
-            this.tabPage2.Controls.Add(this.btn_Create);
+            this.tabPage2.Controls.Add(this.btn_GADATA_Create);
             this.tabPage2.Controls.Add(this.label1);
             this.tabPage2.Controls.Add(this.cb_procedures);
             this.tabPage2.Location = new System.Drawing.Point(4, 25);
@@ -141,16 +149,16 @@
             this.label2.TabIndex = 3;
             this.label2.Text = "Available stored procedures in gadata.volvo schema";
             // 
-            // btn_Create
+            // btn_GADATA_Create
             // 
-            this.btn_Create.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn_Create.Location = new System.Drawing.Point(393, 268);
-            this.btn_Create.Name = "btn_Create";
-            this.btn_Create.Size = new System.Drawing.Size(75, 23);
-            this.btn_Create.TabIndex = 2;
-            this.btn_Create.Text = "Create";
-            this.btn_Create.UseVisualStyleBackColor = true;
-            this.btn_Create.Click += new System.EventHandler(this.btn_Create_Click);
+            this.btn_GADATA_Create.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btn_GADATA_Create.Location = new System.Drawing.Point(393, 268);
+            this.btn_GADATA_Create.Name = "btn_GADATA_Create";
+            this.btn_GADATA_Create.Size = new System.Drawing.Size(75, 23);
+            this.btn_GADATA_Create.TabIndex = 2;
+            this.btn_GADATA_Create.Text = "Create";
+            this.btn_GADATA_Create.UseVisualStyleBackColor = true;
+            this.btn_GADATA_Create.Click += new System.EventHandler(this.btn_GADATA_Create_Click);
             // 
             // label1
             // 
@@ -170,7 +178,51 @@
             this.cb_procedures.Name = "cb_procedures";
             this.cb_procedures.Size = new System.Drawing.Size(370, 24);
             this.cb_procedures.TabIndex = 0;
-            this.cb_procedures.SelectedIndexChanged += new System.EventHandler(this.cb_procedures_SelectedIndexChanged);
+            this.cb_procedures.SelectedIndexChanged += new System.EventHandler(this.cb_GADATA_procedures_SelectedIndexChanged);
+            // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.btn_MX7_create);
+            this.tabPage3.Location = new System.Drawing.Point(4, 25);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(481, 305);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "New_Maximo7";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // btn_MX7_create
+            // 
+            this.btn_MX7_create.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btn_MX7_create.Location = new System.Drawing.Point(400, 276);
+            this.btn_MX7_create.Name = "btn_MX7_create";
+            this.btn_MX7_create.Size = new System.Drawing.Size(75, 23);
+            this.btn_MX7_create.TabIndex = 3;
+            this.btn_MX7_create.Text = "Create";
+            this.btn_MX7_create.UseVisualStyleBackColor = true;
+            this.btn_MX7_create.Click += new System.EventHandler(this.btn_MX7_create_Click);
+            // 
+            // tabPage4
+            // 
+            this.tabPage4.Controls.Add(this.btn_MX3_create);
+            this.tabPage4.Location = new System.Drawing.Point(4, 25);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(481, 305);
+            this.tabPage4.TabIndex = 3;
+            this.tabPage4.Text = "New_Maximo3";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // btn_MX3_create
+            // 
+            this.btn_MX3_create.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btn_MX3_create.Location = new System.Drawing.Point(400, 276);
+            this.btn_MX3_create.Name = "btn_MX3_create";
+            this.btn_MX3_create.Size = new System.Drawing.Size(75, 23);
+            this.btn_MX3_create.TabIndex = 4;
+            this.btn_MX3_create.Text = "Create";
+            this.btn_MX3_create.UseVisualStyleBackColor = true;
+            this.btn_MX3_create.Click += new System.EventHandler(this.btn_MX3_create_Click);
             // 
             // ConnectionManger
             // 
@@ -188,6 +240,8 @@
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            this.tabPage3.ResumeLayout(false);
+            this.tabPage4.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -202,9 +256,13 @@
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.ComboBox cb_procedures;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button btn_Create;
+        private System.Windows.Forms.Button btn_GADATA_Create;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ListBox lb_procParms;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.Button btn_MX7_create;
+        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.Button btn_MX3_create;
 
 
     }

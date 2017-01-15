@@ -40,9 +40,9 @@
             this.group2 = this.Factory.CreateRibbonGroup();
             this.btn_Query = this.Factory.CreateRibbonButton();
             this.separator1 = this.Factory.CreateRibbonSeparator();
-            this.btn_AssetManager = this.Factory.CreateRibbonButton();
             this.btn_ConnectionManager = this.Factory.CreateRibbonButton();
             this.cb_activeConnection = this.Factory.CreateRibbonComboBox();
+            this.btn_EditProcedure = this.Factory.CreateRibbonButton();
             this.AssetManager = this.Factory.CreateRibbonGroup();
             this.cb_Lochierarchy = this.Factory.CreateRibbonComboBox();
             this.cb_locations = this.Factory.CreateRibbonComboBox();
@@ -52,7 +52,7 @@
             this.btn_EndDate = this.Factory.CreateRibbonButton();
             this.btn_nDays = this.Factory.CreateRibbonButton();
             this.proc_parameters = this.Factory.CreateRibbonGroup();
-            this.btn_EditProcedure = this.Factory.CreateRibbonButton();
+            this.btn_AssetManager = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
             this.rib2.SuspendLayout();
             this.group2.SuspendLayout();
@@ -96,14 +96,6 @@
             // 
             this.separator1.Name = "separator1";
             // 
-            // btn_AssetManager
-            // 
-            this.btn_AssetManager.Label = "MngAssets";
-            this.btn_AssetManager.Name = "btn_AssetManager";
-            this.btn_AssetManager.OfficeImageId = "FormulaMoreFunctionsMenu";
-            this.btn_AssetManager.ShowImage = true;
-            this.btn_AssetManager.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_AssetManager_Click);
-            // 
             // btn_ConnectionManager
             // 
             this.btn_ConnectionManager.Label = "MngConnections";
@@ -118,6 +110,12 @@
             this.cb_activeConnection.Name = "cb_activeConnection";
             this.cb_activeConnection.Text = null;
             this.cb_activeConnection.ItemsLoading += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.cb_activeConnection_ItemsLoading);
+            // 
+            // btn_EditProcedure
+            // 
+            this.btn_EditProcedure.Label = "Procedure parameters";
+            this.btn_EditProcedure.Name = "btn_EditProcedure";
+            this.btn_EditProcedure.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_EditProcedure_Click);
             // 
             // AssetManager
             // 
@@ -178,17 +176,20 @@
             this.btn_nDays.Name = "btn_nDays";
             this.btn_nDays.OfficeImageId = "TableExportTableToSharePointList";
             this.btn_nDays.ShowImage = true;
+            this.btn_nDays.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_nDays_Click);
             // 
             // proc_parameters
             // 
             this.proc_parameters.Items.Add(this.btn_AssetManager);
             this.proc_parameters.Name = "proc_parameters";
             // 
-            // btn_EditProcedure
+            // btn_AssetManager
             // 
-            this.btn_EditProcedure.Label = "EditProcedure";
-            this.btn_EditProcedure.Name = "btn_EditProcedure";
-            this.btn_EditProcedure.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_EditProcedure_Click);
+            this.btn_AssetManager.Label = "MngAssets";
+            this.btn_AssetManager.Name = "btn_AssetManager";
+            this.btn_AssetManager.OfficeImageId = "FormulaMoreFunctionsMenu";
+            this.btn_AssetManager.ShowImage = true;
+            this.btn_AssetManager.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_AssetManager_Click);
             // 
             // EquipmentDBRibbon
             // 

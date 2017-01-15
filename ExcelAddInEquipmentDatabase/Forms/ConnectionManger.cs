@@ -23,14 +23,14 @@ namespace ExcelAddInEquipmentDatabase
         {
             InitializeComponent();
             lb_get_connections();
-            cb_procedures_fill();
+            cb_GADATA_procedures_fill();
         }
 
-        private void create_GADATA_connection(string storedProc)
+        private void create_ODBC_connection(string QueryCmd, string ODBCconn, string connectionName )
         {
             Excel._Workbook activeWorkbook = Globals.ThisAddIn.Application.ActiveWorkbook as Excel.Workbook;
             Excel.Worksheet activeWorksheet = Globals.ThisAddIn.Application.ActiveSheet as Excel.Worksheet;
-  
+
             Excel.Worksheet oTemplateSheet;
             Excel.Sheets oSheets;
             Excel.Range oRng;
@@ -49,12 +49,12 @@ namespace ExcelAddInEquipmentDatabase
             {
                 //create Query string 
                 string SQLStr;
-                SQLStr = "use gadata EXEC Volvo." + storedProc.Trim();
+                SQLStr = QueryCmd;
                 object aStrSQL = SQLStr;
                 //create connection string 
 
                 //conn.Name = storedProc;
-                object connection = @"ODBC;DSN=GADATA;Description= GADATA;UID=GADATA;PWD=GADATA987;APP=SQLFront;WSID=GNL1004ZCBQC2\\SDEBEUL;DATABASE=GADATA";
+                object connection = ODBCconn;
 
                 // get existing sheets
                 oSheets = activeWorkbook.Sheets;
@@ -63,7 +63,7 @@ namespace ExcelAddInEquipmentDatabase
                 //select first cell of new sheet 
                 oRng = oTemplateSheet.get_Range("A1");
                 //set name of new sheet
-                oTemplateSheet.Name = storedProc;
+                oTemplateSheet.Name = connectionName;
 
                 // Get the listobjects 
                 /*
@@ -78,7 +78,7 @@ namespace ExcelAddInEquipmentDatabase
                 // create a query table with the connection and SQL command
                 oTable = oTables.Add(connection, oRng, aStrSQL);
                 oTable.RefreshStyle = Excel.XlCellInsertionMode.xlInsertEntireRows;
-                oTable.Name = storedProc;
+                oTable.Name = connectionName;
                 oTable.Refresh(false); //this failes but everthing worked? 
             }
             catch (Exception e)
@@ -87,7 +87,7 @@ namespace ExcelAddInEquipmentDatabase
             }
         }
 
-
+        //existing connections
         public Excel.WorkbookConnection get_Connection(string connectionname)
         { 
             Excel._Workbook activeWorkbook = Globals.ThisAddIn.Application.ActiveWorkbook as Excel.Workbook;
@@ -101,7 +101,6 @@ namespace ExcelAddInEquipmentDatabase
             }
             return null;
         }
-
         private void lb_get_connections()
         {
             lb_connections.Items.Clear();
@@ -122,7 +121,31 @@ namespace ExcelAddInEquipmentDatabase
             }
 
         }
-        private void cb_procedures_fill()
+        private void btn_Delete_Click(object sender, EventArgs e)
+        {
+            Excel.WorkbookConnection connection = get_Connection(lb_connections.GetItemText(lb_connections.SelectedItem));
+            connection.Delete();
+            lb_get_connections();
+        }
+        private void btn_Edit_Click(object sender, EventArgs e)
+        {
+            Excel.WorkbookConnection connection = get_Connection(lb_connections.GetItemText(lb_connections.SelectedItem));
+            connection.Name = "Newname";
+            lb_get_connections();
+        }
+        //GADATA link
+        private void btn_GADATA_Create_Click(object sender, EventArgs e)
+        {
+            if (cb_procedures.Text != "")
+            {
+                string Query = "use gadata EXEC Volvo." + cb_procedures.Text.Trim();
+                string ODBCconn = @"ODBC;DSN=GADATA;Description= GADATA;UID=GADATA;PWD=GADATA987;APP=SQLFront;WSID=GNL1004ZCBQC2\\SDEBEUL;DATABASE=GADATA";
+                string ConnectionName = cb_procedures.Text.Trim();
+                create_ODBC_connection(Query, ODBCconn, ConnectionName);
+            }
+            lb_get_connections();
+        }
+        private void cb_GADATA_procedures_fill()
         {
             try
             {
@@ -142,13 +165,8 @@ namespace ExcelAddInEquipmentDatabase
                 cb_procedures.Text = "%";
                 Debug.WriteLine(ex.Message);
             }
-        }   
-        private void btn_Create_Click(object sender, EventArgs e)
-        {
-            if (cb_procedures.Text != "") create_GADATA_connection(cb_procedures.Text);
-            lb_get_connections();
         }
-        private void lb_get_SpParams(SqlCommand cmd)
+        private void lb_GADATA_get_SpParams(SqlCommand cmd)
         {
             lb_procParms.Items.Clear();
             string header = string.Format("{0,-50}   {1,30}\n", "pName", "pSqlDbType");
@@ -157,7 +175,7 @@ namespace ExcelAddInEquipmentDatabase
             {
                 try
                 {
-                    string item = string.Format("{0,-50}   {1,30}",  p.ParameterName, p.SqlDbType);
+                    string item = string.Format("{0,-50}   {1,30}", p.ParameterName, p.SqlDbType);
                     lb_procParms.Items.Add(item);
                 }
                 catch (Exception e)
@@ -166,24 +184,39 @@ namespace ExcelAddInEquipmentDatabase
                 }
             }
         }
-        private void cb_procedures_SelectedIndexChanged(object sender, EventArgs e)
+        private void cb_GADATA_procedures_SelectedIndexChanged(object sender, EventArgs e)
         {
-            lb_get_SpParams(lGadataComm.get_GADATA_sp_parameters(cb_procedures.Text));
+            lb_GADATA_get_SpParams(lGadataComm.get_GADATA_sp_parameters(cb_procedures.Text));
         }
-        private void btn_Delete_Click(object sender, EventArgs e)
+        //Maximo7 link
+        private void btn_MX7_create_Click(object sender, EventArgs e)
         {
-            Excel.WorkbookConnection connection = get_Connection(lb_connections.GetItemText(lb_connections.SelectedItem));
-            connection.Delete();
-            lb_get_connections();
+            string Query = @"
+                Select STATUS, WORKTYPE, DESCRIPTION, LOCATION, WONUM, REPORTDATE 
+                from MAXIMO.WORKORDER WORKORDER 
+                where 
+                (WORKORDER.location LIKE '5310%') 
+                order by REPORTDATE
+                    ";
+            string ODBCconn = @"ODBC;DSN=Max;Description= MX7;UID=BGASTHUY;PWD=BGASTHUY$123;";
+            string ConnectionName = "MX7Test";
+            create_ODBC_connection(Query, ODBCconn, ConnectionName);
         }
-
-        private void btn_Edit_Click(object sender, EventArgs e)
+        //Maximo3 link
+        private void btn_MX3_create_Click(object sender, EventArgs e)
         {
-            Excel.WorkbookConnection connection = get_Connection(lb_connections.GetItemText(lb_connections.SelectedItem));
-            connection.Name = "Newname";
-            lb_get_connections();
+
+            // NOT WORKING YET 
+            string Query = @"
+                Select LDKEY, STATUS, WORKTYPE, DESCRIPTION, LOCATION, WONUM, WOPM1, REPORTDATE 
+                from MAXIMO.WORKORDER WORKORDER 
+                where 
+                (WORKORDER.location LIKE '%99070R01%') 
+                order by REPORTDATE
+                    ";
+            string ODBCconn = @"ODBC;DSN=MVCGP2;Description= MVCGP2;UID=maximo_ro;PWD=maximo_ro;";
+            string ConnectionName = "MX3Test";
+            create_ODBC_connection(Query, ODBCconn, ConnectionName);
         }
-
-
     }
 }
