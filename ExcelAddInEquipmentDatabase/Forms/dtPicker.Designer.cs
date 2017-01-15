@@ -33,20 +33,30 @@
             // 
             // dateTimePicker1
             // 
+            this.dateTimePicker1.CustomFormat = "yyyy-MM-dd hh:mm:ss";
+            this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dateTimePicker1.Location = new System.Drawing.Point(12, 12);
             this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(200, 22);
+            this.dateTimePicker1.Size = new System.Drawing.Size(163, 22);
             this.dateTimePicker1.TabIndex = 1;
-            this.dateTimePicker1.ValueChanged += new System.EventHandler(this.dateTimePicker1_ValueChanged);
             // 
             // dtPicker
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(235, 46);
+            this.ClientSize = new System.Drawing.Size(180, 46);
             this.Controls.Add(this.dateTimePicker1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "dtPicker";
+            this.ShowInTaskbar = false;
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "dtPicker";
+            this.TopMost = true;
+            this.Activated += new System.EventHandler(this.dtPicker_Activated);
+            this.Deactivate += new System.EventHandler(this.dtPicker_Deactivate);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.dtPicker_FormClosing);
+            this.Shown += new System.EventHandler(this.dtPicker_Shown);
             this.ResumeLayout(false);
 
         }

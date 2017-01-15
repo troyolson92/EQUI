@@ -38,20 +38,20 @@
             this.tab1 = this.Factory.CreateRibbonTab();
             this.rib2 = this.Factory.CreateRibbonTab();
             this.group2 = this.Factory.CreateRibbonGroup();
-            this.btn_Query = this.Factory.CreateRibbonButton();
             this.separator1 = this.Factory.CreateRibbonSeparator();
-            this.btn_ConnectionManager = this.Factory.CreateRibbonButton();
             this.cb_activeConnection = this.Factory.CreateRibbonComboBox();
-            this.btn_EditProcedure = this.Factory.CreateRibbonButton();
             this.AssetManager = this.Factory.CreateRibbonGroup();
             this.cb_Lochierarchy = this.Factory.CreateRibbonComboBox();
             this.cb_locations = this.Factory.CreateRibbonComboBox();
             this.cb_assets = this.Factory.CreateRibbonComboBox();
             this.separator2 = this.Factory.CreateRibbonSeparator();
+            this.proc_parameters = this.Factory.CreateRibbonGroup();
+            this.btn_Query = this.Factory.CreateRibbonButton();
+            this.btn_ConnectionManager = this.Factory.CreateRibbonButton();
+            this.btn_EditProcedure = this.Factory.CreateRibbonButton();
             this.btn_StartDate = this.Factory.CreateRibbonButton();
             this.btn_EndDate = this.Factory.CreateRibbonButton();
             this.btn_nDays = this.Factory.CreateRibbonButton();
-            this.proc_parameters = this.Factory.CreateRibbonGroup();
             this.btn_AssetManager = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
             this.rib2.SuspendLayout();
@@ -83,26 +83,9 @@
             this.group2.Label = "Connection Manager";
             this.group2.Name = "group2";
             // 
-            // btn_Query
-            // 
-            this.btn_Query.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.btn_Query.Label = "Query";
-            this.btn_Query.Name = "btn_Query";
-            this.btn_Query.OfficeImageId = "DataRefreshAll";
-            this.btn_Query.ShowImage = true;
-            this.btn_Query.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_Query_Click);
-            // 
             // separator1
             // 
             this.separator1.Name = "separator1";
-            // 
-            // btn_ConnectionManager
-            // 
-            this.btn_ConnectionManager.Label = "MngConnections";
-            this.btn_ConnectionManager.Name = "btn_ConnectionManager";
-            this.btn_ConnectionManager.OfficeImageId = "AdpDiagramAddRelatedTables";
-            this.btn_ConnectionManager.ShowImage = true;
-            this.btn_ConnectionManager.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_ConnectionManager_Click);
             // 
             // cb_activeConnection
             // 
@@ -110,12 +93,6 @@
             this.cb_activeConnection.Name = "cb_activeConnection";
             this.cb_activeConnection.Text = null;
             this.cb_activeConnection.ItemsLoading += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.cb_activeConnection_ItemsLoading);
-            // 
-            // btn_EditProcedure
-            // 
-            this.btn_EditProcedure.Label = "Procedure parameters";
-            this.btn_EditProcedure.Name = "btn_EditProcedure";
-            this.btn_EditProcedure.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_EditProcedure_Click);
             // 
             // AssetManager
             // 
@@ -135,6 +112,7 @@
             this.cb_Lochierarchy.Name = "cb_Lochierarchy";
             this.cb_Lochierarchy.Text = null;
             this.cb_Lochierarchy.ItemsLoading += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.cb_Lochierarchy_itemsload);
+            this.cb_Lochierarchy.TextChanged += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.cb_Lochierarchy_TextChanged);
             // 
             // cb_locations
             // 
@@ -142,6 +120,7 @@
             this.cb_locations.Name = "cb_locations";
             this.cb_locations.Text = null;
             this.cb_locations.ItemsLoading += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.cb_locations_itemsload);
+            this.cb_locations.TextChanged += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.cb_locations_TextChanged);
             // 
             // cb_assets
             // 
@@ -149,10 +128,39 @@
             this.cb_assets.Name = "cb_assets";
             this.cb_assets.Text = null;
             this.cb_assets.ItemsLoading += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.cb_assets_itemsload);
+            this.cb_assets.TextChanged += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.cb_assets_TextChanged);
             // 
             // separator2
             // 
             this.separator2.Name = "separator2";
+            // 
+            // proc_parameters
+            // 
+            this.proc_parameters.Items.Add(this.btn_AssetManager);
+            this.proc_parameters.Name = "proc_parameters";
+            // 
+            // btn_Query
+            // 
+            this.btn_Query.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.btn_Query.Label = "Query";
+            this.btn_Query.Name = "btn_Query";
+            this.btn_Query.OfficeImageId = "DataRefreshAll";
+            this.btn_Query.ShowImage = true;
+            this.btn_Query.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_Query_Click);
+            // 
+            // btn_ConnectionManager
+            // 
+            this.btn_ConnectionManager.Label = "MngConnections";
+            this.btn_ConnectionManager.Name = "btn_ConnectionManager";
+            this.btn_ConnectionManager.OfficeImageId = "AdpDiagramAddRelatedTables";
+            this.btn_ConnectionManager.ShowImage = true;
+            this.btn_ConnectionManager.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_ConnectionManager_Click);
+            // 
+            // btn_EditProcedure
+            // 
+            this.btn_EditProcedure.Label = "Procedure parameters";
+            this.btn_EditProcedure.Name = "btn_EditProcedure";
+            this.btn_EditProcedure.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_EditProcedure_Click);
             // 
             // btn_StartDate
             // 
@@ -177,11 +185,6 @@
             this.btn_nDays.OfficeImageId = "TableExportTableToSharePointList";
             this.btn_nDays.ShowImage = true;
             this.btn_nDays.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_nDays_Click);
-            // 
-            // proc_parameters
-            // 
-            this.proc_parameters.Items.Add(this.btn_AssetManager);
-            this.proc_parameters.Name = "proc_parameters";
             // 
             // btn_AssetManager
             // 

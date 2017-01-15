@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.btn_Query = new System.Windows.Forms.Button();
+            this.btn_Set = new System.Windows.Forms.Button();
             this.btn_reset = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
@@ -44,16 +44,16 @@
             this.flowLayoutPanel1.Size = new System.Drawing.Size(753, 219);
             this.flowLayoutPanel1.TabIndex = 0;
             // 
-            // btn_Query
+            // btn_Set
             // 
-            this.btn_Query.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn_Query.Location = new System.Drawing.Point(659, 237);
-            this.btn_Query.Name = "btn_Query";
-            this.btn_Query.Size = new System.Drawing.Size(106, 32);
-            this.btn_Query.TabIndex = 1;
-            this.btn_Query.Text = "Query";
-            this.btn_Query.UseVisualStyleBackColor = true;
-            this.btn_Query.Click += new System.EventHandler(this.btn_Query_Click);
+            this.btn_Set.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btn_Set.Location = new System.Drawing.Point(659, 237);
+            this.btn_Set.Name = "btn_Set";
+            this.btn_Set.Size = new System.Drawing.Size(106, 32);
+            this.btn_Set.TabIndex = 1;
+            this.btn_Set.Text = "Set";
+            this.btn_Set.UseVisualStyleBackColor = true;
+            this.btn_Set.Click += new System.EventHandler(this.btn_Query_Click);
             // 
             // btn_reset
             // 
@@ -73,11 +73,13 @@
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(777, 271);
             this.Controls.Add(this.btn_reset);
-            this.Controls.Add(this.btn_Query);
+            this.Controls.Add(this.btn_Set);
             this.Controls.Add(this.flowLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Name = "StoredProcedureManger";
             this.Text = "StoredProcedureManger";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.StoredProcedureManger_FormClosing);
+            this.Shown += new System.EventHandler(this.StoredProcedureManger_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -86,7 +88,7 @@
         #endregion
 
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-        private System.Windows.Forms.Button btn_Query;
+        private System.Windows.Forms.Button btn_Set;
         private System.Windows.Forms.Button btn_reset;
     }
 }

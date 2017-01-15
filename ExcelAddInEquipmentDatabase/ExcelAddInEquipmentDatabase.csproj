@@ -178,6 +178,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DataClassesGADATA.dbml</DependentUpon>
     </Compile>
+    <Compile Include="Forms\uc_Datebox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\uc_Datebox.Designer.cs">
+      <DependentUpon>uc_Datebox.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\uc_Checkbox.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -206,6 +212,9 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
+    <EmbeddedResource Include="Forms\uc_Datebox.resx">
+      <DependentUpon>uc_Datebox.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\uc_Checkbox.resx">
       <DependentUpon>uc_Checkbox.cs</DependentUpon>
     </EmbeddedResource>
