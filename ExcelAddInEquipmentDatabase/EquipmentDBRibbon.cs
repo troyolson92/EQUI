@@ -21,8 +21,8 @@ namespace ExcelAddInEquipmentDatabase
         //procedure manager instance 
         StoredProcedureManger ProcMngr;
         //intance of datetimepickers;
-        dtPicker StartDatePicker = new dtPicker("@StartDate");
-        dtPicker EndDatePicker = new dtPicker("@EndDate");
+        dtPicker StartDatePicker = new dtPicker();
+        dtPicker EndDatePicker = new dtPicker();
 
         private void EquipmentDBRibbon_Load(object sender, RibbonUIEventArgs e)
         {
@@ -31,18 +31,36 @@ namespace ExcelAddInEquipmentDatabase
             {
                 adapter.Fill(lASSETS);
             }
-            //connects the ribbon filter controls with the procMngr
-            ProcMngr.assets.parameterName = "@assets";
-            ProcMngr.lochierarchy.parameterName = "@lochierarchy";
-            ProcMngr.locations.parameterName = "@locations";
-            ProcMngr.startDate.parameterName = "@startDate";
-            ProcMngr.endDate.parameterName = "@endDate";
-            ProcMngr.daysBack.parameterName = "@daysBack";
-            //populate the connections of the workbook
-            cb_connections_update();
+            //need to find out what sheet is active => and if i should set the active connection
+
+            //inital sync with connection
+            //sync_ribbon_with_activeconnection();
+        }
+        /*  If the active connection changes than create a new instance of the procmngr
+         *  =>Only when its a real connection (not refreshall mode)
+         *  =>also load the "available" parameters from procmager back into the ribbon 
+         */ 
+        private void sync_ribbon_with_activeconnection()
+        {
+            if (dd_activeConnection.SelectedItem.Label != "RefreshAll")
+            {
+                if (ProcMngr == null)
+                {
+                    ProcMngr = new StoredProcedureManger(dd_activeConnection.SelectedItem.Label);
+                }
+                else if (ProcMngr.activeconnection != dd_activeConnection.SelectedItem.Label)
+                {
+                    ProcMngr.Close();
+                    ProcMngr.Dispose();
+                    ProcMngr = new StoredProcedureManger(dd_activeConnection.SelectedItem.Label);
+                }
+            }
+            //loads the available parameters back into the ribbon
+            cb_load_all_procparameters();
         }
 
         #region population of comboboxes (dynamic filtering)
+        //population of dynamic boxes
         private void cb_lochierarchy_update()
         {
             cb_Lochierarchy.Items.Clear();
@@ -119,13 +137,13 @@ namespace ExcelAddInEquipmentDatabase
                 Debug.WriteLine(e.Message);
             }
         }
-        private void cb_connections_update()
+        private void dd_connections_update()
         {
-            cb_activeConnection.Items.Clear();
+            dd_activeConnection.Items.Clear();
             RibbonDropDownItem defaultitem = Globals.Factory.GetRibbonFactory().CreateRibbonDropDownItem();
             defaultitem.Label = "RefreshAll";
-            cb_activeConnection.Items.Add(defaultitem);
-            cb_activeConnection.Text = "RefreshAll";
+            dd_activeConnection.Items.Add(defaultitem);
+            dd_activeConnection.SelectedItem.Label = "RefreshAll";
             Excel._Workbook activeWorkbook = Globals.ThisAddIn.Application.ActiveWorkbook as Excel.Workbook;
             foreach (var connection in activeWorkbook.Connections.Cast<Excel.WorkbookConnection>())
             {
@@ -134,16 +152,17 @@ namespace ExcelAddInEquipmentDatabase
                     case Excel.XlConnectionType.xlConnectionTypeODBC:
                         RibbonDropDownItem item = Globals.Factory.GetRibbonFactory().CreateRibbonDropDownItem();
                         item.Label = connection.Name;
-                        cb_activeConnection.Items.Add(item);
+                        dd_activeConnection.Items.Add(item);
                         break;
                     default:
-                        Debug.WriteLine("connection tpye not supported");
+                        Debug.WriteLine("connection type not supported");
                         break;
                 }
             }
         }
         private void cb_load_all_procparameters()
         {
+            //set ribbon control values 
             cb_assets.Text = ProcMngr.assets.input ;
             cb_Lochierarchy.Text = ProcMngr.lochierarchy.input;
             cb_locations.Text = ProcMngr.locations.input;
@@ -161,6 +180,10 @@ namespace ExcelAddInEquipmentDatabase
         #endregion
 
         #region ribbon event handeling
+        /*Reloads the asset collection each time the user drops the box
+         * Each time because of dynamic filtering
+         * =>>>>need to look if I can inprove this Slow as ...
+         */
         private void cb_Lochierarchy_itemsload(object sender, RibbonControlEventArgs e)
         {
             cb_lochierarchy_update();
@@ -173,6 +196,86 @@ namespace ExcelAddInEquipmentDatabase
         {
             cb_locations_update();
         }
+        //handel feedback from filter controls
+        private void btn_StartDate_Click(object sender, RibbonControlEventArgs e)
+        {
+            StartDatePicker.Show();
+            StartDatePicker.FormClosed += new System.Windows.Forms.FormClosedEventHandler(StartDatePicker_FormClosed);
+        }
+        private void StartDatePicker_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            ProcMngr.startDate.input = StartDatePicker.selectedDate.ToString();
+            ProcMngr.sync_with_ribbon();
+        }
+        private void btn_EndDate_Click(object sender, RibbonControlEventArgs e)
+        {
+            EndDatePicker.Show();
+            EndDatePicker.FormClosed += new System.Windows.Forms.FormClosedEventHandler(EndDatePicker_FormClosed);
+        }
+        private void EndDatePicker_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            ProcMngr.endDate.input = EndDatePicker.selectedDate.ToString();
+            ProcMngr.sync_with_ribbon();
+        }
+        private void btn_nDays_Click(object sender, RibbonControlEventArgs e)
+        {
+            MessageBox.Show("not done", "OEPS", MessageBoxButtons.OK);
+        }
+        private void cb_Lochierarchy_TextChanged(object sender, RibbonControlEventArgs e)
+        {
+            ProcMngr.lochierarchy.input = cb_Lochierarchy.Text;
+            ProcMngr.sync_with_ribbon();
+        }
+        private void cb_locations_TextChanged(object sender, RibbonControlEventArgs e)
+        {
+            ProcMngr.locations.input = cb_locations.Text;
+            ProcMngr.sync_with_ribbon();
+        }
+        private void cb_assets_TextChanged(object sender, RibbonControlEventArgs e)
+        {
+            ProcMngr.assets.input = cb_assets.Text;
+            ProcMngr.sync_with_ribbon();
+        }
+        //keeps the collection of connections up to date
+        private void dd_activeConnection_ItemsLoading(object sender, RibbonControlEventArgs e)
+        {
+            dd_connections_update();
+        }
+        private void dd_activeConnection_SelectionChanged(object sender, RibbonControlEventArgs e)
+        {
+            sync_ribbon_with_activeconnection();
+        }
+        //show connection manger of valid connection is selected
+        private void btn_EditProcedure_Click(object sender, RibbonControlEventArgs e)
+        {
+            if (dd_activeConnection.SelectedItem.Label == "RefreshAll") //this is not a connection to van not be edited
+            {
+                MessageBox.Show("Please select an other connection. 'RefreshAll' is not a connection", "Sorry", MessageBoxButtons.OK);
+            }
+            else
+            {
+                ProcMngr.Show();
+            }
+        }
+        //refresh the active connection or refresh all connections if needed
+        private void btn_Query_Click(object sender, RibbonControlEventArgs e)
+        {
+            Excel._Workbook activeWorkbook = Globals.ThisAddIn.Application.ActiveWorkbook as Excel.Workbook;
+            if (dd_activeConnection.SelectedItem.Label == "RefreshAll")
+            {
+                activeWorkbook.RefreshAll();
+            }
+            else
+            {
+                ProcMngr.UpdateQuery();
+                foreach (var connection in activeWorkbook.Connections.Cast<Excel.WorkbookConnection>())
+                {
+                    if (connection.Name == dd_activeConnection.SelectedItem.Label) connection.Refresh();
+                }
+            }
+
+        }
+        //create tools instance when needed. (multible instances are allowed for now) 
         private void btn_AssetManager_Click(object sender, RibbonControlEventArgs e)
         {
             //instance of asset manger 
@@ -185,72 +288,9 @@ namespace ExcelAddInEquipmentDatabase
             ConnectionManger ConnMng = new ConnectionManger();
             ConnMng.Show();
         }
-        private void btn_StartDate_Click(object sender, RibbonControlEventArgs e)
-        {
-            StartDatePicker.Show();
-        }
-        private void btn_EndDate_Click(object sender, RibbonControlEventArgs e)
-        {
-            EndDatePicker.Show();
-        }
-        private void cb_activeConnection_ItemsLoading(object sender, RibbonControlEventArgs e)
-        {
-            cb_connections_update();
-        }
-        private void btn_Query_Click(object sender, RibbonControlEventArgs e)
-        {
-            Excel._Workbook activeWorkbook = Globals.ThisAddIn.Application.ActiveWorkbook as Excel.Workbook;
-            if (cb_activeConnection.Text == "RefreshAll")
-            {
-                activeWorkbook.RefreshAll();
-            }
-            else
-            {
-                foreach (var connection in activeWorkbook.Connections.Cast<Excel.WorkbookConnection>())
-                {
-                    if (connection.Name == cb_activeConnection.Text) connection.Refresh();
-                }
-            }
-
-        }
-        private void btn_EditProcedure_Click(object sender, RibbonControlEventArgs e)
-        {
-            if (cb_activeConnection.Text == "RefreshAll") //this is not a connection to van not be edited
-            {
-               MessageBox.Show("Please select an other connection. 'RefreshAll' is not a connection", "Sorry", MessageBoxButtons.OK);
-            }
-            else
-            {
-                if (ProcMngr == null)
-                {
-                    ProcMngr = new StoredProcedureManger(cb_activeConnection.Text);
-                }
-                else if (ProcMngr.activeconnection != cb_activeConnection.Text)
-                {
-                    ProcMngr.Close();
-                    ProcMngr.Dispose();
-                    ProcMngr = new StoredProcedureManger(cb_activeConnection.Text);
-                }
-                ProcMngr.Show();
-            }
-        }
-        private void btn_nDays_Click(object sender, RibbonControlEventArgs e)
-        {
-            MessageBox.Show("not done", "OEPS", MessageBoxButtons.OK);
-        }
-        private void cb_Lochierarchy_TextChanged(object sender, RibbonControlEventArgs e)
-        {
-            ProcMngr.lochierarchy.input = cb_Lochierarchy.Text;
-        }
-        private void cb_locations_TextChanged(object sender, RibbonControlEventArgs e)
-        {
-            ProcMngr.locations.input = cb_locations.Text;
-        }
-        private void cb_assets_TextChanged(object sender, RibbonControlEventArgs e)
-        {
-            ProcMngr.assets.input = cb_assets.Text;
-        }
         #endregion
+
+
 
     }
 }
