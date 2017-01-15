@@ -236,6 +236,7 @@
             this.Name = "ConnectionManger";
             this.ShowIcon = false;
             this.Text = "ConnectionManger";
+            this.Shown += new System.EventHandler(this.ConnectionManger_Shown);
             this.t_connections.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);

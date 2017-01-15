@@ -218,5 +218,13 @@ namespace ExcelAddInEquipmentDatabase
             string ConnectionName = "MX3Test";
             create_ODBC_connection(Query, ODBCconn, ConnectionName);
         }
+
+        private void ConnectionManger_Shown(object sender, EventArgs e)
+        {
+            var _point = new System.Drawing.Point(Cursor.Position.X, Cursor.Position.Y);
+            Top = _point.Y;
+            Left = _point.X;
+        }
+
     }
 }
