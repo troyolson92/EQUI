@@ -42,11 +42,7 @@ namespace ExcelAddInEquipmentDatabase
             //set active workbook
             activeWorkbook = Globals.ThisAddIn.Application.ActiveWorkbook as Excel.Workbook;
             //fire event when sheets changes (set the active connection automaitcly)
-            activeWorkbook.SheetChange += activeWorkbook_SheetChange;
-            //need to find out what sheet is active => and if i should set the active connection
-    
-            //inital sync with connection
-            //sync_ribbon_with_activeconnection();
+            if (activeWorkbook != null)  activeWorkbook.SheetChange += activeWorkbook_SheetChange;
         }
 
         //fires on sheetchanges and sets the active connection
@@ -101,9 +97,16 @@ namespace ExcelAddInEquipmentDatabase
                     //keep it show for debugging 
                     ProcMngr.Show();
                 }
+                //event handeler for sheet Hide. (to trigger sync with ribbon)
+                ProcMngr.Deactivate += ProcMngr_Deactivate;
             }
             //loads the available parameters back into the ribbon
             set_RibonToProcedureManager();
+        }
+
+        void ProcMngr_Deactivate(object sender, EventArgs e)
+        {
+            sync_with_activeconnection();
         }
 
         #region population of comboboxes (dynamic filtering)
@@ -192,20 +195,21 @@ namespace ExcelAddInEquipmentDatabase
             dd_activeConnection.Items.Add(defaultitem);
             dd_activeConnection.SelectedItem.Label = "RefreshAll";
             Excel._Workbook activeWorkbook = Globals.ThisAddIn.Application.ActiveWorkbook as Excel.Workbook;
-            foreach (var connection in activeWorkbook.Connections.Cast<Excel.WorkbookConnection>())
-            {
-                switch (connection.Type)
+            if (activeWorkbook == null) return; 
+                foreach (var connection in activeWorkbook.Connections.Cast<Excel.WorkbookConnection>())
                 {
-                    case Excel.XlConnectionType.xlConnectionTypeODBC:
-                        RibbonDropDownItem item = Globals.Factory.GetRibbonFactory().CreateRibbonDropDownItem();
-                        item.Label = connection.Name;
-                        dd_activeConnection.Items.Add(item);
-                        break;
-                    default:
-                        Debug.WriteLine("connection type not supported");
-                        break;
+                    switch (connection.Type)
+                    {
+                        case Excel.XlConnectionType.xlConnectionTypeODBC:
+                            RibbonDropDownItem item = Globals.Factory.GetRibbonFactory().CreateRibbonDropDownItem();
+                            item.Label = connection.Name;
+                            dd_activeConnection.Items.Add(item);
+                            break;
+                        default:
+                            Debug.WriteLine("connection type not supported");
+                            break;
+                    }
                 }
-            }
         }
         private void set_RibonToProcedureManager()
         {
@@ -230,15 +234,21 @@ namespace ExcelAddInEquipmentDatabase
          */
         private void cb_Lochierarchy_itemsload(object sender, RibbonControlEventArgs e)
         {
+            Cursor.Current = Cursors.AppStarting;
             cb_lochierarchy_update();
+            Cursor.Current = Cursors.Default;
         }
         private void cb_assets_itemsload(object sender, RibbonControlEventArgs e)
         {
+            Cursor.Current = Cursors.AppStarting;
             cb_assets_update();
+            Cursor.Current = Cursors.Default;
         }
         private void cb_locations_itemsload(object sender, RibbonControlEventArgs e)
         {
+            Cursor.Current = Cursors.AppStarting;
             cb_locations_update();
+            Cursor.Current = Cursors.Default;
         }
         //handel feedback from filter controls
         private void btn_StartDate_Click(object sender, RibbonControlEventArgs e)
