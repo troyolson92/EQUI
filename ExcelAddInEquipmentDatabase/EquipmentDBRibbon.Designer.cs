@@ -52,6 +52,8 @@
             this.btn_nDays = this.Factory.CreateRibbonButton();
             this.proc_parameters = this.Factory.CreateRibbonGroup();
             this.btn_AssetManager = this.Factory.CreateRibbonButton();
+            this.button1 = this.Factory.CreateRibbonButton();
+            this.button2 = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
             this.rib2.SuspendLayout();
             this.group2.SuspendLayout();
@@ -107,8 +109,6 @@
             // 
             this.dd_activeConnection.Label = "ActiveConn";
             this.dd_activeConnection.Name = "dd_activeConnection";
-            this.dd_activeConnection.ButtonClick += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.dd_activeConnection_ItemsLoading);
-            this.dd_activeConnection.ItemsLoading += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.dd_activeConnection_ItemsLoading);
             this.dd_activeConnection.SelectionChanged += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.dd_activeConnection_SelectionChanged);
             // 
             // btn_EditProcedure
@@ -190,6 +190,8 @@
             // proc_parameters
             // 
             this.proc_parameters.Items.Add(this.btn_AssetManager);
+            this.proc_parameters.Items.Add(this.button1);
+            this.proc_parameters.Items.Add(this.button2);
             this.proc_parameters.Name = "proc_parameters";
             // 
             // btn_AssetManager
@@ -199,6 +201,18 @@
             this.btn_AssetManager.OfficeImageId = "FormulaMoreFunctionsMenu";
             this.btn_AssetManager.ShowImage = true;
             this.btn_AssetManager.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_AssetManager_Click);
+            // 
+            // button1
+            // 
+            this.button1.Label = "Rib <= Mngr";
+            this.button1.Name = "button1";
+            this.button1.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button1_Click);
+            // 
+            // button2
+            // 
+            this.button2.Label = "Rib => Mngr";
+            this.button2.Name = "button2";
+            this.button2.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button2_Click);
             // 
             // EquipmentDBRibbon
             // 
@@ -241,6 +255,8 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_nDays;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_EditProcedure;
         internal Microsoft.Office.Tools.Ribbon.RibbonDropDown dd_activeConnection;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton button1;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton button2;
     }
 
     partial class ThisRibbonCollection

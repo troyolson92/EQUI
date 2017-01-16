@@ -12,19 +12,12 @@ namespace ExcelAddInEquipmentDatabase
 {
     public partial class dtPicker : Form
     {
-        DateTime _selectedDate;
+        RibbonParameter _RibbonParameter;
 
-        public DateTime selectedDate 
-        {
-            get { return _selectedDate; }
-            set { _selectedDate = value; }
-        }
-
-
-        public dtPicker()
+        public dtPicker(RibbonParameter RibbonParameter)
         {
             InitializeComponent();
-            _selectedDate = dateTimePicker1.Value;
+            RibbonParameter.input = dateTimePicker1.Value.ToString();
         }
 
         private void dtPicker_FormClosing(object sender, FormClosingEventArgs e)
@@ -46,7 +39,7 @@ namespace ExcelAddInEquipmentDatabase
         private void dtPicker_Deactivate(object sender, EventArgs e)
         {
             //Debug.WriteLine("{0} should be set to: {1}", QueryParameter, this.dateTimePicker1.Value.ToString("yyyy-MM-dd hh:mm:ss"));
-            _selectedDate = dateTimePicker1.Value;
+            _RibbonParameter.input = dateTimePicker1.Value.ToString();
             this.Hide();
         }
 

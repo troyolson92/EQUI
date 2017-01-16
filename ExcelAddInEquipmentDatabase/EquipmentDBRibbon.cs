@@ -21,8 +21,8 @@ namespace ExcelAddInEquipmentDatabase
         //procedure manager instance 
         StoredProcedureManger ProcMngr;
         //intance of datetimepickers;
-        dtPicker StartDatePicker = new dtPicker();
-        dtPicker EndDatePicker = new dtPicker();
+        dtPicker StartDatePicker; 
+        dtPicker EndDatePicker;
 
         private void EquipmentDBRibbon_Load(object sender, RibbonUIEventArgs e)
         {
@@ -31,6 +31,9 @@ namespace ExcelAddInEquipmentDatabase
             {
                 adapter.Fill(lASSETS);
             }
+            dd_connections_update();
+
+
             //need to find out what sheet is active => and if i should set the active connection
 
             //inital sync with connection
@@ -166,8 +169,8 @@ namespace ExcelAddInEquipmentDatabase
             cb_assets.Text = ProcMngr.assets.input ;
             cb_Lochierarchy.Text = ProcMngr.lochierarchy.input;
             cb_locations.Text = ProcMngr.locations.input;
-            StartDatePicker.selectedDate = Convert.ToDateTime(ProcMngr.startDate.input);
-            EndDatePicker.selectedDate = Convert.ToDateTime(ProcMngr.endDate.input);
+           // StartDatePicker.selectedDate = Convert.ToDateTime(ProcMngr.startDate.input);
+           // EndDatePicker.selectedDate = Convert.ToDateTime(ProcMngr.endDate.input);
            // ProcMngr.daysBack.input;
             //set enabeld or disabled. 
             cb_assets.Enabled = ProcMngr.assets.enabeld;
@@ -199,23 +202,13 @@ namespace ExcelAddInEquipmentDatabase
         //handel feedback from filter controls
         private void btn_StartDate_Click(object sender, RibbonControlEventArgs e)
         {
-            StartDatePicker.Show();
-            StartDatePicker.FormClosed += new System.Windows.Forms.FormClosedEventHandler(StartDatePicker_FormClosed);
-        }
-        private void StartDatePicker_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            ProcMngr.startDate.input = StartDatePicker.selectedDate.ToString();
-            ProcMngr.sync_with_ribbon();
+           StartDatePicker = new dtPicker(ProcMngr.startDate);
+           StartDatePicker.Show();
         }
         private void btn_EndDate_Click(object sender, RibbonControlEventArgs e)
         {
+            EndDatePicker = new dtPicker(ProcMngr.endDate);
             EndDatePicker.Show();
-            EndDatePicker.FormClosed += new System.Windows.Forms.FormClosedEventHandler(EndDatePicker_FormClosed);
-        }
-        private void EndDatePicker_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            ProcMngr.endDate.input = EndDatePicker.selectedDate.ToString();
-            ProcMngr.sync_with_ribbon();
         }
         private void btn_nDays_Click(object sender, RibbonControlEventArgs e)
         {
@@ -237,10 +230,6 @@ namespace ExcelAddInEquipmentDatabase
             ProcMngr.sync_with_ribbon();
         }
         //keeps the collection of connections up to date
-        private void dd_activeConnection_ItemsLoading(object sender, RibbonControlEventArgs e)
-        {
-            dd_connections_update();
-        }
         private void dd_activeConnection_SelectionChanged(object sender, RibbonControlEventArgs e)
         {
             sync_ribbon_with_activeconnection();
@@ -291,6 +280,45 @@ namespace ExcelAddInEquipmentDatabase
         #endregion
 
 
+        //bs 
+        private void button1_Click(object sender, RibbonControlEventArgs e)
+        {
+            //ProcMngr.sync_with_ribbon();
+            dd_connections_update();
+            string worksheetconn = activeSheet_connection();
+            foreach (RibbonDropDownItem item in dd_activeConnection.Items)
+            {
+                if ((item.Label == worksheetconn) && (item.Label != dd_activeConnection.SelectedItem.Label))
+                {
+                    dd_activeConnection.SelectedItem = item;
+                    sync_ribbon_with_activeconnection();
+                }
+            }
+        }
 
+        private void button2_Click(object sender, RibbonControlEventArgs e)
+        {
+           // cb_load_all_procparameters();
+        }
+
+        private String activeSheet_connection()
+        {
+            Excel.Worksheet activeWorksheet = Globals.ThisAddIn.Application.ActiveSheet as Excel.Worksheet;
+                foreach ( Excel.QueryTable oTable in activeWorksheet.QueryTables)
+                {
+                    Excel.WorkbookConnection conn = oTable.WorkbookConnection;
+                    Debug.WriteLine ("This sheet has {0} as its connection",conn.Name.ToString());
+                    return conn.Name.ToString();
+                }
+
+            foreach (Excel.ListObject oListobject in activeWorksheet.ListObjects)
+            {
+                Excel.QueryTable oTable = oListobject.QueryTable;
+                Excel.WorkbookConnection conn = oTable.WorkbookConnection;
+                Debug.WriteLine("This sheet has {0} as its connection", conn.Name.ToString());
+                return conn.Name.ToString();
+            }
+            return null;
+        }
     }
 }
