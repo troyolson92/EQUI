@@ -41,9 +41,10 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lbl_1.AutoSize = true;
-            this.lbl_1.Location = new System.Drawing.Point(33, 0);
+            this.lbl_1.Location = new System.Drawing.Point(32, 0);
+            this.lbl_1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl_1.Name = "lbl_1";
-            this.lbl_1.Size = new System.Drawing.Size(38, 30);
+            this.lbl_1.Size = new System.Drawing.Size(29, 25);
             this.lbl_1.TabIndex = 1;
             this.lbl_1.Text = "lbl_1";
             this.lbl_1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -51,9 +52,10 @@
             // rb_enable
             // 
             this.rb_enable.AutoSize = true;
-            this.rb_enable.Location = new System.Drawing.Point(3, 3);
+            this.rb_enable.Location = new System.Drawing.Point(2, 2);
+            this.rb_enable.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.rb_enable.Name = "rb_enable";
-            this.rb_enable.Size = new System.Drawing.Size(17, 16);
+            this.rb_enable.Size = new System.Drawing.Size(14, 13);
             this.rb_enable.TabIndex = 2;
             this.rb_enable.TabStop = true;
             this.rb_enable.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -64,9 +66,10 @@
             // 
             this.tb_1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tb_1.Location = new System.Drawing.Point(127, 3);
+            this.tb_1.Location = new System.Drawing.Point(167, 2);
+            this.tb_1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tb_1.Name = "tb_1";
-            this.tb_1.Size = new System.Drawing.Size(100, 22);
+            this.tb_1.Size = new System.Drawing.Size(76, 20);
             this.tb_1.TabIndex = 3;
             this.tb_1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -78,26 +81,30 @@
             this.tableLayoutPanel1.ColumnCount = 3;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel1.Controls.Add(this.rb_enable, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.tb_1, 2, 0);
             this.tableLayoutPanel1.Controls.Add(this.lbl_1, 1, 0);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(2, 2);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(230, 30);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(245, 25);
             this.tableLayoutPanel1.TabIndex = 4;
             // 
             // uc_Inputbox
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.Controls.Add(this.tableLayoutPanel1);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.MaximumSize = new System.Drawing.Size(400, 30);
+            this.MinimumSize = new System.Drawing.Size(150, 30);
             this.Name = "uc_Inputbox";
-            this.Size = new System.Drawing.Size(240, 40);
+            this.Size = new System.Drawing.Size(248, 28);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);

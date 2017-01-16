@@ -20,8 +20,12 @@ namespace ExcelAddInEquipmentDatabase
         applData.ASSETSDataTable lASSETS = new applData.ASSETSDataTable();
         //procedure manager instance 
         StoredProcedureManger ProcMngr;
+        //asset manager instance
+        AssetManager AssetMngr;
+        //connection manager instance
+        ConnectionManger ConnMng; 
         //intance of datetimepickers;
-        dtPicker StartDatePicker; 
+        dtPicker StartDatePicker;
         dtPicker EndDatePicker;
         //active workbook
         Excel.Workbook activeWorkbook; 
@@ -55,15 +59,33 @@ namespace ExcelAddInEquipmentDatabase
                 if ((item.Label == worksheetconn) && (item.Label != dd_activeConnection.SelectedItem.Label))
                 {
                     dd_activeConnection.SelectedItem = item;
-                    sync_ribbon_with_activeconnection();
+                    sync_with_activeconnection();
                 }
             }
+        }
+        //returns the connection name of the active sheet 
+        private String activeSheet_connection()
+        {
+            Excel.Worksheet activeWorksheet = Globals.ThisAddIn.Application.ActiveSheet as Excel.Worksheet;
+            foreach (Excel.QueryTable oTable in activeWorksheet.QueryTables)
+            {
+                Excel.WorkbookConnection conn = oTable.WorkbookConnection;
+                return conn.Name.ToString();
+            }
+
+            foreach (Excel.ListObject oListobject in activeWorksheet.ListObjects)
+            {
+                Excel.QueryTable oTable = oListobject.QueryTable;
+                Excel.WorkbookConnection conn = oTable.WorkbookConnection;
+                return conn.Name.ToString();
+            }
+            return null;
         }
         /*  If the active connection changes than create a new instance of the procmngr
          *  =>Only when its a real connection (not refreshall mode)
          *  =>also load the "available" parameters from procmager back into the ribbon 
          */ 
-        private void sync_ribbon_with_activeconnection()
+        private void sync_with_activeconnection()
         {
             if (dd_activeConnection.SelectedItem.Label != "RefreshAll")
             {
@@ -81,7 +103,7 @@ namespace ExcelAddInEquipmentDatabase
                 }
             }
             //loads the available parameters back into the ribbon
-            cb_load_all_procparameters();
+            set_RibonToProcedureManager();
         }
 
         #region population of comboboxes (dynamic filtering)
@@ -185,22 +207,19 @@ namespace ExcelAddInEquipmentDatabase
                 }
             }
         }
-        private void cb_load_all_procparameters()
+        private void set_RibonToProcedureManager()
         {
             //set ribbon control values 
             cb_assets.Text = ProcMngr.assets.input ;
             cb_Lochierarchy.Text = ProcMngr.lochierarchy.input;
             cb_locations.Text = ProcMngr.locations.input;
-           // StartDatePicker.selectedDate = Convert.ToDateTime(ProcMngr.startDate.input);
-           // EndDatePicker.selectedDate = Convert.ToDateTime(ProcMngr.endDate.input);
-           // ProcMngr.daysBack.input;
             //set enabeld or disabled. 
-            cb_assets.Enabled = ProcMngr.assets.enabeld;
-            cb_Lochierarchy.Enabled = ProcMngr.lochierarchy.enabeld;
-            cb_locations.Enabled = ProcMngr.locations.enabeld;
-            btn_StartDate.Enabled = ProcMngr.startDate.enabeld;
-            btn_EndDate.Enabled = ProcMngr.endDate.enabeld;
-            btn_nDays.Enabled = ProcMngr.daysBack.enabeld;
+            cb_assets.Enabled = ProcMngr.assets.active;
+            cb_Lochierarchy.Enabled = ProcMngr.lochierarchy.active;
+            cb_locations.Enabled = ProcMngr.locations.active;
+            btn_StartDate.Enabled = ProcMngr.startDate.active;
+            btn_EndDate.Enabled = ProcMngr.endDate.active;
+            btn_nDays.Enabled = ProcMngr.daysBack.active;
         }
         #endregion
 
@@ -224,12 +243,12 @@ namespace ExcelAddInEquipmentDatabase
         //handel feedback from filter controls
         private void btn_StartDate_Click(object sender, RibbonControlEventArgs e)
         {
-           StartDatePicker = new dtPicker(ProcMngr.startDate);
+           if (StartDatePicker == null) StartDatePicker = new dtPicker(ProcMngr.startDate);
            StartDatePicker.Show();
         }
         private void btn_EndDate_Click(object sender, RibbonControlEventArgs e)
         {
-            EndDatePicker = new dtPicker(ProcMngr.endDate);
+            if (EndDatePicker == null) EndDatePicker = new dtPicker(ProcMngr.endDate);
             EndDatePicker.Show();
         }
         private void btn_nDays_Click(object sender, RibbonControlEventArgs e)
@@ -239,22 +258,19 @@ namespace ExcelAddInEquipmentDatabase
         private void cb_Lochierarchy_TextChanged(object sender, RibbonControlEventArgs e)
         {
             ProcMngr.lochierarchy.input = cb_Lochierarchy.Text;
-            ProcMngr.sync_with_ribbon();
         }
         private void cb_locations_TextChanged(object sender, RibbonControlEventArgs e)
         {
             ProcMngr.locations.input = cb_locations.Text;
-            ProcMngr.sync_with_ribbon();
         }
         private void cb_assets_TextChanged(object sender, RibbonControlEventArgs e)
         {
             ProcMngr.assets.input = cb_assets.Text;
-            ProcMngr.sync_with_ribbon();
         }
         //keeps the collection of connections up to date
         private void dd_activeConnection_SelectionChanged(object sender, RibbonControlEventArgs e)
         {
-            sync_ribbon_with_activeconnection();
+            sync_with_activeconnection();
         }
         //show connection manger of valid connection is selected
         private void btn_EditProcedure_Click(object sender, RibbonControlEventArgs e)
@@ -278,10 +294,14 @@ namespace ExcelAddInEquipmentDatabase
             }
             else
             {
-                ProcMngr.UpdateQuery();
+                ProcMngr.ProcMngrToActiveConnection();
                 foreach (var connection in activeWorkbook.Connections.Cast<Excel.WorkbookConnection>())
                 {
-                    if (connection.Name == dd_activeConnection.SelectedItem.Label) connection.Refresh();
+                    if (connection.Name == dd_activeConnection.SelectedItem.Label)
+                    {
+                        ProcMngr.ProcMngrToActiveConnection();
+                        connection.Refresh();
+                    }
                 }
             }
 
@@ -289,37 +309,15 @@ namespace ExcelAddInEquipmentDatabase
         //create tools instance when needed. (multible instances are allowed for now) 
         private void btn_AssetManager_Click(object sender, RibbonControlEventArgs e)
         {
-            //instance of asset manger 
-            AssetManager AssetMngr = new AssetManager();
+            if (AssetManager == null)  AssetMngr = new AssetManager();
             AssetMngr.Show();
         }
         private void btn_ConnectionManager_Click(object sender, RibbonControlEventArgs e)
         {
-            //intance of connectionmanger 
-            ConnectionManger ConnMng = new ConnectionManger();
+            if (ConnMng == null) ConnMng = new ConnectionManger();
             ConnMng.Show();
         }
         #endregion
 
-
-  
-
-        private String activeSheet_connection()
-        {
-            Excel.Worksheet activeWorksheet = Globals.ThisAddIn.Application.ActiveSheet as Excel.Worksheet;
-                foreach ( Excel.QueryTable oTable in activeWorksheet.QueryTables)
-                {
-                    Excel.WorkbookConnection conn = oTable.WorkbookConnection;
-                    return conn.Name.ToString();
-                }
-
-            foreach (Excel.ListObject oListobject in activeWorksheet.ListObjects)
-            {
-                Excel.QueryTable oTable = oListobject.QueryTable;
-                Excel.WorkbookConnection conn = oTable.WorkbookConnection;
-                return conn.Name.ToString();
-            }
-            return null;
-        }
     }
 }

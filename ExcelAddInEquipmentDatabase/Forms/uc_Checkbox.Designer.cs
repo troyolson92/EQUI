@@ -41,18 +41,20 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lbl_1.AutoSize = true;
-            this.lbl_1.Location = new System.Drawing.Point(33, 0);
+            this.lbl_1.Location = new System.Drawing.Point(32, 0);
+            this.lbl_1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl_1.Name = "lbl_1";
-            this.lbl_1.Size = new System.Drawing.Size(38, 23);
+            this.lbl_1.Size = new System.Drawing.Size(29, 23);
             this.lbl_1.TabIndex = 1;
             this.lbl_1.Text = "lbl_1";
             // 
             // rb_enable
             // 
             this.rb_enable.AutoSize = true;
-            this.rb_enable.Location = new System.Drawing.Point(3, 3);
+            this.rb_enable.Location = new System.Drawing.Point(2, 2);
+            this.rb_enable.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.rb_enable.Name = "rb_enable";
-            this.rb_enable.Size = new System.Drawing.Size(17, 16);
+            this.rb_enable.Size = new System.Drawing.Size(14, 13);
             this.rb_enable.TabIndex = 2;
             this.rb_enable.TabStop = true;
             this.rb_enable.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -66,9 +68,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.cb_1.AutoSize = true;
             this.cb_1.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.cb_1.Location = new System.Drawing.Point(77, 3);
+            this.cb_1.Location = new System.Drawing.Point(65, 2);
+            this.cb_1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.cb_1.Name = "cb_1";
-            this.cb_1.Size = new System.Drawing.Size(137, 17);
+            this.cb_1.Size = new System.Drawing.Size(176, 19);
             this.cb_1.TabIndex = 3;
             this.cb_1.UseVisualStyleBackColor = true;
             // 
@@ -84,22 +87,26 @@
             this.tableLayoutPanel1.Controls.Add(this.rb_enable, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.lbl_1, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.cb_1, 2, 0);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(2, 2);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(217, 23);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(243, 23);
             this.tableLayoutPanel1.TabIndex = 4;
             // 
             // uc_Checkbox
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.Controls.Add(this.tableLayoutPanel1);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.MaximumSize = new System.Drawing.Size(400, 30);
+            this.MinimumSize = new System.Drawing.Size(150, 30);
             this.Name = "uc_Checkbox";
-            this.Size = new System.Drawing.Size(230, 30);
+            this.Size = new System.Drawing.Size(248, 28);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
