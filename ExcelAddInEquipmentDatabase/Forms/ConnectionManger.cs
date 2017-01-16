@@ -138,8 +138,6 @@ namespace ExcelAddInEquipmentDatabase
         }
         private void cb_GADATA_procedures_fill()
         {
-            try
-            {
                 applData.StoredProceduresDataTable lPROCEDURES = new applData.StoredProceduresDataTable();
                 using (applDataTableAdapters.StoredProceduresTableAdapter adapter = new applDataTableAdapters.StoredProceduresTableAdapter())
                 {
@@ -147,32 +145,17 @@ namespace ExcelAddInEquipmentDatabase
                 }
                 var data = from a in lPROCEDURES
                            orderby a.ROUTINE_NAME descending
-                           select a.ROUTINE_NAME;
+                           select a.SPECIFIC_CATALOG + '.' + a.SPECIFIC_SCHEMA + '.' + a.ROUTINE_NAME;
 
                 cb_procedures.DataSource = data.Distinct().ToList();
-            }
-            catch (Exception ex)
-            {
-                cb_procedures.Text = "%";
-                Debug.WriteLine(ex.Message);
-            }
         }
         private void lb_GADATA_get_SpParams(SqlCommand cmd)
         {
             lb_procParms.Items.Clear();
-            string header = string.Format("{0,-50}   {1,30}\n", "pName", "pSqlDbType");
-            lb_procParms.Items.Add(header);
+            lb_procParms.Items.AddRange(new object[] { "ParameterNam","SqlDbType" });
             foreach (SqlParameter p in cmd.Parameters)
             {
-                try
-                {
-                    string item = string.Format("{0,-50}   {1,30}", p.ParameterName, p.SqlDbType);
-                    lb_procParms.Items.Add(item);
-                }
-                catch (Exception e)
-                {
-                    Debug.WriteLine(e.Message);
-                }
+                lb_procParms.Items.AddRange(new object[] { p.ParameterName, p.SqlDbType });
             }
         }
         private void cb_GADATA_procedures_SelectedIndexChanged(object sender, EventArgs e)

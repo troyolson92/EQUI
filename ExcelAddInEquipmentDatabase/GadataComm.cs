@@ -121,29 +121,10 @@ namespace ExcelAddInEquipmentDatabase
         {
             SqlCommand cmd = new SqlCommand(sp_name, Gadataconn);
             cmd.CommandType = CommandType.StoredProcedure;
-            try
-            {
                 Gadataconn.Open();
                 SqlCommandBuilder.DeriveParameters(cmd);
-                foreach (SqlParameter p in cmd.Parameters)
-                {
-                    try
-                    {
-                        //Debug.WriteLine("pName:{0} pSqlDbType: {1}", p.ParameterName, p.SqlDbType);
-                    }
-                    catch (Exception e)
-                    {
-                        Debug.WriteLine(e.Message);
-                    }
-                }
                 Gadataconn.Close();
                 return cmd;
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e.Message);
-                return cmd;
-            }
         }
 
         //connection To MX7
