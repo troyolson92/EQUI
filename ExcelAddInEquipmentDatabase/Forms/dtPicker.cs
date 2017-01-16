@@ -12,7 +12,7 @@ namespace ExcelAddInEquipmentDatabase
 {
     public partial class dtPicker : Form
     {
-        RibbonParameter _RibbonParameter;
+        //RibbonParameter _RibbonParameter;
 
         public dtPicker(RibbonParameter RibbonParameter)
         {
@@ -39,7 +39,7 @@ namespace ExcelAddInEquipmentDatabase
         private void dtPicker_Deactivate(object sender, EventArgs e)
         {
             //Debug.WriteLine("{0} should be set to: {1}", QueryParameter, this.dateTimePicker1.Value.ToString("yyyy-MM-dd hh:mm:ss"));
-            _RibbonParameter.input = dateTimePicker1.Value.ToString();
+            //_RibbonParameter.input = dateTimePicker1.Value.ToString();
             this.Hide();
         }
 

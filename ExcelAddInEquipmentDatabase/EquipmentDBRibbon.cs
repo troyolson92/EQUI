@@ -23,6 +23,8 @@ namespace ExcelAddInEquipmentDatabase
         //intance of datetimepickers;
         dtPicker StartDatePicker; 
         dtPicker EndDatePicker;
+        //active workbook
+        Excel.Workbook activeWorkbook; 
 
         private void EquipmentDBRibbon_Load(object sender, RibbonUIEventArgs e)
         {
@@ -31,13 +33,31 @@ namespace ExcelAddInEquipmentDatabase
             {
                 adapter.Fill(lASSETS);
             }
+            //populate with existing workbook connections
             dd_connections_update();
-
-
+            //set active workbook
+            activeWorkbook = Globals.ThisAddIn.Application.ActiveWorkbook as Excel.Workbook;
+            //fire event when sheets changes (set the active connection automaitcly)
+            activeWorkbook.SheetChange += activeWorkbook_SheetChange;
             //need to find out what sheet is active => and if i should set the active connection
-
+    
             //inital sync with connection
             //sync_ribbon_with_activeconnection();
+        }
+
+        //fires on sheetchanges and sets the active connection
+        void activeWorkbook_SheetChange(object Sh, Excel.Range Target)
+        {
+            dd_connections_update();
+            string worksheetconn = activeSheet_connection();
+            foreach (RibbonDropDownItem item in dd_activeConnection.Items)
+            {
+                if ((item.Label == worksheetconn) && (item.Label != dd_activeConnection.SelectedItem.Label))
+                {
+                    dd_activeConnection.SelectedItem = item;
+                    sync_ribbon_with_activeconnection();
+                }
+            }
         }
         /*  If the active connection changes than create a new instance of the procmngr
          *  =>Only when its a real connection (not refreshall mode)
@@ -56,6 +76,8 @@ namespace ExcelAddInEquipmentDatabase
                     ProcMngr.Close();
                     ProcMngr.Dispose();
                     ProcMngr = new StoredProcedureManger(dd_activeConnection.SelectedItem.Label);
+                    //keep it show for debugging 
+                    ProcMngr.Show();
                 }
             }
             //loads the available parameters back into the ribbon
@@ -280,26 +302,7 @@ namespace ExcelAddInEquipmentDatabase
         #endregion
 
 
-        //bs 
-        private void button1_Click(object sender, RibbonControlEventArgs e)
-        {
-            //ProcMngr.sync_with_ribbon();
-            dd_connections_update();
-            string worksheetconn = activeSheet_connection();
-            foreach (RibbonDropDownItem item in dd_activeConnection.Items)
-            {
-                if ((item.Label == worksheetconn) && (item.Label != dd_activeConnection.SelectedItem.Label))
-                {
-                    dd_activeConnection.SelectedItem = item;
-                    sync_ribbon_with_activeconnection();
-                }
-            }
-        }
-
-        private void button2_Click(object sender, RibbonControlEventArgs e)
-        {
-           // cb_load_all_procparameters();
-        }
+  
 
         private String activeSheet_connection()
         {
@@ -307,7 +310,6 @@ namespace ExcelAddInEquipmentDatabase
                 foreach ( Excel.QueryTable oTable in activeWorksheet.QueryTables)
                 {
                     Excel.WorkbookConnection conn = oTable.WorkbookConnection;
-                    Debug.WriteLine ("This sheet has {0} as its connection",conn.Name.ToString());
                     return conn.Name.ToString();
                 }
 
@@ -315,7 +317,6 @@ namespace ExcelAddInEquipmentDatabase
             {
                 Excel.QueryTable oTable = oListobject.QueryTable;
                 Excel.WorkbookConnection conn = oTable.WorkbookConnection;
-                Debug.WriteLine("This sheet has {0} as its connection", conn.Name.ToString());
                 return conn.Name.ToString();
             }
             return null;

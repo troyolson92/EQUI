@@ -35,27 +35,10 @@ namespace ExcelAddInEquipmentDatabase
             Excel.Sheets oSheets;
             Excel.Range oRng;
 
-            /*
-            Excel.Connections oConnections;
-            Excel.XlConnectionType oXLConnection;
-            Excel.ODBCConnection oODBCconnection;
-
-            Excel.ListObjects oListObjects;
-            Excel.ListObject oListObject;
-            */
             Excel.QueryTables oTables;
             Excel.QueryTable oTable;
             try
             {
-                //create Query string 
-                string SQLStr;
-                SQLStr = QueryCmd;
-                object aStrSQL = SQLStr;
-                //create connection string 
-
-                //conn.Name = storedProc;
-                object connection = ODBCconn;
-
                 // get existing sheets
                 oSheets = activeWorkbook.Sheets;
                 // add new sheet to sheets
@@ -64,22 +47,32 @@ namespace ExcelAddInEquipmentDatabase
                 oRng = oTemplateSheet.get_Range("A1");
                 //set name of new sheet
                 oTemplateSheet.Name = connectionName;
-
-                // Get the listobjects 
-                /*
-                    oListObjects = activeWorksheet.ListObjects;
-                    oListObject = oListObjects.AddEx();
-                    oListObject.Name = storedProc;
-                    oListObject.TableStyle = "";
-                  */
-
                 // get the QueryTables collection
                 oTables = oTemplateSheet.QueryTables;
-                // create a query table with the connection and SQL command
-                oTable = oTables.Add(connection, oRng, aStrSQL);
-                oTable.RefreshStyle = Excel.XlCellInsertionMode.xlInsertEntireRows;
-                oTable.Name = connectionName;
-                oTable.Refresh(false); //this failes but everthing worked? 
+                // create the workbook connection
+                activeWorkbook.Connections.Add2(connectionName, connectionName, ODBCconn, QueryCmd);
+
+                //add the query table
+                foreach (Excel.WorkbookConnection lconn in activeWorkbook.Connections)
+                {
+                    if (lconn.Name == connectionName)
+                    {
+                        oTable = oTables.Add(lconn, oRng);
+                        oTable.RefreshStyle = Excel.XlCellInsertionMode.xlInsertEntireRows;
+                        oTable.Name = connectionName;
+                        oTable.Refresh(false); //this failes but everthing worked? 
+
+                        /*
+                        Excel.ListObject oListobject = (Excel.ListObject)oTemplateSheet.ListObjects.AddEx(
+                        SourceType: Excel.XlListObjectSourceType.xlSrcRange,
+                        Source: oRng,
+                        XlListObjectHasHeaders: Excel.XlYesNoGuess.xlYes)
+                        ;
+
+                        oListobject.Name = "Test";
+                         */
+                    }
+                }
             }
             catch (Exception e)
             {
@@ -97,7 +90,6 @@ namespace ExcelAddInEquipmentDatabase
                 {
                     return connection;
                 }
-                Debug.WriteLine(connection.Name);
             }
             return null;
         }
@@ -111,7 +103,6 @@ namespace ExcelAddInEquipmentDatabase
                 {
                     case Excel.XlConnectionType.xlConnectionTypeODBC:
                         var ODBCconString = connection.ODBCConnection.Connection.ToString();
-                        Debug.WriteLine("ODBC Name: {0}",connection.Name);
                         lb_connections.Items.Add(connection.Name);
                         break;
                     default :
