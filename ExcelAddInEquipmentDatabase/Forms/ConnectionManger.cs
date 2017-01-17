@@ -23,7 +23,13 @@ namespace ExcelAddInEquipmentDatabase
         {
             InitializeComponent();
             lb_get_connections();
-            cb_GADATA_procedures_fill();
+        }
+
+        private void ConnectionManger_Shown(object sender, EventArgs e)
+        {
+            var _point = new System.Drawing.Point(Cursor.Position.X, Cursor.Position.Y);
+            Top = _point.Y;
+            Left = _point.X;
         }
 
         private void create_ODBC_connection(string QueryCmd, string ODBCconn, string connectionName )
@@ -121,24 +127,27 @@ namespace ExcelAddInEquipmentDatabase
         private void btn_Edit_Click(object sender, EventArgs e)
         {
             Excel.WorkbookConnection connection = get_Connection(lb_connections.GetItemText(lb_connections.SelectedItem));
-            connection.Name = "Newname";
-            lb_get_connections();
-        }
-        //GADATA link
-        private void btn_GADATA_Create_Click(object sender, EventArgs e)
-        {
-            if (cb_procedures.Text != "")
+            if (connection == null) return;
+            string sNewName = Microsoft.VisualBasic.Interaction.InputBox("Change connection name", string.Format("Edit: {0}",connection.Name), connection.Name, -1, -1);
+            if (sNewName != "") 
             {
-                string Query = "use gadata EXEC Volvo." + cb_procedures.Text.Trim();
-                string ODBCconn = @"ODBC;DSN=GADATA;Description= GADATA;UID=GADATA;PWD=GADATA987;APP=SQLFront;WSID=GNL1004ZCBQC2\\SDEBEUL;DATABASE=GADATA";
-                string ConnectionName = cb_procedures.Text.Trim();
-                create_ODBC_connection(Query, ODBCconn, ConnectionName);
+                try //catch because name might already exist
+                {
+                    connection.Name = sNewName;
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                }
             }
             lb_get_connections();
         }
-        private void cb_GADATA_procedures_fill()
+        //GADATA link
+        #region GADATA
+        private void tp_GADATA_Enter(object sender, EventArgs e)
         {
-                applData.StoredProceduresDataTable lPROCEDURES = new applData.StoredProceduresDataTable();
+            using (applData.StoredProceduresDataTable lPROCEDURES = new applData.StoredProceduresDataTable())
+            {
                 using (applDataTableAdapters.StoredProceduresTableAdapter adapter = new applDataTableAdapters.StoredProceduresTableAdapter())
                 {
                     adapter.Fill(lPROCEDURES);
@@ -147,22 +156,54 @@ namespace ExcelAddInEquipmentDatabase
                            orderby a.ROUTINE_NAME descending
                            select a.SPECIFIC_CATALOG + '.' + a.SPECIFIC_SCHEMA + '.' + a.ROUTINE_NAME;
 
-                cb_procedures.DataSource = data.Distinct().ToList();
+                cb_GADTA_procedures.DataSource = data.Distinct().ToList();
+            }
+        }
+
+        private void btn_GADATA_Create_Click(object sender, EventArgs e)
+        {
+            if (cb_GADTA_procedures.Text != "")
+            {
+                string Query = "use gadata EXEC Volvo." + cb_GADTA_procedures.Text.Trim();
+                string ODBCconn = @"ODBC;DSN=GADATA;Description= GADATA;UID=GADATA;PWD=GADATA987;APP=SQLFront;WSID=GNL1004ZCBQC2\\SDEBEUL;DATABASE=GADATA";
+                string ConnectionName = cb_GADTA_procedures.Text.Trim();
+                create_ODBC_connection(Query, ODBCconn, ConnectionName);
+            }
+            lb_get_connections();
         }
         private void lb_GADATA_get_SpParams(SqlCommand cmd)
         {
-            lb_procParms.Items.Clear();
-            lb_procParms.Items.AddRange(new object[] { "ParameterNam","SqlDbType" });
+            lb_GADATA_procParms.Items.Clear();
+            lb_GADATA_procParms.Items.AddRange(new object[] { "ParameterNam","SqlDbType" });
             foreach (SqlParameter p in cmd.Parameters)
             {
-                lb_procParms.Items.AddRange(new object[] { p.ParameterName, p.SqlDbType });
+                lb_GADATA_procParms.Items.AddRange(new object[] { p.ParameterName, p.SqlDbType });
             }
         }
         private void cb_GADATA_procedures_SelectedIndexChanged(object sender, EventArgs e)
         {
-            lb_GADATA_get_SpParams(lGadataComm.get_GADATA_sp_parameters(cb_procedures.Text));
+            lb_GADATA_get_SpParams(lGadataComm.get_GADATA_sp_parameters(cb_GADTA_procedures.Text));
         }
+        #endregion 
+
+        #region Maximo 7
         //Maximo7 link
+        private void tp_MX7_Enter(object sender, EventArgs e)
+        {
+            using (applData.QUERYSDataTable lQUERYS = new applData.QUERYSDataTable())
+            {
+                using (applDataTableAdapters.QUERYSTableAdapter adapter = new applDataTableAdapters.QUERYSTableAdapter())
+                {
+                    adapter.Fill(lQUERYS);
+                }
+                var data = from a in lQUERYS
+                           where a.SYSTEM == "MX7"
+                           orderby a.NAME descending
+                           select a.NAME;
+                cb_MX7_QueryNames.DataSource = data.Distinct().ToList();
+            }
+        }
+
         private void btn_MX7_create_Click(object sender, EventArgs e)
         {
             string Query = @"
@@ -176,10 +217,36 @@ namespace ExcelAddInEquipmentDatabase
             string ConnectionName = "MX7Test";
             create_ODBC_connection(Query, ODBCconn, ConnectionName);
         }
+
+        private void cb_MX7_QueryNames_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            lb_MX7_QueryDetails.Items.Clear();
+            lb_MX7_QueryDetails.Items.Add(String.Format("{0}     {1}", "ParmName", "DefaultValue"));
+            foreach (OracleQueryParms Parm in oracle_get_QueryParms_from_GADATA(cb_MX7_QueryNames.Text, "MX7"))
+            {
+                lb_MX7_QueryDetails.Items.Add(String.Format("{0}     {1}", Parm.name, Parm.value));
+            }
+        }
+        #endregion
+
+        #region MAXIMO3
         //Maximo3 link
+        private void tp_MX3_Enter(object sender, EventArgs e)
+        {
+            applData.QUERYSDataTable lQUERYS = new applData.QUERYSDataTable();
+            using (applDataTableAdapters.QUERYSTableAdapter adapter = new applDataTableAdapters.QUERYSTableAdapter())
+            {
+                adapter.Fill(lQUERYS);
+            }
+            var data = from a in lQUERYS
+                       where a.SYSTEM == "MX3"
+                       orderby a.NAME descending
+                       select a.NAME;
+            cb_MX3_QueryNames.DataSource = data.Distinct().ToList();
+        }
+
         private void btn_MX3_create_Click(object sender, EventArgs e)
         {
-
             // NOT WORKING YET 
             string Query = @"
                 Select LDKEY, STATUS, WORKTYPE, DESCRIPTION, LOCATION, WONUM, WOPM1, REPORTDATE 
@@ -193,12 +260,51 @@ namespace ExcelAddInEquipmentDatabase
             create_ODBC_connection(Query, ODBCconn, ConnectionName);
         }
 
-        private void ConnectionManger_Shown(object sender, EventArgs e)
+        private void cb_MX3_QueryNames_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var _point = new System.Drawing.Point(Cursor.Position.X, Cursor.Position.Y);
-            Top = _point.Y;
-            Left = _point.X;
+            lb_MX3_QueryDetails.Items.Clear();
+            lb_MX3_QueryDetails.Items.Add(String.Format("{0}     {1}", "ParmName", "DefaultValue"));
+            foreach (OracleQueryParms Parm in oracle_get_QueryParms_from_GADATA(cb_MX3_QueryNames.Text, "MX3"))
+            {
+                lb_MX3_QueryDetails.Items.Add(String.Format("{0}     {1}", Parm.name, Parm.value));
+            }
         }
 
+        #endregion
+        private List<OracleQueryParms> oracle_get_QueryParms_from_GADATA(string QueryName, string System)
+        {
+            string Query;
+            using (applData.QUERYSDataTable lQUERYS = new applData.QUERYSDataTable())
+            {
+                using (applDataTableAdapters.QUERYSTableAdapter adapter = new applDataTableAdapters.QUERYSTableAdapter())
+                {
+                    adapter.Fill(lQUERYS);
+                }
+                Query = (from a in lQUERYS
+                         where a.SYSTEM == System && a.NAME == QueryName
+                         select a.QUERY).First().ToString();
+            }
+            //gets part of the query containing the params
+            List<string> ParmLines = Query.ToUpper().Split(new string[] { "SELECT" }, StringSplitOptions.None)[0].Trim()
+                                                    .Split(new string[] { "DEFINE" }, StringSplitOptions.None).ToList();
+
+            List<OracleQueryParms> _parmList = new List<OracleQueryParms>();
+            foreach (string parm in ParmLines)
+            {
+                if (parm.Contains("="))
+                {
+                    string ParmName = parm.Split('=')[0].Trim();
+                    string ParmValue = parm.Split('=')[1].Trim().Split('\'')[1];
+                    _parmList.Add(new OracleQueryParms { name = ParmName, value = ParmValue });
+                }
+            }
+            return _parmList;
+        }
+
+    }
+    public class OracleQueryParms
+    {
+        public string name { get; set; }
+        public string value { get; set; }
     }
 }

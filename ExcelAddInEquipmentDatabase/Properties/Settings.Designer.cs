@@ -33,5 +33,16 @@ namespace ExcelAddInEquipmentDatabase.Properties {
                 return ((string)(this["GADATAConnectionString"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=sqla001.gen.volvocars.net;Initial Catalog=GADATA;Persist Security Inf" +
+            "o=True;User ID=GADATA;Password=GADATA987")]
+        public string GADATAConnectionString1 {
+            get {
+                return ((string)(this["GADATAConnectionString1"]));
+            }
+        }
     }
 }
