@@ -254,6 +254,7 @@
       <DependentUpon>uc_Inputbox.cs</DependentUpon>
     </Compile>
     <Compile Include="GadataComm.cs" />
+    <Compile Include="MaximoComm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

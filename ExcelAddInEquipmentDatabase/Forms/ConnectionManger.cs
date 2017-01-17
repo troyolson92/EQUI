@@ -18,6 +18,8 @@ namespace ExcelAddInEquipmentDatabase
     {
         //connection to gadata
         GadataComm lGadataComm = new GadataComm();
+        //connection to maxim 
+        MaximoComm LMaximoComm = new MaximoComm();
 
         public ConnectionManger()
         {
@@ -32,7 +34,7 @@ namespace ExcelAddInEquipmentDatabase
             Left = _point.X;
         }
 
-        private void create_ODBC_connection(string QueryCmd, string ODBCconn, string connectionName )
+        private void create_ODBC_connection(string QueryCmd, string ODBCconn, string connectionName)
         {
             Excel._Workbook activeWorkbook = Globals.ThisAddIn.Application.ActiveWorkbook as Excel.Workbook;
             Excel.Worksheet activeWorksheet = Globals.ThisAddIn.Application.ActiveSheet as Excel.Worksheet;
@@ -88,7 +90,7 @@ namespace ExcelAddInEquipmentDatabase
 
         //existing connections
         public Excel.WorkbookConnection get_Connection(string connectionname)
-        { 
+        {
             Excel._Workbook activeWorkbook = Globals.ThisAddIn.Application.ActiveWorkbook as Excel.Workbook;
             foreach (var connection in activeWorkbook.Connections.Cast<Excel.WorkbookConnection>())
             {
@@ -111,7 +113,7 @@ namespace ExcelAddInEquipmentDatabase
                         var ODBCconString = connection.ODBCConnection.Connection.ToString();
                         lb_connections.Items.Add(connection.Name);
                         break;
-                    default :
+                    default:
                         Debug.WriteLine("connection tpye not supported");
                         break;
                 }
@@ -128,8 +130,8 @@ namespace ExcelAddInEquipmentDatabase
         {
             Excel.WorkbookConnection connection = get_Connection(lb_connections.GetItemText(lb_connections.SelectedItem));
             if (connection == null) return;
-            string sNewName = Microsoft.VisualBasic.Interaction.InputBox("Change connection name", string.Format("Edit: {0}",connection.Name), connection.Name, -1, -1);
-            if (sNewName != "") 
+            string sNewName = Microsoft.VisualBasic.Interaction.InputBox("Change connection name", string.Format("Edit: {0}", connection.Name), connection.Name, -1, -1);
+            if (sNewName != "")
             {
                 try //catch because name might already exist
                 {
@@ -174,7 +176,7 @@ namespace ExcelAddInEquipmentDatabase
         private void lb_GADATA_get_SpParams(SqlCommand cmd)
         {
             lb_GADATA_procParms.Items.Clear();
-            lb_GADATA_procParms.Items.AddRange(new object[] { "ParameterNam","SqlDbType" });
+            lb_GADATA_procParms.Items.AddRange(new object[] { "ParameterNam", "SqlDbType" });
             foreach (SqlParameter p in cmd.Parameters)
             {
                 lb_GADATA_procParms.Items.AddRange(new object[] { p.ParameterName, p.SqlDbType });
@@ -184,7 +186,7 @@ namespace ExcelAddInEquipmentDatabase
         {
             lb_GADATA_get_SpParams(lGadataComm.get_GADATA_sp_parameters(cb_GADTA_procedures.Text));
         }
-        #endregion 
+        #endregion
 
         #region Maximo 7
         //Maximo7 link
@@ -222,7 +224,7 @@ namespace ExcelAddInEquipmentDatabase
         {
             lb_MX7_QueryDetails.Items.Clear();
             lb_MX7_QueryDetails.Items.Add(String.Format("{0}     {1}", "ParmName", "DefaultValue"));
-            foreach (OracleQueryParms Parm in oracle_get_QueryParms_from_GADATA(cb_MX7_QueryNames.Text, "MX7"))
+            foreach (OracleQueryParms Parm in LMaximoComm.oracle_get_QueryParms_from_GADATA(cb_MX7_QueryNames.Text, "MX7"))
             {
                 lb_MX7_QueryDetails.Items.Add(String.Format("{0}     {1}", Parm.name, Parm.value));
             }
@@ -264,47 +266,11 @@ namespace ExcelAddInEquipmentDatabase
         {
             lb_MX3_QueryDetails.Items.Clear();
             lb_MX3_QueryDetails.Items.Add(String.Format("{0}     {1}", "ParmName", "DefaultValue"));
-            foreach (OracleQueryParms Parm in oracle_get_QueryParms_from_GADATA(cb_MX3_QueryNames.Text, "MX3"))
+            foreach (OracleQueryParms Parm in LMaximoComm.oracle_get_QueryParms_from_GADATA(cb_MX3_QueryNames.Text, "MX3"))
             {
                 lb_MX3_QueryDetails.Items.Add(String.Format("{0}     {1}", Parm.name, Parm.value));
             }
         }
-
         #endregion
-        private List<OracleQueryParms> oracle_get_QueryParms_from_GADATA(string QueryName, string System)
-        {
-            string Query;
-            using (applData.QUERYSDataTable lQUERYS = new applData.QUERYSDataTable())
-            {
-                using (applDataTableAdapters.QUERYSTableAdapter adapter = new applDataTableAdapters.QUERYSTableAdapter())
-                {
-                    adapter.Fill(lQUERYS);
-                }
-                Query = (from a in lQUERYS
-                         where a.SYSTEM == System && a.NAME == QueryName
-                         select a.QUERY).First().ToString();
-            }
-            //gets part of the query containing the params
-            List<string> ParmLines = Query.ToUpper().Split(new string[] { "SELECT" }, StringSplitOptions.None)[0].Trim()
-                                                    .Split(new string[] { "DEFINE" }, StringSplitOptions.None).ToList();
-
-            List<OracleQueryParms> _parmList = new List<OracleQueryParms>();
-            foreach (string parm in ParmLines)
-            {
-                if (parm.Contains("="))
-                {
-                    string ParmName = parm.Split('=')[0].Trim();
-                    string ParmValue = parm.Split('=')[1].Trim().Split('\'')[1];
-                    _parmList.Add(new OracleQueryParms { name = ParmName, value = ParmValue });
-                }
-            }
-            return _parmList;
-        }
-
-    }
-    public class OracleQueryParms
-    {
-        public string name { get; set; }
-        public string value { get; set; }
     }
 }
