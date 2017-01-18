@@ -16,6 +16,11 @@ namespace ExcelAddInEquipmentDatabase
         SqlConnection Gadataconn = new SqlConnection("user id=GADATA; password=GADATA987; server=SQLA001.gen.volvocars.net;" +
                                                       "Trusted_Connection=no; database=gadata; connection timeout=30");
 
+        public string GADATAconnectionString
+        {
+            get { return @"ODBC;DSN=GADATA;Description= GADATA;UID=GADATA;PWD=GADATA987;APP=SQLFront;WSID=GNL1004ZCBQC2\\SDEBEUL;DATABASE=GADATA"; }
+        }
+
         public void BulkCopyToGadata(string as_schema, DataTable adt_table, string as_destination)
         {
             {

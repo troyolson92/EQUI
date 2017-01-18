@@ -19,7 +19,7 @@ namespace ExcelAddInEquipmentDatabase
         //connection to gadata
         GadataComm lGadataComm = new GadataComm();
         //connection to maxim 
-        MaximoComm LMaximoComm = new MaximoComm();
+        MaximoComm lMaximoComm = new MaximoComm();
 
         public ConnectionManger()
         {
@@ -167,7 +167,7 @@ namespace ExcelAddInEquipmentDatabase
             if (cb_GADTA_procedures.Text != "")
             {
                 string Query = "use gadata EXEC Volvo." + cb_GADTA_procedures.Text.Trim();
-                string ODBCconn = @"ODBC;DSN=GADATA;Description= GADATA;UID=GADATA;PWD=GADATA987;APP=SQLFront;WSID=GNL1004ZCBQC2\\SDEBEUL;DATABASE=GADATA";
+                string ODBCconn = lGadataComm.GADATAconnectionString; 
                 string ConnectionName = cb_GADTA_procedures.Text.Trim();
                 create_ODBC_connection(Query, ODBCconn, ConnectionName);
             }
@@ -208,15 +208,14 @@ namespace ExcelAddInEquipmentDatabase
 
         private void btn_MX7_create_Click(object sender, EventArgs e)
         {
-            string Query = @"
-                Select STATUS, WORKTYPE, DESCRIPTION, LOCATION, WONUM, REPORTDATE 
-                from MAXIMO.WORKORDER WORKORDER 
-                where 
-                (WORKORDER.location LIKE '5310%') 
-                order by REPORTDATE
-                    ";
-            string ODBCconn = @"ODBC;DSN=Max;Description= MX7;UID=BGASTHUY;PWD=BGASTHUY$123;";
-            string ConnectionName = "MX7Test";
+            string Query;
+          using(StoredProcedureManger ProcMngr = new StoredProcedureManger("MX7"))
+          {
+              ProcMngr.MX7_ActiveConnectionToProcMngr(lMaximoComm.oracle_get_QueryParms_from_GADATA(cb_MX7_QueryNames.Text, "MX7"), "It does not exist");
+              Query = ProcMngr.MX7_ProcMngrToActiveConnection(lMaximoComm.oracle_get_QueryTemplate_from_GADATA(cb_MX7_QueryNames.Text, "MX7"));
+          }
+            string ODBCconn = lMaximoComm.MX7connectionString;
+            string ConnectionName = cb_MX7_QueryNames.Text;
             create_ODBC_connection(Query, ODBCconn, ConnectionName);
         }
 
@@ -224,9 +223,9 @@ namespace ExcelAddInEquipmentDatabase
         {
             lb_MX7_QueryDetails.Items.Clear();
             lb_MX7_QueryDetails.Items.Add(String.Format("{0}     {1}", "ParmName", "DefaultValue"));
-            foreach (OracleQueryParms Parm in LMaximoComm.oracle_get_QueryParms_from_GADATA(cb_MX7_QueryNames.Text, "MX7"))
+            foreach (OracleQueryParm Parm in lMaximoComm.oracle_get_QueryParms_from_GADATA(cb_MX7_QueryNames.Text, "MX7"))
             {
-                lb_MX7_QueryDetails.Items.Add(String.Format("{0}     {1}", Parm.name, Parm.value));
+                lb_MX7_QueryDetails.Items.Add(String.Format("{0}     {1}", Parm.ParameterName, Parm.Defaultvalue));
             }
         }
         #endregion
@@ -266,9 +265,9 @@ namespace ExcelAddInEquipmentDatabase
         {
             lb_MX3_QueryDetails.Items.Clear();
             lb_MX3_QueryDetails.Items.Add(String.Format("{0}     {1}", "ParmName", "DefaultValue"));
-            foreach (OracleQueryParms Parm in LMaximoComm.oracle_get_QueryParms_from_GADATA(cb_MX3_QueryNames.Text, "MX3"))
+            foreach (OracleQueryParm Parm in lMaximoComm.oracle_get_QueryParms_from_GADATA(cb_MX3_QueryNames.Text, "MX3"))
             {
-                lb_MX3_QueryDetails.Items.Add(String.Format("{0}     {1}", Parm.name, Parm.value));
+                lb_MX3_QueryDetails.Items.Add(String.Format("{0}     {1}", Parm.ParameterName, Parm.Defaultvalue));
             }
         }
         #endregion

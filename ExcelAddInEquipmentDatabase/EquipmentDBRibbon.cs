@@ -16,6 +16,8 @@ namespace ExcelAddInEquipmentDatabase
     {
         //connection to gadata
         GadataComm lGadataComm = new GadataComm();
+        //connection to maximo
+        MaximoComm lMaximoComm = new MaximoComm();
         //local Asset data instance
         applData.ASSETSDataTable lASSETS = new applData.ASSETSDataTable();
         //procedure manager instance 
@@ -304,12 +306,12 @@ namespace ExcelAddInEquipmentDatabase
             }
             else
             {
-                ProcMngr.ProcMngrToActiveConnection();
+                ProcMngr.GADATA_ProcMngrToActiveConnection();
                 foreach (var connection in activeWorkbook.Connections.Cast<Excel.WorkbookConnection>())
                 {
                     if (connection.Name == dd_activeConnection.SelectedItem.Label)
                     {
-                        ProcMngr.ProcMngrToActiveConnection();
+                        ProcMngr.GADATA_ProcMngrToActiveConnection();
                         connection.Refresh();
                     }
                 }
@@ -328,6 +330,19 @@ namespace ExcelAddInEquipmentDatabase
             ConnMng.Show();
         }
         #endregion
+
+        private void button1_Click(object sender, RibbonControlEventArgs e)
+        {
+            //debug
+            ProcMngr = new StoredProcedureManger("");
+            ProcMngr.MX7_ActiveConnectionToProcMngr(lMaximoComm.oracle_get_QueryParms_from_GADATA("WoDetails", "MX7"), "");
+            ProcMngr.Show();
+        }
+
+        private void button2_Click(object sender, RibbonControlEventArgs e)
+        {
+            ProcMngr.MX7_ProcMngrToActiveConnection(lMaximoComm.oracle_get_QueryTemplate_from_GADATA("WoDetails", "MX7"));
+        }
 
     }
 }
