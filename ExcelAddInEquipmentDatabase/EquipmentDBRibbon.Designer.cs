@@ -52,7 +52,7 @@
             this.btn_nDays = this.Factory.CreateRibbonButton();
             this.proc_parameters = this.Factory.CreateRibbonGroup();
             this.btn_AssetManager = this.Factory.CreateRibbonButton();
-            this.button1 = this.Factory.CreateRibbonButton();
+            this.dd_preselect = this.Factory.CreateRibbonDropDown();
             this.tab1.SuspendLayout();
             this.rib2.SuspendLayout();
             this.group2.SuspendLayout();
@@ -77,8 +77,8 @@
             // 
             this.group2.Items.Add(this.btn_Query);
             this.group2.Items.Add(this.separator1);
-            this.group2.Items.Add(this.btn_ConnectionManager);
             this.group2.Items.Add(this.dd_activeConnection);
+            this.group2.Items.Add(this.dd_preselect);
             this.group2.Items.Add(this.btn_EditProcedure);
             this.group2.Label = "Connection Manager";
             this.group2.Name = "group2";
@@ -108,12 +108,16 @@
             // 
             this.dd_activeConnection.Label = "ActiveConn";
             this.dd_activeConnection.Name = "dd_activeConnection";
+            this.dd_activeConnection.OfficeImageId = "OrganizationChartSelectLevel";
+            this.dd_activeConnection.ShowImage = true;
             this.dd_activeConnection.SelectionChanged += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.dd_activeConnection_SelectionChanged);
             // 
             // btn_EditProcedure
             // 
             this.btn_EditProcedure.Label = "Procedure parameters";
             this.btn_EditProcedure.Name = "btn_EditProcedure";
+            this.btn_EditProcedure.OfficeImageId = "SmartArtInsert";
+            this.btn_EditProcedure.ShowImage = true;
             this.btn_EditProcedure.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_EditProcedure_Click);
             // 
             // AssetManager
@@ -188,8 +192,8 @@
             // 
             // proc_parameters
             // 
+            this.proc_parameters.Items.Add(this.btn_ConnectionManager);
             this.proc_parameters.Items.Add(this.btn_AssetManager);
-            this.proc_parameters.Items.Add(this.button1);
             this.proc_parameters.Name = "proc_parameters";
             // 
             // btn_AssetManager
@@ -200,10 +204,13 @@
             this.btn_AssetManager.ShowImage = true;
             this.btn_AssetManager.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_AssetManager_Click);
             // 
-            // button1
+            // dd_preselect
             // 
-            this.button1.Label = "TEST";
-            this.button1.Name = "button1";
+            this.dd_preselect.Enabled = false;
+            this.dd_preselect.Label = "uQuery";
+            this.dd_preselect.Name = "dd_preselect";
+            this.dd_preselect.OfficeImageId = "ImportMoreMenu";
+            this.dd_preselect.ShowImage = true;
             // 
             // EquipmentDBRibbon
             // 
@@ -245,7 +252,7 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_nDays;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_EditProcedure;
         internal Microsoft.Office.Tools.Ribbon.RibbonDropDown dd_activeConnection;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton button1;
+        internal Microsoft.Office.Tools.Ribbon.RibbonDropDown dd_preselect;
     }
 
     partial class ThisRibbonCollection

@@ -31,26 +31,29 @@
             this.tabcontainer = new System.Windows.Forms.TabControl();
             this.tp_connections = new System.Windows.Forms.TabPage();
             this.btn_Delete = new System.Windows.Forms.Button();
-            this.btn_Edit = new System.Windows.Forms.Button();
             this.lb_connections = new System.Windows.Forms.ListBox();
             this.tp_GADATA = new System.Windows.Forms.TabPage();
-            this.lb_GADATA_procParms = new System.Windows.Forms.ListBox();
             this.label2 = new System.Windows.Forms.Label();
             this.btn_GADATA_Create = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.cb_GADTA_procedures = new System.Windows.Forms.ComboBox();
             this.tp_MX7 = new System.Windows.Forms.TabPage();
-            this.lb_MX7_QueryDetails = new System.Windows.Forms.ListBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.cb_MX7_QueryNames = new System.Windows.Forms.ComboBox();
             this.btn_MX7_create = new System.Windows.Forms.Button();
             this.tp_MX3 = new System.Windows.Forms.TabPage();
-            this.btn_MX3_create = new System.Windows.Forms.Button();
-            this.lb_MX3_QueryDetails = new System.Windows.Forms.ListBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.cb_MX3_QueryNames = new System.Windows.Forms.ComboBox();
+            this.btn_MX3_create = new System.Windows.Forms.Button();
+            this.lv_GADATA_procParms = new System.Windows.Forms.ListView();
+            this.lv_MX7_procParms = new System.Windows.Forms.ListView();
+            this.lv_MX3_procParms = new System.Windows.Forms.ListView();
+            this.btn_MX7_edit = new System.Windows.Forms.Button();
+            this.btn_MX7_new = new System.Windows.Forms.Button();
+            this.btn_MX3_new = new System.Windows.Forms.Button();
+            this.btn_MX3_edit = new System.Windows.Forms.Button();
             this.tabcontainer.SuspendLayout();
             this.tp_connections.SuspendLayout();
             this.tp_GADATA.SuspendLayout();
@@ -77,7 +80,6 @@
             // tp_connections
             // 
             this.tp_connections.Controls.Add(this.btn_Delete);
-            this.tp_connections.Controls.Add(this.btn_Edit);
             this.tp_connections.Controls.Add(this.lb_connections);
             this.tp_connections.Location = new System.Drawing.Point(4, 22);
             this.tp_connections.Margin = new System.Windows.Forms.Padding(2);
@@ -91,7 +93,7 @@
             // btn_Delete
             // 
             this.btn_Delete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn_Delete.Location = new System.Drawing.Point(302, 38);
+            this.btn_Delete.Location = new System.Drawing.Point(303, 14);
             this.btn_Delete.Margin = new System.Windows.Forms.Padding(2);
             this.btn_Delete.Name = "btn_Delete";
             this.btn_Delete.Size = new System.Drawing.Size(56, 19);
@@ -99,18 +101,6 @@
             this.btn_Delete.Text = "Delete";
             this.btn_Delete.UseVisualStyleBackColor = true;
             this.btn_Delete.Click += new System.EventHandler(this.btn_Delete_Click);
-            // 
-            // btn_Edit
-            // 
-            this.btn_Edit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn_Edit.Location = new System.Drawing.Point(302, 14);
-            this.btn_Edit.Margin = new System.Windows.Forms.Padding(2);
-            this.btn_Edit.Name = "btn_Edit";
-            this.btn_Edit.Size = new System.Drawing.Size(56, 19);
-            this.btn_Edit.TabIndex = 11;
-            this.btn_Edit.Text = "Edit";
-            this.btn_Edit.UseVisualStyleBackColor = true;
-            this.btn_Edit.Click += new System.EventHandler(this.btn_Edit_Click);
             // 
             // lb_connections
             // 
@@ -126,7 +116,7 @@
             // 
             // tp_GADATA
             // 
-            this.tp_GADATA.Controls.Add(this.lb_GADATA_procParms);
+            this.tp_GADATA.Controls.Add(this.lv_GADATA_procParms);
             this.tp_GADATA.Controls.Add(this.label2);
             this.tp_GADATA.Controls.Add(this.btn_GADATA_Create);
             this.tp_GADATA.Controls.Add(this.label1);
@@ -140,19 +130,6 @@
             this.tp_GADATA.Text = "New Gadata";
             this.tp_GADATA.UseVisualStyleBackColor = true;
             this.tp_GADATA.Enter += new System.EventHandler(this.tp_GADATA_Enter);
-            // 
-            // lb_GADATA_procParms
-            // 
-            this.lb_GADATA_procParms.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lb_GADATA_procParms.FormattingEnabled = true;
-            this.lb_GADATA_procParms.Location = new System.Drawing.Point(15, 58);
-            this.lb_GADATA_procParms.Margin = new System.Windows.Forms.Padding(2);
-            this.lb_GADATA_procParms.Name = "lb_GADATA_procParms";
-            this.lb_GADATA_procParms.ScrollAlwaysVisible = true;
-            this.lb_GADATA_procParms.Size = new System.Drawing.Size(342, 147);
-            this.lb_GADATA_procParms.TabIndex = 4;
             // 
             // label2
             // 
@@ -200,7 +177,9 @@
             // 
             // tp_MX7
             // 
-            this.tp_MX7.Controls.Add(this.lb_MX7_QueryDetails);
+            this.tp_MX7.Controls.Add(this.btn_MX7_new);
+            this.tp_MX7.Controls.Add(this.btn_MX7_edit);
+            this.tp_MX7.Controls.Add(this.lv_MX7_procParms);
             this.tp_MX7.Controls.Add(this.label3);
             this.tp_MX7.Controls.Add(this.label4);
             this.tp_MX7.Controls.Add(this.cb_MX7_QueryNames);
@@ -214,19 +193,6 @@
             this.tp_MX7.Text = "New_Maximo7";
             this.tp_MX7.UseVisualStyleBackColor = true;
             this.tp_MX7.Enter += new System.EventHandler(this.tp_MX7_Enter);
-            // 
-            // lb_MX7_QueryDetails
-            // 
-            this.lb_MX7_QueryDetails.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lb_MX7_QueryDetails.FormattingEnabled = true;
-            this.lb_MX7_QueryDetails.Location = new System.Drawing.Point(4, 61);
-            this.lb_MX7_QueryDetails.Margin = new System.Windows.Forms.Padding(2);
-            this.lb_MX7_QueryDetails.Name = "lb_MX7_QueryDetails";
-            this.lb_MX7_QueryDetails.ScrollAlwaysVisible = true;
-            this.lb_MX7_QueryDetails.Size = new System.Drawing.Size(342, 147);
-            this.lb_MX7_QueryDetails.TabIndex = 8;
             // 
             // label3
             // 
@@ -274,7 +240,9 @@
             // 
             // tp_MX3
             // 
-            this.tp_MX3.Controls.Add(this.lb_MX3_QueryDetails);
+            this.tp_MX3.Controls.Add(this.btn_MX3_new);
+            this.tp_MX3.Controls.Add(this.btn_MX3_edit);
+            this.tp_MX3.Controls.Add(this.lv_MX3_procParms);
             this.tp_MX3.Controls.Add(this.label5);
             this.tp_MX3.Controls.Add(this.label6);
             this.tp_MX3.Controls.Add(this.cb_MX3_QueryNames);
@@ -288,31 +256,6 @@
             this.tp_MX3.Text = "New_Maximo3";
             this.tp_MX3.UseVisualStyleBackColor = true;
             this.tp_MX3.Enter += new System.EventHandler(this.tp_MX3_Enter);
-            // 
-            // btn_MX3_create
-            // 
-            this.btn_MX3_create.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn_MX3_create.Location = new System.Drawing.Point(300, 224);
-            this.btn_MX3_create.Margin = new System.Windows.Forms.Padding(2);
-            this.btn_MX3_create.Name = "btn_MX3_create";
-            this.btn_MX3_create.Size = new System.Drawing.Size(56, 19);
-            this.btn_MX3_create.TabIndex = 4;
-            this.btn_MX3_create.Text = "Create";
-            this.btn_MX3_create.UseVisualStyleBackColor = true;
-            this.btn_MX3_create.Click += new System.EventHandler(this.btn_MX3_create_Click);
-            // 
-            // lb_MX3_QueryDetails
-            // 
-            this.lb_MX3_QueryDetails.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lb_MX3_QueryDetails.FormattingEnabled = true;
-            this.lb_MX3_QueryDetails.Location = new System.Drawing.Point(13, 64);
-            this.lb_MX3_QueryDetails.Margin = new System.Windows.Forms.Padding(2);
-            this.lb_MX3_QueryDetails.Name = "lb_MX3_QueryDetails";
-            this.lb_MX3_QueryDetails.ScrollAlwaysVisible = true;
-            this.lb_MX3_QueryDetails.Size = new System.Drawing.Size(342, 147);
-            this.lb_MX3_QueryDetails.TabIndex = 12;
             // 
             // label5
             // 
@@ -346,6 +289,99 @@
             this.cb_MX3_QueryNames.TabIndex = 9;
             this.cb_MX3_QueryNames.SelectedIndexChanged += new System.EventHandler(this.cb_MX3_QueryNames_SelectedIndexChanged);
             // 
+            // btn_MX3_create
+            // 
+            this.btn_MX3_create.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btn_MX3_create.Location = new System.Drawing.Point(300, 224);
+            this.btn_MX3_create.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_MX3_create.Name = "btn_MX3_create";
+            this.btn_MX3_create.Size = new System.Drawing.Size(56, 19);
+            this.btn_MX3_create.TabIndex = 4;
+            this.btn_MX3_create.Text = "Create";
+            this.btn_MX3_create.UseVisualStyleBackColor = true;
+            this.btn_MX3_create.Click += new System.EventHandler(this.btn_MX3_create_Click);
+            // 
+            // lv_GADATA_procParms
+            // 
+            this.lv_GADATA_procParms.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lv_GADATA_procParms.Location = new System.Drawing.Point(5, 47);
+            this.lv_GADATA_procParms.Name = "lv_GADATA_procParms";
+            this.lv_GADATA_procParms.Size = new System.Drawing.Size(346, 166);
+            this.lv_GADATA_procParms.TabIndex = 5;
+            this.lv_GADATA_procParms.UseCompatibleStateImageBehavior = false;
+            // 
+            // lv_MX7_procParms
+            // 
+            this.lv_MX7_procParms.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lv_MX7_procParms.Location = new System.Drawing.Point(8, 53);
+            this.lv_MX7_procParms.Name = "lv_MX7_procParms";
+            this.lv_MX7_procParms.Size = new System.Drawing.Size(346, 166);
+            this.lv_MX7_procParms.TabIndex = 8;
+            this.lv_MX7_procParms.UseCompatibleStateImageBehavior = false;
+            // 
+            // lv_MX3_procParms
+            // 
+            this.lv_MX3_procParms.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lv_MX3_procParms.Location = new System.Drawing.Point(8, 53);
+            this.lv_MX3_procParms.Name = "lv_MX3_procParms";
+            this.lv_MX3_procParms.Size = new System.Drawing.Size(346, 166);
+            this.lv_MX3_procParms.TabIndex = 12;
+            this.lv_MX3_procParms.UseCompatibleStateImageBehavior = false;
+            // 
+            // btn_MX7_edit
+            // 
+            this.btn_MX7_edit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btn_MX7_edit.Location = new System.Drawing.Point(8, 222);
+            this.btn_MX7_edit.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_MX7_edit.Name = "btn_MX7_edit";
+            this.btn_MX7_edit.Size = new System.Drawing.Size(56, 19);
+            this.btn_MX7_edit.TabIndex = 9;
+            this.btn_MX7_edit.Text = "Edit";
+            this.btn_MX7_edit.UseVisualStyleBackColor = true;
+            this.btn_MX7_edit.Click += new System.EventHandler(this.btn_MX7_edit_Click);
+            // 
+            // btn_MX7_new
+            // 
+            this.btn_MX7_new.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btn_MX7_new.Location = new System.Drawing.Point(68, 222);
+            this.btn_MX7_new.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_MX7_new.Name = "btn_MX7_new";
+            this.btn_MX7_new.Size = new System.Drawing.Size(107, 19);
+            this.btn_MX7_new.TabIndex = 10;
+            this.btn_MX7_new.Text = "Upload new Query";
+            this.btn_MX7_new.UseVisualStyleBackColor = true;
+            this.btn_MX7_new.Click += new System.EventHandler(this.btn_MX7_new_Click);
+            // 
+            // btn_MX3_new
+            // 
+            this.btn_MX3_new.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btn_MX3_new.Location = new System.Drawing.Point(68, 222);
+            this.btn_MX3_new.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_MX3_new.Name = "btn_MX3_new";
+            this.btn_MX3_new.Size = new System.Drawing.Size(107, 19);
+            this.btn_MX3_new.TabIndex = 14;
+            this.btn_MX3_new.Text = "Upload new Query";
+            this.btn_MX3_new.UseVisualStyleBackColor = true;
+            this.btn_MX3_new.Click += new System.EventHandler(this.btn_MX3_new_Click);
+            // 
+            // btn_MX3_edit
+            // 
+            this.btn_MX3_edit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btn_MX3_edit.Location = new System.Drawing.Point(8, 222);
+            this.btn_MX3_edit.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_MX3_edit.Name = "btn_MX3_edit";
+            this.btn_MX3_edit.Size = new System.Drawing.Size(56, 19);
+            this.btn_MX3_edit.TabIndex = 13;
+            this.btn_MX3_edit.Text = "Edit";
+            this.btn_MX3_edit.UseVisualStyleBackColor = true;
+            this.btn_MX3_edit.Click += new System.EventHandler(this.btn_MX3_edit_Click);
+            // 
             // ConnectionManger
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -377,26 +413,29 @@
         private System.Windows.Forms.TabControl tabcontainer;
         private System.Windows.Forms.TabPage tp_connections;
         private System.Windows.Forms.Button btn_Delete;
-        private System.Windows.Forms.Button btn_Edit;
         private System.Windows.Forms.ListBox lb_connections;
         private System.Windows.Forms.TabPage tp_GADATA;
         private System.Windows.Forms.ComboBox cb_GADTA_procedures;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btn_GADATA_Create;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ListBox lb_GADATA_procParms;
         private System.Windows.Forms.TabPage tp_MX7;
         private System.Windows.Forms.Button btn_MX7_create;
         private System.Windows.Forms.TabPage tp_MX3;
         private System.Windows.Forms.Button btn_MX3_create;
-        private System.Windows.Forms.ListBox lb_MX7_QueryDetails;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox cb_MX7_QueryNames;
-        private System.Windows.Forms.ListBox lb_MX3_QueryDetails;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ComboBox cb_MX3_QueryNames;
+        private System.Windows.Forms.ListView lv_GADATA_procParms;
+        private System.Windows.Forms.ListView lv_MX7_procParms;
+        private System.Windows.Forms.ListView lv_MX3_procParms;
+        private System.Windows.Forms.Button btn_MX7_new;
+        private System.Windows.Forms.Button btn_MX7_edit;
+        private System.Windows.Forms.Button btn_MX3_new;
+        private System.Windows.Forms.Button btn_MX3_edit;
 
 
     }

@@ -294,6 +294,7 @@ namespace ExcelAddInEquipmentDatabase
             else
             {
                 ProcMngr.Show();
+                ProcMngr.ShowOnClick();
             }
         }
         //refresh the active connection or refresh all connections if needed
@@ -340,7 +341,8 @@ namespace ExcelAddInEquipmentDatabase
         }
         private void btn_ConnectionManager_Click(object sender, RibbonControlEventArgs e)
         {
-            if (ConnMng == null) ConnMng = new ConnectionManger();
+            if (ConnMng != null) ConnMng.Dispose();
+            ConnMng = new ConnectionManger();
             ConnMng.Show();
         }
         #endregion

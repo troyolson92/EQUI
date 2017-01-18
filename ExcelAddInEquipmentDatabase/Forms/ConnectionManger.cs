@@ -177,11 +177,16 @@ namespace ExcelAddInEquipmentDatabase
         }
         private void lb_GADATA_get_SpParams(SqlCommand cmd)
         {
-            lb_GADATA_procParms.Items.Clear();
-            lb_GADATA_procParms.Items.AddRange(new object[] { "ParameterNam", "SqlDbType" });
+            lv_GADATA_procParms.Items.Clear();
+            lv_GADATA_procParms.View = View.Details;
+            lv_GADATA_procParms.Columns.Add("ParmName", -2, HorizontalAlignment.Left);
+            lv_GADATA_procParms.Columns.Add("DefaultValue", -2, HorizontalAlignment.Left);
+
             foreach (SqlParameter p in cmd.Parameters)
             {
-                lb_GADATA_procParms.Items.AddRange(new object[] { p.ParameterName, p.SqlDbType });
+                ListViewItem item = new ListViewItem(p.ParameterName);
+                item.SubItems.Add(p.SqlDbType.ToString());
+                lv_GADATA_procParms.Items.Add(item);
             }
         }
         private void cb_GADATA_procedures_SelectedIndexChanged(object sender, EventArgs e)
@@ -224,12 +229,27 @@ namespace ExcelAddInEquipmentDatabase
 
         private void cb_MX7_QueryNames_SelectedIndexChanged(object sender, EventArgs e)
         {
-            lb_MX7_QueryDetails.Items.Clear();
-            lb_MX7_QueryDetails.Items.Add(String.Format("{0}     {1}", "ParmName", "DefaultValue"));
+            lv_MX7_procParms.Items.Clear();
+            lv_MX7_procParms.View = View.Details;
+            lv_MX7_procParms.Columns.Add("ParmName", -2, HorizontalAlignment.Left);
+            lv_MX7_procParms.Columns.Add("DefaultValue", -2, HorizontalAlignment.Left);
+           
             foreach (OracleQueryParm Parm in lMaximoComm.oracle_get_QueryParms_from_GADATA(cb_MX7_QueryNames.Text, "MX7"))
             {
-                lb_MX7_QueryDetails.Items.Add(String.Format("{0}     {1}", Parm.ParameterName, Parm.Defaultvalue));
+                ListViewItem item = new ListViewItem(Parm.ParameterName);
+                item.SubItems.Add(Parm.Defaultvalue);
+                lv_MX7_procParms.Items.Add(item);
             }
+        }
+
+        private void btn_MX7_new_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btn_MX7_edit_Click(object sender, EventArgs e)
+        {
+
         }
         #endregion
 
@@ -266,13 +286,32 @@ namespace ExcelAddInEquipmentDatabase
 
         private void cb_MX3_QueryNames_SelectedIndexChanged(object sender, EventArgs e)
         {
-            lb_MX3_QueryDetails.Items.Clear();
-            lb_MX3_QueryDetails.Items.Add(String.Format("{0}     {1}", "ParmName", "DefaultValue"));
+            lv_MX3_procParms.Items.Clear();
+            lv_MX3_procParms.View = View.Details;
+            lv_MX3_procParms.Columns.Add("ParmName", -2, HorizontalAlignment.Left);
+            lv_MX3_procParms.Columns.Add("DefaultValue", -2, HorizontalAlignment.Left);
+
             foreach (OracleQueryParm Parm in lMaximoComm.oracle_get_QueryParms_from_GADATA(cb_MX3_QueryNames.Text, "MX3"))
             {
-                lb_MX3_QueryDetails.Items.Add(String.Format("{0}     {1}", Parm.ParameterName, Parm.Defaultvalue));
+                ListViewItem item = new ListViewItem(Parm.ParameterName);
+                item.SubItems.Add(Parm.Defaultvalue);
+                lv_MX3_procParms.Items.Add(item);
             }
         }
+
+        private void btn_MX3_edit_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btn_MX3_new_Click(object sender, EventArgs e)
+        {
+
+        }
         #endregion
+
+
+
+
     }
 }
