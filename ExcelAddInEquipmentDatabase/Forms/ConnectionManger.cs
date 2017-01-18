@@ -18,7 +18,7 @@ namespace ExcelAddInEquipmentDatabase
     {
         //connection to gadata
         GadataComm lGadataComm = new GadataComm();
-        //connection to maxim 
+        //connection to maximo 
         MaximoComm lMaximoComm = new MaximoComm();
 
         public ConnectionManger()
@@ -65,6 +65,7 @@ namespace ExcelAddInEquipmentDatabase
                 {
                     if (lconn.Name == connectionName)
                     {
+                        lconn.ODBCConnection.SavePassword = true;
                         oTable = oTables.Add(lconn, oRng);
                         oTable.RefreshStyle = Excel.XlCellInsertionMode.xlInsertEntireRows;
                         oTable.Name = connectionName;
@@ -166,12 +167,13 @@ namespace ExcelAddInEquipmentDatabase
         {
             if (cb_GADTA_procedures.Text != "")
             {
-                string Query = "use gadata EXEC Volvo." + cb_GADTA_procedures.Text.Trim();
+                string Query = "use gadata EXEC " + cb_GADTA_procedures.Text.Trim();
                 string ODBCconn = lGadataComm.GADATAconnectionString; 
-                string ConnectionName = cb_GADTA_procedures.Text.Trim();
+                string ConnectionName = cb_GADTA_procedures.Text.Split('.')[2].Trim();
                 create_ODBC_connection(Query, ODBCconn, ConnectionName);
             }
             lb_get_connections();
+            this.Hide();
         }
         private void lb_GADATA_get_SpParams(SqlCommand cmd)
         {
@@ -212,11 +214,12 @@ namespace ExcelAddInEquipmentDatabase
           using(StoredProcedureManger ProcMngr = new StoredProcedureManger("MX7"))
           {
               ProcMngr.MX7_ActiveConnectionToProcMngr(lMaximoComm.oracle_get_QueryParms_from_GADATA(cb_MX7_QueryNames.Text, "MX7"), "It does not exist");
-              Query = ProcMngr.MX7_ProcMngrToActiveConnection(lMaximoComm.oracle_get_QueryTemplate_from_GADATA(cb_MX7_QueryNames.Text, "MX7"));
+              Query = ProcMngr.MX7_BuildQuery_ProcMngrToActiveConnection(lMaximoComm.oracle_get_QueryTemplate_from_GADATA(cb_MX7_QueryNames.Text, "MX7"));
           }
             string ODBCconn = lMaximoComm.MX7connectionString;
             string ConnectionName = cb_MX7_QueryNames.Text;
             create_ODBC_connection(Query, ODBCconn, ConnectionName);
+            this.Hide();
         }
 
         private void cb_MX7_QueryNames_SelectedIndexChanged(object sender, EventArgs e)

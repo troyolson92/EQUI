@@ -39,16 +39,18 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.flowLayoutPanel1.AutoSize = true;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(9, 10);
+            this.flowLayoutPanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(9, 11);
             this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(2);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(1067, 183);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(580, 183);
             this.flowLayoutPanel1.TabIndex = 0;
+            this.flowLayoutPanel1.WrapContents = false;
             // 
             // btn_Set
             // 
             this.btn_Set.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn_Set.Location = new System.Drawing.Point(862, 198);
+            this.btn_Set.Location = new System.Drawing.Point(375, 198);
             this.btn_Set.Margin = new System.Windows.Forms.Padding(2);
             this.btn_Set.Name = "btn_Set";
             this.btn_Set.Size = new System.Drawing.Size(214, 26);
@@ -75,12 +77,13 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(1085, 225);
+            this.ClientSize = new System.Drawing.Size(598, 225);
             this.Controls.Add(this.btn_reset);
             this.Controls.Add(this.btn_Set);
             this.Controls.Add(this.flowLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Margin = new System.Windows.Forms.Padding(2);
+            this.MinimumSize = new System.Drawing.Size(614, 259);
             this.Name = "StoredProcedureManger";
             this.Text = "StoredProcedureManger";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.StoredProcedureManger_FormClosing);

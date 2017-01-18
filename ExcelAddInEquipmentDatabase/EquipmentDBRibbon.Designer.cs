@@ -53,7 +53,6 @@
             this.proc_parameters = this.Factory.CreateRibbonGroup();
             this.btn_AssetManager = this.Factory.CreateRibbonButton();
             this.button1 = this.Factory.CreateRibbonButton();
-            this.button2 = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
             this.rib2.SuspendLayout();
             this.group2.SuspendLayout();
@@ -191,7 +190,6 @@
             // 
             this.proc_parameters.Items.Add(this.btn_AssetManager);
             this.proc_parameters.Items.Add(this.button1);
-            this.proc_parameters.Items.Add(this.button2);
             this.proc_parameters.Name = "proc_parameters";
             // 
             // btn_AssetManager
@@ -204,15 +202,8 @@
             // 
             // button1
             // 
-            this.button1.Label = "GET";
+            this.button1.Label = "TEST";
             this.button1.Name = "button1";
-            this.button1.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button1_Click);
-            // 
-            // button2
-            // 
-            this.button2.Label = "PUT";
-            this.button2.Name = "button2";
-            this.button2.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button2_Click);
             // 
             // EquipmentDBRibbon
             // 
@@ -255,7 +246,6 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_EditProcedure;
         internal Microsoft.Office.Tools.Ribbon.RibbonDropDown dd_activeConnection;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton button1;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton button2;
     }
 
     partial class ThisRibbonCollection

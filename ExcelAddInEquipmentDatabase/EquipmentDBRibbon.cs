@@ -311,8 +311,22 @@ namespace ExcelAddInEquipmentDatabase
                 {
                     if (connection.Name == dd_activeConnection.SelectedItem.Label)
                     {
-                        ProcMngr.GADATA_ProcMngrToActiveConnection();
-                        connection.Refresh();
+
+                        //connects the ribbon filter controls with the procMngr
+                        if (ProcMngr.get_ODBCconnString_from_activeconnection().Like("%Max%")) //MX7connections
+                        {
+                            ProcMngr.MX7_ProcMngrToActiveConnection(lMaximoComm.oracle_get_QueryTemplate_from_GADATA(connection.Name, "MX7"));
+                            connection.Refresh();
+                        }
+                        else if (ProcMngr.get_ODBCconnString_from_activeconnection().Like("%GADATA%")) //GADATAconnections
+                        {
+                            ProcMngr.GADATA_ProcMngrToActiveConnection();
+                            connection.Refresh();
+                        }
+                        else
+                        {
+                            Debug.WriteLine("Unable to find connection");
+                        }
                     }
                 }
             }
@@ -331,18 +345,6 @@ namespace ExcelAddInEquipmentDatabase
         }
         #endregion
 
-        private void button1_Click(object sender, RibbonControlEventArgs e)
-        {
-            //debug
-            ProcMngr = new StoredProcedureManger("");
-            ProcMngr.MX7_ActiveConnectionToProcMngr(lMaximoComm.oracle_get_QueryParms_from_GADATA("WoDetails", "MX7"), "");
-            ProcMngr.Show();
-        }
-
-        private void button2_Click(object sender, RibbonControlEventArgs e)
-        {
-            ProcMngr.MX7_ProcMngrToActiveConnection(lMaximoComm.oracle_get_QueryTemplate_from_GADATA("WoDetails", "MX7"));
-        }
 
     }
 }

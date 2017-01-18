@@ -12,6 +12,7 @@ namespace ExcelAddInEquipmentDatabase
             get{return @"ODBC;DSN=Max;Description= Max;UID=BGASTHUY;PWD=BGASTHUY$123;"; }
         }
 
+
         public string oracle_get_QueryTemplate_from_GADATA(string QueryName, string System)
         {
             string Query;

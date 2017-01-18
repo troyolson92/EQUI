@@ -62,7 +62,10 @@ namespace ExcelAddInEquipmentDatabase.Forms
             set { lIntOnly = value; }
         
         }
-
+        public bool hide_active
+        {
+            set { rb_enable.Visible = !value; }
+        }
 
 
     }
