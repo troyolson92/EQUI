@@ -11,6 +11,23 @@ namespace ExcelAddInEquipmentDatabase
         {
             get{return @"ODBC;DSN=MAXIMO7;Description= MAXIMO7;UID=BGASTHUY;PWD=BGASTHUY$123;"; }
         }
+        public string SystemMX7 { get { return "MX7"; } }
+        public string SystemMX3 { get { return "MX3"; } }
+
+        public void make_DSN(string System)
+        {
+            if (System == SystemMX7)
+            {
+                ODBCManager.CreateDSN("MAXIMO7", "odbc link MAXIMO7", "dpmxarct"
+                    , "MAXIMO7 ODBC for oracle", @"C:\windows\system32\msorcl32.dll", true, "MAXIMO");
+            }
+            else if (System == SystemMX3)
+            {
+
+
+            }
+
+        }
 
         public void oracle_update_Query_to_GADATA(string System, string Queryname, string QueryDiscription, string Query)
         {
@@ -58,6 +75,22 @@ namespace ExcelAddInEquipmentDatabase
                          select a.QUERY).First().ToString();
             }
             return Query.Trim().TrimEnd(';').ToUpper();
+        }
+
+        public string oracle_get_QueryDiscription_from_GADATA(string QueryName, string System)
+        {
+            string Disciption;
+            using (applData.QUERYSDataTable lQUERYS = new applData.QUERYSDataTable())
+            {
+                using (applDataTableAdapters.QUERYSTableAdapter adapter = new applDataTableAdapters.QUERYSTableAdapter())
+                {
+                    adapter.Fill(lQUERYS);
+                }
+                Disciption = (from a in lQUERYS
+                         where a.SYSTEM == System && a.NAME == QueryName
+                         select a.DISCRIPTION).First().ToString();
+            }
+            return Disciption.Trim();
         }
 
         public List<OracleQueryParm> oracle_get_QueryParms_from_GADATA(string QueryName, string System)

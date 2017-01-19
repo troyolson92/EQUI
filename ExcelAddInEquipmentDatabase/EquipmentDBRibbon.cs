@@ -314,7 +314,7 @@ namespace ExcelAddInEquipmentDatabase
                         //connects the ribbon filter controls with the procMngr
                         if (ProcMngr.get_ODBCconnString_from_activeconnection().Like("%Max%")) //MX7connections
                         {
-                            ProcMngr.MX7_ProcMngrToActiveConnection(lMaximoComm.oracle_get_QueryTemplate_from_GADATA(connection.Name, "MX7"));
+                            ProcMngr.MX7_ProcMngrToActiveConnection(lMaximoComm.oracle_get_QueryTemplate_from_GADATA(connection.Name, lMaximoComm.SystemMX7));
                             connection.Refresh();
                         }
                         else if (ProcMngr.get_ODBCconnString_from_activeconnection().Like("%GADATA%")) //GADATAconnections

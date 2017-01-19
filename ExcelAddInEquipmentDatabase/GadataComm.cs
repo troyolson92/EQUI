@@ -20,6 +20,11 @@ namespace ExcelAddInEquipmentDatabase
         {
             get { return @"ODBC;DSN=GADATA;Description= GADATA;UID=GADATA;PWD=GADATA987;APP=SQLFront;WSID=GNL1004ZCBQC2\\SDEBEUL;DATABASE=GADATA"; }
         }
+        public void make_DSN() 
+        {                
+            ODBCManager.CreateDSN("GADATA", "odbc link to sql001.gen.volvocars.net"
+                , "sqla001.gen.volvocars.net", "SQL Server", @"C:\windows\system32\SQLSRV32.dll", true, "GADATA");
+        }
 
         public void BulkCopyToGadata(string as_schema, DataTable adt_table, string as_destination)
         {

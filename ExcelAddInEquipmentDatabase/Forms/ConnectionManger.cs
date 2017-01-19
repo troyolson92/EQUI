@@ -177,10 +177,7 @@ namespace ExcelAddInEquipmentDatabase
         {
             if (cb_GADTA_procedures.Text != "")
             {
-                ODBCManager.CreateDSN("GADATA", "odbc link to sql001.gen.volvocars.net", "sqla001.gen.volvocars.net", "SQL Server", true, "GADATA");
-                //need to run as admin 
-                //http://stackoverflow.com/questions/34639084/access-to-the-registry-key-is-denied-when-i-want-update-the-value
-                //
+                lGadataComm.make_DSN();
                 string Query = "use gadata EXEC " + cb_GADTA_procedures.Text.Trim();
                 string ODBCconn = lGadataComm.GADATAconnectionString; 
                 string ConnectionName = cb_GADTA_procedures.Text.Split('.')[2].Trim();
@@ -216,7 +213,7 @@ namespace ExcelAddInEquipmentDatabase
                     adapter.Fill(lQUERYS);
                 }
                 var data = from a in lQUERYS
-                           where a.SYSTEM == "MX7"
+                           where a.SYSTEM == lMaximoComm.SystemMX7
                            orderby a.NAME descending
                            select a.NAME;
                 cb_MX7_QueryNames.DataSource = data.Distinct().ToList();
@@ -226,15 +223,12 @@ namespace ExcelAddInEquipmentDatabase
         private void btn_MX7_create_Click(object sender, EventArgs e)
         {
             string Query;
-          using(StoredProcedureManger ProcMngr = new StoredProcedureManger("MX7"))
+            using (StoredProcedureManger ProcMngr = new StoredProcedureManger(lMaximoComm.SystemMX7))
           {
-              ProcMngr.MX7_ActiveConnectionToProcMngr(lMaximoComm.oracle_get_QueryParms_from_GADATA(cb_MX7_QueryNames.Text, "MX7"), "It does not exist");
-              Query = ProcMngr.MX7_BuildQuery_ProcMngrToActiveConnection(lMaximoComm.oracle_get_QueryTemplate_from_GADATA(cb_MX7_QueryNames.Text, "MX7"));
+              ProcMngr.MX7_ActiveConnectionToProcMngr(lMaximoComm.oracle_get_QueryParms_from_GADATA(cb_MX7_QueryNames.Text, lMaximoComm.SystemMX7), "It does not exist");
+              Query = ProcMngr.MX7_BuildQuery_ProcMngrToActiveConnection(lMaximoComm.oracle_get_QueryTemplate_from_GADATA(cb_MX7_QueryNames.Text, lMaximoComm.SystemMX7));
           }
-          ODBCManager.CreateDSN("MAXIMO7", "odbc link MAXIMO7", "dpmxarct", "Microsoft ODBC for oracle", true, "MAXIMO");
-          //need to run as admin 
-          //http://stackoverflow.com/questions/34639084/access-to-the-registry-key-is-denied-when-i-want-update-the-value
-          //
+            lMaximoComm.make_DSN(lMaximoComm.SystemMX7);
             string ODBCconn = lMaximoComm.MX7connectionString;
             string ConnectionName = cb_MX7_QueryNames.Text;
             create_ODBC_connection(Query, ODBCconn, ConnectionName);
@@ -243,8 +237,18 @@ namespace ExcelAddInEquipmentDatabase
 
         private void cb_MX7_QueryNames_SelectedIndexChanged(object sender, EventArgs e)
         {
+            using (applData.QUERYSDataTable lQUERYS = new applData.QUERYSDataTable())
+            {
+                using (applDataTableAdapters.QUERYSTableAdapter adapter = new applDataTableAdapters.QUERYSTableAdapter())
+                {
+                    adapter.Fill(lQUERYS);
+                }
+                lbl_MX7_procDiscription.Text = (from a in lQUERYS
+                                                where a.SYSTEM == lMaximoComm.SystemMX7 && a.NAME == cb_MX7_QueryNames.Text
+                                                select a.DISCRIPTION).First().ToString();
+            }
             lv_MX7_procParms.Items.Clear();
-            foreach (OracleQueryParm Parm in lMaximoComm.oracle_get_QueryParms_from_GADATA(cb_MX7_QueryNames.Text, "MX7"))
+            foreach (OracleQueryParm Parm in lMaximoComm.oracle_get_QueryParms_from_GADATA(cb_MX7_QueryNames.Text, lMaximoComm.SystemMX7))
             {
                 ListViewItem item = new ListViewItem(Parm.ParameterName);
                 item.SubItems.Add(Parm.Defaultvalue);
@@ -256,7 +260,7 @@ namespace ExcelAddInEquipmentDatabase
         {
             if (QEdit != null) QEdit.Dispose();
             QEdit = new Forms.MXxQueryEdit();
-            QEdit.TargetSystem = "MX7";
+            QEdit.TargetSystem = lMaximoComm.SystemMX7;
             QEdit.Show();
         }
 
@@ -264,10 +268,10 @@ namespace ExcelAddInEquipmentDatabase
         {
             if (QEdit != null) QEdit.Dispose();
             QEdit = new Forms.MXxQueryEdit();
-            QEdit.TargetSystem = "MX7";
+            QEdit.TargetSystem = lMaximoComm.SystemMX7;
             QEdit.QueryName = cb_MX7_QueryNames.Text;
-            QEdit.QueryDiscription = "";
-            QEdit.Query = lMaximoComm.oracle_get_QueryTemplate_from_GADATA(cb_MX7_QueryNames.Text,"MX7");
+            QEdit.QueryDiscription =  lbl_MX7_procDiscription.Text;
+            QEdit.Query = lMaximoComm.oracle_get_QueryTemplate_from_GADATA(cb_MX7_QueryNames.Text,lMaximoComm.SystemMX7);
             QEdit.Show();
         }
         #endregion
@@ -282,7 +286,7 @@ namespace ExcelAddInEquipmentDatabase
                 adapter.Fill(lQUERYS);
             }
             var data = from a in lQUERYS
-                       where a.SYSTEM == "MX3"
+                       where a.SYSTEM == lMaximoComm.SystemMX3
                        orderby a.NAME descending
                        select a.NAME;
             cb_MX3_QueryNames.DataSource = data.Distinct().ToList();
@@ -298,6 +302,7 @@ namespace ExcelAddInEquipmentDatabase
                 (WORKORDER.location LIKE '%99070R01%') 
                 order by REPORTDATE
                     ";
+            lMaximoComm.make_DSN(lMaximoComm.SystemMX3);
             string ODBCconn = @"ODBC;DSN=MVCGP2;Description= MVCGP2;UID=maximo_ro;PWD=maximo_ro;";
             string ConnectionName = "MX3Test";
             create_ODBC_connection(Query, ODBCconn, ConnectionName);
@@ -305,8 +310,18 @@ namespace ExcelAddInEquipmentDatabase
 
         private void cb_MX3_QueryNames_SelectedIndexChanged(object sender, EventArgs e)
         {
+         using (applData.QUERYSDataTable lQUERYS = new applData.QUERYSDataTable())
+            {
+                using (applDataTableAdapters.QUERYSTableAdapter adapter = new applDataTableAdapters.QUERYSTableAdapter())
+                {
+                    adapter.Fill(lQUERYS);
+                }
+                lbl_MX3_procDiscription.Text = (from a in lQUERYS
+                           where a.SYSTEM == lMaximoComm.SystemMX3 && a.NAME == cb_MX3_QueryNames.Text
+                           select a.DISCRIPTION).First().ToString();
+           }
             lv_MX3_procParms.Items.Clear();
-            foreach (OracleQueryParm Parm in lMaximoComm.oracle_get_QueryParms_from_GADATA(cb_MX3_QueryNames.Text, "MX3"))
+            foreach (OracleQueryParm Parm in lMaximoComm.oracle_get_QueryParms_from_GADATA(cb_MX3_QueryNames.Text, lMaximoComm.SystemMX3))
             {
                 ListViewItem item = new ListViewItem(Parm.ParameterName);
                 item.SubItems.Add(Parm.Defaultvalue);
@@ -318,7 +333,7 @@ namespace ExcelAddInEquipmentDatabase
         {
             if (QEdit != null) QEdit.Dispose();
             QEdit = new Forms.MXxQueryEdit();
-            QEdit.TargetSystem = "MX3";
+            QEdit.TargetSystem = lMaximoComm.SystemMX3;
             QEdit.Show();
         }
 
@@ -326,12 +341,13 @@ namespace ExcelAddInEquipmentDatabase
         {
             if (QEdit != null) QEdit.Dispose();
             QEdit = new Forms.MXxQueryEdit();
-            QEdit.TargetSystem = "MX3";
+            QEdit.TargetSystem = lMaximoComm.SystemMX3;
             QEdit.QueryName = cb_MX7_QueryNames.Text;
-            QEdit.QueryDiscription = "";
-            QEdit.Query = lMaximoComm.oracle_get_QueryTemplate_from_GADATA(cb_MX7_QueryNames.Text, "MX3");
+            QEdit.QueryDiscription = lbl_MX3_procDiscription.Text;
+            QEdit.Query = lMaximoComm.oracle_get_QueryTemplate_from_GADATA(cb_MX3_QueryNames.Text, lMaximoComm.SystemMX3);
             QEdit.Show();
         }
         #endregion
+
     }
 }

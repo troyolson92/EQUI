@@ -23,20 +23,24 @@ namespace ExcelAddInEquipmentDatabase
         /// <param name="driverName">Name of the driver to use</param>
         /// <param name="trustedConnection">True to use NT authentication, false to require applications to supply username/password in the connection string</param>
         /// <param name="database">Name of the datbase to connect to</param>
-        public static void CreateDSN(string dsnName, string description, string server, string driverName, bool trustedConnection, string database)
+        public static void CreateDSN(string dsnName, string description, string server, string driverName,string driverPath, bool trustedConnection, string database)
         {
             // Lookup driver path from driver name
-            var driverKey = Registry.LocalMachine.CreateSubKey(ODBCINST_INI_REG_PATH + driverName);
+            /*
+             * SDEBEUL because I have to add in Current user Reg I can not check if the driver is there.
+             * So I will pass the driver locaion manually 
+            var driverKey = Registry.CurrentUser.CreateSubKey(ODBCINST_INI_REG_PATH + driverName);
             if (driverKey == null) throw new Exception(string.Format("ODBC Registry key for driver '{0}' does not exist", driverName));
             string driverPath = driverKey.GetValue("Driver").ToString();
-
+            */
             // Add value to odbc data sources
-            var datasourcesKey = Registry.LocalMachine.CreateSubKey(ODBC_INI_REG_PATH + "ODBC Data Sources");
+            var datasourcesKey = Registry.CurrentUser.CreateSubKey(ODBC_INI_REG_PATH + "ODBC Data Sources");
             if (datasourcesKey == null) throw new Exception("ODBC Registry key for datasources does not exist");
+             
             datasourcesKey.SetValue(dsnName, driverName);
 
             // Create new key in odbc.ini with dsn name and add values
-            var dsnKey = Registry.LocalMachine.CreateSubKey(ODBC_INI_REG_PATH + dsnName);
+            var dsnKey = Registry.CurrentUser.CreateSubKey(ODBC_INI_REG_PATH + dsnName);
             if (dsnKey == null) throw new Exception("ODBC Registry key for DSN was not created");
             dsnKey.SetValue("Database", database);
             dsnKey.SetValue("Description", description);
@@ -54,10 +58,10 @@ namespace ExcelAddInEquipmentDatabase
         public static void RemoveDSN(string dsnName)
         {
             // Remove DSN key
-            Registry.LocalMachine.DeleteSubKeyTree(ODBC_INI_REG_PATH + dsnName);
+            Registry.Users.DeleteSubKeyTree(ODBC_INI_REG_PATH + dsnName);
 
             // Remove DSN name from values list in ODBC Data Sources key
-            var datasourcesKey = Registry.LocalMachine.CreateSubKey(ODBC_INI_REG_PATH + "ODBC Data Sources");
+            var datasourcesKey = Registry.CurrentUser.CreateSubKey(ODBC_INI_REG_PATH + "ODBC Data Sources");
             if (datasourcesKey == null) throw new Exception("ODBC Registry key for datasources does not exist");
             datasourcesKey.DeleteValue(dsnName);
         }
@@ -69,7 +73,7 @@ namespace ExcelAddInEquipmentDatabase
         ///<returns></returns>
         public static bool DSNExists(string dsnName)
         {
-            var driversKey = Registry.LocalMachine.CreateSubKey(ODBCINST_INI_REG_PATH + "ODBC Drivers");
+            var driversKey = Registry.CurrentUser.CreateSubKey(ODBCINST_INI_REG_PATH + "ODBC Drivers");
             if (driversKey == null) throw new Exception("ODBC Registry key for drivers does not exist");
 
             return driversKey.GetValue(dsnName) != null;

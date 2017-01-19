@@ -39,9 +39,9 @@ namespace ExcelAddInEquipmentDatabase.Forms
 
         private void MXxQueryEdit_Load(object sender, EventArgs e)
         {
-            var _point = new System.Drawing.Point(Cursor.Position.X, Cursor.Position.Y);
+           /* var _point = new System.Drawing.Point(Cursor.Position.X, Cursor.Position.Y);
             Top = _point.Y;
-            Left = _point.X - this.Size.Width;
+            Left = _point.X - this.Size.Width;*/
             BringToFront();
         }
 
