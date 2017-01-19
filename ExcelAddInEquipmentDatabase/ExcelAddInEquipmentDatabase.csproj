@@ -203,6 +203,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>applData.xsd</DependentUpon>
     </Compile>
+    <Compile Include="DSNmngr.cs" />
     <Compile Include="Forms\AssetManager.cs">
       <SubType>Form</SubType>
     </Compile>

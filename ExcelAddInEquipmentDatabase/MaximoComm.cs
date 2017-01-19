@@ -9,7 +9,7 @@ namespace ExcelAddInEquipmentDatabase
     {
         public string MX7connectionString
         {
-            get{return @"ODBC;DSN=Max;Description= Max;UID=BGASTHUY;PWD=BGASTHUY$123;"; }
+            get{return @"ODBC;DSN=MAXIMO7;Description= MAXIMO7;UID=BGASTHUY;PWD=BGASTHUY$123;"; }
         }
 
         public void oracle_update_Query_to_GADATA(string System, string Queryname, string QueryDiscription, string Query)

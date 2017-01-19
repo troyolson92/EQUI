@@ -177,6 +177,10 @@ namespace ExcelAddInEquipmentDatabase
         {
             if (cb_GADTA_procedures.Text != "")
             {
+                ODBCManager.CreateDSN("GADATA", "odbc link to sql001.gen.volvocars.net", "sqla001.gen.volvocars.net", "SQL Server", true, "GADATA");
+                //need to run as admin 
+                //http://stackoverflow.com/questions/34639084/access-to-the-registry-key-is-denied-when-i-want-update-the-value
+                //
                 string Query = "use gadata EXEC " + cb_GADTA_procedures.Text.Trim();
                 string ODBCconn = lGadataComm.GADATAconnectionString; 
                 string ConnectionName = cb_GADTA_procedures.Text.Split('.')[2].Trim();
@@ -227,6 +231,10 @@ namespace ExcelAddInEquipmentDatabase
               ProcMngr.MX7_ActiveConnectionToProcMngr(lMaximoComm.oracle_get_QueryParms_from_GADATA(cb_MX7_QueryNames.Text, "MX7"), "It does not exist");
               Query = ProcMngr.MX7_BuildQuery_ProcMngrToActiveConnection(lMaximoComm.oracle_get_QueryTemplate_from_GADATA(cb_MX7_QueryNames.Text, "MX7"));
           }
+          ODBCManager.CreateDSN("MAXIMO7", "odbc link MAXIMO7", "dpmxarct", "Microsoft ODBC for oracle", true, "MAXIMO");
+          //need to run as admin 
+          //http://stackoverflow.com/questions/34639084/access-to-the-registry-key-is-denied-when-i-want-update-the-value
+          //
             string ODBCconn = lMaximoComm.MX7connectionString;
             string ConnectionName = cb_MX7_QueryNames.Text;
             create_ODBC_connection(Query, ODBCconn, ConnectionName);
