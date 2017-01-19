@@ -12,6 +12,37 @@ namespace ExcelAddInEquipmentDatabase
             get{return @"ODBC;DSN=Max;Description= Max;UID=BGASTHUY;PWD=BGASTHUY$123;"; }
         }
 
+        public void oracle_update_Query_to_GADATA(string System, string Queryname, string QueryDiscription, string Query)
+        {
+            using (applData.QUERYSDataTable lQUERYS = new applData.QUERYSDataTable())
+            {
+                using (applDataTableAdapters.QUERYSTableAdapter adapter = new applDataTableAdapters.QUERYSTableAdapter())
+                {
+                    var  ds = from a in lQUERYS
+                         where a.SYSTEM == System && a.NAME == Queryname
+                         select a;
+                    //adapter.Update()
+                  
+                }
+            }
+        }
+
+        public void oracle_delete_Query_GADATA(string System, string Queryname)
+             {
+             using (applDataTableAdapters.QUERYSTableAdapter adapter = new applDataTableAdapters.QUERYSTableAdapter())
+                {
+                    adapter.Delete(System, Queryname);
+                }
+             }
+
+        public void oracle_send_new_Query_to_GADATA(string System, string Queryname, string QueryDiscription, string Query)
+        {
+
+                using (applDataTableAdapters.QUERYSTableAdapter adapter = new applDataTableAdapters.QUERYSTableAdapter())
+                {
+                    adapter.Insert(System, Queryname, QueryDiscription, Query);
+                }
+        }
 
         public string oracle_get_QueryTemplate_from_GADATA(string QueryName, string System)
         {

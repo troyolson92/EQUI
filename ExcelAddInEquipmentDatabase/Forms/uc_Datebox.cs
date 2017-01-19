@@ -56,5 +56,6 @@ namespace ExcelAddInEquipmentDatabase.Forms
         {
             set { rb_enable.Visible = !value; }
         }
+
     }
 }

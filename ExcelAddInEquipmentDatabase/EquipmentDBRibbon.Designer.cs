@@ -34,13 +34,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            Microsoft.Office.Tools.Ribbon.RibbonDialogLauncher ribbonDialogLauncherImpl1 = this.Factory.CreateRibbonDialogLauncher();
             this.tab1 = this.Factory.CreateRibbonTab();
             this.rib2 = this.Factory.CreateRibbonTab();
             this.group2 = this.Factory.CreateRibbonGroup();
             this.btn_Query = this.Factory.CreateRibbonButton();
             this.separator1 = this.Factory.CreateRibbonSeparator();
-            this.btn_ConnectionManager = this.Factory.CreateRibbonButton();
             this.dd_activeConnection = this.Factory.CreateRibbonDropDown();
+            this.dd_preselect = this.Factory.CreateRibbonDropDown();
             this.btn_EditProcedure = this.Factory.CreateRibbonButton();
             this.AssetManager = this.Factory.CreateRibbonGroup();
             this.cb_Lochierarchy = this.Factory.CreateRibbonComboBox();
@@ -50,13 +51,17 @@
             this.btn_StartDate = this.Factory.CreateRibbonButton();
             this.btn_EndDate = this.Factory.CreateRibbonButton();
             this.btn_nDays = this.Factory.CreateRibbonButton();
+            this.gr3 = this.Factory.CreateRibbonGroup();
+            this.Btn_debugging = this.Factory.CreateRibbonToggleButton();
             this.proc_parameters = this.Factory.CreateRibbonGroup();
+            this.btn_ConnectionManager = this.Factory.CreateRibbonButton();
             this.btn_AssetManager = this.Factory.CreateRibbonButton();
-            this.dd_preselect = this.Factory.CreateRibbonDropDown();
+            this.btn_refreshconn = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
             this.rib2.SuspendLayout();
             this.group2.SuspendLayout();
             this.AssetManager.SuspendLayout();
+            this.gr3.SuspendLayout();
             this.proc_parameters.SuspendLayout();
             // 
             // tab1
@@ -69,8 +74,9 @@
             // 
             this.rib2.Groups.Add(this.group2);
             this.rib2.Groups.Add(this.AssetManager);
+            this.rib2.Groups.Add(this.gr3);
             this.rib2.Groups.Add(this.proc_parameters);
-            this.rib2.Label = "EQdatabase";
+            this.rib2.Label = "EQDATABASE";
             this.rib2.Name = "rib2";
             // 
             // group2
@@ -96,14 +102,6 @@
             // 
             this.separator1.Name = "separator1";
             // 
-            // btn_ConnectionManager
-            // 
-            this.btn_ConnectionManager.Label = "MngConnections";
-            this.btn_ConnectionManager.Name = "btn_ConnectionManager";
-            this.btn_ConnectionManager.OfficeImageId = "AdpDiagramAddRelatedTables";
-            this.btn_ConnectionManager.ShowImage = true;
-            this.btn_ConnectionManager.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_ConnectionManager_Click);
-            // 
             // dd_activeConnection
             // 
             this.dd_activeConnection.Label = "ActiveConn";
@@ -111,6 +109,14 @@
             this.dd_activeConnection.OfficeImageId = "OrganizationChartSelectLevel";
             this.dd_activeConnection.ShowImage = true;
             this.dd_activeConnection.SelectionChanged += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.dd_activeConnection_SelectionChanged);
+            // 
+            // dd_preselect
+            // 
+            this.dd_preselect.Enabled = false;
+            this.dd_preselect.Label = "uQuery";
+            this.dd_preselect.Name = "dd_preselect";
+            this.dd_preselect.OfficeImageId = "ImportMoreMenu";
+            this.dd_preselect.ShowImage = true;
             // 
             // btn_EditProcedure
             // 
@@ -190,11 +196,33 @@
             this.btn_nDays.ShowImage = true;
             this.btn_nDays.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_nDays_Click);
             // 
+            // gr3
+            // 
+            this.gr3.Items.Add(this.Btn_debugging);
+            this.gr3.Items.Add(this.btn_refreshconn);
+            this.gr3.Label = "DEBUGGING";
+            this.gr3.Name = "gr3";
+            // 
+            // Btn_debugging
+            // 
+            this.Btn_debugging.Label = "Enbl_dbg";
+            this.Btn_debugging.Name = "Btn_debugging";
+            // 
             // proc_parameters
             // 
+            this.proc_parameters.DialogLauncher = ribbonDialogLauncherImpl1;
             this.proc_parameters.Items.Add(this.btn_ConnectionManager);
             this.proc_parameters.Items.Add(this.btn_AssetManager);
+            this.proc_parameters.Label = "Configuration";
             this.proc_parameters.Name = "proc_parameters";
+            // 
+            // btn_ConnectionManager
+            // 
+            this.btn_ConnectionManager.Label = "MngConnections";
+            this.btn_ConnectionManager.Name = "btn_ConnectionManager";
+            this.btn_ConnectionManager.OfficeImageId = "AdpDiagramAddRelatedTables";
+            this.btn_ConnectionManager.ShowImage = true;
+            this.btn_ConnectionManager.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_ConnectionManager_Click);
             // 
             // btn_AssetManager
             // 
@@ -204,13 +232,11 @@
             this.btn_AssetManager.ShowImage = true;
             this.btn_AssetManager.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_AssetManager_Click);
             // 
-            // dd_preselect
+            // btn_refreshconn
             // 
-            this.dd_preselect.Enabled = false;
-            this.dd_preselect.Label = "uQuery";
-            this.dd_preselect.Name = "dd_preselect";
-            this.dd_preselect.OfficeImageId = "ImportMoreMenu";
-            this.dd_preselect.ShowImage = true;
+            this.btn_refreshconn.Label = "connRefresh";
+            this.btn_refreshconn.Name = "btn_refreshconn";
+            this.btn_refreshconn.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_refreshconn_Click);
             // 
             // EquipmentDBRibbon
             // 
@@ -227,6 +253,8 @@
             this.group2.PerformLayout();
             this.AssetManager.ResumeLayout(false);
             this.AssetManager.PerformLayout();
+            this.gr3.ResumeLayout(false);
+            this.gr3.PerformLayout();
             this.proc_parameters.ResumeLayout(false);
             this.proc_parameters.PerformLayout();
 
@@ -253,6 +281,9 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_EditProcedure;
         internal Microsoft.Office.Tools.Ribbon.RibbonDropDown dd_activeConnection;
         internal Microsoft.Office.Tools.Ribbon.RibbonDropDown dd_preselect;
+        internal Microsoft.Office.Tools.Ribbon.RibbonGroup gr3;
+        internal Microsoft.Office.Tools.Ribbon.RibbonToggleButton Btn_debugging;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_refreshconn;
     }
 
     partial class ThisRibbonCollection

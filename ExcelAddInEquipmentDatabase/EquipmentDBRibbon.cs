@@ -189,7 +189,7 @@ namespace ExcelAddInEquipmentDatabase
                 Debug.WriteLine(e.Message);
             }
         }
-        private void dd_connections_update()
+        public void dd_connections_update()
         {
             dd_activeConnection.Items.Clear();
             RibbonDropDownItem defaultitem = Globals.Factory.GetRibbonFactory().CreateRibbonDropDownItem();
@@ -347,6 +347,9 @@ namespace ExcelAddInEquipmentDatabase
         }
         #endregion
 
-
+        private void btn_refreshconn_Click(object sender, RibbonControlEventArgs e)
+        {
+            dd_connections_update();
+        }
     }
 }

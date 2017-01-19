@@ -4782,6 +4782,11 @@ SELECT SYSTEM, NAME, DISCRIPTION, QUERY FROM Volvo.QUERYS WHERE (NAME = @NAME)";
         public virtual int Update(string SYSTEM, string DISCRIPTION, string QUERY, string Original_SYSTEM, string Original_NAME) {
             return this.Update(SYSTEM, Original_NAME, DISCRIPTION, QUERY, Original_SYSTEM, Original_NAME);
         }
+
+        internal void Update()
+        {
+            throw new System.NotImplementedException();
+        }
     }
     
     /// <summary>

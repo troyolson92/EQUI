@@ -223,6 +223,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DataClassesGADATA.dbml</DependentUpon>
     </Compile>
+    <Compile Include="Forms\MXxQueryEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MXxQueryEdit.Designer.cs">
+      <DependentUpon>MXxQueryEdit.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\uc_Datebox.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -258,6 +264,9 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
+    <EmbeddedResource Include="Forms\MXxQueryEdit.resx">
+      <DependentUpon>MXxQueryEdit.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\uc_Datebox.resx">
       <DependentUpon>uc_Datebox.cs</DependentUpon>
     </EmbeddedResource>
