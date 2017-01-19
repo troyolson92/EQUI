@@ -85,7 +85,7 @@
             this.tp_connections.Margin = new System.Windows.Forms.Padding(2);
             this.tp_connections.Name = "tp_connections";
             this.tp_connections.Padding = new System.Windows.Forms.Padding(2);
-            this.tp_connections.Size = new System.Drawing.Size(359, 245);
+            this.tp_connections.Size = new System.Drawing.Size(359, 257);
             this.tp_connections.TabIndex = 0;
             this.tp_connections.Text = "Connections";
             this.tp_connections.UseVisualStyleBackColor = true;
@@ -272,6 +272,7 @@
             this.cb_MX7_QueryNames.Name = "cb_MX7_QueryNames";
             this.cb_MX7_QueryNames.Size = new System.Drawing.Size(278, 21);
             this.cb_MX7_QueryNames.TabIndex = 5;
+            this.cb_MX7_QueryNames.DropDown += new System.EventHandler(this.tp_MX7_Enter);
             this.cb_MX7_QueryNames.SelectedIndexChanged += new System.EventHandler(this.cb_MX7_QueryNames_SelectedIndexChanged);
             // 
             // btn_MX7_create
@@ -299,7 +300,7 @@
             this.tp_MX3.Margin = new System.Windows.Forms.Padding(2);
             this.tp_MX3.Name = "tp_MX3";
             this.tp_MX3.Padding = new System.Windows.Forms.Padding(2);
-            this.tp_MX3.Size = new System.Drawing.Size(359, 245);
+            this.tp_MX3.Size = new System.Drawing.Size(359, 257);
             this.tp_MX3.TabIndex = 3;
             this.tp_MX3.Text = "New_Maximo3";
             this.tp_MX3.UseVisualStyleBackColor = true;
@@ -371,6 +372,7 @@
             this.cb_MX3_QueryNames.Name = "cb_MX3_QueryNames";
             this.cb_MX3_QueryNames.Size = new System.Drawing.Size(278, 21);
             this.cb_MX3_QueryNames.TabIndex = 9;
+            this.cb_MX3_QueryNames.DropDown += new System.EventHandler(this.tp_MX3_Enter);
             this.cb_MX3_QueryNames.SelectedIndexChanged += new System.EventHandler(this.cb_MX3_QueryNames_SelectedIndexChanged);
             // 
             // btn_MX3_create

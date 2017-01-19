@@ -96,8 +96,6 @@ namespace ExcelAddInEquipmentDatabase
                     ProcMngr.Close();
                     ProcMngr.Dispose();
                     ProcMngr = new StoredProcedureManger(dd_activeConnection.SelectedItem.Label);
-                    //keep it show for debugging 
-                    ProcMngr.Show();
                 }
                 //event handeler for sheet Hide. (to trigger sync with ribbon)
                 ProcMngr.Deactivate += ProcMngr_Deactivate;

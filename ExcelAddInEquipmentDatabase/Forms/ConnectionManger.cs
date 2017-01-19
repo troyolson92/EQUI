@@ -308,17 +308,22 @@ namespace ExcelAddInEquipmentDatabase
 
         private void btn_MX3_edit_Click(object sender, EventArgs e)
         {
-
+            if (QEdit != null) QEdit.Dispose();
+            QEdit = new Forms.MXxQueryEdit();
+            QEdit.TargetSystem = "MX3";
+            QEdit.Show();
         }
 
         private void btn_MX3_new_Click(object sender, EventArgs e)
         {
-
+            if (QEdit != null) QEdit.Dispose();
+            QEdit = new Forms.MXxQueryEdit();
+            QEdit.TargetSystem = "MX3";
+            QEdit.QueryName = cb_MX7_QueryNames.Text;
+            QEdit.QueryDiscription = "";
+            QEdit.Query = lMaximoComm.oracle_get_QueryTemplate_from_GADATA(cb_MX7_QueryNames.Text, "MX3");
+            QEdit.Show();
         }
         #endregion
-
-
-
-
     }
 }

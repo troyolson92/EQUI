@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace ExcelAddInEquipmentDatabase.Forms
 {
@@ -19,8 +20,6 @@ namespace ExcelAddInEquipmentDatabase.Forms
         {
             InitializeComponent();
         }
-
-
 
         public string QueryName
         {
@@ -43,7 +42,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
             var _point = new System.Drawing.Point(Cursor.Position.X, Cursor.Position.Y);
             Top = _point.Y;
             Left = _point.X - this.Size.Width;
-            this.BringToFront();
+            BringToFront();
         }
 
         private void btn_delete_Click(object sender, EventArgs e)
@@ -52,30 +51,50 @@ namespace ExcelAddInEquipmentDatabase.Forms
             {
                 MaximoComm lMaxComm = new MaximoComm();
                 lMaxComm.oracle_delete_Query_GADATA(lTargetSystem, QueryName);
-                this.Close();
-                this.Dispose();
+                Close();
+                Dispose();
             }
             catch (Exception ex)
             {
-              
+                Debug.WriteLine(ex.Message);
+                MessageBox.Show(ex.Message, "OEPS", MessageBoxButtons.OK);
             }
 
         }
 
         private void btn_Save_Click(object sender, EventArgs e)
         {
-            //save should work for new and update 
+            if (QueryName.Length < 4)
+            {
+                MessageBox.Show("Queryname is to short", "OEPS", MessageBoxButtons.OK);
+                return;
+            }
+            if (Query.Length < 4)
+            {
+                MessageBox.Show("Query is to short", "OEPS", MessageBoxButtons.OK);
+                return;
+            }
+
 
             try
             {
                 MaximoComm lMaxComm = new MaximoComm();
+                try
+                { // I know this is stupid but to use UPDATE command i need the build a dataset and AARG 
+                    lMaxComm.oracle_delete_Query_GADATA(lTargetSystem, QueryName);
+                }
+                catch
+                {
+                    //
+                }
                 lMaxComm.oracle_send_new_Query_to_GADATA(lTargetSystem, QueryName, QueryDiscription, Query);
-                this.Close();
-                this.Dispose();
+                Close();
+                Dispose();
             }
             catch (Exception ex)
             {
-
+                Debug.WriteLine(ex.Message);
+                MessageBox.Show(ex.Message, "OEPS", MessageBoxButtons.OK);
             }
         }
 

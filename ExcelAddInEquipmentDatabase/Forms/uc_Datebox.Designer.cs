@@ -83,14 +83,15 @@
             // 
             // dt_1
             // 
-            this.dt_1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.dt_1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dt_1.CustomFormat = "yyyy-MM-dd hh:mm:ss";
             this.dt_1.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dt_1.Location = new System.Drawing.Point(66, 2);
+            this.dt_1.Location = new System.Drawing.Point(65, 2);
             this.dt_1.Margin = new System.Windows.Forms.Padding(2);
             this.dt_1.Name = "dt_1";
-            this.dt_1.Size = new System.Drawing.Size(145, 20);
+            this.dt_1.Size = new System.Drawing.Size(146, 20);
             this.dt_1.TabIndex = 4;
             // 
             // uc_Datebox
