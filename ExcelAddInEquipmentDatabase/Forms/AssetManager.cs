@@ -33,6 +33,7 @@ namespace ExcelAddInEquipmentDatabase
 
         private void form_load(object sender, EventArgs e)
         {
+            Cursor.Current = Cursors.AppStarting;
             //Fill local dataset
             using (applDataTableAdapters.ASSETSTableAdapter adapter = new applDataTableAdapters.ASSETSTableAdapter())
             {
@@ -44,6 +45,7 @@ namespace ExcelAddInEquipmentDatabase
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
             //link datasource for grid (all data on init)
             dataGridView1.DataSource = lASSETS;
+            Cursor.Current = Cursors.Default;
         }
 
         private void refreshGrid1()

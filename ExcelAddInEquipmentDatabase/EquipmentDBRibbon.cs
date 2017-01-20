@@ -45,28 +45,25 @@ namespace ExcelAddInEquipmentDatabase
             {
                 adapter.Fill(lASSETS);
             }
-            //populate with existing workbook connections
-            dd_connections_update();
+            //subscribe to workbook open event
+            Globals.ThisAddIn.Application.WorkbookActivate += Application_WorkbookActivate;
+            //subscribe to sheet change event.
+            Globals.ThisAddIn.Application.SheetActivate += Application_SheetActivate;
+
             //set active workbook
-            activeWorkbook = Globals.ThisAddIn.Application.ActiveWorkbook as Excel.Workbook;
-            //fire event when sheets changes (set the active connection automaitcly)
-            if (activeWorkbook != null)  activeWorkbook.SheetChange += activeWorkbook_SheetChange;
+            //activeWorkbook = Globals.ThisAddIn.Application.ActiveWorkbook as Excel.Workbook;
         }
 
-        //fires on sheetchanges and sets the active connection
-        void activeWorkbook_SheetChange(object Sh, Excel.Range Target)
+        void Application_WorkbookActivate(Excel.Workbook Wb)
         {
-            dd_connections_update();
-            string worksheetconn = activeSheet_connection();
-            foreach (RibbonDropDownItem item in dd_activeConnection.Items)
-            {
-                if ((item.Label == worksheetconn) && (item.Label != dd_activeConnection.SelectedItem.Label))
-                {
-                    dd_activeConnection.SelectedItem = item;
-                    sync_with_activeconnection();
-                }
-            }
+            Set_activeconnection();
         }
+
+        void Application_SheetActivate(object Sh)
+        {
+            Set_activeconnection();
+        }
+
         //returns the connection name of the active sheet 
         private String activeSheet_connection()
         {
@@ -89,23 +86,30 @@ namespace ExcelAddInEquipmentDatabase
          *  =>Only when its a real connection (not refreshall mode)
          *  =>also load the "available" parameters from procmager back into the ribbon 
          */ 
+        private void Set_activeconnection()
+        {
+            dd_connections_update();
+            string worksheetconn = activeSheet_connection();
+            foreach (RibbonDropDownItem item in dd_activeConnection.Items)
+            {
+                if ((item.Label == worksheetconn) && (item.Label != dd_activeConnection.SelectedItem.Label))
+                {
+                    dd_activeConnection.SelectedItem = item;
+                    sync_with_activeconnection();
+                }
+            }
+        }
+
         private void sync_with_activeconnection()
         {
-            if (dd_activeConnection.SelectedItem.Label != "RefreshAll")
-            {
-                if (ProcMngr == null)
+
+                if (ProcMngr != null) ProcMngr.Dispose();
+                if (dd_activeConnection.SelectedItem.Label != "RefreshAll")
                 {
-                    ProcMngr = new StoredProcedureManger(dd_activeConnection.SelectedItem.Label);
-                }
-                else if (ProcMngr.activeconnection != dd_activeConnection.SelectedItem.Label)
-                {
-                    ProcMngr.Close();
-                    ProcMngr.Dispose();
                     ProcMngr = new StoredProcedureManger(dd_activeConnection.SelectedItem.Label);
                 }
                 //event handeler for sheet Hide. (to trigger sync with ribbon)
                 ProcMngr.Deactivate += ProcMngr_Deactivate;
-            }
             //loads the available parameters back into the ribbon
             set_RibonToProcedureManager();
         }
@@ -340,7 +344,8 @@ namespace ExcelAddInEquipmentDatabase
         //create tools instance when needed. (multible instances are allowed for now) 
         private void btn_AssetManager_Click(object sender, RibbonControlEventArgs e)
         {
-            if (AssetManager == null)  AssetMngr = new AssetManager();
+            if (AssetManager != null) AssetManager.Dispose();
+            AssetMngr = new AssetManager();
             AssetMngr.Show();
         }
         private void btn_ConnectionManager_Click(object sender, RibbonControlEventArgs e)
@@ -350,10 +355,5 @@ namespace ExcelAddInEquipmentDatabase
             ConnMng.Show();
         }
         #endregion
-
-        private void btn_refreshconn_Click(object sender, RibbonControlEventArgs e)
-        {
-            dd_connections_update();
-        }
     }
 }

@@ -9,21 +9,25 @@ namespace ExcelAddInEquipmentDatabase
     {
         public string MX7connectionString
         {
-            get{return @"ODBC;DSN=MAXIMO7;Description= MAXIMO7;UID=BGASTHUY;PWD=BGASTHUY$123;"; }
+            get { return @"ODBC;DSN=" + DsnMX7 + ";Description= MAXIMO7;UID=BGASTHUY;PWD=BGASTHUY$123;"; }
         }
         public string SystemMX7 { get { return "MX7"; } }
         public string SystemMX3 { get { return "MX3"; } }
+        public string DsnMX7 { get { return "MAXIMO7"; } }
+        public string DsnMX3 { get { return "MAXIMO3"; } }
 
         public void make_DSN(string System)
         {
             if (System == SystemMX7)
             {
-                ODBCManager.CreateDSN("MAXIMO7", "odbc link MAXIMO7", "dpmxarct"
+                ODBCManager.CreateDSN(DsnMX7, "odbc link MAXIMO7", "dpmxarct"
                     , "MAXIMO7 ODBC for oracle", @"C:\windows\system32\msorcl32.dll", true, "MAXIMO");
             }
             else if (System == SystemMX3)
             {
-
+                throw new Exception("Not implemented");
+              //  ODBCManager.CreateDSN(DsnMX3, "odbc link MAXIMO7", "dpmxarct"
+              //   , "MAXIMO7 ODBC for oracle", @"C:\windows\system32\msorcl32.dll", true, "MAXIMO");
 
             }
 

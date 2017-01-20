@@ -16,13 +16,15 @@ namespace ExcelAddInEquipmentDatabase
         SqlConnection Gadataconn = new SqlConnection("user id=GADATA; password=GADATA987; server=SQLA001.gen.volvocars.net;" +
                                                       "Trusted_Connection=no; database=gadata; connection timeout=30");
 
+        public string DsnGADATA { get { return "GADATA"; } }
+
         public string GADATAconnectionString
         {
-            get { return @"ODBC;DSN=GADATA;Description= GADATA;UID=GADATA;PWD=GADATA987;APP=SQLFront;WSID=GNL1004ZCBQC2\\SDEBEUL;DATABASE=GADATA"; }
+            get { return @"ODBC;DSN="+DsnGADATA+";Description= GADATA;UID=GADATA;PWD=GADATA987;APP=SQLFront;WSID=GNL1004ZCBQC2\\SDEBEUL;DATABASE=GADATA"; }
         }
         public void make_DSN() 
-        {                
-            ODBCManager.CreateDSN("GADATA", "odbc link to sql001.gen.volvocars.net"
+        {
+            ODBCManager.CreateDSN(DsnGADATA, "odbc link to sql001.gen.volvocars.net"
                 , "sqla001.gen.volvocars.net", "SQL Server", @"C:\windows\system32\SQLSRV32.dll", true, "GADATA");
         }
 

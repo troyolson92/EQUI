@@ -53,7 +53,6 @@
             this.btn_nDays = this.Factory.CreateRibbonButton();
             this.gr3 = this.Factory.CreateRibbonGroup();
             this.Btn_debugging = this.Factory.CreateRibbonToggleButton();
-            this.btn_refreshconn = this.Factory.CreateRibbonButton();
             this.g_config = this.Factory.CreateRibbonGroup();
             this.btn_ConnectionManager = this.Factory.CreateRibbonButton();
             this.btn_AssetManager = this.Factory.CreateRibbonButton();
@@ -199,7 +198,6 @@
             // gr3
             // 
             this.gr3.Items.Add(this.Btn_debugging);
-            this.gr3.Items.Add(this.btn_refreshconn);
             this.gr3.Label = "DEBUGGING";
             this.gr3.Name = "gr3";
             // 
@@ -207,12 +205,6 @@
             // 
             this.Btn_debugging.Label = "Enbl_dbg";
             this.Btn_debugging.Name = "Btn_debugging";
-            // 
-            // btn_refreshconn
-            // 
-            this.btn_refreshconn.Label = "connRefresh";
-            this.btn_refreshconn.Name = "btn_refreshconn";
-            this.btn_refreshconn.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_refreshconn_Click);
             // 
             // g_config
             // 
@@ -283,7 +275,6 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonDropDown dd_preselect;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup gr3;
         internal Microsoft.Office.Tools.Ribbon.RibbonToggleButton Btn_debugging;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_refreshconn;
     }
 
     partial class ThisRibbonCollection
