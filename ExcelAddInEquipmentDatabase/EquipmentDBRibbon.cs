@@ -360,5 +360,24 @@ namespace ExcelAddInEquipmentDatabase
             Set_activeconnection();
         }
         #endregion
+
+        private void btn_help_Click(object sender, RibbonControlEventArgs e)
+        {
+            string helpfile = @"\\gnlsnm0101.gen.volvocars.net\proj\6308-Shr-VC024800\OBJECTBEHEER GA\Robots\12. SW + Tools\RobotDatabase\VSTO\Manuals\VSTO EQdatabase.pdf";
+            try
+            {
+                Process process = new Process();
+                ProcessStartInfo startInfo = new ProcessStartInfo();
+                process.StartInfo = startInfo;
+                startInfo.FileName = helpfile;
+                process.Start();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(@"Was not able to open the help file.
+                                 File should be on <"+helpfile+@">
+                                    Exeption:"+ex.Message, "Sorry", MessageBoxButtons.OK);
+            }
+        }
     }
 }

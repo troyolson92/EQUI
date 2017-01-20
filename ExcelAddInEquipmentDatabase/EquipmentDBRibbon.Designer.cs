@@ -56,6 +56,7 @@
             this.g_config = this.Factory.CreateRibbonGroup();
             this.btn_ConnectionManager = this.Factory.CreateRibbonButton();
             this.btn_AssetManager = this.Factory.CreateRibbonButton();
+            this.btn_help = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
             this.rib2.SuspendLayout();
             this.group2.SuspendLayout();
@@ -211,6 +212,7 @@
             this.g_config.DialogLauncher = ribbonDialogLauncherImpl1;
             this.g_config.Items.Add(this.btn_ConnectionManager);
             this.g_config.Items.Add(this.btn_AssetManager);
+            this.g_config.Items.Add(this.btn_help);
             this.g_config.Label = "Configuration";
             this.g_config.Name = "g_config";
             // 
@@ -229,6 +231,14 @@
             this.btn_AssetManager.OfficeImageId = "FormulaMoreFunctionsMenu";
             this.btn_AssetManager.ShowImage = true;
             this.btn_AssetManager.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_AssetManager_Click);
+            // 
+            // btn_help
+            // 
+            this.btn_help.Label = "Help";
+            this.btn_help.Name = "btn_help";
+            this.btn_help.OfficeImageId = "TentativeAcceptInvitation";
+            this.btn_help.ShowImage = true;
+            this.btn_help.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_help_Click);
             // 
             // EquipmentDBRibbon
             // 
@@ -275,6 +285,7 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonDropDown dd_preselect;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup gr3;
         internal Microsoft.Office.Tools.Ribbon.RibbonToggleButton Btn_debugging;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_help;
     }
 
     partial class ThisRibbonCollection
