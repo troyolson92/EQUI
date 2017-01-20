@@ -185,6 +185,7 @@ namespace ExcelAddInEquipmentDatabase
             }
             lb_get_connections();
             this.Hide();
+            this.Dispose();
         }
         private void lb_GADATA_get_SpParams(SqlCommand cmd)
         {
@@ -233,6 +234,7 @@ namespace ExcelAddInEquipmentDatabase
             string ConnectionName = cb_MX7_QueryNames.Text;
             create_ODBC_connection(Query, ODBCconn, ConnectionName);
             this.Hide();
+            this.Dispose();
         }
 
         private void cb_MX7_QueryNames_SelectedIndexChanged(object sender, EventArgs e)
@@ -306,6 +308,9 @@ namespace ExcelAddInEquipmentDatabase
             string ODBCconn = @"ODBC;DSN=MVCGP2;Description= MVCGP2;UID=maximo_ro;PWD=maximo_ro;";
             string ConnectionName = "MX3Test";
             create_ODBC_connection(Query, ODBCconn, ConnectionName);
+
+            this.Hide();
+            this.Dispose();
         }
 
         private void cb_MX3_QueryNames_SelectedIndexChanged(object sender, EventArgs e)

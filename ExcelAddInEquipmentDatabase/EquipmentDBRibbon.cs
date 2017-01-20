@@ -102,7 +102,6 @@ namespace ExcelAddInEquipmentDatabase
 
         private void sync_with_activeconnection()
         {
-
                 if (ProcMngr != null) ProcMngr.Dispose();
                 if (dd_activeConnection.SelectedItem.Label != "RefreshAll")
                 {
@@ -116,7 +115,7 @@ namespace ExcelAddInEquipmentDatabase
 
         void ProcMngr_Deactivate(object sender, EventArgs e)
         {
-            sync_with_activeconnection();
+            set_RibonToProcedureManager();
         }
 
         #region population of comboboxes (dynamic filtering)
@@ -353,6 +352,12 @@ namespace ExcelAddInEquipmentDatabase
             if (ConnMng != null) ConnMng.Dispose();
             ConnMng = new ConnectionManger();
             ConnMng.Show();
+            ConnMng.Disposed += ConnMng_Disposed;
+        }
+
+        void ConnMng_Disposed(object sender, EventArgs e)
+        {
+            Set_activeconnection();
         }
         #endregion
     }
