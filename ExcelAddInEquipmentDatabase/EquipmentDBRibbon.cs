@@ -9,6 +9,7 @@ using System.Data;
 using System.Data.SqlClient;
 using Excel = Microsoft.Office.Interop.Excel;
 using System.Windows.Forms;
+using System.Reflection;
 
 namespace ExcelAddInEquipmentDatabase
 {
@@ -34,6 +35,11 @@ namespace ExcelAddInEquipmentDatabase
 
         private void EquipmentDBRibbon_Load(object sender, RibbonUIEventArgs e)
         {
+            //set build version
+            Assembly _assembly = Assembly.GetExecutingAssembly();
+            FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(_assembly.Location);
+            g_config.Label = string.Format("V:{0}",fvi.ProductVersion,"");
+
             //Fill local dataset
             using (applDataTableAdapters.ASSETSTableAdapter adapter = new applDataTableAdapters.ASSETSTableAdapter())
             {

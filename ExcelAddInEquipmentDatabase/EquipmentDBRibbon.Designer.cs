@@ -53,16 +53,16 @@
             this.btn_nDays = this.Factory.CreateRibbonButton();
             this.gr3 = this.Factory.CreateRibbonGroup();
             this.Btn_debugging = this.Factory.CreateRibbonToggleButton();
-            this.proc_parameters = this.Factory.CreateRibbonGroup();
+            this.btn_refreshconn = this.Factory.CreateRibbonButton();
+            this.g_config = this.Factory.CreateRibbonGroup();
             this.btn_ConnectionManager = this.Factory.CreateRibbonButton();
             this.btn_AssetManager = this.Factory.CreateRibbonButton();
-            this.btn_refreshconn = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
             this.rib2.SuspendLayout();
             this.group2.SuspendLayout();
             this.AssetManager.SuspendLayout();
             this.gr3.SuspendLayout();
-            this.proc_parameters.SuspendLayout();
+            this.g_config.SuspendLayout();
             // 
             // tab1
             // 
@@ -75,7 +75,7 @@
             this.rib2.Groups.Add(this.group2);
             this.rib2.Groups.Add(this.AssetManager);
             this.rib2.Groups.Add(this.gr3);
-            this.rib2.Groups.Add(this.proc_parameters);
+            this.rib2.Groups.Add(this.g_config);
             this.rib2.Label = "EQDATABASE";
             this.rib2.Name = "rib2";
             // 
@@ -208,13 +208,19 @@
             this.Btn_debugging.Label = "Enbl_dbg";
             this.Btn_debugging.Name = "Btn_debugging";
             // 
-            // proc_parameters
+            // btn_refreshconn
             // 
-            this.proc_parameters.DialogLauncher = ribbonDialogLauncherImpl1;
-            this.proc_parameters.Items.Add(this.btn_ConnectionManager);
-            this.proc_parameters.Items.Add(this.btn_AssetManager);
-            this.proc_parameters.Label = "Configuration";
-            this.proc_parameters.Name = "proc_parameters";
+            this.btn_refreshconn.Label = "connRefresh";
+            this.btn_refreshconn.Name = "btn_refreshconn";
+            this.btn_refreshconn.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_refreshconn_Click);
+            // 
+            // g_config
+            // 
+            this.g_config.DialogLauncher = ribbonDialogLauncherImpl1;
+            this.g_config.Items.Add(this.btn_ConnectionManager);
+            this.g_config.Items.Add(this.btn_AssetManager);
+            this.g_config.Label = "Configuration";
+            this.g_config.Name = "g_config";
             // 
             // btn_ConnectionManager
             // 
@@ -231,12 +237,6 @@
             this.btn_AssetManager.OfficeImageId = "FormulaMoreFunctionsMenu";
             this.btn_AssetManager.ShowImage = true;
             this.btn_AssetManager.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_AssetManager_Click);
-            // 
-            // btn_refreshconn
-            // 
-            this.btn_refreshconn.Label = "connRefresh";
-            this.btn_refreshconn.Name = "btn_refreshconn";
-            this.btn_refreshconn.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_refreshconn_Click);
             // 
             // EquipmentDBRibbon
             // 
@@ -255,8 +255,8 @@
             this.AssetManager.PerformLayout();
             this.gr3.ResumeLayout(false);
             this.gr3.PerformLayout();
-            this.proc_parameters.ResumeLayout(false);
-            this.proc_parameters.PerformLayout();
+            this.g_config.ResumeLayout(false);
+            this.g_config.PerformLayout();
 
         }
 
@@ -270,7 +270,7 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonComboBox cb_assets;
         internal Microsoft.Office.Tools.Ribbon.RibbonComboBox cb_Lochierarchy;
         internal Microsoft.Office.Tools.Ribbon.RibbonComboBox cb_locations;
-        internal Microsoft.Office.Tools.Ribbon.RibbonGroup proc_parameters;
+        internal Microsoft.Office.Tools.Ribbon.RibbonGroup g_config;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_Query;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_ConnectionManager;
         internal Microsoft.Office.Tools.Ribbon.RibbonSeparator separator1;

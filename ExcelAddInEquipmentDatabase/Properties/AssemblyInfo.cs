@@ -7,9 +7,9 @@ using System.Security;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("ExcelAddInEquipmentDatabase")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("VSTO pluging for generic GADATA and Maximo connection")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft")]
+[assembly: AssemblyCompany("VCG AAOSR")]
 [assembly: AssemblyProduct("ExcelAddInEquipmentDatabase")]
 [assembly: AssemblyCopyright("Copyright © Microsoft 2017")]
 [assembly: AssemblyTrademark("")]
@@ -33,6 +33,6 @@ using System.Security;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("3.0.0.2")]
+[assembly: AssemblyFileVersion("3.0.0.2")]
 
