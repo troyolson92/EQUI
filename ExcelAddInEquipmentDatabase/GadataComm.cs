@@ -208,7 +208,7 @@ namespace ExcelAddInEquipmentDatabase
         {
             using (applDataTableAdapters.QUERYParametersTableAdapter adapter = new applDataTableAdapters.QUERYParametersTableAdapter())
             {
-                adapter.Delete(System, Procname, Setname,"","");
+                adapter.DeleteSet(System, Procname, Setname);
             }
         }
 

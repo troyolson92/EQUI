@@ -5119,7 +5119,7 @@ SELECT SYSTEM, NAME, SETNAME, DISCRIPTION, Parameter, Value FROM EqUi.QUERYParam
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitCommandCollection() {
-            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[2];
+            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[3];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = "SELECT SYSTEM, NAME, SETNAME, DISCRIPTION, Parameter, Value\r\nFROM     EqUi.QUERYP" +
@@ -5132,11 +5132,19 @@ SELECT SYSTEM, NAME, SETNAME, DISCRIPTION, Parameter, Value FROM EqUi.QUERYParam
             this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Parameter", global::System.Data.SqlDbType.VarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, "Parameter", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[1].Connection = this.Connection;
-            this._commandCollection[1].CommandText = "SELECT SYSTEM, NAME, SETNAME, DISCRIPTION, Parameter, Value\r\nFROM     EqUi.QUERYP" +
-                "arameters\r\nWHERE  (SYSTEM = @System) AND (NAME = @Name)";
+            this._commandCollection[1].CommandText = "DELETE FROM EqUi.QUERYParameters\r\nWHERE  (SYSTEM = @Original_SYSTEM) AND (NAME = " +
+                "@Original_NAME) AND (SETNAME = @Original_SETNAME)";
             this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
-            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@System", global::System.Data.SqlDbType.VarChar, 20, global::System.Data.ParameterDirection.Input, 0, 0, "SYSTEM", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Name", global::System.Data.SqlDbType.VarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, "NAME", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_SYSTEM", global::System.Data.SqlDbType.VarChar, 20, global::System.Data.ParameterDirection.Input, 0, 0, "SYSTEM", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_NAME", global::System.Data.SqlDbType.VarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, "NAME", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_SETNAME", global::System.Data.SqlDbType.VarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, "SETNAME", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._commandCollection[2] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[2].Connection = this.Connection;
+            this._commandCollection[2].CommandText = "SELECT DISCRIPTION, NAME, Parameter, SETNAME, SYSTEM, Value FROM EqUi.QUERYParame" +
+                "ters WHERE (SYSTEM = @System) AND (NAME = @Name)";
+            this._commandCollection[2].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@System", global::System.Data.SqlDbType.VarChar, 20, global::System.Data.ParameterDirection.Input, 0, 0, "SYSTEM", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Name", global::System.Data.SqlDbType.VarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, "NAME", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -5216,7 +5224,7 @@ SELECT SYSTEM, NAME, SETNAME, DISCRIPTION, Parameter, Value FROM EqUi.QUERYParam
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, false)]
         public virtual int FillByProcname(applData.QUERYParametersDataTable dataTable, string System, string Name) {
-            this.Adapter.SelectCommand = this.CommandCollection[1];
+            this.Adapter.SelectCommand = this.CommandCollection[2];
             if ((System == null)) {
                 throw new global::System.ArgumentNullException("System");
             }
@@ -5241,7 +5249,7 @@ SELECT SYSTEM, NAME, SETNAME, DISCRIPTION, Parameter, Value FROM EqUi.QUERYParam
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
         public virtual applData.QUERYParametersDataTable GetDataByProcname(string System, string Name) {
-            this.Adapter.SelectCommand = this.CommandCollection[1];
+            this.Adapter.SelectCommand = this.CommandCollection[2];
             if ((System == null)) {
                 throw new global::System.ArgumentNullException("System");
             }
@@ -5493,6 +5501,47 @@ SELECT SYSTEM, NAME, SETNAME, DISCRIPTION, Parameter, Value FROM EqUi.QUERYParam
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
         public virtual int Update(string DISCRIPTION, string Value, string Original_SYSTEM, string Original_NAME, string Original_SETNAME, string Original_Parameter, string Original_Value) {
             return this.Update(Original_SYSTEM, Original_NAME, Original_SETNAME, DISCRIPTION, Original_Parameter, Value, Original_SYSTEM, Original_NAME, Original_SETNAME, Original_Parameter, Original_Value);
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, false)]
+        public virtual int DeleteSet(string Original_SYSTEM, string Original_NAME, string Original_SETNAME) {
+            global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[1];
+            if ((Original_SYSTEM == null)) {
+                throw new global::System.ArgumentNullException("Original_SYSTEM");
+            }
+            else {
+                command.Parameters[0].Value = ((string)(Original_SYSTEM));
+            }
+            if ((Original_NAME == null)) {
+                throw new global::System.ArgumentNullException("Original_NAME");
+            }
+            else {
+                command.Parameters[1].Value = ((string)(Original_NAME));
+            }
+            if ((Original_SETNAME == null)) {
+                throw new global::System.ArgumentNullException("Original_SETNAME");
+            }
+            else {
+                command.Parameters[2].Value = ((string)(Original_SETNAME));
+            }
+            global::System.Data.ConnectionState previousConnectionState = command.Connection.State;
+            if (((command.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                command.Connection.Open();
+            }
+            int returnValue;
+            try {
+                returnValue = command.ExecuteNonQuery();
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    command.Connection.Close();
+                }
+            }
+            return returnValue;
         }
     }
     
