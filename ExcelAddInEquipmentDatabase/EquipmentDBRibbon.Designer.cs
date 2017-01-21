@@ -113,10 +113,11 @@
             // dd_ParameterSets
             // 
             this.dd_ParameterSets.Enabled = false;
-            this.dd_ParameterSets.Label = "uQuery";
+            this.dd_ParameterSets.Label = "pSets";
             this.dd_ParameterSets.Name = "dd_ParameterSets";
             this.dd_ParameterSets.OfficeImageId = "ImportMoreMenu";
             this.dd_ParameterSets.ShowImage = true;
+            this.dd_ParameterSets.SelectionChanged += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.dd_ParameterSets_SelectionChanged);
             // 
             // btn_EditProcedure
             // 

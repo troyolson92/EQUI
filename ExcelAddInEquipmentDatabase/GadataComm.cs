@@ -231,6 +231,17 @@ namespace ExcelAddInEquipmentDatabase
                     return (from a in lDT select a.Value).First();
                 }
         }
+
+        public List<string> Select_ParmSet_list(string System, string Procname)
+        {
+          using (applDataTableAdapters.QUERYParametersTableAdapter adapter = new applDataTableAdapters.QUERYParametersTableAdapter())
+                {
+                    applData.QUERYParametersDataTable lDT = new applData.QUERYParametersDataTable();
+                    adapter.FillByProcname(lDT, System, Procname);
+                    if (lDT.Count() == 0) return new List<string>();
+                    return (from a in lDT select a.SETNAME).Distinct().ToList();
+                }
+        }
     }
     
     public static class MyStringExtensions

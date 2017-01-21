@@ -30,7 +30,6 @@
         {
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.Btn_saveSet = new System.Windows.Forms.Button();
-            this.btn_load = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // flowLayoutPanel1
@@ -54,17 +53,7 @@
             this.Btn_saveSet.TabIndex = 1;
             this.Btn_saveSet.Text = "Save as set";
             this.Btn_saveSet.UseVisualStyleBackColor = true;
-
-            // 
-            // btn_load
-            // 
-            this.btn_load.Location = new System.Drawing.Point(480, 284);
-            this.btn_load.Name = "btn_load";
-            this.btn_load.Size = new System.Drawing.Size(75, 23);
-            this.btn_load.TabIndex = 2;
-            this.btn_load.Text = "load";
-            this.btn_load.UseVisualStyleBackColor = true;
-
+            this.Btn_saveSet.Click += new System.EventHandler(this.Btn_saveSet_Click);
             // 
             // StoredProcedureManger
             // 
@@ -72,7 +61,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(975, 319);
-            this.Controls.Add(this.btn_load);
             this.Controls.Add(this.Btn_saveSet);
             this.Controls.Add(this.flowLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
@@ -94,6 +82,5 @@
 
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.Button Btn_saveSet;
-        private System.Windows.Forms.Button btn_load;
     }
 }

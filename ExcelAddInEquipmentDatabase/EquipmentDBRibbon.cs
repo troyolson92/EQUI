@@ -41,6 +41,8 @@ namespace ExcelAddInEquipmentDatabase
             FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(_assembly.Location);
             g_config.Label = string.Format("V:{0}",fvi.ProductVersion,"");
 
+            //find connections in wb
+            dd_connections_update();
             //Fill local dataset
             using (applDataTableAdapters.ASSETSTableAdapter adapter = new applDataTableAdapters.ASSETSTableAdapter())
             {
@@ -110,8 +112,10 @@ namespace ExcelAddInEquipmentDatabase
                 }
                 //event handeler for sheet Hide. (to trigger sync with ribbon)
                 ProcMngr.Deactivate += ProcMngr_Deactivate;
-            //loads the available parameters back into the ribbon
-            set_RibonToProcedureManager();
+               //loads the available parameters back into the ribbon
+                set_RibonToProcedureManager();
+               //load parameter sets available on db 
+                dd_ParameterSets_update();
         }
 
         void ProcMngr_Deactivate(object sender, EventArgs e)
@@ -230,19 +234,20 @@ namespace ExcelAddInEquipmentDatabase
         }
         private void dd_ParameterSets_update()
         {
-          dd_ParameterSets.Items.Clear();
-            var data = from a in lParameterSets
-                    where a.SYSTEM == "" && a.NAME == "" 
-                    orderby a.NAME descending
-                    select a.NAME;
-                data.Distinct().ToList();
-             foreach (string set in data)
+             dd_ParameterSets.Enabled = false;
+             dd_ParameterSets.Items.Clear();
+             RibbonDropDownItem item;
+             item = Globals.Factory.GetRibbonFactory().CreateRibbonDropDownItem();
+             item.Label = "UserDef";
+             dd_ParameterSets.Items.Add(item);
+             foreach (string setName in lGadataComm.Select_ParmSet_list(ProcMngr.activeSystem,ProcMngr.ProcedureName))
                 {
-                     RibbonDropDownItem item = Globals.Factory.GetRibbonFactory().CreateRibbonDropDownItem();
-                     item.Label = set;
+                    if (setName == null) break;
+                     item = Globals.Factory.GetRibbonFactory().CreateRibbonDropDownItem();
+                     item.Label = setName;
                      dd_ParameterSets.Items.Add(item);
                 }
-
+             if (dd_ParameterSets.Items.Count() > 1) dd_ParameterSets.Enabled = true;
         }
         private void set_RibonToProcedureManager()
         {
@@ -383,6 +388,13 @@ namespace ExcelAddInEquipmentDatabase
         {
             Set_activeconnection();
         }
+
+        private void dd_ParameterSets_SelectionChanged(object sender, RibbonControlEventArgs e)
+        {
+            ProcMngr.Load_ParmsSet(dd_ParameterSets.SelectedItem.Label);
+            //loads the available parameters back into the ribbon
+            set_RibonToProcedureManager();
+        }
         #endregion
 
         private void btn_help_Click(object sender, RibbonControlEventArgs e)
@@ -403,5 +415,7 @@ namespace ExcelAddInEquipmentDatabase
                                     Exeption:"+ex.Message, "Sorry", MessageBoxButtons.OK);
             }
         }
+
+
     }
 }
