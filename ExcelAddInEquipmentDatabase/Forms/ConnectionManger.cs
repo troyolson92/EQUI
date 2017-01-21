@@ -80,16 +80,6 @@ namespace ExcelAddInEquipmentDatabase
                         oTable.RefreshStyle = Excel.XlCellInsertionMode.xlInsertEntireRows;
                         oTable.Name = connectionName;
                         oTable.Refresh(false); //this failes but everthing worked? 
-
-                        /*
-                        Excel.ListObject oListobject = (Excel.ListObject)oTemplateSheet.ListObjects.AddEx(
-                        SourceType: Excel.XlListObjectSourceType.xlSrcRange,
-                        Source: oRng,
-                        XlListObjectHasHeaders: Excel.XlYesNoGuess.xlYes)
-                        ;
-
-                        oListobject.Name = "Test";
-                         */
                     }
                 }
             }
@@ -118,15 +108,22 @@ namespace ExcelAddInEquipmentDatabase
             Excel._Workbook activeWorkbook = Globals.ThisAddIn.Application.ActiveWorkbook as Excel.Workbook;
             foreach (var connection in activeWorkbook.Connections.Cast<Excel.WorkbookConnection>())
             {
-                switch (connection.Type)
+                try
                 {
-                    case Excel.XlConnectionType.xlConnectionTypeODBC:
-                        var ODBCconString = connection.ODBCConnection.Connection.ToString();
-                        lb_connections.Items.Add(connection.Name);
-                        break;
-                    default:
-                        Debug.WriteLine("connection tpye not supported");
-                        break;
+                    switch (connection.Type)
+                    {
+                        case Excel.XlConnectionType.xlConnectionTypeODBC:
+                            var ODBCconString = connection.ODBCConnection.Connection.ToString();
+                            lb_connections.Items.Add(connection.Name);
+                            break;
+                        default:
+                            Debug.WriteLine("connection tpye not supported");
+                            break;
+                    }
+                }
+                catch (Exception e )
+                {
+                  Debug.WriteLine(e.Message);
                 }
             }
 

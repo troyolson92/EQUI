@@ -9,7 +9,7 @@ namespace ExcelAddInEquipmentDatabase
     {
         public string MX7connectionString
         {
-            get { return @"ODBC;DSN=" + DsnMX7 + ";Description= MAXIMO7;UID=BGASTHUY;PWD=BGASTHUY$123;"; }
+            get { return @"ODBC;DSN=" + DsnMX7 + ";Description= MAXIMO7;UID=ARCTVCG;PWD=volvo123;"; }
         }
         public string SystemMX7 { get { return "MX7"; } }
         public string SystemMX3 { get { return "MX3"; } }

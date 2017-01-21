@@ -21,6 +21,8 @@ namespace ExcelAddInEquipmentDatabase
         MaximoComm lMaximoComm = new MaximoComm();
         //local Asset data instance
         applData.ASSETSDataTable lASSETS = new applData.ASSETSDataTable();
+        //local ParameterSets data instance 
+        applData.QUERYParametersDataTable lParameterSets = new applData.QUERYParametersDataTable();
         //procedure manager instance 
         StoredProcedureManger ProcMngr;
         //asset manager instance
@@ -30,8 +32,7 @@ namespace ExcelAddInEquipmentDatabase
         //intance of datetimepickers;
         dtPicker StartDatePicker;
         dtPicker EndDatePicker;
-        //active workbook
-        Excel.Workbook activeWorkbook; 
+
 
         private void EquipmentDBRibbon_Load(object sender, RibbonUIEventArgs e)
         {
@@ -207,18 +208,41 @@ namespace ExcelAddInEquipmentDatabase
             if (activeWorkbook == null) return; 
                 foreach (var connection in activeWorkbook.Connections.Cast<Excel.WorkbookConnection>())
                 {
-                    switch (connection.Type)
+                    try
                     {
-                        case Excel.XlConnectionType.xlConnectionTypeODBC:
-                            RibbonDropDownItem item = Globals.Factory.GetRibbonFactory().CreateRibbonDropDownItem();
-                            item.Label = connection.Name;
-                            dd_activeConnection.Items.Add(item);
-                            break;
-                        default:
-                            Debug.WriteLine("connection type not supported");
-                            break;
+                        switch (connection.Type)
+                        {
+                            case Excel.XlConnectionType.xlConnectionTypeODBC:
+                                RibbonDropDownItem item = Globals.Factory.GetRibbonFactory().CreateRibbonDropDownItem();
+                                item.Label = connection.Name;
+                                dd_activeConnection.Items.Add(item);
+                                break;
+                            default:
+                                Debug.WriteLine("connection type not supported");
+                                break;
+                        }
+                    }
+                    catch (Exception e )
+                    {
+                        Debug.WriteLine(e.Message);
                     }
                 }
+        }
+        private void dd_ParameterSets_update()
+        {
+          dd_ParameterSets.Items.Clear();
+            var data = from a in lParameterSets
+                    where a.SYSTEM == "" && a.NAME == "" 
+                    orderby a.NAME descending
+                    select a.NAME;
+                data.Distinct().ToList();
+             foreach (string set in data)
+                {
+                     RibbonDropDownItem item = Globals.Factory.GetRibbonFactory().CreateRibbonDropDownItem();
+                     item.Label = set;
+                     dd_ParameterSets.Items.Add(item);
+                }
+
         }
         private void set_RibonToProcedureManager()
         {
@@ -321,12 +345,12 @@ namespace ExcelAddInEquipmentDatabase
                     {
 
                         //connects the ribbon filter controls with the procMngr
-                        if (ProcMngr.get_ODBCconnString_from_activeconnection().Like("%Max%")) //MX7connections
+                        if (ProcMngr.activeSystem == lMaximoComm.DsnMX7) //MX7connections
                         {
                             ProcMngr.MX7_ProcMngrToActiveConnection(lMaximoComm.oracle_get_QueryTemplate_from_GADATA(connection.Name, lMaximoComm.SystemMX7));
                             connection.Refresh();
                         }
-                        else if (ProcMngr.get_ODBCconnString_from_activeconnection().Like("%GADATA%")) //GADATAconnections
+                        else if (ProcMngr.activeSystem == lGadataComm.DsnGADATA) //GADATAconnections
                         {
                             ProcMngr.GADATA_ProcMngrToActiveConnection();
                             connection.Refresh();

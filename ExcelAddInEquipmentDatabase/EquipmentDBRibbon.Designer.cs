@@ -41,7 +41,7 @@
             this.btn_Query = this.Factory.CreateRibbonButton();
             this.separator1 = this.Factory.CreateRibbonSeparator();
             this.dd_activeConnection = this.Factory.CreateRibbonDropDown();
-            this.dd_preselect = this.Factory.CreateRibbonDropDown();
+            this.dd_ParameterSets = this.Factory.CreateRibbonDropDown();
             this.btn_EditProcedure = this.Factory.CreateRibbonButton();
             this.AssetManager = this.Factory.CreateRibbonGroup();
             this.cb_Lochierarchy = this.Factory.CreateRibbonComboBox();
@@ -84,7 +84,7 @@
             this.group2.Items.Add(this.btn_Query);
             this.group2.Items.Add(this.separator1);
             this.group2.Items.Add(this.dd_activeConnection);
-            this.group2.Items.Add(this.dd_preselect);
+            this.group2.Items.Add(this.dd_ParameterSets);
             this.group2.Items.Add(this.btn_EditProcedure);
             this.group2.Label = "Connection Manager";
             this.group2.Name = "group2";
@@ -110,13 +110,13 @@
             this.dd_activeConnection.ShowImage = true;
             this.dd_activeConnection.SelectionChanged += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.dd_activeConnection_SelectionChanged);
             // 
-            // dd_preselect
+            // dd_ParameterSets
             // 
-            this.dd_preselect.Enabled = false;
-            this.dd_preselect.Label = "uQuery";
-            this.dd_preselect.Name = "dd_preselect";
-            this.dd_preselect.OfficeImageId = "ImportMoreMenu";
-            this.dd_preselect.ShowImage = true;
+            this.dd_ParameterSets.Enabled = false;
+            this.dd_ParameterSets.Label = "uQuery";
+            this.dd_ParameterSets.Name = "dd_ParameterSets";
+            this.dd_ParameterSets.OfficeImageId = "ImportMoreMenu";
+            this.dd_ParameterSets.ShowImage = true;
             // 
             // btn_EditProcedure
             // 
@@ -282,7 +282,7 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_nDays;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_EditProcedure;
         internal Microsoft.Office.Tools.Ribbon.RibbonDropDown dd_activeConnection;
-        internal Microsoft.Office.Tools.Ribbon.RibbonDropDown dd_preselect;
+        internal Microsoft.Office.Tools.Ribbon.RibbonDropDown dd_ParameterSets;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup gr3;
         internal Microsoft.Office.Tools.Ribbon.RibbonToggleButton Btn_debugging;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_help;

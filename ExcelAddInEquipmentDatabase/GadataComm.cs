@@ -202,6 +202,35 @@ namespace ExcelAddInEquipmentDatabase
             }
 
         }
+
+        //ProcManagerSets
+        public void delete_ParmSet(string System, string Procname, string Setname)
+        {
+            using (applDataTableAdapters.QUERYParametersTableAdapter adapter = new applDataTableAdapters.QUERYParametersTableAdapter())
+            {
+                adapter.Delete(System, Procname, Setname,"","");
+            }
+        }
+
+        public void insert_ParmSet(string System,string Procname, string Setname, string Parm, string Value)
+        {
+
+            using (applDataTableAdapters.QUERYParametersTableAdapter adapter = new applDataTableAdapters.QUERYParametersTableAdapter())
+            {
+                adapter.Insert(System, Procname, Setname, "", Parm, Value);
+            }
+        }
+
+        public string Select_ParmSet_value (string System, string Procname, string Setname, string Parm)
+        {
+                using (applDataTableAdapters.QUERYParametersTableAdapter adapter = new applDataTableAdapters.QUERYParametersTableAdapter())
+                {
+                    applData.QUERYParametersDataTable lDT = new applData.QUERYParametersDataTable();
+                    adapter.Fill(lDT, System, Procname, Setname, Parm);
+                    if (lDT.Count() == 0) return null;
+                    return (from a in lDT select a.Value).First();
+                }
+        }
     }
     
     public static class MyStringExtensions

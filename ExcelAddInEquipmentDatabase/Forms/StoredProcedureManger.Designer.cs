@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.Btn_saveSet = new System.Windows.Forms.Button();
+            this.btn_load = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // flowLayoutPanel1
@@ -37,25 +39,47 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.flowLayoutPanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(9, 11);
-            this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(2);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(12, 14);
+            this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(713, 237);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(950, 258);
             this.flowLayoutPanel1.TabIndex = 0;
             this.flowLayoutPanel1.WrapContents = false;
             // 
+            // Btn_saveSet
+            // 
+            this.Btn_saveSet.Location = new System.Drawing.Point(771, 284);
+            this.Btn_saveSet.Name = "Btn_saveSet";
+            this.Btn_saveSet.Size = new System.Drawing.Size(75, 23);
+            this.Btn_saveSet.TabIndex = 1;
+            this.Btn_saveSet.Text = "Save as set";
+            this.Btn_saveSet.UseVisualStyleBackColor = true;
+
+            // 
+            // btn_load
+            // 
+            this.btn_load.Location = new System.Drawing.Point(480, 284);
+            this.btn_load.Name = "btn_load";
+            this.btn_load.Size = new System.Drawing.Size(75, 23);
+            this.btn_load.TabIndex = 2;
+            this.btn_load.Text = "load";
+            this.btn_load.UseVisualStyleBackColor = true;
+
+            // 
             // StoredProcedureManger
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(731, 259);
+            this.ClientSize = new System.Drawing.Size(975, 319);
+            this.Controls.Add(this.btn_load);
+            this.Controls.Add(this.Btn_saveSet);
             this.Controls.Add(this.flowLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Location = new System.Drawing.Point(947, 357);
-            this.Margin = new System.Windows.Forms.Padding(2);
-            this.MaximumSize = new System.Drawing.Size(1111, 623);
-            this.MinimumSize = new System.Drawing.Size(614, 259);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.MaximumSize = new System.Drawing.Size(1475, 758);
+            this.MinimumSize = new System.Drawing.Size(813, 310);
             this.Name = "StoredProcedureManger";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
@@ -69,5 +93,7 @@
         #endregion
 
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        private System.Windows.Forms.Button Btn_saveSet;
+        private System.Windows.Forms.Button btn_load;
     }
 }

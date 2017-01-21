@@ -40,7 +40,7 @@
     <PublishUrl>\\gnlsnm0101.gen.volvocars.net\proj\6308-Shr-VC024800\OBJECTBEHEER GA\Robots\12. SW + Tools\RobotDatabase\VSTO\DeploymentBase\</PublishUrl>
     <InstallUrl />
     <TargetCulture>en</TargetCulture>
-    <ApplicationVersion>3.0.1.10</ApplicationVersion>
+    <ApplicationVersion>3.0.1.12</ApplicationVersion>
     <AutoIncrementApplicationRevision>true</AutoIncrementApplicationRevision>
     <UpdateEnabled>true</UpdateEnabled>
     <UpdateInterval>0</UpdateInterval>
@@ -200,6 +200,10 @@
     can be found.
   -->
   <ItemGroup>
+    <Compile Include="applData.cs">
+      <DependentUpon>applData.xsd</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="applData.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
