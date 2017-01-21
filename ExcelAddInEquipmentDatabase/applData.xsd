@@ -48,10 +48,10 @@
           </TableAdapter>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="StoredProceduresTableAdapter" GeneratorDataComponentClassName="StoredProceduresTableAdapter" Name="StoredProcedures" UserDataComponentName="StoredProceduresTableAdapter">
             <MainSource>
-              <DbSource ConnectionRef="GADATAConnectionString (Settings)" DbObjectName="GADATA.INFORMATION_SCHEMA.ROUTINES" DbObjectType="View" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+              <DbSource ConnectionRef="GADATAConnectionString (Settings)" DbObjectName="GADATA.INFORMATION_SCHEMA.ROUTINES" DbObjectType="View" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
-                    <CommandText>select * from GADATA.information_schema.routines where routine_type = 'PROCEDURE' AND SPECIFIC_SCHEMA = 'Volvo'</CommandText>
+                    <CommandText>select * from GADATA.information_schema.routines where routine_type = 'PROCEDURE' AND SPECIFIC_SCHEMA = 'EQUI'</CommandText>
                     <Parameters />
                   </DbCommand>
                 </SelectCommand>
@@ -274,7 +274,7 @@ SELECT SYSTEM, NAME, DISCRIPTION, QUERY FROM EqUi.QUERYS WHERE (NAME = @NAME) AN
   <xs:element name="applData" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="applData" msprop:Generator_UserDSName="applData">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="ASSETS" msprop:Generator_TableClassName="ASSETSDataTable" msprop:Generator_TableVarName="tableASSETS" msprop:Generator_TablePropName="ASSETS" msprop:Generator_RowDeletingName="ASSETSRowDeleting" msprop:Generator_RowChangingName="ASSETSRowChanging" msprop:Generator_RowEvHandlerName="ASSETSRowChangeEventHandler" msprop:Generator_RowDeletedName="ASSETSRowDeleted" msprop:Generator_UserTableName="ASSETS" msprop:Generator_RowChangedName="ASSETSRowChanged" msprop:Generator_RowEvArgName="ASSETSRowChangeEvent" msprop:Generator_RowClassName="ASSETSRow">
+        <xs:element name="ASSETS" msprop:Generator_TableClassName="ASSETSDataTable" msprop:Generator_TableVarName="tableASSETS" msprop:Generator_RowChangedName="ASSETSRowChanged" msprop:Generator_TablePropName="ASSETS" msprop:Generator_RowDeletingName="ASSETSRowDeleting" msprop:Generator_RowChangingName="ASSETSRowChanging" msprop:Generator_RowEvHandlerName="ASSETSRowChangeEventHandler" msprop:Generator_RowDeletedName="ASSETSRowDeleted" msprop:Generator_RowClassName="ASSETSRow" msprop:Generator_UserTableName="ASSETS" msprop:Generator_RowEvArgName="ASSETSRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="SYSTEMID" msprop:Generator_ColumnVarNameInTable="columnSYSTEMID" msprop:Generator_ColumnPropNameInRow="SYSTEMID" msprop:Generator_ColumnPropNameInTable="SYSTEMIDColumn" msprop:Generator_UserColumnName="SYSTEMID" minOccurs="0">
@@ -330,7 +330,7 @@ SELECT SYSTEM, NAME, DISCRIPTION, QUERY FROM EqUi.QUERYS WHERE (NAME = @NAME) AN
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="StoredProcedures" msprop:Generator_TableClassName="StoredProceduresDataTable" msprop:Generator_TableVarName="tableStoredProcedures" msprop:Generator_TablePropName="StoredProcedures" msprop:Generator_RowDeletingName="StoredProceduresRowDeleting" msprop:Generator_RowChangingName="StoredProceduresRowChanging" msprop:Generator_RowEvHandlerName="StoredProceduresRowChangeEventHandler" msprop:Generator_RowDeletedName="StoredProceduresRowDeleted" msprop:Generator_UserTableName="StoredProcedures" msprop:Generator_RowChangedName="StoredProceduresRowChanged" msprop:Generator_RowEvArgName="StoredProceduresRowChangeEvent" msprop:Generator_RowClassName="StoredProceduresRow">
+        <xs:element name="StoredProcedures" msprop:Generator_TableClassName="StoredProceduresDataTable" msprop:Generator_TableVarName="tableStoredProcedures" msprop:Generator_RowChangedName="StoredProceduresRowChanged" msprop:Generator_TablePropName="StoredProcedures" msprop:Generator_RowDeletingName="StoredProceduresRowDeleting" msprop:Generator_RowChangingName="StoredProceduresRowChanging" msprop:Generator_RowEvHandlerName="StoredProceduresRowChangeEventHandler" msprop:Generator_RowDeletedName="StoredProceduresRowDeleted" msprop:Generator_RowClassName="StoredProceduresRow" msprop:Generator_UserTableName="StoredProcedures" msprop:Generator_RowEvArgName="StoredProceduresRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="SPECIFIC_CATALOG" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnSPECIFIC_CATALOG" msprop:Generator_ColumnPropNameInRow="SPECIFIC_CATALOG" msprop:Generator_ColumnPropNameInTable="SPECIFIC_CATALOGColumn" msprop:Generator_UserColumnName="SPECIFIC_CATALOG" minOccurs="0">
@@ -627,7 +627,7 @@ SELECT SYSTEM, NAME, DISCRIPTION, QUERY FROM EqUi.QUERYS WHERE (NAME = @NAME) AN
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="QUERYParameters" msprop:Generator_TableClassName="QUERYParametersDataTable" msprop:Generator_TableVarName="tableQUERYParameters" msprop:Generator_TablePropName="QUERYParameters" msprop:Generator_RowDeletingName="QUERYParametersRowDeleting" msprop:Generator_RowChangingName="QUERYParametersRowChanging" msprop:Generator_RowEvHandlerName="QUERYParametersRowChangeEventHandler" msprop:Generator_RowDeletedName="QUERYParametersRowDeleted" msprop:Generator_UserTableName="QUERYParameters" msprop:Generator_RowChangedName="QUERYParametersRowChanged" msprop:Generator_RowEvArgName="QUERYParametersRowChangeEvent" msprop:Generator_RowClassName="QUERYParametersRow">
+        <xs:element name="QUERYParameters" msprop:Generator_TableClassName="QUERYParametersDataTable" msprop:Generator_TableVarName="tableQUERYParameters" msprop:Generator_RowChangedName="QUERYParametersRowChanged" msprop:Generator_TablePropName="QUERYParameters" msprop:Generator_RowDeletingName="QUERYParametersRowDeleting" msprop:Generator_RowChangingName="QUERYParametersRowChanging" msprop:Generator_RowEvHandlerName="QUERYParametersRowChangeEventHandler" msprop:Generator_RowDeletedName="QUERYParametersRowDeleted" msprop:Generator_RowClassName="QUERYParametersRow" msprop:Generator_UserTableName="QUERYParameters" msprop:Generator_RowEvArgName="QUERYParametersRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="SYSTEM" msprop:Generator_ColumnVarNameInTable="columnSYSTEM" msprop:Generator_ColumnPropNameInRow="SYSTEM" msprop:Generator_ColumnPropNameInTable="SYSTEMColumn" msprop:Generator_UserColumnName="SYSTEM">
@@ -675,7 +675,7 @@ SELECT SYSTEM, NAME, DISCRIPTION, QUERY FROM EqUi.QUERYS WHERE (NAME = @NAME) AN
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="QUERYS" msprop:Generator_TableClassName="QUERYSDataTable" msprop:Generator_TableVarName="tableQUERYS" msprop:Generator_TablePropName="QUERYS" msprop:Generator_RowDeletingName="QUERYSRowDeleting" msprop:Generator_RowChangingName="QUERYSRowChanging" msprop:Generator_RowEvHandlerName="QUERYSRowChangeEventHandler" msprop:Generator_RowDeletedName="QUERYSRowDeleted" msprop:Generator_UserTableName="QUERYS" msprop:Generator_RowChangedName="QUERYSRowChanged" msprop:Generator_RowEvArgName="QUERYSRowChangeEvent" msprop:Generator_RowClassName="QUERYSRow">
+        <xs:element name="QUERYS" msprop:Generator_TableClassName="QUERYSDataTable" msprop:Generator_TableVarName="tableQUERYS" msprop:Generator_RowChangedName="QUERYSRowChanged" msprop:Generator_TablePropName="QUERYS" msprop:Generator_RowDeletingName="QUERYSRowDeleting" msprop:Generator_RowChangingName="QUERYSRowChanging" msprop:Generator_RowEvHandlerName="QUERYSRowChangeEventHandler" msprop:Generator_RowDeletedName="QUERYSRowDeleted" msprop:Generator_RowClassName="QUERYSRow" msprop:Generator_UserTableName="QUERYS" msprop:Generator_RowEvArgName="QUERYSRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="SYSTEM" msprop:Generator_ColumnVarNameInTable="columnSYSTEM" msprop:Generator_ColumnPropNameInRow="SYSTEM" msprop:Generator_ColumnPropNameInTable="SYSTEMColumn" msprop:Generator_UserColumnName="SYSTEM">

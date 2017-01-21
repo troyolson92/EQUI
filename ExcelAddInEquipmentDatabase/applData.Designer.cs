@@ -4843,7 +4843,7 @@ namespace ExcelAddInEquipmentDatabase.applDataTableAdapters {
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = "select * from GADATA.information_schema.routines where routine_type = \'PROCEDURE\'" +
-                " AND SPECIFIC_SCHEMA = \'Volvo\'";
+                " AND SPECIFIC_SCHEMA = \'EQUI\'";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
