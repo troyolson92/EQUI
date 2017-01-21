@@ -73,9 +73,9 @@ namespace ExcelAddInEquipmentDatabase
            DataTable tableFromMx7 = new DataTable();
            tableFromMx7 = lGadataComm.GetAssetListFromMX7();
            //Create destination table  in GADATA
-           string CmdDeleteTableData = @"DELETE FROM [Volvo].[ASSETS_fromMX7] FROM [Volvo].[ASSETS_fromMX7]";
-           string CmdCreateTable = @"
-            CREATE TABLE [Volvo].[ASSETS_fromMX7](
+           string CmdDeleteTableData = @"DELETE FROM [Equi].[ASSETS_fromMX7] FROM [Equi].[ASSETS_fromMX7]";
+         /*  string CmdCreateTable = @"
+            CREATE TABLE [Equi].[ASSETS_fromMX7](
 	            [SYSTEMID] [varchar](255) NULL,
 	            [LOCATION] [varchar](255) NULL,
 	            [LocationDescription] [varchar](255) NULL,
@@ -83,13 +83,14 @@ namespace ExcelAddInEquipmentDatabase
 	            [AssetDescription] [varchar](255) NULL,
 	            [LocationTree] [varchar](max) NULL
             ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
-            ";
+            ";*/
            lGadataComm.RunCommandGadata(CmdDeleteTableData);
-           lGadataComm.RunCommandGadata(CmdCreateTable);
+          // lGadataComm.RunCommandGadata(CmdCreateTable);
            //send the data to the SQL GADATA SERVER 
-           lGadataComm.BulkCopyToGadata("VOLVO", tableFromMx7, "ASSETS_fromMX7");
+           lGadataComm.BulkCopyToGadata("Equi", tableFromMx7, "ASSETS_fromMX7");
+            //run a command to links maximo assets with our c_controller tables
            string CmdUpdateAssetsControllers = @"
-                DROP TABLE GADATA.volvo.ASSETS 
+                DROP TABLE GADATA.Equi.ASSETS 
                 SELECT [SYSTEMID]
                       ,assets.[LOCATION]
                       ,assets.[ASSETNUM]
@@ -98,8 +99,8 @@ namespace ExcelAddInEquipmentDatabase
 	                  ,ISNULL(r.controller_name,rr.controller_name) as 'controller_name'
 	                  ,ISNULL(r.controller_type,rr.controller_type) as 'controller_type'
 	                  ,ISNULL(r.id,rr.id) as 'controller_id'
-                  INTO GADATA.volvo.ASSETS
-                  FROM [GADATA].[Volvo].[ASSETS_fromMX7] as assets
+                  INTO GADATA.Equi.ASSETS
+                  FROM [GADATA].[Equi].[ASSETS_fromMX7] as assets
                   --join robot assets with there controller
                   left join GADATA.volvo.Robots as r on 
                   r.controller_name = assets.LOCATION
@@ -238,7 +239,8 @@ namespace ExcelAddInEquipmentDatabase
             DialogResult result = MessageBox.Show("Are you sure? This will change the server side tabels!!!", "Confirmation", MessageBoxButtons.YesNoCancel);
             if (result == DialogResult.Yes)
             {
-                UpdateMaximoAssetsToGadata();
+                 result = MessageBox.Show("disbaled in source code need to fix safety issue to c_controller", "OEPS", MessageBoxButtons.YesNoCancel);
+                //UpdateMaximoAssetsToGadata();
             }
             else if (result == DialogResult.No)
             {

@@ -13,14 +13,14 @@ namespace ExcelAddInEquipmentDatabase
     public class GadataComm
     {
         //connection to GADATA
-        SqlConnection Gadataconn = new SqlConnection("user id=GADATA; password=GADATA987; server=SQLA001.gen.volvocars.net;" +
+        SqlConnection Gadataconn = new SqlConnection("user id=EqUi; password=EqUi; server=SQLA001.gen.volvocars.net;" +
                                                       "Trusted_Connection=no; database=gadata; connection timeout=30");
 
         public string DsnGADATA { get { return "GADATA"; } }
 
         public string GADATAconnectionString
         {
-            get { return @"ODBC;DSN="+DsnGADATA+";Description= GADATA;UID=GADATA;PWD=GADATA987;APP=SQLFront;WSID=GNL1004ZCBQC2\\SDEBEUL;DATABASE=GADATA"; }
+            get { return @"ODBC;DSN=" + DsnGADATA + ";Description= GADATA;UID=EqUi;PWD=EqUi;APP=SQLFront;WSID=GNL1004ZCBQC2\\SDEBEUL;DATABASE=GADATA"; }
         }
         public void make_DSN() 
         {
@@ -142,7 +142,7 @@ namespace ExcelAddInEquipmentDatabase
         //connection To MX7
         public DataTable GetAssetListFromMX7()
         {
-            string strCon = @"DRIVER={Microsoft ODBC for Oracle};UID=BGASTHUY;PWD=BGASTHUY$123;SERVER=dpmxarct";
+            string strCon = @"DRIVER={Microsoft ODBC for Oracle};UID=ARCTVCG;PWD=volvo123;SERVER=dpmxarct";
             string strSql = @"
      SELECT DISTINCT
                  l1.SYSTEMID

@@ -4570,7 +4570,7 @@ namespace ExcelAddInEquipmentDatabase.applDataTableAdapters {
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = @"INSERT INTO [Volvo].[ASSETS] ([SYSTEMID], [LOCATION], [ASSETNUM], [AssetDescription], [LocationTree], [controller_name], [controller_type], [controller_id]) VALUES (@SYSTEMID, @LOCATION, @ASSETNUM, @AssetDescription, @LocationTree, @controller_name, @controller_type, @controller_id)";
+            this._adapter.InsertCommand.CommandText = @"INSERT INTO [EqUi].[ASSETS] ([SYSTEMID], [LOCATION], [ASSETNUM], [AssetDescription], [LocationTree], [controller_name], [controller_type], [controller_id]) VALUES (@SYSTEMID, @LOCATION, @ASSETNUM, @AssetDescription, @LocationTree, @controller_name, @controller_type, @controller_id)";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SYSTEMID", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SYSTEMID", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@LOCATION", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "LOCATION", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -4596,7 +4596,7 @@ namespace ExcelAddInEquipmentDatabase.applDataTableAdapters {
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = "SELECT SYSTEMID, LOCATION, ASSETNUM, AssetDescription, LocationTree, controller_n" +
-                "ame, controller_type, controller_id FROM Volvo.ASSETS";
+                "ame, controller_type, controller_id FROM  EqUi.ASSETS";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
@@ -4651,75 +4651,6 @@ namespace ExcelAddInEquipmentDatabase.applDataTableAdapters {
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         public virtual int Update(global::System.Data.DataRow[] dataRows) {
             return this.Adapter.Update(dataRows);
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(string SYSTEMID, string LOCATION, string ASSETNUM, string AssetDescription, string LocationTree, string controller_name, string controller_type, global::System.Nullable<int> controller_id) {
-            if ((SYSTEMID == null)) {
-                this.Adapter.InsertCommand.Parameters[0].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[0].Value = ((string)(SYSTEMID));
-            }
-            if ((LOCATION == null)) {
-                this.Adapter.InsertCommand.Parameters[1].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[1].Value = ((string)(LOCATION));
-            }
-            if ((ASSETNUM == null)) {
-                this.Adapter.InsertCommand.Parameters[2].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[2].Value = ((string)(ASSETNUM));
-            }
-            if ((AssetDescription == null)) {
-                this.Adapter.InsertCommand.Parameters[3].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[3].Value = ((string)(AssetDescription));
-            }
-            if ((LocationTree == null)) {
-                this.Adapter.InsertCommand.Parameters[4].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[4].Value = ((string)(LocationTree));
-            }
-            if ((controller_name == null)) {
-                this.Adapter.InsertCommand.Parameters[5].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[5].Value = ((string)(controller_name));
-            }
-            if ((controller_type == null)) {
-                this.Adapter.InsertCommand.Parameters[6].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[6].Value = ((string)(controller_type));
-            }
-            if ((controller_id.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[7].Value = ((int)(controller_id.Value));
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[7].Value = global::System.DBNull.Value;
-            }
-            global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
-            if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
-                        != global::System.Data.ConnectionState.Open)) {
-                this.Adapter.InsertCommand.Connection.Open();
-            }
-            try {
-                int returnValue = this.Adapter.InsertCommand.ExecuteNonQuery();
-                return returnValue;
-            }
-            finally {
-                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
-                    this.Adapter.InsertCommand.Connection.Close();
-                }
-            }
         }
     }
     
