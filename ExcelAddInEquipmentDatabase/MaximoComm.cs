@@ -2,11 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Data;
+using System.Diagnostics;
+using Oracle.DataAccess.Client;
+using Oracle.DataAccess.Types;
 
 namespace ExcelAddInEquipmentDatabase
 {
     class MaximoComm
     {
+        OracleConnection Maximo7conn = new OracleConnection("data source = dpmxarct;user id = ARCTVCG;password=volvo123");
+
         public string MX7connectionString
         {
             get { return @"ODBC;DSN=" + DsnMX7 + ";Description= MAXIMO7;UID=ARCTVCG;PWD=volvo123;"; }
@@ -32,6 +38,8 @@ namespace ExcelAddInEquipmentDatabase
             }
 
         }
+
+        //maximo comm TO GADATA
 
         public void oracle_update_Query_to_GADATA(string System, string Queryname, string QueryDiscription, string Query)
         {
@@ -126,6 +134,49 @@ namespace ExcelAddInEquipmentDatabase
             }
             return _parmList;
         }
+
+        //comm to maximo
+
+        public string GetClobMaximo7(string as_query)
+        {
+            try
+            {
+                Maximo7conn.Open();
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.ToString());
+            }
+            try
+            {
+                using (OracleCommand myCommand = new OracleCommand(as_query, Maximo7conn))
+                {
+                    OracleDataReader dr = myCommand.ExecuteReader();
+                    dr.Read();
+                    OracleClob Clob = dr.GetOracleClob(0);
+                    string result = Clob.Value;
+                    Clob.Close();
+                    dr.Close();
+                    try
+                    {
+                       Maximo7conn.Close();
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.WriteLine(e.ToString());
+                    }
+                    return result;
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.ToString());
+                return null;
+            }
+
+
+        }
+
 
     }
     public class OracleQueryParm

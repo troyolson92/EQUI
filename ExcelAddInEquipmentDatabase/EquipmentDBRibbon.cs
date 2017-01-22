@@ -424,9 +424,8 @@ namespace ExcelAddInEquipmentDatabase
 
         private void btn_testWs_Click(object sender, RibbonControlEventArgs e)
         {
-           // WorksheetFeatures.TestCondFormat();
-            WorksheetFeatures wsf = new WorksheetFeatures();
-            wsf.AddExampleMenuItem();
+            Forms.MXxWOdetails Mxxdet = new Forms.MXxWOdetails();
+            Mxxdet.Show();
         }
 
 

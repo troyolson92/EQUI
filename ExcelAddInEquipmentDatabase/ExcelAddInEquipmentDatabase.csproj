@@ -167,6 +167,7 @@
     <Reference Include="Office, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
+    <Reference Include="Oracle.DataAccess, Version=4.121.2.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86" />
     <Reference Include="stdole, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
@@ -236,6 +237,12 @@
     <Compile Include="Forms\MXxQueryEdit.Designer.cs">
       <DependentUpon>MXxQueryEdit.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\MXxWOdetails.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MXxWOdetails.Designer.cs">
+      <DependentUpon>MXxWOdetails.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\uc_Datebox.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -274,6 +281,9 @@
     <Compile Include="WorksheetFeatures.cs" />
     <EmbeddedResource Include="Forms\MXxQueryEdit.resx">
       <DependentUpon>MXxQueryEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MXxWOdetails.resx">
+      <DependentUpon>MXxWOdetails.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\uc_Datebox.resx">
       <DependentUpon>uc_Datebox.cs</DependentUpon>
