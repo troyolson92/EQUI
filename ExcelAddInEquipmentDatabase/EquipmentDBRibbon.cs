@@ -41,6 +41,10 @@ namespace ExcelAddInEquipmentDatabase
             FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(_assembly.Location);
             g_config.Label = string.Format("V:{0}",fvi.ProductVersion,"");
 
+            //Enable dbg here.
+
+            //check here for offline mode. (disabels Querys)
+
             //find connections in wb
             dd_connections_update();
             //Fill local dataset
@@ -53,9 +57,11 @@ namespace ExcelAddInEquipmentDatabase
             //subscribe to sheet change event.
             Globals.ThisAddIn.Application.SheetActivate += Application_SheetActivate;
 
-            //set active workbook
-            //activeWorkbook = Globals.ThisAddIn.Application.ActiveWorkbook as Excel.Workbook;
+            //test for contect menus 
+            //WorksheetFeatures wsf = new WorksheetFeatures();
+            //Globals.ThisAddIn.Application.SheetBeforeRightClick += wsf.Application_SheetBeforeRightClick;
         }
+
 
         void Application_WorkbookActivate(Excel.Workbook Wb)
         {
@@ -414,6 +420,13 @@ namespace ExcelAddInEquipmentDatabase
                                  File should be on <"+helpfile+@">
                                     Exeption:"+ex.Message, "Sorry", MessageBoxButtons.OK);
             }
+        }
+
+        private void btn_testWs_Click(object sender, RibbonControlEventArgs e)
+        {
+           // WorksheetFeatures.TestCondFormat();
+            WorksheetFeatures wsf = new WorksheetFeatures();
+            wsf.AddExampleMenuItem();
         }
 
 

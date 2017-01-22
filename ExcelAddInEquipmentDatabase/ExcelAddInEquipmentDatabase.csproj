@@ -40,7 +40,7 @@
     <PublishUrl>\\gnlsnm0101.gen.volvocars.net\proj\6308-Shr-VC024800\OBJECTBEHEER GA\Robots\12. SW + Tools\RobotDatabase\VSTO\DeploymentBase\</PublishUrl>
     <InstallUrl />
     <TargetCulture>en</TargetCulture>
-    <ApplicationVersion>3.0.1.13</ApplicationVersion>
+    <ApplicationVersion>3.0.1.15</ApplicationVersion>
     <AutoIncrementApplicationRevision>true</AutoIncrementApplicationRevision>
     <UpdateEnabled>true</UpdateEnabled>
     <UpdateInterval>0</UpdateInterval>
@@ -271,6 +271,7 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="WorksheetFeatures.cs" />
     <EmbeddedResource Include="Forms\MXxQueryEdit.resx">
       <DependentUpon>MXxQueryEdit.cs</DependentUpon>
     </EmbeddedResource>

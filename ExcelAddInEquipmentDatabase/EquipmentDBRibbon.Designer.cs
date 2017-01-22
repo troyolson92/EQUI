@@ -54,9 +54,13 @@
             this.gr3 = this.Factory.CreateRibbonGroup();
             this.Btn_debugging = this.Factory.CreateRibbonToggleButton();
             this.g_config = this.Factory.CreateRibbonGroup();
+            this.tbtn_Autorefresh = this.Factory.CreateRibbonToggleButton();
+            this.tbtn_AlertMe = this.Factory.CreateRibbonToggleButton();
+            this.dd_User = this.Factory.CreateRibbonDropDown();
             this.btn_ConnectionManager = this.Factory.CreateRibbonButton();
             this.btn_AssetManager = this.Factory.CreateRibbonButton();
             this.btn_help = this.Factory.CreateRibbonButton();
+            this.btn_testWs = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
             this.rib2.SuspendLayout();
             this.group2.SuspendLayout();
@@ -200,6 +204,7 @@
             // gr3
             // 
             this.gr3.Items.Add(this.Btn_debugging);
+            this.gr3.Items.Add(this.btn_testWs);
             this.gr3.Label = "DEBUGGING";
             this.gr3.Name = "gr3";
             // 
@@ -211,11 +216,32 @@
             // g_config
             // 
             this.g_config.DialogLauncher = ribbonDialogLauncherImpl1;
+            this.g_config.Items.Add(this.tbtn_Autorefresh);
+            this.g_config.Items.Add(this.tbtn_AlertMe);
+            this.g_config.Items.Add(this.dd_User);
             this.g_config.Items.Add(this.btn_ConnectionManager);
             this.g_config.Items.Add(this.btn_AssetManager);
             this.g_config.Items.Add(this.btn_help);
             this.g_config.Label = "Configuration";
             this.g_config.Name = "g_config";
+            // 
+            // tbtn_Autorefresh
+            // 
+            this.tbtn_Autorefresh.Enabled = false;
+            this.tbtn_Autorefresh.Label = "AutoRefresh";
+            this.tbtn_Autorefresh.Name = "tbtn_Autorefresh";
+            // 
+            // tbtn_AlertMe
+            // 
+            this.tbtn_AlertMe.Enabled = false;
+            this.tbtn_AlertMe.Label = "Alert Me";
+            this.tbtn_AlertMe.Name = "tbtn_AlertMe";
+            // 
+            // dd_User
+            // 
+            this.dd_User.Enabled = false;
+            this.dd_User.Label = "U:";
+            this.dd_User.Name = "dd_User";
             // 
             // btn_ConnectionManager
             // 
@@ -240,6 +266,12 @@
             this.btn_help.OfficeImageId = "TentativeAcceptInvitation";
             this.btn_help.ShowImage = true;
             this.btn_help.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_help_Click);
+            // 
+            // btn_testWs
+            // 
+            this.btn_testWs.Label = "NEN TEST KNOP";
+            this.btn_testWs.Name = "btn_testWs";
+            this.btn_testWs.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_testWs_Click);
             // 
             // EquipmentDBRibbon
             // 
@@ -287,6 +319,10 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup gr3;
         internal Microsoft.Office.Tools.Ribbon.RibbonToggleButton Btn_debugging;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_help;
+        internal Microsoft.Office.Tools.Ribbon.RibbonToggleButton tbtn_Autorefresh;
+        internal Microsoft.Office.Tools.Ribbon.RibbonToggleButton tbtn_AlertMe;
+        internal Microsoft.Office.Tools.Ribbon.RibbonDropDown dd_User;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_testWs;
     }
 
     partial class ThisRibbonCollection
