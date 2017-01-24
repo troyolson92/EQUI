@@ -424,7 +424,7 @@ namespace ExcelAddInEquipmentDatabase
 
         private void btn_testWs_Click(object sender, RibbonControlEventArgs e)
         {
-            Forms.MXxWOdetails Mxxdet = new Forms.MXxWOdetails();
+            Forms.MXxWOdetails Mxxdet = new Forms.MXxWOdetails(null);
             Mxxdet.Show();
         }
 

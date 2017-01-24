@@ -39,15 +39,15 @@
             this.wb_longdescrption.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.wb_longdescrption.Location = new System.Drawing.Point(12, 92);
+            this.wb_longdescrption.Location = new System.Drawing.Point(12, 34);
             this.wb_longdescrption.MinimumSize = new System.Drawing.Size(20, 20);
             this.wb_longdescrption.Name = "wb_longdescrption";
-            this.wb_longdescrption.Size = new System.Drawing.Size(556, 437);
+            this.wb_longdescrption.Size = new System.Drawing.Size(556, 495);
             this.wb_longdescrption.TabIndex = 1;
             // 
             // btn_get
             // 
-            this.btn_get.Location = new System.Drawing.Point(292, 5);
+            this.btn_get.Location = new System.Drawing.Point(191, 5);
             this.btn_get.Name = "btn_get";
             this.btn_get.Size = new System.Drawing.Size(75, 23);
             this.btn_get.TabIndex = 2;
@@ -57,7 +57,7 @@
             // 
             // tb_LONGDESCRIPTIONID
             // 
-            this.tb_LONGDESCRIPTIONID.Location = new System.Drawing.Point(175, 6);
+            this.tb_LONGDESCRIPTIONID.Location = new System.Drawing.Point(85, 6);
             this.tb_LONGDESCRIPTIONID.Name = "tb_LONGDESCRIPTIONID";
             this.tb_LONGDESCRIPTIONID.Size = new System.Drawing.Size(100, 22);
             this.tb_LONGDESCRIPTIONID.TabIndex = 3;
@@ -67,9 +67,9 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(12, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(157, 17);
+            this.label1.Size = new System.Drawing.Size(67, 17);
             this.label1.TabIndex = 4;
-            this.label1.Text = "LONGDESCRIPTIONID:";
+            this.label1.Text = "WONUM:";
             // 
             // MXxWOdetails
             // 

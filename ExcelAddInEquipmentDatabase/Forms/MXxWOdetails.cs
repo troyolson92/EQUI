@@ -13,14 +13,26 @@ namespace ExcelAddInEquipmentDatabase.Forms
     public partial class MXxWOdetails : Form
     {
         MaximoComm lMaximocomm = new MaximoComm();
-        public MXxWOdetails()
+        public MXxWOdetails(string wonum)
         {
             //8624949 wo gemaakt met 9 uur verslag in als test voor browser
             InitializeComponent();
-            tb_LONGDESCRIPTIONID.Text = "8624949";
-        }
+            if (wonum != null)
+            {
+                tb_LONGDESCRIPTIONID.Text = wonum;
+                tb_LONGDESCRIPTIONID.Enabled = false;
+                btn_get.Visible = false;
+                getMaximoDetails();
+            }
+            else
+            {
+                tb_LONGDESCRIPTIONID.Text = "8624949";
+                tb_LONGDESCRIPTIONID.Enabled = true;
+                btn_get.Visible = true;
+            }
 
-        private void btn_get_Click(object sender, EventArgs e)
+        }
+        private void getMaximoDetails()
         {
             string cmdFAILUREREMARK = (@"
                 select LD.LDTEXT
@@ -47,6 +59,11 @@ namespace ExcelAddInEquipmentDatabase.Forms
             sb.AppendLine("").Append(sEb).AppendLine("").AppendLine("");
 
             wb_longdescrption.DocumentText = sb.ToString();
+        }
+
+        private void btn_get_Click(object sender, EventArgs e)
+        {
+            getMaximoDetails();
         }
 
     }
