@@ -23,6 +23,8 @@ namespace ExcelAddInEquipmentDatabase
         applData.ASSETSDataTable lASSETS = new applData.ASSETSDataTable();
         //local ParameterSets data instance 
         applData.QUERYParametersDataTable lParameterSets = new applData.QUERYParametersDataTable();
+        //local worsksheet function instance
+        WorksheetFeatures lWorksheetFeatures = new WorksheetFeatures();
         //procedure manager instance 
         StoredProcedureManger ProcMngr;
         //asset manager instance
@@ -56,10 +58,8 @@ namespace ExcelAddInEquipmentDatabase
             Globals.ThisAddIn.Application.WorkbookActivate += Application_WorkbookActivate;
             //subscribe to sheet change event.
             Globals.ThisAddIn.Application.SheetActivate += Application_SheetActivate;
-
-            //test for contect menus 
-            //WorksheetFeatures wsf = new WorksheetFeatures();
-            //Globals.ThisAddIn.Application.SheetBeforeRightClick += wsf.Application_SheetBeforeRightClick;
+            //subscribe to before rightclick for context menus.
+            Globals.ThisAddIn.Application.SheetBeforeRightClick += lWorksheetFeatures.Application_SheetBeforeRightClick;
         }
 
 
