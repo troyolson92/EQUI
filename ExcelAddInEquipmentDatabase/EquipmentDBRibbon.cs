@@ -49,11 +49,6 @@ namespace ExcelAddInEquipmentDatabase
 
             //find connections in wb
             dd_connections_update();
-            //Fill local dataset
-            using (applDataTableAdapters.ASSETSTableAdapter adapter = new applDataTableAdapters.ASSETSTableAdapter())
-            {
-                adapter.Fill(lASSETS);
-            }
             //subscribe to workbook open event
             Globals.ThisAddIn.Application.WorkbookActivate += Application_WorkbookActivate;
             //subscribe to sheet change event.
@@ -131,8 +126,20 @@ namespace ExcelAddInEquipmentDatabase
 
         #region population of comboboxes (dynamic filtering)
         //population of dynamic boxes
+        private void load_assetsDataset()
+        {
+            if (lASSETS == null)
+            {
+                //Fill local dataset
+                using (applDataTableAdapters.ASSETSTableAdapter adapter = new applDataTableAdapters.ASSETSTableAdapter())
+                {
+                    adapter.Fill(lASSETS);
+                }
+            }
+        }
         private void cb_lochierarchy_update()
         {
+            load_assetsDataset();
             cb_Lochierarchy.Items.Clear();
             try
             {
@@ -159,6 +166,7 @@ namespace ExcelAddInEquipmentDatabase
         }
         private void cb_locations_update()
         {
+            load_assetsDataset();
             cb_locations.Items.Clear();
             try
             {
@@ -184,6 +192,7 @@ namespace ExcelAddInEquipmentDatabase
         }
         private void cb_assets_update()
         {
+            load_assetsDataset();
             cb_assets.Items.Clear();
             try
             {
@@ -424,8 +433,7 @@ namespace ExcelAddInEquipmentDatabase
 
         private void btn_testWs_Click(object sender, RibbonControlEventArgs e)
         {
-            Forms.MXxWOdetails Mxxdet = new Forms.MXxWOdetails(null);
-            Mxxdet.Show();
+
         }
 
 

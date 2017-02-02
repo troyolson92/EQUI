@@ -133,10 +133,26 @@ namespace ExcelAddInEquipmentDatabase
         {
             SqlCommand cmd = new SqlCommand(sp_name, Gadataconn);
             cmd.CommandType = CommandType.StoredProcedure;
+            try
+            {
                 Gadataconn.Open();
-                SqlCommandBuilder.DeriveParameters(cmd);
-                Gadataconn.Close();
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.ToString());
+            }
+            try
+            {
+                    SqlCommandBuilder.DeriveParameters(cmd);
+                    Gadataconn.Close();
+                    return cmd;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.ToString());
                 return cmd;
+            }
+
         }
 
         //connection To MX7

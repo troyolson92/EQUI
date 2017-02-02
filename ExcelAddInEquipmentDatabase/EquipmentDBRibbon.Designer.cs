@@ -53,6 +53,7 @@
             this.btn_nDays = this.Factory.CreateRibbonButton();
             this.gr3 = this.Factory.CreateRibbonGroup();
             this.Btn_debugging = this.Factory.CreateRibbonToggleButton();
+            this.btn_testWs = this.Factory.CreateRibbonButton();
             this.g_config = this.Factory.CreateRibbonGroup();
             this.tbtn_Autorefresh = this.Factory.CreateRibbonToggleButton();
             this.tbtn_AlertMe = this.Factory.CreateRibbonToggleButton();
@@ -60,7 +61,6 @@
             this.btn_ConnectionManager = this.Factory.CreateRibbonButton();
             this.btn_AssetManager = this.Factory.CreateRibbonButton();
             this.btn_help = this.Factory.CreateRibbonButton();
-            this.btn_testWs = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
             this.rib2.SuspendLayout();
             this.group2.SuspendLayout();
@@ -213,6 +213,12 @@
             this.Btn_debugging.Label = "Enbl_dbg";
             this.Btn_debugging.Name = "Btn_debugging";
             // 
+            // btn_testWs
+            // 
+            this.btn_testWs.Label = "NEN TEST KNOP";
+            this.btn_testWs.Name = "btn_testWs";
+            this.btn_testWs.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_testWs_Click);
+            // 
             // g_config
             // 
             this.g_config.DialogLauncher = ribbonDialogLauncherImpl1;
@@ -266,12 +272,6 @@
             this.btn_help.OfficeImageId = "TentativeAcceptInvitation";
             this.btn_help.ShowImage = true;
             this.btn_help.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_help_Click);
-            // 
-            // btn_testWs
-            // 
-            this.btn_testWs.Label = "NEN TEST KNOP";
-            this.btn_testWs.Name = "btn_testWs";
-            this.btn_testWs.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_testWs_Click);
             // 
             // EquipmentDBRibbon
             // 

@@ -15,6 +15,8 @@ namespace ExcelAddInEquipmentDatabase
         Excel._Worksheet lClickedSheet;
         //dbg 
         string wonum;
+        string errornum;
+        Office.CommandBarButton btn;
 
         public void Application_SheetBeforeRightClick(object Sh, Excel.Range Target, ref bool Cancel)
         {
@@ -23,19 +25,26 @@ namespace ExcelAddInEquipmentDatabase
             //foreach collum in collums with a switch statement that add controlls 
             foreach (Excel.ListObject oListobject in lClickedSheet.ListObjects)
             {
+                //standard button for sheet formating
+                btn = AddButtonToTableMenuItem("FormatSheet");
+                btn.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(FormatMenuItemClick);
+                //
+
                 foreach (Excel.ListColumn oListColum in oListobject.ListColumns)
                 {
                  //Debug.WriteLine("ListColum: {0} Column: {1}", oListColum.Name, oListColum.Range.Column);
                     switch (oListColum.Name)
                       {
                           case "WONUM":
-                              wonum = (string)lClickedSheet.Cells[Target.Row, oListColum.Range.Column].Value;
-        
-                              AddButtonToTableMenuItem("WorkorderDetails");
+                              wonum = (string)Convert.ToString(lClickedSheet.Cells[Target.Row, oListColum.Range.Column].Value);
+                              btn = AddButtonToTableMenuItem("WorkorderDetails");
+                              btn.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(WorkorderDetailsMenuItemClick);
                               break;
 
                           case "ERROR":
-
+                              errornum = (string)Convert.ToString(lClickedSheet.Cells[Target.Row, oListColum.Range.Column].Value);
+                              btn = AddButtonToTableMenuItem("ErrorDetails");
+                              btn.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(ErrorDetailsMenuItemClick);
                               break;
 
                           default:
@@ -51,6 +60,7 @@ namespace ExcelAddInEquipmentDatabase
                 Debug.WriteLine(oQueryTable.Name);
             }
         }
+
         // reset the Table context menu back to the default
         private void ResetTableMenu()
         {
@@ -62,38 +72,79 @@ namespace ExcelAddInEquipmentDatabase
             return Globals.ThisAddIn.Application.CommandBars["List Range Popup"];
         }
         //for adding a control button
-        public void AddButtonToTableMenuItem(string btnName) // how to pass event handelere here ?
+        public  Office.CommandBarButton AddButtonToTableMenuItem(string btnName) // how to pass event handelere here ?
         {
             Office.MsoControlType menuItem = Office.MsoControlType.msoControlButton;
             Office.CommandBarButton btn = (Office.CommandBarButton)GetTableContextMenu().Controls.Add(menuItem, Type.Missing, Type.Missing, 1, true);
 
             btn.Style = Office.MsoButtonStyle.msoButtonCaption;
             btn.Caption = btnName;
-            btn.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(WorkorderDetailsMenuItemClick);
+            return btn;
         }
 
         //**********************************Table formatting*********************************************
         //create formatting on table 
         private static void AddFormatToTable(Excel._Worksheet Sheet, string TriggerCollum, string TriggerValue, Int32 BackgroundColor) //this works
         {
-            //find table name on sheet
+            foreach (Excel.ListObject oListobject in Sheet.ListObjects)
+            {
+                foreach (Excel.ListColumn oListColum in oListobject.ListColumns)
+                {
+                    if (oListColum.Name == TriggerCollum)
+                    {
+                         String collumLetter = GetExcelColumnLetter(oListColum.Range.Column);
+                        Excel.FormatCondition format = (Excel.FormatCondition)(Sheet.get_Range(oListobject.Name,
+                                Type.Missing).FormatConditions.Add(Excel.XlFormatConditionType.xlExpression, Excel.XlFormatConditionOperator.xlEqual,
+                                "=$" + collumLetter + "2  = \"" + TriggerValue + "\"", Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing));
 
-            //find collum in that table 
-
-            Excel.FormatCondition format = (Excel.FormatCondition)(Sheet.get_Range("table1",
-                    Type.Missing).FormatConditions.Add(Excel.XlFormatConditionType.xlExpression, Excel.XlFormatConditionOperator.xlEqual,
-                    "=$D2  = \"SHIFTBOOK\"", Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing));
-
-            format.StopIfTrue = false;
-            format.Font.Bold = true;
-            format.Font.Color = BackgroundColor;
+                        format.StopIfTrue = false;
+                        //format.Font.Bold = true;
+                        format.Interior.Color = BackgroundColor;
+                    }
+                }
+            }
         }
+        //converts collum number to leter 
+        private static string GetExcelColumnLetter(int columnNumber)
+        {
+            int dividend = columnNumber;
+            string columnName = String.Empty;
+            int modulo;
+
+            while (dividend > 0)
+            {
+                modulo = (dividend - 1) % 26;
+                columnName = Convert.ToChar(65 + modulo).ToString() + columnName;
+                dividend = (int)((dividend - modulo) / 26);
+            }
+
+            return columnName;
+        }
+        //remove sheets format condtions
+        private static void ClearFormatConditions(Excel._Worksheet Sheet)
+        {
+            foreach (Excel.ListObject oListobject in Sheet.ListObjects)
+            {
+                Sheet.get_Range(oListobject.Name).FormatConditions.Delete();   
+            }
+
+        }
+
         //create Robotdb default format rules 
-        private static void AddRobotFormatting(Excel._Worksheet Sheet)
+        public static void AddRobotFormatting(Excel._Worksheet Sheet)
         { 
-        // find existing rules for table and remove;
-            AddFormatToTable(Sheet, "ERRORTYPE", "SHIFTBOOK", 0x000000FF);
-            AddFormatToTable(Sheet, "ERRORTYPE", "BREAKDOWN", 0x000000FF);
+        // find existing rules for table and remove
+            ClearFormatConditions(Sheet);
+           //
+            AddFormatToTable(Sheet, "Errortype", "SHIFTBOOK", 8708322);
+            AddFormatToTable(Sheet, "Errortype", "WARNING",16760832);
+            AddFormatToTable(Sheet, "Errortype", "ALERT", 16724940);
+            AddFormatToTable(Sheet, "Errortype", "SLOWspeed", 16305069);
+            AddFormatToTable(Sheet, "Errortype", "LIVE", 16711680);
+            AddFormatToTable(Sheet, "Errortype", "BREAKDOWN", 45296);
+            AddFormatToTable(Sheet, "Errortype", "BEGIN", 45136);
+            AddFormatToTable(Sheet, "Errortype", "TI", 11128974);
+
         }
         //event handelere for format button
         void FormatMenuItemClick(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)
@@ -101,69 +152,18 @@ namespace ExcelAddInEquipmentDatabase
             AddRobotFormatting(lClickedSheet);
         }
 
-
         //**********************************workorder details*********************************************
         void WorkorderDetailsMenuItemClick(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)
         {
             Forms.MXxWOdetails lMXxWOdetails = new Forms.MXxWOdetails(wonum); //allow multible instances of the form.
             lMXxWOdetails.Show();
         }
-
-
-
-
-//*******************************************************************************************************************************************
-        //testing stuff
-
-        //testing with condition formatting rules
-        /*
-         * will store table on db. 'format sets'
-         * ie a format set called robot std will containt a list of collums and if collum value = apply format style
-         */
-        public static void TestCondFormat() //this works
+        //**********************************Error details*********************************************
+        void ErrorDetailsMenuItemClick(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)
         {
-            Excel.Worksheet activeWorksheet = Globals.ThisAddIn.Application.ActiveSheet as Excel.Worksheet;
-
-            Excel.FormatCondition format = (Excel.FormatCondition)(activeWorksheet.get_Range("table1",
-                    Type.Missing).FormatConditions.Add(Excel.XlFormatConditionType.xlExpression, Excel.XlFormatConditionOperator.xlEqual,
-                    "=$D2  = \"SHIFTBOOK\"", Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing));
-
-            format.StopIfTrue = false;
-            format.Font.Bold = true;
-            format.Font.Color = 0x000000FF;
-          //  format.Font.Background = 0x000000FF;
+            System.Windows.Forms.MessageBox.Show("not done");
         }
 
-        //testing with context menu
-            public  void AddExampleMenuItem()
-            {
-                Office.MsoControlType menuItem = Office.MsoControlType.msoControlButton;
-                Office.CommandBarButton exampleMenuItem = (Office.CommandBarButton)GetTableContextMenu().Controls.Add(menuItem, Type.Missing, Type.Missing, 1, true);
-
-                exampleMenuItem.Style = Office.MsoButtonStyle.msoButtonCaption;
-                exampleMenuItem.Caption = "Example Menu Item";
-                exampleMenuItem.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(exampleMenuItemClick);
-            }
-
-            void exampleMenuItemClick(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)
-            {
-                System.Windows.Forms.MessageBox.Show("Example Menu Item clicked");
-            }
-
-            private void RemoveCutCopyPasteMenuItems()
-            {
-                Office.CommandBar contextMenu = GetTableContextMenu();
-
-                for (int i = contextMenu.Controls.Count; i > 0; i--)
-                {
-                    Office.CommandBarControl control = contextMenu.Controls[i];
-
-                    if (control.Caption == "Cu&t") control.Delete();  // Sample code: remove cut menu item
-                    else if (control.Caption == "&Copy") control.Delete();  // Sample code: remove copy menu item
-                    else if (control.accDescription.Contains("Paste")) control.Delete(); // Sample code: remove any paste menu items
-                }
-            }
-        
 
     }
 }

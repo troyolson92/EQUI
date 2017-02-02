@@ -49,14 +49,13 @@ namespace ExcelAddInEquipmentDatabase.Forms
             cmdFAILUREREMARK = string.Format(cmdFAILUREREMARK, tb_LONGDESCRIPTIONID.Text);
             cmdLONGDESCRIPTION = string.Format(cmdLONGDESCRIPTION, tb_LONGDESCRIPTIONID.Text);
 
-            string sEb = "*********************************************************";
+            string sEb = "<div>***************************</div>";
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine(sEb).AppendLine("LONGDESCRIPTION").AppendLine(sEb).AppendLine("").AppendLine("");
+            sb.AppendLine(sEb).AppendLine("<div>LONGDESCRIPTION</div>").AppendLine(sEb);
             sb.AppendLine(lMaximocomm.GetClobMaximo7(cmdLONGDESCRIPTION));
-            sb.AppendLine("").Append(sEb).AppendLine("").AppendLine("");
-            sb.AppendLine(sEb).AppendLine("FAILUREREMARK").AppendLine(sEb).AppendLine("").AppendLine("");
+
+            sb.AppendLine(sEb).AppendLine("<div>FAILUREREMARK</div>").AppendLine(sEb);
             sb.AppendLine(lMaximocomm.GetClobMaximo7(cmdFAILUREREMARK));
-            sb.AppendLine("").Append(sEb).AppendLine("").AppendLine("");
 
             wb_longdescrption.DocumentText = sb.ToString();
         }
