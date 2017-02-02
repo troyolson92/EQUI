@@ -90,7 +90,7 @@ namespace ExcelAddInEquipmentDatabase
             {
                 foreach (Excel.ListColumn oListColum in oListobject.ListColumns)
                 {
-                    if (oListColum.Name == TriggerCollum)
+                    if (oListColum.Name.ToUpper() == TriggerCollum.ToUpper())
                     {
                          String collumLetter = GetExcelColumnLetter(oListColum.Range.Column);
                         Excel.FormatCondition format = (Excel.FormatCondition)(Sheet.get_Range(oListobject.Name,

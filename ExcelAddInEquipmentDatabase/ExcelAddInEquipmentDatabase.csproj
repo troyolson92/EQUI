@@ -231,6 +231,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DataClassesGADATA.dbml</DependentUpon>
     </Compile>
+    <Compile Include="Forms\GadataErrorDetails.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\GadataErrorDetails.Designer.cs">
+      <DependentUpon>GadataErrorDetails.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\MXxQueryEdit.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -279,6 +285,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="WorksheetFeatures.cs" />
+    <EmbeddedResource Include="Forms\GadataErrorDetails.resx">
+      <DependentUpon>GadataErrorDetails.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\MXxQueryEdit.resx">
       <DependentUpon>MXxQueryEdit.cs</DependentUpon>
     </EmbeddedResource>
