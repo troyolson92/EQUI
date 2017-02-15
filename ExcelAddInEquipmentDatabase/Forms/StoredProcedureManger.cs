@@ -243,6 +243,10 @@ namespace ExcelAddInEquipmentDatabase
                             {
                                 nInputbInt.active = true;
                                 string sValuefirst = Query.Substring(Query.IndexOf(p.ParameterName) + p.ParameterName.Length).Split('=')[1].Trim();
+                                if (sValuefirst.Contains(',') )
+                                {
+                                    sValuefirst = sValuefirst.Split(',')[0].Trim();
+                                }
                                 nInputbInt.input = sValuefirst.Split(' ')[0].Trim();
                             }
                             flowLayoutPanel1.Controls.Add(nInputbInt);

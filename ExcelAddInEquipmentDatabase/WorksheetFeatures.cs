@@ -26,8 +26,11 @@ namespace ExcelAddInEquipmentDatabase
             foreach (Excel.ListObject oListobject in lClickedSheet.ListObjects)
             {
                 //standard button for sheet formating
-                btn = AddButtonToTableMenuItem("FormatSheet");
-                btn.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(FormatMenuItemClick);
+                btn = AddButtonToTableMenuItem("FormatSheetData");
+                btn.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(ApplyRobotFromattingClick);
+                //
+                btn = AddButtonToTableMenuItem("FormatSheetWorkorder");
+                btn.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(ApplyWorkorderFromattingClick);
                 //
 
                 foreach (Excel.ListColumn oListColum in oListobject.ListColumns)
@@ -146,10 +149,26 @@ namespace ExcelAddInEquipmentDatabase
             AddFormatToTable(Sheet, "Errortype", "TI", 11128974);
 
         }
+        //create Workorder default format rules 
+        public static void AddWorkorderFormatting(Excel._Worksheet Sheet)
+        {
+            // find existing rules for table and remove
+            ClearFormatConditions(Sheet);
+            //
+            AddFormatToTable(Sheet, "ACTSTATUS", "INPRG", 16305069);
+            AddFormatToTable(Sheet, "ACTSTATUS", "DRAFT", 16711680);
+            AddFormatToTable(Sheet, "ACTSTATUS", "WAPPR", 16711680);
+            AddFormatToTable(Sheet, "ACTSTATUS", "COMP", 45136);
+
+        }
         //event handelere for format button
-        void FormatMenuItemClick(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)
+        void ApplyRobotFromattingClick(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)
         {
             AddRobotFormatting(lClickedSheet);
+        }
+        void ApplyWorkorderFromattingClick(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)
+        {
+            AddWorkorderFormatting(lClickedSheet);
         }
 
         //**********************************workorder details*********************************************
