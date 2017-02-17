@@ -20,17 +20,37 @@ namespace ExcelAddInEquipmentDatabase.Forms
         public DocManager()
         {
             InitializeComponent();
+            lv_result.Columns.Add("Index", -2, HorizontalAlignment.Left);
+            lv_result.Columns.Add("Filename", -2, HorizontalAlignment.Left);
+            lv_result.Columns.Add("FullFilePath", -2, HorizontalAlignment.Left);
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             List<string> LOGSearchpaths = new List<String>() { @"\\gnlsnm0101.gen.volvocars.net\6308-APP-NASROBOTBCK0001\robot_ga\VEDOC AAOSR\ABB\IRC5-NGAC\Sharepoint_FP_3Doc_17w05d1" };
             List<string> ResultList = ReqSearchDir(LOGSearchpaths, "*.PDF", tb_InFile.Text);
-            listBox1.Items.Clear(); 
-          //  string file = @"Z:\robot_ga\VEDOC AAOSR\ABB\IRC5-NGAC\Sharepoint_FP_3Doc_17w05d1\SW_doc\Type H\ABB_FP_Handling_VCC V3.3.pdf";
+            lv_result.Items.Clear();
+
+            if (ResultList.Count() > 25)
+            {
+                DialogResult result = MessageBox.Show(
+                                    string.Format(@"Are you sure? 
+                                    Your pdl search for '{0}' returned {1} files
+                                    Searching them all could take a long time",tb_InFile.Text,ResultList.Count())
+                                    , "Confirmation", MessageBoxButtons.YesNo);
+                if (result == DialogResult.No){ return; } //abort
+            }
+            
             foreach (string file in ResultList)
             {
-                getbookmarks(file);
+                try
+                {
+                    getbookmarks(file);
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(file + "  Error: " + ex.Message);
+                }
             }
   
         }
@@ -42,21 +62,31 @@ namespace ExcelAddInEquipmentDatabase.Forms
             using (PdfDocument document = PdfReader.Open(fullFilePath, PdfDocumentOpenMode.Import))
             {
                 PdfDictionary outline = document.Internals.Catalog.Elements.GetDictionary("/Outlines");
-                PrintBookmark(outline, Path.GetFileName(fullFilePath));
+                if (outline != null)
+                {
+                    PrintBookmark(outline, fullFilePath);
+                }
+                else
+                {
+                    Debug.WriteLine("Does not have index :" + fullFilePath);
+                }
             }
         }
 
-  void PrintBookmark(PdfDictionary bookmark, string sActFile)
+  void PrintBookmark(PdfDictionary bookmark, string sFullFilepath)
         {
-            string item = bookmark.Elements.GetString("/Title");   
-              if (item.Contains(tb_inIndex.Text))
+            string sBookmark = bookmark.Elements.GetString("/Title");
+            if (sBookmark.Contains(tb_inIndex.Text))
               {
-                  listBox1.Items.Add(sActFile + ": " + item);
+                  ListViewItem lvitem = new ListViewItem(sBookmark);
+                  lvitem.SubItems.Add(Path.GetFileName(sFullFilepath));
+                  lvitem.SubItems.Add(sFullFilepath);
+                  lv_result.Items.Add(lvitem);
               }
-           Debug.WriteLine(bookmark.Elements.GetString("/Title"));
+           //Debug.WriteLine(bookmark.Elements.GetString("/Title"));
             for (PdfDictionary child = bookmark.Elements.GetDictionary("/First"); child != null; child = child.Elements.GetDictionary("/Next"))
             {
-                PrintBookmark(child,sActFile);
+                PrintBookmark(child, sFullFilepath);
             }
         }
 
@@ -68,11 +98,10 @@ namespace ExcelAddInEquipmentDatabase.Forms
       {
           foreach (string filepath in als_filepaths)
           {
-              Debug.WriteLine("\r Searching: {1} Found: {0:D3}", List.Count, filepath.Substring(Math.Max(0, filepath.Length - 40)));
               var allFiles = Directory.GetFiles(filepath, as_mask, SearchOption.AllDirectories);
               foreach (string f in allFiles)
               {
-                  if (f.Contains(as_fileNameMask)) { List.Add(f);}
+                  if (Path.GetFileName(f).Contains(as_fileNameMask)) { List.Add(f);}
               }
           }
       }
