@@ -21,18 +21,12 @@ namespace ExcelAddInEquipmentDatabase
         public void Application_SheetBeforeRightClick(object Sh, Excel.Range Target, ref bool Cancel)
         {
             lClickedSheet = Sh as Excel._Worksheet; //pass the sheet so we can work with it 
-            ResetTableMenu();  // reset the cell context menu back to the default
+            ResetTableMenu();  // reset the cell context menu back to the default (can mess up other peoples code)
             //foreach collum in collums with a switch statement that add controlls 
             foreach (Excel.ListObject oListobject in lClickedSheet.ListObjects)
             {
-                //standard button for sheet formating
-                btn = AddButtonToTableMenuItem("FormatSheetData");
-                btn.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(ApplyRobotFromattingClick);
+                addFormattingSubmenu();
                 //
-                btn = AddButtonToTableMenuItem("FormatSheetWorkorder");
-                btn.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(ApplyWorkorderFromattingClick);
-                //
-
                 foreach (Excel.ListColumn oListColum in oListobject.ListColumns)
                 {
                  //Debug.WriteLine("ListColum: {0} Column: {1}", oListColum.Name, oListColum.Range.Column);
@@ -85,6 +79,7 @@ namespace ExcelAddInEquipmentDatabase
             return btn;
         }
 
+
         //**********************************Table formatting*********************************************
         //create formatting on table 
         private static void AddFormatToTable(Excel._Worksheet Sheet, string TriggerCollum, string TriggerValue, Int32 BackgroundColor) //this works
@@ -134,7 +129,7 @@ namespace ExcelAddInEquipmentDatabase
         }
 
         //create Robotdb default format rules 
-        public static void AddRobotFormatting(Excel._Worksheet Sheet)
+        private static void AddRobotFormatting(Excel._Worksheet Sheet)
         { 
         // find existing rules for table and remove
             ClearFormatConditions(Sheet);
@@ -150,7 +145,7 @@ namespace ExcelAddInEquipmentDatabase
 
         }
         //create Workorder default format rules 
-        public static void AddWorkorderFormatting(Excel._Worksheet Sheet)
+        private static void AddWorkorderFormatting(Excel._Worksheet Sheet)
         {
             // find existing rules for table and remove
             ClearFormatConditions(Sheet);
@@ -160,6 +155,25 @@ namespace ExcelAddInEquipmentDatabase
             AddFormatToTable(Sheet, "ACTSTATUS", "WAPPR", 16711680);
             AddFormatToTable(Sheet, "ACTSTATUS", "COMP", 45136);
 
+        }
+        //submenu for formatting tables
+        public void addFormattingSubmenu()
+        {
+            Office.MsoControlType menuItem = Office.MsoControlType.msoControlButton;
+
+            Office.MsoControlType ControlPopup = Office.MsoControlType.msoControlPopup;
+            Office.CommandBarPopup subMenu = (Office.CommandBarPopup)GetTableContextMenu().Controls.Add(ControlPopup, Type.Missing, Type.Missing, 1, true);
+            subMenu.Caption = "Auto formatting";
+            //
+            Office.CommandBarButton btnFormatSheetData = (Office.CommandBarButton)subMenu.Controls.Add(menuItem, Type.Missing, Type.Missing, 1, true);
+            btnFormatSheetData.Style = Office.MsoButtonStyle.msoButtonCaption;
+            btnFormatSheetData.Caption = "GADATA default";
+            btnFormatSheetData.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(ApplyRobotFromattingClick);
+            //
+            Office.CommandBarButton btnFormatSheetWorkorder = (Office.CommandBarButton)subMenu.Controls.Add(menuItem, Type.Missing, Type.Missing, 1, true);
+            btnFormatSheetWorkorder.Style = Office.MsoButtonStyle.msoButtonCaption;
+            btnFormatSheetWorkorder.Caption = "Maximo default";
+            btnFormatSheetWorkorder.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(ApplyWorkorderFromattingClick);
         }
         //event handelere for format button
         void ApplyRobotFromattingClick(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)
