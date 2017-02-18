@@ -6,12 +6,14 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-
-using PdfSharp.Pdf;
-using PdfSharp.Pdf.IO;
 using System.Diagnostics;
 using System.IO;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using System.Threading;
 
+using iTextSharp.text;
+using iTextSharp.text.pdf;
 
 namespace ExcelAddInEquipmentDatabase.Forms
 {
@@ -20,73 +22,117 @@ namespace ExcelAddInEquipmentDatabase.Forms
         public DocManager()
         {
             InitializeComponent();
-            lv_result.Columns.Add("Index", -2, HorizontalAlignment.Left);
             lv_result.Columns.Add("Filename", -2, HorizontalAlignment.Left);
+            lv_result.Columns.Add("Bookmark", -2, HorizontalAlignment.Left);
+            lv_result.Columns.Add("Page", -2, HorizontalAlignment.Left);
             lv_result.Columns.Add("FullFilePath", -2, HorizontalAlignment.Left);
+            lv_result.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+            lbl_info.Text = "Idle";
+            BindingSource bs = new BindingSource();
+            bs.DataSource = new List<string> {
+                  "Type A"
+                    , "Type D and HD"
+                    , "Type H"
+                    , "Type HDp"
+                    , "Type HN"
+                    , "Type Hse"
+                    , "Type HSeSe"
+                    , "Type HRe"
+                    , "Type NutRunner"
+                    , "Type Se"
+                    , "Type T"
+            };
+            cb_path.DataSource = bs;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btn_find_Click(object sender, EventArgs e)
         {
-            List<string> LOGSearchpaths = new List<String>() { @"\\gnlsnm0101.gen.volvocars.net\6308-APP-NASROBOTBCK0001\robot_ga\VEDOC AAOSR\ABB\IRC5-NGAC\Sharepoint_FP_3Doc_17w05d1" };
-            List<string> ResultList = ReqSearchDir(LOGSearchpaths, "*.PDF", tb_InFile.Text);
+            btn_find.Enabled = false;
             lv_result.Items.Clear();
-
+            List<string> LOGSearchpaths = new List<String>() { @"\\gnl9011102\proj\6308-Shr-VCC03100\TechnischeDocs\Robots\ABB\IRC5 - NGAC\Sharepoint_FP_3Doc_17w05d1" };
+            lbl_info.Text = "Scanning for files";
+            Cursor.Current = Cursors.AppStarting;
+            List<string> ResultList = ReqSearchDir(LOGSearchpaths, "*.PDF", cb_path.Text);
+            Cursor.Current = Cursors.Default;
+            btn_find.Enabled = true;
+            lbl_info.Text = string.Format("Found: {0} files ",ResultList.Count());
             if (ResultList.Count() > 25)
             {
                 DialogResult result = MessageBox.Show(
                                     string.Format(@"Are you sure? 
                                     Your pdl search for '{0}' returned {1} files
-                                    Searching them all could take a long time",tb_InFile.Text,ResultList.Count())
+                                    Searching them all could take a long time", cb_path.Text, ResultList.Count())
                                     , "Confirmation", MessageBoxButtons.YesNo);
-                if (result == DialogResult.No){ return; } //abort
+                if (result == DialogResult.No) { return; } //abort
             }
-            
-            foreach (string file in ResultList)
-            {
-                try
-                {
-                    getbookmarks(file);
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine(file + "  Error: " + ex.Message);
-                }
-            }
-  
+            //process files in other task.
+            //Task.Factory.StartNew(() => processFiles(ResultList)); //crosstrheading issue 
+            btn_find.Enabled = false;
+            processFiles(ResultList);
+            lbl_info.Text = "Done";
+            lv_result.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+            btn_find.Enabled = true;
         }
 
-
-
-  void getbookmarks(string fullFilePath)
+        void processFiles(List<string> FileList)
         {
-            using (PdfDocument document = PdfReader.Open(fullFilePath, PdfDocumentOpenMode.Import))
+            int iProgress = 0;
+            foreach (string file in FileList)
             {
-                PdfDictionary outline = document.Internals.Catalog.Elements.GetDictionary("/Outlines");
-                if (outline != null)
-                {
-                    PrintBookmark(outline, fullFilePath);
-                }
-                else
-                {
-                    Debug.WriteLine("Does not have index :" + fullFilePath);
-                }
+                //add an item for the "hit" on the file to the listview
+                ListViewItem lvitem = new ListViewItem(Path.GetFileName(file));
+                lvitem.SubItems.Add("");  // no page bevause not a bookmark
+                lvitem.SubItems.Add(""); // add empty because not a bookmark
+                lvitem.SubItems.Add(file);
+                lv_result.Items.Add(lvitem);
+
+                iProgress += 1;
+                Debug.WriteLine(string.Format("Processing files: {0}/{1} ", iProgress, FileList.Count()));
+                ItextSharpGetbookmarks(file);
             }
         }
 
-  void PrintBookmark(PdfDictionary bookmark, string sFullFilepath)
+        void ItextSharpGetbookmarks(string filename)
         {
-            string sBookmark = bookmark.Elements.GetString("/Title");
-            if (sBookmark.Contains(tb_inIndex.Text))
-              {
-                  ListViewItem lvitem = new ListViewItem(sBookmark);
-                  lvitem.SubItems.Add(Path.GetFileName(sFullFilepath));
-                  lvitem.SubItems.Add(sFullFilepath);
-                  lv_result.Items.Add(lvitem);
-              }
-           //Debug.WriteLine(bookmark.Elements.GetString("/Title"));
-            for (PdfDictionary child = bookmark.Elements.GetDictionary("/First"); child != null; child = child.Elements.GetDictionary("/Next"))
+            PdfReader pdfReader = new PdfReader(filename);
+            IList<Dictionary<string, object>> bookmarks = SimpleBookmark.GetBookmark(pdfReader);
+            if (bookmarks == null) {return; } //some files have no bookmarks
+            ItextSharpRecursive_search(bookmarks,filename);
+        }
+
+        public void ItextSharpRecursive_search(IList<Dictionary<string, object>> ilist,string filename)
+        {
+            string bmTitle = null;
+            string bmPage = null;
+
+            foreach (Dictionary<string, object> bk in ilist)
             {
-                PrintBookmark(child, sFullFilepath);
+                foreach (KeyValuePair<string, object> kvr in bk)
+                {
+                    if (kvr.Key == "Kids" || kvr.Key == "kids")
+                    {
+                        IList<Dictionary<string, object>> child = (IList<Dictionary<string, object>>)kvr.Value;
+                        ItextSharpRecursive_search(child, filename);
+                    }
+                    else if (kvr.Key == "Title" || kvr.Key == "title")
+                    {
+                         bmTitle = kvr.Value.ToString();
+                    }
+                    else if (kvr.Key == "Page" || kvr.Key == "page")
+                    {
+                         bmPage = Regex.Match(kvr.Value.ToString(), "[0-9]+").Value;
+                    }
+                }
+                //check if we need it
+                //Debug.WriteLine("bmTitle: {0}  bmPage {1} filename: {2}", bmTitle, bmPage, Path.GetFileName(filename));
+                if (bmTitle.Contains(tb_inIndex.Text))
+                {
+                    ListViewItem lvitem = new ListViewItem(Path.GetFileName(filename));
+                    lvitem.SubItems.Add(bmTitle);
+                    lvitem.SubItems.Add(bmPage);
+                    lvitem.SubItems.Add(filename);
+                    lv_result.Items.Add(lvitem);
+                }
             }
         }
 
@@ -110,6 +156,17 @@ namespace ExcelAddInEquipmentDatabase.Forms
           Debug.WriteLine(ex.Message);
       }
       return List;
+  }
+
+  private void lv_result_MouseDoubleClick(object sender, MouseEventArgs e)
+  {
+      foreach (ListViewItem item in lv_result.SelectedItems)
+      {
+           System.Diagnostics.Process myProcess = new System.Diagnostics.Process();
+           myProcess.StartInfo.FileName = "acrord32.exe";
+           myProcess.StartInfo.Arguments = string.Format(" /n /A \"page={0}\" \"{1}\"", item.SubItems[2].Text, item.SubItems[3].Text); //works
+           myProcess.Start();
+      }
   }
 
 
