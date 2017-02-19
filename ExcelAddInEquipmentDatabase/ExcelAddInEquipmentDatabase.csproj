@@ -40,7 +40,7 @@
     <PublishUrl>\\gnlsnm0101.gen.volvocars.net\proj\6308-Shr-VC024800\OBJECTBEHEER GA\Robots\12. SW + Tools\RobotDatabase\VSTO\DeploymentBase\</PublishUrl>
     <InstallUrl />
     <TargetCulture>en</TargetCulture>
-    <ApplicationVersion>3.0.1.15</ApplicationVersion>
+    <ApplicationVersion>3.0.1.16</ApplicationVersion>
     <AutoIncrementApplicationRevision>true</AutoIncrementApplicationRevision>
     <UpdateEnabled>true</UpdateEnabled>
     <UpdateInterval>0</UpdateInterval>
@@ -246,6 +246,12 @@
     <Compile Include="Forms\DocManager.Designer.cs">
       <DependentUpon>DocManager.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\ErrorManger.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ErrorManger.Designer.cs">
+      <DependentUpon>ErrorManger.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\GadataErrorDetails.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -302,6 +308,9 @@
     <Compile Include="WorksheetFeatures.cs" />
     <EmbeddedResource Include="Forms\DocManager.resx">
       <DependentUpon>DocManager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ErrorManger.resx">
+      <DependentUpon>ErrorManger.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\GadataErrorDetails.resx">
       <DependentUpon>GadataErrorDetails.cs</DependentUpon>

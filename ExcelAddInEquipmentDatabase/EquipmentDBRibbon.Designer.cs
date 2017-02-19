@@ -51,9 +51,6 @@
             this.btn_StartDate = this.Factory.CreateRibbonButton();
             this.btn_EndDate = this.Factory.CreateRibbonButton();
             this.btn_nDays = this.Factory.CreateRibbonButton();
-            this.gr3 = this.Factory.CreateRibbonGroup();
-            this.Btn_debugging = this.Factory.CreateRibbonToggleButton();
-            this.btn_testWs = this.Factory.CreateRibbonButton();
             this.g_config = this.Factory.CreateRibbonGroup();
             this.tbtn_Autorefresh = this.Factory.CreateRibbonToggleButton();
             this.tbtn_AlertMe = this.Factory.CreateRibbonToggleButton();
@@ -62,12 +59,16 @@
             this.btn_AssetManager = this.Factory.CreateRibbonButton();
             this.btn_help = this.Factory.CreateRibbonButton();
             this.btn_docMngr = this.Factory.CreateRibbonButton();
+            this.gr3 = this.Factory.CreateRibbonGroup();
+            this.Btn_debugging = this.Factory.CreateRibbonToggleButton();
+            this.btn_testWs = this.Factory.CreateRibbonButton();
+            this.btn_ErrorMngr = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
             this.rib2.SuspendLayout();
             this.group2.SuspendLayout();
             this.AssetManager.SuspendLayout();
-            this.gr3.SuspendLayout();
             this.g_config.SuspendLayout();
+            this.gr3.SuspendLayout();
             // 
             // tab1
             // 
@@ -202,24 +203,6 @@
             this.btn_nDays.ShowImage = true;
             this.btn_nDays.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_nDays_Click);
             // 
-            // gr3
-            // 
-            this.gr3.Items.Add(this.Btn_debugging);
-            this.gr3.Items.Add(this.btn_testWs);
-            this.gr3.Label = "DEBUGGING";
-            this.gr3.Name = "gr3";
-            // 
-            // Btn_debugging
-            // 
-            this.Btn_debugging.Label = "Enbl_dbg";
-            this.Btn_debugging.Name = "Btn_debugging";
-            // 
-            // btn_testWs
-            // 
-            this.btn_testWs.Label = "NEN TEST KNOP";
-            this.btn_testWs.Name = "btn_testWs";
-            this.btn_testWs.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_testWs_Click);
-            // 
             // g_config
             // 
             this.g_config.DialogLauncher = ribbonDialogLauncherImpl1;
@@ -230,6 +213,7 @@
             this.g_config.Items.Add(this.btn_AssetManager);
             this.g_config.Items.Add(this.btn_help);
             this.g_config.Items.Add(this.btn_docMngr);
+            this.g_config.Items.Add(this.btn_ErrorMngr);
             this.g_config.Label = "Configuration";
             this.g_config.Name = "g_config";
             // 
@@ -283,6 +267,30 @@
             this.btn_docMngr.ShowImage = true;
             this.btn_docMngr.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_docMngr_Click);
             // 
+            // gr3
+            // 
+            this.gr3.Items.Add(this.Btn_debugging);
+            this.gr3.Items.Add(this.btn_testWs);
+            this.gr3.Label = "DEBUGGING";
+            this.gr3.Name = "gr3";
+            // 
+            // Btn_debugging
+            // 
+            this.Btn_debugging.Label = "Enbl_dbg";
+            this.Btn_debugging.Name = "Btn_debugging";
+            // 
+            // btn_testWs
+            // 
+            this.btn_testWs.Label = "NEN TEST KNOP";
+            this.btn_testWs.Name = "btn_testWs";
+            this.btn_testWs.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_testWs_Click);
+            // 
+            // btn_ErrorMngr
+            // 
+            this.btn_ErrorMngr.Label = "MngErrors";
+            this.btn_ErrorMngr.Name = "btn_ErrorMngr";
+            this.btn_ErrorMngr.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_ErrorMngr_Click);
+            // 
             // EquipmentDBRibbon
             // 
             this.Name = "EquipmentDBRibbon";
@@ -298,10 +306,10 @@
             this.group2.PerformLayout();
             this.AssetManager.ResumeLayout(false);
             this.AssetManager.PerformLayout();
-            this.gr3.ResumeLayout(false);
-            this.gr3.PerformLayout();
             this.g_config.ResumeLayout(false);
             this.g_config.PerformLayout();
+            this.gr3.ResumeLayout(false);
+            this.gr3.PerformLayout();
 
         }
 
@@ -334,6 +342,7 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonDropDown dd_User;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_testWs;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_docMngr;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_ErrorMngr;
     }
 
     partial class ThisRibbonCollection

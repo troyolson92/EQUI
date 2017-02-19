@@ -442,6 +442,12 @@ namespace ExcelAddInEquipmentDatabase
             lDocManager.Show();
         }
 
+        private void btn_ErrorMngr_Click(object sender, RibbonControlEventArgs e)
+        {
+            Forms.ErrorManger lErrorManager = new Forms.ErrorManger();
+            lErrorManager.Show();
+        }
+
 
     }
 }
