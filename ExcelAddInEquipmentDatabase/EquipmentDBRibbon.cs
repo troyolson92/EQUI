@@ -433,6 +433,11 @@ namespace ExcelAddInEquipmentDatabase
 
         private void btn_testWs_Click(object sender, RibbonControlEventArgs e)
         {
+//nothing
+        }
+
+        private void btn_docMngr_Click(object sender, RibbonControlEventArgs e)
+        {
             Forms.DocManager lDocManager = new Forms.DocManager();
             lDocManager.Show();
         }

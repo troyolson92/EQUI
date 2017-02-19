@@ -61,6 +61,7 @@
             this.btn_ConnectionManager = this.Factory.CreateRibbonButton();
             this.btn_AssetManager = this.Factory.CreateRibbonButton();
             this.btn_help = this.Factory.CreateRibbonButton();
+            this.btn_docMngr = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
             this.rib2.SuspendLayout();
             this.group2.SuspendLayout();
@@ -78,8 +79,8 @@
             // 
             this.rib2.Groups.Add(this.group2);
             this.rib2.Groups.Add(this.AssetManager);
-            this.rib2.Groups.Add(this.gr3);
             this.rib2.Groups.Add(this.g_config);
+            this.rib2.Groups.Add(this.gr3);
             this.rib2.Label = "EQDATABASE";
             this.rib2.Name = "rib2";
             // 
@@ -228,6 +229,7 @@
             this.g_config.Items.Add(this.btn_ConnectionManager);
             this.g_config.Items.Add(this.btn_AssetManager);
             this.g_config.Items.Add(this.btn_help);
+            this.g_config.Items.Add(this.btn_docMngr);
             this.g_config.Label = "Configuration";
             this.g_config.Name = "g_config";
             // 
@@ -272,6 +274,14 @@
             this.btn_help.OfficeImageId = "TentativeAcceptInvitation";
             this.btn_help.ShowImage = true;
             this.btn_help.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_help_Click);
+            // 
+            // btn_docMngr
+            // 
+            this.btn_docMngr.Label = "DocSearch";
+            this.btn_docMngr.Name = "btn_docMngr";
+            this.btn_docMngr.OfficeImageId = "FunctionsLookupReferenceInsertGallery";
+            this.btn_docMngr.ShowImage = true;
+            this.btn_docMngr.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_docMngr_Click);
             // 
             // EquipmentDBRibbon
             // 
@@ -323,6 +333,7 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonToggleButton tbtn_AlertMe;
         internal Microsoft.Office.Tools.Ribbon.RibbonDropDown dd_User;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_testWs;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_docMngr;
     }
 
     partial class ThisRibbonCollection
