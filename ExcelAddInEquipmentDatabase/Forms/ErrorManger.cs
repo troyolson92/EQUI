@@ -24,6 +24,11 @@ namespace ExcelAddInEquipmentDatabase.Forms
             //fill the subgroup list
                     //make new table that will contain all the subgroups for ALL systems
                     //alow user to make new subgroup by typeing one 
+
+            //Lerror def
+            /*
+             id, logcode , logtekst, class_id, subgroup_id,man_set
+             * */
         }
 
         private void btn_GetLogs_Click(object sender, EventArgs e)

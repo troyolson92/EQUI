@@ -40,8 +40,15 @@
             this.cb_classification = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.cb_Subgroup = new System.Windows.Forms.ComboBox();
-            this.btn_Set = new System.Windows.Forms.Button();
+            this.btn_ApplyManual = new System.Windows.Forms.Button();
+            this.dg_Rules = new System.Windows.Forms.DataGridView();
+            this.btn_ApplyRules = new System.Windows.Forms.Button();
+            this.btn_TestRules = new System.Windows.Forms.Button();
+            this.cb_OverRideManualSet = new System.Windows.Forms.CheckBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dg_Result)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dg_Rules)).BeginInit();
             this.SuspendLayout();
             // 
             // dg_Result
@@ -50,7 +57,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dg_Result.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dg_Result.Location = new System.Drawing.Point(12, 36);
+            this.dg_Result.Location = new System.Drawing.Point(12, 63);
             this.dg_Result.Name = "dg_Result";
             this.dg_Result.RowTemplate.Height = 24;
             this.dg_Result.Size = new System.Drawing.Size(699, 281);
@@ -123,7 +130,7 @@
             // 
             this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(12, 332);
+            this.label4.Location = new System.Drawing.Point(11, 357);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(94, 17);
             this.label4.TabIndex = 8;
@@ -133,7 +140,7 @@
             // 
             this.cb_classification.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.cb_classification.FormattingEnabled = true;
-            this.cb_classification.Location = new System.Drawing.Point(103, 325);
+            this.cb_classification.Location = new System.Drawing.Point(102, 350);
             this.cb_classification.Name = "cb_classification";
             this.cb_classification.Size = new System.Drawing.Size(237, 24);
             this.cb_classification.TabIndex = 9;
@@ -142,7 +149,7 @@
             // 
             this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(367, 332);
+            this.label5.Location = new System.Drawing.Point(366, 357);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(74, 17);
             this.label5.TabIndex = 10;
@@ -152,28 +159,95 @@
             // 
             this.cb_Subgroup.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.cb_Subgroup.FormattingEnabled = true;
-            this.cb_Subgroup.Location = new System.Drawing.Point(447, 325);
+            this.cb_Subgroup.Location = new System.Drawing.Point(446, 350);
             this.cb_Subgroup.Name = "cb_Subgroup";
             this.cb_Subgroup.Size = new System.Drawing.Size(136, 24);
             this.cb_Subgroup.TabIndex = 11;
             // 
-            // btn_Set
+            // btn_ApplyManual
             // 
-            this.btn_Set.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn_Set.Location = new System.Drawing.Point(599, 326);
-            this.btn_Set.Name = "btn_Set";
-            this.btn_Set.Size = new System.Drawing.Size(113, 23);
-            this.btn_Set.TabIndex = 12;
-            this.btn_Set.Text = "Set Selection";
-            this.btn_Set.UseVisualStyleBackColor = true;
-            this.btn_Set.Click += new System.EventHandler(this.btn_Set_Click);
+            this.btn_ApplyManual.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btn_ApplyManual.Location = new System.Drawing.Point(598, 351);
+            this.btn_ApplyManual.Name = "btn_ApplyManual";
+            this.btn_ApplyManual.Size = new System.Drawing.Size(113, 23);
+            this.btn_ApplyManual.TabIndex = 12;
+            this.btn_ApplyManual.Text = "Apply Manual";
+            this.btn_ApplyManual.UseVisualStyleBackColor = true;
+            this.btn_ApplyManual.Click += new System.EventHandler(this.btn_Set_Click);
+            // 
+            // dg_Rules
+            // 
+            this.dg_Rules.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dg_Rules.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dg_Rules.Location = new System.Drawing.Point(12, 412);
+            this.dg_Rules.Name = "dg_Rules";
+            this.dg_Rules.RowTemplate.Height = 24;
+            this.dg_Rules.Size = new System.Drawing.Size(699, 147);
+            this.dg_Rules.TabIndex = 13;
+            // 
+            // btn_ApplyRules
+            // 
+            this.btn_ApplyRules.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btn_ApplyRules.Location = new System.Drawing.Point(598, 573);
+            this.btn_ApplyRules.Name = "btn_ApplyRules";
+            this.btn_ApplyRules.Size = new System.Drawing.Size(113, 23);
+            this.btn_ApplyRules.TabIndex = 14;
+            this.btn_ApplyRules.Text = "Apply Rules";
+            this.btn_ApplyRules.UseVisualStyleBackColor = true;
+            // 
+            // btn_TestRules
+            // 
+            this.btn_TestRules.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btn_TestRules.Location = new System.Drawing.Point(479, 573);
+            this.btn_TestRules.Name = "btn_TestRules";
+            this.btn_TestRules.Size = new System.Drawing.Size(113, 23);
+            this.btn_TestRules.TabIndex = 15;
+            this.btn_TestRules.Text = "Test Rules";
+            this.btn_TestRules.UseVisualStyleBackColor = true;
+            // 
+            // cb_OverRideManualSet
+            // 
+            this.cb_OverRideManualSet.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.cb_OverRideManualSet.AutoSize = true;
+            this.cb_OverRideManualSet.Location = new System.Drawing.Point(15, 573);
+            this.cb_OverRideManualSet.Name = "cb_OverRideManualSet";
+            this.cb_OverRideManualSet.Size = new System.Drawing.Size(158, 21);
+            this.cb_OverRideManualSet.TabIndex = 16;
+            this.cb_OverRideManualSet.Text = "Override manual set";
+            this.cb_OverRideManualSet.UseVisualStyleBackColor = true;
+            // 
+            // label6
+            // 
+            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(12, 392);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(271, 17);
+            this.label6.TabIndex = 17;
+            this.label6.Text = "Rules for this Classification and Subgroup";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(9, 43);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(249, 17);
+            this.label7.TabIndex = 18;
+            this.label7.Text = "LogText Records that mach the Query";
             // 
             // ErrorManger
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(723, 371);
-            this.Controls.Add(this.btn_Set);
+            this.ClientSize = new System.Drawing.Size(723, 608);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.cb_OverRideManualSet);
+            this.Controls.Add(this.btn_TestRules);
+            this.Controls.Add(this.btn_ApplyRules);
+            this.Controls.Add(this.dg_Rules);
+            this.Controls.Add(this.btn_ApplyManual);
             this.Controls.Add(this.cb_Subgroup);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.cb_classification);
@@ -186,10 +260,11 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.cb_system);
             this.Controls.Add(this.dg_Result);
-            this.MinimumSize = new System.Drawing.Size(741, 416);
+            this.MinimumSize = new System.Drawing.Size(741, 653);
             this.Name = "ErrorManger";
             this.Text = "ErrorManger";
             ((System.ComponentModel.ISupportInitialize)(this.dg_Result)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dg_Rules)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -209,6 +284,12 @@
         private System.Windows.Forms.ComboBox cb_classification;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ComboBox cb_Subgroup;
-        private System.Windows.Forms.Button btn_Set;
+        private System.Windows.Forms.DataGridView dg_Rules;
+        private System.Windows.Forms.Button btn_ApplyRules;
+        private System.Windows.Forms.Button btn_TestRules;
+        private System.Windows.Forms.CheckBox cb_OverRideManualSet;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Button btn_ApplyManual;
     }
 }
