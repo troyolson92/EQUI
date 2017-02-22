@@ -46,13 +46,15 @@
             this.btn_TestRules = new System.Windows.Forms.Button();
             this.cb_OverRideManualSet = new System.Windows.Forms.CheckBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
+            this.lbl_Results = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dg_Result)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dg_Rules)).BeginInit();
             this.SuspendLayout();
             // 
             // dg_Result
             // 
+            this.dg_Result.AllowUserToAddRows = false;
+            this.dg_Result.AllowUserToDeleteRows = false;
             this.dg_Result.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -188,6 +190,7 @@
             this.dg_Rules.RowTemplate.Height = 24;
             this.dg_Rules.Size = new System.Drawing.Size(699, 147);
             this.dg_Rules.TabIndex = 13;
+            this.dg_Rules.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dg_Rules_RowsAdded);
             // 
             // btn_ApplyRules
             // 
@@ -198,6 +201,7 @@
             this.btn_ApplyRules.TabIndex = 14;
             this.btn_ApplyRules.Text = "Apply Rules";
             this.btn_ApplyRules.UseVisualStyleBackColor = true;
+            this.btn_ApplyRules.Click += new System.EventHandler(this.btn_ApplyRules_Click);
             // 
             // btn_TestRules
             // 
@@ -208,6 +212,7 @@
             this.btn_TestRules.TabIndex = 15;
             this.btn_TestRules.Text = "Test Rules";
             this.btn_TestRules.UseVisualStyleBackColor = true;
+            this.btn_TestRules.Click += new System.EventHandler(this.btn_TestRules_Click);
             // 
             // cb_OverRideManualSet
             // 
@@ -230,21 +235,21 @@
             this.label6.TabIndex = 17;
             this.label6.Text = "Rules for this Classification and Subgroup";
             // 
-            // label7
+            // lbl_Results
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(9, 43);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(249, 17);
-            this.label7.TabIndex = 18;
-            this.label7.Text = "LogText Records that mach the Query";
+            this.lbl_Results.AutoSize = true;
+            this.lbl_Results.Location = new System.Drawing.Point(9, 43);
+            this.lbl_Results.Name = "lbl_Results";
+            this.lbl_Results.Size = new System.Drawing.Size(249, 17);
+            this.lbl_Results.TabIndex = 18;
+            this.lbl_Results.Text = "LogText Records that mach the Query";
             // 
             // ErrorManger
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(723, 608);
-            this.Controls.Add(this.label7);
+            this.Controls.Add(this.lbl_Results);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.cb_OverRideManualSet);
             this.Controls.Add(this.btn_TestRules);
@@ -292,7 +297,7 @@
         private System.Windows.Forms.Button btn_TestRules;
         private System.Windows.Forms.CheckBox cb_OverRideManualSet;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label lbl_Results;
         private System.Windows.Forms.Button btn_ApplyManual;
     }
 }
