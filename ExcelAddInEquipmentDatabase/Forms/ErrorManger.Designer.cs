@@ -56,21 +56,22 @@
             this.dg_Result.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.dg_Result.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
             this.dg_Result.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dg_Result.Location = new System.Drawing.Point(12, 63);
             this.dg_Result.Name = "dg_Result";
             this.dg_Result.RowTemplate.Height = 24;
+            this.dg_Result.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dg_Result.Size = new System.Drawing.Size(699, 281);
             this.dg_Result.TabIndex = 0;
             // 
             // cb_system
             // 
             this.cb_system.FormattingEnabled = true;
-            this.cb_system.Location = new System.Drawing.Point(66, 6);
+            this.cb_system.Location = new System.Drawing.Point(61, 6);
             this.cb_system.Name = "cb_system";
-            this.cb_system.Size = new System.Drawing.Size(85, 24);
+            this.cb_system.Size = new System.Drawing.Size(112, 24);
             this.cb_system.TabIndex = 1;
-            this.cb_system.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // label1
             // 
@@ -84,7 +85,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(157, 9);
+            this.label2.Location = new System.Drawing.Point(180, 9);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(94, 17);
             this.label2.TabIndex = 3;
@@ -92,7 +93,7 @@
             // 
             // tb_logTextFilter
             // 
-            this.tb_logTextFilter.Location = new System.Drawing.Point(248, 6);
+            this.tb_logTextFilter.Location = new System.Drawing.Point(271, 6);
             this.tb_logTextFilter.Name = "tb_logTextFilter";
             this.tb_logTextFilter.Size = new System.Drawing.Size(153, 22);
             this.tb_logTextFilter.TabIndex = 4;
@@ -100,7 +101,7 @@
             // 
             // tb_LogCodeFilter
             // 
-            this.tb_LogCodeFilter.Location = new System.Drawing.Point(503, 4);
+            this.tb_LogCodeFilter.Location = new System.Drawing.Point(526, 4);
             this.tb_LogCodeFilter.Name = "tb_LogCodeFilter";
             this.tb_LogCodeFilter.Size = new System.Drawing.Size(80, 22);
             this.tb_LogCodeFilter.TabIndex = 6;
@@ -109,7 +110,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(407, 9);
+            this.label3.Location = new System.Drawing.Point(430, 9);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(100, 17);
             this.label3.TabIndex = 5;
@@ -118,9 +119,9 @@
             // btn_GetLogs
             // 
             this.btn_GetLogs.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn_GetLogs.Location = new System.Drawing.Point(599, 3);
+            this.btn_GetLogs.Location = new System.Drawing.Point(613, 3);
             this.btn_GetLogs.Name = "btn_GetLogs";
-            this.btn_GetLogs.Size = new System.Drawing.Size(113, 23);
+            this.btn_GetLogs.Size = new System.Drawing.Size(99, 23);
             this.btn_GetLogs.TabIndex = 7;
             this.btn_GetLogs.Text = "Get Results";
             this.btn_GetLogs.UseVisualStyleBackColor = true;
@@ -144,6 +145,7 @@
             this.cb_classification.Name = "cb_classification";
             this.cb_classification.Size = new System.Drawing.Size(237, 24);
             this.cb_classification.TabIndex = 9;
+            this.cb_classification.SelectedIndexChanged += new System.EventHandler(this.cb_classification_SelectedIndexChanged);
             // 
             // label5
             // 
@@ -163,6 +165,7 @@
             this.cb_Subgroup.Name = "cb_Subgroup";
             this.cb_Subgroup.Size = new System.Drawing.Size(136, 24);
             this.cb_Subgroup.TabIndex = 11;
+            this.cb_Subgroup.SelectedIndexChanged += new System.EventHandler(this.cb_Subgroup_SelectedIndexChanged);
             // 
             // btn_ApplyManual
             // 
