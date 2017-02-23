@@ -64,7 +64,7 @@
             this.dg_Result.Name = "dg_Result";
             this.dg_Result.RowTemplate.Height = 24;
             this.dg_Result.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dg_Result.Size = new System.Drawing.Size(699, 281);
+            this.dg_Result.Size = new System.Drawing.Size(1022, 281);
             this.dg_Result.TabIndex = 0;
             // 
             // cb_system
@@ -121,7 +121,7 @@
             // btn_GetLogs
             // 
             this.btn_GetLogs.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn_GetLogs.Location = new System.Drawing.Point(613, 3);
+            this.btn_GetLogs.Location = new System.Drawing.Point(936, 3);
             this.btn_GetLogs.Name = "btn_GetLogs";
             this.btn_GetLogs.Size = new System.Drawing.Size(99, 23);
             this.btn_GetLogs.TabIndex = 7;
@@ -172,7 +172,7 @@
             // btn_ApplyManual
             // 
             this.btn_ApplyManual.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn_ApplyManual.Location = new System.Drawing.Point(598, 351);
+            this.btn_ApplyManual.Location = new System.Drawing.Point(921, 351);
             this.btn_ApplyManual.Name = "btn_ApplyManual";
             this.btn_ApplyManual.Size = new System.Drawing.Size(113, 23);
             this.btn_ApplyManual.TabIndex = 12;
@@ -188,14 +188,14 @@
             this.dg_Rules.Location = new System.Drawing.Point(12, 412);
             this.dg_Rules.Name = "dg_Rules";
             this.dg_Rules.RowTemplate.Height = 24;
-            this.dg_Rules.Size = new System.Drawing.Size(699, 147);
+            this.dg_Rules.Size = new System.Drawing.Size(1022, 147);
             this.dg_Rules.TabIndex = 13;
-            this.dg_Rules.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dg_Rules_RowsAdded);
+            this.dg_Rules.RowLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.dg_Rules_RowLeave);
             // 
             // btn_ApplyRules
             // 
             this.btn_ApplyRules.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn_ApplyRules.Location = new System.Drawing.Point(598, 573);
+            this.btn_ApplyRules.Location = new System.Drawing.Point(921, 573);
             this.btn_ApplyRules.Name = "btn_ApplyRules";
             this.btn_ApplyRules.Size = new System.Drawing.Size(113, 23);
             this.btn_ApplyRules.TabIndex = 14;
@@ -206,7 +206,7 @@
             // btn_TestRules
             // 
             this.btn_TestRules.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn_TestRules.Location = new System.Drawing.Point(479, 573);
+            this.btn_TestRules.Location = new System.Drawing.Point(802, 573);
             this.btn_TestRules.Name = "btn_TestRules";
             this.btn_TestRules.Size = new System.Drawing.Size(113, 23);
             this.btn_TestRules.TabIndex = 15;
@@ -248,7 +248,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(723, 608);
+            this.ClientSize = new System.Drawing.Size(1046, 608);
             this.Controls.Add(this.lbl_Results);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.cb_OverRideManualSet);
@@ -268,7 +268,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.cb_system);
             this.Controls.Add(this.dg_Result);
-            this.MinimumSize = new System.Drawing.Size(741, 653);
+            this.MinimumSize = new System.Drawing.Size(1064, 653);
             this.Name = "ErrorManger";
             this.Text = "ErrorManger";
             ((System.ComponentModel.ISupportInitialize)(this.dg_Result)).EndInit();

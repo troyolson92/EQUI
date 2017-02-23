@@ -20,6 +20,8 @@ WHERE STRUC.SITEID = 'VCG' AND STRUC.CLASSIFICATIONID like 'U%';
 //Lerror def
 /*
  id, logcode , logtekst, class_id, subgroup_id,man_set
+ * 
+ * man_set make it an integer with the rule ID if manset make it -1
  * */
 
 
@@ -114,7 +116,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
             cb_Subgroup.DataSource = data2;
         }
 
-        private void btn_GetLogs_Click(object sender, EventArgs e)
+        private void fill_logs()
         {
             Cursor.Current = Cursors.AppStarting;
             switch (cb_system.Text)
@@ -140,45 +142,59 @@ namespace ExcelAddInEquipmentDatabase.Forms
                     MessageBox.Show("system unkown", "OEPS", MessageBoxButtons.OK);
                     return;
             }
-            
+
             dg_Result.AllowUserToOrderColumns = true;
             dg_Result.AllowUserToResizeColumns = true;
             dg_Result.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             dg_Result.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
             lbl_Results.Text = "LogText Records that mach the Query";
             Cursor.Current = Cursors.Default;
+        }
 
+        private void btn_GetLogs_Click(object sender, EventArgs e)
+        {
+            fill_logs();
         }
 
         private void btn_Set_Click(object sender, EventArgs e)
         {
-//set selected errors to selected subgroup and classification
             foreach(DataGridViewRow row in dg_Result.SelectedRows)
             {
-                switch (cb_system.Text)
-                {
-                    case "C3G":
-                        Debug.WriteLine(row.ToString());
-                        break;
+            try {
+                    switch (cb_system.Text)
+                    {
+                        case "C3G":
+                            using (applDataTableAdapters.c3gL_errorTableAdapter Adapter = new applDataTableAdapters.c3gL_errorTableAdapter())
+                            {
+                                Adapter.UpdateQuery(Convert.ToInt32(row.Cells[0].Value), cb_classification.Text, cb_Subgroup.Text);
+                            }
+                            break;
+                        case "C4G":
+                            Debug.WriteLine(row.ToString());
+                            break;
+                        case "ABB-NGAC":
+                            Debug.WriteLine(row.ToString());
+                            break;
 
-                    case "C4G":
-                        Debug.WriteLine(row.ToString());
-                        break;
-                    case "ABB-NGAC":
-                        Debug.WriteLine(row.ToString());
-                        break;
-
-                    default:
-                        MessageBox.Show("system unkown", "OEPS", MessageBoxButtons.OK);
-                        return;
-                }
-
+                        default:
+                            MessageBox.Show("system unkown", "OEPS", MessageBoxButtons.OK);
+                            return;
+                    }
+                  }
+                  catch (Exception ex)
+                            {
+                                DialogResult result = MessageBox.Show("Something is wrong: " + ex.Message, "Oeps", MessageBoxButtons.AbortRetryIgnore);
+                                if (result == DialogResult.Abort) {return;}
+                                else if (result == DialogResult.Ignore){break;}
+                                else if (result == DialogResult.Retry){} //not done
+                            }
             }
+            fill_logs();
         }
  
         private void cb_Subgroup_SelectedIndexChanged(object sender, EventArgs e)
         { 
-            if (cb_Subgroup.SelectedItem == CreateNew)
+            if (cb_Subgroup.SelectedItem.ToString() == CreateNew)
             {
                 string input = Microsoft.VisualBasic.Interaction.InputBox("Enter the name of the new subgroup /n (between 4 And 20char)", "Create new subgroup", "", -1, -1);
                 if (input.Length < 3)
@@ -215,7 +231,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
 
         private void cb_classification_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cb_classification.SelectedItem == CreateNew)
+            if (cb_classification.SelectedItem.ToString() == CreateNew)
             {
                 string input = Microsoft.VisualBasic.Interaction.InputBox("Enter the name of the new classification /n (between 4 And 40char)", "Create new classification", "", -1, -1);
                 if (input.Length < 3)
@@ -267,9 +283,15 @@ namespace ExcelAddInEquipmentDatabase.Forms
 
         }
 
-        private void dg_Rules_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+        private void dg_Rules_RowLeave(object sender, DataGridViewCellEventArgs e)
         {
-         //   MessageBox.Show("row added", "OEPS", MessageBoxButtons.OK);
+
+            if (e.RowIndex == dg_Rules.NewRowIndex) 
+            {
+                MessageBox.Show("new row ", "OEPS", MessageBoxButtons.OK);
+            }
         }
+
+
     }
 }

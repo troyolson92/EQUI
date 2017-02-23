@@ -2,11 +2,12 @@
 <xs:schema id="applData" targetNamespace="http://tempuri.org/applData.xsd" xmlns:mstns="http://tempuri.org/applData.xsd" xmlns="http://tempuri.org/applData.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
   <xs:annotation>
     <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
-      <DataSource DefaultConnectionIndex="2" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="3" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
         <Connections>
           <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="GADATAConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="GADATAConnectionString (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.ExcelAddInEquipmentDatabase.Properties.Settings.GlobalReference.Default.GADATAConnectionString" Provider="System.Data.SqlClient" />
-          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="GADATAConnectionString1" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="GADATAConnectionString1 (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.ExcelAddInEquipmentDatabase.Properties.Settings.GlobalReference.Default.GADATAConnectionString1" Provider="System.Data.SqlClient" />
-          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="GADATAConnectionString2" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="GADATAConnectionString2 (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.ExcelAddInEquipmentDatabase.Properties.Settings.GlobalReference.Default.GADATAConnectionString2" Provider="System.Data.SqlClient" />
+          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="GADATAConnectionString1" IsAppSettingsProperty="true" Modifier="Assembly" Name="GADATAConnectionString1 (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.ExcelAddInEquipmentDatabase.Properties.Settings.GlobalReference.Default.GADATAConnectionString1" Provider="System.Data.SqlClient" />
+          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="GADATAConnectionString2" IsAppSettingsProperty="true" Modifier="Assembly" Name="GADATAConnectionString2 (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.ExcelAddInEquipmentDatabase.Properties.Settings.GlobalReference.Default.GADATAConnectionString2" Provider="System.Data.SqlClient" />
+          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="ConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="ConnectionString (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.ExcelAddInEquipmentDatabase.Properties.Settings.GlobalReference.Default.ConnectionString" Provider="System.Data.SqlClient" />
         </Connections>
         <Tables>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="ASSETSTableAdapter" GeneratorDataComponentClassName="ASSETSTableAdapter" Name="ASSETS" UserDataComponentName="ASSETSTableAdapter">
@@ -115,7 +116,7 @@
           </TableAdapter>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="QUERYParametersTableAdapter" GeneratorDataComponentClassName="QUERYParametersTableAdapter" Name="QUERYParameters" UserDataComponentName="QUERYParametersTableAdapter">
             <MainSource>
-              <DbSource ConnectionRef="GADATAConnectionString1 (Settings)" DbObjectName="GADATA.EqUi.QUERYParameters" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+              <DbSource ConnectionRef="GADATAConnectionString (Settings)" DbObjectName="GADATA.EqUi.QUERYParameters" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
                 <DeleteCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="false">
                     <CommandText>DELETE FROM [EqUi].[QUERYParameters] WHERE (([SYSTEM] = @Original_SYSTEM) AND ([NAME] = @Original_NAME) AND ([SETNAME] = @Original_SETNAME) AND ([Parameter] = @Original_Parameter) AND ((@IsNull_Value = 1 AND [Value] IS NULL) OR ([Value] = @Original_Value)))</CommandText>
@@ -187,7 +188,7 @@ SELECT SYSTEM, NAME, SETNAME, DISCRIPTION, Parameter, Value FROM EqUi.QUERYParam
               <Mapping SourceColumn="Value" DataSetColumn="Value" />
             </Mappings>
             <Sources>
-              <DbSource ConnectionRef="GADATAConnectionString1 (Settings)" DbObjectName="" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="DeleteSet" Modifier="Public" Name="DeleteSet" QueryType="NoData" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="DeleteSet">
+              <DbSource ConnectionRef="GADATAConnectionString (Settings)" DbObjectName="" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="DeleteSet" Modifier="Public" Name="DeleteSet" QueryType="NoData" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="DeleteSet">
                 <DeleteCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
                     <CommandText>DELETE FROM EqUi.QUERYParameters
@@ -200,7 +201,7 @@ WHERE  (SYSTEM = @Original_SYSTEM) AND (NAME = @Original_NAME) AND (SETNAME = @O
                   </DbCommand>
                 </DeleteCommand>
               </DbSource>
-              <DbSource ConnectionRef="GADATAConnectionString1 (Settings)" DbObjectName="GADATA.EqUi.QUERYParameters" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="FillByProcname" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetDataByProcname" GeneratorSourceName="FillByProcname" GetMethodModifier="Public" GetMethodName="GetDataByProcname" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataByProcname" UserSourceName="FillByProcname">
+              <DbSource ConnectionRef="GADATAConnectionString (Settings)" DbObjectName="GADATA.EqUi.QUERYParameters" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="FillByProcname" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetDataByProcname" GeneratorSourceName="FillByProcname" GetMethodModifier="Public" GetMethodName="GetDataByProcname" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataByProcname" UserSourceName="FillByProcname">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
                     <CommandText>SELECT DISCRIPTION, NAME, Parameter, SETNAME, SYSTEM, Value FROM EqUi.QUERYParameters WHERE (SYSTEM = @System) AND (NAME = @Name)</CommandText>
@@ -215,7 +216,7 @@ WHERE  (SYSTEM = @Original_SYSTEM) AND (NAME = @Original_NAME) AND (SETNAME = @O
           </TableAdapter>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="QUERYSTableAdapter" GeneratorDataComponentClassName="QUERYSTableAdapter" Name="QUERYS" UserDataComponentName="QUERYSTableAdapter">
             <MainSource>
-              <DbSource ConnectionRef="GADATAConnectionString1 (Settings)" DbObjectName="GADATA.EqUi.QUERYS" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+              <DbSource ConnectionRef="GADATAConnectionString (Settings)" DbObjectName="GADATA.EqUi.QUERYS" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
                 <DeleteCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="false">
                     <CommandText>DELETE FROM [EqUi].[QUERYS] WHERE (([SYSTEM] = @Original_SYSTEM) AND ([NAME] = @Original_NAME))</CommandText>
@@ -293,7 +294,7 @@ where error_text like @error_text </CommandText>
           </TableAdapter>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="c_SubgroupTableAdapter" GeneratorDataComponentClassName="c_SubgroupTableAdapter" Name="c_Subgroup" UserDataComponentName="c_SubgroupTableAdapter">
             <MainSource>
-              <DbSource ConnectionRef="GADATAConnectionString2 (Settings)" DbObjectName="GADATA.Volvo.c_Subgroup" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+              <DbSource ConnectionRef="ConnectionString (Settings)" DbObjectName="GADATA.Volvo.c_Subgroup" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
                 <DeleteCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="false">
                     <CommandText>DELETE FROM [Volvo].[c_Subgroup] WHERE (([id] = @Original_id) AND ((@IsNull_Subgroup = 1 AND [Subgroup] IS NULL) OR ([Subgroup] = @Original_Subgroup)))</CommandText>
@@ -342,7 +343,7 @@ SELECT id, Subgroup FROM Volvo.c_Subgroup WHERE (id = @id)</CommandText>
           </TableAdapter>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="c_ClassificationTableAdapter" GeneratorDataComponentClassName="c_ClassificationTableAdapter" Name="c_Classification" UserDataComponentName="c_ClassificationTableAdapter">
             <MainSource>
-              <DbSource ConnectionRef="GADATAConnectionString2 (Settings)" DbObjectName="GADATA.Volvo.c_Classification" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+              <DbSource ConnectionRef="ConnectionString (Settings)" DbObjectName="GADATA.Volvo.c_Classification" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
                 <DeleteCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="false">
                     <CommandText>DELETE FROM [Volvo].[c_Classification] WHERE (([id] = @Original_id) AND ((@IsNull_Classification = 1 AND [Classification] IS NULL) OR ([Classification] = @Original_Classification)))</CommandText>
@@ -391,71 +392,26 @@ SELECT id, Classification FROM Volvo.c_Classification WHERE (id = @id)</CommandT
           </TableAdapter>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="c3gL_errorTableAdapter" GeneratorDataComponentClassName="c3gL_errorTableAdapter" Name="c3gL_error" UserDataComponentName="c3gL_errorTableAdapter">
             <MainSource>
-              <DbSource ConnectionRef="GADATAConnectionString2 (Settings)" DbObjectName="GADATA.C3G.L_error" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
-                <DeleteCommand>
-                  <DbCommand CommandType="Text" ModifiedByUser="false">
-                    <CommandText>DELETE FROM [C3G].[L_error] WHERE (([id] = @Original_id) AND ((@IsNull_error_number = 1 AND [error_number] IS NULL) OR ([error_number] = @Original_error_number)) AND ((@IsNull_error_severity = 1 AND [error_severity] IS NULL) OR ([error_severity] = @Original_error_severity)) AND ((@IsNull_error_text = 1 AND [error_text] IS NULL) OR ([error_text] = @Original_error_text)) AND ((@IsNull_Appl_id = 1 AND [Appl_id] IS NULL) OR ([Appl_id] = @Original_Appl_id)) AND ((@IsNull_Subgroup_id = 1 AND [Subgroup_id] IS NULL) OR ([Subgroup_id] = @Original_Subgroup_id)))</CommandText>
-                    <Parameters>
-                      <Parameter AllowDbNull="false" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@Original_id" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="id" SourceColumnNullMapping="false" SourceVersion="Original" />
-                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@IsNull_error_number" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="error_number" SourceColumnNullMapping="true" SourceVersion="Original" />
-                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@Original_error_number" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="error_number" SourceColumnNullMapping="false" SourceVersion="Original" />
-                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@IsNull_error_severity" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="error_severity" SourceColumnNullMapping="true" SourceVersion="Original" />
-                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@Original_error_severity" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="error_severity" SourceColumnNullMapping="false" SourceVersion="Original" />
-                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@IsNull_error_text" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="error_text" SourceColumnNullMapping="true" SourceVersion="Original" />
-                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="@Original_error_text" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="error_text" SourceColumnNullMapping="false" SourceVersion="Original" />
-                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@IsNull_Appl_id" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="Appl_id" SourceColumnNullMapping="true" SourceVersion="Original" />
-                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@Original_Appl_id" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="Appl_id" SourceColumnNullMapping="false" SourceVersion="Original" />
-                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@IsNull_Subgroup_id" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="Subgroup_id" SourceColumnNullMapping="true" SourceVersion="Original" />
-                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@Original_Subgroup_id" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="Subgroup_id" SourceColumnNullMapping="false" SourceVersion="Original" />
-                    </Parameters>
-                  </DbCommand>
-                </DeleteCommand>
-                <InsertCommand>
-                  <DbCommand CommandType="Text" ModifiedByUser="false">
-                    <CommandText>INSERT INTO [C3G].[L_error] ([error_number], [error_severity], [error_text], [Appl_id], [Subgroup_id]) VALUES (@error_number, @error_severity, @error_text, @Appl_id, @Subgroup_id);
-SELECT id, error_number, error_severity, error_text, Appl_id, Subgroup_id FROM C3G.L_error WHERE (id = SCOPE_IDENTITY())</CommandText>
-                    <Parameters>
-                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@error_number" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="error_number" SourceColumnNullMapping="false" SourceVersion="Current" />
-                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@error_severity" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="error_severity" SourceColumnNullMapping="false" SourceVersion="Current" />
-                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="@error_text" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="error_text" SourceColumnNullMapping="false" SourceVersion="Current" />
-                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@Appl_id" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="Appl_id" SourceColumnNullMapping="false" SourceVersion="Current" />
-                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@Subgroup_id" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="Subgroup_id" SourceColumnNullMapping="false" SourceVersion="Current" />
-                    </Parameters>
-                  </DbCommand>
-                </InsertCommand>
+              <DbSource ConnectionRef="ConnectionString (Settings)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
-                    <CommandText>SELECT id, error_number, error_severity, error_text, Appl_id, Subgroup_id FROM C3G.L_error where error_text like @error_text</CommandText>
+                    <CommandText>Select 
+ l.id
+,l.error_number
+,l.error_severity
+,l.error_text
+,c.Classification
+,S.subgroup
+,l.c_RuleId 
+from gadata.c3g.l_error as l 
+left join gadata.volvo.c_Classification as c on c.id = l.c_classificationId
+left join gadata.volvo.c_subgroup as s on s.id = l.c_subgroupId
+Where l.error_text like @error_text</CommandText>
                     <Parameters>
                       <Parameter AllowDbNull="true" AutogeneratedName="error_text" ColumnName="error_text" DataSourceName="GADATA.C3G.L_error" DataTypeServer="varchar(255)" DbType="AnsiString" Direction="Input" ParameterName="@error_text" Precision="0" ProviderType="VarChar" Scale="0" Size="255" SourceColumn="error_text" SourceColumnNullMapping="false" SourceVersion="Current" />
                     </Parameters>
                   </DbCommand>
                 </SelectCommand>
-                <UpdateCommand>
-                  <DbCommand CommandType="Text" ModifiedByUser="false">
-                    <CommandText>UPDATE [C3G].[L_error] SET [error_number] = @error_number, [error_severity] = @error_severity, [error_text] = @error_text, [Appl_id] = @Appl_id, [Subgroup_id] = @Subgroup_id WHERE (([id] = @Original_id) AND ((@IsNull_error_number = 1 AND [error_number] IS NULL) OR ([error_number] = @Original_error_number)) AND ((@IsNull_error_severity = 1 AND [error_severity] IS NULL) OR ([error_severity] = @Original_error_severity)) AND ((@IsNull_error_text = 1 AND [error_text] IS NULL) OR ([error_text] = @Original_error_text)) AND ((@IsNull_Appl_id = 1 AND [Appl_id] IS NULL) OR ([Appl_id] = @Original_Appl_id)) AND ((@IsNull_Subgroup_id = 1 AND [Subgroup_id] IS NULL) OR ([Subgroup_id] = @Original_Subgroup_id)));
-SELECT id, error_number, error_severity, error_text, Appl_id, Subgroup_id FROM C3G.L_error WHERE (id = @id)</CommandText>
-                    <Parameters>
-                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@error_number" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="error_number" SourceColumnNullMapping="false" SourceVersion="Current" />
-                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@error_severity" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="error_severity" SourceColumnNullMapping="false" SourceVersion="Current" />
-                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="@error_text" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="error_text" SourceColumnNullMapping="false" SourceVersion="Current" />
-                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@Appl_id" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="Appl_id" SourceColumnNullMapping="false" SourceVersion="Current" />
-                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@Subgroup_id" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="Subgroup_id" SourceColumnNullMapping="false" SourceVersion="Current" />
-                      <Parameter AllowDbNull="false" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@Original_id" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="id" SourceColumnNullMapping="false" SourceVersion="Original" />
-                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@IsNull_error_number" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="error_number" SourceColumnNullMapping="true" SourceVersion="Original" />
-                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@Original_error_number" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="error_number" SourceColumnNullMapping="false" SourceVersion="Original" />
-                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@IsNull_error_severity" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="error_severity" SourceColumnNullMapping="true" SourceVersion="Original" />
-                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@Original_error_severity" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="error_severity" SourceColumnNullMapping="false" SourceVersion="Original" />
-                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@IsNull_error_text" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="error_text" SourceColumnNullMapping="true" SourceVersion="Original" />
-                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="@Original_error_text" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="error_text" SourceColumnNullMapping="false" SourceVersion="Original" />
-                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@IsNull_Appl_id" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="Appl_id" SourceColumnNullMapping="true" SourceVersion="Original" />
-                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@Original_Appl_id" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="Appl_id" SourceColumnNullMapping="false" SourceVersion="Original" />
-                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@IsNull_Subgroup_id" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="Subgroup_id" SourceColumnNullMapping="true" SourceVersion="Original" />
-                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@Original_Subgroup_id" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="Subgroup_id" SourceColumnNullMapping="false" SourceVersion="Original" />
-                      <Parameter AllowDbNull="false" AutogeneratedName="id" ColumnName="id" DataSourceName="GADATA.C3G.L_error" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@id" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="id" SourceColumnNullMapping="false" SourceVersion="Current" />
-                    </Parameters>
-                  </DbCommand>
-                </UpdateCommand>
               </DbSource>
             </MainSource>
             <Mappings>
@@ -463,17 +419,37 @@ SELECT id, error_number, error_severity, error_text, Appl_id, Subgroup_id FROM C
               <Mapping SourceColumn="error_number" DataSetColumn="error_number" />
               <Mapping SourceColumn="error_severity" DataSetColumn="error_severity" />
               <Mapping SourceColumn="error_text" DataSetColumn="error_text" />
-              <Mapping SourceColumn="Appl_id" DataSetColumn="Appl_id" />
-              <Mapping SourceColumn="Subgroup_id" DataSetColumn="Subgroup_id" />
+              <Mapping SourceColumn="c_RuleId" DataSetColumn="c_RuleId" />
+              <Mapping SourceColumn="Classification" DataSetColumn="Classification" />
+              <Mapping SourceColumn="subgroup" DataSetColumn="subgroup" />
             </Mappings>
-            <Sources />
+            <Sources>
+              <DbSource ConnectionRef="ConnectionString (Settings)" DbObjectName="" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="UpdateQuery" Modifier="Public" Name="UpdateQuery" QueryType="NoData" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="UpdateQuery">
+                <UpdateCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>UPDATE GADATA.C3g.L_error
+set l_error.c_classificationId = (select top 1 id from [GADATA].[Volvo].[c_Classification] where Classification = @Classification)
+  , l_error.c_subgroupId=  (select top 1 id from [GADATA].[Volvo].[c_subgroup] where subgroup = @subgroup)
+  , l_error.c_ruleid = -1
+from GADATA.C3G.L_error as l 
+where l.id = @error_id
+</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="false" AutogeneratedName="error_id" ColumnName="id" DataSourceName="GADATA.C3G.L_error" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@error_id" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="id" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="Classification" ColumnName="" DataSourceName="" DataTypeServer="nchar(40)" DbType="String" Direction="Input" ParameterName="@Classification" Precision="0" Scale="0" Size="40" SourceColumn="" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="subgroup" ColumnName="" DataSourceName="" DataTypeServer="nchar(20)" DbType="String" Direction="Input" ParameterName="@subgroup" Precision="0" Scale="0" Size="20" SourceColumn="" SourceColumnNullMapping="false" SourceVersion="Original" />
+                    </Parameters>
+                  </DbCommand>
+                </UpdateCommand>
+              </DbSource>
+            </Sources>
           </TableAdapter>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="c3gC_LogClassRulesTableAdapter" GeneratorDataComponentClassName="c3gC_LogClassRulesTableAdapter" Name="c3gC_LogClassRules" UserDataComponentName="c3gC_LogClassRulesTableAdapter">
             <MainSource>
-              <DbSource ConnectionRef="GADATAConnectionString2 (Settings)" DbObjectName="GADATA.C3G.c_LogClassRules" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+              <DbSource ConnectionRef="GADATAConnectionString (Settings)" DbObjectName="GADATA.C3G.c_LogClassRules" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
                 <DeleteCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="false">
-                    <CommandText>DELETE FROM [C3G].[c_LogClassRules] WHERE (([id] = @Original_id) AND ((@IsNull_Appl_id = 1 AND [Appl_id] IS NULL) OR ([Appl_id] = @Original_Appl_id)) AND ((@IsNull_Subgroup_id = 1 AND [Subgroup_id] IS NULL) OR ([Subgroup_id] = @Original_Subgroup_id)) AND ((@IsNull_Err_start = 1 AND [Err_start] IS NULL) OR ([Err_start] = @Original_Err_start)) AND ((@IsNull_Err_end = 1 AND [Err_end] IS NULL) OR ([Err_end] = @Original_Err_end)) AND ((@IsNull_Err_text = 1 AND [Err_text] IS NULL) OR ([Err_text] = @Original_Err_text)) AND ((@IsNull_I_comment = 1 AND [I_comment] IS NULL) OR ([I_comment] = @Original_I_comment)))</CommandText>
+                    <CommandText>DELETE FROM [C3G].[c_LogClassRules] WHERE (([id] = @Original_id) AND ((@IsNull_Appl_id = 1 AND [Appl_id] IS NULL) OR ([Appl_id] = @Original_Appl_id)) AND ((@IsNull_Subgroup_id = 1 AND [Subgroup_id] IS NULL) OR ([Subgroup_id] = @Original_Subgroup_id)) AND ((@IsNull_Err_start = 1 AND [Err_start] IS NULL) OR ([Err_start] = @Original_Err_start)) AND ((@IsNull_Err_end = 1 AND [Err_end] IS NULL) OR ([Err_end] = @Original_Err_end)) AND ((@IsNull_Err_text = 1 AND [Err_text] IS NULL) OR ([Err_text] = @Original_Err_text)) AND ((@IsNull_I_comment = 1 AND [I_comment] IS NULL) OR ([I_comment] = @Original_I_comment)) AND ((@IsNull_c_ClassificationId = 1 AND [c_ClassificationId] IS NULL) OR ([c_ClassificationId] = @Original_c_ClassificationId)) AND ((@IsNull_c_SubgroupId = 1 AND [c_SubgroupId] IS NULL) OR ([c_SubgroupId] = @Original_c_SubgroupId)))</CommandText>
                     <Parameters>
                       <Parameter AllowDbNull="false" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@Original_id" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="id" SourceColumnNullMapping="false" SourceVersion="Original" />
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@IsNull_Appl_id" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="Appl_id" SourceColumnNullMapping="true" SourceVersion="Original" />
@@ -488,13 +464,17 @@ SELECT id, error_number, error_severity, error_text, Appl_id, Subgroup_id FROM C
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="@Original_Err_text" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="Err_text" SourceColumnNullMapping="false" SourceVersion="Original" />
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@IsNull_I_comment" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="I_comment" SourceColumnNullMapping="true" SourceVersion="Original" />
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="@Original_I_comment" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="I_comment" SourceColumnNullMapping="false" SourceVersion="Original" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@IsNull_c_ClassificationId" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="c_ClassificationId" SourceColumnNullMapping="true" SourceVersion="Original" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@Original_c_ClassificationId" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="c_ClassificationId" SourceColumnNullMapping="false" SourceVersion="Original" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@IsNull_c_SubgroupId" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="c_SubgroupId" SourceColumnNullMapping="true" SourceVersion="Original" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@Original_c_SubgroupId" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="c_SubgroupId" SourceColumnNullMapping="false" SourceVersion="Original" />
                     </Parameters>
                   </DbCommand>
                 </DeleteCommand>
                 <InsertCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="false">
-                    <CommandText>INSERT INTO [C3G].[c_LogClassRules] ([Appl_id], [Subgroup_id], [Err_start], [Err_end], [Err_text], [I_comment]) VALUES (@Appl_id, @Subgroup_id, @Err_start, @Err_end, @Err_text, @I_comment);
-SELECT id, Appl_id, Subgroup_id, Err_start, Err_end, Err_text, I_comment FROM C3G.c_LogClassRules WHERE (id = SCOPE_IDENTITY())</CommandText>
+                    <CommandText>INSERT INTO [C3G].[c_LogClassRules] ([Appl_id], [Subgroup_id], [Err_start], [Err_end], [Err_text], [I_comment], [c_ClassificationId], [c_SubgroupId]) VALUES (@Appl_id, @Subgroup_id, @Err_start, @Err_end, @Err_text, @I_comment, @c_ClassificationId, @c_SubgroupId);
+SELECT id, Appl_id, Subgroup_id, Err_start, Err_end, Err_text, I_comment, c_ClassificationId, c_SubgroupId FROM C3G.c_LogClassRules WHERE (id = SCOPE_IDENTITY())</CommandText>
                     <Parameters>
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@Appl_id" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="Appl_id" SourceColumnNullMapping="false" SourceVersion="Current" />
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@Subgroup_id" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="Subgroup_id" SourceColumnNullMapping="false" SourceVersion="Current" />
@@ -502,19 +482,21 @@ SELECT id, Appl_id, Subgroup_id, Err_start, Err_end, Err_text, I_comment FROM C3
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@Err_end" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="Err_end" SourceColumnNullMapping="false" SourceVersion="Current" />
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="@Err_text" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="Err_text" SourceColumnNullMapping="false" SourceVersion="Current" />
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="@I_comment" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="I_comment" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@c_ClassificationId" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="c_ClassificationId" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@c_SubgroupId" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="c_SubgroupId" SourceColumnNullMapping="false" SourceVersion="Current" />
                     </Parameters>
                   </DbCommand>
                 </InsertCommand>
                 <SelectCommand>
-                  <DbCommand CommandType="Text" ModifiedByUser="false">
-                    <CommandText>SELECT id, Appl_id, Subgroup_id, Err_start, Err_end, Err_text, I_comment FROM C3G.c_LogClassRules</CommandText>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT * FROM C3G.c_LogClassRules</CommandText>
                     <Parameters />
                   </DbCommand>
                 </SelectCommand>
                 <UpdateCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="false">
-                    <CommandText>UPDATE [C3G].[c_LogClassRules] SET [Appl_id] = @Appl_id, [Subgroup_id] = @Subgroup_id, [Err_start] = @Err_start, [Err_end] = @Err_end, [Err_text] = @Err_text, [I_comment] = @I_comment WHERE (([id] = @Original_id) AND ((@IsNull_Appl_id = 1 AND [Appl_id] IS NULL) OR ([Appl_id] = @Original_Appl_id)) AND ((@IsNull_Subgroup_id = 1 AND [Subgroup_id] IS NULL) OR ([Subgroup_id] = @Original_Subgroup_id)) AND ((@IsNull_Err_start = 1 AND [Err_start] IS NULL) OR ([Err_start] = @Original_Err_start)) AND ((@IsNull_Err_end = 1 AND [Err_end] IS NULL) OR ([Err_end] = @Original_Err_end)) AND ((@IsNull_Err_text = 1 AND [Err_text] IS NULL) OR ([Err_text] = @Original_Err_text)) AND ((@IsNull_I_comment = 1 AND [I_comment] IS NULL) OR ([I_comment] = @Original_I_comment)));
-SELECT id, Appl_id, Subgroup_id, Err_start, Err_end, Err_text, I_comment FROM C3G.c_LogClassRules WHERE (id = @id)</CommandText>
+                    <CommandText>UPDATE [C3G].[c_LogClassRules] SET [Appl_id] = @Appl_id, [Subgroup_id] = @Subgroup_id, [Err_start] = @Err_start, [Err_end] = @Err_end, [Err_text] = @Err_text, [I_comment] = @I_comment, [c_ClassificationId] = @c_ClassificationId, [c_SubgroupId] = @c_SubgroupId WHERE (([id] = @Original_id) AND ((@IsNull_Appl_id = 1 AND [Appl_id] IS NULL) OR ([Appl_id] = @Original_Appl_id)) AND ((@IsNull_Subgroup_id = 1 AND [Subgroup_id] IS NULL) OR ([Subgroup_id] = @Original_Subgroup_id)) AND ((@IsNull_Err_start = 1 AND [Err_start] IS NULL) OR ([Err_start] = @Original_Err_start)) AND ((@IsNull_Err_end = 1 AND [Err_end] IS NULL) OR ([Err_end] = @Original_Err_end)) AND ((@IsNull_Err_text = 1 AND [Err_text] IS NULL) OR ([Err_text] = @Original_Err_text)) AND ((@IsNull_I_comment = 1 AND [I_comment] IS NULL) OR ([I_comment] = @Original_I_comment)) AND ((@IsNull_c_ClassificationId = 1 AND [c_ClassificationId] IS NULL) OR ([c_ClassificationId] = @Original_c_ClassificationId)) AND ((@IsNull_c_SubgroupId = 1 AND [c_SubgroupId] IS NULL) OR ([c_SubgroupId] = @Original_c_SubgroupId)));
+SELECT id, Appl_id, Subgroup_id, Err_start, Err_end, Err_text, I_comment, c_ClassificationId, c_SubgroupId FROM C3G.c_LogClassRules WHERE (id = @id)</CommandText>
                     <Parameters>
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@Appl_id" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="Appl_id" SourceColumnNullMapping="false" SourceVersion="Current" />
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@Subgroup_id" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="Subgroup_id" SourceColumnNullMapping="false" SourceVersion="Current" />
@@ -522,6 +504,8 @@ SELECT id, Appl_id, Subgroup_id, Err_start, Err_end, Err_text, I_comment FROM C3
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@Err_end" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="Err_end" SourceColumnNullMapping="false" SourceVersion="Current" />
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="@Err_text" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="Err_text" SourceColumnNullMapping="false" SourceVersion="Current" />
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="@I_comment" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="I_comment" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@c_ClassificationId" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="c_ClassificationId" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@c_SubgroupId" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="c_SubgroupId" SourceColumnNullMapping="false" SourceVersion="Current" />
                       <Parameter AllowDbNull="false" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@Original_id" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="id" SourceColumnNullMapping="false" SourceVersion="Original" />
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@IsNull_Appl_id" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="Appl_id" SourceColumnNullMapping="true" SourceVersion="Original" />
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@Original_Appl_id" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="Appl_id" SourceColumnNullMapping="false" SourceVersion="Original" />
@@ -535,7 +519,11 @@ SELECT id, Appl_id, Subgroup_id, Err_start, Err_end, Err_text, I_comment FROM C3
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="@Original_Err_text" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="Err_text" SourceColumnNullMapping="false" SourceVersion="Original" />
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@IsNull_I_comment" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="I_comment" SourceColumnNullMapping="true" SourceVersion="Original" />
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="@Original_I_comment" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="I_comment" SourceColumnNullMapping="false" SourceVersion="Original" />
-                      <Parameter AllowDbNull="false" AutogeneratedName="id" ColumnName="id" DataSourceName="" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@id" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="id" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@IsNull_c_ClassificationId" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="c_ClassificationId" SourceColumnNullMapping="true" SourceVersion="Original" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@Original_c_ClassificationId" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="c_ClassificationId" SourceColumnNullMapping="false" SourceVersion="Original" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@IsNull_c_SubgroupId" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="c_SubgroupId" SourceColumnNullMapping="true" SourceVersion="Original" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@Original_c_SubgroupId" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="c_SubgroupId" SourceColumnNullMapping="false" SourceVersion="Original" />
+                      <Parameter AllowDbNull="false" AutogeneratedName="id" ColumnName="id" DataSourceName="GADATA.C3G.c_LogClassRules" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@id" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="id" SourceColumnNullMapping="false" SourceVersion="Current" />
                     </Parameters>
                   </DbCommand>
                 </UpdateCommand>
@@ -549,12 +537,14 @@ SELECT id, Appl_id, Subgroup_id, Err_start, Err_end, Err_text, I_comment FROM C3
               <Mapping SourceColumn="Err_end" DataSetColumn="Err_end" />
               <Mapping SourceColumn="Err_text" DataSetColumn="Err_text" />
               <Mapping SourceColumn="I_comment" DataSetColumn="I_comment" />
+              <Mapping SourceColumn="c_ClassificationId" DataSetColumn="c_ClassificationId" />
+              <Mapping SourceColumn="c_SubgroupId" DataSetColumn="c_SubgroupId" />
             </Mappings>
             <Sources />
           </TableAdapter>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="c4gC_LogClassRulesTableAdapter" GeneratorDataComponentClassName="c4gC_LogClassRulesTableAdapter" Name="c4gC_LogClassRules" UserDataComponentName="c4gC_LogClassRulesTableAdapter">
             <MainSource>
-              <DbSource ConnectionRef="GADATAConnectionString2 (Settings)" DbObjectName="GADATA.C4G.c_LogClassRules" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+              <DbSource ConnectionRef="GADATAConnectionString (Settings)" DbObjectName="GADATA.C4G.c_LogClassRules" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
                 <DeleteCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="false">
                     <CommandText>DELETE FROM [C4G].[c_LogClassRules] WHERE (([id] = @Original_id) AND ((@IsNull_Appl_id = 1 AND [Appl_id] IS NULL) OR ([Appl_id] = @Original_Appl_id)) AND ((@IsNull_Subgroup_id = 1 AND [Subgroup_id] IS NULL) OR ([Subgroup_id] = @Original_Subgroup_id)) AND ((@IsNull_Err_start = 1 AND [Err_start] IS NULL) OR ([Err_start] = @Original_Err_start)) AND ((@IsNull_Err_end = 1 AND [Err_end] IS NULL) OR ([Err_end] = @Original_Err_end)) AND ((@IsNull_Err_text = 1 AND [Err_text] IS NULL) OR ([Err_text] = @Original_Err_text)) AND ((@IsNull_I_comment = 1 AND [I_comment] IS NULL) OR ([I_comment] = @Original_I_comment)))</CommandText>
@@ -1138,8 +1128,21 @@ SELECT id, Appl_id, Subgroup_id, Err_start, Err_end, Err_text, I_comment FROM C4
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="Appl_id" msprop:Generator_ColumnVarNameInTable="columnAppl_id" msprop:Generator_ColumnPropNameInRow="Appl_id" msprop:Generator_ColumnPropNameInTable="Appl_idColumn" msprop:Generator_UserColumnName="Appl_id" type="xs:int" minOccurs="0" />
-              <xs:element name="Subgroup_id" msprop:Generator_ColumnVarNameInTable="columnSubgroup_id" msprop:Generator_ColumnPropNameInRow="Subgroup_id" msprop:Generator_ColumnPropNameInTable="Subgroup_idColumn" msprop:Generator_UserColumnName="Subgroup_id" type="xs:int" minOccurs="0" />
+              <xs:element name="c_RuleId" msprop:Generator_ColumnVarNameInTable="columnc_RuleId" msprop:Generator_ColumnPropNameInRow="c_RuleId" msprop:Generator_ColumnPropNameInTable="c_RuleIdColumn" msprop:Generator_UserColumnName="c_RuleId" type="xs:int" minOccurs="0" />
+              <xs:element name="Classification" msprop:Generator_ColumnVarNameInTable="columnClassification" msprop:Generator_ColumnPropNameInRow="Classification" msprop:Generator_ColumnPropNameInTable="ClassificationColumn" msprop:Generator_UserColumnName="Classification" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="40" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="subgroup" msprop:Generator_ColumnVarNameInTable="columnsubgroup" msprop:Generator_ColumnPropNameInRow="subgroup" msprop:Generator_ColumnPropNameInTable="subgroupColumn" msprop:Generator_UserColumnName="subgroup" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="20" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -1165,6 +1168,8 @@ SELECT id, Appl_id, Subgroup_id, Err_start, Err_end, Err_text, I_comment FROM C4
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
+              <xs:element name="c_ClassificationId" msprop:Generator_ColumnVarNameInTable="columnc_ClassificationId" msprop:Generator_ColumnPropNameInRow="c_ClassificationId" msprop:Generator_ColumnPropNameInTable="c_ClassificationIdColumn" msprop:Generator_UserColumnName="c_ClassificationId" type="xs:int" minOccurs="0" />
+              <xs:element name="c_SubgroupId" msprop:Generator_ColumnVarNameInTable="columnc_SubgroupId" msprop:Generator_ColumnPropNameInRow="c_SubgroupId" msprop:Generator_ColumnPropNameInTable="c_SubgroupIdColumn" msprop:Generator_UserColumnName="c_SubgroupId" type="xs:int" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
