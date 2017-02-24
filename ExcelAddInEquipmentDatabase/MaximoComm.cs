@@ -11,11 +11,11 @@ namespace ExcelAddInEquipmentDatabase
 {
     class MaximoComm
     {
-        OracleConnection Maximo7conn = new OracleConnection("data source = dpmxarct;user id = ARCTVCG;password=volvo123");
+        OracleConnection Maximo7conn = new OracleConnection("data source = dpmxarct;user id = ARCTVCG;password=vcg$tokfeb2017");
 
         public string MX7connectionString
         {
-            get { return @"ODBC;DSN=" + DsnMX7 + ";Description= MAXIMO7;UID=ARCTVCG;PWD=volvo123;"; }
+            get { return @"ODBC;DSN=" + DsnMX7 + ";Description= MAXIMO7;UID=ARCTVCG;PWD=vcg$tokfeb2017;"; }
         }
         public string SystemMX7 { get { return "MX7"; } }
         public string SystemMX3 { get { return "MX3"; } }
@@ -134,6 +134,28 @@ namespace ExcelAddInEquipmentDatabase
             }
             return _parmList;
         }
+
+        public DataTable oracle_runQuery(string Query)
+        {
+            try
+            {
+                using (OracleDataAdapter dadapter = new OracleDataAdapter(Query, Maximo7conn))
+                {
+                    //get location and asset data from maximo
+                    DataTable table = new DataTable();
+                    dadapter.Fill(table);
+                    return table;
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("OracleDataAdapter: Dataget: {0}", e.Message);
+                DataTable table = new DataTable();
+                return table;
+            }
+
+        }
+
 
         //comm to maximo
 
