@@ -43,7 +43,6 @@
             this.btn_ApplyManual = new System.Windows.Forms.Button();
             this.dg_Rules = new System.Windows.Forms.DataGridView();
             this.btn_ApplyRules = new System.Windows.Forms.Button();
-            this.btn_TestRules = new System.Windows.Forms.Button();
             this.cb_OverRideManualSet = new System.Windows.Forms.CheckBox();
             this.label6 = new System.Windows.Forms.Label();
             this.lbl_Results = new System.Windows.Forms.Label();
@@ -193,7 +192,10 @@
             this.dg_Rules.RowTemplate.Height = 24;
             this.dg_Rules.Size = new System.Drawing.Size(1252, 147);
             this.dg_Rules.TabIndex = 13;
-            this.dg_Rules.RowLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.dg_Rules_RowLeave);
+            this.dg_Rules.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.dg_Rules_CellValidating);
+            this.dg_Rules.RowValidated += new System.Windows.Forms.DataGridViewCellEventHandler(this.dg_Rules_RowValidated);
+            this.dg_Rules.UserAddedRow += new System.Windows.Forms.DataGridViewRowEventHandler(this.dg_Rules_UserAddedRow);
+            this.dg_Rules.UserDeletedRow += new System.Windows.Forms.DataGridViewRowEventHandler(this.dg_Rules_UserDeletedRow);
             // 
             // btn_ApplyRules
             // 
@@ -205,17 +207,6 @@
             this.btn_ApplyRules.Text = "Apply Rules";
             this.btn_ApplyRules.UseVisualStyleBackColor = true;
             this.btn_ApplyRules.Click += new System.EventHandler(this.btn_ApplyRules_Click);
-            // 
-            // btn_TestRules
-            // 
-            this.btn_TestRules.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn_TestRules.Location = new System.Drawing.Point(1032, 573);
-            this.btn_TestRules.Name = "btn_TestRules";
-            this.btn_TestRules.Size = new System.Drawing.Size(113, 23);
-            this.btn_TestRules.TabIndex = 15;
-            this.btn_TestRules.Text = "Test Rules";
-            this.btn_TestRules.UseVisualStyleBackColor = true;
-            this.btn_TestRules.Click += new System.EventHandler(this.btn_TestRules_Click);
             // 
             // cb_OverRideManualSet
             // 
@@ -274,7 +265,6 @@
             this.Controls.Add(this.lbl_Results);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.cb_OverRideManualSet);
-            this.Controls.Add(this.btn_TestRules);
             this.Controls.Add(this.btn_ApplyRules);
             this.Controls.Add(this.dg_Rules);
             this.Controls.Add(this.btn_ApplyManual);
@@ -316,7 +306,6 @@
         private System.Windows.Forms.ComboBox cb_Subgroup;
         private System.Windows.Forms.DataGridView dg_Rules;
         private System.Windows.Forms.Button btn_ApplyRules;
-        private System.Windows.Forms.Button btn_TestRules;
         private System.Windows.Forms.CheckBox cb_OverRideManualSet;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label lbl_Results;

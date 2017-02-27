@@ -44,6 +44,18 @@ namespace ExcelAddInEquipmentDatabase {
         
         private c4gC_LogClassRulesDataTable tablec4gC_LogClassRules;
         
+        private global::System.Data.DataRelation relationFK_c_LogClassRules_c_Classification;
+        
+        private global::System.Data.DataRelation relationFK_c_LogClassRules_c_Subgroup1;
+        
+        private global::System.Data.DataRelation relationFK_c_LogClassRules_c_Classification1;
+        
+        private global::System.Data.DataRelation relationFK_c_LogClassRules_c_Classification2;
+        
+        private global::System.Data.DataRelation relationFK_c_LogClassRules_c_Classification3;
+        
+        private global::System.Data.DataRelation relationFK_c_LogClassRules_c_Classification4;
+        
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -410,6 +422,12 @@ namespace ExcelAddInEquipmentDatabase {
                     this.tablec4gC_LogClassRules.InitVars();
                 }
             }
+            this.relationFK_c_LogClassRules_c_Classification = this.Relations["FK_c_LogClassRules_c_Classification"];
+            this.relationFK_c_LogClassRules_c_Subgroup1 = this.Relations["FK_c_LogClassRules_c_Subgroup1"];
+            this.relationFK_c_LogClassRules_c_Classification1 = this.Relations["FK_c_LogClassRules_c_Classification1"];
+            this.relationFK_c_LogClassRules_c_Classification2 = this.Relations["FK_c_LogClassRules_c_Classification2"];
+            this.relationFK_c_LogClassRules_c_Classification3 = this.Relations["FK_c_LogClassRules_c_Classification3"];
+            this.relationFK_c_LogClassRules_c_Classification4 = this.Relations["FK_c_LogClassRules_c_Classification4"];
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -440,6 +458,30 @@ namespace ExcelAddInEquipmentDatabase {
             base.Tables.Add(this.tablec3gC_LogClassRules);
             this.tablec4gC_LogClassRules = new c4gC_LogClassRulesDataTable();
             base.Tables.Add(this.tablec4gC_LogClassRules);
+            this.relationFK_c_LogClassRules_c_Classification = new global::System.Data.DataRelation("FK_c_LogClassRules_c_Classification", new global::System.Data.DataColumn[] {
+                        this.tablec_Classification.idColumn}, new global::System.Data.DataColumn[] {
+                        this.tablec3gC_LogClassRules.c_ClassificationIdColumn}, false);
+            this.Relations.Add(this.relationFK_c_LogClassRules_c_Classification);
+            this.relationFK_c_LogClassRules_c_Subgroup1 = new global::System.Data.DataRelation("FK_c_LogClassRules_c_Subgroup1", new global::System.Data.DataColumn[] {
+                        this.tablec_Subgroup.idColumn}, new global::System.Data.DataColumn[] {
+                        this.tablec3gC_LogClassRules.c_SubgroupIdColumn}, false);
+            this.Relations.Add(this.relationFK_c_LogClassRules_c_Subgroup1);
+            this.relationFK_c_LogClassRules_c_Classification1 = new global::System.Data.DataRelation("FK_c_LogClassRules_c_Classification1", new global::System.Data.DataColumn[] {
+                        this.tablec4gL_error.idColumn}, new global::System.Data.DataColumn[] {
+                        this.tablec3gC_LogClassRules.c_ClassificationIdColumn}, false);
+            this.Relations.Add(this.relationFK_c_LogClassRules_c_Classification1);
+            this.relationFK_c_LogClassRules_c_Classification2 = new global::System.Data.DataRelation("FK_c_LogClassRules_c_Classification2", new global::System.Data.DataColumn[] {
+                        this.tablec4gL_error.idColumn}, new global::System.Data.DataColumn[] {
+                        this.tablec4gC_LogClassRules.c_ClassificationIdColumn}, false);
+            this.Relations.Add(this.relationFK_c_LogClassRules_c_Classification2);
+            this.relationFK_c_LogClassRules_c_Classification3 = new global::System.Data.DataRelation("FK_c_LogClassRules_c_Classification3", new global::System.Data.DataColumn[] {
+                        this.tablec3gL_error.idColumn}, new global::System.Data.DataColumn[] {
+                        this.tablec3gC_LogClassRules.c_ClassificationIdColumn}, false);
+            this.Relations.Add(this.relationFK_c_LogClassRules_c_Classification3);
+            this.relationFK_c_LogClassRules_c_Classification4 = new global::System.Data.DataRelation("FK_c_LogClassRules_c_Classification4", new global::System.Data.DataColumn[] {
+                        this.tablec3gL_error.idColumn}, new global::System.Data.DataColumn[] {
+                        this.tablec4gC_LogClassRules.c_ClassificationIdColumn}, false);
+            this.Relations.Add(this.relationFK_c_LogClassRules_c_Classification4);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -4129,7 +4171,7 @@ namespace ExcelAddInEquipmentDatabase {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public c3gC_LogClassRulesRow Addc3gC_LogClassRulesRow(int Appl_id, int Subgroup_id, int Err_start, int Err_end, string Err_text, string I_comment, int c_ClassificationId, int c_SubgroupId) {
+            public c3gC_LogClassRulesRow Addc3gC_LogClassRulesRow(int Appl_id, int Subgroup_id, int Err_start, int Err_end, string Err_text, string I_comment, c_ClassificationRow parentc_ClassificationRowByFK_c_LogClassRules_c_Classification, c_SubgroupRow parentc_SubgroupRowByFK_c_LogClassRules_c_Subgroup1) {
                 c3gC_LogClassRulesRow rowc3gC_LogClassRulesRow = ((c3gC_LogClassRulesRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -4139,8 +4181,14 @@ namespace ExcelAddInEquipmentDatabase {
                         Err_end,
                         Err_text,
                         I_comment,
-                        c_ClassificationId,
-                        c_SubgroupId};
+                        null,
+                        null};
+                if ((parentc_ClassificationRowByFK_c_LogClassRules_c_Classification != null)) {
+                    columnValuesArray[7] = parentc_ClassificationRowByFK_c_LogClassRules_c_Classification[0];
+                }
+                if ((parentc_SubgroupRowByFK_c_LogClassRules_c_Subgroup1 != null)) {
+                    columnValuesArray[8] = parentc_SubgroupRowByFK_c_LogClassRules_c_Subgroup1[0];
+                }
                 rowc3gC_LogClassRulesRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowc3gC_LogClassRulesRow);
                 return rowc3gC_LogClassRulesRow;
@@ -4505,7 +4553,7 @@ namespace ExcelAddInEquipmentDatabase {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public c4gC_LogClassRulesRow Addc4gC_LogClassRulesRow(int Appl_id, int Subgroup_id, int Err_start, int Err_end, string Err_text, string I_comment, int c_ClassificationId, int c_SubgroupId) {
+            public c4gC_LogClassRulesRow Addc4gC_LogClassRulesRow(int Appl_id, int Subgroup_id, int Err_start, int Err_end, string Err_text, string I_comment, c4gL_errorRow parentc4gL_errorRowByFK_c_LogClassRules_c_Classification2, int c_SubgroupId) {
                 c4gC_LogClassRulesRow rowc4gC_LogClassRulesRow = ((c4gC_LogClassRulesRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -4515,8 +4563,11 @@ namespace ExcelAddInEquipmentDatabase {
                         Err_end,
                         Err_text,
                         I_comment,
-                        c_ClassificationId,
+                        null,
                         c_SubgroupId};
+                if ((parentc4gL_errorRowByFK_c_LogClassRules_c_Classification2 != null)) {
+                    columnValuesArray[7] = parentc4gL_errorRowByFK_c_LogClassRules_c_Classification2[0];
+                }
                 rowc4gC_LogClassRulesRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowc4gC_LogClassRulesRow);
                 return rowc4gC_LogClassRulesRow;
@@ -6738,6 +6789,28 @@ namespace ExcelAddInEquipmentDatabase {
             public void Setc_RuleIdNull() {
                 this[this.tablec4gL_error.c_RuleIdColumn] = global::System.Convert.DBNull;
             }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public c3gC_LogClassRulesRow[] Getc3gC_LogClassRulesRows() {
+                if ((this.Table.ChildRelations["FK_c_LogClassRules_c_Classification1"] == null)) {
+                    return new c3gC_LogClassRulesRow[0];
+                }
+                else {
+                    return ((c3gC_LogClassRulesRow[])(base.GetChildRows(this.Table.ChildRelations["FK_c_LogClassRules_c_Classification1"])));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public c4gC_LogClassRulesRow[] Getc4gC_LogClassRulesRows() {
+                if ((this.Table.ChildRelations["FK_c_LogClassRules_c_Classification2"] == null)) {
+                    return new c4gC_LogClassRulesRow[0];
+                }
+                else {
+                    return ((c4gC_LogClassRulesRow[])(base.GetChildRows(this.Table.ChildRelations["FK_c_LogClassRules_c_Classification2"])));
+                }
+            }
         }
         
         /// <summary>
@@ -6786,6 +6859,17 @@ namespace ExcelAddInEquipmentDatabase {
                     this[this.tablec_Subgroup.DiscriptionColumn] = value;
                 }
             }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public c3gC_LogClassRulesRow[] Getc3gC_LogClassRulesRows() {
+                if ((this.Table.ChildRelations["FK_c_LogClassRules_c_Subgroup1"] == null)) {
+                    return new c3gC_LogClassRulesRow[0];
+                }
+                else {
+                    return ((c3gC_LogClassRulesRow[])(base.GetChildRows(this.Table.ChildRelations["FK_c_LogClassRules_c_Subgroup1"])));
+                }
+            }
         }
         
         /// <summary>
@@ -6832,6 +6916,17 @@ namespace ExcelAddInEquipmentDatabase {
                 }
                 set {
                     this[this.tablec_Classification.DiscriptionColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public c3gC_LogClassRulesRow[] Getc3gC_LogClassRulesRows() {
+                if ((this.Table.ChildRelations["FK_c_LogClassRules_c_Classification"] == null)) {
+                    return new c3gC_LogClassRulesRow[0];
+                }
+                else {
+                    return ((c3gC_LogClassRulesRow[])(base.GetChildRows(this.Table.ChildRelations["FK_c_LogClassRules_c_Classification"])));
                 }
             }
         }
@@ -7028,6 +7123,28 @@ namespace ExcelAddInEquipmentDatabase {
             public void SetsubgroupNull() {
                 this[this.tablec3gL_error.subgroupColumn] = global::System.Convert.DBNull;
             }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public c3gC_LogClassRulesRow[] Getc3gC_LogClassRulesRows() {
+                if ((this.Table.ChildRelations["FK_c_LogClassRules_c_Classification3"] == null)) {
+                    return new c3gC_LogClassRulesRow[0];
+                }
+                else {
+                    return ((c3gC_LogClassRulesRow[])(base.GetChildRows(this.Table.ChildRelations["FK_c_LogClassRules_c_Classification3"])));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public c4gC_LogClassRulesRow[] Getc4gC_LogClassRulesRows() {
+                if ((this.Table.ChildRelations["FK_c_LogClassRules_c_Classification4"] == null)) {
+                    return new c4gC_LogClassRulesRow[0];
+                }
+                else {
+                    return ((c4gC_LogClassRulesRow[])(base.GetChildRows(this.Table.ChildRelations["FK_c_LogClassRules_c_Classification4"])));
+                }
+            }
         }
         
         /// <summary>
@@ -7181,6 +7298,50 @@ namespace ExcelAddInEquipmentDatabase {
                 }
                 set {
                     this[this.tablec3gC_LogClassRules.c_SubgroupIdColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public c_ClassificationRow c_ClassificationRow {
+                get {
+                    return ((c_ClassificationRow)(this.GetParentRow(this.Table.ParentRelations["FK_c_LogClassRules_c_Classification"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_c_LogClassRules_c_Classification"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public c_SubgroupRow c_SubgroupRow {
+                get {
+                    return ((c_SubgroupRow)(this.GetParentRow(this.Table.ParentRelations["FK_c_LogClassRules_c_Subgroup1"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_c_LogClassRules_c_Subgroup1"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public c4gL_errorRow c4gL_errorRow {
+                get {
+                    return ((c4gL_errorRow)(this.GetParentRow(this.Table.ParentRelations["FK_c_LogClassRules_c_Classification1"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_c_LogClassRules_c_Classification1"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public c3gL_errorRow c3gL_errorRow {
+                get {
+                    return ((c3gL_errorRow)(this.GetParentRow(this.Table.ParentRelations["FK_c_LogClassRules_c_Classification3"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_c_LogClassRules_c_Classification3"]);
                 }
             }
             
@@ -7432,6 +7593,28 @@ namespace ExcelAddInEquipmentDatabase {
                 }
                 set {
                     this[this.tablec4gC_LogClassRules.c_SubgroupIdColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public c4gL_errorRow c4gL_errorRow {
+                get {
+                    return ((c4gL_errorRow)(this.GetParentRow(this.Table.ParentRelations["FK_c_LogClassRules_c_Classification2"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_c_LogClassRules_c_Classification2"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public c3gL_errorRow c3gL_errorRow {
+                get {
+                    return ((c3gL_errorRow)(this.GetParentRow(this.Table.ParentRelations["FK_c_LogClassRules_c_Classification4"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_c_LogClassRules_c_Classification4"]);
                 }
             }
             
@@ -9074,7 +9257,7 @@ SELECT SYSTEM, NAME, DISCRIPTION, QUERY FROM EqUi.QUERYS WHERE (NAME = @NAME) AN
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = global::ExcelAddInEquipmentDatabase.Properties.Settings.Default.GADATAConnectionString;
+            this._connection.ConnectionString = global::ExcelAddInEquipmentDatabase.Properties.Settings.Default.GADATAConnectionString1;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -9419,7 +9602,7 @@ SELECT SYSTEM, NAME, DISCRIPTION, QUERY FROM EqUi.QUERYS WHERE (NAME = @NAME) AN
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = global::ExcelAddInEquipmentDatabase.Properties.Settings.Default.ConnectionString;
+            this._connection.ConnectionString = global::ExcelAddInEquipmentDatabase.Properties.Settings.Default.GADATAConnectionString1;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -9707,7 +9890,7 @@ SELECT id, Subgroup, Discription FROM Volvo.c_Subgroup WHERE (id = @id)";
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = global::ExcelAddInEquipmentDatabase.Properties.Settings.Default.ConnectionString;
+            this._connection.ConnectionString = global::ExcelAddInEquipmentDatabase.Properties.Settings.Default.GADATAConnectionString1;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -10027,7 +10210,7 @@ SELECT id, Subgroup, Discription FROM Volvo.c_Subgroup WHERE (id = @id)";
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = global::ExcelAddInEquipmentDatabase.Properties.Settings.Default.ConnectionString;
+            this._connection.ConnectionString = global::ExcelAddInEquipmentDatabase.Properties.Settings.Default.GADATAConnectionString1;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -10246,7 +10429,7 @@ VALUES(@Classification,@Discription)
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = global::ExcelAddInEquipmentDatabase.Properties.Settings.Default.ConnectionString;
+            this._connection.ConnectionString = global::ExcelAddInEquipmentDatabase.Properties.Settings.Default.GADATAConnectionString1;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -10578,25 +10761,45 @@ SELECT id, Appl_id, Subgroup_id, Err_start, Err_end, Err_text, I_comment, c_Clas
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = global::ExcelAddInEquipmentDatabase.Properties.Settings.Default.GADATAConnectionString;
+            this._connection.ConnectionString = global::ExcelAddInEquipmentDatabase.Properties.Settings.Default.GADATAConnectionString1;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitCommandCollection() {
-            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
+            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[2];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT * FROM C3G.c_LogClassRules";
+            this._commandCollection[0].CommandText = "SELECT * FROM C3G.c_LogClassRules\r\nWHERE c_ClassificationID = @c_ClassificationID" +
+                " \r\nAND c_SubgroupId = @c_SubgroupId ";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@c_ClassificationID", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "c_ClassificationId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@c_SubgroupId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "c_SubgroupId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[1].Connection = this.Connection;
+            this._commandCollection[1].CommandText = "DELETE FROM [C3G].[c_LogClassRules] WHERE ([id] = @Original_id) ";
+            this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(applData.c3gC_LogClassRulesDataTable dataTable) {
+        public virtual int Fill(applData.c3gC_LogClassRulesDataTable dataTable, global::System.Nullable<int> c_ClassificationID, global::System.Nullable<int> c_SubgroupId) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
+            if ((c_ClassificationID.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[0].Value = ((int)(c_ClassificationID.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[0].Value = global::System.DBNull.Value;
+            }
+            if ((c_SubgroupId.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[1].Value = ((int)(c_SubgroupId.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
+            }
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
             }
@@ -10608,8 +10811,20 @@ SELECT id, Appl_id, Subgroup_id, Err_start, Err_end, Err_text, I_comment, c_Clas
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual applData.c3gC_LogClassRulesDataTable GetData() {
+        public virtual applData.c3gC_LogClassRulesDataTable GetData(global::System.Nullable<int> c_ClassificationID, global::System.Nullable<int> c_SubgroupId) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
+            if ((c_ClassificationID.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[0].Value = ((int)(c_ClassificationID.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[0].Value = global::System.DBNull.Value;
+            }
+            if ((c_SubgroupId.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[1].Value = ((int)(c_SubgroupId.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
+            }
             applData.c3gC_LogClassRulesDataTable dataTable = new applData.c3gC_LogClassRulesDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
@@ -10976,6 +11191,30 @@ SELECT id, Appl_id, Subgroup_id, Err_start, Err_end, Err_text, I_comment, c_Clas
                     global::System.Nullable<int> Original_c_SubgroupId) {
             return this.Update(Appl_id, Subgroup_id, Err_start, Err_end, Err_text, I_comment, c_ClassificationId, c_SubgroupId, Original_id, Original_Appl_id, Original_Subgroup_id, Original_Err_start, Original_Err_end, Original_Err_text, Original_I_comment, Original_c_ClassificationId, Original_c_SubgroupId, Original_id);
         }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, false)]
+        public virtual int DeleteQuery(int Original_id) {
+            global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[1];
+            command.Parameters[0].Value = ((int)(Original_id));
+            global::System.Data.ConnectionState previousConnectionState = command.Connection.State;
+            if (((command.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                command.Connection.Open();
+            }
+            int returnValue;
+            try {
+                returnValue = command.ExecuteNonQuery();
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    command.Connection.Close();
+                }
+            }
+            return returnValue;
+        }
     }
     
     /// <summary>
@@ -11180,25 +11419,45 @@ SELECT id, Appl_id, Subgroup_id, Err_start, Err_end, Err_text, I_comment, c_Clas
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = global::ExcelAddInEquipmentDatabase.Properties.Settings.Default.GADATAConnectionString;
+            this._connection.ConnectionString = global::ExcelAddInEquipmentDatabase.Properties.Settings.Default.GADATAConnectionString1;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitCommandCollection() {
-            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
+            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[2];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT* FROM C4G.c_LogClassRules";
+            this._commandCollection[0].CommandText = "SELECT* FROM C4G.c_LogClassRules\r\nWHERE c_ClassificationID = @c_ClassificationID " +
+                "\r\nAND c_SubgroupId = @c_SubgroupId ";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@c_ClassificationID", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "c_ClassificationId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@c_SubgroupId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "c_SubgroupId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[1].Connection = this.Connection;
+            this._commandCollection[1].CommandText = "DELETE FROM [C4G].[c_LogClassRules] WHERE (([id] = @Original_id) )";
+            this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(applData.c4gC_LogClassRulesDataTable dataTable) {
+        public virtual int Fill(applData.c4gC_LogClassRulesDataTable dataTable, global::System.Nullable<int> c_ClassificationID, global::System.Nullable<int> c_SubgroupId) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
+            if ((c_ClassificationID.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[0].Value = ((int)(c_ClassificationID.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[0].Value = global::System.DBNull.Value;
+            }
+            if ((c_SubgroupId.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[1].Value = ((int)(c_SubgroupId.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
+            }
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
             }
@@ -11210,8 +11469,20 @@ SELECT id, Appl_id, Subgroup_id, Err_start, Err_end, Err_text, I_comment, c_Clas
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual applData.c4gC_LogClassRulesDataTable GetData() {
+        public virtual applData.c4gC_LogClassRulesDataTable GetData(global::System.Nullable<int> c_ClassificationID, global::System.Nullable<int> c_SubgroupId) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
+            if ((c_ClassificationID.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[0].Value = ((int)(c_ClassificationID.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[0].Value = global::System.DBNull.Value;
+            }
+            if ((c_SubgroupId.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[1].Value = ((int)(c_SubgroupId.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
+            }
             applData.c4gC_LogClassRulesDataTable dataTable = new applData.c4gC_LogClassRulesDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
@@ -11578,6 +11849,30 @@ SELECT id, Appl_id, Subgroup_id, Err_start, Err_end, Err_text, I_comment, c_Clas
                     global::System.Nullable<int> Original_c_SubgroupId) {
             return this.Update(Appl_id, Subgroup_id, Err_start, Err_end, Err_text, I_comment, c_ClassificationId, c_SubgroupId, Original_id, Original_Appl_id, Original_Subgroup_id, Original_Err_start, Original_Err_end, Original_Err_text, Original_I_comment, Original_c_ClassificationId, Original_c_SubgroupId, Original_id);
         }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, false)]
+        public virtual int DeleteQuery(int Original_id) {
+            global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[1];
+            command.Parameters[0].Value = ((int)(Original_id));
+            global::System.Data.ConnectionState previousConnectionState = command.Connection.State;
+            if (((command.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                command.Connection.Open();
+            }
+            int returnValue;
+            try {
+                returnValue = command.ExecuteNonQuery();
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    command.Connection.Close();
+                }
+            }
+            return returnValue;
+        }
     }
     
     /// <summary>
@@ -11788,6 +12083,15 @@ SELECT id, Appl_id, Subgroup_id, Err_start, Err_end, Err_text, I_comment, c_Clas
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private int UpdateUpdatedRows(applData dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
             int result = 0;
+            if ((this._c_SubgroupTableAdapter != null)) {
+                global::System.Data.DataRow[] updatedRows = dataSet.c_Subgroup.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
+                if (((updatedRows != null) 
+                            && (0 < updatedRows.Length))) {
+                    result = (result + this._c_SubgroupTableAdapter.Update(updatedRows));
+                    allChangedRows.AddRange(updatedRows);
+                }
+            }
             if ((this._aSSETSTableAdapter != null)) {
                 global::System.Data.DataRow[] updatedRows = dataSet.ASSETS.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
                 updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
@@ -11812,15 +12116,6 @@ SELECT id, Appl_id, Subgroup_id, Err_start, Err_end, Err_text, I_comment, c_Clas
                 if (((updatedRows != null) 
                             && (0 < updatedRows.Length))) {
                     result = (result + this._qUERYSTableAdapter.Update(updatedRows));
-                    allChangedRows.AddRange(updatedRows);
-                }
-            }
-            if ((this._c_SubgroupTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.c_Subgroup.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
-                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
-                if (((updatedRows != null) 
-                            && (0 < updatedRows.Length))) {
-                    result = (result + this._c_SubgroupTableAdapter.Update(updatedRows));
                     allChangedRows.AddRange(updatedRows);
                 }
             }
@@ -11852,6 +12147,14 @@ SELECT id, Appl_id, Subgroup_id, Err_start, Err_end, Err_text, I_comment, c_Clas
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private int UpdateInsertedRows(applData dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
             int result = 0;
+            if ((this._c_SubgroupTableAdapter != null)) {
+                global::System.Data.DataRow[] addedRows = dataSet.c_Subgroup.Select(null, null, global::System.Data.DataViewRowState.Added);
+                if (((addedRows != null) 
+                            && (0 < addedRows.Length))) {
+                    result = (result + this._c_SubgroupTableAdapter.Update(addedRows));
+                    allAddedRows.AddRange(addedRows);
+                }
+            }
             if ((this._aSSETSTableAdapter != null)) {
                 global::System.Data.DataRow[] addedRows = dataSet.ASSETS.Select(null, null, global::System.Data.DataViewRowState.Added);
                 if (((addedRows != null) 
@@ -11873,14 +12176,6 @@ SELECT id, Appl_id, Subgroup_id, Err_start, Err_end, Err_text, I_comment, c_Clas
                 if (((addedRows != null) 
                             && (0 < addedRows.Length))) {
                     result = (result + this._qUERYSTableAdapter.Update(addedRows));
-                    allAddedRows.AddRange(addedRows);
-                }
-            }
-            if ((this._c_SubgroupTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.c_Subgroup.Select(null, null, global::System.Data.DataViewRowState.Added);
-                if (((addedRows != null) 
-                            && (0 < addedRows.Length))) {
-                    result = (result + this._c_SubgroupTableAdapter.Update(addedRows));
                     allAddedRows.AddRange(addedRows);
                 }
             }
@@ -11926,14 +12221,6 @@ SELECT id, Appl_id, Subgroup_id, Err_start, Err_end, Err_text, I_comment, c_Clas
                     allChangedRows.AddRange(deletedRows);
                 }
             }
-            if ((this._c_SubgroupTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.c_Subgroup.Select(null, null, global::System.Data.DataViewRowState.Deleted);
-                if (((deletedRows != null) 
-                            && (0 < deletedRows.Length))) {
-                    result = (result + this._c_SubgroupTableAdapter.Update(deletedRows));
-                    allChangedRows.AddRange(deletedRows);
-                }
-            }
             if ((this._qUERYSTableAdapter != null)) {
                 global::System.Data.DataRow[] deletedRows = dataSet.QUERYS.Select(null, null, global::System.Data.DataViewRowState.Deleted);
                 if (((deletedRows != null) 
@@ -11955,6 +12242,14 @@ SELECT id, Appl_id, Subgroup_id, Err_start, Err_end, Err_text, I_comment, c_Clas
                 if (((deletedRows != null) 
                             && (0 < deletedRows.Length))) {
                     result = (result + this._aSSETSTableAdapter.Update(deletedRows));
+                    allChangedRows.AddRange(deletedRows);
+                }
+            }
+            if ((this._c_SubgroupTableAdapter != null)) {
+                global::System.Data.DataRow[] deletedRows = dataSet.c_Subgroup.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+                if (((deletedRows != null) 
+                            && (0 < deletedRows.Length))) {
+                    result = (result + this._c_SubgroupTableAdapter.Update(deletedRows));
                     allChangedRows.AddRange(deletedRows);
                 }
             }
