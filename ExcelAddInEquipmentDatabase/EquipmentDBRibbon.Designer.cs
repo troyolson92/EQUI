@@ -34,7 +34,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Microsoft.Office.Tools.Ribbon.RibbonDialogLauncher ribbonDialogLauncherImpl1 = this.Factory.CreateRibbonDialogLauncher();
             this.tab1 = this.Factory.CreateRibbonTab();
             this.rib2 = this.Factory.CreateRibbonTab();
             this.group2 = this.Factory.CreateRibbonGroup();
@@ -59,16 +58,12 @@
             this.btn_AssetManager = this.Factory.CreateRibbonButton();
             this.btn_help = this.Factory.CreateRibbonButton();
             this.btn_docMngr = this.Factory.CreateRibbonButton();
-            this.gr3 = this.Factory.CreateRibbonGroup();
-            this.Btn_debugging = this.Factory.CreateRibbonToggleButton();
-            this.btn_testWs = this.Factory.CreateRibbonButton();
             this.btn_ErrorMngr = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
             this.rib2.SuspendLayout();
             this.group2.SuspendLayout();
             this.AssetManager.SuspendLayout();
             this.g_config.SuspendLayout();
-            this.gr3.SuspendLayout();
             // 
             // tab1
             // 
@@ -81,7 +76,6 @@
             this.rib2.Groups.Add(this.group2);
             this.rib2.Groups.Add(this.AssetManager);
             this.rib2.Groups.Add(this.g_config);
-            this.rib2.Groups.Add(this.gr3);
             this.rib2.Label = "EQDATABASE";
             this.rib2.Name = "rib2";
             // 
@@ -205,7 +199,6 @@
             // 
             // g_config
             // 
-            this.g_config.DialogLauncher = ribbonDialogLauncherImpl1;
             this.g_config.Items.Add(this.tbtn_Autorefresh);
             this.g_config.Items.Add(this.tbtn_AlertMe);
             this.g_config.Items.Add(this.dd_User);
@@ -267,28 +260,12 @@
             this.btn_docMngr.ShowImage = true;
             this.btn_docMngr.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_docMngr_Click);
             // 
-            // gr3
-            // 
-            this.gr3.Items.Add(this.Btn_debugging);
-            this.gr3.Items.Add(this.btn_testWs);
-            this.gr3.Label = "DEBUGGING";
-            this.gr3.Name = "gr3";
-            // 
-            // Btn_debugging
-            // 
-            this.Btn_debugging.Label = "Enbl_dbg";
-            this.Btn_debugging.Name = "Btn_debugging";
-            // 
-            // btn_testWs
-            // 
-            this.btn_testWs.Label = "NEN TEST KNOP";
-            this.btn_testWs.Name = "btn_testWs";
-            this.btn_testWs.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_testWs_Click);
-            // 
             // btn_ErrorMngr
             // 
             this.btn_ErrorMngr.Label = "MngErrors";
             this.btn_ErrorMngr.Name = "btn_ErrorMngr";
+            this.btn_ErrorMngr.OfficeImageId = "QuerySelectQueryType";
+            this.btn_ErrorMngr.ShowImage = true;
             this.btn_ErrorMngr.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_ErrorMngr_Click);
             // 
             // EquipmentDBRibbon
@@ -308,8 +285,6 @@
             this.AssetManager.PerformLayout();
             this.g_config.ResumeLayout(false);
             this.g_config.PerformLayout();
-            this.gr3.ResumeLayout(false);
-            this.gr3.PerformLayout();
 
         }
 
@@ -334,13 +309,10 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_EditProcedure;
         internal Microsoft.Office.Tools.Ribbon.RibbonDropDown dd_activeConnection;
         internal Microsoft.Office.Tools.Ribbon.RibbonDropDown dd_ParameterSets;
-        internal Microsoft.Office.Tools.Ribbon.RibbonGroup gr3;
-        internal Microsoft.Office.Tools.Ribbon.RibbonToggleButton Btn_debugging;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_help;
         internal Microsoft.Office.Tools.Ribbon.RibbonToggleButton tbtn_Autorefresh;
         internal Microsoft.Office.Tools.Ribbon.RibbonToggleButton tbtn_AlertMe;
         internal Microsoft.Office.Tools.Ribbon.RibbonDropDown dd_User;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_testWs;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_docMngr;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_ErrorMngr;
     }

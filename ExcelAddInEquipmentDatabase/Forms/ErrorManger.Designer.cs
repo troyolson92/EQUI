@@ -61,19 +61,19 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dg_Result.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
             this.dg_Result.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dg_Result.Location = new System.Drawing.Point(12, 63);
+            this.dg_Result.Location = new System.Drawing.Point(12, 73);
             this.dg_Result.Name = "dg_Result";
             this.dg_Result.RowTemplate.Height = 24;
             this.dg_Result.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dg_Result.Size = new System.Drawing.Size(1252, 281);
+            this.dg_Result.Size = new System.Drawing.Size(1252, 271);
             this.dg_Result.TabIndex = 0;
             // 
             // cb_system
             // 
             this.cb_system.FormattingEnabled = true;
-            this.cb_system.Location = new System.Drawing.Point(61, 6);
+            this.cb_system.Location = new System.Drawing.Point(76, 6);
             this.cb_system.Name = "cb_system";
-            this.cb_system.Size = new System.Drawing.Size(112, 24);
+            this.cb_system.Size = new System.Drawing.Size(97, 24);
             this.cb_system.TabIndex = 1;
             this.cb_system.SelectedIndexChanged += new System.EventHandler(this.cb_system_SelectedIndexChanged);
             // 
@@ -97,9 +97,9 @@
             // 
             // tb_logTextFilter
             // 
-            this.tb_logTextFilter.Location = new System.Drawing.Point(301, 6);
+            this.tb_logTextFilter.Location = new System.Drawing.Point(310, 6);
             this.tb_logTextFilter.Name = "tb_logTextFilter";
-            this.tb_logTextFilter.Size = new System.Drawing.Size(153, 22);
+            this.tb_logTextFilter.Size = new System.Drawing.Size(144, 22);
             this.tb_logTextFilter.TabIndex = 4;
             this.tb_logTextFilter.Text = "%";
             // 
@@ -195,7 +195,7 @@
             this.dg_Rules.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.dg_Rules_CellValidating);
             this.dg_Rules.RowValidated += new System.Windows.Forms.DataGridViewCellEventHandler(this.dg_Rules_RowValidated);
             this.dg_Rules.UserAddedRow += new System.Windows.Forms.DataGridViewRowEventHandler(this.dg_Rules_UserAddedRow);
-            this.dg_Rules.UserDeletedRow += new System.Windows.Forms.DataGridViewRowEventHandler(this.dg_Rules_UserDeletedRow);
+            this.dg_Rules.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.dg_Rules_UserDeletingRow);
             // 
             // btn_ApplyRules
             // 

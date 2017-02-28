@@ -322,14 +322,7 @@ STRUC.CLASSIFICATIONID like 'U%'
         //Apply the new rules on the dataset UPDATE ! 
         private void btn_ApplyRules_Click(object sender, EventArgs e)
         {
-/*
- ALTER PROCEDURE [C3G].[sp_update_Lerror_classifcation]
-    @Update as bit = 0 -- 0 = only update records that currently have NULL (new records) | 1 = recalc ALL records
-   ,@OverRideManualSet as bit = 0 -- 1 manully set Classification will be overruled. 
-   ,@c_ClassificationId as int = 0
-   ,@c_SubgroupId as int = 0
- */
-
+            GadataComm lGadataComm = new GadataComm();
             if (cb_OverRideManualSet.Checked)
             {
                 DialogResult result = MessageBox.Show(
@@ -343,18 +336,24 @@ This can not be undone.
             switch (cb_system.Text)
             {
                 case "C3G":
-                    GadataComm lGadataComm = new GadataComm();
                     lGadataComm.RunCommandGadata(string.Format(
                         @"exec gadata.[C3G].[sp_update_Lerror_classifcation] 
                                   @update = 1
                                 , @OverRideManualSet = {0}
                                 , @c_ClassificationId = {1}
                                 , @c_SubgroupId = {2}"
-                        , cb_OverRideManualSet.Checked, Convert.ToInt32(cb_classification.Text.Split('<')[1]), Convert.ToInt32(cb_Subgroup.Text.Split('<')[1]))
+                        , cb_OverRideManualSet.Checked, GetID(cb_classification.Text), GetID(cb_Subgroup.Text))
                         ,true);
                     break;
                 case "C4G":
-                    MessageBox.Show("system not implemented", "OEPS", MessageBoxButtons.OK);
+                    lGadataComm.RunCommandGadata(string.Format(
+                        @"exec gadata.[C4G].[sp_update_Lerror_classifcation] 
+                                  @update = 1
+                                , @OverRideManualSet = {0}
+                                , @c_ClassificationId = {1}
+                                , @c_SubgroupId = {2}"
+                        , cb_OverRideManualSet.Checked, GetID(cb_classification.Text), GetID(cb_Subgroup.Text))
+                        ,true);
                     break;
                 case "ABB-NGAC":
                     MessageBox.Show("system not implemented", "OEPS", MessageBoxButtons.OK);
@@ -364,6 +363,8 @@ This can not be undone.
                     MessageBox.Show("system unkown", "OEPS", MessageBoxButtons.OK);
                     return;
             }
+            cb_OverRideManualSet.Checked = false;
+            fill_logs();
         }
 
         //clear data on change of system. 
@@ -484,39 +485,11 @@ This can not be undone.
             fill_rules();
         }
 
-        //alow user to delete a row 
-        private void dg_Rules_UserDeletedRow(object sender, DataGridViewRowEventArgs e)
+        //confirm delete.
+        private void dg_Rules_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
         {
-            try
-            {
-                switch (cb_system.Text)
-                {
-                    case "C3G":
-                        using (applDataTableAdapters.c3gC_LogClassRulesTableAdapter Adapter = new applDataTableAdapters.c3gC_LogClassRulesTableAdapter())
-                        {
-                            Adapter.DeleteQuery(Convert.ToInt32(e.Row.Cells[0].Value));
-                        }
-                        break;
-                    case "C4G":
-                        using (applDataTableAdapters.c4gC_LogClassRulesTableAdapter Adapter = new applDataTableAdapters.c4gC_LogClassRulesTableAdapter())
-                        {
-                            Adapter.DeleteQuery(Convert.ToInt32(e.Row.Cells[0].Value));
-                        }
-                        break;
-                    case "ABB-NGAC":
-                        MessageBox.Show("system not implemented", "OEPS", MessageBoxButtons.OK);
-                        break;
-
-                    default:
-                        MessageBox.Show("system unkown", "OEPS", MessageBoxButtons.OK);
-                        return;
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine("Failed to delete row: " + ex.Message);
-            }
-            fill_rules();
+            DialogResult result = MessageBox.Show("Are you sure? Delete this row?", "CONFIRMATION", MessageBoxButtons.OKCancel);
+            if (result != DialogResult.OK) { e.Cancel = true; }
         }
 
     }
