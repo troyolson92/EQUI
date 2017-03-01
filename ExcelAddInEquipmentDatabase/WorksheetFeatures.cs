@@ -38,10 +38,14 @@ namespace ExcelAddInEquipmentDatabase
                               btn.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(WorkorderDetailsMenuItemClick);
                               break;
 
-                          case "ERROR":
+                          case "Logcode":
                               errornum = (string)Convert.ToString(lClickedSheet.Cells[Target.Row, oListColum.Range.Column].Value);
+                              //
                               btn = AddButtonToTableMenuItem("ErrorDetails");
                               btn.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(ErrorDetailsMenuItemClick);
+                              //
+                              btn = AddButtonToTableMenuItem("ErrorStats");
+                              btn.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(ErrorStatsMenuItemClick);
                               break;
 
                           default:
@@ -206,9 +210,17 @@ namespace ExcelAddInEquipmentDatabase
         //**********************************Error details*********************************************
         void ErrorDetailsMenuItemClick(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)
         {
-            System.Windows.Forms.MessageBox.Show("not done");
+            Forms.LogDetails lLogDetails = new Forms.LogDetails(errornum); //allow multible instances of the form.
+            lLogDetails.Show();
+        }
+        //**********************************Error Stats*********************************************
+        void ErrorStatsMenuItemClick(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)
+        {
+            Forms.ErrorStats lErrorStats = new Forms.ErrorStats(errornum); //allow multible instances of the form.
+            lErrorStats.Show();
         }
 
+        
 
     }
 }
