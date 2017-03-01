@@ -652,6 +652,14 @@ namespace ExcelAddInEquipmentDatabase {
             
             private global::System.Data.DataColumn columncontroller_id;
             
+            private global::System.Data.DataColumn columnClassDescription;
+            
+            private global::System.Data.DataColumn columnClassStructureId;
+            
+            private global::System.Data.DataColumn columnCLassificationId;
+            
+            private global::System.Data.DataColumn columnClassificationTree;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public ASSETSDataTable() {
@@ -751,6 +759,38 @@ namespace ExcelAddInEquipmentDatabase {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn ClassDescriptionColumn {
+                get {
+                    return this.columnClassDescription;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn ClassStructureIdColumn {
+                get {
+                    return this.columnClassStructureId;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn CLassificationIdColumn {
+                get {
+                    return this.columnCLassificationId;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn ClassificationTreeColumn {
+                get {
+                    return this.columnClassificationTree;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -786,7 +826,7 @@ namespace ExcelAddInEquipmentDatabase {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public ASSETSRow AddASSETSRow(string SYSTEMID, string LOCATION, string ASSETNUM, string AssetDescription, string LocationTree, string controller_name, string controller_type, int controller_id) {
+            public ASSETSRow AddASSETSRow(string SYSTEMID, string LOCATION, string ASSETNUM, string AssetDescription, string LocationTree, string controller_name, string controller_type, int controller_id, string ClassDescription, string ClassStructureId, string CLassificationId, string ClassificationTree) {
                 ASSETSRow rowASSETSRow = ((ASSETSRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         SYSTEMID,
@@ -796,7 +836,11 @@ namespace ExcelAddInEquipmentDatabase {
                         LocationTree,
                         controller_name,
                         controller_type,
-                        controller_id};
+                        controller_id,
+                        ClassDescription,
+                        ClassStructureId,
+                        CLassificationId,
+                        ClassificationTree};
                 rowASSETSRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowASSETSRow);
                 return rowASSETSRow;
@@ -827,6 +871,10 @@ namespace ExcelAddInEquipmentDatabase {
                 this.columncontroller_name = base.Columns["controller_name"];
                 this.columncontroller_type = base.Columns["controller_type"];
                 this.columncontroller_id = base.Columns["controller_id"];
+                this.columnClassDescription = base.Columns["ClassDescription"];
+                this.columnClassStructureId = base.Columns["ClassStructureId"];
+                this.columnCLassificationId = base.Columns["CLassificationId"];
+                this.columnClassificationTree = base.Columns["ClassificationTree"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -848,6 +896,14 @@ namespace ExcelAddInEquipmentDatabase {
                 base.Columns.Add(this.columncontroller_type);
                 this.columncontroller_id = new global::System.Data.DataColumn("controller_id", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columncontroller_id);
+                this.columnClassDescription = new global::System.Data.DataColumn("ClassDescription", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnClassDescription);
+                this.columnClassStructureId = new global::System.Data.DataColumn("ClassStructureId", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnClassStructureId);
+                this.columnCLassificationId = new global::System.Data.DataColumn("CLassificationId", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCLassificationId);
+                this.columnClassificationTree = new global::System.Data.DataColumn("ClassificationTree", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnClassificationTree);
                 this.columnSYSTEMID.MaxLength = 255;
                 this.columnLOCATION.MaxLength = 255;
                 this.columnASSETNUM.MaxLength = 255;
@@ -855,6 +911,10 @@ namespace ExcelAddInEquipmentDatabase {
                 this.columnLocationTree.MaxLength = 2147483647;
                 this.columncontroller_name.MaxLength = 50;
                 this.columncontroller_type.MaxLength = 32;
+                this.columnClassDescription.MaxLength = 255;
+                this.columnClassStructureId.MaxLength = 255;
+                this.columnCLassificationId.MaxLength = 255;
+                this.columnClassificationTree.MaxLength = 2147483647;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -4909,6 +4969,70 @@ namespace ExcelAddInEquipmentDatabase {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string ClassDescription {
+                get {
+                    try {
+                        return ((string)(this[this.tableASSETS.ClassDescriptionColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'ClassDescription\' in table \'ASSETS\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableASSETS.ClassDescriptionColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string ClassStructureId {
+                get {
+                    try {
+                        return ((string)(this[this.tableASSETS.ClassStructureIdColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'ClassStructureId\' in table \'ASSETS\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableASSETS.ClassStructureIdColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string CLassificationId {
+                get {
+                    try {
+                        return ((string)(this[this.tableASSETS.CLassificationIdColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'CLassificationId\' in table \'ASSETS\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableASSETS.CLassificationIdColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string ClassificationTree {
+                get {
+                    try {
+                        return ((string)(this[this.tableASSETS.ClassificationTreeColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'ClassificationTree\' in table \'ASSETS\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableASSETS.ClassificationTreeColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsSYSTEMIDNull() {
                 return this.IsNull(this.tableASSETS.SYSTEMIDColumn);
             }
@@ -5001,6 +5125,54 @@ namespace ExcelAddInEquipmentDatabase {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void Setcontroller_idNull() {
                 this[this.tableASSETS.controller_idColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsClassDescriptionNull() {
+                return this.IsNull(this.tableASSETS.ClassDescriptionColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetClassDescriptionNull() {
+                this[this.tableASSETS.ClassDescriptionColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsClassStructureIdNull() {
+                return this.IsNull(this.tableASSETS.ClassStructureIdColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetClassStructureIdNull() {
+                this[this.tableASSETS.ClassStructureIdColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsCLassificationIdNull() {
+                return this.IsNull(this.tableASSETS.CLassificationIdColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetCLassificationIdNull() {
+                this[this.tableASSETS.CLassificationIdColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsClassificationTreeNull() {
+                return this.IsNull(this.tableASSETS.ClassificationTreeColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetClassificationTreeNull() {
+                this[this.tableASSETS.ClassificationTreeColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -8188,16 +8360,24 @@ namespace ExcelAddInEquipmentDatabase.applDataTableAdapters {
             tableMapping.ColumnMappings.Add("controller_name", "controller_name");
             tableMapping.ColumnMappings.Add("controller_type", "controller_type");
             tableMapping.ColumnMappings.Add("controller_id", "controller_id");
+            tableMapping.ColumnMappings.Add("ClassDescription", "ClassDescription");
+            tableMapping.ColumnMappings.Add("ClassStructureId", "ClassStructureId");
+            tableMapping.ColumnMappings.Add("CLassificationId", "CLassificationId");
+            tableMapping.ColumnMappings.Add("ClassificationTree", "ClassificationTree");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = @"INSERT INTO [EqUi].[ASSETS] ([SYSTEMID], [LOCATION], [ASSETNUM], [AssetDescription], [LocationTree], [controller_name], [controller_type], [controller_id]) VALUES (@SYSTEMID, @LOCATION, @ASSETNUM, @AssetDescription, @LocationTree, @controller_name, @controller_type, @controller_id)";
+            this._adapter.InsertCommand.CommandText = @"INSERT INTO [EqUi].[ASSETS] ([SYSTEMID], [LOCATION], [ASSETNUM], [AssetDescription], [LocationTree], [ClassDescription], [ClassStructureId], [CLassificationId], [ClassificationTree], [controller_name], [controller_type], [controller_id]) VALUES (@SYSTEMID, @LOCATION, @ASSETNUM, @AssetDescription, @LocationTree, @ClassDescription, @ClassStructureId, @CLassificationId, @ClassificationTree, @controller_name, @controller_type, @controller_id)";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SYSTEMID", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SYSTEMID", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@LOCATION", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "LOCATION", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ASSETNUM", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ASSETNUM", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@AssetDescription", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AssetDescription", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@LocationTree", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "LocationTree", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ClassDescription", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ClassDescription", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ClassStructureId", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ClassStructureId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@CLassificationId", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "CLassificationId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ClassificationTree", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ClassificationTree", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@controller_name", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "controller_name", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@controller_type", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "controller_type", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@controller_id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "controller_id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -8216,8 +8396,7 @@ namespace ExcelAddInEquipmentDatabase.applDataTableAdapters {
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT SYSTEMID, LOCATION, ASSETNUM, AssetDescription, LocationTree, controller_n" +
-                "ame, controller_type, controller_id FROM  EqUi.ASSETS";
+            this._commandCollection[0].CommandText = "SELECT * FROM  EqUi.ASSETS";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         

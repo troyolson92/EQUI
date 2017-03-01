@@ -61,7 +61,10 @@ namespace ExcelAddInEquipmentDatabase
         // reset the Table context menu back to the default
         private void ResetTableMenu()
         {
-            GetTableContextMenu().Reset(); 
+
+            GetTableContextMenu().Reset();
+            Office.CommandBar test = GetTableContextMenu();
+            //must only reset my menus
         }
         //get command bar for Table property
         private Office.CommandBar GetTableContextMenu()

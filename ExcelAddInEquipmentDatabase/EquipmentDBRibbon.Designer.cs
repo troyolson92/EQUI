@@ -52,7 +52,7 @@
             this.btn_nDays = this.Factory.CreateRibbonButton();
             this.g_config = this.Factory.CreateRibbonGroup();
             this.tbtn_Autorefresh = this.Factory.CreateRibbonToggleButton();
-            this.tbtn_AlertMe = this.Factory.CreateRibbonToggleButton();
+            this.tbtn_StopRightClick = this.Factory.CreateRibbonToggleButton();
             this.dd_User = this.Factory.CreateRibbonDropDown();
             this.btn_ConnectionManager = this.Factory.CreateRibbonButton();
             this.btn_AssetManager = this.Factory.CreateRibbonButton();
@@ -200,7 +200,7 @@
             // g_config
             // 
             this.g_config.Items.Add(this.tbtn_Autorefresh);
-            this.g_config.Items.Add(this.tbtn_AlertMe);
+            this.g_config.Items.Add(this.tbtn_StopRightClick);
             this.g_config.Items.Add(this.dd_User);
             this.g_config.Items.Add(this.btn_ConnectionManager);
             this.g_config.Items.Add(this.btn_AssetManager);
@@ -212,15 +212,14 @@
             // 
             // tbtn_Autorefresh
             // 
-            this.tbtn_Autorefresh.Enabled = false;
             this.tbtn_Autorefresh.Label = "AutoRefresh";
             this.tbtn_Autorefresh.Name = "tbtn_Autorefresh";
             // 
-            // tbtn_AlertMe
+            // tbtn_StopRightClick
             // 
-            this.tbtn_AlertMe.Enabled = false;
-            this.tbtn_AlertMe.Label = "Alert Me";
-            this.tbtn_AlertMe.Name = "tbtn_AlertMe";
+            this.tbtn_StopRightClick.Label = "WillyKnop";
+            this.tbtn_StopRightClick.Name = "tbtn_StopRightClick";
+            this.tbtn_StopRightClick.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.tbtn_StopRightClick_Click);
             // 
             // dd_User
             // 
@@ -311,7 +310,7 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonDropDown dd_ParameterSets;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_help;
         internal Microsoft.Office.Tools.Ribbon.RibbonToggleButton tbtn_Autorefresh;
-        internal Microsoft.Office.Tools.Ribbon.RibbonToggleButton tbtn_AlertMe;
+        internal Microsoft.Office.Tools.Ribbon.RibbonToggleButton tbtn_StopRightClick;
         internal Microsoft.Office.Tools.Ribbon.RibbonDropDown dd_User;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_docMngr;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_ErrorMngr;

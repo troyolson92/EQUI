@@ -49,6 +49,7 @@
             // 
             // rb_enable
             // 
+            this.rb_enable.AutoCheck = false;
             this.rb_enable.AutoSize = true;
             this.rb_enable.Location = new System.Drawing.Point(3, 2);
             this.rb_enable.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -69,7 +70,7 @@
             this.tableLayoutPanel1.ColumnCount = 3;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 210F));
             this.tableLayoutPanel1.Controls.Add(this.rb_enable, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.dt_1, 2, 0);
             this.tableLayoutPanel1.Controls.Add(this.lbl_1, 1, 0);

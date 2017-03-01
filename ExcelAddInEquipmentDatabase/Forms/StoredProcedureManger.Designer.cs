@@ -53,9 +53,9 @@
             this.Btn_saveSet.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.Btn_saveSet.Location = new System.Drawing.Point(12, 235);
             this.Btn_saveSet.Name = "Btn_saveSet";
-            this.Btn_saveSet.Size = new System.Drawing.Size(86, 23);
+            this.Btn_saveSet.Size = new System.Drawing.Size(142, 23);
             this.Btn_saveSet.TabIndex = 1;
-            this.Btn_saveSet.Text = "ParmSets";
+            this.Btn_saveSet.Text = "Manage ParmSets";
             this.Btn_saveSet.UseVisualStyleBackColor = true;
             this.Btn_saveSet.Click += new System.EventHandler(this.Btn_saveSet_Click);
             // 
@@ -63,7 +63,7 @@
             // 
             this.cb_ParmSetNames.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.cb_ParmSetNames.FormattingEnabled = true;
-            this.cb_ParmSetNames.Location = new System.Drawing.Point(104, 234);
+            this.cb_ParmSetNames.Location = new System.Drawing.Point(160, 234);
             this.cb_ParmSetNames.Name = "cb_ParmSetNames";
             this.cb_ParmSetNames.Size = new System.Drawing.Size(226, 24);
             this.cb_ParmSetNames.TabIndex = 2;
@@ -73,7 +73,7 @@
             // btn_SaveSetConfirm
             // 
             this.btn_SaveSetConfirm.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btn_SaveSetConfirm.Location = new System.Drawing.Point(336, 234);
+            this.btn_SaveSetConfirm.Location = new System.Drawing.Point(392, 234);
             this.btn_SaveSetConfirm.Name = "btn_SaveSetConfirm";
             this.btn_SaveSetConfirm.Size = new System.Drawing.Size(64, 23);
             this.btn_SaveSetConfirm.TabIndex = 3;
@@ -84,7 +84,7 @@
             // 
             // btn_SetDelete
             // 
-            this.btn_SetDelete.Location = new System.Drawing.Point(406, 234);
+            this.btn_SetDelete.Location = new System.Drawing.Point(462, 234);
             this.btn_SetDelete.Name = "btn_SetDelete";
             this.btn_SetDelete.Size = new System.Drawing.Size(60, 23);
             this.btn_SetDelete.TabIndex = 4;

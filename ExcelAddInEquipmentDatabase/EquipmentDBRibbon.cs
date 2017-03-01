@@ -34,6 +34,7 @@ namespace ExcelAddInEquipmentDatabase
         //intance of datetimepickers;
         dtPicker StartDatePicker;
         dtPicker EndDatePicker;
+        
 
 
         private void EquipmentDBRibbon_Load(object sender, RibbonUIEventArgs e)
@@ -42,9 +43,8 @@ namespace ExcelAddInEquipmentDatabase
             Assembly _assembly = Assembly.GetExecutingAssembly();
             FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(_assembly.Location);
             g_config.Label = string.Format("V:{0}",fvi.ProductVersion,"");
-
-            //Enable dbg here.
-
+            //Set user name and level
+            dd_user_update();  
             //check here for offline mode. (disabels Querys)
 
             //find connections in wb
@@ -55,6 +55,11 @@ namespace ExcelAddInEquipmentDatabase
             Globals.ThisAddIn.Application.SheetActivate += Application_SheetActivate;
             //subscribe to before rightclick for context menus.
             Globals.ThisAddIn.Application.SheetBeforeRightClick += lWorksheetFeatures.Application_SheetBeforeRightClick;
+            //run background tick for refresh events 
+            Timer timer = new Timer();
+            timer.Interval = (60 * 1000); // 60 secs
+            timer.Tick += new EventHandler(Refresh_Tick);
+            timer.Start();
         }
 
 
@@ -128,7 +133,7 @@ namespace ExcelAddInEquipmentDatabase
         //population of dynamic boxes
         private void load_assetsDataset()
         {
-            if (lASSETS == null)
+            if ((lASSETS == null) ||(lASSETS.Count == 0))
             {
                 //Fill local dataset
                 using (applDataTableAdapters.ASSETSTableAdapter adapter = new applDataTableAdapters.ASSETSTableAdapter())
@@ -146,7 +151,7 @@ namespace ExcelAddInEquipmentDatabase
                 var data = from a in lASSETS
                                          where a.LocationTree.Like(cb_Lochierarchy.Text)
                                          && a.LOCATION.Like(cb_locations.Text)
-                                         && a.ASSETNUM.Like(cb_assets.Text)
+                                         && a.CLassificationId.Like(cb_assets.Text)
                                          orderby a.LocationTree descending
                                          select a.LocationTree;
                 data.Distinct().ToList();
@@ -173,7 +178,7 @@ namespace ExcelAddInEquipmentDatabase
                 var data = from a in lASSETS
                                          where a.LocationTree.Like(cb_Lochierarchy.Text)
                                          && a.LOCATION.Like(cb_locations.Text)
-                                         && a.ASSETNUM.Like(cb_assets.Text)
+                                         && a.CLassificationId.Like(cb_assets.Text)
                                           orderby a.LOCATION descending
                                          select a.LOCATION;
                 data.Distinct().ToList();
@@ -199,9 +204,9 @@ namespace ExcelAddInEquipmentDatabase
                 var data = from a in lASSETS
                                          where a.LocationTree.Like(cb_Lochierarchy.Text)
                                          && a.LOCATION.Like(cb_locations.Text)
-                                         && a.ASSETNUM.Like(cb_assets.Text)
-                                         orderby a.ASSETNUM descending
-                                         select a.ASSETNUM;
+                                         && a.CLassificationId.Like(cb_assets.Text)
+                                         orderby a.CLassificationId descending
+                                         select a.CLassificationId;
                 data.Distinct().ToList();
                 foreach (string thing in data)
                 {
@@ -246,6 +251,17 @@ namespace ExcelAddInEquipmentDatabase
                         Debug.WriteLine(e.Message);
                     }
                 }
+        }
+        private void dd_user_update()
+        {
+            RibbonDropDownItem defaultitem = Globals.Factory.GetRibbonFactory().CreateRibbonDropDownItem();
+            defaultitem.Label = Environment.UserName; // default;
+            dd_User.Items.Add(defaultitem);
+
+            //get you level 
+
+            //get list of users and levels 
+
         }
         private void dd_ParameterSets_update()
         {
@@ -316,7 +332,16 @@ namespace ExcelAddInEquipmentDatabase
         }
         private void btn_nDays_Click(object sender, RibbonControlEventArgs e)
         {
-            MessageBox.Show("not done", "OEPS", MessageBoxButtons.OK);
+            string input = Microsoft.VisualBasic.Interaction.InputBox("Enter the number of days you whant to go back.", "Number of days back", "10", -1, -1);
+            if (Microsoft.VisualBasic.Information.IsNumeric(input))
+            {
+                ProcMngr.daysBack.input = input;
+            }
+            else
+            {
+                MessageBox.Show(string.Format("Please try it again '{0}' not a valid number ",input), "Sorry", MessageBoxButtons.OK);
+                ProcMngr.daysBack.input = "10";
+            }
         }
         private void cb_Lochierarchy_TextChanged(object sender, RibbonControlEventArgs e)
         {
@@ -446,6 +471,29 @@ namespace ExcelAddInEquipmentDatabase
         {
             Forms.ErrorManger lErrorManager = new Forms.ErrorManger();
             lErrorManager.Show();
+        }
+
+        private void Refresh_Tick(object sender, EventArgs e)
+        {
+            if (tbtn_Autorefresh.Checked)
+            {
+                Excel._Workbook activeWorkbook = Globals.ThisAddIn.Application.ActiveWorkbook as Excel.Workbook;
+                activeWorkbook.RefreshAll();
+            }
+        }
+
+        private void tbtn_StopRightClick_Click(object sender, RibbonControlEventArgs e)
+        {
+            if (tbtn_StopRightClick.Checked)
+            {
+                //UNsubscribe to before rightclick for context menus. (to play well with oter wbs
+                Globals.ThisAddIn.Application.SheetBeforeRightClick -= lWorksheetFeatures.Application_SheetBeforeRightClick;
+            }
+            else
+            {
+                //subscribe to before rightclick for context menus.
+                Globals.ThisAddIn.Application.SheetBeforeRightClick += lWorksheetFeatures.Application_SheetBeforeRightClick;
+            }
         }
 
 

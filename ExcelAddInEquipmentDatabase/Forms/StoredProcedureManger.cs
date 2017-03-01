@@ -112,7 +112,7 @@ namespace ExcelAddInEquipmentDatabase
                 locations.Name = "@locations";
                 startDate.Name = "@StartDate";
                 endDate.Name = "@EndDate";
-                daysBack.Name = "@nDays";
+                daysBack.Name = "@daysBack";
                 //
                 lActConn.System = lGadataComm.DsnGADATA;
                 lActConn.ProcedureName = lActConn.get_storedProcedureFromQuery(lActConn.Query);
@@ -233,23 +233,44 @@ namespace ExcelAddInEquipmentDatabase
                             break;
 
                         case SqlDbType.Int: // in case of bit create a editbox for it
-                            Forms.uc_Inputbox nInputbInt = new Forms.uc_Inputbox();
-                            nInputbInt.Name = p.ParameterName;
-                            nInputbInt.label = p.ParameterName;
-                            nInputbInt.intOnly = true;
-                            nInputbInt.active = false;
-                            nInputbInt.input = "0";
-                            if (Query.Contains(p.ParameterName))
+                            if (p.ParameterName == _daysBack.Name)  //handel default ribbon controls. @daysback
                             {
-                                nInputbInt.active = true;
-                                string sValuefirst = Query.Substring(Query.IndexOf(p.ParameterName) + p.ParameterName.Length).Split('=')[1].Trim();
-                                if (sValuefirst.Contains(',') )
+                                _daysBack.Name = p.ParameterName;
+                                _daysBack.label = p.ParameterName;
+                                _daysBack.intOnly = true;
+                                _daysBack.active = true;
+                                if (Query.Contains(p.ParameterName))
                                 {
-                                    sValuefirst = sValuefirst.Split(',')[0].Trim();
+                                    _daysBack.active = true;
+                                    string sValuefirst = Query.Substring(Query.IndexOf(p.ParameterName) + p.ParameterName.Length).Split('=')[1].Trim();
+                                    if (sValuefirst.Contains(','))
+                                    {
+                                        sValuefirst = sValuefirst.Split(',')[0].Trim();
+                                    }
+                                    _daysBack.input = sValuefirst.Split(' ')[0].Trim();
                                 }
-                                nInputbInt.input = sValuefirst.Split(' ')[0].Trim();
+                                flowLayoutPanel1.Controls.Add(_daysBack);
                             }
-                            flowLayoutPanel1.Controls.Add(nInputbInt);
+                            else
+                            {
+                                Forms.uc_Inputbox nInputbInt = new Forms.uc_Inputbox();
+                                nInputbInt.Name = p.ParameterName;
+                                nInputbInt.label = p.ParameterName;
+                                nInputbInt.intOnly = true;
+                                nInputbInt.active = false;
+                                nInputbInt.input = "0";
+                                if (Query.Contains(p.ParameterName))
+                                {
+                                    nInputbInt.active = true;
+                                    string sValuefirst = Query.Substring(Query.IndexOf(p.ParameterName) + p.ParameterName.Length).Split('=')[1].Trim();
+                                    if (sValuefirst.Contains(','))
+                                    {
+                                        sValuefirst = sValuefirst.Split(',')[0].Trim();
+                                    }
+                                    nInputbInt.input = sValuefirst.Split(' ')[0].Trim();
+                                }
+                                flowLayoutPanel1.Controls.Add(nInputbInt);
+                            }
                             break;
 
                         case SqlDbType.VarChar: // in case of bit create a editbox for it
@@ -304,22 +325,6 @@ namespace ExcelAddInEquipmentDatabase
                                     _lochierarchy.active = false;
                                 }
                                 flowLayoutPanel1.Controls.Add(_lochierarchy);
-                            }
-                            else if (p.ParameterName == _daysBack.Name)  //handel default ribbon controls. @daysback
-                            {
-                                _daysBack.Name = p.ParameterName;
-                                _daysBack.label = p.ParameterName;
-                                _daysBack.intOnly = true;
-                                if (Query.Contains(p.ParameterName))
-                                {
-                                    _daysBack.active = true;
-                                    _daysBack.input = sInput;
-                                }
-                                else
-                                {
-                                    _daysBack.active = false;
-                                }
-                                flowLayoutPanel1.Controls.Add(_daysBack);
                             }
                             else  // in case of other create control for it
                             { 
