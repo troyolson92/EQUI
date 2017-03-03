@@ -2,6 +2,7 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Security;
+using System.Resources;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
@@ -11,8 +12,8 @@ using System.Security;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("VCG AAOSR")]
 [assembly: AssemblyProduct("ExcelAddInEquipmentDatabase")]
-[assembly: AssemblyCopyright("Copyright © Microsoft 2017")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCopyright("VOLVO CARS GENT © SDEBEUL 2017")]
+[assembly: AssemblyTrademark("SDEBEUL")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
@@ -33,6 +34,7 @@ using System.Security;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("3.0.1.6")]
-[assembly: AssemblyFileVersion("3.0.1.6")]
+[assembly: AssemblyVersion("3.0.1.9")]
+[assembly: AssemblyFileVersion("3.0.1.9")]
 
+[assembly: NeutralResourcesLanguageAttribute("en")]

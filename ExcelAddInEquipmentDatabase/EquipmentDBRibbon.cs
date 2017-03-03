@@ -336,6 +336,9 @@ namespace ExcelAddInEquipmentDatabase
             if (Microsoft.VisualBasic.Information.IsNumeric(input))
             {
                 ProcMngr.daysBack.input = input;
+                //also set Startdate = enddate - daysback to make maximo work beter.
+                ProcMngr.startDate.input = DateTime.Now.AddDays(Convert.ToInt32(input) * -1);
+                ProcMngr.endDate.input = DateTime.Now;
             }
             else
             {
@@ -376,6 +379,10 @@ namespace ExcelAddInEquipmentDatabase
         //refresh the active connection or refresh all connections if needed
         private void btn_Query_Click(object sender, RibbonControlEventArgs e)
         {
+            //also set Startdate = enddate - daysback to make maximo work beter.
+            ProcMngr.startDate.input = DateTime.Now.AddDays(Convert.ToInt32(ProcMngr.daysBack.input) * -1);
+            ProcMngr.endDate.input = DateTime.Now;
+            //
             Excel._Workbook activeWorkbook = Globals.ThisAddIn.Application.ActiveWorkbook as Excel.Workbook;
             if (dd_activeConnection.SelectedItem.Label == "RefreshAll")
             {

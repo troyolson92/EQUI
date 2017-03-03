@@ -61,7 +61,11 @@ namespace ExcelAddInEquipmentDatabase.Forms
             lv_result.Items.Clear();
             Resultbuffer.Clear();
             //
-            List<string> LOGSearchpaths = new List<String>() { @"\\gnl9011102\proj\6308-Shr-VCC03100\TechnischeDocs\Robots\ABB\IRC5 - NGAC\Sharepoint_FP_3Doc_17w05d1" };
+            List<string> LOGSearchpaths = new List<String>() 
+            { 
+@"\\gnl9011102\proj\6308-Shr-VCC03100\TechnischeDocs\Robots\ABB\IRC5 - NGAC\Sharepoint_FP_3Doc_17w05d1" 
+,@"\\gnlsnm0101.gen.volvocars.net\proj\6308-Shr-VC024800\OBJECTBEHEER GA\Robots\12. SW + Tools\RobotDatabase"
+            };
             lbl_info.Text = "Scanning for files";
             Cursor.Current = Cursors.AppStarting;
             List<string> ResultList = ReqSearchDir(LOGSearchpaths, "*.PDF", cb_path.Text);
@@ -206,6 +210,11 @@ namespace ExcelAddInEquipmentDatabase.Forms
               Debug.WriteLine(ex.Message);
           }
           return List;
+      }
+
+      private void folderBrowserDialog1_HelpRequest(object sender, EventArgs e)
+      {
+
       }
     }
 }

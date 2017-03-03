@@ -36,6 +36,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.lbl_info = new System.Windows.Forms.Label();
             this.cb_path = new System.Windows.Forms.ComboBox();
+            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.SuspendLayout();
             // 
             // btn_find
@@ -119,6 +120,10 @@
             this.cb_path.Size = new System.Drawing.Size(222, 24);
             this.cb_path.TabIndex = 9;
             // 
+            // folderBrowserDialog1
+            // 
+            this.folderBrowserDialog1.HelpRequest += new System.EventHandler(this.folderBrowserDialog1_HelpRequest);
+            // 
             // DocManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -150,5 +155,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label lbl_info;
         private System.Windows.Forms.ComboBox cb_path;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
     }
 }

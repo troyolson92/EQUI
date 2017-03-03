@@ -23,12 +23,12 @@ namespace ExcelAddInEquipmentDatabase
 
         public string GADATAconnectionString
         {
-            get { return @"ODBC;DSN=" + DsnGADATA + ";Description= GADATA;UID=EqUi;PWD=EqUi;APP=SQLFront;WSID=GNL1004ZCBQC2\\SDEBEUL;DATABASE=GADATA"; }
+            get { return @"ODBC;DSN=" + DsnGADATA + ";Description= GADATA;UID=EqUi;PWD=EqUi;APP=SQLFront;WSID=GNL1004ZCBQC2\\EQUI;DATABASE=GADATA"; }
         }
         public void make_DSN() 
         {
             ODBCManager.CreateDSN(DsnGADATA, "odbc link to sql001.gen.volvocars.net"
-                , "sqla001.gen.volvocars.net", "SQL Server", @"C:\windows\system32\SQLSRV32.dll", true, "GADATA");
+                , "sqla001.gen.volvocars.net", "SQL Server", @"C:\windows\system32\SQLSRV32.dll",false, "GADATA");
         }
 
         public void BulkCopyToGadata(string as_schema, DataTable adt_table, string as_destination)
