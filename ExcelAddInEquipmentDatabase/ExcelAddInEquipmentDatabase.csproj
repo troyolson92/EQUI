@@ -283,6 +283,12 @@
     <Compile Include="Forms\MXxWOdetails.Designer.cs">
       <DependentUpon>MXxWOdetails.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\MXxWOoverview.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MXxWOoverview.Designer.cs">
+      <DependentUpon>MXxWOoverview.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\uc_Datebox.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -339,6 +345,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MXxWOdetails.resx">
       <DependentUpon>MXxWOdetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MXxWOoverview.resx">
+      <DependentUpon>MXxWOoverview.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\uc_Datebox.resx">
       <DependentUpon>uc_Datebox.cs</DependentUpon>

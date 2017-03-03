@@ -48,6 +48,11 @@ namespace ExcelAddInEquipmentDatabase
                               btn.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(ErrorStatsMenuItemClick);
                               break;
 
+                        case "Location":
+                        case "Assetnum":
+                              addMaximoSubmenu();
+                              break;
+
                           default:
                               //nothing to do 
                               break;
@@ -220,6 +225,38 @@ namespace ExcelAddInEquipmentDatabase
             lErrorStats.Show();
         }
 
+
+        //submenu for mawimo tools
+        public void addMaximoSubmenu()
+        {
+            Office.MsoControlType menuItem = Office.MsoControlType.msoControlButton;
+
+            Office.MsoControlType ControlPopup = Office.MsoControlType.msoControlPopup;
+            Office.CommandBarPopup subMenu = (Office.CommandBarPopup)GetTableContextMenu().Controls.Add(ControlPopup, Type.Missing, Type.Missing, 1, true);
+            subMenu.Caption = "Maximo";
+            //
+            Office.CommandBarButton btnShowWorkorderHistory = (Office.CommandBarButton)subMenu.Controls.Add(menuItem, Type.Missing, Type.Missing, 1, true);
+            btnShowWorkorderHistory.Style = Office.MsoButtonStyle.msoButtonCaption;
+            btnShowWorkorderHistory.Caption = "Wo history";
+            btnShowWorkorderHistory.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(btnShowWorkorderHistoryClick);
+            //
+            Office.CommandBarButton btnShowPartsWorkorder = (Office.CommandBarButton)subMenu.Controls.Add(menuItem, Type.Missing, Type.Missing, 1, true);
+            btnShowPartsWorkorder.Style = Office.MsoButtonStyle.msoButtonCaption;
+            btnShowPartsWorkorder.Caption = "Part history";
+            btnShowPartsWorkorder.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(btnShowPartsWorkorderClick);
+        }
+
+        void btnShowWorkorderHistoryClick(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)
+        {
+            Forms.MXxWOoverview lMXxWOoverview = new Forms.MXxWOoverview(); //allow multible instances of the form.
+            lMXxWOoverview.Show();
+        }
+
+        void btnShowPartsWorkorderClick(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)
+        {
+            Forms.MXxWOoverview lMXxWOoverview = new Forms.MXxWOoverview(); //allow multible instances of the form.
+            lMXxWOoverview.Show();
+        }
         
 
     }
