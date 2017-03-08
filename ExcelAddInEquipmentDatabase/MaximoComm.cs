@@ -163,7 +163,7 @@ namespace ExcelAddInEquipmentDatabase
         {
             try
             {
-                Maximo7conn.Open();
+                if (Maximo7conn.State != ConnectionState.Open) { Maximo7conn.Open(); }
             }
             catch (Exception e)
             {

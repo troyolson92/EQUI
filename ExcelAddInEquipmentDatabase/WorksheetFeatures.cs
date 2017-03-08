@@ -16,6 +16,8 @@ namespace ExcelAddInEquipmentDatabase
         //dbg 
         string wonum;
         string errornum;
+        string location;
+        string assetnum;
         Office.CommandBarButton btn;
 
         public void Application_SheetBeforeRightClick(object Sh, Excel.Range Target, ref bool Cancel)
@@ -49,8 +51,12 @@ namespace ExcelAddInEquipmentDatabase
                               break;
 
                         case "Location":
-                        case "Assetnum":
+                              location = (string)Convert.ToString(lClickedSheet.Cells[Target.Row, oListColum.Range.Column].Value);
                               addMaximoSubmenu();
+                              break;
+                        case "Assetnum":
+                              assetnum = (string)Convert.ToString(lClickedSheet.Cells[Target.Row, oListColum.Range.Column].Value);
+
                               break;
 
                           default:
@@ -146,14 +152,14 @@ namespace ExcelAddInEquipmentDatabase
         // find existing rules for table and remove
             ClearFormatConditions(Sheet);
            //old type 
-            AddFormatToTable(Sheet, "Errortype", "SHIFTBOOK", 8708322);
-            AddFormatToTable(Sheet, "Errortype", "WARNING",16760832);
-            AddFormatToTable(Sheet, "Errortype", "ALERT", 16724940);
-            AddFormatToTable(Sheet, "Errortype", "SLOWspeed", 16305069);
-            AddFormatToTable(Sheet, "Errortype", "LIVE", 16711680);
-            AddFormatToTable(Sheet, "Errortype", "BREAKDOWN", 45296);
-            AddFormatToTable(Sheet, "Errortype", "BEGIN", 45136);
-            AddFormatToTable(Sheet, "Errortype", "TI", 11128974);
+            AddFormatToTable(Sheet, "ErrorType", "SHIFTBOOK", 8708322);
+            AddFormatToTable(Sheet, "ErrorType", "WARNING", 16760832);
+            AddFormatToTable(Sheet, "ErrorType", "ALERT", 16724940);
+            AddFormatToTable(Sheet, "ErrorType", "SLOWspeed", 16305069);
+            AddFormatToTable(Sheet, "ErrorType", "LIVE", 16711680);
+            AddFormatToTable(Sheet, "ErrorType", "BREAKDOWN", 45296);
+            AddFormatToTable(Sheet, "ErrorType", "BEGIN", 45136);
+            AddFormatToTable(Sheet, "ErrorType", "TI", 11128974);
 
             //new type 
             AddFormatToTable(Sheet, "LogType", "SHIFTBOOK", 8708322);
@@ -221,7 +227,7 @@ namespace ExcelAddInEquipmentDatabase
         //**********************************Error Stats*********************************************
         void ErrorStatsMenuItemClick(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)
         {
-            Forms.ErrorStats lErrorStats = new Forms.ErrorStats(errornum); //allow multible instances of the form.
+            Forms.ErrorStats lErrorStats = new Forms.ErrorStats(location, errornum); //allow multible instances of the form.
             lErrorStats.Show();
         }
 
@@ -248,13 +254,13 @@ namespace ExcelAddInEquipmentDatabase
 
         void btnShowWorkorderHistoryClick(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)
         {
-            Forms.MXxWOoverview lMXxWOoverview = new Forms.MXxWOoverview(); //allow multible instances of the form.
+            Forms.MXxWOoverview lMXxWOoverview = new Forms.MXxWOoverview(location,false); //allow multible instances of the form.
             lMXxWOoverview.Show();
         }
 
         void btnShowPartsWorkorderClick(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)
         {
-            Forms.MXxWOoverview lMXxWOoverview = new Forms.MXxWOoverview(); //allow multible instances of the form.
+            Forms.MXxWOoverview lMXxWOoverview = new Forms.MXxWOoverview(location,true); //allow multible instances of the form.
             lMXxWOoverview.Show();
         }
         
