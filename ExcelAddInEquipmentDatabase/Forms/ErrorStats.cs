@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace ExcelAddInEquipmentDatabase.Forms
 {
@@ -22,8 +23,8 @@ namespace ExcelAddInEquipmentDatabase.Forms
             chart1.Series.Add("ErrorCount");
             chart1.Series["ErrorCount"].XValueMember = "starttime";
             chart1.Series["ErrorCount"].YValueMembers = "count";
-            chart1.Series["ErrorCount"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Column;
-            chart1.Series[0].XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
+            chart1.Series["ErrorCount"].ChartType = SeriesChartType.Column;
+            chart1.Series[0].XValueType = ChartValueType.DateTime;
             chart1.ChartAreas[0].AxisX.Interval = 1;
             //query all instances of the error 
             string qry = string.Format(
@@ -147,31 +148,35 @@ private void buildTrendChart()
             chart1.DataSource = ldt;
             chart1.DataBind();
             //first error instance
-            string FirstE = dt.AsEnumerable().First()[0].ToString();
+            string FirstE = "";//dt.AsEnumerable().First()[0].ToString();
             //
             if (nDays < 4) //shift mode = min resulotion
             {
+                //this will not work because we already group /shift on SQL side. fuck
                 chart1.ChartAreas[0].AxisX.LabelStyle.Format = "yyyy-MM-dd";
-                chart1.ChartAreas[0].AxisX.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Hours;
+                chart1.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Hours;
                 chart1.ChartAreas[0].AxisX.IntervalOffset = 1;
                 chart1.Series["ErrorCount"].BorderWidth = 8;
                 label1.Text = string.Format("First error: {0}  Mode: {1}", FirstE, "ShiftMode");
+                chart1.DataManipulator.Group("SUM", 1, IntervalType.Hours, "ErrorCount");
             }
             else if (nDays < 31) //day mode
             {
                 chart1.ChartAreas[0].AxisX.LabelStyle.Format = "yyyy-MM-dd";
-                chart1.ChartAreas[0].AxisX.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Days;
+                chart1.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Days;
                 chart1.ChartAreas[0].AxisX.IntervalOffset = 1;
                 chart1.Series["ErrorCount"].BorderWidth = 6;
                 label1.Text = string.Format("First error: {0}  Mode: {1}", FirstE, "Daymode");
+                chart1.DataManipulator.Group("SUM", 1, IntervalType.Days, "ErrorCount");
             }
             else //week mode
             {
                 chart1.ChartAreas[0].AxisX.LabelStyle.Format = "yyyy-MM-dd";
-                chart1.ChartAreas[0].AxisX.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Weeks;
+                chart1.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Weeks;
                 chart1.ChartAreas[0].AxisX.IntervalOffset = 1;
                 chart1.Series["ErrorCount"].BorderWidth = 4;
                 label1.Text = string.Format("First error: {0}  Mode: {1}", FirstE, "Weekmode");
+                chart1.DataManipulator.Group("SUM", 1, IntervalType.Weeks, "ErrorCount");
             }       
         }
 
