@@ -63,6 +63,8 @@ namespace ExcelAddInEquipmentDatabase
         }
 
 
+
+
         void Application_WorkbookActivate(Excel.Workbook Wb)
         {
             Set_activeconnection();
@@ -152,6 +154,7 @@ namespace ExcelAddInEquipmentDatabase
                                          where a.LocationTree.Like(cb_Lochierarchy.Text)
                                          && a.LOCATION.Like(cb_locations.Text)
                                          && a.CLassificationId.Like(cb_assets.Text)
+                                         && a.LocationTree != null
                                          orderby a.LocationTree descending
                                          select a.LocationTree;
                 data.Distinct().ToList();
@@ -179,6 +182,7 @@ namespace ExcelAddInEquipmentDatabase
                                          where a.LocationTree.Like(cb_Lochierarchy.Text)
                                          && a.LOCATION.Like(cb_locations.Text)
                                          && a.CLassificationId.Like(cb_assets.Text)
+                                         && a.LOCATION != null
                                           orderby a.LOCATION descending
                                          select a.LOCATION;
                 data.Distinct().ToList();
@@ -205,6 +209,7 @@ namespace ExcelAddInEquipmentDatabase
                                          where a.LocationTree.Like(cb_Lochierarchy.Text)
                                          && a.LOCATION.Like(cb_locations.Text)
                                          && a.CLassificationId.Like(cb_assets.Text)
+                                         && a.CLassificationId != null
                                          orderby a.CLassificationId descending
                                          select a.CLassificationId;
                 data.Distinct().ToList();

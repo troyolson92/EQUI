@@ -839,6 +839,7 @@ namespace ExcelAddInEquipmentDatabase
                 using (ConnectionManger connMngr = new ConnectionManger())
                 {
                     Excel.WorkbookConnection connection = connMngr.get_Connection(lname);
+                    if (connection.ODBCConnection.Refreshing) { connection.ODBCConnection.CancelRefresh(); }
                     connection.ODBCConnection.CommandText = value;
                     connMngr.Dispose();
                 }
