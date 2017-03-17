@@ -32,12 +32,28 @@ DECLARE @Location as varchar(max) = '{0}'
 DECLARE @ERRORNUM as int = {1} -- why not use the index of the l_error ? might be smarter 
 DECLARE @controllerID as int = (select top 1 controller_id from gadata.equi.ASSETS where RTRIM(location) = @Location)
 DECLARE @controllerTYPE as varchar(10) = (select top 1 controller_type from gadata.equi.ASSETS where RTRIM(location) = @Location)
-DECLARE @First as datetime = 
+DECLARE @First as datetime
+if @controllerTYPE = 'c4g'
+BEGIN
+SET @First = 
 (
 select top 1 isnull(_timestamp,c_timestamp) FROM GADATA.c4g.h_alarm 
 left join gadata.C4G.L_error on L_error.[error_number] = @Errornum and L_error.id = h_alarm.error_id
 where h_alarm.controller_id = @controllerID
 )
+END
+if @controllerTYPE = 'c3g'
+BEGIN
+SET @First = 
+(
+select top 1 isnull(_timestamp,c_timestamp) FROM GADATA.c3g.h_alarm 
+left join gadata.C3G.L_error on L_error.[error_number] = @Errornum and L_error.id = h_alarm.error_id
+where h_alarm.controller_id = @controllerID
+)
+END
+
+print @First
+
 if @controllerTYPE = 'c4g'
 BEGIN
 SELECT 
@@ -52,7 +68,7 @@ l.id = h.error_id
 AND 
 l.[error_number] = @Errornum
 WHERE
-h._timestamp between @first and getdate()
+ISNULL(h._timestamp,h.c_timestamp) between @first and getdate()
 AND 
 h.controller_id = @controllerID
 AND 
@@ -78,7 +94,7 @@ l.id = h.error_id
 AND 
 l.[error_number] = @Errornum
 WHERE
-h._timestamp between @first and getdate()
+ISNULL(h._timestamp,h.c_timestamp) between @first and getdate()
 AND 
 h.controller_id = @controllerID
 AND 
@@ -93,9 +109,28 @@ END
 ", Location, Errornum);
             dt = lGdataComm.RunQueryGadata(qry);
             //figure out init mode
-                // should query all instanace of the error. (from first time it happend)
-                //than figer out what mode I should use. if happend more that 10 times in last 3 days = hourmode if 10 in last week day mode ...
-                //numericUpDown1.Value := 10;
+            var count3 = from a in dt.AsEnumerable()
+                      where a.Field<DateTime>("starttime") >  DateTime.Now.AddDays(Convert.ToInt32(3) * -1)
+                      select a;
+            if (count3.Count() > 10) //more than 10 times in 3 days
+            {
+                numericUpDown1.Value = 3;
+            }
+            else
+            {
+                var count30 = from a in dt.AsEnumerable()
+                             where a.Field<DateTime>("starttime") > DateTime.Now.AddDays(Convert.ToInt32(30) * -1)
+                             select a;
+                if (count30.Count() > 10) //more than 10 times in a month
+                {
+                    numericUpDown1.Value = 30;
+                }
+                else
+                {
+                    numericUpDown1.Value = 1000;
+
+                }
+            }
             //build trend chart in init mode. 
             buildTrendChart();
         }
@@ -108,16 +143,19 @@ private void buildTrendChart()
             var ldt = from a in dt.AsEnumerable()
                       where a.Field<DateTime>("starttime") > GrapStart
                       select a;
-
+            //
             chart1.DataSource = ldt;
             chart1.DataBind();
-
-            if (nDays < 3) //shift mode = min resulotion
+            //first error instance
+            string FirstE = dt.AsEnumerable().First()[0].ToString();
+            //
+            if (nDays < 4) //shift mode = min resulotion
             {
                 chart1.ChartAreas[0].AxisX.LabelStyle.Format = "yyyy-MM-dd";
                 chart1.ChartAreas[0].AxisX.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Hours;
                 chart1.ChartAreas[0].AxisX.IntervalOffset = 1;
                 chart1.Series["ErrorCount"].BorderWidth = 8;
+                label1.Text = string.Format("First error: {0}  Mode: {1}", FirstE, "ShiftMode");
             }
             else if (nDays < 31) //day mode
             {
@@ -125,6 +163,7 @@ private void buildTrendChart()
                 chart1.ChartAreas[0].AxisX.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Days;
                 chart1.ChartAreas[0].AxisX.IntervalOffset = 1;
                 chart1.Series["ErrorCount"].BorderWidth = 6;
+                label1.Text = string.Format("First error: {0}  Mode: {1}", FirstE, "Daymode");
             }
             else //week mode
             {
@@ -132,6 +171,7 @@ private void buildTrendChart()
                 chart1.ChartAreas[0].AxisX.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Weeks;
                 chart1.ChartAreas[0].AxisX.IntervalOffset = 1;
                 chart1.Series["ErrorCount"].BorderWidth = 4;
+                label1.Text = string.Format("First error: {0}  Mode: {1}", FirstE, "Weekmode");
             }       
         }
 
