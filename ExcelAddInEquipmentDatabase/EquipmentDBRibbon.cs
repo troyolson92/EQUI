@@ -84,12 +84,11 @@ namespace ExcelAddInEquipmentDatabase
                 Excel.WorkbookConnection conn = oTable.WorkbookConnection;
                 return conn.Name.ToString();
             }
-
             foreach (Excel.ListObject oListobject in activeWorksheet.ListObjects)
             {
-                Excel.QueryTable oTable = oListobject.QueryTable;
-                Excel.WorkbookConnection conn = oTable.WorkbookConnection;
-                return conn.Name.ToString();
+                    Excel.QueryTable oTable = oListobject.QueryTable;
+                    Excel.WorkbookConnection conn = oTable.WorkbookConnection;
+                    return conn.Name.ToString();
             }
             return null;
         }

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using System.Globalization;
 
 namespace ExcelAddInEquipmentDatabase.Forms
 {
@@ -26,6 +27,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
             chart1.Series["ErrorCount"].ChartType = SeriesChartType.Column;
             chart1.Series[0].XValueType = ChartValueType.DateTime;
             chart1.ChartAreas[0].AxisX.Interval = 1;
+            chart1.FormatNumber += chart1_FormatNumber;
             //query all instances of the error 
             string qry = string.Format(
     @"
@@ -33,89 +35,56 @@ DECLARE @Location as varchar(max) = '{0}'
 DECLARE @ERRORNUM as int = {1} -- why not use the index of the l_error ? might be smarter 
 DECLARE @controllerID as int = (select top 1 controller_id from gadata.equi.ASSETS where RTRIM(location) = @Location)
 DECLARE @controllerTYPE as varchar(10) = (select top 1 controller_type from gadata.equi.ASSETS where RTRIM(location) = @Location)
-DECLARE @First as datetime
-if @controllerTYPE = 'c4g'
-BEGIN
-SET @First = 
-(
-select top 1 isnull(_timestamp,c_timestamp) FROM GADATA.c4g.h_alarm 
-left join gadata.C4G.L_error on L_error.[error_number] = @Errornum and L_error.id = h_alarm.error_id
-where h_alarm.controller_id = @controllerID
-)
-END
-if @controllerTYPE = 'c3g'
-BEGIN
-SET @First = 
-(
-select top 1 isnull(_timestamp,c_timestamp) FROM GADATA.c3g.h_alarm 
-left join gadata.C3G.L_error on L_error.[error_number] = @Errornum and L_error.id = h_alarm.error_id
-where h_alarm.controller_id = @controllerID
-)
-END
-
-print @First
 
 if @controllerTYPE = 'c4g'
 BEGIN
 SELECT 
- t.starttime 
- ,count(x.ts) as 'count'
-FROM GADATA.VOLVO.L_timeline as t 
-LEFT JOIN 
-(
-SELECT ISNULL(h._timestamp,h.c_timestamp) as 'ts' FROM gadata.c4g.h_alarm as h 
-LEFT JOIN gadata.c4g.l_error as l on 
-l.id = h.error_id 
-AND 
-l.[error_number] = @Errornum
-WHERE
-ISNULL(h._timestamp,h.c_timestamp) between @first and getdate()
-AND 
-h.controller_id = @controllerID
-AND 
-l.[error_number] = @ERRORNUM
-)  as x on x.ts between t.starttime and t.endtime
-
-WHERE 
-t.starttime between @first and getdate() 
-group by t.starttime
+  h.c_timestamp as 'starttime'
+, 1 as 'count'
+FROM gadata.c4g.h_alarm as h 
+left join gadata.c4g.l_error as l on l.id = h.error_id
+where l.[error_number] = @errornum and h.controller_id = @controllerID
+UNION
+SELECT 
+  getdate() as 'starttime'
+, 0 as 'count'
 END
 
 if @controllerTYPE = 'c3g'
 BEGIN
+SELECT
+  h.c_timestamp as 'starttime'
+, 1 as 'count'
+FROM gadata.c3g.h_alarm as h 
+left join gadata.c3g.l_error as l on l.id = h.error_id
+where l.[error_number] = @errornum and h.controller_id = @controllerID
+UNION
 SELECT 
- t.starttime 
- ,count(x.ts) as 'count'
-FROM GADATA.VOLVO.L_timeline as t 
-LEFT JOIN 
-(
-SELECT ISNULL(h._timestamp,h.c_timestamp) as 'ts' FROM gadata.c3g.h_alarm as h 
-LEFT JOIN gadata.c3g.l_error as l on 
-l.id = h.error_id 
-AND 
-l.[error_number] = @Errornum
-WHERE
-ISNULL(h._timestamp,h.c_timestamp) between @first and getdate()
-AND 
-h.controller_id = @controllerID
-AND 
-l.[error_number] = @ERRORNUM
-)  as x on x.ts between t.starttime and t.endtime
-
-WHERE 
-t.starttime between @first and getdate() 
-group by t.starttime
+  getdate() as 'starttime'
+, 0 as 'count'
 END
-
 ", Location, Errornum);
+            //fill dataset with all errors
             dt = lGdataComm.RunQueryGadata(qry);
+            //setup trackbar (trackbar maximum = first time error happend, minium = now)
+            DateTime FirstError = (from a in dt.AsEnumerable() select a.Field<DateTime>("starttime")).Min();
+            DateTime LastError = (from a in dt.AsEnumerable() select a.Field<DateTime>("starttime")).Max();
+            trackBar1.Minimum = (int)(FirstError - LastError).TotalDays;
+            trackBar1.Maximum = -1; //minimum display = 1 day 
             //figure out init mode
+            /*this will figure out of "active" the error is, 
+             * if it happens more than 10 times in the last 3 days => set graph to 3 day range (show data in hours)
+             *               more than 10 times in the last 30 days => set graph to 30 day range (show data in days)
+             *               else set to full 'lifecycle' of error and set graph in week mode
+             */
             var count3 = from a in dt.AsEnumerable()
                       where a.Field<DateTime>("starttime") >  DateTime.Now.AddDays(Convert.ToInt32(3) * -1)
                       select a;
             if (count3.Count() > 10) //more than 10 times in 3 days
             {
-                numericUpDown1.Value = 3;
+                trackBar1.Value = -3;
+                this.BackColor = System.Drawing.Color.Red;
+                chart1.BackColor = System.Drawing.Color.Red;
             }
             else
             {
@@ -124,12 +93,15 @@ END
                              select a;
                 if (count30.Count() > 10) //more than 10 times in a month
                 {
-                    numericUpDown1.Value = 30;
+                    trackBar1.Value = -30;
+                    this.BackColor = System.Drawing.Color.Yellow;
+                    chart1.BackColor = System.Drawing.Color.Yellow;
                 }
                 else
                 {
-                    numericUpDown1.Value = 1000;
-
+                    trackBar1.Value = -360; //set last running year as a max for 'init' mode
+                    this.BackColor = System.Drawing.Color.LightBlue;
+                    chart1.BackColor = System.Drawing.Color.LightBlue;
                 }
             }
             //build trend chart in init mode. 
@@ -138,49 +110,95 @@ END
 
 private void buildTrendChart() 
         {
-            decimal nDays = numericUpDown1.Value;
-            DateTime GrapStart = DateTime.Now.AddDays(Convert.ToInt32(nDays) * -1);
-
+            //use the trackbar to calculate the starting point of the graph
+            DateTime GrapStart = DateTime.Now.AddDays(Convert.ToInt32(trackBar1.Value));
+            //
             var ldt = from a in dt.AsEnumerable()
                       where a.Field<DateTime>("starttime") > GrapStart
                       select a;
-            //
             chart1.DataSource = ldt;
             chart1.DataBind();
-            //first error instance
-            string FirstE = "";//dt.AsEnumerable().First()[0].ToString();
             //
-            if (nDays < 4) //shift mode = min resulotion
+            DateTime FirstError = (from a in dt.AsEnumerable() select a.Field<DateTime>("starttime")).Min();
+            //
+            if (trackBar1.Value > -4) //hour mode = min resolution "HotItem"
             {
-                //this will not work because we already group /shift on SQL side. fuck
-                chart1.ChartAreas[0].AxisX.LabelStyle.Format = "yyyy-MM-dd";
+                chart1.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatHour"; 
                 chart1.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Hours;
                 chart1.ChartAreas[0].AxisX.IntervalOffset = 1;
                 chart1.Series["ErrorCount"].BorderWidth = 8;
-                label1.Text = string.Format("First error: {0}  Mode: {1}", FirstE, "ShiftMode");
+                label1.Text = string.Format("First error: {0} ", FirstError);
+                label2.Text = string.Format("'Now'  DisplayMode:{0}", "GroupHourmode");
                 chart1.DataManipulator.Group("SUM", 1, IntervalType.Hours, "ErrorCount");
             }
-            else if (nDays < 31) //day mode
+            else if (trackBar1.Value > -31) //day mode "yellowItem"
             {
-                chart1.ChartAreas[0].AxisX.LabelStyle.Format = "yyyy-MM-dd";
+                chart1.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatDay"; 
                 chart1.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Days;
                 chart1.ChartAreas[0].AxisX.IntervalOffset = 1;
                 chart1.Series["ErrorCount"].BorderWidth = 6;
-                label1.Text = string.Format("First error: {0}  Mode: {1}", FirstE, "Daymode");
+                label1.Text = string.Format("First error: {0} ", FirstError);
+                label2.Text = string.Format("'Now'  DisplayMode:{0}", "GroupDaymode");
                 chart1.DataManipulator.Group("SUM", 1, IntervalType.Days, "ErrorCount");
             }
-            else //week mode
+            else //week mode 
             {
-                chart1.ChartAreas[0].AxisX.LabelStyle.Format = "yyyy-MM-dd";
+                chart1.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatWeek"; 
                 chart1.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Weeks;
                 chart1.ChartAreas[0].AxisX.IntervalOffset = 1;
                 chart1.Series["ErrorCount"].BorderWidth = 4;
-                label1.Text = string.Format("First error: {0}  Mode: {1}", FirstE, "Weekmode");
+                label1.Text = string.Format("First error: {0} ", FirstError);
+                label2.Text = string.Format("'Now'  DisplayMode:{0}", "GroupWeekmode");
                 chart1.DataManipulator.Group("SUM", 1, IntervalType.Weeks, "ErrorCount");
             }       
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        void chart1_FormatNumber(object sender, FormatNumberEventArgs e)
+        {
+            if (e.ElementType == ChartElementType.AxisLabels && e.Format == "CustomAxisXFormatWeek")
+            {
+                if (e.ValueType == ChartValueType.DateTime)
+                {
+                    var currentCalendar = CultureInfo.CurrentCulture.Calendar;
+
+                    e.LocalizedValue = string.Format("{0}W{1}",
+                        DateTime.FromOADate(e.Value).Year % 100,
+                        currentCalendar.GetWeekOfYear(DateTime.FromOADate(e.Value), System.Globalization.CalendarWeekRule.FirstDay, CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek)
+                        );
+                }
+            }
+
+            if (e.ElementType == ChartElementType.AxisLabels && e.Format == "CustomAxisXFormatDay")
+            {
+                if (e.ValueType == ChartValueType.DateTime)
+                {
+                    var currentCalendar = CultureInfo.CurrentCulture.Calendar;
+
+                    e.LocalizedValue = string.Format("{0}W{1}D{2}",
+                        DateTime.FromOADate(e.Value).Year %100,
+                        currentCalendar.GetWeekOfYear(DateTime.FromOADate(e.Value), System.Globalization.CalendarWeekRule.FirstDay, CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek),
+                        (int)DateTime.FromOADate(e.Value).DayOfWeek
+                        );
+                }
+            }
+
+            if (e.ElementType == ChartElementType.AxisLabels && e.Format == "CustomAxisXFormatHour")
+            {
+                if (e.ValueType == ChartValueType.DateTime)
+                {
+                    var currentCalendar = CultureInfo.CurrentCulture.Calendar;
+
+                    e.LocalizedValue = string.Format("{0}W{1}D{2} h{3}",
+                        DateTime.FromOADate(e.Value).Year %100,
+                        currentCalendar.GetWeekOfYear(DateTime.FromOADate(e.Value),System.Globalization.CalendarWeekRule.FirstDay,CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek),
+                        (int)DateTime.FromOADate(e.Value).DayOfWeek,
+                        DateTime.FromOADate(e.Value).Hour
+                        );
+                }
+            }
+        }
+
+        private void trackBar1_ValueChanged(object sender, EventArgs e)
         {
             buildTrendChart();
         }
