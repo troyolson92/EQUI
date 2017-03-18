@@ -45,6 +45,8 @@ namespace ExcelAddInEquipmentDatabase
             g_config.Label = string.Format("V:{0}",fvi.ProductVersion,"");
             //Set user name and level
             dd_user_update();  
+            //test 
+            Application.EnableVisualStyles();
             //check here for offline mode. (disabels Querys)
 
             //find connections in wb

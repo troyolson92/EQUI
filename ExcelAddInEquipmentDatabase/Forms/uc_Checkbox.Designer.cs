@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.lbl_1 = new System.Windows.Forms.Label();
+            this.lbl_1 = new MetroFramework.Controls.MetroLabel();
             this.rb_enable = new System.Windows.Forms.RadioButton();
-            this.cb_1 = new System.Windows.Forms.CheckBox();
+            this.cb_1 = new MetroFramework.Controls.MetroCheckBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -43,7 +43,7 @@
             this.lbl_1.AutoSize = true;
             this.lbl_1.Location = new System.Drawing.Point(43, 0);
             this.lbl_1.Name = "lbl_1";
-            this.lbl_1.Size = new System.Drawing.Size(38, 28);
+            this.lbl_1.Size = new System.Drawing.Size(37, 28);
             this.lbl_1.TabIndex = 1;
             this.lbl_1.Text = "lbl_1";
             // 
@@ -67,10 +67,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.cb_1.AutoSize = true;
             this.cb_1.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.cb_1.Location = new System.Drawing.Point(159, 2);
+            this.cb_1.Location = new System.Drawing.Point(161, 2);
             this.cb_1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cb_1.Name = "cb_1";
-            this.cb_1.Size = new System.Drawing.Size(18, 24);
+            this.cb_1.Size = new System.Drawing.Size(16, 24);
             this.cb_1.TabIndex = 3;
             this.cb_1.UseVisualStyleBackColor = true;
             // 
@@ -83,7 +83,7 @@
             this.tableLayoutPanel1.ColumnCount = 3;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 84F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 97F));
             this.tableLayoutPanel1.Controls.Add(this.rb_enable, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.lbl_1, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.cb_1, 2, 0);
@@ -100,13 +100,13 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.BorderStyle = MetroFramework.Drawing.MetroBorderStyle.FixedSingle;
             this.Controls.Add(this.tableLayoutPanel1);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MaximumSize = new System.Drawing.Size(333, 36);
             this.MinimumSize = new System.Drawing.Size(106, 36);
             this.Name = "uc_Checkbox";
-            this.Size = new System.Drawing.Size(197, 34);
+            this.Size = new System.Drawing.Size(197, 36);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
@@ -116,9 +116,9 @@
 
         #endregion
 
-        private System.Windows.Forms.Label lbl_1;
-        private System.Windows.Forms.RadioButton rb_enable;
-        private System.Windows.Forms.CheckBox cb_1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private MetroFramework.Controls.MetroLabel lbl_1;
+        private MetroFramework.Controls.MetroCheckBox cb_1;
+        private System.Windows.Forms.RadioButton rb_enable;
     }
 }

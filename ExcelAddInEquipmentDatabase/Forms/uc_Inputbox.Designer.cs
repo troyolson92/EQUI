@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.lbl_1 = new System.Windows.Forms.Label();
+            this.lbl_1 = new MetroFramework.Controls.MetroLabel();
             this.rb_enable = new System.Windows.Forms.RadioButton();
-            this.tb_1 = new System.Windows.Forms.TextBox();
+            this.tb_1 = new MetroFramework.Controls.MetroTextBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -43,7 +43,7 @@
             this.lbl_1.AutoSize = true;
             this.lbl_1.Location = new System.Drawing.Point(43, 0);
             this.lbl_1.Name = "lbl_1";
-            this.lbl_1.Size = new System.Drawing.Size(38, 31);
+            this.lbl_1.Size = new System.Drawing.Size(37, 31);
             this.lbl_1.TabIndex = 1;
             this.lbl_1.Text = "lbl_1";
             this.lbl_1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -67,10 +67,10 @@
             this.tb_1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tb_1.Location = new System.Drawing.Point(87, 2);
+            this.tb_1.Location = new System.Drawing.Point(86, 2);
             this.tb_1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tb_1.Name = "tb_1";
-            this.tb_1.Size = new System.Drawing.Size(132, 22);
+            this.tb_1.Size = new System.Drawing.Size(132, 27);
             this.tb_1.TabIndex = 3;
             this.tb_1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -99,13 +99,13 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.BorderStyle = MetroFramework.Drawing.MetroBorderStyle.FixedSingle;
             this.Controls.Add(this.tableLayoutPanel1);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MaximumSize = new System.Drawing.Size(399, 36);
             this.MinimumSize = new System.Drawing.Size(199, 36);
             this.Name = "uc_Inputbox";
-            this.Size = new System.Drawing.Size(200, 34);
+            this.Size = new System.Drawing.Size(200, 36);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
@@ -114,9 +114,9 @@
 
         #endregion
 
-        private System.Windows.Forms.Label lbl_1;
         private System.Windows.Forms.RadioButton rb_enable;
-        private System.Windows.Forms.TextBox tb_1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private MetroFramework.Controls.MetroLabel lbl_1;
+        private MetroFramework.Controls.MetroTextBox tb_1;
     }
 }

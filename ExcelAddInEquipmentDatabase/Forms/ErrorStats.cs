@@ -11,7 +11,7 @@ using System.Globalization;
 
 namespace ExcelAddInEquipmentDatabase.Forms
 {
-    public partial class ErrorStats : Form
+    public partial class ErrorStats : MetroFramework.Forms.MetroForm
     {
         GadataComm lGdataComm = new GadataComm();
         DataTable dt;
@@ -66,6 +66,8 @@ END
 ", Location, Errornum);
             //fill dataset with all errors
             dt = lGdataComm.RunQueryGadata(qry);
+            //check if the result was valid 
+            if (dt.Rows.Count == 0) { MessageBox.Show("The query for this errorcode did not return a valid result", "Sorry", MessageBoxButtons.OK); this.Dispose(); return; };
             //setup trackbar (trackbar maximum = first time error happend, minium = now)
             DateTime FirstError = (from a in dt.AsEnumerable() select a.Field<DateTime>("starttime")).Min();
             DateTime LastError = (from a in dt.AsEnumerable() select a.Field<DateTime>("starttime")).Max();
@@ -106,6 +108,7 @@ END
             }
             //build trend chart in init mode. 
             buildTrendChart();
+            this.Show();
         }
 
 private void buildTrendChart() 
@@ -202,5 +205,6 @@ private void buildTrendChart()
         {
             buildTrendChart();
         }
+
     }
 }

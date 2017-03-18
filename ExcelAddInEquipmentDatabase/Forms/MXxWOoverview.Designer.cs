@@ -28,74 +28,26 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
-            this.cb_ciblings = new System.Windows.Forms.CheckBox();
-            this.cb_preventive = new System.Windows.Forms.CheckBox();
             this.webBrowser1 = new System.Windows.Forms.WebBrowser();
-            this.tb_location = new System.Windows.Forms.TextBox();
-            this.btn_refresh = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.btn_refresh = new MetroFramework.Controls.MetroButton();
+            this.cb_ciblings = new MetroFramework.Controls.MetroCheckBox();
+            this.cb_preventive = new MetroFramework.Controls.MetroCheckBox();
+            this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
+            this.tb_location = new MetroFramework.Controls.MetroTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 13);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(66, 17);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Location:";
-            // 
-            // cb_ciblings
-            // 
-            this.cb_ciblings.AutoSize = true;
-            this.cb_ciblings.Location = new System.Drawing.Point(220, 9);
-            this.cb_ciblings.Name = "cb_ciblings";
-            this.cb_ciblings.Size = new System.Drawing.Size(128, 21);
-            this.cb_ciblings.TabIndex = 1;
-            this.cb_ciblings.Text = "Include Ciblings";
-            this.cb_ciblings.UseVisualStyleBackColor = true;
-            this.cb_ciblings.CheckedChanged += new System.EventHandler(this.cb_ciblings_CheckedChanged);
-            // 
-            // cb_preventive
-            // 
-            this.cb_preventive.AutoSize = true;
-            this.cb_preventive.Location = new System.Drawing.Point(354, 9);
-            this.cb_preventive.Name = "cb_preventive";
-            this.cb_preventive.Size = new System.Drawing.Size(146, 21);
-            this.cb_preventive.TabIndex = 2;
-            this.cb_preventive.Text = "Include Preventive";
-            this.cb_preventive.UseVisualStyleBackColor = true;
             // 
             // webBrowser1
             // 
             this.webBrowser1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.webBrowser1.Location = new System.Drawing.Point(15, 317);
+            this.webBrowser1.Location = new System.Drawing.Point(15, 355);
             this.webBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
             this.webBrowser1.Name = "webBrowser1";
-            this.webBrowser1.Size = new System.Drawing.Size(1271, 304);
+            this.webBrowser1.Size = new System.Drawing.Size(1271, 297);
             this.webBrowser1.TabIndex = 3;
-            // 
-            // tb_location
-            // 
-            this.tb_location.Location = new System.Drawing.Point(75, 10);
-            this.tb_location.Name = "tb_location";
-            this.tb_location.Size = new System.Drawing.Size(119, 22);
-            this.tb_location.TabIndex = 4;
-            // 
-            // btn_refresh
-            // 
-            this.btn_refresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn_refresh.Location = new System.Drawing.Point(1211, 7);
-            this.btn_refresh.Name = "btn_refresh";
-            this.btn_refresh.Size = new System.Drawing.Size(75, 23);
-            this.btn_refresh.TabIndex = 5;
-            this.btn_refresh.Text = "Refresh";
-            this.btn_refresh.UseVisualStyleBackColor = true;
-            this.btn_refresh.Click += new System.EventHandler(this.btn_refresh_Click);
             // 
             // dataGridView1
             // 
@@ -105,7 +57,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(15, 47);
+            this.dataGridView1.Location = new System.Drawing.Point(15, 107);
             this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
@@ -113,24 +65,68 @@
             this.dataGridView1.ShowEditingIcon = false;
             this.dataGridView1.Size = new System.Drawing.Size(1271, 242);
             this.dataGridView1.TabIndex = 6;
-            this.dataGridView1.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_RowEnter);
+            // 
+            // btn_refresh
+            // 
+            this.btn_refresh.Location = new System.Drawing.Point(1200, 55);
+            this.btn_refresh.Name = "btn_refresh";
+            this.btn_refresh.Size = new System.Drawing.Size(75, 23);
+            this.btn_refresh.TabIndex = 7;
+            this.btn_refresh.Text = "Refresh";
+            this.btn_refresh.Click += new System.EventHandler(this.btn_refresh_Click);
+            // 
+            // cb_ciblings
+            // 
+            this.cb_ciblings.AutoSize = true;
+            this.cb_ciblings.Location = new System.Drawing.Point(318, 55);
+            this.cb_ciblings.Name = "cb_ciblings";
+            this.cb_ciblings.Size = new System.Drawing.Size(87, 17);
+            this.cb_ciblings.TabIndex = 8;
+            this.cb_ciblings.Text = "cb_ciblings";
+            this.cb_ciblings.UseVisualStyleBackColor = true;
+            // 
+            // cb_preventive
+            // 
+            this.cb_preventive.AutoSize = true;
+            this.cb_preventive.Location = new System.Drawing.Point(456, 55);
+            this.cb_preventive.Name = "cb_preventive";
+            this.cb_preventive.Size = new System.Drawing.Size(103, 17);
+            this.cb_preventive.TabIndex = 9;
+            this.cb_preventive.Text = "cb_preventive";
+            this.cb_preventive.UseVisualStyleBackColor = true;
+            // 
+            // metroLabel1
+            // 
+            this.metroLabel1.AutoSize = true;
+            this.metroLabel1.Location = new System.Drawing.Point(23, 58);
+            this.metroLabel1.Name = "metroLabel1";
+            this.metroLabel1.Size = new System.Drawing.Size(64, 20);
+            this.metroLabel1.TabIndex = 10;
+            this.metroLabel1.Text = "Location:";
+            // 
+            // tb_location
+            // 
+            this.tb_location.Location = new System.Drawing.Point(92, 55);
+            this.tb_location.Name = "tb_location";
+            this.tb_location.Size = new System.Drawing.Size(200, 23);
+            this.tb_location.TabIndex = 11;
+            this.tb_location.Text = "metroTextBox1";
             // 
             // MXxWOoverview
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1298, 644);
-            this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.btn_refresh);
+            this.ClientSize = new System.Drawing.Size(1298, 689);
             this.Controls.Add(this.tb_location);
-            this.Controls.Add(this.webBrowser1);
+            this.Controls.Add(this.metroLabel1);
             this.Controls.Add(this.cb_preventive);
             this.Controls.Add(this.cb_ciblings);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.btn_refresh);
+            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.webBrowser1);
             this.MinimumSize = new System.Drawing.Size(706, 689);
             this.Name = "MXxWOoverview";
             this.Text = "MXxWOoverview";
-            this.Shown += new System.EventHandler(this.MXxWOoverview_Shown_1);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -139,12 +135,12 @@
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.CheckBox cb_ciblings;
-        private System.Windows.Forms.CheckBox cb_preventive;
         private System.Windows.Forms.WebBrowser webBrowser1;
-        private System.Windows.Forms.TextBox tb_location;
-        private System.Windows.Forms.Button btn_refresh;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private MetroFramework.Controls.MetroButton btn_refresh;
+        private MetroFramework.Controls.MetroCheckBox cb_ciblings;
+        private MetroFramework.Controls.MetroCheckBox cb_preventive;
+        private MetroFramework.Controls.MetroLabel metroLabel1;
+        private MetroFramework.Controls.MetroTextBox tb_location;
     }
 }

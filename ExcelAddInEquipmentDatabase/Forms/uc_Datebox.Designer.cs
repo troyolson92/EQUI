@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.lbl_1 = new System.Windows.Forms.Label();
+            this.lbl_1 = new MetroFramework.Controls.MetroLabel();
             this.rb_enable = new System.Windows.Forms.RadioButton();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.dt_1 = new System.Windows.Forms.DateTimePicker();
@@ -43,7 +43,7 @@
             this.lbl_1.AutoSize = true;
             this.lbl_1.Location = new System.Drawing.Point(43, 0);
             this.lbl_1.Name = "lbl_1";
-            this.lbl_1.Size = new System.Drawing.Size(38, 32);
+            this.lbl_1.Size = new System.Drawing.Size(37, 32);
             this.lbl_1.TabIndex = 1;
             this.lbl_1.Text = "lbl_1";
             // 
@@ -54,7 +54,7 @@
             this.rb_enable.Location = new System.Drawing.Point(3, 2);
             this.rb_enable.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.rb_enable.Name = "rb_enable";
-            this.rb_enable.Size = new System.Drawing.Size(17, 16);
+            this.rb_enable.Size = new System.Drawing.Size(16, 0);
             this.rb_enable.TabIndex = 2;
             this.rb_enable.TabStop = true;
             this.rb_enable.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -70,7 +70,7 @@
             this.tableLayoutPanel1.ColumnCount = 3;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 210F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 211F));
             this.tableLayoutPanel1.Controls.Add(this.rb_enable, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.dt_1, 2, 0);
             this.tableLayoutPanel1.Controls.Add(this.lbl_1, 1, 0);
@@ -89,10 +89,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dt_1.CustomFormat = "yyyy-MM-dd hh:mm:ss";
             this.dt_1.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dt_1.Location = new System.Drawing.Point(87, 2);
+            this.dt_1.Location = new System.Drawing.Point(86, 2);
             this.dt_1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dt_1.Name = "dt_1";
-            this.dt_1.Size = new System.Drawing.Size(204, 22);
+            this.dt_1.Size = new System.Drawing.Size(205, 22);
             this.dt_1.TabIndex = 4;
             // 
             // uc_Datebox
@@ -100,13 +100,13 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.BorderStyle = MetroFramework.Drawing.MetroBorderStyle.FixedSingle;
             this.Controls.Add(this.tableLayoutPanel1);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MaximumSize = new System.Drawing.Size(399, 36);
             this.MinimumSize = new System.Drawing.Size(199, 36);
             this.Name = "uc_Datebox";
-            this.Size = new System.Drawing.Size(301, 34);
+            this.Size = new System.Drawing.Size(301, 36);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
@@ -116,9 +116,9 @@
 
         #endregion
 
-        private System.Windows.Forms.Label lbl_1;
-        private System.Windows.Forms.RadioButton rb_enable;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.DateTimePicker dt_1;
+        private MetroFramework.Controls.MetroLabel lbl_1;
+        private System.Windows.Forms.RadioButton rb_enable;
     }
 }

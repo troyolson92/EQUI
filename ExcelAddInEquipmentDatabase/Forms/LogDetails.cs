@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace ExcelAddInEquipmentDatabase.Forms
 {
-    public partial class LogDetails : Form
+    public partial class LogDetails : MetroFramework.Forms.MetroForm
     {
         public LogDetails(string Errornum)
         {

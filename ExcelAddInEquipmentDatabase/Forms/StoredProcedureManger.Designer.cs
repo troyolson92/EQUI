@@ -41,17 +41,17 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.flowLayoutPanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(12, 14);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(12, 62);
             this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(770, 209);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(795, 231);
             this.flowLayoutPanel1.TabIndex = 0;
             this.flowLayoutPanel1.WrapContents = false;
             // 
             // Btn_saveSet
             // 
-            this.Btn_saveSet.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.Btn_saveSet.Location = new System.Drawing.Point(12, 235);
+            this.Btn_saveSet.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.Btn_saveSet.Location = new System.Drawing.Point(317, 34);
             this.Btn_saveSet.Name = "Btn_saveSet";
             this.Btn_saveSet.Size = new System.Drawing.Size(142, 23);
             this.Btn_saveSet.TabIndex = 1;
@@ -61,9 +61,9 @@
             // 
             // cb_ParmSetNames
             // 
-            this.cb_ParmSetNames.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.cb_ParmSetNames.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.cb_ParmSetNames.FormattingEnabled = true;
-            this.cb_ParmSetNames.Location = new System.Drawing.Point(160, 234);
+            this.cb_ParmSetNames.Location = new System.Drawing.Point(465, 34);
             this.cb_ParmSetNames.Name = "cb_ParmSetNames";
             this.cb_ParmSetNames.Size = new System.Drawing.Size(226, 24);
             this.cb_ParmSetNames.TabIndex = 2;
@@ -72,10 +72,10 @@
             // 
             // btn_SaveSetConfirm
             // 
-            this.btn_SaveSetConfirm.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btn_SaveSetConfirm.Location = new System.Drawing.Point(392, 234);
+            this.btn_SaveSetConfirm.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btn_SaveSetConfirm.Location = new System.Drawing.Point(711, 34);
             this.btn_SaveSetConfirm.Name = "btn_SaveSetConfirm";
-            this.btn_SaveSetConfirm.Size = new System.Drawing.Size(64, 23);
+            this.btn_SaveSetConfirm.Size = new System.Drawing.Size(26, 23);
             this.btn_SaveSetConfirm.TabIndex = 3;
             this.btn_SaveSetConfirm.Text = "Save";
             this.btn_SaveSetConfirm.UseVisualStyleBackColor = true;
@@ -84,9 +84,10 @@
             // 
             // btn_SetDelete
             // 
-            this.btn_SetDelete.Location = new System.Drawing.Point(462, 234);
+            this.btn_SetDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btn_SetDelete.Location = new System.Drawing.Point(743, 34);
             this.btn_SetDelete.Name = "btn_SetDelete";
-            this.btn_SetDelete.Size = new System.Drawing.Size(60, 23);
+            this.btn_SetDelete.Size = new System.Drawing.Size(31, 23);
             this.btn_SetDelete.TabIndex = 4;
             this.btn_SetDelete.Text = "delete";
             this.btn_SetDelete.UseVisualStyleBackColor = true;
@@ -98,16 +99,17 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(795, 270);
+            this.ClientSize = new System.Drawing.Size(813, 310);
             this.Controls.Add(this.btn_SetDelete);
             this.Controls.Add(this.btn_SaveSetConfirm);
             this.Controls.Add(this.cb_ParmSetNames);
             this.Controls.Add(this.Btn_saveSet);
             this.Controls.Add(this.flowLayoutPanel1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Location = new System.Drawing.Point(947, 357);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(1475, 758);
+            this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(813, 310);
             this.Name = "StoredProcedureManger";
             this.ShowIcon = false;

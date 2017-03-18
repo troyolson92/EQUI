@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace ExcelAddInEquipmentDatabase.Forms
 {
-    public partial class uc_Checkbox : UserControl
+    public partial class uc_Checkbox : MetroFramework.Controls.MetroUserControl 
     {
         public uc_Checkbox()
         {

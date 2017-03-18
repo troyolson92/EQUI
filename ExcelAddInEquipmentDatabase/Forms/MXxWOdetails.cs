@@ -10,7 +10,7 @@ using System.Diagnostics;
 
 namespace ExcelAddInEquipmentDatabase.Forms
 {
-    public partial class MXxWOdetails : Form
+    public partial class MXxWOdetails : MetroFramework.Forms.MetroForm
     {
         MaximoComm lMaximocomm = new MaximoComm();
         public MXxWOdetails(string wonum)

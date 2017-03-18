@@ -13,7 +13,7 @@ using Excel = Microsoft.Office.Interop.Excel;
 
 namespace ExcelAddInEquipmentDatabase
 {
-    public partial class StoredProcedureManger : Form
+    public partial class StoredProcedureManger : MetroFramework.Forms.MetroForm
     {
         //connection to gadata
         GadataComm lGadataComm = new GadataComm();

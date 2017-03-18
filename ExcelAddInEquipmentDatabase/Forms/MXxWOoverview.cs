@@ -10,17 +10,34 @@ using System.Diagnostics;
 
 namespace ExcelAddInEquipmentDatabase.Forms
 {
-    public partial class MXxWOoverview : Form
+    public partial class MXxWOoverview : MetroFramework.Forms.MetroForm
     {
         MaximoComm lMaximocomm = new MaximoComm();
         bool lPartmode;
+        BackgroundWorker bwLongDescription = new BackgroundWorker();
 
         public MXxWOoverview(string location, bool partmode)
         {
             InitializeComponent();
+            bwLongDescription.DoWork += bwLongDescription_DoWork;
+         
             tb_location.Text = location;
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             lPartmode = partmode;
+            
+            this.Show();
+
+            getMaximoWorkorder(tb_location.Text, lPartmode);
+
+            dataGridView1.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_RowEnter);
+        }
+
+        void bwLongDescription_DoWork(object sender, DoWorkEventArgs e)
+        {
+            foreach (DataGridViewRow row in dataGridView1.SelectedRows)
+            {
+                getMaximoDetails(row.Cells[0].Value.ToString());
+            }
         }
 
 
@@ -74,7 +91,6 @@ ORDER BY WORKORDER.STATUSDATE
             }
         }
 
-
         private void getMaximoDetails(string wonum)
         {
             string cmdFAILUREREMARK = (@"
@@ -104,34 +120,14 @@ ORDER BY WORKORDER.STATUSDATE
         }
 
         private void dataGridView1_RowEnter(object sender, DataGridViewCellEventArgs e)
-        { 
-            foreach(DataGridViewRow row in dataGridView1.SelectedRows)
-            {
-                Cursor.Current = Cursors.AppStarting;
-                getMaximoDetails(row.Cells[0].Value.ToString());
-                Cursor.Current = Cursors.Default;
-            }
-        }
-
-
-        private void MXxWOoverview_Shown_1(object sender, EventArgs e)
         {
-            Cursor.Current = Cursors.AppStarting;
-            getMaximoWorkorder(tb_location.Text, lPartmode);
-            Cursor.Current = Cursors.Default;
+            if (bwLongDescription.IsBusy) { return; }
+            bwLongDescription.RunWorkerAsync();
         }
 
         private void btn_refresh_Click(object sender, EventArgs e)
         {
-            Cursor.Current = Cursors.AppStarting;
             getMaximoWorkorder(tb_location.Text, lPartmode);
-            Cursor.Current = Cursors.Default;
         }
-
-        private void cb_ciblings_CheckedChanged(object sender, EventArgs e)
-        {
-         
-        }
-
     }
 }
