@@ -32,6 +32,7 @@
             this.btn_get = new MetroFramework.Controls.MetroButton();
             this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
             this.tb_LONGDESCRIPTIONID = new MetroFramework.Controls.MetroTextBox();
+            this.metroProgressSpinner1 = new MetroFramework.Controls.MetroProgressSpinner();
             this.SuspendLayout();
             // 
             // wb_longdescrption
@@ -70,11 +71,23 @@
             this.tb_LONGDESCRIPTIONID.TabIndex = 7;
             this.tb_LONGDESCRIPTIONID.Text = "metroTextBox1";
             // 
+            // metroProgressSpinner1
+            // 
+            this.metroProgressSpinner1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.metroProgressSpinner1.Location = new System.Drawing.Point(198, 206);
+            this.metroProgressSpinner1.Maximum = 100;
+            this.metroProgressSpinner1.Name = "metroProgressSpinner1";
+            this.metroProgressSpinner1.Size = new System.Drawing.Size(166, 162);
+            this.metroProgressSpinner1.TabIndex = 8;
+            // 
             // MXxWOdetails
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(580, 541);
+            this.Controls.Add(this.metroProgressSpinner1);
             this.Controls.Add(this.tb_LONGDESCRIPTIONID);
             this.Controls.Add(this.metroLabel1);
             this.Controls.Add(this.btn_get);
@@ -92,5 +105,6 @@
         private MetroFramework.Controls.MetroButton btn_get;
         private MetroFramework.Controls.MetroLabel metroLabel1;
         private MetroFramework.Controls.MetroTextBox tb_LONGDESCRIPTIONID;
+        private MetroFramework.Controls.MetroProgressSpinner metroProgressSpinner1;
     }
 }

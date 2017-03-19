@@ -624,12 +624,10 @@ namespace ExcelAddInEquipmentDatabase
             var _point = new System.Drawing.Point(Cursor.Position.X, Cursor.Position.Y);
             Top = _point.Y;
             Left = _point.X;
+            this.Show();
             this.BringToFront();
         }
-        private void StoredProcedureManger_Shown(object sender, EventArgs e)
-        {
-            ShowOnClick();
-        }
+
         private void Btn_saveSet_Click(object sender, EventArgs e)
         {
             if (cb_ParmSetNames.Items.Count == 0)

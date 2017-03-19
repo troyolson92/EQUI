@@ -35,6 +35,7 @@
             this.cb_preventive = new MetroFramework.Controls.MetroCheckBox();
             this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
             this.tb_location = new MetroFramework.Controls.MetroTextBox();
+            this.metroProgressSpinner1 = new MetroFramework.Controls.MetroProgressSpinner();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -56,6 +57,7 @@
             this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
+            this.dataGridView1.BackgroundColor = System.Drawing.Color.White;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(15, 107);
             this.dataGridView1.MultiSelect = false;
@@ -112,11 +114,23 @@
             this.tb_location.TabIndex = 11;
             this.tb_location.Text = "metroTextBox1";
             // 
+            // metroProgressSpinner1
+            // 
+            this.metroProgressSpinner1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.metroProgressSpinner1.Location = new System.Drawing.Point(571, 136);
+            this.metroProgressSpinner1.Maximum = 100;
+            this.metroProgressSpinner1.Name = "metroProgressSpinner1";
+            this.metroProgressSpinner1.Size = new System.Drawing.Size(188, 183);
+            this.metroProgressSpinner1.TabIndex = 12;
+            // 
             // MXxWOoverview
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1298, 689);
+            this.Controls.Add(this.metroProgressSpinner1);
             this.Controls.Add(this.tb_location);
             this.Controls.Add(this.metroLabel1);
             this.Controls.Add(this.cb_preventive);
@@ -142,5 +156,6 @@
         private MetroFramework.Controls.MetroCheckBox cb_preventive;
         private MetroFramework.Controls.MetroLabel metroLabel1;
         private MetroFramework.Controls.MetroTextBox tb_location;
+        private MetroFramework.Controls.MetroProgressSpinner metroProgressSpinner1;
     }
 }

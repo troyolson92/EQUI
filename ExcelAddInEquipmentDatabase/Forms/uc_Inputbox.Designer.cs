@@ -70,7 +70,7 @@
             this.tb_1.Location = new System.Drawing.Point(86, 2);
             this.tb_1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tb_1.Name = "tb_1";
-            this.tb_1.Size = new System.Drawing.Size(132, 27);
+            this.tb_1.Size = new System.Drawing.Size(151, 27);
             this.tb_1.TabIndex = 3;
             this.tb_1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -84,14 +84,14 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel1.Controls.Add(this.rb_enable, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.tb_1, 2, 0);
             this.tableLayoutPanel1.Controls.Add(this.lbl_1, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.tb_1, 2, 0);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 2);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(196, 31);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(240, 31);
             this.tableLayoutPanel1.TabIndex = 4;
             // 
             // uc_Inputbox
@@ -103,9 +103,9 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MaximumSize = new System.Drawing.Size(399, 36);
-            this.MinimumSize = new System.Drawing.Size(199, 36);
+            this.MinimumSize = new System.Drawing.Size(200, 36);
             this.Name = "uc_Inputbox";
-            this.Size = new System.Drawing.Size(200, 36);
+            this.Size = new System.Drawing.Size(249, 36);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);

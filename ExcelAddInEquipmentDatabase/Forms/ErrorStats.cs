@@ -85,8 +85,7 @@ END
             if (count3.Count() > 10) //more than 10 times in 3 days
             {
                 trackBar1.Value = -3;
-                this.BackColor = System.Drawing.Color.Red;
-                chart1.BackColor = System.Drawing.Color.Red;
+                chart1.Series["ErrorCount"].Color = System.Drawing.Color.Red;
             }
             else
             {
@@ -96,14 +95,12 @@ END
                 if (count30.Count() > 10) //more than 10 times in a month
                 {
                     trackBar1.Value = -30;
-                    this.BackColor = System.Drawing.Color.Yellow;
-                    chart1.BackColor = System.Drawing.Color.Yellow;
+                    chart1.Series["ErrorCount"].Color = System.Drawing.Color.Yellow;
                 }
                 else
                 {
                     trackBar1.Value = -360; //set last running year as a max for 'init' mode
-                    this.BackColor = System.Drawing.Color.LightBlue;
-                    chart1.BackColor = System.Drawing.Color.LightBlue;
+                    chart1.Series["ErrorCount"].Color = System.Drawing.Color.Blue;
                 }
             }
             //build trend chart in init mode. 

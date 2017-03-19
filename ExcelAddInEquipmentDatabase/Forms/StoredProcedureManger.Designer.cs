@@ -116,7 +116,6 @@
             this.ShowInTaskbar = false;
             this.Text = "StoredProcedureManger";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.StoredProcedureManger_FormClosing);
-            this.Shown += new System.EventHandler(this.StoredProcedureManger_Shown);
             this.ResumeLayout(false);
 
         }

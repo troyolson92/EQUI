@@ -13,16 +13,22 @@ namespace ExcelAddInEquipmentDatabase.Forms
     public partial class MXxWOdetails : MetroFramework.Forms.MetroForm
     {
         MaximoComm lMaximocomm = new MaximoComm();
+        BackgroundWorker bw = new BackgroundWorker();
+
         public MXxWOdetails(string wonum)
         {
             //8624949 wo gemaakt met 9 uur verslag in als test voor browser
             InitializeComponent();
+            bw.DoWork += bw_DoWork;
+            bw.RunWorkerCompleted += bw_RunWorkerCompleted;
+
             if (wonum != null)
             {
                 tb_LONGDESCRIPTIONID.Text = wonum;
                 tb_LONGDESCRIPTIONID.Enabled = false;
                 btn_get.Visible = false;
-                getMaximoDetails();
+                bw.RunWorkerAsync();
+
             }
             else
             {
@@ -32,8 +38,21 @@ namespace ExcelAddInEquipmentDatabase.Forms
             }
 
         }
+
+        void bw_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            metroProgressSpinner1.Hide();
+        }
+
+        void bw_DoWork(object sender, DoWorkEventArgs e)
+        {
+            getMaximoDetails();
+        }
+
         private void getMaximoDetails()
         {
+            metroProgressSpinner1.Show();
+
             string cmdFAILUREREMARK = (@"
                 select LD.LDTEXT
                 from MAXIMO.FAILUREREMARK FM 
@@ -53,7 +72,6 @@ namespace ExcelAddInEquipmentDatabase.Forms
             StringBuilder sb = new StringBuilder();
             sb.AppendLine(sEb).AppendLine("<div>LONGDESCRIPTION</div>").AppendLine(sEb);
             sb.AppendLine(lMaximocomm.GetClobMaximo7(cmdLONGDESCRIPTION));
-
             sb.AppendLine(sEb).AppendLine("<div>FAILUREREMARK</div>").AppendLine(sEb);
             sb.AppendLine(lMaximocomm.GetClobMaximo7(cmdFAILUREREMARK));
 
@@ -62,7 +80,8 @@ namespace ExcelAddInEquipmentDatabase.Forms
 
         private void btn_get_Click(object sender, EventArgs e)
         {
-            getMaximoDetails();
+            if (bw.IsBusy) { return; }
+            bw.RunWorkerAsync();
         }
 
     }

@@ -14,22 +14,46 @@ namespace ExcelAddInEquipmentDatabase.Forms
     {
         MaximoComm lMaximocomm = new MaximoComm();
         bool lPartmode;
+        DataTable tableFromMx7 = new DataTable();
         BackgroundWorker bwLongDescription = new BackgroundWorker();
+        BackgroundWorker bwWorkorders = new BackgroundWorker();
 
         public MXxWOoverview(string location, bool partmode)
         {
             InitializeComponent();
             bwLongDescription.DoWork += bwLongDescription_DoWork;
+            bwWorkorders.DoWork += bwWorkorders_DoWork;
+            bwWorkorders.RunWorkerCompleted += bwWorkorders_RunWorkerCompleted;
          
             tb_location.Text = location;
-            dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             lPartmode = partmode;
-            
+            if (partmode)
+            {
+                this.Text = string.Format("Maximo Wo browser: 'Parts on location' <{0}>", location);
+            }
+            else
+            {
+                this.Text = string.Format("Maximo Wo browser: 'Workorder on location' <{0}>", location);
+            }
+
+            dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
             this.Show();
-
-            getMaximoWorkorder(tb_location.Text, lPartmode);
-
+            btn_refresh.Enabled = false;
+            bwWorkorders.RunWorkerAsync();
             dataGridView1.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_RowEnter);
+        }
+
+        void bwWorkorders_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            dataGridView1.DataSource = tableFromMx7;
+            metroProgressSpinner1.Hide();
+            btn_refresh.Enabled = true;
+        }
+
+        void bwWorkorders_DoWork(object sender, DoWorkEventArgs e)
+        {
+            getMaximoWorkorder(tb_location.Text, lPartmode);
         }
 
         void bwLongDescription_DoWork(object sender, DoWorkEventArgs e)
@@ -40,11 +64,9 @@ namespace ExcelAddInEquipmentDatabase.Forms
             }
         }
 
-
         private void getMaximoWorkorder(string location, bool partmode)
         {
             //get asset list from maximo M7 daily copy
-            DataTable tableFromMx7 = new DataTable();
             string strSqlGetFromMaximo = string.Format(@"
 SELECT 
  TO_NUMBER(WORKORDER.WONUM) WONUM
@@ -79,15 +101,11 @@ ORDER BY WORKORDER.STATUSDATE
 
             if (partmode)
             {
-                this.Text = string.Format("Maximo Wo browser: 'Parts on location' <{0}>", location);
                 tableFromMx7 = lMaximocomm.oracle_runQuery(strSqlGetPartsMaximo);
-                dataGridView1.DataSource = tableFromMx7;
             }
             else
             {
-                this.Text = string.Format("Maximo Wo browser: 'Workorder on location' <{0}>", location);
                 tableFromMx7 = lMaximocomm.oracle_runQuery(strSqlGetFromMaximo);
-                dataGridView1.DataSource = tableFromMx7;
             }
         }
 
@@ -126,8 +144,13 @@ ORDER BY WORKORDER.STATUSDATE
         }
 
         private void btn_refresh_Click(object sender, EventArgs e)
-        {
+        { // if i run it in the bw is this out on cross threath 
+            btn_refresh.Enabled = false;
+            metroProgressSpinner1.Show();
             getMaximoWorkorder(tb_location.Text, lPartmode);
+            dataGridView1.DataSource = tableFromMx7;
+            metroProgressSpinner1.Hide();
+            btn_refresh.Enabled = true;
         }
     }
 }

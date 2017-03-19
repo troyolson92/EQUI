@@ -35,8 +35,6 @@ namespace ExcelAddInEquipmentDatabase
         dtPicker StartDatePicker;
         dtPicker EndDatePicker;
         
-
-
         private void EquipmentDBRibbon_Load(object sender, RibbonUIEventArgs e)
         {
             //set build version
@@ -63,9 +61,6 @@ namespace ExcelAddInEquipmentDatabase
             timer.Tick += new EventHandler(Refresh_Tick);
             timer.Start();
         }
-
-
-
 
         void Application_WorkbookActivate(Excel.Workbook Wb)
         {
@@ -374,11 +369,11 @@ namespace ExcelAddInEquipmentDatabase
         {
             if (dd_activeConnection.SelectedItem.Label == "RefreshAll") //this is not a connection to van not be edited
             {
+                
                 MessageBox.Show("Please select an other connection. 'RefreshAll' is not a connection", "Sorry", MessageBoxButtons.OK);
             }
             else
             {
-                ProcMngr.Show();
                 ProcMngr.ShowOnClick();
             }
         }
@@ -386,6 +381,7 @@ namespace ExcelAddInEquipmentDatabase
         private void btn_Query_Click(object sender, RibbonControlEventArgs e)
         {
             //also set Startdate = enddate - daysback to make maximo work beter.
+            if (ProcMngr == null) { return; }
             ProcMngr.startDate.input = DateTime.Now.AddDays(Convert.ToInt32(ProcMngr.daysBack.input) * -1);
             ProcMngr.endDate.input = DateTime.Now;
             //
