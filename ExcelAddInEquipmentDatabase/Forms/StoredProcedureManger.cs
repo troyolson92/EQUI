@@ -15,6 +15,8 @@ namespace ExcelAddInEquipmentDatabase
 {
     public partial class StoredProcedureManger : MetroFramework.Forms.MetroForm
     {
+        //debugger
+        Debugger Debugger = new Debugger();
         //connection to gadata
         GadataComm lGadataComm = new GadataComm();
         //connection to maximo 
@@ -120,7 +122,7 @@ namespace ExcelAddInEquipmentDatabase
             }
             else
             {
-                Debug.WriteLine("Unable to find connection");
+               Debugger.Message("Unable to find connection");
             }
         }
 
@@ -346,14 +348,14 @@ namespace ExcelAddInEquipmentDatabase
                             break;
 
                         default:
-                            Debug.WriteLine("Type not handeld: pName:{0} pSqlDbType: {1}", p.ParameterName, p.SqlDbType);
+                           Debugger.Message(string.Format("Type not handeld: pName:{0} pSqlDbType: {1}", p.ParameterName, p.SqlDbType));
                             break;
                     }
 
                 }
                 catch (Exception e)
                 {
-                    Debug.WriteLine(e.Message);
+                   Debugger.Exeption(e);
                 }
             }
         }
@@ -430,7 +432,7 @@ namespace ExcelAddInEquipmentDatabase
                 {
                     //need to find out the datetype 
                     TypeCode pType = guess_typecode(p.Defaultvalue);
-                    Debug.WriteLine("P:{0} dft:{1} detected:{2}", p.ParameterName, p.Defaultvalue, pType.ToString());
+                  // Debugger.Exeption("P:{0} dft:{1} detected:{2}", p.ParameterName, p.Defaultvalue, pType.ToString());
                      switch (pType)
                      {
                          case TypeCode.DateTime:  //create datetime pickers 
@@ -559,14 +561,14 @@ namespace ExcelAddInEquipmentDatabase
                              break;
 
                          default:
-                             Debug.WriteLine("Type not handeld: pName:{0} pDftValue: {1}", p.ParameterName, p.Defaultvalue);
+                            Debugger.Message(string.Format("Type not handeld: pName:{0} pDftValue: {1}", p.ParameterName, p.Defaultvalue));
                              break;
                      }
                      
                 }
                 catch (Exception e)
                 {
-                    Debug.WriteLine(e.Message);
+                   Debugger.Exeption(e);
                 }               
             }
         }
@@ -584,19 +586,19 @@ namespace ExcelAddInEquipmentDatabase
                 if (control is Forms.uc_Datebox)
                 {
                     Forms.uc_Datebox nDateb = control as Forms.uc_Datebox;
-                    Debug.WriteLine("name: {0}  enbled: {1}  value: {2}", nDateb.Name, nDateb.active, nDateb.input.ToString("yyyy-MM-dd hh:mm:ss"));
+           //        Debugger.Exeption("name: {0}  enbled: {1}  value: {2}", nDateb.Name, nDateb.active, nDateb.input.ToString("yyyy-MM-dd hh:mm:ss"));
                     sbQuery.Replace("&" + nDateb.Name, nDateb.input.ToString("yyyy-MM-dd hh:mm:ss")); 
                 }
                 else if (control is Forms.uc_Checkbox)
                 {
                     Forms.uc_Checkbox nCheckb = control as Forms.uc_Checkbox;
-                    Debug.WriteLine("name: {0}  enbled: {1}  value: {2}", nCheckb.Name, nCheckb.active, nCheckb.input);
+            //       Debugger.Exeption("name: {0}  enbled: {1}  value: {2}", nCheckb.Name, nCheckb.active, nCheckb.input);
                     sbQuery.Replace("&" + nCheckb.Name, nCheckb.input.ToString()); 
                 }
                 else if (control is Forms.uc_Inputbox)
                 {
                     Forms.uc_Inputbox nInputb = control as Forms.uc_Inputbox;
-                    Debug.WriteLine("name: {0}  enbled: {1}  value: {2}", nInputb.Name, nInputb.active, nInputb.input);
+           //        Debugger.Exeption("name: {0}  enbled: {1}  value: {2}", nInputb.Name, nInputb.active, nInputb.input);
                         if (nInputb.intOnly == true) // integer box 
                         {
                             sbQuery.Replace("&" + nInputb.Name ,nInputb.input); 
@@ -624,8 +626,8 @@ namespace ExcelAddInEquipmentDatabase
             var _point = new System.Drawing.Point(Cursor.Position.X, Cursor.Position.Y);
             Top = _point.Y;
             Left = _point.X;
-            this.Show();
-            this.BringToFront();
+            Show();
+            BringToFront();
         }
 
         private void Btn_saveSet_Click(object sender, EventArgs e)

@@ -72,6 +72,7 @@ END
             DateTime FirstError = (from a in dt.AsEnumerable() select a.Field<DateTime>("starttime")).Min();
             DateTime LastError = (from a in dt.AsEnumerable() select a.Field<DateTime>("starttime")).Max();
             trackBar1.Minimum = (int)(FirstError - LastError).TotalDays;
+            if (trackBar1.Minimum > -3) {trackBar1.Minimum = -3;}
             trackBar1.Maximum = -1; //minimum display = 1 day 
             //figure out init mode
             /*this will figure out of "active" the error is, 
@@ -99,7 +100,14 @@ END
                 }
                 else
                 {
-                    trackBar1.Value = -360; //set last running year as a max for 'init' mode
+                    if (trackBar1.Minimum < -360)
+                    {
+                        trackBar1.Value = -360; //set last running year as a max for 'init' mode
+                    }
+                    else
+                    {
+                        trackBar1.Value = trackBar1.Minimum;
+                    }
                     chart1.Series["ErrorCount"].Color = System.Drawing.Color.Blue;
                 }
             }

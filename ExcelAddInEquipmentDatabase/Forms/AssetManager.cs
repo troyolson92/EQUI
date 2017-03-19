@@ -16,6 +16,8 @@ namespace ExcelAddInEquipmentDatabase
 {
     public partial class AssetManager : Form
     {
+        //debugger
+        Debugger Debugger = new Debugger();
         //local Asset data instance
         applData.ASSETSDataTable lASSETS = new applData.ASSETSDataTable();
         //connection to GADATA
@@ -40,7 +42,7 @@ namespace ExcelAddInEquipmentDatabase
             using (applDataTableAdapters.ASSETSTableAdapter adapter = new applDataTableAdapters.ASSETSTableAdapter())
             {
                 try {adapter.Fill(lASSETS);}
-                catch (Exception ex) { Debug.WriteLine("Failed to fill assets table: " + ex.Message); }
+                catch (Exception ex) {Debugger.Exeption(ex); }
 
             }
             dataGridView1.AllowUserToOrderColumns = true;
@@ -226,7 +228,7 @@ namespace ExcelAddInEquipmentDatabase
             catch (Exception e)
             {
                 CB_ASSET.Text = "%";
-                Debug.WriteLine(e.Message);
+               Debugger.Exeption(e);
             }
         }
         private void cb_location_update()
@@ -246,7 +248,7 @@ namespace ExcelAddInEquipmentDatabase
             catch (Exception e)
             {
                 CB_LOCATION.Text = "%";
-                Debug.WriteLine(e.Message);
+               Debugger.Exeption(e);
             }
         }
         private void cb_Lochierarchy_update()
@@ -266,7 +268,7 @@ namespace ExcelAddInEquipmentDatabase
             catch (Exception e)
             {
                 CB_LOCHIERARCHY.Text = "%";
-                Debug.WriteLine(e.Message);
+               Debugger.Exeption(e);
             }
         }
         private void cb_systemid_load()
@@ -286,7 +288,7 @@ namespace ExcelAddInEquipmentDatabase
             catch (Exception e)
             {
                 CB_SYSTEMID.Text = "%";
-                Debug.WriteLine(e.Message);
+               Debugger.Exeption(e);
             }
         }
 

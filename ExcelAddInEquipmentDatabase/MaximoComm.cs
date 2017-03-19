@@ -12,6 +12,8 @@ namespace ExcelAddInEquipmentDatabase
     class MaximoComm
     {
         OracleConnection Maximo7conn = new OracleConnection("data source = dpmxarct;user id = ARCTVCG;password=vcg$tokfeb2017");
+        //debugger
+        Debugger Debugger = new Debugger();
 
         public string MX7connectionString
         {
@@ -149,7 +151,7 @@ namespace ExcelAddInEquipmentDatabase
             }
             catch (Exception e)
             {
-                Debug.WriteLine("OracleDataAdapter: Dataget: {0}", e.Message);
+               Debugger.Exeption(e);
                 DataTable table = new DataTable();
                 return table;
             }
@@ -167,7 +169,7 @@ namespace ExcelAddInEquipmentDatabase
             }
             catch (Exception e)
             {
-                Debug.WriteLine(e.ToString());
+               Debugger.Exeption(e);
             }
             try
             {
@@ -185,18 +187,16 @@ namespace ExcelAddInEquipmentDatabase
                     }
                     catch (Exception e)
                     {
-                        Debug.WriteLine(e.ToString());
+                       Debugger.Exeption(e);
                     }
                     return result;
                 }
             }
             catch (Exception e)
             {
-                Debug.WriteLine(e.ToString());
+               Debugger.Exeption(e);
                 return null;
             }
-
-
         }
 
 

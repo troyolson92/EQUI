@@ -12,6 +12,8 @@ namespace ExcelAddInEquipmentDatabase
 {
     public class GadataComm
     {
+        //debugger
+        Debugger Debugger = new Debugger();
         //connection to GADATA
         SqlConnection Gadataconn = new SqlConnection("user id=EqUi; password=EqUi; server=SQLA001.gen.volvocars.net;" +
                                                       "Trusted_Connection=no; database=gadata; connection timeout=30");
@@ -50,7 +52,7 @@ namespace ExcelAddInEquipmentDatabase
                         }
                         catch (Exception ex)
                         {
-                            Debug.WriteLine("BulkCopyToGadata exeption: {0} ", ex.Message);
+                           Debugger.Exeption(ex);
                         }
                     }
                     connection.Close();
@@ -73,7 +75,7 @@ namespace ExcelAddInEquipmentDatabase
             }
             catch (Exception e)
             {
-                Debug.WriteLine(e.ToString());
+               Debugger.Exeption(e);
             }
 
             try
@@ -88,13 +90,13 @@ namespace ExcelAddInEquipmentDatabase
                     }
                     catch (Exception e)
                     {
-                        Debug.WriteLine(e.ToString());
+                       Debugger.Exeption(e);
                     }
                 }
             }
             catch (Exception e)
             {
-                Debug.WriteLine(e.ToString());
+               Debugger.Exeption(e);
             }
 
 
@@ -108,7 +110,7 @@ namespace ExcelAddInEquipmentDatabase
             }
             catch (Exception e)
             {
-                Debug.WriteLine(e.ToString());
+               Debugger.Exeption(e);
             }
 
             try
@@ -123,14 +125,14 @@ namespace ExcelAddInEquipmentDatabase
                     }
                     catch (Exception e)
                     {
-                        Debug.WriteLine(e.ToString());
+                       Debugger.Exeption(e);
                     }
                     return dt;
                 }
             }
             catch (Exception e)
             {
-                Debug.WriteLine(e.ToString());
+               Debugger.Exeption(e);
                 DataTable dt = new DataTable();
                 return dt;
             }
@@ -148,7 +150,7 @@ namespace ExcelAddInEquipmentDatabase
             }
             catch (Exception e)
             {
-                Debug.WriteLine(e.ToString());
+               Debugger.Exeption(e);
             }
             try
             {
@@ -158,7 +160,7 @@ namespace ExcelAddInEquipmentDatabase
             }
             catch (Exception e)
             {
-                Debug.WriteLine(e.ToString());
+                Debugger.Exeption(e);
                 return cmd;
             }
 

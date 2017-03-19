@@ -15,6 +15,8 @@ namespace ExcelAddInEquipmentDatabase
 {
     public partial class EquipmentDBRibbon
     {
+        //debugger
+        Debugger Debugger = new Debugger();
         //connection to gadata
         GadataComm lGadataComm = new GadataComm();
         //connection to maximo
@@ -41,6 +43,10 @@ namespace ExcelAddInEquipmentDatabase
             Assembly _assembly = Assembly.GetExecutingAssembly();
             FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(_assembly.Location);
             g_config.Label = string.Format("V:{0}",fvi.ProductVersion,"");
+            //init debugger
+            Debugger.Init();
+            Debugger.LogStack = true;
+            Debugger.LogToFile = true;
             //Set user name and level
             dd_user_update();  
             //test 
@@ -164,7 +170,7 @@ namespace ExcelAddInEquipmentDatabase
             catch (Exception e)
             {
                 cb_Lochierarchy.Text = "%";
-                Debug.WriteLine(e.Message);
+                Debugger.Exeption(e);
             }
 
         }
@@ -192,7 +198,7 @@ namespace ExcelAddInEquipmentDatabase
             catch (Exception e)
             {
                 cb_locations.Text = "%";
-                Debug.WriteLine(e.Message);
+                Debugger.Exeption(e);
             }
         }
         private void cb_assets_update()
@@ -219,7 +225,7 @@ namespace ExcelAddInEquipmentDatabase
             catch (Exception e)
             {
                 cb_locations.Text = "%";
-                Debug.WriteLine(e.Message);
+                Debugger.Exeption(e);
             }
         }
         public void dd_connections_update()
@@ -243,13 +249,12 @@ namespace ExcelAddInEquipmentDatabase
                                 dd_activeConnection.Items.Add(item);
                                 break;
                             default:
-                                Debug.WriteLine("connection type not supported");
                                 break;
                         }
                     }
                     catch (Exception e )
                     {
-                        Debug.WriteLine(e.Message);
+                        Debugger.Exeption(e);
                     }
                 }
         }
@@ -343,7 +348,7 @@ namespace ExcelAddInEquipmentDatabase
             }
             else
             {
-                MessageBox.Show(string.Format("Please try it again '{0}' not a valid number ",input), "Sorry", MessageBoxButtons.OK);
+                Debugger.Message(string.Format("Please try it again '{0}' not a valid number ",input));
                 ProcMngr.daysBack.input = "10";
             }
         }
@@ -368,9 +373,8 @@ namespace ExcelAddInEquipmentDatabase
         private void btn_EditProcedure_Click(object sender, RibbonControlEventArgs e)
         {
             if (dd_activeConnection.SelectedItem.Label == "RefreshAll") //this is not a connection to van not be edited
-            {
-                
-                MessageBox.Show("Please select an other connection. 'RefreshAll' is not a connection", "Sorry", MessageBoxButtons.OK);
+            { 
+               Debugger.Message("Please select an other connection. 'RefreshAll' is not a connection");
             }
             else
             {
@@ -411,7 +415,7 @@ namespace ExcelAddInEquipmentDatabase
                         }
                         else
                         {
-                            Debug.WriteLine("Unable to find connection");
+                           Debugger.Message("Unable to find connection");
                         }
                     }
                 }
@@ -459,9 +463,9 @@ namespace ExcelAddInEquipmentDatabase
             }
             catch (Exception ex)
             {
-                MessageBox.Show(@"Was not able to open the help file.
+               Debugger.Message(@"Was not able to open the help file.
                                  File should be on <"+helpfile+@">
-                                    Exeption:"+ex.Message, "Sorry", MessageBoxButtons.OK);
+                                    Exeption:"+ex.Message);
             }
         }
 

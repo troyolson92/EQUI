@@ -12,6 +12,9 @@ namespace ExcelAddInEquipmentDatabase.Forms
 {
     public partial class MXxQueryEdit : Form
     {
+        //debugger
+        Debugger Debugger = new Debugger();
+
         string lTargetSystem;
 
         public string TargetSystem { set { lTargetSystem = value; } }
@@ -56,7 +59,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.Message);
+               Debugger.Exeption(ex);
                 MessageBox.Show(ex.Message, "OEPS", MessageBoxButtons.OK);
             }
 
@@ -93,7 +96,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.Message);
+               Debugger.Exeption(ex);
                 MessageBox.Show(ex.Message, "OEPS", MessageBoxButtons.OK);
             }
         }

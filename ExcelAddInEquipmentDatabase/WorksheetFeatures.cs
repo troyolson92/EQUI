@@ -12,6 +12,9 @@ namespace ExcelAddInEquipmentDatabase
 {
     public class WorksheetFeatures
     {
+        //debugger
+        Debugger Debugger = new Debugger();
+
         Excel._Worksheet lClickedSheet;
         //dbg 
         string wonum;
@@ -69,7 +72,7 @@ namespace ExcelAddInEquipmentDatabase
             {
                 //if it is not formatted as listobject (just afther create.)
                 //add format as table button here.
-                Debug.WriteLine(oQueryTable.Name);
+            //   Debugger.Exeption(oQueryTable.Name);
             }
         }
 

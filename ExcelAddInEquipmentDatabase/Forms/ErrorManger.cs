@@ -29,6 +29,9 @@ namespace ExcelAddInEquipmentDatabase.Forms
 {
     public partial class ErrorManger : Form
     {
+        //debugger
+        Debugger Debugger = new Debugger();
+        //
         applData.c3gL_errorDataTable lc3gError = new applData.c3gL_errorDataTable();
         applData.c4gL_errorDataTable lc4gError = new applData.c4gL_errorDataTable();
         //
@@ -95,7 +98,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
         }
         catch (Exception ex )
         {
-            Debug.WriteLine("convertFailed: " + ex.Message);
+           Debugger.Exeption(ex);
             return 0;
         }
         }
@@ -150,7 +153,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
             catch (Exception ex)
             {
                 MessageBox.Show(@"The logcodeFilter contains an invalid char" , "OEPS", MessageBoxButtons.OK);
-                Debug.WriteLine(ex.Message);
+               Debugger.Exeption(ex);
                 return;
             }
             //
@@ -221,11 +224,11 @@ namespace ExcelAddInEquipmentDatabase.Forms
                             }
                             break;
                         case "ABB-NGAC":
-                            MessageBox.Show("system not implemented", "OEPS", MessageBoxButtons.OK);
+                            Debugger.Message("system not implemented");
                             break;
 
                         default:
-                            MessageBox.Show("system unkown", "OEPS", MessageBoxButtons.OK);
+                            Debugger.Message("system unkown");
                             return;
                     }
                   }
@@ -405,7 +408,7 @@ This can not be undone.
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("Failed to add row: " + ex.Message);
+               Debugger.Exeption(ex);
             }
             fill_rules();
         }
@@ -479,7 +482,7 @@ This can not be undone.
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("Failed to Update row: " + ex.Message);
+               Debugger.Exeption(ex);
             }
             //
             fill_rules();

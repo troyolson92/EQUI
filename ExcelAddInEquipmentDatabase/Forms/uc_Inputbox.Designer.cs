@@ -70,7 +70,7 @@
             this.tb_1.Location = new System.Drawing.Point(86, 2);
             this.tb_1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tb_1.Name = "tb_1";
-            this.tb_1.Size = new System.Drawing.Size(151, 27);
+            this.tb_1.Size = new System.Drawing.Size(148, 27);
             this.tb_1.TabIndex = 3;
             this.tb_1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -86,12 +86,12 @@
             this.tableLayoutPanel1.Controls.Add(this.rb_enable, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.lbl_1, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.tb_1, 2, 0);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 2);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(5, 2);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(240, 31);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(237, 31);
             this.tableLayoutPanel1.TabIndex = 4;
             // 
             // uc_Inputbox

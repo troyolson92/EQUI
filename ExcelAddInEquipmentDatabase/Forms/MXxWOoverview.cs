@@ -126,12 +126,20 @@ ORDER BY WORKORDER.STATUSDATE
             cmdFAILUREREMARK = string.Format(cmdFAILUREREMARK, wonum);
             cmdLONGDESCRIPTION = string.Format(cmdLONGDESCRIPTION, wonum);
 
-            string sEb = "<div>***************************</div>";
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine(sEb).AppendLine("<div>LONGDESCRIPTION</div>").AppendLine(sEb);
+            sb.AppendLine(
+@"<div><table bgcolor=#00FF00>
+<tr>
+<th>LONGDESCRIPTION</th>
+</tr>
+</table></div>");
             sb.AppendLine(lMaximocomm.GetClobMaximo7(cmdLONGDESCRIPTION));
-
-            sb.AppendLine(sEb).AppendLine("<div>FAILUREREMARK</div>").AppendLine(sEb);
+            sb.AppendLine("<div>---------------------------------------------------------------</div>").AppendLine(
+@"<div><table bgcolor=#00FF00>
+<tr>
+<th>FAILUREREMARK</th>
+</tr>
+</table></div>");
             sb.AppendLine(lMaximocomm.GetClobMaximo7(cmdFAILUREREMARK));
 
             webBrowser1.DocumentText = sb.ToString();

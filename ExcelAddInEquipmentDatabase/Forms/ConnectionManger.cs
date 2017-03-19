@@ -16,6 +16,8 @@ namespace ExcelAddInEquipmentDatabase
 {
     public partial class ConnectionManger : Form
     {
+        //debugger
+        Debugger Debugger = new Debugger();
         //connection to gadata
         GadataComm lGadataComm = new GadataComm();
         //connection to maximo 
@@ -85,7 +87,7 @@ namespace ExcelAddInEquipmentDatabase
             }
             catch (Exception e)
             {
-                Debug.WriteLine(e.Message);
+               Debugger.Exeption(e);
             }
         }
 
@@ -117,13 +119,13 @@ namespace ExcelAddInEquipmentDatabase
                             lb_connections.Items.Add(connection.Name);
                             break;
                         default:
-                            Debug.WriteLine("connection tpye not supported");
+                           Debugger.Message("connection tpye not supported");
                             break;
                     }
                 }
                 catch (Exception e )
                 {
-                  Debug.WriteLine(e.Message);
+                 Debugger.Exeption(e);
                 }
             }
 
@@ -147,7 +149,7 @@ namespace ExcelAddInEquipmentDatabase
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLine(ex.Message);
+                   Debugger.Exeption(ex);
                 }
             }
             lb_get_connections();

@@ -68,11 +68,20 @@ namespace ExcelAddInEquipmentDatabase.Forms
             cmdFAILUREREMARK = string.Format(cmdFAILUREREMARK, tb_LONGDESCRIPTIONID.Text);
             cmdLONGDESCRIPTION = string.Format(cmdLONGDESCRIPTION, tb_LONGDESCRIPTIONID.Text);
 
-            string sEb = "<div>***************************</div>";
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine(sEb).AppendLine("<div>LONGDESCRIPTION</div>").AppendLine(sEb);
+            sb.AppendLine(
+@"<div><table bgcolor=#00FF00>
+<tr>
+<th>    LONGDESCRIPTION                                             </th>
+</tr>
+</table></div>");
             sb.AppendLine(lMaximocomm.GetClobMaximo7(cmdLONGDESCRIPTION));
-            sb.AppendLine(sEb).AppendLine("<div>FAILUREREMARK</div>").AppendLine(sEb);
+            sb.AppendLine("<div>---------------------------------------------------------------</div>").AppendLine(
+@"<div><table bgcolor=#00FF00>
+<tr>
+<th>    FAILUREREMARK                                             </th>
+</tr>
+</table></div>");
             sb.AppendLine(lMaximocomm.GetClobMaximo7(cmdFAILUREREMARK));
 
             wb_longdescrption.DocumentText = sb.ToString();

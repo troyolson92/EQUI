@@ -19,6 +19,9 @@ namespace ExcelAddInEquipmentDatabase.Forms
 {
     public partial class DocManager : Form
     {
+        //debugger
+        Debugger Debugger = new Debugger();
+        //
         private List<string[]> Resultbuffer;
         private BackgroundWorker bw;
 
@@ -185,13 +188,13 @@ namespace ExcelAddInEquipmentDatabase.Forms
               myProcess.StartInfo.FileName = "acrord32.exe";
               myProcess.StartInfo.Arguments = string.Format(" /n /A \"page={0}\" \"{1}\"", item.SubItems[2].Text, item.SubItems[3].Text); //works
               try { myProcess.Start(); }
-              catch (Exception ex) { Debug.WriteLine("Failed to open pdf: " + ex.Message); }
+              catch (Exception ex) {Debugger.Message("Failed to open pdf: " + ex.Message); }
           }
       }
 
 //search
       //search for files
-      static List<string> ReqSearchDir(List<string> als_filepaths, string as_mask, string as_fileNameMask)
+       List<string> ReqSearchDir(List<string> als_filepaths, string as_mask, string as_fileNameMask)
       {
           List<string> List = new List<string>();
           try
@@ -207,7 +210,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
           }
           catch (Exception ex)
           {
-              Debug.WriteLine(ex.Message);
+             Debugger.Exeption(ex);
           }
           return List;
       }

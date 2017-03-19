@@ -40,7 +40,7 @@
     <PublishUrl>\\gnlsnm0101.gen.volvocars.net\proj\6308-Shr-VC024800\OBJECTBEHEER GA\Robots\12. SW + Tools\RobotDatabase\VSTO\DeploymentBase\</PublishUrl>
     <InstallUrl />
     <TargetCulture>en</TargetCulture>
-    <ApplicationVersion>3.0.1.29</ApplicationVersion>
+    <ApplicationVersion>3.0.1.30</ApplicationVersion>
     <AutoIncrementApplicationRevision>true</AutoIncrementApplicationRevision>
     <UpdateEnabled>true</UpdateEnabled>
     <UpdateInterval>0</UpdateInterval>
@@ -230,6 +230,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>applData.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Debugger.cs" />
     <Compile Include="DSNmngr.cs" />
     <Compile Include="Forms\AssetManager.cs">
       <SubType>Form</SubType>
@@ -371,6 +372,7 @@
     <None Include="applData.xss">
       <DependentUpon>applData.xsd</DependentUpon>
     </None>
+    <None Include="ClassDiagram1.cd" />
     <None Include="DataClassesGADATA.dbml.layout">
       <DependentUpon>DataClassesGADATA.dbml</DependentUpon>
     </None>
