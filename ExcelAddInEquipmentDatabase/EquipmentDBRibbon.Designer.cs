@@ -59,6 +59,7 @@
             this.btn_help = this.Factory.CreateRibbonButton();
             this.btn_docMngr = this.Factory.CreateRibbonButton();
             this.btn_ErrorMngr = this.Factory.CreateRibbonButton();
+            this.btn_woTest = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
             this.rib2.SuspendLayout();
             this.group2.SuspendLayout();
@@ -207,6 +208,7 @@
             this.g_config.Items.Add(this.btn_help);
             this.g_config.Items.Add(this.btn_docMngr);
             this.g_config.Items.Add(this.btn_ErrorMngr);
+            this.g_config.Items.Add(this.btn_woTest);
             this.g_config.Label = "Configuration";
             this.g_config.Name = "g_config";
             // 
@@ -267,6 +269,12 @@
             this.btn_ErrorMngr.ShowImage = true;
             this.btn_ErrorMngr.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_ErrorMngr_Click);
             // 
+            // btn_woTest
+            // 
+            this.btn_woTest.Label = "WOtest";
+            this.btn_woTest.Name = "btn_woTest";
+            this.btn_woTest.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_woTest_Click);
+            // 
             // EquipmentDBRibbon
             // 
             this.Name = "EquipmentDBRibbon";
@@ -314,6 +322,7 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonDropDown dd_User;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_docMngr;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_ErrorMngr;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_woTest;
     }
 
     partial class ThisRibbonCollection

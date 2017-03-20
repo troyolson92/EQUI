@@ -507,6 +507,12 @@ namespace ExcelAddInEquipmentDatabase
             }
         }
 
+        private void btn_woTest_Click(object sender, RibbonControlEventArgs e)
+        {
+            Forms.MxXWoCreate lMxXWoCreate = new Forms.MxXWoCreate();
+            lMxXWoCreate.Show();
+        }
+
 
     }
 }
