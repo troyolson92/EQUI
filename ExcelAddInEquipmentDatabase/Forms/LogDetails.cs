@@ -11,10 +11,13 @@ namespace ExcelAddInEquipmentDatabase.Forms
 {
     public partial class LogDetails : MetroFramework.Forms.MetroForm
     {
-        GadataComm lGadataComm = new GadataComm();
+        //debugger
+        Debugger Debugger = new Debugger();
+        GadataComm lGdataComm = new GadataComm();
+        DataTable dt;
         BackgroundWorker bw = new BackgroundWorker();
 
-        public LogDetails(string Errornum)
+        public LogDetails(string Location, string Errornum)
         {
             InitializeComponent();
                         bw.DoWork += bw_DoWork;
@@ -25,6 +28,8 @@ namespace ExcelAddInEquipmentDatabase.Forms
             {
                 tb_errorId.Text = Errornum;
                 tb_errorId.Enabled = false;
+                tb_location.Text = Location;
+                tb_location.Enabled = false;
                 btn_get.Visible = false;
                 bw.RunWorkerAsync();
             }
@@ -32,6 +37,8 @@ namespace ExcelAddInEquipmentDatabase.Forms
             {
                 tb_errorId.Text = "xxxx";
                 tb_errorId.Enabled = true;
+                tb_location.Text = "xxxx";
+                tb_location.Enabled = true;
                 btn_get.Visible = true;
             }
         }
@@ -43,37 +50,90 @@ namespace ExcelAddInEquipmentDatabase.Forms
 
         void bw_DoWork(object sender, DoWorkEventArgs e)
         {
-            getMaximoDetails();
+            getErrorDetails();
         }
 
-        private void getMaximoDetails()
+        private void getErrorDetails()
         {
             metroProgressSpinner1.Show();
 
-            string cmd1 = (@"
+            //query all instances of the error 
+            string qry = string.Format(
+    @"
+DECLARE @Location as varchar(max) = '{0}'
+DECLARE @ERRORNUM as int = {1} 
+DECLARE @controllerTYPE as varchar(10) = (select top 1 controller_type from gadata.equi.ASSETS where RTRIM(location) = @Location)
 
-            ");
-            string cmd2 = (@"
+--voor c3g
+if @controllerTYPE = 'c3g'
+BEGIN
+SELECT TOP 1 
+ GADATA.[dbo].[fn_QinfoFormatString]([Info]) as 'INFO' 
+,GADATA.[dbo].[fn_QinfoFormatString]([Cause]) as 'Cause' 
+,GADATA.[dbo].[fn_QinfoFormatString]([Remedy]) as 'Remedy' 
+FROM [GADATA].[Volvo].[FaultInfo] 
+WHERE ErrorNbr = @ERRORNUM
+END
 
-            ");
-            cmd1 = string.Format(cmd1, tb_errorId.Text);
-            cmd2 = string.Format(cmd2, tb_errorId.Text);
+--voor c4g
+if @controllerTYPE = 'c4g'
+BEGIN
+SELECT TOP 1 
+ GADATA.[dbo].[fn_QinfoFormatString]([Info]) as 'INFO' 
+,GADATA.[dbo].[fn_QinfoFormatString]([Cause]) as 'Cause' 
+,GADATA.[dbo].[fn_QinfoFormatString]([Remedy]) as 'Remedy' 
+FROM [GADATA].[Volvo].[FaultInfo] 
+WHERE ErrorNbr = @ERRORNUM
+END
+
+--voor IRC5
+if @controllerTYPE = 'IRC5'
+BEGIN
+select top 1 
+'Will use this for user info later ... bye bye sdebeul' as 'INFO' 
+,c.cause_text as 'Cause' 
+,R.Remedy_text as 'Remedy'
+from GADATA.ABB.h_alarm as h 
+left join GADATA.ABB.L_Cause as c on c.id = h.cause_id
+left join GADATA.ABB.L_Remedy as R on R.id = h.remedy_id
+WHERE h.id = @ERRORNUM
+END
+", tb_location.Text, tb_errorId.Text);
+
+            //fill dataset
+            dt = lGdataComm.RunQueryGadata(qry);
+            //check if the result was valid 
+            if (dt.Rows.Count == 0) { Debugger.Message("The query for this errorcode did not return a valid result"); this.Dispose(); return; };
 
             StringBuilder sb = new StringBuilder();
             sb.AppendLine(
-@"<div><table bgcolor=#00FF00>
+@"<div>            
+<table bgcolor=#00FF00>
 <tr>
-<th>    Errorinfo1                                             </th>
+<td style = white-space:PRE>INFO                                                                                                                                                                </td>
 </tr>
-</table></div>");
-            sb.AppendLine(lGadataComm.RunQueryGadata(cmd1).ToString());
+</table>
+</div>");
+            sb.AppendLine(dt.Rows[0].Field<String>("INFO"));
             sb.AppendLine("<div>---------------------------------------------------------------</div>").AppendLine(
-@"<div><table bgcolor=#00FF00>
+@"<div>            
+<table bgcolor=#00FF00>
 <tr>
-<th>    Errorinfo12                                             </th>
+<td style = white-space:PRE>Cause                                                                                                                                                                </td>
 </tr>
-</table></div>");
-            sb.AppendLine(lGadataComm.RunQueryGadata(cmd2).ToString());
+</table>
+</div>");
+            sb.AppendLine(dt.Rows[0].Field<String>("Cause"));
+            sb.AppendLine("<div>---------------------------------------------------------------</div>").AppendLine(
+@"<div>            
+<table bgcolor=#00FF00>
+<tr>
+<td style = white-space:PRE>Remedy                                                                                                                                                              </td>
+</tr>
+</table>
+</div>");
+            sb.AppendLine(dt.Rows[0].Field<String>("Remedy"));
+            sb.AppendLine("<div>---------------------------------------------------------------</div>");
 
             webBrowser1.DocumentText = sb.ToString();
         }

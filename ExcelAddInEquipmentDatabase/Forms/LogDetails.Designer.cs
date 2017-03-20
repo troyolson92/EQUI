@@ -33,6 +33,8 @@
             this.btn_get = new MetroFramework.Controls.MetroButton();
             this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
             this.metroProgressSpinner1 = new MetroFramework.Controls.MetroProgressSpinner();
+            this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
+            this.tb_location = new MetroFramework.Controls.MetroTextBox();
             this.SuspendLayout();
             // 
             // webBrowser1
@@ -84,11 +86,32 @@
             this.metroProgressSpinner1.Size = new System.Drawing.Size(193, 182);
             this.metroProgressSpinner1.TabIndex = 4;
             // 
+            // metroLabel2
+            // 
+            this.metroLabel2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.metroLabel2.AutoSize = true;
+            this.metroLabel2.Location = new System.Drawing.Point(382, 37);
+            this.metroLabel2.Name = "metroLabel2";
+            this.metroLabel2.Size = new System.Drawing.Size(64, 20);
+            this.metroLabel2.TabIndex = 6;
+            this.metroLabel2.Text = "Location:";
+            // 
+            // tb_location
+            // 
+            this.tb_location.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.tb_location.Location = new System.Drawing.Point(452, 34);
+            this.tb_location.Name = "tb_location";
+            this.tb_location.Size = new System.Drawing.Size(87, 23);
+            this.tb_location.TabIndex = 5;
+            this.tb_location.Text = "metroTextBox1";
+            // 
             // LogDetails
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(836, 468);
+            this.Controls.Add(this.metroLabel2);
+            this.Controls.Add(this.tb_location);
             this.Controls.Add(this.metroProgressSpinner1);
             this.Controls.Add(this.metroLabel1);
             this.Controls.Add(this.btn_get);
@@ -108,5 +131,7 @@
         private MetroFramework.Controls.MetroButton btn_get;
         private MetroFramework.Controls.MetroLabel metroLabel1;
         private MetroFramework.Controls.MetroProgressSpinner metroProgressSpinner1;
+        private MetroFramework.Controls.MetroLabel metroLabel2;
+        private MetroFramework.Controls.MetroTextBox tb_location;
     }
 }

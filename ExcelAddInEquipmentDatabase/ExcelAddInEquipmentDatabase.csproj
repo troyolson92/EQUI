@@ -40,7 +40,7 @@
     <PublishUrl>\\gnlsnm0101.gen.volvocars.net\proj\6308-Shr-VC024800\OBJECTBEHEER GA\Robots\12. SW + Tools\RobotDatabase\VSTO\DeploymentBase\</PublishUrl>
     <InstallUrl />
     <TargetCulture>en</TargetCulture>
-    <ApplicationVersion>3.0.1.30</ApplicationVersion>
+    <ApplicationVersion>3.0.1.31</ApplicationVersion>
     <AutoIncrementApplicationRevision>true</AutoIncrementApplicationRevision>
     <UpdateEnabled>true</UpdateEnabled>
     <UpdateInterval>0</UpdateInterval>
@@ -282,6 +282,12 @@
     <Compile Include="Forms\MXxQueryEdit.Designer.cs">
       <DependentUpon>MXxQueryEdit.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\MxXWoCreate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MxXWoCreate.Designer.cs">
+      <DependentUpon>MxXWoCreate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\MXxWOdetails.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -344,6 +350,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MXxQueryEdit.resx">
       <DependentUpon>MXxQueryEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MxXWoCreate.resx">
+      <DependentUpon>MxXWoCreate.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MXxWOdetails.resx">
       <DependentUpon>MXxWOdetails.cs</DependentUpon>

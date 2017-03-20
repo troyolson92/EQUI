@@ -13,6 +13,9 @@ namespace ExcelAddInEquipmentDatabase.Forms
 {
     public partial class ErrorStats : MetroFramework.Forms.MetroForm
     {
+        //debugger
+        Debugger Debugger = new Debugger();
+
         GadataComm lGdataComm = new GadataComm();
         DataTable dt;
 
@@ -67,7 +70,7 @@ END
             //fill dataset with all errors
             dt = lGdataComm.RunQueryGadata(qry);
             //check if the result was valid 
-            if (dt.Rows.Count == 0) { MessageBox.Show("The query for this errorcode did not return a valid result", "Sorry", MessageBoxButtons.OK); this.Dispose(); return; };
+            if (dt.Rows.Count == 0) { Debugger.Message("The query for this errorcode did not return a valid result"); this.Dispose(); return; };
             //setup trackbar (trackbar maximum = first time error happend, minium = now)
             DateTime FirstError = (from a in dt.AsEnumerable() select a.Field<DateTime>("starttime")).Min();
             DateTime LastError = (from a in dt.AsEnumerable() select a.Field<DateTime>("starttime")).Max();

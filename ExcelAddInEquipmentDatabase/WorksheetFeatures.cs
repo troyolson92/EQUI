@@ -224,7 +224,7 @@ namespace ExcelAddInEquipmentDatabase
         //**********************************Error details*********************************************
         void ErrorDetailsMenuItemClick(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)
         {
-            Forms.LogDetails lLogDetails = new Forms.LogDetails(errornum); //allow multible instances of the form.
+            Forms.LogDetails lLogDetails = new Forms.LogDetails(location, errornum); //allow multible instances of the form.
             lLogDetails.Show();
         }
         //**********************************Error Stats*********************************************

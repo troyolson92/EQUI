@@ -45,8 +45,6 @@ namespace ExcelAddInEquipmentDatabase
             g_config.Label = string.Format("V:{0}",fvi.ProductVersion,"");
             //init debugger
             Debugger.Init();
-            Debugger.LogStack = true;
-            Debugger.LogToFile = true;
             //Set user name and level
             dd_user_update();  
             //test 

@@ -128,18 +128,24 @@ ORDER BY WORKORDER.STATUSDATE
 
             StringBuilder sb = new StringBuilder();
             sb.AppendLine(
-@"<div><table bgcolor=#00FF00>
+@"<div>            
+<table bgcolor=#00FF00>
 <tr>
-<th>LONGDESCRIPTION</th>
+<td style = white-space:PRE>LONGDESCRIPTION                                                                                                                                        
+                                                                                                                                                                                </td>
 </tr>
-</table></div>");
+</table>
+</div>");
             sb.AppendLine(lMaximocomm.GetClobMaximo7(cmdLONGDESCRIPTION));
             sb.AppendLine("<div>---------------------------------------------------------------</div>").AppendLine(
-@"<div><table bgcolor=#00FF00>
+@"<div>            
+<table bgcolor=#00FF00>
 <tr>
-<th>FAILUREREMARK</th>
+<td style = white-space:PRE>FAILUREREMARK                                                                                                                                        
+                                                                                                                                                                                </td>
 </tr>
-</table></div>");
+</table>
+</div>");
             sb.AppendLine(lMaximocomm.GetClobMaximo7(cmdFAILUREREMARK));
 
             webBrowser1.DocumentText = sb.ToString();
