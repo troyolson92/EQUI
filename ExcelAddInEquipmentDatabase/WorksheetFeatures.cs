@@ -21,6 +21,11 @@ namespace ExcelAddInEquipmentDatabase
         string errornum;
         string location;
         string assetnum;
+        string Logtype;
+        string LogText;
+        int downtime;
+        int refid;
+
         Office.CommandBarButton btn;
 
         public void Application_SheetBeforeRightClick(object Sh, Excel.Range Target, ref bool Cancel)
@@ -39,29 +44,40 @@ namespace ExcelAddInEquipmentDatabase
                       {
                           case "WONUM":
                               wonum = (string)Convert.ToString(lClickedSheet.Cells[Target.Row, oListColum.Range.Column].Value);
-                              btn = AddButtonToTableMenuItem("WorkorderDetails");
+                              btn = AddButtonToTableMenuItem("WorkorderDetails"); //if we have a wonum enable wo details
                               btn.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(WorkorderDetailsMenuItemClick);
                               break;
 
                           case "Logcode":
                               errornum = (string)Convert.ToString(lClickedSheet.Cells[Target.Row, oListColum.Range.Column].Value);
                               //
-                              btn = AddButtonToTableMenuItem("ErrorDetails");
+                              btn = AddButtonToTableMenuItem("ErrorDetails"); //if we have a logcode enabel errordetails
                               btn.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(ErrorDetailsMenuItemClick);
                               //
-                              btn = AddButtonToTableMenuItem("ErrorStats");
+                              btn = AddButtonToTableMenuItem("ErrorStats"); //if we have a logcode enable errostats (graph)
                               btn.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(ErrorStatsMenuItemClick);
                               break;
 
                         case "Location":
                               location = (string)Convert.ToString(lClickedSheet.Cells[Target.Row, oListColum.Range.Column].Value);
-                              addMaximoSubmenu();
+                              addMaximoSubmenu(); // if we have a reference location enable maximo tools
                               break;
                         case "Assetnum":
                               assetnum = (string)Convert.ToString(lClickedSheet.Cells[Target.Row, oListColum.Range.Column].Value);
-
                               break;
-
+                        case "Logtype":
+                              Logtype = (string)Convert.ToString(lClickedSheet.Cells[Target.Row, oListColum.Range.Column].Value);
+                              break;
+                        case "refid":
+                              refid = (int)Convert.ToInt32(lClickedSheet.Cells[Target.Row, oListColum.Range.Column].Value);
+                              break;
+                        case "logtext":
+                              LogText = (string)Convert.ToString(lClickedSheet.Cells[Target.Row, oListColum.Range.Column].Value);
+                              break;
+                        case "Downtime":
+                              downtime = (int)Convert.ToInt32(lClickedSheet.Cells[Target.Row, oListColum.Range.Column].Value);
+                              addShiftbookSubmenu(); //shiftbook tools TEMP
+                              break;
                           default:
                               //nothing to do 
                               break;
@@ -252,6 +268,12 @@ namespace ExcelAddInEquipmentDatabase
             btnShowPartsWorkorder.Style = Office.MsoButtonStyle.msoButtonCaption;
             btnShowPartsWorkorder.Caption = "Part history";
             btnShowPartsWorkorder.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(btnShowPartsWorkorderClick);
+            //
+            //
+            Office.CommandBarButton btnShowCreateWO = (Office.CommandBarButton)subMenu.Controls.Add(menuItem, Type.Missing, Type.Missing, 1, true);
+            btnShowCreateWO.Style = Office.MsoButtonStyle.msoButtonCaption;
+            btnShowCreateWO.Caption = "Create Wo";
+            btnShowCreateWO.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(btnShowCreateWOClick);
         }
 
         void btnShowWorkorderHistoryClick(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)
@@ -264,6 +286,46 @@ namespace ExcelAddInEquipmentDatabase
         {
             Forms.MXxWOoverview lMXxWOoverview = new Forms.MXxWOoverview(location,true); //allow multible instances of the form.
             lMXxWOoverview.Show();
+        }
+
+        void btnShowCreateWOClick(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)
+        {
+            Forms.MxXWoCreate lMxXWoCreate = new Forms.MxXWoCreate(location, Logtype, LogText, downtime, refid); //allow multible instances of the form.
+            lMxXWoCreate.Show();
+        }
+        
+        //shiftbook TEMP
+        //submenu for mawimo tools
+        public void addShiftbookSubmenu()
+        {
+            Office.MsoControlType menuItem = Office.MsoControlType.msoControlButton;
+
+            Office.MsoControlType ControlPopup = Office.MsoControlType.msoControlPopup;
+            Office.CommandBarPopup subMenu = (Office.CommandBarPopup)GetTableContextMenu().Controls.Add(ControlPopup, Type.Missing, Type.Missing, 1, true);
+            subMenu.Caption = "Shiftbook";
+            //
+            Office.CommandBarButton btnShowAdd1 = (Office.CommandBarButton)subMenu.Controls.Add(menuItem, Type.Missing, Type.Missing, 1, true);
+            btnShowAdd1.Style = Office.MsoButtonStyle.msoButtonCaption;
+            btnShowAdd1.Caption = "Add/Edit (gekoppled)";
+            btnShowAdd1.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(btnShowAdd1Click);
+            //
+            Office.CommandBarButton btnShowAdd2 = (Office.CommandBarButton)subMenu.Controls.Add(menuItem, Type.Missing, Type.Missing, 1, true);
+            btnShowAdd2.Style = Office.MsoButtonStyle.msoButtonCaption;
+            btnShowAdd2.Caption = "Add (onafhankelijk)";
+            btnShowAdd2.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(btnShowAdd2Click);
+        }
+
+        void btnShowAdd1Click(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)
+        {
+            Forms.AAOSRshiftbook lAAOSRshiftbook = new Forms.AAOSRshiftbook();
+            lAAOSRshiftbook.EditShiftbook(location, refid.ToString(), "0");
+
+        }
+
+        void btnShowAdd2Click(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)
+        {
+            Forms.AAOSRshiftbook lAAOSRshiftbook = new Forms.AAOSRshiftbook();
+            lAAOSRshiftbook.AddIndependantShiftbook(location,Logtype,LogText, refid.ToString());
         }
         
 

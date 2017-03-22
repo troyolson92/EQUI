@@ -232,6 +232,12 @@
     </Compile>
     <Compile Include="Debugger.cs" />
     <Compile Include="DSNmngr.cs" />
+    <Compile Include="Forms\AAOSRshiftbook.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AAOSRshiftbook.Designer.cs">
+      <DependentUpon>AAOSRshiftbook.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\AssetManager.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -336,6 +342,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="WorksheetFeatures.cs" />
+    <EmbeddedResource Include="Forms\AAOSRshiftbook.resx">
+      <DependentUpon>AAOSRshiftbook.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\DocManager.resx">
       <DependentUpon>DocManager.cs</DependentUpon>
     </EmbeddedResource>

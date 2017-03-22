@@ -123,16 +123,26 @@ ORDER BY WORKORDER.STATUSDATE
                 left join MAXIMO.LONGDESCRIPTION LD on LD.LDKEY = WO.WORKORDERID AND LD.LDOWNERTABLE = 'WORKORDER'
                 where WO.wonum = '{0}'
             ");
+            string cmdLabor = (@"
+            select 
+             LABORCODE
+            ,CRAFT
+            ,PAYRATE
+            ,REGULARHRS
+            from MAXIMO.LABTRANS  LABTRANS 
+            where LABTRANS.REFWO  = '{0}'
+            ");
+
             cmdFAILUREREMARK = string.Format(cmdFAILUREREMARK, wonum);
             cmdLONGDESCRIPTION = string.Format(cmdLONGDESCRIPTION, wonum);
+            cmdLabor = string.Format(cmdLabor, wonum);
 
             StringBuilder sb = new StringBuilder();
             sb.AppendLine(
 @"<div>            
 <table bgcolor=#00FF00>
 <tr>
-<td style = white-space:PRE>LONGDESCRIPTION                                                                                                                                        
-                                                                                                                                                                                </td>
+<td style = white-space:PRE>LONGDESCRIPTION</td>
 </tr>
 </table>
 </div>");
@@ -141,14 +151,61 @@ ORDER BY WORKORDER.STATUSDATE
 @"<div>            
 <table bgcolor=#00FF00>
 <tr>
-<td style = white-space:PRE>FAILUREREMARK                                                                                                                                        
-                                                                                                                                                                                </td>
+<td style = white-space:PRE>FAILUREREMARK</td>
 </tr>
 </table>
 </div>");
             sb.AppendLine(lMaximocomm.GetClobMaximo7(cmdFAILUREREMARK));
-
+            sb.AppendLine("<div>---------------------------------------------------------------</div>").AppendLine(
+@"<div>            
+<table bgcolor=#00FF00>
+<tr>
+<td style = white-space:PRE>LABTRANS</td>
+</tr>
+</table>
+</div>");
+            sb.AppendLine(toHTML_Table(lMaximocomm.oracle_runQuery(cmdLabor)));
             webBrowser1.DocumentText = sb.ToString();
+        }
+
+        public static string toHTML_Table(DataTable dt)
+        {
+            if (dt.Rows.Count == 0) return ""; // enter code here
+
+            StringBuilder builder = new StringBuilder();
+            builder.Append("<html>");
+            builder.Append("<head>");
+            builder.Append("<title>");
+            builder.Append("Page-");
+            builder.Append(Guid.NewGuid());
+            builder.Append("</title>");
+            builder.Append("</head>");
+            builder.Append("<body>");
+            builder.Append("<table border='1px' cellpadding='5' cellspacing='0' ");
+            builder.Append("style='border: solid 1px Silver; font-size: x-small;'>");
+            builder.Append("<tr align='left' valign='top'>");
+            foreach (DataColumn c in dt.Columns)
+            {
+                builder.Append("<td align='left' valign='top'><b>");
+                builder.Append(c.ColumnName);
+                builder.Append("</b></td>");
+            }
+            builder.Append("</tr>");
+            foreach (DataRow r in dt.Rows)
+            {
+                builder.Append("<tr align='left' valign='top'>");
+                foreach (DataColumn c in dt.Columns)
+                {
+                    builder.Append("<td align='left' valign='top'>");
+                    builder.Append(r[c.ColumnName]);
+                    builder.Append("</td>");
+                }
+                builder.Append("</tr>");
+            }
+            builder.Append("</table>");
+            builder.Append("</body>");
+            builder.Append("</html>");
+            return builder.ToString();
         }
 
         private void dataGridView1_RowEnter(object sender, DataGridViewCellEventArgs e)
