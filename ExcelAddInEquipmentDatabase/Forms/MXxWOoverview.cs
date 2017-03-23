@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.Text.RegularExpressions;
 
 namespace ExcelAddInEquipmentDatabase.Forms
 {
@@ -17,6 +18,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
         DataTable tableFromMx7 = new DataTable();
         BackgroundWorker bwLongDescription = new BackgroundWorker();
         BackgroundWorker bwWorkorders = new BackgroundWorker();
+        string Llocation;
 
         public MXxWOoverview(string location, bool partmode)
         {
@@ -24,8 +26,10 @@ namespace ExcelAddInEquipmentDatabase.Forms
             bwLongDescription.DoWork += bwLongDescription_DoWork;
             bwWorkorders.DoWork += bwWorkorders_DoWork;
             bwWorkorders.RunWorkerCompleted += bwWorkorders_RunWorkerCompleted;
-         
+            //store original query location
+            Llocation = location;
             tb_location.Text = location;
+            //
             lPartmode = partmode;
             if (partmode)
             {
@@ -216,12 +220,43 @@ ORDER BY WORKORDER.STATUSDATE
 
         private void btn_refresh_Click(object sender, EventArgs e)
         { // if i run it in the bw is this out on cross threath 
+            refresh();
+        }
+        
+        private void refresh()
+        {
             btn_refresh.Enabled = false;
             metroProgressSpinner1.Show();
             getMaximoWorkorder(tb_location.Text, lPartmode);
             dataGridView1.DataSource = tableFromMx7;
             metroProgressSpinner1.Hide();
             btn_refresh.Enabled = true;
+        }
+
+        private void cb_ciblings_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cb_ciblings.Checked)
+            {
+                tb_location.Text = Regex.Replace(tb_location.Text, @"[A-Za-z\s]", "%") + "%";
+            }
+            else
+            {
+                tb_location.Text = Llocation;
+            }
+            refresh();
+        }
+
+        private void cb_preventive_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cb_preventive.Checked)
+            {
+   
+            }
+            else
+            {
+
+            }
+
         }
     }
 }

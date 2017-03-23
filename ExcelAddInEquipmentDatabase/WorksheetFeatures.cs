@@ -170,24 +170,12 @@ namespace ExcelAddInEquipmentDatabase
         { 
         // find existing rules for table and remove
             ClearFormatConditions(Sheet);
-           //old type 
-            AddFormatToTable(Sheet, "ErrorType", "SHIFTBOOK", 8708322);
-            AddFormatToTable(Sheet, "ErrorType", "WARNING", 16760832);
-            AddFormatToTable(Sheet, "ErrorType", "ALERT", 16724940);
-            AddFormatToTable(Sheet, "ErrorType", "SLOWspeed", 16305069);
-            AddFormatToTable(Sheet, "ErrorType", "LIVE", 16711680);
-            AddFormatToTable(Sheet, "ErrorType", "BREAKDOWN", 45296);
-            AddFormatToTable(Sheet, "ErrorType", "BEGIN", 45136);
-            AddFormatToTable(Sheet, "ErrorType", "TI", 11128974);
-
             //new type 
             AddFormatToTable(Sheet, "LogType", "SHIFTBOOK", 8708322);
             AddFormatToTable(Sheet, "LogType", "WARNING", 16760832);
-            AddFormatToTable(Sheet, "LogType", "ALERT", 16724940);
-            AddFormatToTable(Sheet, "LogType", "SLOWspeed", 16305069);
-            AddFormatToTable(Sheet, "LogType", "LIVE", 16711680);
+            AddFormatToTable(Sheet, "LogType", "LIVE", 16724940);
+            AddFormatToTable(Sheet, "LogType", "WARN", 16305069);
             AddFormatToTable(Sheet, "LogType", "BREAKDOWN", 45296);
-            AddFormatToTable(Sheet, "LogType", "BEGIN", 45136);
             AddFormatToTable(Sheet, "LogType", "TIMELINE", 11128974);
         }
         //create Workorder default format rules 

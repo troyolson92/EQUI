@@ -49,7 +49,7 @@
             // tb_errorId
             // 
             this.tb_errorId.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.tb_errorId.Location = new System.Drawing.Point(644, 31);
+            this.tb_errorId.Location = new System.Drawing.Point(623, 31);
             this.tb_errorId.Name = "tb_errorId";
             this.tb_errorId.Size = new System.Drawing.Size(87, 23);
             this.tb_errorId.TabIndex = 1;
@@ -69,7 +69,7 @@
             // 
             this.metroLabel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.metroLabel1.AutoSize = true;
-            this.metroLabel1.Location = new System.Drawing.Point(564, 34);
+            this.metroLabel1.Location = new System.Drawing.Point(543, 34);
             this.metroLabel1.Name = "metroLabel1";
             this.metroLabel1.Size = new System.Drawing.Size(74, 20);
             this.metroLabel1.TabIndex = 3;
@@ -90,7 +90,7 @@
             // 
             this.metroLabel2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.metroLabel2.AutoSize = true;
-            this.metroLabel2.Location = new System.Drawing.Point(382, 37);
+            this.metroLabel2.Location = new System.Drawing.Point(334, 34);
             this.metroLabel2.Name = "metroLabel2";
             this.metroLabel2.Size = new System.Drawing.Size(64, 20);
             this.metroLabel2.TabIndex = 6;
@@ -99,7 +99,7 @@
             // tb_location
             // 
             this.tb_location.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.tb_location.Location = new System.Drawing.Point(452, 34);
+            this.tb_location.Location = new System.Drawing.Point(419, 31);
             this.tb_location.Name = "tb_location";
             this.tb_location.Size = new System.Drawing.Size(87, 23);
             this.tb_location.TabIndex = 5;

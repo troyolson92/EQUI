@@ -80,27 +80,29 @@
             // cb_ciblings
             // 
             this.cb_ciblings.AutoSize = true;
-            this.cb_ciblings.Location = new System.Drawing.Point(318, 55);
+            this.cb_ciblings.Location = new System.Drawing.Point(311, 74);
             this.cb_ciblings.Name = "cb_ciblings";
-            this.cb_ciblings.Size = new System.Drawing.Size(87, 17);
+            this.cb_ciblings.Size = new System.Drawing.Size(113, 17);
             this.cb_ciblings.TabIndex = 8;
-            this.cb_ciblings.Text = "cb_ciblings";
+            this.cb_ciblings.Text = "include ciblings";
             this.cb_ciblings.UseVisualStyleBackColor = true;
+            this.cb_ciblings.CheckedChanged += new System.EventHandler(this.cb_ciblings_CheckedChanged);
             // 
             // cb_preventive
             // 
             this.cb_preventive.AutoSize = true;
-            this.cb_preventive.Location = new System.Drawing.Point(456, 55);
+            this.cb_preventive.Location = new System.Drawing.Point(449, 74);
             this.cb_preventive.Name = "cb_preventive";
-            this.cb_preventive.Size = new System.Drawing.Size(103, 17);
+            this.cb_preventive.Size = new System.Drawing.Size(199, 17);
             this.cb_preventive.TabIndex = 9;
-            this.cb_preventive.Text = "cb_preventive";
+            this.cb_preventive.Text = "include PP & WSCH (preventive)";
             this.cb_preventive.UseVisualStyleBackColor = true;
+            this.cb_preventive.CheckedChanged += new System.EventHandler(this.cb_preventive_CheckedChanged);
             // 
             // metroLabel1
             // 
             this.metroLabel1.AutoSize = true;
-            this.metroLabel1.Location = new System.Drawing.Point(23, 58);
+            this.metroLabel1.Location = new System.Drawing.Point(16, 77);
             this.metroLabel1.Name = "metroLabel1";
             this.metroLabel1.Size = new System.Drawing.Size(64, 20);
             this.metroLabel1.TabIndex = 10;
@@ -108,7 +110,7 @@
             // 
             // tb_location
             // 
-            this.tb_location.Location = new System.Drawing.Point(92, 55);
+            this.tb_location.Location = new System.Drawing.Point(86, 74);
             this.tb_location.Name = "tb_location";
             this.tb_location.Size = new System.Drawing.Size(200, 23);
             this.tb_location.TabIndex = 11;
