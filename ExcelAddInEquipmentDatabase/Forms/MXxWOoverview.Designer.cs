@@ -93,9 +93,9 @@
             this.cb_preventive.AutoSize = true;
             this.cb_preventive.Location = new System.Drawing.Point(449, 74);
             this.cb_preventive.Name = "cb_preventive";
-            this.cb_preventive.Size = new System.Drawing.Size(199, 17);
+            this.cb_preventive.Size = new System.Drawing.Size(223, 17);
             this.cb_preventive.TabIndex = 9;
-            this.cb_preventive.Text = "include PP & WSCH (preventive)";
+            this.cb_preventive.Text = "include PP, PCI, WSCH (preventive)";
             this.cb_preventive.UseVisualStyleBackColor = true;
             this.cb_preventive.CheckedChanged += new System.EventHandler(this.cb_preventive_CheckedChanged);
             // 

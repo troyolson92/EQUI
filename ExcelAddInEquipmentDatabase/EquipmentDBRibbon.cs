@@ -10,6 +10,7 @@ using System.Data.SqlClient;
 using Excel = Microsoft.Office.Interop.Excel;
 using System.Windows.Forms;
 using System.Reflection;
+using System.Text.RegularExpressions;
 
 namespace ExcelAddInEquipmentDatabase
 {
@@ -21,10 +22,12 @@ namespace ExcelAddInEquipmentDatabase
         GadataComm lGadataComm = new GadataComm();
         //connection to maximo
         MaximoComm lMaximoComm = new MaximoComm();
+        //local Users data instance 
+        applData.UsersDataTable lUsers = new applData.UsersDataTable();
         //local Asset data instance
         applData.ASSETSDataTable lASSETS = new applData.ASSETSDataTable();
         //local ParameterSets data instance 
-        applData.QUERYParametersDataTable lParameterSets = new applData.QUERYParametersDataTable();
+       // applData.QUERYParametersDataTable lParameterSets = new applData.QUERYParametersDataTable();
         //local worsksheet function instance
         WorksheetFeatures lWorksheetFeatures = new WorksheetFeatures();
         //procedure manager instance 
@@ -46,9 +49,10 @@ namespace ExcelAddInEquipmentDatabase
             //init debugger
             Debugger.Init();
             //Set user name and level
+            load_UserDataset();
             dd_user_update();  
-            //test 
-            Application.EnableVisualStyles();
+            //Set controls according to user level
+            apply_userLevel();
             //check here for offline mode. (disabels Querys)
 
             //find connections in wb
@@ -64,6 +68,37 @@ namespace ExcelAddInEquipmentDatabase
             timer.Interval = (60 * 1000); // 60 secs
             timer.Tick += new EventHandler(Refresh_Tick);
             timer.Start();
+        }
+
+        void apply_userLevel()
+        {
+            //get user level
+            var Ulevel = (from a in lUsers
+                          where a.CDS.Trim().ToUpper() == dd_User.SelectedItem.ToString().Trim().ToUpper()
+                          select a.UserLevel).Take(1);
+            Properties.Settings.Default.userlevel = Convert.ToInt32(Ulevel.FirstOrDefault());
+            //get user froup
+            var UserGroup = (from a in lUsers
+                             where a.CDS.Trim().ToUpper() == dd_User.SelectedItem.ToString().Trim().ToUpper()
+                             select a.UserGroup).Take(1);
+            Properties.Settings.Default.usergroup = UserGroup.FirstOrDefault().ToString().Trim().ToUpper();
+            //
+
+        if (Properties.Settings.Default.userlevel >= 100) // admin level 
+            {
+             dd_User.Enabled = true;
+             btn_ConnectionManager.Enabled = true;
+             btn_AssetManager.Enabled = true;
+             btn_docMngr.Enabled = true;
+             btn_ErrorMngr.Enabled = true;
+             return;
+            }
+            //default acces level
+            dd_User.Enabled = false;
+            btn_ConnectionManager.Enabled = false;
+            btn_AssetManager.Enabled = false;
+            btn_docMngr.Enabled = false;
+            btn_ErrorMngr.Enabled = false;
         }
 
         void Application_WorkbookActivate(Excel.Workbook Wb)
@@ -141,6 +176,17 @@ namespace ExcelAddInEquipmentDatabase
                 using (applDataTableAdapters.ASSETSTableAdapter adapter = new applDataTableAdapters.ASSETSTableAdapter())
                 {
                     adapter.Fill(lASSETS);
+                }
+            }
+        }
+        private void load_UserDataset()
+        {
+            if ((lUsers == null) || (lUsers.Count == 0))
+            {
+                //Fill local dataset
+                using (applDataTableAdapters.UsersTableAdapter adapter = new applDataTableAdapters.UsersTableAdapter())
+                {
+                    adapter.Fill(lUsers);
                 }
             }
         }
@@ -258,13 +304,33 @@ namespace ExcelAddInEquipmentDatabase
         }
         private void dd_user_update()
         {
-            RibbonDropDownItem defaultitem = Globals.Factory.GetRibbonFactory().CreateRibbonDropDownItem();
-            defaultitem.Label = Environment.UserName; // default;
-            dd_User.Items.Add(defaultitem);
-
-            //get you level 
-
-            //get list of users and levels 
+            dd_User.Items.Clear();
+            //
+            RibbonDropDownItem CurrentUser = Globals.Factory.GetRibbonFactory().CreateRibbonDropDownItem();
+            CurrentUser.Label = Environment.UserName; // currentuser;
+            dd_User.Items.Add(CurrentUser);
+            //
+            RibbonDropDownItem defaultUser = Globals.Factory.GetRibbonFactory().CreateRibbonDropDownItem();
+            defaultUser.Label = "default user"; // default;
+            dd_User.Items.Add(defaultUser);
+            //
+  
+            try
+            {
+                var data = from a in lUsers
+                           select a.CDS;
+                data.Distinct().ToList();
+                foreach (string user in data)
+                {
+                    RibbonDropDownItem item = Globals.Factory.GetRibbonFactory().CreateRibbonDropDownItem();
+                    item.Label = user;
+                    dd_User.Items.Add(item);
+                }
+            }
+            catch (Exception e)
+            {
+                Debugger.Exeption(e);
+            }
 
         }
         private void dd_ParameterSets_update()
@@ -384,8 +450,18 @@ namespace ExcelAddInEquipmentDatabase
         {
             //also set Startdate = enddate - daysback to make maximo work beter.
             if (ProcMngr == null) { return; }
+            //format datatime to make days back work better 
             ProcMngr.startDate.input = DateTime.Now.AddDays(Convert.ToInt32(ProcMngr.daysBack.input) * -1);
             ProcMngr.endDate.input = DateTime.Now;
+            //if include ciblings is on modify location
+            if (tbn_incluceCiblings.Checked)
+            {
+                ProcMngr.locations.input = Regex.Replace(ProcMngr.locations.input, @"[A-Za-z\s]", "%");
+                if (ProcMngr.locations.input.TrimEnd().EndsWith("%") == false) { ProcMngr.locations.input = ProcMngr.locations.input + "%"; }
+                cb_locations.Text = ProcMngr.locations.input;
+                ProcMngr.assets.input = "%";
+                cb_assets.Text = "%";
+            }
             //
             Excel._Workbook activeWorkbook = Globals.ThisAddIn.Application.ActiveWorkbook as Excel.Workbook;
             if (dd_activeConnection.SelectedItem.Label == "RefreshAll")
@@ -507,10 +583,9 @@ namespace ExcelAddInEquipmentDatabase
             }
         }
 
-        private void btn_woTest_Click(object sender, RibbonControlEventArgs e)
+        private void dd_User_SelectionChanged(object sender, RibbonControlEventArgs e)
         {
-            Forms.MxXWoCreate lMxXWoCreate = new Forms.MxXWoCreate();
-            lMxXWoCreate.Show();
+            apply_userLevel();
         }
 
 

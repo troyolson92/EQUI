@@ -25,5 +25,14 @@
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
       <Value Profile="(Default)">Data Source=sqla001.gen.volvocars.net;Initial Catalog=GADATA;Persist Security Info=True;User ID=GADATA;Password=GADATA987</Value>
     </Setting>
+    <Setting Name="activeuser" Type="System.String" Scope="User">
+      <Value Profile="(Default)">"sdebeul"</Value>
+    </Setting>
+    <Setting Name="userlevel" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">100</Value>
+    </Setting>
+    <Setting Name="usergroup" Type="System.String" Scope="User">
+      <Value Profile="(Default)">"AAOSR"</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

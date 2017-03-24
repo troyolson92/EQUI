@@ -55,5 +55,41 @@ namespace ExcelAddInEquipmentDatabase.Properties {
                 return ((string)(this["GADATAConnectionString1"]));
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("\"sdebeul\"")]
+        public string activeuser {
+            get {
+                return ((string)(this["activeuser"]));
+            }
+            set {
+                this["activeuser"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        public int userlevel {
+            get {
+                return ((int)(this["userlevel"]));
+            }
+            set {
+                this["userlevel"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("\"AAOSR\"")]
+        public string usergroup {
+            get {
+                return ((string)(this["usergroup"]));
+            }
+            set {
+                this["usergroup"] = value;
+            }
+        }
     }
 }
