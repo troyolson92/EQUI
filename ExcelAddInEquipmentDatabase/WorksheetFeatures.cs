@@ -44,6 +44,7 @@ namespace ExcelAddInEquipmentDatabase
             //foreach collum in collums with a switch statement that add controlls 
             foreach (Excel.ListObject oListobject in lClickedSheet.ListObjects)
             {
+                if (Target.Row == 1) { return; } //because can not convert row header (this wil not work if table is somewhere else 
                 //
                 foreach (Excel.ListColumn oListColum in oListobject.ListColumns)
                 {

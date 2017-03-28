@@ -148,10 +148,15 @@ ORDER BY WORKORDER.STATUSDATE
             string cmdLabor = (@"
             select 
              LABORCODE
+            ,PERSON.DISPLAYNAME
             ,CRAFT
             ,PAYRATE
+            ,PERSON.SUPERVISOR
+            ,LABTRANS.ENTERDATE
             ,REGULARHRS
+            ,to_timestamp('12/30/1899 00:00:00', 'MM/DD/YYYY  hh24:mi:ss') + REGULARHRS / 24 Converted
             from MAXIMO.LABTRANS  LABTRANS 
+            left join MAXIMO.PERSON ON PERSON.PERSONID = LABTRANS.LABORCODE
             where LABTRANS.REFWO  = '{0}'
             ");
 

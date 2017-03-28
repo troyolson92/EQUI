@@ -155,13 +155,17 @@ WORKORDER.WONUM LIKE  '{0}'
             tb_defectremark.Text = "not done";
             //
             string cmdLabor = string.Format(@"
-select 
- LABORCODE
-,CRAFT
-,PAYRATE
-,REGULARHRS
-from MAXIMO.LABTRANS  LABTRANS 
-where LABTRANS.REFWO  = '{0}'
+            select 
+             LABORCODE
+            ,PERSON.DISPLAYNAME
+            ,CRAFT
+            ,PAYRATE
+            ,PERSON.SUPERVISOR
+            ,LABTRANS.ENTERDATE
+            ,REGULARHRS
+            from MAXIMO.LABTRANS  LABTRANS 
+            left join MAXIMO.PERSON ON PERSON.PERSONID = LABTRANS.LABORCODE
+            where LABTRANS.REFWO  = '{0}'
             ", tb_workorder.Text);
             dtLabor = lMaximoComm.oracle_runQuery(cmdLabor);;
             dg_labact.DataSource = dtLabor;

@@ -55,6 +55,9 @@ namespace ExcelAddInEquipmentDatabase
             apply_userLevel();
             //check here for offline mode. (disabels Querys)
 
+            //force the DSN connection to the host system
+            lGadataComm.make_DSN();
+            lMaximoComm.make_DSN(lMaximoComm.SystemMX7);
             //find connections in wb
             dd_connections_update();
             //subscribe to workbook open event
@@ -91,14 +94,24 @@ namespace ExcelAddInEquipmentDatabase
              btn_AssetManager.Enabled = true;
              btn_docMngr.Enabled = true;
              btn_ErrorMngr.Enabled = true;
-             return;
             }
+        else if (Properties.Settings.Default.userlevel >= 10) // power user
+        {
+            dd_User.Enabled = false;
+            btn_ConnectionManager.Enabled = true;
+            btn_AssetManager.Enabled = false;
+            btn_docMngr.Enabled = false;
+            btn_ErrorMngr.Enabled = true;
+        }
+        else
+        { 
             //default acces level
             dd_User.Enabled = false;
             btn_ConnectionManager.Enabled = false;
             btn_AssetManager.Enabled = false;
             btn_docMngr.Enabled = false;
             btn_ErrorMngr.Enabled = false;
+        }
         }
 
         void Application_WorkbookActivate(Excel.Workbook Wb)
@@ -451,7 +464,8 @@ namespace ExcelAddInEquipmentDatabase
             //also set Startdate = enddate - daysback to make maximo work beter.
             if (ProcMngr == null) { return; }
             //format datatime to make days back work better 
-            ProcMngr.startDate.input = DateTime.Now.AddDays(Convert.ToInt32(ProcMngr.daysBack.input) * -1);
+            try { ProcMngr.startDate.input = DateTime.Now.AddDays(Convert.ToInt32(ProcMngr.daysBack.input) * -1); }
+            catch (Exception ex) { Debugger.Exeption(ex); return; }
             ProcMngr.endDate.input = DateTime.Now;
             //if include ciblings is on modify location
             if (tbn_incluceCiblings.Checked)

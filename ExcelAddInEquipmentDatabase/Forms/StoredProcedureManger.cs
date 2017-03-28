@@ -79,6 +79,9 @@ namespace ExcelAddInEquipmentDatabase
         {
             InitializeComponent();
             //
+            if (Properties.Settings.Default.userlevel >= 10) { Btn_saveSet.Visible = true; }
+            else { Btn_saveSet.Visible = false; }
+            //
             if (activeconnection == lMaximoComm.SystemMX7 ) //CREATE NEW MX7connections
             {
                 assets.Name = "_assets".ToUpper();
