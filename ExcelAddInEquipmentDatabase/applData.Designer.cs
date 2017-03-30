@@ -8937,7 +8937,7 @@ namespace ExcelAddInEquipmentDatabase.applDataTableAdapters {
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = @"INSERT INTO [EqUi].[ASSETS] ([SYSTEMID], [LOCATION], [ASSETNUM], [AssetDescription], [LocationTree], [ClassDescription], [ClassStructureId], [CLassificationId], [ClassificationTree], [controller_name], [controller_type], [controller_id]) VALUES (@SYSTEMID, @LOCATION, @ASSETNUM, @AssetDescription, @LocationTree, @ClassDescription, @ClassStructureId, @CLassificationId, @ClassificationTree, @controller_name, @controller_type, @controller_id)";
+            this._adapter.InsertCommand.CommandText = @"INSERT INTO [GADATA].[EqUi].[ASSETS] ([SYSTEMID], [LOCATION], [ASSETNUM], [AssetDescription], [LocationTree], [ClassDescription], [ClassStructureId], [ClassificationTree], [controller_name], [controller_type], [controller_id]) VALUES (@SYSTEMID, @LOCATION, @ASSETNUM, @AssetDescription, @LocationTree, @ClassDescription, @ClassStructureId, @ClassificationTree, @controller_name, @controller_type, @controller_id)";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SYSTEMID", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SYSTEMID", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@LOCATION", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "LOCATION", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -8946,7 +8946,6 @@ namespace ExcelAddInEquipmentDatabase.applDataTableAdapters {
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@LocationTree", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "LocationTree", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ClassDescription", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ClassDescription", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ClassStructureId", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ClassStructureId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@CLassificationId", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "CLassificationId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ClassificationTree", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ClassificationTree", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@controller_name", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "controller_name", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@controller_type", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "controller_type", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -8966,7 +8965,19 @@ namespace ExcelAddInEquipmentDatabase.applDataTableAdapters {
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT * FROM  EqUi.ASSETS";
+            this._commandCollection[0].CommandText = @"SELECT [SYSTEMID]
+      ,[LOCATION]
+      ,[ASSETNUM]
+      ,[AssetDescription]
+      ,[LocationTree]
+      ,[ClassDescription]
+      ,[ClassStructureId]
+      ,isnull([CLassificationId],'') [CLassificationId]
+      ,[ClassificationTree]
+      ,[controller_name]
+      ,[controller_type]
+      ,[controller_id]
+  FROM [GADATA].[EqUi].[ASSETS]";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         

@@ -46,8 +46,6 @@
             this.cb_Lochierarchy = this.Factory.CreateRibbonComboBox();
             this.cb_locations = this.Factory.CreateRibbonComboBox();
             this.cb_assets = this.Factory.CreateRibbonComboBox();
-            this.tbn_ExcludeOperational = this.Factory.CreateRibbonToggleButton();
-            this.tbn_incluceCiblings = this.Factory.CreateRibbonToggleButton();
             this.tbn_3 = this.Factory.CreateRibbonToggleButton();
             this.separator2 = this.Factory.CreateRibbonSeparator();
             this.btn_StartDate = this.Factory.CreateRibbonButton();
@@ -55,7 +53,7 @@
             this.btn_nDays = this.Factory.CreateRibbonButton();
             this.g_config = this.Factory.CreateRibbonGroup();
             this.tbtn_Autorefresh = this.Factory.CreateRibbonToggleButton();
-            this.tbtn_StopRightClick = this.Factory.CreateRibbonToggleButton();
+            this.gall_templates = this.Factory.CreateRibbonGallery();
             this.dd_User = this.Factory.CreateRibbonDropDown();
             this.separator3 = this.Factory.CreateRibbonSeparator();
             this.btn_ConnectionManager = this.Factory.CreateRibbonButton();
@@ -63,6 +61,7 @@
             this.btn_help = this.Factory.CreateRibbonButton();
             this.btn_docMngr = this.Factory.CreateRibbonButton();
             this.btn_ErrorMngr = this.Factory.CreateRibbonButton();
+            this.tbtn_StopRightClick = this.Factory.CreateRibbonToggleButton();
             this.tab1.SuspendLayout();
             this.rib2.SuspendLayout();
             this.group2.SuspendLayout();
@@ -136,8 +135,6 @@
             this.AssetManager.Items.Add(this.cb_Lochierarchy);
             this.AssetManager.Items.Add(this.cb_locations);
             this.AssetManager.Items.Add(this.cb_assets);
-            this.AssetManager.Items.Add(this.tbn_ExcludeOperational);
-            this.AssetManager.Items.Add(this.tbn_incluceCiblings);
             this.AssetManager.Items.Add(this.tbn_3);
             this.AssetManager.Items.Add(this.separator2);
             this.AssetManager.Items.Add(this.btn_StartDate);
@@ -172,18 +169,6 @@
             this.cb_assets.Text = null;
             this.cb_assets.ItemsLoading += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.cb_assets_itemsload);
             this.cb_assets.TextChanged += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.cb_assets_TextChanged);
-            // 
-            // tbn_ExcludeOperational
-            // 
-            this.tbn_ExcludeOperational.Label = "ExlOperational";
-            this.tbn_ExcludeOperational.Name = "tbn_ExcludeOperational";
-            this.tbn_ExcludeOperational.ScreenTip = "Exclude operation events from Query";
-            // 
-            // tbn_incluceCiblings
-            // 
-            this.tbn_incluceCiblings.Label = "IncCilbings";
-            this.tbn_incluceCiblings.Name = "tbn_incluceCiblings";
-            this.tbn_incluceCiblings.ScreenTip = "Include ciblings from selected asset (brothers and sisters assets)";
             // 
             // tbn_3
             // 
@@ -225,7 +210,7 @@
             // g_config
             // 
             this.g_config.Items.Add(this.tbtn_Autorefresh);
-            this.g_config.Items.Add(this.tbtn_StopRightClick);
+            this.g_config.Items.Add(this.gall_templates);
             this.g_config.Items.Add(this.dd_User);
             this.g_config.Items.Add(this.separator3);
             this.g_config.Items.Add(this.btn_ConnectionManager);
@@ -233,6 +218,7 @@
             this.g_config.Items.Add(this.btn_help);
             this.g_config.Items.Add(this.btn_docMngr);
             this.g_config.Items.Add(this.btn_ErrorMngr);
+            this.g_config.Items.Add(this.tbtn_StopRightClick);
             this.g_config.Label = "Configuration";
             this.g_config.Name = "g_config";
             // 
@@ -241,11 +227,11 @@
             this.tbtn_Autorefresh.Label = "AutoRefresh";
             this.tbtn_Autorefresh.Name = "tbtn_Autorefresh";
             // 
-            // tbtn_StopRightClick
+            // gall_templates
             // 
-            this.tbtn_StopRightClick.Label = "StopRightClick";
-            this.tbtn_StopRightClick.Name = "tbtn_StopRightClick";
-            this.tbtn_StopRightClick.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.tbtn_StopRightClick_Click);
+            this.gall_templates.Label = "Templates";
+            this.gall_templates.Name = "gall_templates";
+            this.gall_templates.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.gall_templates_Click);
             // 
             // dd_User
             // 
@@ -298,6 +284,12 @@
             this.btn_ErrorMngr.ShowImage = true;
             this.btn_ErrorMngr.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_ErrorMngr_Click);
             // 
+            // tbtn_StopRightClick
+            // 
+            this.tbtn_StopRightClick.Label = "StopRightClick";
+            this.tbtn_StopRightClick.Name = "tbtn_StopRightClick";
+            this.tbtn_StopRightClick.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.tbtn_StopRightClick_Click);
+            // 
             // EquipmentDBRibbon
             // 
             this.Name = "EquipmentDBRibbon";
@@ -346,9 +338,8 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_ErrorMngr;
         internal Microsoft.Office.Tools.Ribbon.RibbonToggleButton tbtn_StopRightClick;
         internal Microsoft.Office.Tools.Ribbon.RibbonSeparator separator3;
-        internal Microsoft.Office.Tools.Ribbon.RibbonToggleButton tbn_ExcludeOperational;
-        internal Microsoft.Office.Tools.Ribbon.RibbonToggleButton tbn_incluceCiblings;
         internal Microsoft.Office.Tools.Ribbon.RibbonToggleButton tbn_3;
+        internal Microsoft.Office.Tools.Ribbon.RibbonGallery gall_templates;
     }
 
     partial class ThisRibbonCollection

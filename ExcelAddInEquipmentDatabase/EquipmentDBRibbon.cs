@@ -11,6 +11,7 @@ using Excel = Microsoft.Office.Interop.Excel;
 using System.Windows.Forms;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using System.IO;
 
 namespace ExcelAddInEquipmentDatabase
 {
@@ -60,6 +61,8 @@ namespace ExcelAddInEquipmentDatabase
             lMaximoComm.make_DSN(lMaximoComm.SystemMX7);
             //find connections in wb
             dd_connections_update();
+            //fill with templates
+            gall_templates_update();
             //subscribe to workbook open event
             Globals.ThisAddIn.Application.WorkbookActivate += Application_WorkbookActivate;
             //subscribe to sheet change event.
@@ -216,12 +219,19 @@ namespace ExcelAddInEquipmentDatabase
                                          && a.LocationTree != null
                                          orderby a.LocationTree descending
                                          select a.LocationTree;
-                data.Distinct().ToList();
-                foreach (string thing in data)
+                List<string> distinctresult = data.Distinct().ToList();
+                foreach (string thing in distinctresult)
                 {
                     RibbonDropDownItem item = Globals.Factory.GetRibbonFactory().CreateRibbonDropDownItem();
+                    if (cb_Lochierarchy.Items.Count() > 500)
+                    {
+                        item.Label = "More items not loading...";
+                        cb_Lochierarchy.Items.Add(item);
+                        break;
+                    }
                     item.Label = thing;
                     cb_Lochierarchy.Items.Add(item);
+
                 }
             }
             catch (Exception e)
@@ -244,10 +254,16 @@ namespace ExcelAddInEquipmentDatabase
                                          && a.LOCATION != null
                                           orderby a.LOCATION descending
                                          select a.LOCATION;
-                data.Distinct().ToList();
-                foreach (string thing in data)
+                List<string> distinctresult = data.Distinct().ToList();
+                foreach (string thing in distinctresult)
                 {
                     RibbonDropDownItem item = Globals.Factory.GetRibbonFactory().CreateRibbonDropDownItem();
+                    if (cb_locations.Items.Count() > 500)
+                    {
+                        item.Label = "More items not loading...";
+                        cb_locations.Items.Add(item);
+                        break;
+                    }
                     item.Label = thing;
                     cb_locations.Items.Add(item);
                 }
@@ -271,12 +287,19 @@ namespace ExcelAddInEquipmentDatabase
                                          && a.CLassificationId != null
                                          orderby a.CLassificationId descending
                                          select a.CLassificationId;
-                data.Distinct().ToList();
-                foreach (string thing in data)
+                List<string> distinctresult = data.Distinct().ToList();
+                foreach (string thing in distinctresult)
                 {
                     RibbonDropDownItem item = Globals.Factory.GetRibbonFactory().CreateRibbonDropDownItem();
+                    if (cb_assets.Items.Count() > 500)
+                    {
+                        item.Label = "More items not loading...";
+                        cb_assets.Items.Add(item);
+                        break;
+                    }
                     item.Label = thing;
                     cb_assets.Items.Add(item);
+
                 }
             }
             catch (Exception e)
@@ -346,6 +369,37 @@ namespace ExcelAddInEquipmentDatabase
             }
 
         }
+        private void gall_templates_update()
+        {
+            gall_templates.Items.Clear();
+
+            List<string> Files = new List<string>(new string[] 
+            { 
+               @"\\gnlsnm0101.gen.volvocars.net\proj\6308-Shr-VC024800\OBJECTBEHEER GA\Robots\12. SW + Tools\RobotDatabase\VSTO\Templates\EqDbGADATATemplate.xlsx"
+           //   ,@"\\gnlsnm0101.gen.volvocars.net\proj\6308-Shr-VC024800\OBJECTBEHEER GA\Robots\12. SW + Tools\RobotDatabase\VSTO\Templates\EqDbTemplate_v0.3.xlsx"
+           //   ,@"\\gnlsnm0101.gen.volvocars.net\proj\6308-Shr-VC024800\OBJECTBEHEER GA\Robots\12. SW + Tools\RobotDatabase\VSTO\Templates\EqDbTemplate_v0.4.xlsx" 
+            });
+            foreach (string file in Files)
+            {
+                RibbonDropDownItem galleryItem = Globals.Factory.GetRibbonFactory().CreateRibbonDropDownItem();
+                galleryItem.Tag = file;
+                galleryItem.Label = Path.GetFileName(file);
+                galleryItem.ScreenTip = "This is a screen tip";
+                gall_templates.Items.Add(galleryItem);
+            }
+        }
+        private void gall_templates_Click(object sender, RibbonControlEventArgs e)
+        {
+            try
+            {
+                Globals.ThisAddIn.Application.Workbooks.Open(gall_templates.SelectedItem.Tag, Type.Missing, true);
+            }
+            catch (Exception ex)
+            {
+                Debugger.Exeption(ex);
+            }
+        }
+
         private void dd_ParameterSets_update()
         {
              dd_ParameterSets.Enabled = false;
@@ -462,20 +516,14 @@ namespace ExcelAddInEquipmentDatabase
         private void btn_Query_Click(object sender, RibbonControlEventArgs e)
         {
             //also set Startdate = enddate - daysback to make maximo work beter.
-            if (ProcMngr == null) { return; }
+            if (ProcMngr == null) { Debugger.Message("ProcMnger is null"); return; }
             //format datatime to make days back work better 
-            try { ProcMngr.startDate.input = DateTime.Now.AddDays(Convert.ToInt32(ProcMngr.daysBack.input) * -1); }
-            catch (Exception ex) { Debugger.Exeption(ex); return; }
+            ProcMngr.startDate.input = DateTime.Now.AddDays(Convert.ToInt32(ProcMngr.daysBack.input) * -1); 
             ProcMngr.endDate.input = DateTime.Now;
-            //if include ciblings is on modify location
-            if (tbn_incluceCiblings.Checked)
-            {
+            //Always include child assets for now. (will make tis beter or server side later) 
                 ProcMngr.locations.input = Regex.Replace(ProcMngr.locations.input, @"[A-Za-z\s]", "%");
                 if (ProcMngr.locations.input.TrimEnd().EndsWith("%") == false) { ProcMngr.locations.input = ProcMngr.locations.input + "%"; }
                 cb_locations.Text = ProcMngr.locations.input;
-                ProcMngr.assets.input = "%";
-                cb_assets.Text = "%";
-            }
             //
             Excel._Workbook activeWorkbook = Globals.ThisAddIn.Application.ActiveWorkbook as Excel.Workbook;
             if (dd_activeConnection.SelectedItem.Label == "RefreshAll")
@@ -601,7 +649,6 @@ namespace ExcelAddInEquipmentDatabase
         {
             apply_userLevel();
         }
-
 
     }
 }

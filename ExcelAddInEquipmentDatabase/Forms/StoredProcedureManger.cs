@@ -33,7 +33,10 @@ namespace ExcelAddInEquipmentDatabase
         Forms.uc_Inputbox _daysBack = new Forms.uc_Inputbox();
         public Forms.uc_Inputbox daysBack
         {
-            get { return _daysBack; }
+            get {
+                if (_daysBack.input == "") {_daysBack.input = "1";} 
+                  return _daysBack; 
+                }
             set { _daysBack = value; }
         }
         public Forms.uc_Inputbox assets

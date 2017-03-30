@@ -75,10 +75,13 @@ namespace ExcelAddInEquipmentDatabase.Forms
 
         void bwLongDescription_DoWork(object sender, DoWorkEventArgs e)
         {
+            webBrowser1.DocumentText = "Getting data....";
             foreach (DataGridViewRow row in dataGridView1.SelectedRows)
             {
-                if (row == null) { return; }
-                getMaximoDetails(row.Cells[0].Value.ToString());
+                if (row.Cells[0].Value != null)
+                {
+                    getMaximoDetails(row.Cells[0].Value.ToString());
+                }
             }
         }
         #endregion

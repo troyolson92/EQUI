@@ -174,7 +174,7 @@ private void buildTrendChart()
 
                     e.LocalizedValue = string.Format("{0}W{1}",
                         DateTime.FromOADate(e.Value).Year % 100,
-                        currentCalendar.GetWeekOfYear(DateTime.FromOADate(e.Value), System.Globalization.CalendarWeekRule.FirstDay, CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek)
+                        currentCalendar.GetWeekOfYear(DateTime.FromOADate(e.Value), System.Globalization.CalendarWeekRule.FirstFourDayWeek, CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek)
                         );
                 }
             }
@@ -187,7 +187,7 @@ private void buildTrendChart()
 
                     e.LocalizedValue = string.Format("{0}W{1}D{2}",
                         DateTime.FromOADate(e.Value).Year %100,
-                        currentCalendar.GetWeekOfYear(DateTime.FromOADate(e.Value), System.Globalization.CalendarWeekRule.FirstDay, CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek),
+                        currentCalendar.GetWeekOfYear(DateTime.FromOADate(e.Value), System.Globalization.CalendarWeekRule.FirstFourDayWeek, CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek),
                         (int)DateTime.FromOADate(e.Value).DayOfWeek
                         );
                 }
@@ -201,7 +201,7 @@ private void buildTrendChart()
 
                     e.LocalizedValue = string.Format("{0}W{1}D{2} h{3}",
                         DateTime.FromOADate(e.Value).Year %100,
-                        currentCalendar.GetWeekOfYear(DateTime.FromOADate(e.Value),System.Globalization.CalendarWeekRule.FirstDay,CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek),
+                        currentCalendar.GetWeekOfYear(DateTime.FromOADate(e.Value),System.Globalization.CalendarWeekRule.FirstFourDayWeek,CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek),
                         (int)DateTime.FromOADate(e.Value).DayOfWeek,
                         DateTime.FromOADate(e.Value).Hour
                         );
