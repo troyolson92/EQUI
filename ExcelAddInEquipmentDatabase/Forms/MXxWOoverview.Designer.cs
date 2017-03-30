@@ -80,7 +80,7 @@
             // cb_ciblings
             // 
             this.cb_ciblings.AutoSize = true;
-            this.cb_ciblings.Location = new System.Drawing.Point(311, 74);
+            this.cb_ciblings.Location = new System.Drawing.Point(434, 77);
             this.cb_ciblings.Name = "cb_ciblings";
             this.cb_ciblings.Size = new System.Drawing.Size(113, 17);
             this.cb_ciblings.TabIndex = 8;
@@ -91,7 +91,7 @@
             // cb_preventive
             // 
             this.cb_preventive.AutoSize = true;
-            this.cb_preventive.Location = new System.Drawing.Point(449, 74);
+            this.cb_preventive.Location = new System.Drawing.Point(635, 77);
             this.cb_preventive.Name = "cb_preventive";
             this.cb_preventive.Size = new System.Drawing.Size(223, 17);
             this.cb_preventive.TabIndex = 9;
@@ -102,7 +102,7 @@
             // metroLabel1
             // 
             this.metroLabel1.AutoSize = true;
-            this.metroLabel1.Location = new System.Drawing.Point(16, 77);
+            this.metroLabel1.Location = new System.Drawing.Point(41, 77);
             this.metroLabel1.Name = "metroLabel1";
             this.metroLabel1.Size = new System.Drawing.Size(64, 20);
             this.metroLabel1.TabIndex = 10;
@@ -110,16 +110,16 @@
             // 
             // tb_location
             // 
-            this.tb_location.Location = new System.Drawing.Point(86, 74);
+            this.tb_location.Location = new System.Drawing.Point(129, 71);
             this.tb_location.Name = "tb_location";
-            this.tb_location.Size = new System.Drawing.Size(200, 23);
+            this.tb_location.Size = new System.Drawing.Size(182, 23);
             this.tb_location.TabIndex = 11;
             this.tb_location.Text = "metroTextBox1";
+            this.tb_location.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // metroProgressSpinner1
             // 
-            this.metroProgressSpinner1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.metroProgressSpinner1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.metroProgressSpinner1.Location = new System.Drawing.Point(571, 136);
             this.metroProgressSpinner1.Maximum = 100;
