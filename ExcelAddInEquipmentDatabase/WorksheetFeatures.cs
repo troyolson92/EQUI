@@ -86,7 +86,7 @@ namespace ExcelAddInEquipmentDatabase
             // add button controls where as needed
             if (wonum != "")
             {
-                btn = AddButtonToTableMenuItem("WorkorderDetails", 0); //if we have a wonum enable wo details
+                btn = AddButtonToTableMenuItem("WorkorderDetails", 1); //if we have a wonum enable wo details
                 btn.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(WorkorderDetailsMenuItemClick);
             }
             if (errornum != "")

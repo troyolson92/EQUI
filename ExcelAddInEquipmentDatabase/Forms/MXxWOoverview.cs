@@ -134,6 +134,8 @@ ORDER BY WORKORDER.STATUSDATE
 
 #region wo details
         //wo details
+        //8936762 ref wo 
+
         private void getMaximoDetails(string wonum)
         {
             string cmdFAILUREREMARK = (@"
@@ -142,12 +144,16 @@ ORDER BY WORKORDER.STATUSDATE
                 left join MAXIMO.LONGDESCRIPTION LD on LD.LDKEY = FM.FAILUREREMARKID AND LD.LDOWNERTABLE = 'FAILUREREMARK'
                 where fm.wonum = '{0}'
             ");
+            cmdFAILUREREMARK = string.Format(cmdFAILUREREMARK, wonum);
+            //
             string cmdLONGDESCRIPTION = (@"
                 select NVL2(LD.LDTEXT, LD.LDTEXT, '') LDTEXT
                 from MAXIMO.WORKORDER WO 
                 left join MAXIMO.LONGDESCRIPTION LD on LD.LDKEY = WO.WORKORDERID AND LD.LDOWNERTABLE = 'WORKORDER'
                 where WO.wonum = '{0}'
             ");
+            cmdLONGDESCRIPTION = string.Format(cmdLONGDESCRIPTION, wonum);
+            //
             string cmdLabor = (@"
             select 
              LABORCODE
@@ -162,43 +168,39 @@ ORDER BY WORKORDER.STATUSDATE
             left join MAXIMO.PERSON ON PERSON.PERSONID = LABTRANS.LABORCODE
             where LABTRANS.REFWO  = '{0}'
             ");
-
-            cmdFAILUREREMARK = string.Format(cmdFAILUREREMARK, wonum);
-            cmdLONGDESCRIPTION = string.Format(cmdLONGDESCRIPTION, wonum);
             cmdLabor = string.Format(cmdLabor, wonum);
-
+            //
+            string cmdWorkLog = (@"
+            select 
+            wl.logtype
+            ,wl.CREATEBY
+            ,wl.CREATEDATE
+            ,wl.CLIENTVIEWABLE
+            ,wl.DESCRIPTION
+            ,ld.LDTEXT 
+            from maximo.worklog wl
+            left join maximo.longdescription ld  on 
+            ld.ldownertable = 'WORKLOG'  
+            AND  ld.ldownercol = 'DESCRIPTION'
+            AND  ld.LDKEY = wl.WORKLOGID
+            where
+            wl.RECORDKEY = '{0}'
+            ");
+            cmdWorkLog = string.Format(cmdWorkLog, wonum);
+            //
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine(
-@"<div>            
-<table bgcolor=#00FF00>
-<tr>
-<td style = white-space:PRE>LONGDESCRIPTION</td>
-</tr>
-</table>
-</div>");
-            sb.AppendLine(lMaximocomm.GetClobMaximo7(cmdLONGDESCRIPTION));
-            sb.AppendLine("<div>---------------------------------------------------------------</div>").AppendLine(
-@"<div>            
-<table bgcolor=#00FF00>
-<tr>
-<td style = white-space:PRE>FAILUREREMARK</td>
-</tr>
-</table>
-</div>");
-            sb.AppendLine(lMaximocomm.GetClobMaximo7(cmdFAILUREREMARK));
-            sb.AppendLine("<div>---------------------------------------------------------------</div>").AppendLine(
-@"<div>            
-<table bgcolor=#00FF00>
-<tr>
-<td style = white-space:PRE>LABTRANS</td>
-</tr>
-</table>
-</div>");
-            sb.AppendLine(toHTML_Table(lMaximocomm.oracle_runQuery(cmdLabor)));
+            sb.AppendLine(StringToHTML_Table("LONGDESCRIPTION", lMaximocomm.GetClobMaximo7(cmdLONGDESCRIPTION)));
+            sb.AppendLine(StringToHTML_Table("FAILUREREMARK", lMaximocomm.GetClobMaximo7(cmdFAILUREREMARK)));
+            sb.AppendLine(DtToHTML_Table(lMaximocomm.oracle_runQuery(cmdLabor)));
+            sb.AppendLine(DtToHTML_Table(lMaximocomm.oracle_runQuery(cmdWorkLog)));
+
+            DataTable dt = lMaximocomm.oracle_runQuery(cmdWorkLog);
+
+            //
             webBrowser1.DocumentText = sb.ToString();
         }
 
-        public static string toHTML_Table(DataTable dt)
+        public static string DtToHTML_Table(DataTable dt)
         {
             if (dt.Rows.Count == 0) return ""; // enter code here
 
@@ -236,6 +238,18 @@ ORDER BY WORKORDER.STATUSDATE
             builder.Append("</body>");
             builder.Append("</html>");
             return builder.ToString();
+        }
+
+        public static string StringToHTML_Table(string header, string input)
+        {
+            if (input == null || input == "") { return null; }
+            DataTable dt = new DataTable();
+            dt.Clear();
+            dt.Columns.Add(header);
+            DataRow rw = dt.NewRow();
+            rw[header] = input;
+            dt.Rows.Add(rw);
+            return DtToHTML_Table(dt);
         }
 
         private void dataGridView1_RowEnter(object sender, DataGridViewCellEventArgs e)

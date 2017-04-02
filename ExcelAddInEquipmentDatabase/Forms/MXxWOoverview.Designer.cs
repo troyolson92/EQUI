@@ -36,7 +36,9 @@
             this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
             this.tb_location = new MetroFramework.Controls.MetroTextBox();
             this.metroProgressSpinner1 = new MetroFramework.Controls.MetroProgressSpinner();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // webBrowser1
@@ -80,7 +82,7 @@
             // cb_ciblings
             // 
             this.cb_ciblings.AutoSize = true;
-            this.cb_ciblings.Location = new System.Drawing.Point(434, 77);
+            this.cb_ciblings.Location = new System.Drawing.Point(321, 3);
             this.cb_ciblings.Name = "cb_ciblings";
             this.cb_ciblings.Size = new System.Drawing.Size(113, 17);
             this.cb_ciblings.TabIndex = 8;
@@ -91,7 +93,7 @@
             // cb_preventive
             // 
             this.cb_preventive.AutoSize = true;
-            this.cb_preventive.Location = new System.Drawing.Point(635, 77);
+            this.cb_preventive.Location = new System.Drawing.Point(440, 3);
             this.cb_preventive.Name = "cb_preventive";
             this.cb_preventive.Size = new System.Drawing.Size(223, 17);
             this.cb_preventive.TabIndex = 9;
@@ -102,7 +104,7 @@
             // metroLabel1
             // 
             this.metroLabel1.AutoSize = true;
-            this.metroLabel1.Location = new System.Drawing.Point(41, 77);
+            this.metroLabel1.Location = new System.Drawing.Point(3, 0);
             this.metroLabel1.Name = "metroLabel1";
             this.metroLabel1.Size = new System.Drawing.Size(64, 20);
             this.metroLabel1.TabIndex = 10;
@@ -110,7 +112,7 @@
             // 
             // tb_location
             // 
-            this.tb_location.Location = new System.Drawing.Point(129, 71);
+            this.tb_location.Location = new System.Drawing.Point(73, 3);
             this.tb_location.Name = "tb_location";
             this.tb_location.Size = new System.Drawing.Size(182, 23);
             this.tb_location.TabIndex = 11;
@@ -127,16 +129,32 @@
             this.metroProgressSpinner1.Size = new System.Drawing.Size(188, 183);
             this.metroProgressSpinner1.TabIndex = 12;
             // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 5;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 60F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.Controls.Add(this.cb_ciblings, 3, 0);
+            this.tableLayoutPanel1.Controls.Add(this.metroLabel1, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.tb_location, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.cb_preventive, 4, 0);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(23, 63);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 1;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(971, 38);
+            this.tableLayoutPanel1.TabIndex = 13;
+            // 
             // MXxWOoverview
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1298, 689);
+            this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.metroProgressSpinner1);
-            this.Controls.Add(this.tb_location);
-            this.Controls.Add(this.metroLabel1);
-            this.Controls.Add(this.cb_preventive);
-            this.Controls.Add(this.cb_ciblings);
             this.Controls.Add(this.btn_refresh);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.webBrowser1);
@@ -144,8 +162,9 @@
             this.Name = "MXxWOoverview";
             this.Text = "MXxWOoverview";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -159,5 +178,6 @@
         private MetroFramework.Controls.MetroLabel metroLabel1;
         private MetroFramework.Controls.MetroTextBox tb_location;
         private MetroFramework.Controls.MetroProgressSpinner metroProgressSpinner1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
     }
 }
