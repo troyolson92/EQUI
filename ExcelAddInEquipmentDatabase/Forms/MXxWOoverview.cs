@@ -189,10 +189,11 @@ ORDER BY WORKORDER.STATUSDATE
             cmdWorkLog = string.Format(cmdWorkLog, wonum);
             //
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine(StringToHTML_Table("LONGDESCRIPTION", lMaximocomm.GetClobMaximo7(cmdLONGDESCRIPTION)));
-            sb.AppendLine(StringToHTML_Table("FAILUREREMARK", lMaximocomm.GetClobMaximo7(cmdFAILUREREMARK)));
-            sb.AppendLine(DtToHTML_Table(lMaximocomm.oracle_runQuery(cmdLabor)));
-            sb.AppendLine(DtToHTML_Table(lMaximocomm.oracle_runQuery(cmdWorkLog)));
+            string newline = "<p></p>";
+            sb.AppendLine(StringToHTML_Table("LONGDESCRIPTION", lMaximocomm.GetClobMaximo7(cmdLONGDESCRIPTION))).AppendLine(newline);
+            sb.AppendLine(StringToHTML_Table("FAILUREREMARK", lMaximocomm.GetClobMaximo7(cmdFAILUREREMARK))).AppendLine(newline);
+            sb.AppendLine(DtToHTML_Table(lMaximocomm.oracle_runQuery(cmdLabor))).AppendLine(newline);
+            sb.AppendLine(DtToHTML_Table(lMaximocomm.oracle_runQuery(cmdWorkLog))).AppendLine(newline);
 
             DataTable dt = lMaximocomm.oracle_runQuery(cmdWorkLog);
 
@@ -213,8 +214,8 @@ ORDER BY WORKORDER.STATUSDATE
             builder.Append("</title>");
             builder.Append("</head>");
             builder.Append("<body>");
-            builder.Append("<table border='1px' cellpadding='5' cellspacing='0' ");
-            builder.Append("style='border: solid 1px Silver; font-size: x-small;'>");
+            builder.Append("<table border='3px' cellpadding='5' cellspacing='0' ");
+            builder.Append("style='border: solid 2px Silver; font-size: x-small;'>");
             builder.Append("<tr align='left' valign='top'>");
             foreach (DataColumn c in dt.Columns)
             {
@@ -242,12 +243,19 @@ ORDER BY WORKORDER.STATUSDATE
 
         public static string StringToHTML_Table(string header, string input)
         {
-            if (input == null || input == "") { return null; }
+
             DataTable dt = new DataTable();
             dt.Clear();
             dt.Columns.Add(header);
             DataRow rw = dt.NewRow();
-            rw[header] = input;
+            if (input == null || input == "")
+            {
+                rw[header] = "null (no data)";
+            }
+            else
+            {
+                rw[header] = input;
+            }
             dt.Rows.Add(rw);
             return DtToHTML_Table(dt);
         }
