@@ -192,8 +192,8 @@ ORDER BY WORKORDER.STATUSDATE
             string newline = "<p></p>";
             sb.AppendLine(StringToHTML_Table("LONGDESCRIPTION", lMaximocomm.GetClobMaximo7(cmdLONGDESCRIPTION))).AppendLine(newline);
             sb.AppendLine(StringToHTML_Table("FAILUREREMARK", lMaximocomm.GetClobMaximo7(cmdFAILUREREMARK))).AppendLine(newline);
-            sb.AppendLine(DtToHTML_Table(lMaximocomm.oracle_runQuery(cmdLabor))).AppendLine(newline);
-            sb.AppendLine(DtToHTML_Table(lMaximocomm.oracle_runQuery(cmdWorkLog))).AppendLine(newline);
+            sb.AppendLine(StringToHTML_Table("LABOR",DtToHTML_Table(lMaximocomm.oracle_runQuery(cmdLabor)))).AppendLine(newline);
+            sb.AppendLine(StringToHTML_Table("WORKLOG",DtToHTML_Table(lMaximocomm.oracle_runQuery(cmdWorkLog)))).AppendLine(newline);
 
             DataTable dt = lMaximocomm.oracle_runQuery(cmdWorkLog);
 

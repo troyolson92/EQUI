@@ -60,7 +60,7 @@ namespace ExcelAddInEquipmentDatabase
                         case "Location":
                               location = (string)Convert.ToString(lClickedSheet.Cells[Target.Row, oListColum.Range.Column].Value);
                               break;
-                        case "Assetnum":
+                       case "Assetnum":
                               assetnum = (string)Convert.ToString(lClickedSheet.Cells[Target.Row, oListColum.Range.Column].Value);
                               break;
                         case "Logtype":
@@ -87,14 +87,17 @@ namespace ExcelAddInEquipmentDatabase
             if (wonum != "")
             {
                 btn = AddButtonToTableMenuItem("WorkorderDetails", 1); //if we have a wonum enable wo details
+                btn.FaceId = 487;
                 btn.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(WorkorderDetailsMenuItemClick);
             }
             if (errornum != "")
             {
                 btn = AddButtonToTableMenuItem("ErrorDetails", 1); //if we have a logcode enabel errordetails
+                btn.FaceId = 463;
                 btn.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(ErrorDetailsMenuItemClick);
                 //
                 btn = AddButtonToTableMenuItem("ErrorStats", 2); //if we have a logcode enable errostats (graph)
+                btn.FaceId = 430;
                 btn.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(ErrorStatsMenuItemClick);
             }
             if (location != "")
@@ -214,6 +217,7 @@ namespace ExcelAddInEquipmentDatabase
             Office.MsoControlType ControlPopup = Office.MsoControlType.msoControlPopup;
             Office.CommandBarPopup subMenu = (Office.CommandBarPopup)GetTableContextMenu().Controls.Add(ControlPopup, Type.Missing, Type.Missing, position, true);
             subMenu.Caption = "Auto formatting";
+            
             //
             Office.CommandBarButton btnFormatSheetData = (Office.CommandBarButton)subMenu.Controls.Add(menuItem, Type.Missing, Type.Missing, 1, true);
             btnFormatSheetData.Style = Office.MsoButtonStyle.msoButtonCaption;
@@ -266,11 +270,13 @@ namespace ExcelAddInEquipmentDatabase
             Office.CommandBarButton btnShowWorkorderHistory = (Office.CommandBarButton)subMenu.Controls.Add(menuItem, Type.Missing, Type.Missing, 1, true);
             btnShowWorkorderHistory.Style = Office.MsoButtonStyle.msoButtonCaption;
             btnShowWorkorderHistory.Caption = "Wo history";
+            btnShowWorkorderHistory.FaceId = 805;
             btnShowWorkorderHistory.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(btnShowWorkorderHistoryClick);
             //
             Office.CommandBarButton btnShowPartsWorkorder = (Office.CommandBarButton)subMenu.Controls.Add(menuItem, Type.Missing, Type.Missing, 2, true);
             btnShowPartsWorkorder.Style = Office.MsoButtonStyle.msoButtonCaption;
             btnShowPartsWorkorder.Caption = "Part history";
+            btnShowPartsWorkorder.FaceId = 806;
             btnShowPartsWorkorder.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(btnShowPartsWorkorderClick);
             //
             //
@@ -278,6 +284,7 @@ namespace ExcelAddInEquipmentDatabase
                 Office.CommandBarButton btnShowCreateWO = (Office.CommandBarButton)subMenu.Controls.Add(menuItem, Type.Missing, Type.Missing, 3, true);
                 btnShowCreateWO.Style = Office.MsoButtonStyle.msoButtonCaption;
                 btnShowCreateWO.Caption = "Create Wo";
+                btnShowCreateWO.FaceId = 340;
                 btnShowCreateWO.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(btnShowCreateWOClick);
                 if (ExcelAddInEquipmentDatabase.Properties.Settings.Default.userlevel < 100)
                 {
