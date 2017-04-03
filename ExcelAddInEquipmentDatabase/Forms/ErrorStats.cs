@@ -99,7 +99,7 @@ END
                 if (count30.Count() > 10) //more than 10 times in a month
                 {
                     trackBar1.Value = -30;
-                    chart1.Series["ErrorCount"].Color = System.Drawing.Color.Yellow;
+                    chart1.Series["ErrorCount"].Color = System.Drawing.Color.DarkOrange;
                 }
                 else
                 {

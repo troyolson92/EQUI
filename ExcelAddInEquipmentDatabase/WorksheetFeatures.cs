@@ -86,18 +86,15 @@ namespace ExcelAddInEquipmentDatabase
             // add button controls where as needed
             if (wonum != "")
             {
-                btn = AddButtonToTableMenuItem("WorkorderDetails", 1); //if we have a wonum enable wo details
-                btn.FaceId = 487;
+                btn = AddButtonToTableMenuItem("WorkorderDetails", 1, 487); //if we have a wonum enable wo details
                 btn.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(WorkorderDetailsMenuItemClick);
             }
             if (errornum != "")
             {
-                btn = AddButtonToTableMenuItem("ErrorDetails", 1); //if we have a logcode enabel errordetails
-                btn.FaceId = 463;
+                btn = AddButtonToTableMenuItem("ErrorDetails", 1, 463); //if we have a logcode enabel errordetails
                 btn.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(ErrorDetailsMenuItemClick);
                 //
-                btn = AddButtonToTableMenuItem("ErrorStats", 2); //if we have a logcode enable errostats (graph)
-                btn.FaceId = 430;
+                btn = AddButtonToTableMenuItem("ErrorStats", 2, 430); //if we have a logcode enable errostats (graph)
                 btn.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(ErrorStatsMenuItemClick);
             }
             if (location != "")
@@ -125,12 +122,12 @@ namespace ExcelAddInEquipmentDatabase
             return Globals.ThisAddIn.Application.CommandBars["List Range Popup"];
         }
         //for adding a control button
-        public  Office.CommandBarButton AddButtonToTableMenuItem(string btnName, int position) // how to pass event handelere here ?
+        public  Office.CommandBarButton AddButtonToTableMenuItem(string btnName, int position, int faceid) // how to pass event handelere here ?
         {
             Office.MsoControlType menuItem = Office.MsoControlType.msoControlButton;
             Office.CommandBarButton btn = (Office.CommandBarButton)GetTableContextMenu().Controls.Add(menuItem, Type.Missing, Type.Missing,position , true);
-
-            btn.Style = Office.MsoButtonStyle.msoButtonCaption;
+            btn.FaceId = faceid;
+            btn.Style = Office.MsoButtonStyle.msoButtonIconAndCaption;
             btn.Caption = btnName;
             return btn;
         }
@@ -265,16 +262,17 @@ namespace ExcelAddInEquipmentDatabase
 
             Office.MsoControlType ControlPopup = Office.MsoControlType.msoControlPopup;
             Office.CommandBarPopup subMenu = (Office.CommandBarPopup)GetTableContextMenu().Controls.Add(ControlPopup, Type.Missing, Type.Missing, position, true);
+            
             subMenu.Caption = "Maximo";
             //
             Office.CommandBarButton btnShowWorkorderHistory = (Office.CommandBarButton)subMenu.Controls.Add(menuItem, Type.Missing, Type.Missing, 1, true);
-            btnShowWorkorderHistory.Style = Office.MsoButtonStyle.msoButtonCaption;
+            btnShowWorkorderHistory.Style = Office.MsoButtonStyle.msoButtonIconAndCaption;
             btnShowWorkorderHistory.Caption = "Wo history";
             btnShowWorkorderHistory.FaceId = 805;
             btnShowWorkorderHistory.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(btnShowWorkorderHistoryClick);
             //
             Office.CommandBarButton btnShowPartsWorkorder = (Office.CommandBarButton)subMenu.Controls.Add(menuItem, Type.Missing, Type.Missing, 2, true);
-            btnShowPartsWorkorder.Style = Office.MsoButtonStyle.msoButtonCaption;
+            btnShowPartsWorkorder.Style = Office.MsoButtonStyle.msoButtonIconAndCaption;
             btnShowPartsWorkorder.Caption = "Part history";
             btnShowPartsWorkorder.FaceId = 806;
             btnShowPartsWorkorder.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(btnShowPartsWorkorderClick);
@@ -282,7 +280,7 @@ namespace ExcelAddInEquipmentDatabase
             //
 
                 Office.CommandBarButton btnShowCreateWO = (Office.CommandBarButton)subMenu.Controls.Add(menuItem, Type.Missing, Type.Missing, 3, true);
-                btnShowCreateWO.Style = Office.MsoButtonStyle.msoButtonCaption;
+                btnShowCreateWO.Style = Office.MsoButtonStyle.msoButtonIconAndCaption;
                 btnShowCreateWO.Caption = "Create Wo";
                 btnShowCreateWO.FaceId = 340;
                 btnShowCreateWO.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(btnShowCreateWOClick);
@@ -329,11 +327,13 @@ namespace ExcelAddInEquipmentDatabase
             Office.CommandBarButton btnShowAdd1 = (Office.CommandBarButton)subMenu.Controls.Add(menuItem, Type.Missing, Type.Missing, 1, true);
             btnShowAdd1.Style = Office.MsoButtonStyle.msoButtonCaption;
             btnShowAdd1.Caption = "Add/Edit (gekoppled)";
+            btnShowAdd1.FaceId = 168;
             btnShowAdd1.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(btnShowAdd1Click);
             //
             Office.CommandBarButton btnShowAdd2 = (Office.CommandBarButton)subMenu.Controls.Add(menuItem, Type.Missing, Type.Missing, 2, true);
             btnShowAdd2.Style = Office.MsoButtonStyle.msoButtonCaption;
             btnShowAdd2.Caption = "Add (onafhankelijk)";
+            btnShowAdd2.FaceId = 169;
             btnShowAdd2.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(btnShowAdd2Click);
         }
 
