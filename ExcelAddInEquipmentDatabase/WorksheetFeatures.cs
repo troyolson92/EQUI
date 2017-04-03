@@ -251,7 +251,7 @@ namespace ExcelAddInEquipmentDatabase
         //**********************************Error Stats*********************************************
         void ErrorStatsMenuItemClick(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)
         {
-            Forms.ErrorStats lErrorStats = new Forms.ErrorStats(location, errornum); //allow multible instances of the form.
+            Forms.ErrorStats lErrorStats = new Forms.ErrorStats(location, errornum, LogText); //allow multible instances of the form.
         }
 
 

@@ -19,10 +19,10 @@ namespace ExcelAddInEquipmentDatabase.Forms
         GadataComm lGdataComm = new GadataComm();
         DataTable dt;
 
-        public ErrorStats(string Location, string Errornum)
+        public ErrorStats(string Location, string Errornum, string logtekst)
         {
             InitializeComponent();
-            this.Text = string.Format("ErrorStats tool Errornum: {0} Location: {1}", Errornum,Location);
+            this.Text = string.Format("ErrorStats tool Errornum: {0} <{2}> Location: {1}", Errornum,Location,logtekst.Trim());
             //init chart 
             chart1.Series.Add("ErrorCount");
             chart1.Series["ErrorCount"].XValueMember = "starttime";

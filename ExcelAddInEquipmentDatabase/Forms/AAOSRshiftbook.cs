@@ -176,10 +176,10 @@ namespace ExcelAddInEquipmentDatabase.Forms
         private void cob_Status_DropDown(object sender, EventArgs e)
         {
             cob_Status.Items.Clear();
-            cob_Status.Items.Insert(0, "IPRG");
-            cob_Status.Items.Insert(1, "EXEC");
-            cob_Status.Items.Insert(2, "COMP");
-            cob_Status.Items.Insert(3, "TECHCOMP");
+            cob_Status.Items.Insert(0, "TECHCOMP");
+            cob_Status.Items.Insert(1, "IPRG");
+            cob_Status.Items.Insert(2, "EXEC");
+            cob_Status.Items.Insert(3, "COMP");
             cob_Status.Items.Insert(4, "WASSIGN");
         }
 
