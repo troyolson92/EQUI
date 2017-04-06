@@ -199,6 +199,11 @@ WORKORDER.WONUM LIKE  '{0}'
             lMXxWOdetails.Show();
         }
 
+        private void metroTextBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+
 
     }
 }

@@ -105,6 +105,15 @@ namespace ExcelAddInEquipmentDatabase
             {
                 addShiftbookSubmenu(4); //shiftbook tools TEMP
             }
+            if (Logtype == "ALERT")
+            {
+                if (ExcelAddInEquipmentDatabase.Properties.Settings.Default.userlevel >= 100)
+                {
+                    btn = AddButtonToTableMenuItem("SBCUStats", 3, 430); //if we have a logcode enable errostats (graph)
+                    btn.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(SBCUStatsMenuItemClick);
+                }
+            }
+
             addFormattingSubmenu(5);
         }
 
@@ -253,7 +262,11 @@ namespace ExcelAddInEquipmentDatabase
         {
             Forms.ErrorStats lErrorStats = new Forms.ErrorStats(location, errornum, LogText); //allow multible instances of the form.
         }
-
+        //**********************************SBCU Stats*********************************************
+        void SBCUStatsMenuItemClick(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)
+        {
+            Forms.SBCUStats lSBCUStats = new Forms.SBCUStats(location); //allow multible instances of the form.
+        }
 
         //submenu for mawimo tools
         public void addMaximoSubmenu(int position)

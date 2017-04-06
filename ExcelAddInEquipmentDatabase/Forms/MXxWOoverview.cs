@@ -215,7 +215,7 @@ ORDER BY WORKORDER.STATUSDATE
             builder.Append("</head>");
             builder.Append("<body>");
             builder.Append("<table border='3px' cellpadding='5' cellspacing='0' ");
-            builder.Append("style='border: solid 2px Silver; font-size: x-small;'>");
+            builder.Append("style='border: solid 2px Silver; font-size: small;'>");
             builder.Append("<tr align='left' valign='top'>");
             foreach (DataColumn c in dt.Columns)
             {
