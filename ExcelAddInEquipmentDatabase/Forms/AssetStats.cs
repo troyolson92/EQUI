@@ -17,7 +17,10 @@ namespace ExcelAddInEquipmentDatabase.Forms
         Debugger Debugger = new Debugger();
 
         GadataComm lGdataComm = new GadataComm();
-        DataTable dt;
+        DataTable dtGadata;
+
+        MaximoComm lMaximoComm = new MaximoComm();
+        DataTable dtMaximo;
 
         public AssetStats(string Location)
         {
@@ -30,14 +33,14 @@ namespace ExcelAddInEquipmentDatabase.Forms
             cb_sortmode.Items.Insert(1, "Hours");
             cb_sortmode.Items.Insert(2, "Days");
             cb_sortmode.Items.Insert(3, "Weeks");
-            //common
+            //init chart common
             chart1.ChartAreas[0].AxisX.Interval = 1;
             chart1.ChartAreas[0].AxisY2.Enabled = AxisEnabled.True;
             chart1.FormatNumber += chart1_FormatNumber;
             //init chart 'count of dt'
             chart1.Series.Add("cDownTime");
             chart1.Series["cDownTime"].XValueMember = "starttime";
-            chart1.Series["cDownTime"].YValueMembers = "count";
+            chart1.Series["cDownTime"].YValueMembers = "countDT";
             chart1.Series["cDownTime"].XValueType = ChartValueType.DateTime;
             chart1.Series["cDownTime"].ChartType = SeriesChartType.Column;
             chart1.Series["cDownTime"].BorderWidth = 8;
@@ -50,9 +53,17 @@ namespace ExcelAddInEquipmentDatabase.Forms
             chart1.Series["DownTime"].BorderWidth = 4;
             chart1.Series["DownTime"].Color = System.Drawing.Color.Purple;
             chart1.Series["DownTime"].YAxisType = AxisType.Secondary;
+            //init chat 'maximo'
+            chart1.Series.Add("Maximo");
+            chart1.Series["Maximo"].XValueMember = "starttime";
+            chart1.Series["Maximo"].YValueMembers = "countWO";
+            chart1.Series["Maximo"].XValueType = ChartValueType.DateTime;
+            chart1.Series["Maximo"].ChartType = SeriesChartType.Point;
+            chart1.Series["Maximo"].BorderWidth = 8;
+            chart1.Series["Maximo"].Color = System.Drawing.Color.ForestGreen;
             //query all instances of the error 
             #region Query
-            string qry = string.Format(
+            string strSqlGetFromGadata = string.Format(
     @"
 USE GADATA
 DECLARE @Location as varchar(max) = '{0}'
@@ -64,7 +75,9 @@ SELECT
   h.StartOfBreakdown as 'starttime' 
 , DATEDIFF(second,'1900-01-01 00:00:00', H.Rt)		AS 'Responsetime' 
 , DATEDIFF(second, H.StartOfBreakdown, H.EndOfBreakdown)AS 'Downtime'
-, 1 as 'count'
+, 1 as 'countDT'
+, null as 'countWO'
+, null as 'WONUM'
 FROM  C3G.h_breakdown AS H 
 LEFT OUTER JOIN C3G.L_error AS L ON L.id = H.error_id 
 
@@ -86,19 +99,34 @@ a.LOCATION like @Location
 UNION
 SELECT 
   getdate() as 'starttime'
- ,null  
+ ,null   
  ,null
- , 0 as 'count'
-
+ , 0
+ ,null
+ ,null
 END",Location);
+
+
+            string strSqlGetFromMaximo = string.Format(@"
+SELECT
+  WORKORDER.STATUSDATE starttime 
+ ,null Responsetime
+ ,null Downtime
+, null countDT
+ ,1 countWO
+ ,TO_NUMBER(WORKORDER.WONUM) WONUM
+FROM MAXIMO.WORKORDER WORKORDER  
+WHERE WORKORDER.LOCATION LIKE '{0}'
+            ", Location);
             #endregion
             //fill dataset with all errors
-            dt = lGdataComm.RunQueryGadata(qry);
+            dtGadata = lGdataComm.RunQueryGadata(strSqlGetFromGadata);
+            dtMaximo = lMaximoComm.oracle_runQuery(strSqlGetFromMaximo);
             //check if the result was valid 
-            if (dt.Rows.Count == 0) { Debugger.Message("The query for this errorcode did not return a valid result"); this.Dispose(); return; };
+            if (dtGadata.Rows.Count == 0) { Debugger.Message("The query for this errorcode did not return a valid result"); this.Dispose(); return; };
             //setup trackbar (trackbar maximum = first time error happend, minium = now)
-            DateTime FirstError = (from a in dt.AsEnumerable() select a.Field<DateTime>("starttime")).Min();
-            DateTime LastError = (from a in dt.AsEnumerable() select a.Field<DateTime>("starttime")).Max();
+            DateTime FirstError = (from a in dtGadata.AsEnumerable() select a.Field<DateTime>("starttime")).Min();
+            DateTime LastError = (from a in dtGadata.AsEnumerable() select a.Field<DateTime>("starttime")).Max();
             trackBar1.Minimum = (int)(FirstError - LastError).TotalDays;
             if (trackBar1.Minimum > -3) {trackBar1.Minimum = -3;}
             trackBar1.Maximum = -1; //minimum display = 1 day 
@@ -108,7 +136,7 @@ END",Location);
              *               more than 10 times in the last 30 days => set graph to 30 day range (show data in days)
              *               else set to full 'lifecycle' of error and set graph in week mode
              */
-            var count3 = from a in dt.AsEnumerable()
+            var count3 = from a in dtGadata.AsEnumerable()
                       where a.Field<DateTime>("starttime") >  DateTime.Now.AddDays(Convert.ToInt32(3) * -1)
                       select a;
             if (count3.Count() > 10) //more than 10 times in 3 days
@@ -119,7 +147,7 @@ END",Location);
             }
             else
             {
-                var count30 = from a in dt.AsEnumerable()
+                var count30 = from a in dtGadata.AsEnumerable()
                              where a.Field<DateTime>("starttime") > DateTime.Now.AddDays(Convert.ToInt32(30) * -1)
                              select a;
                 if (count30.Count() > 10) //more than 10 times in a month
@@ -155,14 +183,15 @@ END",Location);
             //use the trackbar to calculate the starting point of the graph
             DateTime GrapStart = DateTime.Now.AddDays(Convert.ToInt32(trackBar1.Value));
             //
-            var ldt = from a in dt.AsEnumerable()
+            var ldt = from a in dtGadata.AsEnumerable()
+                      .Union(dtMaximo.AsEnumerable())
                       where a.Field<DateTime>("starttime") > GrapStart
                       orderby a.Field<DateTime>("starttime")
                       select a;
             chart1.DataSource = ldt;
             chart1.DataBind();
             //
-            DateTime FirstError = (from a in dt.AsEnumerable() select a.Field<DateTime>("starttime")).Min();
+            DateTime FirstError = (from a in dtGadata.AsEnumerable() select a.Field<DateTime>("starttime")).Min();
             //
             if (noAutoGrouping == false)
             {
@@ -196,6 +225,7 @@ END",Location);
                     label2.Text = string.Format("'Now'  DisplayMode:{0}", "GroupHourmode");
                     chart1.DataManipulator.Group("SUM", 1, IntervalType.Hours, "cDownTime");
                     chart1.DataManipulator.Group("SUM", 1, IntervalType.Hours, "DownTime");
+                    chart1.DataManipulator.Group("SUM", 1, IntervalType.Hours, "Maximo");
                     break;
 
                 case "Days":
@@ -205,6 +235,7 @@ END",Location);
                     label2.Text = string.Format("'Now'  DisplayMode:{0}", "GroupDaymode");
                     chart1.DataManipulator.Group("SUM", 1, IntervalType.Days, "cDownTime");
                     chart1.DataManipulator.Group("SUM", 1, IntervalType.Days, "DownTime");
+                    chart1.DataManipulator.Group("SUM", 1, IntervalType.Days, "Maximo");
                     break;
 
                 case "Weeks":
@@ -214,6 +245,7 @@ END",Location);
                     label2.Text = string.Format("'Now'  DisplayMode:{0}", "GroupWeekmode");
                     chart1.DataManipulator.Group("SUM", 1, IntervalType.Weeks, "cDownTime");
                     chart1.DataManipulator.Group("SUM", 1, IntervalType.Weeks, "DownTime");
+                    chart1.DataManipulator.Group("SUM", 1, IntervalType.Weeks, "Maximo");
                     break;
 
                 default:
@@ -221,7 +253,7 @@ END",Location);
             }   
         }
 
-void chart1_FormatNumber(object sender, FormatNumberEventArgs e)
+        void chart1_FormatNumber(object sender, FormatNumberEventArgs e)
 {
     if (e.ElementType == ChartElementType.AxisLabels && e.Format == "CustomAxisXFormatWeek")
     {
