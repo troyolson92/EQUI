@@ -657,7 +657,7 @@ namespace ExcelAddInEquipmentDatabase
         {
             if (cb_ParmSetNames.Text.Length < 5)
             {
-                MessageBox.Show("The name is to short", "Sorry", MessageBoxButtons.OK);
+                Debugger.Message("The name is to short");
             }
             else
             {

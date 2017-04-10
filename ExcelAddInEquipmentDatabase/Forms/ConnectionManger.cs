@@ -119,7 +119,6 @@ namespace ExcelAddInEquipmentDatabase
                             lb_connections.Items.Add(connection.Name);
                             break;
                         default:
-                           Debugger.Message("connection tpye not supported");
                             break;
                     }
                 }
