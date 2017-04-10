@@ -40,7 +40,7 @@
     <PublishUrl>\\gnlsnm0101.gen.volvocars.net\proj\6308-Shr-VC024800\OBJECTBEHEER GA\Robots\12. SW + Tools\RobotDatabase\VSTO\DeploymentBase\</PublishUrl>
     <InstallUrl />
     <TargetCulture>en</TargetCulture>
-    <ApplicationVersion>3.0.1.47</ApplicationVersion>
+    <ApplicationVersion>3.0.1.48</ApplicationVersion>
     <AutoIncrementApplicationRevision>true</AutoIncrementApplicationRevision>
     <UpdateEnabled>true</UpdateEnabled>
     <UpdateInterval>0</UpdateInterval>
@@ -270,6 +270,12 @@
     <Compile Include="Forms\ErrorManger.Designer.cs">
       <DependentUpon>ErrorManger.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\AssetStats.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AssetStats.Designer.cs">
+      <DependentUpon>AssetStats.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\SBCUStats.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -356,6 +362,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ErrorManger.resx">
       <DependentUpon>ErrorManger.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AssetStats.resx">
+      <DependentUpon>AssetStats.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SBCUStats.resx">
       <DependentUpon>SBCUStats.cs</DependentUpon>

@@ -89,7 +89,7 @@ namespace ExcelAddInEquipmentDatabase
                 btn = AddButtonToTableMenuItem("WorkorderDetails", 1, 487); //if we have a wonum enable wo details
                 btn.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(WorkorderDetailsMenuItemClick);
             }
-            if (errornum != "")
+            if (errornum != "" && (Logtype == "BREAKDOWN" || Logtype == "ERROR" || Logtype == "WARNING"))
             {
                 btn = AddButtonToTableMenuItem("ErrorDetails", 1, 463); //if we have a logcode enabel errordetails
                 btn.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(ErrorDetailsMenuItemClick);
@@ -109,8 +109,16 @@ namespace ExcelAddInEquipmentDatabase
             {
                 if (ExcelAddInEquipmentDatabase.Properties.Settings.Default.userlevel >= 100)
                 {
-                    btn = AddButtonToTableMenuItem("SBCUStats", 3, 430); //if we have a logcode enable errostats (graph)
+                    btn = AddButtonToTableMenuItem("SBCUStats", 3, 430); 
                     btn.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(SBCUStatsMenuItemClick);
+                }
+            }
+            if (Logtype == "BREAKDOWN")
+            {
+                if (ExcelAddInEquipmentDatabase.Properties.Settings.Default.userlevel >= 100)
+                {
+                    btn = AddButtonToTableMenuItem("AssetStats", 3, 430); 
+                    btn.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(AssetStatsMenuItemClick);
                 }
             }
 
@@ -266,6 +274,11 @@ namespace ExcelAddInEquipmentDatabase
         void SBCUStatsMenuItemClick(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)
         {
             Forms.SBCUStats lSBCUStats = new Forms.SBCUStats(location); //allow multible instances of the form.
+        }
+        //**********************************ASSET Stats*********************************************
+        void AssetStatsMenuItemClick(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)
+        {
+            Forms.AssetStats lAssetStats = new Forms.AssetStats(location); //allow multible instances of the form.
         }
 
         //submenu for mawimo tools
