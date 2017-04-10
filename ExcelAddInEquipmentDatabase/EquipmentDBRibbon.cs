@@ -82,14 +82,7 @@ namespace ExcelAddInEquipmentDatabase
             var Ulevel = (from a in lUsers
                           where a.CDS.Trim().ToUpper() == dd_User.SelectedItem.ToString().Trim().ToUpper()
                           select a.UserLevel).Take(1);
-            if (Ulevel.FirstOrDefault() != null)
-            {
             Properties.Settings.Default.userlevel = Convert.ToInt32(Ulevel.FirstOrDefault());
-            }
-            else
-            {
-              Properties.Settings.Default.userlevel = 0;
-            }
             //get user froup
             var UserGroup = (from a in lUsers
                              where a.CDS.Trim().ToUpper() == dd_User.SelectedItem.ToString().Trim().ToUpper()

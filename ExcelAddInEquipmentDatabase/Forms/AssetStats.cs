@@ -9,6 +9,8 @@ using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using System.Globalization;
 
+using System.Diagnostics;
+
 namespace ExcelAddInEquipmentDatabase.Forms
 {
     public partial class AssetStats : MetroFramework.Forms.MetroForm
@@ -22,10 +24,13 @@ namespace ExcelAddInEquipmentDatabase.Forms
         MaximoComm lMaximoComm = new MaximoComm();
         DataTable dtMaximo;
 
+        Point? prevPosition = null; 
+        ToolTip tooltip = new ToolTip();  
+
         public AssetStats(string Location)
         {
             InitializeComponent();
-            Location = "59090GH01F"; //test
+         //.   Location = "59090GH01F"; //test
             this.Text = string.Format("AssetStats tool Location: {0}",Location);
             //
             cb_sortmode.Items.Clear();
@@ -80,6 +85,43 @@ SELECT
 , null as 'WONUM'
 FROM  C3G.h_breakdown AS H 
 LEFT OUTER JOIN C3G.L_error AS L ON L.id = H.error_id 
+
+LEFT OUTER JOIN VOLVO.c_Classification as cc on cc.id = L.c_ClassificationId
+LEFT OUTER JOIN VOLVO.c_Subgroup as cs on cs.id = L.c_SubgroupId
+
+--joining of the RIGHT ASSET
+LEFT OUTER JOIN equi.ASSETS as A on 
+A.controller_type = 'c3g' --join the right 'data controller type'
+AND
+A.controller_id = h.controller_id --join the right 'data controller id'
+AND 
+A.CLassificationId LIKE '%' + ISNULL(RTRIM(cc.Classification),'UR') + '%' 
+
+where 
+a.LOCATION like @Location
+
+
+UNION
+SELECT 
+  getdate() as 'starttime'
+ ,null   
+ ,null
+ , 0
+ ,null
+ ,null
+END
+
+if @controllerTYPE = 'c4g'
+BEGIN
+SELECT 		 
+  h.StartOfBreakdown as 'starttime' 
+, DATEDIFF(second,'1900-01-01 00:00:00', H.Rt)		AS 'Responsetime' 
+, DATEDIFF(second, H.StartOfBreakdown, H.EndOfBreakdown)AS 'Downtime'
+, 1 as 'countDT'
+, null as 'countWO'
+, null as 'WONUM'
+FROM  C4G.h_breakdown AS H 
+LEFT OUTER JOIN C4G.L_error AS L ON L.id = H.error_id 
 
 LEFT OUTER JOIN VOLVO.c_Classification as cc on cc.id = L.c_ClassificationId
 LEFT OUTER JOIN VOLVO.c_Subgroup as cs on cs.id = L.c_SubgroupId
@@ -172,6 +214,7 @@ WHERE WORKORDER.LOCATION LIKE '{0}'
             }
             //build trend chart in init mode. 
             cb_sortmode.SelectedValueChanged += new System.EventHandler(this.cb_sortmode_SelectedValueChanged);
+            chart1.GetToolTipText += new System.EventHandler<System.Windows.Forms.DataVisualization.Charting.ToolTipEventArgs>(Chart1_GetToolTipText);
            // built_Chart();
             this.Show();
         }
@@ -314,6 +357,34 @@ WHERE WORKORDER.LOCATION LIKE '{0}'
         private void cb_sortmode_SelectedValueChanged(object sender, EventArgs e)
         {
             built_Chart(true);
+        }
+
+        private void chart1_MouseMove(object sender, MouseEventArgs e)
+        {
+        var pos = e.Location;
+        if (prevPosition.HasValue && pos == prevPosition.Value) { return; };     
+        tooltip.RemoveAll();     
+        prevPosition = pos;     
+         var results = chart1.HitTest(pos.X, pos.Y, false, ChartElementType.PlottingArea);     
+            foreach (var result in results)     
+            {         
+                if (result.ChartElementType == ChartElementType.PlottingArea)         
+                {
+                    chart1.Series["Maximo"].ToolTip = "X=#VALX, Y=#VALY";
+                }    
+            } 
+        }
+
+        private void Chart1_GetToolTipText(object sender, System.Windows.Forms.DataVisualization.Charting.ToolTipEventArgs e)
+        {
+
+           // Check selevted chart element and set tooltip text
+           if (e.HitTestResult.ChartElementType == ChartElementType.DataPoint)
+           {
+              int i = e.HitTestResult.PointIndex;
+              DataPoint dp = e.HitTestResult.Series.Points[i];
+              e.Text = string.Format("{0:F1}, {1:F1},  {2}", dp.XValue, dp.YValues[0], DateTime.FromOADate(dp.XValue).ToString());
+           }
         }
 
     }

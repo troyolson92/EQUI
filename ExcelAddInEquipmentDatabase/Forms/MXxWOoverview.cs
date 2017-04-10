@@ -80,7 +80,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
             {
                 if (row.Cells[0].Value != null)
                 {
-                    getMaximoDetails(row.Cells[0].Value.ToString());
+                    webBrowser1.DocumentText = lMaximocomm.getMaximoDetails(row.Cells[0].Value.ToString());
                 }
             }
         }
@@ -135,130 +135,6 @@ ORDER BY WORKORDER.STATUSDATE
 #region wo details
         //wo details
         //8936762 ref wo 
-
-        private void getMaximoDetails(string wonum)
-        {
-            string cmdFAILUREREMARK = (@"
-                select  NVL2(LD.LDTEXT, LD.LDTEXT, '') LDTEXT
-                from MAXIMO.FAILUREREMARK FM 
-                left join MAXIMO.LONGDESCRIPTION LD on LD.LDKEY = FM.FAILUREREMARKID AND LD.LDOWNERTABLE = 'FAILUREREMARK'
-                where fm.wonum = '{0}'
-            ");
-            cmdFAILUREREMARK = string.Format(cmdFAILUREREMARK, wonum);
-            //
-            string cmdLONGDESCRIPTION = (@"
-                select NVL2(LD.LDTEXT, LD.LDTEXT, '') LDTEXT
-                from MAXIMO.WORKORDER WO 
-                left join MAXIMO.LONGDESCRIPTION LD on LD.LDKEY = WO.WORKORDERID AND LD.LDOWNERTABLE = 'WORKORDER'
-                where WO.wonum = '{0}'
-            ");
-            cmdLONGDESCRIPTION = string.Format(cmdLONGDESCRIPTION, wonum);
-            //
-            string cmdLabor = (@"
-            select 
-             LABORCODE
-            ,PERSON.DISPLAYNAME
-            ,CRAFT
-            ,PAYRATE
-            ,PERSON.SUPERVISOR
-            ,LABTRANS.ENTERDATE
-            ,REGULARHRS
-            ,to_timestamp('12/30/1899 00:00:00', 'MM/DD/YYYY  hh24:mi:ss') + REGULARHRS / 24 Converted
-            from MAXIMO.LABTRANS  LABTRANS 
-            left join MAXIMO.PERSON ON PERSON.PERSONID = LABTRANS.LABORCODE
-            where LABTRANS.REFWO  = '{0}'
-            ");
-            cmdLabor = string.Format(cmdLabor, wonum);
-            //
-            string cmdWorkLog = (@"
-            select 
-            wl.logtype
-            ,wl.CREATEBY
-            ,wl.CREATEDATE
-            ,wl.CLIENTVIEWABLE
-            ,wl.DESCRIPTION
-            ,ld.LDTEXT 
-            from maximo.worklog wl
-            left join maximo.longdescription ld  on 
-            ld.ldownertable = 'WORKLOG'  
-            AND  ld.ldownercol = 'DESCRIPTION'
-            AND  ld.LDKEY = wl.WORKLOGID
-            where
-            wl.RECORDKEY = '{0}'
-            ");
-            cmdWorkLog = string.Format(cmdWorkLog, wonum);
-            //
-            StringBuilder sb = new StringBuilder();
-            string newline = "<p></p>";
-            sb.AppendLine(StringToHTML_Table("LONGDESCRIPTION", lMaximocomm.GetClobMaximo7(cmdLONGDESCRIPTION))).AppendLine(newline);
-            sb.AppendLine(StringToHTML_Table("FAILUREREMARK", lMaximocomm.GetClobMaximo7(cmdFAILUREREMARK))).AppendLine(newline);
-            sb.AppendLine(StringToHTML_Table("LABOR",DtToHTML_Table(lMaximocomm.oracle_runQuery(cmdLabor)))).AppendLine(newline);
-            sb.AppendLine(StringToHTML_Table("WORKLOG",DtToHTML_Table(lMaximocomm.oracle_runQuery(cmdWorkLog)))).AppendLine(newline);
-
-            DataTable dt = lMaximocomm.oracle_runQuery(cmdWorkLog);
-
-            //
-            webBrowser1.DocumentText = sb.ToString();
-        }
-
-        public static string DtToHTML_Table(DataTable dt)
-        {
-            if (dt.Rows.Count == 0) return ""; // enter code here
-
-            StringBuilder builder = new StringBuilder();
-            builder.Append("<html>");
-            builder.Append("<head>");
-            builder.Append("<title>");
-            builder.Append("Page-");
-            builder.Append(Guid.NewGuid());
-            builder.Append("</title>");
-            builder.Append("</head>");
-            builder.Append("<body>");
-            builder.Append("<table border='3px' cellpadding='5' cellspacing='0' ");
-            builder.Append("style='border: solid 2px Silver; font-size: small;'>");
-            builder.Append("<tr align='left' valign='top'>");
-            foreach (DataColumn c in dt.Columns)
-            {
-                builder.Append("<td align='left' valign='top'><b>");
-                builder.Append(c.ColumnName);
-                builder.Append("</b></td>");
-            }
-            builder.Append("</tr>");
-            foreach (DataRow r in dt.Rows)
-            {
-                builder.Append("<tr align='left' valign='top'>");
-                foreach (DataColumn c in dt.Columns)
-                {
-                    builder.Append("<td align='left' valign='top'>");
-                    builder.Append(r[c.ColumnName]);
-                    builder.Append("</td>");
-                }
-                builder.Append("</tr>");
-            }
-            builder.Append("</table>");
-            builder.Append("</body>");
-            builder.Append("</html>");
-            return builder.ToString();
-        }
-
-        public static string StringToHTML_Table(string header, string input)
-        {
-
-            DataTable dt = new DataTable();
-            dt.Clear();
-            dt.Columns.Add(header);
-            DataRow rw = dt.NewRow();
-            if (input == null || input == "")
-            {
-                rw[header] = "null (no data)";
-            }
-            else
-            {
-                rw[header] = input;
-            }
-            dt.Rows.Add(rw);
-            return DtToHTML_Table(dt);
-        }
 
         private void dataGridView1_RowEnter(object sender, DataGridViewCellEventArgs e)
         {
