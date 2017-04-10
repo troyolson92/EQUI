@@ -66,7 +66,7 @@ namespace ExcelAddInEquipmentDatabase
                         case "Logtype":
                               Logtype = (string)Convert.ToString(lClickedSheet.Cells[Target.Row, oListColum.Range.Column].Value);
                               break;
-                        case "refid":
+                        case "refId":
                               refid = (int)Convert.ToInt32(lClickedSheet.Cells[Target.Row, oListColum.Range.Column].Value);
                               break;
                         case "logtext":

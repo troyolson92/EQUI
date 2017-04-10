@@ -25,7 +25,9 @@ namespace ExcelAddInEquipmentDatabase.Forms
         DataTable dtMaximo;
 
         Point? prevPosition = null; 
-        ToolTip tooltip = new ToolTip();  
+        ToolTip tooltip = new ToolTip(); 
+ 
+        BackgroundWorker bwLongDescription = new BackgroundWorker();
 
         public AssetStats(string Location)
         {
@@ -58,6 +60,15 @@ namespace ExcelAddInEquipmentDatabase.Forms
             chart1.Series["DownTime"].BorderWidth = 4;
             chart1.Series["DownTime"].Color = System.Drawing.Color.Purple;
             chart1.Series["DownTime"].YAxisType = AxisType.Secondary;
+            //init chart 'reponseTime'
+            chart1.Series.Add("ResponseTime");
+            chart1.Series["ResponseTime"].XValueMember = "starttime";
+            chart1.Series["ResponseTime"].YValueMembers = "Responsetime";
+            chart1.Series["ResponseTime"].XValueType = ChartValueType.DateTime;
+            chart1.Series["ResponseTime"].ChartType = SeriesChartType.Line;
+            chart1.Series["ResponseTime"].BorderWidth = 4;
+            chart1.Series["ResponseTime"].Color = System.Drawing.Color.Tomato;
+            chart1.Series["ResponseTime"].YAxisType = AxisType.Secondary;
             //init chat 'maximo'
             chart1.Series.Add("Maximo");
             chart1.Series["Maximo"].XValueMember = "starttime";
@@ -128,7 +139,7 @@ LEFT OUTER JOIN VOLVO.c_Subgroup as cs on cs.id = L.c_SubgroupId
 
 --joining of the RIGHT ASSET
 LEFT OUTER JOIN equi.ASSETS as A on 
-A.controller_type = 'c3g' --join the right 'data controller type'
+A.controller_type = 'c4g' --join the right 'data controller type'
 AND
 A.controller_id = h.controller_id --join the right 'data controller id'
 AND 
@@ -215,7 +226,7 @@ WHERE WORKORDER.LOCATION LIKE '{0}'
             //build trend chart in init mode. 
             cb_sortmode.SelectedValueChanged += new System.EventHandler(this.cb_sortmode_SelectedValueChanged);
             chart1.GetToolTipText += new System.EventHandler<System.Windows.Forms.DataVisualization.Charting.ToolTipEventArgs>(Chart1_GetToolTipText);
-           // built_Chart();
+            bwLongDescription.DoWork += bwLongDescription_DoWork;
             this.Show();
         }
 
@@ -233,6 +244,10 @@ WHERE WORKORDER.LOCATION LIKE '{0}'
                       select a;
             chart1.DataSource = ldt;
             chart1.DataBind();
+            //
+            dtMaximo.DefaultView.RowFilter = string.Format("starttime > '{0}'", GrapStart);
+            dtMaximo.DefaultView.Sort = "starttime desc";
+            dataGridView1.DataSource = dtMaximo; 
             //
             DateTime FirstError = (from a in dtGadata.AsEnumerable() select a.Field<DateTime>("starttime")).Min();
             //
@@ -268,6 +283,7 @@ WHERE WORKORDER.LOCATION LIKE '{0}'
                     label2.Text = string.Format("'Now'  DisplayMode:{0}", "GroupHourmode");
                     chart1.DataManipulator.Group("SUM", 1, IntervalType.Hours, "cDownTime");
                     chart1.DataManipulator.Group("SUM", 1, IntervalType.Hours, "DownTime");
+                    chart1.DataManipulator.Group("SUM", 1, IntervalType.Hours, "ResponseTime");
                     chart1.DataManipulator.Group("SUM", 1, IntervalType.Hours, "Maximo");
                     break;
 
@@ -278,6 +294,7 @@ WHERE WORKORDER.LOCATION LIKE '{0}'
                     label2.Text = string.Format("'Now'  DisplayMode:{0}", "GroupDaymode");
                     chart1.DataManipulator.Group("SUM", 1, IntervalType.Days, "cDownTime");
                     chart1.DataManipulator.Group("SUM", 1, IntervalType.Days, "DownTime");
+                    chart1.DataManipulator.Group("SUM", 1, IntervalType.Days, "ResponseTime");
                     chart1.DataManipulator.Group("SUM", 1, IntervalType.Days, "Maximo");
                     break;
 
@@ -288,6 +305,7 @@ WHERE WORKORDER.LOCATION LIKE '{0}'
                     label2.Text = string.Format("'Now'  DisplayMode:{0}", "GroupWeekmode");
                     chart1.DataManipulator.Group("SUM", 1, IntervalType.Weeks, "cDownTime");
                     chart1.DataManipulator.Group("SUM", 1, IntervalType.Weeks, "DownTime");
+                    chart1.DataManipulator.Group("SUM", 1, IntervalType.Weeks, "ResponseTime");
                     chart1.DataManipulator.Group("SUM", 1, IntervalType.Weeks, "Maximo");
                     break;
 
@@ -385,6 +403,24 @@ WHERE WORKORDER.LOCATION LIKE '{0}'
               DataPoint dp = e.HitTestResult.Series.Points[i];
               e.Text = string.Format("{0:F1}, {1:F1},  {2}", dp.XValue, dp.YValues[0], DateTime.FromOADate(dp.XValue).ToString());
            }
+        }
+
+        private void dataGridView1_RowEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            if (bwLongDescription.IsBusy) { return; }
+            bwLongDescription.RunWorkerAsync();
+        }
+
+        void bwLongDescription_DoWork(object sender, DoWorkEventArgs e)
+        {
+           // webBrowser1.DocumentText = "Getting data....";
+            foreach (DataGridViewRow row in dataGridView1.SelectedRows)
+            {
+                if (row.Cells[0].Value != null)
+                {
+                    webBrowser1.DocumentText = lMaximoComm.getMaximoDetails(row.Cells["WONUM"].Value.ToString());
+                }
+            }
         }
 
     }
