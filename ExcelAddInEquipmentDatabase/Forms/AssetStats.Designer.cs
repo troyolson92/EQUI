@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.label1 = new MetroFramework.Controls.MetroLabel();
             this.label2 = new MetroFramework.Controls.MetroLabel();
@@ -40,6 +40,7 @@
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.cb_preventive = new MetroFramework.Controls.MetroCheckBox();
             this.cb_spltDt = new MetroFramework.Controls.MetroCheckBox();
+            this.metroProgressSpinner1 = new MetroFramework.Controls.MetroProgressSpinner();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -48,11 +49,11 @@
             // 
             this.chart1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea1.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea1);
-            legend1.MaximumAutoSize = 30F;
-            legend1.Name = "Legend1";
-            this.chart1.Legends.Add(legend1);
+            chartArea3.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea3);
+            legend3.MaximumAutoSize = 30F;
+            legend3.Name = "Legend1";
+            this.chart1.Legends.Add(legend3);
             this.chart1.Location = new System.Drawing.Point(9, 104);
             this.chart1.Name = "chart1";
             this.chart1.Size = new System.Drawing.Size(1334, 249);
@@ -166,11 +167,22 @@
             this.cb_spltDt.UseVisualStyleBackColor = true;
             this.cb_spltDt.CheckedChanged += new System.EventHandler(this.cb_spltDt_CheckedChanged);
             // 
+            // metroProgressSpinner1
+            // 
+            this.metroProgressSpinner1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.metroProgressSpinner1.Location = new System.Drawing.Point(540, 138);
+            this.metroProgressSpinner1.Maximum = 100;
+            this.metroProgressSpinner1.Name = "metroProgressSpinner1";
+            this.metroProgressSpinner1.Size = new System.Drawing.Size(188, 183);
+            this.metroProgressSpinner1.TabIndex = 20;
+            // 
             // AssetStats
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1351, 944);
+            this.Controls.Add(this.metroProgressSpinner1);
             this.Controls.Add(this.cb_spltDt);
             this.Controls.Add(this.cb_preventive);
             this.Controls.Add(this.dataGridView1);
@@ -184,6 +196,7 @@
             this.MinimumSize = new System.Drawing.Size(1351, 469);
             this.Name = "AssetStats";
             this.Text = "AssetStats";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.AssetStats_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
@@ -203,5 +216,6 @@
         private System.Windows.Forms.DataGridView dataGridView1;
         private MetroFramework.Controls.MetroCheckBox cb_preventive;
         private MetroFramework.Controls.MetroCheckBox cb_spltDt;
+        private MetroFramework.Controls.MetroProgressSpinner metroProgressSpinner1;
     }
 }

@@ -31,10 +31,12 @@ namespace ExcelAddInEquipmentDatabase.Forms
         BackgroundWorker bwInit = new BackgroundWorker();
         BackgroundWorker bwLongDescription = new BackgroundWorker();
 
+        string lLocation;
+
         public AssetStats(string Location)
         {
             InitializeComponent();
-         //.   Location = "59090GH01F"; //test
+            lLocation = Location;
             this.Text = string.Format("AssetStats tool Location: {0}",Location);
             //
             cb_sortmode.Items.Clear();
@@ -93,7 +95,70 @@ namespace ExcelAddInEquipmentDatabase.Forms
             //
             bwInit.DoWork += bwInit_DoWork;
             bwInit.RunWorkerCompleted += bwInit_RunWorkerCompleted;
-            
+            bwInit.RunWorkerAsync();
+            //
+            this.Show();
+        }
+
+        void bwInit_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            //check if the result was valid 
+            if (dtGadata.Rows.Count == 0) { Debugger.Message("The query for this errorcode did not return a valid result"); this.Dispose(); return; };
+            //setup trackbar (trackbar maximum = first time error happend, minium = now)
+            DateTime FirstError = (from a in dtGadata.AsEnumerable() select a.Field<DateTime>("starttime")).Min();
+            DateTime LastError = (from a in dtGadata.AsEnumerable() select a.Field<DateTime>("starttime")).Max();
+            trackBar1.Minimum = (int)(FirstError - LastError).TotalDays;
+            if (trackBar1.Minimum > -3) { trackBar1.Minimum = -3; }
+            trackBar1.Maximum = -1; //minimum display = 1 day 
+            //figure out init mode
+            /*this will figure out of "active" the error is, 
+             * if it happens more than 10 times in the last 3 days => set graph to 3 day range (show data in hours)
+             *               more than 10 times in the last 30 days => set graph to 30 day range (show data in days)
+             *               else set to full 'lifecycle' of error and set graph in week mode
+             */
+            var count3 = from a in dtGadata.AsEnumerable()
+                         where a.Field<DateTime>("starttime") > DateTime.Now.AddDays(Convert.ToInt32(3) * -1)
+                         select a;
+            if (count3.Count() > 10) //more than 10 times in 3 days
+            {
+                trackBar1.Value = -3;
+                cb_sortmode.SelectedIndex = 1;
+                chart1.Series["cDownTime"].Color = System.Drawing.Color.Red;
+            }
+            else
+            {
+                var count30 = from a in dtGadata.AsEnumerable()
+                              where a.Field<DateTime>("starttime") > DateTime.Now.AddDays(Convert.ToInt32(30) * -1)
+                              select a;
+                if (count30.Count() > 10) //more than 10 times in a month
+                {
+                    trackBar1.Value = -30;
+                    cb_sortmode.SelectedIndex = 2;
+                    chart1.Series["cDownTime"].Color = System.Drawing.Color.DarkOrange;
+                }
+                else
+                {
+                    if (trackBar1.Minimum < -360)
+                    {
+                        trackBar1.Value = -360; //set last running year as a max for 'init' mode
+                    }
+                    else
+                    {
+                        trackBar1.Value = trackBar1.Minimum;
+                    }
+                    cb_sortmode.SelectedIndex = 3;
+                    chart1.Series["cDownTime"].Color = System.Drawing.Color.Blue;
+                }
+            }
+            //build trend chart in init mode. 
+            cb_sortmode.SelectedValueChanged += new System.EventHandler(this.cb_sortmode_SelectedValueChanged);
+            bwLongDescription.DoWork += bwLongDescription_DoWork;
+            //
+            metroProgressSpinner1.Hide();
+        }
+
+        void bwInit_DoWork(object sender, DoWorkEventArgs e)
+        {
             //query all instances of the error 
             #region Query
             string strSqlGetFromGadata = string.Format(
@@ -182,7 +247,7 @@ SELECT
  ,null
  ,null
  ,null
-END", Location);
+END", lLocation);
 
 
             string strSqlGetFromMaximoGraph = string.Format(@"
@@ -197,7 +262,7 @@ SELECT
  ,WORKTYPE
 FROM MAXIMO.WORKORDER WORKORDER  
 WHERE WORKORDER.LOCATION LIKE '{0}'
-            ", Location);
+            ", lLocation);
 
             string strSqlGetFromMaximoDataGrid = string.Format(@"
 SELECT 
@@ -216,75 +281,12 @@ FROM MAXIMO.WORKORDER WORKORDER
 LEFT JOIN MAXIMO.WPITEM WPITEM ON WPITEM.WONUM = WORKORDER.WONUM
 WHERE WORKORDER.LOCATION LIKE '{0}'
 ORDER BY WORKORDER.STATUSDATE DESC
-            ", Location);
+            ", lLocation);
             #endregion
             //fill dataset with all errors
             dtGadata = lGdataComm.RunQueryGadata(strSqlGetFromGadata);
             dtMaximoGraph = lMaximoComm.oracle_runQuery(strSqlGetFromMaximoGraph);
             dtMaximoGrid = lMaximoComm.oracle_runQuery(strSqlGetFromMaximoDataGrid);
-            //check if the result was valid 
-            if (dtGadata.Rows.Count == 0) { Debugger.Message("The query for this errorcode did not return a valid result"); this.Dispose(); return; };
-            //setup trackbar (trackbar maximum = first time error happend, minium = now)
-            DateTime FirstError = (from a in dtGadata.AsEnumerable() select a.Field<DateTime>("starttime")).Min();
-            DateTime LastError = (from a in dtGadata.AsEnumerable() select a.Field<DateTime>("starttime")).Max();
-            trackBar1.Minimum = (int)(FirstError - LastError).TotalDays;
-            if (trackBar1.Minimum > -3) {trackBar1.Minimum = -3;}
-            trackBar1.Maximum = -1; //minimum display = 1 day 
-            //figure out init mode
-            /*this will figure out of "active" the error is, 
-             * if it happens more than 10 times in the last 3 days => set graph to 3 day range (show data in hours)
-             *               more than 10 times in the last 30 days => set graph to 30 day range (show data in days)
-             *               else set to full 'lifecycle' of error and set graph in week mode
-             */
-            var count3 = from a in dtGadata.AsEnumerable()
-                      where a.Field<DateTime>("starttime") >  DateTime.Now.AddDays(Convert.ToInt32(3) * -1)
-                      select a;
-            if (count3.Count() > 10) //more than 10 times in 3 days
-            {
-                trackBar1.Value = -3;
-                cb_sortmode.SelectedIndex = 1;
-                chart1.Series["cDownTime"].Color = System.Drawing.Color.Red;
-            }
-            else
-            {
-                var count30 = from a in dtGadata.AsEnumerable()
-                             where a.Field<DateTime>("starttime") > DateTime.Now.AddDays(Convert.ToInt32(30) * -1)
-                             select a;
-                if (count30.Count() > 10) //more than 10 times in a month
-                {
-                    trackBar1.Value = -30;
-                    cb_sortmode.SelectedIndex = 2;
-                    chart1.Series["cDownTime"].Color = System.Drawing.Color.DarkOrange;
-                }
-                else
-                {
-                    if (trackBar1.Minimum < -360)
-                    {
-                        trackBar1.Value = -360; //set last running year as a max for 'init' mode
-                    }
-                    else
-                    {
-                        trackBar1.Value = trackBar1.Minimum;
-                    }
-                    cb_sortmode.SelectedIndex = 3;
-                    chart1.Series["cDownTime"].Color = System.Drawing.Color.Blue;
-                }
-            }
-            //build trend chart in init mode. 
-            cb_sortmode.SelectedValueChanged += new System.EventHandler(this.cb_sortmode_SelectedValueChanged);
-            chart1.GetToolTipText += new System.EventHandler<System.Windows.Forms.DataVisualization.Charting.ToolTipEventArgs>(Chart1_GetToolTipText);
-            bwLongDescription.DoWork += bwLongDescription_DoWork;
-            this.Show();
-        }
-
-        void bwInit_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-        void bwInit_DoWork(object sender, DoWorkEventArgs e)
-        {
-            throw new NotImplementedException();
         }
 
         private void built_Chart() { built_Chart(false); }
@@ -488,18 +490,6 @@ ORDER BY WORKORDER.STATUSDATE DESC
             } 
         }
 
-        private void Chart1_GetToolTipText(object sender, System.Windows.Forms.DataVisualization.Charting.ToolTipEventArgs e)
-        {
-
-           // Check selevted chart element and set tooltip text
-           if (e.HitTestResult.ChartElementType == ChartElementType.DataPoint)
-           {
-              int i = e.HitTestResult.PointIndex;
-              DataPoint dp = e.HitTestResult.Series.Points[i];
-              e.Text = string.Format("{0:F1}, {1:F1},  {2}", dp.XValue, dp.YValues[0], DateTime.FromOADate(dp.XValue).ToString());
-           }
-        }
-
         private void dataGridView1_RowEnter(object sender, DataGridViewCellEventArgs e)
         {
             if (bwLongDescription.IsBusy) { return; }
@@ -526,6 +516,13 @@ ORDER BY WORKORDER.STATUSDATE DESC
         private void cb_spltDt_CheckedChanged(object sender, EventArgs e)
         {
             built_Chart();
+        }
+
+        private void AssetStats_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            chart1.FormatNumber -= chart1_FormatNumber;
+            cb_sortmode.SelectedValueChanged -= new System.EventHandler(this.cb_sortmode_SelectedValueChanged);
+            dataGridView1.RowEnter -= new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_RowEnter);
         }
 
     }
