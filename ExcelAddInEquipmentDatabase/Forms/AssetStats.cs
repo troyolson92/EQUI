@@ -22,11 +22,13 @@ namespace ExcelAddInEquipmentDatabase.Forms
         DataTable dtGadata;
 
         MaximoComm lMaximoComm = new MaximoComm();
-        DataTable dtMaximo;
+        DataTable dtMaximoGraph;
+        DataTable dtMaximoGrid;
 
         Point? prevPosition = null; 
-        ToolTip tooltip = new ToolTip(); 
- 
+        ToolTip tooltip = new ToolTip();
+
+        BackgroundWorker bwInit = new BackgroundWorker();
         BackgroundWorker bwLongDescription = new BackgroundWorker();
 
         public AssetStats(string Location)
@@ -43,6 +45,8 @@ namespace ExcelAddInEquipmentDatabase.Forms
             //init chart common
             chart1.ChartAreas[0].AxisX.Interval = 1;
             chart1.ChartAreas[0].AxisY2.Enabled = AxisEnabled.True;
+            chart1.ChartAreas[0].AxisY.Title = "Count of downtime/wo";
+            chart1.ChartAreas[0].AxisY2.Title = "Sum of downtime (s.)";
             chart1.FormatNumber += chart1_FormatNumber;
             //init chart 'count of dt'
             chart1.Series.Add("cDownTime");
@@ -69,6 +73,15 @@ namespace ExcelAddInEquipmentDatabase.Forms
             chart1.Series["ResponseTime"].BorderWidth = 4;
             chart1.Series["ResponseTime"].Color = System.Drawing.Color.Tomato;
             chart1.Series["ResponseTime"].YAxisType = AxisType.Secondary;
+            //init chart 'ResolveTime'
+            chart1.Series.Add("ResolveTime");
+            chart1.Series["ResolveTime"].XValueMember = "starttime";
+            chart1.Series["ResolveTime"].YValueMembers = "ResolveTime";
+            chart1.Series["ResolveTime"].XValueType = ChartValueType.DateTime;
+            chart1.Series["ResolveTime"].ChartType = SeriesChartType.Line;
+            chart1.Series["ResolveTime"].BorderWidth = 4;
+            chart1.Series["ResolveTime"].Color = System.Drawing.Color.LawnGreen;
+            chart1.Series["ResolveTime"].YAxisType = AxisType.Secondary;
             //init chat 'maximo'
             chart1.Series.Add("Maximo");
             chart1.Series["Maximo"].XValueMember = "starttime";
@@ -77,6 +90,10 @@ namespace ExcelAddInEquipmentDatabase.Forms
             chart1.Series["Maximo"].ChartType = SeriesChartType.Point;
             chart1.Series["Maximo"].BorderWidth = 8;
             chart1.Series["Maximo"].Color = System.Drawing.Color.ForestGreen;
+            //
+            bwInit.DoWork += bwInit_DoWork;
+            bwInit.RunWorkerCompleted += bwInit_RunWorkerCompleted;
+            
             //query all instances of the error 
             #region Query
             string strSqlGetFromGadata = string.Format(
@@ -90,10 +107,12 @@ BEGIN
 SELECT 		 
   h.StartOfBreakdown as 'starttime' 
 , DATEDIFF(second,'1900-01-01 00:00:00', H.Rt)		AS 'Responsetime' 
+, DATEDIFF(second, H.StartOfBreakdown, H.EndOfBreakdown) - DATEDIFF(second,'1900-01-01 00:00:00', H.Rt)  as 'ResolveTime'
 , DATEDIFF(second, H.StartOfBreakdown, H.EndOfBreakdown)AS 'Downtime'
 , 1 as 'countDT'
 , null as 'countWO'
 , null as 'WONUM'
+, null as 'WORKTYPE'
 FROM  C3G.h_breakdown AS H 
 LEFT OUTER JOIN C3G.L_error AS L ON L.id = H.error_id 
 
@@ -117,7 +136,9 @@ SELECT
   getdate() as 'starttime'
  ,null   
  ,null
+, null
  , 0
+ ,null
  ,null
  ,null
 END
@@ -127,10 +148,12 @@ BEGIN
 SELECT 		 
   h.StartOfBreakdown as 'starttime' 
 , DATEDIFF(second,'1900-01-01 00:00:00', H.Rt)		AS 'Responsetime' 
+, DATEDIFF(second, H.StartOfBreakdown, H.EndOfBreakdown) - DATEDIFF(second,'1900-01-01 00:00:00', H.Rt)  as 'ResolveTime'
 , DATEDIFF(second, H.StartOfBreakdown, H.EndOfBreakdown)AS 'Downtime'
 , 1 as 'countDT'
 , null as 'countWO'
 , null as 'WONUM'
+, null as 'WORKTYPE'
 FROM  C4G.h_breakdown AS H 
 LEFT OUTER JOIN C4G.L_error AS L ON L.id = H.error_id 
 
@@ -154,27 +177,51 @@ SELECT
   getdate() as 'starttime'
  ,null   
  ,null
+, null
  , 0
  ,null
  ,null
-END",Location);
+ ,null
+END", Location);
 
 
-            string strSqlGetFromMaximo = string.Format(@"
+            string strSqlGetFromMaximoGraph = string.Format(@"
 SELECT
   WORKORDER.STATUSDATE starttime 
  ,null Responsetime
+ ,null Resolvetime
  ,null Downtime
-, null countDT
+ ,null countDT
  ,1 countWO
  ,TO_NUMBER(WORKORDER.WONUM) WONUM
+ ,WORKTYPE
 FROM MAXIMO.WORKORDER WORKORDER  
 WHERE WORKORDER.LOCATION LIKE '{0}'
+            ", Location);
+
+            string strSqlGetFromMaximoDataGrid = string.Format(@"
+SELECT 
+ TO_NUMBER(WORKORDER.WONUM) WONUM
+,WORKORDER.STATUS
+,WORKORDER.STATUSDATE
+,WORKORDER.WORKTYPE
+,WORKORDER.DESCRIPTION
+,WORKORDER.LOCATION
+,WORKORDER.REPORTEDBY
+,WORKORDER.REPORTDATE
+,WPITEM.ITEMNUM
+,WPITEM.DESCRIPTION PARTDESCRIPTION
+,WPITEM.REQUESTBY
+FROM MAXIMO.WORKORDER WORKORDER  
+LEFT JOIN MAXIMO.WPITEM WPITEM ON WPITEM.WONUM = WORKORDER.WONUM
+WHERE WORKORDER.LOCATION LIKE '{0}'
+ORDER BY WORKORDER.STATUSDATE DESC
             ", Location);
             #endregion
             //fill dataset with all errors
             dtGadata = lGdataComm.RunQueryGadata(strSqlGetFromGadata);
-            dtMaximo = lMaximoComm.oracle_runQuery(strSqlGetFromMaximo);
+            dtMaximoGraph = lMaximoComm.oracle_runQuery(strSqlGetFromMaximoGraph);
+            dtMaximoGrid = lMaximoComm.oracle_runQuery(strSqlGetFromMaximoDataGrid);
             //check if the result was valid 
             if (dtGadata.Rows.Count == 0) { Debugger.Message("The query for this errorcode did not return a valid result"); this.Dispose(); return; };
             //setup trackbar (trackbar maximum = first time error happend, minium = now)
@@ -230,6 +277,15 @@ WHERE WORKORDER.LOCATION LIKE '{0}'
             this.Show();
         }
 
+        void bwInit_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        void bwInit_DoWork(object sender, DoWorkEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
 
         private void built_Chart() { built_Chart(false); }
         private void built_Chart(Boolean noAutoGrouping) 
@@ -237,17 +293,53 @@ WHERE WORKORDER.LOCATION LIKE '{0}'
             //use the trackbar to calculate the starting point of the graph
             DateTime GrapStart = DateTime.Now.AddDays(Convert.ToInt32(trackBar1.Value));
             //
-            var ldt = from a in dtGadata.AsEnumerable()
-                      .Union(dtMaximo.AsEnumerable())
-                      where a.Field<DateTime>("starttime") > GrapStart
-                      orderby a.Field<DateTime>("starttime")
-                      select a;
-            chart1.DataSource = ldt;
-            chart1.DataBind();
+               var  ldt = from a in dtGadata.AsEnumerable()
+                 .Union(dtMaximoGraph.AsEnumerable())
+                          where 
+                          (
+                          a.Field<DateTime>("starttime") > GrapStart
+                          && cb_preventive.Checked == false
+                          )
+                          ||
+                          (
+                          a.Field<DateTime>("starttime") > GrapStart
+                          && cb_preventive.Checked == true
+                          && a.Field<string>("WORKTYPE") != "PP"
+                          && a.Field<string>("WORKTYPE") != "PCI"
+                          && a.Field<string>("WORKTYPE") != "WSCH"
+                          )
+                          orderby a.Field<DateTime>("starttime")
+                          select a;
+            //this is shit 
+               
+
+               chart1.DataSource = ldt;
+               chart1.DataBind();
             //
-            dtMaximo.DefaultView.RowFilter = string.Format("starttime > '{0}'", GrapStart);
-            dtMaximo.DefaultView.Sort = "starttime desc";
-            dataGridView1.DataSource = dtMaximo; 
+            if (cb_preventive.Checked) //hide preventive
+            {
+                dtMaximoGrid.DefaultView.RowFilter = string.Format("STATUSDATE > '{0}' AND WORKTYPE not in('PP','PCI','WSCH')", GrapStart);
+            }
+            else
+            {
+                dtMaximoGrid.DefaultView.RowFilter = string.Format("STATUSDATE > '{0}'", GrapStart);
+            }
+            dtMaximoGrid.DefaultView.Sort = "STATUSDATE desc";
+            dataGridView1.DataSource = dtMaximoGrid; 
+            //
+            if (cb_spltDt.Checked)
+            {
+                chart1.Series["DownTime"].Enabled = false;
+                chart1.Series["ResolveTime"].Enabled = true;
+                chart1.Series["ResponseTime"].Enabled = true;
+            }
+            else
+            {
+                chart1.Series["DownTime"].Enabled = true;
+                chart1.Series["ResolveTime"].Enabled = false;
+                chart1.Series["ResponseTime"].Enabled = false;
+            }
+
             //
             DateTime FirstError = (from a in dtGadata.AsEnumerable() select a.Field<DateTime>("starttime")).Min();
             //
@@ -284,6 +376,7 @@ WHERE WORKORDER.LOCATION LIKE '{0}'
                     chart1.DataManipulator.Group("SUM", 1, IntervalType.Hours, "cDownTime");
                     chart1.DataManipulator.Group("SUM", 1, IntervalType.Hours, "DownTime");
                     chart1.DataManipulator.Group("SUM", 1, IntervalType.Hours, "ResponseTime");
+                    chart1.DataManipulator.Group("SUM", 1, IntervalType.Hours, "ResolveTime");
                     chart1.DataManipulator.Group("SUM", 1, IntervalType.Hours, "Maximo");
                     break;
 
@@ -295,6 +388,7 @@ WHERE WORKORDER.LOCATION LIKE '{0}'
                     chart1.DataManipulator.Group("SUM", 1, IntervalType.Days, "cDownTime");
                     chart1.DataManipulator.Group("SUM", 1, IntervalType.Days, "DownTime");
                     chart1.DataManipulator.Group("SUM", 1, IntervalType.Days, "ResponseTime");
+                    chart1.DataManipulator.Group("SUM", 1, IntervalType.Days, "ResolveTime");
                     chart1.DataManipulator.Group("SUM", 1, IntervalType.Days, "Maximo");
                     break;
 
@@ -306,6 +400,7 @@ WHERE WORKORDER.LOCATION LIKE '{0}'
                     chart1.DataManipulator.Group("SUM", 1, IntervalType.Weeks, "cDownTime");
                     chart1.DataManipulator.Group("SUM", 1, IntervalType.Weeks, "DownTime");
                     chart1.DataManipulator.Group("SUM", 1, IntervalType.Weeks, "ResponseTime");
+                    chart1.DataManipulator.Group("SUM", 1, IntervalType.Weeks, "ResolveTime");
                     chart1.DataManipulator.Group("SUM", 1, IntervalType.Weeks, "Maximo");
                     break;
 
@@ -421,6 +516,16 @@ WHERE WORKORDER.LOCATION LIKE '{0}'
                     webBrowser1.DocumentText = lMaximoComm.getMaximoDetails(row.Cells["WONUM"].Value.ToString());
                 }
             }
+        }
+
+        private void cb_preventive_CheckedChanged(object sender, EventArgs e)
+        {
+            built_Chart();
+        }
+
+        private void cb_spltDt_CheckedChanged(object sender, EventArgs e)
+        {
+            built_Chart();
         }
 
     }
