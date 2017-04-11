@@ -115,11 +115,10 @@ namespace ExcelAddInEquipmentDatabase
             }
             if (Logtype == "SHIFTBOOK" || Logtype == "BREAKDOWN" || Logtype == "ERROR" || Logtype == "WARNING")
             {
-                if (ExcelAddInEquipmentDatabase.Properties.Settings.Default.userlevel >= 100)
-                {
+
                     btn = AddButtonToTableMenuItem("AssetStats", 3, 610); 
                     btn.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(AssetStatsMenuItemClick);
-                }
+                    if (ExcelAddInEquipmentDatabase.Properties.Settings.Default.usergroup != "AAOSR") { btn.Enabled = false; }
             }
 
             addFormattingSubmenu(5);
