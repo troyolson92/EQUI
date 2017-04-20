@@ -264,7 +264,7 @@ namespace ExcelAddInEquipmentDatabase
             return sb.ToString();
         }
 
-        public static string DtToHTML_Table(DataTable dt)
+        public  string DtToHTML_Table(DataTable dt)
         {
             if (dt.Rows.Count == 0) return ""; // enter code here
 
@@ -304,7 +304,7 @@ namespace ExcelAddInEquipmentDatabase
             return builder.ToString();
         }
 
-        public static string StringToHTML_Table(string header, string input)
+        public  string StringToHTML_Table(string header, string input)
         {
 
             DataTable dt = new DataTable();

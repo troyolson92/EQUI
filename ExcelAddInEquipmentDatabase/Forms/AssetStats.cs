@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using System.Globalization;
-
+using System.Text.RegularExpressions;
 using System.Diagnostics;
 
 namespace ExcelAddInEquipmentDatabase.Forms
@@ -37,6 +37,8 @@ namespace ExcelAddInEquipmentDatabase.Forms
         {
             InitializeComponent();
             lLocation = Location;
+            tb_location.Text = Regex.Replace(lLocation, @"[A-Za-z\s]", "%") + "%";
+
             this.Text = string.Format("AssetStats tool Location: {0}",Location);
             //
             cb_sortmode.Items.Clear();
@@ -48,7 +50,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
             chart1.ChartAreas[0].AxisX.Interval = 1;
             chart1.ChartAreas[0].AxisY2.Enabled = AxisEnabled.True;
             chart1.ChartAreas[0].AxisY.Title = "Count of downtime/wo";
-            chart1.ChartAreas[0].AxisY2.Title = "Sum of downtime (s.)";
+            chart1.ChartAreas[0].AxisY2.Title = "Sum of downtime (min.)";
             chart1.FormatNumber += chart1_FormatNumber;
             //init chart 'count of dt'
             chart1.Series.Add("cDownTime");
@@ -95,6 +97,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
             //
             bwInit.DoWork += bwInit_DoWork;
             bwInit.RunWorkerCompleted += bwInit_RunWorkerCompleted;
+            bwInit.WorkerSupportsCancellation = true;
             bwInit.RunWorkerAsync();
             //
             this.Show();
@@ -110,6 +113,9 @@ namespace ExcelAddInEquipmentDatabase.Forms
             trackBar1.Minimum = (int)(FirstError - LastError).TotalDays;
             if (trackBar1.Minimum > -3) { trackBar1.Minimum = -3; }
             trackBar1.Maximum = -1; //minimum display = 1 day 
+            trackBar2.Minimum = trackBar1.Minimum;
+            trackBar2.Maximum = trackBar1.Maximum;
+            trackBar2.Value = trackBar2.Maximum;
             //figure out init mode
             /*this will figure out of "active" the error is, 
              * if it happens more than 10 times in the last 3 days => set graph to 3 day range (show data in hours)
@@ -119,7 +125,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
             var count3 = from a in dtGadata.AsEnumerable()
                          where a.Field<DateTime>("starttime") > DateTime.Now.AddDays(Convert.ToInt32(3) * -1)
                          select a;
-            if (count3.Count() > 10) //more than 10 times in 3 days
+            if (count3.Count() > 20) //more than 10 times in 3 days
             {
                 trackBar1.Value = -3;
                 cb_sortmode.SelectedIndex = 1;
@@ -130,7 +136,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
                 var count30 = from a in dtGadata.AsEnumerable()
                               where a.Field<DateTime>("starttime") > DateTime.Now.AddDays(Convert.ToInt32(30) * -1)
                               select a;
-                if (count30.Count() > 10) //more than 10 times in a month
+                if (count30.Count() > 20) //more than 10 times in a month
                 {
                     trackBar1.Value = -30;
                     cb_sortmode.SelectedIndex = 2;
@@ -165,40 +171,30 @@ namespace ExcelAddInEquipmentDatabase.Forms
     @"
 USE GADATA
 DECLARE @Location as varchar(max) = '{0}'
-DECLARE @controllerTYPE as varchar(10) = (select top 1 controller_type from gadata.equi.ASSETS where RTRIM(location) = @Location)
+DECLARE @controllerTYPE as varchar(10) = (select top 1 controller_type from gadata.equi.ASSETS where RTRIM(controller_name) LIKE @Location and controller_type is not null)
 
 if @controllerTYPE = 'c3g'
 BEGIN
-SELECT 		 
-  h.StartOfBreakdown as 'starttime' 
-, DATEDIFF(second,'1900-01-01 00:00:00', H.Rt)		AS 'Responsetime' 
-, DATEDIFF(second, H.StartOfBreakdown, H.EndOfBreakdown) - DATEDIFF(second,'1900-01-01 00:00:00', H.Rt)  as 'ResolveTime'
-, DATEDIFF(second, H.StartOfBreakdown, H.EndOfBreakdown)AS 'Downtime'
+SELECT 
+ c3g_breakdown.Location as 'Location'
+,c3g_breakdown.timestamp as 'starttime'
+,c3g_breakdown.[Response(s)]/60 as 'Responsetime'
+,(c3g_breakdown.[Downtime(s)] - c3g_breakdown.[Response(s)]) / 60 as 'ResolveTime'
+,c3g_breakdown.[Downtime(s)]/60 as 'Downtime'
 , 1 as 'countDT'
 , null as 'countWO'
 , null as 'WONUM'
 , null as 'WORKTYPE'
-FROM  C3G.h_breakdown AS H 
-LEFT OUTER JOIN C3G.L_error AS L ON L.id = H.error_id 
-
-LEFT OUTER JOIN VOLVO.c_Classification as cc on cc.id = L.c_ClassificationId
-LEFT OUTER JOIN VOLVO.c_Subgroup as cs on cs.id = L.c_SubgroupId
-
---joining of the RIGHT ASSET
-LEFT OUTER JOIN equi.ASSETS as A on 
-A.controller_type = 'c3g' --join the right 'data controller type'
-AND
-A.controller_id = h.controller_id --join the right 'data controller id'
-AND 
-A.CLassificationId LIKE '%' + ISNULL(RTRIM(cc.Classification),'UR') + '%' 
-
+from GADATA.EqUi.c3g_breakdown
 where 
-a.LOCATION like @Location
-
+c3g_breakdown.controller_name like @Location
+AND 
+c3g_breakdown.Subgroup not in('EO Maint','Operational**','Operational')
 
 UNION
 SELECT 
-  getdate() as 'starttime'
+  null
+ ,getdate() as 'starttime'
  ,null   
  ,null
 , null
@@ -210,36 +206,26 @@ END
 
 if @controllerTYPE = 'c4g'
 BEGIN
-SELECT 		 
-  h.StartOfBreakdown as 'starttime' 
-, DATEDIFF(second,'1900-01-01 00:00:00', H.Rt)		AS 'Responsetime' 
-, DATEDIFF(second, H.StartOfBreakdown, H.EndOfBreakdown) - DATEDIFF(second,'1900-01-01 00:00:00', H.Rt)  as 'ResolveTime'
-, DATEDIFF(second, H.StartOfBreakdown, H.EndOfBreakdown)AS 'Downtime'
+SELECT
+ c4g_breakdown.Location as 'Location'
+,c4g_breakdown.timestamp as 'starttime'
+,c4g_breakdown.[Response(s)]/60 as 'Responsetime'
+,(c4g_breakdown.[Downtime(s)] - c4g_breakdown.[Response(s)]) / 60 as 'ResolveTime'
+,c4g_breakdown.[Downtime(s)]/60 as 'Downtime'
 , 1 as 'countDT'
 , null as 'countWO'
 , null as 'WONUM'
 , null as 'WORKTYPE'
-FROM  C4G.h_breakdown AS H 
-LEFT OUTER JOIN C4G.L_error AS L ON L.id = H.error_id 
-
-LEFT OUTER JOIN VOLVO.c_Classification as cc on cc.id = L.c_ClassificationId
-LEFT OUTER JOIN VOLVO.c_Subgroup as cs on cs.id = L.c_SubgroupId
-
---joining of the RIGHT ASSET
-LEFT OUTER JOIN equi.ASSETS as A on 
-A.controller_type = 'c4g' --join the right 'data controller type'
-AND
-A.controller_id = h.controller_id --join the right 'data controller id'
-AND 
-A.CLassificationId LIKE '%' + ISNULL(RTRIM(cc.Classification),'UR') + '%' 
-
+from GADATA.EqUi.c4g_breakdown
 where 
-a.LOCATION like @Location
-
+c4g_breakdown.controller_name like @Location
+AND 
+c4g_breakdown.Subgroup not in('EO Maint','Operational**','Operational')
 
 UNION
 SELECT 
-  getdate() as 'starttime'
+  null
+ ,getdate() as 'starttime'
  ,null   
  ,null
 , null
@@ -247,12 +233,13 @@ SELECT
  ,null
  ,null
  ,null
-END", lLocation);
+END", tb_location.Text);
 
 
             string strSqlGetFromMaximoGraph = string.Format(@"
 SELECT
-  WORKORDER.STATUSDATE starttime 
+  WORKORDER.LOCATION Location
+ ,WORKORDER.STATUSDATE starttime 
  ,null Responsetime
  ,null Resolvetime
  ,null Downtime
@@ -262,7 +249,7 @@ SELECT
  ,WORKTYPE
 FROM MAXIMO.WORKORDER WORKORDER  
 WHERE WORKORDER.LOCATION LIKE '{0}'
-            ", lLocation);
+            ", tb_location.Text);
 
             string strSqlGetFromMaximoDataGrid = string.Format(@"
 SELECT 
@@ -281,7 +268,7 @@ FROM MAXIMO.WORKORDER WORKORDER
 LEFT JOIN MAXIMO.WPITEM WPITEM ON WPITEM.WONUM = WORKORDER.WONUM
 WHERE WORKORDER.LOCATION LIKE '{0}'
 ORDER BY WORKORDER.STATUSDATE DESC
-            ", lLocation);
+            ", tb_location.Text);
             #endregion
             //fill dataset with all errors
             dtGadata = lGdataComm.RunQueryGadata(strSqlGetFromGadata);
@@ -294,21 +281,41 @@ ORDER BY WORKORDER.STATUSDATE DESC
         {
             //use the trackbar to calculate the starting point of the graph
             DateTime GrapStart = DateTime.Now.AddDays(Convert.ToInt32(trackBar1.Value));
+            DateTime GrapEnd = DateTime.Now.AddDays(Convert.ToInt32(trackBar2.Value));
             //
                var  ldt = from a in dtGadata.AsEnumerable()
                  .Union(dtMaximoGraph.AsEnumerable())
                           where 
                           (
-                          a.Field<DateTime>("starttime") > GrapStart
+                          (
+                          a.Field<DateTime>("starttime") > GrapStart && a.Field<DateTime>("starttime") < GrapEnd
                           && cb_preventive.Checked == false
+                          && a.Field<string>("Location") == lLocation && cb_incCiblings.Checked == false
                           )
                           ||
                           (
-                          a.Field<DateTime>("starttime") > GrapStart
+                          a.Field<DateTime>("starttime") > GrapStart && a.Field<DateTime>("starttime") < GrapEnd
                           && cb_preventive.Checked == true
                           && a.Field<string>("WORKTYPE") != "PP"
                           && a.Field<string>("WORKTYPE") != "PCI"
                           && a.Field<string>("WORKTYPE") != "WSCH"
+                          && a.Field<string>("Location") == lLocation && cb_incCiblings.Checked == false
+                          )
+                          ||
+                                                    (
+                          a.Field<DateTime>("starttime") > GrapStart && a.Field<DateTime>("starttime") < GrapEnd
+                          && cb_preventive.Checked == false
+                          && cb_incCiblings.Checked == true
+                          )
+                          ||
+                          (
+                          a.Field<DateTime>("starttime") > GrapStart && a.Field<DateTime>("starttime") < GrapEnd
+                          && cb_preventive.Checked == true
+                          && a.Field<string>("WORKTYPE") != "PP"
+                          && a.Field<string>("WORKTYPE") != "PCI"
+                          && a.Field<string>("WORKTYPE") != "WSCH"
+                          && cb_incCiblings.Checked == true
+                          )
                           )
                           orderby a.Field<DateTime>("starttime")
                           select a;
@@ -318,16 +325,39 @@ ORDER BY WORKORDER.STATUSDATE DESC
                chart1.DataSource = ldt;
                chart1.DataBind();
             //
-            if (cb_preventive.Checked) //hide preventive
-            {
-                dtMaximoGrid.DefaultView.RowFilter = string.Format("STATUSDATE > '{0}' AND WORKTYPE not in('PP','PCI','WSCH')", GrapStart);
-            }
-            else
-            {
-                dtMaximoGrid.DefaultView.RowFilter = string.Format("STATUSDATE > '{0}'", GrapStart);
-            }
-            dtMaximoGrid.DefaultView.Sort = "STATUSDATE desc";
-            dataGridView1.DataSource = dtMaximoGrid; 
+               if (dtMaximoGrid.Rows.Count != 0)
+               {
+                if (cb_incCiblings.Checked) // with cilds
+                {
+                    if (cb_preventive.Checked) //hide preventive
+                    {
+
+                        dtMaximoGrid.DefaultView.RowFilter = string.Format("STATUSDATE > '{0}' AND STATUSDATE < '{1}' AND WORKTYPE not in('PP','PCI','WSCH')", GrapStart, GrapEnd);
+
+                    }
+                    else
+                    {
+                        dtMaximoGrid.DefaultView.RowFilter = string.Format("STATUSDATE > '{0}' AND STATUSDATE < '{1}' ", GrapStart, GrapEnd);
+                    }
+                }
+                else // no childs
+                {
+                    if (cb_preventive.Checked) //hide preventive
+                    {
+
+                        dtMaximoGrid.DefaultView.RowFilter = string.Format("STATUSDATE > '{0}' AND STATUSDATE < '{1}' AND WORKTYPE not in('PP','PCI','WSCH') AND LOCATION = '{2}'", GrapStart, GrapEnd,lLocation);
+
+                    }
+                    else
+                    {
+                        dtMaximoGrid.DefaultView.RowFilter = string.Format("STATUSDATE > '{0}' AND STATUSDATE < '{1}'  AND LOCATION = '{2}'", GrapStart, GrapEnd, lLocation);
+                    }
+                }
+
+
+                   dtMaximoGrid.DefaultView.Sort = "STATUSDATE desc";
+                   dataGridView1.DataSource = dtMaximoGrid;
+               }
             //
             if (cb_spltDt.Checked)
             {
@@ -347,11 +377,11 @@ ORDER BY WORKORDER.STATUSDATE DESC
             //
             if (noAutoGrouping == false)
             {
-                if (trackBar1.Value > -10)
+                if ((trackBar1.Value -  trackBar2.Value) > -10)
                 {
                     cb_sortmode.SelectedIndex = 1;
                 }
-                else if (trackBar1.Value > -100)
+                else if ((trackBar1.Value - trackBar2.Value) > -100)
                 {
                     cb_sortmode.SelectedIndex = 2;
                 }
@@ -360,7 +390,13 @@ ORDER BY WORKORDER.STATUSDATE DESC
                     cb_sortmode.SelectedIndex = 3;
                 }
             }
-            //
+            //check that manual grouping is fasable
+            if ((cb_sortmode.SelectedIndex < 2) && ((trackBar1.Value - trackBar2.Value) < -20))
+            {
+                    Debugger.Message(string.Format("Its not a good idea to group in this way for '{0}' days of data",(trackBar1.Value-trackBar2.Value)));
+                    cb_sortmode.SelectedIndex = 3;
+            }
+
             switch (cb_sortmode.Text)
             {
                 case "None":
@@ -466,11 +502,46 @@ ORDER BY WORKORDER.STATUSDATE DESC
 
         private void trackBar1_ValueChanged(object sender, EventArgs e)
         {
+            /*
+            if ((trackBar1.Value - trackBar2.Value) > -1)
+            {
+                if (trackBar1.Maximum < trackBar1.Value - 3)
+                {
+                    trackBar1.Value = trackBar1.Maximum;
+                }
+                    trackBar2.Value = trackBar1.Value + 3;
+            }
+            else
+            {
+                built_Chart();
+            }
+             * */
             built_Chart();
+
+        }
+
+        private void trackBar2_ValueChanged(object sender, EventArgs e)
+        {
+            /*
+            if ((trackBar2.Value - trackBar1.Value) < -1)
+            {
+                if (trackBar2.Minimum > (trackBar2.Value - 3))
+                {
+                    trackBar2.Value = trackBar2.Minimum;
+                }
+                trackBar1.Value = trackBar2.Value - 3;
+            }
+            else
+            {
+                built_Chart();
+            }
+             * */
         }
 
         private void cb_sortmode_SelectedValueChanged(object sender, EventArgs e)
         {
+            
+
             built_Chart(true);
         }
 
@@ -518,11 +589,18 @@ ORDER BY WORKORDER.STATUSDATE DESC
             built_Chart();
         }
 
+        private void cb_incCiblings_CheckedChanged(object sender, EventArgs e)
+        {
+            built_Chart();
+        }
+
+
         private void AssetStats_FormClosing(object sender, FormClosingEventArgs e)
         {
             chart1.FormatNumber -= chart1_FormatNumber;
             cb_sortmode.SelectedValueChanged -= new System.EventHandler(this.cb_sortmode_SelectedValueChanged);
             dataGridView1.RowEnter -= new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_RowEnter);
+            bwInit.CancelAsync();
         }
 
     }

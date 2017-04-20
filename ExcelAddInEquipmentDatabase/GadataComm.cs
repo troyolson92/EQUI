@@ -211,6 +211,7 @@ namespace ExcelAddInEquipmentDatabase
     {
         public static bool Like(this string toSearch, string toFind)
         {
+            if (toSearch == null) { return false; }
             return new Regex(@"\A" + new Regex(@"\.|\$|\^|\{|\[|\(|\||\)|\*|\+|\?|\\").Replace(toFind, ch => @"\" + ch).Replace('_', '.').Replace("%", ".*") + @"\z", RegexOptions.Singleline).IsMatch(toSearch);
         }
     }

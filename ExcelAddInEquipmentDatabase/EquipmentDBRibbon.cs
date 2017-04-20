@@ -209,7 +209,14 @@ namespace ExcelAddInEquipmentDatabase
                 //Fill local dataset
                 using (applDataTableAdapters.UsersTableAdapter adapter = new applDataTableAdapters.UsersTableAdapter())
                 {
-                    adapter.Fill(lUsers);
+                    try
+                    {
+                        adapter.Fill(lUsers);
+                    }
+                    catch (Exception ex)
+                    {
+                        Debugger.Exeption(ex);
+                    }
                 }
             }
         }

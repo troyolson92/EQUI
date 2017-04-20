@@ -16,6 +16,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
         GadataComm lGdataComm = new GadataComm();
         DataTable dt;
         BackgroundWorker bw = new BackgroundWorker();
+        MaximoComm lMaximoComm = new MaximoComm();
 
         public LogDetails(string Location, string Errornum)
         {
@@ -103,38 +104,19 @@ END
             //fill dataset
             dt = lGdataComm.RunQueryGadata(qry);
             //check if the result was valid 
-            if (dt.Rows.Count == 0) { Debugger.Message("The query for this errorcode did not return a valid result"); this.Dispose(); return; };
 
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine(
-@"<div>            
-<table bgcolor=#00FF00>
-<tr>
-<td style = white-space:PRE>INFO                                                                                                                                                                </td>
-</tr>
-</table>
-</div>");
-            sb.AppendLine(dt.Rows[0].Field<String>("INFO"));
-            sb.AppendLine("<div>---------------------------------------------------------------</div>").AppendLine(
-@"<div>            
-<table bgcolor=#00FF00>
-<tr>
-<td style = white-space:PRE>Cause                                                                                                                                                                </td>
-</tr>
-</table>
-</div>");
-            sb.AppendLine(dt.Rows[0].Field<String>("Cause"));
-            sb.AppendLine("<div>---------------------------------------------------------------</div>").AppendLine(
-@"<div>            
-<table bgcolor=#00FF00>
-<tr>
-<td style = white-space:PRE>Remedy                                                                                                                                                              </td>
-</tr>
-</table>
-</div>");
-            sb.AppendLine(dt.Rows[0].Field<String>("Remedy"));
-            sb.AppendLine("<div>---------------------------------------------------------------</div>");
-
+            string newline = "<p></p>";
+            if (dt.Rows.Count != 0)
+            {
+                sb.AppendLine(lMaximoComm.StringToHTML_Table("INFO", dt.Rows[0].Field<string>("INFO").ToString())).AppendLine(newline);
+                sb.AppendLine(lMaximoComm.StringToHTML_Table("Cause", dt.Rows[0].Field<string>("Cause").ToString())).AppendLine(newline);
+                sb.AppendLine(lMaximoComm.StringToHTML_Table("Remedy", dt.Rows[0].Field<string>("Remedy").ToString()));
+            }
+            else
+            {
+                sb.AppendLine("No valid result from query");
+            }
             webBrowser1.DocumentText = sb.ToString();
         }
 

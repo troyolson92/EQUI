@@ -180,12 +180,12 @@ namespace ExcelAddInEquipmentDatabase
                   left join GADATA.VOLVO.Robots as rr on 
                   --Grippers
                   (
-                  REPLACE(REPLACE(assets.LOCATION,'GH','R'),'GP','R') LIKE rr.controller_name+'%'
+                  REPLACE(REPLACE(REPLACE(assets.LOCATION,'GH','R'),'GP','R'),'GD','R') LIKE rr.controller_name+'%'
                   )
                   OR
                   --Weld WS (func pack spot) WN (nutweld)
                   (
-                  REPLACE(REPLACE(REPLACE(assets.LOCATION,'WS','R'),'xxxxxx','R'),'WN','R') LIKE rr.controller_name+'%'
+                  REPLACE(REPLACE(REPLACE(assets.LOCATION,'WS','R'),'WT','R'),'WN','R') LIKE rr.controller_name+'%'
                   )
                     OR
                   -- WT (tucker) Pistool, Toevoer, Lasbron, algemene zaken
