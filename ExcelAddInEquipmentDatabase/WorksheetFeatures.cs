@@ -205,7 +205,7 @@ namespace ExcelAddInEquipmentDatabase
             //new type 
             AddFormatToTable(Sheet, "LogType", "SHIFTBOOK", 8708322);
             AddFormatToTable(Sheet, "LogType", "WARNING", 16760832);
-            AddFormatToTable(Sheet, "LogType", "LIVE", 16724940);
+            AddFormatToTable(Sheet, "LogType", "LIVE", System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.Red));
             AddFormatToTable(Sheet, "LogType", "WARN", 16305069);
             AddFormatToTable(Sheet, "LogType", "BREAKDOWN", 45296);
             AddFormatToTable(Sheet, "LogType", "TIMELINE", 11128974);

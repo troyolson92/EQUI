@@ -390,7 +390,7 @@ namespace ExcelAddInEquipmentDatabase
             List<string> Files = new List<string>(new string[] 
             { 
                @"\\gnlsnm0101.gen.volvocars.net\proj\6308-Shr-VC024800\OBJECTBEHEER GA\Robots\12. SW + Tools\RobotDatabase\VSTO\Templates\EqDbGADATATemplate.xlsx"
-           //   ,@"\\gnlsnm0101.gen.volvocars.net\proj\6308-Shr-VC024800\OBJECTBEHEER GA\Robots\12. SW + Tools\RobotDatabase\VSTO\Templates\EqDbTemplate_v0.3.xlsx"
+              ,@"\\gnlsnm0101.gen.volvocars.net\proj\6308-Shr-VC024800\OBJECTBEHEER GA\Robots\12. SW + Tools\RobotDatabase\VSTO\Templates\EqDbGADATATemplateSuperVis.xlsx"
            //   ,@"\\gnlsnm0101.gen.volvocars.net\proj\6308-Shr-VC024800\OBJECTBEHEER GA\Robots\12. SW + Tools\RobotDatabase\VSTO\Templates\EqDbTemplate_v0.4.xlsx" 
             });
             foreach (string file in Files)
@@ -640,8 +640,11 @@ namespace ExcelAddInEquipmentDatabase
         {
             if (tbtn_Autorefresh.Checked)
             {
-                Excel._Workbook activeWorkbook = Globals.ThisAddIn.Application.ActiveWorkbook as Excel.Workbook;
-                activeWorkbook.RefreshAll();
+                Excel.Workbooks workbooks = Globals.ThisAddIn.Application.Workbooks;
+                foreach (Excel._Workbook Workbook in workbooks)
+                {
+                    Workbook.RefreshAll();
+                }
             }
         }
 

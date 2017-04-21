@@ -502,47 +502,62 @@ ORDER BY WORKORDER.STATUSDATE DESC
 
         private void trackBar1_ValueChanged(object sender, EventArgs e)
         {
-            /*
-            if ((trackBar1.Value - trackBar2.Value) > -1)
+            try
             {
-                if (trackBar1.Maximum < trackBar1.Value - 3)
+                if ((trackBar1.Value - trackBar2.Value) > -1)
                 {
-                    trackBar1.Value = trackBar1.Maximum;
+                    trackBar2.ValueChanged -= new System.EventHandler(trackBar2_ValueChanged);
+                    if (trackBar1.Maximum < trackBar1.Value - 3)
+                    {
+                        trackBar1.ValueChanged -= new System.EventHandler(trackBar1_ValueChanged);
+                        trackBar1.Value = trackBar1.Maximum;
+                        trackBar1.ValueChanged += new System.EventHandler(trackBar1_ValueChanged);
+                        trackBar2.Value = trackBar2.Maximum - 3;
+                    }
+                    else
+                    {
+                        trackBar2.Value = trackBar1.Value + 3;
+                    }
+                    trackBar2.ValueChanged += new System.EventHandler(trackBar2_ValueChanged);
                 }
-                    trackBar2.Value = trackBar1.Value + 3;
+                else
+                {
+                      built_Chart();
+                }
             }
-            else
+            catch (System.ArgumentOutOfRangeException) 
             {
-                built_Chart();
             }
-             * */
-            built_Chart();
-
         }
 
         private void trackBar2_ValueChanged(object sender, EventArgs e)
         {
-            /*
-            if ((trackBar2.Value - trackBar1.Value) < -1)
+            try
             {
-                if (trackBar2.Minimum > (trackBar2.Value - 3))
+                if ((trackBar2.Value - trackBar1.Value) < -1)
                 {
-                    trackBar2.Value = trackBar2.Minimum;
+                    trackBar1.ValueChanged -= new System.EventHandler(trackBar1_ValueChanged);
+                    if (trackBar2.Minimum > (trackBar2.Value - 3))
+                    {
+                        trackBar2.ValueChanged -= new System.EventHandler(trackBar2_ValueChanged);
+                        trackBar2.Value = trackBar2.Minimum;
+                        trackBar2.ValueChanged += new System.EventHandler(trackBar2_ValueChanged);
+                        trackBar1.Value = trackBar1.Minimum + 3;
+                    }
+                    else
+                    {
+                        trackBar1.Value = trackBar2.Value - 3;
+                    }
+                    trackBar1.ValueChanged += new System.EventHandler(trackBar1_ValueChanged);
                 }
-                trackBar1.Value = trackBar2.Value - 3;
+                else
+                {
+                     built_Chart();
+                }
             }
-            else
+            catch (System.ArgumentOutOfRangeException)
             {
-                built_Chart();
             }
-             * */
-        }
-
-        private void cb_sortmode_SelectedValueChanged(object sender, EventArgs e)
-        {
-            
-
-            built_Chart(true);
         }
 
         private void chart1_MouseMove(object sender, MouseEventArgs e)
@@ -569,7 +584,6 @@ ORDER BY WORKORDER.STATUSDATE DESC
 
         void bwLongDescription_DoWork(object sender, DoWorkEventArgs e)
         {
-           // webBrowser1.DocumentText = "Getting data....";
             foreach (DataGridViewRow row in dataGridView1.SelectedRows)
             {
                 if (row.Cells[0].Value != null)
@@ -594,6 +608,10 @@ ORDER BY WORKORDER.STATUSDATE DESC
             built_Chart();
         }
 
+        private void cb_sortmode_SelectedValueChanged(object sender, EventArgs e)
+        {
+            built_Chart(true);
+        }
 
         private void AssetStats_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -602,6 +620,7 @@ ORDER BY WORKORDER.STATUSDATE DESC
             dataGridView1.RowEnter -= new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_RowEnter);
             bwInit.CancelAsync();
         }
+
 
     }
 }
