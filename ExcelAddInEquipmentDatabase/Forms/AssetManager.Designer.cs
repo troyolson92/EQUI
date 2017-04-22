@@ -41,6 +41,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.CB_SYSTEMID = new System.Windows.Forms.ComboBox();
             this.btn_MX7toGADATA = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -172,19 +173,31 @@
             // btn_MX7toGADATA
             // 
             this.btn_MX7toGADATA.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn_MX7toGADATA.Location = new System.Drawing.Point(1146, 60);
+            this.btn_MX7toGADATA.Location = new System.Drawing.Point(941, 36);
             this.btn_MX7toGADATA.Name = "btn_MX7toGADATA";
-            this.btn_MX7toGADATA.Size = new System.Drawing.Size(112, 23);
+            this.btn_MX7toGADATA.Size = new System.Drawing.Size(317, 23);
             this.btn_MX7toGADATA.TabIndex = 15;
-            this.btn_MX7toGADATA.Text = "MX7->gadata";
+            this.btn_MX7toGADATA.Text = "MX7->\'[GADATA].[EqUi].[ASSETS_fromMX7]\'";
             this.btn_MX7toGADATA.UseVisualStyleBackColor = true;
             this.btn_MX7toGADATA.Click += new System.EventHandler(this.btn_MX7toGADATA_Click);
+            // 
+            // button1
+            // 
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button1.Location = new System.Drawing.Point(941, 65);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(317, 23);
+            this.button1.TabIndex = 16;
+            this.button1.Text = "\'EqUi.[ASSETS_fromMX7]\' -> EQUI.ASSETS";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // AssetManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1294, 521);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.btn_MX7toGADATA);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.CB_SYSTEMID);
@@ -223,5 +236,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ComboBox CB_SYSTEMID;
         private System.Windows.Forms.Button btn_MX7toGADATA;
+        private System.Windows.Forms.Button button1;
     }
 }

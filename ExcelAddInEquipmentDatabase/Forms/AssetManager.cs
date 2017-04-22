@@ -153,9 +153,13 @@ namespace ExcelAddInEquipmentDatabase
            lGadataComm.RunCommandGadata(CmdDeleteTableData,true);
            //send the data to the SQL GADATA SERVER 
            lGadataComm.BulkCopyToGadata("Equi", tableFromMx7, "ASSETS_fromMX7");
+        }
+
+        private void Assets_from_mx7_TO_Assets()
+        {
             //run a command to links maximo assets with our c_controller tables
-           string CmdUpdateAssetsControllers = @"
- if (OBJECT_ID('GADATA.Equi.ASSETS ') is not null)   DROP TABLE GADATA.Equi.ASSETS 
+            string CmdUpdateAssetsControllers = @"
+  if (OBJECT_ID('GADATA.Equi.ASSETS ') is not null)   DROP TABLE GADATA.Equi.ASSETS 
                 SELECT [SYSTEMID]
                       ,assets.[LOCATION]
                       ,assets.[ASSETNUM]
@@ -168,6 +172,10 @@ namespace ExcelAddInEquipmentDatabase
 	                  ,ISNULL(r.controller_name,rr.controller_name) as 'controller_name'
 	                  ,ISNULL(r.controller_type,rr.controller_type) as 'controller_type'
 	                  ,ISNULL(r.id,rr.id) as 'controller_id'
+                      ,ROW_NUMBER() OVER (PARTITION BY 
+					      ISNULL(r.controller_type,rr.controller_type)
+					    , ISNULL(r.id,rr.id), assets.classificationid 
+						ORDER BY assets.location ASC) AS 'controller_ToolID'
                   INTO GADATA.Equi.ASSETS
                   FROM [GADATA].[Equi].[ASSETS_fromMX7] as assets
                   --join robot assets with there controller
@@ -204,9 +212,9 @@ namespace ExcelAddInEquipmentDatabase
                   )
                 where assets.LocationTree like 'VCG -> A%' AND assets.ASSETNUM like 'U%'
 
-               
+
                 ";
-           lGadataComm.RunCommandGadata(CmdUpdateAssetsControllers,true);
+            lGadataComm.RunCommandGadata(CmdUpdateAssetsControllers, true);
         }
 
         //linq querys to update and filter comboxes
@@ -310,18 +318,28 @@ namespace ExcelAddInEquipmentDatabase
             DialogResult result = MessageBox.Show("Are you sure? This will change the server side tabels!!!", "Confirmation", MessageBoxButtons.OKCancel);
             if (result == DialogResult.OK)
             {
-                 result = MessageBox.Show("disbaled in source code need to fix safety issue to c_controller", "OEPS", MessageBoxButtons.YesNoCancel);
-                
                 Cursor.Current = Cursors.AppStarting;
-             //   UpdateMaximoAssetsToGadata();
+                UpdateMaximoAssetsToGadata();
                 Cursor.Current = Cursors.Default;
             }
 
         }
+        private void button1_Click(object sender, EventArgs e)
+        {            DialogResult result = MessageBox.Show("Are you sure? This will change the server side tabels!!!", "Confirmation", MessageBoxButtons.OKCancel);
+            if (result == DialogResult.OK)
+            {
+                Cursor.Current = Cursors.AppStarting;
+                Assets_from_mx7_TO_Assets();
+                Cursor.Current = Cursors.Default;
+            }
+         }
+
         private void CB_ALL_SelectedIndexChanged(object sender, EventArgs e)
         {
           refreshGrid1();
         }
+
+
     }
 
 
