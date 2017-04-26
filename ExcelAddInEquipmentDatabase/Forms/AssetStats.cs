@@ -48,9 +48,12 @@ namespace ExcelAddInEquipmentDatabase.Forms
             cb_sortmode.Items.Insert(3, "Weeks");
             //init chart common
             chart1.ChartAreas[0].AxisX.Interval = 1;
+            chart1.ChartAreas[0].AxisX.IsMarginVisible = false;
             chart1.ChartAreas[0].AxisY2.Enabled = AxisEnabled.True;
             chart1.ChartAreas[0].AxisY.Title = "Count of downtime/wo";
+            chart1.ChartAreas[0].AxisY.IsMarginVisible = false;
             chart1.ChartAreas[0].AxisY2.Title = "Sum of downtime (min.)";
+            chart1.ChartAreas[0].AxisY2.IsMarginVisible = false;
             chart1.FormatNumber += chart1_FormatNumber;
             //init chart 'count of dt'
             chart1.Series.Add("cDownTime");
@@ -444,7 +447,9 @@ ORDER BY WORKORDER.STATUSDATE DESC
 
                 default:
                     break;
-            }   
+            }
+            //test
+            chart1.Series["cDownTime"].BorderWidth = 8;
         }
 
         void chart1_FormatNumber(object sender, FormatNumberEventArgs e)
@@ -619,6 +624,23 @@ ORDER BY WORKORDER.STATUSDATE DESC
             cb_sortmode.SelectedValueChanged -= new System.EventHandler(this.cb_sortmode_SelectedValueChanged);
             dataGridView1.RowEnter -= new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_RowEnter);
             bwInit.CancelAsync();
+        }
+
+        private void btn_viewData_Click(object sender, EventArgs e)
+        {
+            DataSet ldataset = new DataSet();
+            try 
+            {
+
+                    if (dtGadata != null) { ldataset.Tables.Add(dtGadata); }
+                    if (dtMaximoGraph != null) { ldataset.Tables.Add(dtMaximoGraph); }
+                    if (dtMaximoGrid != null) { ldataset.Tables.Add(dtMaximoGrid); }
+            }
+            catch( Exception ex)
+            {
+                Debugger.Exeption(ex);
+            }
+            Forms.DataDisplay ldatadisplay = new Forms.DataDisplay(ldataset);
         }
 
 

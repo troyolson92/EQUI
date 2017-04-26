@@ -23,6 +23,9 @@ namespace ExcelAddInEquipmentDatabase.Forms
         public SBCUStats(string Location)
         {
             InitializeComponent();
+
+            Location = "32070ws02a";
+
             this.Text = string.Format("SBCUStats Location: {0}",Location);
             //
             cb_sortmode.Items.Clear();
@@ -30,8 +33,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
             cb_sortmode.Items.Insert(1, "Hours");
             cb_sortmode.Items.Insert(2, "Days");
             cb_sortmode.Items.Insert(3, "Weeks");
-            cb_sortmode.SelectedIndex = 0;
-            cb_sortmode.SelectedValueChanged += new System.EventHandler(this.cb_sortmode_SelectedValueChanged);
+            cb_sortmode.SelectedIndex = 0; //default = no grouping 
             //
             //init chart long sbcu
             chart1.Series.Add("DeltaSetup");
@@ -41,6 +43,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
             chart1.Series[0].XValueType = ChartValueType.DateTime;
             chart1.Series["DeltaSetup"].BorderWidth = 3;
             chart1.ChartAreas[0].AxisX.Interval = 1;
+            
             chart1.FormatNumber += chart1_FormatNumber;
             chart1.Series["DeltaSetup"].Color = System.Drawing.Color.Red;
             //init chart short sbcu
@@ -128,25 +131,36 @@ SELECT
             if (trackBar1.Minimum > -3) {trackBar1.Minimum = -3;}
             trackBar1.Maximum = -1; //minimum display = 1 day 
             trackBar1.Value = trackBar1.Minimum;
+            //set startup view to last 30 days of data.
+            if (trackBar1.Minimum < -30) { trackBar1.Value = -30; }
+            //
+            trackBar2.Minimum = trackBar1.Minimum;
+            trackBar2.Maximum = trackBar1.Maximum;
+            trackBar2.Value = trackBar2.Maximum;
             //build trend chart in init mode. 
-            built_Chart();
+            built_Chart(true);
+            //
+            cb_sortmode.SelectedValueChanged += new System.EventHandler(this.cb_sortmode_SelectedValueChanged);
+            //
             this.Show();
         }
 
-        private void built_Chart() 
+        private void built_Chart(Boolean noAutoGrouping) 
         {
             //use the trackbar to calculate the starting point of the graph
+            //use the trackbar to calculate the starting point of the graph
             DateTime GrapStart = DateTime.Now.AddDays(Convert.ToInt32(trackBar1.Value));
+            DateTime GrapEnd = DateTime.Now.AddDays(Convert.ToInt32(trackBar2.Value));
             //
             var ldt_longSBCU = from a in dt_longSBCU.AsEnumerable()
-                               where a.Field<DateTime>("tool_timestamp") > GrapStart
+                               where a.Field<DateTime>("tool_timestamp") > GrapStart && a.Field<DateTime>("tool_timestamp") < GrapEnd
                                orderby a.Field<DateTime>("tool_timestamp")
                                select a;
             chart1.DataSource = ldt_longSBCU;
             chart1.DataBind();
             //
             var ldt_ShortSBCU = from a in dt_shortSBCU .AsEnumerable()
-                               where a.Field<DateTime>("tool_timestamp") > GrapStart
+                                where a.Field<DateTime>("tool_timestamp") > GrapStart && a.Field<DateTime>("tool_timestamp") < GrapEnd
                                orderby  a.Field<DateTime>("tool_timestamp")
                                select a;
             chart2.DataSource = ldt_ShortSBCU;
@@ -154,6 +168,29 @@ SELECT
             //
             DateTime FirstError = (from a in dt_longSBCU.AsEnumerable() select a.Field<DateTime>("tool_timestamp")).Min();
             //
+            if (noAutoGrouping == false)
+            {
+                if ((trackBar1.Value - trackBar2.Value) > -10)
+                {
+                    cb_sortmode.SelectedIndex = 1;
+                }
+                else if ((trackBar1.Value - trackBar2.Value) > -100)
+                {
+                    cb_sortmode.SelectedIndex = 2;
+                }
+                else
+                {
+                    cb_sortmode.SelectedIndex = 3;
+                }
+            }
+            //check that manual grouping is fasable
+            if ((cb_sortmode.SelectedIndex < 2) && ((trackBar1.Value - trackBar2.Value) < -60))
+            {
+                Debugger.Message(string.Format("Its not a good idea to group in this way for '{0}' days of data", (trackBar1.Value - trackBar2.Value)));
+                cb_sortmode.SelectedIndex = 3;
+            }
+
+
             switch (cb_sortmode.Text)
             {
                 case "None":
@@ -259,12 +296,12 @@ SELECT
 
         private void trackBar1_ValueChanged(object sender, EventArgs e)
         {
-            built_Chart();
+            built_Chart(false);
         }
 
         private void cb_sortmode_SelectedValueChanged(object sender, EventArgs e)
         {
-            built_Chart();
+            built_Chart(true);
         }
 
     }

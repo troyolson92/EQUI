@@ -40,7 +40,7 @@ namespace ExcelAddInEquipmentDatabase
         //intance of datetimepickers;
         dtPicker StartDatePicker;
         dtPicker EndDatePicker;
-        
+
         private void EquipmentDBRibbon_Load(object sender, RibbonUIEventArgs e)
         {
             //set build version
@@ -666,6 +666,21 @@ namespace ExcelAddInEquipmentDatabase
         {
             apply_userLevel();
         }
+
+        // testing with pannels.
+        public Forms.Loginfo lLoginfo;
+        public Microsoft.Office.Tools.CustomTaskPane lTaskPaneErrorInfo;
+        //
+
+        private void button1_Click(object sender, RibbonControlEventArgs e)
+        {
+            lLoginfo = new Forms.Loginfo(null, null);
+            lTaskPaneErrorInfo = Globals.ThisAddIn.CustomTaskPanes.Add(lLoginfo, "Loginfo");
+            lTaskPaneErrorInfo.DockPosition = Microsoft.Office.Core.MsoCTPDockPosition.msoCTPDockPositionLeft;
+            lTaskPaneErrorInfo.Width = lLoginfo.Width;
+            lTaskPaneErrorInfo.Visible = true;
+        }
+
 
     }
 }

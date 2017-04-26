@@ -258,6 +258,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DataClassesGADATA.dbml</DependentUpon>
     </Compile>
+    <Compile Include="Forms\DataDisplay.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\DataDisplay.Designer.cs">
+      <DependentUpon>DataDisplay.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\DocManager.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -275,6 +281,12 @@
     </Compile>
     <Compile Include="Forms\AssetStats.Designer.cs">
       <DependentUpon>AssetStats.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Loginfo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Loginfo.Designer.cs">
+      <DependentUpon>Loginfo.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\SBCUStats.cs">
       <SubType>Form</SubType>
@@ -357,6 +369,9 @@
     <EmbeddedResource Include="Forms\AAOSRshiftbook.resx">
       <DependentUpon>AAOSRshiftbook.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\DataDisplay.resx">
+      <DependentUpon>DataDisplay.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\DocManager.resx">
       <DependentUpon>DocManager.cs</DependentUpon>
     </EmbeddedResource>
@@ -365,6 +380,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\AssetStats.resx">
       <DependentUpon>AssetStats.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Loginfo.resx">
+      <DependentUpon>Loginfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SBCUStats.resx">
       <DependentUpon>SBCUStats.cs</DependentUpon>

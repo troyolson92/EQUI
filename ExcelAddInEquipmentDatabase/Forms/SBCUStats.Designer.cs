@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.label1 = new MetroFramework.Controls.MetroLabel();
             this.label2 = new MetroFramework.Controls.MetroLabel();
@@ -39,6 +39,7 @@
             this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
             this.chart2 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.metroLabel3 = new MetroFramework.Controls.MetroLabel();
+            this.trackBar2 = new MetroFramework.Controls.MetroTrackBar();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart2)).BeginInit();
             this.SuspendLayout();
@@ -48,8 +49,8 @@
             this.chart1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea1.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea1);
+            chartArea3.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea3);
             this.chart1.Location = new System.Drawing.Point(8, 137);
             this.chart1.Name = "chart1";
             this.chart1.Size = new System.Drawing.Size(1334, 257);
@@ -117,8 +118,8 @@
             this.chart2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea2.Name = "ChartArea1";
-            this.chart2.ChartAreas.Add(chartArea2);
+            chartArea4.Name = "ChartArea1";
+            this.chart2.ChartAreas.Add(chartArea4);
             this.chart2.Location = new System.Drawing.Point(8, 420);
             this.chart2.Name = "chart2";
             this.chart2.Size = new System.Drawing.Size(1334, 283);
@@ -135,11 +136,21 @@
             this.metroLabel3.TabIndex = 13;
             this.metroLabel3.Text = "Set X sort mode";
             // 
+            // trackBar2
+            // 
+            this.trackBar2.BackColor = System.Drawing.Color.Transparent;
+            this.trackBar2.Location = new System.Drawing.Point(249, 53);
+            this.trackBar2.Name = "trackBar2";
+            this.trackBar2.Size = new System.Drawing.Size(359, 23);
+            this.trackBar2.TabIndex = 14;
+            this.trackBar2.Text = "metroTrackBar1";
+            // 
             // SBCUStats
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1351, 726);
+            this.Controls.Add(this.trackBar2);
             this.Controls.Add(this.metroLabel3);
             this.Controls.Add(this.metroLabel2);
             this.Controls.Add(this.chart2);
@@ -170,5 +181,6 @@
         private MetroFramework.Controls.MetroLabel metroLabel2;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart2;
         private MetroFramework.Controls.MetroLabel metroLabel3;
+        private MetroFramework.Controls.MetroTrackBar trackBar2;
     }
 }

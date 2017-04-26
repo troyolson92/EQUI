@@ -46,6 +46,7 @@
             this.tb_location = new MetroFramework.Controls.MetroTextBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.btn_viewData = new MetroFramework.Controls.MetroButton();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel1.SuspendLayout();
@@ -240,12 +241,22 @@
             this.panel2.Size = new System.Drawing.Size(1787, 356);
             this.panel2.TabIndex = 25;
             // 
+            // btn_viewData
+            // 
+            this.btn_viewData.Location = new System.Drawing.Point(23, 325);
+            this.btn_viewData.Name = "btn_viewData";
+            this.btn_viewData.Size = new System.Drawing.Size(21, 23);
+            this.btn_viewData.TabIndex = 26;
+            this.btn_viewData.Text = "+";
+            this.btn_viewData.Click += new System.EventHandler(this.btn_viewData_Click);
+            // 
             // AssetStats
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(1804, 944);
+            this.Controls.Add(this.btn_viewData);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.tb_location);
@@ -288,5 +299,6 @@
         private MetroFramework.Controls.MetroTextBox tb_location;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
+        private MetroFramework.Controls.MetroButton btn_viewData;
     }
 }
