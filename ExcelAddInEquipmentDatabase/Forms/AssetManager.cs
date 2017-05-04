@@ -35,14 +35,14 @@ namespace ExcelAddInEquipmentDatabase
             timer.Start();
         }
 
-        private void form_load(object sender, EventArgs e)
+        private void btn_load_Click(object sender, EventArgs e)
         {
             Cursor.Current = Cursors.AppStarting;
             //Fill local dataset
             using (applDataTableAdapters.ASSETSTableAdapter adapter = new applDataTableAdapters.ASSETSTableAdapter())
             {
-                try {adapter.Fill(lASSETS);}
-                catch (Exception ex) {Debugger.Exeption(ex); }
+                try { adapter.Fill(lASSETS); }
+                catch (Exception ex) { Debugger.Exeption(ex); }
 
             }
             dataGridView1.AllowUserToOrderColumns = true;
@@ -114,7 +114,11 @@ namespace ExcelAddInEquipmentDatabase
                  NVL2(c1.CLASSIFICATIONID , c1.CLASSIFICATIONID ||' -> ','') ||
                  c1.CLASSIFICATIONID
                  ) ClassificationTree
-                 
+                 ,l4.PARENT Area
+                 ,l3.PARENT SubArea
+                 ,l2.PARENT Line
+                 ,l1.PARENT Station
+                             
                 FROM MAXIMO.LOCHIERARCHY l1
                 JOIN MAXIMO.LOCATIONS LOCATIONS on LOCATIONS.LOCATION = l1.LOCATION -- to get equipment status and details 
                 JOIN MAXIMO.ASSET ASSET on ASSET.LOCATION = l1.LOCATION --to get asset number
@@ -146,6 +150,10 @@ namespace ExcelAddInEquipmentDatabase
                 l1.SITEID = 'VCG'
                 AND
                 l1.SYSTEMID = 'PRODMID'
+                AND 
+                ASSET.ASSETNUM like 'U%'         
+                AND
+                l1.CHILDREN = 0
             ";
            tableFromMx7 = lMaximoComm.oracle_runQuery(strSqlGetFromMaximo);
            //clear destination table  in GADATA
@@ -169,6 +177,10 @@ namespace ExcelAddInEquipmentDatabase
 					  ,assets.[ClassStructureId]
 					  ,assets.[CLassificationId]
 					  ,assets.[ClassificationTree]
+					  ,assets.[Area]
+					  ,assets.[SubArea]
+                      ,assets.[line]
+					  ,assets.[station]
 	                  ,ISNULL(r.controller_name,rr.controller_name) as 'controller_name'
 	                  ,ISNULL(r.controller_type,rr.controller_type) as 'controller_type'
 	                  ,ISNULL(r.id,rr.id) as 'controller_id'
@@ -338,7 +350,6 @@ namespace ExcelAddInEquipmentDatabase
         {
           refreshGrid1();
         }
-
 
     }
 

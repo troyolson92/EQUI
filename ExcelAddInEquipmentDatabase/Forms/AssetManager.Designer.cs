@@ -42,6 +42,7 @@
             this.CB_SYSTEMID = new System.Windows.Forms.ComboBox();
             this.btn_MX7toGADATA = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.btn_load = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -192,11 +193,22 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // btn_load
+            // 
+            this.btn_load.Location = new System.Drawing.Point(759, 4);
+            this.btn_load.Name = "btn_load";
+            this.btn_load.Size = new System.Drawing.Size(75, 23);
+            this.btn_load.TabIndex = 17;
+            this.btn_load.Text = "load";
+            this.btn_load.UseVisualStyleBackColor = true;
+            this.btn_load.Click += new System.EventHandler(this.btn_load_Click);
+            // 
             // AssetManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1294, 521);
+            this.Controls.Add(this.btn_load);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.btn_MX7toGADATA);
             this.Controls.Add(this.label5);
@@ -214,7 +226,6 @@
             this.Name = "AssetManager";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "AssetManager";
-            this.Load += new System.EventHandler(this.form_load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -237,5 +248,6 @@
         private System.Windows.Forms.ComboBox CB_SYSTEMID;
         private System.Windows.Forms.Button btn_MX7toGADATA;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btn_load;
     }
 }

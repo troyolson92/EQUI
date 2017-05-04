@@ -672,6 +672,7 @@ namespace ExcelAddInEquipmentDatabase
         public Microsoft.Office.Tools.CustomTaskPane lTaskPaneErrorInfo;
         //
 
+        //docked pannel test 
         private void button1_Click(object sender, RibbonControlEventArgs e)
         {
             lLoginfo = new Forms.Loginfo(null, null);
@@ -680,6 +681,13 @@ namespace ExcelAddInEquipmentDatabase
             lTaskPaneErrorInfo.Width = lLoginfo.Width;
             lTaskPaneErrorInfo.Visible = true;
         }
+
+        private void sync_stw040_Click(object sender, RibbonControlEventArgs e)
+        {
+            stw040Sync lstw040Sync = new stw040Sync();
+            lstw040Sync.get_swt040data();
+        }
+        //
 
 
     }

@@ -19,7 +19,8 @@ namespace ExcelAddInEquipmentDatabase
                                                       "Trusted_Connection=no; database=gadata; connection timeout=30");
 
         //conntion to GADATA admin
-        SqlConnection GadataconnA = new SqlConnection("Server= SQLA001.gen.volvocars.net, Authentication=Windows Authentication, Database= gadata");
+        SqlConnection GadataconnA = new SqlConnection("user id=GADATA; password=GADATA987; server=SQLA001.gen.volvocars.net;" +
+                                                      "Trusted_Connection=no; database=gadata; connection timeout=60");
 
         public string DsnGADATA { get { return "GADATA"; } }
 

@@ -208,7 +208,8 @@ namespace ExcelAddInEquipmentDatabase
             AddFormatToTable(Sheet, "LogType", "LIVE", System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.Red));
             AddFormatToTable(Sheet, "LogType", "WARN", 16305069);
             AddFormatToTable(Sheet, "LogType", "BREAKDOWN", 45296);
-            AddFormatToTable(Sheet, "LogType", "TIMELINE", 11128974);
+            AddFormatToTable(Sheet, "LogType", "TIMELINE", 11128974); 
+            AddFormatToTable(Sheet, "LogType", "STW040", System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.LightCoral));
         }
         //create Workorder default format rules 
         private static void AddWorkorderFormatting(Excel._Worksheet Sheet)
