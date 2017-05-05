@@ -7,6 +7,7 @@ using System.Data.OleDb;
 using System.Globalization;
 using System.Data;
 using System.Net;
+using System.Windows.Forms;
 
 namespace ExcelAddInEquipmentDatabase
 {
@@ -24,15 +25,46 @@ namespace ExcelAddInEquipmentDatabase
                     , @"C:\Temp\Storingsrapport GA _dumpfile sched.xlsx");
                 //read into dt 
                 DataTable dt = LoadWorksheetInDataTable(@"C:\Temp\Storingsrapport GA _dumpfile sched.xlsx", "Zone - Lijst - Laatste werkdag$");
-                //push to gadata
+                //check how many records are now in gadata.
                 GadataComm lGadataComm = new GadataComm();
+                string qryCount = @"select count(id) 'count' from gadata.equi.['Zone - Lijst - Laatste werkdag$']";
+                DataTable countBefore = lGadataComm.RunQueryGadata(qryCount);
+                //push to gadata
                 lGadataComm.BulkCopyToGadata("EqUi", dt, "'Zone - Lijst - Laatste werkdag$'");
                 //run script to remove duplicates
-
+                string cmdRemoveDup = @"
+                DELETE GADATA.EqUi.['Zone - Lijst - Laatste werkdag$']
+                FROM GADATA.EqUi.['Zone - Lijst - Laatste werkdag$'] as lx 
+                LEFT OUTER JOIN (
+                   SELECT 
+                   MIN(l.id) as 'id' 
+                   ,l.[Begin storing]
+                   ,l.Machines
+                   FROM  GADATA.EqUi.['Zone - Lijst - Laatste werkdag$'] as l  
+                   GROUP BY    
+                    l.[Begin storing]
+                   ,l.Machines
+                ) as KeepRows ON
+                   lx.Id = KeepRows.Id
+                WHERE
+                   KeepRows.Id IS NULL
+                ";
+                lGadataComm.RunCommandGadata(cmdRemoveDup);
+                //check how many record now
+                DataTable countAfter = lGadataComm.RunQueryGadata(qryCount);
+                MessageBox.Show(string.Format(@"
+Finished with operation
+before: {0}
+after: {1}
+new records ={2}"   , countBefore.Rows[0].Field<int>("count").ToString()
+                    , countAfter.Rows[0].Field<int>("count").ToString()
+                    , (countBefore.Rows[0].Field<int>("count")-countAfter.Rows[0].Field<int>("count")).ToString())
+                    , "Confirmation", MessageBoxButtons.OK);
             }
            catch (Exception ex)
             {
                 ldebugger.Exeption(ex);
+                ldebugger.Message(ex.Message);
             }
         }
 
