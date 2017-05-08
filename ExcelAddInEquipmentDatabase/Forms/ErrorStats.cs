@@ -65,6 +65,19 @@ UNION
 SELECT 
   getdate() as 'starttime'
 , 0 as 'count'
+
+if @controllerTYPE = 'IRC5'
+BEGIN
+SELECT
+  h.c_timestamp as 'starttime'
+, 1 as 'count'
+FROM gadata.abb.h_alarm as h 
+left join gadata.abb.l_error as l on l.id = h.error_id
+where l.[error_number] = @errornum and h.controller_id = @controllerID
+UNION
+SELECT 
+  getdate() as 'starttime'
+, 0 as 'count'
 END
 ", Location, Errornum);
             //fill dataset with all errors

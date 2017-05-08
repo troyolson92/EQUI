@@ -222,7 +222,10 @@ namespace ExcelAddInEquipmentDatabase
                   (
                   REPLACE(assets.LOCATION,'JB','R') LIKE rr.controller_name+'%'
                   )
-                where assets.LocationTree like 'VCG -> A%' AND assets.ASSETNUM like 'U%'
+                where 
+				(assets.LocationTree like 'VCG -> A%' AND assets.ASSETNUM like 'U%')
+				OR
+				(assets.LocationTree like 'VCG -> B%' AND assets.ASSETNUM like 'U%')
 
 
                 ";

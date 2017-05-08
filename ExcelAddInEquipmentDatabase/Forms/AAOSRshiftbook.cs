@@ -119,8 +119,8 @@ namespace ExcelAddInEquipmentDatabase.Forms
                 , dt.Rows[0].Field<int>("Breakdownreference")
                 , dt.Rows[0].Field<Int64>("ShiftbookID")
                 , Environment.UserName
-                , tb_Ci.Text
-                , tb_WO.Text 
+                , tb_WO.Text
+                , tb_Ci.Text 
                 , cob_Status.Text
                 , tb_userdescription.Text
                 , tb_usercomment.Text

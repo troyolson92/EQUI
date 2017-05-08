@@ -684,8 +684,18 @@ namespace ExcelAddInEquipmentDatabase
 
         private void sync_stw040_Click(object sender, RibbonControlEventArgs e)
         {
+            sync_stw040.Enabled = false;
             stw040Sync lstw040Sync = new stw040Sync();
             lstw040Sync.get_swt040data();
+            sync_stw040.Enabled = true;
+        }
+
+        private void btn_sync_mx7_Click(object sender, RibbonControlEventArgs e)
+        {
+            btn_sync_mx7.Enabled = false;
+            mx7Sync lmx7Sync = new mx7Sync();
+            lmx7Sync.get_mx7data();
+            btn_sync_mx7.Enabled = true;
         }
         //
 
