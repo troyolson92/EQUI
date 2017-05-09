@@ -99,19 +99,13 @@ namespace ExcelAddInEquipmentDatabase
 
         if (Properties.Settings.Default.userlevel >= 100) // admin level 
             {
-             dd_User.Enabled = true;
-             btn_ConnectionManager.Enabled = true;
-             btn_AssetManager.Enabled = true;
-             btn_docMngr.Enabled = true;
-             btn_ErrorMngr.Enabled = true;
+//everything is on
             }
         else if (Properties.Settings.Default.userlevel >= 10) // power user
         {
             dd_User.Enabled = false;
-            btn_ConnectionManager.Enabled = true;
             btn_AssetManager.Enabled = false;
             btn_docMngr.Enabled = false;
-            btn_ErrorMngr.Enabled = true;
         }
         else
         { 
@@ -121,6 +115,8 @@ namespace ExcelAddInEquipmentDatabase
             btn_AssetManager.Enabled = false;
             btn_docMngr.Enabled = false;
             btn_ErrorMngr.Enabled = false;
+            btn_sync_mx7.Enabled = false;
+            sync_stw040.Enabled = false;
         }
         }
 
@@ -391,7 +387,7 @@ namespace ExcelAddInEquipmentDatabase
             { 
                @"\\gnlsnm0101.gen.volvocars.net\proj\6308-Shr-VC024800\OBJECTBEHEER GA\Robots\12. SW + Tools\RobotDatabase\VSTO\Templates\EqDbGADATATemplate.xlsx"
               ,@"\\gnlsnm0101.gen.volvocars.net\proj\6308-Shr-VC024800\OBJECTBEHEER GA\Robots\12. SW + Tools\RobotDatabase\VSTO\Templates\EqDbGADATATemplateSuperVis.xlsx"
-           //   ,@"\\gnlsnm0101.gen.volvocars.net\proj\6308-Shr-VC024800\OBJECTBEHEER GA\Robots\12. SW + Tools\RobotDatabase\VSTO\Templates\EqDbTemplate_v0.4.xlsx" 
+              ,@"\\gnlsnm0101.gen.volvocars.net\proj\6308-Shr-VC024800\OBJECTBEHEER GA\Robots\12. SW + Tools\RobotDatabase\VSTO\Templates\EqDbGBDATATemplate.xlsx" 
             });
             foreach (string file in Files)
             {
@@ -535,9 +531,12 @@ namespace ExcelAddInEquipmentDatabase
             ProcMngr.startDate.input = DateTime.Now.AddDays(Convert.ToInt32(ProcMngr.daysBack.input) * -1); 
             ProcMngr.endDate.input = DateTime.Now;
             //Always include child assets for now. (will make tis beter or server side later) 
+            if ((!String.IsNullOrEmpty(ProcMngr.locations.input) && Char.IsLetter(ProcMngr.locations.input[0])) == false) //because of GB locations issue
+            {
                 ProcMngr.locations.input = Regex.Replace(ProcMngr.locations.input, @"[A-Za-z\s]", "%");
                 if (ProcMngr.locations.input.TrimEnd().EndsWith("%") == false) { ProcMngr.locations.input = ProcMngr.locations.input + "%"; }
                 cb_locations.Text = ProcMngr.locations.input;
+            }
             //
             Excel._Workbook activeWorkbook = Globals.ThisAddIn.Application.ActiveWorkbook as Excel.Workbook;
             if (dd_activeConnection.SelectedItem.Label == "RefreshAll")

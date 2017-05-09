@@ -38,7 +38,15 @@ namespace ExcelAddInEquipmentDatabase.Forms
             bwWorkorders.RunWorkerCompleted += bwWorkorders_RunWorkerCompleted;
             //store original query location
             Llocation = location;
-            tb_location.Text = Regex.Replace(location, @"[A-Za-z\s]", "%") + "%";
+             ////because of GB locations issue
+            if ((!String.IsNullOrEmpty(Llocation) && Char.IsLetter(Llocation[0])))
+            {
+                tb_location.Text = Llocation;
+            }
+            else 
+            {
+                tb_location.Text = Regex.Replace(Llocation, @"[A-Za-z\s]", "%") + "%"; 
+            }
             //
             lPartmode = partmode;
             if (partmode)
@@ -64,7 +72,15 @@ namespace ExcelAddInEquipmentDatabase.Forms
             metroProgressSpinner1.Hide();
             btn_refresh.Enabled = true;
             cb_preventive.Enabled = true;
-            cb_ciblings.Enabled = true;
+            if ((!String.IsNullOrEmpty(Llocation) && Char.IsLetter(Llocation[0])))
+            {
+                cb_ciblings.Enabled = false;
+            }
+            else
+            {
+                cb_ciblings.Enabled = true;
+            }
+
         }
 
 
@@ -153,7 +169,15 @@ ORDER BY WORKORDER.STATUSDATE
             metroProgressSpinner1.Show();
             //store original query location
             Llocation = tb_location.Text;
-            tb_location.Text = Regex.Replace(Llocation, @"[A-Za-z\s]", "%") + "%";
+            ////because of GB locations issue
+            if ((!String.IsNullOrEmpty(Llocation) && Char.IsLetter(Llocation[0])))
+            {
+                tb_location.Text = Llocation;
+            }
+            else
+            {
+                tb_location.Text = Regex.Replace(Llocation, @"[A-Za-z\s]", "%") + "%"; 
+            }
             //
             getMaximoWorkorder(tb_location.Text, lPartmode);
             dataGridView1.DataSource = tableFromMx7;
@@ -165,7 +189,16 @@ ORDER BY WORKORDER.STATUSDATE
             metroProgressSpinner1.Hide();
             btn_refresh.Enabled = true;
             cb_preventive.Enabled = true;
-            cb_ciblings.Enabled = true;
+            ////because of GB locations issue
+            if ((!String.IsNullOrEmpty(Llocation) && Char.IsLetter(Llocation[0])))
+            {
+                cb_ciblings.Enabled = false;
+            }
+            else
+            {
+                cb_ciblings.Enabled = true;
+            }
+
         }
 
         private void apply_filter()

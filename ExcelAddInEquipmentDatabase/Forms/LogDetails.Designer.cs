@@ -36,6 +36,8 @@
             this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
             this.tb_location = new MetroFramework.Controls.MetroTextBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.metroLabel3 = new MetroFramework.Controls.MetroLabel();
+            this.tb_refid = new MetroFramework.Controls.MetroTextBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -51,7 +53,7 @@
             // tb_errorId
             // 
             this.tb_errorId.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.tb_errorId.Location = new System.Drawing.Point(306, 3);
+            this.tb_errorId.Location = new System.Drawing.Point(246, 3);
             this.tb_errorId.Name = "tb_errorId";
             this.tb_errorId.Size = new System.Drawing.Size(87, 22);
             this.tb_errorId.TabIndex = 1;
@@ -60,9 +62,9 @@
             // btn_get
             // 
             this.btn_get.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn_get.Location = new System.Drawing.Point(435, 3);
+            this.btn_get.Location = new System.Drawing.Point(486, 3);
             this.btn_get.Name = "btn_get";
-            this.btn_get.Size = new System.Drawing.Size(75, 22);
+            this.btn_get.Size = new System.Drawing.Size(73, 22);
             this.btn_get.TabIndex = 2;
             this.btn_get.Text = "Refresh";
             this.btn_get.Click += new System.EventHandler(this.btn_get_Click);
@@ -71,7 +73,7 @@
             // 
             this.metroLabel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.metroLabel1.AutoSize = true;
-            this.metroLabel1.Location = new System.Drawing.Point(226, 0);
+            this.metroLabel1.Location = new System.Drawing.Point(166, 0);
             this.metroLabel1.Name = "metroLabel1";
             this.metroLabel1.Size = new System.Drawing.Size(74, 20);
             this.metroLabel1.TabIndex = 3;
@@ -109,24 +111,48 @@
             // 
             // tableLayoutPanel1
             // 
-            this.tableLayoutPanel1.ColumnCount = 6;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 60F));
+            this.tableLayoutPanel1.ColumnCount = 9;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel1.Controls.Add(this.tb_location, 1, 0);
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel1.Controls.Add(this.metroLabel2, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.btn_get, 5, 0);
+            this.tableLayoutPanel1.Controls.Add(this.metroLabel1, 2, 0);
             this.tableLayoutPanel1.Controls.Add(this.tb_errorId, 4, 0);
-            this.tableLayoutPanel1.Controls.Add(this.metroLabel1, 3, 0);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(265, 26);
+            this.tableLayoutPanel1.Controls.Add(this.btn_get, 8, 0);
+            this.tableLayoutPanel1.Controls.Add(this.metroLabel3, 6, 0);
+            this.tableLayoutPanel1.Controls.Add(this.tb_location, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.tb_refid, 7, 0);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(251, 26);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(513, 28);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(562, 28);
             this.tableLayoutPanel1.TabIndex = 7;
+            // 
+            // metroLabel3
+            // 
+            this.metroLabel3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.metroLabel3.AutoSize = true;
+            this.metroLabel3.Location = new System.Drawing.Point(339, 0);
+            this.metroLabel3.Name = "metroLabel3";
+            this.metroLabel3.Size = new System.Drawing.Size(43, 20);
+            this.metroLabel3.TabIndex = 7;
+            this.metroLabel3.Text = "RefId:";
+            // 
+            // tb_refid
+            // 
+            this.tb_refid.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.tb_refid.Location = new System.Drawing.Point(388, 3);
+            this.tb_refid.Name = "tb_refid";
+            this.tb_refid.Size = new System.Drawing.Size(87, 22);
+            this.tb_refid.TabIndex = 8;
+            this.tb_refid.Text = "metroTextBox1";
             // 
             // LogDetails
             // 
@@ -154,5 +180,7 @@
         private MetroFramework.Controls.MetroLabel metroLabel2;
         private MetroFramework.Controls.MetroTextBox tb_location;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private MetroFramework.Controls.MetroLabel metroLabel3;
+        private MetroFramework.Controls.MetroTextBox tb_refid;
     }
 }

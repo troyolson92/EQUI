@@ -37,8 +37,16 @@ namespace ExcelAddInEquipmentDatabase.Forms
         {
             InitializeComponent();
             lLocation = Location;
-            tb_location.Text = Regex.Replace(lLocation, @"[A-Za-z\s]", "%") + "%";
-
+           
+            //to play nice with gb locations need to clean this up 
+            if ((!String.IsNullOrEmpty(lLocation) && Char.IsLetter(lLocation[0])) == false)
+            {
+                tb_location.Text = lLocation;
+            }
+            else
+            {
+                tb_location.Text = Regex.Replace(lLocation, @"[A-Za-z\s]", "%") + "%";
+            }
             this.Text = string.Format("AssetStats tool Location: {0}",Location);
             //
             cb_sortmode.Items.Clear();

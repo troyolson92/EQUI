@@ -118,7 +118,6 @@ namespace ExcelAddInEquipmentDatabase
 
                     btn = AddButtonToTableMenuItem("AssetStats", 3, 610); 
                     btn.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(AssetStatsMenuItemClick);
-                    if (ExcelAddInEquipmentDatabase.Properties.Settings.Default.usergroup != "AAOSR") { btn.Enabled = false; }
             }
 
             addFormattingSubmenu(5);
@@ -262,7 +261,7 @@ namespace ExcelAddInEquipmentDatabase
         //**********************************Error details*********************************************
         void ErrorDetailsMenuItemClick(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)
         {
-            Forms.LogDetails lLogDetails = new Forms.LogDetails(location, errornum); //allow multible instances of the form.
+            Forms.LogDetails lLogDetails = new Forms.LogDetails(location, errornum,refid); //allow multible instances of the form.
             lLogDetails.Show();
         }
         //**********************************Error Stats*********************************************

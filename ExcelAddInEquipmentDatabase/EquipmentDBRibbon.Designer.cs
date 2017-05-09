@@ -62,7 +62,7 @@
             this.btn_docMngr = this.Factory.CreateRibbonButton();
             this.btn_ErrorMngr = this.Factory.CreateRibbonButton();
             this.tbtn_StopRightClick = this.Factory.CreateRibbonToggleButton();
-            this.group1 = this.Factory.CreateRibbonGroup();
+            this.groupTempTools = this.Factory.CreateRibbonGroup();
             this.sync_stw040 = this.Factory.CreateRibbonButton();
             this.btn_sync_mx7 = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
@@ -70,7 +70,7 @@
             this.group2.SuspendLayout();
             this.AssetManager.SuspendLayout();
             this.g_config.SuspendLayout();
-            this.group1.SuspendLayout();
+            this.groupTempTools.SuspendLayout();
             // 
             // tab1
             // 
@@ -83,7 +83,7 @@
             this.rib2.Groups.Add(this.group2);
             this.rib2.Groups.Add(this.AssetManager);
             this.rib2.Groups.Add(this.g_config);
-            this.rib2.Groups.Add(this.group1);
+            this.rib2.Groups.Add(this.groupTempTools);
             this.rib2.Label = "EQDATABASE";
             this.rib2.Name = "rib2";
             // 
@@ -240,7 +240,6 @@
             // 
             // dd_User
             // 
-            this.dd_User.Enabled = false;
             this.dd_User.Label = "U:";
             this.dd_User.Name = "dd_User";
             this.dd_User.SelectionChanged += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.dd_User_SelectionChanged);
@@ -295,12 +294,12 @@
             this.tbtn_StopRightClick.Name = "tbtn_StopRightClick";
             this.tbtn_StopRightClick.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.tbtn_StopRightClick_Click);
             // 
-            // group1
+            // groupTempTools
             // 
-            this.group1.Items.Add(this.sync_stw040);
-            this.group1.Items.Add(this.btn_sync_mx7);
-            this.group1.Label = "group1";
-            this.group1.Name = "group1";
+            this.groupTempTools.Items.Add(this.sync_stw040);
+            this.groupTempTools.Items.Add(this.btn_sync_mx7);
+            this.groupTempTools.Label = "TempTools";
+            this.groupTempTools.Name = "groupTempTools";
             // 
             // sync_stw040
             // 
@@ -331,8 +330,8 @@
             this.AssetManager.PerformLayout();
             this.g_config.ResumeLayout(false);
             this.g_config.PerformLayout();
-            this.group1.ResumeLayout(false);
-            this.group1.PerformLayout();
+            this.groupTempTools.ResumeLayout(false);
+            this.groupTempTools.PerformLayout();
 
         }
 
@@ -366,7 +365,7 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonSeparator separator3;
         internal Microsoft.Office.Tools.Ribbon.RibbonToggleButton tbn_3;
         internal Microsoft.Office.Tools.Ribbon.RibbonGallery gall_templates;
-        internal Microsoft.Office.Tools.Ribbon.RibbonGroup group1;
+        internal Microsoft.Office.Tools.Ribbon.RibbonGroup groupTempTools;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton sync_stw040;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_sync_mx7;
     }

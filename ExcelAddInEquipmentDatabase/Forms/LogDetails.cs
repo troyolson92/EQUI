@@ -18,7 +18,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
         BackgroundWorker bw = new BackgroundWorker();
         MaximoComm lMaximoComm = new MaximoComm();
 
-        public LogDetails(string Location, string Errornum)
+        public LogDetails(string Location, string Errornum, int RefId)
         {
             InitializeComponent();
                         bw.DoWork += bw_DoWork;
@@ -31,6 +31,8 @@ namespace ExcelAddInEquipmentDatabase.Forms
                 tb_errorId.Enabled = false;
                 tb_location.Text = Location;
                 tb_location.Enabled = false;
+                tb_refid.Text = RefId.ToString();
+                tb_refid.Enabled = false;
                 btn_get.Visible = false;
                 bw.RunWorkerAsync();
             }
@@ -40,6 +42,8 @@ namespace ExcelAddInEquipmentDatabase.Forms
                 tb_errorId.Enabled = true;
                 tb_location.Text = "xxxx";
                 tb_location.Enabled = true;
+                tb_refid.Text = "xxxx";
+                tb_refid.Enabled = true;
                 btn_get.Visible = true;
             }
         }
@@ -63,8 +67,8 @@ namespace ExcelAddInEquipmentDatabase.Forms
     @"
 DECLARE @Location as varchar(max) = '{0}'
 DECLARE @ERRORNUM as int = {1} 
+DECLARE @Refid as int = {2}
 DECLARE @controllerTYPE as varchar(10) = (select top 1 controller_type from gadata.equi.ASSETS where RTRIM(location) = @Location)
-
 --voor c3g
 if @controllerTYPE = 'c3g'
 BEGIN
@@ -91,15 +95,16 @@ END
 if @controllerTYPE = 'IRC5'
 BEGIN
 select top 1 
-'Will use this for user info later ... bye bye sdebeul' as 'INFO' 
+ l.error_text as 'INFO' 
 ,c.cause_text as 'Cause' 
 ,R.Remedy_text as 'Remedy'
 from GADATA.ABB.h_alarm as h 
 left join GADATA.ABB.L_Cause as c on c.id = h.cause_id
 left join GADATA.ABB.L_Remedy as R on R.id = h.remedy_id
-WHERE h.id = @ERRORNUM
+left join GADATA.ABB.L_error as l on l.id = h.error_id
+WHERE h.id = @Refid
 END
-", tb_location.Text, tb_errorId.Text);
+", tb_location.Text, tb_errorId.Text, tb_refid.Text);
 
             //fill dataset
             dt = lGdataComm.RunQueryGadata(qry);
@@ -125,6 +130,7 @@ END
             if (bw.IsBusy) { return; }
             bw.RunWorkerAsync();        
         }
+
 
     }
 }
