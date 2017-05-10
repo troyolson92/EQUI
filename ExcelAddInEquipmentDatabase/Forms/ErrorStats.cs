@@ -34,6 +34,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
             //query all instances of the error 
             string qry = string.Format(
     @"
+
 DECLARE @Location as varchar(max) = '{0}'
 DECLARE @ERRORNUM as int = {1} -- why not use the index of the l_error ? might be smarter 
 DECLARE @controllerID as int = (select top 1 controller_id from gadata.equi.ASSETS where RTRIM(location) = @Location)
@@ -65,11 +66,12 @@ UNION
 SELECT 
   getdate() as 'starttime'
 , 0 as 'count'
+END
 
 if @controllerTYPE = 'IRC5'
 BEGIN
 SELECT
-  h.c_timestamp as 'starttime'
+  ISNULL(H._timestamp, H.wd_timestamp)  as 'starttime'
 , 1 as 'count'
 FROM gadata.abb.h_alarm as h 
 left join gadata.abb.l_error as l on l.id = h.error_id
