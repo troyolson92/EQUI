@@ -1,7 +1,8 @@
 define _assets = 'UR%';
-define _locations ='%';
+define _locations ='99%';
 define _StartDate = '2017-01-01 00:00:00';
 define _EndDate = '2018-01-01 00:00:00';
+define _nDays = '0';
 define _Owngergroup = '%';
 define _Reportedby = '%';
 define _Wonum = '%';
@@ -41,6 +42,6 @@ where
  WORKORDER.REPORTEDBY LIKE '&_Reportedby'
  AND
  WORKORDER.WONUM LIKE  '&_Wonum' 
- ORDER BY WORKORDER.STATUSDATE;
+ ORDER BY WORKORDER.STATUSDATE DESC;
 
 

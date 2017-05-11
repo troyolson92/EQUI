@@ -117,6 +117,7 @@ namespace ExcelAddInEquipmentDatabase
             btn_ErrorMngr.Enabled = false;
             btn_sync_mx7.Enabled = false;
             sync_stw040.Enabled = false;
+            btn_testUpdate.Enabled = false;
         }
         }
 
@@ -385,9 +386,9 @@ namespace ExcelAddInEquipmentDatabase
 
             List<string> Files = new List<string>(new string[] 
             { 
-               @"\\gnlsnm0101.gen.volvocars.net\proj\6308-Shr-VC024800\OBJECTBEHEER GA\Robots\12. SW + Tools\RobotDatabase\VSTO\Templates\EqDbGADATATemplate.xlsx"
-              ,@"\\gnlsnm0101.gen.volvocars.net\proj\6308-Shr-VC024800\OBJECTBEHEER GA\Robots\12. SW + Tools\RobotDatabase\VSTO\Templates\EqDbGADATATemplateSuperVis.xlsx"
-              ,@"\\gnlsnm0101.gen.volvocars.net\proj\6308-Shr-VC024800\OBJECTBEHEER GA\Robots\12. SW + Tools\RobotDatabase\VSTO\Templates\EqDbGBDATATemplate.xlsx" 
+               @"https://sharepoint.volvocars.net/sites/vcg_ga_aaosr/PublicDocuments/VSTO/Templates/EqDbGADATATemplate.xlsx"
+              ,@"https://sharepoint.volvocars.net/sites/vcg_ga_aaosr/PublicDocuments/VSTO/Templates/EqDbGADATATemplateSuperVis.xlsx"
+              ,@"https://sharepoint.volvocars.net/sites/vcg_ga_aaosr/PublicDocuments/VSTO/Templates/EqDbGBDATATemplate.xlsx" 
             });
             foreach (string file in Files)
             {
@@ -601,7 +602,7 @@ namespace ExcelAddInEquipmentDatabase
 
         private void btn_help_Click(object sender, RibbonControlEventArgs e)
         {
-            string helpfile = @"\\gnlsnm0101.gen.volvocars.net\proj\6308-Shr-VC024800\OBJECTBEHEER GA\Robots\12. SW + Tools\RobotDatabase\VSTO\Manuals\VSTO EQdatabase.pdf";
+            string helpfile = @"https://sharepoint.volvocars.net/sites/vcg_ga_aaosr/PublicDocuments/VSTO/Manuals/VSTO EQdatabase.pdf";
             try
             {
                 Process process = new Process();
@@ -696,6 +697,14 @@ namespace ExcelAddInEquipmentDatabase
             lmx7Sync.get_mx7data();
             btn_sync_mx7.Enabled = true;
         }
+
+        private void btn_testUpdate_Click(object sender, RibbonControlEventArgs e)
+        {
+            ClickOnceUtil clickonceutil = new ClickOnceUtil();
+            clickonceutil.test();
+           // clickonceutil.CheckAndUpdate();
+        }
+
         //
 
 

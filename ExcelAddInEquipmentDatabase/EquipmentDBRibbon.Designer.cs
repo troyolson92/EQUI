@@ -65,6 +65,7 @@
             this.groupTempTools = this.Factory.CreateRibbonGroup();
             this.sync_stw040 = this.Factory.CreateRibbonButton();
             this.btn_sync_mx7 = this.Factory.CreateRibbonButton();
+            this.btn_testUpdate = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
             this.rib2.SuspendLayout();
             this.group2.SuspendLayout();
@@ -298,6 +299,7 @@
             // 
             this.groupTempTools.Items.Add(this.sync_stw040);
             this.groupTempTools.Items.Add(this.btn_sync_mx7);
+            this.groupTempTools.Items.Add(this.btn_testUpdate);
             this.groupTempTools.Label = "TempTools";
             this.groupTempTools.Name = "groupTempTools";
             // 
@@ -312,6 +314,12 @@
             this.btn_sync_mx7.Label = "btn_sync_mx7";
             this.btn_sync_mx7.Name = "btn_sync_mx7";
             this.btn_sync_mx7.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_sync_mx7_Click);
+            // 
+            // btn_testUpdate
+            // 
+            this.btn_testUpdate.Label = "btn_testUpdate";
+            this.btn_testUpdate.Name = "btn_testUpdate";
+            this.btn_testUpdate.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_testUpdate_Click);
             // 
             // EquipmentDBRibbon
             // 
@@ -368,6 +376,7 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup groupTempTools;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton sync_stw040;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_sync_mx7;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_testUpdate;
     }
 
     partial class ThisRibbonCollection
