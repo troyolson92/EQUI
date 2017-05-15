@@ -705,6 +705,12 @@ namespace ExcelAddInEquipmentDatabase
            // clickonceutil.CheckAndUpdate();
         }
 
+        //test
+        private void button1_Click_1(object sender, RibbonControlEventArgs e)
+        {
+            Forms.SBCUStats lSBCUStats = new Forms.SBCUStats(""); //allow multible instances of the form.
+        }
+
         //
 
 

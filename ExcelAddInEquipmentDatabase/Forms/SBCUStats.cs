@@ -19,6 +19,8 @@ namespace ExcelAddInEquipmentDatabase.Forms
         GadataComm lGdataComm = new GadataComm();
         DataTable dt_longSBCU;
         DataTable dt_shortSBCU;
+        DataTable dt_Cylinder;
+        DataTable dt_MidAir;
 
         public SBCUStats(string Location)
         {
@@ -43,7 +45,6 @@ namespace ExcelAddInEquipmentDatabase.Forms
             chart1.Series[0].XValueType = ChartValueType.DateTime;
             chart1.Series["DeltaSetup"].BorderWidth = 3;
             chart1.ChartAreas[0].AxisX.Interval = 1;
-            
             chart1.FormatNumber += chart1_FormatNumber;
             chart1.Series["DeltaSetup"].Color = System.Drawing.Color.Red;
             //init chart short sbcu
@@ -56,6 +57,26 @@ namespace ExcelAddInEquipmentDatabase.Forms
             chart2.ChartAreas[0].AxisX.Interval = 1;
             chart2.FormatNumber += chart1_FormatNumber;
             chart2.Series["DeltaSetup"].Color = System.Drawing.Color.Blue;
+            //init chart Cylinder
+            chart3.Series.Add("TotalTime");
+            chart3.Series["TotalTime"].XValueMember = "_timestamp";
+            chart3.Series["TotalTime"].YValueMembers = "TotalTime";
+            chart3.Series["TotalTime"].ChartType = SeriesChartType.Line;
+            chart3.Series[0].XValueType = ChartValueType.DateTime;
+            chart3.Series["TotalTime"].BorderWidth = 3;
+            chart3.ChartAreas[0].AxisX.Interval = 1;
+            chart3.FormatNumber += chart1_FormatNumber;
+            chart3.Series["TotalTime"].Color = System.Drawing.Color.Green;
+            //init chart MidAir
+            chart4.Series.Add("ResisActual");
+            chart4.Series["ResisActual"].XValueMember = "timestamp";
+            chart4.Series["ResisActual"].YValueMembers = "ResisActual";
+            chart4.Series["ResisActual"].ChartType = SeriesChartType.Line;
+            chart4.Series[0].XValueType = ChartValueType.DateTime;
+            chart4.Series["ResisActual"].BorderWidth = 3;
+            chart4.ChartAreas[0].AxisX.Interval = 1;
+            chart4.FormatNumber += chart1_FormatNumber;
+            chart4.Series["ResisActual"].Color = System.Drawing.Color.Black ;
 
             //query all instances of the error 
             #region Query
@@ -117,13 +138,127 @@ SELECT
 ,getdate() as 'tool_timestamp' 
 ,null
                 ";
+            string qryCylinder = @"
+--timeparameters
+   DECLARE 
+   @StartDate as DATETIME = null,
+   @EndDate as DATETIME = null,
+--Filterparameters.
+   @Robot as varchar(25) = '57050r03%',
+   @Tool as varchar(25) = 'Tool: 1',
+   @Weldgunname as varchar(25) = '{0}'
+
+
+---------------------------------------------------------------------------------------
+--Als er een weldgun name word gebruikt zoeken we de juiste robot en tool id op..
+---------------------------------------------------------------------------------------
+
+if (@Weldgunname is not null)
+BEGIN
+SET @Robot = (SELECT TOP 1 '%' + rws.Robot + '%' from GADATA.volvo.RobotWeldGunRelation as rws where rws.WeldgunName LIKE @Weldgunname)
+SET @Tool = (SELECT TOP 1 '%Tool: ' + CAST(rws.ElectrodeNbr as varchar(2)) + '%' from GADATA.volvo.RobotWeldGunRelation as rws where rws.WeldgunName LIKE @Weldgunname)
+END
+
+---------------------------------------------------------------------------------------
+--Set default values of start and end date
+---------------------------------------------------------------------------------------
+if ((@StartDate is null) OR (@StartDate = '1900-01-01 00:00:00:000'))
+BEGIN
+SET @StartDate = GETDATE()-300
+END
+
+if ((@EndDate is null) OR (@EndDate = '1900-01-01 00:00:00:000'))
+BEGIN
+SET @EndDate = GETDATE()
+END
+
+SELECT [location]
+      ,[controller_name]
+      ,[Controller_id]
+      ,[_timestamp]
+      ,[CodedValue]
+      ,[Tool_id]
+      ,[CloseToSemi]
+      ,[SemiToOpen]
+      ,[TotalTime]
+      ,[RefAVG]
+      ,[RefSTDEC]
+      ,[LCL]
+      ,[UCL]
+      ,[RefDp]
+      ,[RefSS]
+      ,[id]
+  FROM [GADATA].[C3G].[WeldGunCylinder]
+
+WHERE
+[WeldGunCylinder]._timestamp between   @startdate and @EndDate 
+AND
+[WeldGunCylinder].[controller_name] LIKE @Robot
+AND
+'%Tool: ' + CAST([WeldGunCylinder].tool_id as varchar(2)) LIKE @Tool     
+";
+
+            string qryMidair = @"
+--timeparameters
+   DECLARE 
+   @StartDate as DATETIME = null,
+   @EndDate as DATETIME = null,
+--Filterparameters.
+   @Robot as varchar(25) = '57050r03%',
+   @Tool as varchar(25) = 'Tool: 1',
+   @Weldgunname as varchar(25) = '{0}'
+
+
+---------------------------------------------------------------------------------------
+--Als er een weldgun name word gebruikt zoeken we de juiste robot en tool id op..
+---------------------------------------------------------------------------------------
+
+if (@Weldgunname is not null)
+BEGIN
+SET @Robot = (SELECT TOP 1 '%' + rws.Robot + '%' from GADATA.volvo.RobotWeldGunRelation as rws where rws.WeldgunName LIKE @Weldgunname)
+SET @Tool = (SELECT TOP 1 '%Tool: ' + CAST(rws.ElectrodeNbr as varchar(2)) + '%' from GADATA.volvo.RobotWeldGunRelation as rws where rws.WeldgunName LIKE @Weldgunname)
+END
+
+---------------------------------------------------------------------------------------
+--Set default values of start and end date
+---------------------------------------------------------------------------------------
+if ((@StartDate is null) OR (@StartDate = '1900-01-01 00:00:00:000'))
+BEGIN
+SET @StartDate = GETDATE()-30
+END
+
+if ((@EndDate is null) OR (@EndDate = '1900-01-01 00:00:00:000'))
+BEGIN
+SET @EndDate = GETDATE()
+END
+
+SELECT [Robotname]
+      ,[Tool]
+      ,[timestamp]
+      ,[SpotId]
+      ,[ResisActual]
+      ,[ResisRef]
+  FROM [GADATA].[dbo].[MidairRef]
+
+WHERE
+[MidairRef].[timestamp] between   @startdate and @EndDate 
+AND
+[MidairRef].[Robotname] LIKE @Robot
+AND
+[MidairRef].[Tool] LIKE @Tool   
+      
+";
             #endregion
             //fill dataset with all errors
             dt_longSBCU = lGdataComm.RunQueryGadata(string.Format(qrySBCUShortLong,1,Location.Trim()));
             dt_shortSBCU = lGdataComm.RunQueryGadata(string.Format(qrySBCUShortLong, 0,Location.Trim()));
+            dt_Cylinder = lGdataComm.RunQueryGadata(string.Format(qryCylinder, Location.Trim()));
+            //dt_MidAir = lGdataComm.RunQueryGadata(string.Format(qryMidair, Location.Trim()));
             //check if the result was valid 
-            if (dt_longSBCU.Rows.Count == 0) { Debugger.Message("The query long did not return a valid result"); this.Dispose(); return; };
-            if (dt_shortSBCU.Rows.Count == 0) { Debugger.Message("The query short did not return a valid result"); this.Dispose(); return; };
+            if (dt_longSBCU.Rows.Count == 0) { Debugger.Message("The query long did not return a valid result dt_longSBCU"); this.Dispose(); return; };
+            if (dt_shortSBCU.Rows.Count == 0) { Debugger.Message("The query short did not return a valid result dt_shortSBCU"); this.Dispose(); return; };
+            if (dt_Cylinder.Rows.Count == 0) { Debugger.Message("The query short did not return a valid result dt_Cylinder"); this.Dispose(); return; };
+            //if (dt_MidAir.Rows.Count == 0) { Debugger.Message("The query short did not return a valid result dt_MidAir"); this.Dispose(); return; };
             //setup trackbar (trackbar maximum = first time error happend, minium = now)
             DateTime First = (from a in dt_longSBCU.AsEnumerable() select a.Field<DateTime>("tool_timestamp")).Min();
             DateTime Last = (from a in dt_longSBCU.AsEnumerable() select a.Field<DateTime>("tool_timestamp")).Max();
@@ -166,6 +301,26 @@ SELECT
             chart2.DataSource = ldt_ShortSBCU;
             chart2.DataBind();
             //
+            if (dt_Cylinder != null)
+            {
+                var ldt_Cylinder = from a in dt_Cylinder.AsEnumerable()
+                                   where a.Field<DateTime>("_timestamp") > GrapStart && a.Field<DateTime>("_timestamp") < GrapEnd
+                                   orderby a.Field<DateTime>("_timestamp")
+                                   select a;
+                chart3.DataSource = ldt_Cylinder;
+                chart3.DataBind();
+            }
+            //
+            if (dt_MidAir != null)
+            {
+                var ldt_Midair = from a in dt_MidAir.AsEnumerable()
+                                 where a.Field<DateTime>("timestamp") > GrapStart && a.Field<DateTime>("timestamp") < GrapEnd
+                                 orderby a.Field<DateTime>("timestamp")
+                                 select a;
+                chart4.DataSource = ldt_Midair;
+                chart4.DataBind();
+            }
+            //
             DateTime FirstError = (from a in dt_longSBCU.AsEnumerable() select a.Field<DateTime>("tool_timestamp")).Min();
             //
             if (noAutoGrouping == false)
@@ -197,7 +352,11 @@ SELECT
                     chart1.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatTimestamp"; 
                     chart1.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.NotSet;
                     chart2.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatTimestamp"; 
-                    chart2.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.NotSet;                    
+                    chart2.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.NotSet;     
+                    chart3.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatTimestamp"; 
+                    chart3.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.NotSet; 
+                    chart4.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatTimestamp"; 
+                    chart4.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.NotSet; 
                     label1.Text = string.Format("First error: {0} ", FirstError);
                     label2.Text = string.Format("'Now'  DisplayMode:{0}", "NoGrouping");
                     break;
@@ -205,12 +364,18 @@ SELECT
                 case "Hours":
                     chart1.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatHour"; 
                     chart1.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Hours;
-                    chart2.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatHour"; 
+                    chart2.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatHour";
                     chart2.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Hours;
+                    chart3.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatHour"; 
+                    chart3.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Hours;
+                    chart4.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatHour"; 
+                    chart4.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Hours;
                     label1.Text = string.Format("First error: {0} ", FirstError);
                     label2.Text = string.Format("'Now'  DisplayMode:{0}", "GroupHourmode");
                     chart1.DataManipulator.Group("AVE", 1, IntervalType.Hours, "DeltaSetup");
                     chart2.DataManipulator.Group("AVE", 1, IntervalType.Hours, "DeltaSetup");
+                    chart3.DataManipulator.Group("AVE", 1, IntervalType.Hours, "TotalTime");
+                  //  chart4.DataManipulator.Group("AVE", 1, IntervalType.Hours, "timestamp");
                     break;
 
                 case "Days":
@@ -218,10 +383,16 @@ SELECT
                     chart1.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Days;
                     chart2.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatDay"; 
                     chart2.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Days;
+                    chart3.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatHour";
+                    chart3.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Days;
+                    chart4.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatHour";
+                    chart4.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Days;
                     label1.Text = string.Format("First error: {0} ", FirstError);
                     label2.Text = string.Format("'Now'  DisplayMode:{0}", "GroupDaymode");
                     chart1.DataManipulator.Group("AVE", 1, IntervalType.Days, "DeltaSetup");
                     chart2.DataManipulator.Group("AVE", 1, IntervalType.Days, "DeltaSetup");
+                    chart3.DataManipulator.Group("AVE", 1, IntervalType.Days, "TotalTime");
+                  //  chart4.DataManipulator.Group("AVE", 1, IntervalType.Days, "timestamp");
                     break;
 
                 case "Weeks":
@@ -229,10 +400,16 @@ SELECT
                     chart1.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Weeks;
                     chart2.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatWeek"; 
                     chart2.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Weeks;
+                    chart3.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatHour";
+                    chart3.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Weeks;
+                    chart4.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatHour";
+                    chart4.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Weeks;
                     label1.Text = string.Format("First error: {0} ", FirstError);
                     label2.Text = string.Format("'Now'  DisplayMode:{0}", "GroupWeekmode");
                     chart1.DataManipulator.Group("AVE", 1, IntervalType.Weeks, "DeltaSetup");
                     chart2.DataManipulator.Group("AVE", 1, IntervalType.Weeks, "DeltaSetup");
+                    chart3.DataManipulator.Group("AVE", 1, IntervalType.Weeks, "TotalTime");
+                 //   chart4.DataManipulator.Group("AVE", 1, IntervalType.Weeks, "timestamp");
                     break;
 
                 default:
@@ -302,6 +479,24 @@ SELECT
         private void cb_sortmode_SelectedValueChanged(object sender, EventArgs e)
         {
             built_Chart(true);
+        }
+
+        private void btn_dataview_Click(object sender, EventArgs e)
+        {
+            DataSet ldataset = new DataSet();
+            try
+            {
+
+                if (dt_longSBCU != null) { ldataset.Tables.Add(dt_longSBCU); }
+                if (dt_shortSBCU != null) { ldataset.Tables.Add(dt_shortSBCU); }
+                if (dt_Cylinder != null) { ldataset.Tables.Add(dt_Cylinder); }
+                if (dt_MidAir != null) { ldataset.Tables.Add(dt_MidAir); }
+            }
+            catch (Exception ex)
+            {
+                Debugger.Exeption(ex);
+            }
+            Forms.DataDisplay ldatadisplay = new Forms.DataDisplay(ldataset);
         }
 
     }

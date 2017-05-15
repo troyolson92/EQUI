@@ -35,12 +35,12 @@
     </UpgradeBackupLocation>
     <OldToolsVersion>4.0</OldToolsVersion>
     <VSTO_TrustAssembliesLocation>true</VSTO_TrustAssembliesLocation>
-    <IsWebBootstrapper>True</IsWebBootstrapper>
-    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <IsWebBootstrapper>False</IsWebBootstrapper>
+    <BootstrapperEnabled>false</BootstrapperEnabled>
     <PublishUrl>\\sharepoint.volvocars.net\sites\vcg_ga_aaosr\PublicDocuments\VSTO\DeploymentBase\</PublishUrl>
-    <InstallUrl>https://sharepoint.volvocars.net/sites/vcg_ga_aaosr/PublicDocuments/VSTO/DeploymentBase/</InstallUrl>
+    <InstallUrl />
     <TargetCulture>en</TargetCulture>
-    <ApplicationVersion>3.0.2.1</ApplicationVersion>
+    <ApplicationVersion>3.0.2.2</ApplicationVersion>
     <AutoIncrementApplicationRevision>true</AutoIncrementApplicationRevision>
     <UpdateEnabled>true</UpdateEnabled>
     <UpdateInterval>0</UpdateInterval>
