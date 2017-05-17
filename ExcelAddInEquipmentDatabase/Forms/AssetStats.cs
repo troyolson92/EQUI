@@ -182,25 +182,25 @@ namespace ExcelAddInEquipmentDatabase.Forms
     @"
 USE GADATA
 DECLARE @Location as varchar(max) = '{0}'
-DECLARE @controllerTYPE as varchar(10) = (select top 1 controller_type from gadata.equi.ASSETS where RTRIM(controller_name) LIKE @Location and controller_type is not null)
+DECLARE @controllerTYPE as varchar(10) = (select top 1 controller_type from gadata.equi.ASSETS where RTRIM(Location) LIKE @Location and controller_type is not null)
 
 if @controllerTYPE = 'c3g'
 BEGIN
 SELECT 
- c3g_breakdown.Location as 'Location'
-,c3g_breakdown.timestamp as 'starttime'
-,c3g_breakdown.[Response(s)]/60 as 'Responsetime'
-,(c3g_breakdown.[Downtime(s)] - c3g_breakdown.[Response(s)]) / 60 as 'ResolveTime'
-,c3g_breakdown.[Downtime(s)]/60 as 'Downtime'
+ breakdown.Location as 'Location'
+,breakdown.timestamp as 'starttime'
+,breakdown.[Response(s)]/60 as 'Responsetime'
+,(breakdown.[Downtime(s)] - breakdown.[Response(s)]) / 60 as 'ResolveTime'
+,breakdown.[Downtime(s)]/60 as 'Downtime'
 , 1 as 'countDT'
 , null as 'countWO'
 , null as 'WONUM'
 , null as 'WORKTYPE'
-from GADATA.EqUi.c3g_breakdown
+from GADATA.c3g.breakdown
 where 
-c3g_breakdown.controller_name like @Location
+breakdown.Location like @Location
 AND 
-c3g_breakdown.Subgroup not in('EO Maint','Operational**','Operational')
+breakdown.Subgroup not in('EO Maint','Operational**','Operational')
 
 UNION
 SELECT 
@@ -218,20 +218,20 @@ END
 if @controllerTYPE = 'c4g'
 BEGIN
 SELECT
- c4g_breakdown.Location as 'Location'
-,c4g_breakdown.timestamp as 'starttime'
-,c4g_breakdown.[Response(s)]/60 as 'Responsetime'
-,(c4g_breakdown.[Downtime(s)] - c4g_breakdown.[Response(s)]) / 60 as 'ResolveTime'
-,c4g_breakdown.[Downtime(s)]/60 as 'Downtime'
+ breakdown.Location as 'Location'
+,breakdown.timestamp as 'starttime'
+,breakdown.[Response(s)]/60 as 'Responsetime'
+,(breakdown.[Downtime(s)] - breakdown.[Response(s)]) / 60 as 'ResolveTime'
+,breakdown.[Downtime(s)]/60 as 'Downtime'
 , 1 as 'countDT'
 , null as 'countWO'
 , null as 'WONUM'
 , null as 'WORKTYPE'
-from GADATA.EqUi.c4g_breakdown
+from GADATA.c4g.breakdown
 where 
-c4g_breakdown.controller_name like @Location
+breakdown.Location like @Location
 AND 
-c4g_breakdown.Subgroup not in('EO Maint','Operational**','Operational')
+breakdown.Subgroup not in('EO Maint','Operational**','Operational')
 
 UNION
 SELECT 

@@ -172,23 +172,7 @@ BEGIN
 SET @EndDate = GETDATE()
 END
 
-SELECT [location]
-      ,[controller_name]
-      ,[Controller_id]
-      ,[_timestamp]
-      ,[CodedValue]
-      ,[Tool_id]
-      ,[CloseToSemi]
-      ,[SemiToOpen]
-      ,[TotalTime]
-      ,[RefAVG]
-      ,[RefSTDEC]
-      ,[LCL]
-      ,[UCL]
-      ,[RefDp]
-      ,[RefSS]
-      ,[id]
-  FROM [GADATA].[C3G].[WeldGunCylinder]
+SELECT * FROM [GADATA].[C3G].[WeldGunCylinder]
 
 WHERE
 [WeldGunCylinder]._timestamp between   @startdate and @EndDate 

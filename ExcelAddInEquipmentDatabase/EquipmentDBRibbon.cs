@@ -106,6 +106,10 @@ namespace ExcelAddInEquipmentDatabase
             dd_User.Enabled = false;
             btn_AssetManager.Enabled = false;
             btn_docMngr.Enabled = false;
+            btn_sync_mx7.Enabled = false;
+            sync_stw040.Enabled = false;
+            btn_testUpdate.Enabled = false;
+            btn_SBCUtest.Enabled = false;
         }
         else
         { 
@@ -118,6 +122,7 @@ namespace ExcelAddInEquipmentDatabase
             btn_sync_mx7.Enabled = false;
             sync_stw040.Enabled = false;
             btn_testUpdate.Enabled = false;
+            btn_SBCUtest.Enabled = false;
         }
         }
 
@@ -710,7 +715,6 @@ namespace ExcelAddInEquipmentDatabase
         {
             Forms.SBCUStats lSBCUStats = new Forms.SBCUStats(""); //allow multible instances of the form.
         }
-
         //
 
 

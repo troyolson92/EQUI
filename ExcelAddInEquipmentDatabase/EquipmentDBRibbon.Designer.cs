@@ -66,7 +66,7 @@
             this.sync_stw040 = this.Factory.CreateRibbonButton();
             this.btn_sync_mx7 = this.Factory.CreateRibbonButton();
             this.btn_testUpdate = this.Factory.CreateRibbonButton();
-            this.button1 = this.Factory.CreateRibbonButton();
+            this.btn_SBCUtest = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
             this.rib2.SuspendLayout();
             this.group2.SuspendLayout();
@@ -301,7 +301,7 @@
             this.groupTempTools.Items.Add(this.sync_stw040);
             this.groupTempTools.Items.Add(this.btn_sync_mx7);
             this.groupTempTools.Items.Add(this.btn_testUpdate);
-            this.groupTempTools.Items.Add(this.button1);
+            this.groupTempTools.Items.Add(this.btn_SBCUtest);
             this.groupTempTools.Label = "TempTools";
             this.groupTempTools.Name = "groupTempTools";
             // 
@@ -323,11 +323,11 @@
             this.btn_testUpdate.Name = "btn_testUpdate";
             this.btn_testUpdate.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_testUpdate_Click);
             // 
-            // button1
+            // btn_SBCUtest
             // 
-            this.button1.Label = "button1";
-            this.button1.Name = "button1";
-            this.button1.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button1_Click_1);
+            this.btn_SBCUtest.Label = "btn_SBCUtest";
+            this.btn_SBCUtest.Name = "btn_SBCUtest";
+            this.btn_SBCUtest.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button1_Click_1);
             // 
             // EquipmentDBRibbon
             // 
@@ -385,7 +385,7 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonButton sync_stw040;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_sync_mx7;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_testUpdate;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton button1;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_SBCUtest;
     }
 
     partial class ThisRibbonCollection
