@@ -48,6 +48,7 @@
             this.metroLabel4 = new MetroFramework.Controls.MetroLabel();
             this.metroLabel5 = new MetroFramework.Controls.MetroLabel();
             this.metroLabel6 = new MetroFramework.Controls.MetroLabel();
+            this.cb_weldguns = new MetroFramework.Controls.MetroComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart3)).BeginInit();
@@ -65,7 +66,7 @@
             this.chart1.ChartAreas.Add(chartArea1);
             this.chart1.Location = new System.Drawing.Point(8, 124);
             this.chart1.Name = "chart1";
-            this.chart1.Size = new System.Drawing.Size(1334, 174);
+            this.chart1.Size = new System.Drawing.Size(1334, 164);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
             // 
@@ -109,6 +110,9 @@
             // 
             // metroLabel1
             // 
+            this.metroLabel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.metroLabel1.AutoSize = true;
             this.metroLabel1.Location = new System.Drawing.Point(9, 101);
             this.metroLabel1.Name = "metroLabel1";
@@ -118,6 +122,9 @@
             // 
             // metroLabel2
             // 
+            this.metroLabel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.metroLabel2.AutoSize = true;
             this.metroLabel2.Location = new System.Drawing.Point(8, 301);
             this.metroLabel2.Name = "metroLabel2";
@@ -136,7 +143,7 @@
             this.chart2.ChartAreas.Add(chartArea2);
             this.chart2.Location = new System.Drawing.Point(8, 324);
             this.chart2.Name = "chart2";
-            this.chart2.Size = new System.Drawing.Size(1334, 174);
+            this.chart2.Size = new System.Drawing.Size(1334, 164);
             this.chart2.TabIndex = 11;
             this.chart2.Text = "chart2";
             // 
@@ -171,7 +178,7 @@
             this.chart3.ChartAreas.Add(chartArea3);
             this.chart3.Location = new System.Drawing.Point(8, 524);
             this.chart3.Name = "chart3";
-            this.chart3.Size = new System.Drawing.Size(1334, 174);
+            this.chart3.Size = new System.Drawing.Size(1334, 164);
             this.chart3.TabIndex = 15;
             this.chart3.Text = "chart3";
             // 
@@ -195,7 +202,7 @@
             this.chart4.ChartAreas.Add(chartArea4);
             this.chart4.Location = new System.Drawing.Point(8, 724);
             this.chart4.Name = "chart4";
-            this.chart4.Size = new System.Drawing.Size(1334, 174);
+            this.chart4.Size = new System.Drawing.Size(1334, 164);
             this.chart4.TabIndex = 17;
             this.chart4.Text = "chart4";
             // 
@@ -211,6 +218,9 @@
             // 
             // metroLabel5
             // 
+            this.metroLabel5.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.metroLabel5.AutoSize = true;
             this.metroLabel5.Location = new System.Drawing.Point(8, 501);
             this.metroLabel5.Name = "metroLabel5";
@@ -220,6 +230,9 @@
             // 
             // metroLabel6
             // 
+            this.metroLabel6.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.metroLabel6.AutoSize = true;
             this.metroLabel6.Location = new System.Drawing.Point(9, 701);
             this.metroLabel6.Name = "metroLabel6";
@@ -227,11 +240,22 @@
             this.metroLabel6.TabIndex = 20;
             this.metroLabel6.Text = "MidAir (MegaOhm)";
             // 
+            // cb_weldguns
+            // 
+            this.cb_weldguns.FormattingEnabled = true;
+            this.cb_weldguns.ItemHeight = 24;
+            this.cb_weldguns.Location = new System.Drawing.Point(759, 33);
+            this.cb_weldguns.Name = "cb_weldguns";
+            this.cb_weldguns.Size = new System.Drawing.Size(161, 30);
+            this.cb_weldguns.TabIndex = 21;
+            this.cb_weldguns.DropDown += new System.EventHandler(this.cb_weldguns_DropDown);
+            // 
             // SBCUStats
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1351, 1102);
+            this.ClientSize = new System.Drawing.Size(1351, 900);
+            this.Controls.Add(this.cb_weldguns);
             this.Controls.Add(this.metroLabel6);
             this.Controls.Add(this.metroLabel5);
             this.Controls.Add(this.metroLabel4);
@@ -278,5 +302,6 @@
         private MetroFramework.Controls.MetroLabel metroLabel4;
         private MetroFramework.Controls.MetroLabel metroLabel5;
         private MetroFramework.Controls.MetroLabel metroLabel6;
+        private MetroFramework.Controls.MetroComboBox cb_weldguns;
     }
 }

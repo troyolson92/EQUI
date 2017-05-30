@@ -22,10 +22,12 @@ namespace ExcelAddInEquipmentDatabase.Forms
         DataTable dt_Cylinder;
         DataTable dt_MidAir;
 
+
         public SBCUStats(string Location)
         {
             InitializeComponent();
-            this.Text = string.Format("SBCUStats Location: {0}",Location);
+            cb_weldguns.Text = Location;
+            this.Text = string.Format("SBCUStats Location: {0}", cb_weldguns.Text);
             //
             cb_sortmode.Items.Clear();
             cb_sortmode.Items.Insert(0, "None");
@@ -42,6 +44,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
             chart1.Series[0].XValueType = ChartValueType.DateTime;
             chart1.Series["DeltaSetup"].BorderWidth = 3;
             chart1.ChartAreas[0].AxisX.Interval = 1;
+            chart1.ChartAreas[0].AxisX.LabelStyle.Enabled = false;
             chart1.FormatNumber += chart1_FormatNumber;
             chart1.Series["DeltaSetup"].Color = System.Drawing.Color.Red;
             //init chart short sbcu
@@ -52,6 +55,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
             chart2.Series[0].XValueType = ChartValueType.DateTime;
             chart2.Series["DeltaSetup"].BorderWidth = 3;
             chart2.ChartAreas[0].AxisX.Interval = 1;
+            chart2.ChartAreas[0].AxisX.LabelStyle.Enabled = false;
             chart2.FormatNumber += chart1_FormatNumber;
             chart2.Series["DeltaSetup"].Color = System.Drawing.Color.Blue;
             //init chart Cylinder
@@ -62,6 +66,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
             chart3.Series[0].XValueType = ChartValueType.DateTime;
             chart3.Series["TotalTime"].BorderWidth = 3;
             chart3.ChartAreas[0].AxisX.Interval = 1;
+            chart3.ChartAreas[0].AxisX.LabelStyle.Enabled = false;
             chart3.FormatNumber += chart1_FormatNumber;
             chart3.Series["TotalTime"].Color = System.Drawing.Color.Green;
             //init chart MidAir
@@ -72,9 +77,21 @@ namespace ExcelAddInEquipmentDatabase.Forms
             chart4.Series[0].XValueType = ChartValueType.DateTime;
             chart4.Series["ResisActual"].BorderWidth = 3;
             chart4.ChartAreas[0].AxisX.Interval = 1;
+            chart4.ChartAreas[0].AxisX.LabelStyle.Enabled = true;
             chart4.FormatNumber += chart1_FormatNumber;
             chart4.Series["ResisActual"].Color = System.Drawing.Color.Black ;
+            //get data to build the chart
+            GetChartData();
+            //build trend chart in init mode. 
+            built_Chart(true);
+            //
+            cb_sortmode.SelectedValueChanged += new System.EventHandler(this.cb_sortmode_SelectedValueChanged);
+            //
+            this.Show();
+        }
 
+        private void GetChartData()
+        {
             //query all instances of the error 
             #region Query
             string qrySBCUShortLong = @"
@@ -96,7 +113,7 @@ SET @Robot = (SELECT TOP 1 '%' + rws.Robot + '%' from GADATA.volvo.RobotWeldGunR
 SET @Tool = (SELECT TOP 1 '%Tool: ' + CAST(rws.ElectrodeNbr as varchar(2)) + '%' from GADATA.volvo.RobotWeldGunRelation as rws where rws.WeldgunName LIKE @Weldgunname)
 END
 
-SET @StartDate = GETDATE()-300
+SET @StartDate = GETDATE()-{2}
 SET @EndDate = GETDATE()
 
 SELECT * FROM gadata.c3g.sbcudata as sbcu 
@@ -135,7 +152,7 @@ SET @Robot = (SELECT TOP 1 '%' + rws.Robot + '%' from GADATA.volvo.RobotWeldGunR
 SET @Tool = (SELECT TOP 1 '%Tool: ' + CAST(rws.ElectrodeNbr as varchar(2)) + '%' from GADATA.volvo.RobotWeldGunRelation as rws where rws.WeldgunName LIKE @Weldgunname)
 END
 
-SET @StartDate = GETDATE()-300
+SET @StartDate = GETDATE()-{1}
 SET @EndDate = GETDATE()
 
 SELECT * FROM [GADATA].[C3G].[WeldGunCylinder]
@@ -174,7 +191,7 @@ SET @Robot = (SELECT TOP 1 '%' + rws.Robot + '%' from GADATA.volvo.RobotWeldGunR
 SET @Tool = (SELECT TOP 1 '%Tool: ' + CAST(rws.ElectrodeNbr as varchar(2)) + '%' from GADATA.volvo.RobotWeldGunRelation as rws where rws.WeldgunName LIKE @Weldgunname)
 END
 
-SET @StartDate = GETDATE()-300
+SET @StartDate = GETDATE()-{1}
 SET @EndDate = GETDATE()
 
 SELECT [Robotname]
@@ -200,20 +217,28 @@ SELECT null ,null
 ";
             #endregion
             //fill dataset with all errors
-            dt_longSBCU = lGdataComm.RunQueryGadata(string.Format(qrySBCUShortLong,1,Location.Trim()));
-            dt_shortSBCU = lGdataComm.RunQueryGadata(string.Format(qrySBCUShortLong, 0,Location.Trim()));
-            dt_Cylinder = lGdataComm.RunQueryGadata(string.Format(qryCylinder, Location.Trim()));
-            dt_MidAir = lGdataComm.RunQueryGadata(string.Format(qryMidair, Location.Trim()));
+            int daysBack = 100;
+            //
+            dt_longSBCU = lGdataComm.RunQueryGadata(string.Format(qrySBCUShortLong, 1, cb_weldguns.Text.Trim(), daysBack.ToString()));
+            dt_shortSBCU = lGdataComm.RunQueryGadata(string.Format(qrySBCUShortLong, 0, cb_weldguns.Text.Trim(), daysBack.ToString()));
+            dt_Cylinder = lGdataComm.RunQueryGadata(string.Format(qryCylinder, cb_weldguns.Text.Trim(), daysBack.ToString()));
+            dt_MidAir = lGdataComm.RunQueryGadata(string.Format(qryMidair, cb_weldguns.Text.Trim(), daysBack.ToString()));
+            //
+            dt_longSBCU.TableName = "dt_longSBCU";
+            dt_shortSBCU.TableName = "dt_shortSBCU";
+            dt_Cylinder.TableName = "dt_Cylinder";
+            dt_MidAir.TableName = "dt_MidAir";
+            //
             //check if the result was valid 
-            if (dt_longSBCU.Rows.Count == 0) { Debugger.Message("The query long did not return a valid result dt_longSBCU");  };
-            if (dt_shortSBCU.Rows.Count == 0) { Debugger.Message("The query short did not return a valid result dt_shortSBCU");  };
-            if (dt_Cylinder.Rows.Count == 0) { Debugger.Message("The query short did not return a valid result dt_Cylinder");  };
-            if (dt_MidAir.Rows.Count == 0) { Debugger.Message("The query short did not return a valid result dt_MidAir");  };
+            if (dt_longSBCU.Rows.Count <= 1) { Debugger.Message("The query long did not return a valid result dt_longSBCU"); };
+            if (dt_shortSBCU.Rows.Count <= 1) { Debugger.Message("The query short did not return a valid result dt_shortSBCU"); };
+            if (dt_Cylinder.Rows.Count <= 1) { Debugger.Message("The query short did not return a valid result dt_Cylinder"); };
+            if (dt_MidAir.Rows.Count <= 1) { Debugger.Message("The query short did not return a valid result dt_MidAir"); };
             //setup trackbar (trackbar maximum = first time error happend, minium = now)
             DateTime First = (from a in dt_longSBCU.AsEnumerable() select a.Field<DateTime>("tool_timestamp")).Min();
             DateTime Last = (from a in dt_longSBCU.AsEnumerable() select a.Field<DateTime>("tool_timestamp")).Max();
             trackBar1.Minimum = (int)(First - Last).TotalDays;
-            if (trackBar1.Minimum > -3) {trackBar1.Minimum = -3;}
+            if (trackBar1.Minimum > -3) { trackBar1.Minimum = -3; }
             trackBar1.Maximum = -1; //minimum display = 1 day 
             trackBar1.Value = trackBar1.Minimum;
             //set startup view to last 30 days of data.
@@ -222,12 +247,7 @@ SELECT null ,null
             trackBar2.Minimum = trackBar1.Minimum;
             trackBar2.Maximum = trackBar1.Maximum;
             trackBar2.Value = trackBar2.Maximum;
-            //build trend chart in init mode. 
-            built_Chart(true);
-            //
-            cb_sortmode.SelectedValueChanged += new System.EventHandler(this.cb_sortmode_SelectedValueChanged);
-            //
-            this.Show();
+
         }
 
         private void built_Chart(Boolean noAutoGrouping) 
@@ -446,6 +466,30 @@ SELECT null ,null
                 Debugger.Exeption(ex);
             }
             Forms.DataDisplay ldatadisplay = new Forms.DataDisplay(ldataset);
+        }
+
+        private void cb_weldguns_DropDown(object sender, EventArgs e)
+        {
+            string orgSelection = cb_weldguns.Text;
+            if (cb_weldguns.DataSource == null)
+            {
+                string QryGetguns = "select  WeldgunName from GADATA.volvo.RobotWeldGunRelation where RobotType = 'c3g'";
+                cb_weldguns.DataSource = lGdataComm.RunQueryGadata(QryGetguns);
+                cb_weldguns.ValueMember = "WeldgunName"; 
+                cb_weldguns.DisplayMember = "WeldgunName";
+                cb_weldguns.Text = orgSelection;
+                cb_weldguns.SelectedIndexChanged += new System.EventHandler(cb_weldguns_SelectedIndexChanged);
+            }
+        }
+
+        private void cb_weldguns_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            cb_weldguns.Enabled = false;
+            //get data to build the chart
+            GetChartData();
+            //build trend chart in init mode. 
+            built_Chart(true);
+            cb_weldguns.Enabled = true;
         }
 
     }
