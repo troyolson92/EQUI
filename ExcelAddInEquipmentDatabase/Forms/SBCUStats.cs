@@ -25,9 +25,6 @@ namespace ExcelAddInEquipmentDatabase.Forms
         public SBCUStats(string Location)
         {
             InitializeComponent();
-
-            Location = "32070ws02a";
-
             this.Text = string.Format("SBCUStats Location: {0}",Location);
             //
             cb_sortmode.Items.Clear();
@@ -80,16 +77,14 @@ namespace ExcelAddInEquipmentDatabase.Forms
 
             //query all instances of the error 
             #region Query
-            string qrySBCUShortLong =  @"
---timeparameters
+            string qrySBCUShortLong = @"
    DECLARE 
    @StartDate as DATETIME = null,
    @EndDate as DATETIME = null,
 --Filterparameters.
-   @Robot as varchar(25) = '57050r03%',
-   @Tool as varchar(25) = 'Tool: 1',
+   @Robot as varchar(25) = null,
+   @Tool as varchar(25) = null,
    @Weldgunname as varchar(25) = '{1}'
-
 
 ---------------------------------------------------------------------------------------
 --Als er een weldgun name word gebruikt zoeken we de juiste robot en tool id op..
@@ -101,27 +96,10 @@ SET @Robot = (SELECT TOP 1 '%' + rws.Robot + '%' from GADATA.volvo.RobotWeldGunR
 SET @Tool = (SELECT TOP 1 '%Tool: ' + CAST(rws.ElectrodeNbr as varchar(2)) + '%' from GADATA.volvo.RobotWeldGunRelation as rws where rws.WeldgunName LIKE @Weldgunname)
 END
 
----------------------------------------------------------------------------------------
---Set default values of start and end date
----------------------------------------------------------------------------------------
-if ((@StartDate is null) OR (@StartDate = '1900-01-01 00:00:00:000'))
-BEGIN
 SET @StartDate = GETDATE()-300
-END
-
-if ((@EndDate is null) OR (@EndDate = '1900-01-01 00:00:00:000'))
-BEGIN
 SET @EndDate = GETDATE()
-END
 
-
-SELECT 
- sbcu.RobotName
-,sbcu.tool_id
-,sbcu.tool_timestamp 
-,sbcu.Dsetup 
-
-FROM gadata.c3g.sbcudata as sbcu 
+SELECT * FROM gadata.c3g.sbcudata as sbcu 
 WHERE
 sbcu.Longcheck = {0}
 AND
@@ -133,10 +111,9 @@ sbcu.tool_id LIKE @Tool
 
 UNION
 SELECT 
- null
-,null
-,getdate() as 'tool_timestamp' 
-,null
+getdate() as 'tool_timestamp' 
+,null,null,null,null,null,null,null,null,null,null,null
+,null,null,null,null,null,null,null,null,null,null,null
                 ";
             string qryCylinder = @"
 --timeparameters
@@ -144,10 +121,9 @@ SELECT
    @StartDate as DATETIME = null,
    @EndDate as DATETIME = null,
 --Filterparameters.
-   @Robot as varchar(25) = '57050r03%',
-   @Tool as varchar(25) = 'Tool: 1',
+   @Robot as varchar(25) = null,
+   @Tool as varchar(25) = null,
    @Weldgunname as varchar(25) = '{0}'
-
 
 ---------------------------------------------------------------------------------------
 --Als er een weldgun name word gebruikt zoeken we de juiste robot en tool id op..
@@ -159,27 +135,22 @@ SET @Robot = (SELECT TOP 1 '%' + rws.Robot + '%' from GADATA.volvo.RobotWeldGunR
 SET @Tool = (SELECT TOP 1 '%Tool: ' + CAST(rws.ElectrodeNbr as varchar(2)) + '%' from GADATA.volvo.RobotWeldGunRelation as rws where rws.WeldgunName LIKE @Weldgunname)
 END
 
----------------------------------------------------------------------------------------
---Set default values of start and end date
----------------------------------------------------------------------------------------
-if ((@StartDate is null) OR (@StartDate = '1900-01-01 00:00:00:000'))
-BEGIN
 SET @StartDate = GETDATE()-300
-END
-
-if ((@EndDate is null) OR (@EndDate = '1900-01-01 00:00:00:000'))
-BEGIN
 SET @EndDate = GETDATE()
-END
 
 SELECT * FROM [GADATA].[C3G].[WeldGunCylinder]
-
 WHERE
 [WeldGunCylinder]._timestamp between   @startdate and @EndDate 
 AND
 [WeldGunCylinder].[controller_name] LIKE @Robot
 AND
-'%Tool: ' + CAST([WeldGunCylinder].tool_id as varchar(2)) LIKE @Tool     
+'%Tool: ' + CAST([WeldGunCylinder].tool_id as varchar(2)) LIKE @Tool  
+UNION
+SELECT 
+null,null,null
+,getdate() as '_timestamp'
+,null,null,null,null,null,null,null,null,null
+,null,null,null,null,null,null,null   
 ";
 
             string qryMidair = @"
@@ -188,8 +159,8 @@ AND
    @StartDate as DATETIME = null,
    @EndDate as DATETIME = null,
 --Filterparameters.
-   @Robot as varchar(25) = '57050r03%',
-   @Tool as varchar(25) = 'Tool: 1',
+   @Robot as varchar(25) = null,
+   @Tool as varchar(25) = null,
    @Weldgunname as varchar(25) = '{0}'
 
 
@@ -203,18 +174,8 @@ SET @Robot = (SELECT TOP 1 '%' + rws.Robot + '%' from GADATA.volvo.RobotWeldGunR
 SET @Tool = (SELECT TOP 1 '%Tool: ' + CAST(rws.ElectrodeNbr as varchar(2)) + '%' from GADATA.volvo.RobotWeldGunRelation as rws where rws.WeldgunName LIKE @Weldgunname)
 END
 
----------------------------------------------------------------------------------------
---Set default values of start and end date
----------------------------------------------------------------------------------------
-if ((@StartDate is null) OR (@StartDate = '1900-01-01 00:00:00:000'))
-BEGIN
-SET @StartDate = GETDATE()-30
-END
-
-if ((@EndDate is null) OR (@EndDate = '1900-01-01 00:00:00:000'))
-BEGIN
+SET @StartDate = GETDATE()-300
 SET @EndDate = GETDATE()
-END
 
 SELECT [Robotname]
       ,[Tool]
@@ -229,20 +190,25 @@ WHERE
 AND
 [MidairRef].[Robotname] LIKE @Robot
 AND
-[MidairRef].[Tool] LIKE @Tool   
-      
+[MidairRef].[Tool] LIKE @Tool 
+
+UNION
+SELECT null ,null
+      , getdate() as 'timestamp'
+      ,null, null, null
+         
 ";
             #endregion
             //fill dataset with all errors
             dt_longSBCU = lGdataComm.RunQueryGadata(string.Format(qrySBCUShortLong,1,Location.Trim()));
             dt_shortSBCU = lGdataComm.RunQueryGadata(string.Format(qrySBCUShortLong, 0,Location.Trim()));
             dt_Cylinder = lGdataComm.RunQueryGadata(string.Format(qryCylinder, Location.Trim()));
-            //dt_MidAir = lGdataComm.RunQueryGadata(string.Format(qryMidair, Location.Trim()));
+            dt_MidAir = lGdataComm.RunQueryGadata(string.Format(qryMidair, Location.Trim()));
             //check if the result was valid 
-            if (dt_longSBCU.Rows.Count == 0) { Debugger.Message("The query long did not return a valid result dt_longSBCU"); this.Dispose(); return; };
-            if (dt_shortSBCU.Rows.Count == 0) { Debugger.Message("The query short did not return a valid result dt_shortSBCU"); this.Dispose(); return; };
-            if (dt_Cylinder.Rows.Count == 0) { Debugger.Message("The query short did not return a valid result dt_Cylinder"); this.Dispose(); return; };
-            //if (dt_MidAir.Rows.Count == 0) { Debugger.Message("The query short did not return a valid result dt_MidAir"); this.Dispose(); return; };
+            if (dt_longSBCU.Rows.Count == 0) { Debugger.Message("The query long did not return a valid result dt_longSBCU");  };
+            if (dt_shortSBCU.Rows.Count == 0) { Debugger.Message("The query short did not return a valid result dt_shortSBCU");  };
+            if (dt_Cylinder.Rows.Count == 0) { Debugger.Message("The query short did not return a valid result dt_Cylinder");  };
+            if (dt_MidAir.Rows.Count == 0) { Debugger.Message("The query short did not return a valid result dt_MidAir");  };
             //setup trackbar (trackbar maximum = first time error happend, minium = now)
             DateTime First = (from a in dt_longSBCU.AsEnumerable() select a.Field<DateTime>("tool_timestamp")).Min();
             DateTime Last = (from a in dt_longSBCU.AsEnumerable() select a.Field<DateTime>("tool_timestamp")).Max();
@@ -266,7 +232,6 @@ AND
 
         private void built_Chart(Boolean noAutoGrouping) 
         {
-            //use the trackbar to calculate the starting point of the graph
             //use the trackbar to calculate the starting point of the graph
             DateTime GrapStart = DateTime.Now.AddDays(Convert.ToInt32(trackBar1.Value));
             DateTime GrapEnd = DateTime.Now.AddDays(Convert.ToInt32(trackBar2.Value));
@@ -322,7 +287,7 @@ AND
                     cb_sortmode.SelectedIndex = 3;
                 }
             }
-            //check that manual grouping is fasable
+            //check that manual grouping is fesable
             if ((cb_sortmode.SelectedIndex < 2) && ((trackBar1.Value - trackBar2.Value) < -60))
             {
                 Debugger.Message(string.Format("Its not a good idea to group in this way for '{0}' days of data", (trackBar1.Value - trackBar2.Value)));
@@ -359,7 +324,7 @@ AND
                     chart1.DataManipulator.Group("AVE", 1, IntervalType.Hours, "DeltaSetup");
                     chart2.DataManipulator.Group("AVE", 1, IntervalType.Hours, "DeltaSetup");
                     chart3.DataManipulator.Group("AVE", 1, IntervalType.Hours, "TotalTime");
-                  //  chart4.DataManipulator.Group("AVE", 1, IntervalType.Hours, "timestamp");
+                    chart4.DataManipulator.Group("AVE", 1, IntervalType.Hours, "ResisActual");
                     break;
 
                 case "Days":
@@ -367,16 +332,16 @@ AND
                     chart1.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Days;
                     chart2.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatDay"; 
                     chart2.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Days;
-                    chart3.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatHour";
+                    chart3.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatDay";
                     chart3.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Days;
-                    chart4.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatHour";
+                    chart4.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatDay";
                     chart4.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Days;
                     label1.Text = string.Format("First error: {0} ", FirstError);
                     label2.Text = string.Format("'Now'  DisplayMode:{0}", "GroupDaymode");
                     chart1.DataManipulator.Group("AVE", 1, IntervalType.Days, "DeltaSetup");
                     chart2.DataManipulator.Group("AVE", 1, IntervalType.Days, "DeltaSetup");
                     chart3.DataManipulator.Group("AVE", 1, IntervalType.Days, "TotalTime");
-                  //  chart4.DataManipulator.Group("AVE", 1, IntervalType.Days, "timestamp");
+                    chart4.DataManipulator.Group("AVE", 1, IntervalType.Days, "ResisActual");
                     break;
 
                 case "Weeks":
@@ -384,16 +349,16 @@ AND
                     chart1.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Weeks;
                     chart2.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatWeek"; 
                     chart2.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Weeks;
-                    chart3.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatHour";
+                    chart3.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatWeek";
                     chart3.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Weeks;
-                    chart4.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatHour";
+                    chart4.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatWeek";
                     chart4.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Weeks;
                     label1.Text = string.Format("First error: {0} ", FirstError);
                     label2.Text = string.Format("'Now'  DisplayMode:{0}", "GroupWeekmode");
                     chart1.DataManipulator.Group("AVE", 1, IntervalType.Weeks, "DeltaSetup");
                     chart2.DataManipulator.Group("AVE", 1, IntervalType.Weeks, "DeltaSetup");
                     chart3.DataManipulator.Group("AVE", 1, IntervalType.Weeks, "TotalTime");
-                 //   chart4.DataManipulator.Group("AVE", 1, IntervalType.Weeks, "timestamp");
+                    chart4.DataManipulator.Group("AVE", 1, IntervalType.Weeks, "ResisActual");
                     break;
 
                 default:

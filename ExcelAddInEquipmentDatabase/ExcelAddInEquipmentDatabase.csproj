@@ -36,11 +36,11 @@
     <OldToolsVersion>4.0</OldToolsVersion>
     <VSTO_TrustAssembliesLocation>true</VSTO_TrustAssembliesLocation>
     <IsWebBootstrapper>False</IsWebBootstrapper>
-    <BootstrapperEnabled>false</BootstrapperEnabled>
-    <PublishUrl>\\sharepoint.volvocars.net\sites\vcg_ga_aaosr\PublicDocuments\VSTO\DeploymentBase\</PublishUrl>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <PublishUrl>\\gnlsnm0101.gen.volvocars.net\proj\6308-SHR-VCC22700\VSTO\DEPLOYMENTBASE\</PublishUrl>
     <InstallUrl />
     <TargetCulture>en</TargetCulture>
-    <ApplicationVersion>3.0.2.2</ApplicationVersion>
+    <ApplicationVersion>3.0.2.3</ApplicationVersion>
     <AutoIncrementApplicationRevision>true</AutoIncrementApplicationRevision>
     <UpdateEnabled>true</UpdateEnabled>
     <UpdateInterval>0</UpdateInterval>

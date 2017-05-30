@@ -158,6 +158,7 @@
             this.trackBar2.Size = new System.Drawing.Size(359, 23);
             this.trackBar2.TabIndex = 14;
             this.trackBar2.Text = "metroTrackBar1";
+            this.trackBar2.ValueChanged += new System.EventHandler(this.trackBar1_ValueChanged);
             // 
             // chart3
             // 

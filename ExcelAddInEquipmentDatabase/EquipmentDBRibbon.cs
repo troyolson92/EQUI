@@ -17,6 +17,7 @@ namespace ExcelAddInEquipmentDatabase
 {
     public partial class EquipmentDBRibbon
     {
+        //
         //debugger
         Debugger Debugger = new Debugger();
         //connection to gadata
@@ -43,6 +44,10 @@ namespace ExcelAddInEquipmentDatabase
 
         private void EquipmentDBRibbon_Load(object sender, RibbonUIEventArgs e)
         {
+            // temp change update location
+            ClickOnceUtil lClickOnce = new ClickOnceUtil();
+            lClickOnce.CheckUpdateLocation();
+
             //set build version
             Assembly _assembly = Assembly.GetExecutingAssembly();
             FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(_assembly.Location);
@@ -713,7 +718,7 @@ namespace ExcelAddInEquipmentDatabase
         //test
         private void button1_Click_1(object sender, RibbonControlEventArgs e)
         {
-            Forms.SBCUStats lSBCUStats = new Forms.SBCUStats(""); //allow multible instances of the form.
+            Forms.SBCUStats lSBCUStats = new Forms.SBCUStats("32070ws02a"); //allow multible instances of the form.
         }
         //
 

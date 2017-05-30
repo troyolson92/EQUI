@@ -105,5 +105,32 @@ namespace ExcelAddInEquipmentDatabase
             
         }
 
+        public void CheckUpdateLocation()
+        {
+            Debugger lDbg = new Debugger();
+            if (System.Deployment.Application.ApplicationDeployment.IsNetworkDeployed)
+            {
+                if (UpdateLocation.Like("%OBJECTBEHEER%"))
+                {
+                    lDbg.Message(@"
+Sorry voor dit ongemak. 
+Omdat deze plugin binnenkort ook in GB zal gebruikt worden moet ik de 'Launch' locatie veranderen.
+Om dit mogelijk te maken moeten eenmaalig de reeds geinstaleerde versies worden verwijderd en opnieuw geinstaleerd.
+Gelieve deze instructie op sharepoint te volgen.
+https://sharepoint.volvocars.net/sites/vcg_ga_aaosr/SitePages/EQUI_changeDeployment.aspx
+Druk op Ok om naar de sharepoint te gaan.
+mvg 
+Sam
+");
+                    System.Diagnostics.Process.Start("https://sharepoint.volvocars.net/sites/vcg_ga_aaosr/SitePages/EQUI_changeDeployment.aspx");
+                }
+            }
+            else
+            {
+                lDbg.Message("not network deployed");
+            }
+
+        }
+
     }
 }

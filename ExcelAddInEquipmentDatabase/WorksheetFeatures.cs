@@ -105,7 +105,7 @@ namespace ExcelAddInEquipmentDatabase
             {
                 addShiftbookSubmenu(4); //shiftbook tools TEMP
             }
-            if (Logtype == "ALERT")
+            if (Logtype == "ALERT" || location.Like("%WS%"))
             {
                 if (ExcelAddInEquipmentDatabase.Properties.Settings.Default.userlevel >= 100)
                 {
