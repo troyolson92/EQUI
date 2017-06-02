@@ -49,7 +49,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
             chart1.Series["LongSbcu"].EmptyPointStyle.Color = Color.Red;
             chart1.Series["LongSbcu"].EmptyPointStyle.BorderWidth = 3;
             chart1.Series["LongSbcu"].EmptyPointStyle.AxisLabel = "Empty";
-            //init 2nd serie short sbcu
+            //add series short sbcu
             chart1.Series.Add("ShortSbcu");
             chart1.Series["ShortSbcu"].XValueMember = "tool_timestamp";
             chart1.Series["ShortSbcu"].YValueMembers = "ShortDsetup";
@@ -63,9 +63,26 @@ namespace ExcelAddInEquipmentDatabase.Forms
             chart1.Series["ShortSbcu"].EmptyPointStyle.Color = Color.Blue;
             chart1.Series["ShortSbcu"].EmptyPointStyle.BorderWidth = 3;
             chart1.Series["ShortSbcu"].EmptyPointStyle.AxisLabel = "Empty";
+            //long UCL
+            chart1.Series.Add("LongUCL");
+            chart1.Series["LongUCL"].XValueMember = "tool_timestamp";
+            chart1.Series["LongUCL"].YValueMembers = "UCL"; //is gemend met korte 
+            chart1.Series["LongUCL"].ChartType = SeriesChartType.Line;
+            chart1.Series["LongUCL"].XValueType = ChartValueType.DateTime;
+            chart1.Series["LongUCL"].BorderWidth = 3;
+            chart1.Series["LongUCL"].Color = Color.Black;
+            //long LCL
+            chart1.Series.Add("LongLCL");
+            chart1.Series["LongLCL"].XValueMember = "tool_timestamp";
+            chart1.Series["LongLCL"].YValueMembers = "LCL"; //is gemend met korte 
+            chart1.Series["LongLCL"].ChartType = SeriesChartType.Line;
+            chart1.Series["LongLCL"].XValueType = ChartValueType.DateTime;
+            chart1.Series["LongLCL"].BorderWidth = 3;
+            chart1.Series["LongLCL"].Color = Color.Black;
             //
             chart1.ChartAreas[0].AxisX.Interval = 1;
             chart1.ChartAreas[0].AxisX.LabelStyle.Enabled = false;
+            chart1.ChartAreas[0].AxisY.IsStartedFromZero = false; 
             chart1.FormatNumber += chart1_FormatNumber;
             chart1.GetToolTipText += chart_GetToolTipText;
             //init chart Cylinder
@@ -73,25 +90,57 @@ namespace ExcelAddInEquipmentDatabase.Forms
             chart3.Series["TotalTime"].XValueMember = "_timestamp";
             chart3.Series["TotalTime"].YValueMembers = "TotalTime";
             chart3.Series["TotalTime"].ChartType = SeriesChartType.Line;
-            chart3.Series[0].XValueType = ChartValueType.DateTime;
-            chart3.Series["TotalTime"].BorderWidth = 3;
+            chart3.Series["TotalTime"].XValueType = ChartValueType.DateTime;
+            chart3.Series["TotalTime"].BorderWidth = 4;
+            chart3.Series["TotalTime"].Color = System.Drawing.Color.Green;
+            chart1.Series["ShortSbcu"].MarkerStyle = MarkerStyle.Circle;
+            chart1.Series["ShortSbcu"].MarkerColor = Color.Green;
+            chart1.Series["ShortSbcu"].MarkerSize = 6;
+            //add series for UCL
+            chart3.Series.Add("UCL");
+            chart3.Series["UCL"].XValueMember = "_timestamp";
+            chart3.Series["UCL"].YValueMembers = "UCL";
+            chart3.Series["UCL"].ChartType = SeriesChartType.Line;
+            chart3.Series["UCL"].XValueType = ChartValueType.DateTime;
+            chart3.Series["UCL"].BorderWidth = 3;
+            chart3.Series["UCL"].Color = System.Drawing.Color.Black;
+            //add series for LCL
+            chart3.Series.Add("LCL");
+            chart3.Series["LCL"].XValueMember = "_timestamp";
+            chart3.Series["LCL"].YValueMembers = "LCL";
+            chart3.Series["LCL"].ChartType = SeriesChartType.Line;
+            chart3.Series["LCL"].XValueType = ChartValueType.DateTime;
+            chart3.Series["LCL"].BorderWidth = 3;
+            chart3.Series["LCL"].Color = System.Drawing.Color.Black;
+            //
             chart3.ChartAreas[0].AxisX.Interval = 1;
             chart3.ChartAreas[0].AxisX.LabelStyle.Enabled = false;
+            chart3.ChartAreas[0].AxisY.IsStartedFromZero = false;
             chart3.FormatNumber += chart1_FormatNumber;
             chart3.GetToolTipText += chart_GetToolTipText;
-            chart3.Series["TotalTime"].Color = System.Drawing.Color.Green;
             //init chart MidAir
             chart4.Series.Add("ResisActual");
             chart4.Series["ResisActual"].XValueMember = "timestamp";
             chart4.Series["ResisActual"].YValueMembers = "ResisActual";
             chart4.Series["ResisActual"].ChartType = SeriesChartType.Line;
-            chart4.Series[0].XValueType = ChartValueType.DateTime;
+            chart4.Series["ResisActual"].XValueType = ChartValueType.DateTime;
             chart4.Series["ResisActual"].BorderWidth = 3;
+            chart4.Series["ResisActual"].Color = System.Drawing.Color.Green;
+            //add series for reference value
+            chart4.Series.Add("ResisRef");
+            chart4.Series["ResisRef"].XValueMember = "timestamp";
+            chart4.Series["ResisRef"].YValueMembers = "ResisRef";
+            chart4.Series["ResisRef"].ChartType = SeriesChartType.Line;
+            chart4.Series["ResisRef"].XValueType = ChartValueType.DateTime;
+            chart4.Series["ResisRef"].BorderWidth = 2;
+            chart4.Series["ResisRef"].Color = System.Drawing.Color.Black;
+            //
             chart4.ChartAreas[0].AxisX.Interval = 1;
             chart4.ChartAreas[0].AxisX.LabelStyle.Enabled = true;
+            chart4.ChartAreas[0].AxisY.IsStartedFromZero = false; 
             chart4.FormatNumber += chart1_FormatNumber;
             chart4.GetToolTipText += chart_GetToolTipText;
-            chart4.Series["ResisActual"].Color = System.Drawing.Color.Black ;
+
             //get data to build the chart
           //  GetChartData();
             //build trend chart in init mode. 
@@ -326,8 +375,6 @@ SELECT null ,null
                     chart3.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.NotSet; 
                     chart4.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatTimestamp"; 
                     chart4.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.NotSet; 
-                    label1.Text = string.Format("First error: {0} ", FirstError);
-                    label2.Text = string.Format("'Now'  DisplayMode:{0}", "NoGrouping");
                     break;
 
                 case "Hours":
@@ -337,12 +384,15 @@ SELECT null ,null
                     chart3.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Hours;
                     chart4.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatHour"; 
                     chart4.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Hours;
-                    label1.Text = string.Format("First error: {0} ", FirstError);
-                    label2.Text = string.Format("'Now'  DisplayMode:{0}", "GroupHourmode");
                     chart1.DataManipulator.Group("AVE", 1, IntervalType.Hours, "LongSbcu");
                     chart1.DataManipulator.Group("AVE", 1, IntervalType.Hours, "ShortSbcu");
+                    chart1.DataManipulator.Group("AVE", 1, IntervalType.Hours, "LongUCL");
+                    chart1.DataManipulator.Group("AVE", 1, IntervalType.Hours, "LongLCL");
                     chart3.DataManipulator.Group("AVE", 1, IntervalType.Hours, "TotalTime");
+                    chart3.DataManipulator.Group("AVE", 1, IntervalType.Hours, "UCL");
+                    chart3.DataManipulator.Group("AVE", 1, IntervalType.Hours, "LCL");
                     chart4.DataManipulator.Group("AVE", 1, IntervalType.Hours, "ResisActual");
+                    chart4.DataManipulator.Group("AVE", 1, IntervalType.Hours, "ResisRef");
                     break;
 
                 case "Days":
@@ -352,12 +402,15 @@ SELECT null ,null
                     chart3.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Days;
                     chart4.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatDay";
                     chart4.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Days;
-                    label1.Text = string.Format("First error: {0} ", FirstError);
-                    label2.Text = string.Format("'Now'  DisplayMode:{0}", "GroupDaymode");
                     chart1.DataManipulator.Group("AVE", 1, IntervalType.Days, "LongSbcu");
                     chart1.DataManipulator.Group("AVE", 1, IntervalType.Days, "ShortSbcu");
+                    chart1.DataManipulator.Group("AVE", 1, IntervalType.Days, "LongUCL");
+                    chart1.DataManipulator.Group("AVE", 1, IntervalType.Days, "LongLCL");
                     chart3.DataManipulator.Group("AVE", 1, IntervalType.Days, "TotalTime");
+                    chart3.DataManipulator.Group("AVE", 1, IntervalType.Days, "UCL");
+                    chart3.DataManipulator.Group("AVE", 1, IntervalType.Days, "LCL");
                     chart4.DataManipulator.Group("AVE", 1, IntervalType.Days, "ResisActual");
+                    chart4.DataManipulator.Group("AVE", 1, IntervalType.Days, "ResisRef");
                     break;
 
                 case "Weeks":
@@ -367,12 +420,15 @@ SELECT null ,null
                     chart3.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Weeks;
                     chart4.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatWeek";
                     chart4.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Weeks;
-                    label1.Text = string.Format("First error: {0} ", FirstError);
-                    label2.Text = string.Format("'Now'  DisplayMode:{0}", "GroupWeekmode");
                     chart1.DataManipulator.Group("AVE", 1, IntervalType.Weeks, "LongSbcu");
                     chart1.DataManipulator.Group("AVE", 1, IntervalType.Weeks, "ShortSbcu");
+                    chart1.DataManipulator.Group("AVE", 1, IntervalType.Weeks, "LongUCL");
+                    chart1.DataManipulator.Group("AVE", 1, IntervalType.Weeks, "LongLCL");
                     chart3.DataManipulator.Group("AVE", 1, IntervalType.Weeks, "TotalTime");
+                    chart3.DataManipulator.Group("AVE", 1, IntervalType.Weeks, "UCL");
+                    chart3.DataManipulator.Group("AVE", 1, IntervalType.Weeks, "LCL");
                     chart4.DataManipulator.Group("AVE", 1, IntervalType.Weeks, "ResisActual");
+                    chart4.DataManipulator.Group("AVE", 1, IntervalType.Weeks, "ResisRef");
                     break;
 
                 default:
