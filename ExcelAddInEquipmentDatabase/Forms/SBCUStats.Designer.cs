@@ -28,12 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.label1 = new MetroFramework.Controls.MetroLabel();
-            this.label2 = new MetroFramework.Controls.MetroLabel();
             this.trackBar1 = new MetroFramework.Controls.MetroTrackBar();
             this.cb_sortmode = new MetroFramework.Controls.MetroComboBox();
             this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
@@ -46,6 +44,7 @@
             this.metroLabel5 = new MetroFramework.Controls.MetroLabel();
             this.metroLabel6 = new MetroFramework.Controls.MetroLabel();
             this.cb_weldguns = new MetroFramework.Controls.MetroComboBox();
+            this.Btn_Show3dChart = new MetroFramework.Controls.MetroButton();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart4)).BeginInit();
@@ -58,31 +57,13 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.chart1.BorderlineColor = System.Drawing.Color.Black;
             this.chart1.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-            chartArea1.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea1);
+            chartArea4.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea4);
             this.chart1.Location = new System.Drawing.Point(8, 124);
             this.chart1.Name = "chart1";
             this.chart1.Size = new System.Drawing.Size(1334, 242);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(570, 66);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(87, 20);
-            this.label1.TabIndex = 6;
-            this.label1.Text = "metroLabel1";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(1186, 66);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(87, 20);
-            this.label2.TabIndex = 7;
-            this.label2.Text = "metroLabel2";
             // 
             // trackBar1
             // 
@@ -141,8 +122,8 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.chart3.BorderlineColor = System.Drawing.Color.Black;
             this.chart3.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-            chartArea2.Name = "ChartArea1";
-            this.chart3.ChartAreas.Add(chartArea2);
+            chartArea5.Name = "ChartArea1";
+            this.chart3.ChartAreas.Add(chartArea5);
             this.chart3.Location = new System.Drawing.Point(8, 399);
             this.chart3.Name = "chart3";
             this.chart3.Size = new System.Drawing.Size(1334, 209);
@@ -151,9 +132,9 @@
             // 
             // btn_dataview
             // 
-            this.btn_dataview.Location = new System.Drawing.Point(499, 63);
+            this.btn_dataview.Location = new System.Drawing.Point(499, 67);
             this.btn_dataview.Name = "btn_dataview";
-            this.btn_dataview.Size = new System.Drawing.Size(37, 23);
+            this.btn_dataview.Size = new System.Drawing.Size(23, 19);
             this.btn_dataview.TabIndex = 16;
             this.btn_dataview.Text = "+";
             this.btn_dataview.Click += new System.EventHandler(this.btn_dataview_Click);
@@ -165,8 +146,8 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.chart4.BorderlineColor = System.Drawing.Color.Black;
             this.chart4.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-            chartArea3.Name = "ChartArea1";
-            this.chart4.ChartAreas.Add(chartArea3);
+            chartArea6.Name = "ChartArea1";
+            this.chart4.ChartAreas.Add(chartArea6);
             this.chart4.Location = new System.Drawing.Point(8, 634);
             this.chart4.Name = "chart4";
             this.chart4.Size = new System.Drawing.Size(1334, 243);
@@ -216,11 +197,21 @@
             this.cb_weldguns.TabIndex = 21;
             this.cb_weldguns.DropDown += new System.EventHandler(this.cb_weldguns_DropDown);
             // 
+            // Btn_Show3dChart
+            // 
+            this.Btn_Show3dChart.Location = new System.Drawing.Point(23, 330);
+            this.Btn_Show3dChart.Name = "Btn_Show3dChart";
+            this.Btn_Show3dChart.Size = new System.Drawing.Size(31, 23);
+            this.Btn_Show3dChart.TabIndex = 22;
+            this.Btn_Show3dChart.Text = "3D";
+            this.Btn_Show3dChart.Click += new System.EventHandler(this.Btn_Show3dChart_Click);
+            // 
             // SBCUStats
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1351, 900);
+            this.Controls.Add(this.Btn_Show3dChart);
             this.Controls.Add(this.cb_weldguns);
             this.Controls.Add(this.metroLabel6);
             this.Controls.Add(this.metroLabel5);
@@ -233,8 +224,6 @@
             this.Controls.Add(this.metroLabel1);
             this.Controls.Add(this.cb_sortmode);
             this.Controls.Add(this.trackBar1);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.chart1);
             this.MinimumSize = new System.Drawing.Size(1351, 469);
             this.Name = "SBCUStats";
@@ -250,8 +239,6 @@
         #endregion
 
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
-        private MetroFramework.Controls.MetroLabel label1;
-        private MetroFramework.Controls.MetroLabel label2;
         private MetroFramework.Controls.MetroTrackBar trackBar1;
         private MetroFramework.Controls.MetroComboBox cb_sortmode;
         private MetroFramework.Controls.MetroLabel metroLabel1;
@@ -264,5 +251,6 @@
         private MetroFramework.Controls.MetroLabel metroLabel5;
         private MetroFramework.Controls.MetroLabel metroLabel6;
         private MetroFramework.Controls.MetroComboBox cb_weldguns;
+        private MetroFramework.Controls.MetroButton Btn_Show3dChart;
     }
 }

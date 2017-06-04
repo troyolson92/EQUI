@@ -9,6 +9,8 @@ using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using System.Globalization;
 
+using WPFChart3D;
+
 namespace ExcelAddInEquipmentDatabase.Forms
 {
     public partial class SBCUStats : MetroFramework.Forms.MetroForm
@@ -66,19 +68,25 @@ namespace ExcelAddInEquipmentDatabase.Forms
             //long UCL
             chart1.Series.Add("LongUCL");
             chart1.Series["LongUCL"].XValueMember = "tool_timestamp";
-            chart1.Series["LongUCL"].YValueMembers = "UCL"; //is gemend met korte 
+            chart1.Series["LongUCL"].YValueMembers = "LongUCL"; 
             chart1.Series["LongUCL"].ChartType = SeriesChartType.Line;
             chart1.Series["LongUCL"].XValueType = ChartValueType.DateTime;
-            chart1.Series["LongUCL"].BorderWidth = 3;
+            chart1.Series["LongUCL"].BorderWidth = 2;
             chart1.Series["LongUCL"].Color = Color.Black;
+            chart1.Series["LongUCL"].EmptyPointStyle.Color = Color.Black;
+            chart1.Series["LongUCL"].EmptyPointStyle.BorderWidth = 2;
+            chart1.Series["LongUCL"].EmptyPointStyle.AxisLabel = "Empty";
             //long LCL
             chart1.Series.Add("LongLCL");
             chart1.Series["LongLCL"].XValueMember = "tool_timestamp";
-            chart1.Series["LongLCL"].YValueMembers = "LCL"; //is gemend met korte 
+            chart1.Series["LongLCL"].YValueMembers = "LongLCL"; 
             chart1.Series["LongLCL"].ChartType = SeriesChartType.Line;
             chart1.Series["LongLCL"].XValueType = ChartValueType.DateTime;
-            chart1.Series["LongLCL"].BorderWidth = 3;
+            chart1.Series["LongLCL"].BorderWidth = 2;
             chart1.Series["LongLCL"].Color = Color.Black;
+            chart1.Series["LongLCL"].EmptyPointStyle.Color = Color.Black;
+            chart1.Series["LongLCL"].EmptyPointStyle.BorderWidth = 2;
+            chart1.Series["LongLCL"].EmptyPointStyle.AxisLabel = "Empty";
             //
             chart1.ChartAreas[0].AxisX.Interval = 1;
             chart1.ChartAreas[0].AxisX.LabelStyle.Enabled = false;
@@ -91,18 +99,18 @@ namespace ExcelAddInEquipmentDatabase.Forms
             chart3.Series["TotalTime"].YValueMembers = "TotalTime";
             chart3.Series["TotalTime"].ChartType = SeriesChartType.Line;
             chart3.Series["TotalTime"].XValueType = ChartValueType.DateTime;
-            chart3.Series["TotalTime"].BorderWidth = 4;
+            chart3.Series["TotalTime"].BorderWidth = 3;
             chart3.Series["TotalTime"].Color = System.Drawing.Color.Green;
-            chart1.Series["ShortSbcu"].MarkerStyle = MarkerStyle.Circle;
-            chart1.Series["ShortSbcu"].MarkerColor = Color.Green;
-            chart1.Series["ShortSbcu"].MarkerSize = 6;
+            chart3.Series["TotalTime"].MarkerStyle = MarkerStyle.Circle;
+            chart3.Series["TotalTime"].MarkerColor = Color.Green;
+            chart3.Series["TotalTime"].MarkerSize = 8;
             //add series for UCL
             chart3.Series.Add("UCL");
             chart3.Series["UCL"].XValueMember = "_timestamp";
             chart3.Series["UCL"].YValueMembers = "UCL";
             chart3.Series["UCL"].ChartType = SeriesChartType.Line;
             chart3.Series["UCL"].XValueType = ChartValueType.DateTime;
-            chart3.Series["UCL"].BorderWidth = 3;
+            chart3.Series["UCL"].BorderWidth = 2;
             chart3.Series["UCL"].Color = System.Drawing.Color.Black;
             //add series for LCL
             chart3.Series.Add("LCL");
@@ -110,7 +118,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
             chart3.Series["LCL"].YValueMembers = "LCL";
             chart3.Series["LCL"].ChartType = SeriesChartType.Line;
             chart3.Series["LCL"].XValueType = ChartValueType.DateTime;
-            chart3.Series["LCL"].BorderWidth = 3;
+            chart3.Series["LCL"].BorderWidth = 2;
             chart3.Series["LCL"].Color = System.Drawing.Color.Black;
             //
             chart3.ChartAreas[0].AxisX.Interval = 1;
@@ -153,7 +161,6 @@ namespace ExcelAddInEquipmentDatabase.Forms
 
         private void GetChartData()
         {
-            //query all instances of the error 
             #region Query
             string qrySBCUShortLong = @"
    DECLARE 
@@ -174,7 +181,15 @@ SET @Robot = (SELECT TOP 1 '%' + rws.Robot + '%' from GADATA.volvo.RobotWeldGunR
 SET @Tool = (SELECT TOP 1 '%Tool: ' + CAST(rws.ElectrodeNbr as varchar(2)) + '%' from GADATA.volvo.RobotWeldGunRelation as rws where rws.WeldgunName LIKE @Weldgunname)
 END
 
-SELECT *, sbcu.Dsetup as 'LongDsetup', null as 'ShortDsetup' FROM gadata.c3g.sbcudata as sbcu 
+SELECT 
+*
+, sbcu.Dsetup as 'LongDsetup'
+, null as 'ShortDsetup' 
+, sbcu.UCL as 'LongUCL'
+, sbcu.LCL as 'LongLCL'
+,null as 'ShortUCL'
+,null as 'ShortLCL'
+FROM gadata.c3g.sbcudata as sbcu 
 WHERE
 sbcu.Longcheck = 1
 AND
@@ -185,7 +200,16 @@ AND
 sbcu.tool_id LIKE @Tool
 
 UNION  
-SELECT *, null as 'LongDsetup', sbcu.Dsetup as 'ShortDsetup' FROM gadata.c3g.sbcudata as sbcu 
+SELECT 
+*
+, null as 'LongDsetup'
+, sbcu.Dsetup as 'ShortDsetup' 
+, null as 'LongUCL'
+, null as 'LongLCL'
+,sbcu.UCL  as 'ShortUCL'
+,sbcu.LCL  as 'ShortLCL'
+
+FROM gadata.c3g.sbcudata as sbcu 
 WHERE
 sbcu.Longcheck = 0
 AND
@@ -199,13 +223,13 @@ sbcu.tool_id LIKE @Tool
 UNION
 SELECT 
 @StartDate as 'tool_timestamp' 
-,null,null,null,null,null,null,null,null,null,null,null,null
-,null,null,null,null,null,null,null,null,null,null,null,null
+,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+,null,null,null,null,null,null,null,null,null,null,null,null,null,null
 UNION
 SELECT 
 @EndDate as 'tool_timestamp' 
-,null,null,null,null,null,null,null,null,null,null,null,null
-,null,null,null,null,null,null,null,null,null,null,null,null
+,null,null,null,null,null,null,null,null,null,null,null,null,null,null
+,null,null,null,null,null,null,null,null,null,null,null,null,null,null
                 ";
             string qryCylinder = @"
    DECLARE 
@@ -293,8 +317,10 @@ SELECT null ,null
          
 ";
             #endregion
-            //fill dataset with all errors
-            int Daysback = -80;
+            //
+            int Daysback = -200; //load 200 days data in buffer.
+            int InitDays = -50; //show 50 days on startup.
+            //
             DateTime StartDate = System.DateTime.Now.AddDays(Daysback);
             DateTime EndDate = System.DateTime.Now;
             //
@@ -306,7 +332,7 @@ SELECT null ,null
             if (trackBar1.Minimum > -3) { trackBar1.Minimum = -3; }
             trackBar1.Maximum = -1; //minimum display = 1 day 
             //set startup view to last 30 days of data.
-            if (trackBar1.Minimum < -30) { trackBar1.Value = -30; }
+            if (trackBar1.Minimum < InitDays) { trackBar1.Value = InitDays; }
             else {trackBar1.Value = trackBar1.Minimum; }
             // set up 2nd trackbar
             trackBar2.Minimum = trackBar1.Minimum;
@@ -490,7 +516,7 @@ SELECT null ,null
             }
         }
 
-  private void chart_GetToolTipText(object sender, ToolTipEventArgs e)
+        private void chart_GetToolTipText(object sender, ToolTipEventArgs e)
   {
      // Check selected chart element and set tooltip text for it
      switch (e.HitTestResult.ChartElementType)
@@ -550,6 +576,20 @@ SELECT null ,null
             //build trend chart in init mode. 
             built_Chart(true);
             cb_weldguns.Enabled = true;
+        }
+
+        private void Btn_Show3dChart_Click(object sender, EventArgs e)
+        {
+            if (dt_SBCU == null) { Debugger.Message("dt_sbcu is null"); return; }
+            DateTime GrapStart = DateTime.Now.AddDays(Convert.ToInt32(trackBar1.Value));
+            DateTime GrapEnd = DateTime.Now.AddDays(Convert.ToInt32(trackBar2.Value));
+
+            var ldt = dt_SBCU.Select(string.Format("[ToolX] is not null AND [ToolY] is not null AND [ToolZ] is not null AND [tool_timestamp] > '{0}' AND [tool_timestamp] < '{1}'",GrapStart,GrapEnd)).CopyToDataTable();
+
+            if (ldt.Rows.Count < 1) { Debugger.Message("ldt has no data"); return; }
+
+            WPFChart3D.Window1 lChar = new Window1(ldt);
+            lChar.Show();
         }
 
     }
