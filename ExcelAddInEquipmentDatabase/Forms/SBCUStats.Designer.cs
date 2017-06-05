@@ -45,9 +45,11 @@
             this.metroLabel6 = new MetroFramework.Controls.MetroLabel();
             this.cb_weldguns = new MetroFramework.Controls.MetroComboBox();
             this.Btn_Show3dChart = new MetroFramework.Controls.MetroButton();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart4)).BeginInit();
+            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // chart1
@@ -59,9 +61,9 @@
             this.chart1.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
             chartArea4.Name = "ChartArea1";
             this.chart1.ChartAreas.Add(chartArea4);
-            this.chart1.Location = new System.Drawing.Point(8, 124);
+            this.chart1.Location = new System.Drawing.Point(3, 33);
             this.chart1.Name = "chart1";
-            this.chart1.Size = new System.Drawing.Size(1334, 242);
+            this.chart1.Size = new System.Drawing.Size(1330, 222);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
             // 
@@ -90,11 +92,12 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.metroLabel1.AutoSize = true;
-            this.metroLabel1.Location = new System.Drawing.Point(9, 101);
+            this.metroLabel1.Location = new System.Drawing.Point(3, 0);
             this.metroLabel1.Name = "metroLabel1";
-            this.metroLabel1.Size = new System.Drawing.Size(290, 20);
+            this.metroLabel1.Size = new System.Drawing.Size(1330, 30);
             this.metroLabel1.TabIndex = 10;
             this.metroLabel1.Text = "SBCU (dsetup mm Long = Red | Short = Blue)";
+            this.metroLabel1.Click += new System.EventHandler(this.metroLabel1_Click);
             // 
             // metroLabel3
             // 
@@ -124,9 +127,9 @@
             this.chart3.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
             chartArea5.Name = "ChartArea1";
             this.chart3.ChartAreas.Add(chartArea5);
-            this.chart3.Location = new System.Drawing.Point(8, 399);
+            this.chart3.Location = new System.Drawing.Point(3, 291);
             this.chart3.Name = "chart3";
-            this.chart3.Size = new System.Drawing.Size(1334, 209);
+            this.chart3.Size = new System.Drawing.Size(1330, 221);
             this.chart3.TabIndex = 15;
             this.chart3.Text = "chart3";
             // 
@@ -148,9 +151,9 @@
             this.chart4.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
             chartArea6.Name = "ChartArea1";
             this.chart4.ChartAreas.Add(chartArea6);
-            this.chart4.Location = new System.Drawing.Point(8, 634);
+            this.chart4.Location = new System.Drawing.Point(3, 548);
             this.chart4.Name = "chart4";
-            this.chart4.Size = new System.Drawing.Size(1334, 243);
+            this.chart4.Size = new System.Drawing.Size(1330, 223);
             this.chart4.TabIndex = 17;
             this.chart4.Text = "chart4";
             // 
@@ -169,9 +172,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.metroLabel5.AutoSize = true;
-            this.metroLabel5.Location = new System.Drawing.Point(8, 376);
+            this.metroLabel5.Location = new System.Drawing.Point(3, 258);
             this.metroLabel5.Name = "metroLabel5";
-            this.metroLabel5.Size = new System.Drawing.Size(147, 20);
+            this.metroLabel5.Size = new System.Drawing.Size(1330, 30);
             this.metroLabel5.TabIndex = 19;
             this.metroLabel5.Text = "Cylinder (totaltime ms)";
             // 
@@ -181,9 +184,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.metroLabel6.AutoSize = true;
-            this.metroLabel6.Location = new System.Drawing.Point(9, 611);
+            this.metroLabel6.Location = new System.Drawing.Point(3, 515);
             this.metroLabel6.Name = "metroLabel6";
-            this.metroLabel6.Size = new System.Drawing.Size(127, 20);
+            this.metroLabel6.Size = new System.Drawing.Size(1330, 30);
             this.metroLabel6.TabIndex = 20;
             this.metroLabel6.Text = "MidAir (MegaOhm)";
             // 
@@ -196,41 +199,64 @@
             this.cb_weldguns.Size = new System.Drawing.Size(161, 30);
             this.cb_weldguns.TabIndex = 21;
             this.cb_weldguns.DropDown += new System.EventHandler(this.cb_weldguns_DropDown);
+            this.cb_weldguns.DropDownClosed += new System.EventHandler(this.cb_weldguns_DropDownClosed);
             // 
             // Btn_Show3dChart
             // 
-            this.Btn_Show3dChart.Location = new System.Drawing.Point(23, 330);
+            this.Btn_Show3dChart.Location = new System.Drawing.Point(9, 74);
             this.Btn_Show3dChart.Name = "Btn_Show3dChart";
             this.Btn_Show3dChart.Size = new System.Drawing.Size(31, 23);
             this.Btn_Show3dChart.TabIndex = 22;
             this.Btn_Show3dChart.Text = "3D";
             this.Btn_Show3dChart.Click += new System.EventHandler(this.Btn_Show3dChart_Click);
             // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel1.ColumnCount = 1;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Controls.Add(this.metroLabel1, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.chart3, 0, 3);
+            this.tableLayoutPanel1.Controls.Add(this.chart1, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.metroLabel6, 0, 4);
+            this.tableLayoutPanel1.Controls.Add(this.chart4, 0, 5);
+            this.tableLayoutPanel1.Controls.Add(this.metroLabel5, 0, 2);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(9, 103);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 6;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1336, 774);
+            this.tableLayoutPanel1.TabIndex = 23;
+            // 
             // SBCUStats
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1351, 900);
+            this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.Btn_Show3dChart);
             this.Controls.Add(this.cb_weldguns);
-            this.Controls.Add(this.metroLabel6);
-            this.Controls.Add(this.metroLabel5);
             this.Controls.Add(this.metroLabel4);
-            this.Controls.Add(this.chart4);
             this.Controls.Add(this.btn_dataview);
-            this.Controls.Add(this.chart3);
             this.Controls.Add(this.trackBar2);
             this.Controls.Add(this.metroLabel3);
-            this.Controls.Add(this.metroLabel1);
             this.Controls.Add(this.cb_sortmode);
             this.Controls.Add(this.trackBar1);
-            this.Controls.Add(this.chart1);
             this.MinimumSize = new System.Drawing.Size(1351, 469);
             this.Name = "SBCUStats";
             this.Text = "SBCUStats Location:";
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart4)).EndInit();
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -252,5 +278,6 @@
         private MetroFramework.Controls.MetroLabel metroLabel6;
         private MetroFramework.Controls.MetroComboBox cb_weldguns;
         private MetroFramework.Controls.MetroButton Btn_Show3dChart;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
     }
 }

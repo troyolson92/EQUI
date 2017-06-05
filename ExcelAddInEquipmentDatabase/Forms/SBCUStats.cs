@@ -564,18 +564,8 @@ SELECT null ,null
                 cb_weldguns.ValueMember = "WeldgunName"; 
                 cb_weldguns.DisplayMember = "WeldgunName";
                 cb_weldguns.Text = orgSelection;
-                cb_weldguns.SelectedIndexChanged += new System.EventHandler(cb_weldguns_SelectedIndexChanged);
+             //   cb_weldguns.SelectedIndexChanged += new System.EventHandler(cb_weldguns_SelectedIndexChanged);
             }
-        }
-
-        private void cb_weldguns_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            cb_weldguns.Enabled = false;
-            //get data to build the chart
-            GetChartData();
-            //build trend chart in init mode. 
-            built_Chart(true);
-            cb_weldguns.Enabled = true;
         }
 
         private void Btn_Show3dChart_Click(object sender, EventArgs e)
@@ -590,6 +580,21 @@ SELECT null ,null
 
             WPFChart3D.Window1 lChar = new Window1(ldt);
             lChar.Show();
+        }
+
+        private void cb_weldguns_DropDownClosed(object sender, EventArgs e)
+        {
+            cb_weldguns.Enabled = false;
+            //get data to build the chart
+            GetChartData();
+            //build trend chart in init mode. 
+            built_Chart(true);
+            cb_weldguns.Enabled = true;
+        }
+
+        private void metroLabel1_Click(object sender, EventArgs e)
+        {
+
         }
 
     }
