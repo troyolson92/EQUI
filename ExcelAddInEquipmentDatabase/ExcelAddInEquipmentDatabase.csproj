@@ -434,8 +434,6 @@
     <None Include="applData.xss">
       <DependentUpon>applData.xsd</DependentUpon>
     </None>
-    <None Include="ClassDiagram1.cd" />
-    <None Include="ClassDiagram2.cd" />
     <None Include="DataClassesGADATA.dbml.layout">
       <DependentUpon>DataClassesGADATA.dbml</DependentUpon>
     </None>
