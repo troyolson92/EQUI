@@ -1,11 +1,7 @@
-define _assets = 'UR%';
-define _locations ='99%';
+
 define _StartDate = '2017-01-01 00:00:00';
 define _EndDate = '2018-01-01 00:00:00';
-define _nDays = '0';
-define _Owngergroup = '%';
-define _Reportedby = '%';
-define _Wonum = '%';
+
 
 --WO DETAILS
 select 
@@ -29,19 +25,11 @@ select
 ,WORKORDER.WORKORDERID
 from MAXIMO.WORKORDER WORKORDER  
 where 
- WORKORDER.ASSETNUM LIKE '&_assets'
- AND
- WORKORDER.LOCATION LIKE '&_locations'
- AND
+
  WORKORDER.REPORTDATE > TO_TIMESTAMP('&_StartDate', 'yyyy/mm/dd hh24:mi:ss')
  AND
  WORKORDER.STATUSDATE < TO_TIMESTAMP('&_EndDate', 'yyyy/mm/dd hh24:mi:ss')
- AND
- WORKORDER.OWNERGROUP LIKE '&_Owngergroup'
- AND
- WORKORDER.REPORTEDBY LIKE '&_Reportedby'
- AND
- WORKORDER.WONUM LIKE  '&_Wonum' 
+
  ORDER BY WORKORDER.STATUSDATE DESC;
 
 

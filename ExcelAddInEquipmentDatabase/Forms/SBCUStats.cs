@@ -23,12 +23,41 @@ namespace ExcelAddInEquipmentDatabase.Forms
         DataTable dt_SBCU;
         DataTable dt_Cylinder;
         DataTable dt_MidAir;
-
+        //bw
+        BackgroundWorker bw = new BackgroundWorker();
+        //settings
+        int Daysback = -200; //load 200 days data in buffer.
+        int InitDays = -50; //show 50 days on startup.
+        //
+        string activeLocation;
 
         public SBCUStats(string Location)
         {
             InitializeComponent();
-            cb_weldguns.Text = Location;
+            cb_weldguns.Enabled = false;
+            cb_weldguns.Items.Clear();
+            cb_weldguns.Items.Insert(0, Location);
+            cb_weldguns.SelectedIndex = 0;
+            activeLocation = Location;
+            //
+            initchart();
+            cb_sortmode.SelectedValueChanged += new System.EventHandler(this.cb_sortmode_SelectedValueChanged);
+            //
+            metroProgressSpinner1.Visible = true;
+            bw.RunWorkerAsync();
+            //
+        }
+
+        public SBCUStats()
+        {
+            InitializeComponent();
+            cb_weldguns.Enabled = true;
+            initchart();
+            cb_sortmode.SelectedValueChanged += new System.EventHandler(this.cb_sortmode_SelectedValueChanged);
+        }
+
+        private void initchart()
+        {
             //
             cb_sortmode.Items.Clear();
             cb_sortmode.Items.Insert(0, "None");
@@ -68,7 +97,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
             //long UCL
             chart1.Series.Add("LongUCL");
             chart1.Series["LongUCL"].XValueMember = "tool_timestamp";
-            chart1.Series["LongUCL"].YValueMembers = "LongUCL"; 
+            chart1.Series["LongUCL"].YValueMembers = "LongUCL";
             chart1.Series["LongUCL"].ChartType = SeriesChartType.Line;
             chart1.Series["LongUCL"].XValueType = ChartValueType.DateTime;
             chart1.Series["LongUCL"].BorderWidth = 2;
@@ -79,7 +108,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
             //long LCL
             chart1.Series.Add("LongLCL");
             chart1.Series["LongLCL"].XValueMember = "tool_timestamp";
-            chart1.Series["LongLCL"].YValueMembers = "LongLCL"; 
+            chart1.Series["LongLCL"].YValueMembers = "LongLCL";
             chart1.Series["LongLCL"].ChartType = SeriesChartType.Line;
             chart1.Series["LongLCL"].XValueType = ChartValueType.DateTime;
             chart1.Series["LongLCL"].BorderWidth = 2;
@@ -90,7 +119,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
             //
             chart1.ChartAreas[0].AxisX.Interval = 1;
             chart1.ChartAreas[0].AxisX.LabelStyle.Enabled = false;
-            chart1.ChartAreas[0].AxisY.IsStartedFromZero = false; 
+            chart1.ChartAreas[0].AxisY.IsStartedFromZero = false;
             chart1.FormatNumber += chart1_FormatNumber;
             chart1.GetToolTipText += chart_GetToolTipText;
             //init chart Cylinder
@@ -145,18 +174,24 @@ namespace ExcelAddInEquipmentDatabase.Forms
             //
             chart4.ChartAreas[0].AxisX.Interval = 1;
             chart4.ChartAreas[0].AxisX.LabelStyle.Enabled = true;
-            chart4.ChartAreas[0].AxisY.IsStartedFromZero = false; 
+            chart4.ChartAreas[0].AxisY.IsStartedFromZero = false;
             chart4.FormatNumber += chart1_FormatNumber;
             chart4.GetToolTipText += chart_GetToolTipText;
-
-            //get data to build the chart
-          //  GetChartData();
-            //build trend chart in init mode. 
-          //  built_Chart(true);
             //
-            cb_sortmode.SelectedValueChanged += new System.EventHandler(this.cb_sortmode_SelectedValueChanged);
+            bw.DoWork += bw_DoWork;
+            bw.RunWorkerCompleted += bw_RunWorkerCompleted;
             //
             this.Show();
+        }
+
+        void bw_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            set_trackbars();
+        }
+
+        void bw_DoWork(object sender, DoWorkEventArgs e)
+        {
+            GetChartData();
         }
 
         private void GetChartData()
@@ -318,26 +353,35 @@ SELECT null ,null
 ";
             #endregion
             //
-            int Daysback = -200; //load 200 days data in buffer.
-            int InitDays = -50; //show 50 days on startup.
-            //
             DateTime StartDate = System.DateTime.Now.AddDays(Daysback);
             DateTime EndDate = System.DateTime.Now;
             //
-            dt_SBCU = lGdataComm.RunQueryGadata(string.Format(qrySBCUShortLong, StartDate.ToString("yyyy-MM-dd HH:mm:ss"), EndDate.ToString("yyyy-MM-dd HH:mm:ss"), cb_weldguns.Text.Trim()));
-            dt_Cylinder = lGdataComm.RunQueryGadata(string.Format(qryCylinder, StartDate.ToString("yyyy-MM-dd HH:mm:ss"), EndDate.ToString("yyyy-MM-dd HH:mm:ss"), cb_weldguns.Text.Trim()));
-            dt_MidAir = lGdataComm.RunQueryGadata(string.Format(qryMidair,  StartDate.ToString("yyyy-MM-dd HH:mm:ss"), EndDate.ToString("yyyy-MM-dd HH:mm:ss"), cb_weldguns.Text.Trim()));    
+            dt_SBCU = lGdataComm.RunQueryGadata(string.Format(qrySBCUShortLong, StartDate.ToString("yyyy-MM-dd HH:mm:ss"), EndDate.ToString("yyyy-MM-dd HH:mm:ss"), activeLocation.Trim()));
+            dt_Cylinder = lGdataComm.RunQueryGadata(string.Format(qryCylinder, StartDate.ToString("yyyy-MM-dd HH:mm:ss"), EndDate.ToString("yyyy-MM-dd HH:mm:ss"), activeLocation.Trim()));
+            dt_MidAir = lGdataComm.RunQueryGadata(string.Format(qryMidair, StartDate.ToString("yyyy-MM-dd HH:mm:ss"), EndDate.ToString("yyyy-MM-dd HH:mm:ss"), activeLocation.Trim()));    
+            //
+        }
+
+        private void set_trackbars()
+        {
+            //
+            DateTime StartDate = System.DateTime.Now.AddDays(Daysback);
+            DateTime EndDate = System.DateTime.Now;
             //setup trackbar (trackbar maximum = first time error happend, minium = now)
             trackBar1.Minimum = (int)(StartDate - EndDate).TotalDays;
             if (trackBar1.Minimum > -3) { trackBar1.Minimum = -3; }
             trackBar1.Maximum = -1; //minimum display = 1 day 
             //set startup view to last 30 days of data.
             if (trackBar1.Minimum < InitDays) { trackBar1.Value = InitDays; }
-            else {trackBar1.Value = trackBar1.Minimum; }
+            else { trackBar1.Value = trackBar1.Minimum; }
             // set up 2nd trackbar
             trackBar2.Minimum = trackBar1.Minimum;
             trackBar2.Maximum = trackBar1.Maximum;
             trackBar2.Value = trackBar2.Maximum;
+            //
+            trackBar1.ValueChanged += new System.EventHandler(trackBar1_ValueChanged);
+            trackBar2.ValueChanged += new System.EventHandler(trackBar1_ValueChanged);
+
         }
 
         private void built_Chart(Boolean noAutoGrouping) 
@@ -367,8 +411,6 @@ SELECT null ,null
                 chart4.DataSource = ldt_Midair;
                 chart4.DataBind();
             //
-            DateTime FirstError = (from a in dt_SBCU.AsEnumerable() select a.Field<DateTime>("tool_timestamp")).Min();
-            //
             if (noAutoGrouping == false)
             {
                 if ((trackBar1.Value - trackBar2.Value) > -10)
@@ -384,13 +426,6 @@ SELECT null ,null
                     cb_sortmode.SelectedIndex = 3;
                 }
             }
-            //check that manual grouping is fesable
-            if ((cb_sortmode.SelectedIndex < 2) && ((trackBar1.Value - trackBar2.Value) < -60))
-            {
-                Debugger.Message(string.Format("Its not a good idea to group in this way for '{0}' days of data", (trackBar1.Value - trackBar2.Value)));
-                cb_sortmode.SelectedIndex = 3;
-            }
-
 
             switch (cb_sortmode.Text)
             {
@@ -460,7 +495,8 @@ SELECT null ,null
                 default:
                     break;
             }
-      
+            //here because of cross threding
+            metroProgressSpinner1.Visible = false;
         }
 
         void chart1_FormatNumber(object sender, FormatNumberEventArgs e)
@@ -523,7 +559,12 @@ SELECT null ,null
      {
         case ChartElementType.DataPoint:
            var dataPoint = e.HitTestResult.Series.Points[e.HitTestResult.PointIndex];
-           e.Text = string.Format("X:\t{0}\nY:\t{1}", dataPoint.XValue, dataPoint.YValues[0]);
+
+           e.Text = string.Format(
+@"Datatype: {0}
+Timestamp: {1}
+Value: {2:0.00}"
+            , e.HitTestResult.Series.Name, DateTime.FromOADate(dataPoint.XValue).ToString("yyyy-MM-dd HH:mm:ss"), dataPoint.YValues[0]);
            break;
      }
   }
@@ -564,37 +605,32 @@ SELECT null ,null
                 cb_weldguns.ValueMember = "WeldgunName"; 
                 cb_weldguns.DisplayMember = "WeldgunName";
                 cb_weldguns.Text = orgSelection;
-             //   cb_weldguns.SelectedIndexChanged += new System.EventHandler(cb_weldguns_SelectedIndexChanged);
             }
-        }
-
-        private void Btn_Show3dChart_Click(object sender, EventArgs e)
-        {
-            if (dt_SBCU == null) { Debugger.Message("dt_sbcu is null"); return; }
-            DateTime GrapStart = DateTime.Now.AddDays(Convert.ToInt32(trackBar1.Value));
-            DateTime GrapEnd = DateTime.Now.AddDays(Convert.ToInt32(trackBar2.Value));
-
-            var ldt = dt_SBCU.Select(string.Format("[ToolX] is not null AND [ToolY] is not null AND [ToolZ] is not null AND [tool_timestamp] > '{0}' AND [tool_timestamp] < '{1}'",GrapStart,GrapEnd)).CopyToDataTable();
-
-            if (ldt.Rows.Count < 1) { Debugger.Message("ldt has no data"); return; }
-
-            WPFChart3D.Window1 lChar = new Window1(ldt);
-            lChar.Show();
         }
 
         private void cb_weldguns_DropDownClosed(object sender, EventArgs e)
         {
             cb_weldguns.Enabled = false;
+            activeLocation = cb_weldguns.Text;
             //get data to build the chart
-            GetChartData();
-            //build trend chart in init mode. 
-            built_Chart(true);
+            metroProgressSpinner1.Visible = true;
+            bw.RunWorkerAsync();
+            //
             cb_weldguns.Enabled = true;
         }
 
-        private void metroLabel1_Click(object sender, EventArgs e)
+        private void metroLabel1_DoubleClick(object sender, EventArgs e)
         {
+            if (dt_SBCU == null) { Debugger.Message("dt_sbcu is null"); return; }
+            DateTime GrapStart = DateTime.Now.AddDays(Convert.ToInt32(trackBar1.Value));
+            DateTime GrapEnd = DateTime.Now.AddDays(Convert.ToInt32(trackBar2.Value));
 
+            var ldt = dt_SBCU.Select(string.Format("[ToolX] is not null AND [ToolY] is not null AND [ToolZ] is not null AND [tool_timestamp] > '{0}' AND [tool_timestamp] < '{1}'", GrapStart, GrapEnd)).CopyToDataTable();
+
+            if (ldt.Rows.Count < 1) { Debugger.Message("ldt has no data"); return; }
+
+            WPFChart3D.Window1 lChar = new Window1(ldt);
+            lChar.Show();
         }
 
     }

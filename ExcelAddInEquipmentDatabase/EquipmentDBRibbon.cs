@@ -114,7 +114,6 @@ namespace ExcelAddInEquipmentDatabase
             btn_sync_mx7.Enabled = false;
             sync_stw040.Enabled = false;
             btn_testUpdate.Enabled = false;
-            btn_SBCUtest.Enabled = false;
         }
         else
         { 
@@ -127,7 +126,6 @@ namespace ExcelAddInEquipmentDatabase
             btn_sync_mx7.Enabled = false;
             sync_stw040.Enabled = false;
             btn_testUpdate.Enabled = false;
-            btn_SBCUtest.Enabled = false;
         }
         }
 
@@ -539,8 +537,11 @@ namespace ExcelAddInEquipmentDatabase
             //also set Startdate = enddate - daysback to make maximo work beter.
             if (ProcMngr == null) { Debugger.Message("ProcMnger is null"); return; }
             //format datatime to make days back work better 
-            ProcMngr.startDate.input = DateTime.Now.AddDays(Convert.ToInt32(ProcMngr.daysBack.input) * -1); 
-            ProcMngr.endDate.input = DateTime.Now;
+            if (ProcMngr.daysBack.active) // added to make dateRange selection possible.
+            {
+                ProcMngr.startDate.input = DateTime.Now.AddDays(Convert.ToInt32(ProcMngr.daysBack.input) * -1);
+                ProcMngr.endDate.input = DateTime.Now;
+            }
             //Always include child assets for now. (will make tis beter or server side later) 
             if ((!String.IsNullOrEmpty(ProcMngr.locations.input) && Char.IsLetter(ProcMngr.locations.input[0])) == false) //because of GB locations issue
             {
@@ -718,7 +719,12 @@ namespace ExcelAddInEquipmentDatabase
         //test
         private void button1_Click_1(object sender, RibbonControlEventArgs e)
         {
-            Forms.SBCUStats lSBCUStats = new Forms.SBCUStats("32070ws02a"); //allow multible instances of the form.
+            Forms.SBCUStats lSBCUStats = new Forms.SBCUStats(); //allow multible instances of the form.
+        }
+
+        private void btn_testPArms_Click(object sender, RibbonControlEventArgs e)
+        {
+            System.Diagnostics.Process.Start(@"\\gnlsnm0101.gen.volvocars.net\proj\6308-SHR-VCC22700\VSTO\DEPLOYMENTBASE\MXxWOoverview.application", "-Test");
         }
         //
 
