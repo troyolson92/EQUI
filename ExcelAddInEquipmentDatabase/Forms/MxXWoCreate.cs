@@ -8,13 +8,14 @@ using System.Text;
 using System.Windows.Forms;
 using MetroFramework;
 using MetroFramework.Forms;
+using EQUICommunictionLib;
 
 namespace ExcelAddInEquipmentDatabase.Forms
 {
     public partial class MxXWoCreate : MetroForm
     {
         //debugger
-        Debugger Debugger = new Debugger();
+        myDebugger Debugger = new myDebugger();
         //
         MaximoComm lMaximoComm = new MaximoComm();
         //

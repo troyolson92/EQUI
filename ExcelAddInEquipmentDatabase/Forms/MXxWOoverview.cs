@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
+using EQUICommunictionLib;
 
 namespace ExcelAddInEquipmentDatabase.Forms
 {
@@ -18,7 +19,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
         DataTable tableFromMx7 = new DataTable();
         BackgroundWorker bwLongDescription = new BackgroundWorker();
         BackgroundWorker bwWorkorders = new BackgroundWorker();
-        Debugger Debugger = new Debugger();
+        myDebugger Debugger = new myDebugger();
         string Llocation;
 
         public MXxWOoverview(string location, bool partmode)

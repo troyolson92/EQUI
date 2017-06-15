@@ -11,9 +11,9 @@ using System.Windows.Forms;
 
 namespace EQUICommunictionLib
 {
-    class stw040Sync
+    public class stw040Sync
     {
-        Debugger ldebugger = new Debugger();
+        myDebugger Debugger = new myDebugger();
 
        public void get_swt040data()
         {
@@ -63,8 +63,8 @@ new records ={2}"   , countBefore.Rows[0].Field<int>("count").ToString()
             }
            catch (Exception ex)
             {
-                ldebugger.Exeption(ex);
-                ldebugger.Message(ex.Message);
+                Debugger.Exeption(ex);
+                Debugger.Message(ex.Message);
             }
         }
 

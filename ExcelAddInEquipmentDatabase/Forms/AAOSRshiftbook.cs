@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using MetroFramework;
 using MetroFramework.Forms;
+using EQUICommunictionLib;
 
 /*TEMP MODULE UNTIL MAX COMM IS UP!*/
 
@@ -17,7 +18,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
     {
         GadataComm lGadataComm = new GadataComm();
         DataTable dt = new DataTable();
-        Debugger Debugger = new Debugger();
+        myDebugger Debugger = new myDebugger();
 
         public AAOSRshiftbook()
         {

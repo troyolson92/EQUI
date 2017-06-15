@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.IO;
+using EQUICommunictionLib;
 
 namespace ExcelAddInEquipmentDatabase
 {
@@ -19,11 +20,13 @@ namespace ExcelAddInEquipmentDatabase
     {
         //
         //debugger
-        Debugger Debugger = new Debugger();
+        myDebugger Debugger = new myDebugger();
         //connection to gadata
         GadataComm lGadataComm = new GadataComm();
         //connection to maximo
         MaximoComm lMaximoComm = new MaximoComm();
+        //connection to GADATA for maximo querys
+        MaximoQuery lMaximoQuery = new MaximoQuery();
         //local Users data instance 
         applData.UsersDataTable lUsers = new applData.UsersDataTable();
         //local Asset data instance
@@ -427,7 +430,7 @@ namespace ExcelAddInEquipmentDatabase
              item = Globals.Factory.GetRibbonFactory().CreateRibbonDropDownItem();
              item.Label = "UserDef";
              dd_ParameterSets.Items.Add(item);
-             foreach (string setName in lGadataComm.Select_ParmSet_list(ProcMngr.activeSystem,ProcMngr.ProcedureName))
+             foreach (string setName in ProcMngr.GADATA_Select_ParmSet_list(ProcMngr.activeSystem,ProcMngr.ProcedureName))
                 {
                     if (setName == null) break;
                      item = Globals.Factory.GetRibbonFactory().CreateRibbonDropDownItem();
@@ -566,7 +569,7 @@ namespace ExcelAddInEquipmentDatabase
                         //connects the ribbon filter controls with the procMngr
                         if (ProcMngr.activeSystem == lMaximoComm.DsnMX7) //MX7connections
                         {
-                            ProcMngr.MX7_ProcMngrToActiveConnection(lMaximoComm.oracle_get_QueryTemplate_from_GADATA(connection.Name, lMaximoComm.SystemMX7));
+                            ProcMngr.MX7_ProcMngrToActiveConnection(lMaximoQuery.oracle_get_QueryTemplate_from_GADATA(connection.Name, lMaximoComm.SystemMX7));
                             connection.Refresh();
                         }
                         else if (ProcMngr.activeSystem == lGadataComm.DsnGADATA) //GADATAconnections
@@ -704,7 +707,7 @@ namespace ExcelAddInEquipmentDatabase
         private void btn_sync_mx7_Click(object sender, RibbonControlEventArgs e)
         {
             btn_sync_mx7.Enabled = false;
-            mx7Sync lmx7Sync = new mx7Sync();
+            EQUICommunictionLib.mx7Sync lmx7Sync = new EQUICommunictionLib.mx7Sync();
             lmx7Sync.get_mx7data();
             btn_sync_mx7.Enabled = true;
         }

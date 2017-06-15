@@ -10,18 +10,20 @@ using Excel = Microsoft.Office.Interop.Excel;
 using System.Diagnostics;
 using System.Data.SqlClient;
 using Microsoft.VisualBasic;
-
+using EQUICommunictionLib;
 
 namespace ExcelAddInEquipmentDatabase
 {
     public partial class ConnectionManger : Form
     {
         //debugger
-        Debugger Debugger = new Debugger();
+        myDebugger Debugger = new myDebugger();
         //connection to gadata
         GadataComm lGadataComm = new GadataComm();
         //connection to maximo 
         MaximoComm lMaximoComm = new MaximoComm();
+        //connection to GADATA for maximo querys
+        MaximoQuery lMaximoQuery = new MaximoQuery();
         //Query edit box instance
         Forms.MXxQueryEdit QEdit;
 
@@ -224,8 +226,8 @@ namespace ExcelAddInEquipmentDatabase
             string Query;
             using (StoredProcedureManger ProcMngr = new StoredProcedureManger(lMaximoComm.SystemMX7))
           {
-              ProcMngr.MX7_ActiveConnectionToProcMngr(lMaximoComm.oracle_get_QueryParms_from_GADATA(cb_MX7_QueryNames.Text, lMaximoComm.SystemMX7), "It does not exist");
-              Query = ProcMngr.MX7_BuildQuery_ProcMngrToActiveConnection(lMaximoComm.oracle_get_QueryTemplate_from_GADATA(cb_MX7_QueryNames.Text, lMaximoComm.SystemMX7));
+              ProcMngr.MX7_ActiveConnectionToProcMngr(lMaximoQuery.oracle_get_QueryParms_from_GADATA(cb_MX7_QueryNames.Text, lMaximoComm.SystemMX7), "It does not exist");
+              Query = ProcMngr.MX7_BuildQuery_ProcMngrToActiveConnection(lMaximoQuery.oracle_get_QueryTemplate_from_GADATA(cb_MX7_QueryNames.Text, lMaximoComm.SystemMX7));
           }
             lMaximoComm.make_DSN(lMaximoComm.SystemMX7);
             string ODBCconn = lMaximoComm.MX7connectionString;
@@ -248,7 +250,7 @@ namespace ExcelAddInEquipmentDatabase
                                                 select a.DISCRIPTION).First().ToString();
             }
             lv_MX7_procParms.Items.Clear();
-            foreach (OracleQueryParm Parm in lMaximoComm.oracle_get_QueryParms_from_GADATA(cb_MX7_QueryNames.Text, lMaximoComm.SystemMX7))
+            foreach (OracleQueryParm Parm in lMaximoQuery.oracle_get_QueryParms_from_GADATA(cb_MX7_QueryNames.Text, lMaximoComm.SystemMX7))
             {
                 ListViewItem item = new ListViewItem(Parm.ParameterName);
                 item.SubItems.Add(Parm.Defaultvalue);
@@ -271,7 +273,7 @@ namespace ExcelAddInEquipmentDatabase
             QEdit.TargetSystem = lMaximoComm.SystemMX7;
             QEdit.QueryName = cb_MX7_QueryNames.Text;
             QEdit.QueryDiscription =  lbl_MX7_procDiscription.Text;
-            QEdit.Query = lMaximoComm.oracle_get_QueryTemplate_from_GADATA(cb_MX7_QueryNames.Text,lMaximoComm.SystemMX7);
+            QEdit.Query = lMaximoQuery.oracle_get_QueryTemplate_from_GADATA(cb_MX7_QueryNames.Text, lMaximoComm.SystemMX7);
             QEdit.Show();
         }
         #endregion
@@ -324,7 +326,7 @@ namespace ExcelAddInEquipmentDatabase
                            select a.DISCRIPTION).First().ToString();
            }
             lv_MX3_procParms.Items.Clear();
-            foreach (OracleQueryParm Parm in lMaximoComm.oracle_get_QueryParms_from_GADATA(cb_MX3_QueryNames.Text, lMaximoComm.SystemMX3))
+            foreach (OracleQueryParm Parm in lMaximoQuery.oracle_get_QueryParms_from_GADATA(cb_MX3_QueryNames.Text, lMaximoComm.SystemMX3))
             {
                 ListViewItem item = new ListViewItem(Parm.ParameterName);
                 item.SubItems.Add(Parm.Defaultvalue);
@@ -347,7 +349,7 @@ namespace ExcelAddInEquipmentDatabase
             QEdit.TargetSystem = lMaximoComm.SystemMX3;
             QEdit.QueryName = cb_MX7_QueryNames.Text;
             QEdit.QueryDiscription = lbl_MX3_procDiscription.Text;
-            QEdit.Query = lMaximoComm.oracle_get_QueryTemplate_from_GADATA(cb_MX3_QueryNames.Text, lMaximoComm.SystemMX3);
+            QEdit.Query = lMaximoQuery.oracle_get_QueryTemplate_from_GADATA(cb_MX3_QueryNames.Text, lMaximoComm.SystemMX3);
             QEdit.Show();
         }
         #endregion

@@ -6,13 +6,14 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using EQUICommunictionLib;
 
 namespace ExcelAddInEquipmentDatabase.Forms
 {
     public partial class Loginfo : UserControl
     {
         //debugger
-        Debugger Debugger = new Debugger();
+        myDebugger Debugger = new myDebugger();
         GadataComm lGdataComm = new GadataComm();
         DataTable dt;
         BackgroundWorker bw = new BackgroundWorker();

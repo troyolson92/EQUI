@@ -14,13 +14,14 @@ using System.Threading;
 
 using iTextSharp.text;
 using iTextSharp.text.pdf;
+using EQUICommunictionLib;
 
 namespace ExcelAddInEquipmentDatabase.Forms
 {
     public partial class DocManager : Form
     {
         //debugger
-        Debugger Debugger = new Debugger();
+        myDebugger Debugger = new myDebugger();
         //
         private List<string[]> Resultbuffer;
         private BackgroundWorker bw;
@@ -210,7 +211,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
           }
           catch (Exception ex)
           {
-             Debugger.Exeption(ex);
+              Debugger.Exeption(ex);
           }
           return List;
       }

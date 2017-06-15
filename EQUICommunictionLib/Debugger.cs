@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace EQUICommunictionLib
 {
-   sealed partial class Debugger
+   public partial class myDebugger
     {
         bool bLogStack = true;
         bool bLogToFile = true;

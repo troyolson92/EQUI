@@ -186,7 +186,7 @@
     <Reference Include="Office, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
-    <Reference Include="Oracle.DataAccess, Version=2.112.3.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=AMD64" />
+    <Reference Include="Oracle.DataAccess, Version=4.121.2.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="stdole, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
@@ -236,8 +236,6 @@
       <DependentUpon>applData.xsd</DependentUpon>
     </Compile>
     <Compile Include="ClickOnce.cs" />
-    <Compile Include="Debugger.cs" />
-    <Compile Include="DSNmngr.cs" />
     <Compile Include="Forms\AAOSRshiftbook.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -366,13 +364,11 @@
     <Compile Include="Forms\uc_Inputbox.Designer.cs">
       <DependentUpon>uc_Inputbox.cs</DependentUpon>
     </Compile>
-    <Compile Include="GadataComm.cs" />
-    <Compile Include="MaximoComm.cs" />
+    <Compile Include="MaximoQuery.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="mx7Sync.cs" />
-    <Compile Include="stw040Sync.cs" />
+    <Compile Include="StringExtenstions.cs" />
     <Compile Include="WorksheetFeatures.cs" />
     <EmbeddedResource Include="Forms\AAOSRshiftbook.resx">
       <DependentUpon>AAOSRshiftbook.cs</DependentUpon>
@@ -506,6 +502,10 @@
     <ProjectReference Include="..\..\WPFChart3D_src\WPFChart\WPFChart\WPFChart.csproj">
       <Project>{4594058d-a96a-4b11-93b5-707215e40231}</Project>
       <Name>WPFChart</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EQUICommunictionLib\EQUICommunictionLib.csproj">
+      <Project>{090979a1-2c7b-4c89-a921-f36a936412f2}</Project>
+      <Name>EQUICommunictionLib</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

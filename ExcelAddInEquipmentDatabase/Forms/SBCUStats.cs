@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using System.Globalization;
-
+using EQUICommunictionLib;
 using WPFChart3D;
 
 namespace ExcelAddInEquipmentDatabase.Forms
@@ -16,7 +16,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
     public partial class SBCUStats : MetroFramework.Forms.MetroForm
     {
         //debugger
-        Debugger Debugger = new Debugger();
+        myDebugger Debugger = new myDebugger();
         //communication module
         GadataComm lGdataComm = new GadataComm();
         //tabels

@@ -28,6 +28,7 @@ namespace MXxWOoverview
                 foreach (string value in cmdLine)
                 {
                     MessageBox.Show(value.ToString());
+                    MessageBox.Show(Environment.GetFolderPath(Environment.SpecialFolder.Programs));
                 }
             }
             else

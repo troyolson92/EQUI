@@ -11,13 +11,14 @@ using System.Diagnostics;
 using System.Data.SqlClient;
 using System.Data.Linq.SqlClient;
 using System.Text.RegularExpressions;
+using EQUICommunictionLib;
 
 namespace ExcelAddInEquipmentDatabase
 {
     public partial class AssetManager : Form
     {
         //debugger
-        Debugger Debugger = new Debugger();
+        myDebugger Debugger = new myDebugger();
         //local Asset data instance
         applData.ASSETSDataTable lASSETS = new applData.ASSETSDataTable();
         //connection to GADATA

@@ -13,7 +13,7 @@ namespace EQUICommunictionLib
     public class GadataComm
     {
         //debugger
-        Debugger Debugger = new Debugger();
+        myDebugger Debugger = new myDebugger();
         //connection to GADATA
         SqlConnection Gadataconn = new SqlConnection("user id=EqUi; password=EqUi; server=SQLA001.gen.volvocars.net;" +
                                                       "Trusted_Connection=no; database=gadata; connection timeout=30");
@@ -166,12 +166,4 @@ namespace EQUICommunictionLib
         }  
     }
     
-    public static class MyStringExtensions
-    {
-        public static bool Like(this string toSearch, string toFind)
-        {
-            if (toSearch == null) { return false; }
-            return new Regex(@"\A" + new Regex(@"\.|\$|\^|\{|\[|\(|\||\)|\*|\+|\?|\\").Replace(toFind, ch => @"\" + ch).Replace('_', '.').Replace("%", ".*") + @"\z", RegexOptions.Singleline).IsMatch(toSearch);
-        }
-    }
 }

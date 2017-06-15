@@ -7,13 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Diagnostics;
+using EQUICommunictionLib;
 
 namespace ExcelAddInEquipmentDatabase.Forms
 {
     public partial class MXxQueryEdit : Form
     {
         //debugger
-        Debugger Debugger = new Debugger();
+        myDebugger Debugger = new myDebugger();
 
         string lTargetSystem;
 
@@ -52,8 +53,8 @@ namespace ExcelAddInEquipmentDatabase.Forms
         {
             try
             {
-                MaximoComm lMaxComm = new MaximoComm();
-                lMaxComm.oracle_delete_Query_GADATA(lTargetSystem, QueryName);
+                MaximoQuery lMaximoQuery = new MaximoQuery();
+                lMaximoQuery.oracle_delete_Query_GADATA(lTargetSystem, QueryName);
                 Close();
                 Dispose();
             }
@@ -81,16 +82,16 @@ namespace ExcelAddInEquipmentDatabase.Forms
 
             try
             {
-                MaximoComm lMaxComm = new MaximoComm();
+                MaximoQuery lMaximoQuery = new MaximoQuery();
                 try
                 { // I know this is stupid but to use UPDATE command i need the build a dataset and AARG 
-                    lMaxComm.oracle_delete_Query_GADATA(lTargetSystem, QueryName);
+                    lMaximoQuery.oracle_delete_Query_GADATA(lTargetSystem, QueryName);
                 }
                 catch
                 {
                     //
                 }
-                lMaxComm.oracle_send_new_Query_to_GADATA(lTargetSystem, QueryName, QueryDiscription, Query);
+                lMaximoQuery.oracle_send_new_Query_to_GADATA(lTargetSystem, QueryName, QueryDiscription, Query);
                 Close();
                 Dispose();
             }

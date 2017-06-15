@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Diagnostics;
+using EQUICommunictionLib;
 
 /*
 select * from MAXIMO.CLASSIFICATION CLASS 
@@ -30,7 +31,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
     public partial class ErrorManger : Form
     {
         //debugger
-        Debugger Debugger = new Debugger();
+        myDebugger Debugger = new myDebugger();
         //
         applData.c3gL_errorDataTable lc3gError = new applData.c3gL_errorDataTable();
         applData.c4gL_errorDataTable lc4gError = new applData.c4gL_errorDataTable();

@@ -2,18 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Excel = Microsoft.Office.Interop.Excel;
 using System.Data.OleDb;
 using System.Globalization;
 using System.Data;
 using System.Net;
 using System.Windows.Forms;
 
-namespace ExcelAddInEquipmentDatabase
+namespace EQUICommunictionLib
 {
-    class mx7Sync
+    public class mx7Sync
     {
-        Debugger ldebugger = new Debugger();
+        myDebugger Debugger = new myDebugger();
 
        public void get_mx7data()
         {
@@ -63,8 +62,8 @@ new records ={2}"   , countBefore.Rows[0].Field<int>("count").ToString()
             }
            catch (Exception ex)
             {
-                ldebugger.Exeption(ex);
-                ldebugger.Message(ex.Message);
+                Debugger.Exeption(ex);
+                Debugger.Message(ex.Message);
             }
         }
 

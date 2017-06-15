@@ -8,13 +8,14 @@ using Microsoft.Office.Tools.Excel;
 using System.Diagnostics;
 using Microsoft.Office.Interop.Excel;
 using System.Windows.Forms;
+using EQUICommunictionLib;
 
 namespace ExcelAddInEquipmentDatabase
 {
     public class WorksheetFeatures
     {
         //debugger
-        Debugger Debugger = new Debugger();
+        myDebugger Debugger = new myDebugger();
 
         Excel._Worksheet lClickedSheet;
         string wonum;

@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml;
+using EQUICommunictionLib;
 
 namespace ExcelAddInEquipmentDatabase
 {
     public class ClickOnceUtil
     {
+        myDebugger Debugger = new myDebugger();
+
         Version _UpdateVersion = null;
         public string UpdateLocation
         {
@@ -79,8 +82,8 @@ namespace ExcelAddInEquipmentDatabase
                 }
                 else
                 {
-                    Debugger lDbg = new Debugger();
-                    lDbg.Message("not network deployed");
+
+                    Debugger.Message("not network deployed");
                 }
             }
             catch (Exception)
@@ -90,29 +93,29 @@ namespace ExcelAddInEquipmentDatabase
 
         public void test()
         {
-            Debugger lDbg = new Debugger();
+         
             if (System.Deployment.Application.ApplicationDeployment.IsNetworkDeployed)
             {
-                lDbg.Message("u:" + UpdateLocation); //locatie op
-                lDbg.Message("d:" + DeployLocation); //waar het op  de pc staat
-                lDbg.Message("cv:" + CurrentVersion); //versie op pc
-                lDbg.Message("cAvail:" + AvailableVersion.ToString()); //beschikbare verise
+                Debugger.Message("u:" + UpdateLocation); //locatie op
+                Debugger.Message("d:" + DeployLocation); //waar het op  de pc staat
+                Debugger.Message("cv:" + CurrentVersion); //versie op pc
+                Debugger.Message("cAvail:" + AvailableVersion.ToString()); //beschikbare verise
             }
             else
             {
-                lDbg.Message("not network deployed");
+                Debugger.Message("not network deployed");
             }
             
         }
 
         public void CheckUpdateLocation()
         {
-            Debugger lDbg = new Debugger();
+            myDebugger Debugger = new myDebugger();
             if (System.Deployment.Application.ApplicationDeployment.IsNetworkDeployed)
             {
                 if (UpdateLocation.Like("%OBJECTBEHEER%"))
                 {
-                    lDbg.Message(@"
+                    Debugger.Message(@"
 Sorry voor dit ongemak. 
 Omdat deze plugin binnenkort ook in GB zal gebruikt worden moet ik de 'Launch' locatie veranderen.
 Om dit mogelijk te maken moeten eenmaalig de reeds geinstaleerde versies worden verwijderd en opnieuw geinstaleerd.
@@ -127,7 +130,7 @@ Sam
             }
             else
             {
-                lDbg.Message("not network deployed");
+                Debugger.Message("not network deployed");
             }
 
         }

@@ -8,13 +8,14 @@ using System.Text;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using System.Globalization;
+using EQUICommunictionLib;
 
 namespace ExcelAddInEquipmentDatabase.Forms
 {
     public partial class ErrorStats : MetroFramework.Forms.MetroForm
     {
         //debugger
-        Debugger Debugger = new Debugger();
+        myDebugger Debugger = new myDebugger();
 
         GadataComm lGdataComm = new GadataComm();
         DataTable dt;

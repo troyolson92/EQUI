@@ -10,17 +10,20 @@ using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Globalization;
 using Excel = Microsoft.Office.Interop.Excel;
+using EQUICommunictionLib;
 
 namespace ExcelAddInEquipmentDatabase
 {
     public partial class StoredProcedureManger : MetroFramework.Forms.MetroForm
     {
         //debugger
-        Debugger Debugger = new Debugger();
+        myDebugger Debugger = new myDebugger();
         //connection to gadata
         GadataComm lGadataComm = new GadataComm();
         //connection to maximo 
         MaximoComm lMaximoComm = new MaximoComm();
+        //connection to GADATA maximo querys 
+        MaximoQuery lMaximoQuery = new MaximoQuery();
         //active connection in active workbook
         ActiveConnection lActConn = new ActiveConnection();
 
@@ -110,8 +113,8 @@ namespace ExcelAddInEquipmentDatabase
                 //
                 lActConn.System = lMaximoComm.DsnMX7;
                 lActConn.ProcedureName = lActConn.Name; //maximo system dont have a stored proc name so we take the name of the Query template
-                MX7_ActiveConnectionToProcMngr(lMaximoComm.oracle_get_QueryParms_from_GADATA(activeconnection, lMaximoComm.SystemMX7)
-                    , lMaximoComm.oracle_get_QueryTemplate_from_GADATA(activeconnection, lMaximoComm.SystemMX7));
+                MX7_ActiveConnectionToProcMngr(lMaximoQuery.oracle_get_QueryParms_from_GADATA(activeconnection, lMaximoComm.SystemMX7)
+                    , lMaximoQuery.oracle_get_QueryTemplate_from_GADATA(activeconnection, lMaximoComm.SystemMX7));
             }
             else if (lActConn.ODBCconnString.Contains(lGadataComm.DsnGADATA)) //existing GADATAconnections
             {
@@ -640,7 +643,7 @@ namespace ExcelAddInEquipmentDatabase
         {
             if (cb_ParmSetNames.Items.Count == 0)
             {
-                cb_ParmSetNames.DataSource = lGadataComm.Select_ParmSet_list(lActConn.System, lActConn.ProcedureName);
+                cb_ParmSetNames.DataSource = GADATA_Select_ParmSet_list(lActConn.System, lActConn.ProcedureName);
                 cb_ParmSetNames.Visible = true;
                 btn_SaveSetConfirm.Visible = true;
                 btn_SetDelete.Visible = true;
@@ -672,7 +675,7 @@ namespace ExcelAddInEquipmentDatabase
         {
             try 
             {
-                lGadataComm.delete_ParmSet(lActConn.System, lActConn.ProcedureName, cb_ParmSetNames.Text);
+                GADATA_delete_ParmSet(lActConn.System, lActConn.ProcedureName, cb_ParmSetNames.Text);
             }
             catch { }
             cb_ParmSetNames.Visible = false;
@@ -694,7 +697,7 @@ namespace ExcelAddInEquipmentDatabase
         #region ParmSets
         private void Save_ParmSet(string System, string Procname, string Setname)
         {
-            lGadataComm.delete_ParmSet(System, Procname, Setname);
+            GADATA_delete_ParmSet(System, Procname, Setname);
 
             foreach (var control in flowLayoutPanel1.Controls)
             {
@@ -703,7 +706,7 @@ namespace ExcelAddInEquipmentDatabase
                     Forms.uc_Datebox nDateb = control as Forms.uc_Datebox;
                     if (nDateb.active)
                     {
-                        lGadataComm.insert_ParmSet(System,Procname,Setname,nDateb.Name,nDateb.input.ToString("yyyy-MM-dd hh:mm:ss"));
+                        GADATA_insert_ParmSet(System, Procname, Setname, nDateb.Name, nDateb.input.ToString("yyyy-MM-dd hh:mm:ss"));
                     }
                 }
                 else if (control is Forms.uc_Checkbox)
@@ -711,7 +714,7 @@ namespace ExcelAddInEquipmentDatabase
                     Forms.uc_Checkbox nCheckb = control as Forms.uc_Checkbox;
                     if (nCheckb.active)
                     {
-                        lGadataComm.insert_ParmSet(System, Procname, Setname, nCheckb.Name, nCheckb.input.ToString());
+                        GADATA_insert_ParmSet(System, Procname, Setname, nCheckb.Name, nCheckb.input.ToString());
                     }
                 }
                 else if (control is Forms.uc_Inputbox)
@@ -719,7 +722,7 @@ namespace ExcelAddInEquipmentDatabase
                     Forms.uc_Inputbox nInputb = control as Forms.uc_Inputbox;
                     if (nInputb.active)
                     {
-                        lGadataComm.insert_ParmSet(System, Procname, Setname, nInputb.Name, nInputb.input.ToString());
+                        GADATA_insert_ParmSet(System, Procname, Setname, nInputb.Name, nInputb.input.ToString());
                     }
                 }
             }
@@ -732,7 +735,7 @@ namespace ExcelAddInEquipmentDatabase
                 if (control is Forms.uc_Datebox)
                 {
                     Forms.uc_Datebox nDateb = control as Forms.uc_Datebox;
-                    string Value = lGadataComm.Select_ParmSet_value(System, Procname, Setname, nDateb.Name);
+                    string Value = GADATA_Select_ParmSet_value(System, Procname, Setname, nDateb.Name);
                     if (Value != null)
                     {
                         nDateb.active = true;
@@ -746,7 +749,7 @@ namespace ExcelAddInEquipmentDatabase
                 else if (control is Forms.uc_Checkbox)
                 {
                     Forms.uc_Checkbox nCheckb = control as Forms.uc_Checkbox;
-                    string Value = lGadataComm.Select_ParmSet_value(System, Procname, Setname, nCheckb.Name);
+                    string Value = GADATA_Select_ParmSet_value(System, Procname, Setname, nCheckb.Name);
                     if (Value != null)
                     {
                         nCheckb.active = true;
@@ -760,7 +763,7 @@ namespace ExcelAddInEquipmentDatabase
                 else if (control is Forms.uc_Inputbox)
                 {
                     Forms.uc_Inputbox nInputb = control as Forms.uc_Inputbox;
-                    string Value = lGadataComm.Select_ParmSet_value(System, Procname, Setname, nInputb.Name);
+                    string Value = GADATA_Select_ParmSet_value(System, Procname, Setname, nInputb.Name);
                     //should I try handle int / varchar ? 
                     if (Value != null)
                     {
@@ -778,6 +781,146 @@ namespace ExcelAddInEquipmentDatabase
         {
             Load_ParmSet(lActConn.System, lActConn.ProcedureName, Setname);
         }
+
+        //ProcManagerSets
+        //parm set calls to gadata 
+
+        public void GADATA_delete_ParmSet(string System, string Procname, string Setname)
+        {
+            using (applDataTableAdapters.QUERYParametersTableAdapter adapter = new applDataTableAdapters.QUERYParametersTableAdapter())
+            {
+                adapter.DeleteSet(System, Procname, Setname);
+            }
+        }
+
+        public void GADATA_insert_ParmSet(string System, string Procname, string Setname, string Parm, string Value)
+        {
+
+            using (applDataTableAdapters.QUERYParametersTableAdapter adapter = new applDataTableAdapters.QUERYParametersTableAdapter())
+            {
+                adapter.Insert(System, Procname, Setname, "", Parm, Value);
+            }
+        }
+
+        public string GADATA_Select_ParmSet_value(string System, string Procname, string Setname, string Parm)
+        {
+            using (applDataTableAdapters.QUERYParametersTableAdapter adapter = new applDataTableAdapters.QUERYParametersTableAdapter())
+            {
+                applData.QUERYParametersDataTable lDT = new applData.QUERYParametersDataTable();
+                adapter.Fill(lDT, System, Procname, Setname, Parm);
+                if (lDT.Count() == 0) return null;
+                return (from a in lDT select a.Value).First();
+            }
+        }
+
+        public List<string> GADATA_Select_ParmSet_list(string System, string Procname)
+        {
+            using (applDataTableAdapters.QUERYParametersTableAdapter adapter = new applDataTableAdapters.QUERYParametersTableAdapter())
+            {
+                applData.QUERYParametersDataTable lDT = new applData.QUERYParametersDataTable();
+                adapter.FillByProcname(lDT, System, Procname);
+                if (lDT.Count() == 0) return new List<string>();
+                return (from a in lDT select a.SETNAME).Distinct().ToList();
+            }
+        }
+
+        //Parm set calls to gadata for MAXIMO
+        //maximo comm TO GADATA
+
+        public void oracle_update_Query_to_GADATA(string System, string Queryname, string QueryDiscription, string Query)
+        {
+            using (applData.QUERYSDataTable lQUERYS = new applData.QUERYSDataTable())
+            {
+                using (applDataTableAdapters.QUERYSTableAdapter adapter = new applDataTableAdapters.QUERYSTableAdapter())
+                {
+                    var ds = from a in lQUERYS
+                             where a.SYSTEM == System && a.NAME == Queryname
+                             select a;
+                    //adapter.Update()
+
+                }
+            }
+        }
+
+        public void oracle_delete_Query_GADATA(string System, string Queryname)
+        {
+            using (applDataTableAdapters.QUERYSTableAdapter adapter = new applDataTableAdapters.QUERYSTableAdapter())
+            {
+                adapter.Delete(System, Queryname);
+            }
+        }
+
+        public void oracle_send_new_Query_to_GADATA(string System, string Queryname, string QueryDiscription, string Query)
+        {
+
+            using (applDataTableAdapters.QUERYSTableAdapter adapter = new applDataTableAdapters.QUERYSTableAdapter())
+            {
+                adapter.Insert(System, Queryname, QueryDiscription, Query);
+            }
+        }
+
+        public string oracle_get_QueryTemplate_from_GADATA(string QueryName, string System)
+        {
+            string Query;
+            using (applData.QUERYSDataTable lQUERYS = new applData.QUERYSDataTable())
+            {
+                using (applDataTableAdapters.QUERYSTableAdapter adapter = new applDataTableAdapters.QUERYSTableAdapter())
+                {
+                    adapter.Fill(lQUERYS);
+                }
+                Query = (from a in lQUERYS
+                         where a.SYSTEM == System && a.NAME == QueryName
+                         select a.QUERY).First().ToString();
+            }
+            return Query.Trim().TrimEnd(';').ToUpper();
+        }
+
+        public string oracle_get_QueryDiscription_from_GADATA(string QueryName, string System)
+        {
+            string Disciption;
+            using (applData.QUERYSDataTable lQUERYS = new applData.QUERYSDataTable())
+            {
+                using (applDataTableAdapters.QUERYSTableAdapter adapter = new applDataTableAdapters.QUERYSTableAdapter())
+                {
+                    adapter.Fill(lQUERYS);
+                }
+                Disciption = (from a in lQUERYS
+                              where a.SYSTEM == System && a.NAME == QueryName
+                              select a.DISCRIPTION).First().ToString();
+            }
+            return Disciption.Trim();
+        }
+
+        public List<OracleQueryParm> oracle_get_QueryParms_from_GADATA(string QueryName, string System)
+        {
+            string Query;
+            using (applData.QUERYSDataTable lQUERYS = new applData.QUERYSDataTable())
+            {
+                using (applDataTableAdapters.QUERYSTableAdapter adapter = new applDataTableAdapters.QUERYSTableAdapter())
+                {
+                    adapter.Fill(lQUERYS);
+                }
+                Query = (from a in lQUERYS
+                         where a.SYSTEM == System && a.NAME == QueryName
+                         select a.QUERY).First().ToString();
+            }
+            //gets part of the query containing the params
+            List<string> ParmLines = Query.ToUpper().Split(new string[] { "SELECT" }, StringSplitOptions.None)[0].Trim()
+                                                    .Split(new string[] { "DEFINE" }, StringSplitOptions.None).ToList();
+
+            List<OracleQueryParm> _parmList = new List<OracleQueryParm>();
+            foreach (string parm in ParmLines)
+            {
+                if (parm.Contains("="))
+                {
+                    string ParmName = parm.Split('=')[0].Trim();
+                    string ParmValue = parm.Split('=')[1].Trim().Split('\'')[1];
+                    _parmList.Add(new OracleQueryParm { ParameterName = ParmName, Defaultvalue = ParmValue });
+                }
+            }
+            return _parmList;
+        }
+
         #endregion
     }
 

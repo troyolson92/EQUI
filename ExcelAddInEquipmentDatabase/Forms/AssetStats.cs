@@ -10,13 +10,14 @@ using System.Windows.Forms.DataVisualization.Charting;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
+using EQUICommunictionLib;
 
 namespace ExcelAddInEquipmentDatabase.Forms
 {
     public partial class AssetStats : MetroFramework.Forms.MetroForm
     {
         //debugger
-        Debugger Debugger = new Debugger();
+        myDebugger Debugger = new myDebugger();
 
         GadataComm lGdataComm = new GadataComm();
         DataTable dtGadata;
