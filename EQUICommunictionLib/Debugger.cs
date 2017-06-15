@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Diagnostics;
-//using System.Windows.Forms;
+using System.Windows.Forms;
 
-namespace ExcelAddInEquipmentDatabase
+namespace EQUICommunictionLib
 {
    sealed partial class Debugger
     {
@@ -71,7 +71,7 @@ namespace ExcelAddInEquipmentDatabase
                     Debug.WriteLine("StackTrace: '{0}'", Environment.StackTrace);
                 }
             }
-       //     MessageBox.Show(message,"Sorry", MessageBoxButtons.OK);
+            MessageBox.Show(message,"Sorry", MessageBoxButtons.OK);
         }
     }
 }
