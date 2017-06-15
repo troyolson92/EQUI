@@ -9,6 +9,7 @@ using System.Diagnostics;
 using Microsoft.Office.Interop.Excel;
 using System.Windows.Forms;
 using EQUICommunictionLib;
+using EQUIToolsLib;
 
 namespace ExcelAddInEquipmentDatabase
 {
@@ -259,29 +260,29 @@ namespace ExcelAddInEquipmentDatabase
         //**********************************workorder details*********************************************
         void WorkorderDetailsMenuItemClick(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)
         {
-            Forms.MXxWOdetails lMXxWOdetails = new Forms.MXxWOdetails(wonum); //allow multible instances of the form.
+            MXxWOdetails lMXxWOdetails = new MXxWOdetails(wonum); //allow multible instances of the form.
             lMXxWOdetails.Show();
         }
         //**********************************Error details*********************************************
         void ErrorDetailsMenuItemClick(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)
         {
-            Forms.LogDetails lLogDetails = new Forms.LogDetails(location, errornum,refid); //allow multible instances of the form.
+            LogDetails lLogDetails = new LogDetails(location, errornum,refid); //allow multible instances of the form.
             lLogDetails.Show();
         }
         //**********************************Error Stats*********************************************
         void ErrorStatsMenuItemClick(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)
         {
-            Forms.ErrorStats lErrorStats = new Forms.ErrorStats(location, errornum, LogText); //allow multible instances of the form.
+            ErrorStats lErrorStats = new ErrorStats(location, errornum, LogText); //allow multible instances of the form.
         }
         //**********************************SBCU Stats*********************************************
         void SBCUStatsMenuItemClick(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)
         {
-            Forms.SBCUStats lSBCUStats = new Forms.SBCUStats(location); //allow multible instances of the form.
+            SBCUStats lSBCUStats = new SBCUStats(location); //allow multible instances of the form.
         }
         //**********************************ASSET Stats*********************************************
         void AssetStatsMenuItemClick(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)
         {
-            Forms.AssetStats lAssetStats = new Forms.AssetStats(location); //allow multible instances of the form.
+            AssetStats lAssetStats = new AssetStats(location); //allow multible instances of the form.
         }
         //**********************************No Production*********************************************
         void SetNoProductionItemClick(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)
@@ -344,19 +345,19 @@ this shift will be out of all OEE calculations!", "Confirmation", MessageBoxButt
 
         void btnShowWorkorderHistoryClick(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)
         {
-            Forms.MXxWOoverview lMXxWOoverview = new Forms.MXxWOoverview(location,false); //allow multible instances of the form.
+            MXxWOoverview lMXxWOoverview = new MXxWOoverview(location,false); //allow multible instances of the form.
             lMXxWOoverview.Show();
         }
 
         void btnShowPartsWorkorderClick(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)
         {
-            Forms.MXxWOoverview lMXxWOoverview = new Forms.MXxWOoverview(location,true); //allow multible instances of the form.
+            MXxWOoverview lMXxWOoverview = new MXxWOoverview(location,true); //allow multible instances of the form.
             lMXxWOoverview.Show();
         }
 
         void btnShowCreateWOClick(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)
         {
-            Forms.MxXWoCreate lMxXWoCreate = new Forms.MxXWoCreate(location, Logtype, LogText, downtime, refid); //allow multible instances of the form.
+            MxXWoCreate lMxXWoCreate = new MxXWoCreate(location, Logtype, LogText, downtime, refid); //allow multible instances of the form.
             lMxXWoCreate.Show();
         }
         

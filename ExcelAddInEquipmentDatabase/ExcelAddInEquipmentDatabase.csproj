@@ -150,24 +150,16 @@
   -->
   <ItemGroup>
     <Reference Include="Accessibility" />
-    <Reference Include="itextsharp">
-      <HintPath>References\itextsharp.dll</HintPath>
-    </Reference>
-    <Reference Include="itextsharp.pdfa">
-      <HintPath>References\itextsharp.pdfa.dll</HintPath>
-    </Reference>
-    <Reference Include="itextsharp.xtra">
-      <HintPath>References\itextsharp.xtra.dll</HintPath>
-    </Reference>
-    <Reference Include="MetroFramework">
-      <HintPath>..\packages\MetroFramework.RunTime.1.2.0.3\lib\net40-Client\MetroFramework.dll</HintPath>
+    <Reference Include="MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\MetroModernUI.1.4.0.0\lib\net\MetroFramework.dll</HintPath>
     </Reference>
     <Reference Include="MetroFramework.Design">
-      <HintPath>..\packages\MetroFramework.Design.1.2.0.3\lib\net40\MetroFramework.Design.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\packages\MetroModernUI.1.4.0.0\lib\net\MetroFramework.Design.dll</HintPath>
     </Reference>
-    <Reference Include="MetroFramework.Fonts">
-      <HintPath>..\packages\MetroFramework.Fonts.1.2.0.3\lib\net40\MetroFramework.Fonts.dll</HintPath>
+    <Reference Include="MetroFramework.Fonts, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\MetroModernUI.1.4.0.0\lib\net\MetroFramework.Fonts.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
       <EmbedInteropTypes>True</EmbedInteropTypes>
@@ -262,29 +254,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DataClassesGADATA.dbml</DependentUpon>
     </Compile>
-    <Compile Include="Forms\DataDisplay.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\DataDisplay.Designer.cs">
-      <DependentUpon>DataDisplay.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\DocManager.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\DocManager.Designer.cs">
-      <DependentUpon>DocManager.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\ErrorManger.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\ErrorManger.Designer.cs">
       <DependentUpon>ErrorManger.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\AssetStats.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\AssetStats.Designer.cs">
-      <DependentUpon>AssetStats.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Loginfo.cs">
       <SubType>UserControl</SubType>
@@ -292,47 +266,11 @@
     <Compile Include="Forms\Loginfo.Designer.cs">
       <DependentUpon>Loginfo.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\SBCUStats.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\SBCUStats.Designer.cs">
-      <DependentUpon>SBCUStats.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\ErrorStats.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\ErrorStats.Designer.cs">
-      <DependentUpon>ErrorStats.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\LogDetails.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\LogDetails.Designer.cs">
-      <DependentUpon>LogDetails.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\MXxQueryEdit.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\MXxQueryEdit.Designer.cs">
       <DependentUpon>MXxQueryEdit.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\MxXWoCreate.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\MxXWoCreate.Designer.cs">
-      <DependentUpon>MxXWoCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\MXxWOdetails.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\MXxWOdetails.Designer.cs">
-      <DependentUpon>MXxWOdetails.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\MXxWOoverview.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\MXxWOoverview.Designer.cs">
-      <DependentUpon>MXxWOoverview.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\uc_Datebox.cs">
       <SubType>UserControl</SubType>
@@ -373,41 +311,14 @@
     <EmbeddedResource Include="Forms\AAOSRshiftbook.resx">
       <DependentUpon>AAOSRshiftbook.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\DataDisplay.resx">
-      <DependentUpon>DataDisplay.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\DocManager.resx">
-      <DependentUpon>DocManager.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\ErrorManger.resx">
       <DependentUpon>ErrorManger.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\AssetStats.resx">
-      <DependentUpon>AssetStats.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Loginfo.resx">
       <DependentUpon>Loginfo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\SBCUStats.resx">
-      <DependentUpon>SBCUStats.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\ErrorStats.resx">
-      <DependentUpon>ErrorStats.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\LogDetails.resx">
-      <DependentUpon>LogDetails.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\MXxQueryEdit.resx">
       <DependentUpon>MXxQueryEdit.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\MxXWoCreate.resx">
-      <DependentUpon>MxXWoCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\MXxWOdetails.resx">
-      <DependentUpon>MXxWOdetails.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\MXxWOoverview.resx">
-      <DependentUpon>MXxWOoverview.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\uc_Datebox.resx">
       <DependentUpon>uc_Datebox.cs</DependentUpon>
@@ -507,6 +418,13 @@
       <Project>{090979a1-2c7b-4c89-a921-f36a936412f2}</Project>
       <Name>EQUICommunictionLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EQUIToolsLib\EQUIToolsLib.csproj">
+      <Project>{ebaded60-44dc-49f0-a1c5-a283baa1c392}</Project>
+      <Name>EQUIToolsLib</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -78,7 +78,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.BorderStyle = MetroFramework.Drawing.MetroBorderStyle.FixedSingle;
             this.Controls.Add(this.rb_enable);
             this.Controls.Add(this.lbl_1);
             this.Controls.Add(this.tb_1);

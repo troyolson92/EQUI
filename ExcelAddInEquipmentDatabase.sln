@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EQUICommunictionLib", "EQUI
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EqUi_UtilManger", "EqUi_UtilManger\EqUi_UtilManger.csproj", "{9B30267D-8A8C-4869-AC9B-1E07EC81C373}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EQUIToolsLib", "EQUIToolsLib\EQUIToolsLib.csproj", "{EBADED60-44DC-49F0-A1C5-A283BAA1C392}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{9B30267D-8A8C-4869-AC9B-1E07EC81C373}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9B30267D-8A8C-4869-AC9B-1E07EC81C373}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9B30267D-8A8C-4869-AC9B-1E07EC81C373}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EBADED60-44DC-49F0-A1C5-A283BAA1C392}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBADED60-44DC-49F0-A1C5-A283BAA1C392}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBADED60-44DC-49F0-A1C5-A283BAA1C392}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBADED60-44DC-49F0-A1C5-A283BAA1C392}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

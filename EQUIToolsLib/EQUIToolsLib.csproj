@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{EBADED60-44DC-49F0-A1C5-A283BAA1C392}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>EQUIToolsLib</RootNamespace>
+    <AssemblyName>EQUIToolsLib</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="itextsharp">
+      <HintPath>..\ExcelAddInEquipmentDatabase\References\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp.pdfa">
+      <HintPath>..\ExcelAddInEquipmentDatabase\References\itextsharp.pdfa.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp.xtra">
+      <HintPath>..\ExcelAddInEquipmentDatabase\References\itextsharp.xtra.dll</HintPath>
+    </Reference>
+    <Reference Include="MetroFramework">
+      <HintPath>..\packages\MetroModernUI.1.4.0.0\lib\net\MetroFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="MetroFramework.Design">
+      <HintPath>..\packages\MetroModernUI.1.4.0.0\lib\net\MetroFramework.Design.dll</HintPath>
+    </Reference>
+    <Reference Include="MetroFramework.Fonts">
+      <HintPath>..\packages\MetroModernUI.1.4.0.0\lib\net\MetroFramework.Fonts.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssetStats.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AssetStats.Designer.cs">
+      <DependentUpon>AssetStats.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataDisplay.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DataDisplay.Designer.cs">
+      <DependentUpon>DataDisplay.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DocManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DocManager.Designer.cs">
+      <DependentUpon>DocManager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ErrorStats.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ErrorStats.Designer.cs">
+      <DependentUpon>ErrorStats.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LogDetails.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LogDetails.Designer.cs">
+      <DependentUpon>LogDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MxXWoCreate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MxXWoCreate.Designer.cs">
+      <DependentUpon>MxXWoCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MXxWOdetails.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MXxWOdetails.Designer.cs">
+      <DependentUpon>MXxWOdetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MXxWOoverview.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MXxWOoverview.Designer.cs">
+      <DependentUpon>MXxWOoverview.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SBCUStats.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SBCUStats.Designer.cs">
+      <DependentUpon>SBCUStats.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="AssetStats.resx">
+      <DependentUpon>AssetStats.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataDisplay.resx">
+      <DependentUpon>DataDisplay.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DocManager.resx">
+      <DependentUpon>DocManager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ErrorStats.resx">
+      <DependentUpon>ErrorStats.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LogDetails.resx">
+      <DependentUpon>LogDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MxXWoCreate.resx">
+      <DependentUpon>MxXWoCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MXxWOdetails.resx">
+      <DependentUpon>MXxWOdetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MXxWOoverview.resx">
+      <DependentUpon>MXxWOoverview.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SBCUStats.resx">
+      <DependentUpon>SBCUStats.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\WPFChart3D_src\WPFChart\WPFChart\WPFChart.csproj">
+      <Project>{4594058d-a96a-4b11-93b5-707215e40231}</Project>
+      <Name>WPFChart</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EQUICommunictionLib\EQUICommunictionLib.csproj">
+      <Project>{090979a1-2c7b-4c89-a921-f36a936412f2}</Project>
+      <Name>EQUICommunictionLib</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

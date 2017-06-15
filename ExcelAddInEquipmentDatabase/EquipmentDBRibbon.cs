@@ -13,6 +13,7 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using System.IO;
 using EQUICommunictionLib;
+using EQUIToolsLib;
 
 namespace ExcelAddInEquipmentDatabase
 {
@@ -640,7 +641,7 @@ namespace ExcelAddInEquipmentDatabase
 
         private void btn_docMngr_Click(object sender, RibbonControlEventArgs e)
         {
-            Forms.DocManager lDocManager = new Forms.DocManager();
+            DocManager lDocManager = new DocManager();
             lDocManager.Show();
         }
 
@@ -722,7 +723,7 @@ namespace ExcelAddInEquipmentDatabase
         //test
         private void button1_Click_1(object sender, RibbonControlEventArgs e)
         {
-            Forms.SBCUStats lSBCUStats = new Forms.SBCUStats(); //allow multible instances of the form.
+            SBCUStats lSBCUStats = new SBCUStats(); //allow multible instances of the form.
         }
 
         private void btn_testPArms_Click(object sender, RibbonControlEventArgs e)
