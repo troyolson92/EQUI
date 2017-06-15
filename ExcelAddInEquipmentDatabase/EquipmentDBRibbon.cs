@@ -726,10 +726,6 @@ namespace ExcelAddInEquipmentDatabase
             SBCUStats lSBCUStats = new SBCUStats(); //allow multible instances of the form.
         }
 
-        private void btn_testPArms_Click(object sender, RibbonControlEventArgs e)
-        {
-            System.Diagnostics.Process.Start(@"\\gnlsnm0101.gen.volvocars.net\proj\6308-SHR-VCC22700\VSTO\DEPLOYMENTBASE\MXxWOoverview.application", "-Test");
-        }
         //
 
 
