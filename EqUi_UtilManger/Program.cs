@@ -14,6 +14,7 @@ namespace EqUi_UtilManger
             //file://///gnlsnm0101.gen.volvocars.net\proj\6308-SHR-VCC22700\VSTO\DEPLOYMENTBASE\EqUi_UtilManger.application
             //file://///gnlsnm0101.gen.volvocars.net\proj\6308-SHR-VCC22700\VSTO\DEPLOYMENTBASE\EqUi_UtilManger.application?param1=foo&param2=bar
             //\\gnlsnm0101.gen.volvocars.net\proj\6308-SHR-VCC22700\VSTO\DEPLOYMENTBASE
+           /*
             if (Args != null)
             {
                 foreach (string Arg in Args)
@@ -35,7 +36,7 @@ namespace EqUi_UtilManger
             {
                 MessageBox.Show("no parms");
             }
-
+            */
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

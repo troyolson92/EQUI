@@ -4,14 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Data;
 using System.Diagnostics;
-using Oracle.DataAccess.Client;
-using Oracle.DataAccess.Types;
+using Oracle.ManagedDataAccess.Client;
+using Oracle.ManagedDataAccess.Types;
 
 namespace EQUICommunictionLib
 {
     public class MaximoComm
     {
-        OracleConnection Maximo7conn = new OracleConnection("data source = dpmxarct;user id = ARCTVCG;password=vcg$tokfeb2017");
+        OracleConnection Maximo7conn = new OracleConnection(
+          "Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=gotsvl2149.got.volvocars.net)(PORT=1521)) (CONNECT_DATA=(SID=dpmxarct)));User Id=ARCTVCG;Password=vcg$tokfeb2017;");
+       
         //debugger
         myDebugger Debugger = new myDebugger();
 
