@@ -24,6 +24,12 @@ namespace EQUIToolsLib
         {
             InitializeComponent();
             this.Text = string.Format("ErrorStats tool Errornum: {0} <{2}> Location: {1}", Errornum,Location,logtekst.Trim());
+            //
+            cb_sortmode.Items.Clear();
+            cb_sortmode.Items.Insert(0, "None");
+            cb_sortmode.Items.Insert(1, "Hours");
+            cb_sortmode.Items.Insert(2, "Days");
+            cb_sortmode.Items.Insert(3, "Weeks");
             //init chart 
             chart1.Series.Add("ErrorCount");
             chart1.Series["ErrorCount"].XValueMember = "starttime";
@@ -135,7 +141,10 @@ END
             this.Show();
         }
 
-private void buildTrendChart() 
+        private void buildTrendChart()
+        { buildTrendChart(false); }
+
+        private void buildTrendChart(bool noAutoGrouping) 
         {
             //use the trackbar to calculate the starting point of the graph
             DateTime GrapStart = DateTime.Now.AddDays(Convert.ToInt32(trackBar1.Value));
@@ -148,36 +157,66 @@ private void buildTrendChart()
             //
             DateTime FirstError = (from a in dt.AsEnumerable() select a.Field<DateTime>("starttime")).Min();
             //
-            if (trackBar1.Value > -4) //hour mode = min resolution "HotItem"
+            if (noAutoGrouping == false)
             {
-                chart1.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatHour"; 
-                chart1.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Hours;
-                chart1.ChartAreas[0].AxisX.IntervalOffset = 1;
-                chart1.Series["ErrorCount"].BorderWidth = 8;
-                label1.Text = string.Format("First error: {0} ", FirstError);
-                label2.Text = string.Format("'Now'  DisplayMode:{0}", "GroupHourmode");
-                chart1.DataManipulator.Group("SUM", 1, IntervalType.Hours, "ErrorCount");
+                if ((trackBar1.Value - 0) > -10)
+                {
+                    cb_sortmode.SelectedIndex = 1;
+                }
+                else if ((trackBar1.Value - 0) > -100)
+                {
+                    cb_sortmode.SelectedIndex = 2;
+                }
+                else
+                {
+                    cb_sortmode.SelectedIndex = 3;
+                }
             }
-            else if (trackBar1.Value > -31) //day mode "yellowItem"
+
+            switch (cb_sortmode.Text)
             {
-                chart1.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatDay"; 
-                chart1.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Days;
-                chart1.ChartAreas[0].AxisX.IntervalOffset = 1;
-                chart1.Series["ErrorCount"].BorderWidth = 6;
-                label1.Text = string.Format("First error: {0} ", FirstError);
-                label2.Text = string.Format("'Now'  DisplayMode:{0}", "GroupDaymode");
-                chart1.DataManipulator.Group("SUM", 1, IntervalType.Days, "ErrorCount");
+                case "None":
+                    chart1.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatTimestamp";
+                    chart1.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.NotSet;
+                    chart1.ChartAreas[0].AxisX.IntervalOffset = 1;
+                    label1.Text = string.Format("First error: {0} ", FirstError);
+                    label2.Text = string.Format("'Now'  DisplayMode:{0}", "NoGrouping");
+                    break;
+
+                case "Hours":
+                    chart1.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatHour"; 
+                    chart1.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Hours;
+                    chart1.ChartAreas[0].AxisX.IntervalOffset = 1;
+                    chart1.Series["ErrorCount"].BorderWidth = 8;
+                    label1.Text = string.Format("First error: {0} ", FirstError);
+                    label2.Text = string.Format("'Now'  DisplayMode:{0}", "GroupHourmode");
+                    chart1.DataManipulator.Group("SUM", 1, IntervalType.Hours, "ErrorCount");
+                    break;
+
+                case "Days":
+                    chart1.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatDay"; 
+                    chart1.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Days;
+                    chart1.ChartAreas[0].AxisX.IntervalOffset = 1;
+                    chart1.Series["ErrorCount"].BorderWidth = 6;
+                    label1.Text = string.Format("First error: {0} ", FirstError);
+                    label2.Text = string.Format("'Now'  DisplayMode:{0}", "GroupDaymode");
+                    chart1.DataManipulator.Group("SUM", 1, IntervalType.Days, "ErrorCount");
+                    break;
+
+                case "Weeks":
+                    chart1.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatWeek"; 
+                    chart1.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Weeks;
+                    chart1.ChartAreas[0].AxisX.IntervalOffset = 1;
+                    chart1.Series["ErrorCount"].BorderWidth = 4;
+                    label1.Text = string.Format("First error: {0} ", FirstError);
+                    label2.Text = string.Format("'Now'  DisplayMode:{0}", "GroupWeekmode");
+                    chart1.DataManipulator.Group("SUM", 1, IntervalType.Weeks, "ErrorCount");
+                    break;
+
+                default:
+                    break;
             }
-            else //week mode 
-            {
-                chart1.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatWeek"; 
-                chart1.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Weeks;
-                chart1.ChartAreas[0].AxisX.IntervalOffset = 1;
-                chart1.Series["ErrorCount"].BorderWidth = 4;
-                label1.Text = string.Format("First error: {0} ", FirstError);
-                label2.Text = string.Format("'Now'  DisplayMode:{0}", "GroupWeekmode");
-                chart1.DataManipulator.Group("SUM", 1, IntervalType.Weeks, "ErrorCount");
-            }       
+   
         }
 
         void chart1_FormatNumber(object sender, FormatNumberEventArgs e)
@@ -202,7 +241,7 @@ private void buildTrendChart()
                     var currentCalendar = CultureInfo.CurrentCulture.Calendar;
 
                     e.LocalizedValue = string.Format("{0}W{1}D{2}",
-                        DateTime.FromOADate(e.Value).Year %100,
+                        DateTime.FromOADate(e.Value).Year % 100,
                         currentCalendar.GetWeekOfYear(DateTime.FromOADate(e.Value), System.Globalization.CalendarWeekRule.FirstFourDayWeek, CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek),
                         (int)DateTime.FromOADate(e.Value).DayOfWeek
                         );
@@ -216,11 +255,19 @@ private void buildTrendChart()
                     var currentCalendar = CultureInfo.CurrentCulture.Calendar;
 
                     e.LocalizedValue = string.Format("{0}W{1}D{2} h{3}",
-                        DateTime.FromOADate(e.Value).Year %100,
-                        currentCalendar.GetWeekOfYear(DateTime.FromOADate(e.Value),System.Globalization.CalendarWeekRule.FirstFourDayWeek,CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek),
+                        DateTime.FromOADate(e.Value).Year % 100,
+                        currentCalendar.GetWeekOfYear(DateTime.FromOADate(e.Value), System.Globalization.CalendarWeekRule.FirstFourDayWeek, CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek),
                         (int)DateTime.FromOADate(e.Value).DayOfWeek,
                         DateTime.FromOADate(e.Value).Hour
                         );
+                }
+            }
+
+            if (e.ElementType == ChartElementType.AxisLabels && e.Format == "CustomAxisXFormatTimestamp")
+            {
+                if (e.ValueType == ChartValueType.DateTime)
+                {
+                    e.LocalizedValue = DateTime.FromOADate(e.Value).ToString("yyyy-MM-dd hh:mm:ss");
                 }
             }
         }
@@ -228,6 +275,11 @@ private void buildTrendChart()
         private void trackBar1_ValueChanged(object sender, EventArgs e)
         {
             buildTrendChart();
+        }
+
+        private void cb_sortmode_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            buildTrendChart(true);
         }
 
     }

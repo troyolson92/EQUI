@@ -87,7 +87,7 @@
             this.cb_ciblings.Size = new System.Drawing.Size(113, 17);
             this.cb_ciblings.TabIndex = 8;
             this.cb_ciblings.Text = "include ciblings";
-            this.cb_ciblings.UseVisualStyleBackColor = true;
+          //  this.cb_ciblings.UseVisualStyleBackColor = true;
             this.cb_ciblings.CheckedChanged += new System.EventHandler(this.cb_ciblings_CheckedChanged);
             // 
             // cb_preventive
@@ -98,7 +98,7 @@
             this.cb_preventive.Size = new System.Drawing.Size(223, 17);
             this.cb_preventive.TabIndex = 9;
             this.cb_preventive.Text = "include PP, PCI, WSCH (preventive)";
-            this.cb_preventive.UseVisualStyleBackColor = true;
+           // this.cb_preventive.UseVisualStyleBackColor = true;
             this.cb_preventive.CheckedChanged += new System.EventHandler(this.cb_preventive_CheckedChanged);
             // 
             // metroLabel1

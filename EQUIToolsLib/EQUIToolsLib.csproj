@@ -40,7 +40,8 @@
     <Reference Include="itextsharp.xtra">
       <HintPath>..\ExcelAddInEquipmentDatabase\References\itextsharp.xtra.dll</HintPath>
     </Reference>
-    <Reference Include="MetroFramework">
+    <Reference Include="MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\MetroModernUI.1.4.0.0\lib\net\MetroFramework.dll</HintPath>
     </Reference>
     <Reference Include="MetroFramework.Design">
@@ -159,6 +160,9 @@
       <Project>{4594058d-a96a-4b11-93b5-707215e40231}</Project>
       <Name>WPFChart</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

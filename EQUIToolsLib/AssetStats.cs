@@ -34,21 +34,59 @@ namespace EQUIToolsLib
 
         string lLocation;
 
+        public AssetStats()
+        {
+            initAssetStats();
+            //
+            tb_location.Visible = true;
+            btn_refresh.Visible = true;
+            metroProgressSpinner1.Visible = false;
+            //
+            this.Show();
+        }
+
         public AssetStats(string Location)
         {
-            InitializeComponent();
             lLocation = Location;
-           
+            //
+            initAssetStats();
+            //
+            tb_location.Visible = false;
+            btn_refresh.Visible = false;
+            metroProgressSpinner1.Visible = true;
+            //
+            bwInit.RunWorkerAsync();
+            //
+            this.Show();
+        }
+
+        void initAssetStats()
+        {
+            InitializeComponent();
+            //
+            initChart();
+            //
+            bwInit.DoWork += bwInit_DoWork;
+            bwInit.RunWorkerCompleted += bwInit_RunWorkerCompleted;
+            bwInit.WorkerSupportsCancellation = true;
+        }
+
+        void initChart()
+        {
             //to play nice with gb locations need to clean this up 
-            if ((!String.IsNullOrEmpty(lLocation) && Char.IsLetter(lLocation[0])) == false)
+            if ((!String.IsNullOrEmpty(lLocation) && Char.IsLetter(lLocation[0])))
             {
                 tb_location.Text = lLocation;
+                cb_incCiblings.Enabled = false;
             }
             else
             {
                 tb_location.Text = Regex.Replace(lLocation, @"[A-Za-z\s]", "%") + "%";
+                cb_incCiblings.Enabled = true;
             }
-            this.Text = string.Format("AssetStats tool Location: {0}",Location);
+            //
+            this.Text = string.Format("AssetStats tool Location: {0}", tb_location.Text);
+            //
             //
             cb_sortmode.Items.Clear();
             cb_sortmode.Items.Insert(0, "None");
@@ -106,13 +144,6 @@ namespace EQUIToolsLib
             chart1.Series["Maximo"].ChartType = SeriesChartType.Point;
             chart1.Series["Maximo"].BorderWidth = 8;
             chart1.Series["Maximo"].Color = System.Drawing.Color.ForestGreen;
-            //
-            bwInit.DoWork += bwInit_DoWork;
-            bwInit.RunWorkerCompleted += bwInit_RunWorkerCompleted;
-            bwInit.WorkerSupportsCancellation = true;
-            bwInit.RunWorkerAsync();
-            //
-            this.Show();
         }
 
         void bwInit_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -173,6 +204,9 @@ namespace EQUIToolsLib
             bwLongDescription.DoWork += bwLongDescription_DoWork;
             //
             metroProgressSpinner1.Hide();
+            //
+            btn_refresh.Enabled = true;
+            tb_location.Enabled = true;
         }
 
         void bwInit_DoWork(object sender, DoWorkEventArgs e)
@@ -650,6 +684,15 @@ ORDER BY WORKORDER.STATUSDATE DESC
                 Debugger.Exeption(ex);
             }
             DataDisplay ldatadisplay = new DataDisplay(ldataset);
+        }
+
+        private void btn_refresh_Click(object sender, EventArgs e)
+        {
+            btn_refresh.Enabled = false;
+            tb_location.Enabled = false;
+            lLocation = tb_location.Text;
+            metroProgressSpinner1.Visible = true;
+            bwInit.RunWorkerAsync();
         }
 
 

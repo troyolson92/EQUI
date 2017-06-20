@@ -33,6 +33,7 @@
             this.label1 = new MetroFramework.Controls.MetroLabel();
             this.label2 = new MetroFramework.Controls.MetroLabel();
             this.trackBar1 = new MetroFramework.Controls.MetroTrackBar();
+            this.cb_sortmode = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -80,11 +81,22 @@
             this.trackBar1.Text = "metroTrackBar1";
             this.trackBar1.ValueChanged += new System.EventHandler(this.trackBar1_ValueChanged);
             // 
+            // cb_sortmode
+            // 
+            this.cb_sortmode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.cb_sortmode.FormattingEnabled = true;
+            this.cb_sortmode.Location = new System.Drawing.Point(1186, 429);
+            this.cb_sortmode.Name = "cb_sortmode";
+            this.cb_sortmode.Size = new System.Drawing.Size(121, 24);
+            this.cb_sortmode.TabIndex = 9;
+            this.cb_sortmode.SelectedIndexChanged += new System.EventHandler(this.cb_sortmode_SelectedIndexChanged);
+            // 
             // ErrorStats
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1351, 469);
+            this.Controls.Add(this.cb_sortmode);
             this.Controls.Add(this.trackBar1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -104,5 +116,6 @@
         private MetroFramework.Controls.MetroLabel label1;
         private MetroFramework.Controls.MetroLabel label2;
         private MetroFramework.Controls.MetroTrackBar trackBar1;
+        private System.Windows.Forms.ComboBox cb_sortmode;
     }
 }

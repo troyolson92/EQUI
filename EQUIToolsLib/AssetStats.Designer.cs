@@ -47,6 +47,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.btn_viewData = new MetroFramework.Controls.MetroButton();
+            this.btn_refresh = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel1.SuspendLayout();
@@ -123,6 +124,7 @@
             this.cb_sortmode.Name = "cb_sortmode";
             this.cb_sortmode.Size = new System.Drawing.Size(121, 30);
             this.cb_sortmode.TabIndex = 14;
+            this.cb_sortmode.UseSelectable = true;
             // 
             // webBrowser1
             // 
@@ -164,6 +166,7 @@
             this.cb_preventive.Size = new System.Drawing.Size(137, 17);
             this.cb_preventive.TabIndex = 18;
             this.cb_preventive.Text = "Hide PP, PCI, WSCH";
+            this.cb_preventive.UseSelectable = true;
             this.cb_preventive.CheckedChanged += new System.EventHandler(this.cb_preventive_CheckedChanged);
             // 
             // cb_spltDt
@@ -174,6 +177,7 @@
             this.cb_spltDt.Size = new System.Drawing.Size(110, 17);
             this.cb_spltDt.TabIndex = 19;
             this.cb_spltDt.Text = "Split downtime";
+            this.cb_spltDt.UseSelectable = true;
             this.cb_spltDt.CheckedChanged += new System.EventHandler(this.cb_spltDt_CheckedChanged);
             // 
             // metroProgressSpinner1
@@ -185,6 +189,7 @@
             this.metroProgressSpinner1.Name = "metroProgressSpinner1";
             this.metroProgressSpinner1.Size = new System.Drawing.Size(190, 183);
             this.metroProgressSpinner1.TabIndex = 20;
+            this.metroProgressSpinner1.UseSelectable = true;
             // 
             // trackBar2
             // 
@@ -206,16 +211,41 @@
             this.cb_incCiblings.Size = new System.Drawing.Size(105, 17);
             this.cb_incCiblings.TabIndex = 22;
             this.cb_incCiblings.Text = "Show Ciblings";
+            this.cb_incCiblings.UseSelectable = true;
             this.cb_incCiblings.CheckedChanged += new System.EventHandler(this.cb_incCiblings_CheckedChanged);
             // 
             // tb_location
             // 
+            // 
+            // 
+            // 
+            this.tb_location.CustomButton.Image = null;
+            this.tb_location.CustomButton.Location = new System.Drawing.Point(107, 1);
+            this.tb_location.CustomButton.Name = "";
+            this.tb_location.CustomButton.Size = new System.Drawing.Size(21, 21);
+            this.tb_location.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.tb_location.CustomButton.TabIndex = 1;
+            this.tb_location.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.tb_location.CustomButton.UseSelectable = true;
+            this.tb_location.CustomButton.Visible = false;
+            this.tb_location.Lines = new string[] {
+        "metroTextBox1"};
             this.tb_location.Location = new System.Drawing.Point(23, 63);
+            this.tb_location.MaxLength = 32767;
             this.tb_location.Name = "tb_location";
-            this.tb_location.Size = new System.Drawing.Size(134, 23);
+            this.tb_location.PasswordChar = '\0';
+            this.tb_location.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.tb_location.SelectedText = "";
+            this.tb_location.SelectionLength = 0;
+            this.tb_location.SelectionStart = 0;
+            this.tb_location.ShortcutsEnabled = true;
+            this.tb_location.Size = new System.Drawing.Size(129, 23);
             this.tb_location.TabIndex = 23;
             this.tb_location.Text = "metroTextBox1";
+            this.tb_location.UseSelectable = true;
             this.tb_location.Visible = false;
+            this.tb_location.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.tb_location.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
             // 
             // panel1
             // 
@@ -250,7 +280,18 @@
             this.btn_viewData.Size = new System.Drawing.Size(21, 23);
             this.btn_viewData.TabIndex = 26;
             this.btn_viewData.Text = "+";
+            this.btn_viewData.UseSelectable = true;
             this.btn_viewData.Click += new System.EventHandler(this.btn_viewData_Click);
+            // 
+            // btn_refresh
+            // 
+            this.btn_refresh.Location = new System.Drawing.Point(175, 63);
+            this.btn_refresh.Name = "btn_refresh";
+            this.btn_refresh.Size = new System.Drawing.Size(75, 23);
+            this.btn_refresh.TabIndex = 27;
+            this.btn_refresh.Text = "refresh";
+            this.btn_refresh.UseVisualStyleBackColor = true;
+            this.btn_refresh.Click += new System.EventHandler(this.btn_refresh_Click);
             // 
             // AssetStats
             // 
@@ -258,6 +299,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(1804, 944);
+            this.Controls.Add(this.btn_refresh);
             this.Controls.Add(this.btn_viewData);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
@@ -302,5 +344,6 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
         private MetroFramework.Controls.MetroButton btn_viewData;
+        private System.Windows.Forms.Button btn_refresh;
     }
 }

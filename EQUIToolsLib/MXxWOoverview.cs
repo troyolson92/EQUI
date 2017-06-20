@@ -22,45 +22,68 @@ namespace EQUIToolsLib
         myDebugger Debugger = new myDebugger();
         string Llocation;
 
+        public MXxWOoverview(bool partmode)
+        {
+            //
+            initMXxWOoverview();
+            //
+            tb_location.Text = "";
+            btn_refresh.Enabled = true;
+            cb_preventive.Enabled = true;
+            cb_ciblings.Enabled = true;
+            metroProgressSpinner1.Visible = false;
+            //
+            lPartmode = partmode;
+            //
+            this.Show();
+        }
+
+
         public MXxWOoverview(string location, bool partmode)
         {
             //
-            if (location == null) { Debugger.Message("no location found"); return; }
+            initMXxWOoverview();
             //
-            InitializeComponent();
-            dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridView1.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_RowEnter);
             btn_refresh.Enabled = false;
             cb_preventive.Enabled = false;
             cb_ciblings.Enabled = false;
-            //
-            bwLongDescription.DoWork += bwLongDescription_DoWork;
-            bwWorkorders.DoWork += bwWorkorders_DoWork;
-            bwWorkorders.RunWorkerCompleted += bwWorkorders_RunWorkerCompleted;
+            metroLabel1.Visible = true;
             //store original query location
             Llocation = location;
-             ////because of GB locations issue
+            ////because of GB locations issue
             if ((!String.IsNullOrEmpty(Llocation) && Char.IsLetter(Llocation[0])))
             {
                 tb_location.Text = Llocation;
             }
-            else 
+            else
             {
-                tb_location.Text = Regex.Replace(Llocation, @"[A-Za-z\s]", "%") + "%"; 
+                tb_location.Text = Regex.Replace(Llocation, @"[A-Za-z\s]", "%") + "%";
             }
             //
             lPartmode = partmode;
-            if (partmode)
-            {
-                this.Text = string.Format("Maximo Wo browser: 'Parts used on location' <{0}>", location);
-            }
-            else
-            {
-                this.Text = string.Format("Maximo Wo browser: 'Workorders on location' <{0}>", location);
-            }
             //
             this.Show();
             bwWorkorders.RunWorkerAsync();
+        }
+
+        void initMXxWOoverview()
+        {
+            InitializeComponent();
+            dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridView1.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_RowEnter);
+            //
+            bwLongDescription.DoWork += bwLongDescription_DoWork;
+            bwWorkorders.DoWork += bwWorkorders_DoWork;
+            bwWorkorders.RunWorkerCompleted += bwWorkorders_RunWorkerCompleted;
+            //
+            if (lPartmode)
+            {
+                this.Text = string.Format("Maximo Wo browser: 'Parts used on location' <{0}>", Llocation);
+            }
+            else
+            {
+                this.Text = string.Format("Maximo Wo browser: 'Workorders on location' <{0}>", Llocation);
+            }
         }
 
         #region backgroundworkers

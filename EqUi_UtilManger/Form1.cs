@@ -25,7 +25,7 @@ namespace EqUi_UtilManger
 
         private void btn_AssetStats_Click(object sender, EventArgs e)
         {
-            AssetStats lAssetStats = new AssetStats("53100R01"); // does not have standalone yet ! 
+            AssetStats lAssetStats = new AssetStats();
         }
 
         private void btn_DocManger_Click(object sender, EventArgs e)
@@ -45,7 +45,7 @@ namespace EqUi_UtilManger
 
         private void Btn_MXxWoOverview_Click(object sender, EventArgs e)
         {
-            MXxWOoverview lMXxWOoverview = new MXxWOoverview("53100R01", false); // does not have standalone yet!
+            MXxWOoverview lMXxWOoverview = new MXxWOoverview(false); 
         }
     }
 }
