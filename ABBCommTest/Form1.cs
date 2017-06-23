@@ -5,14 +5,17 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using EQUICommunictionLib;
 
 using ABB.Robotics.Controllers;
 using ABB.Robotics.Controllers.Discovery;
 using ABB.Robotics.Controllers.RapidDomain;
 using ABB.Robotics.Controllers.EventLogDomain;
 using ABB.Robotics.Controllers.ConfigurationDomain;
+using ABB.Robotics.Controllers.FileSystemDomain;
 
 
 namespace ABBCommTest
@@ -20,56 +23,40 @@ namespace ABBCommTest
     public partial class Form1 : Form
     {
 
-        private NetworkScanner scanner = null;
+        private NetworkScanner scanner = new NetworkScanner();
         private Controller controller = null;
         private ABB.Robotics.Controllers.RapidDomain.Task[] tasks = null;
         private NetworkWatcher networkwatcher = null;
+        myDebugger debugger = new myDebugger();
 
         public Form1()
         {
+            debugger.Init(@"c:\temp\ABBcomm.log");
+            //
             InitializeComponent();
+            //
+            listView1.Columns.Add("IP", -2, HorizontalAlignment.Left);
+            listView1.Columns.Add("Id", -2, HorizontalAlignment.Left);
+            listView1.Columns.Add("Availability", -2, HorizontalAlignment.Left);
+            listView1.Columns.Add("IsVirtual", -2, HorizontalAlignment.Left);
+            listView1.Columns.Add("SystemName", -2, HorizontalAlignment.Left);
+            listView1.Columns.Add("Version", -2, HorizontalAlignment.Left);
+            listView1.Columns.Add("ControllerName", -2, HorizontalAlignment.Left);
+            listView1.Columns.Add("Connected", -2, HorizontalAlignment.Left);
+            listView1.FullRowSelect = true;
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            //scan and populate local subnet
-            this.scanner = new NetworkScanner();
-            this.scanner.Scan();
-            ControllerInfoCollection controllers = scanner.Controllers;
-            //populate the listview
-            ListViewItem item = null;
-            foreach (ControllerInfo controllerInfo in controllers)
-            {
-                item = new ListViewItem(controllerInfo.IPAddress.ToString());
-                item.SubItems.Add(controllerInfo.Id);
-                item.SubItems.Add(controllerInfo.Availability.ToString());
-                item.SubItems.Add(controllerInfo.IsVirtual.ToString());
-                item.SubItems.Add(controllerInfo.SystemName);
-                item.SubItems.Add(controllerInfo.Version.ToString());
-                item.SubItems.Add(controllerInfo.ControllerName);
-                this.listView1.Items.Add(item);
-                item.Tag = controllerInfo;
-            }
-
             //monitor the network
             this.networkwatcher = new NetworkWatcher(scanner.Controllers);
             this.networkwatcher.Found += new EventHandler<NetworkWatcherEventArgs>(HandleFoundEvent);
-           // this.networkwatcher.Lost += new EventHandler<NetworkWatcherEventArgs>(HandleLostEvent);
+            this.networkwatcher.Lost += new EventHandler<NetworkWatcherEventArgs>(HandleLostEvent);
             this.networkwatcher.EnableRaisingEvents = true;
-
-            //enable monitoring for each controller 
-            foreach (Controller ctrl in controllers)
-            {
-                ctrl.OperatingModeChanged += new EventHandler<OperatingModeChangeEventArgs>(ctrl_OperatingModeChanged);
-            }
-
-
         }
 
-        //adding a found controller to the listvieuw
-        private void AddControllerToListView(object sender, NetworkWatcherEventArgs e)
+        private void addControllertoList(ControllerInfo controllerInfo)
         {
-            ControllerInfo controllerInfo = e.Controller;
             ListViewItem item = new ListViewItem(controllerInfo.IPAddress.ToString());
             item.SubItems.Add(controllerInfo.Id);
             item.SubItems.Add(controllerInfo.Availability.ToString());
@@ -77,12 +64,25 @@ namespace ABBCommTest
             item.SubItems.Add(controllerInfo.SystemName);
             item.SubItems.Add(controllerInfo.Version.ToString());
             item.SubItems.Add(controllerInfo.ControllerName);
-            this.listView1.Items.Add(item); 
+            item.SubItems.Add("True"); //connected
             item.Tag = controllerInfo;
+            if (!listView1.Items.Contains(item)) { listView1.Items.Add(item); }
+            //keep track of controller count
+            label1.Text = string.Format("Number of controllers: {0}", listView1.Items.Count);
+        }
+
+        //adding a found controller to the listvieuw
+        private void AddControllerToListView(object sender, NetworkWatcherEventArgs e)
+        {
+            ControllerInfo controllerInfo = e.Controller;
+            addControllertoList(controllerInfo);
+            listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+            listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
         }
 
         private void SignalControlerLostToListView(object sender, NetworkWatcherEventArgs e)
         {
+            ControllerInfo controllerInfo = e.Controller;
             //set listview item for controler Gray 
         }
 
@@ -96,103 +96,13 @@ namespace ABBCommTest
         //handle event from networkscanner (controler lost)
         void HandleLostEvent(object sender, NetworkWatcherEventArgs e)
         {
-            this.Invoke(new EventHandler<NetworkWatcherEventArgs>(AddControllerToListView), new Object[] { this, e });
+            this.Invoke(new EventHandler<NetworkWatcherEventArgs>(SignalControlerLostToListView), new Object[] { this, e });
         }
 
 
-        //event handler for op mode change
-        private static void ctrl_OperatingModeChanged(object sender, OperatingModeChangeEventArgs e)
-        {
-            Console.WriteLine("New Operating mode at: {0} new mode is: {1}", e.Time, e.NewMode);
-            MessageBox.Show(string.Format("New Operating mode at: {0} new mode is: {1}", e.Time, e.NewMode));
-        }
 
-        private void listView1_DoubleClick(object sender, EventArgs e)
-        {
-            ListViewItem item = this.listView1.SelectedItems[0];
 
-            if (item.Tag != null)
-            {
-                ControllerInfo controllerInfo = (ControllerInfo)item.Tag;
-                if
-                (controllerInfo.Availability == Availability.Available)
-                {
-                    if (this.controller != null)
-                    {
-                        this.controller.Logoff();
-                        this.controller.Dispose();
-                        this.controller = null;
-                    }
-                    this.controller = ControllerFactory.CreateFrom(controllerInfo);
-                    this.controller.Logon(UserInfo.DefaultUser);
-                    if (controller.OperatingMode == ControllerOperatingMode.Auto)
-                    {
-                        tasks = controller.Rapid.GetTasks();
-                        using (Mastership m = Mastership.Request(controller.Rapid))
-                        {
 
-                           MessageBox.Show("Mastership");
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("Automatic mode is required to take master.");
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Selected controller not available.");
-                }
-            }
-        }
-
-        private void btn_startTask_Click(object sender, EventArgs e)
-        {
-            Ctrl_startStop(sender, e, true);
-        }
-
-        private void btn_startStop_Click(object sender, EventArgs e)
-        {
-            Ctrl_startStop(sender, e, false);
-        }
-
-        private void Ctrl_startStop(object sender, EventArgs e, Boolean TaskState)
-        {
-            try
-            {
-                if (controller.OperatingMode == ControllerOperatingMode.Auto)
-                {
-                    tasks = controller.Rapid.GetTasks();
-                    using (Mastership m = Mastership.Request(controller.Rapid))
-                    {
-                        //Perform operation
-                        if (TaskState)
-                        {
-                            tasks[1].Start();
-                            MessageBox.Show("Task started");
-                        }
-                        else
-                        {
-                            tasks[1].Stop();
-                            MessageBox.Show("Task Stopped");
-                        }
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Automatic mode is required to start execution from a remote client.");
-                }
-            }
-            catch (System.InvalidOperationException ex)
-            {
-                MessageBox.Show("Mastership is held by another client." + ex.Message);
-            }
-            catch (System.Exception ex)
-            {
-                MessageBox.Show("Unexpected error occurred: " + ex.Message);
-            }
-
-        }
 
         // add a controler by ip 
         private void btn_addCtrl_Click(object sender, EventArgs e)
@@ -200,8 +110,18 @@ namespace ABBCommTest
             //adding for specifc ip 
             try
             {
-                this.scanner = new NetworkScanner();
-                 NetworkScanner.AddRemoteController(tbox_ip.Text.ToString()); // need to handle non ip format
+                System.Net.IPAddress ipAddress;
+                try
+                {
+                    ipAddress = System.Net.IPAddress.Parse(tbox_ip.Text);
+                    NetworkScanner.AddRemoteController(ipAddress);
+                }
+                catch (FormatException ex)
+                {
+                    debugger.Exeption(ex);
+                    debugger.Message("Wrong IP address format");
+                }
+
                 this.scanner.Scan();
             }
             catch (Exception ex)
@@ -211,6 +131,122 @@ namespace ABBCommTest
 
         }
 
+        //construct string to make CFG file to load paramaters.
+        private string makeNFSConfig(string Robot, string UserId, string GroupId, string BasePath, string sharepath)
+        {
+            string nfsConfigScelaton = @"
+SIO:CFG_1.0:6:1::
+
+COM_APP:
+
+      -Name ""robot_ga"" -Type ""NFS"" -Trp ""TCPIP1"" -ServerAddress ""10.249.2.103""\
+      -Trusted 1 -LocalPath ""robot_ga:""\
+      -ServerPath ""{0}{1}"" -UserID {2}\
+      -GroupID {3}
+
+";
+            return string.Format(nfsConfigScelaton,BasePath,Robot,UserId,GroupId,sharepath);
+            /*
+             *       -Name ""share_ga"" -Type ""NFS"" -Trp ""TCPIP1"" -ServerAddress ""10.249.2.103""\
+      -Trusted 1 -LocalPath ""share_ga:""\
+      -ServerPath ""{4}{1}"" -UserID {2}\
+      -GroupID {3}*/
+        }
+
+
+        private void NFSConfigureRobot(string Robot)
+        {
+            string tempdir =  @"c:\temp\";
+            string NFSFilePathOnControler = @"/hd0a/Param/";
+            string NFSFilename = "NFS.CFG";
+
+            try
+            {
+                //check file does not exist on local machine
+                if (File.Exists(tempdir+NFSFilename)) { File.Delete(tempdir+NFSFilename); }
+                //build config file on local machine 
+                File.WriteAllText(tempdir + NFSFilename, makeNFSConfig("99090R01", "13226", "219", @"/ROBOTBCK/robot_ga/ROBLAB/", @"/ROBOTBCK/robot_ga/IRC5_SHARE/"));
+            }
+            catch (Exception ex)
+            {
+                debugger.Exeption(ex);
+                debugger.Message("Create CNFG file error");
+                return;
+            }
+
+            ConfigurationDatabase cfg;
+            FileSystem cntrlFileSystem;
+
+            try
+            {
+                //!*************************************************************************
+                ListViewItem item = this.listView1.SelectedItems[0]; // selected controller
+                ControllerInfo controllerInfo = (ControllerInfo)item.Tag; //get controller info
+                //!*************************************************************************
+                if (controllerInfo.Availability != Availability.Available) { return; } //stop if controller is not available
+                if (controller.OperatingMode == ControllerOperatingMode.Auto) { return; } //controller must be on auto to take master 
+                //
+                controller = ControllerFactory.CreateFrom(controllerInfo); //get controller from factory
+                controller.Logon(UserInfo.DefaultUser); //logon to controller
+
+                cfg = controller.Configuration; //get controller configruation database
+            }
+            catch(Exception ex)
+            {
+                debugger.Exeption(ex);
+                debugger.Message("Error connecting to controller");
+                return;
+            }
+            try
+            {
+                //get controller mastership
+                using (Mastership m = Mastership.Request(controller))
+                {
+                    cntrlFileSystem = controller.FileSystem;
+                    controller.FileSystem.RemoteDirectory = NFSFilePathOnControler;
+                    controller.FileSystem.LocalDirectory = tempdir;
+                    //move file to controler
+                    controller.FileSystem.PutFile(NFSFilename, NFSFilename, true);
+                    //load file on controller
+                    cfg.Load("ctrl:" + NFSFilePathOnControler + NFSFilename, LoadMode.Replace);
+                    //RESTART !!!!!!!!!!!!!!!!!
+                   // controller.Restart(ControllerStartMode.Warm);
+                    //release master
+                    m.Release();
+                }
+            }
+            catch (System.InvalidOperationException ex)
+            {
+                debugger.Exeption(ex);
+                debugger.Message("error writeing to controller");
+                return;
+            }
+        }
+
+
+
+        private void btn_scanNetwork_Click(object sender, EventArgs e)
+        {
+                    scanner.Scan();
+            ControllerInfoCollection controllers = scanner.Controllers;
+            //populate the listview
+            foreach (ControllerInfo controllerInfo in controllers)
+            {
+                addControllertoList(controllerInfo);
+            }
+            listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+            listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+            debugger.Message("done");
+        }
+
+        private void btn_writeNFS_Click(object sender, EventArgs e)
+        {
+            NFSConfigureRobot("");
+        }
+
+
+
+        //*--------------test section
         private void btn_getConf_Click(object sender, EventArgs e)
         {
 
@@ -233,70 +269,43 @@ namespace ABBCommTest
 
                     ConfigurationDatabase cfg = controller.Configuration;
                     Domain sioDomain = controller.Configuration.SerialIO;
-                
+
                     //test read parm
-                   // string[] path = { "SIO", "COM_APP","robot_ga","ServerAddress" };
-                   // string data = cfg.Read(path);
+                    // string[] path = { "SIO", "COM_APP","robot_ga","ServerAddress" };
+                    // string data = cfg.Read(path);
                     //OK 
 
-                    //test write parm. (existing)
-                    /*
-                     try
-                        {
+
+
+                    try
+                    {
 
                         using (Mastership m = Mastership.Request(controller.Configuration))
-                             {
-                                 string[] pathWRite = { "SIO", "COM_APP", "robot_ga", "LocalPath" };
-                                 cfg.Write("Test1:", pathWRite);
-                             } 
-                        }
-                     catch (System.InvalidOperationException ex)
                         {
-                              MessageBox.Show("Mastership is held by another client.");
+                            //test write parm. (existing)
+                            string[] pathWRite = { "SIO", "COM_APP", "robot_ga", "LocalPath" };
+                            cfg.Write("Test1", pathWRite);
                         }
-                     */
-                     // OK
+                    }
+                    catch (System.InvalidOperationException ex)
+                    {
+                        MessageBox.Show("Mastership is held by another client." + ex.Message);
+                        return;
+                    }
 
-                     //test write parm. (new instance )
-                     try
-                     {
-                         DomainCollection domains = cfg.Domains;
-                         Domain domain = controller.Configuration.Domains[controller.Configuration.Domains.IndexOf("SIO")];
-                         ABB.Robotics.Controllers.ConfigurationDomain.Type COM_APPType = domain.Types[domain.Types.IndexOf("COM_APP")];
+                    // OK
 
-                         using (Mastership m = Mastership.Request(controller.Configuration))
-                         {
-
-                             //COM_apptype should have al the instances of comm app type on the controller
-                             var objInstance = COM_APPType["Test_Instance"]; //looks if the instance we whant to create exist
-
-                             //create new instance of com_app
-                             if (objInstance == null) objInstance = COM_APPType.Create("Test_Instance"); //if not exist create it 
-
-                             // set an attribute
-                             objInstance.SetAttribute("LocalPath", "testpath:");
-                             
-
-                             //get it back 
-                             object objEntry = objInstance.GetAttribute("LocalPath");
-                  
-                         }
-                     }
-                     catch (System.InvalidOperationException ex)
-                     {
-                         MessageBox.Show("Mastership is held by another client.");
-                     }
-                    // 
 
                 }
                 else
                 {
                     MessageBox.Show("Selected controller not available.");
                 }
+
             }
         }
 
-
-
     }
+
+
 }

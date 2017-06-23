@@ -28,90 +28,89 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.listView1 = new System.Windows.Forms.ListView();
-            this.ControllerIP = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btn_addCntrl = new System.Windows.Forms.Button();
             this.tbox_ip = new System.Windows.Forms.TextBox();
-            this.btn_start = new System.Windows.Forms.Button();
-            this.btn_stop = new System.Windows.Forms.Button();
-            this.btn_getConf = new System.Windows.Forms.Button();
+            this.btn_writeNFS = new System.Windows.Forms.Button();
+            this.listView1 = new System.Windows.Forms.ListView();
+            this.label1 = new System.Windows.Forms.Label();
+            this.btn_scanNetwork = new System.Windows.Forms.Button();
             this.SuspendLayout();
-            // 
-            // listView1
-            // 
-            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.ControllerIP});
-            this.listView1.Location = new System.Drawing.Point(12, 12);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(688, 249);
-            this.listView1.TabIndex = 0;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.DoubleClick += new System.EventHandler(this.listView1_DoubleClick);
-            // 
-            // ControllerIP
-            // 
-            this.ControllerIP.Tag = "ControllerIP";
-            this.ControllerIP.Width = 300;
             // 
             // btn_addCntrl
             // 
-            this.btn_addCntrl.Location = new System.Drawing.Point(13, 301);
+            this.btn_addCntrl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btn_addCntrl.Location = new System.Drawing.Point(13, 615);
             this.btn_addCntrl.Name = "btn_addCntrl";
-            this.btn_addCntrl.Size = new System.Drawing.Size(108, 23);
+            this.btn_addCntrl.Size = new System.Drawing.Size(158, 23);
             this.btn_addCntrl.TabIndex = 1;
-            this.btn_addCntrl.Text = "btn_addCntrl";
+            this.btn_addCntrl.Text = "btn_addCntrl_byIp";
             this.btn_addCntrl.UseVisualStyleBackColor = true;
             this.btn_addCntrl.Click += new System.EventHandler(this.btn_addCtrl_Click);
             // 
             // tbox_ip
             // 
-            this.tbox_ip.Location = new System.Drawing.Point(150, 301);
+            this.tbox_ip.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.tbox_ip.Location = new System.Drawing.Point(186, 616);
             this.tbox_ip.Name = "tbox_ip";
             this.tbox_ip.Size = new System.Drawing.Size(151, 22);
             this.tbox_ip.TabIndex = 2;
             this.tbox_ip.Text = "10.205.94.240";
             // 
-            // btn_start
+            // btn_writeNFS
             // 
-            this.btn_start.Location = new System.Drawing.Point(13, 379);
-            this.btn_start.Name = "btn_start";
-            this.btn_start.Size = new System.Drawing.Size(75, 23);
-            this.btn_start.TabIndex = 3;
-            this.btn_start.Text = "btn_start";
-            this.btn_start.UseVisualStyleBackColor = true;
-            this.btn_start.Click += new System.EventHandler(this.btn_startTask_Click);
+            this.btn_writeNFS.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btn_writeNFS.Location = new System.Drawing.Point(928, 635);
+            this.btn_writeNFS.Name = "btn_writeNFS";
+            this.btn_writeNFS.Size = new System.Drawing.Size(137, 23);
+            this.btn_writeNFS.TabIndex = 5;
+            this.btn_writeNFS.Text = "WRITE NFS CFG";
+            this.btn_writeNFS.UseVisualStyleBackColor = true;
+            this.btn_writeNFS.Click += new System.EventHandler(this.btn_writeNFS_Click);
             // 
-            // btn_stop
+            // listView1
             // 
-            this.btn_stop.Location = new System.Drawing.Point(13, 409);
-            this.btn_stop.Name = "btn_stop";
-            this.btn_stop.Size = new System.Drawing.Size(75, 23);
-            this.btn_stop.TabIndex = 4;
-            this.btn_stop.Text = "btn_stop";
-            this.btn_stop.UseVisualStyleBackColor = true;
-            this.btn_stop.Click += new System.EventHandler(this.btn_startStop_Click);
+            this.listView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.listView1.Location = new System.Drawing.Point(13, 13);
+            this.listView1.Margin = new System.Windows.Forms.Padding(4);
+            this.listView1.Name = "listView1";
+            this.listView1.Size = new System.Drawing.Size(1052, 595);
+            this.listView1.TabIndex = 6;
+            this.listView1.UseCompatibleStateImageBehavior = false;
+            this.listView1.View = System.Windows.Forms.View.Details;
             // 
-            // btn_getConf
+            // label1
             // 
-            this.btn_getConf.Location = new System.Drawing.Point(13, 439);
-            this.btn_getConf.Name = "btn_getConf";
-            this.btn_getConf.Size = new System.Drawing.Size(75, 23);
-            this.btn_getConf.TabIndex = 5;
-            this.btn_getConf.Text = "btn_getConf";
-            this.btn_getConf.UseVisualStyleBackColor = true;
-            this.btn_getConf.Click += new System.EventHandler(this.btn_getConf_Click);
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(463, 635);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(46, 17);
+            this.label1.TabIndex = 7;
+            this.label1.Text = "label1";
+            // 
+            // btn_scanNetwork
+            // 
+            this.btn_scanNetwork.Location = new System.Drawing.Point(13, 645);
+            this.btn_scanNetwork.Name = "btn_scanNetwork";
+            this.btn_scanNetwork.Size = new System.Drawing.Size(158, 23);
+            this.btn_scanNetwork.TabIndex = 8;
+            this.btn_scanNetwork.Text = "scanNetwork";
+            this.btn_scanNetwork.UseVisualStyleBackColor = true;
+            this.btn_scanNetwork.Click += new System.EventHandler(this.btn_scanNetwork_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(712, 488);
-            this.Controls.Add(this.btn_getConf);
-            this.Controls.Add(this.btn_stop);
-            this.Controls.Add(this.btn_start);
+            this.ClientSize = new System.Drawing.Size(1078, 680);
+            this.Controls.Add(this.btn_scanNetwork);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.listView1);
+            this.Controls.Add(this.btn_writeNFS);
             this.Controls.Add(this.tbox_ip);
             this.Controls.Add(this.btn_addCntrl);
-            this.Controls.Add(this.listView1);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -122,13 +121,12 @@
 
         #endregion
 
-        private System.Windows.Forms.ListView listView1;
         private System.Windows.Forms.Button btn_addCntrl;
         private System.Windows.Forms.TextBox tbox_ip;
-        private System.Windows.Forms.ColumnHeader ControllerIP;
-        private System.Windows.Forms.Button btn_start;
-        private System.Windows.Forms.Button btn_stop;
-        private System.Windows.Forms.Button btn_getConf;
+        private System.Windows.Forms.Button btn_writeNFS;
+        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btn_scanNetwork;
     }
 }
 
