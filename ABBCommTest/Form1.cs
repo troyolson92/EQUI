@@ -25,95 +25,62 @@ namespace ABBCommTest
 
         private NetworkScanner scanner = new NetworkScanner();
         private Controller controller = null;
-        private ABB.Robotics.Controllers.RapidDomain.Task[] tasks = null;
-        private NetworkWatcher networkwatcher = null;
-        myDebugger debugger = new myDebugger();
+        private myDebugger debugger = new myDebugger();
+        private GadataComm lgadatacomm = new GadataComm();
+        private DataTable dt_robots;
 
         public Form1()
         {
             debugger.Init(@"c:\temp\ABBcomm.log");
             //
             InitializeComponent();
+            //get greenfield list from GADATA
+            dt_robots = lgadatacomm.RunQueryGadata(@"SELECT top 10 [Robotnaam]
+                                                      ,[IP address]
+                                                      ,[Subnetmask]
+                                                      ,[Default Gateway]
+                                                  FROM [GADATA].[dbo].[$GreenFieldRobots]
+                                                  "); //where robotnaam = '99090R01'
+            //add colums for extra data
+            dt_robots.Columns.Add("SystemId", System.Type.GetType("System.String"));
+            dt_robots.Columns.Add("Availability", System.Type.GetType("System.String"));
+            dt_robots.Columns.Add("IsVirtual", System.Type.GetType("System.String"));
+            dt_robots.Columns.Add("SystemName", System.Type.GetType("System.String"));
+            dt_robots.Columns.Add("Version", System.Type.GetType("System.String"));
+            dt_robots.Columns.Add("ControllerName", System.Type.GetType("System.String"));
+            dt_robots.Columns.Add("autoOK", System.Type.GetType("System.String"));
+            dt_robots.Columns.Add("ConnectOK", System.Type.GetType("System.String"));
+            dt_robots.Columns.Add("ConfigOK", System.Type.GetType("System.String"));
+            //link to datagrid
+            dataGridView1.DataSource = dt_robots;
             //
-            listView1.Columns.Add("IP", -2, HorizontalAlignment.Left);
-            listView1.Columns.Add("Id", -2, HorizontalAlignment.Left);
-            listView1.Columns.Add("Availability", -2, HorizontalAlignment.Left);
-            listView1.Columns.Add("IsVirtual", -2, HorizontalAlignment.Left);
-            listView1.Columns.Add("SystemName", -2, HorizontalAlignment.Left);
-            listView1.Columns.Add("Version", -2, HorizontalAlignment.Left);
-            listView1.Columns.Add("ControllerName", -2, HorizontalAlignment.Left);
-            listView1.Columns.Add("Connected", -2, HorizontalAlignment.Left);
-            listView1.FullRowSelect = true;
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void LinkControllertoList(ControllerInfo controllerInfo)
         {
-            //monitor the network
-            this.networkwatcher = new NetworkWatcher(scanner.Controllers);
-            this.networkwatcher.Found += new EventHandler<NetworkWatcherEventArgs>(HandleFoundEvent);
-            this.networkwatcher.Lost += new EventHandler<NetworkWatcherEventArgs>(HandleLostEvent);
-            this.networkwatcher.EnableRaisingEvents = true;
+            foreach (DataRow row in dt_robots.Rows)
+            {
+                if (row.Field<string>("IP address").Trim() == controllerInfo.IPAddress.ToString().Trim())
+                {
+                    row["SystemId"] = controllerInfo.SystemId;
+                    row["Availability"] = controllerInfo.Availability.ToString();
+                    row["IsVirtual"] = controllerInfo.IsVirtual.ToString();
+                    row["SystemName"] = controllerInfo.SystemName;
+                    row["Version"] = controllerInfo.Version.ToString();
+                    row["ControllerName"] = controllerInfo.ControllerName;
+                }
+            }
         }
 
-        private void addControllertoList(ControllerInfo controllerInfo)
+        //expose a robot by IP to the networkscanner
+        private void addRobotByIp(string Ip)
         {
-            ListViewItem item = new ListViewItem(controllerInfo.IPAddress.ToString());
-            item.SubItems.Add(controllerInfo.Id);
-            item.SubItems.Add(controllerInfo.Availability.ToString());
-            item.SubItems.Add(controllerInfo.IsVirtual.ToString());
-            item.SubItems.Add(controllerInfo.SystemName);
-            item.SubItems.Add(controllerInfo.Version.ToString());
-            item.SubItems.Add(controllerInfo.ControllerName);
-            item.SubItems.Add("True"); //connected
-            item.Tag = controllerInfo;
-            if (!listView1.Items.Contains(item)) { listView1.Items.Add(item); }
-            //keep track of controller count
-            label1.Text = string.Format("Number of controllers: {0}", listView1.Items.Count);
-        }
-
-        //adding a found controller to the listvieuw
-        private void AddControllerToListView(object sender, NetworkWatcherEventArgs e)
-        {
-            ControllerInfo controllerInfo = e.Controller;
-            addControllertoList(controllerInfo);
-            listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
-            listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
-        }
-
-        private void SignalControlerLostToListView(object sender, NetworkWatcherEventArgs e)
-        {
-            ControllerInfo controllerInfo = e.Controller;
-            //set listview item for controler Gray 
-        }
-
-        //handle event from networkscanner (controler found)
-        void HandleFoundEvent(object sender, NetworkWatcherEventArgs e)
-        {
-            this.Invoke(new EventHandler<NetworkWatcherEventArgs>(AddControllerToListView), new Object[] { this, e });
-        }
-
-
-        //handle event from networkscanner (controler lost)
-        void HandleLostEvent(object sender, NetworkWatcherEventArgs e)
-        {
-            this.Invoke(new EventHandler<NetworkWatcherEventArgs>(SignalControlerLostToListView), new Object[] { this, e });
-        }
-
-
-
-
-
-
-        // add a controler by ip 
-        private void btn_addCtrl_Click(object sender, EventArgs e)
-        {
-            //adding for specifc ip 
             try
             {
                 System.Net.IPAddress ipAddress;
                 try
                 {
-                    ipAddress = System.Net.IPAddress.Parse(tbox_ip.Text);
+                    ipAddress = System.Net.IPAddress.Parse(Ip);
                     NetworkScanner.AddRemoteController(ipAddress);
                 }
                 catch (FormatException ex)
@@ -128,7 +95,19 @@ namespace ABBCommTest
             {
                 MessageBox.Show(ex.Message);
             }
+        }
 
+        //add controllers that are exposed to the scanner
+        private void handleScanner()
+        {
+            scanner.Scan();
+            ControllerInfoCollection controllers = scanner.Controllers;
+            //populate the listview
+            foreach (ControllerInfo controllerInfo in controllers)
+            {
+                LinkControllertoList(controllerInfo);
+            }
+            debugger.Message("done with scan");
         }
 
         //construct string to make CFG file to load paramaters.
@@ -153,19 +132,22 @@ COM_APP:
       -GroupID {3}*/
         }
 
-
-        private void NFSConfigureRobot(string Robot)
+        //write configuration to robot
+        private void NFSConfigureRobot(ControllerInfo ci, DataGridViewRow row)
         {
             string tempdir =  @"c:\temp\";
             string NFSFilePathOnControler = @"/hd0a/Param/";
             string NFSFilename = "NFS.CFG";
 
+            string robotnaam = row.Cells[dataGridView1.Columns["Robotnaam"].Index].Value.ToString();
+            string userID = "13226"; // row.Cells[dataGridView1.Columns["Robotnaam"].Index].Value.ToString();
+            string GroupID = "219"; // row.Cells[dataGridView1.Columns["Robotnaam"].Index].Value.ToString();
             try
             {
                 //check file does not exist on local machine
                 if (File.Exists(tempdir+NFSFilename)) { File.Delete(tempdir+NFSFilename); }
                 //build config file on local machine 
-                File.WriteAllText(tempdir + NFSFilename, makeNFSConfig("99090R01", "13226", "219", @"/ROBOTBCK/robot_ga/ROBLAB/", @"/ROBOTBCK/robot_ga/IRC5_SHARE/"));
+                File.WriteAllText(tempdir + NFSFilename, makeNFSConfig(robotnaam, userID, GroupID, @"/ROBOTBCK/robot_ga/IRC5-NGAC/", @"/ROBOTBCK/IRC5-NGAC/IRC5-NGAC_SHARE/"));
             }
             catch (Exception ex)
             {
@@ -179,20 +161,25 @@ COM_APP:
 
             try
             {
-                //!*************************************************************************
-                ListViewItem item = this.listView1.SelectedItems[0]; // selected controller
-                ControllerInfo controllerInfo = (ControllerInfo)item.Tag; //get controller info
-                //!*************************************************************************
-                if (controllerInfo.Availability != Availability.Available) { return; } //stop if controller is not available
-                if (controller.OperatingMode == ControllerOperatingMode.Auto) { return; } //controller must be on auto to take master 
+                if (ci.Availability != Availability.Available) { debugger.Message("controller busy: " + ci.Id); return; } //stop if controller is not available
                 //
-                controller = ControllerFactory.CreateFrom(controllerInfo); //get controller from factory
+                controller = ControllerFactory.CreateFrom(ci); //get controller from factory
+                if (controller.OperatingMode != ControllerOperatingMode.Auto) //controller must be on auto to take master 
+                {
+                    row.Cells[dataGridView1.Columns["AutoOK"].Index].Value = "NOK";
+                    return;
+                }
+                else
+                { 
+                    row.Cells[dataGridView1.Columns["AutoOK"].Index].Value = "OK";
+                }
                 controller.Logon(UserInfo.DefaultUser); //logon to controller
-
                 cfg = controller.Configuration; //get controller configruation database
+                row.Cells[dataGridView1.Columns["ConnectOK"].Index].Value = "OK";
             }
             catch(Exception ex)
             {
+                row.Cells[dataGridView1.Columns["ConnectOK"].Index].Value = "NOK";
                 debugger.Exeption(ex);
                 debugger.Message("Error connecting to controller");
                 return;
@@ -208,101 +195,66 @@ COM_APP:
                     //move file to controler
                     controller.FileSystem.PutFile(NFSFilename, NFSFilename, true);
                     //load file on controller
-                    cfg.Load("ctrl:" + NFSFilePathOnControler + NFSFilename, LoadMode.Replace);
+                    //cfg.Load("ctrl:" + NFSFilePathOnControler + NFSFilename, LoadMode.Replace);
                     //RESTART !!!!!!!!!!!!!!!!!
                    // controller.Restart(ControllerStartMode.Warm);
                     //release master
                     m.Release();
+                    row.Cells[dataGridView1.Columns["ConfigOK"].Index].Value = "OK";
                 }
             }
             catch (System.InvalidOperationException ex)
             {
+                row.Cells[dataGridView1.Columns["ConfigOK"].Index].Value = "NOK";
                 debugger.Exeption(ex);
-                debugger.Message("error writeing to controller");
+                debugger.Message("error in write to controller");
                 return;
             }
         }
 
-
-
+        //bottons
         private void btn_scanNetwork_Click(object sender, EventArgs e)
         {
-                    scanner.Scan();
-            ControllerInfoCollection controllers = scanner.Controllers;
-            //populate the listview
-            foreach (ControllerInfo controllerInfo in controllers)
-            {
-                addControllertoList(controllerInfo);
-            }
-            listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
-            listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
-            debugger.Message("done");
+            handleScanner();
         }
-
         private void btn_writeNFS_Click(object sender, EventArgs e)
         {
-            NFSConfigureRobot("");
-        }
-
-
-
-        //*--------------test section
-        private void btn_getConf_Click(object sender, EventArgs e)
-        {
-
-            ListViewItem item = this.listView1.SelectedItems[0];
-
-            if (item.Tag != null)
+            foreach (DataGridViewRow row in dataGridView1.SelectedRows)
             {
-                ControllerInfo controllerInfo = (ControllerInfo)item.Tag;
-                if
-                (controllerInfo.Availability == Availability.Available)
+                ControllerInfo ci;
+
+                if (scanner.TryFind(new Guid(row.Cells[dataGridView1.Columns["SystemId"].Index].Value.ToString()), out ci))
                 {
-                    if (this.controller != null)
-                    {
-                        this.controller.Logoff();
-                        this.controller.Dispose();
-                        this.controller = null;
-                    }
-                    this.controller = ControllerFactory.CreateFrom(controllerInfo);
-                    this.controller.Logon(UserInfo.DefaultUser);
-
-                    ConfigurationDatabase cfg = controller.Configuration;
-                    Domain sioDomain = controller.Configuration.SerialIO;
-
-                    //test read parm
-                    // string[] path = { "SIO", "COM_APP","robot_ga","ServerAddress" };
-                    // string data = cfg.Read(path);
-                    //OK 
-
-
-
-                    try
-                    {
-
-                        using (Mastership m = Mastership.Request(controller.Configuration))
-                        {
-                            //test write parm. (existing)
-                            string[] pathWRite = { "SIO", "COM_APP", "robot_ga", "LocalPath" };
-                            cfg.Write("Test1", pathWRite);
-                        }
-                    }
-                    catch (System.InvalidOperationException ex)
-                    {
-                        MessageBox.Show("Mastership is held by another client." + ex.Message);
-                        return;
-                    }
-
-                    // OK
-
-
+                    NFSConfigureRobot(ci, row);
                 }
                 else
                 {
-                    MessageBox.Show("Selected controller not available.");
+                    debugger.Message("can not find controller: " + row.Cells[0].Value.ToString());
                 }
+            }
+
+        }
+        private void btn_addCtrl_Click(object sender, EventArgs e)
+        {
+            //adding for specifc ip 
+            addRobotByIp(tbox_ip.Text);
+        }
+        private void btn_expose_Click(object sender, EventArgs e)
+        {
+            foreach (DataRow row in dt_robots.Rows)
+            {
+                addRobotByIp(row.Field<string>("IP address").Trim());
 
             }
+            debugger.Message("done with expose");
+        }
+
+        private void btnDirMap_Click(object sender, EventArgs e)
+        {
+            RobotBckShortcuts bckShort = new RobotBckShortcuts();
+            bckShort.searchForRobots();
+            bckShort.buildShortcutdirectory();
+            debugger.Message("done with dirbuild");
         }
 
     }
