@@ -174,21 +174,21 @@ namespace ExcelAddInEquipmentDatabase
                       ,assets.[ASSETNUM]
                       ,assets.[AssetDescription]
                       ,assets.[LocationTree]
-					  ,assets.[ClassDescription]
-					  ,assets.[ClassStructureId]
-					  ,assets.[CLassificationId]
-					  ,assets.[ClassificationTree]
-					  ,assets.[Area]
-					  ,assets.[SubArea]
+                      ,assets.[ClassDescription]
+                      ,assets.[ClassStructureId]
+                      ,assets.[CLassificationId]
+                      ,assets.[ClassificationTree]
+                      ,assets.[Area]
+                      ,assets.[SubArea]
                       ,assets.[line]
-					  ,assets.[station]
-	                  ,ISNULL(r.controller_name,rr.controller_name) as 'controller_name'
-	                  ,ISNULL(r.controller_type,rr.controller_type) as 'controller_type'
-	                  ,ISNULL(r.id,rr.id) as 'controller_id'
+                      ,assets.[station]
+                      ,ISNULL(r.controller_name,rr.controller_name) as 'controller_name'
+                      ,ISNULL(r.controller_type,rr.controller_type) as 'controller_type'
+                      ,ISNULL(r.id,rr.id) as 'controller_id'
                       ,ROW_NUMBER() OVER (PARTITION BY 
-					      ISNULL(r.controller_type,rr.controller_type)
-					    , ISNULL(r.id,rr.id), assets.classificationid 
-						ORDER BY assets.location ASC) AS 'controller_ToolID'
+                          ISNULL(r.controller_type,rr.controller_type)
+                        , ISNULL(r.id,rr.id), assets.classificationid 
+                        ORDER BY assets.location ASC) AS 'controller_ToolID'
                   INTO GADATA.Equi.ASSETS
                   FROM [GADATA].[Equi].[ASSETS_fromMX7] as assets
                   --join robot assets with there controller
@@ -224,9 +224,9 @@ namespace ExcelAddInEquipmentDatabase
                   REPLACE(assets.LOCATION,'JB','R') LIKE rr.controller_name+'%'
                   )
                 where 
-				(assets.LocationTree like 'VCG -> A%' AND assets.ASSETNUM like 'U%')
-				OR
-				(assets.LocationTree like 'VCG -> B%' AND assets.ASSETNUM like 'U%')
+                (assets.LocationTree like 'VCG -> A%' AND assets.ASSETNUM like 'U%')
+                OR
+                (assets.LocationTree like 'VCG -> B%' AND assets.ASSETNUM like 'U%')
 
 
                 ";

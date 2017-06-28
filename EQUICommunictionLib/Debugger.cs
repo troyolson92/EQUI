@@ -26,7 +26,12 @@ namespace EQUICommunictionLib
 
         public void Init()
         {
-            Trace.Listeners.Add(new TextWriterTraceListener(@"c:\temp\eqDatabase.log"));
+            Init(@"c:\temp\eqDatabase.log");
+        }
+
+       public void Init(string logfile)
+        {
+            Trace.Listeners.Add(new TextWriterTraceListener(logfile));
             Trace.AutoFlush = true;
             Trace.Indent();
             Trace.Unindent();

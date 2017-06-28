@@ -96,12 +96,13 @@
             this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(12, 12);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 24;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(1053, 582);
+            this.dataGridView1.Size = new System.Drawing.Size(1774, 582);
             this.dataGridView1.TabIndex = 10;
             // 
             // btn_expose
@@ -119,7 +120,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1078, 680);
+            this.ClientSize = new System.Drawing.Size(1799, 680);
             this.Controls.Add(this.btn_expose);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.btnDirMap);
@@ -128,7 +129,7 @@
             this.Controls.Add(this.tbox_ip);
             this.Controls.Add(this.btn_addCntrl);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "SDEBEUL TOOL FOR CFG ABB NFS SETTINGS!! STAY OFF!!";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

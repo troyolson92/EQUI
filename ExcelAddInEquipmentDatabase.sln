@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EQUIToolsLib", "EQUIToolsLi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPFChart", "WPFChart\WPFChart.csproj", "{4594058D-A96A-4B11-93B5-707215E40231}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ABBCommTest", "ABBCommTest\ABBCommTest.csproj", "{8829D91C-B9D6-4ED0-B792-0A8E69E8F9CD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{4594058D-A96A-4B11-93B5-707215E40231}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4594058D-A96A-4B11-93B5-707215E40231}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4594058D-A96A-4B11-93B5-707215E40231}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8829D91C-B9D6-4ED0-B792-0A8E69E8F9CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8829D91C-B9D6-4ED0-B792-0A8E69E8F9CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8829D91C-B9D6-4ED0-B792-0A8E69E8F9CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8829D91C-B9D6-4ED0-B792-0A8E69E8F9CD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

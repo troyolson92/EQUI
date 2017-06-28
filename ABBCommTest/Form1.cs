@@ -16,6 +16,7 @@ using ABB.Robotics.Controllers.RapidDomain;
 using ABB.Robotics.Controllers.EventLogDomain;
 using ABB.Robotics.Controllers.ConfigurationDomain;
 using ABB.Robotics.Controllers.FileSystemDomain;
+using ABB.Robotics.Controllers.IOSystemDomain;
 
 
 namespace ABBCommTest
@@ -40,7 +41,7 @@ namespace ABBCommTest
                                                       ,[Subnetmask]
                                                       ,[Default Gateway]
                                                   FROM [GADATA].[dbo].[$GreenFieldRobots]
-                                                  "); //where robotnaam = '99090R01'
+                                                  where robotnaam like '99090%'");
             //add colums for extra data
             dt_robots.Columns.Add("SystemId", System.Type.GetType("System.String"));
             dt_robots.Columns.Add("Availability", System.Type.GetType("System.String"));
@@ -48,9 +49,11 @@ namespace ABBCommTest
             dt_robots.Columns.Add("SystemName", System.Type.GetType("System.String"));
             dt_robots.Columns.Add("Version", System.Type.GetType("System.String"));
             dt_robots.Columns.Add("ControllerName", System.Type.GetType("System.String"));
+            dt_robots.Columns.Add("ConfIsOK", System.Type.GetType("System.String"));
             dt_robots.Columns.Add("autoOK", System.Type.GetType("System.String"));
             dt_robots.Columns.Add("ConnectOK", System.Type.GetType("System.String"));
             dt_robots.Columns.Add("ConfigOK", System.Type.GetType("System.String"));
+            dt_robots.Columns.Add("restartOK", System.Type.GetType("System.String"));
             //link to datagrid
             dataGridView1.DataSource = dt_robots;
             //
@@ -140,8 +143,8 @@ COM_APP:
             string NFSFilename = "NFS.CFG";
 
             string robotnaam = row.Cells[dataGridView1.Columns["Robotnaam"].Index].Value.ToString();
-            string userID = "13226"; // row.Cells[dataGridView1.Columns["Robotnaam"].Index].Value.ToString();
-            string GroupID = "219"; // row.Cells[dataGridView1.Columns["Robotnaam"].Index].Value.ToString();
+            string userID = "0"; //0 = root // row.Cells[dataGridView1.Columns["Robotnaam"].Index].Value.ToString();
+            string GroupID = "1"; //1 = root  row.Cells[dataGridView1.Columns["Robotnaam"].Index].Value.ToString();
             try
             {
                 //check file does not exist on local machine
@@ -195,9 +198,22 @@ COM_APP:
                     //move file to controler
                     controller.FileSystem.PutFile(NFSFilename, NFSFilename, true);
                     //load file on controller
-                    //cfg.Load("ctrl:" + NFSFilePathOnControler + NFSFilename, LoadMode.Replace);
-                    //RESTART !!!!!!!!!!!!!!!!!
-                   // controller.Restart(ControllerStartMode.Warm);
+                    cfg.Load("ctrl:" + NFSFilePathOnControler + NFSFilename, LoadMode.Replace);
+                    //check if controller if home for restart.
+                    Signal O_Homepos = controller.IOSystem.GetSignal("O_Homepos");
+                    if (O_Homepos.Value == 1 )
+                    {
+                        //RESTART !!!!!!!!!!!!!!!!!
+                        controller.State = ControllerState.MotorsOff;
+                        controller.Restart(ControllerStartMode.Warm);
+                        //
+                        row.Cells[dataGridView1.Columns["restartOK"].Index].Value = "OK";
+                    }
+                    else
+                    {
+                        row.Cells[dataGridView1.Columns["restartOK"].Index].Value = "NOK";
+                    }
+
                     //release master
                     m.Release();
                     row.Cells[dataGridView1.Columns["ConfigOK"].Index].Value = "OK";
@@ -212,6 +228,30 @@ COM_APP:
             }
         }
 
+        //check configuration of robot
+        private bool checkNFSconfig(ControllerInfo ci, DataGridViewRow row)
+        {
+            this.controller = ControllerFactory.CreateFrom(ci);
+            this.controller.Logon(UserInfo.DefaultUser);
+
+            ConfigurationDatabase cfg = controller.Configuration;
+            Domain sioDomain = controller.Configuration.SerialIO;
+
+            // read parm to see if config was done
+             string[] path = { "SIO", "COM_APP","robot_ga","ServerAddress" };
+             string data = null;
+             try { data = cfg.Read(path); }
+             catch (Exception) { }
+             if (data == "10.249.2.103")
+             {
+                 return true;
+             }
+             else
+             {
+                 return false;
+             }
+        }
+
         //bottons
         private void btn_scanNetwork_Click(object sender, EventArgs e)
         {
@@ -221,17 +261,35 @@ COM_APP:
         {
             foreach (DataGridViewRow row in dataGridView1.SelectedRows)
             {
-                ControllerInfo ci;
+                //make sure dir exists for robot.
+                string rootDir = @"\\gnlsnm0101\6308-APP-NASROBOTBCK0001\robot_ga\IRC5-NGAC\";
+                if (!Directory.Exists(rootDir + row.Cells[dataGridView1.Columns["Robotnaam"].Index].Value.ToString()))
+                {
+                    Directory.CreateDirectory(rootDir + row.Cells[dataGridView1.Columns["Robotnaam"].Index].Value.ToString());
+                }
 
+                ControllerInfo ci;
                 if (scanner.TryFind(new Guid(row.Cells[dataGridView1.Columns["SystemId"].Index].Value.ToString()), out ci))
                 {
-                    NFSConfigureRobot(ci, row);
+                    //check if robot needs config
+                    if (checkNFSconfig(ci, row))
+                    {
+                       row.Cells[dataGridView1.Columns["ConfIsOK"].Index].Value = "OK";
+
+                    }
+                    else
+                    {
+                        row.Cells[dataGridView1.Columns["ConfIsOK"].Index].Value = "NOK->";
+                        //load NFS config.
+                        NFSConfigureRobot(ci, row);
+                    }
                 }
                 else
                 {
                     debugger.Message("can not find controller: " + row.Cells[0].Value.ToString());
                 }
             }
+            debugger.Message("done with controllers");
 
         }
         private void btn_addCtrl_Click(object sender, EventArgs e)
