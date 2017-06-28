@@ -130,7 +130,7 @@ Sam
             }
             else
             {
-                Debugger.Message("not network deployed");
+               // Debugger.Message("not network deployed");
             }
 
         }

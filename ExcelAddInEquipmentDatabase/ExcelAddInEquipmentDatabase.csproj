@@ -41,7 +41,7 @@
     <PublishUrl>\\gnlsnm0101.gen.volvocars.net\proj\6308-SHR-VCC22700\VSTO\DEPLOYMENTBASE\</PublishUrl>
     <InstallUrl />
     <TargetCulture>en</TargetCulture>
-    <ApplicationVersion>3.0.2.24</ApplicationVersion>
+    <ApplicationVersion>3.0.2.25</ApplicationVersion>
     <AutoIncrementApplicationRevision>true</AutoIncrementApplicationRevision>
     <UpdateEnabled>true</UpdateEnabled>
     <UpdateInterval>0</UpdateInterval>
@@ -268,6 +268,12 @@
     <Compile Include="Forms\MXxQueryEdit.Designer.cs">
       <DependentUpon>MXxQueryEdit.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\ProcedureManger.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\ProcedureManger.Designer.cs">
+      <DependentUpon>ProcedureManger.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\uc_Datebox.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -316,14 +322,14 @@
     <EmbeddedResource Include="Forms\MXxQueryEdit.resx">
       <DependentUpon>MXxQueryEdit.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ProcedureManger.resx">
+      <DependentUpon>ProcedureManger.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\uc_Datebox.resx">
       <DependentUpon>uc_Datebox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\uc_Checkbox.resx">
       <DependentUpon>uc_Checkbox.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\StoredProcedureManger.resx">
-      <DependentUpon>StoredProcedureManger.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="applData.xsc">
@@ -380,12 +386,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
-    <Compile Include="Forms\StoredProcedureManger.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\StoredProcedureManger.Designer.cs">
-      <DependentUpon>StoredProcedureManger.cs</DependentUpon>
     </Compile>
     <Compile Include="Settings.cs" />
     <Compile Include="ThisAddIn.cs">

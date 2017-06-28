@@ -17,6 +17,7 @@ using EQUIToolsLib;
 
 namespace ExcelAddInEquipmentDatabase
 {
+    [System.Runtime.InteropServices.GuidAttribute("0B866AC0-9B93-40CD-827F-FAF350EC0C0E")]
     public partial class EquipmentDBRibbon
     {
         //
@@ -37,7 +38,9 @@ namespace ExcelAddInEquipmentDatabase
         //local worsksheet function instance
         WorksheetFeatures lWorksheetFeatures = new WorksheetFeatures();
         //procedure manager instance 
-        StoredProcedureManger ProcMngr;
+        //StoredProcedureManger ProcMngr;
+        Forms.ProcedureManger ProcMngr;
+        Microsoft.Office.Tools.CustomTaskPane ProcedureMangerTaskPane;
         //asset manager instance
         AssetManager AssetMngr;
         //connection manager instance
@@ -183,10 +186,11 @@ namespace ExcelAddInEquipmentDatabase
                 if (ProcMngr != null) ProcMngr.Dispose();
                 if (dd_activeConnection.SelectedItem.Label != "RefreshAll")
                 {
-                    ProcMngr = new StoredProcedureManger(dd_activeConnection.SelectedItem.Label);
+                    ProcMngr = new Forms.ProcedureManger(dd_activeConnection.SelectedItem.Label);
+                    ProcedureMangerTaskPane = Globals.ThisAddIn.CustomTaskPanes.Add(ProcMngr, "ProcedureManger");
                 }
                 //event handeler for sheet Hide. (to trigger sync with ribbon)
-                ProcMngr.Deactivate += ProcMngr_Deactivate;
+                ProcMngr.MouseLeave += ProcMngr_Deactivate;
                //loads the available parameters back into the ribbon
                 set_RibonToProcedureManager();
                //load parameter sets available on db 
@@ -532,7 +536,9 @@ namespace ExcelAddInEquipmentDatabase
             }
             else
             {
-                ProcMngr.ShowOnClick();
+                ProcedureMangerTaskPane.Width = ProcMngr.MaxWith() + 50;
+                ProcedureMangerTaskPane.DockPosition = Microsoft.Office.Core.MsoCTPDockPosition.msoCTPDockPositionLeft;
+                ProcedureMangerTaskPane.Visible = true;
             }
         }
         //refresh the active connection or refresh all connections if needed
@@ -725,6 +731,7 @@ namespace ExcelAddInEquipmentDatabase
         {
             SBCUStats lSBCUStats = new SBCUStats(); //allow multible instances of the form.
         }
+
 
         //
 

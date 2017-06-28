@@ -41,9 +41,10 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lbl_1.AutoSize = true;
+            this.lbl_1.BackColor = System.Drawing.Color.White;
             this.lbl_1.Location = new System.Drawing.Point(43, 0);
             this.lbl_1.Name = "lbl_1";
-            this.lbl_1.Size = new System.Drawing.Size(37, 32);
+            this.lbl_1.Size = new System.Drawing.Size(37, 30);
             this.lbl_1.TabIndex = 1;
             this.lbl_1.Text = "lbl_1";
             // 
@@ -51,14 +52,15 @@
             // 
             this.rb_enable.AutoCheck = false;
             this.rb_enable.AutoSize = true;
+            this.rb_enable.BackColor = System.Drawing.Color.White;
             this.rb_enable.Location = new System.Drawing.Point(3, 2);
             this.rb_enable.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.rb_enable.Name = "rb_enable";
-            this.rb_enable.Size = new System.Drawing.Size(16, 0);
+            this.rb_enable.Size = new System.Drawing.Size(17, 16);
             this.rb_enable.TabIndex = 2;
             this.rb_enable.TabStop = true;
             this.rb_enable.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.rb_enable.UseVisualStyleBackColor = true;
+            this.rb_enable.UseVisualStyleBackColor = false;
             this.rb_enable.Click += new System.EventHandler(this.enable_CheckedChanged);
             // 
             // tableLayoutPanel1
@@ -79,7 +81,7 @@
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(294, 32);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(294, 30);
             this.tableLayoutPanel1.TabIndex = 4;
             // 
             // dt_1
@@ -100,12 +102,14 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
+            this.BackColor = System.Drawing.Color.White;
+            this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.Controls.Add(this.tableLayoutPanel1);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MaximumSize = new System.Drawing.Size(399, 36);
             this.MinimumSize = new System.Drawing.Size(199, 36);
             this.Name = "uc_Datebox";
-            this.Size = new System.Drawing.Size(301, 36);
+            this.Size = new System.Drawing.Size(301, 34);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);

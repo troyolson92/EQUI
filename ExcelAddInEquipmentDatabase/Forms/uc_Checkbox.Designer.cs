@@ -43,7 +43,7 @@
             this.lbl_1.AutoSize = true;
             this.lbl_1.Location = new System.Drawing.Point(43, 0);
             this.lbl_1.Name = "lbl_1";
-            this.lbl_1.Size = new System.Drawing.Size(37, 28);
+            this.lbl_1.Size = new System.Drawing.Size(37, 26);
             this.lbl_1.TabIndex = 1;
             this.lbl_1.Text = "lbl_1";
             // 
@@ -66,13 +66,14 @@
             this.cb_1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.cb_1.AutoSize = true;
+            this.cb_1.BackColor = System.Drawing.Color.White;
             this.cb_1.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.cb_1.Location = new System.Drawing.Point(161, 2);
             this.cb_1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cb_1.Name = "cb_1";
-            this.cb_1.Size = new System.Drawing.Size(16, 24);
+            this.cb_1.Size = new System.Drawing.Size(16, 22);
             this.cb_1.TabIndex = 3;
-            this.cb_1.UseVisualStyleBackColor = true;
+            this.cb_1.UseSelectable = true;
             // 
             // tableLayoutPanel1
             // 
@@ -80,6 +81,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel1.AutoSize = true;
+            this.tableLayoutPanel1.BackColor = System.Drawing.Color.White;
             this.tableLayoutPanel1.ColumnCount = 3;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
@@ -92,7 +94,7 @@
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(180, 28);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(180, 26);
             this.tableLayoutPanel1.TabIndex = 4;
             // 
             // uc_Checkbox
@@ -100,12 +102,13 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
+            this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.Controls.Add(this.tableLayoutPanel1);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MaximumSize = new System.Drawing.Size(333, 36);
             this.MinimumSize = new System.Drawing.Size(106, 36);
             this.Name = "uc_Checkbox";
-            this.Size = new System.Drawing.Size(197, 36);
+            this.Size = new System.Drawing.Size(197, 34);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
