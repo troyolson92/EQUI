@@ -188,6 +188,11 @@ namespace EQUIToolsLib
         void bw_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             set_trackbars();
+          //  trackBar1.Value = trackBar1.Value; //to trigger chart initalisation (I know its stupid) 
+            /*
+             * in standonlone oke maar in build in Excel crossthreading 
+             mogelijks better om al de tools te launchen via    Application.Run(new SBCUStats(col["target"]));...
+             * * */
         }
 
         void bw_DoWork(object sender, DoWorkEventArgs e)

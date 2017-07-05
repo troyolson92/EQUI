@@ -128,6 +128,8 @@ namespace EQUIToolsLib
 
         private void getMaximoWorkorder(string location, bool partmode)
         {
+            //get parent select parent from ( select * from maximo.LOCHIERARCHY where location like '%53110%' order by LOCHIERARCHY.LOCHIERARCHYID ) where rownum = 1;
+
             //get asset list from maximo M7 daily copy
             string strSqlGetFromMaximo = string.Format(@"
 SELECT 

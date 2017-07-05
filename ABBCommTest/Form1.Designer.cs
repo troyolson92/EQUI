@@ -35,6 +35,7 @@
             this.btnDirMap = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.btn_expose = new System.Windows.Forms.Button();
+            this.btn_gateway = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -116,11 +117,22 @@
             this.btn_expose.UseVisualStyleBackColor = true;
             this.btn_expose.Click += new System.EventHandler(this.btn_expose_Click);
             // 
+            // btn_gateway
+            // 
+            this.btn_gateway.Location = new System.Drawing.Point(510, 645);
+            this.btn_gateway.Name = "btn_gateway";
+            this.btn_gateway.Size = new System.Drawing.Size(124, 23);
+            this.btn_gateway.TabIndex = 12;
+            this.btn_gateway.Text = "checkPINOGate";
+            this.btn_gateway.UseVisualStyleBackColor = true;
+            this.btn_gateway.Click += new System.EventHandler(this.btn_gateway_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1799, 680);
+            this.Controls.Add(this.btn_gateway);
             this.Controls.Add(this.btn_expose);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.btnDirMap);
@@ -145,6 +157,7 @@
         private System.Windows.Forms.Button btnDirMap;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button btn_expose;
+        private System.Windows.Forms.Button btn_gateway;
     }
 }
 

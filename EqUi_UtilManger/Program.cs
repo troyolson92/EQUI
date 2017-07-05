@@ -6,13 +6,17 @@ using System.Windows.Forms;
 using System.Deployment.Application;
 using System.Web;
 using System.Collections.Specialized;
+using EQUIToolsLib;
 
 namespace EqUi_UtilManger
 {
     static class Program
     {
 
-        [STAThread]
+        // http://gnl1004zcbqc2/Clickonce/EqUi_UtilManger.application
+        // http://gnl1004zcbqc2/Clickonce/EqUi_UtilManger.application?Tool=SBCUstats
+        // http://gnl1004zcbqc2/Clickonce/EqUi_UtilManger.application?Tool=SBCUstats&target=32070WS02A
+
         static void Main()
         {
             String[] Args = Environment.GetCommandLineArgs();
@@ -24,16 +28,17 @@ namespace EqUi_UtilManger
                 string queryString = ApplicationDeployment.CurrentDeployment.ActivationUri.Query;
                 if (queryString != null)
                 {
-                    MessageBox.Show("actURL= " + queryString);
+                    //MessageBox.Show("actURL= " + queryString);
                     col = HttpUtility.ParseQueryString(queryString);
                     HandleQueryParms(col);
                 }
-                {
-                    Application.EnableVisualStyles();
-                    Application.SetCompatibleTextRenderingDefault(false);
-                    Application.Run(new Form1());
-                }
 
+            }
+            else
+            {
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+                Application.Run(new Form1());
             }
 
 
@@ -50,10 +55,17 @@ namespace EqUi_UtilManger
 
                 if (key == "Tool")
                 {
-                    switch (values[0])
+                    switch (col["Tool"])
                     {
                         case "SBCUstats":
-
+                            if (col["target"] != null)
+                            {
+                                Application.Run(new SBCUStats(col["target"]));
+                            }
+                            else
+                            {
+                                Application.Run(new SBCUStats());
+                            }
                             break;
 
                         case "MaximoTool":

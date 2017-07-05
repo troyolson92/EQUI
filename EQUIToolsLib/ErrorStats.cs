@@ -41,9 +41,9 @@ namespace EQUIToolsLib
             //query all instances of the error 
             string qry = string.Format(
     @"
-
 DECLARE @Location as varchar(max) = '{0}'
 DECLARE @ERRORNUM as int = {1} -- why not use the index of the l_error ? might be smarter 
+DECLARE @Logtext as varchar(max) = '{2}'
 DECLARE @controllerID as int = (select top 1 controller_id from gadata.equi.ASSETS where RTRIM(location) = @Location)
 DECLARE @controllerTYPE as varchar(10) = (select top 1 controller_type from gadata.equi.ASSETS where RTRIM(location) = @Location)
 
@@ -82,13 +82,14 @@ SELECT
 , 1 as 'count'
 FROM gadata.abb.h_alarm as h 
 left join gadata.abb.l_error as l on l.id = h.error_id
-where l.[error_number] = @errornum and h.controller_id = @controllerID
+where LTRIM(RTRIM(l.error_text)) = LTRIM(RTRIM(@Logtext)) and h.controller_id = @controllerID
 UNION
 SELECT 
   getdate() as 'starttime'
 , 0 as 'count'
+order by ISNULL(H._timestamp, H.wd_timestamp) ASC
 END
-", Location, Errornum);
+", Location, Errornum, logtekst);
             //fill dataset with all errors
             dt = lGdataComm.RunQueryGadata(qry);
             //check if the result was valid 

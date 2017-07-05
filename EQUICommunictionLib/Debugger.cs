@@ -78,5 +78,18 @@ namespace EQUICommunictionLib
             }
             MessageBox.Show(message,"Sorry", MessageBoxButtons.OK);
         }
+
+       public void Log(string message)
+       {
+           if (bLogToFile)
+           {
+               Trace.WriteLine("DT: " + System.DateTime.Now + " M: " + message);
+           }
+           else
+           {
+               Debug.WriteLine("DT: " + System.DateTime.Now + " M: " + message);
+           }
+
+       }
     }
 }
