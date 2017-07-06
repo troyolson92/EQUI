@@ -15,12 +15,13 @@ namespace EQUIToolsLib
     public partial class MXxWOoverview : MetroFramework.Forms.MetroForm
     {
         MaximoComm lMaximocomm = new MaximoComm();
-        bool lPartmode;
         DataTable tableFromMx7 = new DataTable();
         BackgroundWorker bwLongDescription = new BackgroundWorker();
         BackgroundWorker bwWorkorders = new BackgroundWorker();
         myDebugger Debugger = new myDebugger();
+        //
         string Llocation;
+        bool lPartmode;
 
         public MXxWOoverview(bool partmode)
         {
@@ -28,37 +29,28 @@ namespace EQUIToolsLib
             initMXxWOoverview();
             //
             tb_location.Text = "";
+            tb_location.Enabled = true;
             btn_refresh.Enabled = true;
-            cb_preventive.Enabled = true;
-            cb_ciblings.Enabled = true;
+            //
             metroProgressSpinner1.Visible = false;
             //
             lPartmode = partmode;
             //
             this.Show();
+            //
         }
 
 
         public MXxWOoverview(string location, bool partmode)
         {
+            //store original query location
+            Llocation = location;
             //
             initMXxWOoverview();
             //
+            tb_location.Text = Llocation;
+            tb_location.Enabled = false;
             btn_refresh.Enabled = false;
-            cb_preventive.Enabled = false;
-            cb_ciblings.Enabled = false;
-            metroLabel1.Visible = true;
-            //store original query location
-            Llocation = location;
-            ////because of GB locations issue
-            if ((!String.IsNullOrEmpty(Llocation) && Char.IsLetter(Llocation[0])))
-            {
-                tb_location.Text = Llocation;
-            }
-            else
-            {
-                tb_location.Text = Regex.Replace(Llocation, @"[A-Za-z\s]", "%") + "%";
-            }
             //
             lPartmode = partmode;
             //
@@ -78,62 +70,35 @@ namespace EQUIToolsLib
             //
             if (lPartmode)
             {
-                this.Text = string.Format("Maximo Wo browser: 'Parts used on location' <{0}>", Llocation);
+                this.Text = string.Format("Maximo Wo browser: 'Parts used'");
             }
             else
             {
-                this.Text = string.Format("Maximo Wo browser: 'Workorders on location' <{0}>", Llocation);
+                this.Text = string.Format("Maximo Wo browser: 'Workorders'");
             }
         }
 
-        #region backgroundworkers
         void bwWorkorders_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            //string ancestor = (from a in tableFromMx7.AsEnumerable() select a.Field<string>("ANCESTOR")).FirstOrDefault();
+            //
             dataGridView1.DataSource = tableFromMx7;
-            //by default filer out worktype PP & WSCH
             apply_filter();
             //
             metroProgressSpinner1.Hide();
-            btn_refresh.Enabled = true;
-            cb_preventive.Enabled = true;
-            if ((!String.IsNullOrEmpty(Llocation) && Char.IsLetter(Llocation[0])))
-            {
-                cb_ciblings.Enabled = false;
-            }
-            else
-            {
-                cb_ciblings.Enabled = true;
-            }
-
         }
-
 
         void bwWorkorders_DoWork(object sender, DoWorkEventArgs e)
         {
             getMaximoWorkorder(tb_location.Text, lPartmode);
         }
 
-        void bwLongDescription_DoWork(object sender, DoWorkEventArgs e)
-        {
-            webBrowser1.DocumentText = "Getting data....";
-            foreach (DataGridViewRow row in dataGridView1.SelectedRows)
-            {
-                if (row.Cells[0].Value != null)
-                {
-                    webBrowser1.DocumentText = lMaximocomm.getMaximoDetails(row.Cells[0].Value.ToString());
-                }
-            }
-        }
-        #endregion
-
         private void getMaximoWorkorder(string location, bool partmode)
         {
-            //get parent select parent from ( select * from maximo.LOCHIERARCHY where location like '%53110%' order by LOCHIERARCHY.LOCHIERARCHYID ) where rownum = 1;
-
             //get asset list from maximo M7 daily copy
             string strSqlGetFromMaximo = string.Format(@"
-SELECT 
- TO_NUMBER(WORKORDER.WONUM) WONUM
+select 
+ WORKORDER.WONUM WONUM
 ,WORKORDER.STATUS
 ,WORKORDER.STATUSDATE
 ,WORKORDER.WORKTYPE
@@ -141,10 +106,24 @@ SELECT
 ,WORKORDER.LOCATION
 ,WORKORDER.REPORTEDBY
 ,WORKORDER.REPORTDATE
-FROM MAXIMO.WORKORDER WORKORDER  
-WHERE WORKORDER.LOCATION LIKE '{0}'
+,locancestor.ANCESTOR
+from MAXIMO.WORKORDER WORKORDER
+join MAXIMO.locancestor locancestor on 
+locancestor.LOCATION = WORKORDER.LOCATION
+and 
+locancestor.ORGID = 'VCCBE'
+and 
+locancestor.ANCESTOR = 
+(
+select ancestor from (select locancestor.ancestor 
+from maximo.locancestor where locancestor.location like '{0}' 
+and locancestor.ORGID = 'VCCBE' 
+and locancestor.location <> locancestor.ancestor 
+order by locancestor.LOCANCESTORID)
+where rownum = 1
+)
 ORDER BY WORKORDER.STATUSDATE DESC
-            ",location);
+            ", location);
 
             string strSqlGetPartsMaximo = string.Format(@"
 
@@ -157,11 +136,28 @@ SELECT
 ,WPITEM.DESCRIPTION PARTDESCRIPTION
 ,WORKORDER.LOCATION
 ,WPITEM.REQUESTBY
+,locancestor.ANCESTOR
 FROM MAXIMO.WORKORDER WORKORDER  
 JOIN MAXIMO.WPITEM WPITEM ON WPITEM.WONUM = WORKORDER.WONUM
+join MAXIMO.locancestor locancestor on 
+locancestor.LOCATION = WORKORDER.LOCATION
+and 
+locancestor.ORGID = 'VCCBE'
+and 
+locancestor.ANCESTOR = 
+(
+select ancestor from (select locancestor.ancestor 
+from maximo.locancestor where locancestor.location like '{0}' 
+and locancestor.ORGID = 'VCCBE' 
+and locancestor.location <> locancestor.ancestor 
+order by locancestor.LOCANCESTORID)
+where rownum = 1
+)
+
 WHERE WORKORDER.LOCATION LIKE '{0}'
 ORDER BY WORKORDER.STATUSDATE
             ", location);
+
 
             if (partmode)
             {
@@ -177,11 +173,29 @@ ORDER BY WORKORDER.STATUSDATE
 #region wo details
         //wo details
         //8936762 ref wo 
+        void bwLongDescription_DoWork(object sender, DoWorkEventArgs e)
+        {
+            webBrowser1.DocumentText = lMaximocomm.StringToHTML_Table("Getting data....", "");
+            foreach (DataGridViewRow row in dataGridView1.SelectedRows)
+            {
+                if (row.Cells[0].Value != null)
+                {
+                    webBrowser1.DocumentText = lMaximocomm.getMaximoDetails(row.Cells[0].Value.ToString());
+                }
+            }
+        }
 
         private void dataGridView1_RowEnter(object sender, DataGridViewCellEventArgs e)
         {
-            if (bwLongDescription.IsBusy) { return; }
-            bwLongDescription.RunWorkerAsync();
+            if (!bwLongDescription.IsBusy)
+            {
+                bwLongDescription.RunWorkerAsync();
+            }
+        }
+
+        private void dataGridView1_RowLeave(object sender, DataGridViewCellEventArgs e)
+        {
+            webBrowser1.DocumentText = lMaximocomm.StringToHTML_Table("....","");
         }
         //
 #endregion
@@ -189,70 +203,57 @@ ORDER BY WORKORDER.STATUSDATE
 #region event calls 
         private void btn_refresh_Click(object sender, EventArgs e)
         {
-            btn_refresh.Enabled = false;
-            cb_preventive.Enabled = false;
-            cb_ciblings.Enabled = false;
+            this.Enabled = false;
             metroProgressSpinner1.Show();
             //store original query location
-            Llocation = tb_location.Text;
-            ////because of GB locations issue
-            if ((!String.IsNullOrEmpty(Llocation) && Char.IsLetter(Llocation[0])))
-            {
-                tb_location.Text = Llocation;
-            }
-            else
-            {
-                tb_location.Text = Regex.Replace(Llocation, @"[A-Za-z\s]", "%") + "%"; 
-            }
+            Llocation = tb_location.Text; //schould store the ancestor 
+            tb_location.Text = Llocation;
             //
             getMaximoWorkorder(tb_location.Text, lPartmode);
             dataGridView1.DataSource = tableFromMx7;
             //
-            cb_ciblings.Checked = false;
-            cb_preventive.Checked = false;
             apply_filter();
             //
             metroProgressSpinner1.Hide();
-            btn_refresh.Enabled = true;
-            cb_preventive.Enabled = true;
-            ////because of GB locations issue
-            if ((!String.IsNullOrEmpty(Llocation) && Char.IsLetter(Llocation[0])))
-            {
-                cb_ciblings.Enabled = false;
-            }
-            else
-            {
-                cb_ciblings.Enabled = true;
-            }
-
+            this.Enabled = true;
+            //
         }
 
         private void apply_filter()
         {
-            if (cb_ciblings.Checked)
+            StringBuilder sb = new StringBuilder();
+            sb.Append("");
+            //set up filter for worktype
+            if (tableFromMx7.Columns.Contains("WORKTYPE"))
             {
-                if (cb_preventive.Checked)
+                if (!cb_preventive.Checked)
                 {
-                    tableFromMx7.DefaultView.RowFilter = ""; //all assets with preventive
+                    sb.Append("WORKTYPE not in('PP','PCI','WSCH')");
                 }
-                else
-                {
-                    tableFromMx7.DefaultView.RowFilter = "WORKTYPE not in('PP','PCI','WSCH')"; //all assets no preventive
-                }
-                tb_location.Text = Regex.Replace(Llocation, @"[A-Za-z\s]", "%") + "%";
+                cb_preventive.Enabled = true;
             }
             else
             {
-                if (cb_preventive.Checked)
-                {
-                    tableFromMx7.DefaultView.RowFilter = string.Format("LOCATION = '{0}'", Llocation); //only target asset with preventive
-                }
-                else
-                {
-                    tableFromMx7.DefaultView.RowFilter = string.Format("LOCATION = '{0}' AND WORKTYPE not in('PP','PCI','WSCH') ", Llocation); //only target asset no preventive
-                }
-                tb_location.Text = Llocation;
+                cb_preventive.Enabled = false;
             }
+
+            //set up filter for ancestor 
+            if (tableFromMx7.Columns.Contains("LOCATION"))
+            {
+                if (!cb_ciblings.Checked)
+                {
+                    if(sb.Length > 0){ sb.Append(" AND ");}
+                    sb.Append(string.Format("LOCATION = '{0}'", Llocation));
+                }
+                cb_ciblings.Enabled = true;
+            }
+            else
+            {
+                cb_ciblings.Enabled = false;
+            }
+            //
+            tableFromMx7.DefaultView.RowFilter = sb.ToString();
+            //
         }
 
         private void cb_ciblings_CheckedChanged(object sender, EventArgs e)
@@ -266,5 +267,6 @@ ORDER BY WORKORDER.STATUSDATE
 
         }
  #endregion
+
     }
 }

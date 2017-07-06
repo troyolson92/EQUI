@@ -69,14 +69,17 @@
             this.dataGridView1.ShowEditingIcon = false;
             this.dataGridView1.Size = new System.Drawing.Size(1271, 242);
             this.dataGridView1.TabIndex = 6;
+            this.dataGridView1.RowLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_RowLeave);
             // 
             // btn_refresh
             // 
-            this.btn_refresh.Location = new System.Drawing.Point(1200, 55);
+            this.btn_refresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btn_refresh.Location = new System.Drawing.Point(1185, 3);
             this.btn_refresh.Name = "btn_refresh";
             this.btn_refresh.Size = new System.Drawing.Size(75, 23);
             this.btn_refresh.TabIndex = 7;
             this.btn_refresh.Text = "Refresh";
+            this.btn_refresh.UseSelectable = true;
             this.btn_refresh.Click += new System.EventHandler(this.btn_refresh_Click);
             // 
             // cb_ciblings
@@ -87,7 +90,7 @@
             this.cb_ciblings.Size = new System.Drawing.Size(113, 17);
             this.cb_ciblings.TabIndex = 8;
             this.cb_ciblings.Text = "include ciblings";
-          //  this.cb_ciblings.UseVisualStyleBackColor = true;
+            this.cb_ciblings.UseSelectable = true;
             this.cb_ciblings.CheckedChanged += new System.EventHandler(this.cb_ciblings_CheckedChanged);
             // 
             // cb_preventive
@@ -98,7 +101,7 @@
             this.cb_preventive.Size = new System.Drawing.Size(223, 17);
             this.cb_preventive.TabIndex = 9;
             this.cb_preventive.Text = "include PP, PCI, WSCH (preventive)";
-           // this.cb_preventive.UseVisualStyleBackColor = true;
+            this.cb_preventive.UseSelectable = true;
             this.cb_preventive.CheckedChanged += new System.EventHandler(this.cb_preventive_CheckedChanged);
             // 
             // metroLabel1
@@ -112,12 +115,36 @@
             // 
             // tb_location
             // 
+            // 
+            // 
+            // 
+            this.tb_location.CustomButton.Image = null;
+            this.tb_location.CustomButton.Location = new System.Drawing.Point(160, 1);
+            this.tb_location.CustomButton.Name = "";
+            this.tb_location.CustomButton.Size = new System.Drawing.Size(21, 21);
+            this.tb_location.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.tb_location.CustomButton.TabIndex = 1;
+            this.tb_location.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.tb_location.CustomButton.UseSelectable = true;
+            this.tb_location.CustomButton.Visible = false;
+            this.tb_location.Lines = new string[] {
+        "metroTextBox1"};
             this.tb_location.Location = new System.Drawing.Point(73, 3);
+            this.tb_location.MaxLength = 32767;
             this.tb_location.Name = "tb_location";
+            this.tb_location.PasswordChar = '\0';
+            this.tb_location.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.tb_location.SelectedText = "";
+            this.tb_location.SelectionLength = 0;
+            this.tb_location.SelectionStart = 0;
+            this.tb_location.ShortcutsEnabled = true;
             this.tb_location.Size = new System.Drawing.Size(182, 23);
             this.tb_location.TabIndex = 11;
             this.tb_location.Text = "metroTextBox1";
             this.tb_location.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.tb_location.UseSelectable = true;
+            this.tb_location.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.tb_location.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
             // 
             // metroProgressSpinner1
             // 
@@ -128,24 +155,29 @@
             this.metroProgressSpinner1.Name = "metroProgressSpinner1";
             this.metroProgressSpinner1.Size = new System.Drawing.Size(188, 183);
             this.metroProgressSpinner1.TabIndex = 12;
+            this.metroProgressSpinner1.UseSelectable = true;
             // 
             // tableLayoutPanel1
             // 
-            this.tableLayoutPanel1.ColumnCount = 5;
+            this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel1.ColumnCount = 6;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 60F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Controls.Add(this.cb_ciblings, 3, 0);
             this.tableLayoutPanel1.Controls.Add(this.metroLabel1, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.btn_refresh, 5, 0);
             this.tableLayoutPanel1.Controls.Add(this.tb_location, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.cb_preventive, 4, 0);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(23, 63);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(971, 38);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1263, 38);
             this.tableLayoutPanel1.TabIndex = 13;
             // 
             // MXxWOoverview
@@ -155,7 +187,6 @@
             this.ClientSize = new System.Drawing.Size(1298, 689);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.metroProgressSpinner1);
-            this.Controls.Add(this.btn_refresh);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.webBrowser1);
             this.MinimumSize = new System.Drawing.Size(706, 689);
