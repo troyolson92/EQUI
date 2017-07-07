@@ -35,7 +35,8 @@ namespace EQUIToolsLib
             chart1.Series["ErrorCount"].XValueMember = "starttime";
             chart1.Series["ErrorCount"].YValueMembers = "count";
             chart1.Series["ErrorCount"].ChartType = SeriesChartType.Column;
-            chart1.Series[0].XValueType = ChartValueType.DateTime;
+            chart1.Series["ErrorCount"]["PixelPointWidth"] = "15"; //makes the with of the bars stable
+            chart1.Series["ErrorCount"].XValueType = ChartValueType.DateTime;
             chart1.ChartAreas[0].AxisX.Interval = 1;
             chart1.FormatNumber += chart1_FormatNumber;
             //query all instances of the error 
@@ -188,7 +189,6 @@ END
                     chart1.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatHour"; 
                     chart1.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Hours;
                     chart1.ChartAreas[0].AxisX.IntervalOffset = 1;
-                    chart1.Series["ErrorCount"].BorderWidth = 8;
                     label1.Text = string.Format("First error: {0} ", FirstError);
                     label2.Text = string.Format("'Now'  DisplayMode:{0}", "GroupHourmode");
                     chart1.DataManipulator.Group("SUM", 1, IntervalType.Hours, "ErrorCount");
@@ -198,7 +198,6 @@ END
                     chart1.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatDay"; 
                     chart1.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Days;
                     chart1.ChartAreas[0].AxisX.IntervalOffset = 1;
-                    chart1.Series["ErrorCount"].BorderWidth = 6;
                     label1.Text = string.Format("First error: {0} ", FirstError);
                     label2.Text = string.Format("'Now'  DisplayMode:{0}", "GroupDaymode");
                     chart1.DataManipulator.Group("SUM", 1, IntervalType.Days, "ErrorCount");
@@ -208,7 +207,6 @@ END
                     chart1.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatWeek"; 
                     chart1.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Weeks;
                     chart1.ChartAreas[0].AxisX.IntervalOffset = 1;
-                    chart1.Series["ErrorCount"].BorderWidth = 4;
                     label1.Text = string.Format("First error: {0} ", FirstError);
                     label2.Text = string.Format("'Now'  DisplayMode:{0}", "GroupWeekmode");
                     chart1.DataManipulator.Group("SUM", 1, IntervalType.Weeks, "ErrorCount");
