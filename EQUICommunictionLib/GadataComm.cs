@@ -36,12 +36,12 @@ namespace EQUICommunictionLib
 
         public void BulkCopyToGadata(string as_schema, DataTable adt_table, string as_destination)
         {
-            {          
-                using (Gadataconn)
+            {
+                using (GadataconnAdmin)
                 {
-                    Gadataconn.Open();
+                    GadataconnAdmin.Open();
                     // there is no need to map columns.  
-                    using (SqlBulkCopy bulkCopy = new SqlBulkCopy(Gadataconn))
+                    using (SqlBulkCopy bulkCopy = new SqlBulkCopy(GadataconnAdmin))
                     {
                         bulkCopy.DestinationTableName = "[" + as_schema + "].[" + as_destination + "]";
                         try
@@ -54,8 +54,7 @@ namespace EQUICommunictionLib
                            Debugger.Exeption(ex);
                         }
                     }
-                    Gadataconn.Close();
-                    Gadataconn.Dispose();
+                    GadataconnAdmin.Close();
                 }
             }
         }
