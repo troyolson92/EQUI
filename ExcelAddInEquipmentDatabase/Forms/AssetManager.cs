@@ -162,6 +162,8 @@ namespace ExcelAddInEquipmentDatabase
            lGadataComm.RunCommandGadata(CmdDeleteTableData,true);
            //send the data to the SQL GADATA SERVER 
            lGadataComm.BulkCopyToGadata("Equi", tableFromMx7, "ASSETS_fromMX7");
+           //
+           dataGridView1.DataSource = tableFromMx7;
         }
 
         private void Assets_from_mx7_TO_Assets()

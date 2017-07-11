@@ -116,10 +116,12 @@ namespace ExcelAddInEquipmentDatabase
         else if (Properties.Settings.Default.userlevel >= 10) // power user
         {
             dd_User.Enabled = false;
+            btn_ConnectionManager.Enabled = true;
             btn_AssetManager.Enabled = false;
             btn_docMngr.Enabled = false;
-            btn_sync_mx7.Enabled = false;
-            sync_stw040.Enabled = false;
+            btn_ErrorMngr.Enabled = true;
+            btn_sync_mx7.Enabled = true;
+            sync_stw040.Enabled = true;
             btn_testUpdate.Enabled = false;
         }
         else
