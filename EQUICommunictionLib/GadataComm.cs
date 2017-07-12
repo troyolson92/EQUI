@@ -16,11 +16,11 @@ namespace EQUICommunictionLib
         myDebugger Debugger = new myDebugger();
         //connection to GADATA
         SqlConnection Gadataconn = new SqlConnection("user id=EqUi; password=EqUi; server=SQLA001.gen.volvocars.net;" +
-                                                      "Trusted_Connection=no; database=gadata; connection timeout=30");
+                                                      "Trusted_Connection=no; database=gadata; connection timeout=15");
 
         //conntion to GADATA admin
         SqlConnection GadataconnAdmin = new SqlConnection("user id=GADATA; password=GADATA987; server=SQLA001.gen.volvocars.net;" +
-                                                      "Trusted_Connection=no; database=gadata; connection timeout=60");
+                                                      "Trusted_Connection=no; database=gadata; connection timeout=15");
 
         public string DsnGADATA { get { return "GADATA"; } }
 
@@ -80,8 +80,8 @@ namespace EQUICommunictionLib
             {
                 using (SqlCommand myCommand = new SqlCommand(as_command, lconn))
                 {
+                    myCommand.CommandTimeout = 300;
                     myCommand.ExecuteNonQuery();
-                    Object returnValue = myCommand.ExecuteScalar();
                     try
                     {
                         lconn.Close();
