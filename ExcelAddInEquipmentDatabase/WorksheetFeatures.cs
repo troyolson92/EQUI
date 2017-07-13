@@ -345,13 +345,13 @@ this shift will be out of all OEE calculations!", "Confirmation", MessageBoxButt
 
         void btnShowWorkorderHistoryClick(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)
         {
-            MXxWOoverview lMXxWOoverview = new MXxWOoverview(location,false); //allow multible instances of the form.
+            MXxWOoverview lMXxWOoverview = new MXxWOoverview(location,"vm_workordersOnLocation"); //allow multible instances of the form.
             lMXxWOoverview.Show();
         }
 
         void btnShowPartsWorkorderClick(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)
         {
-            MXxWOoverview lMXxWOoverview = new MXxWOoverview(location,true); //allow multible instances of the form.
+            MXxWOoverview lMXxWOoverview = new MXxWOoverview(location,"vm_PartsOnLocation"); //allow multible instances of the form.
             lMXxWOoverview.Show();
         }
 
