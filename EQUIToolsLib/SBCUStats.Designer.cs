@@ -84,6 +84,7 @@
             this.cb_sortmode.Name = "cb_sortmode";
             this.cb_sortmode.Size = new System.Drawing.Size(121, 30);
             this.cb_sortmode.TabIndex = 9;
+            this.cb_sortmode.UseSelectable = true;
             // 
             // metroLabel1
             // 
@@ -138,6 +139,7 @@
             this.btn_dataview.Size = new System.Drawing.Size(23, 19);
             this.btn_dataview.TabIndex = 16;
             this.btn_dataview.Text = "+";
+            this.btn_dataview.UseSelectable = true;
             this.btn_dataview.Click += new System.EventHandler(this.btn_dataview_Click);
             // 
             // chart4
@@ -196,6 +198,7 @@
             this.cb_weldguns.Name = "cb_weldguns";
             this.cb_weldguns.Size = new System.Drawing.Size(161, 30);
             this.cb_weldguns.TabIndex = 21;
+            this.cb_weldguns.UseSelectable = true;
             this.cb_weldguns.DropDown += new System.EventHandler(this.cb_weldguns_DropDown);
             this.cb_weldguns.DropDownClosed += new System.EventHandler(this.cb_weldguns_DropDownClosed);
             // 
@@ -232,6 +235,7 @@
             this.metroProgressSpinner1.Name = "metroProgressSpinner1";
             this.metroProgressSpinner1.Size = new System.Drawing.Size(161, 110);
             this.metroProgressSpinner1.TabIndex = 24;
+            this.metroProgressSpinner1.UseSelectable = true;
             this.metroProgressSpinner1.Visible = false;
             // 
             // SBCUStats
@@ -250,6 +254,7 @@
             this.Controls.Add(this.trackBar1);
             this.MinimumSize = new System.Drawing.Size(1351, 469);
             this.Name = "SBCUStats";
+            this.Style = MetroFramework.MetroColorStyle.Green;
             this.Text = "WeldGun data for Location:";
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart3)).EndInit();

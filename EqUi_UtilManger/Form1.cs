@@ -28,12 +28,12 @@ namespace EqUi_UtilManger
 
         private void btn_ErrorStats_Click(object sender, EventArgs e)
         {
-            ErrorStats lErrorStats = new ErrorStats("", "0", ""); // does not have standalone yet!
+            ErrorStats lErrorStats = new ErrorStats("","", "0", ""); // does not have standalone yet!
         }
 
         private void btn_logDetails_Click(object sender, EventArgs e)
         {
-            LogDetails lLogDetails = new LogDetails("", "", 0); //does not have standalone yet!
+            LogDetails lLogDetails = new LogDetails("","", "", 0); //does not have standalone yet!
         }
 
         private void Btn_MXxWoOverview_Click(object sender, EventArgs e)

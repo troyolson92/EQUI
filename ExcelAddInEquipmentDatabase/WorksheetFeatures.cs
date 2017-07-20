@@ -52,30 +52,30 @@ namespace ExcelAddInEquipmentDatabase
                 foreach (Excel.ListColumn oListColum in oListobject.ListColumns)
                 {
                  //Debug.WriteLine("ListColum: {0} Column: {1}", oListColum.Name, oListColum.Range.Column);
-                    switch (oListColum.Name)
+                    switch (oListColum.Name.ToLower())
                       {
-                          case "WONUM":
+                          case "wonum":
                               wonum = (string)Convert.ToString(lClickedSheet.Cells[Target.Row, oListColum.Range.Column].Value);
                               break;
-                          case "Logcode":
+                          case "logcode":
                               errornum = (string)Convert.ToString(lClickedSheet.Cells[Target.Row, oListColum.Range.Column].Value);
                               break;
-                        case "Location":
+                        case "location":
                               location = (string)Convert.ToString(lClickedSheet.Cells[Target.Row, oListColum.Range.Column].Value);
                               break;
-                       case "Assetnum":
+                       case "assetnum":
                               assetnum = (string)Convert.ToString(lClickedSheet.Cells[Target.Row, oListColum.Range.Column].Value);
                               break;
-                        case "Logtype":
+                        case "logtype":
                               Logtype = (string)Convert.ToString(lClickedSheet.Cells[Target.Row, oListColum.Range.Column].Value);
                               break;
-                        case "refId":
+                        case "refid":
                               refid = (int)Convert.ToInt32(lClickedSheet.Cells[Target.Row, oListColum.Range.Column].Value);
                               break;
                         case "logtext":
                               LogText = (string)Convert.ToString(lClickedSheet.Cells[Target.Row, oListColum.Range.Column].Value);
                               break;
-                        case "Downtime":
+                        case "downtime":
                               downtime = (int)Convert.ToInt32(lClickedSheet.Cells[Target.Row, oListColum.Range.Column].Value);
                               break;
                           default:
@@ -92,7 +92,7 @@ namespace ExcelAddInEquipmentDatabase
                 btn = AddButtonToTableMenuItem("WorkorderDetails", 1, 487); //if we have a wonum enable wo details
                 btn.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(WorkorderDetailsMenuItemClick);
             }
-            if (errornum != "" && (Logtype == "BREAKDOWN" || Logtype == "ERROR" || Logtype == "WARNING"))
+            if (errornum != "" && (Logtype == "BREAKDOWN" || Logtype == "ERROR" || Logtype == "WARNING" || Logtype == "ControllerEvent" || Logtype == "ErrDispLog"))
             {
                 btn = AddButtonToTableMenuItem("ErrorDetails", 1, 463); //if we have a logcode enabel errordetails
                 btn.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(ErrorDetailsMenuItemClick);
@@ -266,13 +266,13 @@ namespace ExcelAddInEquipmentDatabase
         //**********************************Error details*********************************************
         void ErrorDetailsMenuItemClick(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)
         {
-            LogDetails lLogDetails = new LogDetails(location, errornum,refid); //allow multible instances of the form.
+            LogDetails lLogDetails = new LogDetails(location, Logtype, errornum,refid); //allow multible instances of the form.
             lLogDetails.Show();
         }
         //**********************************Error Stats*********************************************
         void ErrorStatsMenuItemClick(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)
         {
-            ErrorStats lErrorStats = new ErrorStats(location, errornum, LogText); //allow multible instances of the form.
+            ErrorStats lErrorStats = new ErrorStats(location, Logtype, errornum, LogText); //allow multible instances of the form.
         }
         //**********************************SBCU Stats*********************************************
         void SBCUStatsMenuItemClick(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)

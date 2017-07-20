@@ -18,14 +18,16 @@ namespace EQUIToolsLib
         DataTable dt;
         BackgroundWorker bw = new BackgroundWorker();
         MaximoComm lMaximoComm = new MaximoComm();
+        string slogtype = "";
 
-        public LogDetails(string Location, string Errornum, int RefId)
+        public LogDetails(string Location, string LogType, string Errornum, int RefId)
         {
             InitializeComponent();
                         bw.DoWork += bw_DoWork;
             bw.RunWorkerCompleted += bw_RunWorkerCompleted;
             this.Text = string.Format("Errornum: {0}", Errornum);
-            
+            slogtype = LogType;
+
             if (Errornum != null)
             {
                 tb_errorId.Text = Errornum;
@@ -69,6 +71,7 @@ namespace EQUIToolsLib
 DECLARE @Location as varchar(max) = '{0}'
 DECLARE @ERRORNUM as int = {1} 
 DECLARE @Refid as int = {2}
+DECLARE @logtype as varchar(max) = '{3}'
 DECLARE @controllerTYPE as varchar(10) = (select top 1 controller_type from gadata.equi.ASSETS where RTRIM(location) = @Location)
 --voor c3g
 if @controllerTYPE = 'c3g'
@@ -105,7 +108,34 @@ left join GADATA.ABB.L_Remedy as R on R.id = h.remedy_id
 left join GADATA.ABB.L_error as l on l.id = h.error_id
 WHERE h.id = @Refid
 END
-", tb_location.Text, tb_errorId.Text, tb_refid.Text);
+
+--voor NGAC
+if @controllerTYPE = 'NGAC' and @logtype = 'ControllerEvent'
+BEGIN
+select top 1 
+ le.Title
+,ld.Description
+,lco.Consequences
+,lca.Causes
+,lac.Actions
+from GADATA.NGAC.h_alarm as h 
+left join GADATA.NGAC.L_error as le on le._id = h.L_error_id
+left join GADATA.NGAC.L_description as ld on ld.id = le.l_description_id
+left join GADATA.NGAC.L_consequences as lco on lco.id = le.l_consequences_id
+left join GADATA.NGAC.L_causes as lca on lca.id = le.l_causes_id
+left join GADATA.NGAC.L_actions as lac on lac.id = le.l_actions_id
+WHERE h.id = @Refid
+END
+
+--voor NGAC
+if @controllerTYPE = 'NGAC' and @logtype = 'ErrDispLog'
+BEGIN
+select top 1 
+ h.FullLogtext
+from GADATA.NGAC.ErrDispLog as h 
+WHERE h.refId = @Refid
+END
+", tb_location.Text, tb_errorId.Text, tb_refid.Text, slogtype);
 
             //fill dataset
             dt = lGdataComm.RunQueryGadata(qry);
@@ -115,13 +145,15 @@ END
             string newline = "<p></p>";
             if (dt.Rows.Count != 0)
             {
-                sb.AppendLine(lMaximoComm.StringToHTML_Table("INFO", dt.Rows[0].Field<string>("INFO").ToString())).AppendLine(newline);
-                sb.AppendLine(lMaximoComm.StringToHTML_Table("Cause", dt.Rows[0].Field<string>("Cause").ToString())).AppendLine(newline);
-                sb.AppendLine(lMaximoComm.StringToHTML_Table("Remedy", dt.Rows[0].Field<string>("Remedy").ToString()));
+                DataRow myRow = dt.Rows[0];
+                foreach (DataColumn dc in myRow.Table.Columns)
+                {
+                    sb.AppendLine(lMaximoComm.StringToHTML_Table( dc.ColumnName,myRow.Field<string>(dc.ColumnName).ToString() )).AppendLine(newline);
+                }
             }
             else
             {
-                sb.AppendLine("No valid result from query");
+                sb.AppendLine("No valid result from query").AppendLine(newline);
             }
             webBrowser1.DocumentText = sb.ToString();
         }

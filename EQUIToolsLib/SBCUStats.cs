@@ -35,6 +35,8 @@ namespace EQUIToolsLib
         public SBCUStats(string Location)
         {
             InitializeComponent();
+            //
+            //
             cb_weldguns.Enabled = false;
             cb_weldguns.Items.Clear();
             cb_weldguns.Items.Insert(0, Location);

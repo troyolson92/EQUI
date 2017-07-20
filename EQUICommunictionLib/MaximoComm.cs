@@ -198,7 +198,13 @@ namespace EQUICommunictionLib
                 foreach (DataColumn c in dt.Columns)
                 {
                     builder.Append("<td align='left' valign='top'>");
-                    builder.Append(r[c.ColumnName]);
+                    //manipulate to change from asci carigage return to HTML break
+                    string message = r[c.ColumnName].ToString()
+                               .Replace(Environment.NewLine, "<br />")
+                               .Replace("\n", "<br />")
+                               .Replace("\r", "<br />");
+                    //
+                    builder.Append(message);
                     builder.Append("</td>");
                 }
                 builder.Append("</tr>");

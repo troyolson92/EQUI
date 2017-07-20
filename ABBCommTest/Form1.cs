@@ -38,13 +38,8 @@ namespace ABBCommTest
             //
             InitializeComponent();
             //get greenfield list from GADATA
-            dt_robots = lgadatacomm.RunQueryGadata(@"SELECT [Robotnaam]
-                                                      ,[IP address]
-                                                      ,[Subnetmask]
-                                                      ,[Default Gateway]
-                                                  FROM [GADATA].[dbo].[$GreenFieldRobots]
-where robotnaam like '99090%'");
-                                                   //  where CAST(SUBSTRING(robotnaam,0,4) as int) between 351 and 359");
+            dt_robots = lgadatacomm.RunQueryGadata(@"select * from gadata.ngac.c_controller where ip like '10.205%' and controller_name like '%99%'");
+                                                   //  where CAST(SUBSTRING(controller_name,0,4) as int) between 351 and 359");
             //add colums for extra data
             dt_robots.Columns.Add("SystemId", System.Type.GetType("System.String"));
             dt_robots.Columns.Add("Availability", System.Type.GetType("System.String"));
@@ -66,7 +61,7 @@ where robotnaam like '99090%'");
         {
             foreach (DataRow row in dt_robots.Rows)
             {
-                if (row.Field<string>("IP address").Trim() == controllerInfo.IPAddress.ToString().Trim())
+                if (row.Field<string>("IP") == controllerInfo.IPAddress.ToString())
                 {
                     row["SystemId"] = controllerInfo.SystemId;
                     row["Availability"] = controllerInfo.Availability.ToString();
@@ -87,12 +82,13 @@ where robotnaam like '99090%'");
                 try
                 {
                     ipAddress = System.Net.IPAddress.Parse(Ip);
+                    
                     NetworkScanner.AddRemoteController(ipAddress);
                 }
                 catch (FormatException ex)
                 {
                     debugger.Exeption(ex);
-                    debugger.Message("Wrong IP address format");
+                   // debugger.Message("Wrong IP format");
                 }
 
                 this.scanner.Scan();
@@ -145,15 +141,15 @@ COM_APP:
             string NFSFilePathOnControler = @"/hd0a/Param/";
             string NFSFilename = "NFS.CFG";
 
-            string robotnaam = row.Cells[dataGridView1.Columns["Robotnaam"].Index].Value.ToString();
-            string userID = "0"; //0 = root // row.Cells[dataGridView1.Columns["Robotnaam"].Index].Value.ToString();
-            string GroupID = "1"; //1 = root  row.Cells[dataGridView1.Columns["Robotnaam"].Index].Value.ToString();
+            string controller_name = row.Cells[dataGridView1.Columns["controller_name"].Index].Value.ToString();
+            string userID = "0"; //0 = root // row.Cells[dataGridView1.Columns["controller_name"].Index].Value.ToString();
+            string GroupID = "1"; //1 = root  row.Cells[dataGridView1.Columns["controller_name"].Index].Value.ToString();
             try
             {
                 //check file does not exist on local machine
                 if (File.Exists(tempdir+NFSFilename)) { File.Delete(tempdir+NFSFilename); }
                 //build config file on local machine 
-                File.WriteAllText(tempdir + NFSFilename, makeNFSConfig(robotnaam, userID, GroupID, @"/ROBOTBCK/robot_ga/IRC5-NGAC/", @"/ROBOTBCK/IRC5-NGAC/IRC5-NGAC_SHARE/"));
+                File.WriteAllText(tempdir + NFSFilename, makeNFSConfig(controller_name, userID, GroupID, @"/ROBOTBCK/robot_ga/IRC5-NGAC/", @"/ROBOTBCK/IRC5-NGAC/IRC5-NGAC_SHARE/"));
             }
             catch (Exception ex)
             {
@@ -255,7 +251,39 @@ COM_APP:
              }
         }
 
-        //bottons
+        //check motionSub
+        private bool checkMotionSubconfig(ControllerInfo ci, DataGridViewRow row)
+        {
+            this.controller = ControllerFactory.CreateFrom(ci);
+            this.controller.Logon(UserInfo.DefaultUser);
+
+            ConfigurationDatabase cfg = controller.Configuration;
+            Domain sioDomain = controller.Configuration.SerialIO;
+            Domain mocDomain = controller.Configuration.MotionControl;
+
+            // read parm to see if config was done
+            string[] path = { "MOC", "MOTION_SUP", "rob1", "path_col_detect_on" };
+            string datapath = null;
+            try { datapath = cfg.Read(path); }
+            catch (Exception) { }
+            //
+            string[] jog = { "MOC", "MOTION_SUP", "rob1", "jog_col_detect_on" };
+            string dataJog = null;
+            try { dataJog = cfg.Read(jog); }
+            catch (Exception) { }
+
+
+            if (datapath == "TRUE" && dataJog == "TRUE")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        //buttons
         private void btn_scanNetwork_Click(object sender, EventArgs e)
         {
             handleScanner();
@@ -266,9 +294,9 @@ COM_APP:
             {
                 //make sure dir exists for robot.
                 string rootDir = @"\\gnlsnm0101\6308-APP-NASROBOTBCK0001\robot_ga\IRC5-NGAC\";
-                if (!Directory.Exists(rootDir + row.Cells[dataGridView1.Columns["Robotnaam"].Index].Value.ToString()))
+                if (!Directory.Exists(rootDir + row.Cells[dataGridView1.Columns["controller_name"].Index].Value.ToString()))
                 {
-                    Directory.CreateDirectory(rootDir + row.Cells[dataGridView1.Columns["Robotnaam"].Index].Value.ToString());
+                    Directory.CreateDirectory(rootDir + row.Cells[dataGridView1.Columns["controller_name"].Index].Value.ToString());
                 }
                
                 ControllerInfo ci;
@@ -306,7 +334,7 @@ COM_APP:
         {
             foreach (DataRow row in dt_robots.Rows)
             {
-                addRobotByIp(row.Field<string>("IP address").Trim());
+                addRobotByIp(row.Field<string>("IP"));
 
             }
             debugger.Message("done with expose");
@@ -487,6 +515,52 @@ COM_APP:
             xmlDoc.Save(file);
         }
 
+
+        //check of safemove config. Based on offline files from backups
+        private void checkSafeMove()
+        {
+    
+
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+                foreach (DataGridViewRow row in dataGridView1.SelectedRows)
+                {
+                    try
+                    { 
+                    ControllerInfo ci;
+                    if (scanner.TryFind(new Guid(row.Cells[dataGridView1.Columns["SystemId"].Index].Value.ToString()), out ci))
+                    {
+                        this.controller = ControllerFactory.CreateFrom(ci);
+                        this.controller.Logon(UserInfo.DefaultUser);
+
+                        if (checkMotionSubconfig(ci, row))
+                        {
+                            row.Cells[dataGridView1.Columns["ConfIsOK"].Index].Value = "OK";
+                        }
+                        else
+                        {
+                            row.Cells[dataGridView1.Columns["ConfIsOK"].Index].Value = "NOK";
+                        }
+
+                    }
+                    else
+                    {
+                        debugger.Message("can not find controller: " + row.Cells[0].Value.ToString());
+                    }
+                    }           
+                    catch (Exception ex)
+            {
+
+            }
+
+
+                }
+            
+            debugger.Message("done with controllers");
+        }
 
     }
 

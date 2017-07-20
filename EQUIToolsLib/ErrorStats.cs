@@ -20,7 +20,7 @@ namespace EQUIToolsLib
         GadataComm lGdataComm = new GadataComm();
         DataTable dt;
 
-        public ErrorStats(string Location, string Errornum, string logtekst)
+        public ErrorStats(string Location, string Logtype, string Errornum, string logtekst)
         {
             InitializeComponent();
             this.Text = string.Format("ErrorStats tool Errornum: {0} <{2}> Location: {1}", Errornum,Location,logtekst.Trim());
@@ -45,6 +45,7 @@ namespace EQUIToolsLib
 DECLARE @Location as varchar(max) = '{0}'
 DECLARE @ERRORNUM as int = {1} -- why not use the index of the l_error ? might be smarter 
 DECLARE @Logtext as varchar(max) = '{2}'
+DECLARE @logType as varchar(max) = '{3}'
 DECLARE @controllerID as int = (select top 1 controller_id from gadata.equi.ASSETS where RTRIM(location) = @Location)
 DECLARE @controllerTYPE as varchar(10) = (select top 1 controller_type from gadata.equi.ASSETS where RTRIM(location) = @Location)
 
@@ -90,7 +91,49 @@ SELECT
 , 0 as 'count'
 order by ISNULL(H._timestamp, H.wd_timestamp) ASC
 END
-", Location, Errornum, logtekst);
+
+if @controllerTYPE = 'NGAC' AND @logType = 'ControllerEvent'
+BEGIN
+	SELECT
+	  h.[timestamp]  as 'starttime'
+	, 1 as 'count'
+	FROM gadata.NGAC.ControllerEventLog as h 
+	WHERE 
+	h.controller_name = @Location
+	AND
+	h.Logcode = @ERRORNUM
+	AND
+	h.Logtext = @Logtext
+	AND 
+	h.[timestamp] < getdate()
+	UNION
+	SELECT 
+	  getdate() as 'starttime'
+	, 0 as 'count'
+	order by h.[timestamp] ASC
+END
+
+if @controllerTYPE = 'NGAC' AND @logType = 'ErrDispLog'
+BEGIN
+	SELECT
+	  h.[timestamp]  as 'starttime'
+	, 1 as 'count'
+	FROM gadata.NGAC.ErrDispLog as h 
+	WHERE 
+	h.controller_name = @Location
+	AND
+	h.Logcode = @ERRORNUM
+	AND
+	h.Logtext = @Logtext
+	AND 
+	h.[timestamp] < getdate()
+	UNION
+	SELECT 
+	  getdate() as 'starttime'
+	, 0 as 'count'
+	order by h.[timestamp] ASC
+END
+", Location, Errornum, logtekst,Logtype);
             //fill dataset with all errors
             dt = lGdataComm.RunQueryGadata(qry);
             //check if the result was valid 
