@@ -171,6 +171,7 @@ namespace ExcelAddInEquipmentDatabase
          */ 
         private void Set_activeconnection()
         {
+           
             dd_connections_update();
             string worksheetconn = activeSheet_connection();
             foreach (RibbonDropDownItem item in dd_activeConnection.Items)
@@ -189,14 +190,27 @@ namespace ExcelAddInEquipmentDatabase
                 if (dd_activeConnection.SelectedItem.Label != "RefreshAll")
                 {
                     ProcMngr = new Forms.ProcedureManger(dd_activeConnection.SelectedItem.Label);
+                    //
+                    if (ProcedureMangerTaskPane != null) ProcedureMangerTaskPane.Dispose();
                     ProcedureMangerTaskPane = Globals.ThisAddIn.CustomTaskPanes.Add(ProcMngr, "ProcedureManger");
+                    ProcedureMangerTaskPane.Width = ProcMngr.MaxWith() + 50;
+                    ProcedureMangerTaskPane.DockPosition = Microsoft.Office.Core.MsoCTPDockPosition.msoCTPDockPositionLeft;
+                    ProcedureMangerTaskPane.Visible = btn_EditProcedure.Checked;
                 }
+                //event to reset button on taskpane close
+                ProcedureMangerTaskPane.VisibleChanged += ProcedureMangerTaskPane_VisibleChanged;
                 //event handeler for sheet Hide. (to trigger sync with ribbon)
                 ProcMngr.MouseLeave += ProcMngr_Deactivate;
                //loads the available parameters back into the ribbon
                 set_RibonToProcedureManager();
                //load parameter sets available on db 
                 dd_ParameterSets_update();
+        }
+
+        void ProcedureMangerTaskPane_VisibleChanged(object sender, EventArgs e)
+        {
+            Microsoft.Office.Tools.CustomTaskPane ltp = (Microsoft.Office.Tools.CustomTaskPane)sender;
+            btn_EditProcedure.Checked = ltp.Visible;
         }
 
         void ProcMngr_Deactivate(object sender, EventArgs e)
@@ -535,12 +549,11 @@ namespace ExcelAddInEquipmentDatabase
             if (dd_activeConnection.SelectedItem.Label == "RefreshAll") //this is not a connection to van not be edited
             { 
                Debugger.Message("Please select an other connection. 'RefreshAll' is not a connection");
+               btn_EditProcedure.Checked = false;
             }
             else
             {
-                ProcedureMangerTaskPane.Width = ProcMngr.MaxWith() + 50;
-                ProcedureMangerTaskPane.DockPosition = Microsoft.Office.Core.MsoCTPDockPosition.msoCTPDockPositionLeft;
-                ProcedureMangerTaskPane.Visible = true;
+                ProcedureMangerTaskPane.Visible = btn_EditProcedure.Checked;
             }
         }
         //refresh the active connection or refresh all connections if needed
