@@ -24,6 +24,7 @@ namespace EQUIToolsLib
         DataTable dt_SBCU;
         DataTable dt_Cylinder;
         DataTable dt_MidAir;
+        DataTable dt_DressData;
         //bw
         BackgroundWorker bw = new BackgroundWorker();
         //settings
@@ -68,118 +69,177 @@ namespace EQUIToolsLib
             cb_sortmode.Items.Insert(2, "Days");
             cb_sortmode.Items.Insert(3, "Weeks");
             cb_sortmode.SelectedIndex = 0; //default = no grouping 
-            //
+            //************************************************************************************
             //init chart long sbcu
-            chart1.Series.Add("LongSbcu");
-            chart1.Series["LongSbcu"].XValueMember = "tool_timestamp";
-            chart1.Series["LongSbcu"].YValueMembers = "LongDsetup";
-            chart1.Series["LongSbcu"].ChartType = SeriesChartType.Line;
-            chart1.Series["LongSbcu"].XValueType = ChartValueType.DateTime;
-            chart1.Series["LongSbcu"].BorderWidth = 3;
-            chart1.Series["LongSbcu"].Color = Color.Red;
-            chart1.Series["LongSbcu"].MarkerStyle = MarkerStyle.Circle;
-            chart1.Series["LongSbcu"].MarkerColor = Color.Red;
-            chart1.Series["LongSbcu"].MarkerSize = 8;
-            chart1.Series["LongSbcu"].EmptyPointStyle.Color = Color.Red;
-            chart1.Series["LongSbcu"].EmptyPointStyle.BorderWidth = 3;
-            chart1.Series["LongSbcu"].EmptyPointStyle.AxisLabel = "Empty";
+            //************************************************************************************
+            chart_sbcu.Series.Add("LongSbcu");
+            chart_sbcu.Series["LongSbcu"].XValueMember = "tool_timestamp";
+            chart_sbcu.Series["LongSbcu"].YValueMembers = "LongDsetup";
+            chart_sbcu.Series["LongSbcu"].ChartType = SeriesChartType.Line;
+            chart_sbcu.Series["LongSbcu"].XValueType = ChartValueType.DateTime;
+            chart_sbcu.Series["LongSbcu"].BorderWidth = 3;
+            chart_sbcu.Series["LongSbcu"].Color = Color.Red;
+            chart_sbcu.Series["LongSbcu"].MarkerStyle = MarkerStyle.Circle;
+            chart_sbcu.Series["LongSbcu"].MarkerColor = Color.Red;
+            chart_sbcu.Series["LongSbcu"].MarkerSize = 8;
+            chart_sbcu.Series["LongSbcu"].EmptyPointStyle.Color = Color.Red;
+            chart_sbcu.Series["LongSbcu"].EmptyPointStyle.BorderWidth = 3;
+            chart_sbcu.Series["LongSbcu"].EmptyPointStyle.AxisLabel = "Empty";
             //add series short sbcu
-            chart1.Series.Add("ShortSbcu");
-            chart1.Series["ShortSbcu"].XValueMember = "tool_timestamp";
-            chart1.Series["ShortSbcu"].YValueMembers = "ShortDsetup";
-            chart1.Series["ShortSbcu"].ChartType = SeriesChartType.Line;
-            chart1.Series["ShortSbcu"].XValueType = ChartValueType.DateTime;
-            chart1.Series["ShortSbcu"].BorderWidth = 3;
-            chart1.Series["ShortSbcu"].Color = Color.Blue;
-            chart1.Series["ShortSbcu"].MarkerStyle = MarkerStyle.Square;
-            chart1.Series["ShortSbcu"].MarkerColor = Color.Blue;
-            chart1.Series["ShortSbcu"].MarkerSize = 8;
-            chart1.Series["ShortSbcu"].EmptyPointStyle.Color = Color.Blue;
-            chart1.Series["ShortSbcu"].EmptyPointStyle.BorderWidth = 3;
-            chart1.Series["ShortSbcu"].EmptyPointStyle.AxisLabel = "Empty";
+            chart_sbcu.Series.Add("ShortSbcu");
+            chart_sbcu.Series["ShortSbcu"].XValueMember = "tool_timestamp";
+            chart_sbcu.Series["ShortSbcu"].YValueMembers = "ShortDsetup";
+            chart_sbcu.Series["ShortSbcu"].ChartType = SeriesChartType.Line;
+            chart_sbcu.Series["ShortSbcu"].XValueType = ChartValueType.DateTime;
+            chart_sbcu.Series["ShortSbcu"].BorderWidth = 3;
+            chart_sbcu.Series["ShortSbcu"].Color = Color.Blue;
+            chart_sbcu.Series["ShortSbcu"].MarkerStyle = MarkerStyle.Square;
+            chart_sbcu.Series["ShortSbcu"].MarkerColor = Color.Blue;
+            chart_sbcu.Series["ShortSbcu"].MarkerSize = 8;
+            chart_sbcu.Series["ShortSbcu"].EmptyPointStyle.Color = Color.Blue;
+            chart_sbcu.Series["ShortSbcu"].EmptyPointStyle.BorderWidth = 3;
+            chart_sbcu.Series["ShortSbcu"].EmptyPointStyle.AxisLabel = "Empty";
             //long UCL
-            chart1.Series.Add("LongUCL");
-            chart1.Series["LongUCL"].XValueMember = "tool_timestamp";
-            chart1.Series["LongUCL"].YValueMembers = "LongUCL";
-            chart1.Series["LongUCL"].ChartType = SeriesChartType.Line;
-            chart1.Series["LongUCL"].XValueType = ChartValueType.DateTime;
-            chart1.Series["LongUCL"].BorderWidth = 2;
-            chart1.Series["LongUCL"].Color = Color.Black;
-            chart1.Series["LongUCL"].EmptyPointStyle.Color = Color.Black;
-            chart1.Series["LongUCL"].EmptyPointStyle.BorderWidth = 2;
-            chart1.Series["LongUCL"].EmptyPointStyle.AxisLabel = "Empty";
+            chart_sbcu.Series.Add("LongUCL");
+            chart_sbcu.Series["LongUCL"].XValueMember = "tool_timestamp";
+            chart_sbcu.Series["LongUCL"].YValueMembers = "LongUCL";
+            chart_sbcu.Series["LongUCL"].ChartType = SeriesChartType.Line;
+            chart_sbcu.Series["LongUCL"].XValueType = ChartValueType.DateTime;
+            chart_sbcu.Series["LongUCL"].BorderWidth = 2;
+            chart_sbcu.Series["LongUCL"].Color = Color.Black;
+            chart_sbcu.Series["LongUCL"].EmptyPointStyle.Color = Color.Black;
+            chart_sbcu.Series["LongUCL"].EmptyPointStyle.BorderWidth = 2;
+            chart_sbcu.Series["LongUCL"].EmptyPointStyle.AxisLabel = "Empty";
             //long LCL
-            chart1.Series.Add("LongLCL");
-            chart1.Series["LongLCL"].XValueMember = "tool_timestamp";
-            chart1.Series["LongLCL"].YValueMembers = "LongLCL";
-            chart1.Series["LongLCL"].ChartType = SeriesChartType.Line;
-            chart1.Series["LongLCL"].XValueType = ChartValueType.DateTime;
-            chart1.Series["LongLCL"].BorderWidth = 2;
-            chart1.Series["LongLCL"].Color = Color.Black;
-            chart1.Series["LongLCL"].EmptyPointStyle.Color = Color.Black;
-            chart1.Series["LongLCL"].EmptyPointStyle.BorderWidth = 2;
-            chart1.Series["LongLCL"].EmptyPointStyle.AxisLabel = "Empty";
+            chart_sbcu.Series.Add("LongLCL");
+            chart_sbcu.Series["LongLCL"].XValueMember = "tool_timestamp";
+            chart_sbcu.Series["LongLCL"].YValueMembers = "LongLCL";
+            chart_sbcu.Series["LongLCL"].ChartType = SeriesChartType.Line;
+            chart_sbcu.Series["LongLCL"].XValueType = ChartValueType.DateTime;
+            chart_sbcu.Series["LongLCL"].BorderWidth = 2;
+            chart_sbcu.Series["LongLCL"].Color = Color.Black;
+            chart_sbcu.Series["LongLCL"].EmptyPointStyle.Color = Color.Black;
+            chart_sbcu.Series["LongLCL"].EmptyPointStyle.BorderWidth = 2;
+            chart_sbcu.Series["LongLCL"].EmptyPointStyle.AxisLabel = "Empty";
             //
-            chart1.ChartAreas[0].AxisX.Interval = 1;
-            chart1.ChartAreas[0].AxisX.LabelStyle.Enabled = false;
-            chart1.ChartAreas[0].AxisY.IsStartedFromZero = false;
-            chart1.FormatNumber += chart1_FormatNumber;
-            chart1.GetToolTipText += chart_GetToolTipText;
+            chart_sbcu.ChartAreas[0].AxisX.Interval = 1;
+            chart_sbcu.ChartAreas[0].AxisY.IsStartedFromZero = false;
+            chart_sbcu.FormatNumber += chart1_FormatNumber;
+            chart_sbcu.GetToolTipText += chart_GetToolTipText;
+            //************************************************************************************
             //init chart Cylinder
-            chart3.Series.Add("TotalTime");
-            chart3.Series["TotalTime"].XValueMember = "_timestamp";
-            chart3.Series["TotalTime"].YValueMembers = "TotalTime";
-            chart3.Series["TotalTime"].ChartType = SeriesChartType.Line;
-            chart3.Series["TotalTime"].XValueType = ChartValueType.DateTime;
-            chart3.Series["TotalTime"].BorderWidth = 3;
-            chart3.Series["TotalTime"].Color = System.Drawing.Color.Green;
-            chart3.Series["TotalTime"].MarkerStyle = MarkerStyle.Circle;
-            chart3.Series["TotalTime"].MarkerColor = Color.Green;
-            chart3.Series["TotalTime"].MarkerSize = 8;
+            //************************************************************************************
+            chart_cilinder.Series.Add("TotalTime");
+            chart_cilinder.Series["TotalTime"].XValueMember = "_timestamp";
+            chart_cilinder.Series["TotalTime"].YValueMembers = "TotalTime";
+            chart_cilinder.Series["TotalTime"].ChartType = SeriesChartType.Line;
+            chart_cilinder.Series["TotalTime"].XValueType = ChartValueType.DateTime;
+            chart_cilinder.Series["TotalTime"].BorderWidth = 3;
+            chart_cilinder.Series["TotalTime"].Color = System.Drawing.Color.Green;
+            chart_cilinder.Series["TotalTime"].MarkerStyle = MarkerStyle.Circle;
+            chart_cilinder.Series["TotalTime"].MarkerColor = Color.Green;
+            chart_cilinder.Series["TotalTime"].MarkerSize = 8;
             //add series for UCL
-            chart3.Series.Add("UCL");
-            chart3.Series["UCL"].XValueMember = "_timestamp";
-            chart3.Series["UCL"].YValueMembers = "UCL";
-            chart3.Series["UCL"].ChartType = SeriesChartType.Line;
-            chart3.Series["UCL"].XValueType = ChartValueType.DateTime;
-            chart3.Series["UCL"].BorderWidth = 2;
-            chart3.Series["UCL"].Color = System.Drawing.Color.Black;
+            chart_cilinder.Series.Add("UCL");
+            chart_cilinder.Series["UCL"].XValueMember = "_timestamp";
+            chart_cilinder.Series["UCL"].YValueMembers = "UCL";
+            chart_cilinder.Series["UCL"].ChartType = SeriesChartType.Line;
+            chart_cilinder.Series["UCL"].XValueType = ChartValueType.DateTime;
+            chart_cilinder.Series["UCL"].BorderWidth = 2;
+            chart_cilinder.Series["UCL"].Color = System.Drawing.Color.Black;
             //add series for LCL
-            chart3.Series.Add("LCL");
-            chart3.Series["LCL"].XValueMember = "_timestamp";
-            chart3.Series["LCL"].YValueMembers = "LCL";
-            chart3.Series["LCL"].ChartType = SeriesChartType.Line;
-            chart3.Series["LCL"].XValueType = ChartValueType.DateTime;
-            chart3.Series["LCL"].BorderWidth = 2;
-            chart3.Series["LCL"].Color = System.Drawing.Color.Black;
+            chart_cilinder.Series.Add("LCL");
+            chart_cilinder.Series["LCL"].XValueMember = "_timestamp";
+            chart_cilinder.Series["LCL"].YValueMembers = "LCL";
+            chart_cilinder.Series["LCL"].ChartType = SeriesChartType.Line;
+            chart_cilinder.Series["LCL"].XValueType = ChartValueType.DateTime;
+            chart_cilinder.Series["LCL"].BorderWidth = 2;
+            chart_cilinder.Series["LCL"].Color = System.Drawing.Color.Black;
             //
-            chart3.ChartAreas[0].AxisX.Interval = 1;
-            chart3.ChartAreas[0].AxisX.LabelStyle.Enabled = false;
-            chart3.ChartAreas[0].AxisY.IsStartedFromZero = false;
-            chart3.FormatNumber += chart1_FormatNumber;
-            chart3.GetToolTipText += chart_GetToolTipText;
+            chart_cilinder.ChartAreas[0].AxisX.Interval = 1;
+            chart_cilinder.ChartAreas[0].AxisY.IsStartedFromZero = false;
+            chart_cilinder.FormatNumber += chart1_FormatNumber;
+            chart_cilinder.GetToolTipText += chart_GetToolTipText;
+            //************************************************************************************
             //init chart MidAir
-            chart4.Series.Add("ResisActual");
-            chart4.Series["ResisActual"].XValueMember = "timestamp";
-            chart4.Series["ResisActual"].YValueMembers = "ResisActual";
-            chart4.Series["ResisActual"].ChartType = SeriesChartType.Line;
-            chart4.Series["ResisActual"].XValueType = ChartValueType.DateTime;
-            chart4.Series["ResisActual"].BorderWidth = 3;
-            chart4.Series["ResisActual"].Color = System.Drawing.Color.Green;
+            //************************************************************************************
+            chart_midair.Series.Add("ResisActual");
+            chart_midair.Series["ResisActual"].XValueMember = "timestamp";
+            chart_midair.Series["ResisActual"].YValueMembers = "ResisActual";
+            chart_midair.Series["ResisActual"].ChartType = SeriesChartType.Line;
+            chart_midair.Series["ResisActual"].XValueType = ChartValueType.DateTime;
+            chart_midair.Series["ResisActual"].BorderWidth = 3;
+            chart_midair.Series["ResisActual"].Color = System.Drawing.Color.Green;
             //add series for reference value
-            chart4.Series.Add("ResisRef");
-            chart4.Series["ResisRef"].XValueMember = "timestamp";
-            chart4.Series["ResisRef"].YValueMembers = "ResisRef";
-            chart4.Series["ResisRef"].ChartType = SeriesChartType.Line;
-            chart4.Series["ResisRef"].XValueType = ChartValueType.DateTime;
-            chart4.Series["ResisRef"].BorderWidth = 2;
-            chart4.Series["ResisRef"].Color = System.Drawing.Color.Black;
+            chart_midair.Series.Add("ResisRef");
+            chart_midair.Series["ResisRef"].XValueMember = "timestamp";
+            chart_midair.Series["ResisRef"].YValueMembers = "ResisRef";
+            chart_midair.Series["ResisRef"].ChartType = SeriesChartType.Line;
+            chart_midair.Series["ResisRef"].XValueType = ChartValueType.DateTime;
+            chart_midair.Series["ResisRef"].BorderWidth = 2;
+            chart_midair.Series["ResisRef"].Color = System.Drawing.Color.Black;
             //
-            chart4.ChartAreas[0].AxisX.Interval = 1;
-            chart4.ChartAreas[0].AxisX.LabelStyle.Enabled = true;
-            chart4.ChartAreas[0].AxisY.IsStartedFromZero = false;
-            chart4.FormatNumber += chart1_FormatNumber;
-            chart4.GetToolTipText += chart_GetToolTipText;
+            chart_midair.ChartAreas[0].AxisX.Interval = 1;
+            chart_midair.ChartAreas[0].AxisY.IsStartedFromZero = false;
+            chart_midair.FormatNumber += chart1_FormatNumber;
+            chart_midair.GetToolTipText += chart_GetToolTipText;
+            //************************************************************************************
+            //init chart DressData
+            //************************************************************************************
+            //fixed wear
+            chart_DressData.Series.Add("WearFixed");
+            chart_DressData.Series["WearFixed"].XValueMember = "_timestamp";
+            chart_DressData.Series["WearFixed"].YValueMembers = "Wear_Fixed";
+            chart_DressData.Series["WearFixed"].ChartType = SeriesChartType.StackedColumn;
+            chart_DressData.Series["WearFixed"].XValueType = ChartValueType.DateTime;
+            chart_DressData.Series["WearFixed"].BorderWidth = 3;
+            chart_DressData.Series["WearFixed"].Color = Color.DarkOrange;
+            chart_DressData.Series["WearFixed"].EmptyPointStyle.Color = Color.DarkOrange;
+            chart_DressData.Series["WearFixed"].EmptyPointStyle.BorderWidth = 3;
+            chart_DressData.Series["WearFixed"].EmptyPointStyle.AxisLabel = "Empty";
+            //mov wear
+            chart_DressData.Series.Add("WearMove");
+            chart_DressData.Series["WearMove"].XValueMember = "_timestamp";
+            chart_DressData.Series["WearMove"].YValueMembers = "Wear_Move";
+            chart_DressData.Series["WearMove"].ChartType = SeriesChartType.StackedColumn;
+            chart_DressData.Series["WearMove"].XValueType = ChartValueType.DateTime;
+            chart_DressData.Series["WearMove"].BorderWidth = 3;
+            chart_DressData.Series["WearMove"].Color = Color.DarkMagenta;
+            chart_DressData.Series["WearMove"].EmptyPointStyle.Color = Color.DarkMagenta;
+            chart_DressData.Series["WearMove"].EmptyPointStyle.BorderWidth = 3;
+            chart_DressData.Series["WearMove"].EmptyPointStyle.AxisLabel = "Empty";
+            //nr dress
+            chart_DressData.Series.Add("Dress_Num");
+            chart_DressData.Series["Dress_Num"].XValueMember = "_timestamp";
+            chart_DressData.Series["Dress_Num"].YValueMembers = "Dress_Num";
+            chart_DressData.Series["Dress_Num"].ChartType = SeriesChartType.Line;
+            chart_DressData.Series["Dress_Num"].XValueType = ChartValueType.DateTime;
+            chart_DressData.Series["Dress_Num"].BorderWidth = 3;
+            chart_DressData.Series["Dress_Num"].Color = Color.Gray;
+            chart_DressData.Series["Dress_Num"].EmptyPointStyle.Color = Color.Gray;
+            chart_DressData.Series["Dress_Num"].EmptyPointStyle.BorderWidth = 3;
+            chart_DressData.Series["Dress_Num"].EmptyPointStyle.AxisLabel = "Empty";
+            chart_DressData.Series["Dress_Num"].YAxisType = AxisType.Secondary;
+            //nr of welds
+            chart_DressData.Series.Add("Weld_Counter");
+            chart_DressData.Series["Weld_Counter"].XValueMember = "_timestamp";
+            chart_DressData.Series["Weld_Counter"].YValueMembers = "Weld_Counter";
+            chart_DressData.Series["Weld_Counter"].ChartType = SeriesChartType.Line;
+            chart_DressData.Series["Weld_Counter"].XValueType = ChartValueType.DateTime;
+            chart_DressData.Series["Weld_Counter"].BorderWidth = 3;
+            chart_DressData.Series["Weld_Counter"].Color = Color.Blue;
+            chart_DressData.Series["Weld_Counter"].EmptyPointStyle.Color = Color.Blue;
+            chart_DressData.Series["Weld_Counter"].EmptyPointStyle.BorderWidth = 3;
+            chart_DressData.Series["Weld_Counter"].EmptyPointStyle.AxisLabel = "Empty";
+            chart_DressData.Series["Weld_Counter"].YAxisType = AxisType.Secondary;
+
+            //
+            chart_DressData.ChartAreas[0].AxisY2.Enabled = AxisEnabled.True;
+            chart_DressData.ChartAreas[0].AxisX.Interval = 1;
+            chart_DressData.ChartAreas[0].AxisY.IsStartedFromZero = false;
+            chart_DressData.FormatNumber += chart1_FormatNumber;
+            chart_DressData.GetToolTipText += chart_GetToolTipText;
+            //************************************************************************************
             //
             bw.DoWork += bw_DoWork;
             bw.RunWorkerCompleted += bw_RunWorkerCompleted;
@@ -359,6 +419,57 @@ SELECT null ,null
       ,null, null, null
          
 ";
+
+            string qryDressData = @"
+   DECLARE 
+   @StartDate as DATETIME = '{0}',
+   @EndDate as DATETIME = '{1}',
+--Filterparameters.
+   @Robot as varchar(25) = null,
+   @Tool as varchar(25) = null,
+   @Weldgunname as varchar(25) = '{2}'
+
+SELECT [controller_name]
+      ,[id]
+      ,[rt_csv_file_id]
+      ,[Date Time] as '_timestamp'
+      ,[Tool_Nr]
+      ,[Dress_Num]
+      ,[Weld_Counter]
+      ,[Dress_Reason]
+      ,[Weld_Result]
+      ,[Length_Fixed_Result]
+      ,[Length_Move_Result]
+      ,[Max_Wear_Fixed]
+      ,[Wear_Fixed]
+      ,[DiffFrLastWear_Fixed]
+      ,[Max_Wear_Move]
+      ,[Wear_Move]
+      ,[DiffFrLastWear_Move]
+      ,[MaxDiffFrLastMeas]
+      ,[Current_TipWear]
+      ,[TipWearRatio]
+      ,[Time_DressCycleTime]
+      ,[ErrorType]
+      ,[ExtraInfo]
+  FROM [GADATA].[NGAC].[TipDressLogFile]
+  where controller_name = '321030R01' and Tool_Nr = 1
+  and [Date Time] between @startdate and @enddate
+
+UNION
+SELECT 
+null,null,null
+,@StartDate as '_timestamp'
+,null,null,null,null,null,null,null,null,null,null
+,null,null,null,null,null,null,null,null,null
+UNION
+SELECT 
+null,null,null
+,@EndDate as '_timestamp'
+,null,null,null,null,null,null,null,null,null,null
+,null,null,null,null,null,null,null,null,null 
+ 
+";
             #endregion
             //
             DateTime StartDate = System.DateTime.Now.AddDays(Daysback);
@@ -366,7 +477,8 @@ SELECT null ,null
             //
             dt_SBCU = lGdataComm.RunQueryGadata(string.Format(qrySBCUShortLong, StartDate.ToString("yyyy-MM-dd HH:mm:ss"), EndDate.ToString("yyyy-MM-dd HH:mm:ss"), activeLocation.Trim()));
             dt_Cylinder = lGdataComm.RunQueryGadata(string.Format(qryCylinder, StartDate.ToString("yyyy-MM-dd HH:mm:ss"), EndDate.ToString("yyyy-MM-dd HH:mm:ss"), activeLocation.Trim()));
-            dt_MidAir = lGdataComm.RunQueryGadata(string.Format(qryMidair, StartDate.ToString("yyyy-MM-dd HH:mm:ss"), EndDate.ToString("yyyy-MM-dd HH:mm:ss"), activeLocation.Trim()));    
+            dt_MidAir = lGdataComm.RunQueryGadata(string.Format(qryMidair, StartDate.ToString("yyyy-MM-dd HH:mm:ss"), EndDate.ToString("yyyy-MM-dd HH:mm:ss"), activeLocation.Trim()));
+            dt_DressData = lGdataComm.RunQueryGadata(string.Format(qryDressData, StartDate.ToString("yyyy-MM-dd HH:mm:ss"), EndDate.ToString("yyyy-MM-dd HH:mm:ss"), activeLocation.Trim()));    
             //
         }
 
@@ -402,23 +514,31 @@ SELECT null ,null
                                where a.Field<DateTime>("tool_timestamp") > GrapStart && a.Field<DateTime>("tool_timestamp") < GrapEnd
                                orderby a.Field<DateTime>("tool_timestamp")
                                select a;
-            chart1.DataSource = ldt_SBCU;
-            chart1.DataBind();
+            chart_sbcu.DataSource = ldt_SBCU;
+            chart_sbcu.DataBind();
             //
                 var ldt_Cylinder = from a in dt_Cylinder.AsEnumerable()
                                    where a.Field<DateTime>("_timestamp") > GrapStart && a.Field<DateTime>("_timestamp") < GrapEnd
                                    orderby a.Field<DateTime>("_timestamp")
                                    select a;
-                chart3.DataSource = ldt_Cylinder;
-                chart3.DataBind();
+                chart_cilinder.DataSource = ldt_Cylinder;
+                chart_cilinder.DataBind();
             //
                 var ldt_Midair = from a in dt_MidAir.AsEnumerable()
                                  where a.Field<DateTime>("timestamp") > GrapStart && a.Field<DateTime>("timestamp") < GrapEnd
                                  orderby a.Field<DateTime>("timestamp")
                                  select a;
-                chart4.DataSource = ldt_Midair;
-                chart4.DataBind();
+                chart_midair.DataSource = ldt_Midair;
+                chart_midair.DataBind();
             //
+
+                var ldt_DressData = from a in dt_DressData.AsEnumerable()
+                                    where a.Field<DateTime>("_timestamp") > GrapStart && a.Field<DateTime>("_timestamp") < GrapEnd
+                                    orderby a.Field<DateTime>("_timestamp")
+                                 select a;
+                chart_DressData.DataSource = ldt_DressData;
+                chart_DressData.DataBind();
+             //
             if (noAutoGrouping == false)
             {
                 if ((trackBar1.Value - trackBar2.Value) > -10)
@@ -438,71 +558,121 @@ SELECT null ,null
             switch (cb_sortmode.Text)
             {
                 case "None":
-                    chart1.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatTimestamp"; 
-                    chart1.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.NotSet;   
-                    chart3.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatTimestamp"; 
-                    chart3.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.NotSet; 
-                    chart4.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatTimestamp"; 
-                    chart4.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.NotSet; 
+                    chart_sbcu.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatTimestamp"; 
+                    chart_sbcu.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.NotSet;  
+                    
+                    chart_cilinder.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatTimestamp"; 
+                    chart_cilinder.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.NotSet; 
+                    
+                    chart_midair.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatTimestamp"; 
+                    chart_midair.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.NotSet; 
+
+                    chart_DressData.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatTimestamp";
+                    chart_DressData.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.NotSet; 
+                 
                     break;
 
                 case "Hours":
-                    chart1.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatHour"; 
-                    chart1.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Hours;
-                    chart3.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatHour"; 
-                    chart3.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Hours;
-                    chart4.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatHour"; 
-                    chart4.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Hours;
-                    chart1.DataManipulator.Group("AVE", 1, IntervalType.Hours, "LongSbcu");
-                    chart1.DataManipulator.Group("AVE", 1, IntervalType.Hours, "ShortSbcu");
-                    chart1.DataManipulator.Group("AVE", 1, IntervalType.Hours, "LongUCL");
-                    chart1.DataManipulator.Group("AVE", 1, IntervalType.Hours, "LongLCL");
-                    chart3.DataManipulator.Group("AVE", 1, IntervalType.Hours, "TotalTime");
-                    chart3.DataManipulator.Group("AVE", 1, IntervalType.Hours, "UCL");
-                    chart3.DataManipulator.Group("AVE", 1, IntervalType.Hours, "LCL");
-                    chart4.DataManipulator.Group("AVE", 1, IntervalType.Hours, "ResisActual");
-                    chart4.DataManipulator.Group("AVE", 1, IntervalType.Hours, "ResisRef");
+                    chart_sbcu.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatHour"; 
+                    chart_sbcu.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Hours;
+                    
+                    chart_cilinder.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatHour"; 
+                    chart_cilinder.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Hours;
+                   
+                    chart_midair.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatHour"; 
+                    chart_midair.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Hours;
+
+                    chart_DressData.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatHour";
+                    chart_DressData.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Hours;
+                    
+                    chart_sbcu.DataManipulator.Group("AVE", 1, IntervalType.Hours, "LongSbcu");
+                    chart_sbcu.DataManipulator.Group("AVE", 1, IntervalType.Hours, "ShortSbcu");
+                    chart_sbcu.DataManipulator.Group("AVE", 1, IntervalType.Hours, "LongUCL");
+                    chart_sbcu.DataManipulator.Group("AVE", 1, IntervalType.Hours, "LongLCL");
+                    
+                    chart_cilinder.DataManipulator.Group("AVE", 1, IntervalType.Hours, "TotalTime");
+                    chart_cilinder.DataManipulator.Group("AVE", 1, IntervalType.Hours, "UCL");
+                    chart_cilinder.DataManipulator.Group("AVE", 1, IntervalType.Hours, "LCL");
+                    
+                    chart_midair.DataManipulator.Group("AVE", 1, IntervalType.Hours, "ResisActual");
+                    chart_midair.DataManipulator.Group("AVE", 1, IntervalType.Hours, "ResisRef");
+
+                    chart_DressData.DataManipulator.Group("AVE", 1, IntervalType.Hours, "WearFixed");
+                    chart_DressData.DataManipulator.Group("AVE", 1, IntervalType.Hours, "WearMove");
+
+                    chart_DressData.DataManipulator.Group("MAX", 1, IntervalType.Hours, "Dress_Num");
+                    chart_DressData.DataManipulator.Group("SUM", 1, IntervalType.Hours, "Weld_Counter");
                     break;
 
                 case "Days":
-                    chart1.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatDay"; 
-                    chart1.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Days;
-                    chart3.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatDay";
-                    chart3.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Days;
-                    chart4.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatDay";
-                    chart4.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Days;
-                    chart1.DataManipulator.Group("AVE", 1, IntervalType.Days, "LongSbcu");
-                    chart1.DataManipulator.Group("AVE", 1, IntervalType.Days, "ShortSbcu");
-                    chart1.DataManipulator.Group("AVE", 1, IntervalType.Days, "LongUCL");
-                    chart1.DataManipulator.Group("AVE", 1, IntervalType.Days, "LongLCL");
-                    chart3.DataManipulator.Group("AVE", 1, IntervalType.Days, "TotalTime");
-                    chart3.DataManipulator.Group("AVE", 1, IntervalType.Days, "UCL");
-                    chart3.DataManipulator.Group("AVE", 1, IntervalType.Days, "LCL");
-                    chart4.DataManipulator.Group("AVE", 1, IntervalType.Days, "ResisActual");
-                    chart4.DataManipulator.Group("AVE", 1, IntervalType.Days, "ResisRef");
+                    chart_sbcu.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatDay"; 
+                    chart_sbcu.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Days;
+                    
+                    chart_cilinder.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatDay";
+                    chart_cilinder.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Days;
+                    
+                    chart_midair.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatDay";
+                    chart_midair.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Days;
+
+                    chart_DressData.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatDay";
+                    chart_DressData.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Days;
+
+                    chart_sbcu.DataManipulator.Group("AVE", 1, IntervalType.Days, "LongSbcu");
+                    chart_sbcu.DataManipulator.Group("AVE", 1, IntervalType.Days, "ShortSbcu");
+                    chart_sbcu.DataManipulator.Group("AVE", 1, IntervalType.Days, "LongUCL");
+                    chart_sbcu.DataManipulator.Group("AVE", 1, IntervalType.Days, "LongLCL");
+                    
+                    chart_cilinder.DataManipulator.Group("AVE", 1, IntervalType.Days, "TotalTime");
+                    chart_cilinder.DataManipulator.Group("AVE", 1, IntervalType.Days, "UCL");
+                    chart_cilinder.DataManipulator.Group("AVE", 1, IntervalType.Days, "LCL");
+                    
+                    chart_midair.DataManipulator.Group("AVE", 1, IntervalType.Days, "ResisActual");
+                    chart_midair.DataManipulator.Group("AVE", 1, IntervalType.Days, "ResisRef");
+
+                    chart_DressData.DataManipulator.Group("AVE", 1, IntervalType.Days, "WearFixed");
+                    chart_DressData.DataManipulator.Group("AVE", 1, IntervalType.Days, "WearMove");
+
+                    chart_DressData.DataManipulator.Group("MAX", 1, IntervalType.Days, "Dress_Num");
+                    chart_DressData.DataManipulator.Group("SUM", 1, IntervalType.Days, "Weld_Counter");
                     break;
 
                 case "Weeks":
-                    chart1.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatWeek"; 
-                    chart1.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Weeks;
-                    chart3.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatWeek";
-                    chart3.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Weeks;
-                    chart4.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatWeek";
-                    chart4.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Weeks;
-                    chart1.DataManipulator.Group("AVE", 1, IntervalType.Weeks, "LongSbcu");
-                    chart1.DataManipulator.Group("AVE", 1, IntervalType.Weeks, "ShortSbcu");
-                    chart1.DataManipulator.Group("AVE", 1, IntervalType.Weeks, "LongUCL");
-                    chart1.DataManipulator.Group("AVE", 1, IntervalType.Weeks, "LongLCL");
-                    chart3.DataManipulator.Group("AVE", 1, IntervalType.Weeks, "TotalTime");
-                    chart3.DataManipulator.Group("AVE", 1, IntervalType.Weeks, "UCL");
-                    chart3.DataManipulator.Group("AVE", 1, IntervalType.Weeks, "LCL");
-                    chart4.DataManipulator.Group("AVE", 1, IntervalType.Weeks, "ResisActual");
-                    chart4.DataManipulator.Group("AVE", 1, IntervalType.Weeks, "ResisRef");
+                    chart_sbcu.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatWeek"; 
+                    chart_sbcu.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Weeks;
+                    
+                    chart_cilinder.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatWeek";
+                    chart_cilinder.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Weeks;
+                    
+                    chart_midair.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatWeek";
+                    chart_midair.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Weeks;
+
+                    chart_DressData.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatWeek";
+                    chart_DressData.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Weeks;
+                    
+                    chart_sbcu.DataManipulator.Group("AVE", 1, IntervalType.Weeks, "LongSbcu");
+                    chart_sbcu.DataManipulator.Group("AVE", 1, IntervalType.Weeks, "ShortSbcu");
+                    chart_sbcu.DataManipulator.Group("AVE", 1, IntervalType.Weeks, "LongUCL");
+                    chart_sbcu.DataManipulator.Group("AVE", 1, IntervalType.Weeks, "LongLCL");
+                    
+                    chart_cilinder.DataManipulator.Group("AVE", 1, IntervalType.Weeks, "TotalTime");
+                    chart_cilinder.DataManipulator.Group("AVE", 1, IntervalType.Weeks, "UCL");
+                    chart_cilinder.DataManipulator.Group("AVE", 1, IntervalType.Weeks, "LCL");
+                    
+                    chart_midair.DataManipulator.Group("AVE", 1, IntervalType.Weeks, "ResisActual");
+                    chart_midair.DataManipulator.Group("AVE", 1, IntervalType.Weeks, "ResisRef");
+
+                    chart_DressData.DataManipulator.Group("AVE", 1, IntervalType.Weeks, "WearFixed");
+                    chart_DressData.DataManipulator.Group("AVE", 1, IntervalType.Weeks, "WearMove");
+
+                    chart_DressData.DataManipulator.Group("MAX", 1, IntervalType.Weeks, "Dress_Num");
+                    chart_DressData.DataManipulator.Group("SUM", 1, IntervalType.Weeks, "Weld_Counter");
                     break;
 
                 default:
                     break;
             }
+            //
+            SetXlabelOnForBottumChart();
             //here because of cross threding
             metroProgressSpinner1.Visible = false;
         }
@@ -595,6 +765,7 @@ Value: {2:0.00}"
                 if (dt_SBCU != null) { dt_SBCU.TableName = "dt_SBCU"; ldataset.Tables.Add(dt_SBCU); }
                 if (dt_Cylinder != null) { dt_Cylinder.TableName = "dt_Cylinder"; ldataset.Tables.Add(dt_Cylinder); }
                 if (dt_MidAir != null) { dt_MidAir.TableName = "dt_MidAir"; ldataset.Tables.Add(dt_MidAir); }
+                if (dt_DressData != null) { dt_DressData.TableName = "dt_DressData"; ldataset.Tables.Add(dt_DressData); }
             }
             catch (Exception ex)
             {
@@ -627,8 +798,10 @@ Value: {2:0.00}"
             cb_weldguns.Enabled = true;
         }
 
-        private void metroLabel1_DoubleClick(object sender, EventArgs e)
+ //launch SBCU 3D tool 
+        private void btn_3dTemp_Click(object sender, EventArgs e)
         {
+            //SBCU (dsetup in mm | LongSbcu = Red | ShortScbu = Blue)
             if (dt_SBCU == null) { Debugger.Message("dt_sbcu is null"); return; }
             DateTime GrapStart = DateTime.Now.AddDays(Convert.ToInt32(trackBar1.Value));
             DateTime GrapEnd = DateTime.Now.AddDays(Convert.ToInt32(trackBar2.Value));
@@ -639,6 +812,118 @@ Value: {2:0.00}"
 
             WPFChart3D.Window1 lChar = new Window1(ldt);
             lChar.Show();
+        }
+
+//show hide charts 
+        private void btn_chart_sbcu_Click(object sender, EventArgs e)
+        {
+            if (tableLayoutPanel1.RowStyles[1].Height == 0)
+            {
+                tableLayoutPanel1.RowStyles[1].SizeType = SizeType.Percent;
+                tableLayoutPanel1.RowStyles[1].Height = 25;  //size = %   
+            }
+            else
+            {
+                tableLayoutPanel1.RowStyles[1].Height = 0;
+            }
+            built_Chart(false);
+        }
+
+
+        private void Btn_CharCilinder_Click(object sender, EventArgs e)
+        {
+            if (tableLayoutPanel1.RowStyles[3].Height == 0)
+            {
+                tableLayoutPanel1.RowStyles[3].SizeType = SizeType.Percent;
+                tableLayoutPanel1.RowStyles[3].Height = 25;  //size = %   
+            }
+            else
+            {
+                tableLayoutPanel1.RowStyles[3].Height = 0;
+            }
+            built_Chart(false);
+        }
+
+        private void Btn_ChartMidair_Click(object sender, EventArgs e)
+        {
+            if (tableLayoutPanel1.RowStyles[5].Height == 0)
+            {
+                tableLayoutPanel1.RowStyles[5].SizeType = SizeType.Percent;
+                tableLayoutPanel1.RowStyles[5].Height = 25;  //size = %   
+            }
+            else
+            {
+                tableLayoutPanel1.RowStyles[5].Height = 0;
+            }
+            built_Chart(false);
+        }
+
+        private void btn_ChartDressData_Click(object sender, EventArgs e)
+        {
+            if (tableLayoutPanel1.RowStyles[7].Height == 0)
+            {
+                tableLayoutPanel1.RowStyles[7].SizeType = SizeType.Percent;
+                tableLayoutPanel1.RowStyles[7].Height = 25;  //size = %   
+            }
+            else
+            {
+                tableLayoutPanel1.RowStyles[7].Height = 0;
+            }
+            built_Chart(false);
+        }
+
+        private void hideEmptyCharts()
+        {
+            if (chart_sbcu.Series[0].Points.Count == 0)
+            {
+                tableLayoutPanel1.RowStyles[1].Height = 0;
+            }
+            else
+            {
+                tableLayoutPanel1.RowStyles[1].SizeType = SizeType.Percent;
+                tableLayoutPanel1.RowStyles[1].Height = 25;  //size = %   
+            }
+
+          
+            if (chart_DressData.Series[0].Points.Count == 0) 
+            {
+                tableLayoutPanel1.RowStyles[7].Height = 0;
+            }
+            else
+            {
+                tableLayoutPanel1.RowStyles[7].SizeType = SizeType.Percent;
+                tableLayoutPanel1.RowStyles[7].Height = 25;  //size = %   
+            }
+
+        }
+
+        private void SetXlabelOnForBottumChart()
+        {
+             chart_sbcu.ChartAreas[0].AxisX.LabelStyle.Enabled = false;
+             chart_cilinder.ChartAreas[0].AxisX.LabelStyle.Enabled = false;
+             chart_midair.ChartAreas[0].AxisX.LabelStyle.Enabled = false;
+             chart_DressData.ChartAreas[0].AxisX.LabelStyle.Enabled = false;
+
+            if (tableLayoutPanel1.RowStyles[7].Height != 0)
+            {
+                chart_DressData.ChartAreas[0].AxisX.LabelStyle.Enabled = true;
+                return;
+            }
+            if (tableLayoutPanel1.RowStyles[5].Height != 0)
+            {
+                chart_midair.ChartAreas[0].AxisX.LabelStyle.Enabled = true;
+                return;
+            }
+            if (tableLayoutPanel1.RowStyles[3].Height != 0)
+            {
+                chart_cilinder.ChartAreas[0].AxisX.LabelStyle.Enabled = true;
+                return;
+            }
+            if (tableLayoutPanel1.RowStyles[1].Height != 0)
+            {
+                chart_sbcu.ChartAreas[0].AxisX.LabelStyle.Enabled = true;
+                return;
+            }
         }
 
     }
