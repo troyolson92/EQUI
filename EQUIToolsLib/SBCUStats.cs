@@ -45,7 +45,7 @@ namespace EQUIToolsLib
             activeLocation = Location;
             //
             initchart();
-            cb_sortmode.SelectedValueChanged += new System.EventHandler(this.cb_sortmode_SelectedValueChanged);
+            toolStripComboBoxSortMode.SelectedIndexChanged += new System.EventHandler(this.cb_sortmode_SelectedValueChanged);
             //
             metroProgressSpinner1.Visible = true;
             bw.RunWorkerAsync();
@@ -57,18 +57,18 @@ namespace EQUIToolsLib
             InitializeComponent();
             cb_weldguns.Enabled = true;
             initchart();
-            cb_sortmode.SelectedValueChanged += new System.EventHandler(this.cb_sortmode_SelectedValueChanged);
+            toolStripComboBoxSortMode.SelectedIndexChanged  += new System.EventHandler(this.cb_sortmode_SelectedValueChanged);
         }
 
         private void initchart()
         {
             //init cb for sort mode
-            cb_sortmode.Items.Clear();
-            cb_sortmode.Items.Insert(0, "None");
-            cb_sortmode.Items.Insert(1, "Hours");
-            cb_sortmode.Items.Insert(2, "Days");
-            cb_sortmode.Items.Insert(3, "Weeks");
-            cb_sortmode.SelectedIndex = 0; //default = no grouping 
+            toolStripComboBoxSortMode.Items.Clear();
+            toolStripComboBoxSortMode.Items.Insert(0, "Groupmode: None");
+            toolStripComboBoxSortMode.Items.Insert(1, "Groupmode: Hours");
+            toolStripComboBoxSortMode.Items.Insert(2, "Groupmode: Days");
+            toolStripComboBoxSortMode.Items.Insert(3, "Groupmode: Weeks");
+            toolStripComboBoxSortMode.SelectedIndex = 0; //default = no grouping 
             //************************************************************************************
             //init chart long sbcu
             //************************************************************************************
@@ -329,58 +329,46 @@ namespace EQUIToolsLib
 
         }
 
-        private void built_Chart(Boolean noAutoGrouping, Boolean bHideEmptyCharts) 
+        private void link_chart(Chart lchart, DataTable ldt)
         {
+            if (ldt == null) return;
             //use the trackbar to calculate the starting point of the graph
             DateTime GrapStart = DateTime.Now.AddDays(Convert.ToInt32(trackBar1.Value));
             DateTime GrapEnd = DateTime.Now.AddDays(Convert.ToInt32(trackBar2.Value));
             //
-            var ldt_SBCU = from a in dt_SBCU.AsEnumerable()
+            var vldt = from a in ldt.AsEnumerable()
                            where a.Field<DateTime>("timestamp") > GrapStart && a.Field<DateTime>("timestamp") < GrapEnd
                            orderby a.Field<DateTime>("timestamp")
-                               select a;
-            chart_sbcu.DataSource = ldt_SBCU;  
-            chart_sbcu.DataBind();
-            //
-                var ldt_Cylinder = from a in dt_Cylinder.AsEnumerable()
-                                   where a.Field<DateTime>("timestamp") > GrapStart && a.Field<DateTime>("timestamp") < GrapEnd
-                                   orderby a.Field<DateTime>("timestamp")
-                                   select a;
-                chart_cilinder.DataSource = ldt_Cylinder;
-                chart_cilinder.DataBind();
-            //
-                var ldt_Midair = from a in dt_MidAir.AsEnumerable()
-                                 where a.Field<DateTime>("timestamp") > GrapStart && a.Field<DateTime>("timestamp") < GrapEnd
-                                 orderby a.Field<DateTime>("timestamp")
-                                 select a;
-                chart_midair.DataSource = ldt_Midair;
-                chart_midair.DataBind();
-            //
+                           select a;
+            lchart.DataSource = vldt;
+            lchart.DataBind();
+        }
 
-                var ldt_DressData = from a in dt_DressData.AsEnumerable()
-                                    where a.Field<DateTime>("timestamp") > GrapStart && a.Field<DateTime>("timestamp") < GrapEnd
-                                    orderby a.Field<DateTime>("timestamp")
-                                 select a;
-                chart_DressData.DataSource = ldt_DressData;
-                chart_DressData.DataBind();
+
+        private void built_Chart(Boolean noAutoGrouping, Boolean bHideEmptyCharts) 
+        {
+            link_chart(chart_sbcu, dt_SBCU);
+            link_chart(chart_cilinder, dt_Cylinder);
+            link_chart(chart_midair, dt_MidAir);
+            link_chart(chart_DressData, dt_DressData);
              //
             if (noAutoGrouping == false)
             {
                 if ((trackBar1.Value - trackBar2.Value) > -10)
                 {
-                    cb_sortmode.SelectedIndex = 1;
+                    toolStripComboBoxSortMode.SelectedIndex = 1;
                 }
                 else if ((trackBar1.Value - trackBar2.Value) > -100)
                 {
-                    cb_sortmode.SelectedIndex = 2;
+                    toolStripComboBoxSortMode.SelectedIndex = 2;
                 }
                 else
                 {
-                    cb_sortmode.SelectedIndex = 3;
+                    toolStripComboBoxSortMode.SelectedIndex = 3;
                 }
             }
 
-            switch (cb_sortmode.Text)
+            switch (toolStripComboBoxSortMode.Text)
             {
                 case "None":
                     chart_sbcu.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatTimestamp"; 
@@ -642,56 +630,56 @@ Value: {2:0.00}"
 //show hide charts 
         private void btn_chart_sbcu_Click(object sender, EventArgs e)
         {
-            if (tableLayoutPanel1.RowStyles[1].Height == 0)
+            if (tableLayoutPanel1.RowStyles[2].Height == 0)
             {
-                tableLayoutPanel1.RowStyles[1].SizeType = SizeType.Percent;
-                tableLayoutPanel1.RowStyles[1].Height = 25;  //size = %   
+                tableLayoutPanel1.RowStyles[2].SizeType = SizeType.Percent;
+                tableLayoutPanel1.RowStyles[2].Height = 25;  //size = %   
             }
             else
             {
-                tableLayoutPanel1.RowStyles[1].Height = 0;
+                tableLayoutPanel1.RowStyles[2].Height = 0;
             }
             built_Chart(false,false);
         }
 
         private void Btn_CharCilinder_Click(object sender, EventArgs e)
         {
-            if (tableLayoutPanel1.RowStyles[3].Height == 0)
+            if (tableLayoutPanel1.RowStyles[4].Height == 0)
             {
-                tableLayoutPanel1.RowStyles[3].SizeType = SizeType.Percent;
-                tableLayoutPanel1.RowStyles[3].Height = 25;  //size = %   
+                tableLayoutPanel1.RowStyles[4].SizeType = SizeType.Percent;
+                tableLayoutPanel1.RowStyles[4].Height = 25;  //size = %   
             }
             else
             {
-                tableLayoutPanel1.RowStyles[3].Height = 0;
+                tableLayoutPanel1.RowStyles[4].Height = 0;
             }
             built_Chart(false,false);
         }
 
         private void Btn_ChartMidair_Click(object sender, EventArgs e)
         {
-            if (tableLayoutPanel1.RowStyles[5].Height == 0)
+            if (tableLayoutPanel1.RowStyles[6].Height == 0)
             {
-                tableLayoutPanel1.RowStyles[5].SizeType = SizeType.Percent;
-                tableLayoutPanel1.RowStyles[5].Height = 25;  //size = %   
+                tableLayoutPanel1.RowStyles[6].SizeType = SizeType.Percent;
+                tableLayoutPanel1.RowStyles[6].Height = 25;  //size = %   
             }
             else
             {
-                tableLayoutPanel1.RowStyles[5].Height = 0;
+                tableLayoutPanel1.RowStyles[6].Height = 0;
             }
             built_Chart(false,false);
         }
 
         private void btn_ChartDressData_Click(object sender, EventArgs e)
         {
-            if (tableLayoutPanel1.RowStyles[7].Height == 0)
+            if (tableLayoutPanel1.RowStyles[8].Height == 0)
             {
-                tableLayoutPanel1.RowStyles[7].SizeType = SizeType.Percent;
-                tableLayoutPanel1.RowStyles[7].Height = 25;  //size = %   
+                tableLayoutPanel1.RowStyles[8].SizeType = SizeType.Percent;
+                tableLayoutPanel1.RowStyles[8].Height = 25;  //size = %   
             }
             else
             {
-                tableLayoutPanel1.RowStyles[7].Height = 0;
+                tableLayoutPanel1.RowStyles[8].Height = 0;
             }
             built_Chart(false,false);
         }
@@ -700,43 +688,43 @@ Value: {2:0.00}"
         {
             if (chart_sbcu.Series[0].Points.Count == 0)
             {
-                tableLayoutPanel1.RowStyles[1].Height = 0;
+                tableLayoutPanel1.RowStyles[2].Height = 0;
             }
             else
             {
-                tableLayoutPanel1.RowStyles[1].SizeType = SizeType.Percent;
-                tableLayoutPanel1.RowStyles[1].Height = 25;  //size = %   
+                tableLayoutPanel1.RowStyles[2].SizeType = SizeType.Percent;
+                tableLayoutPanel1.RowStyles[2].Height = 25;  //size = %   
             }
 
             if (chart_cilinder.Series[0].Points.Count == 0)
             {
-                tableLayoutPanel1.RowStyles[3].Height = 0;
+                tableLayoutPanel1.RowStyles[4].Height = 0;
             }
             else
             {
-                tableLayoutPanel1.RowStyles[3].SizeType = SizeType.Percent;
-                tableLayoutPanel1.RowStyles[3].Height = 25;  //size = %   
+                tableLayoutPanel1.RowStyles[4].SizeType = SizeType.Percent;
+                tableLayoutPanel1.RowStyles[4].Height = 25;  //size = %   
             }
 
             if (chart_midair.Series[0].Points.Count == 0)
             {
-                tableLayoutPanel1.RowStyles[5].Height = 0;
+                tableLayoutPanel1.RowStyles[6].Height = 0;
             }
             else
             {
-                tableLayoutPanel1.RowStyles[5].SizeType = SizeType.Percent;
-                tableLayoutPanel1.RowStyles[5].Height = 25;  //size = %   
+                tableLayoutPanel1.RowStyles[6].SizeType = SizeType.Percent;
+                tableLayoutPanel1.RowStyles[6].Height = 25;  //size = %   
             }
 
           
             if (chart_DressData.Series[0].Points.Count == 0) 
             {
-                tableLayoutPanel1.RowStyles[7].Height = 0;
+                tableLayoutPanel1.RowStyles[8].Height = 0;
             }
             else
             {
-                tableLayoutPanel1.RowStyles[7].SizeType = SizeType.Percent;
-                tableLayoutPanel1.RowStyles[7].Height = 25;  //size = %   
+                tableLayoutPanel1.RowStyles[8].SizeType = SizeType.Percent;
+                tableLayoutPanel1.RowStyles[8].Height = 25;  //size = %   
             }
 
         }
@@ -748,27 +736,28 @@ Value: {2:0.00}"
              chart_midair.ChartAreas[0].AxisX.LabelStyle.Enabled = false;
              chart_DressData.ChartAreas[0].AxisX.LabelStyle.Enabled = false;
 
-            if (tableLayoutPanel1.RowStyles[7].Height != 0)
+            if (tableLayoutPanel1.RowStyles[8].Height != 0)
             {
                 chart_DressData.ChartAreas[0].AxisX.LabelStyle.Enabled = true;
                 return;
             }
-            if (tableLayoutPanel1.RowStyles[5].Height != 0)
+            if (tableLayoutPanel1.RowStyles[6].Height != 0)
             {
                 chart_midair.ChartAreas[0].AxisX.LabelStyle.Enabled = true;
                 return;
             }
-            if (tableLayoutPanel1.RowStyles[3].Height != 0)
+            if (tableLayoutPanel1.RowStyles[4].Height != 0)
             {
                 chart_cilinder.ChartAreas[0].AxisX.LabelStyle.Enabled = true;
                 return;
             }
-            if (tableLayoutPanel1.RowStyles[1].Height != 0)
+            if (tableLayoutPanel1.RowStyles[2].Height != 0)
             {
                 chart_sbcu.ChartAreas[0].AxisX.LabelStyle.Enabled = true;
                 return;
             }
         }
+
 
     }
 }
