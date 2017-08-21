@@ -62,7 +62,7 @@ namespace EQUIToolsLib
 
         private void initchart()
         {
-            //
+            //init cb for sort mode
             cb_sortmode.Items.Clear();
             cb_sortmode.Items.Insert(0, "None");
             cb_sortmode.Items.Insert(1, "Hours");
@@ -73,7 +73,7 @@ namespace EQUIToolsLib
             //init chart long sbcu
             //************************************************************************************
             chart_sbcu.Series.Add("LongSbcu");
-            chart_sbcu.Series["LongSbcu"].XValueMember = "tool_timestamp";
+            chart_sbcu.Series["LongSbcu"].XValueMember = "timestamp";
             chart_sbcu.Series["LongSbcu"].YValueMembers = "LongDsetup";
             chart_sbcu.Series["LongSbcu"].ChartType = SeriesChartType.Line;
             chart_sbcu.Series["LongSbcu"].XValueType = ChartValueType.DateTime;
@@ -87,7 +87,7 @@ namespace EQUIToolsLib
             chart_sbcu.Series["LongSbcu"].EmptyPointStyle.AxisLabel = "Empty";
             //add series short sbcu
             chart_sbcu.Series.Add("ShortSbcu");
-            chart_sbcu.Series["ShortSbcu"].XValueMember = "tool_timestamp";
+            chart_sbcu.Series["ShortSbcu"].XValueMember = "timestamp";
             chart_sbcu.Series["ShortSbcu"].YValueMembers = "ShortDsetup";
             chart_sbcu.Series["ShortSbcu"].ChartType = SeriesChartType.Line;
             chart_sbcu.Series["ShortSbcu"].XValueType = ChartValueType.DateTime;
@@ -101,7 +101,7 @@ namespace EQUIToolsLib
             chart_sbcu.Series["ShortSbcu"].EmptyPointStyle.AxisLabel = "Empty";
             //long UCL
             chart_sbcu.Series.Add("LongUCL");
-            chart_sbcu.Series["LongUCL"].XValueMember = "tool_timestamp";
+            chart_sbcu.Series["LongUCL"].XValueMember = "timestamp";
             chart_sbcu.Series["LongUCL"].YValueMembers = "LongUCL";
             chart_sbcu.Series["LongUCL"].ChartType = SeriesChartType.Line;
             chart_sbcu.Series["LongUCL"].XValueType = ChartValueType.DateTime;
@@ -112,7 +112,7 @@ namespace EQUIToolsLib
             chart_sbcu.Series["LongUCL"].EmptyPointStyle.AxisLabel = "Empty";
             //long LCL
             chart_sbcu.Series.Add("LongLCL");
-            chart_sbcu.Series["LongLCL"].XValueMember = "tool_timestamp";
+            chart_sbcu.Series["LongLCL"].XValueMember = "timestamp";
             chart_sbcu.Series["LongLCL"].YValueMembers = "LongLCL";
             chart_sbcu.Series["LongLCL"].ChartType = SeriesChartType.Line;
             chart_sbcu.Series["LongLCL"].XValueType = ChartValueType.DateTime;
@@ -122,15 +122,16 @@ namespace EQUIToolsLib
             chart_sbcu.Series["LongLCL"].EmptyPointStyle.BorderWidth = 2;
             chart_sbcu.Series["LongLCL"].EmptyPointStyle.AxisLabel = "Empty";
             //
+            //chart_sbcu.ChartAreas[0].AxisY2.Enabled = AxisEnabled.True;
             chart_sbcu.ChartAreas[0].AxisX.Interval = 1;
             chart_sbcu.ChartAreas[0].AxisY.IsStartedFromZero = false;
-            chart_sbcu.FormatNumber += chart1_FormatNumber;
+            chart_sbcu.FormatNumber += chart_FormatNumberXaxis;
             chart_sbcu.GetToolTipText += chart_GetToolTipText;
             //************************************************************************************
             //init chart Cylinder
             //************************************************************************************
             chart_cilinder.Series.Add("TotalTime");
-            chart_cilinder.Series["TotalTime"].XValueMember = "_timestamp";
+            chart_cilinder.Series["TotalTime"].XValueMember = "timestamp";
             chart_cilinder.Series["TotalTime"].YValueMembers = "TotalTime";
             chart_cilinder.Series["TotalTime"].ChartType = SeriesChartType.Line;
             chart_cilinder.Series["TotalTime"].XValueType = ChartValueType.DateTime;
@@ -141,7 +142,7 @@ namespace EQUIToolsLib
             chart_cilinder.Series["TotalTime"].MarkerSize = 8;
             //add series for UCL
             chart_cilinder.Series.Add("UCL");
-            chart_cilinder.Series["UCL"].XValueMember = "_timestamp";
+            chart_cilinder.Series["UCL"].XValueMember = "timestamp";
             chart_cilinder.Series["UCL"].YValueMembers = "UCL";
             chart_cilinder.Series["UCL"].ChartType = SeriesChartType.Line;
             chart_cilinder.Series["UCL"].XValueType = ChartValueType.DateTime;
@@ -149,16 +150,17 @@ namespace EQUIToolsLib
             chart_cilinder.Series["UCL"].Color = System.Drawing.Color.Black;
             //add series for LCL
             chart_cilinder.Series.Add("LCL");
-            chart_cilinder.Series["LCL"].XValueMember = "_timestamp";
+            chart_cilinder.Series["LCL"].XValueMember = "timestamp";
             chart_cilinder.Series["LCL"].YValueMembers = "LCL";
             chart_cilinder.Series["LCL"].ChartType = SeriesChartType.Line;
             chart_cilinder.Series["LCL"].XValueType = ChartValueType.DateTime;
             chart_cilinder.Series["LCL"].BorderWidth = 2;
             chart_cilinder.Series["LCL"].Color = System.Drawing.Color.Black;
             //
+            //chart_cilinder.ChartAreas[0].AxisY2.Enabled = AxisEnabled.True;
             chart_cilinder.ChartAreas[0].AxisX.Interval = 1;
             chart_cilinder.ChartAreas[0].AxisY.IsStartedFromZero = false;
-            chart_cilinder.FormatNumber += chart1_FormatNumber;
+            chart_cilinder.FormatNumber += chart_FormatNumberXaxis;
             chart_cilinder.GetToolTipText += chart_GetToolTipText;
             //************************************************************************************
             //init chart MidAir
@@ -179,16 +181,17 @@ namespace EQUIToolsLib
             chart_midair.Series["ResisRef"].BorderWidth = 2;
             chart_midair.Series["ResisRef"].Color = System.Drawing.Color.Black;
             //
+            //chart_midair.ChartAreas[0].AxisY2.Enabled = AxisEnabled.True;
             chart_midair.ChartAreas[0].AxisX.Interval = 1;
             chart_midair.ChartAreas[0].AxisY.IsStartedFromZero = false;
-            chart_midair.FormatNumber += chart1_FormatNumber;
+            chart_midair.FormatNumber += chart_FormatNumberXaxis;
             chart_midair.GetToolTipText += chart_GetToolTipText;
             //************************************************************************************
             //init chart DressData
             //************************************************************************************
             //fixed wear
             chart_DressData.Series.Add("WearFixed");
-            chart_DressData.Series["WearFixed"].XValueMember = "_timestamp";
+            chart_DressData.Series["WearFixed"].XValueMember = "timestamp";
             chart_DressData.Series["WearFixed"].YValueMembers = "Wear_Fixed";
             chart_DressData.Series["WearFixed"].ChartType = SeriesChartType.StackedColumn;
             chart_DressData.Series["WearFixed"].XValueType = ChartValueType.DateTime;
@@ -199,7 +202,7 @@ namespace EQUIToolsLib
             chart_DressData.Series["WearFixed"].EmptyPointStyle.AxisLabel = "Empty";
             //mov wear
             chart_DressData.Series.Add("WearMove");
-            chart_DressData.Series["WearMove"].XValueMember = "_timestamp";
+            chart_DressData.Series["WearMove"].XValueMember = "timestamp";
             chart_DressData.Series["WearMove"].YValueMembers = "Wear_Move";
             chart_DressData.Series["WearMove"].ChartType = SeriesChartType.StackedColumn;
             chart_DressData.Series["WearMove"].XValueType = ChartValueType.DateTime;
@@ -210,7 +213,7 @@ namespace EQUIToolsLib
             chart_DressData.Series["WearMove"].EmptyPointStyle.AxisLabel = "Empty";
             //nr dress
             chart_DressData.Series.Add("Dress_Num");
-            chart_DressData.Series["Dress_Num"].XValueMember = "_timestamp";
+            chart_DressData.Series["Dress_Num"].XValueMember = "timestamp";
             chart_DressData.Series["Dress_Num"].YValueMembers = "Dress_Num";
             chart_DressData.Series["Dress_Num"].ChartType = SeriesChartType.Line;
             chart_DressData.Series["Dress_Num"].XValueType = ChartValueType.DateTime;
@@ -222,7 +225,7 @@ namespace EQUIToolsLib
             chart_DressData.Series["Dress_Num"].YAxisType = AxisType.Secondary;
             //nr of welds
             chart_DressData.Series.Add("Weld_Counter");
-            chart_DressData.Series["Weld_Counter"].XValueMember = "_timestamp";
+            chart_DressData.Series["Weld_Counter"].XValueMember = "timestamp";
             chart_DressData.Series["Weld_Counter"].YValueMembers = "Weld_Counter";
             chart_DressData.Series["Weld_Counter"].ChartType = SeriesChartType.Line;
             chart_DressData.Series["Weld_Counter"].XValueType = ChartValueType.DateTime;
@@ -237,7 +240,7 @@ namespace EQUIToolsLib
             chart_DressData.ChartAreas[0].AxisY2.Enabled = AxisEnabled.True;
             chart_DressData.ChartAreas[0].AxisX.Interval = 1;
             chart_DressData.ChartAreas[0].AxisY.IsStartedFromZero = false;
-            chart_DressData.FormatNumber += chart1_FormatNumber;
+            chart_DressData.FormatNumber += chart_FormatNumberXaxis;
             chart_DressData.GetToolTipText += chart_GetToolTipText;
             //************************************************************************************
             //
@@ -264,222 +267,44 @@ namespace EQUIToolsLib
 
         private void GetChartData()
         {
-            #region Query
-            string qrySBCUShortLong = @"
-   DECLARE 
-   @StartDate as DATETIME = '{0}',
-   @EndDate as DATETIME = '{1}',
---Filterparameters.
-   @Robot as varchar(25) = null,
-   @Tool as varchar(25) = null,
-   @Weldgunname as varchar(25) = '{2}'
-
----------------------------------------------------------------------------------------
---Als er een weldgun name word gebruikt zoeken we de juiste robot en tool id op..
----------------------------------------------------------------------------------------
-
-if (@Weldgunname is not null)
-BEGIN
-SET @Robot = (SELECT TOP 1 '%' + rws.Robot + '%' from GADATA.volvo.RobotWeldGunRelation as rws where rws.WeldgunName LIKE @Weldgunname)
-SET @Tool = (SELECT TOP 1 '%Tool: ' + CAST(rws.ElectrodeNbr as varchar(2)) + '%' from GADATA.volvo.RobotWeldGunRelation as rws where rws.WeldgunName LIKE @Weldgunname)
-END
-
-SELECT 
-*
-, sbcu.Dsetup as 'LongDsetup'
-, null as 'ShortDsetup' 
-, sbcu.UCL as 'LongUCL'
-, sbcu.LCL as 'LongLCL'
-,null as 'ShortUCL'
-,null as 'ShortLCL'
-FROM gadata.c3g.sbcudata as sbcu 
-WHERE
-sbcu.Longcheck = 1
-AND
-sbcu.tool_timestamp between   @startdate and @EndDate 
-AND
-sbcu.Robotname LIKE @Robot
-AND
-sbcu.tool_id LIKE @Tool
-
-UNION  
-SELECT 
-*
-, null as 'LongDsetup'
-, sbcu.Dsetup as 'ShortDsetup' 
-, null as 'LongUCL'
-, null as 'LongLCL'
-,sbcu.UCL  as 'ShortUCL'
-,sbcu.LCL  as 'ShortLCL'
-
-FROM gadata.c3g.sbcudata as sbcu 
-WHERE
-sbcu.Longcheck = 0
-AND
-sbcu.tool_timestamp between   @startdate and @EndDate 
-AND
-sbcu.Robotname LIKE @Robot
-AND
-sbcu.tool_id LIKE @Tool  
-
-
-UNION
-SELECT 
-@StartDate as 'tool_timestamp' 
-,null,null,null,null,null,null,null,null,null,null,null,null,null,null
-,null,null,null,null,null,null,null,null,null,null,null,null,null,null
-UNION
-SELECT 
-@EndDate as 'tool_timestamp' 
-,null,null,null,null,null,null,null,null,null,null,null,null,null,null
-,null,null,null,null,null,null,null,null,null,null,null,null,null,null
-                ";
-            string qryCylinder = @"
-   DECLARE 
-   @StartDate as DATETIME = '{0}',
-   @EndDate as DATETIME = '{1}',
---Filterparameters.
-   @Robot as varchar(25) = null,
-   @Tool as varchar(25) = null,
-   @Weldgunname as varchar(25) = '{2}'
-
----------------------------------------------------------------------------------------
---Als er een weldgun name word gebruikt zoeken we de juiste robot en tool id op..
----------------------------------------------------------------------------------------
-
-if (@Weldgunname is not null)
-BEGIN
-SET @Robot = (SELECT TOP 1 '%' + rws.Robot + '%' from GADATA.volvo.RobotWeldGunRelation as rws where rws.WeldgunName LIKE @Weldgunname)
-SET @Tool = (SELECT TOP 1 '%Tool: ' + CAST(rws.ElectrodeNbr as varchar(2)) + '%' from GADATA.volvo.RobotWeldGunRelation as rws where rws.WeldgunName LIKE @Weldgunname)
-END
-
-SELECT * FROM [GADATA].[C3G].[WeldGunCylinder]
-WHERE
-[WeldGunCylinder]._timestamp between   @startdate and @EndDate 
-AND
-[WeldGunCylinder].[controller_name] LIKE @Robot
-AND
-'%Tool: ' + CAST([WeldGunCylinder].tool_id as varchar(2)) LIKE @Tool  
-UNION
-SELECT 
-null,null,null
-,@StartDate as '_timestamp'
-,null,null,null,null,null,null,null,null,null
-,null,null,null,null,null,null,null  
-UNION
-SELECT 
-null,null,null
-,@EndDate as '_timestamp'
-,null,null,null,null,null,null,null,null,null
-,null,null,null,null,null,null,null  
-";
-
-            string qryMidair = @"
-   DECLARE 
-   @StartDate as DATETIME = '{0}',
-   @EndDate as DATETIME = '{1}',
---Filterparameters.
-   @Robot as varchar(25) = null,
-   @Tool as varchar(25) = null,
-   @Weldgunname as varchar(25) = '{2}'
-
-
----------------------------------------------------------------------------------------
---Als er een weldgun name word gebruikt zoeken we de juiste robot en tool id op..
----------------------------------------------------------------------------------------
-
-if (@Weldgunname is not null)
-BEGIN
-SET @Robot = (SELECT TOP 1 '%' + rws.Robot + '%' from GADATA.volvo.RobotWeldGunRelation as rws where rws.WeldgunName LIKE @Weldgunname)
-SET @Tool = (SELECT TOP 1 '%Tool: ' + CAST(rws.ElectrodeNbr as varchar(2)) + '%' from GADATA.volvo.RobotWeldGunRelation as rws where rws.WeldgunName LIKE @Weldgunname)
-END
-
-SELECT [Robotname]
-      ,[Tool]
-      ,[timestamp]
-      ,[SpotId]
-      ,[ResisActual]
-      ,[ResisRef]
-  FROM [GADATA].[dbo].[MidairRef]
-
-WHERE
-[MidairRef].[timestamp] between   @startdate and @EndDate 
-AND
-[MidairRef].[Robotname] LIKE @Robot
-AND
-[MidairRef].[Tool] LIKE @Tool 
-
-UNION
-SELECT null ,null
-      , @EndDate as 'timestamp'
-      ,null, null, null
-UNION
-SELECT null ,null
-      , @StartDate as 'timestamp'
-      ,null, null, null
-         
-";
-
-            string qryDressData = @"
-   DECLARE 
-   @StartDate as DATETIME = '{0}',
-   @EndDate as DATETIME = '{1}',
---Filterparameters.
-   @Robot as varchar(25) = null,
-   @Tool as varchar(25) = null,
-   @Weldgunname as varchar(25) = '{2}'
-
-SELECT [controller_name]
-      ,[id]
-      ,[rt_csv_file_id]
-      ,[Date Time] as '_timestamp'
-      ,[Tool_Nr]
-      ,[Dress_Num]
-      ,[Weld_Counter]
-      ,[Dress_Reason]
-      ,[Weld_Result]
-      ,[Length_Fixed_Result]
-      ,[Length_Move_Result]
-      ,[Max_Wear_Fixed]
-      ,[Wear_Fixed]
-      ,[DiffFrLastWear_Fixed]
-      ,[Max_Wear_Move]
-      ,[Wear_Move]
-      ,[DiffFrLastWear_Move]
-      ,[MaxDiffFrLastMeas]
-      ,[Current_TipWear]
-      ,[TipWearRatio]
-      ,[Time_DressCycleTime]
-      ,[ErrorType]
-      ,[ExtraInfo]
-  FROM [GADATA].[NGAC].[TipDressLogFile]
-  where controller_name = '321030R01' and Tool_Nr = 1
-  and [Date Time] between @startdate and @enddate
-
-UNION
-SELECT 
-null,null,null
-,@StartDate as '_timestamp'
-,null,null,null,null,null,null,null,null,null,null
-,null,null,null,null,null,null,null,null,null
-UNION
-SELECT 
-null,null,null
-,@EndDate as '_timestamp'
-,null,null,null,null,null,null,null,null,null,null
-,null,null,null,null,null,null,null,null,null 
- 
-";
-            #endregion
+            string qrySBCUShortLong = @"exec [EqUi].[GetSbcuData] @StartDate = '{0}',  @EndDate = '{1}', @Weldgunname = '{2}'";
+            string qryCylinder =  @"exec [EqUi].[GetCilinderData] @StartDate = '{0}',  @EndDate = '{1}', @Weldgunname = '{2}'";
+            string qryMidair =      @"exec [EqUi].[GetMidairData] @StartDate = '{0}',  @EndDate = '{1}', @Weldgunname = '{2}'";
+            string qryDressData = @"exec [EqUi].[GetTipDressData] @StartDate = '{0}',  @EndDate = '{1}', @Weldgunname = '{2}'";
             //
             DateTime StartDate = System.DateTime.Now.AddDays(Daysback);
             DateTime EndDate = System.DateTime.Now;
             //
-            dt_SBCU = lGdataComm.RunQueryGadata(string.Format(qrySBCUShortLong, StartDate.ToString("yyyy-MM-dd HH:mm:ss"), EndDate.ToString("yyyy-MM-dd HH:mm:ss"), activeLocation.Trim()));
-            dt_Cylinder = lGdataComm.RunQueryGadata(string.Format(qryCylinder, StartDate.ToString("yyyy-MM-dd HH:mm:ss"), EndDate.ToString("yyyy-MM-dd HH:mm:ss"), activeLocation.Trim()));
-            dt_MidAir = lGdataComm.RunQueryGadata(string.Format(qryMidair, StartDate.ToString("yyyy-MM-dd HH:mm:ss"), EndDate.ToString("yyyy-MM-dd HH:mm:ss"), activeLocation.Trim()));
-            dt_DressData = lGdataComm.RunQueryGadata(string.Format(qryDressData, StartDate.ToString("yyyy-MM-dd HH:mm:ss"), EndDate.ToString("yyyy-MM-dd HH:mm:ss"), activeLocation.Trim()));    
+           // activeLocation = "321030WS01a"; //DEBUGGG
             //
+            dt_SBCU = lGdataComm.RunQueryGadata(string.Format(qrySBCUShortLong, StartDate.ToString("yyyy-MM-dd HH:mm:ss"), EndDate.ToString("yyyy-MM-dd HH:mm:ss"), activeLocation.Trim()));
+            dt_SBCU = add_dummyTimestampRow(dt_SBCU, StartDate);
+            dt_SBCU = add_dummyTimestampRow(dt_SBCU, EndDate);
+            //
+            dt_Cylinder = lGdataComm.RunQueryGadata(string.Format(qryCylinder, StartDate.ToString("yyyy-MM-dd HH:mm:ss"), EndDate.ToString("yyyy-MM-dd HH:mm:ss"), activeLocation.Trim()));
+            dt_Cylinder = add_dummyTimestampRow(dt_Cylinder, StartDate);
+            dt_Cylinder = add_dummyTimestampRow(dt_Cylinder, EndDate);            
+            //
+            dt_MidAir = lGdataComm.RunQueryGadata(string.Format(qryMidair, StartDate.ToString("yyyy-MM-dd HH:mm:ss"), EndDate.ToString("yyyy-MM-dd HH:mm:ss"), activeLocation.Trim()));
+            dt_MidAir = add_dummyTimestampRow(dt_MidAir, StartDate);
+            dt_MidAir = add_dummyTimestampRow(dt_MidAir, EndDate);           
+            //
+            dt_DressData = lGdataComm.RunQueryGadata(string.Format(qryDressData, StartDate.ToString("yyyy-MM-dd HH:mm:ss"), EndDate.ToString("yyyy-MM-dd HH:mm:ss"), activeLocation.Trim()));
+            dt_DressData = add_dummyTimestampRow(dt_DressData, StartDate);
+            dt_DressData = add_dummyTimestampRow(dt_DressData, EndDate);
+            //
+        }
+
+        private DataTable add_dummyTimestampRow(DataTable dt, DateTime timestamp)
+        {
+            foreach (DataColumn col in dt.Columns)
+            {
+                col.AllowDBNull = true;
+            }
+            DataRow newrow = dt.NewRow();
+            newrow["timestamp"] = timestamp;
+            dt.Rows.Add(newrow);
+            return dt;
         }
 
         private void set_trackbars()
@@ -499,27 +324,27 @@ null,null,null
             trackBar2.Maximum = trackBar1.Maximum;
             trackBar2.Value = trackBar2.Maximum;
             //
-            trackBar1.ValueChanged += new System.EventHandler(trackBar1_ValueChanged);
-            trackBar2.ValueChanged += new System.EventHandler(trackBar1_ValueChanged);
+            trackBar1.ValueChanged += new System.EventHandler(trackBar_ValueChanged);
+            trackBar2.ValueChanged += new System.EventHandler(trackBar_ValueChanged);
 
         }
 
-        private void built_Chart(Boolean noAutoGrouping) 
+        private void built_Chart(Boolean noAutoGrouping, Boolean bHideEmptyCharts) 
         {
             //use the trackbar to calculate the starting point of the graph
             DateTime GrapStart = DateTime.Now.AddDays(Convert.ToInt32(trackBar1.Value));
             DateTime GrapEnd = DateTime.Now.AddDays(Convert.ToInt32(trackBar2.Value));
             //
             var ldt_SBCU = from a in dt_SBCU.AsEnumerable()
-                               where a.Field<DateTime>("tool_timestamp") > GrapStart && a.Field<DateTime>("tool_timestamp") < GrapEnd
-                               orderby a.Field<DateTime>("tool_timestamp")
+                           where a.Field<DateTime>("timestamp") > GrapStart && a.Field<DateTime>("timestamp") < GrapEnd
+                           orderby a.Field<DateTime>("timestamp")
                                select a;
-            chart_sbcu.DataSource = ldt_SBCU;
+            chart_sbcu.DataSource = ldt_SBCU;  
             chart_sbcu.DataBind();
             //
                 var ldt_Cylinder = from a in dt_Cylinder.AsEnumerable()
-                                   where a.Field<DateTime>("_timestamp") > GrapStart && a.Field<DateTime>("_timestamp") < GrapEnd
-                                   orderby a.Field<DateTime>("_timestamp")
+                                   where a.Field<DateTime>("timestamp") > GrapStart && a.Field<DateTime>("timestamp") < GrapEnd
+                                   orderby a.Field<DateTime>("timestamp")
                                    select a;
                 chart_cilinder.DataSource = ldt_Cylinder;
                 chart_cilinder.DataBind();
@@ -533,8 +358,8 @@ null,null,null
             //
 
                 var ldt_DressData = from a in dt_DressData.AsEnumerable()
-                                    where a.Field<DateTime>("_timestamp") > GrapStart && a.Field<DateTime>("_timestamp") < GrapEnd
-                                    orderby a.Field<DateTime>("_timestamp")
+                                    where a.Field<DateTime>("timestamp") > GrapStart && a.Field<DateTime>("timestamp") < GrapEnd
+                                    orderby a.Field<DateTime>("timestamp")
                                  select a;
                 chart_DressData.DataSource = ldt_DressData;
                 chart_DressData.DataBind();
@@ -672,12 +497,14 @@ null,null,null
                     break;
             }
             //
+            if (bHideEmptyCharts) hideEmptyCharts();
+            //
             SetXlabelOnForBottumChart();
             //here because of cross threding
             metroProgressSpinner1.Visible = false;
         }
 
-        void chart1_FormatNumber(object sender, FormatNumberEventArgs e)
+        private void chart_FormatNumberXaxis(object sender, FormatNumberEventArgs e)
         {
             if (e.ElementType == ChartElementType.AxisLabels && e.Format == "CustomAxisXFormatWeek")
             {
@@ -747,14 +574,14 @@ Value: {2:0.00}"
      }
   }
 
-        private void trackBar1_ValueChanged(object sender, EventArgs e)
+        private void trackBar_ValueChanged(object sender, EventArgs e)
         {
-            built_Chart(false);
+            built_Chart(false,true);
         }
 
         private void cb_sortmode_SelectedValueChanged(object sender, EventArgs e)
         {
-            built_Chart(true);
+            built_Chart(true,false);
         }
 
         private void btn_dataview_Click(object sender, EventArgs e)
@@ -776,15 +603,13 @@ Value: {2:0.00}"
 
         private void cb_weldguns_DropDown(object sender, EventArgs e)
         {
+            if (cb_weldguns.DataSource != null) return;
             string orgSelection = cb_weldguns.Text;
-            if (cb_weldguns.DataSource == null)
-            {
-                string QryGetguns = "select  WeldgunName from GADATA.volvo.RobotWeldGunRelation where RobotType = 'c3g'";
-                cb_weldguns.DataSource = lGdataComm.RunQueryGadata(QryGetguns);
-                cb_weldguns.ValueMember = "WeldgunName"; 
-                cb_weldguns.DisplayMember = "WeldgunName";
-                cb_weldguns.Text = orgSelection;
-            }
+            string QryGetguns = "SELECT [WeldgunName] FROM [GADATA].[Volvo].[RobotWeldGunRelation] ";
+                    cb_weldguns.DataSource = lGdataComm.RunQueryGadata(QryGetguns);
+                    cb_weldguns.ValueMember = "WeldgunName";
+                    cb_weldguns.DisplayMember = "WeldgunName";
+                    cb_weldguns.Text = orgSelection;
         }
 
         private void cb_weldguns_DropDownClosed(object sender, EventArgs e)
@@ -826,9 +651,8 @@ Value: {2:0.00}"
             {
                 tableLayoutPanel1.RowStyles[1].Height = 0;
             }
-            built_Chart(false);
+            built_Chart(false,false);
         }
-
 
         private void Btn_CharCilinder_Click(object sender, EventArgs e)
         {
@@ -841,7 +665,7 @@ Value: {2:0.00}"
             {
                 tableLayoutPanel1.RowStyles[3].Height = 0;
             }
-            built_Chart(false);
+            built_Chart(false,false);
         }
 
         private void Btn_ChartMidair_Click(object sender, EventArgs e)
@@ -855,7 +679,7 @@ Value: {2:0.00}"
             {
                 tableLayoutPanel1.RowStyles[5].Height = 0;
             }
-            built_Chart(false);
+            built_Chart(false,false);
         }
 
         private void btn_ChartDressData_Click(object sender, EventArgs e)
@@ -869,7 +693,7 @@ Value: {2:0.00}"
             {
                 tableLayoutPanel1.RowStyles[7].Height = 0;
             }
-            built_Chart(false);
+            built_Chart(false,false);
         }
 
         private void hideEmptyCharts()
@@ -882,6 +706,26 @@ Value: {2:0.00}"
             {
                 tableLayoutPanel1.RowStyles[1].SizeType = SizeType.Percent;
                 tableLayoutPanel1.RowStyles[1].Height = 25;  //size = %   
+            }
+
+            if (chart_cilinder.Series[0].Points.Count == 0)
+            {
+                tableLayoutPanel1.RowStyles[3].Height = 0;
+            }
+            else
+            {
+                tableLayoutPanel1.RowStyles[3].SizeType = SizeType.Percent;
+                tableLayoutPanel1.RowStyles[3].Height = 25;  //size = %   
+            }
+
+            if (chart_midair.Series[0].Points.Count == 0)
+            {
+                tableLayoutPanel1.RowStyles[5].Height = 0;
+            }
+            else
+            {
+                tableLayoutPanel1.RowStyles[5].SizeType = SizeType.Percent;
+                tableLayoutPanel1.RowStyles[5].Height = 25;  //size = %   
             }
 
           

@@ -75,7 +75,7 @@
             // trackBar1
             // 
             this.trackBar1.BackColor = System.Drawing.Color.Transparent;
-            this.trackBar1.Location = new System.Drawing.Point(796, 67);
+            this.trackBar1.Location = new System.Drawing.Point(858, 63);
             this.trackBar1.Name = "trackBar1";
             this.trackBar1.Size = new System.Drawing.Size(359, 23);
             this.trackBar1.TabIndex = 8;
@@ -103,7 +103,7 @@
             // trackBar2
             // 
             this.trackBar2.BackColor = System.Drawing.Color.Transparent;
-            this.trackBar2.Location = new System.Drawing.Point(796, 38);
+            this.trackBar2.Location = new System.Drawing.Point(858, 34);
             this.trackBar2.Name = "trackBar2";
             this.trackBar2.Size = new System.Drawing.Size(359, 23);
             this.trackBar2.TabIndex = 14;
@@ -275,7 +275,7 @@
             // 
             // metroProgressSpinner1
             // 
-            this.metroProgressSpinner1.Location = new System.Drawing.Point(361, 19);
+            this.metroProgressSpinner1.Location = new System.Drawing.Point(727, 20);
             this.metroProgressSpinner1.Maximum = 100;
             this.metroProgressSpinner1.Name = "metroProgressSpinner1";
             this.metroProgressSpinner1.Size = new System.Drawing.Size(94, 67);
@@ -285,7 +285,7 @@
             // 
             // btn_3dTemp
             // 
-            this.btn_3dTemp.Location = new System.Drawing.Point(1248, 71);
+            this.btn_3dTemp.Location = new System.Drawing.Point(590, 66);
             this.btn_3dTemp.Name = "btn_3dTemp";
             this.btn_3dTemp.Size = new System.Drawing.Size(80, 19);
             this.btn_3dTemp.TabIndex = 25;
