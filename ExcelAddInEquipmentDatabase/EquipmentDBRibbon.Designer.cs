@@ -41,6 +41,7 @@
             this.separator1 = this.Factory.CreateRibbonSeparator();
             this.dd_activeConnection = this.Factory.CreateRibbonDropDown();
             this.dd_ParameterSets = this.Factory.CreateRibbonDropDown();
+            this.btn_EditProcedure = this.Factory.CreateRibbonToggleButton();
             this.AssetManager = this.Factory.CreateRibbonGroup();
             this.cb_Lochierarchy = this.Factory.CreateRibbonComboBox();
             this.cb_locations = this.Factory.CreateRibbonComboBox();
@@ -64,9 +65,7 @@
             this.groupTempTools = this.Factory.CreateRibbonGroup();
             this.sync_stw040 = this.Factory.CreateRibbonButton();
             this.btn_sync_mx7 = this.Factory.CreateRibbonButton();
-            this.btn_testUpdate = this.Factory.CreateRibbonButton();
             this.btn_SBCUtest = this.Factory.CreateRibbonButton();
-            this.btn_EditProcedure = this.Factory.CreateRibbonToggleButton();
             this.tab1.SuspendLayout();
             this.rib2.SuspendLayout();
             this.group2.SuspendLayout();
@@ -128,6 +127,14 @@
             this.dd_ParameterSets.OfficeImageId = "ImportMoreMenu";
             this.dd_ParameterSets.ShowImage = true;
             this.dd_ParameterSets.SelectionChanged += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.dd_ParameterSets_SelectionChanged);
+            // 
+            // btn_EditProcedure
+            // 
+            this.btn_EditProcedure.Label = "Procedure parameters";
+            this.btn_EditProcedure.Name = "btn_EditProcedure";
+            this.btn_EditProcedure.OfficeImageId = "SmartArtInsert";
+            this.btn_EditProcedure.ShowImage = true;
+            this.btn_EditProcedure.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_EditProcedure_Click);
             // 
             // AssetManager
             // 
@@ -292,7 +299,6 @@
             // 
             this.groupTempTools.Items.Add(this.sync_stw040);
             this.groupTempTools.Items.Add(this.btn_sync_mx7);
-            this.groupTempTools.Items.Add(this.btn_testUpdate);
             this.groupTempTools.Items.Add(this.btn_SBCUtest);
             this.groupTempTools.Label = "TempTools";
             this.groupTempTools.Name = "groupTempTools";
@@ -309,25 +315,11 @@
             this.btn_sync_mx7.Name = "btn_sync_mx7";
             this.btn_sync_mx7.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_sync_mx7_Click);
             // 
-            // btn_testUpdate
-            // 
-            this.btn_testUpdate.Label = "btn_testUpdate";
-            this.btn_testUpdate.Name = "btn_testUpdate";
-            this.btn_testUpdate.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_testUpdate_Click);
-            // 
             // btn_SBCUtest
             // 
             this.btn_SBCUtest.Label = "btn_SBCUtest";
             this.btn_SBCUtest.Name = "btn_SBCUtest";
             this.btn_SBCUtest.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button1_Click_1);
-            // 
-            // btn_EditProcedure
-            // 
-            this.btn_EditProcedure.Label = "Procedure parameters";
-            this.btn_EditProcedure.Name = "btn_EditProcedure";
-            this.btn_EditProcedure.OfficeImageId = "SmartArtInsert";
-            this.btn_EditProcedure.ShowImage = true;
-            this.btn_EditProcedure.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_EditProcedure_Click);
             // 
             // EquipmentDBRibbon
             // 
@@ -383,7 +375,6 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup groupTempTools;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton sync_stw040;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_sync_mx7;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_testUpdate;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_SBCUtest;
         internal Microsoft.Office.Tools.Ribbon.RibbonToggleButton btn_EditProcedure;
     }

@@ -10,6 +10,7 @@ using Microsoft.Office.Interop.Excel;
 using System.Windows.Forms;
 using EQUICommunictionLib;
 using EQUIToolsLib;
+using System.Threading;
 
 namespace ExcelAddInEquipmentDatabase
 {
@@ -201,6 +202,19 @@ namespace ExcelAddInEquipmentDatabase
 
         }
 
+        //set wrap text 
+        private static void SetWrapText(Excel._Worksheet Sheet)
+        {
+            foreach (Excel.ListObject oListobject in Sheet.ListObjects)
+            {
+                Sheet.get_Range(oListobject.Name).EntireColumn.AutoFit();
+                //not working
+                Sheet.get_Range(oListobject.Name).Cells.VerticalAlignment = Microsoft.Office.Interop.Excel.XlVAlign.xlVAlignTop;
+                Sheet.get_Range(oListobject.Name).WrapText = true;
+            }
+
+        }
+
         //create Robotdb default format rules 
         private static void AddRobotFormatting(Excel._Worksheet Sheet)
         { 
@@ -234,7 +248,7 @@ namespace ExcelAddInEquipmentDatabase
 
             Office.MsoControlType ControlPopup = Office.MsoControlType.msoControlPopup;
             Office.CommandBarPopup subMenu = (Office.CommandBarPopup)GetTableContextMenu().Controls.Add(ControlPopup, Type.Missing, Type.Missing, position, true);
-            subMenu.Caption = "Auto formatting";
+            subMenu.Caption = "Formatting";
             
             //
             Office.CommandBarButton btnFormatSheetData = (Office.CommandBarButton)subMenu.Controls.Add(menuItem, Type.Missing, Type.Missing, 1, true);
@@ -246,6 +260,16 @@ namespace ExcelAddInEquipmentDatabase
             btnFormatSheetWorkorder.Style = Office.MsoButtonStyle.msoButtonCaption;
             btnFormatSheetWorkorder.Caption = "Maximo default";
             btnFormatSheetWorkorder.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(ApplyWorkorderFromattingClick);
+            //
+            Office.CommandBarButton btnSetWrap = (Office.CommandBarButton)subMenu.Controls.Add(menuItem, Type.Missing, Type.Missing, 3, true);
+            btnSetWrap.Style = Office.MsoButtonStyle.msoButtonCaption;
+            btnSetWrap.Caption = "AutoFitData";
+            btnSetWrap.Click += btnSetWrap_Click;
+        }
+
+        void btnSetWrap_Click(Office.CommandBarButton Ctrl, ref bool CancelDefault)
+        {
+            SetWrapText(lClickedSheet);
         }
         //event handelere for format button
         void ApplyRobotFromattingClick(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)
@@ -277,7 +301,14 @@ namespace ExcelAddInEquipmentDatabase
         //**********************************SBCU Stats*********************************************
         void SBCUStatsMenuItemClick(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)
         {
-            SBCUStats lSBCUStats = new SBCUStats(location); //allow multible instances of the form.
+            //SBCUStats lSBCUStats = new SBCUStats(location); //crossth
+            var newThread = new System.Threading.Thread(frmNewFormThread);
+            newThread.SetApartmentState(System.Threading.ApartmentState.STA);
+            newThread.Start();
+        }
+        public void frmNewFormThread()
+        {
+           System.Windows.Forms.Application.Run(new SBCUStats(location));
         }
         //**********************************ASSET Stats*********************************************
         void AssetStatsMenuItemClick(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)

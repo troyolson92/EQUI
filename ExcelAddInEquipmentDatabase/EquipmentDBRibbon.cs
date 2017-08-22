@@ -14,6 +14,7 @@ using System.Text.RegularExpressions;
 using System.IO;
 using EQUICommunictionLib;
 using EQUIToolsLib;
+using System.Threading;
 
 namespace ExcelAddInEquipmentDatabase
 {
@@ -82,7 +83,7 @@ namespace ExcelAddInEquipmentDatabase
             //subscribe to before rightclick for context menus.
             Globals.ThisAddIn.Application.SheetBeforeRightClick += lWorksheetFeatures.Application_SheetBeforeRightClick;
             //run background tick for refresh events 
-            Timer timer = new Timer();
+            System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
             timer.Interval = (60 * 1000); // 60 secs
             timer.Tick += new EventHandler(Refresh_Tick);
             timer.Start();
@@ -122,7 +123,6 @@ namespace ExcelAddInEquipmentDatabase
             btn_ErrorMngr.Enabled = true;
             btn_sync_mx7.Enabled = true;
             sync_stw040.Enabled = true;
-            btn_testUpdate.Enabled = false;
         }
         else
         { 
@@ -134,7 +134,6 @@ namespace ExcelAddInEquipmentDatabase
             btn_ErrorMngr.Enabled = false;
             btn_sync_mx7.Enabled = false;
             sync_stw040.Enabled = false;
-            btn_testUpdate.Enabled = false;
         }
         }
 
@@ -159,9 +158,17 @@ namespace ExcelAddInEquipmentDatabase
             }
             foreach (Excel.ListObject oListobject in activeWorksheet.ListObjects)
             {
+                try
+                {
                     Excel.QueryTable oTable = oListobject.QueryTable;
                     Excel.WorkbookConnection conn = oTable.WorkbookConnection;
                     return conn.Name.ToString();
+                }
+                catch (Exception ex)
+                {
+                    Debugger.Exeption(ex);
+                    return null;
+                }
             }
             return null;
         }
@@ -734,20 +741,19 @@ namespace ExcelAddInEquipmentDatabase
             btn_sync_mx7.Enabled = true;
         }
 
-        private void btn_testUpdate_Click(object sender, RibbonControlEventArgs e)
-        {
-            ClickOnceUtil clickonceutil = new ClickOnceUtil();
-            clickonceutil.test();
-           // clickonceutil.CheckAndUpdate();
-        }
-
         //test
         private void button1_Click_1(object sender, RibbonControlEventArgs e)
         {
-            SBCUStats lSBCUStats = new SBCUStats(); //allow multible instances of the form.
+           // SBCUStats lSBCUStats = new SBCUStats(); //crosstrheading
+            var newThread = new System.Threading.Thread(frmNewFormThread);
+            newThread.SetApartmentState(System.Threading.ApartmentState.STA);
+            newThread.Start();
         }
-
-
+       
+        public void frmNewFormThread()
+        {
+            Application.Run(new SBCUStats());
+        }
         //
 
 
