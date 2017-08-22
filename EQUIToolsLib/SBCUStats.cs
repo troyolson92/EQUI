@@ -224,6 +224,7 @@ namespace EQUIToolsLib
             chart_DressData.Series["Dress_Num"].EmptyPointStyle.AxisLabel = "Empty";
             chart_DressData.Series["Dress_Num"].YAxisType = AxisType.Secondary;
             //nr of welds
+            /*
             chart_DressData.Series.Add("Weld_Counter");
             chart_DressData.Series["Weld_Counter"].XValueMember = "timestamp";
             chart_DressData.Series["Weld_Counter"].YValueMembers = "Weld_Counter";
@@ -235,6 +236,7 @@ namespace EQUIToolsLib
             chart_DressData.Series["Weld_Counter"].EmptyPointStyle.BorderWidth = 3;
             chart_DressData.Series["Weld_Counter"].EmptyPointStyle.AxisLabel = "Empty";
             chart_DressData.Series["Weld_Counter"].YAxisType = AxisType.Secondary;
+             */
 
             //
             chart_DressData.ChartAreas[0].AxisY2.Enabled = AxisEnabled.True;
@@ -253,7 +255,8 @@ namespace EQUIToolsLib
         void bw_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             set_trackbars();
-          //  trackBar1.Value = trackBar1.Value; //to trigger chart initalisation (I know its stupid) 
+            EnableEvents(true);
+            trackBar1.Value = trackBar1.Value; //to trigger chart initalisation (I know its stupid) 
             /*
              * in standonlone oke maar in build in Excel crossthreading 
              mogelijks better om al de tools te launchen via    Application.Run(new SBCUStats(col["target"]));...
@@ -262,8 +265,26 @@ namespace EQUIToolsLib
 
         void bw_DoWork(object sender, DoWorkEventArgs e)
         {
+            EnableEvents(false);
             GetChartData();
         }
+
+        private void EnableEvents(Boolean enbl)
+        {
+           if (enbl)
+           {
+               trackBar1.ValueChanged += new System.EventHandler(trackBar_ValueChanged);
+               trackBar2.ValueChanged += new System.EventHandler(trackBar_ValueChanged);
+               toolStripComboBoxSortMode.SelectedIndexChanged += new System.EventHandler(this.cb_sortmode_SelectedValueChanged);
+           }
+           else
+           {
+               trackBar1.ValueChanged -= new System.EventHandler(trackBar_ValueChanged);
+               trackBar2.ValueChanged -= new System.EventHandler(trackBar_ValueChanged);
+               toolStripComboBoxSortMode.SelectedIndexChanged -= new System.EventHandler(this.cb_sortmode_SelectedValueChanged);
+           }
+        }
+
 
         private void GetChartData()
         {
@@ -324,9 +345,6 @@ namespace EQUIToolsLib
             trackBar2.Maximum = trackBar1.Maximum;
             trackBar2.Value = trackBar2.Maximum;
             //
-            trackBar1.ValueChanged += new System.EventHandler(trackBar_ValueChanged);
-            trackBar2.ValueChanged += new System.EventHandler(trackBar_ValueChanged);
-
         }
 
         private void link_chart(Chart lchart, DataTable ldt)
@@ -341,17 +359,26 @@ namespace EQUIToolsLib
                            orderby a.Field<DateTime>("timestamp")
                            select a;
             lchart.DataSource = vldt;
-            lchart.DataBind();
-        }
+            try
+            {
+                lchart.DataBind();
+            }
+            catch (Exception ex)
+            {
 
+            }
+        }
 
         private void built_Chart(Boolean noAutoGrouping, Boolean bHideEmptyCharts) 
         {
+            //disable events
+            EnableEvents(false);
+            //link datatbels to charts
             link_chart(chart_sbcu, dt_SBCU);
             link_chart(chart_cilinder, dt_Cylinder);
             link_chart(chart_midair, dt_MidAir);
             link_chart(chart_DressData, dt_DressData);
-             //
+            //set autogrouping
             if (noAutoGrouping == false)
             {
                 if ((trackBar1.Value - trackBar2.Value) > -10)
@@ -370,7 +397,7 @@ namespace EQUIToolsLib
 
             switch (toolStripComboBoxSortMode.Text)
             {
-                case "None":
+                case "Groupmode: None":
                     chart_sbcu.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatTimestamp"; 
                     chart_sbcu.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.NotSet;  
                     
@@ -385,7 +412,7 @@ namespace EQUIToolsLib
                  
                     break;
 
-                case "Hours":
+                case "Groupmode: Hours":
                     chart_sbcu.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatHour"; 
                     chart_sbcu.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Hours;
                     
@@ -414,10 +441,10 @@ namespace EQUIToolsLib
                     chart_DressData.DataManipulator.Group("AVE", 1, IntervalType.Hours, "WearMove");
 
                     chart_DressData.DataManipulator.Group("MAX", 1, IntervalType.Hours, "Dress_Num");
-                    chart_DressData.DataManipulator.Group("SUM", 1, IntervalType.Hours, "Weld_Counter");
+                   // chart_DressData.DataManipulator.Group("MAX", 1, IntervalType.Hours, "Weld_Counter");
                     break;
 
-                case "Days":
+                case "Groupmode: Days":
                     chart_sbcu.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatDay"; 
                     chart_sbcu.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Days;
                     
@@ -446,10 +473,10 @@ namespace EQUIToolsLib
                     chart_DressData.DataManipulator.Group("AVE", 1, IntervalType.Days, "WearMove");
 
                     chart_DressData.DataManipulator.Group("MAX", 1, IntervalType.Days, "Dress_Num");
-                    chart_DressData.DataManipulator.Group("SUM", 1, IntervalType.Days, "Weld_Counter");
+                    //chart_DressData.DataManipulator.Group("MAX", 1, IntervalType.Days, "Weld_Counter");
                     break;
 
-                case "Weeks":
+                case "Groupmode: Weeks":
                     chart_sbcu.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatWeek"; 
                     chart_sbcu.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Weeks;
                     
@@ -478,7 +505,7 @@ namespace EQUIToolsLib
                     chart_DressData.DataManipulator.Group("AVE", 1, IntervalType.Weeks, "WearMove");
 
                     chart_DressData.DataManipulator.Group("MAX", 1, IntervalType.Weeks, "Dress_Num");
-                    chart_DressData.DataManipulator.Group("SUM", 1, IntervalType.Weeks, "Weld_Counter");
+                    //chart_DressData.DataManipulator.Group("MAX", 1, IntervalType.Weeks, "Weld_Counter");
                     break;
 
                 default:
@@ -488,8 +515,11 @@ namespace EQUIToolsLib
             if (bHideEmptyCharts) hideEmptyCharts();
             //
             SetXlabelOnForBottumChart();
-            //here because of cross threding
+            //
             metroProgressSpinner1.Visible = false;
+            //
+            EnableEvents(true);
+            //
         }
 
         private void chart_FormatNumberXaxis(object sender, FormatNumberEventArgs e)
@@ -758,6 +788,10 @@ Value: {2:0.00}"
             }
         }
 
+        private void showHideLedendeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
 
     }
 }
