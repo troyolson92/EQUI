@@ -207,10 +207,9 @@ namespace ExcelAddInEquipmentDatabase
         {
             foreach (Excel.ListObject oListobject in Sheet.ListObjects)
             {
-                Sheet.get_Range(oListobject.Name).EntireColumn.AutoFit();
-                //not working
                 Sheet.get_Range(oListobject.Name).Cells.VerticalAlignment = Microsoft.Office.Interop.Excel.XlVAlign.xlVAlignTop;
                 Sheet.get_Range(oListobject.Name).WrapText = true;
+                Sheet.get_Range(oListobject.Name).EntireColumn.AutoFit();
             }
 
         }

@@ -425,16 +425,17 @@ namespace ExcelAddInEquipmentDatabase
 
             List<string> Files = new List<string>(new string[] 
             { 
-               @"https://sharepoint.volvocars.net/sites/vcg_ga_aaosr/PublicDocuments/VSTO/Templates/EqDbGADATATemplate.xlsx"
-              ,@"https://sharepoint.volvocars.net/sites/vcg_ga_aaosr/PublicDocuments/VSTO/Templates/EqDbGADATATemplateSuperVis.xlsx"
-              ,@"https://sharepoint.volvocars.net/sites/vcg_ga_aaosr/PublicDocuments/VSTO/Templates/EqDbGBDATATemplate.xlsx" 
+               @"\\gnlsnm0101.gen.volvocars.net\proj\6308-SHR-VCC22700\VSTO\Templates\EqDbGADATATemplate.xlsx"
+              ,@"\\gnlsnm0101.gen.volvocars.net\proj\6308-SHR-VCC22700\VSTO\Templates\EqDbGADATATemplateSuperVis.xlsx"
+              ,@"\\gnlsnm0101.gen.volvocars.net\proj\6308-SHR-VCC22700\VSTO\Templates\EqDbGBDATATemplate.xlsx" 
+              ,@"\\gnlsnm0101.gen.volvocars.net\proj\6308-SHR-VCC22700\VSTO\Templates\NGACtemplate_beta1.xlsx" 
             });
             foreach (string file in Files)
             {
                 RibbonDropDownItem galleryItem = Globals.Factory.GetRibbonFactory().CreateRibbonDropDownItem();
                 galleryItem.Tag = file;
                 galleryItem.Label = Path.GetFileName(file);
-                galleryItem.ScreenTip = "This is a screen tip";
+                galleryItem.ScreenTip = "These templates will get you started.";
                 gall_templates.Items.Add(galleryItem);
             }
         }
