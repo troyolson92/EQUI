@@ -12,31 +12,7 @@ using EQUICommunictionLib;
 
 namespace EQUIToolsLib
 {
-    public class MxxOverviewMode
-    {
-        string sDataGridQuery;
-        string sDiscription;
-        string sLocation;
-
-        public string DataGridQuery 
-        {
-            get { return sDataGridQuery; }
-            set { sDataGridQuery = value; }    
-        }
-
-        public string Discription
-        {
-            get { return sDiscription; }
-            set { sDiscription = value; }
-        }
-
-        public string Location
-        {
-            get { return sLocation; }
-            set { sLocation = value; }
-        }
-    }
-
+ 
     public partial class MXxWOoverview : MetroFramework.Forms.MetroForm
     {
         MaximoComm lMaximocomm = new MaximoComm();
@@ -125,6 +101,7 @@ ORDER BY WORKORDER.STATUSDATE";
                     break;
 //view workorders on location ****************************************************************
                 case "vm_workordersOnLocation":
+                lbl_default:
             lvm.Discription = "Maximo Wo browser: 'Workorders'";
             lvm.DataGridQuery = @"
 select 
@@ -157,7 +134,6 @@ ORDER BY WORKORDER.STATUSDATE DESC
             break;
  //view Qtaakplan ****************************************************************
                 case "vm_QualityOnLocation":
-            lbl_default:
             lvm.Discription = "Maximo Wo browser: 'Quality'";
             lvm.DataGridQuery = @"
 select 
@@ -340,4 +316,30 @@ ORDER BY WORKORDER.STATUSDATE DESC
  #endregion
 
     }
+
+    public class MxxOverviewMode
+    {
+        string sDataGridQuery;
+        string sDiscription;
+        string sLocation;
+
+        public string DataGridQuery
+        {
+            get { return sDataGridQuery; }
+            set { sDataGridQuery = value; }
+        }
+
+        public string Discription
+        {
+            get { return sDiscription; }
+            set { sDiscription = value; }
+        }
+
+        public string Location
+        {
+            get { return sLocation; }
+            set { sLocation = value; }
+        }
+    }
+
 }

@@ -52,12 +52,13 @@
             this.dataViewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.show3DSbcuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripComboBoxSortMode = new System.Windows.Forms.ToolStripComboBox();
-            this.metroProgressSpinner1 = new MetroFramework.Controls.MetroProgressSpinner();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showHideLedendeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.metroProgressSpinner1 = new MetroFramework.Controls.MetroProgressSpinner();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.chart_sbcu)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart_cilinder)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart_midair)).BeginInit();
@@ -98,9 +99,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.trackBar1.BackColor = System.Drawing.Color.Transparent;
-            this.trackBar1.Location = new System.Drawing.Point(114, 27);
+            this.trackBar1.Location = new System.Drawing.Point(583, 27);
             this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Size = new System.Drawing.Size(437, 22);
+            this.trackBar1.Size = new System.Drawing.Size(387, 22);
             this.trackBar1.TabIndex = 8;
             this.trackBar1.Text = "metroTrackBar1";
             // 
@@ -110,9 +111,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.trackBar2.BackColor = System.Drawing.Color.Transparent;
-            this.trackBar2.Location = new System.Drawing.Point(114, 3);
+            this.trackBar2.Location = new System.Drawing.Point(583, 3);
             this.trackBar2.Name = "trackBar2";
-            this.trackBar2.Size = new System.Drawing.Size(437, 18);
+            this.trackBar2.Size = new System.Drawing.Size(387, 18);
             this.trackBar2.TabIndex = 14;
             this.trackBar2.Text = "metroTrackBar1";
             // 
@@ -166,7 +167,7 @@
             // 
             this.cb_weldguns.FormattingEnabled = true;
             this.cb_weldguns.ItemHeight = 24;
-            this.cb_weldguns.Location = new System.Drawing.Point(321, 20);
+            this.cb_weldguns.Location = new System.Drawing.Point(303, 3);
             this.cb_weldguns.Name = "cb_weldguns";
             this.cb_weldguns.Size = new System.Drawing.Size(161, 30);
             this.cb_weldguns.TabIndex = 21;
@@ -319,53 +320,6 @@
             this.toolStripComboBoxSortMode.Size = new System.Drawing.Size(150, 26);
             this.toolStripComboBoxSortMode.Text = "Sortmode";
             // 
-            // metroProgressSpinner1
-            // 
-            this.metroProgressSpinner1.Location = new System.Drawing.Point(548, 11);
-            this.metroProgressSpinner1.Maximum = 100;
-            this.metroProgressSpinner1.Name = "metroProgressSpinner1";
-            this.metroProgressSpinner1.Size = new System.Drawing.Size(99, 94);
-            this.metroProgressSpinner1.TabIndex = 24;
-            this.metroProgressSpinner1.UseSelectable = true;
-            this.metroProgressSpinner1.Visible = false;
-            // 
-            // tableLayoutPanel2
-            // 
-            this.tableLayoutPanel2.ColumnCount = 3;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 66.66666F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel2.Controls.Add(this.trackBar1, 1, 1);
-            this.tableLayoutPanel2.Controls.Add(this.trackBar2, 1, 0);
-            this.tableLayoutPanel2.Controls.Add(this.label1, 0, 1);
-            this.tableLayoutPanel2.Controls.Add(this.label2, 2, 0);
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(679, 53);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 2;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 46.57534F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 53.42466F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(666, 52);
-            this.tableLayoutPanel2.TabIndex = 25;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(3, 24);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(68, 17);
-            this.label1.TabIndex = 15;
-            this.label1.Text = "StartDate";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(557, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(63, 17);
-            this.label2.TabIndex = 16;
-            this.label2.Text = "EndDate";
-            // 
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -381,6 +335,68 @@
             this.showHideLedendeToolStripMenuItem.Text = "Show/Hide Ledende";
             this.showHideLedendeToolStripMenuItem.Click += new System.EventHandler(this.showHideLedendeToolStripMenuItem_Click);
             // 
+            // metroProgressSpinner1
+            // 
+            this.metroProgressSpinner1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.metroProgressSpinner1.Location = new System.Drawing.Point(1147, 11);
+            this.metroProgressSpinner1.Maximum = 100;
+            this.metroProgressSpinner1.Name = "metroProgressSpinner1";
+            this.metroProgressSpinner1.Size = new System.Drawing.Size(99, 94);
+            this.metroProgressSpinner1.TabIndex = 24;
+            this.metroProgressSpinner1.UseSelectable = true;
+            this.metroProgressSpinner1.Visible = false;
+            // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.ColumnCount = 5;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 300F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 180F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.tableLayoutPanel2.Controls.Add(this.label2, 4, 0);
+            this.tableLayoutPanel2.Controls.Add(this.trackBar2, 3, 0);
+            this.tableLayoutPanel2.Controls.Add(this.trackBar1, 3, 1);
+            this.tableLayoutPanel2.Controls.Add(this.label1, 2, 1);
+            this.tableLayoutPanel2.Controls.Add(this.cb_weldguns, 1, 0);
+            this.tableLayoutPanel2.Controls.Add(this.label3, 0, 0);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(23, 23);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 2;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 46.57534F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 53.42466F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(1073, 52);
+            this.tableLayoutPanel2.TabIndex = 25;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(976, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(63, 17);
+            this.label2.TabIndex = 16;
+            this.label2.Text = "EndDate";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(483, 24);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(68, 17);
+            this.label1.TabIndex = 15;
+            this.label1.Text = "StartDate";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(3, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(250, 24);
+            this.label3.TabIndex = 22;
+            this.label3.Text = "WeldGun data for Location:";
+            // 
             // SBCUStats
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -389,11 +405,9 @@
             this.Controls.Add(this.tableLayoutPanel2);
             this.Controls.Add(this.metroProgressSpinner1);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Controls.Add(this.cb_weldguns);
             this.MinimumSize = new System.Drawing.Size(1351, 469);
             this.Name = "SBCUStats";
             this.Style = MetroFramework.MetroColorStyle.Green;
-            this.Text = "WeldGun data for Location:";
             ((System.ComponentModel.ISupportInitialize)(this.chart_sbcu)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart_cilinder)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart_midair)).EndInit();
@@ -432,5 +446,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem showHideLedendeToolStripMenuItem;
+        private System.Windows.Forms.Label label3;
     }
 }
