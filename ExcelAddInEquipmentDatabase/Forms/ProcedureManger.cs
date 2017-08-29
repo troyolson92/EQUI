@@ -135,7 +135,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
             }
             else
             {
-                Debugger.Message("Unable to find connection");
+                Debugger.Message(string.Format("Unable to read connection DSN must be {0} or {1}",lGadataComm.DsnGADATA,lMaximoComm.DsnMX7));
             }
         }
 
