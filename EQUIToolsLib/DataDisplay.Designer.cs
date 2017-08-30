@@ -30,8 +30,10 @@
         {
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.cb_datasource = new MetroFramework.Controls.MetroComboBox();
-            this.metroTile1 = new MetroFramework.Controls.MetroTile();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // dataGridView1
@@ -53,30 +55,47 @@
             // 
             this.cb_datasource.FormattingEnabled = true;
             this.cb_datasource.ItemHeight = 24;
-            this.cb_datasource.Location = new System.Drawing.Point(697, 27);
+            this.cb_datasource.Location = new System.Drawing.Point(126, 3);
             this.cb_datasource.Name = "cb_datasource";
-            this.cb_datasource.Size = new System.Drawing.Size(230, 30);
+            this.cb_datasource.Size = new System.Drawing.Size(244, 30);
             this.cb_datasource.TabIndex = 1;
+            this.cb_datasource.UseSelectable = true;
             // 
-            // metroTile1
+            // tableLayoutPanel1
             // 
-            this.metroTile1.Location = new System.Drawing.Point(539, 34);
-            this.metroTile1.Name = "metroTile1";
-            this.metroTile1.Size = new System.Drawing.Size(152, 23);
-            this.metroTile1.TabIndex = 2;
-            this.metroTile1.Text = "DataSource";
+            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 250F));
+            this.tableLayoutPanel1.Controls.Add(this.metroLabel1, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.cb_datasource, 1, 0);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(23, 24);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 1;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(373, 33);
+            this.tableLayoutPanel1.TabIndex = 2;
+            // 
+            // metroLabel1
+            // 
+            this.metroLabel1.AutoSize = true;
+            this.metroLabel1.Location = new System.Drawing.Point(3, 0);
+            this.metroLabel1.Name = "metroLabel1";
+            this.metroLabel1.Size = new System.Drawing.Size(110, 20);
+            this.metroLabel1.TabIndex = 2;
+            this.metroLabel1.Text = "Data display tool";
             // 
             // DataDisplay
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1434, 642);
-            this.Controls.Add(this.metroTile1);
-            this.Controls.Add(this.cb_datasource);
+            this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.dataGridView1);
             this.Name = "DataDisplay";
             this.Text = "DataDisplay";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -85,6 +104,7 @@
 
         private System.Windows.Forms.DataGridView dataGridView1;
         private MetroFramework.Controls.MetroComboBox cb_datasource;
-        private MetroFramework.Controls.MetroTile metroTile1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private MetroFramework.Controls.MetroLabel metroLabel1;
     }
 }

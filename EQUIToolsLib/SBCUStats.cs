@@ -20,6 +20,8 @@ namespace EQUIToolsLib
         myDebugger Debugger = new myDebugger();
         //communication module
         GadataComm lGdataComm = new GadataComm();
+        //ds
+        DataSet DataSet = new DataSet();
         //tabels
         DataTable dt_SBCU;
         DataTable dt_Cylinder;
@@ -38,10 +40,10 @@ namespace EQUIToolsLib
             InitializeComponent();
             //
             //
-            cb_weldguns.Enabled = false;
-            cb_weldguns.Items.Clear();
-            cb_weldguns.Items.Insert(0, Location);
-            cb_weldguns.SelectedIndex = 0;
+            cb_Tools.Enabled = false;
+            cb_Tools.Items.Clear();
+            cb_Tools.Items.Insert(0, Location);
+            cb_Tools.SelectedIndex = 0;
             activeLocation = Location;
             //
             initchart();
@@ -55,7 +57,7 @@ namespace EQUIToolsLib
         public SBCUStats()
         {
             InitializeComponent();
-            cb_weldguns.Enabled = true;
+            cb_Tools.Enabled = true;
             initchart();
             toolStripComboBoxSortMode.SelectedIndexChanged  += new System.EventHandler(this.cb_sortmode_SelectedValueChanged);
         }
@@ -267,6 +269,44 @@ namespace EQUIToolsLib
         {
             EnableEvents(false);
             GetChartData();
+            //
+        }
+
+        private void GetChartData()
+        {
+            string qrySBCUShortLong = @"exec [EqUi].[GetSbcuData] @StartDate = '{0}',  @EndDate = '{1}', @toolname = '{2}'";
+            string qryCylinder = @"exec [EqUi].[GetCilinderData] @StartDate = '{0}',  @EndDate = '{1}', @Weldgunname = '{2}'";
+            string qryMidair = @"exec [EqUi].[GetMidairData] @StartDate = '{0}',  @EndDate = '{1}', @Weldgunname = '{2}'";
+            string qryDressData = @"exec [EqUi].[GetTipDressData] @StartDate = '{0}',  @EndDate = '{1}', @Weldgunname = '{2}'";
+            //
+            DateTime StartDate = System.DateTime.Now.AddDays(Daysback);
+            DateTime EndDate = System.DateTime.Now;
+            //
+            // activeLocation = "321030WS01a"; //DEBUGGG
+            //
+            dt_SBCU = lGdataComm.RunQueryGadata(string.Format(qrySBCUShortLong, StartDate.ToString("yyyy-MM-dd HH:mm:ss"), EndDate.ToString("yyyy-MM-dd HH:mm:ss"), activeLocation.Trim()));
+            dt_SBCU = add_dummyTimestampRow(dt_SBCU, StartDate);
+            dt_SBCU = add_dummyTimestampRow(dt_SBCU, EndDate);
+            //
+            dt_Cylinder = lGdataComm.RunQueryGadata(string.Format(qryCylinder, StartDate.ToString("yyyy-MM-dd HH:mm:ss"), EndDate.ToString("yyyy-MM-dd HH:mm:ss"), activeLocation.Trim()));
+            dt_Cylinder = add_dummyTimestampRow(dt_Cylinder, StartDate);
+            dt_Cylinder = add_dummyTimestampRow(dt_Cylinder, EndDate);
+            //
+            dt_MidAir = lGdataComm.RunQueryGadata(string.Format(qryMidair, StartDate.ToString("yyyy-MM-dd HH:mm:ss"), EndDate.ToString("yyyy-MM-dd HH:mm:ss"), activeLocation.Trim()));
+            dt_MidAir = add_dummyTimestampRow(dt_MidAir, StartDate);
+            dt_MidAir = add_dummyTimestampRow(dt_MidAir, EndDate);
+            //
+            dt_DressData = lGdataComm.RunQueryGadata(string.Format(qryDressData, StartDate.ToString("yyyy-MM-dd HH:mm:ss"), EndDate.ToString("yyyy-MM-dd HH:mm:ss"), activeLocation.Trim()));
+            dt_DressData = add_dummyTimestampRow(dt_DressData, StartDate);
+            dt_DressData = add_dummyTimestampRow(dt_DressData, EndDate);
+            //
+            if (DataSet.Tables.Count == 0)
+            {
+                DataSet.Tables.Add(dt_SBCU);
+                DataSet.Tables.Add(dt_Cylinder);
+                DataSet.Tables.Add(dt_MidAir);
+                DataSet.Tables.Add(dt_DressData);
+            }
         }
 
         private void EnableEvents(Boolean enbl)
@@ -276,6 +316,10 @@ namespace EQUIToolsLib
                trackBar1.ValueChanged += new System.EventHandler(trackBar_ValueChanged);
                trackBar2.ValueChanged += new System.EventHandler(trackBar_ValueChanged);
                toolStripComboBoxSortMode.SelectedIndexChanged += new System.EventHandler(this.cb_sortmode_SelectedValueChanged);
+               /*trackBar1.Enabled = true;
+               trackBar2.Enabled = true;
+               cb_Tools.Enabled = true;*/
+               
            }
            else
            {
@@ -284,38 +328,7 @@ namespace EQUIToolsLib
                toolStripComboBoxSortMode.SelectedIndexChanged -= new System.EventHandler(this.cb_sortmode_SelectedValueChanged);
            }
         }
-
-
-        private void GetChartData()
-        {
-            string qrySBCUShortLong = @"exec [EqUi].[GetSbcuData] @StartDate = '{0}',  @EndDate = '{1}', @Weldgunname = '{2}'";
-            string qryCylinder =  @"exec [EqUi].[GetCilinderData] @StartDate = '{0}',  @EndDate = '{1}', @Weldgunname = '{2}'";
-            string qryMidair =      @"exec [EqUi].[GetMidairData] @StartDate = '{0}',  @EndDate = '{1}', @Weldgunname = '{2}'";
-            string qryDressData = @"exec [EqUi].[GetTipDressData] @StartDate = '{0}',  @EndDate = '{1}', @Weldgunname = '{2}'";
-            //
-            DateTime StartDate = System.DateTime.Now.AddDays(Daysback);
-            DateTime EndDate = System.DateTime.Now;
-            //
-           // activeLocation = "321030WS01a"; //DEBUGGG
-            //
-            dt_SBCU = lGdataComm.RunQueryGadata(string.Format(qrySBCUShortLong, StartDate.ToString("yyyy-MM-dd HH:mm:ss"), EndDate.ToString("yyyy-MM-dd HH:mm:ss"), activeLocation.Trim()));
-            dt_SBCU = add_dummyTimestampRow(dt_SBCU, StartDate);
-            dt_SBCU = add_dummyTimestampRow(dt_SBCU, EndDate);
-            //
-            dt_Cylinder = lGdataComm.RunQueryGadata(string.Format(qryCylinder, StartDate.ToString("yyyy-MM-dd HH:mm:ss"), EndDate.ToString("yyyy-MM-dd HH:mm:ss"), activeLocation.Trim()));
-            dt_Cylinder = add_dummyTimestampRow(dt_Cylinder, StartDate);
-            dt_Cylinder = add_dummyTimestampRow(dt_Cylinder, EndDate);            
-            //
-            dt_MidAir = lGdataComm.RunQueryGadata(string.Format(qryMidair, StartDate.ToString("yyyy-MM-dd HH:mm:ss"), EndDate.ToString("yyyy-MM-dd HH:mm:ss"), activeLocation.Trim()));
-            dt_MidAir = add_dummyTimestampRow(dt_MidAir, StartDate);
-            dt_MidAir = add_dummyTimestampRow(dt_MidAir, EndDate);           
-            //
-            dt_DressData = lGdataComm.RunQueryGadata(string.Format(qryDressData, StartDate.ToString("yyyy-MM-dd HH:mm:ss"), EndDate.ToString("yyyy-MM-dd HH:mm:ss"), activeLocation.Trim()));
-            dt_DressData = add_dummyTimestampRow(dt_DressData, StartDate);
-            dt_DressData = add_dummyTimestampRow(dt_DressData, EndDate);
-            //
-        }
-
+    
         private DataTable add_dummyTimestampRow(DataTable dt, DateTime timestamp)
         {
             foreach (DataColumn col in dt.Columns)
@@ -365,7 +378,7 @@ namespace EQUIToolsLib
             }
             catch (Exception ex)
             {
-
+                Debugger.Exeption(ex);
             }
         }
 
@@ -515,6 +528,11 @@ namespace EQUIToolsLib
             if (bHideEmptyCharts) hideEmptyCharts();
             //
             SetXlabelOnForBottumChart();
+            //show hide legends
+            chart_sbcu.Legends[0].Enabled = showHideLedendeToolStripMenuItem.Checked;
+            chart_cilinder.Legends[0].Enabled = showHideLedendeToolStripMenuItem.Checked;
+            chart_midair.Legends[0].Enabled = showHideLedendeToolStripMenuItem.Checked;
+            chart_DressData.Legends[0].Enabled = showHideLedendeToolStripMenuItem.Checked;
             //
             metroProgressSpinner1.Visible = false;
             //
@@ -604,41 +622,41 @@ Value: {2:0.00}"
 
         private void btn_dataview_Click(object sender, EventArgs e)
         {
-            DataSet ldataset = new DataSet();
-            try
-            {
-                if (dt_SBCU != null) { dt_SBCU.TableName = "dt_SBCU"; ldataset.Tables.Add(dt_SBCU); }
-                if (dt_Cylinder != null) { dt_Cylinder.TableName = "dt_Cylinder"; ldataset.Tables.Add(dt_Cylinder); }
-                if (dt_MidAir != null) { dt_MidAir.TableName = "dt_MidAir"; ldataset.Tables.Add(dt_MidAir); }
-                if (dt_DressData != null) { dt_DressData.TableName = "dt_DressData"; ldataset.Tables.Add(dt_DressData); }
-            }
-            catch (Exception ex)
-            {
-                Debugger.Exeption(ex);
-            }
-            DataDisplay ldatadisplay = new DataDisplay(ldataset);
+            DataDisplay ldatadisplay = new DataDisplay(DataSet);
         }
 
         private void cb_weldguns_DropDown(object sender, EventArgs e)
         {
-            if (cb_weldguns.DataSource != null) return;
-            string orgSelection = cb_weldguns.Text;
-            string QryGetguns = "SELECT [WeldgunName] FROM [GADATA].[Volvo].[RobotWeldGunRelation] ";
-                    cb_weldguns.DataSource = lGdataComm.RunQueryGadata(QryGetguns);
-                    cb_weldguns.ValueMember = "WeldgunName";
-                    cb_weldguns.DisplayMember = "WeldgunName";
-                    cb_weldguns.Text = orgSelection;
+            if (cb_Tools.DataSource != null) return;
+            string orgSelection = cb_Tools.Text;
+            string QryGetTools = @"
+SELECT * FROM (
+SELECT DISTINCT 
+       [WeldgunName]  as 'Toolname'
+  FROM [GADATA].[Volvo].[RobotWeldGunRelation]
+UNION
+SELECT DISTINCT
+         SUBSTRING([controller_name],0,CHARINDEX('R', [controller_name]) )
+        +REPLACE(REPLACE(REPLACE([tool name],'Doser',''),'Stud',''),'TCP','') as 'Toolname'
+  FROM [GADATA].[NGAC].[TCP_LOG]
+  WHERE [Tool Name] not like '%Gun%'
+) as x 
+ORDER BY x.Toolname ASC";
+                    cb_Tools.DataSource = lGdataComm.RunQueryGadata(QryGetTools);
+                    cb_Tools.ValueMember = "Toolname";
+                    cb_Tools.DisplayMember = "Toolname";
+                    cb_Tools.Text = orgSelection;
         }
 
         private void cb_weldguns_DropDownClosed(object sender, EventArgs e)
         {
-            cb_weldguns.Enabled = false;
-            activeLocation = cb_weldguns.Text;
+            cb_Tools.Enabled = false;
+            activeLocation = cb_Tools.Text;
             //get data to build the chart
             metroProgressSpinner1.Visible = true;
             bw.RunWorkerAsync();
             //
-            cb_weldguns.Enabled = true;
+            cb_Tools.Enabled = true;
         }
 
  //launch SBCU 3D tool 
@@ -648,8 +666,27 @@ Value: {2:0.00}"
             if (dt_SBCU == null) { Debugger.Message("dt_sbcu is null"); return; }
             DateTime GrapStart = DateTime.Now.AddDays(Convert.ToInt32(trackBar1.Value));
             DateTime GrapEnd = DateTime.Now.AddDays(Convert.ToInt32(trackBar2.Value));
-
-            var ldt = dt_SBCU.Select(string.Format("[ToolX] is not null AND [ToolY] is not null AND [ToolZ] is not null AND [tool_timestamp] > '{0}' AND [tool_timestamp] < '{1}'", GrapStart, GrapEnd)).CopyToDataTable();
+            //check if C3g or NGAC 
+            DataColumnCollection columns = dt_SBCU.Columns;
+            DataTable ldt;
+            if (columns.Contains("ToolX"))
+            {
+                ldt = dt_SBCU.Select(string.Format("[ToolX] is not null AND [ToolY] is not null AND [ToolZ] is not null AND [timestamp] > '{0}' AND [timestamp] < '{1}'", GrapStart, GrapEnd)).CopyToDataTable();
+            }
+            else if (columns.Contains("GunTCP_X"))
+            {
+                ldt = dt_SBCU.Select(string.Format("[GunTCP_X] is not null AND [GunTCP_Y] is not null AND [GunTCP_Z] is not null AND [timestamp] > '{0}' AND [timestamp] < '{1}'", GrapStart, GrapEnd)).CopyToDataTable();
+                ldt.Columns["GunTCP_X"].ColumnName = "ToolX";
+                ldt.Columns["GunTCP_Y"].ColumnName = "ToolY";
+                ldt.Columns["GunTCP_Z"].ColumnName = "ToolZ";
+                ldt.Columns.Add("Longcheck", Type.GetType("System.Boolean"));
+                
+            }
+            else
+            {
+                Debugger.Message("unable to analyse data");
+                return;
+            }
 
             if (ldt.Rows.Count < 1) { Debugger.Message("ldt has no data"); return; }
 
@@ -761,6 +798,16 @@ Value: {2:0.00}"
 
         private void SetXlabelOnForBottumChart()
         {
+
+            if (showAllXAxisToolStripMenuItem.Checked)
+            {
+                chart_sbcu.ChartAreas[0].AxisX.LabelStyle.Enabled = true;
+                chart_cilinder.ChartAreas[0].AxisX.LabelStyle.Enabled = true;
+                chart_midair.ChartAreas[0].AxisX.LabelStyle.Enabled = true;
+                chart_DressData.ChartAreas[0].AxisX.LabelStyle.Enabled = true;
+                return;
+            }
+
              chart_sbcu.ChartAreas[0].AxisX.LabelStyle.Enabled = false;
              chart_cilinder.ChartAreas[0].AxisX.LabelStyle.Enabled = false;
              chart_midair.ChartAreas[0].AxisX.LabelStyle.Enabled = false;
@@ -790,8 +837,16 @@ Value: {2:0.00}"
 
         private void showHideLedendeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            showHideLedendeToolStripMenuItem.Checked = !showHideLedendeToolStripMenuItem.Checked;
+            built_Chart(false, true);
         }
+
+        private void showAllXAxisToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            showAllXAxisToolStripMenuItem.Checked = !showAllXAxisToolStripMenuItem.Checked;
+            built_Chart(false, true);
+        }
+
 
     }
 }

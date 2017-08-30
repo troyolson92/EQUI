@@ -49,6 +49,8 @@ namespace ExcelAddInEquipmentDatabase
         //intance of datetimepickers;
         dtPicker StartDatePicker;
         dtPicker EndDatePicker;
+        //if user trigger a refresh (because i'm an idiot and did not find a refresh finished event)
+        bool TriggerRefresh = false;
 
         private void EquipmentDBRibbon_Load(object sender, RibbonUIEventArgs e)
         {
@@ -82,11 +84,19 @@ namespace ExcelAddInEquipmentDatabase
             Globals.ThisAddIn.Application.SheetActivate += Application_SheetActivate;
             //subscribe to before rightclick for context menus.
             Globals.ThisAddIn.Application.SheetBeforeRightClick += lWorksheetFeatures.Application_SheetBeforeRightClick;
+            //subscribe to refresh finished 
+            Globals.ThisAddIn.Application.AfterCalculate += Application_AfterCalculate;
             //run background tick for refresh events 
             System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
             timer.Interval = (60 * 1000); // 60 secs
             timer.Tick += new EventHandler(Refresh_Tick);
             timer.Start();
+        }
+
+        void Application_AfterCalculate()
+        {
+            if (TriggerRefresh && tgbtn_Wrap.Checked) SetWrapText(true);
+            TriggerRefresh = false;
         }
 
         void apply_userLevel()
@@ -595,7 +605,9 @@ namespace ExcelAddInEquipmentDatabase
                 {
                     if (connection.Name == dd_activeConnection.SelectedItem.Label)
                     {
-
+                        //disable text wraping 
+                        SetWrapText(false);
+                        TriggerRefresh = true;
                         //connects the ribbon filter controls with the procMngr
                         if (ProcMngr.activeSystem == lMaximoComm.DsnMX7) //MX7connections
                         {
@@ -755,6 +767,24 @@ namespace ExcelAddInEquipmentDatabase
         {
             Application.Run(new SBCUStats());
         }
+
+        private void tgbtn_Wrap_Click(object sender, RibbonControlEventArgs e)
+        {
+            SetWrapText( tgbtn_Wrap.Checked);
+        }
+
+        private static void SetWrapText(bool state)
+        {
+            Excel.Worksheet Sheet = Globals.ThisAddIn.Application.ActiveSheet as Excel.Worksheet;
+            foreach (Excel.ListObject oListobject in Sheet.ListObjects)
+            {
+                Sheet.get_Range(oListobject.Name).Cells.VerticalAlignment = Microsoft.Office.Interop.Excel.XlVAlign.xlVAlignTop;
+                Sheet.get_Range(oListobject.Name).Columns.WrapText = state;
+                if (state) Sheet.get_Range(oListobject.Name).EntireColumn.AutoFit();
+            }
+
+        }
+
         //
 
 

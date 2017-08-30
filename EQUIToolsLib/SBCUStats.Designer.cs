@@ -28,20 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea7 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend7 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea8 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend8 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             this.chart_sbcu = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.trackBar1 = new MetroFramework.Controls.MetroTrackBar();
             this.trackBar2 = new MetroFramework.Controls.MetroTrackBar();
             this.chart_cilinder = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.chart_midair = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.cb_weldguns = new MetroFramework.Controls.MetroComboBox();
+            this.cb_Tools = new MetroFramework.Controls.MetroComboBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.chart_DressData = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.btn_ChartDressData = new MetroFramework.Controls.MetroButton();
@@ -54,6 +54,7 @@
             this.toolStripComboBoxSortMode = new System.Windows.Forms.ToolStripComboBox();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showHideLedendeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showAllXAxisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.metroProgressSpinner1 = new MetroFramework.Controls.MetroProgressSpinner();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.label2 = new System.Windows.Forms.Label();
@@ -75,18 +76,18 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.chart_sbcu.BorderlineColor = System.Drawing.Color.Black;
             this.chart_sbcu.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-            chartArea1.Name = "ChartArea1";
-            this.chart_sbcu.ChartAreas.Add(chartArea1);
-            legend1.AutoFitMinFontSize = 5;
-            legend1.BorderColor = System.Drawing.Color.Black;
-            legend1.DockedToChartArea = "ChartArea1";
-            legend1.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Top;
-            legend1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            legend1.IsTextAutoFit = false;
-            legend1.LegendStyle = System.Windows.Forms.DataVisualization.Charting.LegendStyle.Row;
-            legend1.MaximumAutoSize = 10F;
-            legend1.Name = "Legend1";
-            this.chart_sbcu.Legends.Add(legend1);
+            chartArea5.Name = "ChartArea1";
+            this.chart_sbcu.ChartAreas.Add(chartArea5);
+            legend5.AutoFitMinFontSize = 5;
+            legend5.BorderColor = System.Drawing.Color.Black;
+            legend5.DockedToChartArea = "ChartArea1";
+            legend5.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Top;
+            legend5.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            legend5.IsTextAutoFit = false;
+            legend5.LegendStyle = System.Windows.Forms.DataVisualization.Charting.LegendStyle.Row;
+            legend5.MaximumAutoSize = 10F;
+            legend5.Name = "Legend1";
+            this.chart_sbcu.Legends.Add(legend5);
             this.chart_sbcu.Location = new System.Drawing.Point(3, 63);
             this.chart_sbcu.Name = "chart_sbcu";
             this.chart_sbcu.Size = new System.Drawing.Size(1330, 156);
@@ -124,16 +125,16 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.chart_cilinder.BorderlineColor = System.Drawing.Color.Black;
             this.chart_cilinder.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-            chartArea2.Name = "ChartArea1";
-            this.chart_cilinder.ChartAreas.Add(chartArea2);
-            legend2.BorderColor = System.Drawing.Color.Black;
-            legend2.DockedToChartArea = "ChartArea1";
-            legend2.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Top;
-            legend2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            legend2.IsTextAutoFit = false;
-            legend2.LegendStyle = System.Windows.Forms.DataVisualization.Charting.LegendStyle.Row;
-            legend2.Name = "Legend1";
-            this.chart_cilinder.Legends.Add(legend2);
+            chartArea6.Name = "ChartArea1";
+            this.chart_cilinder.ChartAreas.Add(chartArea6);
+            legend6.BorderColor = System.Drawing.Color.Black;
+            legend6.DockedToChartArea = "ChartArea1";
+            legend6.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Top;
+            legend6.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            legend6.IsTextAutoFit = false;
+            legend6.LegendStyle = System.Windows.Forms.DataVisualization.Charting.LegendStyle.Row;
+            legend6.Name = "Legend1";
+            this.chart_cilinder.Legends.Add(legend6);
             this.chart_cilinder.Location = new System.Drawing.Point(3, 255);
             this.chart_cilinder.Name = "chart_cilinder";
             this.chart_cilinder.Size = new System.Drawing.Size(1330, 156);
@@ -147,33 +148,33 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.chart_midair.BorderlineColor = System.Drawing.Color.Black;
             this.chart_midair.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-            chartArea3.Name = "ChartArea1";
-            this.chart_midair.ChartAreas.Add(chartArea3);
-            legend3.BorderColor = System.Drawing.Color.Black;
-            legend3.DockedToChartArea = "ChartArea1";
-            legend3.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Top;
-            legend3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            legend3.IsTextAutoFit = false;
-            legend3.LegendStyle = System.Windows.Forms.DataVisualization.Charting.LegendStyle.Row;
-            legend3.Name = "Legend1";
-            this.chart_midair.Legends.Add(legend3);
+            chartArea7.Name = "ChartArea1";
+            this.chart_midair.ChartAreas.Add(chartArea7);
+            legend7.BorderColor = System.Drawing.Color.Black;
+            legend7.DockedToChartArea = "ChartArea1";
+            legend7.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Top;
+            legend7.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            legend7.IsTextAutoFit = false;
+            legend7.LegendStyle = System.Windows.Forms.DataVisualization.Charting.LegendStyle.Row;
+            legend7.Name = "Legend1";
+            this.chart_midair.Legends.Add(legend7);
             this.chart_midair.Location = new System.Drawing.Point(3, 447);
             this.chart_midair.Name = "chart_midair";
             this.chart_midair.Size = new System.Drawing.Size(1330, 156);
             this.chart_midair.TabIndex = 17;
             this.chart_midair.Text = "chart4";
             // 
-            // cb_weldguns
+            // cb_Tools
             // 
-            this.cb_weldguns.FormattingEnabled = true;
-            this.cb_weldguns.ItemHeight = 24;
-            this.cb_weldguns.Location = new System.Drawing.Point(303, 3);
-            this.cb_weldguns.Name = "cb_weldguns";
-            this.cb_weldguns.Size = new System.Drawing.Size(161, 30);
-            this.cb_weldguns.TabIndex = 21;
-            this.cb_weldguns.UseSelectable = true;
-            this.cb_weldguns.DropDown += new System.EventHandler(this.cb_weldguns_DropDown);
-            this.cb_weldguns.DropDownClosed += new System.EventHandler(this.cb_weldguns_DropDownClosed);
+            this.cb_Tools.FormattingEnabled = true;
+            this.cb_Tools.ItemHeight = 24;
+            this.cb_Tools.Location = new System.Drawing.Point(303, 3);
+            this.cb_Tools.Name = "cb_Tools";
+            this.cb_Tools.Size = new System.Drawing.Size(161, 30);
+            this.cb_Tools.TabIndex = 21;
+            this.cb_Tools.UseSelectable = true;
+            this.cb_Tools.DropDown += new System.EventHandler(this.cb_weldguns_DropDown);
+            this.cb_Tools.DropDownClosed += new System.EventHandler(this.cb_weldguns_DropDownClosed);
             // 
             // tableLayoutPanel1
             // 
@@ -213,16 +214,16 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.chart_DressData.BorderlineColor = System.Drawing.Color.Black;
             this.chart_DressData.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-            chartArea4.Name = "ChartArea1";
-            this.chart_DressData.ChartAreas.Add(chartArea4);
-            legend4.BorderColor = System.Drawing.Color.Black;
-            legend4.DockedToChartArea = "ChartArea1";
-            legend4.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Top;
-            legend4.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            legend4.IsTextAutoFit = false;
-            legend4.LegendStyle = System.Windows.Forms.DataVisualization.Charting.LegendStyle.Row;
-            legend4.Name = "Legend1";
-            this.chart_DressData.Legends.Add(legend4);
+            chartArea8.Name = "ChartArea1";
+            this.chart_DressData.ChartAreas.Add(chartArea8);
+            legend8.BorderColor = System.Drawing.Color.Black;
+            legend8.DockedToChartArea = "ChartArea1";
+            legend8.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Top;
+            legend8.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            legend8.IsTextAutoFit = false;
+            legend8.LegendStyle = System.Windows.Forms.DataVisualization.Charting.LegendStyle.Row;
+            legend8.Name = "Legend1";
+            this.chart_DressData.Legends.Add(legend8);
             this.chart_DressData.Location = new System.Drawing.Point(3, 639);
             this.chart_DressData.Name = "chart_DressData";
             this.chart_DressData.Size = new System.Drawing.Size(1330, 157);
@@ -323,17 +324,27 @@
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.showHideLedendeToolStripMenuItem});
+            this.showHideLedendeToolStripMenuItem,
+            this.showAllXAxisToolStripMenuItem});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(73, 26);
             this.optionsToolStripMenuItem.Text = "Options";
             // 
             // showHideLedendeToolStripMenuItem
             // 
+            this.showHideLedendeToolStripMenuItem.Checked = true;
+            this.showHideLedendeToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.showHideLedendeToolStripMenuItem.Name = "showHideLedendeToolStripMenuItem";
-            this.showHideLedendeToolStripMenuItem.Size = new System.Drawing.Size(219, 26);
-            this.showHideLedendeToolStripMenuItem.Text = "Show/Hide Ledende";
+            this.showHideLedendeToolStripMenuItem.Size = new System.Drawing.Size(182, 26);
+            this.showHideLedendeToolStripMenuItem.Text = "Show Ledende";
             this.showHideLedendeToolStripMenuItem.Click += new System.EventHandler(this.showHideLedendeToolStripMenuItem_Click);
+            // 
+            // showAllXAxisToolStripMenuItem
+            // 
+            this.showAllXAxisToolStripMenuItem.Name = "showAllXAxisToolStripMenuItem";
+            this.showAllXAxisToolStripMenuItem.Size = new System.Drawing.Size(182, 26);
+            this.showAllXAxisToolStripMenuItem.Text = "Show all X axis";
+            this.showAllXAxisToolStripMenuItem.Click += new System.EventHandler(this.showAllXAxisToolStripMenuItem_Click);
             // 
             // metroProgressSpinner1
             // 
@@ -358,7 +369,7 @@
             this.tableLayoutPanel2.Controls.Add(this.trackBar2, 3, 0);
             this.tableLayoutPanel2.Controls.Add(this.trackBar1, 3, 1);
             this.tableLayoutPanel2.Controls.Add(this.label1, 2, 1);
-            this.tableLayoutPanel2.Controls.Add(this.cb_weldguns, 1, 0);
+            this.tableLayoutPanel2.Controls.Add(this.cb_Tools, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.label3, 0, 0);
             this.tableLayoutPanel2.Location = new System.Drawing.Point(23, 23);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
@@ -408,6 +419,7 @@
             this.MinimumSize = new System.Drawing.Size(1351, 469);
             this.Name = "SBCUStats";
             this.Style = MetroFramework.MetroColorStyle.Green;
+            this.Text = "GunData";
             ((System.ComponentModel.ISupportInitialize)(this.chart_sbcu)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart_cilinder)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart_midair)).EndInit();
@@ -429,7 +441,7 @@
         private MetroFramework.Controls.MetroTrackBar trackBar2;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart_cilinder;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart_midair;
-        private MetroFramework.Controls.MetroComboBox cb_weldguns;
+        private MetroFramework.Controls.MetroComboBox cb_Tools;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private MetroFramework.Controls.MetroProgressSpinner metroProgressSpinner1;
         private MetroFramework.Controls.MetroButton Btn_ChartMidair;
@@ -447,5 +459,6 @@
         private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem showHideLedendeToolStripMenuItem;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ToolStripMenuItem showAllXAxisToolStripMenuItem;
     }
 }

@@ -66,6 +66,7 @@
             this.sync_stw040 = this.Factory.CreateRibbonButton();
             this.btn_sync_mx7 = this.Factory.CreateRibbonButton();
             this.btn_SBCUtest = this.Factory.CreateRibbonButton();
+            this.tgbtn_Wrap = this.Factory.CreateRibbonToggleButton();
             this.tab1.SuspendLayout();
             this.rib2.SuspendLayout();
             this.group2.SuspendLayout();
@@ -224,7 +225,7 @@
             this.g_config.Items.Add(this.btn_help);
             this.g_config.Items.Add(this.btn_docMngr);
             this.g_config.Items.Add(this.btn_ErrorMngr);
-            this.g_config.Items.Add(this.tbtn_StopRightClick);
+            this.g_config.Items.Add(this.tgbtn_Wrap);
             this.g_config.Label = "Configuration";
             this.g_config.Name = "g_config";
             // 
@@ -300,6 +301,7 @@
             this.groupTempTools.Items.Add(this.sync_stw040);
             this.groupTempTools.Items.Add(this.btn_sync_mx7);
             this.groupTempTools.Items.Add(this.btn_SBCUtest);
+            this.groupTempTools.Items.Add(this.tbtn_StopRightClick);
             this.groupTempTools.Label = "TempTools";
             this.groupTempTools.Name = "groupTempTools";
             // 
@@ -320,6 +322,12 @@
             this.btn_SBCUtest.Label = "btn_SBCUtest";
             this.btn_SBCUtest.Name = "btn_SBCUtest";
             this.btn_SBCUtest.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button1_Click_1);
+            // 
+            // tgbtn_Wrap
+            // 
+            this.tgbtn_Wrap.Label = "WrapText";
+            this.tgbtn_Wrap.Name = "tgbtn_Wrap";
+            this.tgbtn_Wrap.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.tgbtn_Wrap_Click);
             // 
             // EquipmentDBRibbon
             // 
@@ -377,6 +385,7 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_sync_mx7;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_SBCUtest;
         internal Microsoft.Office.Tools.Ribbon.RibbonToggleButton btn_EditProcedure;
+        internal Microsoft.Office.Tools.Ribbon.RibbonToggleButton tgbtn_Wrap;
     }
 
     partial class ThisRibbonCollection

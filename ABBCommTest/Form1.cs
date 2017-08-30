@@ -38,7 +38,7 @@ namespace ABBCommTest
             //
             InitializeComponent();
             //get greenfield list from GADATA
-            dt_robots = lgadatacomm.RunQueryGadata(@"select * from gadata.ngac.c_controller where ip like '10.205%' and controller_name like '%99%'");
+            dt_robots = lgadatacomm.RunQueryGadata(@"select * from gadata.ngac.c_controller where assetnum like 'URA%' and ip like '10%'");// where ip like '10.205%' and controller_name like '%99%'");
                                                    //  where CAST(SUBSTRING(controller_name,0,4) as int) between 351 and 359");
             //add colums for extra data
             dt_robots.Columns.Add("SystemId", System.Type.GetType("System.String"));
@@ -256,31 +256,21 @@ COM_APP:
         {
             this.controller = ControllerFactory.CreateFrom(ci);
             this.controller.Logon(UserInfo.DefaultUser);
+            RapidSymbolSearchProperties sProp = RapidSymbolSearchProperties.CreateDefault();
+            sProp.Recursive = true;
+            sProp.Types = SymbolTypes.Constant | SymbolTypes.Persistent | SymbolTypes.Variable | SymbolTypes.Data;
+            // sProp.Types = SymbolTypes.Data; 
+            RapidSymbol[] rsCol;
 
-            ConfigurationDatabase cfg = controller.Configuration;
-            Domain sioDomain = controller.Configuration.SerialIO;
-            Domain mocDomain = controller.Configuration.MotionControl;
+             ABB.Robotics.Controllers.RapidDomain.Task  tRob1 = controller.Rapid.GetTask("T_ROB1");
+             rsCol = tRob1.SearchRapidSymbol(sProp, "tooldata", string.Empty);
 
-            // read parm to see if config was done
-            string[] path = { "MOC", "MOTION_SUP", "rob1", "path_col_detect_on" };
-            string datapath = null;
-            try { datapath = cfg.Read(path); }
-            catch (Exception) { }
-            //
-            string[] jog = { "MOC", "MOTION_SUP", "rob1", "jog_col_detect_on" };
-            string dataJog = null;
-            try { dataJog = cfg.Read(jog); }
-            catch (Exception) { }
-
-
-            if (datapath == "TRUE" && dataJog == "TRUE")
+            foreach (RapidSymbol rs in rsCol)
             {
-                return true;
+                Console.WriteLine(string.Format("{0}; {1}",controller.SystemId,rs.Name));
+ 
             }
-            else
-            {
-                return false;
-            }
+            return true;
         }
 
         //buttons

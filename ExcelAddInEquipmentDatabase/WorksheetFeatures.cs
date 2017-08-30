@@ -109,7 +109,7 @@ namespace ExcelAddInEquipmentDatabase
             {
                 addShiftbookSubmenu(4); //shiftbook tools TEMP
             }
-            if (Logtype == "ALERT" || location.Like("%WS%"))
+            if (Logtype == "ALERT" || location.Like("%WS%") || location.Like("%JG%") || location.Like("%WT%"))
             {
                     btn = AddButtonToTableMenuItem("SBCUStats", 3, 433); 
                     btn.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(SBCUStatsMenuItemClick);
@@ -202,18 +202,6 @@ namespace ExcelAddInEquipmentDatabase
 
         }
 
-        //set wrap text 
-        private static void SetWrapText(Excel._Worksheet Sheet)
-        {
-            foreach (Excel.ListObject oListobject in Sheet.ListObjects)
-            {
-                Sheet.get_Range(oListobject.Name).Cells.VerticalAlignment = Microsoft.Office.Interop.Excel.XlVAlign.xlVAlignTop;
-                Sheet.get_Range(oListobject.Name).WrapText = true;
-                Sheet.get_Range(oListobject.Name).EntireColumn.AutoFit();
-            }
-
-        }
-
         //create Robotdb default format rules 
         private static void AddRobotFormatting(Excel._Worksheet Sheet)
         { 
@@ -260,16 +248,8 @@ namespace ExcelAddInEquipmentDatabase
             btnFormatSheetWorkorder.Caption = "Maximo default";
             btnFormatSheetWorkorder.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(ApplyWorkorderFromattingClick);
             //
-            Office.CommandBarButton btnSetWrap = (Office.CommandBarButton)subMenu.Controls.Add(menuItem, Type.Missing, Type.Missing, 3, true);
-            btnSetWrap.Style = Office.MsoButtonStyle.msoButtonCaption;
-            btnSetWrap.Caption = "AutoFitData";
-            btnSetWrap.Click += btnSetWrap_Click;
         }
 
-        void btnSetWrap_Click(Office.CommandBarButton Ctrl, ref bool CancelDefault)
-        {
-            SetWrapText(lClickedSheet);
-        }
         //event handelere for format button
         void ApplyRobotFromattingClick(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)
         {
