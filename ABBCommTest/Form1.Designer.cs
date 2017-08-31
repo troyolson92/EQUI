@@ -30,12 +30,9 @@
         {
             this.btn_addCntrl = new System.Windows.Forms.Button();
             this.tbox_ip = new System.Windows.Forms.TextBox();
-            this.btn_writeNFS = new System.Windows.Forms.Button();
             this.btn_scanNetwork = new System.Windows.Forms.Button();
-            this.btnDirMap = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.btn_expose = new System.Windows.Forms.Button();
-            this.btn_gateway = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -60,17 +57,6 @@
             this.tbox_ip.TabIndex = 2;
             this.tbox_ip.Text = "10.205.94.240";
             // 
-            // btn_writeNFS
-            // 
-            this.btn_writeNFS.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btn_writeNFS.Location = new System.Drawing.Point(353, 645);
-            this.btn_writeNFS.Name = "btn_writeNFS";
-            this.btn_writeNFS.Size = new System.Drawing.Size(137, 23);
-            this.btn_writeNFS.TabIndex = 5;
-            this.btn_writeNFS.Text = "WRITE NFS CFG";
-            this.btn_writeNFS.UseVisualStyleBackColor = true;
-            this.btn_writeNFS.Click += new System.EventHandler(this.btn_writeNFS_Click);
-            // 
             // btn_scanNetwork
             // 
             this.btn_scanNetwork.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -81,17 +67,6 @@
             this.btn_scanNetwork.Text = "scanNetwork";
             this.btn_scanNetwork.UseVisualStyleBackColor = true;
             this.btn_scanNetwork.Click += new System.EventHandler(this.btn_scanNetwork_Click);
-            // 
-            // btnDirMap
-            // 
-            this.btnDirMap.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnDirMap.Location = new System.Drawing.Point(990, 645);
-            this.btnDirMap.Name = "btnDirMap";
-            this.btnDirMap.Size = new System.Drawing.Size(75, 23);
-            this.btnDirMap.TabIndex = 9;
-            this.btnDirMap.Text = "DirMap";
-            this.btnDirMap.UseVisualStyleBackColor = true;
-            this.btnDirMap.Click += new System.EventHandler(this.btnDirMap_Click);
             // 
             // dataGridView1
             // 
@@ -118,21 +93,12 @@
             this.btn_expose.UseVisualStyleBackColor = true;
             this.btn_expose.Click += new System.EventHandler(this.btn_expose_Click);
             // 
-            // btn_gateway
-            // 
-            this.btn_gateway.Location = new System.Drawing.Point(510, 645);
-            this.btn_gateway.Name = "btn_gateway";
-            this.btn_gateway.Size = new System.Drawing.Size(124, 23);
-            this.btn_gateway.TabIndex = 12;
-            this.btn_gateway.Text = "checkPINOGate";
-            this.btn_gateway.UseVisualStyleBackColor = true;
-            this.btn_gateway.Click += new System.EventHandler(this.btn_gateway_Click);
-            // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(704, 614);
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.button1.Location = new System.Drawing.Point(500, 616);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.Size = new System.Drawing.Size(120, 52);
             this.button1.TabIndex = 13;
             this.button1.Text = "button1";
             this.button1.UseVisualStyleBackColor = true;
@@ -144,12 +110,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1799, 680);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.btn_gateway);
             this.Controls.Add(this.btn_expose);
             this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.btnDirMap);
             this.Controls.Add(this.btn_scanNetwork);
-            this.Controls.Add(this.btn_writeNFS);
             this.Controls.Add(this.tbox_ip);
             this.Controls.Add(this.btn_addCntrl);
             this.Name = "Form1";
@@ -164,12 +127,9 @@
 
         private System.Windows.Forms.Button btn_addCntrl;
         private System.Windows.Forms.TextBox tbox_ip;
-        private System.Windows.Forms.Button btn_writeNFS;
         private System.Windows.Forms.Button btn_scanNetwork;
-        private System.Windows.Forms.Button btnDirMap;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button btn_expose;
-        private System.Windows.Forms.Button btn_gateway;
         private System.Windows.Forms.Button button1;
     }
 }

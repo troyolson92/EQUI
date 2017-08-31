@@ -38,20 +38,21 @@ namespace ABBCommTest
             //
             InitializeComponent();
             //get greenfield list from GADATA
-            dt_robots = lgadatacomm.RunQueryGadata(@"select * from gadata.ngac.c_controller where assetnum like 'URA%' and ip like '10%'");// where ip like '10.205%' and controller_name like '%99%'");
+            dt_robots = lgadatacomm.RunQueryGadata(@"select top 10 * from gadata.ngac.c_controller where assetnum like 'URA%' "); //and controller_name like '%99%'");
                                                    //  where CAST(SUBSTRING(controller_name,0,4) as int) between 351 and 359");
             //add colums for extra data
             dt_robots.Columns.Add("SystemId", System.Type.GetType("System.String"));
-            dt_robots.Columns.Add("Availability", System.Type.GetType("System.String"));
-            dt_robots.Columns.Add("IsVirtual", System.Type.GetType("System.String"));
-            dt_robots.Columns.Add("SystemName", System.Type.GetType("System.String"));
-            dt_robots.Columns.Add("Version", System.Type.GetType("System.String"));
+           // dt_robots.Columns.Add("Availability", System.Type.GetType("System.String"));
+           // dt_robots.Columns.Add("IsVirtual", System.Type.GetType("System.String"));
+           // dt_robots.Columns.Add("SystemName", System.Type.GetType("System.String"));
+           // dt_robots.Columns.Add("Version", System.Type.GetType("System.String"));
             dt_robots.Columns.Add("ControllerName", System.Type.GetType("System.String"));
-            dt_robots.Columns.Add("ConfIsOK", System.Type.GetType("System.String"));
+           // dt_robots.Columns.Add("ConfIsOK", System.Type.GetType("System.String"));
             dt_robots.Columns.Add("autoOK", System.Type.GetType("System.String"));
             dt_robots.Columns.Add("ConnectOK", System.Type.GetType("System.String"));
-            dt_robots.Columns.Add("ConfigOK", System.Type.GetType("System.String"));
-            dt_robots.Columns.Add("restartOK", System.Type.GetType("System.String"));
+          //  dt_robots.Columns.Add("ConfigOK", System.Type.GetType("System.String"));
+           // dt_robots.Columns.Add("restartOK", System.Type.GetType("System.String"));
+            dt_robots.Columns.Add("LoadOK", System.Type.GetType("System.String"));
             //link to datagrid
             dataGridView1.DataSource = dt_robots;
             //
@@ -64,10 +65,10 @@ namespace ABBCommTest
                 if (row.Field<string>("IP") == controllerInfo.IPAddress.ToString())
                 {
                     row["SystemId"] = controllerInfo.SystemId;
-                    row["Availability"] = controllerInfo.Availability.ToString();
-                    row["IsVirtual"] = controllerInfo.IsVirtual.ToString();
-                    row["SystemName"] = controllerInfo.SystemName;
-                    row["Version"] = controllerInfo.Version.ToString();
+               //     row["Availability"] = controllerInfo.Availability.ToString();
+               //     row["IsVirtual"] = controllerInfo.IsVirtual.ToString();
+               //     row["SystemName"] = controllerInfo.SystemName;
+               //     row["Version"] = controllerInfo.Version.ToString();
                     row["ControllerName"] = controllerInfo.ControllerName;
                 }
             }
@@ -194,6 +195,7 @@ COM_APP:
                     cntrlFileSystem = controller.FileSystem;
                     controller.FileSystem.RemoteDirectory = NFSFilePathOnControler;
                     controller.FileSystem.LocalDirectory = tempdir;
+                    
                     //move file to controler
                     controller.FileSystem.PutFile(NFSFilename, NFSFilename, true);
                     //load file on controller
@@ -227,6 +229,104 @@ COM_APP:
             }
         }
 
+        //write configuration to robot
+        private void SocketConfigureRobot(ControllerInfo ci, DataGridViewRow row)
+        {
+            string tempdir = @"c:\temp\debug\";
+            string FilePathOnControler = @"/hd0a/TEMP/";
+
+            try
+            {
+                if (ci.Availability != Availability.Available) { debugger.Message("controller busy: " + ci.Id); return; } //stop if controller is not available
+                //
+                controller = ControllerFactory.CreateFrom(ci); //get controller from factory
+                if (controller.OperatingMode != ControllerOperatingMode.Auto) //controller must be on auto to take master 
+                {
+                    row.Cells[dataGridView1.Columns["AutoOK"].Index].Value = "NOK";
+                    return;
+                }
+                else
+                {
+                    row.Cells[dataGridView1.Columns["AutoOK"].Index].Value = "OK";
+
+                    // get modules from controller task trob1
+                    ABB.Robotics.Controllers.RapidDomain.Task tRob1 = controller.Rapid.GetTask("T_ROB1");
+                    Module[] mx  = tRob1.GetModules();
+                    //find the one we need 
+                    foreach (Module m in mx)
+                    {
+                        if (m.Name.StartsWith("LR",StringComparison.InvariantCulture))
+                        {
+                            Routine proc = m.GetRoutine("InitUser");
+                            if (proc != null) //check if we have the right module
+                            {
+                                //find the module on the controller and get it **************************************
+                                    //save it on the controller
+                                    m.SaveToFile(FilePathOnControler);
+                                    System.Threading.Thread.Sleep(1000);
+                                    //get file from controler to pc 
+                                    FileSystem cntrlFileSystem;
+                                    cntrlFileSystem = controller.FileSystem;
+                                    controller.FileSystem.RemoteDirectory = FilePathOnControler;
+                                    controller.FileSystem.LocalDirectory = tempdir;
+                                    //move file to pc
+                                    controller.FileSystem.GetFile(m.Name + ".mod", m.Name + ".mod", true);
+                                //process the file******************************************************************
+                                    string lrModule = File.ReadAllText(tempdir + m.Name + ".mod");
+                                    lrModule = lrModule.Replace("bUseSocket", "!bUseSocket");
+                                    lrModule = lrModule.Replace("bBodyIDActive", "!bBodyIDActive");
+                                    File.WriteAllText(tempdir + m.Name + ".mod", lrModule);
+                                //put the file back*****************************************************************
+                                    try
+                                    {
+                                        //get controller mastership
+                                        using (Mastership master = Mastership.Request(controller))
+                                        {
+
+                                            //put the file back on the controller
+                                            controller.FileSystem.PutFile(m.Name + ".mod", m.Name + ".mod", true);
+
+
+                                            //check if controller if home for load.
+                                            Signal O_Homepos = controller.IOSystem.GetSignal("O_Homepos");
+                                            if (O_Homepos.Value == 1)
+                                            {
+                                                tRob1.LoadModuleFromFile(FilePathOnControler + m.Name + ".mod", RapidLoadMode.Replace);
+                                                row.Cells[dataGridView1.Columns["LoadOK"].Index].Value = "OK";
+                                            }
+                                            else
+                                            {
+                                                row.Cells[dataGridView1.Columns["LoadOK"].Index].Value = "NOK";           
+                                            }
+
+                                            //release master
+                                            master.Release();
+                                        }
+                                    }
+                                    catch (System.InvalidOperationException ex)
+                                    {
+                                        debugger.Exeption(ex);
+                                        debugger.Message("error in write to controller");
+                                        return;
+                                    }
+                            }
+                      
+                        }
+
+                    }
+                }
+                row.Cells[dataGridView1.Columns["ConnectOK"].Index].Value = "OK";   
+        }     
+            catch (Exception ex)
+            {
+                row.Cells[dataGridView1.Columns["ConnectOK"].Index].Value = "NOK";
+                debugger.Exeption(ex);
+                debugger.Message("Error connecting to controller");
+                return;
+            }
+        }
+
+
         //check configuration of robot
         private bool checkNFSconfig(ControllerInfo ci, DataGridViewRow row)
         {
@@ -249,28 +349,6 @@ COM_APP:
              {
                  return false;
              }
-        }
-
-        //check motionSub
-        private bool checkMotionSubconfig(ControllerInfo ci, DataGridViewRow row)
-        {
-            this.controller = ControllerFactory.CreateFrom(ci);
-            this.controller.Logon(UserInfo.DefaultUser);
-            RapidSymbolSearchProperties sProp = RapidSymbolSearchProperties.CreateDefault();
-            sProp.Recursive = true;
-            sProp.Types = SymbolTypes.Constant | SymbolTypes.Persistent | SymbolTypes.Variable | SymbolTypes.Data;
-            // sProp.Types = SymbolTypes.Data; 
-            RapidSymbol[] rsCol;
-
-             ABB.Robotics.Controllers.RapidDomain.Task  tRob1 = controller.Rapid.GetTask("T_ROB1");
-             rsCol = tRob1.SearchRapidSymbol(sProp, "tooldata", string.Empty);
-
-            foreach (RapidSymbol rs in rsCol)
-            {
-                Console.WriteLine(string.Format("{0}; {1}",controller.SystemId,rs.Name));
- 
-            }
-            return true;
         }
 
         //buttons
@@ -338,215 +416,27 @@ COM_APP:
             debugger.Message("done with dirbuild");
         }
 
-        //adding code to change XML file 
-        //get pino config file name
-        private string GetPino(Controller controller)
-        {
-
-            ConfigurationDatabase cfg = controller.Configuration;
-            Domain sioDomain = controller.Configuration.SerialIO;
-
-            // read parm to see if config was done
-            string[] path = { "SIO", "INDUSTRIAL_NETWORK_USER", "NetworkUserConfig", "FileCfgName" };
-            string data = null;
-            try { data = cfg.Read(path); }
-            catch (Exception) { }
-            return data;
-        }
-
-        //get controller gateway
-        private string GetGateway(Controller controller)
-        {
-            NetworkSettingsInfo nsi = controller.NetworkSettings;
-            return nsi.Gateway.ToString();
-        }
-
-        private void btn_gateway_Click(object sender, EventArgs e)
-        {
-            foreach (DataGridViewRow row in dataGridView1.SelectedRows)
-            {
-                ControllerInfo ci;
-                if (scanner.TryFind(new Guid(row.Cells[dataGridView1.Columns["SystemId"].Index].Value.ToString()), out ci))
-                {
-                   // debugger.Message("OUT OF USE");
-                    PINOUPDATE(ci, row);     
-                }
-                else
-                {
-                    debugger.Message("can not find controller: " + row.Cells[0].Value.ToString());
-                }
-            }
-            debugger.Message("done with controllers");
-        }
-
-        private void PINOUPDATE(ControllerInfo ci, DataGridViewRow row)
-        {
-            FileSystem cntrlFileSystem;
-
-            try
-            {
-                if (ci.Availability != Availability.Available) { debugger.Message("controller busy: " + ci.Id); return; } //stop if controller is not available
-                //
-                controller = ControllerFactory.CreateFrom(ci); //get controller from factory
-                if (controller.OperatingMode != ControllerOperatingMode.Auto) //controller must be on auto to take master 
-                {
-                    row.Cells[dataGridView1.Columns["AutoOK"].Index].Value = "NOK";
-                    return;
-                }
-                else
-                {
-                    row.Cells[dataGridView1.Columns["AutoOK"].Index].Value = "OK";
-                }
-                controller.Logon(UserInfo.DefaultUser); //logon to controller
-                row.Cells[dataGridView1.Columns["ConnectOK"].Index].Value = "OK";
-            }
-            catch (Exception ex)
-            {
-                row.Cells[dataGridView1.Columns["ConnectOK"].Index].Value = "NOK";
-                debugger.Exeption(ex);
-                debugger.Message("Error connecting to controller");
-                return;
-            }
-
-            
-            try
-            {
-                //get controller mastership
-                using (Mastership m = Mastership.Request(controller))
-                {
-                    // get pino filename
-                    string pinofilename = GetPino(controller);
-                    //get controller gateway 
-                    string controllergateway = GetGateway(controller);
-
-                    //get file from controler to pc 
-                    cntrlFileSystem = controller.FileSystem;
-                    controller.FileSystem.RemoteDirectory = string.Format(@"/hd0a/{0}/HOME",controller.SystemName);
-                    controller.FileSystem.LocalDirectory = @"c:\temp\";
-                    //move file to pc
-                    controller.FileSystem.GetFile(pinofilename, pinofilename, true);
-                    //edit the pino file to the new gataway.
-                    editPino(controllergateway, @"c:\temp\" + pinofilename);
-                    //put the file back on the controller
-                    controller.FileSystem.PutFile(pinofilename, pinofilename, true);
-                    
-                    
-                    //check if controller if home for restart.
-                    Signal O_Homepos = controller.IOSystem.GetSignal("O_Homepos");
-                    if (O_Homepos.Value == 1)
-                    {
-                        //RESTART !!!!!!!!!!!!!!!!!
-                        if (controller.State == ControllerState.MotorsOn)
-                        {
-                            controller.State = ControllerState.MotorsOff;
-                        }
-                        controller.Restart(ControllerStartMode.Warm);
-                        //
-                        row.Cells[dataGridView1.Columns["restartOK"].Index].Value = "OK";
-                    }
-                    else
-                    {
-                        row.Cells[dataGridView1.Columns["restartOK"].Index].Value = "NOK";
-                    }
-                    
-                    //release master
-                    m.Release();
-                    row.Cells[dataGridView1.Columns["ConfigOK"].Index].Value = "OK";
-                }
-            }
-            catch (System.InvalidOperationException ex)
-            {
-                row.Cells[dataGridView1.Columns["ConfigOK"].Index].Value = "NOK";
-                debugger.Exeption(ex);
-                debugger.Message("error in write to controller");
-                return;
-            }
-            
 
 
-        }
 
-        private void editPino(string newGateway, string file)
-        {
-            string[] gateway = newGateway.Split('.');
-
-            XDocument xmlDoc = XDocument.Load(file);
-
-            var items = from item in xmlDoc.Descendants("Gate")
-                        select item;
-
-            foreach (XElement itemElement in items)
-            {
-                if (itemElement.Attribute("d1").Value != gateway[0].ToString() )
-                {
-                    debugger.Log(string.Format("File: {0} d1:{1} -> {2}", file, itemElement.Attribute("d1").Value, gateway[0].ToString()));
-                    itemElement.SetAttributeValue("d1", gateway[0].ToString());
-                }
-
-                if (itemElement.Attribute("d2").Value != gateway[1].ToString())
-                {
-                    debugger.Log(string.Format("File: {0} d2:{1} -> {2}", file, itemElement.Attribute("d2").Value, gateway[1].ToString()));
-                    itemElement.SetAttributeValue("d2", gateway[1].ToString());
-                }
-
-                if (itemElement.Attribute("d3").Value != gateway[2].ToString())
-                {
-                    debugger.Log(string.Format("File: {0} d3:{1} -> {2}", file, itemElement.Attribute("d3").Value, gateway[2].ToString()));
-                    itemElement.SetAttributeValue("d3", gateway[2].ToString());
-                }
-
-                if (itemElement.Attribute("d4").Value != gateway[3].ToString())
-                {
-                    debugger.Log(string.Format("File: {0} d4:{1} -> {2}", file, itemElement.Attribute("d4").Value, gateway[3].ToString()));
-                    itemElement.SetAttributeValue("d4", gateway[3].ToString());
-                }
-            }
-
-            xmlDoc.Save(file);
-        }
-
-
-        //check of safemove config. Based on offline files from backups
-        private void checkSafeMove()
-        {
-    
-
-
-        }
 
         private void button1_Click(object sender, EventArgs e)
         {
                 foreach (DataGridViewRow row in dataGridView1.SelectedRows)
                 {
-                    try
-                    { 
                     ControllerInfo ci;
                     if (scanner.TryFind(new Guid(row.Cells[dataGridView1.Columns["SystemId"].Index].Value.ToString()), out ci))
                     {
                         this.controller = ControllerFactory.CreateFrom(ci);
                         this.controller.Logon(UserInfo.DefaultUser);
 
-                        if (checkMotionSubconfig(ci, row))
-                        {
-                            row.Cells[dataGridView1.Columns["ConfIsOK"].Index].Value = "OK";
-                        }
-                        else
-                        {
-                            row.Cells[dataGridView1.Columns["ConfIsOK"].Index].Value = "NOK";
-                        }
+                        SocketConfigureRobot(ci, row);
 
                     }
                     else
                     {
                         debugger.Message("can not find controller: " + row.Cells[0].Value.ToString());
                     }
-                    }           
-                    catch (Exception ex)
-            {
-
-            }
-
-
                 }
             
             debugger.Message("done with controllers");
