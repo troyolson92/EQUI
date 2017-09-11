@@ -796,12 +796,6 @@ namespace ExcelAddInEquipmentDatabase
 
         }
 
-        private void btn_treeNodes_Click(object sender, RibbonControlEventArgs e)
-        {
-            Application.Run(new MXxBomTree());
-        }
-
-
         //
 
     }
