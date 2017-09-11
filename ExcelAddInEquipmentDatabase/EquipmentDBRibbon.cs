@@ -16,6 +16,7 @@ using EQUICommunictionLib;
 using EQUIToolsLib;
 using System.Threading;
 
+
 namespace ExcelAddInEquipmentDatabase
 {
     [System.Runtime.InteropServices.GuidAttribute("0B866AC0-9B93-40CD-827F-FAF350EC0C0E")]
@@ -35,7 +36,7 @@ namespace ExcelAddInEquipmentDatabase
         //local Asset data instance
         applData.ASSETSDataTable lASSETS = new applData.ASSETSDataTable();
         //local ParameterSets data instance 
-       // applData.QUERYParametersDataTable lParameterSets = new applData.QUERYParametersDataTable();
+        // applData.QUERYParametersDataTable lParameterSets = new applData.QUERYParametersDataTable();
         //local worsksheet function instance
         WorksheetFeatures lWorksheetFeatures = new WorksheetFeatures();
         //procedure manager instance 
@@ -45,7 +46,7 @@ namespace ExcelAddInEquipmentDatabase
         //asset manager instance
         AssetManager AssetMngr;
         //connection manager instance
-        ConnectionManger ConnMng; 
+        ConnectionManger ConnMng;
         //intance of datetimepickers;
         dtPicker StartDatePicker;
         dtPicker EndDatePicker;
@@ -61,12 +62,12 @@ namespace ExcelAddInEquipmentDatabase
             //set build version
             Assembly _assembly = Assembly.GetExecutingAssembly();
             FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(_assembly.Location);
-            g_config.Label = string.Format("V:{0}",fvi.ProductVersion,"");
+            g_config.Label = string.Format("V:{0}", fvi.ProductVersion, "");
             //init debugger
             Debugger.Init();
             //Set user name and level
             load_UserDataset();
-            dd_user_update();  
+            dd_user_update();
             //Set controls according to user level
             apply_userLevel();
             //check here for offline mode. (disabels Querys)
@@ -120,31 +121,33 @@ namespace ExcelAddInEquipmentDatabase
             }
             //
 
-        if (Properties.Settings.Default.userlevel >= 100) // admin level 
+            if (Properties.Settings.Default.userlevel >= 100) // admin level 
             {
-//everything is on
+                //everything is on
             }
-        else if (Properties.Settings.Default.userlevel >= 10) // power user
-        {
-            dd_User.Enabled = false;
-            btn_ConnectionManager.Enabled = true;
-            btn_AssetManager.Enabled = false;
-            btn_docMngr.Enabled = false;
-            btn_ErrorMngr.Enabled = true;
-            btn_sync_mx7.Enabled = true;
-            sync_stw040.Enabled = true;
-        }
-        else
-        { 
-            //default acces level
-            dd_User.Enabled = false;
-            btn_ConnectionManager.Enabled = false;
-            btn_AssetManager.Enabled = false;
-            btn_docMngr.Enabled = false;
-            btn_ErrorMngr.Enabled = false;
-            btn_sync_mx7.Enabled = false;
-            sync_stw040.Enabled = false;
-        }
+            else if (Properties.Settings.Default.userlevel >= 10) // power user
+            {
+                dd_User.Enabled = false;
+                btn_ConnectionManager.Enabled = true;
+                btn_AssetManager.Enabled = false;
+                btn_docMngr.Enabled = false;
+                btn_ErrorMngr.Enabled = true;
+                btn_sync_mx7.Enabled = true;
+                btn_sync_sto.Enabled = false;
+                sync_stw040.Enabled = true;
+            }
+            else
+            {
+                //default acces level
+                dd_User.Enabled = false;
+                btn_ConnectionManager.Enabled = false;
+                btn_AssetManager.Enabled = false;
+                btn_docMngr.Enabled = false;
+                btn_ErrorMngr.Enabled = false;
+                btn_sync_mx7.Enabled = false;
+                btn_sync_sto.Enabled = false;
+                sync_stw040.Enabled = false;
+            }
         }
 
         void Application_WorkbookActivate(Excel.Workbook Wb)
@@ -185,10 +188,10 @@ namespace ExcelAddInEquipmentDatabase
         /*  If the active connection changes than create a new instance of the procmngr
          *  =>Only when its a real connection (not refreshall mode)
          *  =>also load the "available" parameters from procmager back into the ribbon 
-         */ 
+         */
         private void Set_activeconnection()
         {
-           
+
             dd_connections_update();
             string worksheetconn = activeSheet_connection();
             foreach (RibbonDropDownItem item in dd_activeConnection.Items)
@@ -203,25 +206,25 @@ namespace ExcelAddInEquipmentDatabase
 
         private void sync_with_activeconnection()
         {
-                if (ProcMngr != null) ProcMngr.Dispose();
-                if (dd_activeConnection.SelectedItem.Label != "RefreshAll")
-                {
-                    ProcMngr = new Forms.ProcedureManger(dd_activeConnection.SelectedItem.Label);
-                    //
-                    if (ProcedureMangerTaskPane != null) ProcedureMangerTaskPane.Dispose();
-                    ProcedureMangerTaskPane = Globals.ThisAddIn.CustomTaskPanes.Add(ProcMngr, "ProcedureManger");
-                    ProcedureMangerTaskPane.Width = ProcMngr.MaxWith() + 50;
-                    ProcedureMangerTaskPane.DockPosition = Microsoft.Office.Core.MsoCTPDockPosition.msoCTPDockPositionLeft;
-                    ProcedureMangerTaskPane.Visible = btn_EditProcedure.Checked;
-                }
-                //event to reset button on taskpane close
-                ProcedureMangerTaskPane.VisibleChanged += ProcedureMangerTaskPane_VisibleChanged;
-                //event handeler for sheet Hide. (to trigger sync with ribbon)
-                ProcMngr.MouseLeave += ProcMngr_Deactivate;
-               //loads the available parameters back into the ribbon
-                set_RibonToProcedureManager();
-               //load parameter sets available on db 
-                dd_ParameterSets_update();
+            if (ProcMngr != null) ProcMngr.Dispose();
+            if (dd_activeConnection.SelectedItem.Label != "RefreshAll")
+            {
+                ProcMngr = new Forms.ProcedureManger(dd_activeConnection.SelectedItem.Label);
+                //
+                if (ProcedureMangerTaskPane != null) ProcedureMangerTaskPane.Dispose();
+                ProcedureMangerTaskPane = Globals.ThisAddIn.CustomTaskPanes.Add(ProcMngr, "ProcedureManger");
+                ProcedureMangerTaskPane.Width = ProcMngr.MaxWith() + 50;
+                ProcedureMangerTaskPane.DockPosition = Microsoft.Office.Core.MsoCTPDockPosition.msoCTPDockPositionLeft;
+                ProcedureMangerTaskPane.Visible = btn_EditProcedure.Checked;
+            }
+            //event to reset button on taskpane close
+            ProcedureMangerTaskPane.VisibleChanged += ProcedureMangerTaskPane_VisibleChanged;
+            //event handeler for sheet Hide. (to trigger sync with ribbon)
+            ProcMngr.MouseLeave += ProcMngr_Deactivate;
+            //loads the available parameters back into the ribbon
+            set_RibonToProcedureManager();
+            //load parameter sets available on db 
+            dd_ParameterSets_update();
         }
 
         void ProcedureMangerTaskPane_VisibleChanged(object sender, EventArgs e)
@@ -239,7 +242,7 @@ namespace ExcelAddInEquipmentDatabase
         //population of dynamic boxes
         private void load_assetsDataset()
         {
-            if ((lASSETS == null) ||(lASSETS.Count == 0))
+            if ((lASSETS == null) || (lASSETS.Count == 0))
             {
                 //Fill local dataset
                 using (applDataTableAdapters.ASSETSTableAdapter adapter = new applDataTableAdapters.ASSETSTableAdapter())
@@ -273,12 +276,12 @@ namespace ExcelAddInEquipmentDatabase
             try
             {
                 var data = from a in lASSETS
-                                         where a.LocationTree.Like(cb_Lochierarchy.Text)
-                                         && a.LOCATION.Like(cb_locations.Text)
-                                         && a.CLassificationId.Like(cb_assets.Text)
-                                         && a.LocationTree != null
-                                         orderby a.LocationTree descending
-                                         select a.LocationTree;
+                           where a.LocationTree.Like(cb_Lochierarchy.Text)
+                           && a.LOCATION.Like(cb_locations.Text)
+                           && a.CLassificationId.Like(cb_assets.Text)
+                           && a.LocationTree != null
+                           orderby a.LocationTree descending
+                           select a.LocationTree;
                 List<string> distinctresult = data.Distinct().ToList();
                 foreach (string thing in distinctresult)
                 {
@@ -308,12 +311,12 @@ namespace ExcelAddInEquipmentDatabase
             try
             {
                 var data = from a in lASSETS
-                                         where a.LocationTree.Like(cb_Lochierarchy.Text)
-                                         && a.LOCATION.Like(cb_locations.Text)
-                                         && a.CLassificationId.Like(cb_assets.Text)
-                                         && a.LOCATION != null
-                                          orderby a.LOCATION descending
-                                         select a.LOCATION;
+                           where a.LocationTree.Like(cb_Lochierarchy.Text)
+                           && a.LOCATION.Like(cb_locations.Text)
+                           && a.CLassificationId.Like(cb_assets.Text)
+                           && a.LOCATION != null
+                           orderby a.LOCATION descending
+                           select a.LOCATION;
                 List<string> distinctresult = data.Distinct().ToList();
                 foreach (string thing in distinctresult)
                 {
@@ -341,12 +344,12 @@ namespace ExcelAddInEquipmentDatabase
             try
             {
                 var data = from a in lASSETS
-                                         where a.LocationTree.Like(cb_Lochierarchy.Text)
-                                         && a.LOCATION.Like(cb_locations.Text)
-                                         && a.CLassificationId.Like(cb_assets.Text)
-                                         && a.CLassificationId != null
-                                         orderby a.CLassificationId descending
-                                         select a.CLassificationId;
+                           where a.LocationTree.Like(cb_Lochierarchy.Text)
+                           && a.LOCATION.Like(cb_locations.Text)
+                           && a.CLassificationId.Like(cb_assets.Text)
+                           && a.CLassificationId != null
+                           orderby a.CLassificationId descending
+                           select a.CLassificationId;
                 List<string> distinctresult = data.Distinct().ToList();
                 foreach (string thing in distinctresult)
                 {
@@ -376,27 +379,27 @@ namespace ExcelAddInEquipmentDatabase
             dd_activeConnection.Items.Add(defaultitem);
             dd_activeConnection.SelectedItem.Label = "RefreshAll";
             Excel._Workbook activeWorkbook = Globals.ThisAddIn.Application.ActiveWorkbook as Excel.Workbook;
-            if (activeWorkbook == null) return; 
-                foreach (var connection in activeWorkbook.Connections.Cast<Excel.WorkbookConnection>())
+            if (activeWorkbook == null) return;
+            foreach (var connection in activeWorkbook.Connections.Cast<Excel.WorkbookConnection>())
+            {
+                try
                 {
-                    try
+                    switch (connection.Type)
                     {
-                        switch (connection.Type)
-                        {
-                            case Excel.XlConnectionType.xlConnectionTypeODBC:
-                                RibbonDropDownItem item = Globals.Factory.GetRibbonFactory().CreateRibbonDropDownItem();
-                                item.Label = connection.Name;
-                                dd_activeConnection.Items.Add(item);
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                    catch (Exception e )
-                    {
-                        Debugger.Exeption(e);
+                        case Excel.XlConnectionType.xlConnectionTypeODBC:
+                            RibbonDropDownItem item = Globals.Factory.GetRibbonFactory().CreateRibbonDropDownItem();
+                            item.Label = connection.Name;
+                            dd_activeConnection.Items.Add(item);
+                            break;
+                        default:
+                            break;
                     }
                 }
+                catch (Exception e)
+                {
+                    Debugger.Exeption(e);
+                }
+            }
         }
         private void dd_user_update()
         {
@@ -410,7 +413,7 @@ namespace ExcelAddInEquipmentDatabase
             defaultUser.Label = "default user"; // default;
             dd_User.Items.Add(defaultUser);
             //
-  
+
             try
             {
                 var data = from a in lUsers
@@ -463,25 +466,25 @@ namespace ExcelAddInEquipmentDatabase
 
         private void dd_ParameterSets_update()
         {
-             dd_ParameterSets.Enabled = false;
-             dd_ParameterSets.Items.Clear();
-             RibbonDropDownItem item;
-             item = Globals.Factory.GetRibbonFactory().CreateRibbonDropDownItem();
-             item.Label = "UserDef";
-             dd_ParameterSets.Items.Add(item);
-             foreach (string setName in ProcMngr.GADATA_Select_ParmSet_list(ProcMngr.activeSystem,ProcMngr.ProcedureName))
-                {
-                    if (setName == null) break;
-                     item = Globals.Factory.GetRibbonFactory().CreateRibbonDropDownItem();
-                     item.Label = setName;
-                     dd_ParameterSets.Items.Add(item);
-                }
-             if (dd_ParameterSets.Items.Count() > 1) dd_ParameterSets.Enabled = true;
+            dd_ParameterSets.Enabled = false;
+            dd_ParameterSets.Items.Clear();
+            RibbonDropDownItem item;
+            item = Globals.Factory.GetRibbonFactory().CreateRibbonDropDownItem();
+            item.Label = "UserDef";
+            dd_ParameterSets.Items.Add(item);
+            foreach (string setName in ProcMngr.GADATA_Select_ParmSet_list(ProcMngr.activeSystem, ProcMngr.ProcedureName))
+            {
+                if (setName == null) break;
+                item = Globals.Factory.GetRibbonFactory().CreateRibbonDropDownItem();
+                item.Label = setName;
+                dd_ParameterSets.Items.Add(item);
+            }
+            if (dd_ParameterSets.Items.Count() > 1) dd_ParameterSets.Enabled = true;
         }
         private void set_RibonToProcedureManager()
         {
             //set ribbon control values 
-            cb_assets.Text = ProcMngr.assets.input ;
+            cb_assets.Text = ProcMngr.assets.input;
             cb_Lochierarchy.Text = ProcMngr.lochierarchy.input;
             cb_locations.Text = ProcMngr.locations.input;
             //set enabeld or disabled. 
@@ -520,8 +523,8 @@ namespace ExcelAddInEquipmentDatabase
         //handel feedback from filter controls
         private void btn_StartDate_Click(object sender, RibbonControlEventArgs e)
         {
-           if (StartDatePicker == null) StartDatePicker = new dtPicker(ProcMngr.startDate);
-           StartDatePicker.Show();
+            if (StartDatePicker == null) StartDatePicker = new dtPicker(ProcMngr.startDate);
+            StartDatePicker.Show();
         }
         private void btn_EndDate_Click(object sender, RibbonControlEventArgs e)
         {
@@ -540,7 +543,7 @@ namespace ExcelAddInEquipmentDatabase
             }
             else
             {
-                Debugger.Message(string.Format("Please try it again '{0}' not a valid number ",input));
+                Debugger.Message(string.Format("Please try it again '{0}' not a valid number ", input));
                 ProcMngr.daysBack.input = "10";
             }
         }
@@ -565,9 +568,9 @@ namespace ExcelAddInEquipmentDatabase
         private void btn_EditProcedure_Click(object sender, RibbonControlEventArgs e)
         {
             if (dd_activeConnection.SelectedItem.Label == "RefreshAll") //this is not a connection to van not be edited
-            { 
-               Debugger.Message("Please select an other connection. 'RefreshAll' is not a connection");
-               btn_EditProcedure.Checked = false;
+            {
+                Debugger.Message("Please select an other connection. 'RefreshAll' is not a connection");
+                btn_EditProcedure.Checked = false;
             }
             else
             {
@@ -621,7 +624,7 @@ namespace ExcelAddInEquipmentDatabase
                         }
                         else
                         {
-                           Debugger.Message("Unable to find connection");
+                            Debugger.Message("Unable to find connection");
                         }
                     }
                 }
@@ -669,15 +672,15 @@ namespace ExcelAddInEquipmentDatabase
             }
             catch (Exception ex)
             {
-               Debugger.Message(@"Was not able to open the help file.
-                                 File should be on <"+helpfile+@">
-                                    Exeption:"+ex.Message);
+                Debugger.Message(@"Was not able to open the help file.
+                                 File should be on <" + helpfile + @">
+                                    Exeption:" + ex.Message);
             }
         }
 
         private void btn_testWs_Click(object sender, RibbonControlEventArgs e)
         {
-//nothing
+            //nothing
         }
 
         private void btn_docMngr_Click(object sender, RibbonControlEventArgs e)
@@ -754,15 +757,23 @@ namespace ExcelAddInEquipmentDatabase
             btn_sync_mx7.Enabled = true;
         }
 
+        private void btn_sync_sto_Click(object sender, RibbonControlEventArgs e)
+        {
+            btn_sync_sto.Enabled = false;
+            EQUICommunictionLib.stoSync lstoSync = new EQUICommunictionLib.stoSync();
+            lstoSync.get_stodata();
+            btn_sync_sto.Enabled = true;
+        }
+
         //test
         private void button1_Click_1(object sender, RibbonControlEventArgs e)
         {
-           // SBCUStats lSBCUStats = new SBCUStats(); //crosstrheading
+            // SBCUStats lSBCUStats = new SBCUStats(); //crosstrheading
             var newThread = new System.Threading.Thread(frmNewFormThread);
             newThread.SetApartmentState(System.Threading.ApartmentState.STA);
             newThread.Start();
         }
-       
+
         public void frmNewFormThread()
         {
             Application.Run(new SBCUStats());
@@ -770,7 +781,7 @@ namespace ExcelAddInEquipmentDatabase
 
         private void tgbtn_Wrap_Click(object sender, RibbonControlEventArgs e)
         {
-            SetWrapText( tgbtn_Wrap.Checked);
+            SetWrapText(tgbtn_Wrap.Checked);
         }
 
         private static void SetWrapText(bool state)
@@ -785,8 +796,14 @@ namespace ExcelAddInEquipmentDatabase
 
         }
 
-        //
+        private void btn_treeNodes_Click(object sender, RibbonControlEventArgs e)
+        {
+            Application.Run(new MXxBomTree());
+        }
 
+
+        //
 
     }
 }
+

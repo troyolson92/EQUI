@@ -64,6 +64,7 @@ namespace EQUICommunictionLib
             }
 
         }
+
         //comm to maximo
 
         public string GetClobMaximo7(string as_query)

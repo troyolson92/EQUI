@@ -41,7 +41,7 @@
     <PublishUrl>\\gnlsnm0101.gen.volvocars.net\proj\6308-SHR-VCC22700\VSTO\DEPLOYMENTBASE\</PublishUrl>
     <InstallUrl />
     <TargetCulture>en</TargetCulture>
-    <ApplicationVersion>3.0.2.32</ApplicationVersion>
+    <ApplicationVersion>3.0.2.33</ApplicationVersion>
     <AutoIncrementApplicationRevision>true</AutoIncrementApplicationRevision>
     <UpdateEnabled>true</UpdateEnabled>
     <UpdateInterval>0</UpdateInterval>
@@ -218,7 +218,7 @@
       <DependentUpon>applData.xsd</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="applData.Designer.cs">
+    <Compile Include="applData1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>applData.xsd</DependentUpon>
@@ -308,6 +308,9 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Ribbon.cs">
+      <XmlRibbon>true</XmlRibbon>
+    </Compile>
     <Compile Include="StringExtenstions.cs" />
     <Compile Include="WorksheetFeatures.cs" />
     <EmbeddedResource Include="Forms\AAOSRshiftbook.resx">
@@ -338,7 +341,7 @@
     <None Include="applData.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>applData.Designer.cs</LastGenOutput>
+      <LastGenOutput>applData1.Designer.cs</LastGenOutput>
     </None>
     <None Include="applData.xss">
       <DependentUpon>applData.xsd</DependentUpon>
@@ -404,6 +407,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="MetroFramework.txt" />
+    <EmbeddedResource Include="Ribbon.xml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EQUICommunictionLib\EQUICommunictionLib.csproj">

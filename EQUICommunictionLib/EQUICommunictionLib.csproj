@@ -50,8 +50,10 @@
     <Compile Include="DSNmngr.cs" />
     <Compile Include="GadataComm.cs" />
     <Compile Include="MaximoComm.cs" />
+    <Compile Include="stoSync.cs" />
     <Compile Include="mx7Sync.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StoComm.cs" />
     <Compile Include="stw040Sync.cs" />
   </ItemGroup>
   <ItemGroup>

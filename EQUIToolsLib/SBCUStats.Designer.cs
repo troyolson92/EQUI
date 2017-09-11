@@ -60,6 +60,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.loadAllDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.chart_sbcu)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart_cilinder)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart_midair)).BeginInit();
@@ -325,7 +326,8 @@
             // 
             this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.showHideLedendeToolStripMenuItem,
-            this.showAllXAxisToolStripMenuItem});
+            this.showAllXAxisToolStripMenuItem,
+            this.loadAllDataToolStripMenuItem});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(73, 26);
             this.optionsToolStripMenuItem.Text = "Options";
@@ -408,6 +410,13 @@
             this.label3.TabIndex = 22;
             this.label3.Text = "WeldGun data for Location:";
             // 
+            // loadAllDataToolStripMenuItem
+            // 
+            this.loadAllDataToolStripMenuItem.Name = "loadAllDataToolStripMenuItem";
+            this.loadAllDataToolStripMenuItem.Size = new System.Drawing.Size(182, 26);
+            this.loadAllDataToolStripMenuItem.Text = "LoadAllData";
+            this.loadAllDataToolStripMenuItem.Click += new System.EventHandler(this.loadAllDataToolStripMenuItem_Click);
+            // 
             // SBCUStats
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -460,5 +469,6 @@
         private System.Windows.Forms.ToolStripMenuItem showHideLedendeToolStripMenuItem;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ToolStripMenuItem showAllXAxisToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem loadAllDataToolStripMenuItem;
     }
 }

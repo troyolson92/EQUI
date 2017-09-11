@@ -61,12 +61,14 @@
             this.btn_help = this.Factory.CreateRibbonButton();
             this.btn_docMngr = this.Factory.CreateRibbonButton();
             this.btn_ErrorMngr = this.Factory.CreateRibbonButton();
-            this.tbtn_StopRightClick = this.Factory.CreateRibbonToggleButton();
+            this.tgbtn_Wrap = this.Factory.CreateRibbonToggleButton();
             this.groupTempTools = this.Factory.CreateRibbonGroup();
             this.sync_stw040 = this.Factory.CreateRibbonButton();
             this.btn_sync_mx7 = this.Factory.CreateRibbonButton();
+            this.btn_sync_sto = this.Factory.CreateRibbonButton();
             this.btn_SBCUtest = this.Factory.CreateRibbonButton();
-            this.tgbtn_Wrap = this.Factory.CreateRibbonToggleButton();
+            this.tbtn_StopRightClick = this.Factory.CreateRibbonToggleButton();
+            this.btn_treeNodes = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
             this.rib2.SuspendLayout();
             this.group2.SuspendLayout();
@@ -290,18 +292,20 @@
             this.btn_ErrorMngr.ShowImage = true;
             this.btn_ErrorMngr.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_ErrorMngr_Click);
             // 
-            // tbtn_StopRightClick
+            // tgbtn_Wrap
             // 
-            this.tbtn_StopRightClick.Label = "StopRightClick";
-            this.tbtn_StopRightClick.Name = "tbtn_StopRightClick";
-            this.tbtn_StopRightClick.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.tbtn_StopRightClick_Click);
+            this.tgbtn_Wrap.Label = "WrapText";
+            this.tgbtn_Wrap.Name = "tgbtn_Wrap";
+            this.tgbtn_Wrap.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.tgbtn_Wrap_Click);
             // 
             // groupTempTools
             // 
             this.groupTempTools.Items.Add(this.sync_stw040);
             this.groupTempTools.Items.Add(this.btn_sync_mx7);
+            this.groupTempTools.Items.Add(this.btn_sync_sto);
             this.groupTempTools.Items.Add(this.btn_SBCUtest);
             this.groupTempTools.Items.Add(this.tbtn_StopRightClick);
+            this.groupTempTools.Items.Add(this.btn_treeNodes);
             this.groupTempTools.Label = "TempTools";
             this.groupTempTools.Name = "groupTempTools";
             // 
@@ -317,17 +321,29 @@
             this.btn_sync_mx7.Name = "btn_sync_mx7";
             this.btn_sync_mx7.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_sync_mx7_Click);
             // 
+            // btn_sync_sto
+            // 
+            this.btn_sync_sto.Label = "btn_sync_sto";
+            this.btn_sync_sto.Name = "btn_sync_sto";
+            this.btn_sync_sto.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_sync_sto_Click);
+            // 
             // btn_SBCUtest
             // 
             this.btn_SBCUtest.Label = "btn_SBCUtest";
             this.btn_SBCUtest.Name = "btn_SBCUtest";
             this.btn_SBCUtest.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button1_Click_1);
             // 
-            // tgbtn_Wrap
+            // tbtn_StopRightClick
             // 
-            this.tgbtn_Wrap.Label = "WrapText";
-            this.tgbtn_Wrap.Name = "tgbtn_Wrap";
-            this.tgbtn_Wrap.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.tgbtn_Wrap_Click);
+            this.tbtn_StopRightClick.Label = "StopRightClick";
+            this.tbtn_StopRightClick.Name = "tbtn_StopRightClick";
+            this.tbtn_StopRightClick.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.tbtn_StopRightClick_Click);
+            // 
+            // btn_treeNodes
+            // 
+            this.btn_treeNodes.Label = "TreeNode";
+            this.btn_treeNodes.Name = "btn_treeNodes";
+            this.btn_treeNodes.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_treeNodes_Click);
             // 
             // EquipmentDBRibbon
             // 
@@ -386,6 +402,8 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_SBCUtest;
         internal Microsoft.Office.Tools.Ribbon.RibbonToggleButton btn_EditProcedure;
         internal Microsoft.Office.Tools.Ribbon.RibbonToggleButton tgbtn_Wrap;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_sync_sto;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_treeNodes;
     }
 
     partial class ThisRibbonCollection

@@ -593,7 +593,10 @@ namespace ExcelAddInEquipmentDatabase.Forms
         public string MX7_BuildQuery_ProcMngrToActiveConnection(String QueryTemplate)
         {
             System.Text.StringBuilder sbQuery = new System.Text.StringBuilder();
-            sbQuery.Append("SELECT ").Append(QueryTemplate.Split(new string[] { "SELECT" }, StringSplitOptions.None)[1]);
+            //gives issue when users uses nested querys 
+            //sbQuery.Append("SELECT ").Append(QueryTemplate.Split(new string[] { "SELECT" }, StringSplitOptions.None)[1]);
+            sbQuery.Append("SELECT ").Append(QueryTemplate.Substring(QueryTemplate.IndexOf("SELECT") + 6));
+
             foreach (var control in flowLayoutPanel1.Controls)
             {
                 if (control is Forms.uc_Datebox)

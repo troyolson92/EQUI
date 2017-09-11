@@ -35,17 +35,17 @@ namespace ExcelAddInEquipmentDatabase.Forms
         //
         applData.c3gL_errorDataTable lc3gError = new applData.c3gL_errorDataTable();
         applData.c4gL_errorDataTable lc4gError = new applData.c4gL_errorDataTable();
-        applData._ABB_ORGL_L_errorDataTable lorglError = new applData._ABB_ORGL_L_errorDataTable();
+        applData.ngacL_errorDataTable lngaclError = new applData.ngacL_errorDataTable();
         //
         applData.c3gC_LogClassRulesDataTable lv3gRules = new applData.c3gC_LogClassRulesDataTable();
         applData.c4gC_LogClassRulesDataTable lv4gRules = new applData.c4gC_LogClassRulesDataTable();
-        applData._ABB_ORGL_c_LogClassRulesDataTable lvorglRules = new applData._ABB_ORGL_c_LogClassRulesDataTable();
+        applData.ngacC_LogClassRulesDataTable lngaclRules = new applData.ngacC_LogClassRulesDataTable();
         BindingSource bindingSourceRules = new BindingSource();
         //
         applData.c_SubgroupDataTable lc_subgroup = new applData.c_SubgroupDataTable();
         applData.c_ClassificationDataTable lc_classification = new applData.c_ClassificationDataTable();
         //
-        static string[] systems = new string[] { "ABB-ORGL","ABB-NGAC" ,"C3G", "C4G"};
+        static string[] systems = new string[] { "ABB-NGAC" ,"C3G", "C4G"};
         string CreateNew = "Create new...";
         string UpdateFromMaximo = "Update from Maximo...";
 
@@ -127,14 +127,11 @@ namespace ExcelAddInEquipmentDatabase.Forms
                     bindingSourceRules.DataSource = lv4gRules;
                     break;
                 case "ABB-NGAC":
-                    MessageBox.Show("system not implemented", "OEPS", MessageBoxButtons.OK);
-                    break;
-                case "ABB-ORGL":
-                    using (applDataTableAdapters.ABB_ORGL_c_LogClassRulesTableAdapter Adapter = new applDataTableAdapters.ABB_ORGL_c_LogClassRulesTableAdapter())
+                    using (applDataTableAdapters.ngacC_LogClassRulesTableAdapter Adapter = new applDataTableAdapters.ngacC_LogClassRulesTableAdapter())
                     {
-                        Adapter.Fill(lvorglRules, GetID(cb_classification.Text), GetID(cb_Subgroup.Text));
+                        Adapter.Fill(lngaclRules, GetID(cb_classification.Text), GetID(cb_Subgroup.Text));
                     }
-                    bindingSourceRules.DataSource = lvorglRules;
+                    bindingSourceRules.DataSource = lngaclRules;
                     break;
                 default:
                     MessageBox.Show("system unkown", "OEPS", MessageBoxButtons.OK);
@@ -183,14 +180,11 @@ namespace ExcelAddInEquipmentDatabase.Forms
                     dg_Result.DataSource = lc4gError;
                     break;
                 case "ABB-NGAC":
-                    MessageBox.Show("system not implemented", "OEPS", MessageBoxButtons.OK);
-                    break;
-                case "ABB-ORGL":
-                    using (applDataTableAdapters.ABB_ORGL_L_errorTableAdapter Adapter = new applDataTableAdapters.ABB_ORGL_L_errorTableAdapter())
+                    using (applDataTableAdapters.ngacL_errorTableAdapter Adapter = new applDataTableAdapters.ngacL_errorTableAdapter())
                     {
-                        Adapter.Fill(lorglError, tb_logTextFilter.Text, Convert.ToInt32(tb_LogCodeFilterFrom.Text), Convert.ToInt32(tb_LogCodeFilterUntil.Text));
+                        Adapter.Fill(lngaclError, tb_logTextFilter.Text, Convert.ToInt32(tb_LogCodeFilterFrom.Text), Convert.ToInt32(tb_LogCodeFilterUntil.Text));
                     }
-                    dg_Result.DataSource = lorglError;
+                    dg_Result.DataSource = lngaclError;
                     break;
                 default:
                     MessageBox.Show("system unkown", "OEPS", MessageBoxButtons.OK);
@@ -239,15 +233,12 @@ namespace ExcelAddInEquipmentDatabase.Forms
                             }
                             break;
                         case "ABB-NGAC":
-                            Debugger.Message("system not implemented");
-                            break;
-                        case "ABB-ORGL":
-                            using (applDataTableAdapters.ABB_ORGL_L_errorTableAdapter Adapter = new applDataTableAdapters.ABB_ORGL_L_errorTableAdapter())
+                            using (applDataTableAdapters.ngacL_errorTableAdapter Adapter = new applDataTableAdapters.ngacL_errorTableAdapter())
                             {
-                                Adapter.UpdateQuery(Convert.ToInt32(row.Cells[0].Value), GetID(cb_classification.Text), GetID(cb_Subgroup.Text));
+                              
+                                Adapter.UpdateQuery(Convert.ToInt32(row.Cells[2].Value), GetID(cb_classification.Text), GetID(cb_Subgroup.Text));
                             }
                             break;
-
                         default:
                             Debugger.Message("system unkown");
                             return;
@@ -380,11 +371,8 @@ This can not be undone.
                         ,true);
                     break;
                 case "ABB-NGAC":
-                    MessageBox.Show("system not implemented", "OEPS", MessageBoxButtons.OK);
-                    break;
-                case "ABB-ORGL":
                     lGadataComm.RunCommandGadata(string.Format(
-                        @"exec gadata.[ABB].[sp_update_Lerror_classifcation] 
+                        @"exec gadata.[NGAC].[sp_update_Lerror_classifcation] 
                                   @update = 1
                                 , @OverRideManualSet = {0}
                                 , @c_ClassificationId = {1}
@@ -392,7 +380,6 @@ This can not be undone.
                         , cb_OverRideManualSet.Checked, GetID(cb_classification.Text), GetID(cb_Subgroup.Text))
                         , true);
                     break;
-
                 default:
                     MessageBox.Show("system unkown", "OEPS", MessageBoxButtons.OK);
                     return;
@@ -419,26 +406,22 @@ This can not be undone.
                     case "C3G":
                         using (applDataTableAdapters.c3gC_LogClassRulesTableAdapter Adapter = new applDataTableAdapters.c3gC_LogClassRulesTableAdapter())
                         {
-                            Adapter.Insert(null, null, null, null, null, null, GetID(cb_classification.Text), GetID(cb_Subgroup.Text));
+                            Adapter.Insert(null, null, null, null, GetID(cb_classification.Text), GetID(cb_Subgroup.Text));
                         }
                         break;
                     case "C4G":
                         using (applDataTableAdapters.c4gC_LogClassRulesTableAdapter Adapter = new applDataTableAdapters.c4gC_LogClassRulesTableAdapter())
                         {
-                            Adapter.Insert(null, null, null, null, null, null, GetID(cb_classification.Text), GetID(cb_Subgroup.Text));
+                            Adapter.Insert(null, null, null, null, GetID(cb_classification.Text), GetID(cb_Subgroup.Text));
                         }
                         break;
                     case "ABB-NGAC":
-                        MessageBox.Show("system not implemented", "OEPS", MessageBoxButtons.OK);
-                        break;
-                    case "ABB-ORGL":
-                        using (applDataTableAdapters.ABB_ORGL_c_LogClassRulesTableAdapter Adapter = new applDataTableAdapters.ABB_ORGL_c_LogClassRulesTableAdapter())
+                        using (applDataTableAdapters.ngacC_LogClassRulesTableAdapter Adapter = new applDataTableAdapters.ngacC_LogClassRulesTableAdapter())
                         {
-                            
-                            Adapter.Insert(null, null, null, null, null, null, null, null, null, GetID(cb_classification.Text), GetID(cb_Subgroup.Text));
+                        
+                            Adapter.Insert(null, null, null, null, GetID(cb_classification.Text), GetID(cb_Subgroup.Text));
                         }
                         break;
-
                     default:
                         MessageBox.Show("system unkown", "OEPS", MessageBoxButtons.OK);
                         return;
@@ -510,16 +493,12 @@ This can not be undone.
                         }
                         break;
                     case "ABB-NGAC":
-                        MessageBox.Show("system not implemented", "OEPS", MessageBoxButtons.OK);
-                        break;
-                    case "ABB-ORGL":
-                        using (applDataTableAdapters.ABB_ORGL_c_LogClassRulesTableAdapter Adapter = new applDataTableAdapters.ABB_ORGL_c_LogClassRulesTableAdapter())
+                        using (applDataTableAdapters.ngacC_LogClassRulesTableAdapter Adapter = new applDataTableAdapters.ngacC_LogClassRulesTableAdapter())
                         {
-                            applData._ABB_ORGL_c_LogClassRulesDataTable dt = (applData._ABB_ORGL_c_LogClassRulesDataTable)bindingSourceRules.DataSource;
+                            applData.ngacC_LogClassRulesDataTable dt = (applData.ngacC_LogClassRulesDataTable)bindingSourceRules.DataSource;
                             rowsUpdated = Adapter.Update(dt);
                         }
                         break;
-
                     default:
                         MessageBox.Show("system unkown", "OEPS", MessageBoxButtons.OK);
                         return;

@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<customUI onLoad="Ribbon_Load" xmlns="http://schemas.microsoft.com/office/2006/01/customui">
+    <ribbon>
+        <tabs>
+            <tab idMso="TabAddIns" />
+            <tab id="rib2" label="EQDATABASE">
+                <group id="group2" label="Connection Manager">
+                    <button id="btn_Query" imageMso="DataRefreshAll" onAction="btn_Query_Click" label="Query" size="large" />
+                    <separator id="separator1" />
+                    <dropDown id="dd_activeConnection" imageMso="OrganizationChartSelectLevel" onAction="dd_activeConnection_SelectionChanged" label="ActiveConn" />
+                    <dropDown id="dd_ParameterSets" imageMso="ImportMoreMenu" onAction="dd_ParameterSets_SelectionChanged" enabled="false" label="pSets" />
+                    <toggleButton id="btn_EditProcedure" imageMso="SmartArtInsert" onAction="btn_EditProcedure_Click" label="Procedure parameters" />
+                </group>
+                <group id="AssetManager" label="Asset and time manager">
+                    <comboBox id="cb_Lochierarchy" onChange="cb_Lochierarchy_TextChanged" enabled="false" label="Lochierarchy" showImage="false" />
+                    <comboBox id="cb_locations" onChange="cb_locations_TextChanged" enabled="false" label="Location" showImage="false" />
+                    <comboBox id="cb_assets" onChange="cb_assets_TextChanged" enabled="false" label="Asset" showImage="false" />
+                    <toggleButton id="tbn_3" enabled="false" label=" " showImage="false" />
+                    <separator id="separator2" />
+                    <button id="btn_StartDate" imageMso="FillRight" onAction="btn_StartDate_Click" enabled="false" label="StartDate" />
+                    <button id="btn_EndDate" imageMso="FillLeft" onAction="btn_EndDate_Click" enabled="false" label="EndDate" />
+                    <button id="btn_nDays" imageMso="TableExportTableToSharePointList" onAction="btn_nDays_Click" enabled="false" label="nDays" />
+                </group>
+                <group id="g_config" label="Configuration">
+                    <toggleButton id="tbtn_Autorefresh" label="AutoRefresh" showImage="false" />
+                    <gallery id="gall_templates" onAction="gall_templates_Click" label="Templates" showImage="false" />
+                    <dropDown id="dd_User" onAction="dd_User_SelectionChanged" label="U:" showImage="false" />
+                    <separator id="separator3" />
+                    <button id="btn_ConnectionManager" imageMso="AdpDiagramAddRelatedTables" onAction="btn_ConnectionManager_Click" label="MngConnections" />
+                    <button id="btn_AssetManager" imageMso="FormulaMoreFunctionsMenu" onAction="btn_AssetManager_Click" label="MngAssets" />
+                    <button id="btn_help" imageMso="TentativeAcceptInvitation" onAction="btn_help_Click" label="Help" />
+                    <button id="btn_docMngr" imageMso="FunctionsLookupReferenceInsertGallery" onAction="btn_docMngr_Click" label="DocSearch" />
+                    <button id="btn_ErrorMngr" imageMso="QuerySelectQueryType" onAction="btn_ErrorMngr_Click" label="MngErrors" />
+                    <toggleButton id="tgbtn_Wrap" onAction="tgbtn_Wrap_Click" label="WrapText" showImage="false" />
+                </group>
+                <group id="groupTempTools" label="TempTools">
+                    <button id="sync_stw040" onAction="sync_stw040_Click" label="btn_sync_stw040" showImage="false" />
+                    <button id="btn_sync_mx7" onAction="btn_sync_mx7_Click" label="btn_sync_mx7" showImage="false" />
+                    <button id="btn_sync_sto" onAction="btn_sync_sto_Click" label="btn_sync_sto" showImage="false" />
+                    <button id="btn_SBCUtest" onAction="button1_Click_1" label="btn_SBCUtest" showImage="false" />
+                    <toggleButton id="tbtn_StopRightClick" onAction="tbtn_StopRightClick_Click" label="StopRightClick" showImage="false" />
+                </group>
+            </tab>
+        </tabs>
+    </ribbon>
+</customUI>

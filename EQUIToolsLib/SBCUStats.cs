@@ -650,6 +650,11 @@ ORDER BY x.Toolname ASC";
 
         private void cb_weldguns_DropDownClosed(object sender, EventArgs e)
         {
+            refresh();
+        }
+
+        private void refresh()
+        {
             cb_Tools.Enabled = false;
             activeLocation = cb_Tools.Text;
             //get data to build the chart
@@ -657,6 +662,7 @@ ORDER BY x.Toolname ASC";
             bw.RunWorkerAsync();
             //
             cb_Tools.Enabled = true;
+
         }
 
  //launch SBCU 3D tool 
@@ -845,6 +851,12 @@ ORDER BY x.Toolname ASC";
         {
             showAllXAxisToolStripMenuItem.Checked = !showAllXAxisToolStripMenuItem.Checked;
             built_Chart(false, true);
+        }
+
+        private void loadAllDataToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Daysback = -365 * 10; //get last 10 years.
+            refresh();
         }
 
 
