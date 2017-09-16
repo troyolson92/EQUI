@@ -31,8 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ActiproSoftware.Shared.Net20, Version=1.0.102.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
-    <Reference Include="ActiproSoftware.WinUICore.Net20, Version=1.0.102.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=x86" />
     <Reference Include="itextsharp">
       <HintPath>..\ExcelAddInEquipmentDatabase\References\itextsharp.dll</HintPath>
     </Reference>

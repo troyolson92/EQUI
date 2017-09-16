@@ -38,7 +38,7 @@ namespace ABBCommTest
             //
             InitializeComponent();
             //get greenfield list from GADATA
-            dt_robots = lgadatacomm.RunQueryGadata(@"select top 10 * from gadata.ngac.c_controller where assetnum like 'URA%' "); //and controller_name like '%99%'");
+            dt_robots = lgadatacomm.RunQueryGadata(@"select * from gadata.ngac.c_controller where assetnum like 'URA%' "); //and controller_name like '%99%'");
                                                    //  where CAST(SUBSTRING(controller_name,0,4) as int) between 351 and 359");
             //add colums for extra data
             dt_robots.Columns.Add("SystemId", System.Type.GetType("System.String"));
@@ -53,6 +53,9 @@ namespace ABBCommTest
           //  dt_robots.Columns.Add("ConfigOK", System.Type.GetType("System.String"));
            // dt_robots.Columns.Add("restartOK", System.Type.GetType("System.String"));
             dt_robots.Columns.Add("LoadOK", System.Type.GetType("System.String"));
+            dt_robots.Columns.Add("HasTipneed", System.Type.GetType("System.String"));
+            dt_robots.Columns.Add("HasTipneedComment", System.Type.GetType("System.String"));
+
             //link to datagrid
             dataGridView1.DataSource = dt_robots;
             //
@@ -326,6 +329,85 @@ COM_APP:
             }
         }
 
+        //check doTipneed active
+        //write configuration to robot
+        private void DoTipneedcheckRobot(ControllerInfo ci, DataGridViewRow row)
+        {
+            string tempdir = @"c:\temp\debug\";
+            string FilePathOnControler = @"/hd0a/TEMP/";
+
+            try
+            {
+                if (ci.Availability != Availability.Available) { debugger.Message("controller busy: " + ci.Id); return; } //stop if controller is not available
+                //
+                controller = ControllerFactory.CreateFrom(ci); //get controller from factory
+                    // get modules from controller task trob1
+                    ABB.Robotics.Controllers.RapidDomain.Task tRob1 = controller.Rapid.GetTask("T_ROB1");
+                    Module[] mx = tRob1.GetModules();
+                    //find the one we need 
+                    foreach (Module m in mx)
+                    {
+                        if (m.Name.StartsWith("LR", StringComparison.InvariantCulture))
+                        {
+                            Routine proc = m.GetRoutine("AutoRunUser");
+                            if (proc != null) //check if we have the right module
+                            {
+                                //find the module on the controller and get it **************************************
+                                //save it on the controller
+                                m.SaveToFile(FilePathOnControler);
+                                System.Threading.Thread.Sleep(1000);
+                                //get file from controler to pc 
+                                FileSystem cntrlFileSystem;
+                                cntrlFileSystem = controller.FileSystem;
+                                controller.FileSystem.RemoteDirectory = FilePathOnControler;
+                                controller.FileSystem.LocalDirectory = tempdir;
+                                //move file to pc
+                                controller.FileSystem.GetFile(m.Name + ".mod", m.Name + ".mod", true);
+                                //process the file******************************************************************
+                                string lrModule = File.ReadAllText(tempdir + m.Name + ".mod");
+
+                                if (lrModule.Contains("DoTipNeed;"))
+                                {
+                                    row.Cells[dataGridView1.Columns["HasTipneed"].Index].Value = "Y";
+                                    string[] lines = System.IO.File.ReadAllLines(tempdir + m.Name + ".mod");
+
+                                    foreach (string r in lines)
+                                    {
+                                        if (r.Contains("DoTipNeed") && r.Contains("!"))
+                                        {
+                                            row.Cells[dataGridView1.Columns["HasTipneedComment"].Index].Value = "Y";
+                                            debugger.Log(string.Format("ERROR controller: {0} checkline= {1}",ci.ControllerName,r));
+                                            return;
+
+                                        }
+                                        else
+                                        {
+                                            row.Cells[dataGridView1.Columns["HasTipneedComment"].Index].Value = "N";
+                                        }
+                                        
+                                    }
+                                }
+                                else
+                                {
+                                    row.Cells[dataGridView1.Columns["HasTipneed"].Index].Value = "N";
+                                }
+
+                            }
+
+                        }
+
+                    }
+               
+                row.Cells[dataGridView1.Columns["ConnectOK"].Index].Value = "OK";
+            }
+            catch (Exception ex)
+            {
+                row.Cells[dataGridView1.Columns["ConnectOK"].Index].Value = "NOK";
+                debugger.Exeption(ex);
+                debugger.Message("Error connecting to controller");
+                return;
+            }
+        }
 
         //check configuration of robot
         private bool checkNFSconfig(ControllerInfo ci, DataGridViewRow row)
@@ -424,18 +506,25 @@ COM_APP:
         {
                 foreach (DataGridViewRow row in dataGridView1.SelectedRows)
                 {
-                    ControllerInfo ci;
-                    if (scanner.TryFind(new Guid(row.Cells[dataGridView1.Columns["SystemId"].Index].Value.ToString()), out ci))
+                    try
                     {
-                        this.controller = ControllerFactory.CreateFrom(ci);
-                        this.controller.Logon(UserInfo.DefaultUser);
+                        ControllerInfo ci;
+                        if (scanner.TryFind(new Guid(row.Cells[dataGridView1.Columns["SystemId"].Index].Value.ToString()), out ci))
+                        {
+                            this.controller = ControllerFactory.CreateFrom(ci);
+                            this.controller.Logon(UserInfo.DefaultUser);
 
-                        SocketConfigureRobot(ci, row);
-
+                            // SocketConfigureRobot(ci, row);
+                            DoTipneedcheckRobot(ci, row);
+                        }
+                        else
+                        {
+                            debugger.Message("can not find controller: " + row.Cells[0].Value.ToString());
+                        }
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        debugger.Message("can not find controller: " + row.Cells[0].Value.ToString());
+                        debugger.Exeption(ex);
                     }
                 }
             

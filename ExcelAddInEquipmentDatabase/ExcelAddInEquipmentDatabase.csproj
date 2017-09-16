@@ -41,7 +41,7 @@
     <PublishUrl>\\gnlsnm0101.gen.volvocars.net\proj\6308-SHR-VCC22700\VSTO\DEPLOYMENTBASE\</PublishUrl>
     <InstallUrl />
     <TargetCulture>en</TargetCulture>
-    <ApplicationVersion>3.0.2.33</ApplicationVersion>
+    <ApplicationVersion>3.0.2.36</ApplicationVersion>
     <AutoIncrementApplicationRevision>true</AutoIncrementApplicationRevision>
     <UpdateEnabled>true</UpdateEnabled>
     <UpdateInterval>0</UpdateInterval>
@@ -346,6 +346,7 @@
     <None Include="applData.xss">
       <DependentUpon>applData.xsd</DependentUpon>
     </None>
+    <None Include="ClassDiagram1.cd" />
     <None Include="DataClassesGADATA.dbml.layout">
       <DependentUpon>DataClassesGADATA.dbml</DependentUpon>
     </None>
