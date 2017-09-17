@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Mvc;
 
-namespace EqUiWeb
+namespace EqUiWebUi
 {
     public class FilterConfig
     {
