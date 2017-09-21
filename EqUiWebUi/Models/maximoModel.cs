@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace EquiWebUi.Models
+namespace EqUiWebUi.Models
 {
     public class maximoModel
     {

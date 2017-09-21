@@ -41,7 +41,7 @@ namespace ExcelAddInEquipmentDatabase
         WorksheetFeatures lWorksheetFeatures = new WorksheetFeatures();
         //procedure manager instance 
         //StoredProcedureManger ProcMngr;
-        Forms.ProcedureManger ProcMngr;
+        Forms.ProcedureManeger ProcMngr;
         Microsoft.Office.Tools.CustomTaskPane ProcedureMangerTaskPane;
         //asset manager instance
         AssetManager AssetMngr;
@@ -88,15 +88,21 @@ namespace ExcelAddInEquipmentDatabase
             //subscribe to refresh finished 
             Globals.ThisAddIn.Application.AfterCalculate += Application_AfterCalculate;
             //run background tick for refresh events 
-            System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
-            timer.Interval = (60 * 1000); // 60 secs
+            System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer
+            {
+                Interval = (60 * 1000) // 60 secs
+            };
             timer.Tick += new EventHandler(Refresh_Tick);
             timer.Start();
         }
 
         void Application_AfterCalculate()
         {
-            if (TriggerRefresh && tgbtn_Wrap.Checked) SetWrapText(true);
+            if (TriggerRefresh && tgbtn_Wrap.Checked)
+            {
+                SetWrapText(true);
+            }
+
             TriggerRefresh = false;
         }
 
@@ -209,10 +215,10 @@ namespace ExcelAddInEquipmentDatabase
             if (ProcMngr != null) ProcMngr.Dispose();
             if (dd_activeConnection.SelectedItem.Label != "RefreshAll")
             {
-                ProcMngr = new Forms.ProcedureManger(dd_activeConnection.SelectedItem.Label);
+                ProcMngr = new Forms.ProcedureManeger(dd_activeConnection.SelectedItem.Label);
                 //
                 if (ProcedureMangerTaskPane != null) ProcedureMangerTaskPane.Dispose();
-                ProcedureMangerTaskPane = Globals.ThisAddIn.CustomTaskPanes.Add(ProcMngr, "ProcedureManger");
+                ProcedureMangerTaskPane = Globals.ThisAddIn.CustomTaskPanes.Add(ProcMngr, "ProcedureManeger");
                 ProcedureMangerTaskPane.Width = ProcMngr.MaxWith() + 50;
                 ProcedureMangerTaskPane.DockPosition = Microsoft.Office.Core.MsoCTPDockPosition.msoCTPDockPositionLeft;
                 ProcedureMangerTaskPane.Visible = btn_EditProcedure.Checked;

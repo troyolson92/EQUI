@@ -216,7 +216,6 @@
   <ItemGroup>
     <Compile Include="applData.cs">
       <DependentUpon>applData.xsd</DependentUpon>
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="applData1.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -242,14 +241,6 @@
     <Compile Include="Forms\ConnectionManger.Designer.cs">
       <DependentUpon>ConnectionManger.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataClassesGADATA.cs">
-      <DependentUpon>DataClassesGADATA.dbml</DependentUpon>
-    </Compile>
-    <Compile Include="DataClassesGADATA.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DataClassesGADATA.dbml</DependentUpon>
-    </Compile>
     <Compile Include="Forms\ErrorManger.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -268,11 +259,11 @@
     <Compile Include="Forms\MXxQueryEdit.Designer.cs">
       <DependentUpon>MXxQueryEdit.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\ProcedureManger.cs">
+    <Compile Include="Forms\ProcedureManeger.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\ProcedureManger.Designer.cs">
-      <DependentUpon>ProcedureManger.cs</DependentUpon>
+    <Compile Include="Forms\ProcedureManeger.Designer.cs">
+      <DependentUpon>ProcedureManeger.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\uc_Datebox.cs">
       <SubType>UserControl</SubType>
@@ -325,8 +316,8 @@
     <EmbeddedResource Include="Forms\MXxQueryEdit.resx">
       <DependentUpon>MXxQueryEdit.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\ProcedureManger.resx">
-      <DependentUpon>ProcedureManger.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\ProcedureManeger.resx">
+      <DependentUpon>ProcedureManeger.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\uc_Datebox.resx">
       <DependentUpon>uc_Datebox.cs</DependentUpon>
@@ -347,9 +338,6 @@
       <DependentUpon>applData.xsd</DependentUpon>
     </None>
     <None Include="ClassDiagram1.cd" />
-    <None Include="DataClassesGADATA.dbml.layout">
-      <DependentUpon>DataClassesGADATA.dbml</DependentUpon>
-    </None>
     <EmbeddedResource Include="Forms\AssetManager.resx">
       <DependentUpon>AssetManager.cs</DependentUpon>
     </EmbeddedResource>
@@ -375,11 +363,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="DataClassesGADATA.dbml">
-      <Generator>MSLinqToSQLGenerator</Generator>
-      <LastGenOutput>DataClassesGADATA.designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
     <None Include="ExcelAddInEquipmentDatabase_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -441,7 +424,7 @@
   <ProjectExtensions>
     <VisualStudio>
       <FlavorProperties GUID="{BAA0C2D2-18E2-41B9-852F-F413020CAA33}">
-        <ProjectProperties HostName="Excel" HostPackage="{29A7B9D7-A7F1-4328-8EF0-6B2D1A56B2C1}" OfficeVersion="15.0" VstxVersion="4.0" ApplicationType="Excel" Language="cs" TemplatesPath="VSTOTemplates" DebugInfoExeName="#Software\Microsoft\Office\15.0\Excel\InstallRoot\Path#excel.exe" DebugInfoCommandLine="/x " AddItemTemplatesGuid="{51063C3A-E220-4D12-8922-BDA915ACD783}" />
+        <ProjectProperties HostName="Excel" HostPackage="{29A7B9D7-A7F1-4328-8EF0-6B2D1A56B2C1}" OfficeVersion="15.0" VstxVersion="4.0" ApplicationType="Excel" Language="cs" TemplatesPath="VSTOTemplates" DebugInfoExeName="#Software\Microsoft\Office\16.0\Excel\InstallRoot\Path#excel.exe" DebugInfoCommandLine="/x " AddItemTemplatesGuid="{51063C3A-E220-4D12-8922-BDA915ACD783}" />
         <Host Name="Excel" GeneratedCodeNamespace="ExcelAddInEquipmentDatabase" PublishedHash="69C324AB27932AA2FBF2B7EA72250886FF164DE6" IconIndex="0">
           <HostItem Name="ThisAddIn" Code="ThisAddIn.cs" CanonicalName="AddIn" PublishedHash="ED01C5DEFA352485C02F2B5AD72C85E6209E4BE5" CanActivate="false" IconIndex="1" Blueprint="ThisAddIn.Designer.xml" GeneratedCode="ThisAddIn.Designer.cs" />
         </Host>

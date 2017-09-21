@@ -224,7 +224,7 @@ namespace ExcelAddInEquipmentDatabase
         private void btn_MX7_create_Click(object sender, EventArgs e)
         {
             string Query;
-            using (Forms.ProcedureManger  ProcMngr = new Forms.ProcedureManger(lMaximoComm.SystemMX7))
+            using (Forms.ProcedureManeger  ProcMngr = new Forms.ProcedureManeger(lMaximoComm.SystemMX7))
           {
               ProcMngr.MX7_ActiveConnectionToProcMngr(lMaximoQuery.oracle_get_QueryParms_from_GADATA(cb_MX7_QueryNames.Text, lMaximoComm.SystemMX7), "It does not exist");
               Query = ProcMngr.MX7_BuildQuery_ProcMngrToActiveConnection(lMaximoQuery.oracle_get_QueryTemplate_from_GADATA(cb_MX7_QueryNames.Text, lMaximoComm.SystemMX7));

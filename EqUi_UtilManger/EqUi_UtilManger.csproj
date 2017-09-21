@@ -11,11 +11,11 @@
     <AssemblyName>EqUi_UtilManger</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <TargetFrameworkProfile />
-    <PublishUrl>\\gnlsnm0101.gen.volvocars.net\proj\6308-SHR-VCC22700\IIS7\wwwroot\Clickonce\</PublishUrl>
+    <PublishUrl>\\gnlsnm0101.gen.volvocars.net\proj\6308-SHR-VCC22700\IIS7\EqUiWebUi\Clickonce\</PublishUrl>
     <Install>false</Install>
-    <InstallFrom>Web</InstallFrom>
+    <InstallFrom>Unc</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
     <UpdateMode>Foreground</UpdateMode>
     <UpdateInterval>7</UpdateInterval>
@@ -23,14 +23,14 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <InstallUrl>http://gnl1004zcbqc2/Clickonce/</InstallUrl>
     <ProductName>EqUi_UtilManger</ProductName>
     <PublisherName>SDEBEUL +329250 3069</PublisherName>
     <SuiteName>EqUI</SuiteName>
+    <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <TrustUrlParameters>true</TrustUrlParameters>
-    <ApplicationRevision>43</ApplicationRevision>
+    <ApplicationRevision>44</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>

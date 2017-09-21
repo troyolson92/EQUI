@@ -162,7 +162,48 @@ namespace EQUICommunictionLib
                 return cmd;
             }
 
-        }  
+        }
+
+        public void InsertSnaphotGadata(string name, string qry, string htmlResult)
+        {
+            SqlConnection lconn = Gadataconn;
+        
+            try
+            {
+                lconn.Open();
+            }
+            catch (Exception e)
+            {
+                Debugger.Exeption(e);
+            }
+
+            try
+            {
+                using (SqlCommand myCommand = new SqlCommand("insert INTO GADATA.EqUi.QuerySnapshots VALUES(@name, getdate(), @query, @htmlresult)", lconn))
+                {
+                    myCommand.Parameters.AddWithValue("@name", name);
+                    myCommand.Parameters.AddWithValue("@query", qry);
+                    myCommand.Parameters.AddWithValue("@htmlresult", htmlResult);
+
+                    myCommand.CommandTimeout = 300;
+                    myCommand.ExecuteNonQuery();
+                    try
+                    {
+                        lconn.Close();
+                    }
+                    catch (Exception e)
+                    {
+                        Debugger.Exeption(e);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Debugger.Exeption(e);
+            }
+
+
+        }
     }
     
 }
