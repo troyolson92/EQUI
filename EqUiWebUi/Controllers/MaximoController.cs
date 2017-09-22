@@ -9,12 +9,14 @@ using System.Data;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using HtmlDiff;
+using System.Text;
 
 namespace EqUiWebUi.Controllers
 {
     public class MaximoController : Controller
     {
-        EQUICommunictionLib.MaximoComm lMxCom = new EQUICommunictionLib.MaximoComm();
+        EQUICommunictionLib.MaximoComm lmaxCom = new MaximoComm();
+        EQUICommunictionLib.GadataComm lgadataCom = new GadataComm();
 
         //
         // GET: /Maximo/
@@ -26,7 +28,7 @@ namespace EqUiWebUi.Controllers
 
         public ActionResult WoDetails(string wonum)
         {
-            var workorder = new MaximoWorkorder() { sWoNum = wonum, sWoDetails = lMxCom.getMaximoDetails(wonum) };
+            var workorder = new MaximoWorkorder() { sWoNum = wonum, sWoDetails = lmaxCom.getMaximoDetails(wonum) };
             //return View(workorder);
             workorder.sWoDetails =  workorder.sWoDetails.Replace("font-size: small","font-size: xx-small");
             return Content(workorder.sWoDetails);
@@ -34,31 +36,59 @@ namespace EqUiWebUi.Controllers
 
         public ActionResult WoDiff(string wonum)
         {
-            //7437793
-            var workorder = new MaximoWorkorder() { sWoNum = wonum, sWoDetails = lMxCom.getMaximoDetails(wonum) };
+            DataTable dt = lgadataCom.RunQueryGadata("SELECT TOP 1 * FROM GADATA.EQUI.QuerySnapshots order by id desc ");
 
-            string oldText = workorder.sWoDetails.Replace("font-size: small", "font-size: xx-small");
-            string newText = oldText.Replace("6","5").Replace("OK", "OK en nog wa meer zever");
+            string orgHtmlResult = dt.Rows[0].Field<string>("htmlResult");
+            DataTable dtNew = lmaxCom.oracle_runQuery(dt.Rows[0].Field<string>("query"));
+            string newHtmlReulst = ConvertDataTableToHTML(dtNew);
 
-            //change rendering
-            /*         
-ins { 
-    background-color: #cfc; 
-    text-decoration: none;  
-}  
-del { 
+            //test 
+            newHtmlReulst = newHtmlReulst.Replace("INPRG", "dingens");
 
-    color: #999; 
-    background-color:#FEC8C8;  
-} 
-*/
-            HtmlDiff.HtmlDiff diffHelper = new HtmlDiff.HtmlDiff(oldText, newText);
-           
+            HtmlDiff.HtmlDiff diffHelper = new HtmlDiff.HtmlDiff(orgHtmlResult, newHtmlReulst);
             string diffOutput = diffHelper.Build();
 
+            return Content(FormatHTMLTable(diffOutput));
+        }
 
-            workorder.sWoDetails = diffOutput;
-            return Content(workorder.sWoDetails);
+        public static string FormatHTMLTable(string input)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.Append("<html>");
+            builder.Append(@"<style>
+                            ins { 
+                                background-color: #cfc; 
+                                text-decoration: none; } 
+                            del { 
+                                color: #999; 
+                                background-color:#FEC8C8; } 
+                            </style>");
+            builder.Append("<body>");
+            //builder.Append("<table border='3px' cellpadding='5' cellspacing='0' ");
+            builder.Append(input);
+            builder.Append("</body>");
+            builder.Append("</html>");
+            return builder.ToString();
+        }
+
+        public static string ConvertDataTableToHTML(DataTable dt)
+        {
+            string html = "<table>";
+            //add header row
+            html += "<tr>";
+            for (int i = 0; i < dt.Columns.Count; i++)
+                html += "<td>" + dt.Columns[i].ColumnName + "</td>";
+            html += "</tr>";
+            //add rows
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                html += "<tr>";
+                for (int j = 0; j < dt.Columns.Count; j++)
+                    html += "<td>" + dt.Rows[i][j].ToString() + "</td>";
+                html += "</tr>";
+            }
+            html += "</table>";
+            return html;
         }
 
         [HttpGet]
@@ -98,7 +128,7 @@ where rownum = 1
 ORDER BY WORKORDER.STATUSDATE DESC";
 
             //this wil get everything each time and not limit to page
-            var workorders = lMxCom.oracle_runQuery(qry);
+            var workorders = lmaxCom.oracle_runQuery(qry);
             
             int pageIndex = Convert.ToInt32(page) - 1;
             int pageSize = rows;

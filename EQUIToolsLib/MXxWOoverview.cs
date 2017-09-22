@@ -38,7 +38,7 @@ namespace EQUIToolsLib
             //
             metroProgressSpinner1.Visible = false;
             //
-            this.Show();
+            Show();
             //
         }
 
@@ -56,7 +56,7 @@ namespace EQUIToolsLib
             tb_location.Enabled = false;
             btn_refresh.Enabled = false;
             //
-            this.Show();
+            Show();
             bwWorkorders.RunWorkerAsync();
         }
 
@@ -182,13 +182,13 @@ ORDER BY WORKORDER.STATUSDATE DESC
         {
             InitializeComponent();
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridView1.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_RowEnter);
+            dataGridView1.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(dataGridView1_RowEnter);
             //
             bwLongDescription.DoWork += bwLongDescription_DoWork;
             bwWorkorders.DoWork += bwWorkorders_DoWork;
             bwWorkorders.RunWorkerCompleted += bwWorkorders_RunWorkerCompleted;
             //
-            this.Text = viewmode.Discription;
+            Text = viewmode.Discription;
         }
 
         void bwWorkorders_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -249,7 +249,7 @@ ORDER BY WORKORDER.STATUSDATE DESC
 #region event calls 
         private void btn_refresh_Click(object sender, EventArgs e)
         {
-            this.Enabled = false;
+            Enabled = false;
             metroProgressSpinner1.Show();
             //store original query location
             viewmode.Location = tb_location.Text; //schould store the ancestor 
@@ -262,7 +262,7 @@ ORDER BY WORKORDER.STATUSDATE DESC
             apply_filter();
             //
             metroProgressSpinner1.Hide();
-            this.Enabled = true;
+            Enabled = true;
             //
         }
 

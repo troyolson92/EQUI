@@ -47,7 +47,7 @@ namespace EQUIToolsLib
             activeLocation = Location;
             //
             initchart();
-            toolStripComboBoxSortMode.SelectedIndexChanged += new System.EventHandler(this.cb_sortmode_SelectedValueChanged);
+            toolStripComboBoxSortMode.SelectedIndexChanged += new System.EventHandler(cb_sortmode_SelectedValueChanged);
             //
             metroProgressSpinner1.Visible = true;
             bw.RunWorkerAsync();
@@ -59,7 +59,7 @@ namespace EQUIToolsLib
             InitializeComponent();
             cb_Tools.Enabled = true;
             initchart();
-            toolStripComboBoxSortMode.SelectedIndexChanged  += new System.EventHandler(this.cb_sortmode_SelectedValueChanged);
+            toolStripComboBoxSortMode.SelectedIndexChanged  += new System.EventHandler(cb_sortmode_SelectedValueChanged);
         }
 
         private void initchart()
@@ -251,7 +251,7 @@ namespace EQUIToolsLib
             bw.DoWork += bw_DoWork;
             bw.RunWorkerCompleted += bw_RunWorkerCompleted;
             //
-            this.Show();
+            Show();
         }
 
         void bw_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -315,7 +315,7 @@ namespace EQUIToolsLib
            {
                trackBar1.ValueChanged += new System.EventHandler(trackBar_ValueChanged);
                trackBar2.ValueChanged += new System.EventHandler(trackBar_ValueChanged);
-               toolStripComboBoxSortMode.SelectedIndexChanged += new System.EventHandler(this.cb_sortmode_SelectedValueChanged);
+               toolStripComboBoxSortMode.SelectedIndexChanged += new System.EventHandler(cb_sortmode_SelectedValueChanged);
                /*trackBar1.Enabled = true;
                trackBar2.Enabled = true;
                cb_Tools.Enabled = true;*/
@@ -325,7 +325,7 @@ namespace EQUIToolsLib
            {
                trackBar1.ValueChanged -= new System.EventHandler(trackBar_ValueChanged);
                trackBar2.ValueChanged -= new System.EventHandler(trackBar_ValueChanged);
-               toolStripComboBoxSortMode.SelectedIndexChanged -= new System.EventHandler(this.cb_sortmode_SelectedValueChanged);
+               toolStripComboBoxSortMode.SelectedIndexChanged -= new System.EventHandler(cb_sortmode_SelectedValueChanged);
            }
         }
     

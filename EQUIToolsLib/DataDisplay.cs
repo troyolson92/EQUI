@@ -22,7 +22,7 @@ namespace EQUIToolsLib
                 cb_datasource.Items.Add(dt.TableName);
             }
             cb_datasource.SelectedValueChanged += cb_datasource_SelectedValueChanged;
-            this.Show();
+            Show();
         }
 
         void cb_datasource_SelectedValueChanged(object sender, EventArgs e)

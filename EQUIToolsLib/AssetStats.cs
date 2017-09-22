@@ -42,7 +42,7 @@ namespace EQUIToolsLib
             btn_refresh.Visible = true;
             metroProgressSpinner1.Visible = false;
             //
-            this.Show();
+            Show();
         }
 
         public AssetStats(string Location)
@@ -57,7 +57,7 @@ namespace EQUIToolsLib
             //
             bwInit.RunWorkerAsync();
             //
-            this.Show();
+            Show();
         }
 
         void initAssetStats()
@@ -85,7 +85,7 @@ namespace EQUIToolsLib
                 cb_incCiblings.Enabled = true;
             }
             //
-            this.Text = string.Format("AssetStats tool Location: {0}", tb_location.Text);
+            Text = string.Format("AssetStats tool Location: {0}", tb_location.Text);
             //
             //
             cb_sortmode.Items.Clear();
@@ -149,7 +149,7 @@ namespace EQUIToolsLib
         void bwInit_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             //check if the result was valid 
-            if (dtGadata.Rows.Count == 0) { Debugger.Message("The query for this errorcode did not return a valid result"); this.Dispose(); return; };
+            if (dtGadata.Rows.Count == 0) { Debugger.Message("The query for this errorcode did not return a valid result"); Dispose(); return; };
             //setup trackbar (trackbar maximum = first time error happend, minium = now)
             DateTime FirstError = (from a in dtGadata.AsEnumerable() select a.Field<DateTime>("starttime")).Min();
             DateTime LastError = (from a in dtGadata.AsEnumerable() select a.Field<DateTime>("starttime")).Max();
@@ -200,7 +200,7 @@ namespace EQUIToolsLib
                 }
             }
             //build trend chart in init mode. 
-            cb_sortmode.SelectedValueChanged += new System.EventHandler(this.cb_sortmode_SelectedValueChanged);
+            cb_sortmode.SelectedValueChanged += new System.EventHandler(cb_sortmode_SelectedValueChanged);
             bwLongDescription.DoWork += bwLongDescription_DoWork;
             //
             metroProgressSpinner1.Hide();
@@ -664,8 +664,8 @@ ORDER BY WORKORDER.STATUSDATE DESC
         private void AssetStats_FormClosing(object sender, FormClosingEventArgs e)
         {
             chart1.FormatNumber -= chart1_FormatNumber;
-            cb_sortmode.SelectedValueChanged -= new System.EventHandler(this.cb_sortmode_SelectedValueChanged);
-            dataGridView1.RowEnter -= new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_RowEnter);
+            cb_sortmode.SelectedValueChanged -= new System.EventHandler(cb_sortmode_SelectedValueChanged);
+            dataGridView1.RowEnter -= new System.Windows.Forms.DataGridViewCellEventHandler(dataGridView1_RowEnter);
             bwInit.CancelAsync();
         }
 

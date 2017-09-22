@@ -263,29 +263,44 @@ namespace ExcelAddInEquipmentDatabase
         //**********************************workorder details*********************************************
         void WorkorderDetailsMenuItemClick(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)
         {
-            MXxWOdetails lMXxWOdetails = new MXxWOdetails(wonum); //allow multible instances of the form.
-            lMXxWOdetails.Show();
+            var newThread = new System.Threading.Thread(frmNewWorkoderThread);
+            newThread.SetApartmentState(System.Threading.ApartmentState.STA);
+            newThread.Start();
+        }
+        public void frmNewWorkoderThread()
+        {
+            System.Windows.Forms.Application.Run(new MXxWOdetails(wonum));
         }
         //**********************************Error details*********************************************
         void ErrorDetailsMenuItemClick(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)
         {
-            LogDetails lLogDetails = new LogDetails(location, Logtype, errornum,refid); //allow multible instances of the form.
-            lLogDetails.Show();
+            var newThread = new System.Threading.Thread(frmNewErrordetailsThread);
+            newThread.SetApartmentState(System.Threading.ApartmentState.STA);
+            newThread.Start();
+        }
+        public void frmNewErrordetailsThread()
+        {
+            System.Windows.Forms.Application.Run(new LogDetails(location, Logtype, errornum, refid));
         }
         //**********************************Error Stats*********************************************
         void ErrorStatsMenuItemClick(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)
         {
-            ErrorStats lErrorStats = new ErrorStats(location, Logtype, errornum, LogText); //allow multible instances of the form.
+            var newThread = new System.Threading.Thread(frmNewErrorStatsThread);
+            newThread.SetApartmentState(System.Threading.ApartmentState.STA);
+            newThread.Start();
+        }
+        public void frmNewErrorStatsThread()
+        {
+            System.Windows.Forms.Application.Run(new ErrorStats(location, Logtype, errornum, LogText));
         }
         //**********************************SBCU Stats*********************************************
         void SBCUStatsMenuItemClick(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)
         {
-            //SBCUStats lSBCUStats = new SBCUStats(location); //crossth
-            var newThread = new System.Threading.Thread(frmNewFormThread);
+            var newThread = new System.Threading.Thread(frmNewSBCUstatsThread);
             newThread.SetApartmentState(System.Threading.ApartmentState.STA);
             newThread.Start();
         }
-        public void frmNewFormThread()
+        public void frmNewSBCUstatsThread()
         {
            System.Windows.Forms.Application.Run(new SBCUStats(location));
         }

@@ -182,6 +182,15 @@ namespace EQUICommunictionLib
             builder.Append(Guid.NewGuid());
             builder.Append("</title>");
             builder.Append("</head>");
+            builder.Append(@"<style>
+
+ins { 
+    background-color: #cfc; 
+    text-decoration: none; } 
+del { 
+    color: #999; 
+    background-color:#FEC8C8; } 
+</style>");
             builder.Append("<body>");
             builder.Append("<table border='3px' cellpadding='5' cellspacing='0' ");
             builder.Append("style='border: solid 2px Silver; font-size: small;'>");

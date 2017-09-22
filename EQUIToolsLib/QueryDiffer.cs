@@ -19,7 +19,7 @@ namespace EQUIToolsLib
         public QueryDiffer()
         {
             InitializeComponent();
-            this.Show();
+            Show();
         }
 
         private void btn_snapshot_Click(object sender, EventArgs e)
@@ -78,30 +78,79 @@ AND WOSTATUS.STATUS IN ('INPRG','EXEC' ) --WVB MUST SET TO ONE OF THESE STATUSES
 ";
 
             DataTable dt = lmaxCom.oracle_runQuery(Qry);
-            string htmlResult = lmaxCom.DtToHTML_Table(dt);
+            string htmlResult = ConvertDataTableToHTML(dt);
 
             lgadataCom.InsertSnaphotGadata("Testname",Qry,htmlResult);
 
-            webBrowser1.DocumentText = htmlResult;
+            webBrowser1.DocumentText = FormatHTMLTable(htmlResult);
 
         }
 
         private void btn_compare_Click(object sender, EventArgs e)
         {
-            DataTable dt = lgadataCom.RunQueryGadata("SELECT TOP 1 * FROM GADATA.EQUI.QuerySnapshots ");
+            DataTable dt = lgadataCom.RunQueryGadata("SELECT TOP 1 * FROM GADATA.EQUI.QuerySnapshots order by id desc ");
 
             string orgHtmlResult = dt.Rows[0].Field<string>("htmlResult");
             DataTable dtNew = lmaxCom.oracle_runQuery(dt.Rows[0].Field<string>("query"));
-            string newHtmlReulst = lmaxCom.DtToHTML_Table(dtNew);
+            string newHtmlReulst = ConvertDataTableToHTML(dtNew);
 
             //test 
-            newHtmlReulst = newHtmlReulst.Replace("INPRG", "dingens");
+            //newHtmlReulst = newHtmlReulst.Replace("INPRG", "dingens");
 
             HtmlDiff.HtmlDiff diffHelper = new HtmlDiff.HtmlDiff(orgHtmlResult, newHtmlReulst);
             string diffOutput = diffHelper.Build();
 
-            webBrowser1.DocumentText = diffOutput;
+            webBrowser1.DocumentText = FormatHTMLTable(diffOutput);
 
+        }
+
+        public static string FormatHTMLTable(string input)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.Append("<html>");
+            builder.Append(@"<style>
+                            ins { 
+                                background-color: #cfc; 
+                                text-decoration: none; } 
+                            del { 
+                                color: #999; 
+                                background-color:#FEC8C8; } 
+                            table {
+                                border-collapse: separate;
+                                width: 100%;
+                                border: 2px solid black;
+                                table-layout: auto;
+                                white-space:nowrap;}
+                             tr, td { width: 100%;
+                                    border: 1px solid black
+}
+                            table > thead > tr > th { width: auto; }
+                            </style>");
+            builder.Append("<body>");
+            builder.Append(input);
+            builder.Append("</body>");
+            builder.Append("</html>");
+            return builder.ToString();
+        }
+
+        public static string ConvertDataTableToHTML(DataTable dt)
+        {
+            string html = "<table>";
+            //add header row
+            html += "<tr>";
+            for (int i = 0; i < dt.Columns.Count; i++)
+                html += "<td>" + dt.Columns[i].ColumnName + "</td>";
+            html += "</tr>";
+            //add rows
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                html += "<tr>";
+                for (int j = 0; j < dt.Columns.Count; j++)
+                    html += "<td>" + dt.Rows[i][j].ToString() + "</td>";
+                html += "</tr>";
+            }
+            html += "</table>";
+            return html;
         }
 
     }

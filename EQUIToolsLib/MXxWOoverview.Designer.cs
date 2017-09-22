@@ -54,18 +54,20 @@
             this.webBrowser1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.webBrowser1.Location = new System.Drawing.Point(0, 3);
-            this.webBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
+            this.webBrowser1.Location = new System.Drawing.Point(0, 2);
+            this.webBrowser1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.webBrowser1.MinimumSize = new System.Drawing.Size(15, 16);
             this.webBrowser1.Name = "webBrowser1";
-            this.webBrowser1.Size = new System.Drawing.Size(1258, 352);
+            this.webBrowser1.Size = new System.Drawing.Size(943, 270);
             this.webBrowser1.TabIndex = 3;
             // 
             // btn_refresh
             // 
             this.btn_refresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn_refresh.Location = new System.Drawing.Point(1185, 3);
+            this.btn_refresh.Location = new System.Drawing.Point(981, 2);
+            this.btn_refresh.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btn_refresh.Name = "btn_refresh";
-            this.btn_refresh.Size = new System.Drawing.Size(75, 23);
+            this.btn_refresh.Size = new System.Drawing.Size(56, 19);
             this.btn_refresh.TabIndex = 7;
             this.btn_refresh.Text = "Refresh";
             this.btn_refresh.UseSelectable = true;
@@ -74,9 +76,10 @@
             // cb_ciblings
             // 
             this.cb_ciblings.AutoSize = true;
-            this.cb_ciblings.Location = new System.Drawing.Point(321, 3);
+            this.cb_ciblings.Location = new System.Drawing.Point(252, 2);
+            this.cb_ciblings.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.cb_ciblings.Name = "cb_ciblings";
-            this.cb_ciblings.Size = new System.Drawing.Size(113, 17);
+            this.cb_ciblings.Size = new System.Drawing.Size(106, 15);
             this.cb_ciblings.TabIndex = 8;
             this.cb_ciblings.Text = "include ciblings";
             this.cb_ciblings.UseSelectable = true;
@@ -85,9 +88,10 @@
             // cb_preventive
             // 
             this.cb_preventive.AutoSize = true;
-            this.cb_preventive.Location = new System.Drawing.Point(440, 3);
+            this.cb_preventive.Location = new System.Drawing.Point(362, 2);
+            this.cb_preventive.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.cb_preventive.Name = "cb_preventive";
-            this.cb_preventive.Size = new System.Drawing.Size(223, 17);
+            this.cb_preventive.Size = new System.Drawing.Size(209, 15);
             this.cb_preventive.TabIndex = 9;
             this.cb_preventive.Text = "include PP, PCI, WSCH (preventive)";
             this.cb_preventive.UseSelectable = true;
@@ -96,9 +100,10 @@
             // metroLabel1
             // 
             this.metroLabel1.AutoSize = true;
-            this.metroLabel1.Location = new System.Drawing.Point(3, 0);
+            this.metroLabel1.Location = new System.Drawing.Point(2, 0);
+            this.metroLabel1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.metroLabel1.Name = "metroLabel1";
-            this.metroLabel1.Size = new System.Drawing.Size(64, 20);
+            this.metroLabel1.Size = new System.Drawing.Size(61, 19);
             this.metroLabel1.TabIndex = 10;
             this.metroLabel1.Text = "Location:";
             // 
@@ -108,9 +113,10 @@
             // 
             // 
             this.tb_location.CustomButton.Image = null;
-            this.tb_location.CustomButton.Location = new System.Drawing.Point(160, 1);
+            this.tb_location.CustomButton.Location = new System.Drawing.Point(88, 1);
+            this.tb_location.CustomButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tb_location.CustomButton.Name = "";
-            this.tb_location.CustomButton.Size = new System.Drawing.Size(21, 21);
+            this.tb_location.CustomButton.Size = new System.Drawing.Size(13, 14);
             this.tb_location.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
             this.tb_location.CustomButton.TabIndex = 1;
             this.tb_location.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
@@ -118,7 +124,8 @@
             this.tb_location.CustomButton.Visible = false;
             this.tb_location.Lines = new string[] {
         "metroTextBox1"};
-            this.tb_location.Location = new System.Drawing.Point(73, 3);
+            this.tb_location.Location = new System.Drawing.Point(67, 2);
+            this.tb_location.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tb_location.MaxLength = 32767;
             this.tb_location.Name = "tb_location";
             this.tb_location.PasswordChar = '\0';
@@ -127,7 +134,7 @@
             this.tb_location.SelectionLength = 0;
             this.tb_location.SelectionStart = 0;
             this.tb_location.ShortcutsEnabled = true;
-            this.tb_location.Size = new System.Drawing.Size(182, 23);
+            this.tb_location.Size = new System.Drawing.Size(136, 19);
             this.tb_location.TabIndex = 11;
             this.tb_location.Text = "metroTextBox1";
             this.tb_location.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -137,12 +144,11 @@
             // 
             // metroProgressSpinner1
             // 
-            this.metroProgressSpinner1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.metroProgressSpinner1.Location = new System.Drawing.Point(521, 30);
+            this.metroProgressSpinner1.Location = new System.Drawing.Point(425, 26);
+            this.metroProgressSpinner1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.metroProgressSpinner1.Maximum = 100;
             this.metroProgressSpinner1.Name = "metroProgressSpinner1";
-            this.metroProgressSpinner1.Size = new System.Drawing.Size(153, 123);
+            this.metroProgressSpinner1.Size = new System.Drawing.Size(114, 100);
             this.metroProgressSpinner1.TabIndex = 12;
             this.metroProgressSpinner1.UseSelectable = true;
             // 
@@ -153,20 +159,21 @@
             this.tableLayoutPanel1.ColumnCount = 6;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 60F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 45F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 597F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 466F));
             this.tableLayoutPanel1.Controls.Add(this.cb_ciblings, 3, 0);
             this.tableLayoutPanel1.Controls.Add(this.metroLabel1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.btn_refresh, 5, 0);
             this.tableLayoutPanel1.Controls.Add(this.tb_location, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.cb_preventive, 4, 0);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(23, 63);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(17, 51);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1263, 38);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(947, 31);
             this.tableLayoutPanel1.TabIndex = 13;
             // 
             // splitContainer1
@@ -175,7 +182,8 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.splitContainer1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.splitContainer1.Location = new System.Drawing.Point(23, 107);
+            this.splitContainer1.Location = new System.Drawing.Point(17, 87);
+            this.splitContainer1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -188,9 +196,9 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.webBrowser1);
-            this.splitContainer1.Size = new System.Drawing.Size(1260, 559);
-            this.splitContainer1.SplitterDistance = 176;
-            this.splitContainer1.SplitterWidth = 15;
+            this.splitContainer1.Size = new System.Drawing.Size(945, 454);
+            this.splitContainer1.SplitterDistance = 150;
+            this.splitContainer1.SplitterWidth = 12;
             this.splitContainer1.TabIndex = 14;
             // 
             // dataGridView1
@@ -225,7 +233,8 @@
             this.dataGridView1.EnableHeadersVisualStyles = false;
             this.dataGridView1.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.dataGridView1.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.dataGridView1.Location = new System.Drawing.Point(3, 3);
+            this.dataGridView1.Location = new System.Drawing.Point(2, 2);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
@@ -241,18 +250,20 @@
             this.dataGridView1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dataGridView1.RowTemplate.Height = 24;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(1252, 168);
+            this.dataGridView1.Size = new System.Drawing.Size(938, 143);
             this.dataGridView1.TabIndex = 15;
             // 
             // MXxWOoverview
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1298, 689);
+            this.ClientSize = new System.Drawing.Size(974, 560);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.MinimumSize = new System.Drawing.Size(706, 689);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.MinimumSize = new System.Drawing.Size(530, 560);
             this.Name = "MXxWOoverview";
+            this.Padding = new System.Windows.Forms.Padding(15, 49, 15, 16);
             this.Text = "MXxWOoverview";
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
