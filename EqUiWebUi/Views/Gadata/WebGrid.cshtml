@@ -21,8 +21,7 @@
     grid.Column("Name", "Name"),
     grid.Column("Price", "Price"),
     grid.Column("Department", "Department"),
-    grid.Column(header: "Action",
-                format: @<text><a data-value='@item.Id' href='javascript:void(0)' class='btnEdit'>Edit</a></text>)
+    grid.Column(header: "Action", format: @<text><a data-value='@item.Id' href='javascript:void(0)' class='btnEdit'>Edit</a></text>)
 ))
 
 <div id="dialog" title="edit view" style="overflow: hidden;"></div>

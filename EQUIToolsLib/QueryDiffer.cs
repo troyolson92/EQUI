@@ -20,6 +20,14 @@ namespace EQUIToolsLib
         {
             InitializeComponent();
             Show();
+            try
+            {
+            //    lblLastRefresh.Text = string.Format("Last Wo change on server: {0}", lmaxCom.oracle_runQuery("").Rows[0].Field<DateTime>("changedate").ToString());
+            }
+            catch
+            {
+
+            }
         }
 
         private void btn_snapshot_Click(object sender, EventArgs e)
@@ -88,14 +96,14 @@ AND WOSTATUS.STATUS IN ('INPRG','EXEC' ) --WVB MUST SET TO ONE OF THESE STATUSES
 
         private void btn_compare_Click(object sender, EventArgs e)
         {
-            DataTable dt = lgadataCom.RunQueryGadata("SELECT TOP 1 * FROM GADATA.EQUI.QuerySnapshots order by id desc ");
+            DataTable dt = lgadataCom.RunQueryGadata("SELECT TOP 1 * FROM GADATA.EQUI.QuerySnapshots where id = 3 order by id desc ");
 
             string orgHtmlResult = dt.Rows[0].Field<string>("htmlResult");
             DataTable dtNew = lmaxCom.oracle_runQuery(dt.Rows[0].Field<string>("query"));
             string newHtmlReulst = ConvertDataTableToHTML(dtNew);
 
             //test 
-            //newHtmlReulst = newHtmlReulst.Replace("INPRG", "dingens");
+           // newHtmlReulst = newHtmlReulst.Replace("INPRG", "dingens");
 
             HtmlDiff.HtmlDiff diffHelper = new HtmlDiff.HtmlDiff(orgHtmlResult, newHtmlReulst);
             string diffOutput = diffHelper.Build();

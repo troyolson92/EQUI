@@ -34,6 +34,7 @@
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.btn_compare = new MetroFramework.Controls.MetroButton();
             this.btn_snapshot = new MetroFramework.Controls.MetroButton();
+            this.lblLastRefresh = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -85,11 +86,13 @@
             this.tableLayoutPanel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanel2.ColumnCount = 2;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.ColumnCount = 3;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 49.60733F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.39267F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 996F));
             this.tableLayoutPanel2.Controls.Add(this.btn_compare, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.btn_snapshot, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.lblLastRefresh, 2, 0);
             this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
@@ -99,7 +102,7 @@
             // 
             // btn_compare
             // 
-            this.btn_compare.Location = new System.Drawing.Point(652, 2);
+            this.btn_compare.Location = new System.Drawing.Point(153, 2);
             this.btn_compare.Margin = new System.Windows.Forms.Padding(2);
             this.btn_compare.Name = "btn_compare";
             this.btn_compare.Size = new System.Drawing.Size(75, 19);
@@ -119,6 +122,15 @@
             this.btn_snapshot.UseSelectable = true;
             this.btn_snapshot.Click += new System.EventHandler(this.btn_snapshot_Click);
             // 
+            // lblLastRefresh
+            // 
+            this.lblLastRefresh.AutoSize = true;
+            this.lblLastRefresh.Location = new System.Drawing.Point(307, 0);
+            this.lblLastRefresh.Name = "lblLastRefresh";
+            this.lblLastRefresh.Size = new System.Drawing.Size(35, 13);
+            this.lblLastRefresh.TabIndex = 8;
+            this.lblLastRefresh.Text = "label1";
+            // 
             // QueryDiffer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -132,6 +144,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
+            this.tableLayoutPanel2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -144,5 +157,6 @@
         private MetroFramework.Controls.MetroButton btn_snapshot;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.WebBrowser webBrowser1;
+        private System.Windows.Forms.Label lblLastRefresh;
     }
 }
