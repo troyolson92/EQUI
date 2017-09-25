@@ -1,0 +1,16 @@
+﻿
+
+@model EqUiWebUi.Models.ListDiffQuerysViewModel
+
+
+
+@using (Html.BeginForm("IndexFeedback", "Difftable", FormMethod.Post))
+{
+@Html.DropDownListFor(m => m.SelectedId, new SelectList(Model.DiffQuerys, "id", "name"), "Select an instance")
+    <p><input type="submit" value="Send" /></p>
+}
+
+
+<p><a href="~/Difftable/RunDiffQUery" class="btn btn-primary btn-danger">RunDiff &raquo;</a></p>
+ <p><a href="~/Difftable/DiffWebgrid" class="btn btn-primary btn-success">ShowDiff &raquo;</a></p>
+

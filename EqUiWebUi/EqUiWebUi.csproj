@@ -122,12 +122,14 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\DifftableController.cs" />
     <Compile Include="Controllers\GadataController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MaximoController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\DifftableModel.cs" />
     <Compile Include="Models\maximoModel.cs" />
     <Compile Include="Models\ProductModel.cs" />
     <Compile Include="Products.cs" />
@@ -170,9 +172,11 @@
     <Content Include="Views\Gadata\WebGrid.cshtml" />
     <Content Include="Views\Shared\_GridEditPartial.cshtml" />
     <Content Include="Views\Maximo\WojqGrid.cshtml" />
-    <Content Include="Views\Maximo\WoDiff.cshtml" />
     <Content Include="Views\Gadata\DynamicWebgrid.cshtml" />
-    <Content Include="Views\Gadata\DiffWebgrid.cshtml" />
+    <Content Include="Views\Difftable\DiffWebgrid.cshtml" />
+    <Content Include="Views\Difftable\Index.cshtml" />
+    <Content Include="Views\Difftable\RunDiffQUery.cshtml" />
+    <Content Include="Views\Difftable\IndexFeedback.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EQUICommunictionLib\EQUICommunictionLib.csproj">

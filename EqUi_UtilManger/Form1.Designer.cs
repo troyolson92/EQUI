@@ -34,13 +34,12 @@
             this.btn_ErrorStats = new System.Windows.Forms.Button();
             this.btn_logDetails = new System.Windows.Forms.Button();
             this.Btn_MXxWoOverview = new System.Windows.Forms.Button();
-            this.btnSnapShot = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btn_AssetStats
             // 
             this.btn_AssetStats.Location = new System.Drawing.Point(19, 41);
-            this.btn_AssetStats.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btn_AssetStats.Margin = new System.Windows.Forms.Padding(2);
             this.btn_AssetStats.Name = "btn_AssetStats";
             this.btn_AssetStats.Size = new System.Drawing.Size(78, 19);
             this.btn_AssetStats.TabIndex = 0;
@@ -51,7 +50,7 @@
             // btn_sbcuStat
             // 
             this.btn_sbcuStat.Location = new System.Drawing.Point(19, 10);
-            this.btn_sbcuStat.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btn_sbcuStat.Margin = new System.Windows.Forms.Padding(2);
             this.btn_sbcuStat.Name = "btn_sbcuStat";
             this.btn_sbcuStat.Size = new System.Drawing.Size(78, 19);
             this.btn_sbcuStat.TabIndex = 1;
@@ -62,7 +61,7 @@
             // btn_DocManger
             // 
             this.btn_DocManger.Location = new System.Drawing.Point(19, 74);
-            this.btn_DocManger.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btn_DocManger.Margin = new System.Windows.Forms.Padding(2);
             this.btn_DocManger.Name = "btn_DocManger";
             this.btn_DocManger.Size = new System.Drawing.Size(78, 19);
             this.btn_DocManger.TabIndex = 2;
@@ -73,7 +72,7 @@
             // btn_ErrorStats
             // 
             this.btn_ErrorStats.Location = new System.Drawing.Point(19, 107);
-            this.btn_ErrorStats.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btn_ErrorStats.Margin = new System.Windows.Forms.Padding(2);
             this.btn_ErrorStats.Name = "btn_ErrorStats";
             this.btn_ErrorStats.Size = new System.Drawing.Size(78, 19);
             this.btn_ErrorStats.TabIndex = 3;
@@ -84,7 +83,7 @@
             // btn_logDetails
             // 
             this.btn_logDetails.Location = new System.Drawing.Point(19, 139);
-            this.btn_logDetails.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btn_logDetails.Margin = new System.Windows.Forms.Padding(2);
             this.btn_logDetails.Name = "btn_logDetails";
             this.btn_logDetails.Size = new System.Drawing.Size(78, 19);
             this.btn_logDetails.TabIndex = 4;
@@ -96,7 +95,7 @@
             // 
             this.Btn_MXxWoOverview.AutoSize = true;
             this.Btn_MXxWoOverview.Location = new System.Drawing.Point(19, 171);
-            this.Btn_MXxWoOverview.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Btn_MXxWoOverview.Margin = new System.Windows.Forms.Padding(2);
             this.Btn_MXxWoOverview.Name = "Btn_MXxWoOverview";
             this.Btn_MXxWoOverview.Size = new System.Drawing.Size(100, 23);
             this.Btn_MXxWoOverview.TabIndex = 5;
@@ -104,31 +103,18 @@
             this.Btn_MXxWoOverview.UseVisualStyleBackColor = true;
             this.Btn_MXxWoOverview.Click += new System.EventHandler(this.Btn_MXxWoOverview_Click);
             // 
-            // btnSnapShot
-            // 
-            this.btnSnapShot.AutoSize = true;
-            this.btnSnapShot.Location = new System.Drawing.Point(20, 207);
-            this.btnSnapShot.Margin = new System.Windows.Forms.Padding(2);
-            this.btnSnapShot.Name = "btnSnapShot";
-            this.btnSnapShot.Size = new System.Drawing.Size(100, 23);
-            this.btnSnapShot.TabIndex = 6;
-            this.btnSnapShot.Text = "sanpshot";
-            this.btnSnapShot.UseVisualStyleBackColor = true;
-            this.btnSnapShot.Click += new System.EventHandler(this.btnSnapShot_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(131, 291);
-            this.Controls.Add(this.btnSnapShot);
+            this.ClientSize = new System.Drawing.Size(131, 216);
             this.Controls.Add(this.Btn_MXxWoOverview);
             this.Controls.Add(this.btn_logDetails);
             this.Controls.Add(this.btn_ErrorStats);
             this.Controls.Add(this.btn_DocManger);
             this.Controls.Add(this.btn_sbcuStat);
             this.Controls.Add(this.btn_AssetStats);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Form1";
             this.Text = "Form1";
             this.ResumeLayout(false);
@@ -144,7 +130,6 @@
         private System.Windows.Forms.Button btn_ErrorStats;
         private System.Windows.Forms.Button btn_logDetails;
         private System.Windows.Forms.Button Btn_MXxWoOverview;
-        private System.Windows.Forms.Button btnSnapShot;
     }
 }
 

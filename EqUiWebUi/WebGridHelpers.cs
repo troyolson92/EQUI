@@ -26,10 +26,6 @@ namespace EqUiWebUi.WebGridHelpers
             }
             return data;
         }
-        //   grid.Column(format: (item) => @Html.Raw("Your Raw HTML Here"), "Your Parameter");
-        // columns.Add(new WebGridColumn() { Format = (item) => { return new HtmlString(string.Format("<a href= {0}>View</a>", Url.Action("Edit", "Edit", new { Id = item.Id }))); } });
-        //<td><del class='diffmod'>INPRG</del><ins class='diffmod'>dingens</ins></td>
-
 
         public List<WebGridColumn> getDatatabelCollumns(DataTable dt)
         {
@@ -53,7 +49,7 @@ namespace EqUiWebUi.WebGridHelpers
                 {
                     foreach (HtmlNode col in row.SelectNodes("td"))
                     {
-                        columns.Add(new WebGridColumn() { ColumnName = col.InnerHtml, Header = col.InnerHtml});
+                       columns.Add(new WebGridColumn() { ColumnName = col.InnerHtml, Header = col.InnerHtml });
                     }
                     //only the first one ofcoarse
                     break;

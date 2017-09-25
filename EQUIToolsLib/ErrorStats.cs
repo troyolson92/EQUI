@@ -53,59 +53,66 @@ namespace EQUIToolsLib
 			trackBar1.Minimum = (int)(FirstError - LastError).TotalDays;
 			if (trackBar1.Minimum > -3) {trackBar1.Minimum = -3;}
 			trackBar1.Maximum = -1; //minimum display = 1 day 
-			//figure out init mode
-			/*this will figure out of "active" the error is, 
-			 * if it happens more than 10 times in the last 3 days => set graph to 3 day range (show data in hours)
-			 *               more than 10 times in the last 30 days => set graph to 30 day range (show data in days)
-			 *               else set to full 'lifecycle' of error and set graph in week mode
-			 */
+                                    //figure out init mode
+                                    /*this will figure out of "active" the error is, 
+                                     * if it happens more than 10 times in the last 3 days => set graph to 3 day range (show data in hours)
+                                     *               more than 10 times in the last 30 days => set graph to 30 day range (show data in days)
+                                     *               else set to full 'lifecycle' of error and set graph in week mode
+                                     */
+          try { 
 			var count3 = from a in dt.AsEnumerable()
 					  where a.Field<DateTime>("starttime") >  DateTime.Now.AddDays(Convert.ToInt32(3) * -1)
 					  select a;
-			if (count3.Count() > 10) //more than 10 times in 3 days
-			{
-				if (trackBar1.Minimum > -3)
-				{
-					trackBar1.Value = -3;
-				}
-				else
-				{
-					trackBar1.Value = trackBar1.Minimum;
-				}
-				chart1.Series["ErrorCount"].Color = System.Drawing.Color.Red;
-			}
-			else
-			{
-				var count30 = from a in dt.AsEnumerable()
-							 where a.Field<DateTime>("starttime") > DateTime.Now.AddDays(Convert.ToInt32(30) * -1)
-							 select a;
-				if (count30.Count() > 10) //more than 10 times in a month
-				{
-					if (trackBar1.Minimum > -30)
-					{
-						trackBar1.Value = -30;
-					}
-					else
-					{
-						trackBar1.Value = trackBar1.Minimum;
-					}
-					chart1.Series["ErrorCount"].Color = System.Drawing.Color.DarkOrange;
-				}
-				else
-				{
-					if (trackBar1.Minimum < -360)
-					{
-						trackBar1.Value = -360; //set last running year as a max for 'init' mode
-					}
-					else
-					{
-						trackBar1.Value = trackBar1.Minimum;
-					}
-					chart1.Series["ErrorCount"].Color = System.Drawing.Color.Blue;
-				}
-			}
-			//build trend chart in init mode. 
-			buildTrendChart();
+                if (count3.Count() > 10) //more than 10 times in 3 days
+                {
+                    if (trackBar1.Minimum < -3)
+                    {
+                        trackBar1.Value = -3;
+                    }
+                    else
+                    {
+                        trackBar1.Value = trackBar1.Minimum;
+                    }
+                    chart1.Series["ErrorCount"].Color = System.Drawing.Color.Red;
+                }
+                else
+                {
+                    var count30 = from a in dt.AsEnumerable()
+                                  where a.Field<DateTime>("starttime") > DateTime.Now.AddDays(Convert.ToInt32(30) * -1)
+                                  select a;
+                    if (count30.Count() > 10) //more than 10 times in a month
+                    {
+                        if (trackBar1.Minimum < -30)
+                        {
+                            trackBar1.Value = -30;
+                        }
+                        else
+                        {
+                            trackBar1.Value = trackBar1.Minimum;
+                        }
+                        chart1.Series["ErrorCount"].Color = System.Drawing.Color.DarkOrange;
+                    }
+                    else
+                    {
+                        if (trackBar1.Minimum < -360)
+                        {
+                            trackBar1.Value = -360; //set last running year as a max for 'init' mode
+                        }
+                        else
+                        {
+                            trackBar1.Value = trackBar1.Minimum;
+                        }
+                        chart1.Series["ErrorCount"].Color = System.Drawing.Color.Blue;
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                Debugger.Exeption(ex);
+            }
+            //build trend chart in init mode. 
+            buildTrendChart();
 			this.Show();
 		}
 

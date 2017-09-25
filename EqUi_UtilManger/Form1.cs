@@ -41,9 +41,5 @@ namespace EqUi_UtilManger
             MXxWOoverview lMXxWOoverview = new MXxWOoverview(null); 
         }
 
-        private void btnSnapShot_Click(object sender, EventArgs e)
-        {
-            QueryDiffer queryDiffer = new QueryDiffer();
-        }
     }
 }

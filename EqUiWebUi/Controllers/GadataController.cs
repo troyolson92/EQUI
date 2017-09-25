@@ -1,19 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using EqUiWebUi.Models;
-using System.Web.Helpers;
-using System.Dynamic;
 using System.Data;
 using EQUICommunictionLib;
 using EqUiWebUi.WebGridHelpers;
-using HtmlDiff;
 
 namespace EqUiWebUi.Controllers
 {
-	public class GadataController : Controller
+    public class GadataController : Controller
 	{
 		//
 		// GET: /Gadata/
@@ -68,39 +64,6 @@ namespace EqUiWebUi.Controllers
             }
             return View(model);
         }
-
-        [HttpGet]
-        public ActionResult DiffWebgrid()
-        {
-            GadataComm gadataComm = new GadataComm();
-            DataTable dt = gadataComm.RunQueryGadata(
-                        @"SELECT TOP(10)[id]
-                              ,[name]
-                              ,[timestamp]
-                              ,[query]
-                              ,[htmlresult]
-                          FROM[GADATA].[EqUi].[querySnapshots]");
-            //
-            HtmlDiff.HtmlDiff diffHelper = new HtmlDiff.HtmlDiff(dt.Rows[2].Field<string>("htmlresult"), dt.Rows[3].Field<string>("htmlresult"));
-            string diffOutput = diffHelper.Build();
-            //
-            WebGridHelpers.WebGridHelper webGridHelper = new WebGridHelper();
-            ViewBag.Columns = webGridHelper.getHtmltabelCollumns(diffOutput);
-            //
-            List<dynamic> data = webGridHelper.htmltableToDynamic(diffOutput);
-            //
-            WebGridHelpers.DefaultModel model = new WebGridHelpers.DefaultModel();
-            model.PageSize = 30;
-            //
-            if (data != null)
-            {
-                model.TotalCount = data.Count();
-                model.Data = data;
-            }
-            return View(model);
-        }
-
-
 
         [HttpGet]
 		public ActionResult jqGrid()
