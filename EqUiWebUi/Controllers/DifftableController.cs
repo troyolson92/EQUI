@@ -41,26 +41,20 @@ namespace EqUiWebUi.Controllers
             return View(viewModel);
         }
 
-        [HttpPost]
-        public ActionResult IndexFeedback(ListDiffQuerysViewModel model)
-        {
-            int SelectedValue = model.SelectedId;
-            return View(model);
-        }
 
         [HttpGet]
         public ActionResult DiffWebgrid()
         {
             GadataComm gadataComm = new GadataComm();
             DataTable dt = gadataComm.RunQueryGadata(
-                        @"SELECT TOP(10)[id]
+                      @"SELECT [id]
                               ,[name]
                               ,[timestamp]
                               ,[query]
                               ,[htmlresult]
                           FROM[GADATA].[EqUi].[querySnapshots]");
             //
-            HtmlDiff.HtmlDiff diffHelper = new HtmlDiff.HtmlDiff(dt.Rows[2].Field<string>("htmlresult"), dt.Rows[4].Field<string>("htmlresult"));
+            HtmlDiff.HtmlDiff diffHelper = new HtmlDiff.HtmlDiff(dt.Rows[11].Field<string>("htmlresult"), dt.Rows[dt.Rows.Count-1].Field<string>("htmlresult"));
             diffHelper.AddBlockExpression(new Regex(@"[0-9]:[0-9]{1,2}:[0-9]{1,2}", RegexOptions.IgnoreCase)); //time
             diffHelper.AddBlockExpression(new Regex(@"[0-9]/[0-9]{1,2}/20[0-9]{1,2}", RegexOptions.IgnoreCase)); //date
             string diffOutput = diffHelper.Build();

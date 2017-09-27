@@ -1,0 +1,38 @@
+﻿@model EqUiWebUi.Models.MyViewModel
+
+@Html.DropDownListFor(
+    x => x.Year,
+    new SelectList(Model.Years, "Value", "Text"),
+    Model.Year
+)
+
+@Html.DropDownListFor(
+    x => x.Month,
+    Enumerable.Empty<SelectListItem>(),
+    Model.Month
+)
+
+@using (Html.BeginForm("Subscribe", "Test", FormMethod.Post))
+{
+    @Html.TextBoxFor(model => model.feedback)
+    <button type="submit">Subscribe</button>
+}
+
+
+<script type="text/javascript">
+    $('#Year').change(function () {
+        var selectedYear = $(this).val();
+        if (selectedYear != null && selectedYear != '') {
+            $.getJSON('@Url.Action(@"\Test\Months")', { year: selectedYear }, function (months) {
+                var monthsSelect = $('#Month');
+                monthsSelect.empty();
+                $.each(months, function (index, month) {
+                    monthsSelect.append($('<option/>', {
+                        value: month.value,
+                        text: month.text
+                    }));
+                });
+            });
+        }
+    });
+</script>
