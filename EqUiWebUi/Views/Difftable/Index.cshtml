@@ -1,16 +1,63 @@
-﻿
+﻿@model EqUiWebUi.Models.DiffQuery
 
-@model EqUiWebUi.Models.ListDiffQuerysViewModel
-
-
-
-@using (Html.BeginForm("IndexFeedback", "DifftableController", FormMethod.Post))
-{
-@Html.DropDownListFor(m => m.SelectedId, new SelectList(Model.DiffQuerys, "id", "name"), "Select an instance")
-    <p><input type="submit" value="Send" /></p>
+@{
+    ViewBag.Title = "Index";
 }
+<h2>Begin Form</h2>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+@*script that fill hsnapshot listbox when users selects a c_snapshot instance*@
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#SelectedQuery").change(function () {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("getSnapshots")',
+                dataType: 'json',
+                data: { id: $("#SelectedQuery").val() },
+
+                success: function (snapshots) {
+                    $.each(snapshots, function (i, item) {
+                        $("#SelectedSnapshotID1").append('<option value="' + item.Value + '">' + item.Text + '</option>');
+                    });
+                    $.each(snapshots, function (i, item) {
+                        $("#SelectedSnapshotID2").append('<option value="' + item.Value + '">' + item.Text + '</option>');
+                    });
+                },
+          
+                error: function (ex) {
+                    alert('Failed to retrieve snapshots.' + ex);
+                }
+            });
+            return false;
+        })
+    });
+</script>
 
 
+@using (Html.BeginForm())
+{
+<br />
+@Html.Label("Snapshot=>")
+@Html.DropDownListFor(m => m.SelectedQuery, new SelectList(Model.c_querySnapshots, "id", "name"), "--select a snapshot")
+<br />
+@Html.Label("Compare=>")
+@Html.DropDownListFor(m => m.SelectedSnapshotID1, new SelectList(string.Empty, "Value", "Text"), "--Instance of snapshot")
+<br />
+@Html.Label("______To=>")
+    @Html.DropDownListFor(m => m.SelectedSnapshotID2, new SelectList(string.Empty, "Value", "Text"), "--Instance of snapshot")
+<br />
+
+<h2>Textbox area</h2>
+@Html.TextAreaFor(m => m.c_querySnapshots[0].query, 10, 20,
+    new
+        {
+        style = "background-color:Gray;"
+        })
+
+
+@Html.Hidden("id","this is a hidden field")
+<p><input type="submit" value="Show diff>>" /></p>
+}
 <p><a href="~/Difftable/RunDiffQUery" class="btn btn-primary btn-danger">RunDiff &raquo;</a></p>
- <p><a href="~/Difftable/DiffWebgrid" class="btn btn-primary btn-success">ShowDiff &raquo;</a></p>
 

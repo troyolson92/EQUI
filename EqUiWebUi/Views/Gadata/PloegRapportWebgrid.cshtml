@@ -36,17 +36,24 @@ content = "width=device-width"/>
 }
 </style>
 
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('#gridMapping > tbody > tr').each(function (index) {
-            if ($(this).children('td:nth-child(1)').text() == "Done") {
-                $(this).children('td:nth-child(1)').css("background-color", "#33CC99");
-            } else {
-                $(this).children('td:nth-child(1)').css("background-color", "#FFCC99");
+<script type = "text/javascript" > /* coloring entire Row */
+    $(document).ready(function()
+        {
+        debugger;
+        $('#gridMapping > tr').each(function(index)
+           {
+
+            if ($(this).children('td:nth-child(3)').text() == "BREAKDOWN")
+            {
+                $(this).children('td').css("background-color", "#33CC99");
+            } else
+            {
+                $(this).children('td').css("background-color", "#FFCC99");
             }
+
         });
-    });
-</script>
+    }); </script>
+
 
 <style type = "text/css" >/*Mouse hover*/
     #gridMapping tr:hover
@@ -54,12 +61,15 @@ content = "width=device-width"/>
         background-color: #F5DEB3;
     } </style>
 
+
 </head><body><div>
                  @{
                      ViewBag.Title = "Dynamic Gridview";
                      WebGrid grid = new WebGrid(null, rowsPerPage: @Model.PageSize);
                      grid.Bind(Model.Data, autoSortAndPage: true, rowCount: @Model.PageSize);
                  }
+
+
 
 @grid.GetHtml(
                     htmlAttributes: new
@@ -77,6 +87,6 @@ content = "width=device-width"/>
                     previousText: "< Prev",
                     nextText: "Next >",
                     lastText: "Last >>",
-                    columns: ViewBag.Columns
+                     columns: ViewBag.Columns
         ) 
 </div></body></html>  

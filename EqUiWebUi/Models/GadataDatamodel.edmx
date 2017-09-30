@@ -1,0 +1,271 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Models.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="c_querySnapshots">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="200" />
+          <Property Name="_timestamp" Type="datetime" />
+          <Property Name="_user" Type="varchar" MaxLength="50" />
+          <Property Name="query" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="h_querySnapshots">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="queryId" Type="int" />
+          <Property Name="timestamp" Type="datetime" />
+        </EntityType>
+        <EntityType Name="l_querySnapshots">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="htmlresult" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="QUERYParameters">
+          <Key>
+            <PropertyRef Name="SYSTEM" />
+            <PropertyRef Name="NAME" />
+            <PropertyRef Name="SETNAME" />
+            <PropertyRef Name="Parameter" />
+          </Key>
+          <Property Name="SYSTEM" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="NAME" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="SETNAME" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DISCRIPTION" Type="varchar(max)" />
+          <Property Name="Parameter" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Value" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="QUERYS">
+          <Key>
+            <PropertyRef Name="SYSTEM" />
+            <PropertyRef Name="NAME" />
+          </Key>
+          <Property Name="SYSTEM" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="NAME" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DISCRIPTION" Type="varchar(max)" />
+          <Property Name="QUERY" Type="varchar(max)" />
+        </EntityType>
+        <Association Name="FK_h_querySnapshots_c_querySnapshots">
+          <End Role="c_querySnapshots" Type="Self.c_querySnapshots" Multiplicity="0..1" />
+          <End Role="h_querySnapshots" Type="Self.h_querySnapshots" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_querySnapshots">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="h_querySnapshots">
+              <PropertyRef Name="queryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_h_querySnapshots_l_querySnapshots">
+          <End Role="l_querySnapshots" Type="Self.l_querySnapshots" Multiplicity="1" />
+          <End Role="h_querySnapshots" Type="Self.h_querySnapshots" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="l_querySnapshots">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="h_querySnapshots">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ModelsStoreContainer">
+          <EntitySet Name="c_querySnapshots" EntityType="Self.c_querySnapshots" Schema="EqUi" store:Type="Tables" />
+          <EntitySet Name="h_querySnapshots" EntityType="Self.h_querySnapshots" Schema="EqUi" store:Type="Tables" />
+          <EntitySet Name="l_querySnapshots" EntityType="Self.l_querySnapshots" Schema="EqUi" store:Type="Tables" />
+          <EntitySet Name="QUERYParameters" EntityType="Self.QUERYParameters" Schema="EqUi" store:Type="Tables" />
+          <EntitySet Name="QUERYS" EntityType="Self.QUERYS" Schema="EqUi" store:Type="Tables" />
+          <AssociationSet Name="FK_h_querySnapshots_c_querySnapshots" Association="Self.FK_h_querySnapshots_c_querySnapshots">
+            <End Role="c_querySnapshots" EntitySet="c_querySnapshots" />
+            <End Role="h_querySnapshots" EntitySet="h_querySnapshots" />
+          </AssociationSet>
+          <AssociationSet Name="FK_h_querySnapshots_l_querySnapshots" Association="Self.FK_h_querySnapshots_l_querySnapshots">
+            <End Role="l_querySnapshots" EntitySet="l_querySnapshots" />
+            <End Role="h_querySnapshots" EntitySet="h_querySnapshots" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Models" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="QUERYParameters">
+          <Key>
+            <PropertyRef Name="SYSTEM" />
+            <PropertyRef Name="NAME" />
+            <PropertyRef Name="SETNAME" />
+            <PropertyRef Name="Parameter" />
+          </Key>
+          <Property Name="SYSTEM" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SETNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DISCRIPTION" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Parameter" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Value" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="QUERYS">
+          <Key>
+            <PropertyRef Name="SYSTEM" />
+            <PropertyRef Name="NAME" />
+          </Key>
+          <Property Name="SYSTEM" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DISCRIPTION" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="QUERY" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityContainer Name="GADATAEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="QUERYParameters" EntityType="Self.QUERYParameters" />
+          <EntitySet Name="QUERYS" EntityType="Self.QUERYS" />
+          <EntitySet Name="c_querySnapshots" EntityType="Models.c_querySnapshots" />
+          <EntitySet Name="l_querySnapshots" EntityType="Models.l_querySnapshots" />
+          <EntitySet Name="h_querySnapshots" EntityType="Models.h_querySnapshots" />
+          <AssociationSet Name="FK_h_querySnapshots_c_querySnapshots" Association="Models.FK_h_querySnapshots_c_querySnapshots">
+            <End Role="c_querySnapshots" EntitySet="c_querySnapshots" />
+            <End Role="h_querySnapshots" EntitySet="h_querySnapshots" />
+          </AssociationSet>
+          <AssociationSet Name="FK_h_querySnapshots_l_querySnapshots" Association="Models.FK_h_querySnapshots_l_querySnapshots">
+            <End Role="l_querySnapshots" EntitySet="l_querySnapshots" />
+            <End Role="h_querySnapshots" EntitySet="h_querySnapshots" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="c_querySnapshots">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="C_timestamp" Type="DateTime" Precision="3" />
+          <Property Name="C_user" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="query" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="h_querySnapshots" Relationship="Models.FK_h_querySnapshots_c_querySnapshots" FromRole="c_querySnapshots" ToRole="h_querySnapshots" />
+        </EntityType>
+        <EntityType Name="l_querySnapshots">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="htmlresult" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="h_querySnapshots" Relationship="Models.FK_h_querySnapshots_l_querySnapshots" FromRole="l_querySnapshots" ToRole="h_querySnapshots" />
+        </EntityType>
+        <EntityType Name="h_querySnapshots">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="queryId" Type="Int32" />
+          <Property Name="timestamp" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="c_querySnapshots" Relationship="Models.FK_h_querySnapshots_c_querySnapshots" FromRole="h_querySnapshots" ToRole="c_querySnapshots" />
+          <NavigationProperty Name="l_querySnapshots" Relationship="Models.FK_h_querySnapshots_l_querySnapshots" FromRole="h_querySnapshots" ToRole="l_querySnapshots" />
+        </EntityType>
+        <Association Name="FK_h_querySnapshots_c_querySnapshots">
+          <End Type="Models.c_querySnapshots" Role="c_querySnapshots" Multiplicity="0..1" />
+          <End Type="Models.h_querySnapshots" Role="h_querySnapshots" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_querySnapshots">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="h_querySnapshots">
+              <PropertyRef Name="queryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_h_querySnapshots_l_querySnapshots">
+          <End Type="Models.l_querySnapshots" Role="l_querySnapshots" Multiplicity="1" />
+          <End Type="Models.h_querySnapshots" Role="h_querySnapshots" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="l_querySnapshots">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="h_querySnapshots">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelsStoreContainer" CdmEntityContainer="GADATAEntities">
+          <EntitySetMapping Name="QUERYParameters">
+            <EntityTypeMapping TypeName="Models.QUERYParameters">
+              <MappingFragment StoreEntitySet="QUERYParameters">
+                <ScalarProperty Name="SYSTEM" ColumnName="SYSTEM" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+                <ScalarProperty Name="SETNAME" ColumnName="SETNAME" />
+                <ScalarProperty Name="DISCRIPTION" ColumnName="DISCRIPTION" />
+                <ScalarProperty Name="Parameter" ColumnName="Parameter" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QUERYS">
+            <EntityTypeMapping TypeName="Models.QUERYS">
+              <MappingFragment StoreEntitySet="QUERYS">
+                <ScalarProperty Name="SYSTEM" ColumnName="SYSTEM" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+                <ScalarProperty Name="DISCRIPTION" ColumnName="DISCRIPTION" />
+                <ScalarProperty Name="QUERY" ColumnName="QUERY" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="c_querySnapshots">
+            <EntityTypeMapping TypeName="Models.c_querySnapshots">
+              <MappingFragment StoreEntitySet="c_querySnapshots">
+                <ScalarProperty Name="query" ColumnName="query" />
+                <ScalarProperty Name="C_user" ColumnName="_user" />
+                <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="l_querySnapshots">
+            <EntityTypeMapping TypeName="Models.l_querySnapshots">
+              <MappingFragment StoreEntitySet="l_querySnapshots">
+                <ScalarProperty Name="htmlresult" ColumnName="htmlresult" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="h_querySnapshots">
+            <EntityTypeMapping TypeName="Models.h_querySnapshots">
+              <MappingFragment StoreEntitySet="h_querySnapshots">
+                <ScalarProperty Name="timestamp" ColumnName="timestamp" />
+                <ScalarProperty Name="queryId" ColumnName="queryId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

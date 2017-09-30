@@ -9,14 +9,14 @@ using EqUiWebUi.WebGridHelpers;
 
 namespace EqUiWebUi.Controllers
 {
-    public class GadataController : Controller
+	public class GadataController : Controller
 	{
 		//
 		// GET: /Gadata/
-        public ActionResult Index()
-        {
-            return new HttpNotFoundResult("Woeps");
-        }
+		public ActionResult Index()
+		{
+			return new HttpNotFoundResult("Woeps");
+		}
 
 		[HttpGet]
 		public ActionResult WebGrid()
@@ -35,37 +35,61 @@ namespace EqUiWebUi.Controllers
 			return View(model);
 		}
 
-        [HttpGet]
-        public ActionResult DynamicWebgrid()
-        {
-            GadataComm gadataComm = new GadataComm();
+		[HttpGet]
+		public ActionResult DynamicWebgrid()
+		{
+			GadataComm gadataComm = new GadataComm();
+			DataTable dt = gadataComm.RunQueryGadata(
+				@"SELECT TOP(1000)[controller_name]
+						  ,[Date Time]
+						  ,[Dress_Num]
+						  ,[Weld_Counter]
+						  ,[ESTremainingspotsFixed]
+						  ,[ESTremainingspotsMove]
+					  FROM[GADATA].[NGAC].[TipwearLast]
+					  Order by Weld_Counter DESC");
+			//
+			WebGridHelpers.WebGridHelper webGridHelper = new WebGridHelper();
+			ViewBag.Columns = webGridHelper.getDatatabelCollumns(dt);
+			//
+			List<dynamic> data = webGridHelper.datatableToDynamic(dt);
+			//
+			WebGridHelpers.DefaultModel model = new WebGridHelpers.DefaultModel();
+			model.PageSize = 30;
+			//
+			if (data != null)
+			{
+				model.TotalCount = data.Count();
+				model.Data = data;
+			}
+			return View(model);
+		}
+
+		[HttpGet]
+		public ActionResult PloegRapportWebgrid()
+		{
+			GadataComm gadataComm = new GadataComm();
             DataTable dt = gadataComm.RunQueryGadata(
-                @"SELECT TOP(1000)[controller_name]
-                          ,[Date Time]
-                          ,[Dress_Num]
-                          ,[Weld_Counter]
-                          ,[ESTremainingspotsFixed]
-                          ,[ESTremainingspotsMove]
-                      FROM[GADATA].[NGAC].[TipwearLast]
-                      Order by Weld_Counter DESC");
+                @"USE GADATA EXEC GADATA.EqUi.AAOSR_PloegRaportV2 @daysBack = 1 , @minDowntime = 20 ");
             //
             WebGridHelpers.WebGridHelper webGridHelper = new WebGridHelper();
-            ViewBag.Columns = webGridHelper.getDatatabelCollumns(dt);
-            //
-            List<dynamic> data = webGridHelper.datatableToDynamic(dt);
-            //
-            WebGridHelpers.DefaultModel model = new WebGridHelpers.DefaultModel();
-            model.PageSize = 30;
-            //
-            if (data != null)
-            {
-                model.TotalCount = data.Count();
-                model.Data = data;
-            }
-            return View(model);
-        }
+			ViewBag.Columns = webGridHelper.getDatatabelCollumns(dt);
+			//
+			List<dynamic> data = webGridHelper.datatableToDynamic(dt);
+			//
+			WebGridHelpers.DefaultModel model = new WebGridHelpers.DefaultModel();
+			model.PageSize = 30;
+			//
+			if (data != null)
+			{
+				model.TotalCount = data.Count();
+				model.Data = data;
+			}
+			return View(model);
+		}
 
-        [HttpGet]
+
+		[HttpGet]
 		public ActionResult jqGrid()
 		{
 			return View();

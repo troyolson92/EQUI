@@ -11,50 +11,49 @@ namespace EqUiWebUi.Controllers
 {
     public class DifftableController : Controller
     {
-        // GET: Difftable
+        //index for controller
+        [HttpGet]
         public ActionResult Index()
         {
-            GadataComm gadataComm = new GadataComm();
-            DataTable dt = gadataComm.RunQueryGadata(
-                    @"SELECT TOP(1000)
-                           [id]
-                          ,[name]
-                          ,[timestamp]
-                          ,[query]
-                          ,[htmlresult]
-                      FROM[GADATA].[EqUi].[querySnapshots]");
-            //
-            List<DiffQuery> diffQueryNames = new List<DiffQuery>();
-            foreach (DataRow row in dt.Rows)
-            {
-                DiffQuery diffQuery = new DiffQuery
-                {
-                    id = row.Field<int>("id"),
-                    name = string.Format("<{0}> <{1}> id:{2}", row.Field<string>("name"), "ts", row.Field<int>("id"))
-                };
-                diffQueryNames.Add(diffQuery);
-            }
-
-            ListDiffQuerysViewModel viewModel = new ListDiffQuerysViewModel();
-            viewModel.DiffQuerys = diffQueryNames;
-
-            return View(viewModel);
+            DiffQuery diffQuery = new DiffQuery();
+            return View(diffQuery);
         }
 
+        //called by html form commit
+        [HttpPost]
+        public ActionResult Index(DiffQuery diff_Query)
+        {
+            if(string.IsNullOrEmpty(diff_Query.SelectedQuery))
+            {
 
+            }
+            return RedirectToAction("DiffWebgrid", new
+            {
+                id1 = diff_Query.SelectedSnapshotID1,
+                id2 = diff_Query.SelectedSnapshotID2
+            });
+        }
+
+        //called by cascading listbox 
+        public JsonResult getSnapshots(int id)
+        {
+            DiffQuery diffQuery = new DiffQuery();
+            IEnumerable<SelectListItem> snapshots = diffQuery.h_querySnapshots.Where(h => h.queryId == id).ToList()
+                .Select(x => new SelectListItem {
+                                                Value = x.id.ToString(),
+                                                Text = x.timestamp.ToString() 
+                                                });
+            return Json(new SelectList(snapshots, "Value", "Text", JsonRequestBehavior.AllowGet));
+        }
+        //show diggerance between 2 views
         [HttpGet]
-        public ActionResult DiffWebgrid()
+        public ActionResult DiffWebgrid(int id1, int id2)
         {
             GadataComm gadataComm = new GadataComm();
             DataTable dt = gadataComm.RunQueryGadata(
-                      @"SELECT [id]
-                              ,[name]
-                              ,[timestamp]
-                              ,[query]
-                              ,[htmlresult]
-                          FROM[GADATA].[EqUi].[querySnapshots]");
+                string.Format(@"SELECT [id],[htmlresult] FROM [GADATA].[EqUi].[L_querySnapshots] WHERE id in({0},{1})",id1,id2));
             //
-            HtmlDiff.HtmlDiff diffHelper = new HtmlDiff.HtmlDiff(dt.Rows[11].Field<string>("htmlresult"), dt.Rows[dt.Rows.Count-1].Field<string>("htmlresult"));
+            HtmlDiff.HtmlDiff diffHelper = new HtmlDiff.HtmlDiff(dt.Rows[0].Field<string>("htmlresult"), dt.Rows[1].Field<string>("htmlresult"));
             diffHelper.AddBlockExpression(new Regex(@"[0-9]:[0-9]{1,2}:[0-9]{1,2}", RegexOptions.IgnoreCase)); //time
             diffHelper.AddBlockExpression(new Regex(@"[0-9]/[0-9]{1,2}/20[0-9]{1,2}", RegexOptions.IgnoreCase)); //date
             string diffOutput = diffHelper.Build();
@@ -132,7 +131,7 @@ AND WOSTATUS.STATUS IN ('INPRG','EXEC' ) --WVB MUST SET TO ONE OF THESE STATUSES
             DataTable dt = maximoComm.oracle_runQuery(Qry);
             string htmlResult = ConvertDataTableToHTML(dt);
 
-            gadataComm.InsertSnaphotGadata("Testname", Qry, htmlResult);
+           // gadataComm.InsertSnaphotGadata("Testname", Qry, htmlResult);
 
             ViewBag.myData = FormatHTMLTable(htmlResult);
 
