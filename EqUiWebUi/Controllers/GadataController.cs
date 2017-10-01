@@ -38,9 +38,12 @@ namespace EqUiWebUi.Controllers
 		[HttpGet]
 		public ActionResult DynamicWebgrid()
 		{
-			GadataComm gadataComm = new GadataComm();
+            //set refresh 
+            //Response.AddHeader("Refresh", "10");
+            //Get data from database
+            GadataComm gadataComm = new GadataComm();
 			DataTable dt = gadataComm.RunQueryGadata(
-				@"SELECT TOP(1000)[controller_name]
+				@"SELECT TOP(50)[controller_name]
 						  ,[Date Time]
 						  ,[Dress_Num]
 						  ,[Weld_Counter]
@@ -65,7 +68,24 @@ namespace EqUiWebUi.Controllers
 			return View(model);
 		}
 
-		[HttpGet]
+        [HttpGet]
+        public JsonResult checkNewData()
+        {
+            bool btest = false;
+            if (btest)
+            {
+               //issue reload
+               return Json(new object[] { new object() }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                //no reload needed
+                return null; 
+            }
+
+        }
+
+        [HttpGet]
 		public ActionResult PloegRapportWebgrid()
 		{
 			GadataComm gadataComm = new GadataComm();

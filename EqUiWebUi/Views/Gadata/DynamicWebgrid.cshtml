@@ -76,12 +76,14 @@ content = "width=device-width"/>
 @*http://soundbible.com/grab.php?id=1377&type=mp3*@
 <script type="text/javascript">
     $(document).ready(function () {
-        $(function () {
-            CheckSound();
-            setInterval(CheckSound, 1000*60);
-        });
         var bNeedToPlay = new Boolean(false);
         var sound = new Audio(src = "http://soundbible.com/grab.php?id=1377&type=mp3");
+
+        $(function () {
+            setInterval(CheckSound, 1000 * 60);
+            CheckSound();
+        });
+
         function CheckSound() {
             bNeedToPlay = false;
             $('#gridMapping > tbody > tr').each(function (index) {
@@ -97,9 +99,34 @@ content = "width=device-width"/>
     });
 </script>
 
+@*function that calls server ever x time if there is new data*@
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(function () {
+            //check every 5 seconds 
+            setInterval(CheckForData, 1000 * 5);
+        });
 
+        function CheckForData() {
+            $.ajax({
+                async: true,
+                type: 'GET',
+                url: '@Url.Action("checkNewData")',
+                dataType: 'json',
 
+                success: function (response) {
+                    //succes = reload needed 
+                    //could pass data in json object to handle reload smarter
+                    window.location.reload();
+                },
 
+                error: function (ex) {
+                    //error = no reload
+                }
+            });
+        }
+    });
+</script>
 
 @*stype for mouse hover color complete row *@
 <style type = "text/css" >/*Mouse hover*/
@@ -118,10 +145,7 @@ content = "width=device-width"/>
                  }
 
 @grid.GetHtml(
-                    htmlAttributes: new
-                    {
-                        id = "gridMapping"
-                    },
+                    htmlAttributes: new{id = "gridMapping"},
                     tableStyle: "table table-bordered",
                     headerStyle: "info",
                     footerStyle: "webgrid-footer",
