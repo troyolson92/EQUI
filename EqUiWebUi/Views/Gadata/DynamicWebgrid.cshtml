@@ -1,6 +1,5 @@
 ﻿@model EqUiWebUi.WebGridHelpers.DefaultModel
 
-
 <html>
 <head>
 <meta name = "viewport"
@@ -104,9 +103,12 @@ content = "width=device-width"/>
 <script type="text/javascript">
     $(document).ready(function () {
         $(function () {
-            //check every 5 seconds 
-            setInterval(CheckForData, 1000 * 5);
+            //check every 5 seconds
+            setInterval(CheckForData, 1000 * 5 );
         });
+        //get last data timestamp from model 
+        var Datatimestamp = '@Html.Raw(Model.DataTimestamp)';
+        console.log(Datatimestamp);
         //interlock for ajax request
         var bInterlock = new Boolean();
         bInterlock = false;
@@ -122,10 +124,11 @@ content = "width=device-width"/>
                         type: 'GET',
                         url: '@Url.Action("checkNewData")',
                         dataType: 'json',
+                        data: { dataTimestamp: Datatimestamp },
 
                         success: function (response) {
                             bInterlock = false;
-                            //succes = reload needed 
+                            //succes = reload needed
                             window.location.reload();
                         },
 
@@ -133,7 +136,7 @@ content = "width=device-width"/>
                             bInterlock = false;
                             //error = no reload
                         }
-                    });
+            });
 
         }
     });

@@ -91,6 +91,7 @@ namespace EqUiWebUi.WebGridHelpers
         public int PageSize { get; set; }
         public int PageNumber { get; set; }
         public int PagerCount { get; set; }
+        public string DataTimestamp { get; set; }
 
         public List<dynamic> Data { get; set; }
     }

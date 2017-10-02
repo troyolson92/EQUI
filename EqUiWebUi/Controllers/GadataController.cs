@@ -56,21 +56,20 @@ namespace EqUiWebUi.Controllers
 			model.PageSize = 30;
 			//
 
-			
-
 			if (data != null)
 			{
 				model.TotalCount = data.Count();
 				model.Data = data;
+                model.DataTimestamp =  DataBuffer.TipstatusLastDt.ToString("yyyy-mm-dd HH:mm:ss");
 			}
 			return View(model);
 		}
 
 		[HttpGet]
-		public JsonResult checkNewData()
+		public JsonResult checkNewData(String dataTimestamp)
 		{
-			bool btest = false;
-			if (btest)
+            DateTime date = DateTime.ParseExact(dataTimestamp, "yyyy-mm-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+            if (DataBuffer.TipstatusLastDt <= date)
 			{
 			   //issue reload
 			   return Json(new object[] { new object() }, JsonRequestBehavior.AllowGet);
