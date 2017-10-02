@@ -40,18 +40,13 @@ namespace EqUiWebUi.Controllers
 		{
             //set refresh 
             //Response.AddHeader("Refresh", "10");
-            //Get data from database
-            GadataComm gadataComm = new GadataComm();
-			DataTable dt = gadataComm.RunQueryGadata(
-				@"SELECT TOP(50)[controller_name]
-						  ,[Date Time]
-						  ,[Dress_Num]
-						  ,[Weld_Counter]
-						  ,[ESTremainingspotsFixed]
-						  ,[ESTremainingspotsMove]
-					  FROM[GADATA].[NGAC].[TipwearLast]
-					  Order by Weld_Counter DESC");
-			//
+
+            DataTable dt = new DataTable();
+            if (DataBuffer.Tipstatus != null)
+            {
+                dt = DataBuffer.Tipstatus;
+            }
+            //
 			WebGridHelpers.WebGridHelper webGridHelper = new WebGridHelper();
 			ViewBag.Columns = webGridHelper.getDatatabelCollumns(dt);
 			//
@@ -60,6 +55,9 @@ namespace EqUiWebUi.Controllers
 			WebGridHelpers.DefaultModel model = new WebGridHelpers.DefaultModel();
 			model.PageSize = 30;
 			//
+
+			
+
 			if (data != null)
 			{
 				model.TotalCount = data.Count();
@@ -68,31 +66,31 @@ namespace EqUiWebUi.Controllers
 			return View(model);
 		}
 
-        [HttpGet]
-        public JsonResult checkNewData()
-        {
-            bool btest = false;
-            if (btest)
-            {
-               //issue reload
-               return Json(new object[] { new object() }, JsonRequestBehavior.AllowGet);
-            }
-            else
-            {
-                //no reload needed
-                return null; 
-            }
+		[HttpGet]
+		public JsonResult checkNewData()
+		{
+			bool btest = false;
+			if (btest)
+			{
+			   //issue reload
+			   return Json(new object[] { new object() }, JsonRequestBehavior.AllowGet);
+			}
+			else
+			{
+				//no reload needed
+				return null; 
+			}
 
-        }
+		}
 
-        [HttpGet]
+		[HttpGet]
 		public ActionResult PloegRapportWebgrid()
 		{
 			GadataComm gadataComm = new GadataComm();
-            DataTable dt = gadataComm.RunQueryGadata(
-                @"USE GADATA EXEC GADATA.EqUi.AAOSR_PloegRaportV2 @daysBack = 1 , @minDowntime = 20 ");
-            //
-            WebGridHelpers.WebGridHelper webGridHelper = new WebGridHelper();
+			DataTable dt = gadataComm.RunQueryGadata(
+				@"USE GADATA EXEC GADATA.EqUi.AAOSR_PloegRaportV2 @daysBack = 1 , @minDowntime = 20 ");
+			//
+			WebGridHelpers.WebGridHelper webGridHelper = new WebGridHelper();
 			ViewBag.Columns = webGridHelper.getDatatabelCollumns(dt);
 			//
 			List<dynamic> data = webGridHelper.datatableToDynamic(dt);
