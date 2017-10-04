@@ -269,8 +269,16 @@ namespace ExcelAddInEquipmentDatabase
         }
         public void frmNewWorkoderThread()
         {
+            try
+            {
             System.Windows.Forms.Application.Run(new MXxWOdetails(wonum));
-        }
+            }
+            catch (Exception ex)
+            {
+                Debugger.Exeption(ex);
+                Debugger.Message("Dam..." + ex.Message);
+            }
+}
         //**********************************Error details*********************************************
         void ErrorDetailsMenuItemClick(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)
         {
@@ -280,8 +288,16 @@ namespace ExcelAddInEquipmentDatabase
         }
         public void frmNewErrordetailsThread()
         {
+            try
+            { 
             System.Windows.Forms.Application.Run(new LogDetails(location, Logtype, errornum, refid));
-        }
+            }
+            catch (Exception ex)
+            {
+                Debugger.Exeption(ex);
+                Debugger.Message("Dam..." + ex.Message);
+            }
+}
         //**********************************Error Stats*********************************************
         void ErrorStatsMenuItemClick(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)
         {
@@ -291,7 +307,15 @@ namespace ExcelAddInEquipmentDatabase
         }
         public void frmNewErrorStatsThread()
         {
-            System.Windows.Forms.Application.Run(new ErrorStats(location, Logtype, errornum, LogText));
+            try
+            {
+                System.Windows.Forms.Application.Run(new ErrorStats(location, Logtype, errornum, LogText));
+            }
+            catch (Exception ex)
+            {
+                Debugger.Exeption(ex);
+                Debugger.Message("Dam..." + ex.Message);
+            }
         }
         //**********************************SBCU Stats*********************************************
         void SBCUStatsMenuItemClick(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)
@@ -302,8 +326,16 @@ namespace ExcelAddInEquipmentDatabase
         }
         public void frmNewSBCUstatsThread()
         {
+            try
+            { 
            System.Windows.Forms.Application.Run(new SBCUStats(location));
-        }
+            }
+            catch (Exception ex)
+            {
+                Debugger.Exeption(ex);
+                Debugger.Message("Dam..." + ex.Message);
+            }
+}
         //**********************************ASSET Stats*********************************************
         void AssetStatsMenuItemClick(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)
         {

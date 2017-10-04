@@ -19,6 +19,7 @@ namespace EQUIToolsLib
         BackgroundWorker bw = new BackgroundWorker();
         MaximoComm lMaximoComm = new MaximoComm();
         string slogtype = "";
+        string sResult;
 
         public LogDetails(string Location, string LogType, string Errornum, int RefId)
         {
@@ -53,6 +54,7 @@ namespace EQUIToolsLib
 
         void bw_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            webBrowser1.DocumentText = sResult;
             metroProgressSpinner1.Hide();
         }
 
@@ -92,7 +94,7 @@ namespace EQUIToolsLib
             {
                 sb.AppendLine("No valid result from query").AppendLine(newline);
             }
-            webBrowser1.DocumentText = sb.ToString();
+            sResult = sb.ToString();
         }
 
         private void btn_get_Click(object sender, EventArgs e)

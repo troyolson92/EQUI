@@ -216,7 +216,7 @@ ORDER BY WORKORDER.STATUSDATE DESC
         void bwWorkorders_DoWork(object sender, DoWorkEventArgs e)
         {
             tableFromMx7 =  lMaximocomm.oracle_runQuery(string.Format(viewmode.DataGridQuery, viewmode.Location));
-            if (tableFromMx7.Rows.Count == 0) { Debugger.Message("no result from maximo"); return; };
+            if (tableFromMx7.Rows.Count == 0) { Debugger.Message("no result from maximo (rowcount = 0)"); return; };
         }
 
 
