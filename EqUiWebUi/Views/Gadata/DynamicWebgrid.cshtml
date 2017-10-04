@@ -35,6 +35,7 @@ content = "width=device-width"/>
 
 @*script for setting row colors based on there values*@
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+@*
     <script type="text/javascript">
         $(document).ready(function () { 
             $('#gridMapping > tbody > tr').each(function (index) {
@@ -47,6 +48,7 @@ content = "width=device-width"/>
             });
         });
     </script>
+*@
 
 @*scrip for blinking a row based on there value.*@
     <script type="text/javascript">
@@ -58,12 +60,12 @@ content = "width=device-width"/>
         function flashRow() {
             bFlip = !bFlip;
             $('#gridMapping > tbody > tr').each(function (index) {
-                if ($(this).children('td:nth-child(3)').text() > 35)
+                if ($(this).children('td:nth-child(5)').text() > 30)
                 {
                     if (bFlip) {
-                        $(this).children('td').css("background-color", "#33CC99");
+                        $(this).children('td').css("background-color", "#f71111");
                     } else {
-                        $(this).children('td').css("background-color", "#FFCC99");
+                        $(this).children('td').css("background-color", "#6a6d55");
                     }
                 }
             });
@@ -87,7 +89,7 @@ content = "width=device-width"/>
         function CheckSound() {
             bNeedToPlay = false;
             $('#gridMapping > tbody > tr').each(function (index) {
-                if ($(this).children('td:nth-child(3)').text() == 40) {
+                if ($(this).children('td:nth-child(5)').text() > 80) {
                     bNeedToPlay = true;
                 }
             });
@@ -150,7 +152,9 @@ content = "width=device-width"/>
     } </style>
 
 @*main body*@
-</head><body><div>
+</head><body>
+<h5>Last data push: @Html.Raw(Model.DataTimestamp)</h5>
+    <div>
                  @{
                      ViewBag.Title = "Dynamic Gridview";
                      WebGrid grid = new WebGrid(null, rowsPerPage: @Model.PageSize);

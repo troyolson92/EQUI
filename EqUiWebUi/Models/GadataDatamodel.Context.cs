@@ -28,7 +28,7 @@ namespace EqUiWebUi.Models
         public DbSet<QUERYParameters> QUERYParameters { get; set; }
         public DbSet<QUERYS> QUERYS { get; set; }
         public DbSet<c_querySnapshots> c_querySnapshots { get; set; }
-        public DbSet<l_querySnapshots> l_querySnapshots { get; set; }
         public DbSet<h_querySnapshots> h_querySnapshots { get; set; }
+        public DbSet<l_querySnapshots> l_querySnapshots { get; set; }
     }
 }

@@ -60,7 +60,7 @@ namespace EqUiWebUi.Controllers
 			{
 				model.TotalCount = data.Count();
 				model.Data = data;
-                model.DataTimestamp =  DataBuffer.TipstatusLastDt.ToString("yyyy-mm-dd HH:mm:ss");
+                model.DataTimestamp =  DataBuffer.TipstatusLastDt.ToString("yyyy-MM-dd HH:mm:ss");
 			}
 			return View(model);
 		}
@@ -68,8 +68,8 @@ namespace EqUiWebUi.Controllers
 		[HttpGet]
 		public JsonResult checkNewData(String dataTimestamp)
 		{
-            DateTime date = DateTime.ParseExact(dataTimestamp, "yyyy-mm-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
-            if (DataBuffer.TipstatusLastDt <= date)
+            DateTime date = DateTime.ParseExact(dataTimestamp, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+            if (DataBuffer.TipstatusLastDt > date)
 			{
 			   //issue reload
 			   return Json(new object[] { new object() }, JsonRequestBehavior.AllowGet);

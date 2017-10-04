@@ -144,6 +144,15 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Backgroundwork.cs" />
+    <Compile Include="Models\c_querySnapshots.cs">
+      <DependentUpon>GadataDatamodel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\h_querySnapshots.cs">
+      <DependentUpon>GadataDatamodel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\l_querySnapshots.cs">
+      <DependentUpon>GadataDatamodel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="Controllers\DifftableController.cs" />
     <Compile Include="Controllers\GadataController.cs" />
@@ -152,9 +161,6 @@
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="Models\c_querySnapshots.cs">
-      <DependentUpon>GadataDatamodel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DifftableModel.cs" />
     <Compile Include="Models\GadataDatamodel.Context.cs">
@@ -171,12 +177,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>GadataDatamodel.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Models\h_querySnapshots.cs">
-      <DependentUpon>GadataDatamodel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\l_querySnapshots.cs">
-      <DependentUpon>GadataDatamodel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\maximoModel.cs" />
     <Compile Include="Models\MyViewModel.cs" />
@@ -248,7 +248,6 @@
     <Content Include="Views\Gadata\DynamicWebgrid.cshtml" />
     <Content Include="Views\Difftable\DiffWebgrid.cshtml" />
     <Content Include="Views\Difftable\Index.cshtml" />
-    <Content Include="Views\Difftable\RunDiffQUery.cshtml" />
     <Content Include="Views\Test\Index.cshtml" />
     <Content Include="Views\Gadata\PloegRapportWebgrid.cshtml" />
   </ItemGroup>

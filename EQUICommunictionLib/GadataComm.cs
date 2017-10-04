@@ -164,10 +164,9 @@ namespace EQUICommunictionLib
 
         }
 
-        public void InsertSnaphotGadata(string name, string qry, string htmlResult)
+        public void InsertSnaphotGadata(int id, string htmlResult)
         {
             SqlConnection lconn = Gadataconn;
-        
             try
             {
                 lconn.Open();
@@ -176,13 +175,11 @@ namespace EQUICommunictionLib
             {
                 Debugger.Exeption(e);
             }
-
             try
             {
-                using (SqlCommand myCommand = new SqlCommand("insert INTO GADATA.EqUi.QuerySnapshots VALUES(@name, getdate(), @query, @htmlresult)", lconn))
+                using (SqlCommand myCommand = new SqlCommand("INSERT INTO GADATA.EqUi.l_querySnapshots VALUES(@id, getdate(), @htmlresult)", lconn))
                 {
-                    myCommand.Parameters.AddWithValue("@name", name);
-                    myCommand.Parameters.AddWithValue("@query", qry);
+                    myCommand.Parameters.AddWithValue("@id", id);
                     myCommand.Parameters.AddWithValue("@htmlresult", htmlResult);
 
                     myCommand.CommandTimeout = 300;

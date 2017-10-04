@@ -21,10 +21,14 @@ namespace EqUiWebUi
 
             //background work
             Backgroundwork backgroundwork = new Backgroundwork();
+            //**********************************TipDresData table***************************************************
             //fire and forget to init
             BackgroundJob.Enqueue(() => backgroundwork.UpdateTipstatus());
             //set job to refresh every minute
             RecurringJob.AddOrUpdate(() => backgroundwork.UpdateTipstatus(), Cron.Minutely);
+            //**********************************snapshot system****************************************************
+            //check every minute for new jobs 
+            RecurringJob.AddOrUpdate(() => backgroundwork.HandleMaximoSnapshotWork(),Cron.Minutely);
 
         }
     }

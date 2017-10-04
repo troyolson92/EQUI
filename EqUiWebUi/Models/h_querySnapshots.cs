@@ -14,11 +14,17 @@ namespace EqUiWebUi.Models
     
     public partial class h_querySnapshots
     {
+        public h_querySnapshots()
+        {
+            this.l_querySnapshots = new HashSet<l_querySnapshots>();
+        }
+    
         public int id { get; set; }
         public Nullable<int> queryId { get; set; }
         public Nullable<System.DateTime> timestamp { get; set; }
+        public Nullable<bool> Hangfire { get; set; }
     
         public virtual c_querySnapshots c_querySnapshots { get; set; }
-        public virtual l_querySnapshots l_querySnapshots { get; set; }
+        public virtual ICollection<l_querySnapshots> l_querySnapshots { get; set; }
     }
 }

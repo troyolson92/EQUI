@@ -15,6 +15,8 @@ namespace EqUiWebUi.Models
     public partial class l_querySnapshots
     {
         public int id { get; set; }
+        public Nullable<int> snapshotId { get; set; }
+        public Nullable<System.DateTime> timestamp { get; set; }
         public string htmlresult { get; set; }
     
         public virtual h_querySnapshots h_querySnapshots { get; set; }

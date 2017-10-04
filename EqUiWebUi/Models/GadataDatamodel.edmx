@@ -22,12 +22,15 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="queryId" Type="int" />
           <Property Name="timestamp" Type="datetime" />
+          <Property Name="Hangfire" Type="bit" />
         </EntityType>
         <EntityType Name="l_querySnapshots">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="snapshotId" Type="int" />
+          <Property Name="timestamp" Type="datetime" />
           <Property Name="htmlresult" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="QUERYParameters">
@@ -66,15 +69,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_h_querySnapshots_l_querySnapshots">
-          <End Role="l_querySnapshots" Type="Self.l_querySnapshots" Multiplicity="1" />
+        <Association Name="FK_l_querySnapshots_h_querySnapshots">
           <End Role="h_querySnapshots" Type="Self.h_querySnapshots" Multiplicity="0..1" />
+          <End Role="l_querySnapshots" Type="Self.l_querySnapshots" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="l_querySnapshots">
+            <Principal Role="h_querySnapshots">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="h_querySnapshots">
-              <PropertyRef Name="id" />
+            <Dependent Role="l_querySnapshots">
+              <PropertyRef Name="snapshotId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -88,9 +91,9 @@
             <End Role="c_querySnapshots" EntitySet="c_querySnapshots" />
             <End Role="h_querySnapshots" EntitySet="h_querySnapshots" />
           </AssociationSet>
-          <AssociationSet Name="FK_h_querySnapshots_l_querySnapshots" Association="Self.FK_h_querySnapshots_l_querySnapshots">
-            <End Role="l_querySnapshots" EntitySet="l_querySnapshots" />
+          <AssociationSet Name="FK_l_querySnapshots_h_querySnapshots" Association="Self.FK_l_querySnapshots_h_querySnapshots">
             <End Role="h_querySnapshots" EntitySet="h_querySnapshots" />
+            <End Role="l_querySnapshots" EntitySet="l_querySnapshots" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -125,17 +128,17 @@
           <EntitySet Name="QUERYParameters" EntityType="Self.QUERYParameters" />
           <EntitySet Name="QUERYS" EntityType="Self.QUERYS" />
           <EntitySet Name="c_querySnapshots" EntityType="Models.c_querySnapshots" />
-          <EntitySet Name="l_querySnapshots" EntityType="Models.l_querySnapshots" />
           <EntitySet Name="h_querySnapshots" EntityType="Models.h_querySnapshots" />
+          <EntitySet Name="l_querySnapshots" EntityType="Models.l_querySnapshots" />
           <AssociationSet Name="FK_h_querySnapshots_c_querySnapshots" Association="Models.FK_h_querySnapshots_c_querySnapshots">
             <End Role="c_querySnapshots" EntitySet="c_querySnapshots" />
             <End Role="h_querySnapshots" EntitySet="h_querySnapshots" />
           </AssociationSet>
-          <AssociationSet Name="FK_h_querySnapshots_l_querySnapshots" Association="Models.FK_h_querySnapshots_l_querySnapshots">
-            <End Role="l_querySnapshots" EntitySet="l_querySnapshots" />
+          <AssociationSet Name="FK_l_querySnapshots_h_querySnapshots" Association="Models.FK_l_querySnapshots_h_querySnapshots">
             <End Role="h_querySnapshots" EntitySet="h_querySnapshots" />
+            <End Role="l_querySnapshots" EntitySet="l_querySnapshots" />
           </AssociationSet>
-        </EntityContainer>
+          </EntityContainer>
         <EntityType Name="c_querySnapshots">
           <Key>
             <PropertyRef Name="id" />
@@ -147,14 +150,6 @@
           <Property Name="query" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="h_querySnapshots" Relationship="Models.FK_h_querySnapshots_c_querySnapshots" FromRole="c_querySnapshots" ToRole="h_querySnapshots" />
         </EntityType>
-        <EntityType Name="l_querySnapshots">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" />
-          <Property Name="htmlresult" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="h_querySnapshots" Relationship="Models.FK_h_querySnapshots_l_querySnapshots" FromRole="l_querySnapshots" ToRole="h_querySnapshots" />
-        </EntityType>
         <EntityType Name="h_querySnapshots">
           <Key>
             <PropertyRef Name="id" />
@@ -162,8 +157,19 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="queryId" Type="Int32" />
           <Property Name="timestamp" Type="DateTime" Precision="3" />
+          <Property Name="Hangfire" Type="Boolean" />
           <NavigationProperty Name="c_querySnapshots" Relationship="Models.FK_h_querySnapshots_c_querySnapshots" FromRole="h_querySnapshots" ToRole="c_querySnapshots" />
-          <NavigationProperty Name="l_querySnapshots" Relationship="Models.FK_h_querySnapshots_l_querySnapshots" FromRole="h_querySnapshots" ToRole="l_querySnapshots" />
+          <NavigationProperty Name="l_querySnapshots" Relationship="Models.FK_l_querySnapshots_h_querySnapshots" FromRole="h_querySnapshots" ToRole="l_querySnapshots" />
+        </EntityType>
+        <EntityType Name="l_querySnapshots">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="snapshotId" Type="Int32" />
+          <Property Name="timestamp" Type="DateTime" Precision="3" />
+          <Property Name="htmlresult" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="h_querySnapshots" Relationship="Models.FK_l_querySnapshots_h_querySnapshots" FromRole="l_querySnapshots" ToRole="h_querySnapshots" />
         </EntityType>
         <Association Name="FK_h_querySnapshots_c_querySnapshots">
           <End Type="Models.c_querySnapshots" Role="c_querySnapshots" Multiplicity="0..1" />
@@ -177,19 +183,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_h_querySnapshots_l_querySnapshots">
-          <End Type="Models.l_querySnapshots" Role="l_querySnapshots" Multiplicity="1" />
+        <Association Name="FK_l_querySnapshots_h_querySnapshots">
           <End Type="Models.h_querySnapshots" Role="h_querySnapshots" Multiplicity="0..1" />
+          <End Type="Models.l_querySnapshots" Role="l_querySnapshots" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="l_querySnapshots">
+            <Principal Role="h_querySnapshots">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="h_querySnapshots">
-              <PropertyRef Name="id" />
+            <Dependent Role="l_querySnapshots">
+              <PropertyRef Name="snapshotId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -228,24 +234,27 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="l_querySnapshots">
-            <EntityTypeMapping TypeName="Models.l_querySnapshots">
-              <MappingFragment StoreEntitySet="l_querySnapshots">
-                <ScalarProperty Name="htmlresult" ColumnName="htmlresult" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="h_querySnapshots">
             <EntityTypeMapping TypeName="Models.h_querySnapshots">
               <MappingFragment StoreEntitySet="h_querySnapshots">
+                <ScalarProperty Name="Hangfire" ColumnName="Hangfire" />
                 <ScalarProperty Name="timestamp" ColumnName="timestamp" />
                 <ScalarProperty Name="queryId" ColumnName="queryId" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-        </EntityContainerMapping>
+          <EntitySetMapping Name="l_querySnapshots">
+            <EntityTypeMapping TypeName="Models.l_querySnapshots">
+              <MappingFragment StoreEntitySet="l_querySnapshots">
+                <ScalarProperty Name="htmlresult" ColumnName="htmlresult" />
+                <ScalarProperty Name="timestamp" ColumnName="timestamp" />
+                <ScalarProperty Name="snapshotId" ColumnName="snapshotId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>
