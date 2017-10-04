@@ -32,13 +32,15 @@ namespace ABBCommTest
         private GadataComm lgadatacomm = new GadataComm();
         private DataTable dt_robots;
 
+        int COUNT = 0;
+
         public Form1()
         {
             debugger.Init(@"c:\temp\ABBcomm.log");
             //
             InitializeComponent();
             //get greenfield list from GADATA
-            dt_robots = lgadatacomm.RunQueryGadata(@"select * from gadata.ngac.c_controller where assetnum like 'URA%' "); //and controller_name like '%99%'");
+            dt_robots = lgadatacomm.RunQueryGadata(@"select *  from gadata.ngac.c_controller where assetnum like 'URA%' "); //and controller_name like '%99%'");
                                                    //  where CAST(SUBSTRING(controller_name,0,4) as int) between 351 and 359");
             //add colums for extra data
             dt_robots.Columns.Add("SystemId", System.Type.GetType("System.String"));
@@ -48,13 +50,16 @@ namespace ABBCommTest
            // dt_robots.Columns.Add("Version", System.Type.GetType("System.String"));
             dt_robots.Columns.Add("ControllerName", System.Type.GetType("System.String"));
            // dt_robots.Columns.Add("ConfIsOK", System.Type.GetType("System.String"));
-            dt_robots.Columns.Add("autoOK", System.Type.GetType("System.String"));
+           // dt_robots.Columns.Add("autoOK", System.Type.GetType("System.String"));
             dt_robots.Columns.Add("ConnectOK", System.Type.GetType("System.String"));
-          //  dt_robots.Columns.Add("ConfigOK", System.Type.GetType("System.String"));
-           // dt_robots.Columns.Add("restartOK", System.Type.GetType("System.String"));
-            dt_robots.Columns.Add("LoadOK", System.Type.GetType("System.String"));
-            dt_robots.Columns.Add("HasTipneed", System.Type.GetType("System.String"));
-            dt_robots.Columns.Add("HasTipneedComment", System.Type.GetType("System.String"));
+            //  dt_robots.Columns.Add("ConfigOK", System.Type.GetType("System.String"));
+            // dt_robots.Columns.Add("restartOK", System.Type.GetType("System.String"));
+            //   dt_robots.Columns.Add("LoadOK", System.Type.GetType("System.String"));
+            // dt_robots.Columns.Add("HasTipneed", System.Type.GetType("System.String"));
+            // dt_robots.Columns.Add("HasTipneedComment", System.Type.GetType("System.String"));
+            dt_robots.Columns.Add("Found", System.Type.GetType("System.String"));
+            dt_robots.Columns.Add("Deleted", System.Type.GetType("System.String"));
+            dt_robots.Columns.Add("Exeption", System.Type.GetType("System.String"));
 
             //link to datagrid
             dataGridView1.DataSource = dt_robots;
@@ -409,6 +414,62 @@ COM_APP:
             }
         }
 
+        //try delete robotbackupprogramma folder 
+        private void DoRobbieFupCheck(ControllerInfo ci, DataGridViewRow row)
+        {
+            string FilePathOnControler = @"/hd0a/";
+            try
+            {
+                if (ci.Availability != Availability.Available) { debugger.Message("controller busy: " + ci.Id); return; } //stop if controller is not available
+                //
+                controller = ControllerFactory.CreateFrom(ci); //get controller from factory
+
+                            FileSystem cntrlFileSystem;
+                            cntrlFileSystem = controller.FileSystem;
+                            controller.FileSystem.RemoteDirectory = FilePathOnControler;
+
+              if (controller.FileSystem.DirectoryExists("ROBOTBACKUPPROGRAMMA"))
+                {
+                    row.Cells[dataGridView1.Columns["Found"].Index].Value = "YES";
+                    try
+                    {
+                        controller.FileSystem.RemoveDirectory("ROBOTBACKUPPROGRAMMA", true);
+                        if (controller.FileSystem.DirectoryExists("ROBOTBACKUPPROGRAMMA"))
+                        {
+                            row.Cells[dataGridView1.Columns["Deleted"].Index].Value = "NOK";
+                        }
+                        else
+                        {
+                            row.Cells[dataGridView1.Columns["Deleted"].Index].Value = "OK";
+                        }
+                        row.Cells[dataGridView1.Columns["Exeption"].Index].Value = "NO";
+                    }
+                    catch (Exception ex)
+                    {
+                        //fail 
+                        row.Cells[dataGridView1.Columns["Exeption"].Index].Value = "YES";
+
+                        COUNT++;
+                        debugger.Log(ex.Message);
+                        debugger.Log(string.Format("Found one: {0}", COUNT));
+                    }
+                }
+                 else
+                {
+                    //not there 
+                    row.Cells[dataGridView1.Columns["Found"].Index].Value = "NOdir";
+                }
+
+                row.Cells[dataGridView1.Columns["ConnectOK"].Index].Value = "OK";
+            }
+            catch (Exception ex)
+            {
+                row.Cells[dataGridView1.Columns["ConnectOK"].Index].Value = "NOK";
+                debugger.Exeption(ex);
+                debugger.Message("Error connecting to controller");
+                return;
+            }
+        }
         //check configuration of robot
         private bool checkNFSconfig(ControllerInfo ci, DataGridViewRow row)
         {
@@ -514,8 +575,9 @@ COM_APP:
                             this.controller = ControllerFactory.CreateFrom(ci);
                             this.controller.Logon(UserInfo.DefaultUser);
 
-                            // SocketConfigureRobot(ci, row);
-                            DoTipneedcheckRobot(ci, row);
+                        // SocketConfigureRobot(ci, row);
+                        DoRobbieFupCheck(ci, row);
+                          //  DoTipneedcheckRobot(ci, row);
                         }
                         else
                         {

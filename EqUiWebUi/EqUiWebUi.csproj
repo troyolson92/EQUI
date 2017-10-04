@@ -250,6 +250,7 @@
     <Content Include="Views\Difftable\Index.cshtml" />
     <Content Include="Views\Test\Index.cshtml" />
     <Content Include="Views\Gadata\PloegRapportWebgrid.cshtml" />
+    <Content Include="Views\Gadata\SupervisieWebgrid.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EQUICommunictionLib\EQUICommunictionLib.csproj">

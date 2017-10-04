@@ -35,12 +35,10 @@ namespace EqUiWebUi.Controllers
 			return View(model);
 		}
 
+        //------------------------------------Dynamic Grid-------------------------------------------------
 		[HttpGet]
 		public ActionResult DynamicWebgrid()
 		{
-            //set refresh 
-            //Response.AddHeader("Refresh", "10");
-
             DataTable dt = new DataTable();
             if (DataBuffer.Tipstatus != null)
             {
@@ -81,32 +79,104 @@ namespace EqUiWebUi.Controllers
 			}
 
 		}
+        //-------------------------------------------------------------------------------------------------
 
-		[HttpGet]
+        //------------------------------------PloegRapport-------------------------------------------------
+        [HttpGet]
 		public ActionResult PloegRapportWebgrid()
 		{
-			GadataComm gadataComm = new GadataComm();
-			DataTable dt = gadataComm.RunQueryGadata(
-				@"USE GADATA EXEC GADATA.EqUi.AAOSR_PloegRaportV2 @daysBack = 1 , @minDowntime = 20 ");
-			//
-			WebGridHelpers.WebGridHelper webGridHelper = new WebGridHelper();
-			ViewBag.Columns = webGridHelper.getDatatabelCollumns(dt);
-			//
-			List<dynamic> data = webGridHelper.datatableToDynamic(dt);
-			//
-			WebGridHelpers.DefaultModel model = new WebGridHelpers.DefaultModel();
-			model.PageSize = 30;
-			//
-			if (data != null)
-			{
-				model.TotalCount = data.Count();
-				model.Data = data;
-			}
-			return View(model);
-		}
+            DataTable dt = new DataTable();
+            if (DataBuffer.Tipstatus != null)
+            {
+                dt = DataBuffer.Ploegreport;
+            }
+            //
+            WebGridHelpers.WebGridHelper webGridHelper = new WebGridHelper();
+            ViewBag.Columns = webGridHelper.getDatatabelCollumns(dt);
+            //
+            List<dynamic> data = webGridHelper.datatableToDynamic(dt);
+            //
+            WebGridHelpers.DefaultModel model = new WebGridHelpers.DefaultModel();
+            model.PageSize = 30;
+            //
+
+            if (data != null)
+            {
+                model.TotalCount = data.Count();
+                model.Data = data;
+                model.DataTimestamp = DataBuffer.PloegreportLastDt.ToString("yyyy-MM-dd HH:mm:ss");
+            }
+            return View(model);
+        }
+
+        [HttpGet]
+        public JsonResult PloegRapportcheckNewData(String dataTimestamp)
+        {
+            DateTime date = DateTime.ParseExact(dataTimestamp, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+            if (DataBuffer.PloegreportLastDt > date)
+            {
+                //issue reload
+                return Json(new object[] { new object() }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                //no reload needed
+                return null;
+            }
+
+        }
+        //-------------------------------------------------------------------------------------------------
+
+        //------------------------------------PloegRapport-------------------------------------------------
+        [HttpGet]
+        public ActionResult SupervisieWebgrid()
+        {
+            DataTable dt = new DataTable();
+            if (DataBuffer.Tipstatus != null)
+            {
+                dt = DataBuffer.Supervisie;
+            }
+            //
+            WebGridHelpers.WebGridHelper webGridHelper = new WebGridHelper();
+            ViewBag.Columns = webGridHelper.getDatatabelCollumns(dt);
+            //
+            List<dynamic> data = webGridHelper.datatableToDynamic(dt);
+            //
+            WebGridHelpers.DefaultModel model = new WebGridHelpers.DefaultModel();
+            model.PageSize = 30;
+            //
+
+            if (data != null)
+            {
+                model.TotalCount = data.Count();
+                model.Data = data;
+                model.DataTimestamp = DataBuffer.SupervisieLastDt.ToString("yyyy-MM-dd HH:mm:ss");
+            }
+            return View(model);
+        }
+
+        [HttpGet]
+        public JsonResult SupervisiecheckNewData(String dataTimestamp)
+        {
+            DateTime date = DateTime.ParseExact(dataTimestamp, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+            if (DataBuffer.SupervisieLastDt > date)
+            {
+                //issue reload
+                return Json(new object[] { new object() }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                //no reload needed
+                return null;
+            }
+
+        }
+        //-------------------------------------------------------------------------------------------------
 
 
-		[HttpGet]
+
+        //------------------------------------LEARNING STUFF -------------------------------------------------
+        [HttpGet]
 		public ActionResult jqGrid()
 		{
 			return View();
@@ -162,5 +232,6 @@ namespace EqUiWebUi.Controllers
 			//update database
 			return Content("Record updated!!", "text/html");
 		}
-	}
+        //-------------------------------------------------------------------------------------------------
+    }
 }

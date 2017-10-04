@@ -8,8 +8,15 @@ namespace EqUiWebUi
 {
     public static class DataBuffer
     {
+        //
         public static DataTable Tipstatus { get; set; }
         public static DateTime TipstatusLastDt { get; set; }
+        //
+        public static DataTable Ploegreport { get; set; }
+        public static DateTime PloegreportLastDt { get; set; }
+        //
+        public static DataTable Supervisie { get; set; }
+        public static DateTime SupervisieLastDt { get; set; }
     }
 
   
@@ -56,6 +63,69 @@ namespace EqUiWebUi
 				// send message that something failed s
 			}
 		}
+
+        //update the local datatable with ploeg rapport called every minute #hangfire
+        public void UpdatePloegreport()
+        {
+            GadataComm gadataComm = new GadataComm();
+            DataTable dt = gadataComm.RunQueryGadata(
+                @"EXEC GADATA.EqUi.AAOSR_PloegRaportV2  @daysBack = 1 , @minDowntime = 20");
+            if (dt.Rows.Count != 0)
+            {
+
+                DataBuffer.Ploegreport = dt;
+
+                //query contast a tag with timestamp at end of current shift so must exclude this
+                //also contans a last refresh tag. (refresh does not mean new data so filter it also)
+                DateTime maxDate = dt.AsEnumerable()
+                            .Where(r => Convert.ToDateTime(r.Field<string>("timestamp")) < System.DateTime.Now)
+                            .Where(r => r.Field<string>("Logtype").Contains("Ruleinfo") == false)
+                            .Select(r => Convert.ToDateTime(r.Field<string>("timestamp")))
+                            .Max();
+
+                DataBuffer.PloegreportLastDt = maxDate;
+            }
+            else
+            {
+                // send message that something failed s
+            }
+        }
+
+        //update the local datatable with supervisie called every minute #hangfire
+        public void UpdateSupervisie()
+        {
+            GadataComm gadataComm = new GadataComm();
+            DataTable dt = gadataComm.RunQueryGadata(
+                @"USE GADATA EXEC GADATA.EqUi.EQpluginNewformat1 
+                @daysBack = 1 , 
+                @assets = '%' , 
+                @locations = '%' , 
+                @lochierarchy = '%' , 
+                @timeline = True , 
+                @c3gError = True , 
+                @c4gError = True , 
+                @c3gBreakdown = True , 
+                @c4gBreakdown = True , 
+                @active = True , 
+                @MinLogserv = 8 , 
+                @MinDowntime = 10" );
+
+            if (dt.Rows.Count != 0)
+            {
+
+                DataBuffer.Supervisie = dt;
+
+                DateTime maxDate = dt.AsEnumerable()
+                            .Select(r => Convert.ToDateTime(r.Field<string>("timestamp")))
+                            .Max();
+
+                DataBuffer.SupervisieLastDt = maxDate;
+            }
+            else
+            {
+                // send message that something failed s
+            }
+        }
 
         //check if there are snapshots that need to be run. Called every minute #hangfire.
         //if work is needed this wil fire and forget the work.
