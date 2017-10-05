@@ -1,105 +1,41 @@
-﻿@model EqUiWebUi.WebGridHelpers.DefaultModel
+﻿@model IEnumerable<EqUiWebUi.Models.Supervisie>
 
-<html>
-<head>
-<meta name = "viewport"
-content = "width=device-width"/>
+@using GridMvc.Html
 
-<title> DisplayGrid  </title>  
-
-<link href="https://code.jquery.com/ui/1.12.0-rc.2/themes/smoothness/jquery-ui.css" rel="stylesheet" />
-
-<style type = "text/css" >
-    .mainpanel
-    {
-        margin-left: 230px;
-        min-height: 636px;
-        padding: 20px;
-        padding-top: 20px;
-        padding-right: 20px;
-        padding-bottom: 20px;
-        padding-left: 20px;
-    }
-
-.info th
-{
-    background: #E0E0E0!important;
+@*Remove default layout*@
+@{
+    Layout = null;
 }
 
-.info th a
-{
-    color: #000000;
-    font-weight: normal;
-}
-</style>
+<link href="@Url.Content("~/Content/Gridmvc.css")" rel="stylesheet" />
+<link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" />
+<script src="~/Scripts/jquery-3.2.1.min.js"></script>
+<script src="@Url.Content("~/Scripts/gridmvc.min.js")"></script>
 
 @*script for setting row colors based on there values*@
-<script src="~/Scripts/jquery-1.10.2.min.js"></script>
-@*
-    <script type="text/javascript">
-        $(document).ready(function () { 
-            $('#gridMapping > tbody > tr').each(function (index) {
-                if (($(this).children('td:nth-child(3)').text() < 60) && ($(this).children('td:nth-child(3)').text() > 80))
-                 { $(this).children('td').css("background-color", "#33CC99");}
-                else if ($(this).children('td:nth-child(3)').text() < 36 )
-                 { $(this).children('td').css("background-color", "#FFCC99");}
-                else
-                 { }
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('tbody > tr').each(function (index) {
+                    if ($(this).children('td:nth-child(8)').text() == "SHIFTBOOK")
+                    { $(this).children('td').css("background-color", "#d6d613");}
+
+                    else if ($(this).children('td:nth-child(8)').text() == "WARNING")
+                    { $(this).children('td').css("background-color", "#127bf1"); }
+
+                    else if ($(this).children('td:nth-child(8)').text() == "LIVE")
+                    { $(this).children('td').css("background-color", "#f21a1a"); }
+
+                    else if ($(this).children('td:nth-child(8)').text() == "BREAKDOWN")
+                    { $(this).children('td').css("background-color", "#f2af13"); }
+
+                    else if ($(this).children('td:nth-child(8)').text() == "TIMELINE")
+                    { $(this).children('td').css("background-color", "#16dd76"); }
+
+                    else
+                    {}
+                });
             });
-        });
-    </script>
-*@
-
-@*scrip for blinking a row based on there value.*@
-    <script type="text/javascript">
-    $(document).ready(function () {
-        $(function () {
-            setInterval(flashRow, 750);
-        });
-        var bFlip = new Boolean(false);
-        function flashRow() {
-            bFlip = !bFlip;
-            $('#gridMapping > tbody > tr').each(function (index) {
-                if ($(this).children('td:nth-child(5)').text() > 30)
-                {
-                    if (bFlip) {
-                        $(this).children('td').css("background-color", "#f71111");
-                    } else {
-                        $(this).children('td').css("background-color", "#6a6d55");
-                    }
-                }
-            });
-        }
-    });
-    </script>
-
-@*scrip for playing sound based on row value.*@
-@*http://soundbible.com/grab.php?id=1252&type=mp3*@
-@*http://soundbible.com/grab.php?id=1377&type=mp3*@
-<script type="text/javascript">
-    $(document).ready(function () {
-        var bNeedToPlay = new Boolean(false);
-        var sound = new Audio(src = "http://soundbible.com/grab.php?id=1377&type=mp3");
-
-        $(function () {
-            setInterval(CheckSound, 1000 * 60);
-            CheckSound();
-        });
-
-        function CheckSound() {
-            bNeedToPlay = false;
-            $('#gridMapping > tbody > tr').each(function (index) {
-                if ($(this).children('td:nth-child(5)').text() > 80) {
-                    bNeedToPlay = true;
-                }
-            });
-            if (bNeedToPlay)
-            {
-                sound.play();
-            }
-        }
-    });
-</script>
+        </script>
 
 @*function that calls server ever x time if there is new data*@
 <script type="text/javascript">
@@ -108,8 +44,8 @@ content = "width=device-width"/>
             //check every 5 seconds
             setInterval(CheckForData, 1000 * 5 );
         });
-        //get last data timestamp from model 
-        var Datatimestamp = '@Html.Raw(Model.DataTimestamp)';
+        //get last data timestamp from model
+        var Datatimestamp = '@Html.Raw(ViewBag.DataTimestamp)';
         console.log(Datatimestamp);
         //interlock for ajax request
         var bInterlock = new Boolean();
@@ -124,7 +60,7 @@ content = "width=device-width"/>
                     $.ajax({
                         async: true,
                         type: 'GET',
-                        url: '@Url.Action("SupervisiecheckNewData")',
+                        url: '@Url.Action("checkNewData")',
                         dataType: 'json',
                         data: { dataTimestamp: Datatimestamp },
 
@@ -144,36 +80,22 @@ content = "width=device-width"/>
     });
 </script>
 
-@*stype for mouse hover color complete row *@
-<style type = "text/css" >/*Mouse hover*/
-    #gridMapping tr:hover
+    <div class="code-cut">
+        @Html.Grid(Model).Columns(columns =>
     {
-        background-color: #F5DEB3;
-    } </style>
+        columns.Add(c => c.Location).Filterable(true);
+        columns.Add(c => c.logtext);
+        columns.Add(c => c.DT);
+        columns.Add(c => c.time);
+        columns.Add(c => c.Classification).Titled("Class");
+        columns.Add(c => c.Subgroup);
+        columns.Add(c => c.Severity).Titled("Serv").Filterable(true);
+        columns.Add(c => c.Logtype).Filterable(true);
 
-@*main body*@
-</head><body>
-<h5>Last data push: @Html.Raw(Model.DataTimestamp)</h5>
-    <div>
-                 @{
-                     ViewBag.Title = "Dynamic Gridview";
-                     WebGrid grid = new WebGrid(null, rowsPerPage: @Model.PageSize);
-                     grid.Bind(Model.Data, autoSortAndPage: true, rowCount: @Model.PageSize);
-                 }
-
-@grid.GetHtml(
-                    htmlAttributes: new{id = "gridMapping"},
-                    tableStyle: "table table-bordered",
-                    headerStyle: "info",
-                    footerStyle: "webgrid-footer",
-                    alternatingRowStyle: "webgrid-alternating-row",
-                    selectedRowStyle: "webgrid-selected-row",
-                    rowStyle: "gridrow",
-                    mode: WebGridPagerModes.All,
-                    firstText: "<< First",
-                    previousText: "< Prev",
-                    nextText: "Next >",
-                    lastText: "Last >>",
-                    columns: ViewBag.Columns
-        ) 
-</div></body></html>  
+        columns.Add()
+        .Encoded(false)
+        .Sanitized(false)
+        .SetWidth(30)
+        .RenderValueAs(o => Html.ActionLink("Info", "supervisieMoveinfo", new { id = o.refId }));
+    }).WithPaging(20).Sortable(true)
+    </div> 

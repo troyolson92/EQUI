@@ -30,5 +30,6 @@ namespace EqUiWebUi.Models
         public DbSet<c_querySnapshots> c_querySnapshots { get; set; }
         public DbSet<h_querySnapshots> h_querySnapshots { get; set; }
         public DbSet<l_querySnapshots> l_querySnapshots { get; set; }
+        public DbSet<Supervisie> Supervisies { get; set; }
     }
 }

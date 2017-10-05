@@ -66,8 +66,16 @@ namespace EqUiWebUi.Controllers
 		[HttpGet]
 		public JsonResult checkNewData(String dataTimestamp)
 		{
+            //direct query hangfire is not up
+            if (dataTimestamp == "")
+            {
+                //issue reload
+                return Json(new object[] { new object() }, JsonRequestBehavior.AllowGet);
+            }
             DateTime date = DateTime.ParseExact(dataTimestamp, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
-            if (DataBuffer.TipstatusLastDt > date)
+            date = date.AddSeconds(1);
+
+            if (DataBuffer.SupervisieLastDt > date)
 			{
 			   //issue reload
 			   return Json(new object[] { new object() }, JsonRequestBehavior.AllowGet);
@@ -127,32 +135,24 @@ namespace EqUiWebUi.Controllers
         }
         //-------------------------------------------------------------------------------------------------
 
-        //------------------------------------PloegRapport-------------------------------------------------
+        //------------------------------------Supervisie-------------------------------------------------
         [HttpGet]
         public ActionResult SupervisieWebgrid()
         {
-            DataTable dt = new DataTable();
-            if (DataBuffer.Tipstatus != null)
+            var data = DataBuffer.Supervisie;
+            //in case hangfire is taking a day off
+            if (data == null)
             {
-                dt = DataBuffer.Supervisie;
+                GADATAEntities gADATAEntities = new GADATAEntities();
+                data = (from supervis in gADATAEntities.Supervisies
+                        select supervis).ToList();
             }
-            //
-            WebGridHelpers.WebGridHelper webGridHelper = new WebGridHelper();
-            ViewBag.Columns = webGridHelper.getDatatabelCollumns(dt);
-            //
-            List<dynamic> data = webGridHelper.datatableToDynamic(dt);
-            //
-            WebGridHelpers.DefaultModel model = new WebGridHelpers.DefaultModel();
-            model.PageSize = 30;
-            //
+            else //add tracking timestamp for hangfire sync
+            {
+                ViewBag.DataTimestamp = DataBuffer.SupervisieLastDt.ToString("yyyy-MM-dd HH:mm:ss");
+            }
 
-            if (data != null)
-            {
-                model.TotalCount = data.Count();
-                model.Data = data;
-                model.DataTimestamp = DataBuffer.SupervisieLastDt.ToString("yyyy-MM-dd HH:mm:ss");
-            }
-            return View(model);
+            return View(data);
         }
 
         [HttpGet]
@@ -172,7 +172,6 @@ namespace EqUiWebUi.Controllers
 
         }
         //-------------------------------------------------------------------------------------------------
-
 
 
         //------------------------------------LEARNING STUFF -------------------------------------------------

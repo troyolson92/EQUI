@@ -28,7 +28,7 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="snapshotId" Type="int" />
           <Property Name="timestamp" Type="datetime" />
           <Property Name="htmlresult" Type="nvarchar(max)" />
@@ -56,6 +56,24 @@
           <Property Name="NAME" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="DISCRIPTION" Type="varchar(max)" />
           <Property Name="QUERY" Type="varchar(max)" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.EqUi.Supervisie' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Supervisie">
+          <Key>
+            <PropertyRef Name="refId" />
+          </Key>
+          <Property Name="Location" Type="varchar" MaxLength="255" />
+          <Property Name="logtext" Type="varchar" MaxLength="2106" />
+          <Property Name="RT" Type="int" />
+          <Property Name="DT" Type="int" />
+          <Property Name="time" Type="char" MaxLength="19" />
+          <Property Name="Classification" Type="varchar" MaxLength="50" />
+          <Property Name="Subgroup" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Severity" Type="int" />
+          <Property Name="Logtype" Type="varchar" MaxLength="9" Nullable="false" />
+          <Property Name="refId" Type="int" Nullable="false" />
+          <Property Name="timestamp" Type="datetime" />
         </EntityType>
         <Association Name="FK_h_querySnapshots_c_querySnapshots">
           <End Role="c_querySnapshots" Type="Self.c_querySnapshots" Multiplicity="0..1" />
@@ -87,6 +105,21 @@
           <EntitySet Name="l_querySnapshots" EntityType="Self.l_querySnapshots" Schema="EqUi" store:Type="Tables" />
           <EntitySet Name="QUERYParameters" EntityType="Self.QUERYParameters" Schema="EqUi" store:Type="Tables" />
           <EntitySet Name="QUERYS" EntityType="Self.QUERYS" Schema="EqUi" store:Type="Tables" />
+          <EntitySet Name="Supervisie" EntityType="Self.Supervisie" store:Type="Views" store:Schema="EqUi">
+            <DefiningQuery>SELECT 
+[Supervisie].[Location] AS [Location], 
+[Supervisie].[logtext] AS [logtext], 
+[Supervisie].[RT] AS [RT], 
+[Supervisie].[DT] AS [DT], 
+[Supervisie].[time] AS [time], 
+[Supervisie].[Classification] AS [Classification], 
+[Supervisie].[Subgroup] AS [Subgroup], 
+[Supervisie].[Severity] AS [Severity], 
+[Supervisie].[Logtype] AS [Logtype], 
+[Supervisie].[refId] AS [refId], 
+[Supervisie].[timestamp] AS [timestamp]
+FROM [EqUi].[Supervisie] AS [Supervisie]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_h_querySnapshots_c_querySnapshots" Association="Self.FK_h_querySnapshots_c_querySnapshots">
             <End Role="c_querySnapshots" EntitySet="c_querySnapshots" />
             <End Role="h_querySnapshots" EntitySet="h_querySnapshots" />
@@ -138,6 +171,7 @@
             <End Role="h_querySnapshots" EntitySet="h_querySnapshots" />
             <End Role="l_querySnapshots" EntitySet="l_querySnapshots" />
           </AssociationSet>
+          <EntitySet Name="Supervisies" EntityType="Models.Supervisie" />
           </EntityContainer>
         <EntityType Name="c_querySnapshots">
           <Key>
@@ -195,6 +229,22 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Supervisie">
+          <Key>
+            <PropertyRef Name="refId" />
+          </Key>
+          <Property Name="Location" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="logtext" Type="String" MaxLength="2106" FixedLength="false" Unicode="false" />
+          <Property Name="RT" Type="Int32" />
+          <Property Name="DT" Type="Int32" />
+          <Property Name="time" Type="String" MaxLength="19" FixedLength="true" Unicode="false" />
+          <Property Name="Classification" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Subgroup" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Severity" Type="Int32" />
+          <Property Name="Logtype" Type="String" Nullable="false" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="refId" Type="Int32" Nullable="false" />
+          <Property Name="timestamp" Type="DateTime" Precision="3" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -251,6 +301,23 @@
                 <ScalarProperty Name="timestamp" ColumnName="timestamp" />
                 <ScalarProperty Name="snapshotId" ColumnName="snapshotId" />
                 <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Supervisies">
+            <EntityTypeMapping TypeName="Models.Supervisie">
+              <MappingFragment StoreEntitySet="Supervisie">
+                <ScalarProperty Name="timestamp" ColumnName="timestamp" />
+                <ScalarProperty Name="refId" ColumnName="refId" />
+                <ScalarProperty Name="Logtype" ColumnName="Logtype" />
+                <ScalarProperty Name="Severity" ColumnName="Severity" />
+                <ScalarProperty Name="Subgroup" ColumnName="Subgroup" />
+                <ScalarProperty Name="Classification" ColumnName="Classification" />
+                <ScalarProperty Name="time" ColumnName="time" />
+                <ScalarProperty Name="DT" ColumnName="DT" />
+                <ScalarProperty Name="RT" ColumnName="RT" />
+                <ScalarProperty Name="logtext" ColumnName="logtext" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

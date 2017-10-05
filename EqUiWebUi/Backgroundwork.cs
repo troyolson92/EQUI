@@ -3,6 +3,8 @@ using EQUICommunictionLib;
 using System;
 using System.Linq;
 using Hangfire;
+using EqUiWebUi.Models;
+using System.Collections.Generic;
 
 namespace EqUiWebUi
 {
@@ -15,7 +17,8 @@ namespace EqUiWebUi
         public static DataTable Ploegreport { get; set; }
         public static DateTime PloegreportLastDt { get; set; }
         //
-        public static DataTable Supervisie { get; set; }
+        //
+        public static List<Supervisie> Supervisie { get; set; }
         public static DateTime SupervisieLastDt { get; set; }
     }
 
@@ -94,29 +97,16 @@ namespace EqUiWebUi
         //update the local datatable with supervisie called every minute #hangfire
         public void UpdateSupervisie()
         {
-            GadataComm gadataComm = new GadataComm();
-            DataTable dt = gadataComm.RunQueryGadata(
-                @"USE GADATA EXEC GADATA.EqUi.EQpluginNewformat1 
-                @daysBack = 1 , 
-                @assets = '%' , 
-                @locations = '%' , 
-                @lochierarchy = '%' , 
-                @timeline = True , 
-                @c3gError = True , 
-                @c4gError = True , 
-                @c3gBreakdown = True , 
-                @c4gBreakdown = True , 
-                @active = True , 
-                @MinLogserv = 8 , 
-                @MinDowntime = 10" );
+            GADATAEntities gADATAEntities = new GADATAEntities();
+            List<Supervisie> data = (from supervis in gADATAEntities.Supervisies
+                        select supervis).ToList();
 
-            if (dt.Rows.Count != 0)
+            if (data.Count != 0)
             {
+                DataBuffer.Supervisie = data;
 
-                DataBuffer.Supervisie = dt;
-
-                DateTime maxDate = dt.AsEnumerable()
-                            .Select(r => Convert.ToDateTime(r.Field<string>("timestamp")))
+                DateTime maxDate = data
+                            .Select(r => r.timestamp.Value)
                             .Max();
 
                 DataBuffer.SupervisieLastDt = maxDate;
