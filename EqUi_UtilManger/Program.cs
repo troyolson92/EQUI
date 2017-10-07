@@ -14,6 +14,7 @@ namespace EqUi_UtilManger
         // http://gnl1004zcbqc2/Clickonce/EqUi_UtilManger.application?Tool=SBCUstats
         // http://gnl1004zcbqc2/Clickonce/EqUi_UtilManger.application?Tool=SBCUstats&target=32070WS02A
         // http://gnl1004zcbqc2/Clickonce/EqUi_UtilManger.application?Tool=MaximoTool&Viewmode=vm_QualityOnLocation&target=A%20STN32000
+        // http://equi/EqUi_UtilManager/EqUi_UtilManger.application?Tool=SBCUstats
 
         /*
          * chlickonce extention support for Chrome! 
@@ -85,7 +86,19 @@ namespace EqUi_UtilManger
                             }
                             break;
 
-                        default:
+                          case "ERRORstats":
+                                if (col["target"] != null)
+                                {
+                                    Application.Run(new ErrorStats(col["target"], col["Logtype"], col["Errornum"], col["logtext"]));
+                                }
+                                else
+                                {
+                                    MessageBox.Show(string.Format("Tool: '{0}' is not a valid tool", values[0]));
+
+                                }
+                                break;
+
+                            default:
                             MessageBox.Show(string.Format("Tool: '{0}' is not a valid tool",values[0]));
                             break;
                     }

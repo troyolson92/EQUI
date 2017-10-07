@@ -29,7 +29,9 @@ namespace EQUIToolsLib
             this.Text = string.Format("Errornum: {0}", Errornum);
             slogtype = LogType;
 
-            if (Errornum != null)
+            if (Errornum == null) { Errornum = "0"; }
+
+            if (LogType != null)
             {
                 tb_errorId.Text = Errornum;
                 tb_errorId.Enabled = false;

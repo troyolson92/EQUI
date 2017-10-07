@@ -14,19 +14,20 @@ namespace EqUiWebUi
         public static DataTable Tipstatus { get; set; }
         public static DateTime TipstatusLastDt { get; set; }
         //
-        public static DataTable Ploegreport { get; set; }
-        public static DateTime PloegreportLastDt { get; set; }
-        //
-        //
         public static List<Supervisie> Supervisie { get; set; }
         public static DateTime SupervisieLastDt { get; set; }
+        //
+        public static List<AAOSR_PloegRaportV2_Result> Ploegreport { get; set;}
+        public static DateTime PloegreportLastDt { get; set; }
+
     }
 
   
 	public class Backgroundwork
 	{
         //update the local datatable with tipstatus called every minute #hangfire
-		public void UpdateTipstatus()
+        [AutomaticRetry(Attempts = 0)]
+        public void UpdateTipstatus()
 		{
 			GadataComm gadataComm = new GadataComm();
 			DataTable dt = gadataComm.RunQueryGadata(
@@ -68,57 +69,78 @@ namespace EqUiWebUi
 		}
 
         //update the local datatable with ploeg rapport called every minute #hangfire
+        [AutomaticRetry(Attempts = 0)]
         public void UpdatePloegreport()
         {
-            GadataComm gadataComm = new GadataComm();
-            DataTable dt = gadataComm.RunQueryGadata(
-                @"EXEC GADATA.EqUi.AAOSR_PloegRaportV2  @daysBack = 1 , @minDowntime = 20");
-            if (dt.Rows.Count != 0)
+            try
             {
 
-                DataBuffer.Ploegreport = dt;
+                GADATAEntities gADATAEntities = new GADATAEntities();
+                List<AAOSR_PloegRaportV2_Result> data = (from ploegrapport in gADATAEntities.AAOSR_PloegRaportV2
+                                (startDate: null,
+                                   endDate: null,
+                                   daysBack: null,
+                                   assets: "%",
+                                   locations: "%",
+                                   lochierarchy: "%",
+                                   minDowntime: 20,
+                                   minCountOfDowtime: 3,
+                                   minCountofWarning: 4,
+                                   getAlerts: false,
+                                   getShifbook: true)
+                                                         select ploegrapport).ToList();
 
-                //query contast a tag with timestamp at end of current shift so must exclude this
-                //also contans a last refresh tag. (refresh does not mean new data so filter it also)
-                DateTime maxDate = dt.AsEnumerable()
-                            .Where(r => Convert.ToDateTime(r.Field<string>("timestamp")) < System.DateTime.Now)
-                            .Where(r => r.Field<string>("Logtype").Contains("Ruleinfo") == false)
-                            .Select(r => Convert.ToDateTime(r.Field<string>("timestamp")))
-                            .Max();
+                if (data.Count != 0)
+                {
+                    DataBuffer.Ploegreport = data;
 
-                DataBuffer.PloegreportLastDt = maxDate;
+                    DateTime maxDate = data
+                        .Where(r => Convert.ToDateTime(r.timestamp) < System.DateTime.Now)
+                        // .Where(r => r.Logtype.Contains("Ruleinfo") == false)
+                        .Select(r => Convert.ToDateTime(r.timestamp))
+                        .Max();
+
+                    DataBuffer.PloegreportLastDt = maxDate;
+                }
+                else
+                {
+                    // send message that something failed s
+                }
             }
-            else
+            catch(Exception ex)
             {
-                // send message that something failed s
+                //because im stupid 
             }
         }
 
         //update the local datatable with supervisie called every minute #hangfire
+        [AutomaticRetry(Attempts = 0)]
         public void UpdateSupervisie()
         {
-            GADATAEntities gADATAEntities = new GADATAEntities();
-            List<Supervisie> data = (from supervis in gADATAEntities.Supervisies
-                        select supervis).ToList();
+                GADATAEntities gADATAEntities = new GADATAEntities();
+                List<Supervisie> data = (from supervis in gADATAEntities.Supervisies
+                                         select supervis).ToList();
 
-            if (data.Count != 0)
-            {
-                DataBuffer.Supervisie = data;
+                if (data.Count != 0)
+                {
+                    DataBuffer.Supervisie = data;
 
-                DateTime maxDate = data
-                            .Select(r => r.timestamp.Value)
-                            .Max();
+                    DateTime maxDate = data
+                                .Where(r => r != null)
+                                .Select(r => r.timestamp.Value)
+                                .Max();
 
-                DataBuffer.SupervisieLastDt = maxDate;
-            }
-            else
-            {
-                // send message that something failed s
-            }
+                    DataBuffer.SupervisieLastDt = maxDate;
+                }
+                else
+                {
+                    // send message that something failed s
+                }
         }
 
         //check if there are snapshots that need to be run. Called every minute #hangfire.
         //if work is needed this wil fire and forget the work.
+        [AutomaticRetry(Attempts = 0)]
         public void HandleMaximoSnapshotWork()
         {
             GadataComm gadataComm = new GadataComm();

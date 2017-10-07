@@ -140,7 +140,13 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Backgroundwork.cs" />
+    <Compile Include="Models\AAOSR_PloegRaportV2_Result.cs">
+      <DependentUpon>GadataDatamodel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\c_querySnapshots.cs">
+      <DependentUpon>GadataDatamodel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GetErrorInfoData_Result.cs">
       <DependentUpon>GadataDatamodel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\h_querySnapshots.cs">
@@ -157,7 +163,6 @@
     <Compile Include="Controllers\GadataController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MaximoController.cs" />
-    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -178,15 +183,12 @@
       <DependentUpon>GadataDatamodel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\maximoModel.cs" />
-    <Compile Include="Models\MyViewModel.cs" />
-    <Compile Include="Models\ProductModel.cs" />
     <Compile Include="Models\QUERYParameters.cs">
       <DependentUpon>GadataDatamodel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\QUERYS.cs">
       <DependentUpon>GadataDatamodel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Products.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebGridHelpers.cs" />
   </ItemGroup>
@@ -216,7 +218,6 @@
     <Content Include="Models\GadataDatamodel.edmx.diagram">
       <DependentUpon>GadataDatamodel.edmx</DependentUpon>
     </Content>
-    <Content Include="Grid.mvc.readme" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -259,20 +260,16 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Maximo\WoDetails.cshtml" />
-    <Content Include="Views\Gadata\jqGrid.cshtml" />
-    <Content Include="Views\Gadata\WebGrid.cshtml" />
-    <Content Include="Views\Shared\_GridEditPartial.cshtml" />
-    <Content Include="Views\Maximo\WojqGrid.cshtml" />
     <Content Include="Views\Gadata\DynamicWebgrid.cshtml" />
     <Content Include="Views\Difftable\DiffWebgrid.cshtml" />
     <Content Include="Views\Difftable\Index.cshtml" />
-    <Content Include="Views\Test\Index.cshtml" />
     <Content Include="Views\Gadata\PloegRapportWebgrid.cshtml" />
     <Content Include="Views\Shared\_GridPager.cshtml" />
     <Content Include="Views\Shared\_Grid.cshtml" />
     <Content Include="Scripts\jquery-3.2.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.2.1.min.map" />
     <Content Include="Views\Gadata\SupervisieWebgrid.cshtml" />
+    <Content Include="Views\Shared\_SupervisieMoreinfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EQUICommunictionLib\EQUICommunictionLib.csproj">

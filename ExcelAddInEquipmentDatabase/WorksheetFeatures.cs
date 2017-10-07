@@ -93,9 +93,10 @@ namespace ExcelAddInEquipmentDatabase
                 btn = AddButtonToTableMenuItem("WorkorderDetails", 1, 487); //if we have a wonum enable wo details
                 btn.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(WorkorderDetailsMenuItemClick);
             }
-            if (errornum != "" && (Logtype == "BREAKDOWN" || Logtype == "ERROR" || Logtype == "WARNING" || Logtype == "ControllerEvent" || Logtype == "ErrDispLog"))
+            if (errornum != "" && (Logtype == "BREAKDOWN" || Logtype == "ERROR" || Logtype == "WARNING" 
+                || Logtype == "ControllerEvent" || Logtype == "ErrDispLog" || Logtype == "SHIFTBOOK"))
             {
-                btn = AddButtonToTableMenuItem("ErrorDetails", 1, 463); //if we have a logcode enabel errordetails
+                btn = AddButtonToTableMenuItem("LogDetails", 1, 463); //if we have a logcode enabel errordetails
                 btn.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(ErrorDetailsMenuItemClick);
                 //
                 btn = AddButtonToTableMenuItem("ErrorStats", 2, 430); //if we have a logcode enable errostats (graph)

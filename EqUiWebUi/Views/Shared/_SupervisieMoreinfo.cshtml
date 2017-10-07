@@ -1,0 +1,63 @@
+﻿@{
+    Layout = null;
+}
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <div class="modal-header">
+        <h2>How can we help....</h2>
+        </div>
+
+
+        <p></p>
+        <div class="modal-content">
+            <h4>log details</h4>
+            @Html.Raw(ViewBag.Logdetails)
+        </div>
+        <p></p>
+      
+        <div class=" modal-footer">
+            <h4>These tools might proof useful</h4>                    
+            <p>
+                @{
+                    var urlSbcu = string.Format(
+                        "http://equi/EqUi_UtilManager/EqUi_UtilManger.application?Tool=SBCUstats&target={0}",
+                        @Uri.EscapeDataString(ViewBag.location.ToString()));
+                }
+                <a href="@urlSbcu" class="btn btn-primary btn-sm">WeldgunData (sbcu, midair, dress,...) &raquo;</a>
+                
+                @{
+                    var urlPqaGeo = string.Format(
+                        "http://equi/EqUi_UtilManager/EqUi_UtilManger.application?Tool=MaximoTool&Viewmode={0}&target={1}",
+                        @Uri.EscapeDataString("vm_QualityOnLocation"),
+                        @Uri.EscapeDataString(ViewBag.location.ToString()));
+                }
+                <a href="@urlPqaGeo" class="btn btn-primary btn-sm">PQaGeo &raquo;</a>
+
+                @{
+                    var urlWo = string.Format(
+                        "http://equi/EqUi_UtilManager/EqUi_UtilManger.application?Tool=MaximoTool&Viewmode={0}&target={1}",
+                        @Uri.EscapeDataString("vm_workordersOnLocation"),
+                        @Uri.EscapeDataString(ViewBag.location.ToString()));
+                }
+                <a href="@urlWo" class="btn btn-primary btn-sm">Workorders &raquo;</a>
+
+                @{
+                    var urlParts = string.Format(
+                        "http://equi/EqUi_UtilManager/EqUi_UtilManger.application?Tool=MaximoTool&Viewmode={0}&target={1}",
+                        @Uri.EscapeDataString("vm_PartsOnLocation"),
+                        @Uri.EscapeDataString(ViewBag.location.ToString()));
+                }
+                <a href="@urlParts" class="btn btn-primary btn-sm">PartsUsed &raquo;</a>
+
+  
+            </p>
+        </div>
+    </fieldset>
+
+
+
+}
+
+
+

@@ -6,6 +6,7 @@ using EqUiWebUi.Models;
 using System.Data;
 using EQUICommunictionLib;
 using EqUiWebUi.WebGridHelpers;
+using System.Text;
 
 namespace EqUiWebUi.Controllers
 {
@@ -16,23 +17,6 @@ namespace EqUiWebUi.Controllers
 		public ActionResult Index()
 		{
 			return new HttpNotFoundResult("Woeps");
-		}
-
-		[HttpGet]
-		public ActionResult WebGrid()
-		{
-			ProductModel model = new ProductModel();
-			model.PageSize = 4;
-
-			List<Product> products = Product.GetSampleProducts();
-
-			if (products != null)
-			{
-				model.TotalCount = products.Count();
-				model.Products = products;
-			}
-
-			return View(model);
 		}
 
         //------------------------------------Dynamic Grid-------------------------------------------------
@@ -49,8 +33,8 @@ namespace EqUiWebUi.Controllers
 			ViewBag.Columns = webGridHelper.getDatatabelCollumns(dt);
 			//
 			List<dynamic> data = webGridHelper.datatableToDynamic(dt);
-			//
-			WebGridHelpers.DefaultModel model = new WebGridHelpers.DefaultModel();
+            //
+            DefaultModel model = new WebGridHelpers.DefaultModel();
 			model.PageSize = 30;
 			//
 
@@ -64,7 +48,7 @@ namespace EqUiWebUi.Controllers
 		}
 
 		[HttpGet]
-		public JsonResult checkNewData(String dataTimestamp)
+		public JsonResult CheckNewData(String dataTimestamp)
 		{
             //direct query hangfire is not up
             if (dataTimestamp == "")
@@ -93,28 +77,20 @@ namespace EqUiWebUi.Controllers
         [HttpGet]
 		public ActionResult PloegRapportWebgrid()
 		{
-            DataTable dt = new DataTable();
-            if (DataBuffer.Tipstatus != null)
+            //refresh every 10 minutes anyway ! 
+            Response.AddHeader("Refresh", "600");
+            //
+            var data = DataBuffer.Ploegreport;
+            //in case hangfire is taking a day off
+            if (data == null)
             {
-                dt = DataBuffer.Ploegreport;
+                return new HttpNotFoundResult("give hangfire some time");
             }
-            //
-            WebGridHelpers.WebGridHelper webGridHelper = new WebGridHelper();
-            ViewBag.Columns = webGridHelper.getDatatabelCollumns(dt);
-            //
-            List<dynamic> data = webGridHelper.datatableToDynamic(dt);
-            //
-            WebGridHelpers.DefaultModel model = new WebGridHelpers.DefaultModel();
-            model.PageSize = 30;
-            //
-
-            if (data != null)
+            else //add tracking timestamp for hangfire sync
             {
-                model.TotalCount = data.Count();
-                model.Data = data;
-                model.DataTimestamp = DataBuffer.PloegreportLastDt.ToString("yyyy-MM-dd HH:mm:ss");
+                ViewBag.DataTimestamp = DataBuffer.SupervisieLastDt.ToString("yyyy-MM-dd HH:mm:ss");
             }
-            return View(model);
+            return View(data);
         }
 
         [HttpGet]
@@ -133,19 +109,25 @@ namespace EqUiWebUi.Controllers
             }
 
         }
+
+        [HttpGet]
+        public ActionResult PloegRapportInfo(int id)
+        {
+            return new HttpNotFoundResult("Woeps das nog ni klaar");
+        }
         //-------------------------------------------------------------------------------------------------
 
         //------------------------------------Supervisie-------------------------------------------------
         [HttpGet]
         public ActionResult SupervisieWebgrid()
         {
+            //refresh every 10 minutes anyway ! 
+            Response.AddHeader("Refresh", "600");
             var data = DataBuffer.Supervisie;
             //in case hangfire is taking a day off
             if (data == null)
             {
-                GADATAEntities gADATAEntities = new GADATAEntities();
-                data = (from supervis in gADATAEntities.Supervisies
-                        select supervis).ToList();
+                return new HttpNotFoundResult("give hangfire some time");
             }
             else //add tracking timestamp for hangfire sync
             {
@@ -171,66 +153,47 @@ namespace EqUiWebUi.Controllers
             }
 
         }
-        //-------------------------------------------------------------------------------------------------
 
-
-        //------------------------------------LEARNING STUFF -------------------------------------------------
         [HttpGet]
-		public ActionResult jqGrid()
-		{
-			return View();
-		}
+        public ActionResult _SupervisieMoreinfo(string location, int errornum, int refid, string logtype)
+        {
+            GadataComm gadataComm = new GadataComm();
+            MaximoComm maximoComm = new MaximoComm();
+            //query all instances of the error 
+            string qry = string.Format(
+            @"EXEC [EqUi].[GetErrorInfoData] @Location  = '{0}' ,@ERRORNUM = {1} ,@Refid = {2} ,@logtype ='{3}'"
+            , location, errornum, refid, logtype);
 
-		public ActionResult GetProducts(string sidx, string sord, int page, int rows)
-		{
-			var products = Product.GetSampleProducts();
-			int pageIndex = Convert.ToInt32(page) - 1;
-			int pageSize = rows;
-			int totalRecords = products.Count();
-			int totalPages = (int)Math.Ceiling((float)totalRecords / (float)pageSize);
+            //fill dataset
+            DataTable dt = gadataComm.RunQueryGadata(qry);
+            //check if the result was valid 
 
-			var data = products.OrderBy(x => x.Id)
-						 .Skip(pageSize * (page - 1))
-						 .Take(pageSize).ToList();
-
-			var jsonData = new
-			{
-				total = totalPages,
-				page = page,
-				records = totalRecords,
-				rows = data
-			};
-
-			return Json(jsonData, JsonRequestBehavior.AllowGet);
-		}
-
-		public ActionResult GetProductById(int id)
-		{
-			var products = Product.GetSampleProducts().Where(x => x.Id == id); ;
-
-			if (products != null)
-			{
-				ProductModel model = new ProductModel();
-
-				foreach (var item in products)
-				{
-					model.Name = item.Name;
-					model.Price = item.Price;
-					model.Department = item.Department;
-				}
-
-				return PartialView("_GridEditPartial", model);
-			}
-
-			return View();
-		}
-
-		[HttpPost]
-		public ActionResult UpdateProduct(ProductModel model)
-		{
-			//update database
-			return Content("Record updated!!", "text/html");
-		}
+            StringBuilder sb = new StringBuilder();
+            string newline = "<p></p>";
+            if (dt.Rows.Count != 0)
+            {
+                DataRow myRow = dt.Rows[0];
+                foreach (DataColumn dc in myRow.Table.Columns)
+                {
+                    if (myRow[dc.ColumnName] == DBNull.Value)
+                    {
+                        myRow[dc.ColumnName] = "null (no data)";
+                    }
+                    sb.AppendLine(maximoComm.StringToHTML_Table(dc.ColumnName, myRow.Field<string>(dc.ColumnName).ToString())).AppendLine(newline);
+                }
+            }
+            else
+            {
+                sb.AppendLine("No valid result from query").AppendLine(newline);
+            }
+            ViewBag.Logdetails = sb.ToString();
+            ViewBag.location = location;
+            ViewBag.errornum = errornum;
+            ViewBag.refid = refid;
+            ViewBag.logtype = logtype;
+            //
+            return PartialView();
+        }
         //-------------------------------------------------------------------------------------------------
     }
 }

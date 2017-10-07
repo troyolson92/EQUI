@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.15
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelAddInEquipmentDatabase", "ExcelAddInEquipmentDatabase\ExcelAddInEquipmentDatabase.csproj", "{407E3A76-7130-4154-9EBD-9D48F523EE0F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EQUICommunictionLib", "EQUICommunictionLib\EQUICommunictionLib.csproj", "{090979A1-2C7B-4C89-A921-F36A936412F2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EqUi_UtilManger", "EqUi_UtilManger\EqUi_UtilManger.csproj", "{9B30267D-8A8C-4869-AC9B-1E07EC81C373}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EqUi_UtilManager", "EqUi_UtilManger\EqUi_UtilManager.csproj", "{9B30267D-8A8C-4869-AC9B-1E07EC81C373}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EQUIToolsLib", "EQUIToolsLib\EQUIToolsLib.csproj", "{EBADED60-44DC-49F0-A1C5-A283BAA1C392}"
 EndProject
@@ -54,5 +54,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0F430639-A7F1-44A0-8C37-5088F83C4EA1}
 	EndGlobalSection
 EndGlobal
