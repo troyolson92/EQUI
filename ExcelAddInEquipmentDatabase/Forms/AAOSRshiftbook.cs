@@ -1,14 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using MetroFramework;
-using MetroFramework.Forms;
 using EQUICommunictionLib;
+using System.Data.SqlClient;
 
 /*TEMP MODULE UNTIL MAX COMM IS UP!*/
 
@@ -103,52 +97,39 @@ namespace ExcelAddInEquipmentDatabase.Forms
 
         private void Btn_update_Click(object sender, EventArgs e)
         {
-            string cmd = string.Format(
-                @"USE GADATA EXEC GADATA.dbo.Qinfo_Shiftbook
-    @Robot = '{0}'
-   ,@BreakdownID = {1}
-   ,@ShiftbookID = {2}
-   ,@user = '{3}'
-   ,@WO = {4}
-   ,@CI = {5}
-   ,@STATE = '{6}'
-   ,@userDescription= '{7}'
-   ,@userComment = '{8}'
-   ,@Runmode = {9}
-                "
-                , dt.Rows[0].Field<String>("Robot")
-                , dt.Rows[0].Field<int>("Breakdownreference")
-                , dt.Rows[0].Field<Int64>("ShiftbookID")
-                , Environment.UserName
+            RunQuery(
+                  dt.Rows[0].Field<String>("Robot")
+                , dt.Rows[0].Field<int>("Breakdownreference").ToString()
+                , dt.Rows[0].Field<Int64>("ShiftbookID").ToString()
                 , tb_WO.Text
-                , tb_Ci.Text 
+                , tb_Ci.Text
                 , cob_Status.Text
                 , tb_userdescription.Text
                 , tb_usercomment.Text
                 , 1);
 
-            dt = lGadataComm.RunQueryGadata(cmd);
             this.Hide();
             this.Dispose();
         }
 
         private void RunQuery(string Robot,string BreakdownID,string shiftbookID,string wo,string ci,string state,string userDescription,string userComment,int Runmode)
         {
-            string cmd = string.Format(
-                @"USE GADATA EXEC GADATA.dbo.Qinfo_Shiftbook
-    @Robot = '{0}'
-   ,@BreakdownID = '{1}'
-   ,@ShiftbookID = '{2}'
-   ,@user = '{3}'
-   ,@WO = '{4}'
-   ,@CI = '{5}'
-   ,@STATE = '{6}'
-   ,@userDescription= '{7}'
-   ,@userComment = '{8}'
-   ,@Runmode = {9}
-                ",Robot, BreakdownID, shiftbookID, Environment.UserName, wo, ci, state, userDescription, userComment, Runmode
-                );
-              dt = lGadataComm.RunQueryGadata(cmd);
+            string proc = "GADATA.dbo.Qinfo_Shiftbook";
+
+            using (SqlCommand Cmd = new SqlCommand())
+            {
+                Cmd.Parameters.AddWithValue("@Robot",Robot);
+                Cmd.Parameters.AddWithValue("@BreakdownID", BreakdownID);
+                Cmd.Parameters.AddWithValue("@ShiftbookID", shiftbookID);
+                Cmd.Parameters.AddWithValue("@user", Environment.UserName);
+                Cmd.Parameters.AddWithValue("@WO", wo);
+                Cmd.Parameters.AddWithValue("@CI", ci);
+                Cmd.Parameters.AddWithValue("@STATE", state);
+                Cmd.Parameters.AddWithValue("@userDescription", userDescription); //willy proofing 
+                Cmd.Parameters.AddWithValue("@userComment", tb_usercomment.ToString()); //willy proofing 
+                Cmd.Parameters.AddWithValue("@Runmode", Runmode);
+                dt = lGadataComm.RunParametercommand(proc, Cmd);
+            }
 
         }
  

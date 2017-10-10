@@ -22,9 +22,9 @@ namespace EqUiWebUi.Models
         public string Classification { get; set; }
         public string Subgroup { get; set; }
         public Nullable<int> Severity { get; set; }
+        public Nullable<int> Logcode { get; set; }
         public string Logtype { get; set; }
         public int refId { get; set; }
         public Nullable<System.DateTime> timestamp { get; set; }
-        public Nullable<int> Logcode { get; set; }
     }
 }

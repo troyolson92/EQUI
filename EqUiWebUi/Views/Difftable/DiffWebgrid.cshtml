@@ -1,58 +1,60 @@
-﻿<html>
-<head>
-<meta name = "viewport"
-content = "width=device-width"/>
+﻿
+<script src="~/Scripts/jquery-3.2.1.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/gridmvc.min.js"></script>
 
-<title> DisplayGrid  </title>  
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/Gridmvc.css" rel="stylesheet" />
 
-<link href="https://code.jquery.com/ui/1.12.0-rc.2/themes/smoothness/jquery-ui.css" rel="stylesheet" />
-<script src = "~/Scripts/jquery-1.9.1.js" > </script> 
-<script src = "~/bootstrap-3.3.6-dist/js/bootstrap.js"> </script>
-
-<style type = "text/css" >
-
-/*for diff markup*/
-ins 
-{
-        background-color: #cfc;
-        text-decoration: none;
+@*set title*@
+@{
+    ViewBag.Title = "Query differ";
 }
 
-del 
-{
-        color: #999;
-        background-color: #FEC8C8;
-}
-/*table styling*/
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        white-space: nowrap;
+@*style*@
+<style type="text/css">
+    /*for diff markup*/
+    ins
+    {
+            background-color: #cfc;
+            text-decoration: none;
     }
 
-    /* Zebra striping */
-    tr:nth-of-type(odd) {
-        background: #eee;
+    del
+    {
+            color: #999;
+            background-color: #FEC8C8;
     }
+    /*table styling*/
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            white-space: nowrap;
+        }
 
-    th {
-        background: #333;
-        color: white;
-        font-weight: bold;
-    }
+        /* Zebra striping */
+        tr:nth-of-type(odd) {
+            background: #eee;
+        }
 
-    td, th {
-        padding: 6px;
-        border: 1px solid #ccc;
-        text-align: left;
-    }
+        th {
+            background: #333;
+            color: white;
+            font-weight: bold;
+        }
+
+        td, th {
+            padding: 6px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
 </style>
 
 
-
-</head><body><div>
-
+@*content*@
+<br />
+<div>
 @Html.Raw((String)ViewBag.myData)
+</div>
 
-</div></body></html>  
 

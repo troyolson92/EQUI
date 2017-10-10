@@ -1,0 +1,136 @@
+﻿@model IEnumerable<EqUiWebUi.Models.TipMonitor>
+
+@using GridMvc.Html
+
+<script src="~/Scripts/jquery-3.2.1.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/gridmvc.min.js"></script>
+
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/Gridmvc.css" rel="stylesheet" />
+
+@*set title*@
+@{
+    ViewBag.Title = "Tipwear";
+}
+
+@*scrip for blinking a row based on there value.*@
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(function () {
+            setInterval(flashRow, 750);
+        });
+        var bFlip = new Boolean(false);
+        function flashRow() {
+            bFlip = !bFlip;
+            $('tbody > tr').each(function (index) {
+                @*blink for slowspeed*@
+                if ($(this).children('td:nth-child(5)').text() > 30) {
+                    if (bFlip) {
+                        $(this).children('td').css("background-color", "#f21a1a");
+                    } else {
+                        $(this).children('td').css("background-color", "#ffffff");
+                    }
+                }
+            });
+        }
+    });
+</script>
+
+@*scrip for playing sound based on row value.*@
+@*http://soundbible.com/grab.php?id=1252&type=mp3*@
+@*http://soundbible.com/grab.php?id=1377&type=mp3*@
+<script type="text/javascript">
+    $(document).ready(function () {
+        var bNeedToPlay = new Boolean(false);
+        var sound = new Audio(src = "http://soundbible.com/grab.php?id=1377&type=mp3");
+
+        $(function () {
+            setInterval(CheckSound, 1000 * 60);
+            CheckSound();
+        });
+
+        function CheckSound() {
+            bNeedToPlay = false;
+            $('#gridMapping > tbody > tr').each(function (index) {
+                if ($(this).children('td:nth-child(5)').text() > 30) {
+                    bNeedToPlay = true;
+                }
+            });
+            if (bNeedToPlay) {
+                sound.play();
+            }
+        }
+    });
+</script>
+
+@*function that calls server ever x time if there is new data*@
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(function () {
+            //check every 5 seconds
+            setInterval(CheckForData, 1000 * 5 );
+        });
+        //get last data timestamp from model
+        var Datatimestamp = '@Html.Raw(ViewBag.DataTimestamp)';
+        console.log(Datatimestamp);
+        //interlock for ajax request
+        var bInterlock = new Boolean();
+        bInterlock = false;
+
+        function CheckForData() {
+            if (bInterlock) {
+                return;
+            } else {
+                bInterlock = true;
+            }
+                    $.ajax({
+                        async: true,
+                        type: 'GET',
+                        url: '@Url.Action("TipwearCheckNewData")',
+                        dataType: 'json',
+                        data: { dataTimestamp: Datatimestamp },
+
+                        success: function (response) {
+                            bInterlock = false;
+                            //succes = reload needed
+                            window.location.reload();
+                        },
+
+                        error: function (ex) {
+                            bInterlock = false;
+                            //error = no reload
+                        }
+            });
+
+        }
+    });
+</script>
+
+@*main grid*@
+<div class="code-cut">
+    @Html.Grid(Model).Named("DataGrid").Columns(columns =>
+{
+    columns.Add(c => c.Robot).Filterable(true);
+    columns.Add(c => c.Date_Time);
+    columns.Add(c => c.nDress);
+    columns.Add(c => c.nWelds);
+    columns.Add(c => c.pWear).Titled("%wear");
+    columns.Add(c => c.nRspots).Titled("remainingSpots");
+    columns.Add(c => c.nRcars).Titled("remainingCars");
+
+    columns.Add()
+    .Titled("Info")
+    .Encoded(false)
+    .Sanitized(false)
+    .SetWidth(30)
+    .RenderValueAs(o => Html.ActionLink("INFO", "EqUi_UtilManager/EqUi_UtilManger.application", "",
+    new{ Tool = "SBCUstats",  location = o.Robot})
+        );
+}).WithPaging(20).Sortable(true)
+</div>
+<h6>
+    <a href="~/" class="btn btn-primary btn-sm">goHome &raquo;</a>
+    Last data push: '@Html.Raw(ViewBag.DataTimestamp)'
+</h6>
+

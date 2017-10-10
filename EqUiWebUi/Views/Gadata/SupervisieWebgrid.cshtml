@@ -22,19 +22,19 @@
 <script type="text/javascript">
             $(document).ready(function () {
                 $('tbody > tr').each(function (index) {
-                    if ($(this).children('td:nth-child(8)').text() == "SHIFTBOOK")
+                    if ($(this).children('td:nth-child(7)').text() == "SHIFTBOOK")
                     { $(this).children('td').css("background-color", "#d6d613");}
 
-                    else if ($(this).children('td:nth-child(8)').text() == "WARNING")
+                    else if ($(this).children('td:nth-child(7)').text() == "WARNING")
                     { $(this).children('td').css("background-color", "#127bf1"); }
 
-                    else if ($(this).children('td:nth-child(8)').text() == "LIVE")
+                    else if ($(this).children('td:nth-child(7)').text() == "LIVE")
                     { $(this).children('td').css("background-color", "#f21a1a"); }
 
-                    else if ($(this).children('td:nth-child(8)').text() == "BREAKDOWN")
+                    else if ($(this).children('td:nth-child(7)').text() == "BREAKDOWN")
                     { $(this).children('td').css("background-color", "#f2af13"); }
 
-                    else if ($(this).children('td:nth-child(8)').text() == "TIMELINE")
+                    else if ($(this).children('td:nth-child(7)').text() == "TIMELINE")
                     { $(this).children('td').css("background-color", "#16dd76"); }
 
                     else
@@ -54,7 +54,7 @@
             bFlip = !bFlip;
             $('tbody > tr').each(function (index) {
                 @*blink for slowspeed*@
-                if ($(this).children('td:nth-child(8)').text() == 'SLOWSpeed') {
+                if ($(this).children('td:nth-child(7)').text() == 'SLOWSpeed') {
                     if (bFlip) {
                         $(this).children('td').css("background-color", "#fc2fd0");
                     } else {
@@ -62,7 +62,7 @@
                     }
                 }
                 @*blink live hardware fault*@
-                if (($(this).children('td:nth-child(8)').text() == 'LIVE')
+                if (($(this).children('td:nth-child(7)').text() == 'LIVE')
                     && ($(this).children('td:nth-child(6)').text() == 'Hardware')) {
                     if (bFlip) {
                         $(this).children('td').css("background-color", "#f21a1a");
@@ -98,14 +98,16 @@
                     $.ajax({
                         async: true,
                         type: 'GET',
-                        url: '@Url.Action("checkNewData")',
+                        url: '@Url.Action("SupervisiecheckNewData")',
                         dataType: 'json',
                         data: { dataTimestamp: Datatimestamp },
 
                         success: function (response) {
                             bInterlock = false;
                             //succes = reload needed
-                            window.location.reload();
+                            if (!bModalOpen) { //only reaload when modal is not open
+                                window.location.reload();
+                            }
                         },
 
                         error: function (ex) {
@@ -128,7 +130,7 @@
     columns.Add(c => c.time);
     columns.Add(c => c.Classification).Titled("Class");
     columns.Add(c => c.Subgroup);
-    columns.Add(c => c.Severity).Titled("Serv").Filterable(true);
+  //  columns.Add(c => c.Severity).Titled("Serv").Filterable(true);
     columns.Add(c => c.Logtype).Filterable(true).SetFilterWidgetType("CustomLogtypeFilterWidget");
 
     columns.Add()
@@ -136,29 +138,38 @@
     .Encoded(false)
     .Sanitized(false)
     .SetWidth(30)
-     .RenderValueAs(o => Html.ActionLink("INFO", "_SupervisieMoreinfo",
+     .RenderValueAs(o => Html.ActionLink("INFO", "_Moreinfo",
        new { location = o.Location,
-             errornum = o.Logcode,
-             refid = o.refId,
-             logtype = o.Logtype
-         },
+           errornum = o.Logcode,
+           refid = o.refId,
+           logtype = o.Logtype,
+           logtext = o.logtext
+       },
          new { @class = "modal-link" }
          )
     );}).WithPaging(20).Sortable(true)
 </div> 
-<h5>Last data push: '@Html.Raw(ViewBag.DataTimestamp)'</h5>
+<h6>
+    <a href="~/" class="btn btn-primary btn-sm">goHome &raquo;</a>
+    Last data push: '@Html.Raw(ViewBag.DataTimestamp)'
+</h6>
 
 
 @*info modal java script*@
 <script type="text/javascript">
-    //this script reset and show modal each time when you click on the link:
+    var bModalOpen = false;
+    //this script show modal each time when you click on the link:
     $(function () {
         $(".modal-link").click(function (event) {
-            console.log("Modal trigger " + $(this).attr("href"));
-            event.preventDefault();
-            $('#myModal').removeData("modal");           
+            event.preventDefault();       
+            bModalOpen = true;
             $('#myModal').modal({ remote: $(this).attr("href") });
         });
+
+        $('#myModal').on('hidden.bs.modal', function () {
+            // reload page
+            window.location.reload();
+        })
     })
 </script>
 

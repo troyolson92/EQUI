@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Data;
 using System.Data.SqlClient;
-using System.Diagnostics;
-using System.Data.Odbc;
-using System.Text.RegularExpressions;
 
 namespace EQUICommunictionLib
 {
@@ -197,6 +191,47 @@ namespace EQUICommunictionLib
             catch (Exception e)
             {
                 Debugger.Exeption(e);
+            }
+
+
+        }
+
+        public DataTable RunParametercommand(string proc, SqlCommand sqlCommand)
+        {
+            SqlConnection lconn = Gadataconn;
+            try
+            {
+                lconn.Open();
+            }
+            catch (Exception e)
+            {
+                Debugger.Exeption(e);
+            }
+            try
+            {
+                sqlCommand.Connection = lconn;
+                sqlCommand.CommandText = proc;
+                sqlCommand.CommandType = CommandType.StoredProcedure;
+                sqlCommand.CommandTimeout = 300;
+                DataTable dt = new DataTable();
+                dt.Load(sqlCommand.ExecuteReader());
+
+                    try
+                    {
+                        lconn.Close();
+                    }
+                    catch (Exception e)
+                    {
+                        Debugger.Exeption(e);
+                    }
+
+                    return dt;
+            }
+            catch (Exception e)
+            {
+                Debugger.Exeption(e);
+                DataTable dt = new DataTable();
+                return dt;
             }
 
 

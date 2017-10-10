@@ -2,15 +2,21 @@
 
 @using GridMvc.Html
 
+<script src="~/Scripts/jquery-3.2.1.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/gridmvc.min.js"></script>
+
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/Gridmvc.css" rel="stylesheet" />
+
 @*Remove default layout*@
 @{
     Layout = null;
 }
-
-<link href="@Url.Content("~/Content/Gridmvc.css")" rel="stylesheet" />
-<link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" />
-<script src="~/Scripts/jquery-3.2.1.min.js"></script>
-<script src="@Url.Content("~/Scripts/gridmvc.min.js")"></script>
+@*set title*@
+@{
+    ViewBag.Title = "Ploegrapport";
+}
 
 @*script for setting row colors based on there values*@
 <script type="text/javascript">
@@ -67,7 +73,9 @@
                         success: function (response) {
                             bInterlock = false;
                             //succes = reload needed
-                            window.location.reload();
+                            if (!bModalOpen) { //only reaload when modal is not open
+                                window.location.reload();
+                            }
                         },
 
                         error: function (ex) {
@@ -81,7 +89,7 @@
 </script>
 
 <div class="code-cut">
-    @Html.Grid(Model).Columns(columns =>
+@Html.Grid(Model).Named("DataGrid").Columns(columns =>
 {
     columns.Add(c => c.Location).Filterable(true);
     columns.Add(c => c.logtext);
@@ -93,11 +101,82 @@
     columns.Add(c => c.Logtype).Filterable(true);
 
     columns.Add()
+    .Titled("Info")
     .Encoded(false)
     .Sanitized(false)
     .SetWidth(30)
-    .RenderValueAs(o => Html.ActionLink("Info", "PloegRapportInfo", new { id = o.refId }));
+     .RenderValueAs(o => Html.ActionLink("INFO", "_Moreinfo",
+       new
+       {
+           location = o.Location,
+           errornum = o.Logcode,
+           refid = o.refId,
+           logtype = o.Logtype,
+           logtext = o.logtext
+       },
+         new { @class = "modal-link" }
+         )
+    );
 }).WithPaging(20).Sortable(true)
 </div>
+<h6>
+    <a href="~/" class="btn btn-primary btn-sm">goHome &raquo;</a>
+    Last data push: '@Html.Raw(ViewBag.DataTimestamp)'
+</h6>
 
-<h5>Last data push: '@Html.Raw(ViewBag.DataTimestamp)'</h5>
+@*info modal java script*@
+<script type="text/javascript">
+    var bModalOpen = false;
+    //this script show modal each time when you click on the link:
+    $(function () {
+        $(".modal-link").click(function (event) {
+            event.preventDefault();
+            bModalOpen = true;
+            $('#myModal').modal({ remote: $(this).attr("href") });
+        });
+
+        $('#myModal').on('hidden.bs.modal', function () {
+            // reload page
+            window.location.reload();
+        })
+    })
+</script>
+
+@*info model html only show while loading partial *@
+<div id="myModal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>I'm trying to help</h2>
+        </div>
+        <div class="modal-body">
+            <p>Trying to connect</p>
+            <p>Getting data...</p>
+            <p>Click outside of this box to abort</p>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* The Modal (background) */
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        padding-top: 100px; /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+
+    /* Modal Content */
+    .modal-content {
+        background-color: #fefefe;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+    }
+</style>

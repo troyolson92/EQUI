@@ -11,7 +11,7 @@ namespace EqUiWebUi
     public static class DataBuffer
     {
         //
-        public static DataTable Tipstatus { get; set; }
+        public static List<TipMonitor> Tipstatus { get; set; }
         public static DateTime TipstatusLastDt { get; set; }
         //
         public static List<Supervisie> Supervisie { get; set; }
@@ -29,44 +29,26 @@ namespace EqUiWebUi
         [AutomaticRetry(Attempts = 0)]
         public void UpdateTipstatus()
 		{
-			GadataComm gadataComm = new GadataComm();
-			DataTable dt = gadataComm.RunQueryGadata(
-                @"SELECT [controller_name] as 'Robot'
-                          ,[Date Time]
-                          ,[Dress_Num] as 'nDress'
-                          ,[Weld_Counter] as 'nWelds'
-	                      ,CASE 
-		                      WHEN [Wear_Fixed] > [Wear_Move] THEN ROUND(([Wear_Fixed]  * ([Max_Wear_Fixed]/100))*100,0)
-		                      ELSE ROUND(([Wear_Move] * (Max_Wear_Move/100))*100,0)
-		                      END '%Wear'
-                          ,CASE 
-	                          WHEN [ESTremainingspotsFixed] > [ESTremainingspotsMove] THEN [ESTremainingspotsFixed]
-		                      ELSE [ESTremainingspotsMove]
-		                      END 'nRspots'
-                          ,CASE 
-	                          WHEN [ESTremainingCarsFixed] > [ESTremainingsCarsMove] THEN [ESTremainingCarsFixed]
-		                      ELSE [ESTremainingsCarsMove]
-		                      END 'nRcars'
-                      FROM [GADATA].[NGAC].[TipwearLast]
-                      where [Date Time] < getdate()
-                      Order by [%Wear] DESC");
-			if (dt.Rows.Count != 0 )
-			{
-                
-                DataBuffer.Tipstatus = dt;
+            GADATAEntities gADATAEntities = new GADATAEntities();
+            List<TipMonitor> data = (from tipstatus in gADATAEntities.TipMonitor
+                                     select tipstatus).ToList();
 
-                DateTime maxDate = dt.AsEnumerable()
-                            .Select(r => r.Field<DateTime>("Date Time"))
+            if (data.Count != 0)
+            {
+                DataBuffer.Tipstatus = data;
+
+                DateTime maxDate = data
+                            .Where(r => r != null)
+                            .Select(r => r.Date_Time.Value)
                             .Max();
 
                 DataBuffer.TipstatusLastDt = maxDate;
-
             }
-			else
-			{
-				// send message that something failed s
-			}
-		}
+            else
+            {
+                // send message that something failed s
+            }
+        }
 
         //update the local datatable with ploeg rapport called every minute #hangfire
         [AutomaticRetry(Attempts = 0)]
@@ -118,7 +100,7 @@ namespace EqUiWebUi
         public void UpdateSupervisie()
         {
                 GADATAEntities gADATAEntities = new GADATAEntities();
-                List<Supervisie> data = (from supervis in gADATAEntities.Supervisies
+                List<Supervisie> data = (from supervis in gADATAEntities.Supervisie
                                          select supervis).ToList();
 
                 if (data.Count != 0)

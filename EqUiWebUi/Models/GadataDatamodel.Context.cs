@@ -13,6 +13,7 @@ namespace EqUiWebUi.Models
     using System.Data.Entity;
     using System.Data.Entity.Core.Objects;
     using System.Data.Entity.Infrastructure;
+    using System.Linq;
     
     public partial class GADATAEntities : DbContext
     {
@@ -31,7 +32,8 @@ namespace EqUiWebUi.Models
         public DbSet<c_querySnapshots> c_querySnapshots { get; set; }
         public DbSet<h_querySnapshots> h_querySnapshots { get; set; }
         public DbSet<l_querySnapshots> l_querySnapshots { get; set; }
-        public DbSet<Supervisie> Supervisies { get; set; }
+        public DbSet<Supervisie> Supervisie { get; set; }
+        public DbSet<TipMonitor> TipMonitor { get; set; }
     
         public virtual ObjectResult<AAOSR_PloegRaportV2_Result> AAOSR_PloegRaportV2(Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate, Nullable<int> daysBack, string assets, string locations, string lochierarchy, Nullable<int> minDowntime, Nullable<int> minCountOfDowtime, Nullable<int> minCountofWarning, Nullable<bool> getAlerts, Nullable<bool> getShifbook)
         {

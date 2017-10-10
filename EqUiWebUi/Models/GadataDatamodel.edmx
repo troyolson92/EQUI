@@ -78,6 +78,21 @@ warning 6002: The table/view 'GADATA.EqUi.Supervisie' does not have a primary ke
           <Property Name="refId" Type="int" Nullable="false" />
           <Property Name="timestamp" Type="datetime" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.NGAC.TipMonitor' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="TipMonitor">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="Robot" Type="varchar" MaxLength="30" />
+          <Property Name="Date Time" Type="datetime" />
+          <Property Name="nDress" Type="smallint" />
+          <Property Name="nWelds" Type="smallint" />
+          <Property Name="pWear" Type="float" />
+          <Property Name="nRspots" Type="float" />
+          <Property Name="nRcars" Type="float" />
+          <Property Name="id" Type="int" Nullable="false" />
+        </EntityType>
         <Association Name="FK_h_querySnapshots_c_querySnapshots">
           <End Role="c_querySnapshots" Type="Self.c_querySnapshots" Multiplicity="0..1" />
           <End Role="h_querySnapshots" Type="Self.h_querySnapshots" Multiplicity="*" />
@@ -143,6 +158,18 @@ warning 6002: The table/view 'GADATA.EqUi.Supervisie' does not have a primary ke
 [Supervisie].[timestamp] AS [timestamp]
 FROM [EqUi].[Supervisie] AS [Supervisie]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="TipMonitor" EntityType="Self.TipMonitor" store:Type="Views" store:Schema="NGAC">
+            <DefiningQuery>SELECT 
+[TipMonitor].[Robot] AS [Robot], 
+[TipMonitor].[Date Time] AS [Date Time], 
+[TipMonitor].[nDress] AS [nDress], 
+[TipMonitor].[nWelds] AS [nWelds], 
+[TipMonitor].[pWear] AS [pWear], 
+[TipMonitor].[nRspots] AS [nRspots], 
+[TipMonitor].[nRcars] AS [nRcars], 
+[TipMonitor].[id] AS [id]
+FROM [NGAC].[TipMonitor] AS [TipMonitor]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_h_querySnapshots_c_querySnapshots" Association="Self.FK_h_querySnapshots_c_querySnapshots">
             <End Role="c_querySnapshots" EntitySet="c_querySnapshots" />
             <End Role="h_querySnapshots" EntitySet="h_querySnapshots" />
@@ -194,7 +221,6 @@ FROM [EqUi].[Supervisie] AS [Supervisie]</DefiningQuery>
             <End Role="h_querySnapshots" EntitySet="h_querySnapshots" />
             <End Role="l_querySnapshots" EntitySet="l_querySnapshots" />
           </AssociationSet>
-          <EntitySet Name="Supervisies" EntityType="Models.Supervisie" />
           <FunctionImport Name="AAOSR_PloegRaportV2" ReturnType="Collection(Models.AAOSR_PloegRaportV2_Result)">
             <Parameter Name="StartDate" Mode="In" Type="DateTime" />
             <Parameter Name="EndDate" Mode="In" Type="DateTime" />
@@ -214,6 +240,8 @@ FROM [EqUi].[Supervisie] AS [Supervisie]</DefiningQuery>
             <Parameter Name="Refid" Mode="In" Type="Int32" />
             <Parameter Name="logtype" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="Supervisie" EntityType="Models.Supervisie" />
+          <EntitySet Name="TipMonitor" EntityType="Models.TipMonitor" />
           </EntityContainer>
         <EntityType Name="c_querySnapshots">
           <Key>
@@ -271,23 +299,6 @@ FROM [EqUi].[Supervisie] AS [Supervisie]</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="Supervisie">
-          <Key>
-            <PropertyRef Name="refId" />
-          </Key>
-          <Property Name="Location" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="logtext" Type="String" MaxLength="2106" FixedLength="false" Unicode="false" />
-          <Property Name="RT" Type="Int32" />
-          <Property Name="DT" Type="Int32" />
-          <Property Name="time" Type="String" MaxLength="19" FixedLength="true" Unicode="false" />
-          <Property Name="Classification" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Subgroup" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Severity" Type="Int32" />
-          <Property Name="Logtype" Type="String" Nullable="false" MaxLength="9" FixedLength="false" Unicode="false" />
-          <Property Name="refId" Type="Int32" Nullable="false" />
-          <Property Name="timestamp" Type="DateTime" Precision="3" />
-          <Property Name="Logcode" Type="Int32" />
-        </EntityType>
         <ComplexType Name="AAOSR_PloegRaportV2_Result">
           <Property Type="String" Name="Location" Nullable="true" MaxLength="256" />
           <Property Type="String" Name="AssetID" Nullable="true" MaxLength="255" />
@@ -307,6 +318,36 @@ FROM [EqUi].[Supervisie] AS [Supervisie]</DefiningQuery>
           <Property Type="String" Name="Cause" Nullable="true" MaxLength="2000" />
           <Property Type="String" Name="Remedy" Nullable="true" MaxLength="2000" />
         </ComplexType>
+        <EntityType Name="Supervisie">
+          <Key>
+            <PropertyRef Name="refId" />
+          </Key>
+          <Property Name="Location" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="logtext" Type="String" MaxLength="2106" FixedLength="false" Unicode="false" />
+          <Property Name="RT" Type="Int32" />
+          <Property Name="DT" Type="Int32" />
+          <Property Name="time" Type="String" MaxLength="19" FixedLength="true" Unicode="false" />
+          <Property Name="Classification" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Subgroup" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Severity" Type="Int32" />
+          <Property Name="Logcode" Type="Int32" />
+          <Property Name="Logtype" Type="String" Nullable="false" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="refId" Type="Int32" Nullable="false" />
+          <Property Name="timestamp" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="TipMonitor">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="Robot" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Date_Time" Type="DateTime" Precision="3" />
+          <Property Name="nDress" Type="Int16" />
+          <Property Name="nWelds" Type="Int16" />
+          <Property Name="pWear" Type="Double" />
+          <Property Name="nRspots" Type="Double" />
+          <Property Name="nRcars" Type="Double" />
+          <Property Name="id" Type="Int32" Nullable="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -366,24 +407,6 @@ FROM [EqUi].[Supervisie] AS [Supervisie]</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Supervisies">
-            <EntityTypeMapping TypeName="Models.Supervisie">
-              <MappingFragment StoreEntitySet="Supervisie">
-                <ScalarProperty Name="Logcode" ColumnName="Logcode" />
-                <ScalarProperty Name="timestamp" ColumnName="timestamp" />
-                <ScalarProperty Name="refId" ColumnName="refId" />
-                <ScalarProperty Name="Logtype" ColumnName="Logtype" />
-                <ScalarProperty Name="Severity" ColumnName="Severity" />
-                <ScalarProperty Name="Subgroup" ColumnName="Subgroup" />
-                <ScalarProperty Name="Classification" ColumnName="Classification" />
-                <ScalarProperty Name="time" ColumnName="time" />
-                <ScalarProperty Name="DT" ColumnName="DT" />
-                <ScalarProperty Name="RT" ColumnName="RT" />
-                <ScalarProperty Name="logtext" ColumnName="logtext" />
-                <ScalarProperty Name="Location" ColumnName="Location" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="AAOSR_PloegRaportV2" FunctionName="Models.Store.AAOSR_PloegRaportV2">
             <ResultMapping>
               <ComplexTypeMapping TypeName="Models.AAOSR_PloegRaportV2_Result">
@@ -411,6 +434,38 @@ FROM [EqUi].[Supervisie] AS [Supervisie]</DefiningQuery>
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="Supervisie">
+            <EntityTypeMapping TypeName="Models.Supervisie">
+              <MappingFragment StoreEntitySet="Supervisie">
+                <ScalarProperty Name="timestamp" ColumnName="timestamp" />
+                <ScalarProperty Name="refId" ColumnName="refId" />
+                <ScalarProperty Name="Logtype" ColumnName="Logtype" />
+                <ScalarProperty Name="Logcode" ColumnName="Logcode" />
+                <ScalarProperty Name="Severity" ColumnName="Severity" />
+                <ScalarProperty Name="Subgroup" ColumnName="Subgroup" />
+                <ScalarProperty Name="Classification" ColumnName="Classification" />
+                <ScalarProperty Name="time" ColumnName="time" />
+                <ScalarProperty Name="DT" ColumnName="DT" />
+                <ScalarProperty Name="RT" ColumnName="RT" />
+                <ScalarProperty Name="logtext" ColumnName="logtext" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipMonitor">
+            <EntityTypeMapping TypeName="Models.TipMonitor">
+              <MappingFragment StoreEntitySet="TipMonitor">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nRcars" ColumnName="nRcars" />
+                <ScalarProperty Name="nRspots" ColumnName="nRspots" />
+                <ScalarProperty Name="pWear" ColumnName="pWear" />
+                <ScalarProperty Name="nWelds" ColumnName="nWelds" />
+                <ScalarProperty Name="nDress" ColumnName="nDress" />
+                <ScalarProperty Name="Date_Time" ColumnName="Date Time" />
+                <ScalarProperty Name="Robot" ColumnName="Robot" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -425,8 +480,8 @@ FROM [EqUi].[Supervisie] AS [Supervisie]</DefiningQuery>
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="True" />
-        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="False" />
         <DesignerProperty Name="UseLegacyProvider" Value="true" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>

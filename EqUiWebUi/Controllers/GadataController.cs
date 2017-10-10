@@ -19,36 +19,28 @@ namespace EqUiWebUi.Controllers
 			return new HttpNotFoundResult("Woeps");
 		}
 
-        //------------------------------------Dynamic Grid-------------------------------------------------
+        //------------------------------------tip status-------------------------------------------------
 		[HttpGet]
-		public ActionResult DynamicWebgrid()
+		public ActionResult TipstatusWebgrid()
 		{
-            DataTable dt = new DataTable();
-            if (DataBuffer.Tipstatus != null)
+            //refresh every 10 minutes anyway ! 
+            Response.AddHeader("Refresh", "600");
+            //
+            var data = DataBuffer.Tipstatus;
+            //in case hangfire is taking a day off
+            if (data == null)
             {
-                dt = DataBuffer.Tipstatus;
+                return new HttpNotFoundResult("give hangfire some time");
             }
-            //
-			WebGridHelpers.WebGridHelper webGridHelper = new WebGridHelper();
-			ViewBag.Columns = webGridHelper.getDatatabelCollumns(dt);
-			//
-			List<dynamic> data = webGridHelper.datatableToDynamic(dt);
-            //
-            DefaultModel model = new WebGridHelpers.DefaultModel();
-			model.PageSize = 30;
-			//
-
-			if (data != null)
-			{
-				model.TotalCount = data.Count();
-				model.Data = data;
-                model.DataTimestamp =  DataBuffer.TipstatusLastDt.ToString("yyyy-MM-dd HH:mm:ss");
-			}
-			return View(model);
-		}
+            else //add tracking timestamp for hangfire sync
+            {
+                ViewBag.DataTimestamp = DataBuffer.TipstatusLastDt.ToString("yyyy-MM-dd HH:mm:ss");
+            }
+            return View(data);
+        }
 
 		[HttpGet]
-		public JsonResult CheckNewData(String dataTimestamp)
+		public JsonResult TipwearCheckNewData(String dataTimestamp)
 		{
             //direct query hangfire is not up
             if (dataTimestamp == "")
@@ -59,7 +51,7 @@ namespace EqUiWebUi.Controllers
             DateTime date = DateTime.ParseExact(dataTimestamp, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
             date = date.AddSeconds(1);
 
-            if (DataBuffer.SupervisieLastDt > date)
+            if (DataBuffer.TipstatusLastDt > date)
 			{
 			   //issue reload
 			   return Json(new object[] { new object() }, JsonRequestBehavior.AllowGet);
@@ -97,6 +89,8 @@ namespace EqUiWebUi.Controllers
         public JsonResult PloegRapportcheckNewData(String dataTimestamp)
         {
             DateTime date = DateTime.ParseExact(dataTimestamp, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+            date = date.AddSeconds(1);
+
             if (DataBuffer.PloegreportLastDt > date)
             {
                 //issue reload
@@ -141,6 +135,8 @@ namespace EqUiWebUi.Controllers
         public JsonResult SupervisiecheckNewData(String dataTimestamp)
         {
             DateTime date = DateTime.ParseExact(dataTimestamp, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+            date = date.AddSeconds(1);
+
             if (DataBuffer.SupervisieLastDt > date)
             {
                 //issue reload
@@ -154,8 +150,10 @@ namespace EqUiWebUi.Controllers
 
         }
 
+        //-------------------------------------------------------------------------------------------------
+
         [HttpGet]
-        public ActionResult _SupervisieMoreinfo(string location, int errornum, int refid, string logtype)
+        public ActionResult _Moreinfo(string location, int errornum, int refid, string logtype, string logtext)
         {
             GadataComm gadataComm = new GadataComm();
             MaximoComm maximoComm = new MaximoComm();
@@ -191,9 +189,9 @@ namespace EqUiWebUi.Controllers
             ViewBag.errornum = errornum;
             ViewBag.refid = refid;
             ViewBag.logtype = logtype;
+            ViewBag.logtext = logtext;
             //
             return PartialView();
         }
-        //-------------------------------------------------------------------------------------------------
     }
 }

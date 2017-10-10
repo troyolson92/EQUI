@@ -140,6 +140,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Backgroundwork.cs" />
+    <Compile Include="Controllers\DynamicController.cs" />
     <Compile Include="Models\AAOSR_PloegRaportV2_Result.cs">
       <DependentUpon>GadataDatamodel.tt</DependentUpon>
     </Compile>
@@ -156,6 +157,9 @@
       <DependentUpon>GadataDatamodel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Supervisie.cs">
+      <DependentUpon>GadataDatamodel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TipMonitor.cs">
       <DependentUpon>GadataDatamodel.tt</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
@@ -260,7 +264,6 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Maximo\WoDetails.cshtml" />
-    <Content Include="Views\Gadata\DynamicWebgrid.cshtml" />
     <Content Include="Views\Difftable\DiffWebgrid.cshtml" />
     <Content Include="Views\Difftable\Index.cshtml" />
     <Content Include="Views\Gadata\PloegRapportWebgrid.cshtml" />
@@ -269,7 +272,9 @@
     <Content Include="Scripts\jquery-3.2.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.2.1.min.map" />
     <Content Include="Views\Gadata\SupervisieWebgrid.cshtml" />
-    <Content Include="Views\Shared\_SupervisieMoreinfo.cshtml" />
+    <Content Include="Views\Shared\_Moreinfo.cshtml" />
+    <Content Include="Views\Dynamic\DynamicWebgrid.cshtml" />
+    <Content Include="Views\Gadata\TipstatusWebgrid.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EQUICommunictionLib\EQUICommunictionLib.csproj">
