@@ -28,7 +28,10 @@ namespace EQUIToolsLib
         DataTable dt_MidAir;
         DataTable dt_DressData;
         //bw
-        BackgroundWorker bw = new BackgroundWorker();
+        BackgroundWorker bwSbcu = new BackgroundWorker();
+        BackgroundWorker bwCylinder = new BackgroundWorker();
+        BackgroundWorker bwMidair = new BackgroundWorker();
+        BackgroundWorker bwDressData = new BackgroundWorker();
         //settings
         int Daysback = -200; //load 200 days data in buffer.
         int InitDays = -50; //show 50 days on startup.
@@ -49,8 +52,13 @@ namespace EQUIToolsLib
             initchart();
             toolStripComboBoxSortMode.SelectedIndexChanged += new System.EventHandler(cb_sortmode_SelectedValueChanged);
             //
-            metroProgressSpinner1.Visible = true;
-            bw.RunWorkerAsync();
+            EnableEvents(false);
+            progressBar1.Value = 0;
+            progressBar1.Visible = true;
+            bwDressData.RunWorkerAsync();
+            bwMidair.RunWorkerAsync();
+            bwCylinder.RunWorkerAsync();
+            bwSbcu.RunWorkerAsync();
             //
         }
 
@@ -248,58 +256,88 @@ namespace EQUIToolsLib
             chart_DressData.GetToolTipText += chart_GetToolTipText;
             //************************************************************************************
             //
-            bw.DoWork += bw_DoWork;
-            bw.RunWorkerCompleted += bw_RunWorkerCompleted;
+            bwSbcu.DoWork += BwSbcu_DoWork;
+            bwSbcu.RunWorkerCompleted += bw_RunWorkerCompleted;
+            bwCylinder.DoWork += BwCylinder_DoWork; ;
+            bwCylinder.RunWorkerCompleted += bw_RunWorkerCompleted;
+            bwMidair.DoWork += BwMidair_DoWork; ;
+            bwMidair.RunWorkerCompleted += bw_RunWorkerCompleted;
+            bwDressData.DoWork += BwDressData_DoWork; ;
+            bwDressData.RunWorkerCompleted += bw_RunWorkerCompleted;
+
             //
             Show();
         }
 
-        void bw_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private void BwDressData_DoWork(object sender, DoWorkEventArgs e)
         {
-            set_trackbars();
-            EnableEvents(true);
-            trackBar1.Value = trackBar1.Value; //to trigger chart initalisation (I know its stupid) 
-            /*
-             * in standonlone oke maar in build in Excel crossthreading 
-             mogelijks better om al de tools te launchen via    Application.Run(new SBCUStats(col["target"]));...
-             * * */
-        }
+            GadataComm lGdataComm = new GadataComm();
+            string qryDressData = @"exec [EqUi].[GetTipDressData] @StartDate = '{0}',@EndDate = '{1}',@Weldgunname = '{2}'";
 
-        void bw_DoWork(object sender, DoWorkEventArgs e)
-        {
-            EnableEvents(false);
-            GetChartData();
-            //
-        }
-
-        private void GetChartData()
-        {
-            string qrySBCUShortLong = @"exec [EqUi].[GetSbcuData] @StartDate = '{0}',  @EndDate = '{1}', @toolname = '{2}'";
-            string qryCylinder = @"exec [EqUi].[GetCilinderData] @StartDate = '{0}',  @EndDate = '{1}', @Weldgunname = '{2}'";
-            string qryMidair = @"exec [EqUi].[GetMidairData] @StartDate = '{0}',  @EndDate = '{1}', @Weldgunname = '{2}'";
-            string qryDressData = @"exec [EqUi].[GetTipDressData] @StartDate = '{0}',  @EndDate = '{1}', @Weldgunname = '{2}'";
-            //
             DateTime StartDate = System.DateTime.Now.AddDays(Daysback);
             DateTime EndDate = System.DateTime.Now;
-            //
-            // activeLocation = "321030WS01a"; //DEBUGGG
-            //
-            dt_SBCU = lGdataComm.RunQueryGadata(string.Format(qrySBCUShortLong, StartDate.ToString("yyyy-MM-dd HH:mm:ss"), EndDate.ToString("yyyy-MM-dd HH:mm:ss"), activeLocation.Trim()));
-            dt_SBCU = add_dummyTimestampRow(dt_SBCU, StartDate);
-            dt_SBCU = add_dummyTimestampRow(dt_SBCU, EndDate);
-            //
-            dt_Cylinder = lGdataComm.RunQueryGadata(string.Format(qryCylinder, StartDate.ToString("yyyy-MM-dd HH:mm:ss"), EndDate.ToString("yyyy-MM-dd HH:mm:ss"), activeLocation.Trim()));
-            dt_Cylinder = add_dummyTimestampRow(dt_Cylinder, StartDate);
-            dt_Cylinder = add_dummyTimestampRow(dt_Cylinder, EndDate);
-            //
-            dt_MidAir = lGdataComm.RunQueryGadata(string.Format(qryMidair, StartDate.ToString("yyyy-MM-dd HH:mm:ss"), EndDate.ToString("yyyy-MM-dd HH:mm:ss"), activeLocation.Trim()));
-            dt_MidAir = add_dummyTimestampRow(dt_MidAir, StartDate);
-            dt_MidAir = add_dummyTimestampRow(dt_MidAir, EndDate);
-            //
+
             dt_DressData = lGdataComm.RunQueryGadata(string.Format(qryDressData, StartDate.ToString("yyyy-MM-dd HH:mm:ss"), EndDate.ToString("yyyy-MM-dd HH:mm:ss"), activeLocation.Trim()));
             dt_DressData = add_dummyTimestampRow(dt_DressData, StartDate);
             dt_DressData = add_dummyTimestampRow(dt_DressData, EndDate);
-            //
+            dt_DressData.TableName = "dt_DressData";
+        }
+
+        private void BwMidair_DoWork(object sender, DoWorkEventArgs e)
+        {
+            GadataComm lGdataComm = new GadataComm();
+            string qryMidair = @"exec [EqUi].[GetMidairData] @StartDate = '{0}',@EndDate = '{1}',@Weldgunname = '{2}'";
+
+            DateTime StartDate = System.DateTime.Now.AddDays(Daysback);
+            DateTime EndDate = System.DateTime.Now;
+
+            dt_MidAir = lGdataComm.RunQueryGadata(string.Format(qryMidair, StartDate.ToString("yyyy-MM-dd HH:mm:ss"), EndDate.ToString("yyyy-MM-dd HH:mm:ss"), activeLocation.Trim()));
+            dt_MidAir = add_dummyTimestampRow(dt_MidAir, StartDate);
+            dt_MidAir = add_dummyTimestampRow(dt_MidAir, EndDate);
+            dt_MidAir.TableName = "dt_MidAir";
+        }
+
+        private void BwCylinder_DoWork(object sender, DoWorkEventArgs e)
+        {
+            GadataComm lGdataComm = new GadataComm();
+            string qryCylinder = @"exec [EqUi].[GetCilinderData] @StartDate = '{0}',@EndDate = '{1}',@Weldgunname = '{2}'";
+
+            DateTime StartDate = System.DateTime.Now.AddDays(Daysback);
+            DateTime EndDate = System.DateTime.Now;
+
+            dt_Cylinder = lGdataComm.RunQueryGadata(string.Format(qryCylinder, StartDate.ToString("yyyy-MM-dd HH:mm:ss"), EndDate.ToString("yyyy-MM-dd HH:mm:ss"), activeLocation.Trim()));
+            dt_Cylinder = add_dummyTimestampRow(dt_Cylinder, StartDate);
+            dt_Cylinder = add_dummyTimestampRow(dt_Cylinder, EndDate);
+            dt_Cylinder.TableName = "dt_Cylinder";
+        }
+
+        private void BwSbcu_DoWork(object sender, DoWorkEventArgs e)
+        {
+            GadataComm lGdataComm = new GadataComm();
+            string qrySBCUShortLong = @"exec [EqUi].[GetSbcuData] @StartDate = '{0}',@EndDate = '{1}',@toolname = '{2}'";
+
+            DateTime StartDate = System.DateTime.Now.AddDays(Daysback);
+            DateTime EndDate = System.DateTime.Now;
+
+            dt_SBCU = lGdataComm.RunQueryGadata(string.Format(qrySBCUShortLong, StartDate.ToString("yyyy-MM-dd HH:mm:ss"), EndDate.ToString("yyyy-MM-dd HH:mm:ss"), activeLocation.Trim()));
+            dt_SBCU = add_dummyTimestampRow(dt_SBCU, StartDate);
+            dt_SBCU = add_dummyTimestampRow(dt_SBCU, EndDate);
+            dt_SBCU.TableName = "dt_SBCU";
+        }
+
+        void bw_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if(bwSbcu.IsBusy || bwCylinder.IsBusy || bwMidair.IsBusy || bwDressData.IsBusy)
+            {
+                progressBar1.Value += 25;
+                return;
+            }
+
+            lbl_sbcu.Text = string.Format("Sbcu: {0}", dt_SBCU.Rows.Count-2);
+            lbl_Cylinder.Text = string.Format("Cyl: {0}", dt_Cylinder.Rows.Count-2);
+            lbl_midair.Text = string.Format("Mid: {0}", dt_MidAir.Rows.Count-2);
+            lbl_dress.Text = string.Format("Dress: {0}", dt_DressData.Rows.Count-2);
+
             if (DataSet.Tables.Count == 0)
             {
                 DataSet.Tables.Add(dt_SBCU);
@@ -307,6 +345,12 @@ namespace EQUIToolsLib
                 DataSet.Tables.Add(dt_MidAir);
                 DataSet.Tables.Add(dt_DressData);
             }
+
+            set_trackbars();
+            EnableEvents(true);
+            trackBar1.Value = trackBar1.Value;
+
+            progressBar1.Visible = false;
         }
 
         private void EnableEvents(Boolean enbl)
@@ -534,8 +578,6 @@ namespace EQUIToolsLib
             chart_midair.Legends[0].Enabled = showHideLedendeToolStripMenuItem.Checked;
             chart_DressData.Legends[0].Enabled = showHideLedendeToolStripMenuItem.Checked;
             //
-            metroProgressSpinner1.Visible = false;
-            //
             EnableEvents(true);
             //
         }
@@ -658,8 +700,13 @@ ORDER BY x.Toolname ASC";
             cb_Tools.Enabled = false;
             activeLocation = cb_Tools.Text;
             //get data to build the chart
-            metroProgressSpinner1.Visible = true;
-            bw.RunWorkerAsync();
+            EnableEvents(false);
+            progressBar1.Value = 0;
+            progressBar1.Visible = true;
+            bwDressData.RunWorkerAsync();
+            bwMidair.RunWorkerAsync();
+            bwCylinder.RunWorkerAsync();
+            bwSbcu.RunWorkerAsync();
             //
             cb_Tools.Enabled = true;
 
@@ -859,6 +906,9 @@ ORDER BY x.Toolname ASC";
             refresh();
         }
 
+        private void cb_Tools_SelectedIndexChanged(object sender, EventArgs e)
+        {
 
+        }
     }
 }

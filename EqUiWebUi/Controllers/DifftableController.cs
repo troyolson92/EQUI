@@ -50,8 +50,13 @@ namespace EqUiWebUi.Controllers
         public ActionResult DiffWebgrid(int id1, int id2)
         {
             GadataComm gadataComm = new GadataComm();
-            DataTable dt = gadataComm.RunQueryGadata(
-                string.Format(@"SELECT [id],[htmlresult] FROM [GADATA].[EqUi].[L_querySnapshots] WHERE id in({0},{1})",id1,id2));
+
+            string cmd = string.Format(
+@"SELECT * FROM (SELECT TOP 1 [id],[htmlresult] FROM [GADATA].[EqUi].[L_querySnapshots] WHERE snapshotid = {0} order by id desc ) as x 
+  UNION 
+  SELECT * FROM (SELECT TOP 1 [id],[htmlresult] FROM [GADATA].[EqUi].[L_querySnapshots] WHERE snapshotid = {1} order by id desc ) as x "
+, id1, id2);
+            DataTable dt = gadataComm.RunQueryGadata(cmd);
             //
             HtmlDiff.HtmlDiff diffHelper = new HtmlDiff.HtmlDiff(dt.Rows[0].Field<string>("htmlresult"), dt.Rows[1].Field<string>("htmlresult"));
             diffHelper.AddBlockExpression(new Regex(@"[0-9]:[0-9]{1,2}:[0-9]{1,2}", RegexOptions.IgnoreCase)); //time

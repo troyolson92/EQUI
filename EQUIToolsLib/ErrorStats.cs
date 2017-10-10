@@ -114,7 +114,7 @@ namespace EQUIToolsLib
             //build trend chart in init mode. 
             buildTrendChart();
 			this.Show();
-		}
+        }
 
 		private void buildTrendChart()
 		{ buildTrendChart(false); }
