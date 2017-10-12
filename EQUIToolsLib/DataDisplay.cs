@@ -22,7 +22,15 @@ namespace EQUIToolsLib
                 cb_datasource.Items.Add(dt.TableName);
             }
             cb_datasource.SelectedValueChanged += cb_datasource_SelectedValueChanged;
-            Show();
+            if (WindowState == FormWindowState.Minimized)
+                WindowState = FormWindowState.Normal;
+            else
+            {
+                TopMost = true;
+                Focus();
+                BringToFront();
+                TopMost = false;
+            }
         }
 
         void cb_datasource_SelectedValueChanged(object sender, EventArgs e)

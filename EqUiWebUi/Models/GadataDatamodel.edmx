@@ -77,6 +77,8 @@ warning 6002: The table/view 'GADATA.EqUi.Supervisie' does not have a primary ke
           <Property Name="Logtype" Type="varchar" MaxLength="9" Nullable="false" />
           <Property Name="refId" Type="int" Nullable="false" />
           <Property Name="timestamp" Type="datetime" />
+          <Property Name="LocationTree" Type="varchar(max)" />
+          <Property Name="ClassTree" Type="varchar(max)" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'GADATA.NGAC.TipMonitor' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -155,7 +157,9 @@ warning 6002: The table/view 'GADATA.NGAC.TipMonitor' does not have a primary ke
 [Supervisie].[Logcode] AS [Logcode], 
 [Supervisie].[Logtype] AS [Logtype], 
 [Supervisie].[refId] AS [refId], 
-[Supervisie].[timestamp] AS [timestamp]
+[Supervisie].[timestamp] AS [timestamp], 
+[Supervisie].[LocationTree] AS [LocationTree], 
+[Supervisie].[ClassTree] AS [ClassTree]
 FROM [EqUi].[Supervisie] AS [Supervisie]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="TipMonitor" EntityType="Self.TipMonitor" store:Type="Views" store:Schema="NGAC">
@@ -334,6 +338,8 @@ FROM [NGAC].[TipMonitor] AS [TipMonitor]</DefiningQuery>
           <Property Name="Logtype" Type="String" Nullable="false" MaxLength="9" FixedLength="false" Unicode="false" />
           <Property Name="refId" Type="Int32" Nullable="false" />
           <Property Name="timestamp" Type="DateTime" Precision="3" />
+          <Property Name="LocationTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ClassTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="TipMonitor">
           <Key>
@@ -437,6 +443,8 @@ FROM [NGAC].[TipMonitor] AS [TipMonitor]</DefiningQuery>
           <EntitySetMapping Name="Supervisie">
             <EntityTypeMapping TypeName="Models.Supervisie">
               <MappingFragment StoreEntitySet="Supervisie">
+                <ScalarProperty Name="ClassTree" ColumnName="ClassTree" />
+                <ScalarProperty Name="LocationTree" ColumnName="LocationTree" />
                 <ScalarProperty Name="timestamp" ColumnName="timestamp" />
                 <ScalarProperty Name="refId" ColumnName="refId" />
                 <ScalarProperty Name="Logtype" ColumnName="Logtype" />

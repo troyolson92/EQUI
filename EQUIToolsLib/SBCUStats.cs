@@ -266,7 +266,15 @@ namespace EQUIToolsLib
             bwDressData.RunWorkerCompleted += bw_RunWorkerCompleted;
 
             //
-            Show();
+            if (WindowState == FormWindowState.Minimized)
+                WindowState = FormWindowState.Normal;
+            else
+            {
+                TopMost = true;
+                Focus();
+                BringToFront();
+                TopMost = false;
+            }
         }
 
         private void BwDressData_DoWork(object sender, DoWorkEventArgs e)
@@ -333,10 +341,10 @@ namespace EQUIToolsLib
                 return;
             }
 
-            lbl_sbcu.Text = string.Format("Sbcu: {0}", dt_SBCU.Rows.Count-2);
-            lbl_Cylinder.Text = string.Format("Cyl: {0}", dt_Cylinder.Rows.Count-2);
-            lbl_midair.Text = string.Format("Mid: {0}", dt_MidAir.Rows.Count-2);
-            lbl_dress.Text = string.Format("Dress: {0}", dt_DressData.Rows.Count-2);
+            lbl_sbcu.Text = string.Format("Sbcu: {0}", dt_SBCU.Rows.Count);
+            lbl_Cylinder.Text = string.Format("Cyl: {0}", dt_Cylinder.Rows.Count);
+            lbl_midair.Text = string.Format("Mid: {0}", dt_MidAir.Rows.Count);
+            lbl_dress.Text = string.Format("Dress: {0}", dt_DressData.Rows.Count);
 
             if (DataSet.Tables.Count == 0)
             {
@@ -351,6 +359,16 @@ namespace EQUIToolsLib
             trackBar1.Value = trackBar1.Value;
 
             progressBar1.Visible = false;
+
+            if (WindowState == FormWindowState.Minimized)
+                WindowState = FormWindowState.Normal;
+            else
+            {
+                TopMost = true;
+                Focus();
+                BringToFront();
+                TopMost = false;
+            }
         }
 
         private void EnableEvents(Boolean enbl)

@@ -26,5 +26,7 @@ namespace EqUiWebUi.Models
         public string Logtype { get; set; }
         public int refId { get; set; }
         public Nullable<System.DateTime> timestamp { get; set; }
+        public string LocationTree { get; set; }
+        public string ClassTree { get; set; }
     }
 }

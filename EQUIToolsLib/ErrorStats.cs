@@ -39,6 +39,7 @@ namespace EQUIToolsLib
 			chart1.Series["ErrorCount"].XValueType = ChartValueType.DateTime;
 			chart1.ChartAreas[0].AxisX.Interval = 1;
 			chart1.FormatNumber += chart1_FormatNumber;
+            chart1.GetToolTipText += chart_GetToolTipText;
 			//query all instances of the error 
 			string qry = string.Format(
 			@"EXEC [EqUi].[GetErrorTrentData] @Location = '{0}' ,@ERRORNUM = {1} ,@Logtext = '{2}' ,@logType = '{3}'"
@@ -113,7 +114,15 @@ namespace EQUIToolsLib
             }
             //build trend chart in init mode. 
             buildTrendChart();
-			this.Show();
+            if (WindowState == FormWindowState.Minimized)
+                WindowState = FormWindowState.Normal;
+            else
+            {
+                TopMost = true;
+                Focus();
+                BringToFront();
+                TopMost = false;
+            }
         }
 
 		private void buildTrendChart()
@@ -244,7 +253,24 @@ namespace EQUIToolsLib
 			}
 		}
 
-		private void trackBar1_ValueChanged(object sender, EventArgs e)
+        private void chart_GetToolTipText(object sender, ToolTipEventArgs e)
+        {
+            // Check selected chart element and set tooltip text for it
+            switch (e.HitTestResult.ChartElementType)
+            {
+                case ChartElementType.DataPoint:
+                    var dataPoint = e.HitTestResult.Series.Points[e.HitTestResult.PointIndex];
+
+                    e.Text = string.Format(
+@"Datatype: {0}
+Timestamp: {1}
+Value: {2:0.00}"
+                     , e.HitTestResult.Series.Name, DateTime.FromOADate(dataPoint.XValue).ToString("yyyy-MM-dd HH:mm:ss"), dataPoint.YValues[0]);
+                    break;
+            }
+        }
+
+        private void trackBar1_ValueChanged(object sender, EventArgs e)
 		{
 			buildTrendChart();
 		}

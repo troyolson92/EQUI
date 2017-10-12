@@ -130,15 +130,15 @@
     columns.Add(c => c.time);
     columns.Add(c => c.Classification).Titled("Class");
     columns.Add(c => c.Subgroup);
-  //  columns.Add(c => c.Severity).Titled("Serv").Filterable(true);
-    columns.Add(c => c.Logtype).Filterable(true).SetFilterWidgetType("CustomLogtypeFilterWidget");
+    columns.Add(c => c.Logtype).Filterable(true);
 
-    columns.Add()
+    columns.Add(c => c.LocationTree)
     .Titled("Info")
     .Encoded(false)
     .Sanitized(false)
     .SetWidth(30)
-     .RenderValueAs(o => Html.ActionLink("INFO", "_Moreinfo",
+    .Filterable(true)
+    .RenderValueAs(o => Html.ActionLink("INFO", "_Moreinfo",
        new { location = o.Location,
            errornum = o.Logcode,
            refid = o.refId,
@@ -149,10 +149,27 @@
          )
     );}).WithPaging(20).Sortable(true)
 </div> 
-<h6>
-    <a href="~/" class="btn btn-primary btn-sm">goHome &raquo;</a>
-    Last data push: '@Html.Raw(ViewBag.DataTimestamp)'
-</h6>
+
+    <div  class="modal-content">
+        <div class="dropdown">
+            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                Set a location filter
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a href="/Gadata/SupervisieWebgrid">ClearFilter</a></li>
+                <li><a href="/Gadata/SupervisieWebgrid?grid-filter=LocationTree__2__AAL">P3</a></li>
+                <li><a href="/Gadata/SupervisieWebgrid?grid-filter=LocationTree__2__A FLOOR L">A FLOOR L</a></li>
+                <li><a href="/Gadata/SupervisieWebgrid?grid-filter=LocationTree__2__A SIBO L">A SIBO L</a></li>
+                <li><a href="/Gadata/SupervisieWebgrid?grid-filter=LocationTree__2__AAS">P4</a></li>
+                <li><a href="/Gadata/SupervisieWebgrid?grid-filter=LocationTree__2__A FLOOR S">A FLOOR S</a></li>
+                <li><a href="/Gadata/SupervisieWebgrid?grid-filter=LocationTree__2__A SIBO ">A SIBO S</a></li>
+            </ul>
+
+            <a href="~/" class="btn btn-primary">goHome &raquo;</a>
+            Last data push: '@Html.Raw(ViewBag.DataTimestamp)'
+        </div>
+    </div>
 
 
 @*info modal java script*@
@@ -212,4 +229,5 @@
     }
 
 </style>
+
 

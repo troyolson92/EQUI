@@ -169,9 +169,17 @@ namespace EqUiWebUi
             MaximoComm maximoComm = new MaximoComm();
             //run maximo query
             DataTable maximoResult = maximoComm.oracle_runQuery(query);
-            string htmlResult = ConvertDataTableToHTML(maximoResult);
-            //insert in gadata
-            gadataComm.InsertSnaphotGadata(id, htmlResult);
+            //check result valid
+            if (maximoResult.Rows.Count < 1)
+            {
+                throw new System.ArgumentException("datatable result invallid.");
+            }
+            else
+            {
+                string htmlResult = ConvertDataTableToHTML(maximoResult);
+                //insert in gadata
+                gadataComm.InsertSnaphotGadata(id, htmlResult);
+            }
         }
 
         public static string ConvertDataTableToHTML(DataTable dt)

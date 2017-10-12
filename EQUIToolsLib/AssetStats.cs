@@ -42,7 +42,15 @@ namespace EQUIToolsLib
             btn_refresh.Visible = true;
             metroProgressSpinner1.Visible = false;
             //
-            Show();
+            if (WindowState == FormWindowState.Minimized)
+                WindowState = FormWindowState.Normal;
+            else
+            {
+                TopMost = true;
+                Focus();
+                BringToFront();
+                TopMost = false;
+            }
         }
 
         public AssetStats(string Location)

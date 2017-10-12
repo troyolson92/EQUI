@@ -38,7 +38,15 @@ namespace EQUIToolsLib
             //
             metroProgressSpinner1.Visible = false;
             //
-            Show();
+            if (WindowState == FormWindowState.Minimized)
+                WindowState = FormWindowState.Normal;
+            else
+            {
+                TopMost = true;
+                Focus();
+                BringToFront();
+                TopMost = false;
+            }
             //
         }
 
