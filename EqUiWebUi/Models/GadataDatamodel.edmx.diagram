@@ -13,7 +13,7 @@
         <AssociationConnector Association="Models.FK_h_querySnapshots_c_querySnapshots" />
         <AssociationConnector Association="Models.FK_l_querySnapshots_h_querySnapshots" />
         <EntityTypeShape EntityType="Models.Supervisie" Width="1.5" PointX="7.375" PointY="0.75" />
-        <EntityTypeShape EntityType="Models.TipMonitor" Width="1.5" PointX="5.375" PointY="6.75" />
+        <EntityTypeShape EntityType="Models.TipMonitor" Width="1.5" PointX="5.125" PointY="0.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -225,6 +225,14 @@ FROM [NGAC].[TipMonitor] AS [TipMonitor]</DefiningQuery>
             <End Role="h_querySnapshots" EntitySet="h_querySnapshots" />
             <End Role="l_querySnapshots" EntitySet="l_querySnapshots" />
           </AssociationSet>
+          <FunctionImport Name="GetErrorInfoData" ReturnType="Collection(Models.GetErrorInfoData_Result)">
+            <Parameter Name="Location" Mode="In" Type="String" />
+            <Parameter Name="ERRORNUM" Mode="In" Type="Int32" />
+            <Parameter Name="Refid" Mode="In" Type="Int32" />
+            <Parameter Name="logtype" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="Supervisie" EntityType="Models.Supervisie" />
+          <EntitySet Name="TipMonitor" EntityType="Models.TipMonitor" />
           <FunctionImport Name="AAOSR_PloegRaportV2" ReturnType="Collection(Models.AAOSR_PloegRaportV2_Result)">
             <Parameter Name="StartDate" Mode="In" Type="DateTime" />
             <Parameter Name="EndDate" Mode="In" Type="DateTime" />
@@ -238,14 +246,6 @@ FROM [NGAC].[TipMonitor] AS [TipMonitor]</DefiningQuery>
             <Parameter Name="getAlerts" Mode="In" Type="Boolean" />
             <Parameter Name="getShifbook" Mode="In" Type="Boolean" />
           </FunctionImport>
-          <FunctionImport Name="GetErrorInfoData" ReturnType="Collection(Models.GetErrorInfoData_Result)">
-            <Parameter Name="Location" Mode="In" Type="String" />
-            <Parameter Name="ERRORNUM" Mode="In" Type="Int32" />
-            <Parameter Name="Refid" Mode="In" Type="Int32" />
-            <Parameter Name="logtype" Mode="In" Type="String" />
-          </FunctionImport>
-          <EntitySet Name="Supervisie" EntityType="Models.Supervisie" />
-          <EntitySet Name="TipMonitor" EntityType="Models.TipMonitor" />
           </EntityContainer>
         <EntityType Name="c_querySnapshots">
           <Key>
@@ -303,20 +303,6 @@ FROM [NGAC].[TipMonitor] AS [TipMonitor]</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <ComplexType Name="AAOSR_PloegRaportV2_Result">
-          <Property Type="String" Name="Location" Nullable="true" MaxLength="256" />
-          <Property Type="String" Name="AssetID" Nullable="true" MaxLength="255" />
-          <Property Type="Int32" Name="Logcode" Nullable="true" />
-          <Property Type="String" Name="Logtype" Nullable="false" MaxLength="9" />
-          <Property Type="String" Name="logtext" Nullable="true" MaxLength="8000" />
-          <Property Type="Int32" Name="Response_min_" Nullable="true" />
-          <Property Type="Int32" Name="Downtime_min_" Nullable="true" />
-          <Property Type="Int32" Name="Count" Nullable="true" />
-          <Property Type="String" Name="timestamp" Nullable="true" MaxLength="19" />
-          <Property Type="String" Name="time" Nullable="true" MaxLength="19" />
-          <Property Type="String" Name="Subgroup" Nullable="true" MaxLength="50" />
-          <Property Type="Int64" Name="refId" Nullable="true" />
-        </ComplexType>
         <ComplexType Name="GetErrorInfoData_Result">
           <Property Type="String" Name="INFO" Nullable="true" MaxLength="2000" />
           <Property Type="String" Name="Cause" Nullable="true" MaxLength="2000" />
@@ -354,6 +340,21 @@ FROM [NGAC].[TipMonitor] AS [TipMonitor]</DefiningQuery>
           <Property Name="nRcars" Type="Double" />
           <Property Name="id" Type="Int32" Nullable="false" />
         </EntityType>
+        <ComplexType Name="AAOSR_PloegRaportV2_Result">
+          <Property Type="String" Name="Location" Nullable="true" MaxLength="256" />
+          <Property Type="String" Name="AssetID" Nullable="true" MaxLength="255" />
+          <Property Type="Int32" Name="Logcode" Nullable="true" />
+          <Property Type="String" Name="Logtype" Nullable="false" MaxLength="9" />
+          <Property Type="String" Name="logtext" Nullable="true" MaxLength="888" />
+          <Property Type="Int32" Name="Response_min_" Nullable="true" />
+          <Property Type="Int32" Name="Downtime_min_" Nullable="true" />
+          <Property Type="Int32" Name="Count" Nullable="true" />
+          <Property Type="String" Name="timestamp" Nullable="true" MaxLength="19" />
+          <Property Type="String" Name="time" Nullable="true" MaxLength="19" />
+          <Property Type="String" Name="Subgroup" Nullable="true" MaxLength="50" />
+          <Property Type="Int64" Name="refId" Nullable="true" />
+          <Property Type="String" Name="LocationTree" Nullable="true" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -413,24 +414,6 @@ FROM [NGAC].[TipMonitor] AS [TipMonitor]</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="AAOSR_PloegRaportV2" FunctionName="Models.Store.AAOSR_PloegRaportV2">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Models.AAOSR_PloegRaportV2_Result">
-                <ScalarProperty Name="Location" ColumnName="Location" />
-                <ScalarProperty Name="AssetID" ColumnName="AssetID" />
-                <ScalarProperty Name="Logcode" ColumnName="Logcode" />
-                <ScalarProperty Name="Logtype" ColumnName="Logtype" />
-                <ScalarProperty Name="logtext" ColumnName="logtext" />
-                <ScalarProperty Name="Response_min_" ColumnName="Response(min)" />
-                <ScalarProperty Name="Downtime_min_" ColumnName="Downtime(min)" />
-                <ScalarProperty Name="Count" ColumnName="Count" />
-                <ScalarProperty Name="timestamp" ColumnName="timestamp" />
-                <ScalarProperty Name="time" ColumnName="time" />
-                <ScalarProperty Name="Subgroup" ColumnName="Subgroup" />
-                <ScalarProperty Name="refId" ColumnName="refId" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetErrorInfoData" FunctionName="Models.Store.GetErrorInfoData">
             <ResultMapping>
               <ComplexTypeMapping TypeName="Models.GetErrorInfoData_Result">
@@ -474,6 +457,25 @@ FROM [NGAC].[TipMonitor] AS [TipMonitor]</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="AAOSR_PloegRaportV2" FunctionName="Models.Store.AAOSR_PloegRaportV2">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Models.AAOSR_PloegRaportV2_Result">
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="AssetID" ColumnName="AssetID" />
+                <ScalarProperty Name="Logcode" ColumnName="Logcode" />
+                <ScalarProperty Name="Logtype" ColumnName="Logtype" />
+                <ScalarProperty Name="logtext" ColumnName="logtext" />
+                <ScalarProperty Name="Response_min_" ColumnName="Response(min)" />
+                <ScalarProperty Name="Downtime_min_" ColumnName="Downtime(min)" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+                <ScalarProperty Name="timestamp" ColumnName="timestamp" />
+                <ScalarProperty Name="time" ColumnName="time" />
+                <ScalarProperty Name="Subgroup" ColumnName="Subgroup" />
+                <ScalarProperty Name="refId" ColumnName="refId" />
+                <ScalarProperty Name="LocationTree" ColumnName="LocationTree" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

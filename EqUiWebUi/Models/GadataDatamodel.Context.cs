@@ -13,8 +13,6 @@ namespace EqUiWebUi.Models
     using System.Data.Entity;
     using System.Data.Entity.Core.Objects;
     using System.Data.Entity.Infrastructure;
-    using System.Linq;
-    
     public partial class GADATAEntities : DbContext
     {
         public GADATAEntities()
@@ -34,6 +32,27 @@ namespace EqUiWebUi.Models
         public DbSet<l_querySnapshots> l_querySnapshots { get; set; }
         public DbSet<Supervisie> Supervisie { get; set; }
         public DbSet<TipMonitor> TipMonitor { get; set; }
+    
+        public virtual ObjectResult<GetErrorInfoData_Result> GetErrorInfoData(string location, Nullable<int> eRRORNUM, Nullable<int> refid, string logtype)
+        {
+            var locationParameter = location != null ?
+                new ObjectParameter("Location", location) :
+                new ObjectParameter("Location", typeof(string));
+    
+            var eRRORNUMParameter = eRRORNUM.HasValue ?
+                new ObjectParameter("ERRORNUM", eRRORNUM) :
+                new ObjectParameter("ERRORNUM", typeof(int));
+    
+            var refidParameter = refid.HasValue ?
+                new ObjectParameter("Refid", refid) :
+                new ObjectParameter("Refid", typeof(int));
+    
+            var logtypeParameter = logtype != null ?
+                new ObjectParameter("logtype", logtype) :
+                new ObjectParameter("logtype", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetErrorInfoData_Result>("GetErrorInfoData", locationParameter, eRRORNUMParameter, refidParameter, logtypeParameter);
+        }
     
         public virtual ObjectResult<AAOSR_PloegRaportV2_Result> AAOSR_PloegRaportV2(Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate, Nullable<int> daysBack, string assets, string locations, string lochierarchy, Nullable<int> minDowntime, Nullable<int> minCountOfDowtime, Nullable<int> minCountofWarning, Nullable<bool> getAlerts, Nullable<bool> getShifbook)
         {
@@ -82,27 +101,6 @@ namespace EqUiWebUi.Models
                 new ObjectParameter("getShifbook", typeof(bool));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<AAOSR_PloegRaportV2_Result>("AAOSR_PloegRaportV2", startDateParameter, endDateParameter, daysBackParameter, assetsParameter, locationsParameter, lochierarchyParameter, minDowntimeParameter, minCountOfDowtimeParameter, minCountofWarningParameter, getAlertsParameter, getShifbookParameter);
-        }
-    
-        public virtual ObjectResult<GetErrorInfoData_Result> GetErrorInfoData(string location, Nullable<int> eRRORNUM, Nullable<int> refid, string logtype)
-        {
-            var locationParameter = location != null ?
-                new ObjectParameter("Location", location) :
-                new ObjectParameter("Location", typeof(string));
-    
-            var eRRORNUMParameter = eRRORNUM.HasValue ?
-                new ObjectParameter("ERRORNUM", eRRORNUM) :
-                new ObjectParameter("ERRORNUM", typeof(int));
-    
-            var refidParameter = refid.HasValue ?
-                new ObjectParameter("Refid", refid) :
-                new ObjectParameter("Refid", typeof(int));
-    
-            var logtypeParameter = logtype != null ?
-                new ObjectParameter("logtype", logtype) :
-                new ObjectParameter("logtype", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetErrorInfoData_Result>("GetErrorInfoData", locationParameter, eRRORNUMParameter, refidParameter, logtypeParameter);
         }
     }
 }

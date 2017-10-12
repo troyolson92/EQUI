@@ -25,5 +25,6 @@ namespace EqUiWebUi.Models
         public string time { get; set; }
         public string Subgroup { get; set; }
         public Nullable<long> refId { get; set; }
+        public string LocationTree { get; set; }
     }
 }
