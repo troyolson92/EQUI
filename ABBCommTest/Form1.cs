@@ -55,11 +55,11 @@ namespace ABBCommTest
             //  dt_robots.Columns.Add("ConfigOK", System.Type.GetType("System.String"));
             // dt_robots.Columns.Add("restartOK", System.Type.GetType("System.String"));
             //   dt_robots.Columns.Add("LoadOK", System.Type.GetType("System.String"));
-            // dt_robots.Columns.Add("HasTipneed", System.Type.GetType("System.String"));
-            // dt_robots.Columns.Add("HasTipneedComment", System.Type.GetType("System.String"));
-            dt_robots.Columns.Add("Found", System.Type.GetType("System.String"));
-            dt_robots.Columns.Add("Deleted", System.Type.GetType("System.String"));
-            dt_robots.Columns.Add("Exeption", System.Type.GetType("System.String"));
+            dt_robots.Columns.Add("HasTipneed", System.Type.GetType("System.String"));
+            dt_robots.Columns.Add("HasTipneedComment", System.Type.GetType("System.String"));
+          //  dt_robots.Columns.Add("Found", System.Type.GetType("System.String"));
+          //  dt_robots.Columns.Add("Deleted", System.Type.GetType("System.String"));
+          //  dt_robots.Columns.Add("Exeption", System.Type.GetType("System.String"));
 
             //link to datagrid
             dataGridView1.DataSource = dt_robots;
@@ -576,8 +576,8 @@ COM_APP:
                             this.controller.Logon(UserInfo.DefaultUser);
 
                         // SocketConfigureRobot(ci, row);
-                        DoRobbieFupCheck(ci, row);
-                          //  DoTipneedcheckRobot(ci, row);
+                        //DoRobbieFupCheck(ci, row);
+                           DoTipneedcheckRobot(ci, row);
                         }
                         else
                         {

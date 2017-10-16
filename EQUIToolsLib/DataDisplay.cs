@@ -22,6 +22,8 @@ namespace EQUIToolsLib
                 cb_datasource.Items.Add(dt.TableName);
             }
             cb_datasource.SelectedValueChanged += cb_datasource_SelectedValueChanged;
+
+            Show();
             if (WindowState == FormWindowState.Minimized)
                 WindowState = FormWindowState.Normal;
             else
