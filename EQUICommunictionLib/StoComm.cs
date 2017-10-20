@@ -8,7 +8,7 @@ using Oracle.ManagedDataAccess.Client;
 using Oracle.ManagedDataAccess.Types;
 namespace EQUICommunictionLib
 {
-    class StoComm
+    public class StoComm
     {
         OracleConnection Stoconn = new OracleConnection(
             @"Data Source= (DESCRIPTION=

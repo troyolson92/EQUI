@@ -18,48 +18,62 @@
         <div class="modal-footer">
             <h4 class="modal-title">These tools might proof useful</h4>                    
             <p>
-                @{
-                    var urlSbcu = string.Format(
+                @if (ViewBag.Logtype == "ALERT" || ViewBag.location.Contains("WS") || ViewBag.location.Contains("JG") || ViewBag.location.Contains("WT"))
+                {
+                    string urlSbcu = string.Format(
                         "http://equi/EqUi_UtilManager/EqUi_UtilManger.application?Tool=SBCUstats&target={0}",
                         @Uri.EscapeDataString(ViewBag.location.ToString()));
-                }
-                <a href="@urlSbcu" class="btn btn-primary btn-sm"
-                    data-toggle="tooltip" title="Data ivm SBCU midair lastang cilinder en dress" 
-                   >WeldgunData &raquo;</a>
-                
-                @{
-                    var urlPqaGeo = string.Format(
-                        "http://equi/EqUi_UtilManager/EqUi_UtilManger.application?Tool=MaximoTool&Viewmode={0}&target={1}",
-                        @Uri.EscapeDataString("vm_QualityOnLocation"),
-                        @Uri.EscapeDataString(ViewBag.location.ToString()));
-                }
-                <a href="@urlPqaGeo" class="btn btn-primary btn-sm">PQaGeo &raquo;</a>
 
-                @{
-                    var urlWo = string.Format(
+                    <a href="@urlSbcu" class="btn btn-primary btn-sm"
+                       data-toggle="tooltip" title="Data ivm SBCU midair lastang cilinder en dress">WeldgunData &raquo;</a>
+                }
+
+
+                
+                @if (ViewBag.location != "")
+                {
+                    string urlPqaGeo = string.Format(
+                            "http://equi/EqUi_UtilManager/EqUi_UtilManger.application?Tool=MaximoTool&Viewmode={0}&target={1}",
+                            @Uri.EscapeDataString("vm_QualityOnLocation"),
+                            @Uri.EscapeDataString(ViewBag.location.ToString()));
+
+                    <a href="@urlPqaGeo" class="btn btn-primary btn-sm"
+                        data-toggle="tooltip" title="Toont werkorders van het taakplan PGAGEO voor deze locatie">PQaGeo &raquo;</a>
+
+
+                    string urlWo = string.Format(
                         "http://equi/EqUi_UtilManager/EqUi_UtilManger.application?Tool=MaximoTool&Viewmode={0}&target={1}",
                         @Uri.EscapeDataString("vm_workordersOnLocation"),
                         @Uri.EscapeDataString(ViewBag.location.ToString()));
-                }
-                <a href="@urlWo" class="btn btn-primary btn-sm">Workorders &raquo;</a>
 
-                @{
-                    var urlParts = string.Format(
+                    <a href="@urlWo" class="btn btn-primary btn-sm"
+                        data-toggle="tooltip" title="Geeft de werkorders van deze locatie weer">Workorders &raquo;</a>
+
+
+                    string urlParts = string.Format(
                         "http://equi/EqUi_UtilManager/EqUi_UtilManger.application?Tool=MaximoTool&Viewmode={0}&target={1}",
                         @Uri.EscapeDataString("vm_PartsOnLocation"),
                         @Uri.EscapeDataString(ViewBag.location.ToString()));
-                }
-                <a href="@urlParts" class="btn btn-primary btn-sm">PartsUsed &raquo;</a>
 
-                @{
-                    var urlErrorstats = string.Format(
-                        "http://equi/EqUi_UtilManager/EqUi_UtilManger.application?Tool=ERRORstats&target={0}&Logtype={1}&Errornum={2}&logtext={3}",
-                        @Uri.EscapeDataString(ViewBag.location.ToString()),
-                        @Uri.EscapeDataString(ViewBag.logtype.ToString()),
-                        @Uri.EscapeDataString(ViewBag.errornum.ToString()),
-                        @Uri.EscapeDataString(ViewBag.logtext.ToString())
-                        );
+                    <a href="@urlParts" class="btn btn-primary btn-sm"
+                        data-toggle="tooltip" title="Kijkt in maximo welke stukken ooit op deze locatie zijn gebruikt">PartsUsed &raquo;</a>
                 }
-                <a href="@urlErrorstats" class="btn btn-primary btn-sm">ErrorStats &raquo;</a>
+
+
+                    @if (ViewBag.errornum.ToString() != "" && (ViewBag.Logtype == "BREAKDOWN" || ViewBag.Logtype == "ERROR" || ViewBag.Logtype == "WARNING"
+             || ViewBag.Logtype == "ControllerEvent" || ViewBag.Logtype == "ErrDispLog" || ViewBag.Logtype == "SHIFTBOOK"))
+                    {
+                        string urlErrorstats = string.Format(
+                       "http://equi/EqUi_UtilManager/EqUi_UtilManger.application?Tool=ERRORstats&target={0}&Logtype={1}&Errornum={2}&logtext={3}",
+                       @Uri.EscapeDataString(ViewBag.location.ToString()),
+                       @Uri.EscapeDataString(ViewBag.logtype.ToString()),
+                       @Uri.EscapeDataString(ViewBag.errornum.ToString()),
+                       @Uri.EscapeDataString(ViewBag.logtext.ToString())
+                       );
+
+                        <a href="@urlErrorstats" class="btn btn-primary btn-sm"
+                            data-toggle="tooltip" title="geeft de trend van de deze foutecode weer">Error trend &raquo;</a>
+                    }
+
             </p>
         </div>

@@ -43,7 +43,9 @@ namespace EqUiWebUi
             //**********************************snapshot system****************************************************
             //check every minute for new jobs 
             RecurringJob.AddOrUpdate(() => backgroundwork.HandleMaximoSnapshotWork(),Cron.Minutely);
-
+            //**********************************STO****************************************************
+            //check every minute for new data 
+            RecurringJob.AddOrUpdate(() => backgroundwork.PushDatafromSTOtoGADATA(), Cron.Minutely);
         }
 
         public class MyAuthorizationFilter : IDashboardAuthorizationFilter

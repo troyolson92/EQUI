@@ -67,7 +67,6 @@
             this.groupTempTools = this.Factory.CreateRibbonGroup();
             this.sync_stw040 = this.Factory.CreateRibbonButton();
             this.btn_sync_mx7 = this.Factory.CreateRibbonButton();
-            this.btn_sync_sto = this.Factory.CreateRibbonButton();
             this.btn_SBCUtest = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
             this.rib2.SuspendLayout();
@@ -343,7 +342,6 @@
             // 
             this.groupTempTools.Items.Add(this.sync_stw040);
             this.groupTempTools.Items.Add(this.btn_sync_mx7);
-            this.groupTempTools.Items.Add(this.btn_sync_sto);
             this.groupTempTools.Items.Add(this.btn_SBCUtest);
             this.groupTempTools.Label = "TempTools";
             this.groupTempTools.Name = "groupTempTools";
@@ -359,12 +357,6 @@
             this.btn_sync_mx7.Label = "btn_sync_mx7";
             this.btn_sync_mx7.Name = "btn_sync_mx7";
             this.btn_sync_mx7.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_sync_mx7_Click);
-            // 
-            // btn_sync_sto
-            // 
-            this.btn_sync_sto.Label = "btn_sync_sto";
-            this.btn_sync_sto.Name = "btn_sync_sto";
-            this.btn_sync_sto.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_sync_sto_Click);
             // 
             // btn_SBCUtest
             // 
@@ -429,7 +421,6 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_SBCUtest;
         internal Microsoft.Office.Tools.Ribbon.RibbonToggleButton btn_EditProcedure;
         internal Microsoft.Office.Tools.Ribbon.RibbonToggleButton tgbtn_Wrap;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_sync_sto;
         internal Microsoft.Office.Tools.Ribbon.RibbonSeparator separator4;
     }
 

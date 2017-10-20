@@ -261,7 +261,7 @@
             this.Btn_ChartMidair.Name = "Btn_ChartMidair";
             this.Btn_ChartMidair.Size = new System.Drawing.Size(1330, 24);
             this.Btn_ChartMidair.TabIndex = 20;
-            this.Btn_ChartMidair.Text = "+ Midar (mircoOhm)";
+            this.Btn_ChartMidair.Text = "+ Midar (µOhm)";
             this.Btn_ChartMidair.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.Btn_ChartMidair.UseSelectable = true;
             this.Btn_ChartMidair.Click += new System.EventHandler(this.Btn_ChartMidair_Click);

@@ -139,7 +139,6 @@ namespace ExcelAddInEquipmentDatabase
                 btn_docMngr.Enabled = false;
                 btn_ErrorMngr.Enabled = true;
                 btn_sync_mx7.Enabled = true;
-                btn_sync_sto.Enabled = false;
                 sync_stw040.Enabled = true;
             }
             else
@@ -151,7 +150,6 @@ namespace ExcelAddInEquipmentDatabase
                 btn_docMngr.Enabled = false;
                 btn_ErrorMngr.Enabled = false;
                 btn_sync_mx7.Enabled = false;
-                btn_sync_sto.Enabled = false;
                 sync_stw040.Enabled = false;
             }
         }
@@ -764,13 +762,6 @@ namespace ExcelAddInEquipmentDatabase
             btn_sync_mx7.Enabled = true;
         }
 
-        private void btn_sync_sto_Click(object sender, RibbonControlEventArgs e)
-        {
-            btn_sync_sto.Enabled = false;
-            EQUICommunictionLib.stoSync lstoSync = new EQUICommunictionLib.stoSync();
-            lstoSync.get_stodata();
-            btn_sync_sto.Enabled = true;
-        }
 
         //test
         private void button1_Click_1(object sender, RibbonControlEventArgs e)
