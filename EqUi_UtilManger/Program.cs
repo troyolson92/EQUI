@@ -101,6 +101,10 @@ namespace EqUi_UtilManger
                             default:
                             MessageBox.Show(string.Format("Tool: '{0}' is not a valid tool",values[0]));
                             break;
+
+                            case "sleepBlock":
+                                Application.Run(new SleepBlock());
+                                break;
                     }
                     break;
                 //

@@ -34,6 +34,7 @@
             this.btn_ErrorStats = new System.Windows.Forms.Button();
             this.btn_logDetails = new System.Windows.Forms.Button();
             this.Btn_MXxWoOverview = new System.Windows.Forms.Button();
+            this.btn_blockSleep = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btn_AssetStats
@@ -103,11 +104,24 @@
             this.Btn_MXxWoOverview.UseVisualStyleBackColor = true;
             this.Btn_MXxWoOverview.Click += new System.EventHandler(this.Btn_MXxWoOverview_Click);
             // 
+            // btn_blockSleep
+            // 
+            this.btn_blockSleep.AutoSize = true;
+            this.btn_blockSleep.Location = new System.Drawing.Point(19, 198);
+            this.btn_blockSleep.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_blockSleep.Name = "btn_blockSleep";
+            this.btn_blockSleep.Size = new System.Drawing.Size(100, 23);
+            this.btn_blockSleep.TabIndex = 6;
+            this.btn_blockSleep.Text = "BlockSleep";
+            this.btn_blockSleep.UseVisualStyleBackColor = true;
+            this.btn_blockSleep.Click += new System.EventHandler(this.btn_blockSleep_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(131, 216);
+            this.ClientSize = new System.Drawing.Size(131, 253);
+            this.Controls.Add(this.btn_blockSleep);
             this.Controls.Add(this.Btn_MXxWoOverview);
             this.Controls.Add(this.btn_logDetails);
             this.Controls.Add(this.btn_ErrorStats);
@@ -130,6 +144,7 @@
         private System.Windows.Forms.Button btn_ErrorStats;
         private System.Windows.Forms.Button btn_logDetails;
         private System.Windows.Forms.Button Btn_MXxWoOverview;
+        private System.Windows.Forms.Button btn_blockSleep;
     }
 }
 

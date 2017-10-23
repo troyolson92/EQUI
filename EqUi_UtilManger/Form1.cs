@@ -41,5 +41,9 @@ namespace EqUi_UtilManger
             MXxWOoverview lMXxWOoverview = new MXxWOoverview(null); 
         }
 
+        private void btn_blockSleep_Click(object sender, EventArgs e)
+        {
+            SleepBlock sleepBlock = new SleepBlock();
+        }
     }
 }
