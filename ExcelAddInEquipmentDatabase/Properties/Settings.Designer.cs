@@ -12,7 +12,7 @@ namespace ExcelAddInEquipmentDatabase.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "12.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.3.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -26,33 +26,11 @@ namespace ExcelAddInEquipmentDatabase.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=sqla001.gen.volvocars.net;Initial Catalog=GADATA;Persist Security Inf" +
-            "o=True;User ID=EqUi;Password=EqUi")]
-        public string GADATAConnectionString {
-            get {
-                return ((string)(this["GADATAConnectionString"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
         [global::System.Configuration.DefaultSettingValueAttribute("Data Source=sqla001.gen.volvocars.net;Persist Security Info=True;User ID=GADATA;P" +
             "assword=GADATA987")]
         public string GadataConnRW {
             get {
                 return ((string)(this["GadataConnRW"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=sqla001.gen.volvocars.net;Initial Catalog=GADATA;Persist Security Inf" +
-            "o=True;User ID=GADATA;Password=GADATA987")]
-        public string GADATAConnectionString1 {
-            get {
-                return ((string)(this["GADATAConnectionString1"]));
             }
         }
         
@@ -89,6 +67,17 @@ namespace ExcelAddInEquipmentDatabase.Properties {
             }
             set {
                 this["usergroup"] = value;
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=sqla001.gen.volvocars.net;Initial Catalog=GADATA;Persist Security Inf" +
+            "o=True;User ID=GADATA;Password=GADATA987")]
+        public string GADATAConnectionString {
+            get {
+                return ((string)(this["GADATAConnectionString"]));
             }
         }
     }

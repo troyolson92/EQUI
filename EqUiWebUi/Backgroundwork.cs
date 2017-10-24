@@ -213,20 +213,40 @@ namespace EqUiWebUi
 		{
 			GadataComm lGadataComm = new GadataComm();
 			//get last record in GADATA 
-			string gadataGetMaxIDXQry = "SELECT TOP 1 [NID_ALARM_DATA] FROM [GADATA].[STO].[rt_breakdown] ORDER BY [NID_ALARM_DATA] DESC";
-			DataTable dtGadataMaxIDX = lGadataComm.RunQueryGadata(gadataGetMaxIDXQry);
-			double GadataMAxIDX = dtGadataMaxIDX.Rows[0].Field<double>("NID_ALARM_DATA");
+			string gadataGetMaxTimestampQry = "select TOP 1 _timestamp FROM GADATA.STO.h_breakdown order by _timestamp desc ";
+			DataTable dtGadataMaxTS= lGadataComm.RunQueryGadata(gadataGetMaxTimestampQry);
+            //handel empty table
+            DateTime GadataMAxTs = DateTime.Parse("1900-01-01 00:00:00");
+            if (dtGadataMaxTS.Rows.Count != 0)
+            {
+                GadataMAxTs = dtGadataMaxTS.Rows[0].Field<DateTime>("_timestamp");
+            }
 			//get new records from STO
 			StoComm lStoComm = new StoComm();
-			string stoQry = string.Format(@"SELECT * FROM STO_SYS.ALARM_DATA_UB12 WHERE NID_ALARM_DATA > {0}"
-				, GadataMAxIDX);
+			string stoQry = string.Format(@"
+SELECT * FROM
+(
+SELECT ALARM_DATA_UB12.*, 'ALARM_DATA_UB12' stoTable FROM STO_SYS.ALARM_DATA_UB12
+UNION
+SELECT ALARM_DATA_SUBASSY.*,'ALARM_DATA_SUBASSY' stoTable FROM STO_SYS.ALARM_DATA_SUBASSY
+UNION
+SELECT ALARM_DATA_BODY_SIDES.*,'ALARM_DATA_BODY_SIDES' stoTable FROM STO_SYS.ALARM_DATA_BODY_SIDES
+UNION
+SELECT ALARM_DATA_SUBASSY.*,'ALARM_DATA_SUBASSY' stoTable FROM STO_SYS.ALARM_DATA_SUBASSY
+) WHERE CHANGETS > '{0}'"
+                , GadataMAxTs);
 			DataTable newStoDt = lStoComm.oracle_runQuery(stoQry);
 			//push to gadata
 			lGadataComm.BulkCopyToGadata("STO", newStoDt, "rt_breakdown");
-			//get new max in gadata
-			DataTable dtGadataNewMaxIDX = lGadataComm.RunQueryGadata(gadataGetMaxIDXQry);
-			double GadataNewMAxIDX = dtGadataNewMaxIDX.Rows[0].Field<double>("NID_ALARM_DATA");
-		  
-		}
+            //get new max in gadata
+            //DataTable dtGadataNewMaxIDX = lGadataComm.RunQueryGadata(gadataGetMaxTimestampQry);
+            //DateTime GadataNewMAxIDX = dtGadataNewMaxIDX.Rows[0].Field<DateTime>("_timestamp");
+            //trigger normalisation
+            lGadataComm.RunCommandGadata("EXEC GADATA.STO.[sp_update_L]",true);
+            //trigger classification
+         //   lGadataComm.RunCommandGadata("EXEC GADATA.STO.[sp_update_Lerror_classifcation]", true);
+
+
+        }
 	}
 }

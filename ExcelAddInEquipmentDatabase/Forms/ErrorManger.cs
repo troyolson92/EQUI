@@ -36,16 +36,18 @@ namespace ExcelAddInEquipmentDatabase.Forms
         applData.c3gL_errorDataTable lc3gError = new applData.c3gL_errorDataTable();
         applData.c4gL_errorDataTable lc4gError = new applData.c4gL_errorDataTable();
         applData.ngacL_errorDataTable lngaclError = new applData.ngacL_errorDataTable();
+        applData.stoL_errorDataTable lstoError = new applData.stoL_errorDataTable();
         //
         applData.c3gC_LogClassRulesDataTable lv3gRules = new applData.c3gC_LogClassRulesDataTable();
         applData.c4gC_LogClassRulesDataTable lv4gRules = new applData.c4gC_LogClassRulesDataTable();
         applData.ngacC_LogClassRulesDataTable lngaclRules = new applData.ngacC_LogClassRulesDataTable();
+        applData.stoC_LogClassRulesDataTable lstoRules = new applData.stoC_LogClassRulesDataTable();
         BindingSource bindingSourceRules = new BindingSource();
         //
         applData.c_SubgroupDataTable lc_subgroup = new applData.c_SubgroupDataTable();
         applData.c_ClassificationDataTable lc_classification = new applData.c_ClassificationDataTable();
         //
-        static string[] systems = new string[] { "ABB-NGAC" ,"C3G", "C4G"};
+        static string[] systems = new string[] { "ABB-NGAC" ,"C3G", "C4G", "STO"};
         string CreateNew = "Create new...";
         string UpdateFromMaximo = "Update from Maximo...";
 
@@ -133,6 +135,14 @@ namespace ExcelAddInEquipmentDatabase.Forms
                     }
                     bindingSourceRules.DataSource = lngaclRules;
                     break;
+                case "STO":
+                    using (applDataTableAdapters.stoC_LogClassRulesTableAdapter Adapter = new applDataTableAdapters.stoC_LogClassRulesTableAdapter())
+                    {
+                        Adapter.Fill(lstoRules, GetID(cb_classification.Text), GetID(cb_Subgroup.Text));
+                    }
+                    bindingSourceRules.DataSource = lstoRules;
+                    break;
+
                 default:
                     MessageBox.Show("system unkown", "OEPS", MessageBoxButtons.OK);
                     return;
@@ -186,6 +196,14 @@ namespace ExcelAddInEquipmentDatabase.Forms
                     }
                     dg_Result.DataSource = lngaclError;
                     break;
+                case "STO":
+                    using (applDataTableAdapters.stoL_errorTableAdapter Adapter = new applDataTableAdapters.stoL_errorTableAdapter())
+                    {
+                        //sto does not contain error number feater
+                        Adapter.Fill(lstoError, tb_logTextFilter.Text);
+                    }
+                    dg_Result.DataSource = lstoError;
+                    break;
                 default:
                     MessageBox.Show("system unkown", "OEPS", MessageBoxButtons.OK);
                     return;
@@ -237,6 +255,12 @@ namespace ExcelAddInEquipmentDatabase.Forms
                             {
                               
                                 Adapter.UpdateQuery(Convert.ToInt32(row.Cells[2].Value), GetID(cb_classification.Text), GetID(cb_Subgroup.Text));
+                            }
+                            break;
+                        case "STO":
+                            using (applDataTableAdapters.stoL_errorTableAdapter Adapter = new applDataTableAdapters.stoL_errorTableAdapter())
+                            {
+                                Adapter.UpdateQuery(Convert.ToInt32(row.Cells[0].Value), GetID(cb_classification.Text), GetID(cb_Subgroup.Text));
                             }
                             break;
                         default:
@@ -380,6 +404,16 @@ This can not be undone.
                         , cb_OverRideManualSet.Checked, GetID(cb_classification.Text), GetID(cb_Subgroup.Text))
                         , true);
                     break;
+                case "STO":
+                    lGadataComm.RunCommandGadata(string.Format(
+                        @"exec gadata.[STO].[sp_update_Lerror_classifcation] 
+                                  @update = 1
+                                , @OverRideManualSet = {0}
+                                , @c_ClassificationId = {1}
+                                , @c_SubgroupId = {2}"
+                        , cb_OverRideManualSet.Checked, GetID(cb_classification.Text), GetID(cb_Subgroup.Text))
+                        , true);
+                    break;
                 default:
                     MessageBox.Show("system unkown", "OEPS", MessageBoxButtons.OK);
                     return;
@@ -419,6 +453,13 @@ This can not be undone.
                         using (applDataTableAdapters.ngacC_LogClassRulesTableAdapter Adapter = new applDataTableAdapters.ngacC_LogClassRulesTableAdapter())
                         {
                         
+                            Adapter.Insert(null, null, null, null, GetID(cb_classification.Text), GetID(cb_Subgroup.Text));
+                        }
+                        break;
+                    case "STO":
+                        using (applDataTableAdapters.stoC_LogClassRulesTableAdapter Adapter = new applDataTableAdapters.stoC_LogClassRulesTableAdapter())
+                        {
+
                             Adapter.Insert(null, null, null, null, GetID(cb_classification.Text), GetID(cb_Subgroup.Text));
                         }
                         break;
@@ -496,6 +537,13 @@ This can not be undone.
                         using (applDataTableAdapters.ngacC_LogClassRulesTableAdapter Adapter = new applDataTableAdapters.ngacC_LogClassRulesTableAdapter())
                         {
                             applData.ngacC_LogClassRulesDataTable dt = (applData.ngacC_LogClassRulesDataTable)bindingSourceRules.DataSource;
+                            rowsUpdated = Adapter.Update(dt);
+                        }
+                        break;
+                    case "STO":
+                        using (applDataTableAdapters.stoC_LogClassRulesTableAdapter Adapter = new applDataTableAdapters.stoC_LogClassRulesTableAdapter())
+                        {
+                            applData.stoC_LogClassRulesDataTable dt = (applData.stoC_LogClassRulesDataTable)bindingSourceRules.DataSource;
                             rowsUpdated = Adapter.Update(dt);
                         }
                         break;

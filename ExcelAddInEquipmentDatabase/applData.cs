@@ -1,14 +1,21 @@
-﻿namespace ExcelAddInEquipmentDatabase {
-    
-    
-    public partial class applData {
+﻿namespace ExcelAddInEquipmentDatabase
+{
+
+
+    public partial class applData
+    {
         partial class ngacL_errorDataTable
         {
         }
     }
 }
 
-namespace ExcelAddInEquipmentDatabase.applDataTableAdapters {
+namespace ExcelAddInEquipmentDatabase.applDataTableAdapters
+{
+    partial class stoL_errorTableAdapter
+    {
+    }
+
     partial class ngacC_LogClassRulesTableAdapter
     {
     }

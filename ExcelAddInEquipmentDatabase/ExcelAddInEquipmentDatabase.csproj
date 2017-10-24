@@ -217,7 +217,7 @@
     <Compile Include="applData.cs">
       <DependentUpon>applData.xsd</DependentUpon>
     </Compile>
-    <Compile Include="applData1.Designer.cs">
+    <Compile Include="applData.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>applData.xsd</DependentUpon>
@@ -332,7 +332,7 @@
     <None Include="applData.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>applData1.Designer.cs</LastGenOutput>
+      <LastGenOutput>applData.Designer.cs</LastGenOutput>
     </None>
     <None Include="applData.xss">
       <DependentUpon>applData.xsd</DependentUpon>

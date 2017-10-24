@@ -2,11 +2,10 @@
 <xs:schema id="applData" targetNamespace="http://tempuri.org/applData.xsd" xmlns:mstns="http://tempuri.org/applData.xsd" xmlns="http://tempuri.org/applData.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
   <xs:annotation>
     <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
-      <DataSource DefaultConnectionIndex="3" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="4" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
         <Connections>
           <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="GADATAConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="GADATAConnectionString (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.ExcelAddInEquipmentDatabase.Properties.Settings.GlobalReference.Default.GADATAConnectionString" Provider="System.Data.SqlClient" />
-          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="GADATAConnectionString1" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="GADATAConnectionString1 (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.ExcelAddInEquipmentDatabase.Properties.Settings.GlobalReference.Default.GADATAConnectionString1" Provider="System.Data.SqlClient" />
-          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="GADATAConnectionString2" IsAppSettingsProperty="true" Modifier="Assembly" Name="GADATAConnectionString2 (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.ExcelAddInEquipmentDatabase.Properties.Settings.GlobalReference.Default.GADATAConnectionString2" Provider="System.Data.SqlClient" />
+          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="GADATAConnectionString1" IsAppSettingsProperty="true" Modifier="Assembly" Name="GADATAConnectionString1 (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.ExcelAddInEquipmentDatabase.Properties.Settings.GlobalReference.Default.GADATAConnectionString1" Provider="System.Data.SqlClient" />
           <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="ConnectionString" IsAppSettingsProperty="true" Modifier="Assembly" Name="ConnectionString (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.ExcelAddInEquipmentDatabase.Properties.Settings.GlobalReference.Default.ConnectionString" Provider="System.Data.SqlClient" />
         </Connections>
         <Tables>
@@ -235,7 +234,7 @@ WHERE  (SYSTEM = @Original_SYSTEM) AND (NAME = @Original_NAME) AND (SETNAME = @O
           </TableAdapter>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="QUERYSTableAdapter" GeneratorDataComponentClassName="QUERYSTableAdapter" Name="QUERYS" UserDataComponentName="QUERYSTableAdapter">
             <MainSource>
-              <DbSource ConnectionRef="GADATAConnectionString1 (Settings)" DbObjectName="GADATA.EqUi.QUERYS" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+              <DbSource ConnectionRef="GADATAConnectionString (Settings)" DbObjectName="GADATA.EqUi.QUERYS" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
                 <DeleteCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="false">
                     <CommandText>DELETE FROM [EqUi].[QUERYS] WHERE (([SYSTEM] = @Original_SYSTEM) AND ([NAME] = @Original_NAME))</CommandText>
@@ -289,7 +288,7 @@ SELECT SYSTEM, NAME, DISCRIPTION, QUERY FROM EqUi.QUERYS WHERE (NAME = @NAME) AN
           </TableAdapter>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="c4gL_errorTableAdapter" GeneratorDataComponentClassName="c4gL_errorTableAdapter" Name="c4gL_error" UserDataComponentName="c4gL_errorTableAdapter">
             <MainSource>
-              <DbSource ConnectionRef="GADATAConnectionString1 (Settings)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+              <DbSource ConnectionRef="GADATAConnectionString (Settings)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
                     <CommandText>Select 
@@ -326,7 +325,7 @@ l.error_number between @lerror_numberFrom and  @error_numberUntil</CommandText>
               <Mapping SourceColumn="c_RuleId" DataSetColumn="c_RuleId" />
             </Mappings>
             <Sources>
-              <DbSource ConnectionRef="GADATAConnectionString1 (Settings)" DbObjectName="" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="UpdateQuery" Modifier="Public" Name="UpdateQuery" QueryType="NoData" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="UpdateQuery">
+              <DbSource ConnectionRef="GADATAConnectionString (Settings)" DbObjectName="" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="UpdateQuery" Modifier="Public" Name="UpdateQuery" QueryType="NoData" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="UpdateQuery">
                 <UpdateCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
                     <CommandText>UPDATE GADATA.C4g.L_error
@@ -348,7 +347,7 @@ where l.id = @error_id
           </TableAdapter>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="c_SubgroupTableAdapter" GeneratorDataComponentClassName="c_SubgroupTableAdapter" Name="c_Subgroup" UserDataComponentName="c_SubgroupTableAdapter">
             <MainSource>
-              <DbSource ConnectionRef="GADATAConnectionString1 (Settings)" DbObjectName="GADATA.Volvo.c_Subgroup" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+              <DbSource ConnectionRef="GADATAConnectionString (Settings)" DbObjectName="GADATA.Volvo.c_Subgroup" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
                 <DeleteCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="false">
                     <CommandText>DELETE FROM [Volvo].[c_Subgroup] WHERE (([id] = @Original_id) AND ([Subgroup] = @Original_Subgroup) AND ([Discription] = @Original_Discription))</CommandText>
@@ -400,7 +399,7 @@ SELECT id, Subgroup, Discription FROM Volvo.c_Subgroup WHERE (id = @id)</Command
           </TableAdapter>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="c_ClassificationTableAdapter" GeneratorDataComponentClassName="c_ClassificationTableAdapter" Name="c_Classification" UserDataComponentName="c_ClassificationTableAdapter">
             <MainSource>
-              <DbSource ConnectionRef="GADATAConnectionString1 (Settings)" DbObjectName="GADATA.Volvo.c_Classification" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+              <DbSource ConnectionRef="GADATAConnectionString (Settings)" DbObjectName="GADATA.Volvo.c_Classification" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
                     <CommandText>SELECT * FROM Volvo.c_Classification</CommandText>
@@ -415,7 +414,7 @@ SELECT id, Subgroup, Discription FROM Volvo.c_Subgroup WHERE (id = @id)</Command
               <Mapping SourceColumn="Discription" DataSetColumn="Discription" />
             </Mappings>
             <Sources>
-              <DbSource ConnectionRef="GADATAConnectionString1 (Settings)" DbObjectName="" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="InsertQuery" Modifier="Public" Name="InsertQuery" QueryType="NoData" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="InsertQuery">
+              <DbSource ConnectionRef="GADATAConnectionString (Settings)" DbObjectName="" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="InsertQuery" Modifier="Public" Name="InsertQuery" QueryType="NoData" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="InsertQuery">
                 <InsertCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
                     <CommandText>   IF NOT EXISTS (SELECT * FROM GADATA.volvo.c_Classification 
@@ -435,7 +434,7 @@ VALUES(@Classification,@Discription)
           </TableAdapter>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="c3gL_errorTableAdapter" GeneratorDataComponentClassName="c3gL_errorTableAdapter" Name="c3gL_error" UserDataComponentName="c3gL_errorTableAdapter">
             <MainSource>
-              <DbSource ConnectionRef="GADATAConnectionString1 (Settings)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+              <DbSource ConnectionRef="GADATAConnectionString (Settings)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
                     <CommandText>Select 
@@ -472,7 +471,7 @@ l.error_number between @lerror_numberFrom and  @error_numberUntil</CommandText>
               <Mapping SourceColumn="subgroup" DataSetColumn="subgroup" />
             </Mappings>
             <Sources>
-              <DbSource ConnectionRef="GADATAConnectionString1 (Settings)" DbObjectName="" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="UpdateQuery" Modifier="Public" Name="UpdateQuery" QueryType="NoData" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="UpdateQuery">
+              <DbSource ConnectionRef="GADATAConnectionString (Settings)" DbObjectName="" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="UpdateQuery" Modifier="Public" Name="UpdateQuery" QueryType="NoData" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="UpdateQuery">
                 <UpdateCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
                     <CommandText>UPDATE GADATA.C3g.L_error
@@ -494,7 +493,7 @@ where l.id = @error_id
           </TableAdapter>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="c3gC_LogClassRulesTableAdapter" GeneratorDataComponentClassName="c3gC_LogClassRulesTableAdapter" Name="c3gC_LogClassRules" UserDataComponentName="c3gC_LogClassRulesTableAdapter">
             <MainSource>
-              <DbSource ConnectionRef="GADATAConnectionString1 (Settings)" DbObjectName="GADATA.C3G.c_LogClassRules" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+              <DbSource ConnectionRef="GADATAConnectionString (Settings)" DbObjectName="GADATA.C3G.c_LogClassRules" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
                 <DeleteCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="false">
                     <CommandText>DELETE FROM [C3G].[c_LogClassRules] WHERE (([id] = @Original_id) AND ((@IsNull_Err_start = 1 AND [Err_start] IS NULL) OR ([Err_start] = @Original_Err_start)) AND ((@IsNull_Err_end = 1 AND [Err_end] IS NULL) OR ([Err_end] = @Original_Err_end)) AND ((@IsNull_Err_text = 1 AND [Err_text] IS NULL) OR ([Err_text] = @Original_Err_text)) AND ((@IsNull_I_comment = 1 AND [I_comment] IS NULL) OR ([I_comment] = @Original_I_comment)) AND ((@IsNull_c_ClassificationId = 1 AND [c_ClassificationId] IS NULL) OR ([c_ClassificationId] = @Original_c_ClassificationId)) AND ((@IsNull_c_SubgroupId = 1 AND [c_SubgroupId] IS NULL) OR ([c_SubgroupId] = @Original_c_SubgroupId)))</CommandText>
@@ -578,7 +577,7 @@ SELECT id, Err_start, Err_end, Err_text, I_comment, c_ClassificationId, c_Subgro
               <Mapping SourceColumn="c_SubgroupId" DataSetColumn="c_SubgroupId" />
             </Mappings>
             <Sources>
-              <DbSource ConnectionRef="GADATAConnectionString1 (Settings)" DbObjectName="" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="DeleteQuery" Modifier="Public" Name="DeleteQuery" QueryType="NoData" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="DeleteQuery">
+              <DbSource ConnectionRef="GADATAConnectionString (Settings)" DbObjectName="" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="DeleteQuery" Modifier="Public" Name="DeleteQuery" QueryType="NoData" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="DeleteQuery">
                 <DeleteCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
                     <CommandText>DELETE FROM [C3G].[c_LogClassRules] WHERE ([id] = @Original_id) </CommandText>
@@ -592,7 +591,7 @@ SELECT id, Err_start, Err_end, Err_text, I_comment, c_ClassificationId, c_Subgro
           </TableAdapter>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="c4gC_LogClassRulesTableAdapter" GeneratorDataComponentClassName="c4gC_LogClassRulesTableAdapter" Name="c4gC_LogClassRules" UserDataComponentName="c4gC_LogClassRulesTableAdapter">
             <MainSource>
-              <DbSource ConnectionRef="GADATAConnectionString1 (Settings)" DbObjectName="GADATA.C4G.c_LogClassRules" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+              <DbSource ConnectionRef="GADATAConnectionString (Settings)" DbObjectName="GADATA.C4G.c_LogClassRules" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
                 <DeleteCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="false">
                     <CommandText>DELETE FROM [C4G].[c_LogClassRules] WHERE (([id] = @Original_id) AND ((@IsNull_Err_start = 1 AND [Err_start] IS NULL) OR ([Err_start] = @Original_Err_start)) AND ((@IsNull_Err_end = 1 AND [Err_end] IS NULL) OR ([Err_end] = @Original_Err_end)) AND ((@IsNull_Err_text = 1 AND [Err_text] IS NULL) OR ([Err_text] = @Original_Err_text)) AND ((@IsNull_I_comment = 1 AND [I_comment] IS NULL) OR ([I_comment] = @Original_I_comment)) AND ((@IsNull_c_ClassificationId = 1 AND [c_ClassificationId] IS NULL) OR ([c_ClassificationId] = @Original_c_ClassificationId)) AND ((@IsNull_c_SubgroupId = 1 AND [c_SubgroupId] IS NULL) OR ([c_SubgroupId] = @Original_c_SubgroupId)))</CommandText>
@@ -676,7 +675,7 @@ SELECT id, Err_start, Err_end, Err_text, I_comment, c_ClassificationId, c_Subgro
               <Mapping SourceColumn="c_SubgroupId" DataSetColumn="c_SubgroupId" />
             </Mappings>
             <Sources>
-              <DbSource ConnectionRef="GADATAConnectionString1 (Settings)" DbObjectName="" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="DeleteQuery" Modifier="Public" Name="DeleteQuery" QueryType="NoData" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="DeleteQuery">
+              <DbSource ConnectionRef="GADATAConnectionString (Settings)" DbObjectName="" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="DeleteQuery" Modifier="Public" Name="DeleteQuery" QueryType="NoData" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="DeleteQuery">
                 <DeleteCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
                     <CommandText>DELETE FROM [C4G].[c_LogClassRules] WHERE (([id] = @Original_id) )</CommandText>
@@ -690,7 +689,7 @@ SELECT id, Err_start, Err_end, Err_text, I_comment, c_ClassificationId, c_Subgro
           </TableAdapter>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="UsersTableAdapter" GeneratorDataComponentClassName="UsersTableAdapter" Name="Users" UserDataComponentName="UsersTableAdapter">
             <MainSource>
-              <DbSource ConnectionRef="GADATAConnectionString1 (Settings)" DbObjectName="GADATA.Volvo.Users" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+              <DbSource ConnectionRef="GADATAConnectionString (Settings)" DbObjectName="GADATA.Volvo.Users" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
                 <DeleteCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="false">
                     <CommandText>DELETE FROM [Volvo].[Users] WHERE (([id] = @Original_id) AND ((@IsNull_CDS = 1 AND [CDS] IS NULL) OR ([CDS] = @Original_CDS)) AND ((@IsNull_nickname = 1 AND [nickname] IS NULL) OR ([nickname] = @Original_nickname)) AND ((@IsNull_Ulevel = 1 AND [Ulevel] IS NULL) OR ([Ulevel] = @Original_Ulevel)) AND ((@IsNull_UserLevel = 1 AND [UserLevel] IS NULL) OR ([UserLevel] = @Original_UserLevel)) AND ((@IsNull_UserGroup = 1 AND [UserGroup] IS NULL) OR ([UserGroup] = @Original_UserGroup)))</CommandText>
@@ -767,7 +766,7 @@ SELECT id, CDS, nickname, Ulevel, UserLevel, UserGroup FROM Volvo.Users WHERE (i
           </TableAdapter>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="ngacC_LogClassRulesTableAdapter" GeneratorDataComponentClassName="ngacC_LogClassRulesTableAdapter" Name="ngacC_LogClassRules" UserDataComponentName="ngacC_LogClassRulesTableAdapter">
             <MainSource>
-              <DbSource ConnectionRef="GADATAConnectionString1 (Settings)" DbObjectName="GADATA.NGAC.c_LogClassRules" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+              <DbSource ConnectionRef="GADATAConnectionString (Settings)" DbObjectName="GADATA.NGAC.c_LogClassRules" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
                 <DeleteCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="false">
                     <CommandText>DELETE FROM [ngac].[c_LogClassRules] WHERE (([id] = @Original_id) AND ((@IsNull_Err_start = 1 AND [Err_start] IS NULL) OR ([Err_start] = @Original_Err_start)) AND ((@IsNull_Err_end = 1 AND [Err_end] IS NULL) OR ([Err_end] = @Original_Err_end)) AND ((@IsNull_Err_text = 1 AND [Err_text] IS NULL) OR ([Err_text] = @Original_Err_text)) AND ((@IsNull_I_comment = 1 AND [I_comment] IS NULL) OR ([I_comment] = @Original_I_comment)) AND ((@IsNull_c_ClassificationId = 1 AND [c_ClassificationId] IS NULL) OR ([c_ClassificationId] = @Original_c_ClassificationId)) AND ((@IsNull_c_SubgroupId = 1 AND [c_SubgroupId] IS NULL) OR ([c_SubgroupId] = @Original_c_SubgroupId)))</CommandText>
@@ -853,7 +852,7 @@ SELECT id, Err_start, Err_end, Err_text, I_comment, c_ClassificationId, c_Subgro
               <Mapping SourceColumn="c_SubgroupId" DataSetColumn="c_SubgroupId" />
             </Mappings>
             <Sources>
-              <DbSource ConnectionRef="GADATAConnectionString1 (Settings)" DbObjectName="" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="DeleteQuery" Modifier="Public" Name="DeleteQuery" QueryType="NoData" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="DeleteQuery">
+              <DbSource ConnectionRef="GADATAConnectionString (Settings)" DbObjectName="" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="DeleteQuery" Modifier="Public" Name="DeleteQuery" QueryType="NoData" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="DeleteQuery">
                 <DeleteCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
                     <CommandText>DELETE FROM [NGAC].[c_LogClassRules] WHERE (([id] = @Original_id) )</CommandText>
@@ -867,7 +866,7 @@ SELECT id, Err_start, Err_end, Err_text, I_comment, c_ClassificationId, c_Subgro
           </TableAdapter>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="ngacL_errorTableAdapter" GeneratorDataComponentClassName="ngacL_errorTableAdapter" Name="ngacL_error" UserDataComponentName="ngacL_errorTableAdapter">
             <MainSource>
-              <DbSource ConnectionRef="GADATAConnectionString1 (Settings)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+              <DbSource ConnectionRef="GADATAConnectionString (Settings)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
                     <CommandText>SELECT 
@@ -902,7 +901,7 @@ WHERE  (ld.Description LIKE @error_text) AND (l.Number BETWEEN @lerror_numberFro
               <Mapping SourceColumn="Subgroup" DataSetColumn="Subgroup" />
             </Mappings>
             <Sources>
-              <DbSource ConnectionRef="GADATAConnectionString1 (Settings)" DbObjectName="" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="UpdateQuery" Modifier="Public" Name="UpdateQuery" QueryType="NoData" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="UpdateQuery">
+              <DbSource ConnectionRef="GADATAConnectionString (Settings)" DbObjectName="" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="UpdateQuery" Modifier="Public" Name="UpdateQuery" QueryType="NoData" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="UpdateQuery">
                 <UpdateCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
                     <CommandText>UPDATE GADATA.NGAC.L_error
@@ -916,6 +915,112 @@ where l._id = @error_id
                       <Parameter AllowDbNull="false" AutogeneratedName="error_id" ColumnName="_id" DataSourceName="GADATA.NGAC.L_error" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@error_id" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="_id" SourceColumnNullMapping="false" SourceVersion="Current" />
                       <Parameter AllowDbNull="false" AutogeneratedName="classificationId" ColumnName="" DataSourceName="" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@classificationId" Precision="0" Scale="0" Size="4" SourceColumn="" SourceColumnNullMapping="false" SourceVersion="Current" />
                       <Parameter AllowDbNull="false" AutogeneratedName="subgroupId" ColumnName="" DataSourceName="" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@subgroupId" Precision="0" Scale="0" Size="4" SourceColumn="" SourceColumnNullMapping="false" SourceVersion="Original" />
+                    </Parameters>
+                  </DbCommand>
+                </UpdateCommand>
+              </DbSource>
+            </Sources>
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="stoC_LogClassRulesTableAdapter" GeneratorDataComponentClassName="stoC_LogClassRulesTableAdapter" Name="stoC_LogClassRules" UserDataComponentName="stoC_LogClassRulesTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="GADATAConnectionString (Settings)" DbObjectName="GADATA.STO.c_LogClassRules" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+                <InsertCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>INSERT INTO [STO].[c_LogClassRules] ([Err_start], [Err_end], [Err_text], [I_comment], [c_ClassificationId], [c_SubgroupId]) VALUES (@Err_start, @Err_end, @Err_text, @I_comment, @c_ClassificationId, @c_SubgroupId)</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@Err_start" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="Err_start" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@Err_end" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="Err_end" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="@Err_text" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="Err_text" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="@I_comment" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="I_comment" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@c_ClassificationId" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="c_ClassificationId" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@c_SubgroupId" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="c_SubgroupId" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </InsertCommand>
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT * FROM STO.c_LogClassRules
+WHERE c_ClassificationID = @c_ClassificationID 
+AND c_SubgroupId = @c_SubgroupId </CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="true" AutogeneratedName="c_ClassificationID" ColumnName="c_ClassificationId" DataSourceName="GADATA.STO.c_LogClassRules" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@c_ClassificationID" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="c_ClassificationId" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="c_SubgroupId" ColumnName="c_SubgroupId" DataSourceName="GADATA.STO.c_LogClassRules" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@c_SubgroupId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="c_SubgroupId" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="id" DataSetColumn="id" />
+              <Mapping SourceColumn="Err_start" DataSetColumn="Err_start" />
+              <Mapping SourceColumn="Err_end" DataSetColumn="Err_end" />
+              <Mapping SourceColumn="Err_text" DataSetColumn="Err_text" />
+              <Mapping SourceColumn="I_comment" DataSetColumn="I_comment" />
+              <Mapping SourceColumn="c_ClassificationId" DataSetColumn="c_ClassificationId" />
+              <Mapping SourceColumn="c_SubgroupId" DataSetColumn="c_SubgroupId" />
+            </Mappings>
+            <Sources>
+              <DbSource ConnectionRef="GADATAConnectionString (Settings)" DbObjectName="" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="DeleteQuery" Modifier="Public" Name="DeleteQuery" QueryType="NoData" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="DeleteQuery">
+                <DeleteCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>DELETE FROM [STO].[c_LogClassRules] WHERE (([id] = @Original_id) )</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="false" AutogeneratedName="Original_id" ColumnName="id" DataSourceName="GADATA.STO.c_LogClassRules" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@Original_id" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="id" SourceColumnNullMapping="false" SourceVersion="Original" />
+                    </Parameters>
+                  </DbCommand>
+                </DeleteCommand>
+              </DbSource>
+            </Sources>
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="stoL_errorTableAdapter" GeneratorDataComponentClassName="stoL_errorTableAdapter" Name="stoL_error" UserDataComponentName="stoL_errorTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="GADATAConnectionString (Settings)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>Select 
+ l.id
+,l.SUBOBJECT
+,l.ALARMSEVERITY
+,l.ALARMCOMMENT
+,c.Classification
+,S.subgroup
+,l.c_RuleId 
+from gadata.STO.l_error as l 
+left join gadata.volvo.c_Classification as c on c.id = l.c_classificationId
+left join gadata.volvo.c_subgroup as s on s.id = l.c_subgroupId
+Where
+l.ALARMCOMMENT like @error_text</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="true" AutogeneratedName="error_text" ColumnName="ALARMCOMMENT" DataSourceName="GADATA.STO.l_error" DataTypeServer="varchar(MAX)" DbType="AnsiString" Direction="Input" ParameterName="@error_text" Precision="0" ProviderType="VarChar" Scale="0" Size="2147483647" SourceColumn="ALARMCOMMENT" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="id" DataSetColumn="id" />
+              <Mapping SourceColumn="SUBOBJECT" DataSetColumn="SUBOBJECT" />
+              <Mapping SourceColumn="ALARMSEVERITY" DataSetColumn="ALARMSEVERITY" />
+              <Mapping SourceColumn="ALARMCOMMENT" DataSetColumn="ALARMCOMMENT" />
+              <Mapping SourceColumn="Classification" DataSetColumn="Classification" />
+              <Mapping SourceColumn="subgroup" DataSetColumn="subgroup" />
+              <Mapping SourceColumn="c_RuleId" DataSetColumn="c_RuleId" />
+            </Mappings>
+            <Sources>
+              <DbSource ConnectionRef="GADATAConnectionString (Settings)" DbObjectName="" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="UpdateQuery" Modifier="Public" Name="UpdateQuery" QueryType="NoData" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="UpdateQuery">
+                <UpdateCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>UPDATE GADATA.STO.L_error
+set l_error.c_classificationId = (select top 1 id from [GADATA].[Volvo].[c_Classification] where id = @classificationId)
+  , l_error.c_subgroupId=  (select top 1 id from [GADATA].[Volvo].[c_subgroup] where id = @subgroupId)
+  , l_error.c_ruleid = -1
+from GADATA.STO.L_error as l 
+where l.id = @error_id
+</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="false" AutogeneratedName="error_id" ColumnName="id" DataSourceName="GADATA.STO.l_error" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@error_id" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="id" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="false" AutogeneratedName="classificationId" ColumnName="id" DataSourceName="GADATA.STO.l_error" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@classificationId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="id" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="false" AutogeneratedName="subgroupId" ColumnName="id" DataSourceName="GADATA.STO.l_error" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@subgroupId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="id" SourceColumnNullMapping="false" SourceVersion="Original" />
                     </Parameters>
                   </DbCommand>
                 </UpdateCommand>
@@ -1633,6 +1738,74 @@ where l._id = @error_id
             </xs:sequence>
           </xs:complexType>
         </xs:element>
+        <xs:element name="stoC_LogClassRules" msprop:Generator_TableClassName="stoC_LogClassRulesDataTable" msprop:Generator_TableVarName="tablestoC_LogClassRules" msprop:Generator_RowChangedName="stoC_LogClassRulesRowChanged" msprop:Generator_TablePropName="stoC_LogClassRules" msprop:Generator_RowDeletingName="stoC_LogClassRulesRowDeleting" msprop:Generator_RowChangingName="stoC_LogClassRulesRowChanging" msprop:Generator_RowEvHandlerName="stoC_LogClassRulesRowChangeEventHandler" msprop:Generator_RowDeletedName="stoC_LogClassRulesRowDeleted" msprop:Generator_RowClassName="stoC_LogClassRulesRow" msprop:Generator_UserTableName="stoC_LogClassRules" msprop:Generator_RowEvArgName="stoC_LogClassRulesRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="id" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnid" msprop:Generator_ColumnPropNameInRow="id" msprop:Generator_ColumnPropNameInTable="idColumn" msprop:Generator_UserColumnName="id" type="xs:int" />
+              <xs:element name="Err_start" msprop:Generator_ColumnVarNameInTable="columnErr_start" msprop:Generator_ColumnPropNameInRow="Err_start" msprop:Generator_ColumnPropNameInTable="Err_startColumn" msprop:Generator_UserColumnName="Err_start" type="xs:int" minOccurs="0" />
+              <xs:element name="Err_end" msprop:Generator_ColumnVarNameInTable="columnErr_end" msprop:Generator_ColumnPropNameInRow="Err_end" msprop:Generator_ColumnPropNameInTable="Err_endColumn" msprop:Generator_UserColumnName="Err_end" type="xs:int" minOccurs="0" />
+              <xs:element name="Err_text" msprop:Generator_ColumnVarNameInTable="columnErr_text" msprop:Generator_ColumnPropNameInRow="Err_text" msprop:Generator_ColumnPropNameInTable="Err_textColumn" msprop:Generator_UserColumnName="Err_text" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="255" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="I_comment" msprop:Generator_ColumnVarNameInTable="columnI_comment" msprop:Generator_ColumnPropNameInRow="I_comment" msprop:Generator_ColumnPropNameInTable="I_commentColumn" msprop:Generator_UserColumnName="I_comment" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="255" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="c_ClassificationId" msprop:Generator_ColumnVarNameInTable="columnc_ClassificationId" msprop:Generator_ColumnPropNameInRow="c_ClassificationId" msprop:Generator_ColumnPropNameInTable="c_ClassificationIdColumn" msprop:Generator_UserColumnName="c_ClassificationId" type="xs:int" minOccurs="0" />
+              <xs:element name="c_SubgroupId" msprop:Generator_ColumnVarNameInTable="columnc_SubgroupId" msprop:Generator_ColumnPropNameInRow="c_SubgroupId" msprop:Generator_ColumnPropNameInTable="c_SubgroupIdColumn" msprop:Generator_UserColumnName="c_SubgroupId" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="stoL_error" msprop:Generator_TableClassName="stoL_errorDataTable" msprop:Generator_TableVarName="tablestoL_error" msprop:Generator_RowChangedName="stoL_errorRowChanged" msprop:Generator_TablePropName="stoL_error" msprop:Generator_RowDeletingName="stoL_errorRowDeleting" msprop:Generator_RowChangingName="stoL_errorRowChanging" msprop:Generator_RowEvHandlerName="stoL_errorRowChangeEventHandler" msprop:Generator_RowDeletedName="stoL_errorRowDeleted" msprop:Generator_RowClassName="stoL_errorRow" msprop:Generator_UserTableName="stoL_error" msprop:Generator_RowEvArgName="stoL_errorRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="id" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnid" msprop:Generator_ColumnPropNameInRow="id" msprop:Generator_ColumnPropNameInTable="idColumn" msprop:Generator_UserColumnName="id" type="xs:int" />
+              <xs:element name="SUBOBJECT" msprop:Generator_ColumnVarNameInTable="columnSUBOBJECT" msprop:Generator_ColumnPropNameInRow="SUBOBJECT" msprop:Generator_ColumnPropNameInTable="SUBOBJECTColumn" msprop:Generator_UserColumnName="SUBOBJECT" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ALARMSEVERITY" msprop:Generator_ColumnVarNameInTable="columnALARMSEVERITY" msprop:Generator_ColumnPropNameInRow="ALARMSEVERITY" msprop:Generator_ColumnPropNameInTable="ALARMSEVERITYColumn" msprop:Generator_UserColumnName="ALARMSEVERITY" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ALARMCOMMENT" msprop:Generator_ColumnVarNameInTable="columnALARMCOMMENT" msprop:Generator_ColumnPropNameInRow="ALARMCOMMENT" msprop:Generator_ColumnPropNameInTable="ALARMCOMMENTColumn" msprop:Generator_UserColumnName="ALARMCOMMENT" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Classification" msprop:Generator_ColumnVarNameInTable="columnClassification" msprop:Generator_ColumnPropNameInRow="Classification" msprop:Generator_ColumnPropNameInTable="ClassificationColumn" msprop:Generator_UserColumnName="Classification" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="subgroup" msprop:Generator_ColumnVarNameInTable="columnsubgroup" msprop:Generator_ColumnPropNameInRow="subgroup" msprop:Generator_ColumnPropNameInTable="subgroupColumn" msprop:Generator_UserColumnName="subgroup" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="c_RuleId" msprop:Generator_ColumnVarNameInTable="columnc_RuleId" msprop:Generator_ColumnPropNameInRow="c_RuleId" msprop:Generator_ColumnPropNameInTable="c_RuleIdColumn" msprop:Generator_UserColumnName="c_RuleId" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
       </xs:choice>
     </xs:complexType>
     <xs:unique name="Constraint1" msdata:PrimaryKey="true">
@@ -1683,6 +1856,14 @@ where l._id = @error_id
       <xs:selector xpath=".//mstns:ngacL_error" />
       <xs:field xpath="mstns:_id" />
     </xs:unique>
+    <xs:unique name="stoC_LogClassRulesKey1">
+      <xs:selector xpath=".//mstns:stoC_LogClassRules" />
+      <xs:field xpath="mstns:id" />
+    </xs:unique>
+    <xs:unique name="stoL_error_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:stoL_error" />
+      <xs:field xpath="mstns:id" />
+    </xs:unique>
   </xs:element>
   <xs:annotation>
     <xs:appinfo>
@@ -1696,6 +1877,11 @@ where l._id = @error_id
       <msdata:Relationship name="FK_c_LogClassRules_c_Subgroup" msdata:parent="c_Subgroup" msdata:child="ngacC_LogClassRules" msdata:parentkey="id" msdata:childkey="c_SubgroupId" msprop:Generator_UserChildTable="ngacC_LogClassRules" msprop:Generator_ChildPropName="GetngacC_LogClassRulesRows" msprop:Generator_UserRelationName="FK_c_LogClassRules_c_Subgroup" msprop:Generator_RelationVarName="relationFK_c_LogClassRules_c_Subgroup" msprop:Generator_UserParentTable="c_Subgroup" msprop:Generator_ParentPropName="c_SubgroupRow" />
       <msdata:Relationship name="FK_c_LogClassRules_c_Classification6" msdata:parent="c_Classification" msdata:child="c4gC_LogClassRules" msdata:parentkey="id" msdata:childkey="c_ClassificationId" msprop:Generator_UserChildTable="c4gC_LogClassRules" msprop:Generator_ChildPropName="Getc4gC_LogClassRulesRows" msprop:Generator_UserRelationName="FK_c_LogClassRules_c_Classification6" msprop:Generator_ParentPropName="c_ClassificationRow" msprop:Generator_RelationVarName="relationFK_c_LogClassRules_c_Classification6" msprop:Generator_UserParentTable="c_Classification" />
       <msdata:Relationship name="FK_c_LogClassRules_c_Subgroup11" msdata:parent="c_Subgroup" msdata:child="c4gC_LogClassRules" msdata:parentkey="id" msdata:childkey="c_SubgroupId" msprop:Generator_UserChildTable="c4gC_LogClassRules" msprop:Generator_ChildPropName="Getc4gC_LogClassRulesRows" msprop:Generator_UserRelationName="FK_c_LogClassRules_c_Subgroup11" msprop:Generator_ParentPropName="c_SubgroupRow" msprop:Generator_RelationVarName="relationFK_c_LogClassRules_c_Subgroup11" msprop:Generator_UserParentTable="c_Subgroup" />
+      <msdata:Relationship name="c_Subgroup_stoC_LogClassRules" msdata:parent="c_Subgroup" msdata:child="stoC_LogClassRules" msdata:parentkey="id" msdata:childkey="c_SubgroupId" msprop:Generator_UserChildTable="stoC_LogClassRules" msprop:Generator_ChildPropName="GetstoC_LogClassRulesRows" msprop:Generator_UserRelationName="c_Subgroup_stoC_LogClassRules" msprop:Generator_RelationVarName="relationc_Subgroup_stoC_LogClassRules" msprop:Generator_UserParentTable="c_Subgroup" msprop:Generator_ParentPropName="c_SubgroupRow" />
+      <msdata:Relationship name="c_Classification_stoC_LogClassRules" msdata:parent="c_Classification" msdata:child="stoC_LogClassRules" msdata:parentkey="id" msdata:childkey="c_ClassificationId" msprop:Generator_UserChildTable="stoC_LogClassRules" msprop:Generator_ChildPropName="GetstoC_LogClassRulesRows" msprop:Generator_UserRelationName="c_Classification_stoC_LogClassRules" msprop:Generator_RelationVarName="relationc_Classification_stoC_LogClassRules" msprop:Generator_UserParentTable="c_Classification" msprop:Generator_ParentPropName="c_ClassificationRow" />
+      <msdata:Relationship name="FK_c_LogClassRules_c_Classification7" msdata:parent="stoL_error" msdata:child="c3gC_LogClassRules" msdata:parentkey="id" msdata:childkey="c_ClassificationId" msprop:Generator_UserChildTable="c3gC_LogClassRules" msprop:Generator_ChildPropName="Getc3gC_LogClassRulesRows" msprop:Generator_UserRelationName="FK_c_LogClassRules_c_Classification7" msprop:Generator_RelationVarName="relationFK_c_LogClassRules_c_Classification7" msprop:Generator_UserParentTable="stoL_error" msprop:Generator_ParentPropName="stoL_errorRow" />
+      <msdata:Relationship name="FK_c_LogClassRules_c_Classification8" msdata:parent="stoL_error" msdata:child="c4gC_LogClassRules" msdata:parentkey="id" msdata:childkey="c_ClassificationId" msprop:Generator_UserChildTable="c4gC_LogClassRules" msprop:Generator_ChildPropName="Getc4gC_LogClassRulesRows" msprop:Generator_UserRelationName="FK_c_LogClassRules_c_Classification8" msprop:Generator_RelationVarName="relationFK_c_LogClassRules_c_Classification8" msprop:Generator_UserParentTable="stoL_error" msprop:Generator_ParentPropName="stoL_errorRow" />
+      <msdata:Relationship name="FK_c_LogClassRules_c_Classification9" msdata:parent="stoL_error" msdata:child="ngacC_LogClassRules" msdata:parentkey="id" msdata:childkey="c_ClassificationId" msprop:Generator_UserChildTable="ngacC_LogClassRules" msprop:Generator_ChildPropName="GetngacC_LogClassRulesRows" msprop:Generator_UserRelationName="FK_c_LogClassRules_c_Classification9" msprop:Generator_RelationVarName="relationFK_c_LogClassRules_c_Classification9" msprop:Generator_UserParentTable="stoL_error" msprop:Generator_ParentPropName="stoL_errorRow" />
     </xs:appinfo>
   </xs:annotation>
 </xs:schema>
