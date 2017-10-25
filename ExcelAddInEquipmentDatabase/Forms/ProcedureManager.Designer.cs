@@ -1,6 +1,6 @@
 ﻿namespace ExcelAddInEquipmentDatabase.Forms
 {
-    partial class ProcedureManeger
+    partial class ProcedureManager
     {
         /// <summary> 
         /// Required designer variable.

@@ -15,7 +15,7 @@ using EQUICommunictionLib;
 namespace ExcelAddInEquipmentDatabase.Forms
 {
 
-    public partial class ProcedureManeger : UserControl
+    public partial class ProcedureManager : UserControl
     {
         //debugger
         myDebugger Debugger = new myDebugger();
@@ -83,7 +83,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
         }
         #endregion
 
-        public ProcedureManeger(string activeconnection)
+        public ProcedureManager(string activeconnection)
         {
             InitializeComponent();
             //

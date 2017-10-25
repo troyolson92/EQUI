@@ -5,7 +5,6 @@ using System.Text;
 using System.Data;
 using System.Diagnostics;
 using Oracle.ManagedDataAccess.Client;
-using Oracle.ManagedDataAccess.Types;
 namespace EQUICommunictionLib
 {
     public class StoComm
@@ -24,12 +23,11 @@ namespace EQUICommunictionLib
   )
 ;User Id=STO_SYS_READONLY;Password=sto_sys_readonly1;");
 
-        //debugger
-        myDebugger Debugger = new myDebugger();
+
 
         public DataTable oracle_runQuery(string Query)
         {
-            try
+          try
             {
                 using (OracleDataAdapter dadapter = new OracleDataAdapter(Query, Stoconn))
                 {
@@ -39,12 +37,10 @@ namespace EQUICommunictionLib
                     return table;
                 }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-               Debugger.Exeption(e);
-                DataTable table = new DataTable();
-                return table;
-            }
+                throw new NotSupportedException("Failed to run sto query " + Query, ex);
+            } 
 
         }
         

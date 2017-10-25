@@ -41,7 +41,7 @@
     <PublishUrl>\\gnlsnm0101.gen.volvocars.net\proj\6308-SHR-VCC22700\VSTO\DEPLOYMENTBASE\</PublishUrl>
     <InstallUrl />
     <TargetCulture>en</TargetCulture>
-    <ApplicationVersion>3.0.2.45</ApplicationVersion>
+    <ApplicationVersion>3.0.2.46</ApplicationVersion>
     <AutoIncrementApplicationRevision>true</AutoIncrementApplicationRevision>
     <UpdateEnabled>true</UpdateEnabled>
     <UpdateInterval>0</UpdateInterval>
@@ -259,11 +259,11 @@
     <Compile Include="Forms\MXxQueryEdit.Designer.cs">
       <DependentUpon>MXxQueryEdit.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\ProcedureManeger.cs">
+    <Compile Include="Forms\ProcedureManager.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\ProcedureManeger.Designer.cs">
-      <DependentUpon>ProcedureManeger.cs</DependentUpon>
+    <Compile Include="Forms\ProcedureManager.Designer.cs">
+      <DependentUpon>ProcedureManager.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\uc_Datebox.cs">
       <SubType>UserControl</SubType>
@@ -316,8 +316,8 @@
     <EmbeddedResource Include="Forms\MXxQueryEdit.resx">
       <DependentUpon>MXxQueryEdit.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\ProcedureManeger.resx">
-      <DependentUpon>ProcedureManeger.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\ProcedureManager.resx">
+      <DependentUpon>ProcedureManager.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\uc_Datebox.resx">
       <DependentUpon>uc_Datebox.cs</DependentUpon>

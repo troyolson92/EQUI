@@ -233,18 +233,21 @@ UNION
 SELECT ALARM_DATA_BODY_SIDES.*,'ALARM_DATA_BODY_SIDES' stoTable FROM STO_SYS.ALARM_DATA_BODY_SIDES
 UNION
 SELECT ALARM_DATA_SUBASSY.*,'ALARM_DATA_SUBASSY' stoTable FROM STO_SYS.ALARM_DATA_SUBASSY
-) WHERE CHANGETS > '{0}'"
-                , GadataMAxTs);
-			DataTable newStoDt = lStoComm.oracle_runQuery(stoQry);
+) WHERE CHANGETS > TO_TIMESTAMP('{0}', 'YYYY/MM/DD HH24:MI:SS')
+"
+                , GadataMAxTs.ToString("yyyy-MM-dd hh:mm:ss"));
+
+            DataTable newStoDt = lStoComm.oracle_runQuery(stoQry);
 			//push to gadata
 			lGadataComm.BulkCopyToGadata("STO", newStoDt, "rt_breakdown");
             //get new max in gadata
             //DataTable dtGadataNewMaxIDX = lGadataComm.RunQueryGadata(gadataGetMaxTimestampQry);
             //DateTime GadataNewMAxIDX = dtGadataNewMaxIDX.Rows[0].Field<DateTime>("_timestamp");
             //trigger normalisation
-            lGadataComm.RunCommandGadata("EXEC GADATA.STO.[sp_update_L]",true);
+            BackgroundJob.Enqueue(() => lGadataComm.RunCommandGadata("EXEC GADATA.STO.[sp_update_L]", true));
             //trigger classification
-         //   lGadataComm.RunCommandGadata("EXEC GADATA.STO.[sp_update_Lerror_classifcation]", true);
+            //   lGadataComm.RunCommandGadata("EXEC GADATA.STO.[sp_update_Lerror_classifcation]", true);
+            //fire and forget to init
 
 
         }

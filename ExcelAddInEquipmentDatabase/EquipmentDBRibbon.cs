@@ -41,7 +41,7 @@ namespace ExcelAddInEquipmentDatabase
         WorksheetFeatures lWorksheetFeatures = new WorksheetFeatures();
         //procedure manager instance 
         //StoredProcedureManger ProcMngr;
-        Forms.ProcedureManeger ProcMngr;
+        Forms.ProcedureManager ProcMngr;
         Microsoft.Office.Tools.CustomTaskPane ProcedureMangerTaskPane;
         //asset manager instance
         AssetManager AssetMngr;
@@ -213,7 +213,7 @@ namespace ExcelAddInEquipmentDatabase
             if (ProcMngr != null) ProcMngr.Dispose();
             if (dd_activeConnection.SelectedItem.Label != "RefreshAll")
             {
-                ProcMngr = new Forms.ProcedureManeger(dd_activeConnection.SelectedItem.Label);
+                ProcMngr = new Forms.ProcedureManager(dd_activeConnection.SelectedItem.Label);
                 //
                 if (ProcedureMangerTaskPane != null) ProcedureMangerTaskPane.Dispose();
                 ProcedureMangerTaskPane = Globals.ThisAddIn.CustomTaskPanes.Add(ProcMngr, "ProcedureManeger");
