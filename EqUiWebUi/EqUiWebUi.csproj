@@ -147,6 +147,9 @@
     <Compile Include="Models\AAOSR_PloegRaportV2_Result.cs">
       <DependentUpon>GadataDatamodel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Breakdown.cs">
+      <DependentUpon>GadataDatamodel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\c_querySnapshots.cs">
       <DependentUpon>GadataDatamodel.tt</DependentUpon>
     </Compile>
@@ -280,6 +283,8 @@
     <Content Include="Views\Shared\_Moreinfo.cshtml" />
     <Content Include="Views\Dynamic\DynamicWebgrid.cshtml" />
     <Content Include="Views\Gadata\TipstatusWebgrid.cshtml" />
+    <Content Include="Views\Gadata\StoWebgrid.cshtml" />
+    <Content Include="Views\Gadata\BatchRuns.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EQUICommunictionLib\EQUICommunictionLib.csproj">

@@ -95,6 +95,31 @@ warning 6002: The table/view 'GADATA.NGAC.TipMonitor' does not have a primary ke
           <Property Name="nRcars" Type="float" />
           <Property Name="id" Type="int" Nullable="false" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.STO.Breakdown' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Breakdown">
+          <Key>
+            <PropertyRef Name="refId" />
+          </Key>
+          <Property Name="location" Type="varchar" MaxLength="255" />
+          <Property Name="AssetID" Type="varchar" MaxLength="255" />
+          <Property Name="Logtype" Type="varchar" MaxLength="9" Nullable="false" />
+          <Property Name="timestamp" Type="datetime" />
+          <Property Name="Logcode" Type="varchar(max)" />
+          <Property Name="Severity" Type="varchar(max)" />
+          <Property Name="logtext" Type="varchar(max)" Nullable="false" />
+          <Property Name="Fulllogtext" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="Response" Type="int" />
+          <Property Name="Downtime" Type="int" />
+          <Property Name="Classification" Type="varchar" MaxLength="10" />
+          <Property Name="Subgroup" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Category" Type="int" />
+          <Property Name="refId" Type="float" Nullable="false" />
+          <Property Name="LocationTree" Type="varchar(max)" />
+          <Property Name="ClassTree" Type="varchar(max)" />
+          <Property Name="controller_name" Type="varchar(max)" />
+          <Property Name="controller_type" Type="varchar" MaxLength="3" Nullable="false" />
+        </EntityType>
         <Association Name="FK_h_querySnapshots_c_querySnapshots">
           <End Role="c_querySnapshots" Type="Self.c_querySnapshots" Multiplicity="0..1" />
           <End Role="h_querySnapshots" Type="Self.h_querySnapshots" Multiplicity="*" />
@@ -174,6 +199,28 @@ FROM [EqUi].[Supervisie] AS [Supervisie]</DefiningQuery>
 [TipMonitor].[id] AS [id]
 FROM [NGAC].[TipMonitor] AS [TipMonitor]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="Breakdown" EntityType="Self.Breakdown" store:Type="Views" store:Schema="STO">
+            <DefiningQuery>SELECT 
+[Breakdown].[location] AS [location], 
+[Breakdown].[AssetID] AS [AssetID], 
+[Breakdown].[Logtype] AS [Logtype], 
+[Breakdown].[timestamp] AS [timestamp], 
+[Breakdown].[Logcode] AS [Logcode], 
+[Breakdown].[Severity] AS [Severity], 
+[Breakdown].[logtext] AS [logtext], 
+[Breakdown].[Fulllogtext] AS [Fulllogtext], 
+[Breakdown].[Response] AS [Response], 
+[Breakdown].[Downtime] AS [Downtime], 
+[Breakdown].[Classification] AS [Classification], 
+[Breakdown].[Subgroup] AS [Subgroup], 
+[Breakdown].[Category] AS [Category], 
+[Breakdown].[refId] AS [refId], 
+[Breakdown].[LocationTree] AS [LocationTree], 
+[Breakdown].[ClassTree] AS [ClassTree], 
+[Breakdown].[controller_name] AS [controller_name], 
+[Breakdown].[controller_type] AS [controller_type]
+FROM [STO].[Breakdown] AS [Breakdown]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_h_querySnapshots_c_querySnapshots" Association="Self.FK_h_querySnapshots_c_querySnapshots">
             <End Role="c_querySnapshots" EntitySet="c_querySnapshots" />
             <End Role="h_querySnapshots" EntitySet="h_querySnapshots" />
@@ -246,6 +293,7 @@ FROM [NGAC].[TipMonitor] AS [TipMonitor]</DefiningQuery>
             <Parameter Name="getAlerts" Mode="In" Type="Boolean" />
             <Parameter Name="getShifbook" Mode="In" Type="Boolean" />
           </FunctionImport>
+          <EntitySet Name="Breakdown" EntityType="Models.Breakdown" />
           </EntityContainer>
         <EntityType Name="c_querySnapshots">
           <Key>
@@ -355,6 +403,29 @@ FROM [NGAC].[TipMonitor] AS [TipMonitor]</DefiningQuery>
           <Property Type="Int64" Name="refId" Nullable="true" />
           <Property Type="String" Name="LocationTree" Nullable="true" />
         </ComplexType>
+        <EntityType Name="Breakdown">
+          <Key>
+            <PropertyRef Name="refId" />
+          </Key>
+          <Property Name="location" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="AssetID" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Logtype" Type="String" Nullable="false" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="timestamp" Type="DateTime" Precision="3" />
+          <Property Name="Logcode" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Severity" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="logtext" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Fulllogtext" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Response" Type="Int32" />
+          <Property Name="Downtime" Type="Int32" />
+          <Property Name="Classification" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Subgroup" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Category" Type="Int32" />
+          <Property Name="refId" Type="Double" Nullable="false" />
+          <Property Name="LocationTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ClassTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="controller_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="controller_type" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -476,6 +547,30 @@ FROM [NGAC].[TipMonitor] AS [TipMonitor]</DefiningQuery>
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="Breakdown">
+            <EntityTypeMapping TypeName="Models.Breakdown">
+              <MappingFragment StoreEntitySet="Breakdown">
+                <ScalarProperty Name="controller_type" ColumnName="controller_type" />
+                <ScalarProperty Name="controller_name" ColumnName="controller_name" />
+                <ScalarProperty Name="ClassTree" ColumnName="ClassTree" />
+                <ScalarProperty Name="LocationTree" ColumnName="LocationTree" />
+                <ScalarProperty Name="refId" ColumnName="refId" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="Subgroup" ColumnName="Subgroup" />
+                <ScalarProperty Name="Classification" ColumnName="Classification" />
+                <ScalarProperty Name="Downtime" ColumnName="Downtime" />
+                <ScalarProperty Name="Response" ColumnName="Response" />
+                <ScalarProperty Name="Fulllogtext" ColumnName="Fulllogtext" />
+                <ScalarProperty Name="logtext" ColumnName="logtext" />
+                <ScalarProperty Name="Severity" ColumnName="Severity" />
+                <ScalarProperty Name="Logcode" ColumnName="Logcode" />
+                <ScalarProperty Name="timestamp" ColumnName="timestamp" />
+                <ScalarProperty Name="Logtype" ColumnName="Logtype" />
+                <ScalarProperty Name="AssetID" ColumnName="AssetID" />
+                <ScalarProperty Name="location" ColumnName="location" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

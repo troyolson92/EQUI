@@ -150,6 +150,87 @@ namespace EqUiWebUi.Controllers
 
         }
 
+        //------------------------------------Supervisie-------------------------------------------------
+        [HttpGet]
+        public ActionResult StoWebgrid()
+        {
+            //refresh every 10 minutes anyway ! 
+            Response.AddHeader("Refresh", "600");
+            var data = DataBuffer.StoBreakdown;
+            //in case hangfire is taking a day off
+            if (data == null)
+            {
+                return new HttpNotFoundResult("give hangfire some time");
+            }
+            else //add tracking timestamp for hangfire sync
+            {
+                ViewBag.DataTimestamp = DataBuffer.StoBreakdownLastDt.ToString("yyyy-MM-dd HH:mm:ss");
+            }
+
+            return View(data);
+        }
+
+        [HttpGet]
+        public JsonResult StocheckNewData(String dataTimestamp)
+        {
+            DateTime date = DateTime.ParseExact(dataTimestamp, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+            date = date.AddSeconds(1);
+
+            if (DataBuffer.StoBreakdownLastDt > date)
+            {
+                //issue reload
+                return Json(new object[] { new object() }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                //no reload needed
+                return null;
+            }
+
+        }
+
+        //------------------------------------Supervisie-------------------------------------------------
+        [HttpGet]
+        public ActionResult BatchRuns()
+        {
+            DataTable dt = new DataTable();
+
+            //get data
+            GadataComm gadataComm = new GadataComm();
+            string qry = @"
+SELECT TOP (50) 
+        [Location] +  ' ' 
+       +[Classification] + ' <' 
+	   +RTRIM(CONVERT(char(19),[timestamp], 108)) + '> ' + char(10) + char(13) 
+       +[Logtext] as 'foutinfo'
+  FROM [GADATA].[Tableau].[ApplFaults] as a 
+  where 
+  a.Location LIKE '334%'
+  AND
+  a.timestamp BETWEEN '2017-10-26 09:33:01' AND '2017-10-26 10:56:00'
+  order by timestamp asc 
+";
+            dt = gadataComm.RunQueryGadata(qry);
+
+            //
+            WebGridHelpers.WebGridHelper webGridHelper = new WebGridHelper();
+            ViewBag.Columns = webGridHelper.getDatatabelCollumns(dt);
+            //
+            List<dynamic> data = webGridHelper.datatableToDynamic(dt);
+            //
+            DefaultModel model = new WebGridHelpers.DefaultModel();
+            model.PageSize = 30;
+            //
+
+            if (data != null)
+            {
+                model.TotalCount = data.Count();
+                model.Data = data;
+                model.DataTimestamp = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            }
+            return View(model);
+        }
+
         //-------------------------------------------------------------------------------------------------
 
         [HttpGet]

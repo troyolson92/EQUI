@@ -411,7 +411,7 @@ namespace EQUIToolsLib
             //setup trackbar (trackbar maximum = first time error happend, minium = now)
             trackBar1.Minimum = (int)(StartDate - EndDate).TotalDays;
             if (trackBar1.Minimum > -3) { trackBar1.Minimum = -3; }
-            trackBar1.Maximum = -1; //minimum display = 1 day 
+            trackBar1.Maximum = 0; //must be 0 to get full range of the data
             //set startup view to last 30 days of data.
             if (trackBar1.Minimum < InitDays) { trackBar1.Value = InitDays; }
             else { trackBar1.Value = trackBar1.Minimum; }
