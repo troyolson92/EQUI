@@ -126,7 +126,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
                 Cmd.Parameters.AddWithValue("@CI", ci);
                 Cmd.Parameters.AddWithValue("@STATE", state);
                 Cmd.Parameters.AddWithValue("@userDescription", userDescription); //willy proofing 
-                Cmd.Parameters.AddWithValue("@userComment", tb_usercomment.ToString()); //willy proofing 
+                Cmd.Parameters.AddWithValue("@userComment", userComment); //willy proofing 
                 Cmd.Parameters.AddWithValue("@Runmode", Runmode);
                 dt = lGadataComm.RunParametercommand(proc, Cmd);
             }

@@ -11,9 +11,9 @@ namespace EqUiWebUi.Models
 {
     using System;
     using System.Data.Entity;
+    using System.Data.Entity.Core.Objects;
     using System.Data.Entity.Infrastructure;
     using System.Linq;
-    using System.Data.Entity.Core.Objects;
     
     public partial class GADATAEntities : DbContext
     {
@@ -35,6 +35,7 @@ namespace EqUiWebUi.Models
         public DbSet<Supervisie> Supervisie { get; set; }
         public DbSet<TipMonitor> TipMonitor { get; set; }
         public DbSet<Breakdown> Breakdown { get; set; }
+        public DbSet<logDetails> logDetails { get; set; }
     
         public virtual ObjectResult<GetErrorInfoData_Result> GetErrorInfoData(string location, Nullable<int> eRRORNUM, Nullable<int> refid, string logtype)
         {

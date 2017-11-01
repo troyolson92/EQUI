@@ -99,6 +99,11 @@ warning 6002: The table/view 'GADATA.NGAC.TipMonitor' does not have a primary ke
 warning 6002: The table/view 'GADATA.STO.Breakdown' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Breakdown">
           <Key>
+            
+            
+            
+            
+            
             <PropertyRef Name="refId" />
           </Key>
           <Property Name="location" Type="varchar" MaxLength="255" />
@@ -119,6 +124,18 @@ warning 6002: The table/view 'GADATA.STO.Breakdown' does not have a primary key 
           <Property Name="ClassTree" Type="varchar(max)" />
           <Property Name="controller_name" Type="varchar(max)" />
           <Property Name="controller_type" Type="varchar" MaxLength="3" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.Tableau.logDetails' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="logDetails">
+          <Key>
+            <PropertyRef Name="refid" />
+          </Key>
+          <Property Name="location" Type="varchar" MaxLength="255" />
+          <Property Name="Subgroup" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="timestamp" Type="datetime" />
+          <Property Name="Fulllogtext" Type="varchar(max)" />
+          <Property Name="refid" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK_h_querySnapshots_c_querySnapshots">
           <End Role="c_querySnapshots" Type="Self.c_querySnapshots" Multiplicity="0..1" />
@@ -221,6 +238,15 @@ FROM [NGAC].[TipMonitor] AS [TipMonitor]</DefiningQuery>
 [Breakdown].[controller_type] AS [controller_type]
 FROM [STO].[Breakdown] AS [Breakdown]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="logDetails" EntityType="Self.logDetails" store:Type="Views" store:Schema="Tableau">
+            <DefiningQuery>SELECT 
+[logDetails].[location] AS [location], 
+[logDetails].[Subgroup] AS [Subgroup], 
+[logDetails].[timestamp] AS [timestamp], 
+[logDetails].[Fulllogtext] AS [Fulllogtext], 
+[logDetails].[refid] AS [refid]
+FROM [Tableau].[logDetails] AS [logDetails]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_h_querySnapshots_c_querySnapshots" Association="Self.FK_h_querySnapshots_c_querySnapshots">
             <End Role="c_querySnapshots" EntitySet="c_querySnapshots" />
             <End Role="h_querySnapshots" EntitySet="h_querySnapshots" />
@@ -294,6 +320,7 @@ FROM [STO].[Breakdown] AS [Breakdown]</DefiningQuery>
             <Parameter Name="getShifbook" Mode="In" Type="Boolean" />
           </FunctionImport>
           <EntitySet Name="Breakdown" EntityType="Models.Breakdown" />
+          <EntitySet Name="logDetails" EntityType="Models.logDetails" />
           </EntityContainer>
         <EntityType Name="c_querySnapshots">
           <Key>
@@ -425,6 +452,16 @@ FROM [STO].[Breakdown] AS [Breakdown]</DefiningQuery>
           <Property Name="ClassTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="controller_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="controller_type" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="logDetails">
+          <Key>
+            <PropertyRef Name="refid" />
+          </Key>
+          <Property Name="location" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Subgroup" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="timestamp" Type="DateTime" Precision="3" />
+          <Property Name="Fulllogtext" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="refid" Type="Int32" Nullable="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -567,6 +604,17 @@ FROM [STO].[Breakdown] AS [Breakdown]</DefiningQuery>
                 <ScalarProperty Name="timestamp" ColumnName="timestamp" />
                 <ScalarProperty Name="Logtype" ColumnName="Logtype" />
                 <ScalarProperty Name="AssetID" ColumnName="AssetID" />
+                <ScalarProperty Name="location" ColumnName="location" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="logDetails">
+            <EntityTypeMapping TypeName="Models.logDetails">
+              <MappingFragment StoreEntitySet="logDetails">
+                <ScalarProperty Name="refid" ColumnName="refid" />
+                <ScalarProperty Name="Fulllogtext" ColumnName="Fulllogtext" />
+                <ScalarProperty Name="timestamp" ColumnName="timestamp" />
+                <ScalarProperty Name="Subgroup" ColumnName="Subgroup" />
                 <ScalarProperty Name="location" ColumnName="location" />
               </MappingFragment>
             </EntityTypeMapping>

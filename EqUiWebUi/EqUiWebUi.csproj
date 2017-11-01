@@ -144,6 +144,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Backgroundwork.cs" />
     <Compile Include="Controllers\DynamicController.cs" />
+    <Compile Include="Controllers\TableauController.cs" />
     <Compile Include="Models\AAOSR_PloegRaportV2_Result.cs">
       <DependentUpon>GadataDatamodel.tt</DependentUpon>
     </Compile>
@@ -157,6 +158,9 @@
       <DependentUpon>GadataDatamodel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\h_querySnapshots.cs">
+      <DependentUpon>GadataDatamodel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\logDetails.cs">
       <DependentUpon>GadataDatamodel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\l_querySnapshots.cs">
@@ -285,6 +289,7 @@
     <Content Include="Views\Gadata\TipstatusWebgrid.cshtml" />
     <Content Include="Views\Gadata\StoWebgrid.cshtml" />
     <Content Include="Views\Gadata\BatchRuns.cshtml" />
+    <Content Include="Views\Tableau\logDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EQUICommunictionLib\EQUICommunictionLib.csproj">

@@ -1,0 +1,42 @@
+﻿@model IEnumerable<EqUiWebUi.Models.logDetails>
+
+@using GridMvc.Html
+
+<script src="~/Scripts/jquery-3.2.1.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/gridmvc.min.js"></script>
+
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/Gridmvc.css" rel="stylesheet" />
+
+@*Remove default layout*@
+@{
+    Layout = null;
+}
+@*set title*@
+@{
+    ViewBag.Title = "LogDetails";
+}
+
+@*this goes on the 4k screen so set custom font*@
+<style>
+    table {
+        font-size: 18px;
+    }
+    th {
+        font-weight: bold;
+    }
+</style>
+
+@*main grid*@
+<div class="code-cut">
+    @Html.Grid(Model).Named("LogDetails").Columns(columns =>
+{
+columns.Add(c => c.location).Filterable(true);
+columns.Add(c => c.Subgroup);
+columns.Add(c => c.timestamp);
+columns.Add(c => c.Fulllogtext);
+
+}).WithPaging(15).Sortable(true)
+</div>
+
