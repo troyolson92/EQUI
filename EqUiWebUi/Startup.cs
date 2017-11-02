@@ -4,11 +4,13 @@ using Hangfire.SqlServer;
 using Microsoft.Owin;
 using System;
 
+[assembly: log4net.Config.XmlConfigurator(Watch = true)]
+
 namespace EqUiWebUi
 {
     public class Startup
     {
-        public void Configuration(Owin.IAppBuilder app)
+  public void Configuration(Owin.IAppBuilder app)
         {
         //setting up hangfire 
             GlobalConfiguration.Configuration

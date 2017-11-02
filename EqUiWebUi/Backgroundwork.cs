@@ -5,9 +5,7 @@ using System.Linq;
 using Hangfire;
 using EqUiWebUi.Models;
 using System.Collections.Generic;
-using log4net;
 
-[assembly: log4net.Config.XmlConfigurator(Watch = true)]
 namespace EqUiWebUi
 {
 	public static class DataBuffer
@@ -21,17 +19,17 @@ namespace EqUiWebUi
 		//
 		public static List<AAOSR_PloegRaportV2_Result> Ploegreport { get; set;}
 		public static DateTime PloegreportLastDt { get; set; }
-        //
-        public static List<Breakdown> StoBreakdown { get; set; }
-        public static DateTime StoBreakdownLastDt { get; set; }
-    }
+		//
+		public static List<Breakdown> StoBreakdown { get; set; }
+		public static DateTime StoBreakdownLastDt { get; set; }
+	}
 
   
 	public class Backgroundwork
 	{
-        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-        //update the local datatable with tipstatus called every minute #hangfire
-        [AutomaticRetry(Attempts = 0)]
+		private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+		//update the local datatable with tipstatus called every minute #hangfire
+		[AutomaticRetry(Attempts = 0)]
 		public void UpdateTipstatus()
 		{
 			GADATAEntities gADATAEntities = new GADATAEntities();
@@ -48,11 +46,11 @@ namespace EqUiWebUi
 							.Max();
 
 				DataBuffer.TipstatusLastDt = maxDate;
-                log.Info(string.Format("UpdateTipstatus {0} records", data.Count));
-            }
+				log.Info(string.Format("UpdateTipstatus {0} records", data.Count));
+			}
 			else
 			{
-                log.Error("UpdateTipstatus did not return any data");
+				log.Error("UpdateTipstatus did not return any data");
 			}
 		}
 
@@ -92,12 +90,12 @@ namespace EqUiWebUi
 				}
 				else
 				{
-                    log.Error("UpdatePloegreport did not return any data");
-                }
+					log.Error("UpdatePloegreport did not return any data");
+				}
 			}
 			catch(Exception ex)
 			{
-                log.Error("UpdatePloegreport", ex);
+				log.Error("UpdatePloegreport", ex);
 			}
 		}
 
@@ -122,7 +120,7 @@ namespace EqUiWebUi
 				}
 				else
 				{
-                    log.Error("UpdateSupervisie did not return any data");
+					log.Error("UpdateSupervisie did not return any data");
 				}
 		}
 
@@ -165,8 +163,8 @@ namespace EqUiWebUi
 			}
 			else
 			{
-                log.Debug("HandleMaximoSnapshotWork no work to do");
-            }
+				log.Debug("HandleMaximoSnapshotWork no work to do");
+			}
 		}
 
 		public void DoSnapshot(int id, string query)
@@ -217,12 +215,12 @@ namespace EqUiWebUi
 			//get last record in GADATA 
 			string gadataGetMaxTimestampQry = "select TOP 1 _timestamp FROM GADATA.STO.h_breakdown order by _timestamp desc ";
 			DataTable dtGadataMaxTS= lGadataComm.RunQueryGadata(gadataGetMaxTimestampQry);
-            //handel empty table
-            DateTime GadataMAxTs = DateTime.Parse("1900-01-01 00:00:00");
-            if (dtGadataMaxTS.Rows.Count != 0)
-            {
-                GadataMAxTs = dtGadataMaxTS.Rows[0].Field<DateTime>("_timestamp");
-            }
+			//handel empty table
+			DateTime GadataMAxTs = DateTime.Parse("1900-01-01 00:00:00");
+			if (dtGadataMaxTS.Rows.Count != 0)
+			{
+				GadataMAxTs = dtGadataMaxTS.Rows[0].Field<DateTime>("_timestamp");
+			}
 			//get new records from STO
 			StoComm lStoComm = new StoComm();
 			string stoQry = string.Format(@"
@@ -237,31 +235,31 @@ UNION
 SELECT ALARM_DATA_SUBASSY.*,'ALARM_DATA_SUBASSY' stoTable FROM STO_SYS.ALARM_DATA_SUBASSY
 ) WHERE CHANGETS > TO_TIMESTAMP('{0}', 'YYYY/MM/DD HH24:MI:SS') AND ALARMSTATUS = 1
 "
-                , GadataMAxTs.ToString("yyyy-MM-dd hh:mm:ss"));
+				, GadataMAxTs.ToString("yyyy-MM-dd hh:mm:ss"));
 
-            DataTable newStoDt = lStoComm.oracle_runQuery(stoQry);
+			DataTable newStoDt = lStoComm.oracle_runQuery(stoQry);
 			//push to gadata
 			lGadataComm.BulkCopyToGadata("STO", newStoDt, "rt_error");
-            //get new max in gadata
-            //DataTable dtGadataNewMaxIDX = lGadataComm.RunQueryGadata(gadataGetMaxTimestampQry);
-            //DateTime GadataNewMAxIDX = dtGadataNewMaxIDX.Rows[0].Field<DateTime>("_timestamp");
-            //trigger normalisation
-            BackgroundJob.Enqueue(() => lGadataComm.RunCommandGadata("EXEC GADATA.STO.[sp_update_L]", true));
-            //trigger classification
-            //   lGadataComm.RunCommandGadata("EXEC GADATA.STO.[sp_update_Lerror_classifcation]", true);
-            //fire and forget to init
+			//get new max in gadata
+			//DataTable dtGadataNewMaxIDX = lGadataComm.RunQueryGadata(gadataGetMaxTimestampQry);
+			//DateTime GadataNewMAxIDX = dtGadataNewMaxIDX.Rows[0].Field<DateTime>("_timestamp");
+			//trigger normalisation
+			BackgroundJob.Enqueue(() => lGadataComm.RunCommandGadata("EXEC GADATA.STO.[sp_update_L]", true));
+			//trigger classification
+			//   lGadataComm.RunCommandGadata("EXEC GADATA.STO.[sp_update_Lerror_classifcation]", true);
+			//fire and forget to init
 
 
-        }
+		}
 
 
-        //calculate sto supervision. called every minute #hangfire
-        [AutomaticRetry(Attempts = 0)]
-        public void CalcStoSupervision()
-        {
-            //get new records from STO needed to clac breakdowns
-            StoComm lStoComm = new StoComm();
-            string stoQry = string.Format(@"
+		//calculate sto supervision. called every minute #hangfire
+		[AutomaticRetry(Attempts = 0)]
+		public void CalcStoSupervision()
+		{
+			//get new records from STO needed to clac breakdowns
+			StoComm lStoComm = new StoComm();
+			string stoQry = string.Format(@"
 SELECT * FROM
 (
 SELECT ALARM_DATA_UB12.*, 'ALARM_DATA_UB12' stoTable FROM STO_SYS.ALARM_DATA_UB12
@@ -276,35 +274,35 @@ WHERE
 CHANGETS  >= (sysdate-2/24)
 AND ALARMSEVERITY in('A','B')"
 );
-            DataTable newStoDt = lStoComm.oracle_runQuery(stoQry);
+			DataTable newStoDt = lStoComm.oracle_runQuery(stoQry);
 
-            GadataComm lGadataComm = new GadataComm();
-            //clear gadata table 
-            lGadataComm.RunCommandGadata("DELETE GADATA.STO.rt_breakdown FROM GADATA.STO.rt_breakdown",true);
-            //push to gadata
-            lGadataComm.BulkCopyToGadata("STO", newStoDt, "rt_breakdown");
+			GadataComm lGadataComm = new GadataComm();
+			//clear gadata table 
+			lGadataComm.RunCommandGadata("DELETE GADATA.STO.rt_breakdown FROM GADATA.STO.rt_breakdown",true);
+			//push to gadata
+			lGadataComm.BulkCopyToGadata("STO", newStoDt, "rt_breakdown");
 
-            //get back to calculated supervision view from gadata.
-            GADATAEntities gADATAEntities = new GADATAEntities();
-            List<Breakdown> data = (from Breakdown in gADATAEntities.Breakdown
-                                     select Breakdown).ToList();
+			//get back to calculated supervision view from gadata.
+			GADATAEntities gADATAEntities = new GADATAEntities();
+			List<Breakdown> data = (from Breakdown in gADATAEntities.Breakdown
+									 select Breakdown).ToList();
 
-            if (data.Count != 0)
-            {
-                DataBuffer.StoBreakdown = data;
+			if (data.Count != 0)
+			{
+				DataBuffer.StoBreakdown = data;
 
-                DateTime maxDate = data
-                            .Where(r => r != null)
-                            .Select(r => r.timestamp.Value)
-                            .Max();
+				DateTime maxDate = data
+							.Where(r => r != null)
+							.Select(r => r.timestamp.Value)
+							.Max();
 
-                DataBuffer.StoBreakdownLastDt = maxDate;
-            }
-            else
-            {
-                log.Error("UpdateStoBreakown did not return any data");
-            }
+				DataBuffer.StoBreakdownLastDt = maxDate;
+			}
+			else
+			{
+				log.Error("UpdateStoBreakown did not return any data");
+			}
 
-        }
-    }
+		}
+	}
 }

@@ -40,7 +40,7 @@ namespace ABBCommTest
             //
             InitializeComponent();
             //get greenfield list from GADATA
-            dt_robots = lgadatacomm.RunQueryGadata(@"select *  from gadata.ngac.c_controller where assetnum like 'URA%' "); //and controller_name like '%99%'");
+            dt_robots = lgadatacomm.RunQueryGadata(@"select top 5 *  from gadata.ngac.c_controller where assetnum like 'URA%' "); //and controller_name like '%99%'");
                                                    //  where CAST(SUBSTRING(controller_name,0,4) as int) between 351 and 359");
             //add colums for extra data
             dt_robots.Columns.Add("SystemId", System.Type.GetType("System.String"));
@@ -50,13 +50,15 @@ namespace ABBCommTest
            // dt_robots.Columns.Add("Version", System.Type.GetType("System.String"));
             dt_robots.Columns.Add("ControllerName", System.Type.GetType("System.String"));
            // dt_robots.Columns.Add("ConfIsOK", System.Type.GetType("System.String"));
-           // dt_robots.Columns.Add("autoOK", System.Type.GetType("System.String"));
+            dt_robots.Columns.Add("autoOK", System.Type.GetType("System.String"));
+            dt_robots.Columns.Add("Version", System.Type.GetType("System.String"));
+            dt_robots.Columns.Add("OKtoLoad", System.Type.GetType("System.String"));
             dt_robots.Columns.Add("ConnectOK", System.Type.GetType("System.String"));
             //  dt_robots.Columns.Add("ConfigOK", System.Type.GetType("System.String"));
             // dt_robots.Columns.Add("restartOK", System.Type.GetType("System.String"));
-            //   dt_robots.Columns.Add("LoadOK", System.Type.GetType("System.String"));
-            dt_robots.Columns.Add("HasTipneed", System.Type.GetType("System.String"));
-            dt_robots.Columns.Add("HasTipneedComment", System.Type.GetType("System.String"));
+               dt_robots.Columns.Add("LoadOK", System.Type.GetType("System.String"));
+          //  dt_robots.Columns.Add("HasTipneed", System.Type.GetType("System.String"));
+           // dt_robots.Columns.Add("HasTipneedComment", System.Type.GetType("System.String"));
           //  dt_robots.Columns.Add("Found", System.Type.GetType("System.String"));
           //  dt_robots.Columns.Add("Deleted", System.Type.GetType("System.String"));
           //  dt_robots.Columns.Add("Exeption", System.Type.GetType("System.String"));
@@ -237,7 +239,7 @@ COM_APP:
             }
         }
 
-        //write configuration to robot
+        //change socket config in autorun. to robot
         private void SocketConfigureRobot(ControllerInfo ci, DataGridViewRow row)
         {
             string tempdir = @"c:\temp\debug\";
@@ -325,6 +327,113 @@ COM_APP:
                 }
                 row.Cells[dataGridView1.Columns["ConnectOK"].Index].Value = "OK";   
         }     
+            catch (Exception ex)
+            {
+                row.Cells[dataGridView1.Columns["ConnectOK"].Index].Value = "NOK";
+                debugger.Exeption(ex);
+                debugger.Message("Error connecting to controller");
+                return;
+            }
+        }
+
+
+        //load new version of lrobot.
+        private void LoadNewLrobotRobot(ControllerInfo ci, DataGridViewRow row)
+        {
+            string tempdir = @"c:\temp\debug\";
+            string FilePathOnControler = @"/hd0a/TEMP/";
+            string modulename = "LRobot.sys";
+            string refVar = "Version_LRobot";
+
+            try
+            {
+                if (ci.Availability != Availability.Available) { debugger.Message("controller busy: " + ci.Id); return; } //stop if controller is not available
+                //
+                controller = ControllerFactory.CreateFrom(ci); //get controller from factory
+                if (controller.OperatingMode != ControllerOperatingMode.Auto) //controller must be on auto to take master 
+                {
+                    row.Cells[dataGridView1.Columns["AutoOK"].Index].Value = "NOK";
+                    return;
+                }
+                else
+                {
+                    row.Cells[dataGridView1.Columns["AutoOK"].Index].Value = "OK";
+
+
+                    //check current version 
+                    RapidData rd = controller.Rapid.GetRapidData("T_ROB1", modulename.Split('.')[0], refVar);
+                    row.Cells[dataGridView1.Columns["Version"].Index].Value = rd.Value.ToString();
+
+                   // return; // break for testing .
+
+                    if (rd.Value.ToString().Contains("ABB 6V03 - 2017-01-12"))
+                    {
+
+                        //put the file on the controller*****************************************************************
+                        FileSystem cntrlFileSystem;
+                        cntrlFileSystem = controller.FileSystem;
+                        controller.FileSystem.RemoteDirectory = FilePathOnControler;
+                        controller.FileSystem.LocalDirectory = tempdir;
+
+                        try
+                        {
+                            //get controller mastership
+                            using (Mastership master = Mastership.Request(controller))
+                            {
+
+                                //put the file  on the controller
+                                controller.FileSystem.PutFile(modulename, modulename, true);
+
+
+                                //check if controller if home for load.
+                                Signal O_Homepos = controller.IOSystem.GetSignal("O_Homepos");
+                                if (O_Homepos.Value == 1)
+                                {
+                                    // get modules from controller task trob1
+                                    ABB.Robotics.Controllers.RapidDomain.Task tRob1 = controller.Rapid.GetTask("T_ROB1");
+                                    //stop trob 1 if running.
+                                    bool bWasRunning = false;
+                                    if (tRob1.ExecutionStatus == TaskExecutionStatus.Running)
+                                    {
+                                        bWasRunning = true;
+                                        tRob1.Stop(StopMode.Immediate);
+                                        System.Threading.Thread.Sleep(1000);
+
+                                    }
+
+                                    tRob1.LoadModuleFromFile(FilePathOnControler + modulename, RapidLoadMode.Replace);
+                                    row.Cells[dataGridView1.Columns["LoadOK"].Index].Value = "OK";
+
+                                    //restart if was running
+                                    if (bWasRunning)
+                                    {
+                                        tRob1.Start();
+                                    }
+                                }
+                                else
+                                {
+                                    row.Cells[dataGridView1.Columns["LoadOK"].Index].Value = "NOK";
+                                }
+
+                                //release master
+                                master.Release();
+                            }
+                        }
+                        catch (System.InvalidOperationException ex)
+                        {
+                            debugger.Exeption(ex);
+                            debugger.Message("error in write to controller");
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        row.Cells[dataGridView1.Columns["OKtoLoad"].Index].Value = "NOK";
+                    }
+
+                    }
+                row.Cells[dataGridView1.Columns["ConnectOK"].Index].Value = "OK";
+            }
             catch (Exception ex)
             {
                 row.Cells[dataGridView1.Columns["ConnectOK"].Index].Value = "NOK";
@@ -560,9 +669,6 @@ COM_APP:
         }
 
 
-
-
-
         private void button1_Click(object sender, EventArgs e)
         {
                 foreach (DataGridViewRow row in dataGridView1.SelectedRows)
@@ -577,7 +683,8 @@ COM_APP:
 
                         // SocketConfigureRobot(ci, row);
                         //DoRobbieFupCheck(ci, row);
-                           DoTipneedcheckRobot(ci, row);
+                        //DoTipneedcheckRobot(ci, row);
+                        LoadNewLrobotRobot(ci, row);
                         }
                         else
                         {
