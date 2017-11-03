@@ -65,8 +65,6 @@
             this.btn_docMngr = this.Factory.CreateRibbonButton();
             this.btn_ErrorMngr = this.Factory.CreateRibbonButton();
             this.groupTempTools = this.Factory.CreateRibbonGroup();
-            this.sync_stw040 = this.Factory.CreateRibbonButton();
-            this.btn_sync_mx7 = this.Factory.CreateRibbonButton();
             this.btn_SBCUtest = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
             this.rib2.SuspendLayout();
@@ -74,6 +72,7 @@
             this.AssetManager.SuspendLayout();
             this.g_config.SuspendLayout();
             this.groupTempTools.SuspendLayout();
+            this.SuspendLayout();
             // 
             // tab1
             // 
@@ -340,23 +339,9 @@
             // 
             // groupTempTools
             // 
-            this.groupTempTools.Items.Add(this.sync_stw040);
-            this.groupTempTools.Items.Add(this.btn_sync_mx7);
             this.groupTempTools.Items.Add(this.btn_SBCUtest);
             this.groupTempTools.Label = "TempTools";
             this.groupTempTools.Name = "groupTempTools";
-            // 
-            // sync_stw040
-            // 
-            this.sync_stw040.Label = "btn_sync_stw040";
-            this.sync_stw040.Name = "sync_stw040";
-            this.sync_stw040.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.sync_stw040_Click);
-            // 
-            // btn_sync_mx7
-            // 
-            this.btn_sync_mx7.Label = "btn_sync_mx7";
-            this.btn_sync_mx7.Name = "btn_sync_mx7";
-            this.btn_sync_mx7.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_sync_mx7_Click);
             // 
             // btn_SBCUtest
             // 
@@ -383,6 +368,7 @@
             this.g_config.PerformLayout();
             this.groupTempTools.ResumeLayout(false);
             this.groupTempTools.PerformLayout();
+            this.ResumeLayout(false);
 
         }
 
@@ -416,8 +402,6 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonToggleButton tbn_3;
         internal Microsoft.Office.Tools.Ribbon.RibbonGallery gall_templates;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup groupTempTools;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton sync_stw040;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_sync_mx7;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_SBCUtest;
         internal Microsoft.Office.Tools.Ribbon.RibbonToggleButton btn_EditProcedure;
         internal Microsoft.Office.Tools.Ribbon.RibbonToggleButton tgbtn_Wrap;

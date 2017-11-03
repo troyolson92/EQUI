@@ -94,6 +94,7 @@ warning 6002: The table/view 'GADATA.NGAC.TipMonitor' does not have a primary ke
           <Property Name="nRspots" Type="float" />
           <Property Name="nRcars" Type="float" />
           <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="LocationTree" Type="varchar(max)" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'GADATA.STO.Breakdown' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -129,6 +130,7 @@ warning 6002: The table/view 'GADATA.STO.Breakdown' does not have a primary key 
 warning 6002: The table/view 'GADATA.Tableau.logDetails' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="logDetails">
           <Key>
+            
             <PropertyRef Name="refid" />
           </Key>
           <Property Name="location" Type="varchar" MaxLength="255" />
@@ -213,7 +215,8 @@ FROM [EqUi].[Supervisie] AS [Supervisie]</DefiningQuery>
 [TipMonitor].[pWear] AS [pWear], 
 [TipMonitor].[nRspots] AS [nRspots], 
 [TipMonitor].[nRcars] AS [nRcars], 
-[TipMonitor].[id] AS [id]
+[TipMonitor].[id] AS [id], 
+[TipMonitor].[LocationTree] AS [LocationTree]
 FROM [NGAC].[TipMonitor] AS [TipMonitor]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="Breakdown" EntityType="Self.Breakdown" store:Type="Views" store:Schema="STO">
@@ -414,6 +417,7 @@ FROM [Tableau].[logDetails] AS [logDetails]</DefiningQuery>
           <Property Name="nRspots" Type="Double" />
           <Property Name="nRcars" Type="Double" />
           <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="LocationTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <ComplexType Name="AAOSR_PloegRaportV2_Result">
           <Property Type="String" Name="Location" Nullable="true" MaxLength="256" />
@@ -554,6 +558,7 @@ FROM [Tableau].[logDetails] AS [logDetails]</DefiningQuery>
           <EntitySetMapping Name="TipMonitor">
             <EntityTypeMapping TypeName="Models.TipMonitor">
               <MappingFragment StoreEntitySet="TipMonitor">
+                <ScalarProperty Name="LocationTree" ColumnName="LocationTree" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="nRcars" ColumnName="nRcars" />
                 <ScalarProperty Name="nRspots" ColumnName="nRspots" />

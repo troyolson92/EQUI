@@ -17,14 +17,12 @@ namespace EQUICommunictionLib
 
        public void get_swt040data()
         {
-            try
-            {
-                //download
-                WebClient Client = new WebClient();
-                Client.DownloadFile("http://biwebreports.got.volvocars.net:8080/reports/vcg/VCG_Manufacturing_And_Supply_Chain/Manufacturing/Disturbances_And_Maintenance/Storingsrapport GA _dumpfile sched.xlsx"
-                    , @"C:\Temp\Storingsrapport GA _dumpfile sched.xlsx");
+            //download
+            WebClient Client = new WebClient();
+                Client.DownloadFile("http://biwebreports.got.volvocars.net:8080/reports/vcg/VCG_Manufacturing_And_Supply_Chain/Manufacturing/Disturbances_And_Maintenance/Storingsrapport%20GA_dumpfile%20sched%202.xlsx"
+                    , @"C:\GADATA\IIS\Temp\Storingsrapport GA _dumpfile sched 2.xlsx");
                 //read into dt 
-                DataTable dt = LoadWorksheetInDataTable(@"C:\Temp\Storingsrapport GA _dumpfile sched.xlsx", "Zone - Lijst - Laatste werkdag$");
+                DataTable dt = LoadWorksheetInDataTable(@"C:\GADATA\IIS\Temp\Storingsrapport GA _dumpfile sched 2.xlsx", "Zone - Lijst - Laatste werkdag$");
                 //check how many records are now in gadata.
                 GadataComm lGadataComm = new GadataComm();
                 string qryCount = @"select count(id) 'count' from gadata.equi.['Zone - Lijst - Laatste werkdag$']";
@@ -52,20 +50,14 @@ namespace EQUICommunictionLib
                 lGadataComm.RunCommandGadata(cmdRemoveDup);
                 //check how many record now
                 DataTable countAfter = lGadataComm.RunQueryGadata(qryCount);
-                MessageBox.Show(string.Format(@"
-Finished with operation
-before: {0}
-after: {1}
-new records ={2}"   , countBefore.Rows[0].Field<int>("count").ToString()
-                    , countAfter.Rows[0].Field<int>("count").ToString()
-                    , (countBefore.Rows[0].Field<int>("count")-countAfter.Rows[0].Field<int>("count")).ToString())
-                    , "Confirmation", MessageBoxButtons.OK);
-            }
-           catch (Exception ex)
-            {
-                Debugger.Exeption(ex);
-                Debugger.Message(ex.Message);
-            }
+                Debugger.Log(string.Format(@"
+                Finished with operation
+                before: {0}
+                after: {1}
+                new records ={2}", countBefore.Rows[0].Field<int>("count").ToString()
+                                    , countAfter.Rows[0].Field<int>("count").ToString()
+                                    , (countBefore.Rows[0].Field<int>("count") - countAfter.Rows[0].Field<int>("count")).ToString())
+                                    );
         }
 
         DataTable LoadWorksheetInDataTable(string fileName, string sheetName)

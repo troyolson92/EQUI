@@ -252,9 +252,24 @@ SELECT ALARM_DATA_SUBASSY.*,'ALARM_DATA_SUBASSY' stoTable FROM STO_SYS.ALARM_DAT
 
 		}
 
+        //update new data from STW040 (BI RAPPORT) to gadata. called every minute #hangfire
+        [AutomaticRetry(Attempts = 0)]
+        public void PushDatafromSTW040toGADATA()
+        {
+            stw040Sync lstw040Sync = new stw040Sync();
+            lstw040Sync.get_swt040data();
+        }
 
-		//calculate sto supervision. called every minute #hangfire
-		[AutomaticRetry(Attempts = 0)]
+        //update new data from MX7 (BI RAPPORT) to gadata. called every minute #hangfire
+        [AutomaticRetry(Attempts = 0)]
+        public void PushDatafromMX7toGADATA()
+        {
+            mx7Sync mx7Sync = new mx7Sync();
+            mx7Sync.get_mx7data();
+        }
+
+        //calculate sto supervision. called every minute #hangfire
+        [AutomaticRetry(Attempts = 0)]
 		public void CalcStoSupervision()
 		{
 			//get new records from STO needed to clac breakdowns

@@ -9,6 +9,11 @@
 <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
 <link href="~/Content/Gridmvc.css" rel="stylesheet" />
 
+@*Remove default layout*@
+@{
+    Layout = null;
+}
+
 @*set title*@
 @{
     ViewBag.Title = "Tipwear";
@@ -119,18 +124,39 @@
     columns.Add(c => c.nRspots).Titled("remainingSpots");
     columns.Add(c => c.nRcars).Titled("remainingCars");
 
-    columns.Add()
+    columns.Add(c => c.LocationTree)
     .Titled("Info")
     .Encoded(false)
     .Sanitized(false)
     .SetWidth(30)
-    .RenderValueAs(o => Html.ActionLink("INFO", "EqUi_UtilManager/EqUi_UtilManger.application", "",
-    new{ Tool = "SBCUstats",  location = o.Robot})
-        );
+    .Filterable(true)
+    .RenderValueAs(o => Html.ActionLink("INFO", "_Moreinfo")
+    );
+
 }).WithPaging(20).Sortable(true)
 </div>
-<h6>
-    <a href="~/" class="btn btn-primary btn-sm">goHome &raquo;</a>
-    Last data push: '@Html.Raw(ViewBag.DataTimestamp)'
-</h6>
+
+@*footer modal with filter and gohome*@
+<div class="modal-content">
+    <div class="dropdown">
+        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+            Set a location filter
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+            <li><a href="/Gadata/TipstatusWebgrid">ClearFilter</a></li>
+            <li><a href="/Gadata/TipstatusWebgrid?grid-filter=LocationTree__2__GA1">GA1</a></li>
+            <li><a href="/Gadata/TipstatusWebgrid?grid-filter=LocationTree__2__A LIJN 33">-FLOOR</a></li>
+            <li><a href="/Gadata/TipstatusWebgrid?grid-filter=LocationTree__2__A LIJN 334">--FF-334</a></li>
+            <li><a href="/Gadata/TipstatusWebgrid?grid-filter=LocationTree__2__A LIJN 331">--FS-331</a></li>
+            <li><a href="/Gadata/TipstatusWebgrid?grid-filter=LocationTree__2__A LIJN 336">--RF-336</a></li>
+            <li><a href="/Gadata/TipstatusWebgrid?grid-filter=LocationTree__2__A LIJN 338">--MAR-338</a></li>
+            <li><a href="/Gadata/TipstatusWebgrid?grid-filter=LocationTree__2__A LIJN 339">--WBL-339</a></li>
+            <li><a href="/Gadata/TipstatusWebgrid?grid-filter=LocationTree__2__A LIJN 35">-SIDES</a></li>
+        </ul>
+
+        <a href="~/" class="btn btn-primary">goHome &raquo;</a>
+        Last data push: '@Html.Raw(ViewBag.DataTimestamp)'
+    </div>
+</div>
 

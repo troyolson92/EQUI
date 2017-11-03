@@ -138,8 +138,6 @@ namespace ExcelAddInEquipmentDatabase
                 btn_AssetManager.Enabled = false;
                 btn_docMngr.Enabled = false;
                 btn_ErrorMngr.Enabled = true;
-                btn_sync_mx7.Enabled = true;
-                sync_stw040.Enabled = true;
             }
             else
             {
@@ -149,8 +147,6 @@ namespace ExcelAddInEquipmentDatabase
                 btn_AssetManager.Enabled = false;
                 btn_docMngr.Enabled = false;
                 btn_ErrorMngr.Enabled = false;
-                btn_sync_mx7.Enabled = false;
-                sync_stw040.Enabled = false;
             }
         }
 
@@ -745,23 +741,6 @@ namespace ExcelAddInEquipmentDatabase
             lTaskPaneErrorInfo.Width = lLoginfo.Width;
             lTaskPaneErrorInfo.Visible = true;
         }
-
-        private void sync_stw040_Click(object sender, RibbonControlEventArgs e)
-        {
-            sync_stw040.Enabled = false;
-            stw040Sync lstw040Sync = new stw040Sync();
-            lstw040Sync.get_swt040data();
-            sync_stw040.Enabled = true;
-        }
-
-        private void btn_sync_mx7_Click(object sender, RibbonControlEventArgs e)
-        {
-            btn_sync_mx7.Enabled = false;
-            EQUICommunictionLib.mx7Sync lmx7Sync = new EQUICommunictionLib.mx7Sync();
-            lmx7Sync.get_mx7data();
-            btn_sync_mx7.Enabled = true;
-        }
-
 
         //test
         private void button1_Click_1(object sender, RibbonControlEventArgs e)
