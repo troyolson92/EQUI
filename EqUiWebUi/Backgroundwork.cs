@@ -158,7 +158,7 @@ namespace EqUiWebUi
 						FROM [GADATA].[EqUi].[h_querySnapshots] 
 						WHERE id = {0}
 						", row.Field<int>("id"));
-					gadataComm.RunCommandGadata(cmd);
+					gadataComm.RunCommandGadata(cmd,true);
 				}
 			}
 			else
@@ -252,6 +252,49 @@ SELECT ALARM_DATA_SUBASSY.*,'ALARM_DATA_SUBASSY' stoTable FROM STO_SYS.ALARM_DAT
 
 		}
 
+        //update new data from STO to gadata. called every minute #hangfire
+        [AutomaticRetry(Attempts = 0)]
+        public void PushDatafromMAXIMOtoGADATA()
+        {
+            //delete data in now in maximo.
+            GadataComm lGadataComm = new GadataComm();
+            lGadataComm.RunCommandGadata("DELETE GADATA.MAXIMO.WORKORDERS FROM GADATA.MAXIMO.WORKORDERS", true);
+
+            //get new records from STO
+            MaximoComm maximoComm = new MaximoComm();
+            string MaximoQry = string.Format(@"
+select 
+ WORKORDER.WONUM WONUM
+,WORKORDER.STATUS
+,WORKORDER.STATUSDATE
+,WORKORDER.WORKTYPE
+,WORKORDER.DESCRIPTION
+,WORKORDER.LOCATION
+,WORKORDER.REPORTEDBY
+,WORKORDER.REPORTDATE
+,locancestor.ANCESTOR
+from MAXIMO.WORKORDER WORKORDER
+join MAXIMO.locancestor locancestor on 
+locancestor.LOCATION = WORKORDER.LOCATION
+and 
+locancestor.ORGID = 'VCCBE'
+
+and
+workorder.changedate >= sysdate - 200
+and
+workorder.worktype = 'CI'
+and 
+locancestor.ANCESTOR LIKE 'A LIJN%'
+
+ORDER BY WORKORDER.STATUSDATE DESC
+"
+);
+
+            DataTable newMaximoDt = maximoComm.oracle_runQuery(MaximoQry);
+            //push to gadata
+            lGadataComm.BulkCopyToGadata("MAXIMO", newMaximoDt, "WORKORDERS");
+        }
+
         //update new data from STW040 (BI RAPPORT) to gadata. called every minute #hangfire
         [AutomaticRetry(Attempts = 0)]
         public void PushDatafromSTW040toGADATA()
@@ -319,5 +362,14 @@ AND ALARMSEVERITY in('A','B')"
 			}
 
 		}
-	}
+
+        //update tableau buffers. called every 20minutes #hangfire
+        [AutomaticRetry(Attempts = 0)]
+        public void UpdateTableauBuffers()
+        {
+            GadataComm lGadataComm = new GadataComm();
+            //
+            lGadataComm.RunCommandGadata(@"EXEC [GADATA].[Tableau].[Updatebuffers]", true);
+        }
+    }
 }

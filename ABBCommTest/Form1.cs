@@ -40,8 +40,8 @@ namespace ABBCommTest
             //
             InitializeComponent();
             //get greenfield list from GADATA
-            dt_robots = lgadatacomm.RunQueryGadata(@"select top 5 *  from gadata.ngac.c_controller where assetnum like 'URA%' "); //and controller_name like '%99%'");
-                                                   //  where CAST(SUBSTRING(controller_name,0,4) as int) between 351 and 359");
+            dt_robots = lgadatacomm.RunQueryGadata(@"select * from gadata.ngac.c_controller where assetnum like 'URA%' AND CONTROLLER_NAME LIKE '339%'"); //); //and controller_name like '%99%'");
+                                                   
             //add colums for extra data
             dt_robots.Columns.Add("SystemId", System.Type.GetType("System.String"));
            // dt_robots.Columns.Add("Availability", System.Type.GetType("System.String"));
@@ -366,7 +366,7 @@ COM_APP:
 
                    // return; // break for testing .
 
-                    if (rd.Value.ToString().Contains("ABB 6V03 - 2017-01-12"))
+                    if (rd.Value.ToString().Contains("ABB 6V99 - 2017-11-02"))
                     {
 
                         //put the file on the controller*****************************************************************
@@ -377,6 +377,7 @@ COM_APP:
 
                         try
                         {
+
                             //get controller mastership
                             using (Mastership master = Mastership.Request(controller))
                             {
@@ -407,6 +408,7 @@ COM_APP:
                                     //restart if was running
                                     if (bWasRunning)
                                     {
+                                        tRob1.ResetProgramPointer();
                                         tRob1.Start();
                                     }
                                 }
@@ -425,6 +427,7 @@ COM_APP:
                             debugger.Message("error in write to controller");
                             return;
                         }
+                        
                     }
                     else
                     {
@@ -441,6 +444,7 @@ COM_APP:
                 debugger.Message("Error connecting to controller");
                 return;
             }
+            
         }
 
         //check doTipneed active
@@ -660,15 +664,6 @@ COM_APP:
             debugger.Message("done with expose");
         }
 
-        private void btnDirMap_Click(object sender, EventArgs e)
-        {
-            RobotBckShortcuts bckShort = new RobotBckShortcuts();
-            bckShort.searchForRobots();
-            bckShort.buildShortcutdirectory();
-            debugger.Message("done with dirbuild");
-        }
-
-
         private void button1_Click(object sender, EventArgs e)
         {
                 foreach (DataGridViewRow row in dataGridView1.SelectedRows)
@@ -700,6 +695,13 @@ COM_APP:
             debugger.Message("done with controllers");
         }
 
+        private void btn_bckShortcuts_Click(object sender, EventArgs e)
+        {
+            RobotBckShortcuts bckShort = new RobotBckShortcuts();
+            bckShort.searchForRobots();
+            bckShort.buildShortcutdirectory();
+            debugger.Message("done with dirbuild");
+        }
     }
 
 

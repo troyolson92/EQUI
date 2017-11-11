@@ -1,6 +1,7 @@
 ﻿using EQUIToolsLib;
 using System;
 using System.Windows.Forms;
+using EQUICommunictionLib;
 
 namespace EqUi_UtilManger
 {
@@ -45,5 +46,14 @@ namespace EqUi_UtilManger
         {
             SleepBlock sleepBlock = new SleepBlock();
         }
+
+        private void btn_test_Click(object sender, EventArgs e)
+        {
+            Sharepoint sharepoint = new Sharepoint();
+            sharepoint.AddNewIusse("8888", "iets", "http://equi/");
+
+        }
+
+
     }
 }

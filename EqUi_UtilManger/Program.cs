@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using System.Deployment.Application;
 using System.Web;
 using System.Windows.Forms;
+using EQUICommunictionLib;
 
 namespace EqUi_UtilManger
 {
@@ -15,6 +16,7 @@ namespace EqUi_UtilManger
         // http://gnl1004zcbqc2/Clickonce/EqUi_UtilManger.application?Tool=SBCUstats&target=32070WS02A
         // http://gnl1004zcbqc2/Clickonce/EqUi_UtilManger.application?Tool=MaximoTool&Viewmode=vm_QualityOnLocation&target=A%20STN32000
         // http://equi/EqUi_UtilManager/EqUi_UtilManger.application?Tool=SBCUstats
+        // http://equi/EqUi_UtilManager/EqUi_UtilManger.application?Tool=sharepoint
 
         /*
          * chlickonce extention support for Chrome! 
@@ -104,6 +106,13 @@ namespace EqUi_UtilManger
 
                             case "sleepBlock":
                                 Application.Run(new SleepBlock());
+                                break;
+
+                            case "sharepoint":
+                                Sharepoint sharepoint = new Sharepoint();
+                                sharepoint.AddNewIusse("8888", "iets", "http://equi/");    
+                                
+
                                 break;
                     }
                     break;

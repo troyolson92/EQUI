@@ -48,12 +48,17 @@ namespace EqUiWebUi
             //**********************************STO****************************************************************
             //check every minute for new data (hystorian)
             RecurringJob.AddOrUpdate(() => backgroundwork.PushDatafromSTOtoGADATA(), Cron.Minutely);
-            //check every minute for new data (supervision
+            //check every minute for new data (supervision)
             RecurringJob.AddOrUpdate(() => backgroundwork.CalcStoSupervision(), Cron.Minutely);
-            //**********************************STW040 BI rapoort**************************************************
+            //**********************************STW040 BI rapoort****************************************************
             RecurringJob.AddOrUpdate(() => backgroundwork.PushDatafromSTW040toGADATA(), Cron.HourInterval(1));
-            //**********************************MX7 BI rapport******************************************************
-            RecurringJob.AddOrUpdate(() => backgroundwork.PushDatafromMX7toGADATA(), Cron.HourInterval(1));
+            //**********************************MX7 *****************************************************************
+            //BI rapport
+            //RecurringJob.AddOrUpdate(() => backgroundwork.PushDatafromMX7toGADATA(), Cron.HourInterval(1));
+            //reporting DB 
+            RecurringJob.AddOrUpdate(() => backgroundwork.PushDatafromMAXIMOtoGADATA(), Cron.HourInterval(1));
+            //**********************************Tableau buffers******************************************************
+            RecurringJob.AddOrUpdate(() => backgroundwork.UpdateTableauBuffers(), Cron.MinuteInterval(20));
 
 
         }

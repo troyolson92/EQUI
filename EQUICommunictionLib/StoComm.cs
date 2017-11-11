@@ -9,7 +9,7 @@ namespace EQUICommunictionLib
 {
     public class StoComm
     {
-        OracleConnection Stoconn = new OracleConnection(
+        OracleConnection StoconnQI = new OracleConnection(
             @"Data Source= (DESCRIPTION=
     (ADDRESS=
       (COMMUNITY=tcp.world)
@@ -23,13 +23,38 @@ namespace EQUICommunictionLib
   )
 ;User Id=STO_SYS_READONLY;Password=sto_sys_readonly1;");
 
+        OracleConnection StoconnPROD = new OracleConnection(
+           @"Data Source= (DESCRIPTION=
+            (ADDRESS=
+              (COMMUNITY=tcp.world)
+              (PROTOCOL=TCP)
+              (HOST=nvr.gent.vcc.ford.com)
+              (PORT=49970)
+            )
+            (CONNECT_DATA=
+              (SID=DST)
+            )
+          )
+        ;User Id=STO_SYS_READONLY;Password=sto_sys_readonly1;");
 
+
+        /*
+                @"Data Source=(DESCRIPTION=
+            (ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)
+            (HOST=nvr.gent.vcc.ford.com)
+            (PORT=49970)))
+            (CONNECT_DATA=(SERVER=DEDICATED)
+            (SERVICE_NAME=DST)));
+            User Id=STO_SYS_READONLY;
+            Password=sto_sys_readonly1;");
+
+    */
 
         public DataTable oracle_runQuery(string Query)
         {
           try
             {
-                using (OracleDataAdapter dadapter = new OracleDataAdapter(Query, Stoconn))
+                using (OracleDataAdapter dadapter = new OracleDataAdapter(Query, StoconnPROD))
                 {
                     //get location and asset data from maximo
                     DataTable table = new DataTable();

@@ -87,7 +87,7 @@ namespace ABBCommTest
 
 		public void searchForRobots()
 		{
-			List<string> LOGSearchpaths = new List<String>() 
+			/*List<string> LOGSearchpathsOLD = new List<String>() 
 			{ 
 			@"\\gnlsnm0101\6308-APP-NASROBOTBCK0001\robot_ga\P1X_FLOOR" ,
 			@"\\gnlsnm0101\6308-APP-NASROBOTBCK0001\robot_ga\P1X_SIBO" , 
@@ -96,10 +96,17 @@ namespace ABBCommTest
 			@"\\gnlsnm0101\6308-APP-NASROBOTBCK0001\robot_ga\SIBO" , 
 			@"\\gnlsnm0101\6308-APP-NASROBOTBCK0001\robot_ga\BOSKI" , 
 			@"\\gnlsnm0101\6308-APP-NASROBOTBCK0001\robot_ga\ROBLAB" , 
-			};
-			ResultList = ReqSearchDir(LOGSearchpaths, "*", @"(\d\d\d\d\d)R(\d\d)$");
 
-		}
+			};
+			ResultList = ReqSearchDir(LOGSearchpathsOLD, "*", @"(\d\d\d\d\d)R(\d\d)$");*/
+
+            List<string> LOGSearchpathsNGAC = new List<String>()
+            {
+            @"\\gnlsnm0101\6308-APP-NASROBOTBCK0001\robot_ga\IRC5-NGAC" 
+            };
+            ResultList = ReqSearchDir(LOGSearchpathsNGAC, "*", @"(\d\d\d\d\d\d)R(\d\d)$");
+
+        }
 
 		List<string> ReqSearchDir(List<string> als_filepaths, string as_mask, string as_fileNameMask)
 		{
