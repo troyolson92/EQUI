@@ -18,15 +18,17 @@
     ViewBag.Title = "LogDetails";
 }
 
-@*this goes on the 4k screen so set custom font*@
-<style>
-    table {
-        font-size: 18px;
-    }
-    th {
-        font-weight: bold;
-    }
-</style>
+@* Set font style to viewbag data*@
+<script type="text/javascript">
+    $(document).ready(function () {
+        var myElements = document.querySelectorAll(".table");
+
+        for (var i = 0; i < myElements.length; i++) {
+            myElements[i].style.fontSize =  @ViewBag.fontSize + "px";
+        }
+    });
+</script>
+
 
 @*main grid*@
 <div class="code-cut">
@@ -37,7 +39,7 @@ columns.Add(c => c.Subgroup);
 columns.Add(c => c.timestamp);
 columns.Add(c => c.Fulllogtext);
 
-}).WithPaging(15).Sortable(true)
+}).WithPaging(5).Sortable(true)
 </div>
 
 <h6>@Html.Raw(ViewBag.info)</h6>

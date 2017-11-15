@@ -10,6 +10,7 @@ namespace EqUi_UtilManger
         public Form1()
         {
             InitializeComponent();
+
         }
 
         private void btn_sbcuStat_Click(object sender, EventArgs e)

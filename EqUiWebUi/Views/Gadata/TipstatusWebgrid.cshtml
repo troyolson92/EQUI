@@ -30,7 +30,7 @@
             bFlip = !bFlip;
             $('tbody > tr').each(function (index) {
                 @*blink for slowspeed*@
-                if ($(this).children('td:nth-child(5)').text() > 30) {
+                if ($(this).children('td:nth-child(5)').text() > 40) {
                     if (bFlip) {
                         $(this).children('td').css("background-color", "#f21a1a");
                     } else {

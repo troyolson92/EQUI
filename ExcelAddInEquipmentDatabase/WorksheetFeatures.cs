@@ -106,7 +106,7 @@ namespace ExcelAddInEquipmentDatabase
             {
                 addMaximoSubmenu(3); // if we have a reference location enable maximo tools
             }
-            if (Logtype == "SHIFTBOOK" || Logtype == "BREAKDOWN" || Logtype == "ERROR" || Logtype == "WARNING")
+            if (Logtype == "SHIFTBOOK" || Logtype == "BREAKDOWN" || Logtype == "ERROR" || Logtype == "WARNING" || Logtype == "ControllerEvent")
             {
                 addShiftbookSubmenu(4); //shiftbook tools TEMP
             }

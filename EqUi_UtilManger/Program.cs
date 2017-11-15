@@ -111,8 +111,6 @@ namespace EqUi_UtilManger
                             case "sharepoint":
                                 Sharepoint sharepoint = new Sharepoint();
                                 sharepoint.AddNewIusse("8888", "iets", "http://equi/");    
-                                
-
                                 break;
                     }
                     break;
