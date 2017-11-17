@@ -15,25 +15,26 @@ namespace EqUiWebUi.Controllers
             return View();
         }
 
+        //handels inbedded views from tableau for FullHD and smaller type monitors
         [HttpGet]
-        public ActionResult LongTerm_Layout_STO_NGAC()
+        public ActionResult EmbeddedDesktop(string workbook, string sheet)
         {
+            ViewBag.workbook = workbook;
+            ViewBag.sheet = sheet;
             return View();
         }
 
+        //handels inbedded views from tablea 4K monitors  
         [HttpGet]
-        public ActionResult LongTerm_Treemap_STO_NGAC()
+        public ActionResult Embedded4K(string workbook, string sheet)
         {
+            ViewBag.workbook = workbook;
+            ViewBag.sheet = sheet;
             return View();
         }
 
-        [HttpGet]
-        public ActionResult LongTerm_Layout_STW040_MAXIMO()
-        {
-            return View();
-        }
 
-
+        //handels log details sheet in tableau workbooks.
         [HttpGet]
         public ActionResult logDetails(string Location, string Subgroup, string minTimestamp, string maxTimestamp, int fontSize = 18)
         {

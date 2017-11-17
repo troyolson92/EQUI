@@ -44,19 +44,24 @@
 </script>
 
 @*content *@
-<br />
-<div class="modal-content">
+<div class="container body-content">
     <br />
-    @using (Html.BeginForm())
-    {
-        @Html.Label("Snapshot")
-        @Html.DropDownListFor(m => m.SelectedQuery, new SelectList(Model.c_querySnapshots, "id", "name"), "select a snapshot")
-        @Html.Label("Compare")
-        @Html.DropDownListFor(m => m.SelectedSnapshotID1, new SelectList(string.Empty, "Value", "Text"), "Instance of snapshot")
-        @Html.Label("To")
-        @Html.DropDownListFor(m => m.SelectedSnapshotID2, new SelectList(string.Empty, "Value", "Text"), "Instance of snapshot")
-        <input type="submit" value="Show diff>>" />
-    }
-    <br />
+    <div class="modal-content">
+        <br />
+        @using (Html.BeginForm())
+        {
+            @Html.Label("Snapshot")
+            @Html.DropDownListFor(m => m.SelectedQuery, new SelectList(Model.c_querySnapshots, "id", "name"), "select a snapshot")
+           <p></p>
+            @Html.Label("Compare")
+            @Html.DropDownListFor(m => m.SelectedSnapshotID1, new SelectList(string.Empty, "Value", "Text"), "Instance of snapshot")
+            <p></p>
+            @Html.Label("To")
+            @Html.DropDownListFor(m => m.SelectedSnapshotID2, new SelectList(string.Empty, "Value", "Text"), "Instance of snapshot")
+            <p></p>
+            <input type="submit" value="Show diff>>" />
+        }
+        <br />
+    </div>
 </div>
 

@@ -297,9 +297,8 @@
     <Content Include="Views\Sharepoint\Index.cshtml" />
     <Content Include="Views\Sharepoint\AddNewIusse.cshtml" />
     <Content Include="Views\Tableau\Index.cshtml" />
-    <Content Include="Views\Tableau\LongTerm_Layout_STO_NGAC.cshtml" />
-    <Content Include="Views\Tableau\LongTerm_Treemap_STO_NGAC.cshtml" />
-    <Content Include="Views\Tableau\LongTerm_Layout_STW040_MAXIMO.cshtml" />
+    <Content Include="Views\Tableau\EmbeddedDesktop.cshtml" />
+    <Content Include="Views\Tableau\Embedded4K.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EQUICommunictionLib\EQUICommunictionLib.csproj">

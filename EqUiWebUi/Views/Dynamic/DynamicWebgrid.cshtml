@@ -41,7 +41,7 @@
     @*main body*@
 </head>
 <body>
-    <div>
+    <div class="container body-content">
         @{
             ViewBag.Title = "Dynamic Gridview";
             WebGrid grid = new WebGrid(null, rowsPerPage: @Model.PageSize);

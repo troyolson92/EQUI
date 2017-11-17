@@ -1,20 +1,52 @@
 ﻿@{
     ViewBag.Title = "VCG GA UB12 Homepage";
 }
+<div class="container body-content">
+    <div class="jumbotron">
+        <h1>WELCOME IN VCG A-SHOP</h1>
+        <p class="lead">VCG GA UB12 Homepage</p>
+    </div>
 
-<div class="jumbotron">
-    <h1>Hellow</h1>
-    <p class="lead">VCG GA UB12 Homepage</p>
+    <p></p>
 
-    <p><a href="~/Gadata/TipstatusWebgrid" class="btn btn-primary btn-sm">Tipstatus &raquo;</a></p>
-    <p><a href="~/Gadata/PloegRapportWebgrid" class="btn btn-primary btn-sm">PloegRapport &raquo;</a></p>
-    <p><a href="~/Gadata/SupervisieWebgrid" class="btn btn-primary btn-sm">Supervisie &raquo;</a></p>
-    <p><a href="~/Gadata/Stowebgrid" class="btn btn-primary btn-sm">STO &raquo;</a></p>
-    <p><a href="~/Difftable/Index" class="btn btn-primary btn-sm">QueryDiffer &raquo;</a></p>
-    <p><a href="~/Dynamic/DynamicWebgrid" class="btn btn-primary btn-sm">Dynamic &raquo;</a></p>
-    <p><a href="~/Tableau/index" class="btn btn-primary btn-sm">Tableau &raquo;</a></p>
-    <div></div>
-    <p><a href="~/Sharepoint/AddNewIusse?location=TestLocation&title=TestTitle&refURL=http://MyServer/sites/MySiteCollection" class="btn btn-primary btn-sm">SharepointTest &raquo;</a></p>
-   
+    <div class="panel panel-default">
+        <h4>BROWNFIELD</h4>
+        <div class="panel-body">
+            <p><a href="~/Gadata/PloegRapportWebgrid" class="btn btn-primary btn-sm">PloegRapport &raquo;</a> 
+            Bevat storingen groter dan 20 minuten of die meer dan 3 keer zijn voorgevallen</p>
+            <p><a href="~/Gadata/SupervisieWebgrid" class="btn btn-primary btn-sm">Supervisie &raquo;</a>
+            Bevat alles dat nu in storing staat, storingen die langer dan 10 minuten hebben geduurd en hardwarefouten van robots</p>
+        </div>
+    </div>
+
+    <p></p>
+
+    <div class="panel panel-default">
+        <h4>GREENFIELD</h4>
+        <div class="panel-body">
+            <p><a href="~/Gadata/TipstatusWebgrid" class="btn btn-primary btn-sm">Tipstatus &raquo;</a>
+            Huidige elektrode status inclusief een voorspelling van het aantal nog te lassen wagens</p>
+            <p><a href="~/Gadata/Stowebgrid" class="btn btn-primary btn-sm">STO &raquo;</a>
+            Data van de PLC actieve storingen</p>
+            <p><a href="~/Tableau/index" class="btn btn-primary btn-sm">Tableau &raquo;</a>
+            Een interactive manier om naar data te kijken.</p>
+        </div>
+    </div>
+
+    <p></p>
+
+    <div class="panel panel-default">
+        <h4>Please don't touch</h4>
+        <div class="panel-body">
+            <p><a href="~/Difftable/Index" class="btn btn-primary btn-sm">QueryDiffer &raquo;</a>
+            Concept om data van maximo op verschillende tijdstippen te vergelijken</p>
+            <p><a href="~/Dynamic/DynamicWebgrid" class="btn btn-primary btn-sm">Dynamic &raquo;</a>
+            Test met niet gebufferde query
+            </p>
+            <p><a href="~/Sharepoint/AddNewIusse?location=TestLocation&title=TestTitle&refURL=http://MyServer/sites/MySiteCollection" class="btn btn-primary btn-sm">SharepointTest &raquo;</a>
+            Test communicatie naar sharepoint.
+            </p>
+        </div>
+    </div>
 
 </div>
