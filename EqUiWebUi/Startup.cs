@@ -3,6 +3,7 @@ using Hangfire.Dashboard;
 using Hangfire.SqlServer;
 using Microsoft.Owin;
 using System;
+using System.Web;
 
 [assembly: log4net.Config.XmlConfigurator(Watch = true)]
 
@@ -22,6 +23,7 @@ namespace EqUiWebUi
             {
                 Authorization = new[] { new MyAuthorizationFilter() }
             });
+
 
             app.UseHangfireServer();
         //
@@ -73,7 +75,17 @@ namespace EqUiWebUi
 
                 // Allow all authenticated users to see the Dashboard (potentially dangerous).
                 //return owinContext.Authentication.User.Identity.IsAuthenticated;
-                return true;
+
+                EquiRoleProvider equiRoleProvider = new EquiRoleProvider();
+
+                if (equiRoleProvider.IsUserInRole(HttpContext.Current.User.Identity.Name , "Administrator"))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
         }
 

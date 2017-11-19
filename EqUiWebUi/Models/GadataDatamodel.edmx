@@ -139,6 +139,17 @@ warning 6002: The table/view 'GADATA.Tableau.logDetails' does not have a primary
           <Property Name="Fulllogtext" Type="varchar(max)" />
           <Property Name="refid" Type="int" Nullable="false" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.Volvo.UserPermisions' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="UserPermisions">
+          <Key>
+            <PropertyRef Name="user_id" />
+            <PropertyRef Name="Role" />
+          </Key>
+          <Property Name="user_id" Type="int" Nullable="false" />
+          <Property Name="Role" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="50" />
+        </EntityType>
         <Association Name="FK_h_querySnapshots_c_querySnapshots">
           <End Role="c_querySnapshots" Type="Self.c_querySnapshots" Multiplicity="0..1" />
           <End Role="h_querySnapshots" Type="Self.h_querySnapshots" Multiplicity="*" />
@@ -250,6 +261,13 @@ FROM [STO].[Breakdown] AS [Breakdown]</DefiningQuery>
 [logDetails].[refid] AS [refid]
 FROM [Tableau].[logDetails] AS [logDetails]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="UserPermisions" EntityType="Self.UserPermisions" store:Type="Views" store:Schema="Volvo">
+            <DefiningQuery>SELECT 
+[UserPermisions].[user_id] AS [user_id], 
+[UserPermisions].[Role] AS [Role], 
+[UserPermisions].[username] AS [username]
+FROM [Volvo].[UserPermisions] AS [UserPermisions]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_h_querySnapshots_c_querySnapshots" Association="Self.FK_h_querySnapshots_c_querySnapshots">
             <End Role="c_querySnapshots" EntitySet="c_querySnapshots" />
             <End Role="h_querySnapshots" EntitySet="h_querySnapshots" />
@@ -324,6 +342,7 @@ FROM [Tableau].[logDetails] AS [logDetails]</DefiningQuery>
           </FunctionImport>
           <EntitySet Name="Breakdown" EntityType="Models.Breakdown" />
           <EntitySet Name="logDetails" EntityType="Models.logDetails" />
+          <EntitySet Name="UserPermisions" EntityType="Models.UserPermisions" />
           </EntityContainer>
         <EntityType Name="c_querySnapshots">
           <Key>
@@ -466,6 +485,15 @@ FROM [Tableau].[logDetails] AS [logDetails]</DefiningQuery>
           <Property Name="timestamp" Type="DateTime" Precision="3" />
           <Property Name="Fulllogtext" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="refid" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserPermisions">
+          <Key>
+            <PropertyRef Name="user_id" />
+            <PropertyRef Name="Role" />
+          </Key>
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <Property Name="Role" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -621,6 +649,15 @@ FROM [Tableau].[logDetails] AS [logDetails]</DefiningQuery>
                 <ScalarProperty Name="timestamp" ColumnName="timestamp" />
                 <ScalarProperty Name="Subgroup" ColumnName="Subgroup" />
                 <ScalarProperty Name="location" ColumnName="location" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserPermisions">
+            <EntityTypeMapping TypeName="Models.UserPermisions">
+              <MappingFragment StoreEntitySet="UserPermisions">
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -13,6 +13,7 @@ namespace EqUiWebUi.Controllers
             return View();
         }
 
+
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
@@ -24,6 +25,12 @@ namespace EqUiWebUi.Controllers
         {
             ViewBag.Message = "Your contact page.";
 
+            return View();
+        }
+
+        [Authorize(Roles = "Administrator")]
+        public ActionResult Settings()
+        {
             return View();
         }
     }

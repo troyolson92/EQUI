@@ -1,0 +1,96 @@
+﻿<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="http://public.tableau.com/javascripts/api/tableau-2.0.0.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
+
+    <script>
+        /**
+         * Instantiate our vizualization.
+         */
+        $(function () {
+            var url = 'https://tableau-test.volvocars.biz/t/Ghent/views/'.concat('@ViewBag.workbook').concat('/').concat('@ViewBag.sheet');
+
+
+            var size = findDashboardSize();
+            var vizOptions = {
+                embed: true,
+                hideTabs: false,
+                hideToolbar: false,
+                showShareOptions: false,
+                showAppBanner: false,
+                width: size.width + "px",
+                height: size.height + "px",
+                onFirstInteractive: function (e) {
+                    $('.viz iframe').attr("scrolling", "no");
+                    $('.viz iframe').css('overflow', 'hidden');
+                }
+            };
+
+            new tableauSoftware.Viz(document.getElementById('viz'), url, vizOptions)
+        });
+
+        /**
+         * Finds the correct size of the dashboard in this screen.
+         */
+        function findDashboardSize() {
+            var minHeight = 1600;
+            var maxHeight =  2160;
+            var minWidth = 2560;
+
+            // The minus 100px leaves us room for the header/footer. Adjust as needed.
+            var height = $('body').height() - 50;
+
+            if (height < minHeight) {
+                height = minHeight;
+            }
+            if (height > maxHeight) {
+                height = maxHeight;
+            }
+
+            // var width = Math.round(height / (minHeight / minWidth));
+            var width = $('body').width();
+            if (width < minWidth) {
+                width = minWidth;
+            }
+
+            console.log("Resize: Body:", $('body').height(), "x", $('body').width(), " viz:", height, " x", width);
+
+            return {
+                'width': width,
+                'height': height
+            }
+        }
+
+        /**
+         * Resizes our viz.
+         */
+        function resize() {
+            var size = findDashboardSize();
+            $('#viz').width(size.width);
+            $('#viz').height(size.height);
+            $('#viz iframe').attr("scrolling", "no");
+            $('#viz iframe').css('overflow', 'hidden');
+            $('#viz iframe').width(size.width);
+            $('#viz iframe').height(size.height + 20);
+        }
+
+        /**
+         * Hook into the window resize event to resize when the user resizes the screen.
+         */
+        $(window).resize(resize);
+
+
+    </script>
+</head>
+<body>
+    @*<h6>Workbook: @ViewBag.workbook Sheet: @ViewBag.sheet</h6>*@
+    @*render the viz*@
+    <div id="viz"></div>
+</body>
+</html>
+
+
+
+
+

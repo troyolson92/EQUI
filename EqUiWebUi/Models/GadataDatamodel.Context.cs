@@ -36,6 +36,7 @@ namespace EqUiWebUi.Models
         public DbSet<TipMonitor> TipMonitor { get; set; }
         public DbSet<Breakdown> Breakdown { get; set; }
         public DbSet<logDetails> logDetails { get; set; }
+        public DbSet<UserPermisions> UserPermisions { get; set; }
     
         public virtual ObjectResult<GetErrorInfoData_Result> GetErrorInfoData(string location, Nullable<int> eRRORNUM, Nullable<int> refid, string logtype)
         {
