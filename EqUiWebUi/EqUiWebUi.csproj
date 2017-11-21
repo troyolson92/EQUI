@@ -145,6 +145,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Backgroundwork.cs" />
     <Compile Include="Controllers\DynamicController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\PdfController.cs" />
     <Compile Include="Controllers\SharepointController.cs" />
     <Compile Include="Controllers\TableauController.cs" />
@@ -681,6 +682,10 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\Home\Settings.cshtml" />
     <Content Include="Views\Pdf\RenderPdf.cshtml" />
+    <Content Include="Views\Error\Index.cshtml" />
+    <Content Include="Views\Error\NotFound.cshtml" />
+    <Content Include="Views\Error\AccessDenied.cshtml" />
+    <Content Include="Views\Error\InternalServerError.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EQUICommunictionLib\EQUICommunictionLib.csproj">

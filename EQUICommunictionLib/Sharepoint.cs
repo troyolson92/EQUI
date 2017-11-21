@@ -80,7 +80,7 @@ namespace EQUICommunictionLib
                         }
                         catch (Exception ex)
                         {
-
+                            Console.WriteLine(ex.Message);
                         }
                     }
                 }

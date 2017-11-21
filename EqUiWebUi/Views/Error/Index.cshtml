@@ -1,0 +1,41 @@
+﻿@{
+    ViewBag.Title = @TempData["error"];
+    Layout = null;
+}
+<div class="container body-content">
+    <div class="jumbotron">
+        <h1>@TempData["error"]</h1>
+    </div>
+
+    <p></p>
+
+    <div class="panel panel-default">
+        <h4>ERROR</h4>
+        <div class="panel-body">
+            <p>
+                <h4> Error Description:</h4>
+
+                <div class="alert alert-warning">
+                    @Model.Exception.Message.ToString() @Html.Raw(" ") @Model.ControllerName @Html.Raw(" ") @Model.ActionName
+                </div>
+            </p>
+
+            <p>
+                <button class="btn btn-primary btn-danger" onclick="goback()" type="button"><<< Back</button>
+            </p>
+        </div>
+    </div>
+
+    <p></p>
+
+</div>
+
+<footer>
+    <p>&copy; @DateTime.Now.Year - VCG GA SDEBEUL ASP.NET Application</p>
+</footer>
+
+<script>
+    function goback() {
+        window.history.back()
+    }
+</script>

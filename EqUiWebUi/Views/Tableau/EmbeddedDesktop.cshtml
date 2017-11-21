@@ -32,14 +32,15 @@
 
         /**
          * Finds the correct size of the dashboard in this screen.
+        https://en.wikipedia.org/wiki/Display_resolution#/media/File:Vector_Video_Standards8.svg
          */
         function findDashboardSize() {
             var minHeight = 600;
-            var maxHeight =  2160;
+            var maxHeight =  1452;
             var minWidth = 800;
 
             // The minus 100px leaves us room for the header/footer. Adjust as needed.
-            var height = $('body').height() - 50;
+            var height = window.innerHeight - 130;
 
             if (height < minHeight) {
                 height = minHeight;
@@ -49,12 +50,12 @@
             }
 
             // var width = Math.round(height / (minHeight / minWidth));
-            var width = $('body').width();
+            var width = window.innerWidth - 20;
             if (width < minWidth) {
                 width = minWidth;
             }
 
-            console.log("Resize: Body:", $('body').height(), "x", $('body').width(), " viz:", height, " x", width);
+            console.log("Resize: Body:", window.innerHeight, "x", window.innerWidth, " viz:", height, " x", width);
           
             return {
                 'width': width,
@@ -79,6 +80,8 @@
          * Hook into the window resize event to resize when the user resizes the screen.
          */
         $(window).resize(resize);
+        /*trigger once on load ready*/
+        //$(document).ready(resize);
 
         
     </script>
