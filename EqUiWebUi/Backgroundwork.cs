@@ -252,17 +252,17 @@ SELECT ALARM_DATA_SUBASSY.*,'ALARM_DATA_SUBASSY' stoTable FROM STO_SYS.ALARM_DAT
 
 		}
 
-        //update new data from STO to gadata. called every minute #hangfire
-        [AutomaticRetry(Attempts = 0)]
-        public void PushDatafromMAXIMOtoGADATA()
-        {
-            //delete data in now in maximo.
-            GadataComm lGadataComm = new GadataComm();
-            lGadataComm.RunCommandGadata("DELETE GADATA.MAXIMO.WORKORDERS FROM GADATA.MAXIMO.WORKORDERS", true);
+		//update new data from STO to gadata. called every minute #hangfire
+		[AutomaticRetry(Attempts = 0)]
+		public void PushDatafromMAXIMOtoGADATA()
+		{
+			//delete data in now in maximo.
+			GadataComm lGadataComm = new GadataComm();
+			lGadataComm.RunCommandGadata("DELETE GADATA.MAXIMO.WORKORDERS FROM GADATA.MAXIMO.WORKORDERS", true);
 
-            //get new records from STO
-            MaximoComm maximoComm = new MaximoComm();
-            string MaximoQry = string.Format(@"
+			//get new records from STO
+			MaximoComm maximoComm = new MaximoComm();
+			string MaximoQry = string.Format(@"
 select 
  WORKORDER.WONUM WONUM
 ,WORKORDER.STATUS
@@ -290,29 +290,29 @@ ORDER BY WORKORDER.STATUSDATE DESC
 "
 );
 
-            DataTable newMaximoDt = maximoComm.oracle_runQuery(MaximoQry);
-            //push to gadata
-            lGadataComm.BulkCopyToGadata("MAXIMO", newMaximoDt, "WORKORDERS");
-        }
+			DataTable newMaximoDt = maximoComm.oracle_runQuery(MaximoQry);
+			//push to gadata
+			lGadataComm.BulkCopyToGadata("MAXIMO", newMaximoDt, "WORKORDERS");
+		}
 
-        //update new data from STW040 (BI RAPPORT) to gadata. called every minute #hangfire
-        [AutomaticRetry(Attempts = 0)]
-        public void PushDatafromSTW040toGADATA()
-        {
-            stw040Sync lstw040Sync = new stw040Sync();
-            lstw040Sync.get_swt040data();
-        }
+		//update new data from STW040 (BI RAPPORT) to gadata. called every minute #hangfire
+		[AutomaticRetry(Attempts = 0)]
+		public void PushDatafromSTW040toGADATA()
+		{
+			stw040Sync lstw040Sync = new stw040Sync();
+			lstw040Sync.get_swt040data();
+		}
 
-        //update new data from MX7 (BI RAPPORT) to gadata. called every minute #hangfire
-        [AutomaticRetry(Attempts = 0)]
-        public void PushDatafromMX7toGADATA()
-        {
-            mx7Sync mx7Sync = new mx7Sync();
-            mx7Sync.get_mx7data();
-        }
+		//update new data from MX7 (BI RAPPORT) to gadata. called every minute #hangfire
+		[AutomaticRetry(Attempts = 0)]
+		public void PushDatafromMX7toGADATA()
+		{
+			mx7Sync mx7Sync = new mx7Sync();
+			mx7Sync.get_mx7data();
+		}
 
-        //calculate sto supervision. called every minute #hangfire
-        [AutomaticRetry(Attempts = 0)]
+		//calculate sto supervision. called every minute #hangfire
+		[AutomaticRetry(Attempts = 0)]
 		public void CalcStoSupervision()
 		{
 			//get new records from STO needed to clac breakdowns
@@ -363,13 +363,13 @@ AND ALARMSEVERITY in('A','B')"
 
 		}
 
-        //update tableau buffers. called every 20minutes #hangfire
-        [AutomaticRetry(Attempts = 0)]
-        public void UpdateTableauBuffers()
-        {
-            GadataComm lGadataComm = new GadataComm();
-            //
-            lGadataComm.RunCommandGadata(@"EXEC [GADATA].[Tableau].[Updatebuffers]", true);
-        }
-    }
+		//update tableau buffers. called every 20minutes #hangfire
+		[AutomaticRetry(Attempts = 0)]
+		public void UpdateTableauBuffers()
+		{
+			GadataComm lGadataComm = new GadataComm();
+			//
+			lGadataComm.RunCommandGadata(@"EXEC [GADATA].[Tableau].[Updatebuffers]", true);
+		}
+	}
 }
