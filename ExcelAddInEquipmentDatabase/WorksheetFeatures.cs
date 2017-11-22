@@ -44,6 +44,15 @@ namespace ExcelAddInEquipmentDatabase
 
             //
             lClickedSheet = Sh as Excel._Worksheet; //pass the sheet so we can work with it 
+
+            //adding code to support old weldguncockpit. can be removed once file is killed.
+            //17w47d2
+            if (lClickedSheet.Name == "Alerts")
+            {
+                Debugger.Log("Dit not append VSTO context menu (weldguncockpit exeption");
+                return;
+            }
+            //
             ResetTableMenu();  // reset the cell context menu back to the default (can mess up other peoples code)
             //foreach collum in collums with a switch statement that add controlls 
             foreach (Excel.ListObject oListobject in lClickedSheet.ListObjects)
@@ -459,7 +468,6 @@ this shift will be out of all OEE calculations!", "Confirmation", MessageBoxButt
             Forms.AAOSRshiftbook lAAOSRshiftbook = new Forms.AAOSRshiftbook();
             lAAOSRshiftbook.AddIndependantShiftbook(location,Logtype,LogText, refid.ToString());
         }
-        
 
     }
 }
