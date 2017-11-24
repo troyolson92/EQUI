@@ -117,7 +117,7 @@
     @Html.Grid(Model).Named("DataGrid").Columns(columns =>
 {
     columns.Add(c => c.Robot).Filterable(true);
-    columns.Add(c => c.Date_Time);
+    columns.Add(c => c.Date_Time).Format("{0:dd-MM-yyyy hh:mm}");
     columns.Add(c => c.nDress);
     columns.Add(c => c.nWelds);
     columns.Add(c => c.pWear).Titled("%wear");

@@ -15,7 +15,9 @@ namespace EqUiWebUi.Models
     public partial class UserPermisions
     {
         public int user_id { get; set; }
-        public string Role { get; set; }
         public string username { get; set; }
+        public string Role { get; set; }
+        public string Description { get; set; }
+        public string GrantedBy { get; set; }
     }
 }

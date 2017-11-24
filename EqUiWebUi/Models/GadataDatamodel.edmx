@@ -145,10 +145,13 @@ warning 6002: The table/view 'GADATA.Volvo.UserPermisions' does not have a prima
           <Key>
             <PropertyRef Name="user_id" />
             <PropertyRef Name="Role" />
+            <PropertyRef Name="GrantedBy" />
           </Key>
           <Property Name="user_id" Type="int" Nullable="false" />
-          <Property Name="Role" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="username" Type="varchar" MaxLength="50" />
+          <Property Name="Role" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="varchar(max)" />
+          <Property Name="GrantedBy" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <Association Name="FK_h_querySnapshots_c_querySnapshots">
           <End Role="c_querySnapshots" Type="Self.c_querySnapshots" Multiplicity="0..1" />
@@ -264,8 +267,10 @@ FROM [Tableau].[logDetails] AS [logDetails]</DefiningQuery>
           <EntitySet Name="UserPermisions" EntityType="Self.UserPermisions" store:Type="Views" store:Schema="Volvo">
             <DefiningQuery>SELECT 
 [UserPermisions].[user_id] AS [user_id], 
+[UserPermisions].[username] AS [username], 
 [UserPermisions].[Role] AS [Role], 
-[UserPermisions].[username] AS [username]
+[UserPermisions].[Description] AS [Description], 
+[UserPermisions].[GrantedBy] AS [GrantedBy]
 FROM [Volvo].[UserPermisions] AS [UserPermisions]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_h_querySnapshots_c_querySnapshots" Association="Self.FK_h_querySnapshots_c_querySnapshots">
@@ -490,10 +495,13 @@ FROM [Volvo].[UserPermisions] AS [UserPermisions]</DefiningQuery>
           <Key>
             <PropertyRef Name="user_id" />
             <PropertyRef Name="Role" />
+            <PropertyRef Name="GrantedBy" />
           </Key>
           <Property Name="user_id" Type="Int32" Nullable="false" />
-          <Property Name="Role" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Role" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="GrantedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -655,8 +663,10 @@ FROM [Volvo].[UserPermisions] AS [UserPermisions]</DefiningQuery>
           <EntitySetMapping Name="UserPermisions">
             <EntityTypeMapping TypeName="Models.UserPermisions">
               <MappingFragment StoreEntitySet="UserPermisions">
-                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="GrantedBy" ColumnName="GrantedBy" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="username" ColumnName="username" />
                 <ScalarProperty Name="user_id" ColumnName="user_id" />
               </MappingFragment>
             </EntityTypeMapping>

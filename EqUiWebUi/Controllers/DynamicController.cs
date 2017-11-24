@@ -45,5 +45,22 @@ namespace EqUiWebUi.Controllers
             }
             return View(model);
         }
+
+        [HttpGet]
+        public ActionResult DynamicDatatable(DataTable dataTable)
+        {
+            //
+            WebGridHelpers.WebGridHelper webGridHelper = new WebGridHelper();
+            ViewBag.Columns = webGridHelper.getDatatabelCollumns(dataTable);
+            //
+            List<dynamic> data = webGridHelper.datatableToDynamic(dataTable);
+            //
+            DefaultModel model = new WebGridHelpers.DefaultModel();
+            model.PageSize = 5;
+            //
+            model.Data = data;
+            //
+            return View(model);
+        }
     }
 }

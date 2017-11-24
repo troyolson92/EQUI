@@ -97,7 +97,7 @@
     columns.Add(c => c.Logcode);
     columns.Add(c => c.logtext);
     columns.Add(c => c.Downtime);
-    columns.Add(c => c.timestamp);
+    columns.Add(c => c.timestamp).Format("{0:hh:mm:ss}");
     columns.Add(c => c.Classification).Titled("Class");
     columns.Add(c => c.Subgroup);
     columns.Add(c => c.Logtype).Filterable(true);

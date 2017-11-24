@@ -1,8 +1,73 @@
-﻿@model EqUiWebUi.Models.MaximoWorkorder
+﻿@model EqUiWebUi.WebGridHelpers.DefaultModel
 
+@*Remove default layout*@
 @{
-    ViewBag.Title = "WoDetails";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = null;
 }
 
-<h2>@Model.sWoDetails</h2>
+@{
+    ViewBag.Title = "WorkorderDetails";
+}
+
+
+<script src="~/Scripts/jquery-3.2.1.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/gridmvc.min.js"></script>
+
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/Gridmvc.css" rel="stylesheet" />
+
+
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h6>LongDescription</h6>
+    </div>
+
+    <div class="panel-body">
+        @Html.Raw(ViewBag.LongDescription)
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h6>FailureRemark</h6>
+    </div>
+
+    <div class="panel-body">
+        @Html.Raw(ViewBag.FailureRemark)
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h6>Labor</h6>
+    </div>
+
+    <div class="panel-body">
+        @{
+            ViewBag.Title = "Dynamic Gridview";
+            WebGrid grid = new WebGrid(null, rowsPerPage: @Model.PageSize);
+            grid.Bind(Model.Data, autoSortAndPage: true, rowCount: @Model.PageSize);
+        }
+
+        @grid.GetHtml(
+                    htmlAttributes: new { id = "gridMapping", style = "font-size: 12px" },                   
+                    tableStyle: "table table-striped grid-table",
+                    headerStyle: "grid-header-title",
+                    footerStyle: "grid-footer",
+                    alternatingRowStyle: "webgrid-alternating-row",
+                    selectedRowStyle: "grid-row grid-row-selected",
+                    rowStyle: "grid-row",
+                    mode: WebGridPagerModes.All,
+                    firstText: "<< First",
+                    previousText: "< Prev",
+                    nextText: "Next >",
+                    lastText: "Last >>",
+                    columns: ViewBag.LABORColumns
+        )
+    </div>
+</div>
+
+
+

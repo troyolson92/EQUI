@@ -27,11 +27,5 @@ namespace EqUiWebUi.Controllers
 
             return View();
         }
-
-        [Authorize(Roles = "Administrator")]
-        public ActionResult Settings()
-        {
-            return View();
-        }
     }
 }

@@ -38,6 +38,7 @@
             var minHeight = 600;
             var maxHeight =  1452;
             var minWidth = 800;
+            var maxWidth = 1920;
 
             // The minus 100px leaves us room for the header/footer. Adjust as needed.
             var height = window.innerHeight - 130;
@@ -53,6 +54,9 @@
             var width = window.innerWidth - 20;
             if (width < minWidth) {
                 width = minWidth;
+            }
+            if (width > maxWidth) {
+                width = maxWidth;
             }
 
             console.log("Resize: Body:", window.innerHeight, "x", window.innerWidth, " viz:", height, " x", width);
@@ -89,6 +93,7 @@
 <body>
     @*<h6>Workbook: @ViewBag.workbook Sheet: @ViewBag.sheet</h6>*@
     @*render the viz*@
+    <p></p>
     <p></p>
     <div id="viz"></div>
 </body>
