@@ -8,7 +8,7 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar-inverse navbar-fixed-top" id="navbar">
 
         <div class="container">
             <div class="navbar-header">
@@ -59,8 +59,13 @@
         @RenderBody()
         <hr />
     </div>
-
     @Scripts.Render("~/bundles/jquery")
+    @*added for mvc grid*@
+    @Scripts.Render("~/bundles/MvcGrid")
+    <script>
+            $('.mvc-grid').mvcgrid();
+    </script>
+    
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace EqUiWebUi.Models
 {
@@ -9,10 +7,13 @@ namespace EqUiWebUi.Models
     {
 
     }
-    public class MaximoWorkorder
+    public class WorkordersOnLocation
     {
-        public string sWoNum { get; set; }
-        public string sWoDetails { get; set; }
+        public string location { get; set; }
+        public string station { get; set; }
+        public bool b_ciblings { get; set; }
+        public bool b_preventive { get; set; }
+        public List<Workorder> workorders { get; set; }
     }
 
 
@@ -29,4 +30,6 @@ namespace EqUiWebUi.Models
         public Nullable<System.DateTime> REPORTDATE { get; set; }
         public string ANCESTOR { get; set; }
     }
+
+
 }

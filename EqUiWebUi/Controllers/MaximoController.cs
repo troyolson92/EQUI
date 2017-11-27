@@ -17,15 +17,19 @@ namespace EqUiWebUi.Controllers
 
         //
         // GET: /Maximo/
-
         public ActionResult Index()
         {
-            return HttpNotFound();
+            return View();
         }
 
-        //used in tableau to get workorder list. 
+        //get workorders for a specific location. can search by station or by location.
+        /*http://localhost:64061/Maximo/workorders?location=53100R01
+         *http://localhost:64061/Maximo/workorders?location=53100R01&station=A%20STN53100
+         *http://localhost:64061/Maximo/workorders?location=*&station=A%20STN53100
+         *http://localhost:64061/Maximo/workorders?location=*&station=*
+         */
         [HttpGet]
-        public ActionResult workorders(string location, string station, bool b_ciblings = false, bool b_preventive = false, int page = 1, int fontSize = 12)
+        public ActionResult workorders(string location, string station, bool b_ciblings = false, bool b_preventive = false, int fontSize = 12)
         {
             //check the selected locations. 
             if (location == null) location = "NoLocation";
@@ -45,25 +49,18 @@ namespace EqUiWebUi.Controllers
                 station = station.Split(',')[0];
             }
 
-            ViewBag.location = location;
-            ViewBag.station = station;
-            ViewBag.fontSize = fontSize;
-            ViewBag.b_ciblings = b_ciblings;
-            ViewBag.b_preventive = b_preventive;
-            ViewBag.page = page; 
+            WorkordersOnLocation workordersOnLocation = new WorkordersOnLocation();
+            workordersOnLocation.location = location;
+            workordersOnLocation.station = station;
+            workordersOnLocation.b_ciblings = b_ciblings;
+            workordersOnLocation.b_preventive = b_preventive;
 
-            return View();
+
+            return View(workordersOnLocation);
         }
-
-
-        //get workorders for a specific location. can search by station or by location.
-        /*http://localhost:64061/Maximo/workorders?location=53100R01
-         *http://localhost:64061/Maximo/workorders?location=53100R01&station=A%20STN53100
-         *http://localhost:64061/Maximo/workorders?location=*&station=A%20STN53100
-         *http://localhost:64061/Maximo/workorders?location=*&station=*
-         */
+    
         [HttpGet]
-        public ActionResult workordersOnLocation(string location, string station, bool b_ciblings = false, bool b_preventive = false, int fontSize = 12)
+        public ActionResult _workordersOnLocation(string location, string station, bool b_ciblings = false, bool b_preventive = false, int fontSize = 12)
         {
             //pas info for fontsize
             ViewBag.fontSize = fontSize;
@@ -153,12 +150,12 @@ namespace EqUiWebUi.Controllers
                 workorders.Add(workorder);
             }
 
-            return View(workorders);
+            return PartialView("_workordersOnLocation",workorders);
         }
 
         //get workorder details (long text, failure, labor)
         [HttpGet]
-        public ActionResult WoDetails(string wonum)
+        public ActionResult _woDetails(string wonum)
         {
             if (wonum == null) wonum = "NoWonum";
             if (wonum == "") wonum = "NoWonum";
@@ -227,7 +224,8 @@ namespace EqUiWebUi.Controllers
             LABORmodel.PageSize = 5;
             LABORmodel.Data = LABORdata;
             //
-            return View(LABORmodel);
+            return PartialView(LABORmodel);
         }
+
     }
 }
