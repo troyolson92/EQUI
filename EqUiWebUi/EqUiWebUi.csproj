@@ -231,7 +231,6 @@
     <Content Include="Content\images\icons8-home-button-25.png" />
     <Content Include="Content\images\icons8-settings-25.png" />
     <Content Include="Content\images\volvo-50.png" />
-    <Content Include="Content\MvcGrid\mvc-grid.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -551,7 +550,6 @@
     <Content Include="PDFjs\LICENSE" />
     <Content Include="PDFjs\web\Q-Mapping Dashboard.pdf" />
     <Content Include="Grid.Mvc.Ajax.readme" />
-    <Content Include="Content\MvcGrid\Fonts\GridGlyphs.woff" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION.pubxml" />
     <None Include="Properties\PublishProfiles\VCC22700-Testing.pubxml" />
     <Content Include="PDFjs\build\pdf.js" />
@@ -642,7 +640,6 @@
     <Content Include="Scripts\gridmvc.customwidgets.js" />
     <Content Include="Scripts\gridmvc.js" />
     <Content Include="Scripts\gridmvc.lang.fr.js" />
-    <Content Include="Scripts\gridmvc.lang.ru.js" />
     <Content Include="Scripts\gridmvc.min.js" />
     <Content Include="Scripts\gridmvc.min.js.map" />
     <None Include="Scripts\jquery-3.2.1.intellisense.js" />
@@ -677,8 +674,6 @@
     <Content Include="Views\Difftable\DiffWebgrid.cshtml" />
     <Content Include="Views\Difftable\Index.cshtml" />
     <Content Include="Views\Gadata\PloegRapportWebgrid.cshtml" />
-    <Content Include="Views\Shared\_GridPager.cshtml" />
-    <Content Include="Views\Shared\_Grid.cshtml" />
     <Content Include="Scripts\jquery-3.2.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.2.1.min.map" />
     <Content Include="Views\Gadata\SupervisieWebgrid.cshtml" />

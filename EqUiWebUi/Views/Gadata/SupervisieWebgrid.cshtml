@@ -1,18 +1,7 @@
 ﻿@model IEnumerable<EqUiWebUi.Models.Supervisie>
 
-@using GridMvc.Html
-
 <script src="~/Scripts/jquery-3.2.1.min.js"></script>
-<script src="~/Scripts/bootstrap.min.js"></script>
-<script src="~/Scripts/gridmvc.min.js"></script>
 
-<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
-<link href="~/Content/Gridmvc.css" rel="stylesheet" />
-
-@*Remove default layout*@
-@{
-    Layout = null;
-}
 @*set title*@
 @{
     ViewBag.Title = "Supervisie";
@@ -122,23 +111,21 @@
 
 @*main grid*@
 <div class="code-cut">
-@Html.Grid(Model).Named("DataGrid").Columns(columns =>
-{
-    columns.Add(c => c.Location).Filterable(true);
-    columns.Add(c => c.logtext);
-    columns.Add(c => c.DT);
-    columns.Add(c => c.time);
-    columns.Add(c => c.Classification).Titled("Class");
-    columns.Add(c => c.Subgroup);
-    columns.Add(c => c.Logtype).Filterable(true);
 
+@Html.Grid(Model).Named("DataGrid").Build(columns =>
+{
+    columns.Add(c => c.Location).Titled("Location").Filterable(true);
+    columns.Add(c => c.logtext).Titled("Logtext");
+    columns.Add(c => c.DT).Titled("DT");
+    columns.Add(c => c.time).Titled("time");
+    columns.Add(c => c.Classification).Titled("Class");
+    columns.Add(c => c.Subgroup).Titled("Subgroup");
+    columns.Add(c => c.Logtype).Titled("LogType").Filterable(true);
     columns.Add(c => c.LocationTree)
     .Titled("Info")
     .Encoded(false)
-    .Sanitized(false)
-    .SetWidth(30)
     .Filterable(true)
-    .RenderValueAs(o => Html.ActionLink("INFO", "_Moreinfo",
+    .RenderedAs(o => Html.ActionLink("INFO", "_Moreinfo",
        new { location = o.Location,
            errornum = o.Logcode,
            refid = o.refId,
@@ -147,7 +134,12 @@
        },
          new { @class = "modal-link" }
          )
-    );}).WithPaging(20).Sortable(true)
+    );
+}).Sortable().Pageable(pager =>
+    {
+        pager.RowsPerPage = 20;
+    }).Empty("No data found")
+
 </div> 
 
     <div  class="modal-content">
@@ -158,12 +150,12 @@
             </button>
             <ul class="dropdown-menu">
                 <li><a href="/Gadata/SupervisieWebgrid">ClearFilter</a></li>
-                <li><a href="/Gadata/SupervisieWebgrid?grid-filter=LocationTree__2__AAL">P3</a></li>
-                <li><a href="/Gadata/SupervisieWebgrid?grid-filter=LocationTree__2__A FLOOR L">A FLOOR L</a></li>
-                <li><a href="/Gadata/SupervisieWebgrid?grid-filter=LocationTree__2__A SIBO L">A SIBO L</a></li>
-                <li><a href="/Gadata/SupervisieWebgrid?grid-filter=LocationTree__2__AAS">P4</a></li>
-                <li><a href="/Gadata/SupervisieWebgrid?grid-filter=LocationTree__2__A FLOOR S">A FLOOR S</a></li>
-                <li><a href="/Gadata/SupervisieWebgrid?grid-filter=LocationTree__2__A SIBO ">A SIBO S</a></li>
+                <li><a href="/Gadata/SupervisieWebgrid?DataGrid-LocationTree-Contains=AAL">P3</a></li>
+                <li><a href="/Gadata/SupervisieWebgrid?DataGrid-LocationTree-Contains=A FLOOR L">A FLOOR L</a></li>
+                <li><a href="/Gadata/SupervisieWebgrid?DataGrid-LocationTree-Contains=A SIBO L">A SIBO L</a></li>
+                <li><a href="/Gadata/SupervisieWebgrid?DataGrid-LocationTree-Contains=AAS">P4</a></li>
+                <li><a href="/Gadata/SupervisieWebgrid?DataGrid-LocationTree-Contains=A FLOOR S">A FLOOR S</a></li>
+                <li><a href="/Gadata/SupervisieWebgrid?DataGrid-LocationTree-Contains=A SIBO ">A SIBO S</a></li>
             </ul>
 
             <a href="~/" class="btn btn-primary">goHome &raquo;</a>
