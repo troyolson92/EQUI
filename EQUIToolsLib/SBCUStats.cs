@@ -137,6 +137,10 @@ namespace EQUIToolsLib
             chart_sbcu.ChartAreas[0].AxisY.IsStartedFromZero = false;
             chart_sbcu.FormatNumber += chart_FormatNumberXaxis;
             chart_sbcu.GetToolTipText += chart_GetToolTipText;
+            //add context menu to chart.
+            ContextMenu cmSBCU = new ContextMenu();
+            cmSBCU.MenuItems.Add("Edit control limtis", new EventHandler(SetSbcuControlLimits));
+            chart_sbcu.ContextMenu = cmSBCU;
             //************************************************************************************
             //init chart Cylinder
             //************************************************************************************
@@ -172,6 +176,10 @@ namespace EQUIToolsLib
             chart_cilinder.ChartAreas[0].AxisY.IsStartedFromZero = false;
             chart_cilinder.FormatNumber += chart_FormatNumberXaxis;
             chart_cilinder.GetToolTipText += chart_GetToolTipText;
+            //add context menu to cilinder.
+            ContextMenu cmCilinder = new ContextMenu();
+            cmCilinder.MenuItems.Add("Edit control limtis", new EventHandler(SetCilinderControlLimits));
+            chart_cilinder.ContextMenu = cmCilinder;
             //************************************************************************************
             //init chart MidAir
             //************************************************************************************
@@ -928,5 +936,22 @@ ORDER BY x.Toolname ASC";
         {
 
         }
+
+        //handle control limit events.
+
+        private void SetCilinderControlLimits(object sender, EventArgs e)
+        {
+            if (activeLocation is null) return; 
+            EditControlLimits editControlLimits = new EditControlLimits("Cilinder", activeLocation.Trim());
+            editControlLimits.Show();
+        }
+
+        private void SetSbcuControlLimits(object sender, EventArgs e)
+        {
+            if (activeLocation is null) return;
+            EditControlLimits editControlLimits = new EditControlLimits("Sbcu", activeLocation.Trim());
+            editControlLimits.Show();
+        }
+
     }
 }

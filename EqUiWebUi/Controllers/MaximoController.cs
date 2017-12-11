@@ -31,31 +31,71 @@ namespace EqUiWebUi.Controllers
         [HttpGet]
         public ActionResult workorders(string location, string station, bool b_ciblings = false, bool b_preventive = false, int fontSize = 12)
         {
+            //helper model to pass data
+            WorkordersOnLocation workordersOnLocation = new WorkordersOnLocation();
+
             //check the selected locations. 
             if (location == null) location = "NoLocation";
+            //handle multible locations
             if (location.Contains(','))
             {
-                ViewBag.locationInfo = " !... ";
-                //multi locations are selected for now just take first.
-                location = location.Split(',')[0];
+                //signal multible location to viewbag
+                ViewBag.locationInfo = location.Split(',')[0] + " !... ";
+                //build in statement for multible locations
+                StringBuilder sbLocation = new StringBuilder();
+                sbLocation.Append("in(");
+                foreach(string subLocation in location.Split(','))
+                {
+                    sbLocation.Append("'").Append(subLocation).Append("'");
+                    //add a comma if not last value 
+                    if(!subLocation.Equals(location.Split(',').Last()))
+                    {
+                        sbLocation.Append(",");
+                    }
+                }
+                sbLocation.Append(")");
+                workordersOnLocation.location = sbLocation.ToString();
+            }
+            else //if single location handle wildcards with like statement.
+            {
+                //signal location to viewbag
+                ViewBag.locationInfo = location;
+                workordersOnLocation.location = "like '" + location + "'";
             }
 
             //check the selected stations.
             if (station == null) station = "NoStation";
+            //handle multible stations
             if (station.Contains(','))
             {
-                ViewBag.stationInfo = " !... ";
-                //multi stations are selected ... do ? ??
-                station = station.Split(',')[0];
+                //signal multible location to viewbag
+                ViewBag.stationInfo = station.Split(',')[0] + " !... ";
+                //build in statement for multible stations
+                StringBuilder sbStation = new StringBuilder();
+                sbStation.Append("in(");
+                foreach (string subStation in station.Split(','))
+                {
+                    sbStation.Append("'").Append(subStation).Append("'");
+                    //add a comma if not last value 
+                    if (!subStation.Equals(station.Split(',').Last()))
+                    {
+                        sbStation.Append(",");
+                    }
+                }
+                sbStation.Append(")");
+                workordersOnLocation.station = sbStation.ToString();
+            }
+            else
+            {
+                //signal location to viewbag
+                ViewBag.stationInfo = station;
+                workordersOnLocation.station = "like '" + station + "'";
             }
 
-            WorkordersOnLocation workordersOnLocation = new WorkordersOnLocation();
-            workordersOnLocation.location = location;
-            workordersOnLocation.station = station;
+            //pass boolean reaquest
             workordersOnLocation.b_ciblings = b_ciblings;
             workordersOnLocation.b_preventive = b_preventive;
-
-
+            //return view with model 
             return View(workordersOnLocation);
         }
     
@@ -106,7 +146,7 @@ namespace EqUiWebUi.Controllers
             sbqry.Append(string.Format(@" 
                     AND locancestor.ANCESTOR = (
                     select ancestor from(select locancestor.ancestor
-                    from maximo.locancestor where locancestor.location like '{0}'
+                    from maximo.locancestor where locancestor.location {0}
                     and locancestor.ORGID = 'VCCBE'
                     and locancestor.location <> locancestor.ancestor
                     order by locancestor.LOCANCESTORID)
@@ -115,7 +155,7 @@ namespace EqUiWebUi.Controllers
             //handle ciblings
             if (!b_ciblings)
             {
-                sbqry.Append(string.Format(" AND locancestor.LOCATION = '{0}'", targetlocation));
+                sbqry.Append(string.Format(" AND locancestor.LOCATION {0}", targetlocation));
             }
 
             //handle preventive
@@ -151,6 +191,14 @@ namespace EqUiWebUi.Controllers
             }
 
             return PartialView("_workordersOnLocation",workorders);
+        }
+
+        //view details about one workorder.
+        [HttpGet]
+        public ActionResult WoDetails(string wonum)
+        {
+            ViewBag.wonum = wonum;
+            return View();
         }
 
         //get workorder details (long text, failure, labor)

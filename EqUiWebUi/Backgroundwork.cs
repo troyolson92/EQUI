@@ -60,9 +60,8 @@ namespace EqUiWebUi
 		{
 			try
 			{
-
 				GADATAEntities gADATAEntities = new GADATAEntities();
-				List<AAOSR_PloegRaportV2_Result> data = (from ploegrapport in gADATAEntities.AAOSR_PloegRaportV2
+            List<AAOSR_PloegRaportV2_Result> data = (from ploegrapport in gADATAEntities.AAOSR_PloegRaportV2
 								(startDate: null,
 								   endDate: null,
 								   daysBack: null,
@@ -209,7 +208,8 @@ namespace EqUiWebUi
 
 		//update new data from STO to gadata. called every minute #hangfire
 		[AutomaticRetry(Attempts = 0)]
-		public void PushDatafromSTOtoGADATA()
+        [DisableConcurrentExecution(120)] //locks the job from starting multible times if other one stil running.
+        public void PushDatafromSTOtoGADATA()
 		{
 			GadataComm lGadataComm = new GadataComm();
 			//get last record in GADATA 
@@ -235,16 +235,18 @@ UNION
 SELECT ALARM_DATA_SUBASSY.*,'ALARM_DATA_SUBASSY' stoTable FROM STO_SYS.ALARM_DATA_SUBASSY
 ) WHERE CHANGETS > TO_TIMESTAMP('{0}', 'YYYY/MM/DD HH24:MI:SS') AND ALARMSTATUS = 1
 "
-				, GadataMAxTs.ToString("yyyy-MM-dd hh:mm:ss"));
+                , GadataMAxTs.ToString("yyyy-MM-dd hh:mm:ss"));
 
 			DataTable newStoDt = lStoComm.oracle_runQuery(stoQry);
 			//push to gadata
 			lGadataComm.BulkCopyToGadata("STO", newStoDt, "rt_error");
-			//get new max in gadata
-			//DataTable dtGadataNewMaxIDX = lGadataComm.RunQueryGadata(gadataGetMaxTimestampQry);
-			//DateTime GadataNewMAxIDX = dtGadataNewMaxIDX.Rows[0].Field<DateTime>("_timestamp");
-			//trigger normalisation
-			BackgroundJob.Enqueue(() => lGadataComm.RunCommandGadata("EXEC GADATA.STO.[sp_update_L]", true));
+            //get new max in gadata
+            //DataTable dtGadataNewMaxIDX = lGadataComm.RunQueryGadata(gadataGetMaxTimestampQry);
+            //DateTime GadataNewMAxIDX = dtGadataNewMaxIDX.Rows[0].Field<DateTime>("_timestamp");
+            //trigger normalisation
+
+            GadataComm gadataComm = new GadataComm();
+            gadataComm.RunCommandGadata("EXEC GADATA.STO.[sp_update_L]", true);
 			//trigger classification
 			//   lGadataComm.RunCommandGadata("EXEC GADATA.STO.[sp_update_Lerror_classifcation]", true);
 			//fire and forget to init
@@ -254,7 +256,7 @@ SELECT ALARM_DATA_SUBASSY.*,'ALARM_DATA_SUBASSY' stoTable FROM STO_SYS.ALARM_DAT
 
 		//update new data from STO to gadata. called every minute #hangfire
 		[AutomaticRetry(Attempts = 0)]
-		public void PushDatafromMAXIMOtoGADATA()
+        public void PushDatafromMAXIMOtoGADATA()
 		{
 			//delete data in now in maximo.
 			GadataComm lGadataComm = new GadataComm();
@@ -311,61 +313,10 @@ ORDER BY WORKORDER.STATUSDATE DESC
 			mx7Sync.get_mx7data();
 		}
 
-		//calculate sto supervision. called every minute #hangfire
-		[AutomaticRetry(Attempts = 0)]
-		public void CalcStoSupervision()
-		{
-			//get new records from STO needed to clac breakdowns
-			StoComm lStoComm = new StoComm();
-			string stoQry = string.Format(@"
-SELECT * FROM
-(
-SELECT ALARM_DATA_UB12.*, 'ALARM_DATA_UB12' stoTable FROM STO_SYS.ALARM_DATA_UB12
-UNION
-SELECT ALARM_DATA_SUBASSY.*,'ALARM_DATA_SUBASSY' stoTable FROM STO_SYS.ALARM_DATA_SUBASSY
-UNION
-SELECT ALARM_DATA_BODY_SIDES.*,'ALARM_DATA_BODY_SIDES' stoTable FROM STO_SYS.ALARM_DATA_BODY_SIDES
-UNION
-SELECT ALARM_DATA_SUBASSY.*,'ALARM_DATA_SUBASSY' stoTable FROM STO_SYS.ALARM_DATA_SUBASSY
-) 
-WHERE 
-CHANGETS  >= (sysdate-2/24)
-AND ALARMSEVERITY in('A','B')"
-);
-			DataTable newStoDt = lStoComm.oracle_runQuery(stoQry);
-
-			GadataComm lGadataComm = new GadataComm();
-			//clear gadata table 
-			lGadataComm.RunCommandGadata("DELETE GADATA.STO.rt_breakdown FROM GADATA.STO.rt_breakdown",true);
-			//push to gadata
-			lGadataComm.BulkCopyToGadata("STO", newStoDt, "rt_breakdown");
-
-			//get back to calculated supervision view from gadata.
-			GADATAEntities gADATAEntities = new GADATAEntities();
-			List<Breakdown> data = (from Breakdown in gADATAEntities.Breakdown
-									 select Breakdown).ToList();
-
-			if (data.Count != 0)
-			{
-				DataBuffer.StoBreakdown = data;
-
-				DateTime maxDate = data
-							.Where(r => r != null)
-							.Select(r => r.timestamp.Value)
-							.Max();
-
-				DataBuffer.StoBreakdownLastDt = maxDate;
-			}
-			else
-			{
-				log.Error("UpdateStoBreakown did not return any data");
-			}
-
-		}
-
 		//update tableau buffers. called every 20minutes #hangfire
 		[AutomaticRetry(Attempts = 0)]
-		public void UpdateTableauBuffers()
+        [DisableConcurrentExecution(120)] //locks the job from starting multible times if other one stil running.
+        public void UpdateTableauBuffers()
 		{
 			GadataComm lGadataComm = new GadataComm();
 			//

@@ -1,46 +1,42 @@
 ﻿@model IEnumerable<EqUiWebUi.Models.logDetails>
 
-@using GridMvc.Html
-
-<script src="~/Scripts/jquery-3.2.1.min.js"></script>
-<script src="~/Scripts/bootstrap.min.js"></script>
-<script src="~/Scripts/gridmvc.min.js"></script>
-
-<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
-<link href="~/Content/Gridmvc.css" rel="stylesheet" />
-
-@*Remove default layout*@
-@{
-    Layout = null;
-}
 @*set title*@
 @{
     ViewBag.Title = "LogDetails";
 }
 
+<script src="~/Scripts/jquery-3.2.1.min.js"></script>
+
 @* Set font style to viewbag data*@
 <script type="text/javascript">
     $(document).ready(function () {
-        var myElements = document.querySelectorAll(".table");
+        //hide the navbar in this view
+        $('.navbar').hide();
+        //set optional font size. (to support HD and 4K monitors  )
+        setFont();
+    });
 
+ @* Set font style to viewbag data*@
+    function setFont() {
+        var myElements = document.querySelectorAll(".table");
         for (var i = 0; i < myElements.length; i++) {
             myElements[i].style.fontSize =  @ViewBag.fontSize + "px";
         }
-    });
+    };
 </script>
 
 
 @*main grid*@
 <div class="code-cut">
-    @Html.Grid(Model).Named("LogDetails").Columns(columns =>
+    @Html.Grid(Model).Named("LogDetails").Build(columns =>
 {
-columns.Add(c => c.location).Filterable(true);
-columns.Add(c => c.Subgroup);
-columns.Add(c => c.timestamp);
-columns.Add(c => c.Fulllogtext);
+    columns.Add(c => c.location).Titled("Location").Filterable(true);
+    columns.Add(c => c.Subgroup).Titled("Subgroup");
+    columns.Add(c => c.timestamp).Titled("Time");
+    columns.Add(c => c.Fulllogtext).Titled("Logtext");
 
-}).WithPaging(7).Sortable(true)
+}).Sortable().Pageable(pager =>
+{
+    pager.RowsPerPage = 7;
+}).Empty("No data found")
 </div>
-
-@*<h6 font-size="8px" >@Html.Raw(ViewBag.info)</h6>*@
-

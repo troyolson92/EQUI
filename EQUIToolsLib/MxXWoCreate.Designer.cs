@@ -376,7 +376,7 @@
             this.cbx_WorkDuringproduc.Tag = "\tWORKORDER.CXCBDDPROD";
             this.cbx_WorkDuringproduc.Text = "Excuteable during prodcution";
             this.cbx_WorkDuringproduc.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.cbx_WorkDuringproduc.UseVisualStyleBackColor = true;
+          //  this.cbx_WorkDuringproduc.UseVisualStyleBackColor = true;
             // 
             // tb_completedby
             // 

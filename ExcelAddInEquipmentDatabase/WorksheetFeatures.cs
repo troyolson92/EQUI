@@ -223,6 +223,7 @@ namespace ExcelAddInEquipmentDatabase
             AddFormatToTable(Sheet, "LogType", "LIVE", System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.Red));
             AddFormatToTable(Sheet, "LogType", "WARN", 16305069);
             AddFormatToTable(Sheet, "LogType", "BREAKDOWN", 45296);
+            AddFormatToTable(Sheet, "LogType", "BREAKDOWN_start", System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.LightGoldenrodYellow));
             AddFormatToTable(Sheet, "LogType", "TIMELINE", 11128974); 
             AddFormatToTable(Sheet, "LogType", "STW040", System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.LightCoral));
         }

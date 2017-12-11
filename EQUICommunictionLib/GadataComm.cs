@@ -13,7 +13,7 @@ namespace EQUICommunictionLib
                                                       "Trusted_Connection=no; database=gadata; connection timeout=15");
 
         //conntion to GADATA admin
-        SqlConnection GadataconnAdmin = new SqlConnection("user id=GADATA; password=GADATA987; server=SQLA001.gen.volvocars.net;" +
+        SqlConnection GadataconnAdmin = new SqlConnection("user id=EqUiAdmin; password=EqUiAdmin; server=SQLA001.gen.volvocars.net;" +
                                                       "Trusted_Connection=no; database=gadata; connection timeout=15");
 
         public string DsnGADATA { get { return "GADATA"; } }

@@ -105,9 +105,10 @@
     @Html.Grid(Model).Named("DataGrid").Build(columns =>
 {
     columns.Add(c => c.Robot).Titled("Robot").Filterable(true);
-    columns.Add(c => c.Date_Time).Titled("Time").Formatted("{0:dd-MM-yyyy hh:mm}");
-    columns.Add(c => c.nDress).Titled("nDress");
-    columns.Add(c => c.nWelds).Titled("nWelds");
+    columns.Add(c => c.Date_Time).Titled("Laaste keer gefreest").Formatted("{0:dd-MM-yyyy hh:mm}");
+    columns.Add(c => c.nDress).Titled("Aantal keer gefreest");
+    columns.Add(c => c.WearRatio).Titled("%WearRatio");
+   // columns.Add(c => c.nWelds).Titled("nWelds");
     columns.Add(c => c.pWear).Titled("%wear");
     columns.Add(c => c.nRspots).Titled("remainingSpots");
     columns.Add(c => c.nRcars).Titled("remainingCars");
@@ -133,7 +134,7 @@
         </button>
         <ul class="dropdown-menu">
             <li><a href="/Gadata/TipstatusWebgrid">ClearFilter</a></li>
-            <li><a href="/Gadata/TipstatusWebgrid?DataGrid-LocationTree-Contains=GA1">GA1</a></li>
+            <li><a href="/Gadata/TipstatusWebgrid?DataGrid-LocationTree-Contains=GA4">GA4</a></li>
             <li><a href="/Gadata/TipstatusWebgrid?DataGrid-LocationTree-Contains=A LIJN 33">-FLOOR</a></li>
             <li><a href="/Gadata/TipstatusWebgrid?DataGrid-LocationTree-Contains=A LIJN 334">--FF-334</a></li>
             <li><a href="/Gadata/TipstatusWebgrid?DataGrid-LocationTree-Contains=A LIJN 331">--FS-331</a></li>

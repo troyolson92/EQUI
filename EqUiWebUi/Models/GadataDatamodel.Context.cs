@@ -39,27 +39,6 @@ namespace EqUiWebUi.Models
         public DbSet<logDetails> logDetails { get; set; }
         public DbSet<UserPermisions> UserPermisions { get; set; }
     
-        public virtual ObjectResult<GetErrorInfoData_Result> GetErrorInfoData(string location, Nullable<int> eRRORNUM, Nullable<int> refid, string logtype)
-        {
-            var locationParameter = location != null ?
-                new ObjectParameter("Location", location) :
-                new ObjectParameter("Location", typeof(string));
-    
-            var eRRORNUMParameter = eRRORNUM.HasValue ?
-                new ObjectParameter("ERRORNUM", eRRORNUM) :
-                new ObjectParameter("ERRORNUM", typeof(int));
-    
-            var refidParameter = refid.HasValue ?
-                new ObjectParameter("Refid", refid) :
-                new ObjectParameter("Refid", typeof(int));
-    
-            var logtypeParameter = logtype != null ?
-                new ObjectParameter("logtype", logtype) :
-                new ObjectParameter("logtype", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetErrorInfoData_Result>("GetErrorInfoData", locationParameter, eRRORNUMParameter, refidParameter, logtypeParameter);
-        }
-    
         public virtual ObjectResult<AAOSR_PloegRaportV2_Result> AAOSR_PloegRaportV2(Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate, Nullable<int> daysBack, string assets, string locations, string lochierarchy, Nullable<int> minDowntime, Nullable<int> minCountOfDowtime, Nullable<int> minCountofWarning, Nullable<bool> getAlerts, Nullable<bool> getShifbook)
         {
             var startDateParameter = startDate.HasValue ?

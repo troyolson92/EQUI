@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="Models.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Models.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="c_querySnapshots">
           <Key>
             <PropertyRef Name="id" />
@@ -90,6 +90,7 @@ warning 6002: The table/view 'GADATA.NGAC.TipMonitor' does not have a primary ke
           <Property Name="Date Time" Type="datetime" />
           <Property Name="nDress" Type="smallint" />
           <Property Name="nWelds" Type="smallint" />
+          <Property Name="WearRatio" Type="float" />
           <Property Name="pWear" Type="float" />
           <Property Name="nRspots" Type="float" />
           <Property Name="nRcars" Type="float" />
@@ -190,12 +191,6 @@ warning 6002: The table/view 'GADATA.Volvo.UserPermisions' does not have a prima
           <Parameter Name="getAlerts" Type="bit" Mode="In" />
           <Parameter Name="getShifbook" Type="bit" Mode="In" />
         </Function>
-        <Function Name="GetErrorInfoData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="EqUi">
-          <Parameter Name="Location" Type="varchar(max)" Mode="In" />
-          <Parameter Name="ERRORNUM" Type="int" Mode="In" />
-          <Parameter Name="Refid" Type="int" Mode="In" />
-          <Parameter Name="logtype" Type="varchar(max)" Mode="In" />
-        </Function>
         <EntityContainer Name="ModelsStoreContainer">
           <EntitySet Name="c_querySnapshots" EntityType="Self.c_querySnapshots" Schema="EqUi" store:Type="Tables" />
           <EntitySet Name="h_querySnapshots" EntityType="Self.h_querySnapshots" Schema="EqUi" store:Type="Tables" />
@@ -204,74 +199,75 @@ warning 6002: The table/view 'GADATA.Volvo.UserPermisions' does not have a prima
           <EntitySet Name="QUERYS" EntityType="Self.QUERYS" Schema="EqUi" store:Type="Tables" />
           <EntitySet Name="Supervisie" EntityType="Self.Supervisie" store:Type="Views" store:Schema="EqUi">
             <DefiningQuery>SELECT 
-[Supervisie].[Location] AS [Location], 
-[Supervisie].[logtext] AS [logtext], 
-[Supervisie].[RT] AS [RT], 
-[Supervisie].[DT] AS [DT], 
-[Supervisie].[time] AS [time], 
-[Supervisie].[Classification] AS [Classification], 
-[Supervisie].[Subgroup] AS [Subgroup], 
-[Supervisie].[Severity] AS [Severity], 
-[Supervisie].[Logcode] AS [Logcode], 
-[Supervisie].[Logtype] AS [Logtype], 
-[Supervisie].[refId] AS [refId], 
-[Supervisie].[timestamp] AS [timestamp], 
-[Supervisie].[LocationTree] AS [LocationTree], 
-[Supervisie].[ClassTree] AS [ClassTree]
-FROM [EqUi].[Supervisie] AS [Supervisie]</DefiningQuery>
+    [Supervisie].[Location] AS [Location], 
+    [Supervisie].[logtext] AS [logtext], 
+    [Supervisie].[RT] AS [RT], 
+    [Supervisie].[DT] AS [DT], 
+    [Supervisie].[time] AS [time], 
+    [Supervisie].[Classification] AS [Classification], 
+    [Supervisie].[Subgroup] AS [Subgroup], 
+    [Supervisie].[Severity] AS [Severity], 
+    [Supervisie].[Logcode] AS [Logcode], 
+    [Supervisie].[Logtype] AS [Logtype], 
+    [Supervisie].[refId] AS [refId], 
+    [Supervisie].[timestamp] AS [timestamp], 
+    [Supervisie].[LocationTree] AS [LocationTree], 
+    [Supervisie].[ClassTree] AS [ClassTree]
+    FROM [EqUi].[Supervisie] AS [Supervisie]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="TipMonitor" EntityType="Self.TipMonitor" store:Type="Views" store:Schema="NGAC">
             <DefiningQuery>SELECT 
-[TipMonitor].[Robot] AS [Robot], 
-[TipMonitor].[Date Time] AS [Date Time], 
-[TipMonitor].[nDress] AS [nDress], 
-[TipMonitor].[nWelds] AS [nWelds], 
-[TipMonitor].[pWear] AS [pWear], 
-[TipMonitor].[nRspots] AS [nRspots], 
-[TipMonitor].[nRcars] AS [nRcars], 
-[TipMonitor].[id] AS [id], 
-[TipMonitor].[LocationTree] AS [LocationTree]
-FROM [NGAC].[TipMonitor] AS [TipMonitor]</DefiningQuery>
+    [TipMonitor].[Robot] AS [Robot], 
+    [TipMonitor].[Date Time] AS [Date Time], 
+    [TipMonitor].[nDress] AS [nDress], 
+    [TipMonitor].[nWelds] AS [nWelds], 
+    [TipMonitor].[WearRatio] AS [WearRatio], 
+    [TipMonitor].[pWear] AS [pWear], 
+    [TipMonitor].[nRspots] AS [nRspots], 
+    [TipMonitor].[nRcars] AS [nRcars], 
+    [TipMonitor].[id] AS [id], 
+    [TipMonitor].[LocationTree] AS [LocationTree]
+    FROM [NGAC].[TipMonitor] AS [TipMonitor]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="Breakdown" EntityType="Self.Breakdown" store:Type="Views" store:Schema="STO">
             <DefiningQuery>SELECT 
-[Breakdown].[location] AS [location], 
-[Breakdown].[AssetID] AS [AssetID], 
-[Breakdown].[Logtype] AS [Logtype], 
-[Breakdown].[timestamp] AS [timestamp], 
-[Breakdown].[Logcode] AS [Logcode], 
-[Breakdown].[Severity] AS [Severity], 
-[Breakdown].[logtext] AS [logtext], 
-[Breakdown].[Fulllogtext] AS [Fulllogtext], 
-[Breakdown].[Response] AS [Response], 
-[Breakdown].[Downtime] AS [Downtime], 
-[Breakdown].[Classification] AS [Classification], 
-[Breakdown].[Subgroup] AS [Subgroup], 
-[Breakdown].[Category] AS [Category], 
-[Breakdown].[refId] AS [refId], 
-[Breakdown].[LocationTree] AS [LocationTree], 
-[Breakdown].[ClassTree] AS [ClassTree], 
-[Breakdown].[controller_name] AS [controller_name], 
-[Breakdown].[controller_type] AS [controller_type]
-FROM [STO].[Breakdown] AS [Breakdown]</DefiningQuery>
+    [Breakdown].[location] AS [location], 
+    [Breakdown].[AssetID] AS [AssetID], 
+    [Breakdown].[Logtype] AS [Logtype], 
+    [Breakdown].[timestamp] AS [timestamp], 
+    [Breakdown].[Logcode] AS [Logcode], 
+    [Breakdown].[Severity] AS [Severity], 
+    [Breakdown].[logtext] AS [logtext], 
+    [Breakdown].[Fulllogtext] AS [Fulllogtext], 
+    [Breakdown].[Response] AS [Response], 
+    [Breakdown].[Downtime] AS [Downtime], 
+    [Breakdown].[Classification] AS [Classification], 
+    [Breakdown].[Subgroup] AS [Subgroup], 
+    [Breakdown].[Category] AS [Category], 
+    [Breakdown].[refId] AS [refId], 
+    [Breakdown].[LocationTree] AS [LocationTree], 
+    [Breakdown].[ClassTree] AS [ClassTree], 
+    [Breakdown].[controller_name] AS [controller_name], 
+    [Breakdown].[controller_type] AS [controller_type]
+    FROM [STO].[Breakdown] AS [Breakdown]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="logDetails" EntityType="Self.logDetails" store:Type="Views" store:Schema="Tableau">
             <DefiningQuery>SELECT 
-[logDetails].[location] AS [location], 
-[logDetails].[Subgroup] AS [Subgroup], 
-[logDetails].[timestamp] AS [timestamp], 
-[logDetails].[Fulllogtext] AS [Fulllogtext], 
-[logDetails].[refid] AS [refid]
-FROM [Tableau].[logDetails] AS [logDetails]</DefiningQuery>
+    [logDetails].[location] AS [location], 
+    [logDetails].[Subgroup] AS [Subgroup], 
+    [logDetails].[timestamp] AS [timestamp], 
+    [logDetails].[Fulllogtext] AS [Fulllogtext], 
+    [logDetails].[refid] AS [refid]
+    FROM [Tableau].[logDetails] AS [logDetails]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="UserPermisions" EntityType="Self.UserPermisions" store:Type="Views" store:Schema="Volvo">
             <DefiningQuery>SELECT 
-[UserPermisions].[user_id] AS [user_id], 
-[UserPermisions].[username] AS [username], 
-[UserPermisions].[Role] AS [Role], 
-[UserPermisions].[Description] AS [Description], 
-[UserPermisions].[GrantedBy] AS [GrantedBy]
-FROM [Volvo].[UserPermisions] AS [UserPermisions]</DefiningQuery>
+    [UserPermisions].[user_id] AS [user_id], 
+    [UserPermisions].[username] AS [username], 
+    [UserPermisions].[Role] AS [Role], 
+    [UserPermisions].[Description] AS [Description], 
+    [UserPermisions].[GrantedBy] AS [GrantedBy]
+    FROM [Volvo].[UserPermisions] AS [UserPermisions]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_h_querySnapshots_c_querySnapshots" Association="Self.FK_h_querySnapshots_c_querySnapshots">
             <End Role="c_querySnapshots" EntitySet="c_querySnapshots" />
@@ -324,14 +320,11 @@ FROM [Volvo].[UserPermisions] AS [UserPermisions]</DefiningQuery>
             <End Role="h_querySnapshots" EntitySet="h_querySnapshots" />
             <End Role="l_querySnapshots" EntitySet="l_querySnapshots" />
           </AssociationSet>
-          <FunctionImport Name="GetErrorInfoData" ReturnType="Collection(Models.GetErrorInfoData_Result)">
-            <Parameter Name="Location" Mode="In" Type="String" />
-            <Parameter Name="ERRORNUM" Mode="In" Type="Int32" />
-            <Parameter Name="Refid" Mode="In" Type="Int32" />
-            <Parameter Name="logtype" Mode="In" Type="String" />
-          </FunctionImport>
           <EntitySet Name="Supervisie" EntityType="Models.Supervisie" />
           <EntitySet Name="TipMonitor" EntityType="Models.TipMonitor" />
+          <EntitySet Name="Breakdown" EntityType="Models.Breakdown" />
+          <EntitySet Name="logDetails" EntityType="Models.logDetails" />
+          <EntitySet Name="UserPermisions" EntityType="Models.UserPermisions" />
           <FunctionImport Name="AAOSR_PloegRaportV2" ReturnType="Collection(Models.AAOSR_PloegRaportV2_Result)">
             <Parameter Name="StartDate" Mode="In" Type="DateTime" />
             <Parameter Name="EndDate" Mode="In" Type="DateTime" />
@@ -345,9 +338,6 @@ FROM [Volvo].[UserPermisions] AS [UserPermisions]</DefiningQuery>
             <Parameter Name="getAlerts" Mode="In" Type="Boolean" />
             <Parameter Name="getShifbook" Mode="In" Type="Boolean" />
           </FunctionImport>
-          <EntitySet Name="Breakdown" EntityType="Models.Breakdown" />
-          <EntitySet Name="logDetails" EntityType="Models.logDetails" />
-          <EntitySet Name="UserPermisions" EntityType="Models.UserPermisions" />
           </EntityContainer>
         <EntityType Name="c_querySnapshots">
           <Key>
@@ -405,11 +395,6 @@ FROM [Volvo].[UserPermisions] AS [UserPermisions]</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <ComplexType Name="GetErrorInfoData_Result">
-          <Property Type="String" Name="INFO" Nullable="true" MaxLength="2000" />
-          <Property Type="String" Name="Cause" Nullable="true" MaxLength="2000" />
-          <Property Type="String" Name="Remedy" Nullable="true" MaxLength="2000" />
-        </ComplexType>
         <EntityType Name="Supervisie">
           <Key>
             <PropertyRef Name="refId" />
@@ -442,22 +427,8 @@ FROM [Volvo].[UserPermisions] AS [UserPermisions]</DefiningQuery>
           <Property Name="nRcars" Type="Double" />
           <Property Name="id" Type="Int32" Nullable="false" />
           <Property Name="LocationTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="WearRatio" Type="Double" />
         </EntityType>
-        <ComplexType Name="AAOSR_PloegRaportV2_Result">
-          <Property Type="String" Name="Location" Nullable="true" MaxLength="256" />
-          <Property Type="String" Name="AssetID" Nullable="true" MaxLength="255" />
-          <Property Type="Int32" Name="Logcode" Nullable="true" />
-          <Property Type="String" Name="Logtype" Nullable="false" MaxLength="9" />
-          <Property Type="String" Name="logtext" Nullable="true" MaxLength="888" />
-          <Property Type="Int32" Name="Response_min_" Nullable="true" />
-          <Property Type="Int32" Name="Downtime_min_" Nullable="true" />
-          <Property Type="Int32" Name="Count" Nullable="true" />
-          <Property Type="String" Name="timestamp" Nullable="true" MaxLength="19" />
-          <Property Type="String" Name="time" Nullable="true" MaxLength="19" />
-          <Property Type="String" Name="Subgroup" Nullable="true" MaxLength="50" />
-          <Property Type="Int64" Name="refId" Nullable="true" />
-          <Property Type="String" Name="LocationTree" Nullable="true" />
-        </ComplexType>
         <EntityType Name="Breakdown">
           <Key>
             <PropertyRef Name="refId" />
@@ -503,6 +474,21 @@ FROM [Volvo].[UserPermisions] AS [UserPermisions]</DefiningQuery>
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="GrantedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
+        <ComplexType Name="AAOSR_PloegRaportV2_Result">
+          <Property Type="String" Name="Location" Nullable="true" MaxLength="256" />
+          <Property Type="String" Name="AssetID" Nullable="true" MaxLength="255" />
+          <Property Type="Int32" Name="Logcode" Nullable="true" />
+          <Property Type="String" Name="Logtype" Nullable="false" MaxLength="9" />
+          <Property Type="String" Name="logtext" Nullable="true" MaxLength="888" />
+          <Property Type="Int32" Name="Response_min_" Nullable="true" />
+          <Property Type="Int32" Name="Downtime_min_" Nullable="true" />
+          <Property Type="Int32" Name="Count" Nullable="true" />
+          <Property Type="String" Name="timestamp" Nullable="true" MaxLength="19" />
+          <Property Type="String" Name="time" Nullable="true" MaxLength="19" />
+          <Property Type="String" Name="Subgroup" Nullable="true" MaxLength="50" />
+          <Property Type="Int64" Name="refId" Nullable="true" />
+          <Property Type="String" Name="LocationTree" Nullable="true" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -562,15 +548,6 @@ FROM [Volvo].[UserPermisions] AS [UserPermisions]</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="GetErrorInfoData" FunctionName="Models.Store.GetErrorInfoData">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Models.GetErrorInfoData_Result">
-                <ScalarProperty Name="INFO" ColumnName="INFO" />
-                <ScalarProperty Name="Cause" ColumnName="Cause" />
-                <ScalarProperty Name="Remedy" ColumnName="Remedy" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <EntitySetMapping Name="Supervisie">
             <EntityTypeMapping TypeName="Models.Supervisie">
               <MappingFragment StoreEntitySet="Supervisie">
@@ -594,6 +571,7 @@ FROM [Volvo].[UserPermisions] AS [UserPermisions]</DefiningQuery>
           <EntitySetMapping Name="TipMonitor">
             <EntityTypeMapping TypeName="Models.TipMonitor">
               <MappingFragment StoreEntitySet="TipMonitor">
+                <ScalarProperty Name="WearRatio" ColumnName="WearRatio" />
                 <ScalarProperty Name="LocationTree" ColumnName="LocationTree" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="nRcars" ColumnName="nRcars" />
@@ -606,25 +584,6 @@ FROM [Volvo].[UserPermisions] AS [UserPermisions]</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="AAOSR_PloegRaportV2" FunctionName="Models.Store.AAOSR_PloegRaportV2">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Models.AAOSR_PloegRaportV2_Result">
-                <ScalarProperty Name="Location" ColumnName="Location" />
-                <ScalarProperty Name="AssetID" ColumnName="AssetID" />
-                <ScalarProperty Name="Logcode" ColumnName="Logcode" />
-                <ScalarProperty Name="Logtype" ColumnName="Logtype" />
-                <ScalarProperty Name="logtext" ColumnName="logtext" />
-                <ScalarProperty Name="Response_min_" ColumnName="Response(min)" />
-                <ScalarProperty Name="Downtime_min_" ColumnName="Downtime(min)" />
-                <ScalarProperty Name="Count" ColumnName="Count" />
-                <ScalarProperty Name="timestamp" ColumnName="timestamp" />
-                <ScalarProperty Name="time" ColumnName="time" />
-                <ScalarProperty Name="Subgroup" ColumnName="Subgroup" />
-                <ScalarProperty Name="refId" ColumnName="refId" />
-                <ScalarProperty Name="LocationTree" ColumnName="LocationTree" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <EntitySetMapping Name="Breakdown">
             <EntityTypeMapping TypeName="Models.Breakdown">
               <MappingFragment StoreEntitySet="Breakdown">
@@ -671,6 +630,25 @@ FROM [Volvo].[UserPermisions] AS [UserPermisions]</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="AAOSR_PloegRaportV2" FunctionName="Models.Store.AAOSR_PloegRaportV2">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Models.AAOSR_PloegRaportV2_Result">
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="AssetID" ColumnName="AssetID" />
+                <ScalarProperty Name="Logcode" ColumnName="Logcode" />
+                <ScalarProperty Name="Logtype" ColumnName="Logtype" />
+                <ScalarProperty Name="logtext" ColumnName="logtext" />
+                <ScalarProperty Name="Response_min_" ColumnName="Response(min)" />
+                <ScalarProperty Name="Downtime_min_" ColumnName="Downtime(min)" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+                <ScalarProperty Name="timestamp" ColumnName="timestamp" />
+                <ScalarProperty Name="time" ColumnName="time" />
+                <ScalarProperty Name="Subgroup" ColumnName="Subgroup" />
+                <ScalarProperty Name="refId" ColumnName="refId" />
+                <ScalarProperty Name="LocationTree" ColumnName="LocationTree" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -687,7 +665,7 @@ FROM [Volvo].[UserPermisions] AS [UserPermisions]</DefiningQuery>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="False" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="False" />
-        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>

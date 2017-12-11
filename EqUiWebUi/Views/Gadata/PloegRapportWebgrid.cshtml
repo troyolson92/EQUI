@@ -10,6 +10,7 @@
 @*script for setting row colors based on there values*@
 <script type="text/javascript">
     $(document).ready(function () {
+        //set colors for grid 
         $('tbody > tr').each(function (index) {
             if ($(this).children('td:nth-child(8)').text() == "SHIFTBOOK")
             { $(this).children('td').css("background-color", "#d6d613"); }

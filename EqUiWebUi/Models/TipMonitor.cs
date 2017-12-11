@@ -23,5 +23,6 @@ namespace EqUiWebUi.Models
         public Nullable<double> nRcars { get; set; }
         public int id { get; set; }
         public string LocationTree { get; set; }
+        public Nullable<double> WearRatio { get; set; }
     }
 }
