@@ -19,52 +19,6 @@ namespace EqUiWebUi.Controllers
 			return new HttpNotFoundResult("Woeps");
 		}
 
-        //------------------------------------tip status-------------------------------------------------
-		[HttpGet]
-		public ActionResult TipstatusWebgrid()
-		{
-            //refresh every 10 minutes anyway ! 
-            Response.AddHeader("Refresh", "600");
-            //
-            var data = DataBuffer.Tipstatus;
-            //in case hangfire is taking a day off
-            if (data == null)
-            {
-                return new HttpNotFoundResult("give hangfire some time");
-            }
-            else //add tracking timestamp for hangfire sync
-            {
-                ViewBag.DataTimestamp = DataBuffer.TipstatusLastDt.ToString("yyyy-MM-dd HH:mm:ss");
-            }
-            return View(data);
-        }
-
-		[HttpGet]
-		public JsonResult TipwearCheckNewData(String dataTimestamp)
-		{
-            //direct query hangfire is not up
-            if (dataTimestamp == "")
-            {
-                //issue reload
-                return Json(new object[] { new object() }, JsonRequestBehavior.AllowGet);
-            }
-            DateTime date = DateTime.ParseExact(dataTimestamp, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
-            date = date.AddSeconds(1);
-
-            if (DataBuffer.TipstatusLastDt > date)
-			{
-			   //issue reload
-			   return Json(new object[] { new object() }, JsonRequestBehavior.AllowGet);
-			}
-			else
-			{
-				//no reload needed
-				return null; 
-			}
-
-		}
-        //-------------------------------------------------------------------------------------------------
-
         //------------------------------------PloegRapport-------------------------------------------------
         [HttpGet]
 		public ActionResult PloegRapportWebgrid()
@@ -76,7 +30,8 @@ namespace EqUiWebUi.Controllers
             //in case hangfire is taking a day off
             if (data == null)
             {
-                return new HttpNotFoundResult("give hangfire some time");
+                Backgroundwork backgroundwork = new Backgroundwork();
+                backgroundwork.UpdatePloegreport();
             }
             else //add tracking timestamp for hangfire sync
             {
@@ -121,7 +76,8 @@ namespace EqUiWebUi.Controllers
             //in case hangfire is taking a day off
             if (data == null)
             {
-                return new HttpNotFoundResult("give hangfire some time");
+                Backgroundwork backgroundwork = new Backgroundwork();
+                backgroundwork.UpdateSupervisie();
             }
             else //add tracking timestamp for hangfire sync
             {
@@ -150,7 +106,7 @@ namespace EqUiWebUi.Controllers
 
         }
 
-        //------------------------------------Supervisie-------------------------------------------------
+        //------------------------------------Supervisie brownfield-------------------------------------------------
         [HttpGet]
         public ActionResult StoWebgrid()
         {
@@ -189,7 +145,18 @@ namespace EqUiWebUi.Controllers
 
         }
 
-        //------------------------------------Supervisie-------------------------------------------------
+        //------------------------------------Supervisie Greenfield-------------------------------------------------
+        [HttpGet]
+        public ActionResult NgacSupervisieWebgrid()
+        {
+            GADATAEntities gADATAEntities = new GADATAEntities();
+            List<ActiveState> data = (from activeState in gADATAEntities.ActiveState
+                                         select activeState).ToList();
+
+            return View(data);
+        }
+
+        //------------------------------------maximo-------------------------------------------------
         [HttpGet]
         public ActionResult BatchRuns()
         {

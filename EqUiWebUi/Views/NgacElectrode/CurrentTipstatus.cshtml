@@ -105,13 +105,15 @@
     @Html.Grid(Model).Named("DataGrid").Build(columns =>
 {
     columns.Add(c => c.Robot).Titled("Robot").Filterable(true);
-    columns.Add(c => c.Date_Time).Titled("Laaste keer gefreest").Formatted("{0:dd-MM-yyyy hh:mm}");
+    columns.Add(c => c.Date_Time).Titled("Laaste keer gefreest").Formatted("{0:dd-MM-yyyy HH:mm}");
     columns.Add(c => c.nDress).Titled("Aantal keer gefreest");
     columns.Add(c => c.WearRatio).Titled("%WearRatio");
-   // columns.Add(c => c.nWelds).Titled("nWelds");
-    columns.Add(c => c.pWear).Titled("%wear");
+    // columns.Add(c => c.nWelds).Titled("nWelds");
+    columns.Add(c => c.pWear).Titled("%wear").Filterable(true);
     columns.Add(c => c.nRspots).Titled("remainingSpots");
     columns.Add(c => c.nRcars).Titled("remainingCars");
+    columns.Add(c => c.TipAge_h_).Titled("Electrode leeftijd (h)");
+    columns.Add(c => c.Time_DressCycleTime).Titled("Dress ct (s)");
     columns.Add(c => c.LocationTree)
     .Titled("Info")
     .Encoded(false)
@@ -120,9 +122,9 @@
     );
 
 }).Sortable().Pageable(pager =>
-    {
-    pager.RowsPerPage = 20;
-    }).Empty("No data found")
+{
+    pager.RowsPerPage = @ViewBag.RowsPerPage;
+}).Empty("No data found").Css("table-hover")
 </div>
 
 @*footer modal with filter and gohome*@
@@ -133,15 +135,15 @@
             <span class="caret"></span>
         </button>
         <ul class="dropdown-menu">
-            <li><a href="/Gadata/TipstatusWebgrid">ClearFilter</a></li>
-            <li><a href="/Gadata/TipstatusWebgrid?DataGrid-LocationTree-Contains=GA4">GA4</a></li>
-            <li><a href="/Gadata/TipstatusWebgrid?DataGrid-LocationTree-Contains=A LIJN 33">-FLOOR</a></li>
-            <li><a href="/Gadata/TipstatusWebgrid?DataGrid-LocationTree-Contains=A LIJN 334">--FF-334</a></li>
-            <li><a href="/Gadata/TipstatusWebgrid?DataGrid-LocationTree-Contains=A LIJN 331">--FS-331</a></li>
-            <li><a href="/Gadata/TipstatusWebgrid?DataGrid-LocationTree-Contains=A LIJN 336">--RF-336</a></li>
-            <li><a href="/Gadata/TipstatusWebgrid?DataGrid-LocationTree-Contains=A LIJN 338">--MAR-338</a></li>
-            <li><a href="/Gadata/TipstatusWebgrid?DataGrid-LocationTree-Contains=A LIJN 339">--WBL-339</a></li>
-            <li><a href="/Gadata/TipstatusWebgrid?DataGrid-LocationTree-Contains=A LIJN 35">-SIDES</a></li>
+            <li><a href="/NgacElectrode/CurrentTipstatus">ClearFilter</a></li>
+            <li><a href="/NgacElectrode/CurrentTipstatus?DataGrid-LocationTree-Contains=GA4">GA4</a></li>
+            <li><a href="/NgacElectrode/CurrentTipstatus?DataGrid-LocationTree-Contains=A LIJN 33">-FLOOR</a></li>
+            <li><a href="/NgacElectrode/CurrentTipstatus?DataGrid-LocationTree-Contains=A LIJN 334">--FF-334</a></li>
+            <li><a href="/NgacElectrode/CurrentTipstatus?DataGrid-LocationTree-Contains=A LIJN 331">--FS-331</a></li>
+            <li><a href="/NgacElectrode/CurrentTipstatus?DataGrid-LocationTree-Contains=A LIJN 336">--RF-336</a></li>
+            <li><a href="/NgacElectrode/CurrentTipstatus?DataGrid-LocationTree-Contains=A LIJN 338">--MAR-338</a></li>
+            <li><a href="/NgacElectrode/CurrentTipstatus?DataGrid-LocationTree-Contains=A LIJN 339">--WBL-339</a></li>
+            <li><a href="/NgacElectrode/CurrentTipstatus?DataGrid-LocationTree-Contains=A LIJN 35">-SIDES</a></li>
         </ul>
 
         <a href="~/" class="btn btn-primary">goHome &raquo;</a>

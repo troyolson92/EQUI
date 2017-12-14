@@ -149,11 +149,15 @@
     <Compile Include="Backgroundwork.cs" />
     <Compile Include="Controllers\DynamicController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\NgacElectrodeController.cs" />
     <Compile Include="Controllers\PdfController.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Controllers\SharepointController.cs" />
     <Compile Include="Controllers\TableauController.cs" />
     <Compile Include="Models\AAOSR_PloegRaportV2_Result.cs">
+      <DependentUpon>GadataDatamodel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ActiveState.cs">
       <DependentUpon>GadataDatamodel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Breakdown.cs">
@@ -178,6 +182,9 @@
       <DependentUpon>GadataDatamodel.tt</DependentUpon>
     </Compile>
     <Compile Include="EquiRoleProvider.cs" />
+    <Compile Include="Models\TipwearBeforeChange.cs">
+      <DependentUpon>GadataDatamodel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\UserPermisions.cs">
       <DependentUpon>GadataDatamodel.tt</DependentUpon>
     </Compile>
@@ -248,11 +255,10 @@
     <Content Include="Models\GadataDatamodel.edmx.diagram">
       <DependentUpon>GadataDatamodel.edmx</DependentUpon>
     </Content>
-    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
@@ -546,7 +552,7 @@
     <Content Include="PDFjs\web\viewer.js.map" />
     <Content Include="PDFjs\LICENSE" />
     <Content Include="PDFjs\web\Q-Mapping Dashboard.pdf" />
-    <Content Include="fonts\GridGlyphs.woff" />
+    <Content Include="MvcGrid\Fonts\GridGlyphs.woff" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION.pubxml" />
     <None Include="Properties\PublishProfiles\VCC22700-Testing.pubxml" />
     <Content Include="PDFjs\build\pdf.js" />
@@ -676,7 +682,6 @@
     <Content Include="Views\Gadata\SupervisieWebgrid.cshtml" />
     <Content Include="Views\Shared\_Moreinfo.cshtml" />
     <Content Include="Views\Dynamic\DynamicWebgrid.cshtml" />
-    <Content Include="Views\Gadata\TipstatusWebgrid.cshtml" />
     <Content Include="Views\Gadata\StoWebgrid.cshtml" />
     <Content Include="Views\Gadata\BatchRuns.cshtml" />
     <Content Include="Views\Tableau\logDetails.cshtml" />
@@ -702,6 +707,11 @@
     <Content Include="Views\Shared\MvcGrid\_AjaxGrid.cshtml" />
     <Content Include="Views\Maximo\_woDetails.cshtml" />
     <Content Include="Views\Maximo\WoDetails.cshtml" />
+    <Content Include="Views\Gadata\NgacSupervisieWebgrid.cshtml" />
+    <Content Include="Views\NgacElectrode\CurrentTipstatus.cshtml" />
+    <Content Include="Views\NgacElectrode\TipChangeList.cshtml" />
+    <Content Include="Views\NgacElectrode\Index.cshtml" />
+    <Content Include="Views\NgacElectrode\TipwearBeforeChange.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EQUICommunictionLib\EQUICommunictionLib.csproj">

@@ -24,5 +24,8 @@ namespace EqUiWebUi.Models
         public int id { get; set; }
         public string LocationTree { get; set; }
         public Nullable<double> WearRatio { get; set; }
+        public Nullable<int> TipAge_h_ { get; set; }
+        public Nullable<System.DateTime> LastTipchange { get; set; }
+        public Nullable<double> Time_DressCycleTime { get; set; }
     }
 }

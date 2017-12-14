@@ -81,6 +81,21 @@ warning 6002: The table/view 'GADATA.EqUi.Supervisie' does not have a primary ke
           <Property Name="ClassTree" Type="varchar(max)" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.NGAC.ActiveState' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ActiveState">
+          <Key>
+            <PropertyRef Name="_timestamp" />
+            <PropertyRef Name="controller_name" />
+          </Key>
+          <Property Name="controller_name" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="_timestamp" Type="datetime" Nullable="false" />
+          <Property Name="program_number" Type="int" Nullable="false" />
+          <Property Name="application_error" Type="int" Nullable="false" />
+          <Property Name="operating_mode" Type="int" Nullable="false" />
+          <Property Name="at_home" Type="int" Nullable="false" />
+          <Property Name="FullLogtext" Type="varchar(max)" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'GADATA.NGAC.TipMonitor' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="TipMonitor">
           <Key>
@@ -94,8 +109,31 @@ warning 6002: The table/view 'GADATA.NGAC.TipMonitor' does not have a primary ke
           <Property Name="pWear" Type="float" />
           <Property Name="nRspots" Type="float" />
           <Property Name="nRcars" Type="float" />
+          <Property Name="TipAge(h)" Type="int" />
+          <Property Name="LastTipchange" Type="datetime" />
+          <Property Name="Time_DressCycleTime" Type="float" />
           <Property Name="id" Type="int" Nullable="false" />
           <Property Name="LocationTree" Type="varchar(max)" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.NGAC.TipwearBeforeChange' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="TipwearBeforeChange">
+          <Key>
+            <PropertyRef Name="TipchangeTimestamp" />
+            <PropertyRef Name="controller_name" />
+          </Key>
+          <Property Name="controller_name" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Tool_Nr" Type="smallint" Nullable="false" />
+          <Property Name="TipchangeTimestamp" Type="datetime" Nullable="false" />
+          <Property Name="FixedWearBeforeChange" Type="float" />
+          <Property Name="MoveWearBeforeChange" Type="float" />
+          <Property Name="WearBeforeChange" Type="float" />
+          <Property Name="WeldsBeforeChange" Type="int" />
+          <Property Name="DressBeforeChange" Type="smallint" />
+          <Property Name="%FixedWearBeforeChange" Type="float" />
+          <Property Name="%MoveWearBeforeChange" Type="float" />
+          <Property Name="ESTnSpotsFixedWearBefore100" Type="float" />
+          <Property Name="ESTnSpotsMoveWearBefore100" Type="float" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'GADATA.STO.Breakdown' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -215,6 +253,17 @@ warning 6002: The table/view 'GADATA.Volvo.UserPermisions' does not have a prima
     [Supervisie].[ClassTree] AS [ClassTree]
     FROM [EqUi].[Supervisie] AS [Supervisie]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="ActiveState" EntityType="Self.ActiveState" store:Type="Views" store:Schema="NGAC">
+            <DefiningQuery>SELECT 
+    [ActiveState].[controller_name] AS [controller_name], 
+    [ActiveState].[_timestamp] AS [_timestamp], 
+    [ActiveState].[program_number] AS [program_number], 
+    [ActiveState].[application_error] AS [application_error], 
+    [ActiveState].[operating_mode] AS [operating_mode], 
+    [ActiveState].[at_home] AS [at_home], 
+    [ActiveState].[FullLogtext] AS [FullLogtext]
+    FROM [NGAC].[ActiveState] AS [ActiveState]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="TipMonitor" EntityType="Self.TipMonitor" store:Type="Views" store:Schema="NGAC">
             <DefiningQuery>SELECT 
     [TipMonitor].[Robot] AS [Robot], 
@@ -225,9 +274,28 @@ warning 6002: The table/view 'GADATA.Volvo.UserPermisions' does not have a prima
     [TipMonitor].[pWear] AS [pWear], 
     [TipMonitor].[nRspots] AS [nRspots], 
     [TipMonitor].[nRcars] AS [nRcars], 
+    [TipMonitor].[TipAge(h)] AS [TipAge(h)], 
+    [TipMonitor].[LastTipchange] AS [LastTipchange], 
+    [TipMonitor].[Time_DressCycleTime] AS [Time_DressCycleTime], 
     [TipMonitor].[id] AS [id], 
     [TipMonitor].[LocationTree] AS [LocationTree]
     FROM [NGAC].[TipMonitor] AS [TipMonitor]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="TipwearBeforeChange" EntityType="Self.TipwearBeforeChange" store:Type="Views" store:Schema="NGAC">
+            <DefiningQuery>SELECT 
+    [TipwearBeforeChange].[controller_name] AS [controller_name], 
+    [TipwearBeforeChange].[Tool_Nr] AS [Tool_Nr], 
+    [TipwearBeforeChange].[TipchangeTimestamp] AS [TipchangeTimestamp], 
+    [TipwearBeforeChange].[FixedWearBeforeChange] AS [FixedWearBeforeChange], 
+    [TipwearBeforeChange].[MoveWearBeforeChange] AS [MoveWearBeforeChange], 
+    [TipwearBeforeChange].[WearBeforeChange] AS [WearBeforeChange], 
+    [TipwearBeforeChange].[WeldsBeforeChange] AS [WeldsBeforeChange], 
+    [TipwearBeforeChange].[DressBeforeChange] AS [DressBeforeChange], 
+    [TipwearBeforeChange].[%FixedWearBeforeChange] AS [%FixedWearBeforeChange], 
+    [TipwearBeforeChange].[%MoveWearBeforeChange] AS [%MoveWearBeforeChange], 
+    [TipwearBeforeChange].[ESTnSpotsFixedWearBefore100] AS [ESTnSpotsFixedWearBefore100], 
+    [TipwearBeforeChange].[ESTnSpotsMoveWearBefore100] AS [ESTnSpotsMoveWearBefore100]
+    FROM [NGAC].[TipwearBeforeChange] AS [TipwearBeforeChange]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="Breakdown" EntityType="Self.Breakdown" store:Type="Views" store:Schema="STO">
             <DefiningQuery>SELECT 
@@ -338,6 +406,8 @@ warning 6002: The table/view 'GADATA.Volvo.UserPermisions' does not have a prima
             <Parameter Name="getAlerts" Mode="In" Type="Boolean" />
             <Parameter Name="getShifbook" Mode="In" Type="Boolean" />
           </FunctionImport>
+          <EntitySet Name="ActiveState" EntityType="Models.ActiveState" />
+          <EntitySet Name="TipwearBeforeChange" EntityType="Models.TipwearBeforeChange" />
           </EntityContainer>
         <EntityType Name="c_querySnapshots">
           <Key>
@@ -428,6 +498,9 @@ warning 6002: The table/view 'GADATA.Volvo.UserPermisions' does not have a prima
           <Property Name="id" Type="Int32" Nullable="false" />
           <Property Name="LocationTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="WearRatio" Type="Double" />
+          <Property Name="TipAge_h_" Type="Int32" />
+          <Property Name="LastTipchange" Type="DateTime" Precision="3" />
+          <Property Name="Time_DressCycleTime" Type="Double" />
         </EntityType>
         <EntityType Name="Breakdown">
           <Key>
@@ -489,6 +562,37 @@ warning 6002: The table/view 'GADATA.Volvo.UserPermisions' does not have a prima
           <Property Type="Int64" Name="refId" Nullable="true" />
           <Property Type="String" Name="LocationTree" Nullable="true" />
         </ComplexType>
+        <EntityType Name="ActiveState">
+          <Key>
+            <PropertyRef Name="C_timestamp" />
+            <PropertyRef Name="controller_name" />
+          </Key>
+          <Property Name="controller_name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="C_timestamp" Type="DateTime" Precision="3" Nullable="false" />
+          <Property Name="program_number" Type="Int32" Nullable="false" />
+          <Property Name="application_error" Type="Int32" Nullable="false" />
+          <Property Name="operating_mode" Type="Int32" Nullable="false" />
+          <Property Name="at_home" Type="Int32" Nullable="false" />
+          <Property Name="FullLogtext" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="TipwearBeforeChange">
+          <Key>
+            <PropertyRef Name="TipchangeTimestamp" />
+            <PropertyRef Name="controller_name" />
+          </Key>
+          <Property Name="controller_name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Tool_Nr" Type="Int16" Nullable="false" />
+          <Property Name="TipchangeTimestamp" Type="DateTime" Precision="3" Nullable="false" />
+          <Property Name="FixedWearBeforeChange" Type="Double" />
+          <Property Name="MoveWearBeforeChange" Type="Double" />
+          <Property Name="WearBeforeChange" Type="Double" />
+          <Property Name="WeldsBeforeChange" Type="Int32" />
+          <Property Name="DressBeforeChange" Type="Int16" />
+          <Property Name="C_FixedWearBeforeChange" Type="Double" />
+          <Property Name="C_MoveWearBeforeChange" Type="Double" />
+          <Property Name="ESTnSpotsFixedWearBefore100" Type="Double" />
+          <Property Name="ESTnSpotsMoveWearBefore100" Type="Double" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -571,6 +675,9 @@ warning 6002: The table/view 'GADATA.Volvo.UserPermisions' does not have a prima
           <EntitySetMapping Name="TipMonitor">
             <EntityTypeMapping TypeName="Models.TipMonitor">
               <MappingFragment StoreEntitySet="TipMonitor">
+                <ScalarProperty Name="Time_DressCycleTime" ColumnName="Time_DressCycleTime" />
+                <ScalarProperty Name="LastTipchange" ColumnName="LastTipchange" />
+                <ScalarProperty Name="TipAge_h_" ColumnName="TipAge(h)" />
                 <ScalarProperty Name="WearRatio" ColumnName="WearRatio" />
                 <ScalarProperty Name="LocationTree" ColumnName="LocationTree" />
                 <ScalarProperty Name="id" ColumnName="id" />
@@ -649,6 +756,37 @@ warning 6002: The table/view 'GADATA.Volvo.UserPermisions' does not have a prima
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="ActiveState">
+            <EntityTypeMapping TypeName="Models.ActiveState">
+              <MappingFragment StoreEntitySet="ActiveState">
+                <ScalarProperty Name="FullLogtext" ColumnName="FullLogtext" />
+                <ScalarProperty Name="at_home" ColumnName="at_home" />
+                <ScalarProperty Name="operating_mode" ColumnName="operating_mode" />
+                <ScalarProperty Name="application_error" ColumnName="application_error" />
+                <ScalarProperty Name="program_number" ColumnName="program_number" />
+                <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
+                <ScalarProperty Name="controller_name" ColumnName="controller_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipwearBeforeChange">
+            <EntityTypeMapping TypeName="Models.TipwearBeforeChange">
+              <MappingFragment StoreEntitySet="TipwearBeforeChange">
+                <ScalarProperty Name="ESTnSpotsMoveWearBefore100" ColumnName="ESTnSpotsMoveWearBefore100" />
+                <ScalarProperty Name="ESTnSpotsFixedWearBefore100" ColumnName="ESTnSpotsFixedWearBefore100" />
+                <ScalarProperty Name="C_MoveWearBeforeChange" ColumnName="%MoveWearBeforeChange" />
+                <ScalarProperty Name="C_FixedWearBeforeChange" ColumnName="%FixedWearBeforeChange" />
+                <ScalarProperty Name="DressBeforeChange" ColumnName="DressBeforeChange" />
+                <ScalarProperty Name="WeldsBeforeChange" ColumnName="WeldsBeforeChange" />
+                <ScalarProperty Name="WearBeforeChange" ColumnName="WearBeforeChange" />
+                <ScalarProperty Name="MoveWearBeforeChange" ColumnName="MoveWearBeforeChange" />
+                <ScalarProperty Name="FixedWearBeforeChange" ColumnName="FixedWearBeforeChange" />
+                <ScalarProperty Name="TipchangeTimestamp" ColumnName="TipchangeTimestamp" />
+                <ScalarProperty Name="Tool_Nr" ColumnName="Tool_Nr" />
+                <ScalarProperty Name="controller_name" ColumnName="controller_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

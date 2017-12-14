@@ -61,7 +61,7 @@ namespace EqUiWebUi
 			try
 			{
 				GADATAEntities gADATAEntities = new GADATAEntities();
-            List<AAOSR_PloegRaportV2_Result> data = (from ploegrapport in gADATAEntities.AAOSR_PloegRaportV2
+			List<AAOSR_PloegRaportV2_Result> data = (from ploegrapport in gADATAEntities.AAOSR_PloegRaportV2
 								(startDate: null,
 								   endDate: null,
 								   daysBack: null,
@@ -208,8 +208,8 @@ namespace EqUiWebUi
 
 		//update new data from STO to gadata. called every minute #hangfire
 		[AutomaticRetry(Attempts = 0)]
-        [DisableConcurrentExecution(120)] //locks the job from starting multible times if other one stil running.
-        public void PushDatafromSTOtoGADATA()
+		[DisableConcurrentExecution(120)] //locks the job from starting multible times if other one stil running.
+		public void PushDatafromSTOtoGADATA()
 		{
 			GadataComm lGadataComm = new GadataComm();
 			//get last record in GADATA 
@@ -222,7 +222,7 @@ namespace EqUiWebUi
 				GadataMAxTs = dtGadataMaxTS.Rows[0].Field<DateTime>("_timestamp");
 			}
 			//get new records from STO
-			StoComm lStoComm = new StoComm();
+StoComm lStoComm = new StoComm();
 			string stoQry = string.Format(@"
 SELECT * FROM
 (
@@ -235,28 +235,22 @@ UNION
 SELECT ALARM_DATA_SUBASSY.*,'ALARM_DATA_SUBASSY' stoTable FROM STO_SYS.ALARM_DATA_SUBASSY
 ) WHERE CHANGETS > TO_TIMESTAMP('{0}', 'YYYY/MM/DD HH24:MI:SS') AND ALARMSTATUS = 1
 "
-                , GadataMAxTs.ToString("yyyy-MM-dd hh:mm:ss"));
+				, GadataMAxTs.ToString("yyyy-MM-dd HH:mm:ss")); //USE BIG HH for 24 hour format !!!!
 
 			DataTable newStoDt = lStoComm.oracle_runQuery(stoQry);
 			//push to gadata
 			lGadataComm.BulkCopyToGadata("STO", newStoDt, "rt_error");
-            //get new max in gadata
-            //DataTable dtGadataNewMaxIDX = lGadataComm.RunQueryGadata(gadataGetMaxTimestampQry);
-            //DateTime GadataNewMAxIDX = dtGadataNewMaxIDX.Rows[0].Field<DateTime>("_timestamp");
-            //trigger normalisation
-
-            GadataComm gadataComm = new GadataComm();
-            gadataComm.RunCommandGadata("EXEC GADATA.STO.[sp_update_L]", true);
+			//trigger normalisation make new gadatacom and use Admin powers 
+			GadataComm gadataComm = new GadataComm();
+			gadataComm.RunCommandGadata("EXEC GADATA.STO.[sp_update_L]", true);
 			//trigger classification
 			//   lGadataComm.RunCommandGadata("EXEC GADATA.STO.[sp_update_Lerror_classifcation]", true);
 			//fire and forget to init
-
-
 		}
 
 		//update new data from STO to gadata. called every minute #hangfire
 		[AutomaticRetry(Attempts = 0)]
-        public void PushDatafromMAXIMOtoGADATA()
+		public void PushDatafromMAXIMOtoGADATA()
 		{
 			//delete data in now in maximo.
 			GadataComm lGadataComm = new GadataComm();
@@ -315,8 +309,8 @@ ORDER BY WORKORDER.STATUSDATE DESC
 
 		//update tableau buffers. called every 20minutes #hangfire
 		[AutomaticRetry(Attempts = 0)]
-        [DisableConcurrentExecution(120)] //locks the job from starting multible times if other one stil running.
-        public void UpdateTableauBuffers()
+		[DisableConcurrentExecution(120)] //locks the job from starting multible times if other one stil running.
+		public void UpdateTableauBuffers()
 		{
 			GadataComm lGadataComm = new GadataComm();
 			//

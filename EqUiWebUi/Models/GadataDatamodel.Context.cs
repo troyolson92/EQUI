@@ -38,6 +38,8 @@ namespace EqUiWebUi.Models
         public DbSet<Breakdown> Breakdown { get; set; }
         public DbSet<logDetails> logDetails { get; set; }
         public DbSet<UserPermisions> UserPermisions { get; set; }
+        public DbSet<ActiveState> ActiveState { get; set; }
+        public DbSet<TipwearBeforeChange> TipwearBeforeChange { get; set; }
     
         public virtual ObjectResult<AAOSR_PloegRaportV2_Result> AAOSR_PloegRaportV2(Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate, Nullable<int> daysBack, string assets, string locations, string lochierarchy, Nullable<int> minDowntime, Nullable<int> minCountOfDowtime, Nullable<int> minCountofWarning, Nullable<bool> getAlerts, Nullable<bool> getShifbook)
         {
