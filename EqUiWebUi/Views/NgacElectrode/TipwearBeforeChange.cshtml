@@ -1,0 +1,34 @@
+﻿@model IEnumerable<EqUiWebUi.Models.TipwearBeforeChange>
+
+@*set title*@
+@{
+    ViewBag.Title = "TipwearBeforeChange";
+}
+
+<script src="~/Scripts/jquery-3.2.1.min.js"></script>
+
+<div class="container body-content">
+    <p></p>
+    <p></p>
+    <div class="panel panel-default">
+       <h4>TipwearBeforeChange</h4>
+        <div class="panel-body">
+            @*main grid*@
+            <div class="code-cut">
+                @Html.Grid(Model).Named("DataGrid").Build(columns =>
+            {
+                columns.Add(c => c.controller_name).Titled("Robot").Filterable(true);
+                columns.Add(c => c.TipchangeTimestamp).Titled("TipchangeTimestamp").Formatted("{0:dd-MM-yyyy HH:mm}");
+                columns.Add(c => c.WearBeforeChange).Titled("WearBeforeChange").Filterable(true);
+                columns.Add(c => c.WeldsBeforeChange).Titled("WeldsBeforeChange").Filterable(true);
+                columns.Add(c => c.DressBeforeChange).Titled("DressBeforeChange").Filterable(true);
+                columns.Add(c => c.C_FixedWearBeforeChange).Titled("%FixedWearBeforeChange").Filterable(true);
+                columns.Add(c => c.C_MoveWearBeforeChange).Titled("%MoveWearBeforeChange").Filterable(true);
+            }).Sortable().Pageable(pager =>
+                {
+                  pager.RowsPerPage = 20;
+                }).Empty("No data found")
+            </div>
+        </div>
+    </div>
+</div>

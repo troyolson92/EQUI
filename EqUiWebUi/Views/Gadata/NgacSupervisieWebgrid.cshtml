@@ -1,0 +1,33 @@
+﻿@model IEnumerable<EqUiWebUi.Models.ActiveState>
+@{
+    ViewBag.Title = "NgacSupervisieWebgrid";
+}
+
+<script src="~/Scripts/jquery-3.2.1.min.js"></script>
+
+<div class="container body-content">
+    <p></p>
+    <p></p>
+    <div class="panel panel-default">
+        <h4>NgacSupervisieWebgrid</h4>
+        <div class="panel-body">
+            @*main grid*@
+            <div>
+                @Html.Grid(Model).Named("DataGrid").Build(columns =>
+           {
+               columns.Add(c => c.controller_name).Titled("controller_name").Filterable(true);
+               columns.Add(c => c.C_timestamp).Titled("C_timestamp").Filterable(true);
+               columns.Add(c => c.program_number).Titled("program_number").Filterable(true);
+               columns.Add(c => c.application_error).Titled("application_error").Filterable(true);
+               columns.Add(c => c.at_home).Titled("at_home").Filterable(true);
+               columns.Add(c => c.FullLogtext).Titled("FullLogtext").Filterable(true);
+           }).Sortable().Pageable(pager =>
+                {
+                pager.RowsPerPage = 30;
+                }).Empty("No data found").Css("table-hover")
+            </div>
+        </div>
+    </div>
+</div>
+
+

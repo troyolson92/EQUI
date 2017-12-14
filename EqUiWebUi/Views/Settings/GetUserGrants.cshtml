@@ -1,0 +1,31 @@
+﻿@model IEnumerable<EqUiWebUi.Models.UserPermisions>
+
+<script src="~/Scripts/jquery-3.2.1.min.js"></script>
+
+<div class="container body-content">
+    <p></p>
+    <p></p>
+    <div class="panel panel-default">
+        <h4>UserGrants</h4>
+        <div class="panel-body">
+            @*main grid*@
+            <div>
+                    @Html.Grid(Model).Named("DataGrid").Build(columns =>
+               {
+                   columns.Add(c => c.username).Titled("Username").Filterable(true);
+                   columns.Add(c => c.Role).Titled("Role").Filterable(true);
+                   columns.Add(c => c.Description).Titled("Description");
+            //     columns.Add(c => c.GrantedOn);
+                   columns.Add(c => c.GrantedBy).Titled("GrandedBy").Filterable(true);
+               })
+                .Sortable()
+                .Pageable(pager =>
+                {
+                pager.RowsPerPage = 10;
+                })
+                .Empty("No data found")
+                );
+            </div>
+        </div>
+     </div>
+</div>

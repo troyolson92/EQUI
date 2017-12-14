@@ -1,0 +1,27 @@
+﻿@model EqUiWebUi.WebGridHelpers.DefaultModel
+@{
+    ViewBag.Title = "WoDetails";
+}
+<script src="~/Scripts/jquery-3.2.1.min.js"></script>
+
+<script type="text/javascript">
+
+    @*run on doc ready *@
+    $(document).ready(function () {
+        $("#woDetailsPartial").html("Loading.....");
+        var url = "@Url.Action("_woDetails", "Maximo")?wonum=" + @ViewBag.wonum;
+        $("#woDetailsPartial").load(url);
+    })
+</script>
+
+
+<h2>WoDetails</h2>
+<div class="panel panel-default">
+    <p></p>
+    @*info model in page load wo details *@
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div id="woDetailsPartial">more details about a workorder</div>
+        </div>
+    </div>
+</div>
