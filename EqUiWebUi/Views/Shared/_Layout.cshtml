@@ -42,11 +42,11 @@
                             <li><a href="http://equi/EqUi_UtilManager/EqUi_UtilManger.application?Tool=sleepBlock">Block autologoff</a></li>
                         </ul>
                     </li>
+                
                 </ul>
 
-                <a class="nav navbar-text navbar-right">
-                    <img src="~/Content/images/icons8-customer-25.png" />
-                    @User.Identity.Name
+                <a class="nav navbar-text navbar-right"  data-toggle="tooltip" data-placement="bottom" title="@User.Identity.Name">
+                    <img src="~/Content/images/icons8-customer-25.png" /> 
                 </a>
 
                 <a href='@Url.Action("Index", "Settings")' class="nav navbar-text navbar-right">
@@ -69,8 +69,6 @@
     <script>
         $('.mvc-grid').mvcgrid();
     </script>
-
-
 
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)

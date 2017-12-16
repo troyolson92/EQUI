@@ -1,0 +1,7 @@
+﻿
+@model IEnumerable<EqUiWebUi.Models.TipMonitor>
+
+@Html.Grid(Model).Named("TipsChangedTable").Build(columns =>
+                    {
+                        columns.Add(c => c.Robot).Titled("Robot").Filterable(true);
+                    }).Sortable().Empty("No data found").Css("table-hover")

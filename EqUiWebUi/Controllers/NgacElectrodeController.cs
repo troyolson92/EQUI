@@ -93,7 +93,7 @@ namespace EqUiWebUi.Controllers
             return View();
         }
 
-        //get filterd list of wich 
+        //get filterd list of wich need to be change
         public ActionResult _TipsToChange(string locationFilter, int minWear = 0, int minParts = 0 )
         {
             GADATAEntities gADATAEntities = new GADATAEntities();
@@ -103,9 +103,18 @@ namespace EqUiWebUi.Controllers
                                      && tipMonitor.LocationTree.Contains(locationFilter)
                                               select tipMonitor
                                               ).ToList();
-
-            string rest = Request.QueryString.ToString();
-
+            return PartialView(data);
+        }
+        //get filterd list of wich need to be change
+        public ActionResult _TipsChanged(string locationFilter, int minWear = 0, int minParts = 0)
+        {
+            GADATAEntities gADATAEntities = new GADATAEntities();
+            List<TipMonitor> data = (from tipMonitor in gADATAEntities.TipMonitor
+                                     where tipMonitor.pWear > minWear
+                                     && tipMonitor.nRcars > minParts
+                                     && tipMonitor.LocationTree.Contains(locationFilter)
+                                     select tipMonitor
+                                              ).ToList();
             return PartialView(data);
         }
     }

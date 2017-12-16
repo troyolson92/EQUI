@@ -41,7 +41,6 @@
         </div>
 
         <div class="panel-body">
-            <div class="code-cut">
                 @Html.Grid(Model).Named("DataGrid").Build(columns =>
                          {
                              columns.Add(c => c.Robot).Titled("Robot").Filterable(true);
@@ -63,7 +62,6 @@
                          {
                              pager.RowsPerPage = @ViewBag.RowsPerPage;
                          }).Empty("No data found").Css("table-hover")
-            </div>
         </div>
 
         <div class="panel-footer">
