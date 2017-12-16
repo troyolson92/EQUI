@@ -19,5 +19,7 @@ namespace EqUiWebUi.Models
         public string Role { get; set; }
         public string Description { get; set; }
         public string GrantedBy { get; set; }
+        public string LocationRoot { get; set; }
+        public string AssetRoot { get; set; }
     }
 }

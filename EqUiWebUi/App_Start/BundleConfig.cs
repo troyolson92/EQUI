@@ -9,11 +9,13 @@ namespace EqUiWebUi
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"
+                        "~/Scripts/jquery-{version}.js",
+                        "~/Scripts/spin.js"
                             ));
 
             bundles.Add(new ScriptBundle("~/bundles/MvcGrid").Include(
-                         "~/Scripts/MvcGrid/mvc-grid.js" //scripts for mvc grids
+                         "~/Scripts/MvcGrid/mvc-grid.js", //scripts for mvc grids
+                         "~/Scripts/jquery-3.2.1.min.js"
                         ));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
@@ -28,7 +30,7 @@ namespace EqUiWebUi
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
-                      "~/Content/MvcGrid/mvc-grid.css" //style for mvc grids
+                      "~/Content/mvc-grid.css" //style for mvc grids
                       ));
         }
     }

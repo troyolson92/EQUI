@@ -1,0 +1,155 @@
+﻿@*set title*@
+@{
+    ViewBag.Title = "PlanTipChange";
+}
+<div class="container body-content">
+    <p></p>
+    <p></p>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4>Tipchange toolbox</h4>
+        </div>
+
+
+        <div class="panel-body">
+            @*plan false
+                gebruiker geeft in het formulier waar en met welke voorwaardes hij elektrodes wil wisselen*@
+            <div class="panel panel-default">
+
+                <div class="panel-heading">
+                    <h4>Plan het onderhoud</h4>
+                </div>
+
+                <div class="panel-body">
+                    <form>
+                        <div class="form-group">
+                            <div class="col-md-4">
+                                <label class="col-md-4 control-label" for="location">location</label>
+                                <select id="location" name="Selecteer locatie" class="form-control">
+                                    <option value="A LIJN 33">Floor</option>
+                                    <option value="A LIJN 331">FS</option>
+                                    <option value="A LIJN 334">FF</option>
+                                    <option value="A LIJN 336">RF</option>
+                                    <option value="A LIJN 338">MAR</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        @*SDB enable disable toevoegen voor de verschillende faktoren*@
+                        <div class="form-group">
+                            <div class="col-md-4">
+                                <label class="col-md-4 control-label" for="minwear">waar wear groter dan</label>
+                                <input class="form-control input-md" type="number" min="0" max="100" step="5" value="30" id="minwear" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-4">
+                                <label class="col-md-4 control-label" for="minparts">of minium resterende stukken</label>
+                                <input class="form-control input-md" type="number" min="0" step="10" value="200" id="minparts" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="panel-footer">
+                    <button class="btn-sm btn-primary" id="loadLocations">Zoek</button>
+                </div>
+            </div>
+
+        </div>
+
+        @*DO
+            Hier word de lijst getoond met waar er moet gewisselde worden*@
+        <div class="panel-body" id="tipsToChangeContainer" style="display:none">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    
+                    <div class="col-lg-12">
+
+                        <h5>Deze robots moeten gewisseld worden.</h5>
+                        <div class='input-group date' id='datetimepicker1'>
+                            <input type='text' class="form-control" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+                <div id="spincontainer" class="panel-body">
+                    <div id="tipsToChange" style="display:none">result wil be here</div>
+                </div>
+
+                <div class="panel-footer">
+                    <a href="~/NgacElectrode/Index" class="btn-sm btn-success">Print &raquo;</a>
+                </div>
+            </div>
+        </div>
+
+        @*CHECK
+            Hier moet een soort van bevestiging komen. user moet elke keer op refresh duwen en crossmatch met lijst van hierboven
+            gebruik refernetie timestime van hierboven.*@
+        <div class="panel-body">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h5>Dit is wat er gewisseld is geweest.</h5>
+                </div>
+
+                <div class="panel-body">
+
+                </div>
+
+                <div class="panel-footer">
+                    <a href="~/NgacElectrode/Index" class="btn-sm btn-success">Print &raquo;</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-footer">
+            <a href="~/NgacElectrode/Index" class="btn-xs btn-primary">Electrode home &raquo;</a>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+//loading of first container and table
+    var url = '@Url.Action("_TipsToChange")';
+    var spinner = new Spinner();
+
+    $('#loadLocations').click(function () {
+        //disable button
+        $('#loadLocations').attr("disabled", true);
+        //clear table if its there
+        $("#tipsToChange").empty();
+        //start a wait spinner
+        spinner.spin(document.getElementById('spincontainer'));
+        //first fade in the container (will only fade in on first run)
+        $("#tipsToChangeContainer").fadeIn();
+        //load partial
+            var locationfilter = $('#location').val();
+            var minwear = $('#minwear').val();
+            var minparts = $('#minparts').val();
+            $("#tipsToChange").load(url,
+                {
+                    locationFilter: locationfilter,
+                    minWear: minwear,
+                    minParts: minparts
+                },
+                //this runs when load done
+                function () {
+                    //fade in the result table
+                    $('#tipsToChange').fadeIn(1000,function () {
+                        //hide spinner when fade completes
+                        spinner.stop();
+                    });
+                    //enable button
+                    $('#loadLocations').removeAttr("disabled");
+                }
+            );
+    })
+</script>

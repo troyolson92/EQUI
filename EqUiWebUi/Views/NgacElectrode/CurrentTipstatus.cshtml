@@ -2,10 +2,76 @@
 
 @*set title*@
 @{
-    ViewBag.Title = "Tipwear";
+    ViewBag.Title = "CurrentTipstatus";
 }
+@*html*@
+<div>
+    <p></p>
+    <p></p>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <table style="width:25%">
+                <tr>
+                    <th>
+                        <h4>CurrentTipstatus</h4>
+                    </th>
+                    <th>
+                        <div class="dropdown">
+                            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                                Set a location filter
+                                <span class="caret"></span>
+                            </button>
 
-<script src="~/Scripts/jquery-3.2.1.min.js"></script>
+                            <ul class="dropdown-menu">
+                                <li><a href="/NgacElectrode/CurrentTipstatus">ClearFilter</a></li>
+                                <li><a href="/NgacElectrode/CurrentTipstatus?DataGrid-LocationTree-Contains=GA4">GA4</a></li>
+                                <li><a href="/NgacElectrode/CurrentTipstatus?DataGrid-LocationTree-Contains=A LIJN 33">-FLOOR</a></li>
+                                <li><a href="/NgacElectrode/CurrentTipstatus?DataGrid-LocationTree-Contains=A LIJN 334">--FF..334</a></li>
+                                <li><a href="/NgacElectrode/CurrentTipstatus?DataGrid-LocationTree-Contains=A LIJN 331">--FS..331</a></li>
+                                <li><a href="/NgacElectrode/CurrentTipstatus?DataGrid-LocationTree-Contains=A LIJN 336">--RF..336</a></li>
+                                <li><a href="/NgacElectrode/CurrentTipstatus?DataGrid-LocationTree-Contains=A LIJN 338">--MAR.338</a></li>
+                                <li><a href="/NgacElectrode/CurrentTipstatus?DataGrid-LocationTree-Contains=A LIJN 339">--WB..339</a></li>
+                                <li><a href="/NgacElectrode/CurrentTipstatus?DataGrid-LocationTree-Contains=A LIJN 35">-SIDES</a></li>
+                            </ul>
+
+                        </div>
+                    </th>
+                </tr>
+            </table>
+        </div>
+
+        <div class="panel-body">
+            <div class="code-cut">
+                @Html.Grid(Model).Named("DataGrid").Build(columns =>
+                         {
+                             columns.Add(c => c.Robot).Titled("Robot").Filterable(true);
+                             columns.Add(c => c.Date_Time).Titled("Laaste keer gefreest").Formatted("{0:dd-MM-yyyy HH:mm}");
+                             columns.Add(c => c.nDress).Titled("Aantal keer gefreest");
+                             columns.Add(c => c.WearRatio).Titled("%WearRatio");
+                             columns.Add(c => c.pWear).Titled("%wear").Filterable(true).Css("bolded");
+                             columns.Add(c => c.nRspots).Titled("Resterende Spots");
+                             columns.Add(c => c.nRcars).Titled("Resterende Stukken");
+                             columns.Add(c => c.TipAge_h_).Titled("Electrode leeftijd (h)");
+                             columns.Add(c => c.Time_DressCycleTime).Titled("Dress ct (s)");
+                             columns.Add(c => c.LocationTree)
+                             .Titled("Info")
+                             .Encoded(false)
+                             .Filterable(true)
+                             .RenderedAs(o => Html.ActionLink("INFO", "_Moreinfo")
+                             );
+                         }).Sortable().Pageable(pager =>
+                         {
+                             pager.RowsPerPage = @ViewBag.RowsPerPage;
+                         }).Empty("No data found").Css("table-hover")
+            </div>
+        </div>
+
+        <div class="panel-footer">
+            <a href="~/NgacElectrode/Index" class="btn btn-primary">Electrode home &raquo;</a>
+            Last data push: '@Html.Raw(ViewBag.DataTimestamp)'
+        </div>
+    </div>
+</div>
 
 @*scrip for blinking a row based on there value.*@
 <script type="text/javascript">
@@ -99,55 +165,3 @@
         }
     });
 </script>
-
-@*main grid*@
-<div class="code-cut">
-    @Html.Grid(Model).Named("DataGrid").Build(columns =>
-{
-    columns.Add(c => c.Robot).Titled("Robot").Filterable(true);
-    columns.Add(c => c.Date_Time).Titled("Laaste keer gefreest").Formatted("{0:dd-MM-yyyy HH:mm}");
-    columns.Add(c => c.nDress).Titled("Aantal keer gefreest");
-    columns.Add(c => c.WearRatio).Titled("%WearRatio");
-    // columns.Add(c => c.nWelds).Titled("nWelds");
-    columns.Add(c => c.pWear).Titled("%wear").Filterable(true);
-    columns.Add(c => c.nRspots).Titled("remainingSpots");
-    columns.Add(c => c.nRcars).Titled("remainingCars");
-    columns.Add(c => c.TipAge_h_).Titled("Electrode leeftijd (h)");
-    columns.Add(c => c.Time_DressCycleTime).Titled("Dress ct (s)");
-    columns.Add(c => c.LocationTree)
-    .Titled("Info")
-    .Encoded(false)
-    .Filterable(true)
-    .RenderedAs(o => Html.ActionLink("INFO", "_Moreinfo")
-    );
-
-}).Sortable().Pageable(pager =>
-{
-    pager.RowsPerPage = @ViewBag.RowsPerPage;
-}).Empty("No data found").Css("table-hover")
-</div>
-
-@*footer modal with filter and gohome*@
-<div class="modal-content">
-    <div class="dropdown">
-        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-            Set a location filter
-            <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu">
-            <li><a href="/NgacElectrode/CurrentTipstatus">ClearFilter</a></li>
-            <li><a href="/NgacElectrode/CurrentTipstatus?DataGrid-LocationTree-Contains=GA4">GA4</a></li>
-            <li><a href="/NgacElectrode/CurrentTipstatus?DataGrid-LocationTree-Contains=A LIJN 33">-FLOOR</a></li>
-            <li><a href="/NgacElectrode/CurrentTipstatus?DataGrid-LocationTree-Contains=A LIJN 334">--FF-334</a></li>
-            <li><a href="/NgacElectrode/CurrentTipstatus?DataGrid-LocationTree-Contains=A LIJN 331">--FS-331</a></li>
-            <li><a href="/NgacElectrode/CurrentTipstatus?DataGrid-LocationTree-Contains=A LIJN 336">--RF-336</a></li>
-            <li><a href="/NgacElectrode/CurrentTipstatus?DataGrid-LocationTree-Contains=A LIJN 338">--MAR-338</a></li>
-            <li><a href="/NgacElectrode/CurrentTipstatus?DataGrid-LocationTree-Contains=A LIJN 339">--WBL-339</a></li>
-            <li><a href="/NgacElectrode/CurrentTipstatus?DataGrid-LocationTree-Contains=A LIJN 35">-SIDES</a></li>
-        </ul>
-
-        <a href="~/" class="btn btn-primary">goHome &raquo;</a>
-        Last data push: '@Html.Raw(ViewBag.DataTimestamp)'
-    </div>
-</div>
-

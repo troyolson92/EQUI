@@ -25,5 +25,32 @@ namespace EqUiWebUi.Controllers
 
             return View(data);
         }
+
+        [HttpGet]
+        public ActionResult CookieSet()
+        {
+            HttpCookie cookie = new HttpCookie("EQUICookie");
+            cookie["Name"] = "test";
+            cookie["iets"] = "bla";
+            cookie["num"] = "10";
+            Response.Cookies.Add(cookie);
+
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult CookieGet()
+        {
+            HttpCookie cookie = Request.Cookies["EQUICookie"];
+            if (cookie != null)
+            {
+                string name = cookie["Name"];
+                string iets = cookie["iets"];
+
+
+            }
+
+            return View();
+        }
     }
 }

@@ -26,5 +26,6 @@ namespace EqUiWebUi.Models
         public Nullable<double> C_MoveWearBeforeChange { get; set; }
         public Nullable<double> ESTnSpotsFixedWearBefore100 { get; set; }
         public Nullable<double> ESTnSpotsMoveWearBefore100 { get; set; }
+        public Nullable<int> TipAge_h_ { get; set; }
     }
 }

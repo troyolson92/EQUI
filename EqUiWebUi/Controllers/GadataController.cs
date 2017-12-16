@@ -150,10 +150,9 @@ namespace EqUiWebUi.Controllers
         public ActionResult NgacSupervisieWebgrid()
         {
             GADATAEntities gADATAEntities = new GADATAEntities();
-            List<ActiveState> data = (from activeState in gADATAEntities.ActiveState
-                                         select activeState).ToList();
+     
 
-            return View(data);
+            return View();
         }
 
         //------------------------------------maximo-------------------------------------------------

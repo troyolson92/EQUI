@@ -47,25 +47,31 @@
                 <a class="nav navbar-text navbar-right">
                     <img src="~/Content/images/icons8-customer-25.png" />
                     @User.Identity.Name
-                    </a>
-                
-                <a  href='@Url.Action("Index", "Settings")' class="nav navbar-text navbar-right">
-                    <img src="~/Content/images/icons8-settings-25.png" /></a>
+                </a>
+
+                <a href='@Url.Action("Index", "Settings")' class="nav navbar-text navbar-right">
+                    <img src="~/Content/images/icons8-settings-25.png" />
+                </a>
             </div>
         </div>
     </div>
+
+    @*load this bundle before body because of scripts in views*@
+    @Scripts.Render("~/bundles/jquery")
 
     <div>
         @RenderBody()
         <hr />
     </div>
-    @Scripts.Render("~/bundles/jquery")
-    @*added for mvc grid*@
+
+    @*added for mvc grid LOAD AFTHER BODY!*@
     @Scripts.Render("~/bundles/MvcGrid")
     <script>
-            $('.mvc-grid').mvcgrid();
+        $('.mvc-grid').mvcgrid();
     </script>
-    
+
+
+
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>

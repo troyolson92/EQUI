@@ -76,29 +76,37 @@ namespace EqUiWebUi.Controllers
         [HttpGet]
         public ActionResult TipwearBeforeChange()
         {
+            var startdate = DateTime.Now.Date.AddDays(-30);
             GADATAEntities gADATAEntities = new GADATAEntities();
             List<TipwearBeforeChange> data = (from tipwearBeforeChange in gADATAEntities.TipwearBeforeChange
-                                              orderby tipwearBeforeChange.TipchangeTimestamp descending
+                                              where tipwearBeforeChange.TipchangeTimestamp < startdate
                                               select tipwearBeforeChange
                                               ).ToList();
             return View(data);
         }
 
+        //----------------------------------onderhouds plannings tools------------------------------------------------------
         [HttpGet]
-        public ActionResult TipChangeList()
+        public ActionResult PlanTipChange()
         {
-            var data = DataBuffer.Tipstatus;
-            //in case hangfire is taking a day off
-            if (data == null)
-            {
-                Backgroundwork backgroundwork = new Backgroundwork();
-                backgroundwork.UpdateTipstatus();
-            }
-            else //add tracking timestamp for hangfire sync
-            {
-                ViewBag.DataTimestamp = DataBuffer.TipstatusLastDt.ToString("yyyy-MM-dd HH:mm:ss");
-            }
-            return View(data);
+
+            return View();
+        }
+
+        //get filterd list of wich 
+        public ActionResult _TipsToChange(string locationFilter, int minWear = 0, int minParts = 0 )
+        {
+            GADATAEntities gADATAEntities = new GADATAEntities();
+            List<TipMonitor> data = (from tipMonitor in gADATAEntities.TipMonitor
+                                     where tipMonitor.pWear > minWear
+                                     && tipMonitor.nRcars > minParts
+                                     && tipMonitor.LocationTree.Contains(locationFilter)
+                                              select tipMonitor
+                                              ).ToList();
+
+            string rest = Request.QueryString.ToString();
+
+            return PartialView(data);
         }
     }
 }

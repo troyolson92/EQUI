@@ -33,7 +33,7 @@
                         $("#SelectedSnapshotID2").append('<option value="' + item.Value + '">' + item.Text + '</option>');
                     });
                 },
-          
+
                 error: function (ex) {
                     alert('Failed to retrieve snapshots.' + ex);
                 }
@@ -45,14 +45,21 @@
 
 @*content *@
 <div class="container body-content">
-    <br />
-    <div class="modal-content">
-        <br />
-        @using (Html.BeginForm())
+    <p></p>
+    <p></p>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4>Snapshot manager</h4>
+        </div>
+
+        <div class="panel-body">
+            <div class="form-inline">
+                <br />
+                @using (Html.BeginForm())
         {
             @Html.Label("Snapshot")
             @Html.DropDownListFor(m => m.SelectedQuery, new SelectList(Model.c_querySnapshots, "id", "name"), "select a snapshot")
-           <p></p>
+            <p></p>
             @Html.Label("Compare")
             @Html.DropDownListFor(m => m.SelectedSnapshotID1, new SelectList(string.Empty, "Value", "Text"), "Instance of snapshot")
             <p></p>
@@ -60,8 +67,14 @@
             @Html.DropDownListFor(m => m.SelectedSnapshotID2, new SelectList(string.Empty, "Value", "Text"), "Instance of snapshot")
             <p></p>
             <input type="submit" value="Show diff>>" />
-        }
-        <br />
+}
+                <br />
+            </div>
+        </div>
+
+        <div class="panel-footer">
+
+        </div>
     </div>
 </div>
 

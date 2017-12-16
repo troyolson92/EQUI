@@ -5,30 +5,36 @@
     ViewBag.Title = "TipwearBeforeChange";
 }
 
-<script src="~/Scripts/jquery-3.2.1.min.js"></script>
-
 <div class="container body-content">
     <p></p>
     <p></p>
     <div class="panel panel-default">
-       <h4>TipwearBeforeChange</h4>
+        <div class="panel-heading">
+             <h4>TipwearBeforeChange</h4>
+        </div>
+
         <div class="panel-body">
-            @*main grid*@
             <div class="code-cut">
                 @Html.Grid(Model).Named("DataGrid").Build(columns =>
-            {
-                columns.Add(c => c.controller_name).Titled("Robot").Filterable(true);
-                columns.Add(c => c.TipchangeTimestamp).Titled("TipchangeTimestamp").Formatted("{0:dd-MM-yyyy HH:mm}");
-                columns.Add(c => c.WearBeforeChange).Titled("WearBeforeChange").Filterable(true);
-                columns.Add(c => c.WeldsBeforeChange).Titled("WeldsBeforeChange").Filterable(true);
-                columns.Add(c => c.DressBeforeChange).Titled("DressBeforeChange").Filterable(true);
-                columns.Add(c => c.C_FixedWearBeforeChange).Titled("%FixedWearBeforeChange").Filterable(true);
-                columns.Add(c => c.C_MoveWearBeforeChange).Titled("%MoveWearBeforeChange").Filterable(true);
-            }).Sortable().Pageable(pager =>
-                {
-                  pager.RowsPerPage = 20;
-                }).Empty("No data found")
+           {
+               columns.Add(c => c.controller_name).Titled("Robot").Filterable(true);
+               columns.Add(c => c.TipchangeTimestamp).Titled("Tipchangetimestamp").Formatted("{0:dd-MM-yyyy HH:mm}").InitialSort(GridSortOrder.Desc);
+               columns.Add(c => c.WearBeforeChange).Titled("Wear (mm)").Filterable(true);
+               columns.Add(c => c.WeldsBeforeChange).Titled("#Welds").Filterable(true);
+               columns.Add(c => c.DressBeforeChange).Titled("#Dress").Filterable(true);
+               columns.Add(c => c.C_FixedWearBeforeChange).Titled("%FixedWear").Filterable(true);
+               columns.Add(c => c.C_MoveWearBeforeChange).Titled("%MoveWear").Filterable(true);
+               columns.Add(c => c.TipAge_h_).Titled("Electrode leeftijd(h)").Filterable(true);
+           }).Sortable().Pageable(pager =>
+           {
+               pager.RowsPerPage = 20;
+           }).Empty("No data found").Css("table-hover")
             </div>
+        </div>
+
+        <div class="panel-footer">
+            <a href="~/NgacElectrode/Index" class="btn btn-primary">Electrode home &raquo;</a>
+            data from last 30 days
         </div>
     </div>
 </div>
