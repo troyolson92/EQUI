@@ -14,9 +14,10 @@ namespace EqUiWebUi.Controllers
         // GET: Dynamic
         public ActionResult Index()
         {
-            return View();
+            return new HttpNotFoundResult("Woeps there seems to bo nothing here");
         }
 
+        //test to show how to build da datatable without using entityframework
         [HttpGet]
         public ActionResult DynamicWebgrid()
         {
