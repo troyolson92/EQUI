@@ -54,76 +54,20 @@
     @MyModals.tableHelperModal("tableModal");
 </div>
 
-@*info modal java script*@
+
 <script type="text/javascript">
+    //need to just eleminiate this... can use the attributes of the modal
     var bModalOpen = false;
-    //this script show modal each time when you click on the link:
-    $(function () {
-        $(".modal-link").click(function (event) {
-            event.preventDefault();
-            bModalOpen = true;
-            $('#myModal').modal({ remote: $(this).attr("href") });
-        });
+    //
 
-        $('#myModal').on('hidden.bs.modal', function () {
-            // reload page
-            window.location.reload();
-        })
-    })
-</script>
-
-
-<script type="text/javascript">
     $(document).ready(function () {
         //set colors for grid
         tableFormatLogtype(7);
         //enable blinking
         tableFormatBlink(7, 6);
-    });
-</script>
-
-
-@*function that calls server ever x time if there is new data*@
-<script type="text/javascript">
-    $(document).ready(function () {
-        $(function () {
-            //check every 5 seconds
-            setInterval(CheckForData, 1000 * 5 );
-        });
-        //get last data timestamp from model
-        var Datatimestamp = '@Html.Raw(ViewBag.DataTimestamp)';
-        console.log(Datatimestamp);
-        //interlock for ajax request
-        var bInterlock = new Boolean();
-        bInterlock = false;
-
-        function CheckForData() {
-            if (bInterlock) {
-                return;
-            } else {
-                bInterlock = true;
-            }
-                    $.ajax({
-                        async: true,
-                        type: 'GET',
-                        url: '@Url.Action("SupervisiecheckNewData")',
-                        dataType: 'json',
-                        data: { dataTimestamp: Datatimestamp },
-
-                        success: function (response) {
-                            bInterlock = false;
-                            //succes = reload needed
-                            if (!bModalOpen) { //only reaload when modal is not open
-                                window.location.reload();
-                            }
-                        },
-
-                        error: function (ex) {
-                            bInterlock = false;
-                            //error = no reload
-                        }
-            });
-
-        }
+        //subscribe to modal click
+        ListenToModal('#myModal');
+        //enable polling for new data
+        PolFordata(5, '@Html.Raw(ViewBag.DataTimestamp)', '@Url.Action("SupervisiecheckNewData")');
     });
 </script>

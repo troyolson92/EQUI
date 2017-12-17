@@ -5,196 +5,65 @@
     ViewBag.Title = "STO breakdown";
 }
 
-<script src="~/Scripts/jquery-3.2.1.min.js"></script>
+<div>
+    <p></p>
+    <p></p>
+    <div>
+        @Html.Grid(Model).Named("DataGrid").Build(columns =>
+        {
+            columns.Add(c => c.location).Titled("Location").Filterable(true);
+            columns.Add(c => c.Logcode).Titled("Logcode");
+            columns.Add(c => c.logtext).Titled("Logtext");
+            columns.Add(c => c.Downtime).Titled("DT");
+            columns.Add(c => c.timestamp).Titled("Time").Formatted("{0:HH:mm:ss}");
+            columns.Add(c => c.Classification).Titled("Class");
+            columns.Add(c => c.Subgroup).Titled("Subgroup");
+            columns.Add(c => c.Logtype).Titled("Logtype").Filterable(true);
+            columns.Add(c => c.LocationTree)
+            .Titled("Info")
+            .Encoded(false)
+            .Filterable(true)
+            .RenderedAs(o => Html.ActionLink("INFO", "_Moreinfo",
+               new
+               {
+                   location = o.location,
+                   errornum = o.Logcode,
+                   refid = o.refId,
+                   logtype = o.Logtype,
+                   logtext = o.logtext
+               },
+                 new { @class = "modal-link" }
+                 )
+            );
+        }).Sortable().Pageable(pager =>
+            {
+                pager.RowsPerPage = 20;
+            }).Empty("No data found")
+    </div>
 
-@*script for setting row colors based on there values*@
+    <div class="panel-footer">
+        @MyFilters.LocationDropdown("/Gadata/StoWebgrid", "")
+        <p style="float:right"> Last data push: '@Html.Raw(ViewBag.DataTimestamp)'</p>
+    </div>
+</div>
+
+
+@*render popuover modal*@
+<div>
+    @MyModals.tableHelperModal("tableModal");
+</div>
+
 <script type="text/javascript">
-            $(document).ready(function () {
-                $('tbody > tr').each(function (index) {
-                    if ($(this).children('td:nth-child(8)').text() == "SHIFTBOOK")
-                    { $(this).children('td').css("background-color", "#d6d613");}
+    //need to just eleminiate this... can use the attributes of the modal
+    var bModalOpen = false;
+    //
 
-                    else if ($(this).children('td:nth-child(8)').text() == "WARNING")
-                    { $(this).children('td').css("background-color", "#127bf1"); }
-
-                    else if ($(this).children('td:nth-child(8)').text() == "LIVE")
-                    { $(this).children('td').css("background-color", "#f21a1a"); }
-
-                    else if ($(this).children('td:nth-child(8)').text() == "BREAKDOWN")
-                    { $(this).children('td').css("background-color", "#f2af13"); }
-
-                    else if ($(this).children('td:nth-child(8)').text() == "TIMELINE")
-                    { $(this).children('td').css("background-color", "#16dd76"); }
-
-                    else
-                    {}
-                });
-            });
-</script>
-
-
-@*function that calls server ever x time if there is new data*@
-<script type="text/javascript">
     $(document).ready(function () {
-        $(function () {
-            //check every 5 seconds
-            setInterval(CheckForData, 1000 * 5 );
-        });
-        //get last data timestamp from model
-        var Datatimestamp = '@Html.Raw(ViewBag.DataTimestamp)';
-        console.log(Datatimestamp);
-        //interlock for ajax request
-        var bInterlock = new Boolean();
-        bInterlock = false;
-
-        function CheckForData() {
-            if (bInterlock) {
-                return;
-            } else {
-                bInterlock = true;
-            }
-                    $.ajax({
-                        async: true,
-                        type: 'GET',
-                        url: '@Url.Action("StocheckNewData")',
-                        dataType: 'json',
-                        data: { dataTimestamp: Datatimestamp },
-
-                        success: function (response) {
-                            bInterlock = false;
-                            //succes = reload needed
-                            if (!bModalOpen) { //only reaload when modal is not open
-                                window.location.reload();
-                            }
-                        },
-
-                        error: function (ex) {
-                            bInterlock = false;
-                            //error = no reload
-                        }
-            });
-
-        }
+        //set colors for grid
+        tableFormatLogtype(8);
+        //subscribe to modal click
+        ListenToModal('#myModal');
+        //enable polling for new data
+        PolFordata(5, '@Html.Raw(ViewBag.DataTimestamp)', '@Url.Action("StocheckNewData")');
     });
 </script>
-
-@*main grid*@
-<div class="code-cut">
-    @Html.Grid(Model).Named("DataGrid").Build(columns =>
-{
-    columns.Add(c => c.location).Titled("Location").Filterable(true);
-    columns.Add(c => c.Logcode).Titled("Logcode");
-    columns.Add(c => c.logtext).Titled("Logtext");
-    columns.Add(c => c.Downtime).Titled("DT");
-    columns.Add(c => c.timestamp).Titled("Time").Formatted("{0:HH:mm:ss}");
-    columns.Add(c => c.Classification).Titled("Class");
-    columns.Add(c => c.Subgroup).Titled("Subgroup");
-    columns.Add(c => c.Logtype).Titled("Logtype").Filterable(true);
-    columns.Add(c => c.LocationTree)
-    .Titled("Info")
-    .Encoded(false)
-    .Filterable(true)
-    .RenderedAs(o => Html.ActionLink("INFO", "_Moreinfo",
-       new
-       {
-           location = o.location,
-           errornum = o.Logcode,
-           refid = o.refId,
-           logtype = o.Logtype,
-           logtext = o.logtext
-       },
-         new { @class = "modal-link" }
-         )
-    );
-}).Sortable().Pageable(pager =>
-    {
-    pager.RowsPerPage = 20;
-    }).Empty("No data found")
-</div>
-
-@*footer modal with filter and gohome*@
-<div class="modal-content">
-    <div class="dropdown">
-        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-            Set a location filter
-            <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu">
-            <li><a href="/Gadata/StoWebgrid">ClearFilter</a></li>
-            <li><a href="/Gadata/StoWebgrid?DataGrid-LocationTree-Contains=GA4">GA4</a></li>
-            <li><a href="/Gadata/StoWebgrid?DataGrid-LocationTree-Contains=A LIJN 33">-FLOOR</a></li>
-            <li><a href="/Gadata/StoWebgrid?DataGrid-LocationTree-Contains=A LIJN 334">--FF-334</a></li>
-            <li><a href="/Gadata/StoWebgrid?DataGrid-LocationTree-Contains=A LIJN 331">--FS-331</a></li>
-            <li><a href="/Gadata/StoWebgrid?DataGrid-LocationTree-Contains=A LIJN 336">--RF-336</a></li>
-            <li><a href="/Gadata/StoWebgrid?DataGrid-LocationTree-Contains=A LIJN 338">--MAR-338</a></li>
-            <li><a href="/Gadata/StoWebgrid?DataGrid-LocationTree-Contains=A LIJN 339">--WBL-339</a></li>
-            <li><a href="/Gadata/StoWebgrid?DataGrid-LocationTree-Contains=A LIJN 35">-SIDES</a></li>
-        </ul>
-
-        <a href="~/" class="btn btn-primary">goHome &raquo;</a>
-        Last data push: '@Html.Raw(ViewBag.DataTimestamp)'
-    </div>
-</div>
-
-
-@*info modal java script*@
-<script type="text/javascript">
-    var bModalOpen = false;
-    //this script show modal each time when you click on the link:
-    $(function () {
-        $(".modal-link").click(function (event) {
-            event.preventDefault();
-            bModalOpen = true;
-            $('#myModal').modal({ remote: $(this).attr("href") });
-        });
-
-        $('#myModal').on('hidden.bs.modal', function () {
-            // reload page
-            window.location.reload();
-        })
-    })
-</script>
-
-@*info model html only show while loading partial *@
-<div id="myModal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h2>I'm trying to help</h2>
-        </div>
-        <div class="modal-body">
-            <p>Trying to connect</p>
-            <p>Getting data...</p>
-            <p>Click outside of this box to abort</p>
-        </div>
-    </div>
-</div>
-
-<style>
-    /* The Modal (background) */
-    .modal {
-        display: none; /* Hidden by default */
-        position: fixed; /* Stay in place */
-        padding-top: 100px; /* Location of the box */
-        left: 0;
-        top: 0;
-        width: 100%; /* Full width */
-        height: 100%; /* Full height */
-        overflow: auto; /* Enable scroll if needed */
-        background-color: rgb(0,0,0); /* Fallback color */
-        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-    }
-
-    /* Modal Content */
-    .modal-content {
-        background-color: #fefefe;
-        margin: auto;
-        padding: 20px;
-        border: 1px solid #888;
-        width: 80%;
-    }
-</style>
-
-
-
-
-

@@ -7,7 +7,7 @@ namespace EqUiWebUi.Controllers
         // GET: Sharepoint
         public ActionResult Index()
         {
-            return View();
+            return new HttpNotFoundResult("Woeps there seems to bo nothing here");
         }
 
         // GET: Add new issue to sharepoint.

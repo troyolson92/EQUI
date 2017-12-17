@@ -1,16 +1,44 @@
 ﻿@model EqUiWebUi.Models.DiffQuery
 
-<script src="~/Scripts/jquery-3.2.1.min.js"></script>
-<script src="~/Scripts/bootstrap.min.js"></script>
-<script src="~/Scripts/gridmvc.min.js"></script>
-
-<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
-<link href="~/Content/Gridmvc.css" rel="stylesheet" />
-
 @*set title*@
 @{
     ViewBag.Title = "Query differ";
 }
+
+<div class="container body-content">
+    <p></p>
+    <p></p>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4>Snapshot manager</h4>
+        </div>
+
+        <div class="panel-body">
+            <div class="form-inline">
+                <br />
+                @using (Html.BeginForm())
+                {
+                    @Html.Label("Snapshot")
+                    @Html.DropDownListFor(m => m.SelectedQuery, new SelectList(Model.c_querySnapshots, "id", "name"), "select a snapshot")
+                    <p></p>
+                    @Html.Label("Compare")
+                    @Html.DropDownListFor(m => m.SelectedSnapshotID1, new SelectList(string.Empty, "Value", "Text"), "Instance of snapshot")
+                    <p></p>
+                    @Html.Label("To")
+                    @Html.DropDownListFor(m => m.SelectedSnapshotID2, new SelectList(string.Empty, "Value", "Text"), "Instance of snapshot")
+                    <p></p>
+                    <input type="submit" value="Show diff>>" />
+                }
+                <br />
+            </div>
+        </div>
+
+        <div class="panel-footer">
+
+        </div>
+    </div>
+</div>
+
 @*script that fill hsnapshot listbox when users selects a c_snapshot instance*@
 <script type="text/javascript">
     $(document).ready(function () {
@@ -42,39 +70,3 @@
         })
     });
 </script>
-
-@*content *@
-<div class="container body-content">
-    <p></p>
-    <p></p>
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h4>Snapshot manager</h4>
-        </div>
-
-        <div class="panel-body">
-            <div class="form-inline">
-                <br />
-                @using (Html.BeginForm())
-        {
-            @Html.Label("Snapshot")
-            @Html.DropDownListFor(m => m.SelectedQuery, new SelectList(Model.c_querySnapshots, "id", "name"), "select a snapshot")
-            <p></p>
-            @Html.Label("Compare")
-            @Html.DropDownListFor(m => m.SelectedSnapshotID1, new SelectList(string.Empty, "Value", "Text"), "Instance of snapshot")
-            <p></p>
-            @Html.Label("To")
-            @Html.DropDownListFor(m => m.SelectedSnapshotID2, new SelectList(string.Empty, "Value", "Text"), "Instance of snapshot")
-            <p></p>
-            <input type="submit" value="Show diff>>" />
-}
-                <br />
-            </div>
-        </div>
-
-        <div class="panel-footer">
-
-        </div>
-    </div>
-</div>
-

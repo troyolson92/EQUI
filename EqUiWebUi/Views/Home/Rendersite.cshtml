@@ -1,0 +1,35 @@
+﻿<div>
+    <p></p>
+    <p></p>
+       <div class="panel-body" id="placecontainer" style="position:relative">
+            <div id="placeholder" style="display:none">page will load here</div>
+       </div>
+
+       <div class="panel-footer">
+            <h5>Loaded from: @ViewBag.redirectURL</h5>
+       </div>
+</div>
+
+<footer>
+    <p>&copy; @DateTime.Now.Year - VCG GA SDEBEUL ASP.NET Application</p>
+</footer>
+
+<script type="text/javascript">
+    var spinner1 = new Spinner();
+    $(document).ready(function () {
+        //start a wait spinner
+        spinner1.spin(document.getElementById('placecontainer'));
+        $("#placecontainer").fadeIn();
+        //load partial
+            $("#placeholder").load('@ViewBag.redirectURL',
+                //this runs when load done
+                function () {
+                    //fade in the result table
+                    $('#placeholder').fadeIn(1000,function () {
+                        //hide spinner when fade completes
+                        spinner1.stop();
+                    });
+                }
+            );
+    })
+</script>

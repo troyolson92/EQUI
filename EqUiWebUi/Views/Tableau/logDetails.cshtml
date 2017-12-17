@@ -5,7 +5,19 @@
     ViewBag.Title = "LogDetails";
 }
 
-<script src="~/Scripts/jquery-3.2.1.min.js"></script>
+<div>
+    @Html.Grid(Model).Named("LogDetails").Build(columns =>
+    {
+        columns.Add(c => c.location).Titled("Location").Filterable(true);
+        columns.Add(c => c.Subgroup).Titled("Subgroup");
+        columns.Add(c => c.timestamp).Titled("Time");
+        columns.Add(c => c.Fulllogtext).Titled("Logtext");
+
+    }).Sortable().Pageable(pager =>
+    {
+        pager.RowsPerPage = 7;
+    }).Empty("No data found")
+</div>
 
 @* Set font style to viewbag data*@
 <script type="text/javascript">
@@ -24,19 +36,3 @@
         }
     };
 </script>
-
-
-@*main grid*@
-<div class="code-cut">
-    @Html.Grid(Model).Named("LogDetails").Build(columns =>
-{
-    columns.Add(c => c.location).Titled("Location").Filterable(true);
-    columns.Add(c => c.Subgroup).Titled("Subgroup");
-    columns.Add(c => c.timestamp).Titled("Time");
-    columns.Add(c => c.Fulllogtext).Titled("Logtext");
-
-}).Sortable().Pageable(pager =>
-{
-    pager.RowsPerPage = 7;
-}).Empty("No data found")
-</div>

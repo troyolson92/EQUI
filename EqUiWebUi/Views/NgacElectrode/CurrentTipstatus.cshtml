@@ -9,64 +9,34 @@
     <p></p>
     <p></p>
     <div class="panel panel-default">
-        <div class="panel-heading">
-            <table style="width:25%">
-                <tr>
-                    <th>
-                        <h4>CurrentTipstatus</h4>
-                    </th>
-                    <th>
-                        <div class="dropdown">
-                            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-                                Set a location filter
-                                <span class="caret"></span>
-                            </button>
-
-                            <ul class="dropdown-menu">
-                                <li><a href="/NgacElectrode/CurrentTipstatus">ClearFilter</a></li>
-                                <li><a href="/NgacElectrode/CurrentTipstatus?DataGrid-LocationTree-Contains=GA4">GA4</a></li>
-                                <li><a href="/NgacElectrode/CurrentTipstatus?DataGrid-LocationTree-Contains=A LIJN 33">-FLOOR</a></li>
-                                <li><a href="/NgacElectrode/CurrentTipstatus?DataGrid-LocationTree-Contains=A LIJN 334">--FF..334</a></li>
-                                <li><a href="/NgacElectrode/CurrentTipstatus?DataGrid-LocationTree-Contains=A LIJN 331">--FS..331</a></li>
-                                <li><a href="/NgacElectrode/CurrentTipstatus?DataGrid-LocationTree-Contains=A LIJN 336">--RF..336</a></li>
-                                <li><a href="/NgacElectrode/CurrentTipstatus?DataGrid-LocationTree-Contains=A LIJN 338">--MAR.338</a></li>
-                                <li><a href="/NgacElectrode/CurrentTipstatus?DataGrid-LocationTree-Contains=A LIJN 339">--WB..339</a></li>
-                                <li><a href="/NgacElectrode/CurrentTipstatus?DataGrid-LocationTree-Contains=A LIJN 35">-SIDES</a></li>
-                            </ul>
-
-                        </div>
-                    </th>
-                </tr>
-            </table>
-        </div>
 
         <div class="panel-body">
-                @Html.Grid(Model).Named("DataGrid").Build(columns =>
-                         {
-                             columns.Add(c => c.Robot).Titled("Robot").Filterable(true);
-                             columns.Add(c => c.Date_Time).Titled("Laaste keer gefreest").Formatted("{0:dd-MM-yyyy HH:mm}");
-                             columns.Add(c => c.nDress).Titled("Aantal keer gefreest");
-                             columns.Add(c => c.WearRatio).Titled("%WearRatio");
-                             columns.Add(c => c.pWear).Titled("%wear").Filterable(true).Css("bolded");
-                             columns.Add(c => c.nRspots).Titled("Resterende Spots");
-                             columns.Add(c => c.nRcars).Titled("Resterende Stukken");
-                             columns.Add(c => c.TipAge_h_).Titled("Electrode leeftijd (h)");
-                             columns.Add(c => c.Time_DressCycleTime).Titled("Dress ct (s)");
-                             columns.Add(c => c.LocationTree)
-                             .Titled("Info")
-                             .Encoded(false)
-                             .Filterable(true)
-                             .RenderedAs(o => Html.ActionLink("INFO", "_Moreinfo")
-                             );
-                         }).Sortable().Pageable(pager =>
-                         {
-                             pager.RowsPerPage = @ViewBag.RowsPerPage;
-                         }).Empty("No data found").Css("table-hover")
+            @Html.Grid(Model).Named("DataGrid").Build(columns =>
+                      {
+                          columns.Add(c => c.Robot).Titled("Robot").Filterable(true);
+                          columns.Add(c => c.Date_Time).Titled("Laaste keer gefreest").Formatted("{0:dd-MM-yyyy HH:mm}");
+                          columns.Add(c => c.nDress).Titled("Aantal keer gefreest");
+                          columns.Add(c => c.WearRatio).Titled("%WearRatio");
+                          columns.Add(c => c.pWear).Titled("%wear").Filterable(true).Css("bolded");
+                          columns.Add(c => c.nRspots).Titled("Resterende Spots");
+                          columns.Add(c => c.nRcars).Titled("Resterende Stukken");
+                          columns.Add(c => c.TipAge_h_).Titled("Electrode leeftijd (h)");
+                          columns.Add(c => c.Time_DressCycleTime).Titled("Dress ct (s)");
+                          columns.Add(c => c.LocationTree)
+                          .Titled("Info")
+                          .Encoded(false)
+                          .Filterable(true)
+                          .RenderedAs(o => Html.ActionLink("INFO", "_Moreinfo")
+                          );
+                      }).Sortable().Pageable(pager =>
+                      {
+                          pager.RowsPerPage = @ViewBag.RowsPerPage;
+                      }).Empty("No data found").Css("table-hover")
         </div>
 
         <div class="panel-footer">
-            <a href="~/NgacElectrode/Index" class="btn btn-primary">Electrode home &raquo;</a>
-            <p style="float:right"> Last data push: '@Html.Raw(ViewBag.DataTimestamp)'</p>     
+            @MyFilters.LocationDropdown("/NgacElectrode/CurrentTipstatus", "")
+            <p style="float:right"> Last data push: '@Html.Raw(ViewBag.DataTimestamp)'</p>
         </div>
     </div>
 </div>
@@ -82,7 +52,7 @@
             bFlip = !bFlip;
             $('tbody > tr').each(function (index) {
                 @*blink for slowspeed*@
-                if ($(this).children('td:nth-child(5)').text() > 40) {
+                if ($(this).children('td:nth-child(5)').text() > 50) {
                     if (bFlip) {
                         $(this).children('td').css("background-color", "#f21a1a");
                     } else {
@@ -115,51 +85,16 @@
                 }
             });
             if (bNeedToPlay) {
+                console.log("playing sound");
                 sound.play();
             }
         }
     });
 </script>
 
-@*function that calls server ever x time if there is new data*@
 <script type="text/javascript">
     $(document).ready(function () {
-        $(function () {
-            //check every 5 seconds
-            setInterval(CheckForData, 1000 * 5 );
-        });
-        //get last data timestamp from model
-        var Datatimestamp = '@Html.Raw(ViewBag.DataTimestamp)';
-        console.log(Datatimestamp);
-        //interlock for ajax request
-        var bInterlock = new Boolean();
-        bInterlock = false;
-
-        function CheckForData() {
-            if (bInterlock) {
-                return;
-            } else {
-                bInterlock = true;
-            }
-                    $.ajax({
-                        async: true,
-                        type: 'GET',
-                        url: '@Url.Action("TipwearCheckNewData")',
-                        dataType: 'json',
-                        data: { dataTimestamp: Datatimestamp },
-
-                        success: function (response) {
-                            bInterlock = false;
-                            //succes = reload needed
-                            window.location.reload();
-                        },
-
-                        error: function (ex) {
-                            bInterlock = false;
-                            //error = no reload
-                        }
-            });
-
-        }
+        //enable polling for new data
+        PolFordata(5, '@Html.Raw(ViewBag.DataTimestamp)', '@Url.Action("TipwearCheckNewData")');
     });
 </script>

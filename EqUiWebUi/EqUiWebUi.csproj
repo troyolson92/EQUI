@@ -147,7 +147,6 @@
     <Compile Include="Controllers\DynamicController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\NgacElectrodeController.cs" />
-    <Compile Include="Controllers\PdfController.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Controllers\SharepointController.cs" />
     <Compile Include="Controllers\TableauController.cs" />
@@ -684,15 +683,12 @@
     <Content Include="Views\Shared\_Moreinfo.cshtml" />
     <Content Include="Views\Dynamic\DynamicWebgrid.cshtml" />
     <Content Include="Views\Gadata\StoWebgrid.cshtml" />
-    <Content Include="Views\Gadata\BatchRuns.cshtml" />
     <Content Include="Views\Tableau\logDetails.cshtml" />
-    <Content Include="Views\Sharepoint\Index.cshtml" />
     <Content Include="Views\Sharepoint\AddNewIusse.cshtml" />
     <Content Include="Views\Tableau\Index.cshtml" />
     <Content Include="Views\Tableau\EmbeddedDesktop.cshtml" />
     <Content Include="Views\Tableau\Embedded4K.cshtml" />
     <Content Include="Views\Web.config" />
-    <Content Include="Views\Pdf\RenderPdf.cshtml" />
     <Content Include="Views\Error\Index.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Error\AccessDenied.cshtml" />
@@ -705,7 +701,6 @@
     <Content Include="Views\Maximo\Index.cshtml" />
     <Content Include="Views\Maximo\_woDetails.cshtml" />
     <Content Include="Views\Maximo\WoDetails.cshtml" />
-    <Content Include="Views\Gadata\NgacSupervisieWebgrid.cshtml" />
     <Content Include="Views\NgacElectrode\CurrentTipstatus.cshtml" />
     <Content Include="Views\NgacElectrode\Index.cshtml" />
     <Content Include="Views\NgacElectrode\TipwearBeforeChange.cshtml" />
@@ -717,6 +712,7 @@
     <Content Include="Scripts\jquery-3.2.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.2.1.min.map" />
     <Content Include="Views\NgacElectrode\_TipsChanged.cshtml" />
+    <Content Include="Views\Home\Rendersite.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EQUICommunictionLib\EQUICommunictionLib.csproj">

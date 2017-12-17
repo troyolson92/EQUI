@@ -29,6 +29,7 @@ namespace EqUiWebUi.Controllers
             {
                 Backgroundwork backgroundwork = new Backgroundwork();
                 backgroundwork.UpdateTipstatus();
+                data = DataBuffer.Tipstatus;
                 ViewBag.DataTimestamp = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             }
             else //add tracking timestamp for hangfire sync

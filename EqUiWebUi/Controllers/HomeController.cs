@@ -16,15 +16,18 @@ namespace EqUiWebUi.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
-
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            return View();
+        }
 
+        //render an external site in our content (embedded)
+        public ActionResult Rendersite(string url)
+        {
+            ViewBag.redirectURL = url;
             return View();
         }
     }

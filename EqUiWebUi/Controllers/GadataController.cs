@@ -16,7 +16,7 @@ namespace EqUiWebUi.Controllers
 		// GET: /Gadata/
 		public ActionResult Index()
 		{
-			return new HttpNotFoundResult("Woeps");
+			return new HttpNotFoundResult("Woeps there seems to bo nothing here");
 		}
 
         //------------------------------------PloegRapport-------------------------------------------------
@@ -61,11 +61,6 @@ namespace EqUiWebUi.Controllers
 
         }
 
-        [HttpGet]
-        public ActionResult PloegRapportInfo(int id)
-        {
-            return new HttpNotFoundResult("Woeps das nog ni klaar");
-        }
         //-------------------------------------------------------------------------------------------------
 
         //------------------------------------Supervisie-------------------------------------------------
@@ -110,17 +105,22 @@ namespace EqUiWebUi.Controllers
 
         }
 
-        //------------------------------------Supervisie brownfield-------------------------------------------------
+        //------------------------------------Supervisie STO-------------------------------------------------
         [HttpGet]
         public ActionResult StoWebgrid()
         {
+            return new HttpNotFoundResult("Data loading disabled in hangfire");
+
             //refresh every 10 minutes anyway ! 
             Response.AddHeader("Refresh", "600");
             var data = DataBuffer.StoBreakdown;
             //in case hangfire is taking a day off
             if (data == null)
             {
-                return new HttpNotFoundResult("give hangfire some time");
+                Backgroundwork backgroundwork = new Backgroundwork();
+                //backgroundwork.updataSTO();
+                data = DataBuffer.StoBreakdown;
+                ViewBag.DataTimestamp = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             }
             else //add tracking timestamp for hangfire sync
             {
@@ -149,58 +149,7 @@ namespace EqUiWebUi.Controllers
 
         }
 
-        //------------------------------------Supervisie Greenfield-------------------------------------------------
-        [HttpGet]
-        public ActionResult NgacSupervisieWebgrid()
-        {
-            GADATAEntities gADATAEntities = new GADATAEntities();
-            return View();
-        }
-
-        //------------------------------------maximo-------------------------------------------------
-        [HttpGet]
-        public ActionResult BatchRuns()
-        {
-            DataTable dt = new DataTable();
-
-            //get data
-            GadataComm gadataComm = new GadataComm();
-            string qry = @"
-SELECT TOP (50) 
-        [Location] +  ' ' 
-       +[Classification] + ' <' 
-	   +RTRIM(CONVERT(char(19),[timestamp], 108)) + '> ' + char(10) + char(13) 
-       +[Logtext] as 'foutinfo'
-  FROM [GADATA].[Tableau].[ApplFaults] as a 
-  where 
-  a.Location LIKE '334%'
-  AND
-  a.timestamp BETWEEN '2017-10-26 09:33:01' AND '2017-10-26 10:56:00'
-  order by timestamp asc 
-";
-            dt = gadataComm.RunQueryGadata(qry);
-
-            //
-            WebGridHelpers.WebGridHelper webGridHelper = new WebGridHelper();
-            ViewBag.Columns = webGridHelper.getDatatabelCollumns(dt);
-            //
-            List<dynamic> data = webGridHelper.datatableToDynamic(dt);
-            //
-            DefaultModel model = new WebGridHelpers.DefaultModel();
-            model.PageSize = 30;
-            //
-
-            if (data != null)
-            {
-                model.TotalCount = data.Count();
-                model.Data = data;
-                model.DataTimestamp = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-            }
-            return View(model);
-        }
-
-        //-------------------------------------------------------------------------------------------------
-
+        //Partial view for more info modal-------------------------------------------------------------------------------------------------
         [HttpGet]
         public ActionResult _Moreinfo(string location, int errornum, int refid, string logtype, string logtext)
         {
