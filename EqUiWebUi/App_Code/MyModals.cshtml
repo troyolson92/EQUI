@@ -1,0 +1,41 @@
+﻿@helper tableHelperModal(string name)
+    {
+        @*info model html only show while loading partial *@
+        <div id="myModal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>I'm trying to help</h2>
+                </div>
+                <div class="modal-body">
+                    <p>Trying to connect</p>
+                    <p>Getting data...</p>
+                    <p>Click outside of this box to abort</p>
+                </div>
+            </div>
+        </div>
+
+        <style>
+            /* The Modal (background) */
+            .modal {
+                display: none; /* Hidden by default */
+                position: fixed; /* Stay in place */
+                padding-top: 100px; /* Location of the box */
+                left: 0;
+                top: 0;
+                width: 100%; /* Full width */
+                height: 100%; /* Full height */
+                overflow: auto; /* Enable scroll if needed */
+                background-color: rgb(0,0,0); /* Fallback color */
+                background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            }
+
+            /* Modal Content */
+            .modal-content {
+                background-color: #fefefe;
+                margin: auto;
+                padding: 20px;
+                border: 1px solid #888;
+                width: 80%;
+            }
+        </style>
+}

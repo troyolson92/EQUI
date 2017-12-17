@@ -1,0 +1,41 @@
+﻿@*drop down control for filtering on 'locationtree'*@
+@helper LocationDropdown(string id)
+    {
+        <select class="form-control input-sm" id="@id" name="Selecteer locatie">
+            <optgroup label="CMA UB12 floorline">
+                <option value="A LIJN 33">Floor (all)</option>
+                <option value="A LIJN 331">Frontstructure</option>
+                <option value="A LIJN 334">Frontfloor</option>
+                <option value="A LIJN 336">Rearfloor</option>
+                <option value="A LIJN 338">Marriage</option>
+            </optgroup>
+            <optgroup label="CMA Sides">
+                <option value="A LIJN 35">Sides (all)</option>
+            </optgroup>
+            <optgroup label="CMA Preassembly">
+                <option value="A LIJN 32">A LIJN 32%</option>
+            </optgroup>
+        </select>
+}
+
+@*dropdown filter that redirects to page
+Leave ID blank!    
+*@
+@helper LocationDropdown(string id, string redirecbase, bool dropup = false)
+    {
+        <div class="dropup" id="@id">
+            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                    Set a location filter
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a href="@redirecbase">ClearFilter</a></li>
+                    <li><a href="@redirecbase?DataGrid-LocationTree-Contains=AAL">P3</a></li>
+                    <li><a href="@redirecbase?DataGrid-LocationTree-Contains=A FLOOR L">A FLOOR L</a></li>
+                    <li><a href="@redirecbase?DataGrid-LocationTree-Contains=A SIBO L">A SIBO L</a></li>
+                    <li><a href="@redirecbase?DataGrid-LocationTree-Contains=AAS">P4</a></li>
+                    <li><a href="@redirecbase?DataGrid-LocationTree-Contains=A FLOOR S">A FLOOR S</a></li>
+                    <li><a href="@redirecbase?DataGrid-LocationTree-Contains=A SIBO ">A SIBO S</a></li>
+                </ul>
+       </div>
+            }

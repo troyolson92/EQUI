@@ -1,68 +1,87 @@
 ﻿@model IEnumerable<EqUiWebUi.Models.Supervisie>
 
-<script src="~/Scripts/jquery-3.2.1.min.js"></script>
-
 @*set title*@
 @{
     ViewBag.Title = "Supervisie";
 }
 
-@*script for setting row colors based on there values*@
+<div>
+    <p></p>
+    <p></p>
+    <div>
+        <div>
+            @Html.Grid(Model).Named("DataGrid").Build(columns =>
+                         {
+                             columns.Add(c => c.Location).Titled("Location").Filterable(true);
+                             columns.Add(c => c.logtext).Titled("Logtext");
+                             columns.Add(c => c.DT).Titled("DT");
+                             columns.Add(c => c.time).Titled("time");
+                             columns.Add(c => c.Classification).Titled("Class");
+                             columns.Add(c => c.Subgroup).Titled("Subgroup");
+                             columns.Add(c => c.Logtype).Titled("LogType").Filterable(true);
+                             columns.Add(c => c.LocationTree)
+                             .Titled("Info")
+                             .Encoded(false)
+                             .Filterable(true)
+                             .RenderedAs(o => Html.ActionLink("INFO", "_Moreinfo",
+                                new
+                                {
+                                    location = o.Location,
+                                    errornum = o.Logcode,
+                                    refid = o.refId,
+                                    logtype = o.Logtype,
+                                    logtext = o.logtext
+                                },
+                                  new { @class = "modal-link" }
+                                  )
+                             );
+                         }).Sortable().Pageable(pager =>
+                             {
+                                 pager.RowsPerPage = 20;
+                             }).Empty("No data found")
+        </div>
+
+        <div class="panel-footer">
+            @MyFilters.LocationDropdown("/Gadata/SupervisieWebgrid", "")
+            <p style="float:right"> Last data push: '@Html.Raw(ViewBag.DataTimestamp)'</p>
+        </div>
+    </div>
+</div>
+
+
+@*render popuover modal*@
+<div>
+    @MyModals.tableHelperModal("tableModal");
+</div>
+
+@*info modal java script*@
 <script type="text/javascript">
-            $(document).ready(function () {
-                $('tbody > tr').each(function (index) {
-                    if ($(this).children('td:nth-child(7)').text() == "SHIFTBOOK")
-                    { $(this).children('td').css("background-color", "#d6d613");}
+    var bModalOpen = false;
+    //this script show modal each time when you click on the link:
+    $(function () {
+        $(".modal-link").click(function (event) {
+            event.preventDefault();
+            bModalOpen = true;
+            $('#myModal').modal({ remote: $(this).attr("href") });
+        });
 
-                    else if ($(this).children('td:nth-child(7)').text() == "WARNING")
-                    { $(this).children('td').css("background-color", "#127bf1"); }
+        $('#myModal').on('hidden.bs.modal', function () {
+            // reload page
+            window.location.reload();
+        })
+    })
+</script>
 
-                    else if ($(this).children('td:nth-child(7)').text() == "LIVE")
-                    { $(this).children('td').css("background-color", "#f21a1a"); }
 
-                    else if ($(this).children('td:nth-child(7)').text() == "BREAKDOWN")
-                    { $(this).children('td').css("background-color", "#f2af13"); }
-
-                    else if ($(this).children('td:nth-child(7)').text() == "TIMELINE")
-                    { $(this).children('td').css("background-color", "#16dd76"); }
-
-                    else
-                    {}
-                });
-            });
-        </script>
-
-@*scrip for blinking a row based on there value.*@
 <script type="text/javascript">
     $(document).ready(function () {
-        $(function () {
-            setInterval(flashRow, 750);
-        });
-        var bFlip = new Boolean(false);
-        function flashRow() {
-            bFlip = !bFlip;
-            $('tbody > tr').each(function (index) {
-                @*blink for slowspeed*@
-                if ($(this).children('td:nth-child(7)').text() == 'SLOWSpeed') {
-                    if (bFlip) {
-                        $(this).children('td').css("background-color", "#fc2fd0");
-                    } else {
-                        $(this).children('td').css("background-color", "#ffffff");
-                    }
-                }
-                @*blink live hardware fault*@
-                if (($(this).children('td:nth-child(7)').text() == 'LIVE')
-                    && ($(this).children('td:nth-child(6)').text() == 'Hardware')) {
-                    if (bFlip) {
-                        $(this).children('td').css("background-color", "#f21a1a");
-                    } else {
-                        $(this).children('td').css("background-color", "#ffffff");
-                    }
-                }
-            });
-        }
+        //set colors for grid
+        tableFormatLogtype(7);
+        //enable blinking
+        tableFormatBlink(7, 6);
     });
 </script>
+
 
 @*function that calls server ever x time if there is new data*@
 <script type="text/javascript">
@@ -108,118 +127,3 @@
         }
     });
 </script>
-
-@*main grid*@
-<div class="code-cut">
-
-@Html.Grid(Model).Named("DataGrid").Build(columns =>
-{
-    columns.Add(c => c.Location).Titled("Location").Filterable(true);
-    columns.Add(c => c.logtext).Titled("Logtext");
-    columns.Add(c => c.DT).Titled("DT");
-    columns.Add(c => c.time).Titled("time");
-    columns.Add(c => c.Classification).Titled("Class");
-    columns.Add(c => c.Subgroup).Titled("Subgroup");
-    columns.Add(c => c.Logtype).Titled("LogType").Filterable(true);
-    columns.Add(c => c.LocationTree)
-    .Titled("Info")
-    .Encoded(false)
-    .Filterable(true)
-    .RenderedAs(o => Html.ActionLink("INFO", "_Moreinfo",
-       new { location = o.Location,
-           errornum = o.Logcode,
-           refid = o.refId,
-           logtype = o.Logtype,
-           logtext = o.logtext
-       },
-         new { @class = "modal-link" }
-         )
-    );
-}).Sortable().Pageable(pager =>
-    {
-        pager.RowsPerPage = 20;
-    }).Empty("No data found")
-
-</div> 
-
-    <div  class="modal-content">
-        <div class="dropup">
-            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-                Set a location filter
-                <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu">
-                <li><a href="/Gadata/SupervisieWebgrid">ClearFilter</a></li>
-                <li><a href="/Gadata/SupervisieWebgrid?DataGrid-LocationTree-Contains=AAL">P3</a></li>
-                <li><a href="/Gadata/SupervisieWebgrid?DataGrid-LocationTree-Contains=A FLOOR L">A FLOOR L</a></li>
-                <li><a href="/Gadata/SupervisieWebgrid?DataGrid-LocationTree-Contains=A SIBO L">A SIBO L</a></li>
-                <li><a href="/Gadata/SupervisieWebgrid?DataGrid-LocationTree-Contains=AAS">P4</a></li>
-                <li><a href="/Gadata/SupervisieWebgrid?DataGrid-LocationTree-Contains=A FLOOR S">A FLOOR S</a></li>
-                <li><a href="/Gadata/SupervisieWebgrid?DataGrid-LocationTree-Contains=A SIBO ">A SIBO S</a></li>
-            </ul>
-
-            <a href="~/" class="btn btn-primary">goHome &raquo;</a>
-            Last data push: '@Html.Raw(ViewBag.DataTimestamp)'
-        </div>
-    </div>
-
-
-@*info modal java script*@
-<script type="text/javascript">
-    var bModalOpen = false;
-    //this script show modal each time when you click on the link:
-    $(function () {
-        $(".modal-link").click(function (event) {
-            event.preventDefault();       
-            bModalOpen = true;
-            $('#myModal').modal({ remote: $(this).attr("href") });
-        });
-
-        $('#myModal').on('hidden.bs.modal', function () {
-            // reload page
-            window.location.reload();
-        })
-    })
-</script>
-
-@*info model html only show while loading partial *@
-<div id="myModal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h2>I'm trying to help</h2>
-        </div>
-        <div class="modal-body">
-            <p>Trying to connect</p>
-            <p>Getting data...</p>
-            <p>Click outside of this box to abort</p>
-        </div>
-    </div>
-</div>
-
-<style>
-    /* The Modal (background) */
-    .modal {
-        display: none; /* Hidden by default */
-        position: fixed; /* Stay in place */
-        padding-top: 100px; /* Location of the box */
-        left: 0;
-        top: 0;
-        width: 100%; /* Full width */
-        height: 100%; /* Full height */
-        overflow: auto; /* Enable scroll if needed */
-        background-color: rgb(0,0,0); /* Fallback color */
-        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-    }
-
-    /* Modal Content */
-    .modal-content {
-        background-color: #fefefe;
-        margin: auto;
-        padding: 20px;
-        border: 1px solid #888;
-        width: 80%;
-    }
-
-</style>
-
-

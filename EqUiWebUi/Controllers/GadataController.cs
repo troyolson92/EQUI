@@ -32,6 +32,8 @@ namespace EqUiWebUi.Controllers
             {
                 Backgroundwork backgroundwork = new Backgroundwork();
                 backgroundwork.UpdatePloegreport();
+                data = DataBuffer.Ploegreport;
+                ViewBag.DataTimestamp = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             }
             else //add tracking timestamp for hangfire sync
             {
@@ -78,6 +80,8 @@ namespace EqUiWebUi.Controllers
             {
                 Backgroundwork backgroundwork = new Backgroundwork();
                 backgroundwork.UpdateSupervisie();
+                data = DataBuffer.Supervisie;
+                ViewBag.DataTimestamp = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             }
             else //add tracking timestamp for hangfire sync
             {
@@ -150,8 +154,6 @@ namespace EqUiWebUi.Controllers
         public ActionResult NgacSupervisieWebgrid()
         {
             GADATAEntities gADATAEntities = new GADATAEntities();
-     
-
             return View();
         }
 

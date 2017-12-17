@@ -25,21 +25,7 @@
                                     <div class="col-sm-5">
                                         <label class="control-label col-sm-4"" for="location">Op locatie</label>
                                         <div class="col-sm-8">
-                                            <select class="form-control input-sm" id="location" name="Selecteer locatie">
-                                                <optgroup label="CMA UB12 floorline">
-                                                    <option value="A LIJN 33">Floor (all)</option>
-                                                    <option value="A LIJN 331">Frontstructure</option>
-                                                    <option value="A LIJN 334">Frontfloor</option>
-                                                    <option value="A LIJN 336">Rearfloor</option>
-                                                    <option value="A LIJN 338">Marriage</option>
-                                                </optgroup>
-                                                <optgroup label="CMA Sides">
-                                                    <option value="A LIJN 35">Sides (all)</option>
-                                                </optgroup>
-                                                <optgroup label="CMA Preassembly">
-                                                    <option value="A LIJN 32">A LIJN 32%</option>
-                                                </optgroup>
-                                            </select>
+                                           @MyFilters.LocationDropdown("location")
                                         </div>
                                     </div>
                                 </div>
@@ -118,7 +104,7 @@
         </div>
 
         <div class="panel-footer">
-            <a href="~/NgacElectrode/Index" class="btn-xs btn-primary">Electrode home &raquo;</a>
+            <a href="~/NgacElectrode/Index" class="btn-xs btn-primary" style="float:right">Electrode home &raquo;</a>
         </div>
     </div>
 </div>
