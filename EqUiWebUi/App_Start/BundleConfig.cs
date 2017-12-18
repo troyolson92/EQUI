@@ -10,12 +10,14 @@ namespace EqUiWebUi
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js",
-                        "~/Scripts/spin.js" //spinner
+                        "~/Scripts/spin.js" //https://github.com/fgnass/spin.js/
                             ));
 
             bundles.Add(new ScriptBundle("~/bundles/MvcGrid").Include(
-                         "~/Scripts/MvcGrid/mvc-grid.js", //scripts for mvc grids
-                         "~/Scripts/jquery-3.2.1.min.js"
+                         "~/Scripts/MvcGrid/mvc-grid.js", //https://github.com/NonFactors/MVC5.Grid
+                         "~/Scripts/jquery-3.2.1.min.js", //why do we load this here again ? 
+                         "~/Scripts/jquery.bootstrap-autohidingnavbar.js", //https://github.com/istvan-ujjmeszaros/bootstrap-autohidingnavbar 
+                         "~/Scripts/printThis.js" //https://github.com/jasonday/printThis
                         ));
 
             bundles.Add(new ScriptBundle("~/bundles/MyScripts").Include(

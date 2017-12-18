@@ -2,8 +2,8 @@
 
 @Html.Grid(Model).Named("Workorders").Build(columns =>
     {
-        //columns.Add(model => DateTime.Now).Titled("Time");
-        columns.Add(c => c.WONUM).Titled("WONUM");
+//columns.Add(model => DateTime.Now).Titled("Time");
+columns.Add(c => c.WONUM).Titled("WONUM");
         columns.Add(c => c.WORKTYPE).Titled("WORKTYPE");
         columns.Add(c => c.STATUS).Titled("STATUS").Filterable(true);
         columns.Add(c => c.STATUSDATE).Titled("STATUSDATE").Formatted("{0:dd-MM-yyyy hh:mm}");
@@ -14,3 +14,8 @@
     {
         pager.RowsPerPage = 7;
     }).Empty("No workorders found")
+
+@*subscrible this table to events*@
+<script>
+        $('.mvc-grid').mvcgrid();
+</script>

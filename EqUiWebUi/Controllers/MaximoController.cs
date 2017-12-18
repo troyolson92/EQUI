@@ -29,7 +29,7 @@ namespace EqUiWebUi.Controllers
          *http://localhost:64061/Maximo/workorders?location=*&station=*
          */
         [HttpGet]
-        public ActionResult workorders(string location, string station, bool b_ciblings = false, bool b_preventive = false, int fontSize = 12)
+        public ActionResult Workorders(string location, string station, bool b_ciblings = false, bool b_preventive = false, int fontSize = 12)
         {
             //helper model to pass data
             WorkordersOnLocation workordersOnLocation = new WorkordersOnLocation();

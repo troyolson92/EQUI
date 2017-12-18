@@ -59,3 +59,48 @@
             </ul>
         </div>
 }
+
+@*helper to change alter status*@
+@helper SetAlertStatus(string id, int alertId, int? currentState)
+    {
+        <div class="dropdown" id="@id">
+            <button class="btn btn-xs btn-danger dropdown-toggle" type="button" data-toggle="dropdown">
+                @{
+                    switch (currentState)
+                    {
+                        case 0:
+                            <text>
+                                WAITING
+                            </text>
+                            break;
+                        case 1:
+                            <text>
+                                OKREQ
+                            </text>
+                            break;
+                        case 2:
+                            <text>
+                                EXEC
+                            </text>
+                            break;
+                        case 3:
+                            <text>
+                                COMP
+                            </text>
+                            break;
+                        default:
+                            <text>
+                                not valid
+                            </text>
+                            break;
+                    }
+                }
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="modal-link" href="/spc/_setState?id=@id,newstate=1">OKREQ</a></li>
+                <li><a class="modal-link" href="/spc/_setState?id=@id,newstate=2">EXEC</a></li>
+                <li><a class="modal-link" href="/spc/_setState?id=@id,newstate=3">COMP</a></li>
+            </ul>
+        </div>
+}

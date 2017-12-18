@@ -65,5 +65,8 @@
         ListenToModal('#myModal');
         //enable polling for new data
         PolFordata(5, '@Html.Raw(ViewBag.DataTimestamp)', '@Url.Action("StocheckNewData")');
+        //hide the navbar and move body content up
+        $(".navbar-fixed-top").autoHidingNavbar().hide();
+        $("#allcontent").animate({ "margin-top": "-60px" }, "fast");
     });
 </script>

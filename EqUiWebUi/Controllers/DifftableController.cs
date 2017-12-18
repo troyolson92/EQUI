@@ -27,7 +27,7 @@ namespace EqUiWebUi.Controllers
             {
 
             }
-            return RedirectToAction("DiffWebgrid", new
+            return RedirectToAction("_DiffWebgrid", new
             {
                 id1 = diff_Query.SelectedSnapshotID1,
                 id2 = diff_Query.SelectedSnapshotID2
@@ -47,7 +47,7 @@ namespace EqUiWebUi.Controllers
         }
         //show diggerance between 2 views
         [HttpGet]
-        public ActionResult DiffWebgrid(int id1, int id2)
+        public ActionResult _diffWebgrid(int id1, int id2)
         {
             GadataComm gadataComm = new GadataComm();
 

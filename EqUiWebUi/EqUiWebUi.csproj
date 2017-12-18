@@ -87,6 +87,9 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
@@ -96,6 +99,12 @@
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
@@ -143,12 +152,14 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Backgroundwork.cs" />
     <Compile Include="Controllers\DynamicController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\NgacElectrodeController.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Controllers\SharepointController.cs" />
+    <Compile Include="Controllers\SpcController.cs" />
     <Compile Include="Controllers\TableauController.cs" />
     <Compile Include="Models\AAOSR_PloegRaportV2_Result.cs">
       <DependentUpon>GadataDatamodel.tt</DependentUpon>
@@ -160,6 +171,9 @@
       <DependentUpon>GadataDatamodel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\h_querySnapshots.cs">
+      <DependentUpon>GadataDatamodel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ia_Alert.cs">
       <DependentUpon>GadataDatamodel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\logDetails.cs">
@@ -448,6 +462,7 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="App_Code\MyFilters.cshtml" />
     <Content Include="App_Code\MyModals.cshtml" />
+    <Content Include="App_Code\MyEquiToolkit.cshtml" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION.pubxml" />
     <None Include="Properties\PublishProfiles\VCC22700-Testing.pubxml" />
     <Content Include="PDFjs\build\pdf.js" />
@@ -542,6 +557,7 @@
     <Content Include="Scripts\jquery-3.2.1.min.js" />
     <Content Include="Scripts\jquery-3.2.1.slim.js" />
     <Content Include="Scripts\jquery-3.2.1.slim.min.js" />
+    <Content Include="Scripts\jquery.bootstrap-autohidingnavbar.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\moment-with-locales.js" />
     <Content Include="Scripts\moment-with-locales.min.js" />
@@ -550,6 +566,7 @@
     <Content Include="Scripts\MvcGrid\mvc-grid.js" />
     <Content Include="Scripts\MvcGrid\mvc-grid.min.js" />
     <Content Include="Scripts\MyScripts\tablehelper.js" />
+    <Content Include="Scripts\printThis.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
@@ -573,7 +590,6 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Difftable\DiffWebgrid.cshtml" />
     <Content Include="Views\Difftable\Index.cshtml" />
     <Content Include="Views\Gadata\PloegRapportWebgrid.cshtml" />
     <Content Include="Views\Gadata\SupervisieWebgrid.cshtml" />
@@ -594,7 +610,7 @@
     <Content Include="Views\Dynamic\DynamicDatatable.cshtml" />
     <Content Include="Views\Settings\Index.cshtml" />
     <Content Include="Views\Settings\GetUserGrants.cshtml" />
-    <Content Include="Views\Maximo\workorders.cshtml" />
+    <Content Include="Views\Maximo\Workorders.cshtml" />
     <Content Include="Views\Maximo\Index.cshtml" />
     <Content Include="Views\Maximo\_woDetails.cshtml" />
     <Content Include="Views\Maximo\WoDetails.cshtml" />
@@ -610,6 +626,9 @@
     <Content Include="Scripts\jquery-3.2.1.min.map" />
     <Content Include="Views\NgacElectrode\_TipsChanged.cshtml" />
     <Content Include="Views\Home\Rendersite.cshtml" />
+    <Content Include="Views\Difftable\_diffWebgrid.cshtml" />
+    <Content Include="Views\Spc\Index.cshtml" />
+    <Content Include="Views\Spc\_setState.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EQUICommunictionLib\EQUICommunictionLib.csproj">

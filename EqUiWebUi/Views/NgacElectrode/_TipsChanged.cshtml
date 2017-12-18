@@ -3,5 +3,13 @@
 
 @Html.Grid(Model).Named("TipsChangedTable").Build(columns =>
                     {
-                        columns.Add(c => c.Robot).Titled("Robot").Filterable(true);
-                    }).Sortable().Empty("No data found").Css("table-hover")
+                        columns.Add(c => c.Robot).Titled("Robot").InitialSort(GridSortOrder.Asc);
+                        columns.Add(c => c.pWear).Titled("%wear");
+                        columns.Add(c => c.nRspots).Titled("Resterende Spots");
+                        columns.Add(c => c.nRcars).Titled("Resterende Stukken");
+                    }).Empty("Did not find anything").Css("table-hover")
+
+@*subscrible this table to events*@
+<script>
+    $('.mvc-grid').mvcgrid();
+</script>

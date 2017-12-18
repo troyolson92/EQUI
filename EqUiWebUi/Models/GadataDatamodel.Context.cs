@@ -38,8 +38,9 @@ namespace EqUiWebUi.Models
         public DbSet<logDetails> logDetails { get; set; }
         public DbSet<UserPermisions> UserPermisions { get; set; }
         public DbSet<TipwearBeforeChange> TipwearBeforeChange { get; set; }
+        public DbSet<ia_Alert> ia_Alert { get; set; }
     
-        public virtual System.Data.Entity.Core.Objects.ObjectResult<AAOSR_PloegRaportV2_Result> AAOSR_PloegRaportV2(Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate, Nullable<int> daysBack, string assets, string locations, string lochierarchy, Nullable<int> minDowntime, Nullable<int> minCountOfDowtime, Nullable<int> minCountofWarning, Nullable<bool> getAlerts, Nullable<bool> getShifbook)
+        public virtual ObjectResult<AAOSR_PloegRaportV2_Result> AAOSR_PloegRaportV2(Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate, Nullable<int> daysBack, string assets, string locations, string lochierarchy, Nullable<int> minDowntime, Nullable<int> minCountOfDowtime, Nullable<int> minCountofWarning, Nullable<bool> getAlerts, Nullable<bool> getShifbook)
         {
             var startDateParameter = startDate.HasValue ?
                 new ObjectParameter("StartDate", startDate) :

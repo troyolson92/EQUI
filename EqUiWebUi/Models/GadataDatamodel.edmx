@@ -57,6 +57,28 @@
           <Property Name="DISCRIPTION" Type="varchar(max)" />
           <Property Name="QUERY" Type="varchar(max)" />
         </EntityType>
+        <EntityType Name="ia_Alert">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="_timestamp" Type="datetime" />
+          <Property Name="Type" Type="varchar" MaxLength="10" />
+          <Property Name="controller_name" Type="varchar" MaxLength="256" />
+          <Property Name="reference_id" Type="int" />
+          <Property Name="description" Type="varchar" MaxLength="256" />
+          <Property Name="Accept_user" Type="varchar" MaxLength="256" />
+          <Property Name="Accept_timestamp" Type="datetime" />
+          <Property Name="Fix_user" Type="varchar" MaxLength="256" />
+          <Property Name="Fix_timestamp" Type="datetime" />
+          <Property Name="Detect_timestamp" Type="datetime" />
+          <Property Name="Close_user" Type="varchar" MaxLength="256" />
+          <Property Name="Close_timestamp" Type="datetime" />
+          <Property Name="User_Comment" Type="varchar" MaxLength="2000" />
+          <Property Name="controller_id" Type="int" />
+          <Property Name="controller_type" Type="varchar" MaxLength="5" />
+          <Property Name="AlertStatus" Type="int" />
+        </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'GADATA.EqUi.Supervisie' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Supervisie">
@@ -171,6 +193,7 @@ warning 6002: The table/view 'GADATA.Volvo.UserPermisions' does not have a prima
           <Key>
             <PropertyRef Name="user_id" />
             <PropertyRef Name="Role" />
+            
           </Key>
           <Property Name="user_id" Type="int" Nullable="false" />
           <Property Name="username" Type="varchar" MaxLength="50" />
@@ -223,6 +246,7 @@ warning 6002: The table/view 'GADATA.Volvo.UserPermisions' does not have a prima
           <EntitySet Name="l_querySnapshots" EntityType="Self.l_querySnapshots" Schema="EqUi" store:Type="Tables" />
           <EntitySet Name="QUERYParameters" EntityType="Self.QUERYParameters" Schema="EqUi" store:Type="Tables" />
           <EntitySet Name="QUERYS" EntityType="Self.QUERYS" Schema="EqUi" store:Type="Tables" />
+          <EntitySet Name="ia_Alert" EntityType="Self.ia_Alert" Schema="Volvo" store:Type="Tables" />
           <EntitySet Name="Supervisie" EntityType="Self.Supervisie" store:Type="Views" store:Schema="EqUi">
             <DefiningQuery>SELECT 
     [Supervisie].[Location] AS [Location], 
@@ -387,6 +411,7 @@ warning 6002: The table/view 'GADATA.Volvo.UserPermisions' does not have a prima
             <Parameter Name="getShifbook" Mode="In" Type="Boolean" />
           </FunctionImport>
           <EntitySet Name="TipwearBeforeChange" EntityType="Models.TipwearBeforeChange" />
+          <EntitySet Name="ia_Alert" EntityType="Models.ia_Alert" />
           </EntityContainer>
         <EntityType Name="c_querySnapshots">
           <Key>
@@ -560,6 +585,28 @@ warning 6002: The table/view 'GADATA.Volvo.UserPermisions' does not have a prima
           <Property Name="ESTnSpotsFixedWearBefore100" Type="Double" />
           <Property Name="ESTnSpotsMoveWearBefore100" Type="Double" />
           <Property Name="TipAge_h_" Type="Int32" />
+        </EntityType>
+        <EntityType Name="ia_Alert">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="C_timestamp" Type="DateTime" Precision="3" />
+          <Property Name="Type" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="controller_name" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="reference_id" Type="Int32" />
+          <Property Name="description" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="Accept_user" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="Accept_timestamp" Type="DateTime" Precision="3" />
+          <Property Name="Fix_user" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="Fix_timestamp" Type="DateTime" Precision="3" />
+          <Property Name="Detect_timestamp" Type="DateTime" Precision="3" />
+          <Property Name="Close_user" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="Close_timestamp" Type="DateTime" Precision="3" />
+          <Property Name="User_Comment" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+          <Property Name="controller_id" Type="Int32" />
+          <Property Name="controller_type" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="AlertStatus" Type="Int32" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -742,6 +789,29 @@ warning 6002: The table/view 'GADATA.Volvo.UserPermisions' does not have a prima
                 <ScalarProperty Name="TipchangeTimestamp" ColumnName="TipchangeTimestamp" />
                 <ScalarProperty Name="Tool_Nr" ColumnName="Tool_Nr" />
                 <ScalarProperty Name="controller_name" ColumnName="controller_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ia_Alert">
+            <EntityTypeMapping TypeName="Models.ia_Alert">
+              <MappingFragment StoreEntitySet="ia_Alert">
+                <ScalarProperty Name="AlertStatus" ColumnName="AlertStatus" />
+                <ScalarProperty Name="controller_type" ColumnName="controller_type" />
+                <ScalarProperty Name="controller_id" ColumnName="controller_id" />
+                <ScalarProperty Name="User_Comment" ColumnName="User_Comment" />
+                <ScalarProperty Name="Close_timestamp" ColumnName="Close_timestamp" />
+                <ScalarProperty Name="Close_user" ColumnName="Close_user" />
+                <ScalarProperty Name="Detect_timestamp" ColumnName="Detect_timestamp" />
+                <ScalarProperty Name="Fix_timestamp" ColumnName="Fix_timestamp" />
+                <ScalarProperty Name="Fix_user" ColumnName="Fix_user" />
+                <ScalarProperty Name="Accept_timestamp" ColumnName="Accept_timestamp" />
+                <ScalarProperty Name="Accept_user" ColumnName="Accept_user" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="reference_id" ColumnName="reference_id" />
+                <ScalarProperty Name="controller_name" ColumnName="controller_name" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

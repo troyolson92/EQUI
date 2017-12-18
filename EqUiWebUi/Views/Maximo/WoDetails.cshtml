@@ -2,9 +2,24 @@
 @{
     ViewBag.Title = "WoDetails";
 }
-<script src="~/Scripts/jquery-3.2.1.js"></script>
-<script type="text/javascript">
+<div class="container body-content">
+    <p></p>
+    <p></p>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4>WoDetails @ViewBag.wonum</h4>
+        </div>
 
+        <div class="panel-body">
+             <div id="woDetailsPartial">more details about a workorder</div>
+        </div>
+
+
+    </div>
+
+</div>
+
+<script type="text/javascript">
     @*run on doc ready *@
     $(document).ready(function () {
         $("#woDetailsPartial").html("Loading.....");
@@ -12,15 +27,3 @@
         $("#woDetailsPartial").load(url);
     })
 </script>
-
-
-<h2>WoDetails</h2>
-<div class="panel panel-default">
-    <p></p>
-    @*info model in page load wo details *@
-    <div class="panel panel-default">
-        <div class="panel-body">
-            <div id="woDetailsPartial">more details about a workorder</div>
-        </div>
-    </div>
-</div>

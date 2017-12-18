@@ -53,6 +53,18 @@ function tableFormatBlink(logtypecolnum, subgroupcolnum) {
 
 
 //*****************************
+//table set fontsize
+//*****************************
+function SetTableFont(fontsize) {
+    $(function () {
+        var myElements = document.querySelectorAll(".table");
+        for (var i = 0; i < myElements.length; i++) {
+            myElements[i].style.fontSize = fontsize + "px";
+        }
+    });
+}
+
+//*****************************
 //table popover modal section
 //*****************************
 function ListenToModal(modalid) {
@@ -63,20 +75,20 @@ function ListenToModal(modalid) {
             $(modalid).modal({ remote: $(this).attr("href") });
         });
 
+        //slideInDown
+        //slideOutUp
+
         $(modalid).on('hidden.bs.modal', function () {
             // reload page
             window.location.reload();
-        })
+        });
     })
 }
-
 
 
 //*****************************
 //table datarefresh polling
 //*****************************
-//'@Html.Raw(ViewBag.DataTimestamp)'
-//@Url.Action("PloegRapportcheckNewData")
 function PolFordata(polinterval, datatimestamp, urlaction) {
     $(function () {
         //check every 5 seconds

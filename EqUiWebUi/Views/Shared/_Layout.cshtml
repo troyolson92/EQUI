@@ -59,7 +59,7 @@
     @*load this bundle before body because of scripts in views*@
     @Scripts.Render("~/bundles/jquery")
 
-    <div>
+    <div id="allcontent">
         @RenderBody()
         <hr />
     </div>
@@ -67,8 +67,13 @@
     @*added for mvc grid LOAD AFTHER BODY!*@
     @Scripts.Render("~/bundles/MvcGrid")
     @Scripts.Render("~/bundles/MyScripts")
+    @*subscrible renderd grids to events*@
     <script>
         $('.mvc-grid').mvcgrid();
+    </script>
+    @*default no autohide navbar*@
+    <script>
+        $(".navbar-fixed-top").autoHidingNavbar("setDisableAutohide",true);
     </script>
 
     @Scripts.Render("~/bundles/bootstrap")

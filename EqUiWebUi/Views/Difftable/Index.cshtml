@@ -18,13 +18,13 @@
                 <br />
                 @using (Html.BeginForm())
                 {
-                    @Html.Label("Snapshot")
-                    @Html.DropDownListFor(m => m.SelectedQuery, new SelectList(Model.c_querySnapshots, "id", "name"), "select a snapshot")
+                    @Html.Label("Snapshot", new { @class = "control-label" })
+                    @Html.DropDownListFor(m => m.SelectedQuery, new SelectList(Model.c_querySnapshots, "id", "name"), "select a snapshot", new { @class = "dropdown-toggle" })
                     <p></p>
-                    @Html.Label("Compare")
+                    @Html.Label("Compare",new { @class = "control-label" })
                     @Html.DropDownListFor(m => m.SelectedSnapshotID1, new SelectList(string.Empty, "Value", "Text"), "Instance of snapshot")
                     <p></p>
-                    @Html.Label("To")
+                    @Html.Label("To",new { @class = "control-label" })
                     @Html.DropDownListFor(m => m.SelectedSnapshotID2, new SelectList(string.Empty, "Value", "Text"), "Instance of snapshot")
                     <p></p>
                     <input type="submit" value="Show diff>>" />
