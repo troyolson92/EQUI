@@ -1,0 +1,27 @@
+﻿@model EqUiWebUi.Models.ia_Alert
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <h2 class="modal-title">Spc status change</h2>
+</div>
+
+
+<p></p>
+<div class="modal-content">
+    <H4>State changed confirmation</H4> 
+    Changed to state @Html.Label(Model.AlertStatus.ToString())
+</div>
+<p></p>
+
+<script>
+    //hide modal afther 1 sec
+    $(document).ready(function () {
+        function Hidepanel() {
+            $('#AlertModal').modal('hide');
+        }
+        setTimeout(Hidepanel, 1000)
+    });
+</script>
+

@@ -69,6 +69,10 @@ namespace EqUi_UtilManger
                             {
                                 Application.Run(new SBCUStats(col["target"]));
                             }
+                            else if (col["Controller"] != null && col["Toolid"] != null)
+                                {
+                                    Application.Run(new SBCUStats(col["Controller"],col["Toolid"]));
+                                }
                             else
                             {
                                 Application.Run(new SBCUStats());

@@ -70,7 +70,7 @@
                     {
                         case 0:
                             <text>
-                                WAITING
+                                DRAFT
                             </text>
                             break;
                         case 1:
@@ -80,12 +80,12 @@
                             break;
                         case 2:
                             <text>
-                                EXEC
+                                COMP
                             </text>
                             break;
                         case 3:
                             <text>
-                                COMP
+                                VOID
                             </text>
                             break;
                         default:
@@ -98,9 +98,9 @@
                 <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
-                <li><a class="modal-link" href="/spc/_setState?id=@id,newstate=1">OKREQ</a></li>
-                <li><a class="modal-link" href="/spc/_setState?id=@id,newstate=2">EXEC</a></li>
-                <li><a class="modal-link" href="/spc/_setState?id=@id,newstate=3">COMP</a></li>
+                <li><a class="modal-link" href="/spc/_setState?id=@alertId&newstate=1">OKREQ</a></li>
+                <li><a class="modal-link" href="/spc/_setState?id=@alertId&newstate=2">COMP</a></li>
+                <li><a class="modal-link" href="/spc/_setState?id=@alertId&newstate=3">VOID</a></li>
             </ul>
         </div>
 }

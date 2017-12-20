@@ -37,17 +37,48 @@ namespace EQUIToolsLib
         int InitDays = -50; //show 50 days on startup.
         //
         string activeLocation;
+        //
+        string activeSbcuCompontent = "LongSbcu";
 
-        public SBCUStats(string Location)
+        public SBCUStats(string Weldgun)
         {
             InitializeComponent();
             //
             //
             cb_Tools.Enabled = false;
             cb_Tools.Items.Clear();
-            cb_Tools.Items.Insert(0, Location);
+            cb_Tools.Items.Insert(0, Weldgun);
             cb_Tools.SelectedIndex = 0;
-            activeLocation = Location;
+            activeLocation = Weldgun;
+            //
+            initchart();
+            toolStripComboBoxSortMode.SelectedIndexChanged += new System.EventHandler(cb_sortmode_SelectedValueChanged);
+            //
+            EnableEvents(false);
+            progressBar1.Value = 0;
+            progressBar1.Visible = true;
+            bwDressData.RunWorkerAsync();
+            bwMidair.RunWorkerAsync();
+            bwCylinder.RunWorkerAsync();
+            bwSbcu.RunWorkerAsync();
+            //
+        }
+
+        public SBCUStats(string Controller, string Toolid)
+        {
+            //
+            string cmd = string.Format("select top 1 *  from GADATA.volvo.RobotWeldGunRelation where Robot = '{0}' and ElectrodeNbr = {1}", Controller.Trim(), Toolid);
+            DataTable dt = lGdataComm.RunQueryGadata(cmd);
+            string Weldgun = dt.Rows[0].Field<string>("WeldgunName");
+            activeLocation = Weldgun;
+            //
+            InitializeComponent();
+            //
+            //
+            cb_Tools.Enabled = false;
+            cb_Tools.Items.Clear();
+            cb_Tools.Items.Insert(0, activeLocation);
+            cb_Tools.SelectedIndex = 0;
             //
             initchart();
             toolStripComboBoxSortMode.SelectedIndexChanged += new System.EventHandler(cb_sortmode_SelectedValueChanged);
@@ -508,7 +539,7 @@ namespace EQUIToolsLib
                     chart_DressData.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatHour";
                     chart_DressData.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Hours;
                     
-                    chart_sbcu.DataManipulator.Group("AVE", 1, IntervalType.Hours, "LongSbcu");
+                    chart_sbcu.DataManipulator.Group("AVE", 1, IntervalType.Hours, activeSbcuCompontent);
                     chart_sbcu.DataManipulator.Group("AVE", 1, IntervalType.Hours, "ShortSbcu");
                     chart_sbcu.DataManipulator.Group("AVE", 1, IntervalType.Hours, "LongUCL");
                     chart_sbcu.DataManipulator.Group("AVE", 1, IntervalType.Hours, "LongLCL");
@@ -540,7 +571,7 @@ namespace EQUIToolsLib
                     chart_DressData.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatDay";
                     chart_DressData.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Days;
 
-                    chart_sbcu.DataManipulator.Group("AVE", 1, IntervalType.Days, "LongSbcu");
+                    chart_sbcu.DataManipulator.Group("AVE", 1, IntervalType.Days, activeSbcuCompontent);
                     chart_sbcu.DataManipulator.Group("AVE", 1, IntervalType.Days, "ShortSbcu");
                     chart_sbcu.DataManipulator.Group("AVE", 1, IntervalType.Days, "LongUCL");
                     chart_sbcu.DataManipulator.Group("AVE", 1, IntervalType.Days, "LongLCL");
@@ -572,7 +603,7 @@ namespace EQUIToolsLib
                     chart_DressData.ChartAreas[0].AxisX.LabelStyle.Format = "CustomAxisXFormatWeek";
                     chart_DressData.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Weeks;
                     
-                    chart_sbcu.DataManipulator.Group("AVE", 1, IntervalType.Weeks, "LongSbcu");
+                    chart_sbcu.DataManipulator.Group("AVE", 1, IntervalType.Weeks, activeSbcuCompontent);
                     chart_sbcu.DataManipulator.Group("AVE", 1, IntervalType.Weeks, "ShortSbcu");
                     chart_sbcu.DataManipulator.Group("AVE", 1, IntervalType.Weeks, "LongUCL");
                     chart_sbcu.DataManipulator.Group("AVE", 1, IntervalType.Weeks, "LongLCL");
@@ -832,7 +863,7 @@ ORDER BY x.Toolname ASC";
 
         private void hideEmptyCharts()
         {
-            if (chart_sbcu.Series[0].Points.Count == 0)
+            if (chart_sbcu.Series[0].Points.Count < 2)
             {
                 tableLayoutPanel1.RowStyles[2].Height = 0;
             }
@@ -842,7 +873,7 @@ ORDER BY x.Toolname ASC";
                 tableLayoutPanel1.RowStyles[2].Height = 25;  //size = %   
             }
 
-            if (chart_cilinder.Series[0].Points.Count == 0)
+            if (chart_cilinder.Series[0].Points.Count < 2)
             {
                 tableLayoutPanel1.RowStyles[4].Height = 0;
             }
@@ -852,7 +883,7 @@ ORDER BY x.Toolname ASC";
                 tableLayoutPanel1.RowStyles[4].Height = 25;  //size = %   
             }
 
-            if (chart_midair.Series[0].Points.Count == 0)
+            if (chart_midair.Series[0].Points.Count < 2)
             {
                 tableLayoutPanel1.RowStyles[6].Height = 0;
             }
@@ -863,7 +894,7 @@ ORDER BY x.Toolname ASC";
             }
 
           
-            if (chart_DressData.Series[0].Points.Count == 0) 
+            if (chart_DressData.Series[0].Points.Count < 2) 
             {
                 tableLayoutPanel1.RowStyles[8].Height = 0;
             }
@@ -932,11 +963,6 @@ ORDER BY x.Toolname ASC";
             refresh();
         }
 
-        private void cb_Tools_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
         //handle control limit events.
 
         private void SetCilinderControlLimits(object sender, EventArgs e)
@@ -953,5 +979,86 @@ ORDER BY x.Toolname ASC";
             editControlLimits.Show();
         }
 
+        private void showDeltaSetupToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            showDeltaSetupToolStripMenuItem.Checked = true;
+            showXToolStripMenuItem.Checked = false;
+            showYToolStripMenuItem.Checked = false;
+            showZToolStripMenuItem.Checked = false;
+            sbcuDisplayComponent();
+        }
+
+        private void showXToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            showDeltaSetupToolStripMenuItem.Checked = false;
+            showXToolStripMenuItem.Checked = true;
+            showYToolStripMenuItem.Checked = false;
+            showZToolStripMenuItem.Checked = false;
+            sbcuDisplayComponent();
+        }
+
+        private void showYToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            showDeltaSetupToolStripMenuItem.Checked = false;
+            showXToolStripMenuItem.Checked = false;
+            showYToolStripMenuItem.Checked = true;
+            showZToolStripMenuItem.Checked = false;
+            sbcuDisplayComponent();
+        }
+
+        private void showZToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            showDeltaSetupToolStripMenuItem.Checked = false;
+            showXToolStripMenuItem.Checked = false;
+            showYToolStripMenuItem.Checked = false;
+            showZToolStripMenuItem.Checked = true;
+            sbcuDisplayComponent();
+        }
+
+        private void sbcuDisplayComponent()
+        {
+            //hide al series
+            chart_sbcu.Series[activeSbcuCompontent].Enabled = false; 
+            chart_sbcu.Series["ShortSbcu"].Enabled = false;
+            chart_sbcu.Series["LongUCL"].Enabled = false;
+            chart_sbcu.Series["LongLCL"].Enabled = false;
+            //show what is needed and change label
+            if (showDeltaSetupToolStripMenuItem.Checked)
+            {
+                chart_sbcu.Series[activeSbcuCompontent].Name = "LongDsetup";
+                activeSbcuCompontent = "LongDsetup";
+                chart_sbcu.Series[activeSbcuCompontent].Enabled = true;
+                chart_sbcu.Series[activeSbcuCompontent].YValueMembers = "LongDsetup";
+                //enable al the other series for default 
+                chart_sbcu.Series["ShortSbcu"].Enabled = true;
+                chart_sbcu.Series["LongUCL"].Enabled = true;
+                chart_sbcu.Series["LongLCL"].Enabled = true;
+            }
+            else if (showXToolStripMenuItem.Checked)
+            {
+                chart_sbcu.Series[activeSbcuCompontent].Name = "ToolX";
+                activeSbcuCompontent = "ToolX";
+                chart_sbcu.Series[activeSbcuCompontent].Enabled = true;
+                chart_sbcu.Series[activeSbcuCompontent].YValueMembers = "ToolX";
+            }
+            else if (showYToolStripMenuItem.Checked)
+            {
+                chart_sbcu.Series[activeSbcuCompontent].Name = "ToolY";
+                activeSbcuCompontent = "ToolY";
+                chart_sbcu.Series[activeSbcuCompontent].Enabled = true;
+                chart_sbcu.Series[activeSbcuCompontent].YValueMembers = "ToolY";
+            }
+            else if (showZToolStripMenuItem.Checked)
+            {
+                chart_sbcu.Series[activeSbcuCompontent].Name = "ToolZ";
+                activeSbcuCompontent = "ToolZ";
+                chart_sbcu.Series[activeSbcuCompontent].Enabled = true;
+                chart_sbcu.Series[activeSbcuCompontent].YValueMembers = "ToolZ";
+            }
+            else
+            {
+                Debugger.Message("invalid");
+            }
+        }
     }
 }

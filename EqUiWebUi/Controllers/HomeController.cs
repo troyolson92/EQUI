@@ -30,5 +30,11 @@ namespace EqUiWebUi.Controllers
             ViewBag.redirectURL = url;
             return View();
         }
+
+        public ActionResult Rendersites(string[] url)
+        {
+            ViewBag.redirectURL = url;
+            return View();
+        }
     }
 }

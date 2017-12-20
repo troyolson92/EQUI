@@ -629,6 +629,9 @@
     <Content Include="Views\Difftable\_diffWebgrid.cshtml" />
     <Content Include="Views\Spc\Index.cshtml" />
     <Content Include="Views\Spc\_setState.cshtml" />
+    <Content Include="Views\Spc\_details.cshtml" />
+    <Content Include="Views\Spc\GetAlerts.cshtml" />
+    <Content Include="Views\Home\Rendersites.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EQUICommunictionLib\EQUICommunictionLib.csproj">

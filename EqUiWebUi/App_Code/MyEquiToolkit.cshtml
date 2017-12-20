@@ -1,0 +1,13 @@
+﻿@helper SbcuTool(string gunname)
+    {
+
+        string urlSbcu = string.Format("http://equi/EqUi_UtilManager/EqUi_UtilManger.application?Tool=SBCUstats&target={0}", @Uri.EscapeDataString(gunname));
+        <a href="@urlSbcu" class="btn-xs btn-success" data-toggle="tooltip" title="Data ivm SBCU midair lastang cilinder en dress">GunData &raquo;</a>
+    }
+
+@helper SbcuTool(string controllername, string toolId)
+    {
+
+        string urlSbcu = string.Format("http://equi/EqUi_UtilManager/EqUi_UtilManger.application?Tool=SBCUstats&Controller={0}&Toolid={1}", @Uri.EscapeDataString(controllername), toolId);
+        <a href="@urlSbcu" class="btn-xs btn-success" data-toggle="tooltip" title="Data ivm SBCU midair lastang cilinder en dress">GunData &raquo;</a>
+    }

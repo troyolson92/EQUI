@@ -61,7 +61,7 @@
         //set colors for grid
         tableFormatLogtype(8);
         //subscribe to modal click
-        ListenToModal('#myModal');
+        ListenToModal('#tableModal');
         //enable polling for new data
         PolFordata(5, '@Html.Raw(ViewBag.DataTimestamp)', '@Url.Action("PloegRapportcheckNewData")');
         //hide the navbar and move body content up

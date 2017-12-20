@@ -20,6 +20,17 @@ function tableFormatLogtype(colnumLogType) {
     });
 }
 
+function tableFormatAlerttype(colnumLogType) {
+    $('tbody > tr').each(function (index) {
+        if ($(this).children('td:nth-child(' + colnumLogType + ')').text() == "0") { $(this).children('td').css("background-color", "#f21a1a"); }
+
+        else if ($(this).children('td:nth-child(' + colnumLogType + ')').text() == "1") { $(this).children('td').css("background-color", "#f2af13"); }
+
+        else { }
+    });
+}
+
+
 //script for blinking rows
 function tableFormatBlink(logtypecolnum, subgroupcolnum) {
     //flash row 
