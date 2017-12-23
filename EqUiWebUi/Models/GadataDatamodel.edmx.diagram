@@ -17,7 +17,7 @@
         <EntityTypeShape EntityType="Models.Breakdown" Width="1.5" PointX="9.25" PointY="0.75" />
         <EntityTypeShape EntityType="Models.logDetails" Width="1.5" PointX="11" PointY="0.75" />
         <EntityTypeShape EntityType="Models.UserPermisions" Width="1.5" PointX="13.75" PointY="8.25" />
-        <EntityTypeShape EntityType="Models.TipwearBeforeChange" Width="1.5" PointX="12.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Models.TipwearBeforeChange" Width="2.5" PointX="12.75" PointY="0.75" />
         <EntityTypeShape EntityType="Models.ia_Alert" Width="1.5" PointX="7.375" PointY="6.75" />
         </Diagram>
     </edmx:Diagrams>

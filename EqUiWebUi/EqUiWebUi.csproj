@@ -171,6 +171,7 @@
     <Compile Include="Models\c_querySnapshots.cs">
       <DependentUpon>GadataDatamodel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\gadataModel.cs" />
     <Compile Include="Models\h_querySnapshots.cs">
       <DependentUpon>GadataDatamodel.tt</DependentUpon>
     </Compile>
@@ -641,6 +642,7 @@
     <Content Include="Views\Spc\GetAlerts.cshtml" />
     <Content Include="Views\Home\Rendersites.cshtml" />
     <Content Include="Views\Chart\Index.cshtml" />
+    <Content Include="Views\Chart\_getErrorTrend.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EQUICommunictionLib\EQUICommunictionLib.csproj">

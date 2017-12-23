@@ -1,13 +1,56 @@
-﻿@helper SbcuTool(string gunname)
+﻿@*sbcu tool *@
+@helper SbcuTool(string gunname)
     {
 
         string urlSbcu = string.Format("http://equi/EqUi_UtilManager/EqUi_UtilManger.application?Tool=SBCUstats&target={0}", @Uri.EscapeDataString(gunname));
         <a href="@urlSbcu" class="btn-xs btn-success" data-toggle="tooltip" title="Data ivm SBCU midair lastang cilinder en dress">GunData &raquo;</a>
-    }
+}
 
 @helper SbcuTool(string controllername, string toolId)
     {
 
         string urlSbcu = string.Format("http://equi/EqUi_UtilManager/EqUi_UtilManger.application?Tool=SBCUstats&Controller={0}&Toolid={1}", @Uri.EscapeDataString(controllername), toolId);
         <a href="@urlSbcu" class="btn-xs btn-success" data-toggle="tooltip" title="Data ivm SBCU midair lastang cilinder en dress">GunData &raquo;</a>
-    }
+}
+
+@*Error trent tool *@
+@helper ErrorTrentTool(string location, string logtype, int errornum, string logtext)
+    {
+        string urlErrorstats = string.Format(
+       "http://equi/EqUi_UtilManager/EqUi_UtilManger.application?Tool=ERRORstats&target={0}&Logtype={1}&Errornum={2}&logtext={3}",
+       @Uri.EscapeDataString(location.ToString()),
+       @Uri.EscapeDataString(logtype.ToString()),
+       @Uri.EscapeDataString(errornum.ToString()),
+       @Uri.EscapeDataString(logtext.ToString())
+       );
+        <a href="@urlErrorstats" class="btn-xs btn-success" data-toggle="tooltip" title="geeft de trend van de deze foutecode weer">Error trend &raquo;</a>
+}
+
+
+@*Maximo tools *@
+@helper MaximoToolPgaGeo(string location)
+    {
+        string urlPqaGeo = string.Format(
+                "http://equi/EqUi_UtilManager/EqUi_UtilManger.application?Tool=MaximoTool&Viewmode={0}&target={1}",
+                @Uri.EscapeDataString("vm_QualityOnLocation"),
+                @Uri.EscapeDataString(Model.location.ToString()));
+        <a href="@urlPqaGeo" class="btn-xs btn-success" data-toggle="tooltip" title="werkorders van het taakplan PGAGEO voor deze locatie">PQaGeo &raquo;</a>
+}
+
+@helper MaximoToolWorkoders(string location)
+    {
+        string urlWo = string.Format(
+            "http://equi/EqUi_UtilManager/EqUi_UtilManger.application?Tool=MaximoTool&Viewmode={0}&target={1}",
+            @Uri.EscapeDataString("vm_workordersOnLocation"),
+            @Uri.EscapeDataString(Model.location.ToString()));
+        <a href="@urlWo" class="btn-xs btn-success" data-toggle="tooltip" title="Geeft de werkorders van deze locatie weer">Workorders &raquo;</a>
+}
+
+@helper MaximoToolParts(string location)
+    {
+        string urlParts = string.Format(
+            "http://equi/EqUi_UtilManager/EqUi_UtilManger.application?Tool=MaximoTool&Viewmode={0}&target={1}",
+            @Uri.EscapeDataString("vm_PartsOnLocation"),
+            @Uri.EscapeDataString(Model.location.ToString()));
+        <a href="@urlParts" class="btn-xs btn-success" data-toggle="tooltip" title="Kijkt in maximo welke stukken ooit op deze locatie zijn gebruikt">PartsUsed &raquo;</a>
+}

@@ -22,7 +22,7 @@
        columns.Add(c => c.nRcars).Titled("Resterende Stukken");
        columns.Add(c => c.TipAge_h_).Titled("Electrode leeftijd (h)");
        columns.Add(c => c.Time_DressCycleTime).Titled("Dress ct (s)");
-       columns.Add(c => c.LocationTree).Css("hidden"); //used for filtering
+       columns.Add(c => c.LocationTree).Filterable(true).Css("hidden"); //used for filtering
        //launch sbcu tool
        columns.Add()
                              .Encoded(false)

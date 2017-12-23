@@ -1,79 +1,59 @@
-﻿@{Layout = null;}
+﻿@model EqUiWebUi.Models.LogInfo
 
-        <div class="modal-header">
+<div class="modal-header">
+    <div class="row">
+        <div class="col-sm-11">
+            <h4>Log helper</h4>
+        </div>
+        <div class="col-sm-1">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
-            <h2 class="modal-title">How can we help....</h2>
+        </div>
+    </div>
+</div>
+
+<div class="modal-body">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            @Model.logtype details for logcode: @Model.errornum  logtext: @Model.logtext
+        </div>
+          <div class="panel-body">
+                    @Html.Raw(Model.logDetails)
+                </div>
         </div>
 
+    @Html.Partial("../Chart/_getErrorTrend", Model)
 
-        <p></p>
-        <div class="modal-content">
-            <h4 class="modal-header">log details</h4>
-            @Html.Raw(ViewBag.Logdetails)
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h5>Workorders for location: @Model.location</h5>
         </div>
-        <p></p>
-      
-        <div class="modal-footer">
-            <h4 class="modal-title">These tools might proof useful</h4>                    
-            <p>
-                @if (ViewBag.Logtype == "ALERT" || ViewBag.location.Contains("WS") || ViewBag.location.Contains("JG") || ViewBag.location.Contains("WT"))
-                {
-                    string urlSbcu = string.Format(
-                        "http://equi/EqUi_UtilManager/EqUi_UtilManger.application?Tool=SBCUstats&target={0}",
-                        @Uri.EscapeDataString(ViewBag.location.ToString()));
-
-                    <a href="@urlSbcu" class="btn btn-primary btn-sm"
-                       data-toggle="tooltip" title="Data ivm SBCU midair lastang cilinder en dress">WeldgunData &raquo;</a>
-                }
-
-
-                
-                @if (ViewBag.location != "")
-                {
-                    string urlPqaGeo = string.Format(
-                            "http://equi/EqUi_UtilManager/EqUi_UtilManger.application?Tool=MaximoTool&Viewmode={0}&target={1}",
-                            @Uri.EscapeDataString("vm_QualityOnLocation"),
-                            @Uri.EscapeDataString(ViewBag.location.ToString()));
-
-                    <a href="@urlPqaGeo" class="btn btn-primary btn-sm"
-                        data-toggle="tooltip" title="Toont werkorders van het taakplan PGAGEO voor deze locatie">PQaGeo &raquo;</a>
-
-
-                    string urlWo = string.Format(
-                        "http://equi/EqUi_UtilManager/EqUi_UtilManger.application?Tool=MaximoTool&Viewmode={0}&target={1}",
-                        @Uri.EscapeDataString("vm_workordersOnLocation"),
-                        @Uri.EscapeDataString(ViewBag.location.ToString()));
-
-                    <a href="@urlWo" class="btn btn-primary btn-sm"
-                        data-toggle="tooltip" title="Geeft de werkorders van deze locatie weer">Workorders &raquo;</a>
-
-
-                    string urlParts = string.Format(
-                        "http://equi/EqUi_UtilManager/EqUi_UtilManger.application?Tool=MaximoTool&Viewmode={0}&target={1}",
-                        @Uri.EscapeDataString("vm_PartsOnLocation"),
-                        @Uri.EscapeDataString(ViewBag.location.ToString()));
-
-                    <a href="@urlParts" class="btn btn-primary btn-sm"
-                        data-toggle="tooltip" title="Kijkt in maximo welke stukken ooit op deze locatie zijn gebruikt">PartsUsed &raquo;</a>
-                }
-
-
-                    @if (ViewBag.errornum.ToString() != "" && (ViewBag.Logtype == "BREAKDOWN" || ViewBag.Logtype == "ERROR" || ViewBag.Logtype == "WARNING"
-             || ViewBag.Logtype == "ControllerEvent" || ViewBag.Logtype == "ErrDispLog" || ViewBag.Logtype == "SHIFTBOOK"))
-                    {
-                        string urlErrorstats = string.Format(
-                       "http://equi/EqUi_UtilManager/EqUi_UtilManger.application?Tool=ERRORstats&target={0}&Logtype={1}&Errornum={2}&logtext={3}",
-                       @Uri.EscapeDataString(ViewBag.location.ToString()),
-                       @Uri.EscapeDataString(ViewBag.logtype.ToString()),
-                       @Uri.EscapeDataString(ViewBag.errornum.ToString()),
-                       @Uri.EscapeDataString(ViewBag.logtext.ToString())
-                       );
-
-                        <a href="@urlErrorstats" class="btn btn-primary btn-sm"
-                            data-toggle="tooltip" title="geeft de trend van de deze foutecode weer">Error trend &raquo;</a>
-                    }
-
-            </p>
+        <div class="panel-body">
+            @Html.Action("Workorders", "Maximo", new { location = Model.location })
         </div>
+    </div>
+</div>
+
+<div class="modal-footer">
+        <h4 class="modal-title">These tools might also proof useful</h4>
+        <p>
+            @if (Model.logtype == "ALERT" || Model.location.Contains("WS") || Model.location.Contains("JG") || Model.location.Contains("WT"))
+            {
+                MyEquiToolkit.SbcuTool(Model.location);
+            }
+
+            @if (Model.location != "")
+            {
+                MyEquiToolkit.MaximoToolPgaGeo(Model.location);
+                MyEquiToolkit.MaximoToolWorkoders(Model.location);
+                MyEquiToolkit.MaximoToolParts(Model.location);
+            }
+
+            @if (Model.errornum.ToString() != "" && (Model.logtype == "BREAKDOWN" || Model.logtype == "ERROR" || Model.logtype == "WARNING"
+                   || Model.logtype == "ControllerEvent" || Model.logtype == "ErrDispLog" || Model.logtype == "SHIFTBOOK"))
+            {
+                MyEquiToolkit.ErrorTrentTool(Model.location, Model.logtype, Model.errornum, Model.logtext);
+            }
+        </p>
+    </div>

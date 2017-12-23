@@ -153,43 +153,47 @@ namespace EqUiWebUi.Controllers
         [HttpGet]
         public ActionResult _Moreinfo(string location, int errornum, int refid, string logtype, string logtext)
         {
-            GadataComm gadataComm = new GadataComm();
-            MaximoComm maximoComm = new MaximoComm();
+            //build up the model
+            LogInfo logInfo = new LogInfo();
+            logInfo.location = location;
+            logInfo.errornum = errornum;
+            logInfo.refid = refid;
+            logInfo.logtype = logtype;
+            logInfo.logtext = logtext;
             //query all instances of the error 
+            GadataComm gadataComm = new GadataComm();
             string qry = string.Format(
             @"EXEC [EqUi].[GetErrorInfoData] @Location  = '{0}' ,@ERRORNUM = {1} ,@Refid = {2} ,@logtype ='{3}'"
-            , location, errornum, refid, logtype);
-
-            //fill dataset
+            , logInfo.location, logInfo.errornum, logInfo.refid, logInfo.logtype);
             DataTable dt = gadataComm.RunQueryGadata(qry);
-            //check if the result was valid 
-
+            //build an html respone with the log info.
             StringBuilder sb = new StringBuilder();
-            string newline = "<p></p>";
+            //check if the result was valid 
             if (dt.Rows.Count != 0)
             {
-                DataRow myRow = dt.Rows[0];
-                foreach (DataColumn dc in myRow.Table.Columns)
+                foreach(DataRow row in dt.Rows)
                 {
-                    if (myRow[dc.ColumnName] == DBNull.Value)
+                    foreach(DataColumn col in row.Table.Columns)
                     {
-                        myRow[dc.ColumnName] = "null (no data)";
+                        //only add if there is something.
+                        if (row.Field<string>(col.ColumnName).ToString().Length > 1)
+                        {
+                            sb.AppendLine("<div class=\"panel panel-default\">").AppendLine("<div class=\"panel-heading\">");
+                            sb.AppendLine(col.ColumnName);
+                            sb.AppendLine("</div>").AppendLine("<div class=\"panel-body\">");
+                            sb.AppendLine(row.Field<string>(col.ColumnName).ToString());
+                            sb.AppendLine("</div>").AppendLine("</div>");
+                        }
                     }
-                    sb.AppendLine(maximoComm.StringToHTML_Table(dc.ColumnName, myRow.Field<string>(dc.ColumnName).ToString())).AppendLine(newline);
                 }
             }
             else
             {
-                sb.AppendLine("No valid result from query").AppendLine(newline);
+                sb.AppendLine("<h4>No valid result from query!</h4>");
             }
-            ViewBag.Logdetails = sb.ToString();
-            ViewBag.location = location;
-            ViewBag.errornum = errornum;
-            ViewBag.refid = refid;
-            ViewBag.logtype = logtype;
-            ViewBag.logtext = logtext;
+            logInfo.logDetails = sb.ToString();
             //
-            return PartialView();
+            return PartialView(logInfo);
         }
     }
 }

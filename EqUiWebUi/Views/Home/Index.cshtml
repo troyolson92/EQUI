@@ -19,10 +19,15 @@
                 <a href="~/Gadata/SupervisieWebgrid" class="btn btn-primary btn-sm">Supervisie Robots &raquo;</a>
                 Bevat alles dat nu in storing staat, storingen die langer dan 10 minuten hebben geduurd en hardwarefouten van robots
             </p>
+
+            @{
+            string url = @Uri.EscapeDataString("http://webapps.gen.volvocars.net/applications/eng/equipment/supervisiep1/intranet");
             <p>
-                <a href="~/Home/Rendersite?url=http://webapps.gen.volvocars.net/applications/eng/equipment/supervisiep1/intranet/" class="btn btn-primary btn-sm">Supervisie Intranet P1 &raquo;</a>
+                <a href="~/Home/Rendersite?url=@url" class="btn btn-primary btn-sm">Supervisie Intranet P1 &raquo;</a>
                 Supervisie intranet
             </p>
+            }
+
         </div>
     </div>
 

@@ -9,7 +9,7 @@
     <p></p>
     <p></p>
     <div>
-        @Html.Grid(Model).Named("DataGrid").Build(columns =>
+        @Html.Grid(Model).Named("Sto").Build(columns =>
         {
             columns.Add(c => c.location).Titled("Location").Filterable(true);
             columns.Add(c => c.Logcode).Titled("Logcode");

@@ -5,9 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using EQUICommunictionLib;
 using System.Data;
-using Newtonsoft.Json;
-using EqUiWebUi.WebGridHelpers;
 using System.Globalization;
+using EqUiWebUi.Models;
 
 namespace EqUiWebUi.Controllers
 {
@@ -17,6 +16,12 @@ namespace EqUiWebUi.Controllers
         public ActionResult Index()
         {
             return View();
+        }
+
+        [HttpGet]
+        public ActionResult _getErrorTrend(LogInfo logInfo)
+        {
+            return PartialView();
         }
 
         [HttpGet]
@@ -37,7 +42,6 @@ namespace EqUiWebUi.Controllers
 
             return Json(data, JsonRequestBehavior.AllowGet);            
         }
-
 
         //helps to group a datatable collum list
         public enum grouptType {None, Hour, Day, Week, Month };
@@ -101,7 +105,7 @@ namespace EqUiWebUi.Controllers
                                          orderby p.Field<DateTime>(groupcol) descending
                                          group p by new
                                         {
-                                            month = p.Field<DateTime>(groupcol).Month.ToString("MMM"),
+                                            month = p.Field<DateTime>(groupcol).ToString("MMM"),
                                             year = p.Field<DateTime>(groupcol).Year 
                                         } into d
                                         select new
@@ -116,8 +120,6 @@ namespace EqUiWebUi.Controllers
                     return null;
             }
         }
-
-
 
     }
 }

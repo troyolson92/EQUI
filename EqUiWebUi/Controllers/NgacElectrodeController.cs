@@ -75,12 +75,12 @@ namespace EqUiWebUi.Controllers
 
         //------------------------------------tabel met elektrode wissels.-------------------------------------------------
         [HttpGet]
-        public ActionResult TipwearBeforeChange()
+        public ActionResult TipwearBeforeChange(int daysback = 30)
         {
-            var startdate = DateTime.Now.Date.AddDays(-30);
+            var startdate = DateTime.Now.Date.AddDays(daysback*-1);
             GADATAEntities gADATAEntities = new GADATAEntities();
             List<TipwearBeforeChange> data = (from tipwearBeforeChange in gADATAEntities.TipwearBeforeChange
-                                              where tipwearBeforeChange.TipchangeTimestamp < startdate
+                                              where tipwearBeforeChange.TipchangeTimestamp > startdate
                                               select tipwearBeforeChange
                                               ).ToList();
             return View(data);
@@ -95,12 +95,13 @@ namespace EqUiWebUi.Controllers
         }
 
         //get filterd list of wich need to be change
-        public ActionResult _TipsToChange(string locationFilter, int minWear = 0, int minParts = 0 )
+        public ActionResult _TipsToChange(string locationFilter, int minWear = 0, int minParts = 0, int maxDress = 200)
         {
             GADATAEntities gADATAEntities = new GADATAEntities();
             List<TipMonitor> data = (from tipMonitor in gADATAEntities.TipMonitor
                                      where tipMonitor.pWear > minWear
                                      && tipMonitor.nRcars > minParts
+                                     && tipMonitor.nDress < maxDress
                                      && tipMonitor.LocationTree.Contains(locationFilter)
                                               select tipMonitor
                                               ).ToList();

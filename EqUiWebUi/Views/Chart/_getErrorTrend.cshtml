@@ -1,0 +1,184 @@
+﻿ @model EqUiWebUi.Models.LogInfo
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h5>Trend for @Model.logtext on @Model.location</h5>
+        </div>
+
+        <div class="panel-body">
+           <div id="gaphContainer">
+              <canvas  id='graphCanvas'></canvas>
+           </div>             
+       </div>
+
+        <div class="panel-footer">
+            <div class="row">
+                <div class=" col-sm-2">
+                    Grouping mode
+                </div>
+
+                <div class="col-sm-5">
+                    <div class="btn-group" role="group" aria-label="Graph grouping mode">
+                        <button type="button" class="btn btn-secondary" id="btnGroupingHour" >hour</button>
+                        <button type="button" class="btn btn-secondary active" id="btnGroupingDay">day</button> 
+                        <button type="button" class="btn btn-secondary" id="btnGroupingWeek">week</button>
+                        <button type="button" class="btn btn-secondary" id="btnGroupingMonth">month</button>
+                    </div>
+                </div>
+                <div class="col-sm-5"></div>
+            </div>
+        </div>
+    </div>
+
+
+<style>
+
+    .bar {
+        fill: steelblue;
+    }
+
+        .bar:hover {
+            fill: brown;
+        }
+
+    .axis {
+        font: 10px sans-serif;
+    }
+
+        .axis path,
+        .axis line {
+            fill: none;
+            stroke: #000;
+            shape-rendering: crispEdges;
+        }
+
+    .x.axis path {
+        display: none;
+    }
+</style>
+
+<script src="~/Scripts/d3/d3.js"></script>
+<script src="~/Scripts/d3/Chart.bundle.js"></script>
+
+<script>
+    function buildchart(table, chartName) {
+        var vLabels = new Array();
+        var vData = new Array();
+
+        for (var i = table.length - 1; i >= 0; i--) {
+            vLabels.push(table[i].timestamp);
+            vData.push(table[i].count)
+        }
+
+        var config = {
+            type: 'bar',
+            data: {
+                labels: vLabels,
+                datasets: [{
+                    yAxisID: 'A',
+                    position: 'left',
+                    label: "Count of fault",
+                    backgroundColor: '#2F7CCA',
+                    borderColor: '#2F7CCA',
+                    data: vData,
+                    fill: false,
+                }
+                ]
+            },
+            options: {
+                responsive: true,
+                legend: {
+                    display: false //nolegend
+                },
+                title: {
+                    display: false, //display name off!
+                    text: chartName
+                },
+                tooltips: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                hover: {
+                    mode: 'nearest',
+                    intersect: true
+                },
+                scales: {
+                    xAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: false, //x label off 
+                            labelString: '[Time]'
+                        }
+                    }],
+                    yAxes: [{
+                        display: true,
+                        id: 'A',
+                        ticks: {
+                            beginAtZero: true,
+                           // steps: 10,
+                           // stepValue: 5,
+                           //max: 200,
+                        },
+                        scaleLabel: {
+                            display: true,
+                            labelString: ' [Count]'
+                        }
+                    }]
+                }
+            }
+        };
+
+        $("#graphCanvas").remove(); //this trows an error because we delete the chart object and the resize handelers for the chart are still up
+        $("#gaphContainer").append('<canvas id="graphCanvas" height="80"></canvas>');
+        var ctx = document.getElementById("graphCanvas").getContext("2d");
+        window.myLine = new Chart(ctx, config);
+    }
+</script>
+
+<script>
+    function getChartData(_location, _errornum, _logtekst, _logtype, _groupType) {
+        console.log("request start");
+        $.ajax({
+            type: 'GET',
+            url: "/chart/_getData?location=" + _location + "&errornum=" + _errornum + "&logtekst=" + _logtekst + "&logtype=" + _logtype + "&grouptType=" + _groupType,
+            data: JSON.stringify(),
+            success: function (returnPayload) {
+                console.log("json result");
+                console.log(returnPayload);
+                buildchart(returnPayload, "chartName");
+                console && console.log("request succeeded");;
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console && console.log("request failed");
+            },
+            dataType: "json",
+            contentType: "application/json",
+            processData: false,
+            async: true
+        });
+    };
+</script>
+
+<script>
+    //        getChartData("26010R02", 24170, " Pump 1 not ready $IN[377] = OFF","BREAKDOWN", 1);
+    $("#btnGroupingHour").click(function () {
+        getChartData("@Model.location", @Model.errornum, "@Model.logtext","@Model.logtype", 1);
+    });
+
+    $("#btnGroupingDay").click(function () {
+        getChartData("@Model.location", @Model.errornum, "@Model.logtext","@Model.logtype", 2);
+    });
+
+    $("#btnGroupingWeek").click(function () {
+        getChartData("@Model.location", @Model.errornum, "@Model.logtext","@Model.logtype", 3);
+    });
+
+    $("#btnGroupingMonth").click(function () {
+        getChartData("@Model.location", @Model.errornum, "@Model.logtext","@Model.logtype", 4);
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+       getChartData("@Model.location", @Model.errornum, "@Model.logtext","@Model.logtype", 2);
+    });
+</script>
