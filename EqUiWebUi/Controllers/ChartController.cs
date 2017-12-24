@@ -38,88 +38,289 @@ namespace EqUiWebUi.Controllers
 
             DataTable dt = gadataComm.RunQueryGadata(qry);
 
-            var data = groupby(dt, "starttime", grouptType);
+            object data = null;
+            switch (grouptType)
+            {
+                case grouptType.Hour:
+                    data = completeDataAndGroupByHour(dt, "starttime", System.DateTime.Now, System.DateTime.Now.AddDays(-3));
+                    break;
+
+                case grouptType.Day:
+                    data = completeDataAndGroupByDay(dt, "starttime", System.DateTime.Now, System.DateTime.Now.AddDays(-30));
+                    break;
+
+                case grouptType.Week:
+                    data = completeDataAndGroupByWeek(dt, "starttime", System.DateTime.Now, System.DateTime.Now.AddDays(-300));
+                    break;
+
+                case grouptType.Month:
+                    data = completeDataAndGroupByMonth(dt, "starttime", System.DateTime.Now, System.DateTime.Now.AddDays(-3000));
+                    break;
+
+                default:
+                    return null;
+            }
 
             return Json(data, JsonRequestBehavior.AllowGet);            
         }
 
         //helps to group a datatable collum list
         public enum grouptType {None, Hour, Day, Week, Month };
-        public object groupby(DataTable dt,string groupcol, grouptType grouptType)
+        //generate 'timestamps' that have no data. to help complete missing graph data
+        //data from inDt is also filter using the startDate and endDate!
+        public object completeDataAndGroupByHour(DataTable inDt, string groupcol, DateTime startDate, DateTime endDate)
         {
+            //we need to calculate all missing data in the lowester display format we whant (hours)
+
+            //calculate how many days we have to traverse.
+            int hours = System.Convert.ToInt32(System.Math.Ceiling((startDate - endDate).TotalHours));
+
+            // Gather the data we have in the database, which will be incomplete for the graph (missing dates).
             var currentCalendar = CultureInfo.CurrentCulture.Calendar;
-            //
-            switch (grouptType)
+            var dataQuery =
+                from tr in inDt.AsEnumerable()
+                where (tr.Field<DateTime>(groupcol) > endDate) && (tr.Field<DateTime>(groupcol) < startDate)
+                group tr by new { tr.Field<DateTime>(groupcol).Year, tr.Field<DateTime>(groupcol).Month, tr.Field<DateTime>(groupcol).Day, tr.Field<DateTime>(groupcol).Hour } into g
+                select new
+                {
+                    Datetime = new DateTime(g.Key.Year, g.Key.Month, g.Key.Day, g.Key.Hour, 0, 0),
+                    Count = g.Count()
+                };
+
+            // Generate the complete list of Dates we want.
+            var roundedStartdate = startDate.RoundToNearestHour();
+            var datetimes = new List<DateTime>();
+            for (int i = 0; i < hours; i++)
             {
-                case grouptType.None:
-                    //not implemented
-                    return null;
-
-                case grouptType.Hour:
-                    var groupedByHour = from p in dt.AsEnumerable()
-                                        orderby p.Field<DateTime>(groupcol) descending
-                                        group p by new { hour = p.Field<DateTime>(groupcol).Hour,
-                                                          day = (int)p.Field<DateTime>(groupcol).DayOfWeek,
-                                                          weeknum = currentCalendar.GetWeekOfYear(p.Field<DateTime>(groupcol), System.Globalization.CalendarWeekRule.FirstFourDayWeek, CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek),
-                                                          year = p.Field<DateTime>(groupcol).Year % 100 }  into d
-                                        select new { timestamp = string.Format("{0}W{1}D{2} h{3}", d.Key.year, d.Key.weeknum, d.Key.day, d.Key.hour)
-                                 
-                                            , count = d.Count() };
-                    return groupedByHour;
-
-                case grouptType.Day:
-                    var groupedByDay = from p in dt.AsEnumerable()
-                                       orderby p.Field<DateTime>(groupcol) descending
-                                       group p by new
-                                        {
-                                            day = (int)p.Field<DateTime>(groupcol).DayOfWeek,
-                                            weeknum = currentCalendar.GetWeekOfYear(p.Field<DateTime>(groupcol), System.Globalization.CalendarWeekRule.FirstFourDayWeek, CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek),
-                                            year = p.Field<DateTime>(groupcol).Year % 100
-                                        } into d
-                                        select new
-                                        {
-                                            timestamp = string.Format("{0}W{1}D{2}", d.Key.year, d.Key.weeknum, d.Key.day)
-                                                  ,
-                                            count = d.Count()
-                                        };
-                    return groupedByDay;
-
-                case grouptType.Week:
-                    var groupedByWeek = from p in dt.AsEnumerable()
-                                        orderby p.Field<DateTime>(groupcol) descending
-                                        group p by new
-                                       {
-                                           weeknum = currentCalendar.GetWeekOfYear(p.Field<DateTime>(groupcol), System.Globalization.CalendarWeekRule.FirstFourDayWeek, CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek),
-                                           year = p.Field<DateTime>(groupcol).Year % 100
-                                       } into d
-                                       select new
-                                       {
-                                           timestamp = string.Format("{0}W{1}", d.Key.year, d.Key.weeknum)
-                                                 ,
-                                           count = d.Count()
-                                       };
-                    return groupedByWeek;
-
-                case grouptType.Month:
-                    var groupedByMonth = from p in dt.AsEnumerable()
-                                         orderby p.Field<DateTime>(groupcol) descending
-                                         group p by new
-                                        {
-                                            month = p.Field<DateTime>(groupcol).ToString("MMM"),
-                                            year = p.Field<DateTime>(groupcol).Year 
-                                        } into d
-                                        select new
-                                        {
-                                            timestamp = string.Format("{0} {1}", d.Key.year, d.Key.month)
-                                                  ,
-                                            count = d.Count()
-                                        };
-                    return groupedByMonth;
-
-                default:
-                    return null;
+                datetimes.Add(roundedStartdate.AddHours(-i));
             }
-        }
 
+            // Generate the empty table, which is the shape of the output we want but without counts.
+            var emptyTableQuery =
+                from dt in datetimes
+                select new
+                {
+                    Datetime = new DateTime(dt.Year, dt.Month, dt.Day, dt.Hour, 0, 0),
+                    Count = 0
+                };
+
+            // Perform an outer join of the empty table with the real data and use the magic DefaultIfEmpty
+            // to handle the "there's no data from the database case".
+            var finalQuery =
+                from e in emptyTableQuery
+                join realData in dataQuery on
+                    new { e.Datetime } equals
+                    new { realData.Datetime } into g
+                from realDataJoin in g.DefaultIfEmpty()
+                select new
+                {
+                    Datetime = e.Datetime,
+                    Label = string.Format("{0}W{1}D{2}h{3}"
+                                                , e.Datetime.Year % 100
+                                                , currentCalendar.GetWeekOfYear(e.Datetime, System.Globalization.CalendarWeekRule.FirstFourDayWeek, CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek)
+                                                , (int)e.Datetime.DayOfWeek
+                                                , e.Datetime.Hour
+                                                ),
+                    Count = realDataJoin == null ? 0 : realDataJoin.Count
+                };
+
+            //sort it and return 
+            return finalQuery.OrderByDescending(x => x.Datetime);
+        }
+        public object completeDataAndGroupByDay(DataTable inDt, string groupcol, DateTime startDate, DateTime endDate)
+        {
+            //we need to calculate all missing data in the lowester display format we whant (days)
+
+            //calculate how many days we have to traverse.
+            int days = System.Convert.ToInt32(System.Math.Ceiling((startDate - endDate).TotalDays));
+
+            // Gather the data we have in the database, which will be incomplete for the graph (missing dates).
+            var currentCalendar = CultureInfo.CurrentCulture.Calendar;
+            var dataQuery =
+                from tr in inDt.AsEnumerable()
+                where (tr.Field<DateTime>(groupcol) > endDate) && (tr.Field<DateTime>(groupcol) < startDate)
+                group tr by new { tr.Field<DateTime>(groupcol).Year, tr.Field<DateTime>(groupcol).Month, tr.Field<DateTime>(groupcol).Day} into g
+                select new
+                {
+                    Datetime = new DateTime(g.Key.Year, g.Key.Month, g.Key.Day, 0, 0, 0),
+                    Count = g.Count()
+                };
+
+            // Generate the complete list of Dates we want.
+            var roundedStartdate = startDate.RoundToNearestHour();
+            var datetimes = new List<DateTime>();
+            for (int i = 0; i < days; i++)
+            {
+                datetimes.Add(roundedStartdate.AddDays(-i));
+            }
+
+            // Generate the empty table, which is the shape of the output we want but without counts.
+            var emptyTableQuery =
+                from dt in datetimes
+                select new
+                {
+                    Datetime = new DateTime(dt.Year, dt.Month, dt.Day, 0, 0, 0),
+                    Count = 0
+                };
+
+            // Perform an outer join of the empty table with the real data and use the magic DefaultIfEmpty
+            // to handle the "there's no data from the database case".
+            var finalQuery =
+                from e in emptyTableQuery
+                join realData in dataQuery on
+                    new { e.Datetime } equals
+                    new { realData.Datetime } into g
+                from realDataJoin in g.DefaultIfEmpty()
+                select new
+                {
+                    Datetime = e.Datetime,
+                    Label = string.Format("{0}W{1}D{2}"
+                                                , e.Datetime.Year % 100
+                                                , currentCalendar.GetWeekOfYear(e.Datetime, System.Globalization.CalendarWeekRule.FirstFourDayWeek, CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek)
+                                                , (int)e.Datetime.DayOfWeek
+                                                ),
+                    Count = realDataJoin == null ? 0 : realDataJoin.Count
+                };
+
+            //sort it and return 
+            return finalQuery.OrderByDescending(x => x.Datetime);
+        }
+        public object completeDataAndGroupByWeek(DataTable inDt, string groupcol, DateTime startDate, DateTime endDate)
+        {
+            //we need to calculate all missing data in the lowester display format we whant (Weeks)
+
+            //calculate how many days we have to traverse.
+            int days = System.Convert.ToInt32(System.Math.Ceiling((startDate - endDate).TotalDays));
+
+            // Gather the data we have in the database, which will be incomplete for the graph (missing dates).
+            var currentCalendar = CultureInfo.CurrentCulture.Calendar;
+            var dataQuery =
+                from tr in inDt.AsEnumerable()
+                where (tr.Field<DateTime>(groupcol) > endDate) && (tr.Field<DateTime>(groupcol) < startDate)
+                group tr by new { tr.Field<DateTime>(groupcol).Year, Week = currentCalendar.GetWeekOfYear(tr.Field<DateTime>(groupcol), System.Globalization.CalendarWeekRule.FirstFourDayWeek, CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek) } into g
+                select new
+                {
+                    Datetime = FirstDateOfWeekISO8601(g.Key.Year, g.Key.Week),
+                    Count = g.Count()
+                };
+
+            // Generate the complete list of Dates we want.
+            var roundedStartdate = startDate.RoundToNearestHour();
+            var datetimes = new List<DateTime>();
+            for (int i = 0; i < days; i++)
+            {
+                datetimes.Add(roundedStartdate.AddDays(-i));
+            }
+
+            // Generate the empty table, which is the shape of the output we want but without counts.
+            var emptyTableQuery =
+                from dt in datetimes
+                select new
+                {
+                    Datetime = FirstDateOfWeekISO8601(dt.Year, currentCalendar.GetWeekOfYear(dt, System.Globalization.CalendarWeekRule.FirstFourDayWeek, CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek)),
+                    Count = 0
+                };
+
+            //because we could not do AddWeek our empty table now has for earch month X days labels. We need to filter this to distict
+            emptyTableQuery = emptyTableQuery.Distinct();
+
+            // Perform an outer join of the empty table with the real data and use the magic DefaultIfEmpty
+            // to handle the "there's no data from the database case".
+            var finalQuery =
+                from e in emptyTableQuery
+                join realData in dataQuery on
+                    new { e.Datetime } equals
+                    new { realData.Datetime } into g
+                from realDataJoin in g.DefaultIfEmpty()
+                select new
+                {
+                    Datetime = e.Datetime,
+                    Label = string.Format("{0}W{1}"
+                                                , e.Datetime.Year%100
+                                                , currentCalendar.GetWeekOfYear(e.Datetime, System.Globalization.CalendarWeekRule.FirstFourDayWeek, CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek)
+                                                ),
+                    Count = realDataJoin == null ? 0 : realDataJoin.Count
+                };
+
+            //sort it and return 
+            return finalQuery.OrderByDescending(x => x.Datetime);
+        }
+        public static DateTime FirstDateOfWeekISO8601(int year, int weekOfYear)
+        {
+            DateTime jan1 = new DateTime(year, 1, 1);
+            int daysOffset = DayOfWeek.Thursday - jan1.DayOfWeek;
+
+            DateTime firstThursday = jan1.AddDays(daysOffset);
+            var cal = CultureInfo.CurrentCulture.Calendar;
+            int firstWeek = cal.GetWeekOfYear(firstThursday, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
+
+            var weekNum = weekOfYear;
+            if (firstWeek <= 1)
+            {
+                weekNum -= 1;
+            }
+            var result = firstThursday.AddDays(weekNum * 7);
+            return result.AddDays(-3);
+        }
+        public object completeDataAndGroupByMonth(DataTable inDt, string groupcol, DateTime startDate, DateTime endDate)
+        {
+            //we need to calculate all missing data in the lowester display format we whant (Months)
+
+            //calculate how many days we have to traverse.
+            int days = System.Convert.ToInt32(System.Math.Ceiling((startDate - endDate).TotalDays));
+
+            // Gather the data we have in the database, which will be incomplete for the graph (missing dates).
+            var currentCalendar = CultureInfo.CurrentCulture.Calendar;
+            var dataQuery =
+                from tr in inDt.AsEnumerable()
+                where (tr.Field<DateTime>(groupcol) > endDate) && (tr.Field<DateTime>(groupcol) < startDate)
+                group tr by new { tr.Field<DateTime>(groupcol).Year, tr.Field<DateTime>(groupcol).Month } into g
+                select new
+                {
+                    Datetime = new DateTime(g.Key.Year, g.Key.Month, 1, 0, 0, 0),
+                    Count = g.Count()
+                };
+
+            // Generate the complete list of Dates we want.
+            var roundedStartdate = startDate.RoundToNearestHour();
+            var datetimes = new List<DateTime>();
+            for (int i = 0; i < days; i++)
+            {
+                datetimes.Add(roundedStartdate.AddDays(-i));
+            }
+
+            // Generate the empty table, which is the shape of the output we want but without counts.
+            var emptyTableQuery =
+                from dt in datetimes
+                select new
+                {
+                    Datetime = new DateTime(dt.Year, dt.Month, 1, 0, 0, 0),
+                    Count = 0
+                };
+
+            //because we could not do AddMonth our empty table now has for earch month X days labels. We need to filter this to distict
+            emptyTableQuery = emptyTableQuery.Distinct();
+
+            // Perform an outer join of the empty table with the real data and use the magic DefaultIfEmpty
+            // to handle the "there's no data from the database case".
+            var finalQuery =
+                from e in emptyTableQuery
+                join realData in dataQuery on
+                    new { e.Datetime } equals
+                    new { realData.Datetime } into g
+                from realDataJoin in g.DefaultIfEmpty()
+                select new
+                {
+                    Datetime = e.Datetime,
+                    Label = string.Format("{0} {1}"
+                                                , e.Datetime.Year
+                                                ,e.Datetime.ToString("MMM")
+                                                ),
+                    Count = realDataJoin == null ? 0 : realDataJoin.Count
+                };
+
+            //sort it and return 
+            return finalQuery.OrderByDescending(x => x.Datetime);
+        }
     }
 }

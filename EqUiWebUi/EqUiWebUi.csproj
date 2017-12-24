@@ -229,7 +229,7 @@
       <DependentUpon>GadataDatamodel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StringExtenstions.cs" />
+    <Compile Include="MyExtenstions.cs" />
     <Compile Include="WebGridHelpers.cs" />
   </ItemGroup>
   <ItemGroup>
