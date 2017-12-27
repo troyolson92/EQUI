@@ -1,65 +1,94 @@
-﻿ @model EqUiWebUi.Models.LogInfo
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h5>Trend for @Model.logtext on @Model.location</h5>
-        </div>
+﻿@model EqUiWebUi.Models.LogInfo
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h5>Trend for @Model.logtext on @Model.location</h5>
+    </div>
 
-        <div class="panel-body">
-           <div id="gaphContainer">
-              <canvas  id='graphCanvas'></canvas>
-           </div>             
-       </div>
-
-        <div class="panel-footer">
-            <div class="row">
-                <div class=" col-sm-2">
-                    Grouping mode
-                </div>
-
-                <div class="col-sm-5">
-                    <div class="btn-group" role="group" aria-label="Graph grouping mode">
-                        <button type="button" class="btn btn-secondary" id="btnGroupingHour" >hour</button>
-                        <button type="button" class="btn btn-secondary active" id="btnGroupingDay">day</button> 
-                        <button type="button" class="btn btn-secondary" id="btnGroupingWeek">week</button>
-                        <button type="button" class="btn btn-secondary" id="btnGroupingMonth">month</button>
-                    </div>
-                </div>
-                <div class="col-sm-5"></div>
-            </div>
+    <div class="panel-body" id="graphSpinner" style="position:relative">
+        <div id="gaphContainer">
+            <canvas id='graphCanvas'></canvas>
         </div>
     </div>
 
+    <div class="panel-footer">
+        <div class="row">
+            <div class=" col-sm-2">
+                Groupmode
+            </div>
 
-<style>
+            <div class="col-sm-4">
+                <div class="btn-group" id="btnGrouping" role="group" aria-label="Graph grouping mode">
+                    <button type="button" class="btn  btn-sm btn-secondary active" id="btnGroupingAuto">auto</button>
+                    <button type="button" class="btn  btn-sm btn-secondary" id="btnGroupingHour">hour</button>
+                    <button type="button" class="btn  btn-sm btn-secondary" id="btnGroupingDay">day</button>
+                    <button type="button" class="btn  btn-sm btn-secondary" id="btnGroupingWeek">week</button>
+                    <button type="button" class="btn  btn-sm btn-secondary" id="btnGroupingMonth">month</button>
+                </div>
+            </div>
 
-    .bar {
-        fill: steelblue;
-    }
+            <div class="col-sm-3"></div>
 
-        .bar:hover {
-            fill: brown;
-        }
+            <div class="col-sm-4 col-sm-offset-2">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <h5>Date range</h5>
+                    </div>
+                    <div class="col-sm-8">
+                        <input type="text" id="demo" class="form-control input-sm">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-    .axis {
-        font: 10px sans-serif;
-    }
-
-        .axis path,
-        .axis line {
-            fill: none;
-            stroke: #000;
-            shape-rendering: crispEdges;
-        }
-
-    .x.axis path {
-        display: none;
-    }
-</style>
 
 <script src="~/Scripts/d3/d3.js"></script>
 <script src="~/Scripts/d3/Chart.bundle.js"></script>
-
 <script>
+    //global vars
+    var groupmode = 0;
+    var endDate = moment().subtract(29, 'days');
+    var startDate = moment();
+    var spinnerErrorTrent = new Spinner();
+    var ErrorTrendChart;
+
+    //get chart data
+    function getChartData(_location, _errornum, _logtekst, _logtype, _startDate, _endDate, _groupType) {
+        //start a wait spinner
+        spinnerErrorTrent.spin(document.getElementById('graphSpinner'));
+        //make ajax request
+        $.ajax({
+            type: 'GET',
+            url: "/chart/_getData" +
+            "?location=" + _location
+            + "&errornum=" + _errornum
+            + "&logtekst=" + _logtekst
+            + "&logtype=" + _logtype
+            + "&startDate=" + _startDate
+            + "&endDate=" + _endDate
+            + "&grouptType=" + _groupType,
+            data: JSON.stringify(),
+            success: function (returnPayload) {
+                console && console.log("request succeeded");
+                buildchart(returnPayload, "chartName");
+                //hide spinner when completes
+                spinnerErrorTrent.stop();
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console && console.log("request failed!!");
+                $("#gaphContainer").html('<div>Request failed!!</div>');
+                spinnerErrorTrent.stop();
+            },
+            dataType: "json",
+            contentType: "application/json",
+            processData: false,
+            async: true
+        });
+    };
+
+
+    //build the chart Calls when ajax request ends
     function buildchart(table, chartName) {
         var vLabels = new Array();
         var vData = new Array();
@@ -105,7 +134,7 @@
                     xAxes: [{
                         display: true,
                         scaleLabel: {
-                            display: false, //x label off 
+                            display: false, //x label off
                             labelString: '[Time]'
                         }
                     }],
@@ -114,9 +143,9 @@
                         id: 'A',
                         ticks: {
                             beginAtZero: true,
-                           // steps: 10,
-                           // stepValue: 5,
-                           //max: 200,
+                            // steps: 10,
+                            // stepValue: 5,
+                            //max: 200,
                         },
                         scaleLabel: {
                             display: true,
@@ -126,59 +155,88 @@
                 }
             }
         };
-
-        $("#graphCanvas").remove(); //this trows an error because we delete the chart object and the resize handelers for the chart are still up
-        $("#gaphContainer").append('<canvas id="graphCanvas" height="80"></canvas>');
+        //destroy chart if exists
+        if (ErrorTrendChart) {
+            ErrorTrendChart.destroy();
+        }
+        //clear the cancas just to be shure
+        $("#graphCanvas").remove(); 
+        //add the new canvas
+        $("#gaphContainer").append('<canvas id="graphCanvas" height="70"></canvas>');
+        //build the chart
         var ctx = document.getElementById("graphCanvas").getContext("2d");
-        window.myLine = new Chart(ctx, config);
+        ErrorTrendChart = new Chart(ctx, config);
     }
-</script>
 
-<script>
-    function getChartData(_location, _errornum, _logtekst, _logtype, _groupType) {
-        console.log("request start");
-        $.ajax({
-            type: 'GET',
-            url: "/chart/_getData?location=" + _location + "&errornum=" + _errornum + "&logtekst=" + _logtekst + "&logtype=" + _logtype + "&grouptType=" + _groupType,
-            data: JSON.stringify(),
-            success: function (returnPayload) {
-                console.log("json result");
-                console.log(returnPayload);
-                buildchart(returnPayload, "chartName");
-                console && console.log("request succeeded");;
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-                console && console.log("request failed");
-            },
-            dataType: "json",
-            contentType: "application/json",
-            processData: false,
-            async: true
-        });
+
+    //refresh the chart
+    function refreshChart() {
+        getChartData("@Model.location", @Model.errornum, "@Model.logtext", "@Model.logtype", moment(startDate).toISOString(), moment(endDate).toISOString(), groupmode);
     };
-</script>
 
-<script>
-    //        getChartData("26010R02", 24170, " Pump 1 not ready $IN[377] = OFF","BREAKDOWN", 1);
+
+    //setting up datetimePicker
+    $('#demo').daterangepicker({
+        "showWeekNumbers": true,
+        "showISOWeekNumbers": true,
+        "ranges": {
+            'Today': [moment(), moment()],
+            'Last 48 Hours': [moment().subtract(2, 'days'), moment()],
+            'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+            'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+            'Last 100 Days': [moment().subtract(100, 'days'), moment()],
+            'Last Year': [moment().subtract(365, 'days'), moment()]
+        },
+        "startDate": startDate,
+        "endDate": endDate,
+        "opens": "left",
+        "drops": "up"
+    }, function (end, start, label) {
+        console.log("New date range selected: " + start.format('YYYY-MM-DD') + " to " + end.format('YYYY-MM-DD') + " (predefined range: " + label + ")");
+        startDate = start;
+        endDate = end;
+        refreshChart();
+        });
+
+    
+    //setting up groupmode events
+    $("#btnGroupingAuto").click(function () {
+        $("#btnGrouping").find(".active").removeClass("active");
+        $("#btnGroupingAuto").addClass("active");
+        groupmode = 0;
+        refreshChart();
+    });
+
     $("#btnGroupingHour").click(function () {
-        getChartData("@Model.location", @Model.errornum, "@Model.logtext","@Model.logtype", 1);
+        $("#btnGrouping").find(".active").removeClass("active");
+        $("#btnGroupingHour").addClass("active");
+        groupmode = 1;
+        refreshChart();
     });
 
     $("#btnGroupingDay").click(function () {
-        getChartData("@Model.location", @Model.errornum, "@Model.logtext","@Model.logtype", 2);
+        $("#btnGrouping").find(".active").removeClass("active");
+        $("#btnGroupingDay").addClass("active");
+        groupmode = 2;
+        refreshChart();
     });
 
     $("#btnGroupingWeek").click(function () {
-        getChartData("@Model.location", @Model.errornum, "@Model.logtext","@Model.logtype", 3);
+        $("#btnGrouping").find(".active").removeClass("active");
+        $("#btnGroupingWeek").addClass("v");
+        groupmode = 3;
+        refreshChart();
     });
 
     $("#btnGroupingMonth").click(function () {
-        getChartData("@Model.location", @Model.errornum, "@Model.logtext","@Model.logtype", 4);
+        $("#btnGrouping").find(".active").removeClass("active");
+        $("#btnGroupingMonth").addClass("active");
+        groupmode = 4;
+        refreshChart();
+    });
+    //init on doc loaded done
+    $(document).ready(function () {
+        refreshChart();
     });
 </script>
 
-<script>
-    $(document).ready(function () {
-       getChartData("@Model.location", @Model.errornum, "@Model.logtext","@Model.logtype", 2);
-    });
-</script>

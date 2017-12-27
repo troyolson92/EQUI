@@ -25,7 +25,7 @@ namespace EqUiWebUi.Controllers
         }
 
         [HttpGet]
-        public JsonResult _getData(string location ,int  errornum ,string logtekst ,string logtype ,grouptType grouptType = grouptType.Hour)
+        public JsonResult _getData(string location ,int  errornum ,string logtekst ,string logtype, DateTime startDate, DateTime endDate, grouptType grouptType = grouptType.Hour)
         {
             GadataComm gadataComm = new GadataComm();
 
@@ -33,39 +33,74 @@ namespace EqUiWebUi.Controllers
             // need to handle how many days we fetch! use the grouptype 
             //
 
+            //if start date is today set it to now. (else it will plots hours in the future)
+            if (startDate.Date == System.DateTime.Now.Date)
+            {
+                startDate = System.DateTime.Now;
+            }
+
+            //get the data
             string qry = string.Format(@"EXEC [EqUi].[GetErrorTrentData] @Location = '{0}' ,@ERRORNUM = {1} ,@Logtext = '{2}' ,@logType = '{3}'"
             , location, errornum, logtekst, logtype);
-
             DataTable dt = gadataComm.RunQueryGadata(qry);
 
+            //because of legencay app we stil have a data with count = 0 this needs to go out because this system counts the intance of timestamps
+            DataTable tblFiltered = dt.AsEnumerable()
+                  .Where(row => row.Field<int>("Count") != 0)
+                  .CopyToDataTable();
+            //
+
+            //if groupmode auto (0) find out best grouping mode based on set timespan.
+            if (grouptType == grouptType.auto)
+            {
+                double span = (startDate - endDate).TotalDays;
+                if (span > 365)
+                {
+                    grouptType = grouptType.Month;
+                }
+                else if(span > 100)
+                {
+                    grouptType = grouptType.Week;
+                }
+                else if(span > 6)
+                {
+                    grouptType = grouptType.Day;
+                }
+                else
+                {
+                    grouptType = grouptType.Hour;
+                }
+            }
+
+            //create data and use the auto fill system.
             object data = null;
             switch (grouptType)
             {
                 case grouptType.Hour:
-                    data = completeDataAndGroupByHour(dt, "starttime", System.DateTime.Now, System.DateTime.Now.AddDays(-3));
+                    data = completeDataAndGroupByHour(tblFiltered, "starttime", startDate, endDate);
                     break;
 
                 case grouptType.Day:
-                    data = completeDataAndGroupByDay(dt, "starttime", System.DateTime.Now, System.DateTime.Now.AddDays(-30));
+                    data = completeDataAndGroupByDay(tblFiltered, "starttime", startDate, endDate);
                     break;
 
                 case grouptType.Week:
-                    data = completeDataAndGroupByWeek(dt, "starttime", System.DateTime.Now, System.DateTime.Now.AddDays(-300));
+                    data = completeDataAndGroupByWeek(tblFiltered, "starttime", startDate, endDate);
                     break;
 
                 case grouptType.Month:
-                    data = completeDataAndGroupByMonth(dt, "starttime", System.DateTime.Now, System.DateTime.Now.AddDays(-3000));
+                    data = completeDataAndGroupByMonth(tblFiltered, "starttime", startDate, endDate);
                     break;
 
                 default:
                     return null;
             }
-
+            //
             return Json(data, JsonRequestBehavior.AllowGet);            
         }
 
         //helps to group a datatable collum list
-        public enum grouptType {None, Hour, Day, Week, Month };
+        public enum grouptType {auto, Hour, Day, Week, Month };
         //generate 'timestamps' that have no data. to help complete missing graph data
         //data from inDt is also filter using the startDate and endDate!
         public object completeDataAndGroupByHour(DataTable inDt, string groupcol, DateTime startDate, DateTime endDate)
