@@ -14,25 +14,27 @@
 </div>
 
 <div class="modal-body">
-    <div class="panel panel-default">
+    <div class="panel panel-primary">
         <div class="panel-heading">
-            @Model.logtype details for logcode: @Model.errornum  logtext: @Model.logtext
+            <h4 class="panel-title">@Model.logtype details for logcode: @Model.errornum  logtext: @Model.logtext</h4>
+            <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
         </div>
-          <div class="panel-body">
-                    @Html.Raw(Model.logDetails)
-                </div>
+        <div class="panel-body">
+            @Html.Raw(Model.logDetails)
         </div>
+    </div>
 
     @Html.Partial("../Chart/_getErrorTrend", Model)
 
-    <div class="panel panel-default">
+    <div class="panel panel-primary">
         <div class="panel-heading">
-            <h5>Workorders for location: @Model.location</h5>
+            <h4 class="panel-title">Workorders for location: @Model.location</h4>
+            <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
         </div>
-        <div class="panel-body">
-            @Html.Action("Workorders", "Maximo", new { location = Model.location })
-        </div>
+    <div class="panel-body">
+        @Html.Action("Workorders", "Maximo", new { location = Model.location })
     </div>
+</div>
 </div>
 
 <div class="modal-footer">

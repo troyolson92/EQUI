@@ -10,53 +10,49 @@
     <p></p>
     <div>
         @Html.Grid(Model).Named("PloegRapport").Build(columns =>
-                        {
-                            columns.Add(c => c.Location).Titled("Location").Filterable(true);
-                            columns.Add(c => c.logtext).Titled("Logtext");
-                            columns.Add(c => c.Response_min_).Titled("RT");
-                            columns.Add(c => c.Downtime_min_).Titled("DT");
-                            columns.Add(c => c.Count).Titled("Count");
-                            columns.Add(c => c.time).Titled("Time");
-                            columns.Add(c => c.Subgroup).Titled("Subgroup");
-                            columns.Add(c => c.Logtype).Titled("Logtype").Filterable(true);
-                            columns.Add(c => c.LocationTree)
-                            .Titled("Info")
-                            .Encoded(false)
-                            .Filterable(true)
-                            .RenderedAs(o => Html.ActionLink("INFO", "_Moreinfo",
-                               new
-                               {
-                                   location = o.Location,
-                                   errornum = o.Logcode,
-                                   refid = o.refId,
-                                   logtype = o.Logtype,
-                                   logtext = o.logtext
-                               },
-                                 new { @class = "modal-link" }
-                                 )
-                            );
-                        }).Sortable().Pageable(pager =>
-                            {
-                                pager.RowsPerPage = 20;
-                            }).Empty("No data found")
+                             {
+                                 columns.Add(c => c.Location).Titled("Location").Filterable(true);
+                                 columns.Add(c => c.logtext).Titled("Logtext").Css("hidden-sm hidden-xs");
+                                 columns.Add(c => c.Response_min_).Titled("RT");
+                                 columns.Add(c => c.Downtime_min_).Titled("DT");
+                                 columns.Add(c => c.Count).Titled("Count");
+                                 columns.Add(c => c.time).Titled("Time");
+                                 columns.Add(c => c.Subgroup).Titled("Subgroup");
+                                 columns.Add(c => c.Logtype).Titled("Logtype").Filterable(true);
+                                 columns.Add(c => c.LocationTree)
+                                 .Titled("Info")
+                                 .Encoded(false)
+                                 .Filterable(true)
+                                 .RenderedAs(o => Html.ActionLink("INFO", "_Moreinfo",
+                                    new
+                                    {
+                                        location = o.Location,
+                                        errornum = o.Logcode,
+                                        refid = o.refId,
+                                        logtype = o.Logtype,
+                                        logtext = o.logtext
+                                    },
+                                      new { @class = "modal-link" }
+                                      )
+                                 );
+                             }).Sortable().Pageable(pager =>
+                                 {
+                                     pager.RowsPerPage = 20;
+                                 }).Empty("No data found").Css("table-hover")
     </div>
 
     <div class="panel-footer">
-        @MyFilters.LocationDropdownBrownfield("/Gadata/PloegRapportWebgrid", "")
-        <p style="float:right"> Last data push: '@Html.Raw(ViewBag.DataTimestamp)'</p>
+        @MyFilters.LocationDropdownBrownfield("PloegRapport", "/Gadata/PloegRapportWebgrid")
+        <p class="pull-right"> Last data push: '@Html.Raw(ViewBag.DataTimestamp)'</p>
     </div>
 </div>
 
 @*render popuover modal*@
 <div>
-    @MyModals.tableHelperModal("tableModal");
+    @MyModals.tableHelperModal("tableModal")
 </div>
 
 <script type="text/javascript">
-    //need to just eleminiate this... can use the attributes of the modal
-    var bModalOpen = false;
-    //
-
     $(document).ready(function () {
         //set colors for grid
         tableFormatLogtype(8);
@@ -65,7 +61,12 @@
         //enable polling for new data
         PolFordata(5, '@Html.Raw(ViewBag.DataTimestamp)', '@Url.Action("PloegRapportcheckNewData")');
         //hide the navbar and move body content up
-        $(".navbar-fixed-top").autoHidingNavbar().hide();
-        $("#allcontent").animate({ "margin-top": "-60px" }, "fast");
+        Navbar(false);
+        //subscribe to row clicked events
+        $('.mvc-grid').mvcgrid({
+            rowClicked: function (row, data, e) {
+                console.log("row click:") & console.log(data);
+            }
+        });
     });
 </script>

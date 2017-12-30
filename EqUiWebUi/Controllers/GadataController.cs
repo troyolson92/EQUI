@@ -19,6 +19,12 @@ namespace EqUiWebUi.Controllers
 			return new HttpNotFoundResult("Woeps there seems to bo nothing here");
 		}
 
+        public ActionResult RenderSupervisPartial()
+        {
+
+            return View();
+        }
+
         //------------------------------------PloegRapport-------------------------------------------------
         [HttpGet]
 		public ActionResult PloegRapportWebgrid()

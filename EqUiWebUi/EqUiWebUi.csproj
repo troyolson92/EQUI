@@ -233,8 +233,8 @@
     <Compile Include="WebGridHelpers.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\bootstrap-theme.css" />
-    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\CustomStyleTweeks.css" />
+    <Content Include="Content\Cyborg.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\daterangepicker.css" />
@@ -246,7 +246,6 @@
     <Content Include="Content\MvcGrid\mvc-grid.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
     <Content Include="Models\GadataDatamodel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>GadataDatamodel.Context.cs</LastGenOutput>
@@ -459,8 +458,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\bootstrap-theme.min.css.map" />
-    <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="App_Code\MyFilters.cshtml" />
     <Content Include="App_Code\MyModals.cshtml" />
     <Content Include="App_Code\MyEquiToolkit.cshtml" />
@@ -560,6 +557,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\daterangepicker.js" />
+    <Content Include="Scripts\MyScripts\Interface.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />
     <Content Include="Scripts\jquery-3.2.1.slim.js" />

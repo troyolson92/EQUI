@@ -11,18 +11,19 @@ namespace EqUiWebUi
             //loads before content
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js",
-                         "~/Scripts/jquery-3.2.1.min.js", //why do we load this here again ? 
                          "~/Scripts/jquery.bootstrap-autohidingnavbar.js", //https://github.com/istvan-ujjmeszaros/bootstrap-autohidingnavbar 
-                         "~/Scripts/moment.js",
+                         "~/Scripts/moment.js", //https://github.com/moment/moment/
                          "~/Scripts/spin.js", //https://github.com/fgnass/spin.js/
                          "~/Scripts/daterangepicker.js" //https://github.com/dangrossman/bootstrap-daterangepicker
+
                             ));
 
             //loads afther content
             bundles.Add(new ScriptBundle("~/bundles/MyScripts").Include(
-             "~/Scripts/MyScripts/tablehelper.js",
-             "~/Scripts/MvcGrid/mvc-grid.js", //https://github.com/NonFactors/MVC5.Grid
-             "~/Scripts/printThis.js" //https://github.com/jasonday/printThis
+                         "~/Scripts/MyScripts/tablehelper.js",
+                         "~/Scripts/MyScripts/Interface.js",
+                         "~/Scripts/MvcGrid/mvc-grid.js", //https://github.com/NonFactors/MVC5.Grid
+                         "~/Scripts/printThis.js" //https://github.com/jasonday/printThis
             ));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
@@ -39,10 +40,10 @@ namespace EqUiWebUi
                       ));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/site.css",
+                      "~/Content/Bootstrap.css",
                       "~/Content/mvc-grid.css", //style for mvc grids
-                      "~/Content/daterangepicker.css" //style for datarange pickers
+                      "~/Content/daterangepicker.css", //style for datarange pickers
+                      "~/Content/CustomStyleTweeks.css" //custom style tweeks
                       ));
         }
     }

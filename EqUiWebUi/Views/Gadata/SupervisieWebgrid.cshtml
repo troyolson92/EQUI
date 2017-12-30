@@ -11,39 +11,39 @@
     <div>
         <div>
             @Html.Grid(Model).Named("Supervisie").Build(columns =>
-                         {
-                             columns.Add(c => c.Location).Titled("Location").Filterable(true);
-                             columns.Add(c => c.logtext).Titled("Logtext");
-                             columns.Add(c => c.DT).Titled("DT");
-                             columns.Add(c => c.time).Titled("time");
-                             columns.Add(c => c.Classification).Titled("Class");
-                             columns.Add(c => c.Subgroup).Titled("Subgroup");
-                             columns.Add(c => c.Logtype).Titled("LogType").Filterable(true);
-                             columns.Add(c => c.LocationTree)
-                             .Titled("Info")
-                             .Encoded(false)
-                             .Filterable(true)
-                             .RenderedAs(o => Html.ActionLink("INFO", "_Moreinfo",
-                                new
-                                {
-                                    location = o.Location,
-                                    errornum = o.Logcode,
-                                    refid = o.refId,
-                                    logtype = o.Logtype,
-                                    logtext = o.logtext
-                                },
-                                  new { @class = "modal-link" }
-                                  )
-                             );
-                         }).Sortable().Pageable(pager =>
-                             {
-                                 pager.RowsPerPage = 20;
-                             }).Empty("No data found")
+       {
+           columns.Add(c => c.Location).Titled("Location").Filterable(true);
+           columns.Add(c => c.logtext).Titled("Logtext").Css("hidden-sm hidden-xs");
+           columns.Add(c => c.DT).Titled("DT");
+           columns.Add(c => c.time).Titled("time");
+           columns.Add(c => c.Classification).Titled("Class");
+           columns.Add(c => c.Subgroup).Titled("Subgroup");
+           columns.Add(c => c.Logtype).Titled("LogType").Filterable(true);
+           columns.Add(c => c.LocationTree)
+           .Titled("Info")
+           .Encoded(false)
+           .Filterable(true)
+           .RenderedAs(o => Html.ActionLink("INFO", "_Moreinfo",
+              new
+              {
+                  location = o.Location,
+                  errornum = o.Logcode,
+                  refid = o.refId,
+                  logtype = o.Logtype,
+                  logtext = o.logtext
+              },
+                new { @class = "modal-link" }
+                )
+           );
+       }).Sortable().Pageable(pager =>
+       {
+           pager.RowsPerPage = 20;
+       }).Empty("No data found").Css("table-hover")
         </div>
 
         <div class="panel-footer">
-            @MyFilters.LocationDropdownBrownfield("/Gadata/SupervisieWebgrid", "")
-            <p style="float:right"> Last data push: '@Html.Raw(ViewBag.DataTimestamp)'</p>
+            @MyFilters.LocationDropdownBrownfield("Supervisie","/Gadata/SupervisieWebgrid")
+            <p class="pull-right"> Last data push: '@Html.Raw(ViewBag.DataTimestamp)'</p>
         </div>
     </div>
 </div>
@@ -51,7 +51,7 @@
 
 @*render popuover modal*@
 <div>
-    @MyModals.tableHelperModal("tableModal");
+    @MyModals.tableHelperModal("tableModal")
 </div>
 
 
@@ -70,7 +70,6 @@
         //enable polling for new data
         PolFordata(5, '@Html.Raw(ViewBag.DataTimestamp)', '@Url.Action("SupervisiecheckNewData")');
         //hide the navbar and move body content up
-        $(".navbar-fixed-top").autoHidingNavbar().hide();
-        $("#allcontent").animate({ "margin-top": "-60px" }, "fast");
+        Navbar(false);
     });
 </script>

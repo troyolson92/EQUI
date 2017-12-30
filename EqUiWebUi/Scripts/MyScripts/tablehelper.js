@@ -82,7 +82,6 @@ function ListenToModal(modalid) {
     $(function () {
         $(".modal-link").click(function (event) {
             event.preventDefault();
-            bModalOpen = true;
             $(modalid).modal({ remote: $(this).attr("href") });
         });
 
@@ -129,7 +128,7 @@ function PolFordata(polinterval, datatimestamp, urlaction) {
             success: function (response) {
                 bInterlock = false;
                 //succes = reload needed
-                if (!bModalOpen) { //only reaload when modal is not open
+                if (!bModalOpen) { //only reload when modal is not open
                     window.location.reload();
                 }
             },
@@ -140,5 +139,19 @@ function PolFordata(polinterval, datatimestamp, urlaction) {
             }
         });
 
+    }
+}
+
+//*****************************
+//show hide navbar
+//*****************************
+function Navbar(show) {
+    if (show == true) {
+        $(".navbar-fixed-top").autoHidingNavbar().show();
+        $("#allcontent").animate({ "margin-top": "60px" }, "fast");
+    }
+    else {
+        $(".navbar-fixed-top").autoHidingNavbar().hide();
+        $("#allcontent").animate({ "margin-top": "0px" }, "fast");
     }
 }

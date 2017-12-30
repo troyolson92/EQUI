@@ -65,15 +65,15 @@
     </div>
 
     @Scripts.Render("~/bundles/MyScripts")
-    @*subscrible renderd grids to events*@
     <script>
+        //subscrible renderd grids to events
         $('.mvc-grid').mvcgrid();
+        //enable general interface stuff
+        initInterface();
+        //default no autfiding navbar
+        $("#allcontent").animate({ "margin-top": "60px" }, "fast");
+        $(".navbar-fixed-top").autoHidingNavbar();
     </script>
-    @*default no autohide navbar*@
-    <script>
-        $(".navbar-fixed-top").autoHidingNavbar("setDisableAutohide",true);
-    </script>
-
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>

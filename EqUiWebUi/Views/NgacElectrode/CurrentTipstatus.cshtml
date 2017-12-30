@@ -11,7 +11,7 @@
     <div class="panel panel-default">
 
         <div class="panel-body">
-            @Html.Grid(Model).Named("DataGrid").Build(columns =>
+            @Html.Grid(Model).Named("NgacTipStatus").Build(columns =>
        {
        columns.Add(c => c.Robot).Titled("Robot").Filterable(true);
        columns.Add(c => c.Date_Time).Titled("Laaste keer gefreest").Formatted("{0:dd-MM-yyyy HH:mm}");
@@ -36,7 +36,7 @@
         </div>
 
         <div class="panel-footer">
-            @MyFilters.LocationDropdownGreenField("/NgacElectrode/CurrentTipstatus", "")
+            @MyFilters.LocationDropdownGreenField("NgacTipStatus", "/NgacElectrode/CurrentTipstatus")
             <p style="float:right"> Last data push: '@Html.Raw(ViewBag.DataTimestamp)'</p>
         </div>
     </div>
