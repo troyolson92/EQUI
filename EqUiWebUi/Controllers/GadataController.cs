@@ -19,18 +19,18 @@ namespace EqUiWebUi.Controllers
 			return new HttpNotFoundResult("Woeps there seems to bo nothing here");
 		}
 
-        public ActionResult RenderSupervisPartial()
-        {
-
-            return View();
-        }
-
         //------------------------------------PloegRapport-------------------------------------------------
         [HttpGet]
 		public ActionResult PloegRapportWebgrid()
 		{
             //refresh every 10 minutes anyway ! 
             Response.AddHeader("Refresh", "600");
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult _ploegRapport()
+        {
             //
             var data = DataBuffer.Ploegreport;
             //in case hangfire is taking a day off
@@ -39,32 +39,24 @@ namespace EqUiWebUi.Controllers
                 Backgroundwork backgroundwork = new Backgroundwork();
                 backgroundwork.UpdatePloegreport();
                 data = DataBuffer.Ploegreport;
-                ViewBag.DataTimestamp = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             }
-            else //add tracking timestamp for hangfire sync
-            {
-                ViewBag.DataTimestamp = DataBuffer.SupervisieLastDt.ToString("yyyy-MM-dd HH:mm:ss");
-            }
-            return View(data);
+            return PartialView(data);
         }
 
         [HttpGet]
-        public JsonResult PloegRapportcheckNewData(String dataTimestamp)
+        public JsonResult PloegRapportcheckNewData(DateTime dataTimestamp)
         {
-            DateTime date = DateTime.ParseExact(dataTimestamp, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
-            date = date.AddSeconds(1);
-
-            if (DataBuffer.PloegreportLastDt > date)
+            Boolean breload = false;
+            if (DataBuffer.PloegreportLastDt > dataTimestamp.AddSeconds(1))
             {
-                //issue reload
-                return Json(new object[] { new object() }, JsonRequestBehavior.AllowGet);
+                breload = true;
             }
-            else
+            //
+            return new JsonResult()
             {
-                //no reload needed
-                return null;
-            }
-
+                Data = new { doReload = breload, dataTimestamp =  DataBuffer.PloegreportLastDt.ToString("yyyy-MM-dd HH:mm:ss"), lastCheck = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") },
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
         }
 
         //-------------------------------------------------------------------------------------------------
@@ -75,6 +67,13 @@ namespace EqUiWebUi.Controllers
         {
             //refresh every 10 minutes anyway ! 
             Response.AddHeader("Refresh", "600");
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult _supervisie()
+        {
+            //
             var data = DataBuffer.Supervisie;
             //in case hangfire is taking a day off
             if (data == null)
@@ -82,33 +81,24 @@ namespace EqUiWebUi.Controllers
                 Backgroundwork backgroundwork = new Backgroundwork();
                 backgroundwork.UpdateSupervisie();
                 data = DataBuffer.Supervisie;
-                ViewBag.DataTimestamp = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             }
-            else //add tracking timestamp for hangfire sync
-            {
-                ViewBag.DataTimestamp = DataBuffer.SupervisieLastDt.ToString("yyyy-MM-dd HH:mm:ss");
-            }
-
-            return View(data);
+            return PartialView(data);
         }
 
         [HttpGet]
-        public JsonResult SupervisiecheckNewData(String dataTimestamp)
+        public JsonResult SupervisiecheckNewData(DateTime dataTimestamp)
         {
-            DateTime date = DateTime.ParseExact(dataTimestamp, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
-            date = date.AddSeconds(1);
-
-            if (DataBuffer.SupervisieLastDt > date)
+            Boolean breload = false;
+            if (DataBuffer.SupervisieLastDt > dataTimestamp.AddSeconds(1))
             {
-                //issue reload
-                return Json(new object[] { new object() }, JsonRequestBehavior.AllowGet);
+                breload = true;
             }
-            else
+            //
+            return new JsonResult()
             {
-                //no reload needed
-                return null;
-            }
-
+                Data = new { doReload = breload, dataTimestamp = DataBuffer.SupervisieLastDt.ToString("yyyy-MM-dd HH:mm:ss"), lastCheck = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") },
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
         }
 
         //------------------------------------Supervisie STO-------------------------------------------------
@@ -116,43 +106,22 @@ namespace EqUiWebUi.Controllers
         public ActionResult StoWebgrid()
         {
             return new HttpNotFoundResult("Data loading disabled in hangfire");
-
-            //refresh every 10 minutes anyway ! 
-            Response.AddHeader("Refresh", "600");
-            var data = DataBuffer.StoBreakdown;
-            //in case hangfire is taking a day off
-            if (data == null)
-            {
-                Backgroundwork backgroundwork = new Backgroundwork();
-                //backgroundwork.updataSTO();
-                data = DataBuffer.StoBreakdown;
-                ViewBag.DataTimestamp = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-            }
-            else //add tracking timestamp for hangfire sync
-            {
-                ViewBag.DataTimestamp = DataBuffer.StoBreakdownLastDt.ToString("yyyy-MM-dd HH:mm:ss");
-            }
-
-            return View(data);
         }
 
         [HttpGet]
-        public JsonResult StocheckNewData(String dataTimestamp)
+        public JsonResult StocheckNewData(DateTime dataTimestamp)
         {
-            DateTime date = DateTime.ParseExact(dataTimestamp, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
-            date = date.AddSeconds(1);
-
-            if (DataBuffer.StoBreakdownLastDt > date)
+            Boolean breload = false;
+            if (DataBuffer.StoBreakdownLastDt > dataTimestamp.AddSeconds(1))
             {
-                //issue reload
-                return Json(new object[] { new object() }, JsonRequestBehavior.AllowGet);
+                breload = true;
             }
-            else
+            //
+            return new JsonResult()
             {
-                //no reload needed
-                return null;
-            }
-
+                Data = new { doReload = breload, dataTimestamp = DataBuffer.StoBreakdownLastDt.ToString("yyyy-MM-dd HH:mm:ss"), lastCheck = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") },
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
         }
 
         //Partial view for more info modal-------------------------------------------------------------------------------------------------

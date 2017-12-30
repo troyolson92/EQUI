@@ -142,6 +142,55 @@ function PolFordata(polinterval, datatimestamp, urlaction) {
     }
 }
 
+//V2 of datacheck
+function CheckRefreshTable(polinterval, urlDataCheckaction, urlReloadAction, gridId) {
+    $(function () {
+        setInterval(CheckForData, 1000 * polinterval);
+    });
+    //get last data timestamp from model
+    var Datatimestamp = '1900-01-01 00:00:00';
+    console.log("Datatimestamp: " + Datatimestamp);
+    //interlock for ajax request
+    var bInterlock = new Boolean();
+    bInterlock = false;
+
+    function CheckForData() {
+        console.log("check for data");
+        if (bInterlock) {
+            return;
+        } else {
+            bInterlock = true;
+        }
+        $.ajax({
+            async: true,
+            type: 'GET',
+            url: urlDataCheckaction, //need to pas query string here for filters ! 
+            dataType: 'json',
+            data: { dataTimestamp: Datatimestamp },
+
+            success: function (response) {
+                if (response.doReload) {
+                    //reload grid
+                    $(gridId).mvcgrid({
+                        sourceUrl: urlReloadAction,
+                        reload: true,
+                    });
+                    Datatimestamp = response.dataTimestamp;
+                    console.log("Reloaded grid:") & console.log(response);
+                }
+                //stop interlock
+                bInterlock = false;
+            },
+
+            error: function (ex) {
+                console.log("Request failed") & console.log(ex);
+                bInterlock = false;
+            }
+        });
+
+    }
+}
+
 //*****************************
 //show hide navbar
 //*****************************

@@ -3,7 +3,6 @@ function initInterface() {
     EnablePannelCollaps();
 }
 
-
 //script for subscribing to pannel colaps
 function EnablePannelCollaps() {
     $(document).on('click', '.panel-heading span.clickable', function (e) {

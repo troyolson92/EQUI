@@ -1,0 +1,40 @@
+﻿@model IEnumerable<EqUiWebUi.Models.AAOSR_PloegRaportV2_Result>
+
+@Html.Grid(Model).Named("PloegRapport").Build(columns =>
+                             {
+                                 columns.Add(c => c.Location).Titled("Location").Filterable(true);
+                                 columns.Add(c => c.logtext).Titled("Logtext").Css("hidden-sm hidden-xs");
+                                 columns.Add(c => c.Response_min_).Titled("RT");
+                                 columns.Add(c => c.Downtime_min_).Titled("DT");
+                                 columns.Add(c => c.Count).Titled("Count");
+                                 columns.Add(c => c.time).Titled("Time");
+                                 columns.Add(c => c.Subgroup).Titled("Subgroup");
+                                 columns.Add(c => c.Logtype).Titled("Logtype").Filterable(true);
+                                 columns.Add(c => c.LocationTree)
+                                 .Titled("Info")
+                                 .Encoded(false)
+                                 .Filterable(true)
+                                 .RenderedAs(o => Html.ActionLink("INFO", "_Moreinfo",
+                                    new
+                                    {
+                                        location = o.Location,
+                                        errornum = o.Logcode,
+                                        refid = o.refId,
+                                        logtype = o.Logtype,
+                                        logtext = o.logtext
+                                    },
+                                      new { @class = "modal-link" }
+                                      )
+                                 );
+                             }).Sortable().Pageable(pager =>
+                                 {
+                                     pager.RowsPerPage = 20;
+                                 }).Empty("No data found").Css("table-hover")
+
+
+<script>
+    //subscrible this table to events
+    $('#PloegRapport').mvcgrid();
+    //set colors for grid
+    tableFormatLogtype(8);
+</script>

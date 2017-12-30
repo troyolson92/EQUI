@@ -451,7 +451,6 @@
     <Content Include="PDFjs\web\Q-Mapping Dashboard.pdf" />
     <Content Include="MvcGrid\Fonts\GridGlyphs.woff" />
     <Content Include="Content\MvcGrid\Fonts\GridGlyphs.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -639,6 +638,9 @@
     <Content Include="Views\Home\Rendersites.cshtml" />
     <Content Include="Views\Chart\Index.cshtml" />
     <Content Include="Views\Chart\_getErrorTrend.cshtml" />
+    <Content Include="Views\Gadata\_ploegRapport.cshtml" />
+    <Content Include="Views\Gadata\_supervisie.cshtml" />
+    <Content Include="Views\NgacElectrode\_TipStatus.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EQUICommunictionLib\EQUICommunictionLib.csproj">

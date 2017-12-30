@@ -18,10 +18,16 @@ namespace EqUiWebUi.Controllers
 
         //------------------------------------huidige tip status voor al de robots-------------------------------------------------
         [HttpGet]
-        public ActionResult CurrentTipstatus(bool showAll = false)
+        public ActionResult CurrentTipstatus()
         {
             //refresh every 10 minutes anyway ! 
             Response.AddHeader("Refresh", "600");
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult _TipStatus()
+        {
             //
             var data = DataBuffer.Tipstatus;
             //in case hangfire is taking a day off
@@ -30,47 +36,24 @@ namespace EqUiWebUi.Controllers
                 Backgroundwork backgroundwork = new Backgroundwork();
                 backgroundwork.UpdateTipstatus();
                 data = DataBuffer.Tipstatus;
-                ViewBag.DataTimestamp = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             }
-            else //add tracking timestamp for hangfire sync
-            {
-                ViewBag.DataTimestamp = DataBuffer.TipstatusLastDt.ToString("yyyy-MM-dd HH:mm:ss");
-            }
-
-            if (showAll)
-            {
-                ViewBag.RowsPerPage = 1000;
-            }
-            else
-            {
-                ViewBag.RowsPerPage = 20;
-            }
-            return View(data);
+            return PartialView(data);
         }
 
         [HttpGet]
-        public JsonResult TipwearCheckNewData(String dataTimestamp)
+        public JsonResult TipwearCheckNewData(DateTime dataTimestamp)
         {
-            //direct query hangfire is not up
-            if (dataTimestamp == "")
+            Boolean breload = false;
+            if (DataBuffer.TipstatusLastDt > dataTimestamp.AddSeconds(1))
             {
-                //issue reload
-                return Json(new object[] { new object() }, JsonRequestBehavior.AllowGet);
+                breload = true;
             }
-            DateTime date = DateTime.ParseExact(dataTimestamp, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
-            date = date.AddSeconds(1);
-
-            if (DataBuffer.TipstatusLastDt > date)
+            //
+            return new JsonResult()
             {
-                //issue reload
-                return Json(new object[] { new object() }, JsonRequestBehavior.AllowGet);
-            }
-            else
-            {
-                //no reload needed
-                return null;
-            }
-
+                Data = new { doReload = breload, dataTimestamp = DataBuffer.TipstatusLastDt.ToString("yyyy-MM-dd HH:mm:ss"), lastCheck = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") },
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
         }
 
         //------------------------------------tabel met elektrode wissels.-------------------------------------------------

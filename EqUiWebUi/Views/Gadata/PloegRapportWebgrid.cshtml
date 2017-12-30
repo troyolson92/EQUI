@@ -1,6 +1,4 @@
-﻿@model IEnumerable<EqUiWebUi.Models.AAOSR_PloegRaportV2_Result>
-
-@*set title*@
+﻿@*set title*@
 @{
     ViewBag.Title = "PloegRapport";
 }
@@ -9,41 +7,12 @@
     <p></p>
     <p></p>
     <div>
-        @Html.Grid(Model).Named("PloegRapport").Build(columns =>
-                             {
-                                 columns.Add(c => c.Location).Titled("Location").Filterable(true);
-                                 columns.Add(c => c.logtext).Titled("Logtext").Css("hidden-sm hidden-xs");
-                                 columns.Add(c => c.Response_min_).Titled("RT");
-                                 columns.Add(c => c.Downtime_min_).Titled("DT");
-                                 columns.Add(c => c.Count).Titled("Count");
-                                 columns.Add(c => c.time).Titled("Time");
-                                 columns.Add(c => c.Subgroup).Titled("Subgroup");
-                                 columns.Add(c => c.Logtype).Titled("Logtype").Filterable(true);
-                                 columns.Add(c => c.LocationTree)
-                                 .Titled("Info")
-                                 .Encoded(false)
-                                 .Filterable(true)
-                                 .RenderedAs(o => Html.ActionLink("INFO", "_Moreinfo",
-                                    new
-                                    {
-                                        location = o.Location,
-                                        errornum = o.Logcode,
-                                        refid = o.refId,
-                                        logtype = o.Logtype,
-                                        logtext = o.logtext
-                                    },
-                                      new { @class = "modal-link" }
-                                      )
-                                 );
-                             }).Sortable().Pageable(pager =>
-                                 {
-                                     pager.RowsPerPage = 20;
-                                 }).Empty("No data found").Css("table-hover")
+        @Html.AjaxGrid(Url.Action("_ploegRapport"))
     </div>
 
     <div class="panel-footer">
         @MyFilters.LocationDropdownBrownfield("PloegRapport", "/Gadata/PloegRapportWebgrid")
-        <p class="pull-right"> Last data push: '@Html.Raw(ViewBag.DataTimestamp)'</p>
+        <p class="pull-right" id="Refreshinfo"> Last data push: ?????</p>
     </div>
 </div>
 
@@ -54,16 +23,14 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        //set colors for grid
-        tableFormatLogtype(8);
         //subscribe to modal click
         ListenToModal('#tableModal');
         //enable polling for new data
-        PolFordata(5, '@Html.Raw(ViewBag.DataTimestamp)', '@Url.Action("PloegRapportcheckNewData")');
+        CheckRefreshTable(5, '@Url.Action("PloegRapportcheckNewData")', '@Url.Action("_ploegRapport")', '#PloegRapport');
         //hide the navbar and move body content up
         Navbar(false);
         //subscribe to row clicked events
-        $('.mvc-grid').mvcgrid({
+        $('#PloegRapport').mvcgrid({
             rowClicked: function (row, data, e) {
                 console.log("row click:") & console.log(data);
             }

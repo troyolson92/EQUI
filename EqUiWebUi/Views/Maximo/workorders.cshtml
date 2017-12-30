@@ -69,7 +69,7 @@
         //set optional font size. (to support HD and 4K monitors  )
         SetTableFont('@ViewBag.fontSize');
         //subscribe to row clicked events
-        $('.mvc-grid').mvcgrid({
+        $('#Workorders').mvcgrid({
             rowClicked: function (row, data, e) {
                 $("#woDetailsPartial").html("Loading.....");
                 var url = "@Url.Action("_woDetails", "Maximo")?wonum=" + data.WONUM;
@@ -81,7 +81,7 @@
     @*function runs on checkbox change event*@
     function cb_click() {
         //reload grid add parameters that can change in UI
-        $('.mvc-grid').mvcgrid({
+        $('#Workorders').mvcgrid({
             sourceUrl: '@Url.Action("_workordersOnLocation",
                     new //recreate action link WIHTOUT boolean parameters!
                     {
