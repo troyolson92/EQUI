@@ -21,7 +21,7 @@
 @*dropdown filter that redirects to page
     Leave ID blank!
 *@
-@helper LocationDropdownBrownfield(string GridId, string redirecbase, bool dropup = false)
+@helper LocationDropdownBrownfield(string GridId, bool dropup = false)
     {
         <div class="dropup" id="LocationDropdownBrownfield">
             <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
@@ -29,36 +29,37 @@
                 <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
-                <li><a href="@redirecbase?">ClearFilter</a></li>
-                <li><a href="@redirecbase?@GridId-LocationTree-Contains=AAL">P3</a></li>
-                <li><a href="@redirecbase?@GridId-LocationTree-Contains=A FLOOR L">A FLOOR L</a></li>
-                <li><a href="@redirecbase?@GridId-LocationTree-Contains=A SIBO L">A SIBO L</a></li>
-                <li><a href="@redirecbase?@GridId-LocationTree-Contains=AAS">P4</a></li>
-                <li><a href="@redirecbase?@GridId-LocationTree-Contains=A FLOOR S">A FLOOR S</a></li>
-                <li><a href="@redirecbase?@GridId-LocationTree-Contains=A SIBO ">A SIBO S</a></li>
+                <li onclick="SetAjaxGridFilter('@GridId','')">ClearFilter</li>
+                <li onclick="SetAjaxGridFilter('@GridId','@GridId-LocationTree-Contains=AAL')">P3</li>
+                <li onclick="SetAjaxGridFilter('@GridId','@GridId-LocationTree-Contains=A FLOOR L')">A FLOOR L</li>
+                <li onclick="SetAjaxGridFilter('@GridId','@GridId-LocationTree-Contains=A SIBO L')">A SIBO L</li>
+                <li onclick="SetAjaxGridFilter('@GridId','@GridId-LocationTree-Contains=P4')">P4</li>
+                <li onclick="SetAjaxGridFilter('@GridId','@GridId-LocationTree-Contains=A FLOOR S')">A FLOOR S</li>
+                <li onclick="SetAjaxGridFilter('@GridId','@GridId-LocationTree-Contains=A SIBO S')">A SIBO S</li>
             </ul>
         </div>
 }
 
-@helper LocationDropdownGreenField(string GridId, string redirecbase, bool dropup = false)
-    {
+@helper LocationDropdownGreenField(string GridId, bool dropup = false)
+        {
         <div class="dropup" id="LocationDropdownGreenField">
             <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
                 Set a location filter
                 <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
-                <li><a href="@redirecbase?">ClearFilter</a></li>
-                <li><a href="@redirecbase?@GridId-LocationTree-Contains=A LIJN 33">Floor (all)</a></li>
-                <li><a href="@redirecbase?@GridId-LocationTree-Contains=A LIJN 331">Frontstructure</a></li>
-                <li><a href="@redirecbase?@GridId-LocationTree-Contains=A LIJN 334">Frontfloor</a></li>
-                <li><a href="@redirecbase?@GridId-LocationTree-Contains=A LIJN 336">Rearfloor</a></li>
-                <li><a href="@redirecbase?@GridId-LocationTree-Contains=A LIJN 338">Marriage</a></li>
-                <li><a href="@redirecbase?@GridId-LocationTree-Contains=A LIJN 35 ">Sides</a></li>
-                <li><a href="@redirecbase?@GridId-LocationTree-Contains=GA4.0 ">Preassembly</a></li>
+                <li onclick="SetAjaxGridFilter('@GridId','')">ClearFilter</li>
+                <li onclick="SetAjaxGridFilter('@GridId','@GridId-LocationTree-Contains=A LIJN 33')">Floor (all)</li>
+                <li onclick="SetAjaxGridFilter('@GridId','@GridId-LocationTree-Contains=A LIJN 331')">Frontstructure</li>
+                <li onclick="SetAjaxGridFilter('@GridId','@GridId-LocationTree-Contains=A LIJN 334')">Frontfloor</li>
+                <li onclick="SetAjaxGridFilter('@GridId','@GridId-LocationTree-Contains=A LIJN 336')">Rearfloor</li>
+                <li onclick="SetAjaxGridFilter('@GridId','@GridId-LocationTree-Contains=A LIJN 338')">Marriage</li>
+                <li onclick="SetAjaxGridFilter('@GridId','@GridId-LocationTree-Contains=A LIJN 35')">Sides</li>
+                <li onclick="SetAjaxGridFilter('@GridId','@GridId-LocationTree-Contains=GA4.0')">Preassembly</li>
             </ul>
         </div>
 }
+
 
 @*helper to change alter status*@
 @helper SetAlertStatus(string id, int alertId, int? currentState)
@@ -93,7 +94,7 @@
                                 not valid
                             </text>
                             break;
-                    }
+}
                 }
                 <span class="caret"></span>
             </button>

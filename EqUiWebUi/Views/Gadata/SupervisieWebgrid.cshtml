@@ -14,7 +14,7 @@
         </div>
 
         <div class="panel-footer">
-            @MyFilters.LocationDropdownBrownfield("Supervisie","/Gadata/SupervisieWebgrid")
+            @MyFilters.LocationDropdownBrownfield("Supervisie")
             <p class="pull-right"> Last data push: ????</p>
         </div>
     </div>
@@ -32,7 +32,7 @@
         //subscribe to modal click
         ListenToModal('#tableModal');
         //enable polling for new data
-        CheckRefreshTable(5, '@Url.Action("SupervisiecheckNewData")', '@Url.Action("_supervisie")', '#Supervisie');
+        CheckRefreshTable(5, '@Url.Action("SupervisiecheckNewData")','#Supervisie');
         //hide the navbar and move body content up
         Navbar(false);
         //subscribe to row clicked events

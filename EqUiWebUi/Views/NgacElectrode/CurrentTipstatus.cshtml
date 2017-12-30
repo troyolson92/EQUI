@@ -15,7 +15,7 @@
         </div>
 
         <div class="panel-footer">
-            @MyFilters.LocationDropdownGreenField("NgacTipStatus", "/NgacElectrode/CurrentTipstatus")
+            @MyFilters.LocationDropdownGreenField("NgacTipStatus")
             <p style="float:right"> Last data push: ????</p>
         </div>
     </div>
@@ -75,6 +75,6 @@
 <script type="text/javascript">
     $(document).ready(function () {
         //enable polling for new data
-        CheckRefreshTable(5, '@Url.Action("TipwearCheckNewData")', '@Url.Action("_TipStatus")', '#NgacTipStatus');
+        CheckRefreshTable(5, '@Url.Action("TipwearCheckNewData")','#NgacTipStatus');
     });
 </script>

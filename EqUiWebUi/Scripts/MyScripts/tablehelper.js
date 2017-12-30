@@ -99,51 +99,7 @@ function ListenToModal(modalid) {
 //*****************************
 //table datarefresh polling
 //*****************************
-function PolFordata(polinterval, datatimestamp, urlaction) {
-    $(function () {
-        //check every 5 seconds
-        setInterval(CheckForData, 1000 * polinterval);
-    });
-    //get last data timestamp from model
-    var Datatimestamp = datatimestamp;
-    console.log("Datatimestamp: " + Datatimestamp);
-    //interlock for ajax request
-    var bInterlock = new Boolean();
-    bInterlock = false;
-
-    function CheckForData() {
-        console.log("check for data");
-        if (bInterlock) {
-            return;
-        } else {
-            bInterlock = true;
-        }
-        $.ajax({
-            async: true,
-            type: 'GET',
-            url: urlaction,
-            dataType: 'json',
-            data: { dataTimestamp: Datatimestamp },
-
-            success: function (response) {
-                bInterlock = false;
-                //succes = reload needed
-                if (!bModalOpen) { //only reload when modal is not open
-                    window.location.reload();
-                }
-            },
-
-            error: function (ex) {
-                bInterlock = false;
-                //error = no reload
-            }
-        });
-
-    }
-}
-
-//V2 of datacheck
-function CheckRefreshTable(polinterval, urlDataCheckaction, urlReloadAction, gridId) {
+function CheckRefreshTable(polinterval, urlDataCheckaction, gridId) {
     $(function () {
         setInterval(CheckForData, 1000 * polinterval);
     });
@@ -172,7 +128,7 @@ function CheckRefreshTable(polinterval, urlDataCheckaction, urlReloadAction, gri
                 if (response.doReload) {
                     //reload grid
                     $(gridId).mvcgrid({
-                        sourceUrl: urlReloadAction,
+                       // sourceUrl: urlReloadAction, 
                         reload: true,
                     });
                     Datatimestamp = response.dataTimestamp;
@@ -189,6 +145,16 @@ function CheckRefreshTable(polinterval, urlDataCheckaction, urlReloadAction, gri
         });
 
     }
+}
+
+//*****************************
+//set query string of a grid
+//*****************************
+function SetAjaxGridFilter(GridID, QueryString) {
+    $('#' + GridID).mvcgrid({
+        query: QueryString,
+        reload: true,
+    });
 }
 
 //*****************************
