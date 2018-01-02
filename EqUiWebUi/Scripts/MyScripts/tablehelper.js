@@ -42,7 +42,7 @@ function tableFormatBlink(logtypecolnum, subgroupcolnum) {
         bFlip = !bFlip;
         $('tbody > tr').each(function (index) {
             //blink for slowspeed
-                    if ($(this).children('td:nth-child(' + logtypecolnum + ')').text() == 'SLOWSpeed') {
+            if ($(this).children('td:nth-child(' + logtypecolnum + ')').text() == 'SLOWSpeed') {
                 if (bFlip) {
                     $(this).children('td').css("background-color", "#fc2fd0");
                 } else {
@@ -50,7 +50,7 @@ function tableFormatBlink(logtypecolnum, subgroupcolnum) {
                 }
             }
             //link live hardware fault
-                    if (($(this).children('td:nth-child(' + logtypecolnum + ')').text() == 'LIVE')
+            if (($(this).children('td:nth-child(' + logtypecolnum + ')').text() == 'LIVE')
                 && ($(this).children('td:nth-child(' + subgroupcolnum + ')').text() == 'Hardware')) {
                 if (bFlip) {
                     $(this).children('td').css("background-color", "#f21a1a");
@@ -81,17 +81,19 @@ function SetTableFont(fontsize) {
 function ListenToModal(modalid) {
     $(function () {
         $(".modal-link").click(function (event) {
-            event.preventDefault();
-            $(modalid).modal({ remote: $(this).attr("href") });
+            //event.preventDefault();
+            //$(modalid).modal({ remote: $(this).attr("href") });
         });
 
         //slideInDown
         //slideOutUp
 
         $(modalid).on('hidden.bs.modal', function () {
-            // reload page
-            window.location.reload();
+            bInterlockModal = false;
+            console.log("reset modal interlock");
         });
+
+
     })
 }
 
@@ -112,7 +114,9 @@ function CheckRefreshTable(polinterval, urlDataCheckaction, gridId) {
 
     function CheckForData() {
         console.log("check for data");
+
         if (bInterlock) {
+            console.log("check for data interlock");
             return;
         } else {
             bInterlock = true;
@@ -125,21 +129,25 @@ function CheckRefreshTable(polinterval, urlDataCheckaction, gridId) {
             data: { dataTimestamp: Datatimestamp },
 
             success: function (response) {
-                if (response.doReload) {
-                    //reload grid
-                    $(gridId).mvcgrid({
-                       // sourceUrl: urlReloadAction, 
-                        reload: true,
-                    });
-                    Datatimestamp = response.dataTimestamp;
-                    console.log("Reloaded grid:") & console.log(response);
+                if (!($("element").data('bs.modal') || {}).isShown ) { // NOK 
+                    if (response.doReload) {
+                        //reload grid
+                        $(gridId).mvcgrid({
+                            reload: true,
+                        });
+                        Datatimestamp = response.dataTimestamp;
+                        console.log("Reloaded grid:") & console.log(response);
+                    }
+                }
+                else {
+                    console.log("Reload SKIPED a modal is open");
                 }
                 //stop interlock
                 bInterlock = false;
             },
 
             error: function (ex) {
-                console.log("Request failed") & console.log(ex);
+                console.log("check for data Request failed") & console.log(ex);
                 bInterlock = false;
             }
         });

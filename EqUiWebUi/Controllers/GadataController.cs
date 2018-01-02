@@ -126,13 +126,13 @@ namespace EqUiWebUi.Controllers
 
         //Partial view for more info modal-------------------------------------------------------------------------------------------------
         [HttpGet]
-        public ActionResult _Moreinfo(string location, int errornum, int refid, string logtype, string logtext)
+        public ActionResult _Moreinfo(string location, int? errornum, int? refid, string logtype, string logtext)
         {
             //build up the model
             LogInfo logInfo = new LogInfo();
             logInfo.location = location;
-            logInfo.errornum = errornum;
-            logInfo.refid = refid;
+            logInfo.errornum = errornum.GetValueOrDefault(0);
+            logInfo.refid = refid.GetValueOrDefault(0);
             logInfo.logtype = logtype;
             logInfo.logtext = logtext;
             //query all instances of the error 
@@ -151,13 +151,16 @@ namespace EqUiWebUi.Controllers
                     foreach(DataColumn col in row.Table.Columns)
                     {
                         //only add if there is something.
-                        if (row.Field<string>(col.ColumnName).ToString().Length > 1)
+                        if (row.Field<string>(col.ColumnName) != null)
                         {
-                            sb.AppendLine("<div class=\"panel panel-default\">").AppendLine("<div class=\"panel-heading\">");
-                            sb.AppendLine(col.ColumnName);
-                            sb.AppendLine("</div>").AppendLine("<div class=\"panel-body\">");
-                            sb.AppendLine(row.Field<string>(col.ColumnName).ToString());
-                            sb.AppendLine("</div>").AppendLine("</div>");
+                            if (!string.IsNullOrEmpty(row.Field<string>(col.ColumnName).ToString()))
+                            {
+                                sb.AppendLine("<div class=\"panel panel-default\">").AppendLine("<div class=\"panel-heading\">");
+                                sb.AppendLine(col.ColumnName);
+                                sb.AppendLine("</div>").AppendLine("<div class=\"panel-body\">");
+                                sb.AppendLine(row.Field<string>(col.ColumnName).ToString());
+                                sb.AppendLine("</div>").AppendLine("</div>");
+                            }
                         }
                     }
                 }

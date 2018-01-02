@@ -45,9 +45,13 @@ namespace EqUiWebUi.Controllers
             DataTable dt = gadataComm.RunQueryGadata(qry);
 
             //because of legencay app we stil have a data with count = 0 this needs to go out because this system counts the intance of timestamps
-            DataTable tblFiltered = dt.AsEnumerable()
+            DataTable tblFiltered = dt;
+            if (dt.Rows.Count > 1)
+            { 
+                 tblFiltered = dt.AsEnumerable()
                   .Where(row => row.Field<int>("Count") != 0)
                   .CopyToDataTable();
+            }
             //
 
             //if groupmode auto (0) find out best grouping mode based on set timespan.

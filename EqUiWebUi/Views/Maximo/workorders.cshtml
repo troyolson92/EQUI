@@ -61,8 +61,7 @@
     @*run on doc ready *@
     $(document).ready(function () {
         //hide the navbar and move body content up
-        $(".navbar-fixed-top").autoHidingNavbar().hide();
-        $("#allcontent").animate({ "margin-top": "-60px" }, "fast");
+//THIS VIEW IS USED AS PARTIAL ! must change it
         //set ceckbox value to model on start
         document.getElementById("b_ciblings").checked = @Json.Encode(Model.b_ciblings);
         document.getElementById("b_preventive").checked = @Json.Encode(Model.b_preventive);
