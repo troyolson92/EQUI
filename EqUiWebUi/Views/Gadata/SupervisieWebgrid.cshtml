@@ -8,9 +8,15 @@
 <div>
   @Html.Action("_supervisie")
   <div class="panel-footer">
-            @MyFilters.LocationDropdownBrownfield("Supervisie")
-            <p class="pull-right"> Last data push: ????</p>
-        </div>
+      <div class="row">
+          <div class="col-sm-2">
+              @MyFilters.LocationDropdownGlobal("Supervisie")
+          </div>
+          <div class="col-sm-4"></div>
+          <div class="col-sm-6">
+              <p class="pull-right" id="PushInfo"> Last data push: ????</p>
+          </div>
+     </div>
 </div>
 
 

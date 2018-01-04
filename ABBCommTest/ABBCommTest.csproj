@@ -128,12 +128,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EQUICommunictionLib\EQUICommunictionLib.csproj">
-      <Project>{090979a1-2c7b-4c89-a921-f36a936412f2}</Project>
-      <Name>EQUICommunictionLib</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <COMReference Include="IWshRuntimeLibrary">
       <Guid>{F935DC20-1CF0-11D0-ADB9-00C04FD58A0B}</Guid>
       <VersionMajor>1</VersionMajor>
@@ -143,6 +137,12 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EQUICommunictionLib\EQUICommunictionLib.csproj">
+      <Project>{090979a1-2c7b-4c89-a921-f36a936412f2}</Project>
+      <Name>EQUICommunictionLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

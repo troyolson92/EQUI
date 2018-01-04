@@ -30,7 +30,8 @@ namespace EqUiWebUi
 		private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 		//update the local datatable with tipstatus called every minute #hangfire
 		[AutomaticRetry(Attempts = 0)]
-		public void UpdateTipstatus()
+        [DisableConcurrentExecution(120)] //locks the job from starting multible times if other one stil running.
+        public void UpdateTipstatus()
 		{
 			GADATAEntities gADATAEntities = new GADATAEntities();
 			List<TipMonitor> data = (from tipstatus in gADATAEntities.TipMonitor
@@ -56,7 +57,8 @@ namespace EqUiWebUi
 
 		//update the local datatable with ploeg rapport called every minute #hangfire
 		[AutomaticRetry(Attempts = 0)]
-		public void UpdatePloegreport()
+        [DisableConcurrentExecution(120)] //locks the job from starting multible times if other one stil running.
+        public void UpdatePloegreport()
 		{
 			try
 			{
@@ -100,7 +102,8 @@ namespace EqUiWebUi
 
 		//update the local datatable with supervisie called every minute #hangfire
 		[AutomaticRetry(Attempts = 0)]
-		public void UpdateSupervisie()
+        [DisableConcurrentExecution(120)] //locks the job from starting multible times if other one stil running.
+        public void UpdateSupervisie()
 		{
 				GADATAEntities gADATAEntities = new GADATAEntities();
 				List<Supervisie> data = (from supervis in gADATAEntities.Supervisie

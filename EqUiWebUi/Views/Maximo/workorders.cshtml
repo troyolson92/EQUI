@@ -37,14 +37,13 @@
         <div class="panel-body">
             <p>@ViewBag.error</p>
             @Html.AjaxGrid(Url.Action("_workordersOnLocation",
-                         new
-                         {
-                             location = Model.location,
-                             station = Model.station,
-                             b_ciblings = Model.b_ciblings,
-                             b_preventive = Model.b_preventive
-                         }))
-
+                   new
+                   {
+                       location = Model.location,
+                       station = Model.station,
+                       b_ciblings = Model.b_ciblings,
+                       b_preventive = Model.b_preventive
+                   }))
         </div>
 
         <p></p>
@@ -68,7 +67,7 @@
         //set optional font size. (to support HD and 4K monitors  )
         SetTableFont('@ViewBag.fontSize');
         //subscribe to row clicked events
-        $('#Workorders').mvcgrid({
+        $('.mvc-grid').mvcgrid({
             rowClicked: function (row, data, e) {
                 $("#woDetailsPartial").html("Loading.....");
                 var url = "@Url.Action("_woDetails", "Maximo")?wonum=" + data.WONUM;

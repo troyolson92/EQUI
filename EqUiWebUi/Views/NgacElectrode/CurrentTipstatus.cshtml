@@ -6,17 +6,21 @@
 }
 @*html*@
 <div>
-    <p></p>
-    <p></p>
     <div class="panel panel-default">
-
         <div class="panel-body">
-            @Html.AjaxGrid(Url.Action("_TipStatus"))
+            @Html.Action("_TipStatus")
         </div>
 
         <div class="panel-footer">
-            @MyFilters.LocationDropdownGreenField("NgacTipStatus")
-            <p style="float:right"> Last data push: ????</p>
+            <div class="row">
+                <div class="col-sm-2">
+                    @MyFilters.LocationDropdownGlobal("NgacTipStatus")
+                </div>
+                <div class="col-sm-4"></div>
+                <div class="col-sm-6">
+                    <p class="pull-right" id="PushInfo"> Last data push: ????</p>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -31,8 +35,7 @@
         function flashRow() {
             bFlip = !bFlip;
             $('tbody > tr').each(function (index) {
-                @*blink for slowspeed*@
-                if ($(this).children('td:nth-child(5)').text() > 50) {
+                if ($(this).children('td:nth-child(5)').text() > 80) {
                     if (bFlip) {
                         $(this).children('td').css("background-color", "#f21a1a");
                     } else {
@@ -74,6 +77,10 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        //subscribe to row clicked events
+        $('#NgacTipStatus').mvcgrid({
+            sourceUrl: '@Url.Action("_TipStatus")',
+        });
         //enable polling for new data
         CheckRefreshTable(5, '@Url.Action("TipwearCheckNewData")','#NgacTipStatus');
     });

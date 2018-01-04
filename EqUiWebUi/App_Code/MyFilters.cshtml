@@ -41,7 +41,7 @@
 }
 
 @helper LocationDropdownGreenField(string GridId, bool dropup = false)
-        {
+    {
         <div class="dropup" id="LocationDropdownGreenField">
             <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
                 Set a location filter
@@ -58,6 +58,36 @@
                 <li onclick="SetAjaxGridFilter('@GridId','@GridId-LocationTree-Contains=GA4.0')">Preassembly</li>
             </ul>
         </div>
+}
+
+@helper LocationDropdownGlobal(string GridId, bool dropup = false)
+    {
+        <select class="form-control input-sm" id="LocationDropdownGlobal" name="Selecteer locatie" onchange="SetAjaxGridFilter('@GridId','@GridId-LocationTree-Contains='+this.value)">
+            <option value="">no Filter</option>
+            <optgroup label="CMA UB12 floorline">
+                <option value="A LIJN 33">Floor (all)</option>
+                <option value="A LIJN 331">Frontstructure</option>
+                <option value="A LIJN 334">Frontfloor</option>
+                <option value="A LIJN 336">Rearfloor</option>
+                <option value="A LIJN 338">Marriage</option>
+            </optgroup>
+            <optgroup label="CMA Sides">
+                <option value="A LIJN 35">Sides (all)</option>
+            </optgroup>
+            <optgroup label="CMA Preassembly">
+                <option value="GA4.0">GA4.0</option>
+            </optgroup>
+            <optgroup label="AAL">
+                <option value="AAL">AAL (all)</option>
+                <option value="A FLOOR L">A FLOOR L</option>
+                <option value="A SIBO L">A SIBO L</option>
+            </optgroup>
+            <optgroup label="AAS">
+                <option value="AAS">AAS (all)</option>
+                <option value="A FLOOR S">A FLOOR S</option>
+                <option value="A SIBO S">A SIBO S</option>
+            </optgroup>
+        </select>
 }
 
 
@@ -94,7 +124,7 @@
                                 not valid
                             </text>
                             break;
-}
+                    }
                 }
                 <span class="caret"></span>
             </button>

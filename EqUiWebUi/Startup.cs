@@ -41,9 +41,9 @@ namespace EqUiWebUi
             RecurringJob.AddOrUpdate(() => backgroundwork.UpdatePloegreport(), Cron.Minutely);
             //**********************************Supervisie table***************************************************
             //fire and forget to init
-            BackgroundJob.Enqueue(() => backgroundwork.UpdateSupervisie());
+            //BackgroundJob.Enqueue(() => backgroundwork.UpdateSupervisie());
             //set job to refresh every minute
-            RecurringJob.AddOrUpdate(() => backgroundwork.UpdateSupervisie(), Cron.Minutely);
+            //RecurringJob.AddOrUpdate(() => backgroundwork.UpdateSupervisie(), Cron.Minutely);
             //**********************************snapshot system****************************************************
             //check every minute for new jobs 
             RecurringJob.AddOrUpdate(() => backgroundwork.HandleMaximoSnapshotWork(),Cron.Minutely);

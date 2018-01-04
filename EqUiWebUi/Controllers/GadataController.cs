@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using EqUiWebUi.Models;
 using System.Data;
 using EQUICommunictionLib;
-using EqUiWebUi.WebGridHelpers;
 using System.Text;
+using System.Web;
 
 namespace EqUiWebUi.Controllers
 {
@@ -16,22 +15,19 @@ namespace EqUiWebUi.Controllers
 		// GET: /Gadata/
 		public ActionResult Index()
 		{
-			return new HttpNotFoundResult("Woeps there seems to bo nothing here");
+			return new HttpNotFoundResult("Woeps there seems to be nothing here");
 		}
 
         //------------------------------------PloegRapport-------------------------------------------------
         [HttpGet]
-		public ActionResult PloegRapportWebgrid()
-		{
-            //refresh every 10 minutes anyway ! 
-            Response.AddHeader("Refresh", "600");
+        public ActionResult PloegRapportWebgrid()
+        {
             return View();
         }
 
         [HttpGet]
         public ActionResult _ploegRapport()
         {
-            //
             var data = DataBuffer.Ploegreport;
             //in case hangfire is taking a day off
             if (data == null)
@@ -40,6 +36,26 @@ namespace EqUiWebUi.Controllers
                 backgroundwork.UpdatePloegreport();
                 data = DataBuffer.Ploegreport;
             }
+
+            //in case still null trow error 
+            if (data ==null)
+            {
+                return new HttpNotFoundResult("Woeps there seems to be an error");
+            }
+
+            //test with cookie
+            var cookie = Request.Cookies["equi_user"];
+            if (cookie != null)
+            {
+                if(cookie["LocationRoot"] != "")
+                {
+                   data = (from d in data
+                          where (d.LocationTree ??"").Contains(cookie["LocationRoot"])
+                          || d.Logtype == "TIMELINE"
+                          select d).ToList();
+                }
+            }
+            //
             return PartialView(data);
         }
 
@@ -65,8 +81,6 @@ namespace EqUiWebUi.Controllers
         [HttpGet]
         public ActionResult SupervisieWebgrid()
         {
-            //refresh every 10 minutes anyway ! 
-            Response.AddHeader("Refresh", "600");
             return View();
         }
 
@@ -81,7 +95,26 @@ namespace EqUiWebUi.Controllers
                 Backgroundwork backgroundwork = new Backgroundwork();
                 backgroundwork.UpdateSupervisie();
                 data = DataBuffer.Supervisie;
+            }           
+            //in case still null trow error 
+            if (data == null)
+            {
+                return new HttpNotFoundResult("Woeps there seems to be an error");
             }
+
+            //test with cookie
+            var cookie = Request.Cookies["equi_user"];
+            if (cookie != null)
+            {
+                if (cookie["LocationRoot"] != "")
+                {
+                    data = (from d in data
+                            where (d.LocationTree ?? "").Contains(cookie["LocationRoot"])
+                            || d.Logtype == "TIMELINE"
+                            select d).ToList();
+                }
+            }
+            //
             return PartialView(data);
         }
 

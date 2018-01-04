@@ -37,6 +37,24 @@ namespace EqUiWebUi.Controllers
                 backgroundwork.UpdateTipstatus();
                 data = DataBuffer.Tipstatus;
             }
+            //in case still null trow error 
+            if (data == null)
+            {
+                return new HttpNotFoundResult("Woeps there seems to be an error");
+            }
+
+            //test with cookie
+            var cookie = Request.Cookies["equi_user"];
+            if (cookie != null)
+            {
+                if (cookie["LocationRoot"] != "")
+                {
+                    data = (from d in data
+                            where (d.LocationTree ?? "").Contains(cookie["LocationRoot"])
+                            select d).ToList();
+                }
+            }
+            //
             return PartialView(data);
         }
 
@@ -78,13 +96,15 @@ namespace EqUiWebUi.Controllers
         }
 
         //get filterd list of wich need to be change
-        public ActionResult _TipsToChange(string locationFilter, int minWear = 0, int minParts = 0, int maxDress = 200)
+        public ActionResult _TipsToChange(string locationFilter, int minWear = 0, int minParts = 0, int maxDress = 1000)
         {
             GADATAEntities gADATAEntities = new GADATAEntities();
             List<TipMonitor> data = (from tipMonitor in gADATAEntities.TipMonitor
-                                     where tipMonitor.pWear > minWear
-                                     && tipMonitor.nRcars > minParts
-                                     && tipMonitor.nDress < maxDress
+                                     where 
+                                     (   tipMonitor.pWear > minWear
+                                    //  || tipMonitor.nRcars < minParts
+                                      || tipMonitor.nDress > maxDress
+                                     )
                                      && tipMonitor.LocationTree.Contains(locationFilter)
                                               select tipMonitor
                                               ).ToList();

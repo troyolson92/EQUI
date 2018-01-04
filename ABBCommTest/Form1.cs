@@ -8,8 +8,6 @@ using System.Text;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using EQUICommunictionLib;
-
 using ABB.Robotics.Controllers;
 using ABB.Robotics.Controllers.Discovery;
 using ABB.Robotics.Controllers.RapidDomain;
@@ -19,6 +17,7 @@ using ABB.Robotics.Controllers.FileSystemDomain;
 using ABB.Robotics.Controllers.IOSystemDomain;
 
 using System.Xml.Linq;
+using EQUICommunictionLib;
 
 
 namespace ABBCommTest
@@ -40,7 +39,7 @@ namespace ABBCommTest
             //
             InitializeComponent();
             //get greenfield list from GADATA
-            dt_robots = lgadatacomm.RunQueryGadata(@"select * from gadata.ngac.c_controller where assetnum like 'URA%' AND CONTROLLER_NAME LIKE '331020%'"); //); //and controller_name like '%99%'");
+            dt_robots = lgadatacomm.RunQueryGadata(@"select * from gadata.ngac.c_controller where assetnum like 'URA%' AND CONTROLLER_NAME LIKE '331%'"); //); //and controller_name like '%99%'");
                                                    
             //add colums for extra data
             dt_robots.Columns.Add("SystemId", System.Type.GetType("System.String"));
@@ -56,7 +55,7 @@ namespace ABBCommTest
             dt_robots.Columns.Add("ConnectOK", System.Type.GetType("System.String"));
             //  dt_robots.Columns.Add("ConfigOK", System.Type.GetType("System.String"));
             // dt_robots.Columns.Add("restartOK", System.Type.GetType("System.String"));
-               dt_robots.Columns.Add("LoadOK", System.Type.GetType("System.String"));
+            dt_robots.Columns.Add("WriteOk", System.Type.GetType("System.String"));
           //  dt_robots.Columns.Add("HasTipneed", System.Type.GetType("System.String"));
            // dt_robots.Columns.Add("HasTipneedComment", System.Type.GetType("System.String"));
           //  dt_robots.Columns.Add("Found", System.Type.GetType("System.String"));
@@ -336,7 +335,6 @@ COM_APP:
             }
         }
 
-
         //load new version of lrobot.
         private void LoadNewLrobotRobot(ControllerInfo ci, DataGridViewRow row)
         {
@@ -445,6 +443,100 @@ COM_APP:
                 return;
             }
             
+        }
+
+
+        private void SearchSymbolStructure(RapidSymbol[] rsCol)
+        {
+            RapidDataType theDataType; foreach (RapidSymbol rs in rsCol)
+            {
+                Console.WriteLine("RapidSymbol name = " + rs.Name);
+                theDataType = RapidDataType.GetDataType(rs);
+                Console.WriteLine("DataType = " + theDataType.Name); if (theDataType.IsRecord)
+                {
+                    RapidSymbol[] syms = theDataType.GetComponents();
+                    SearchSymbolStructure(syms);
+                }
+            }
+        }
+
+        //load new version of lrobot.
+        private void ChangeMAxnoDress(ControllerInfo ci, DataGridViewRow row)
+        {
+
+            try
+            {
+                if (ci.Availability != Availability.Available) { debugger.Message("controller busy: " + ci.Id); return; } //stop if controller is not available
+                //
+                controller = ControllerFactory.CreateFrom(ci); //get controller from factory
+                if (controller.OperatingMode != ControllerOperatingMode.Auto) //controller must be on auto to take master 
+                {
+                    row.Cells[dataGridView1.Columns["AutoOK"].Index].Value = "NOK";
+                    return;
+                }
+                else
+                {
+                    row.Cells[dataGridView1.Columns["AutoOK"].Index].Value = "OK";
+
+                    RapidSymbolSearchProperties sProp = RapidSymbolSearchProperties.CreateDefault();
+                    sProp.Recursive = true;
+                    sProp.Types = SymbolTypes.Constant | SymbolTypes.Persistent;
+                    sProp.SearchMethod = SymbolSearchMethod.Block;
+
+                    ABB.Robotics.Controllers.RapidDomain.Task tRob1 = controller.Rapid.GetTask("T_ROB1");
+                    RapidSymbol[] rsCol = tRob1.SearchRapidSymbol(sProp, "", string.Empty);
+
+                    RapidDataType theDataType;
+
+                    foreach (RapidSymbol rs in rsCol)
+                    {
+                        theDataType = RapidDataType.GetDataType(rs);
+
+                        if (theDataType.Name.StartsWith("gundata") && rs.Scope[1].EndsWith("UserData")) //type tipdress data in a module that ends with user data
+                        {
+                        RapidData rd = controller.Rapid.GetRapidData(rs.Scope[0], rs.Scope[1], rs.Scope[2]);
+
+                        RapidDataType rdt = controller.Rapid.GetRapidDataType(rs.Scope[0], rs.Scope[1], rs.Scope[2]);
+                        UserDefined gundata = new UserDefined(rdt);
+
+                        gundata = (UserDefined)rd.Value;
+                        string maxWelds = gundata.Components[2].ToString();
+
+                        Console.WriteLine("{0}; {1}; {2}", controller.Name, rs.Scope[2], maxWelds);
+
+                            //change it 
+                            try
+                            {
+                                //get controller mastership
+                                using (Mastership master = Mastership.Request(controller))
+                                {
+                                    gundata.Components[2].FillFromString("60"); // set new value to 60
+                                    rd.Value = gundata;
+                                    row.Cells[dataGridView1.Columns["WriteOk"].Index].Value = "OK";
+                                    //release master
+                                    master.Release();
+                                }
+                            }
+                            catch (System.InvalidOperationException ex)
+                            {
+                                debugger.Exeption(ex);
+                                debugger.Message("error in write to controller");
+                                return;
+                            }
+                        }
+                    }
+
+                }
+                row.Cells[dataGridView1.Columns["ConnectOK"].Index].Value = "OK";
+            }
+            catch (Exception ex)
+            {
+                row.Cells[dataGridView1.Columns["ConnectOK"].Index].Value = "NOK";
+                debugger.Exeption(ex);
+                debugger.Message("Error connecting to controller");
+                return;
+            }
+
         }
 
         //check doTipneed active
@@ -679,7 +771,7 @@ COM_APP:
                         // SocketConfigureRobot(ci, row);
                         //DoRobbieFupCheck(ci, row);
                         //DoTipneedcheckRobot(ci, row);
-                        LoadNewLrobotRobot(ci, row);
+                        ChangeMAxnoDress(ci, row);
                         }
                         else
                         {

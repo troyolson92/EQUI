@@ -107,20 +107,26 @@ function CheckRefreshTable(polinterval, urlDataCheckaction, gridId) {
     });
     //get last data timestamp from model
     var Datatimestamp = '1900-01-01 00:00:00';
-    console.log("Datatimestamp: " + Datatimestamp);
     //interlock for ajax request
     var bInterlock = new Boolean();
     bInterlock = false;
 
     function CheckForData() {
-        console.log("check for data");
-
+        //if modal open no check
+        if ($('.modal').hasClass('in')) {
+            console.log("Modal open detected check for new data: " + urlDataCheckaction + " halted");
+            return;
+        } else {
+            console.log("check for new data: " + urlDataCheckaction);
+        }
+        // if an other request running no check
         if (bInterlock) {
-            console.log("check for data interlock");
+            console.log("INTERLOCK check for new data: " + urlDataCheckaction + " halted");
             return;
         } else {
             bInterlock = true;
         }
+        //Ajax request
         $.ajax({
             async: true,
             type: 'GET',
@@ -136,18 +142,18 @@ function CheckRefreshTable(polinterval, urlDataCheckaction, gridId) {
                             reload: true,
                         });
                         Datatimestamp = response.dataTimestamp;
-                        console.log("Reloaded grid:") & console.log(response);
+                        console.log("Reloaded grid: " + gridId) + console.log(response);
                     }
                 }
                 else {
                     console.log("Reload SKIPED a modal is open");
                 }
-                //stop interlock
                 bInterlock = false;
+                $("#PushInfo").html("Last check: " + response.lastCheck + " Last push: " + response.dataTimestamp);
             },
 
             error: function (ex) {
-                console.log("check for data Request failed") & console.log(ex);
+                console.log("Modal open detected check for new data: " + urlDataCheckaction) + console.log(ex);
                 bInterlock = false;
             }
         });
