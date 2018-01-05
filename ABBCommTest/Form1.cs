@@ -38,33 +38,6 @@ namespace ABBCommTest
             debugger.Init(@"c:\temp\ABBcomm.log");
             //
             InitializeComponent();
-            //get greenfield list from GADATA
-            dt_robots = lgadatacomm.RunQueryGadata(@"select * from gadata.ngac.c_controller where assetnum like 'URA%' AND CONTROLLER_NAME LIKE '331%'"); //); //and controller_name like '%99%'");
-                                                   
-            //add colums for extra data
-            dt_robots.Columns.Add("SystemId", System.Type.GetType("System.String"));
-           // dt_robots.Columns.Add("Availability", System.Type.GetType("System.String"));
-           // dt_robots.Columns.Add("IsVirtual", System.Type.GetType("System.String"));
-           // dt_robots.Columns.Add("SystemName", System.Type.GetType("System.String"));
-           // dt_robots.Columns.Add("Version", System.Type.GetType("System.String"));
-            dt_robots.Columns.Add("ControllerName", System.Type.GetType("System.String"));
-           // dt_robots.Columns.Add("ConfIsOK", System.Type.GetType("System.String"));
-            dt_robots.Columns.Add("autoOK", System.Type.GetType("System.String"));
-            dt_robots.Columns.Add("Version", System.Type.GetType("System.String"));
-            dt_robots.Columns.Add("OKtoLoad", System.Type.GetType("System.String"));
-            dt_robots.Columns.Add("ConnectOK", System.Type.GetType("System.String"));
-            //  dt_robots.Columns.Add("ConfigOK", System.Type.GetType("System.String"));
-            // dt_robots.Columns.Add("restartOK", System.Type.GetType("System.String"));
-            dt_robots.Columns.Add("WriteOk", System.Type.GetType("System.String"));
-          //  dt_robots.Columns.Add("HasTipneed", System.Type.GetType("System.String"));
-           // dt_robots.Columns.Add("HasTipneedComment", System.Type.GetType("System.String"));
-          //  dt_robots.Columns.Add("Found", System.Type.GetType("System.String"));
-          //  dt_robots.Columns.Add("Deleted", System.Type.GetType("System.String"));
-          //  dt_robots.Columns.Add("Exeption", System.Type.GetType("System.String"));
-
-            //link to datagrid
-            dataGridView1.DataSource = dt_robots;
-            //
         }
 
         private void LinkControllertoList(ControllerInfo controllerInfo)
@@ -335,13 +308,14 @@ COM_APP:
             }
         }
 
-        //load new version of lrobot.
-        private void LoadNewLrobotRobot(ControllerInfo ci, DataGridViewRow row)
+        //load new version of a module.
+        private void LoadNewLrobotRobot(ControllerInfo ci, DataGridViewRow row, string workfolder,string modulename,string refVar, string refVarValueContains)
         {
-            string tempdir = @"c:\temp\debug\";
+            //   string workfolder = @"c:\temp\debug\";
             string FilePathOnControler = @"/hd0a/TEMP/";
-            string modulename = "LRobot.sys";
-            string refVar = "Version_LRobot";
+           // string modulename = "LRobot.sys";
+           // string refVar = "Version_LRobot";
+           // string refVarValueContains = "ABB 6V99 - 2017-11-02";
 
             try
             {
@@ -364,14 +338,14 @@ COM_APP:
 
                    // return; // break for testing .
 
-                    if (rd.Value.ToString().Contains("ABB 6V99 - 2017-11-02"))
+                    if (rd.Value.ToString().Contains(refVarValueContains))
                     {
 
                         //put the file on the controller*****************************************************************
                         FileSystem cntrlFileSystem;
                         cntrlFileSystem = controller.FileSystem;
                         controller.FileSystem.RemoteDirectory = FilePathOnControler;
-                        controller.FileSystem.LocalDirectory = tempdir;
+                        controller.FileSystem.LocalDirectory = workfolder;
 
                         try
                         {
@@ -443,21 +417,6 @@ COM_APP:
                 return;
             }
             
-        }
-
-
-        private void SearchSymbolStructure(RapidSymbol[] rsCol)
-        {
-            RapidDataType theDataType; foreach (RapidSymbol rs in rsCol)
-            {
-                Console.WriteLine("RapidSymbol name = " + rs.Name);
-                theDataType = RapidDataType.GetDataType(rs);
-                Console.WriteLine("DataType = " + theDataType.Name); if (theDataType.IsRecord)
-                {
-                    RapidSymbol[] syms = theDataType.GetComponents();
-                    SearchSymbolStructure(syms);
-                }
-            }
         }
 
         //load new version of lrobot.
@@ -756,7 +715,7 @@ COM_APP:
             debugger.Message("done with expose");
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnDoWork_Click(object sender, EventArgs e)
         {
                 foreach (DataGridViewRow row in dataGridView1.SelectedRows)
                 {
@@ -771,7 +730,10 @@ COM_APP:
                         // SocketConfigureRobot(ci, row);
                         //DoRobbieFupCheck(ci, row);
                         //DoTipneedcheckRobot(ci, row);
-                        ChangeMAxnoDress(ci, row);
+                        //ChangeMAxnoDress(ci, row);
+                        LoadNewLrobotRobot(ci, row, tb_workfolder.Text.Trim(), tb_module.Text.Trim(), tbVerVarName.Text.Trim(), tb_verfileValue.Text.Trim());
+
+
                         }
                         else
                         {
@@ -793,6 +755,32 @@ COM_APP:
             bckShort.searchForRobots();
             bckShort.buildShortcutdirectory();
             debugger.Message("done with dirbuild");
+        }
+
+        private void btn_loadGrid_Click(object sender, EventArgs e)
+        {
+            //get greenfield list from GADATA
+            string qry = string.Format(@"select * from gadata.ngac.c_controller where assetnum like 'URA%' AND CONTROLLER_NAME LIKE '{0}'",tbGridWhereClause.Text.Trim());
+            dt_robots = lgadatacomm.RunQueryGadata(qry); 
+            //add colums for extra data
+            dt_robots.Columns.Add("SystemId", System.Type.GetType("System.String"));
+            dt_robots.Columns.Add("ControllerName", System.Type.GetType("System.String"));
+            dt_robots.Columns.Add("autoOK", System.Type.GetType("System.String"));
+            dt_robots.Columns.Add("Version", System.Type.GetType("System.String"));
+            dt_robots.Columns.Add("OKtoLoad", System.Type.GetType("System.String"));
+            dt_robots.Columns.Add("ConnectOK", System.Type.GetType("System.String"));
+            //  dt_robots.Columns.Add("ConfigOK", System.Type.GetType("System.String"));
+            // dt_robots.Columns.Add("restartOK", System.Type.GetType("System.String"));
+            dt_robots.Columns.Add("WriteOk", System.Type.GetType("System.String"));
+            //  dt_robots.Columns.Add("HasTipneed", System.Type.GetType("System.String"));
+            // dt_robots.Columns.Add("HasTipneedComment", System.Type.GetType("System.String"));
+            //  dt_robots.Columns.Add("Found", System.Type.GetType("System.String"));
+            //  dt_robots.Columns.Add("Deleted", System.Type.GetType("System.String"));
+            //  dt_robots.Columns.Add("Exeption", System.Type.GetType("System.String"));
+
+            //link to datagrid
+            dataGridView1.DataSource = dt_robots;
+            //
         }
     }
 

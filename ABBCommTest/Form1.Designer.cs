@@ -33,16 +33,29 @@
             this.btn_scanNetwork = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.btn_expose = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.btn_bckShortcuts = new System.Windows.Forms.Button();
+            this.btnDoWork = new System.Windows.Forms.Button();
+            this.tbGridWhereClause = new System.Windows.Forms.TextBox();
+            this.btn_loadGrid = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.tbVerVarName = new System.Windows.Forms.TextBox();
+            this.tb_verfileValue = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.tb_module = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.tb_workfolder = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // btn_addCntrl
             // 
             this.btn_addCntrl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btn_addCntrl.Location = new System.Drawing.Point(10, 500);
-            this.btn_addCntrl.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btn_addCntrl.Location = new System.Drawing.Point(145, 19);
+            this.btn_addCntrl.Margin = new System.Windows.Forms.Padding(2);
             this.btn_addCntrl.Name = "btn_addCntrl";
             this.btn_addCntrl.Size = new System.Drawing.Size(118, 19);
             this.btn_addCntrl.TabIndex = 1;
@@ -53,8 +66,8 @@
             // tbox_ip
             // 
             this.tbox_ip.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.tbox_ip.Location = new System.Drawing.Point(140, 500);
-            this.tbox_ip.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tbox_ip.Location = new System.Drawing.Point(15, 18);
+            this.tbox_ip.Margin = new System.Windows.Forms.Padding(2);
             this.tbox_ip.Name = "tbox_ip";
             this.tbox_ip.Size = new System.Drawing.Size(114, 20);
             this.tbox_ip.TabIndex = 2;
@@ -63,8 +76,8 @@
             // btn_scanNetwork
             // 
             this.btn_scanNetwork.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btn_scanNetwork.Location = new System.Drawing.Point(140, 524);
-            this.btn_scanNetwork.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btn_scanNetwork.Location = new System.Drawing.Point(427, 34);
+            this.btn_scanNetwork.Margin = new System.Windows.Forms.Padding(2);
             this.btn_scanNetwork.Name = "btn_scanNetwork";
             this.btn_scanNetwork.Size = new System.Drawing.Size(113, 19);
             this.btn_scanNetwork.TabIndex = 8;
@@ -80,18 +93,18 @@
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(9, 10);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(2);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 24;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(1340, 473);
+            this.dataGridView1.Size = new System.Drawing.Size(1308, 455);
             this.dataGridView1.TabIndex = 10;
             // 
             // btn_expose
             // 
             this.btn_expose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btn_expose.Location = new System.Drawing.Point(10, 524);
-            this.btn_expose.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btn_expose.Location = new System.Drawing.Point(284, 34);
+            this.btn_expose.Margin = new System.Windows.Forms.Padding(2);
             this.btn_expose.Name = "btn_expose";
             this.btn_expose.Size = new System.Drawing.Size(118, 19);
             this.btn_expose.TabIndex = 11;
@@ -99,46 +112,168 @@
             this.btn_expose.UseVisualStyleBackColor = true;
             this.btn_expose.Click += new System.EventHandler(this.btn_expose_Click);
             // 
-            // button1
+            // btnDoWork
             // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button1.Location = new System.Drawing.Point(375, 500);
-            this.button1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(90, 42);
-            this.button1.TabIndex = 13;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btnDoWork.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnDoWork.Location = new System.Drawing.Point(1167, 489);
+            this.btnDoWork.Margin = new System.Windows.Forms.Padding(2);
+            this.btnDoWork.Name = "btnDoWork";
+            this.btnDoWork.Size = new System.Drawing.Size(122, 57);
+            this.btnDoWork.TabIndex = 13;
+            this.btnDoWork.Text = "DO SELECTED WORK";
+            this.btnDoWork.UseVisualStyleBackColor = true;
+            this.btnDoWork.Click += new System.EventHandler(this.btnDoWork_Click);
             // 
-            // btn_bckShortcuts
+            // tbGridWhereClause
             // 
-            this.btn_bckShortcuts.Location = new System.Drawing.Point(1067, 517);
-            this.btn_bckShortcuts.Name = "btn_bckShortcuts";
-            this.btn_bckShortcuts.Size = new System.Drawing.Size(75, 23);
-            this.btn_bckShortcuts.TabIndex = 14;
-            this.btn_bckShortcuts.Text = "buildshortcuts";
-            this.btn_bckShortcuts.UseVisualStyleBackColor = true;
-            this.btn_bckShortcuts.Click += new System.EventHandler(this.btn_bckShortcuts_Click);
+            this.tbGridWhereClause.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.tbGridWhereClause.Location = new System.Drawing.Point(15, 56);
+            this.tbGridWhereClause.Margin = new System.Windows.Forms.Padding(2);
+            this.tbGridWhereClause.Name = "tbGridWhereClause";
+            this.tbGridWhereClause.Size = new System.Drawing.Size(114, 20);
+            this.tbGridWhereClause.TabIndex = 14;
+            this.tbGridWhereClause.Text = "336020%";
+            // 
+            // btn_loadGrid
+            // 
+            this.btn_loadGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btn_loadGrid.Location = new System.Drawing.Point(145, 56);
+            this.btn_loadGrid.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_loadGrid.Name = "btn_loadGrid";
+            this.btn_loadGrid.Size = new System.Drawing.Size(118, 19);
+            this.btn_loadGrid.TabIndex = 15;
+            this.btn_loadGrid.Text = "LoadGridFromDB";
+            this.btn_loadGrid.UseVisualStyleBackColor = true;
+            this.btn_loadGrid.Click += new System.EventHandler(this.btn_loadGrid_Click);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.groupBox1.Controls.Add(this.tbox_ip);
+            this.groupBox1.Controls.Add(this.btn_loadGrid);
+            this.groupBox1.Controls.Add(this.btn_addCntrl);
+            this.groupBox1.Controls.Add(this.tbGridWhereClause);
+            this.groupBox1.Controls.Add(this.btn_scanNetwork);
+            this.groupBox1.Controls.Add(this.btn_expose);
+            this.groupBox1.Location = new System.Drawing.Point(9, 470);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(556, 84);
+            this.groupBox1.TabIndex = 16;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Config robots";
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.groupBox2.Controls.Add(this.label4);
+            this.groupBox2.Controls.Add(this.tb_workfolder);
+            this.groupBox2.Controls.Add(this.label3);
+            this.groupBox2.Controls.Add(this.label2);
+            this.groupBox2.Controls.Add(this.tb_module);
+            this.groupBox2.Controls.Add(this.label1);
+            this.groupBox2.Controls.Add(this.tb_verfileValue);
+            this.groupBox2.Controls.Add(this.tbVerVarName);
+            this.groupBox2.Location = new System.Drawing.Point(580, 470);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(534, 86);
+            this.groupBox2.TabIndex = 17;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "LoadModule";
+            // 
+            // tbVerVarName
+            // 
+            this.tbVerVarName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.tbVerVarName.Location = new System.Drawing.Point(108, 56);
+            this.tbVerVarName.Margin = new System.Windows.Forms.Padding(2);
+            this.tbVerVarName.Name = "tbVerVarName";
+            this.tbVerVarName.Size = new System.Drawing.Size(177, 20);
+            this.tbVerVarName.TabIndex = 16;
+            this.tbVerVarName.Text = "Version_DTipChange_EDAG";
+            // 
+            // tb_verfileValue
+            // 
+            this.tb_verfileValue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.tb_verfileValue.Location = new System.Drawing.Point(343, 56);
+            this.tb_verfileValue.Margin = new System.Windows.Forms.Padding(2);
+            this.tb_verfileValue.Name = "tb_verfileValue";
+            this.tb_verfileValue.Size = new System.Drawing.Size(177, 20);
+            this.tb_verfileValue.TabIndex = 17;
+            this.tb_verfileValue.Text = "ABB 6.0.5 - 2018-01-03 ";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(16, 59);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(87, 13);
+            this.label1.TabIndex = 18;
+            this.label1.Text = "Load if: Varname";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(290, 59);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(48, 13);
+            this.label2.TabIndex = 19;
+            this.label2.Text = "Contains";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(16, 22);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(42, 13);
+            this.label3.TabIndex = 21;
+            this.label3.Text = "Module";
+            // 
+            // tb_module
+            // 
+            this.tb_module.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.tb_module.Location = new System.Drawing.Point(78, 19);
+            this.tb_module.Margin = new System.Windows.Forms.Padding(2);
+            this.tb_module.Name = "tb_module";
+            this.tb_module.Size = new System.Drawing.Size(160, 20);
+            this.tb_module.TabIndex = 20;
+            this.tb_module.Text = "DTipChange.sys";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(298, 18);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(56, 13);
+            this.label4.TabIndex = 23;
+            this.label4.Text = "workfolder";
+            // 
+            // tb_workfolder
+            // 
+            this.tb_workfolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.tb_workfolder.Location = new System.Drawing.Point(360, 15);
+            this.tb_workfolder.Margin = new System.Windows.Forms.Padding(2);
+            this.tb_workfolder.Name = "tb_workfolder";
+            this.tb_workfolder.Size = new System.Drawing.Size(160, 20);
+            this.tb_workfolder.TabIndex = 22;
+            this.tb_workfolder.Text = "c:\\temp\\debug\\";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1359, 552);
-            this.Controls.Add(this.btn_bckShortcuts);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.btn_expose);
+            this.ClientSize = new System.Drawing.Size(1327, 566);
+            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.btn_scanNetwork);
-            this.Controls.Add(this.tbox_ip);
-            this.Controls.Add(this.btn_addCntrl);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Controls.Add(this.btnDoWork);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Form1";
-            this.Text = "SDEBEUL TOOL FOR CFG ABB NFS SETTINGS!! STAY OFF!!";
+            this.Text = "DANGER!!!!! Tool connects to robots and can DO A LOT OF NASTY STUF!!!!";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -149,8 +284,19 @@
         private System.Windows.Forms.Button btn_scanNetwork;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button btn_expose;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button btn_bckShortcuts;
+        private System.Windows.Forms.Button btnDoWork;
+        private System.Windows.Forms.TextBox tbGridWhereClause;
+        private System.Windows.Forms.Button btn_loadGrid;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox tb_verfileValue;
+        private System.Windows.Forms.TextBox tbVerVarName;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox tb_module;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox tb_workfolder;
     }
 }
 
