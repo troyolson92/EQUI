@@ -4,8 +4,8 @@
                     {
                         columns.Add(c => c.Robot).Titled("Robot").InitialSort(GridSortOrder.Asc);
                         columns.Add(c => c.pWear).Titled("%wear");
-                        columns.Add(c => c.nRspots).Titled("Resterende Spots").Css("hidden-xs"); 
-                        columns.Add(c => c.nRcars).Titled("Resterende Stukken").Css("hidden-xs");
+                        columns.Add(c => c.nRspots).Titled("Resterende Spots").Css("hidden");  //hide until trusted
+                        columns.Add(c => c.nRcars).Titled("Resterende Stukken").Css("hidden");  //hide until trusted
                         columns.Add(c => c.nDress).Titled("Aantal dresses");
                     }).Empty("Did not find anything").Css("table-hover")
 

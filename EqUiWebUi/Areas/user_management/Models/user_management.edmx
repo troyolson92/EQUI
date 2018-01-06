@@ -1,0 +1,241 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="GADATAModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="c_userRoles">
+          <Key>
+            <PropertyRef Name="Role" />
+          </Key>
+          <Property Name="Role" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="h_usersPermisions">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+          <Property Name="Role" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="GrantedBy" Type="int" Nullable="false" />
+          <Property Name="GrantedAt" Type="datetime" />
+        </EntityType>
+        <EntityType Name="L_users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LocationRoot" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="AssetRoot" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Locked" Type="bit" Nullable="false" />
+          <Property Name="Blocked" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_h_usersPermisions_c_userRoles">
+          <End Role="c_userRoles" Type="Self.c_userRoles" Multiplicity="1" />
+          <End Role="h_usersPermisions" Type="Self.h_usersPermisions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_userRoles">
+              <PropertyRef Name="Role" />
+            </Principal>
+            <Dependent Role="h_usersPermisions">
+              <PropertyRef Name="Role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_h_usersPermisions_L_users">
+          <End Role="L_users" Type="Self.L_users" Multiplicity="1" />
+          <End Role="h_usersPermisions" Type="Self.h_usersPermisions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="L_users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="h_usersPermisions">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_h_usersPermisions_L_users1">
+          <End Role="L_users" Type="Self.L_users" Multiplicity="1" />
+          <End Role="h_usersPermisions" Type="Self.h_usersPermisions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="L_users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="h_usersPermisions">
+              <PropertyRef Name="GrantedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="GADATAModelStoreContainer">
+          <EntitySet Name="c_userRoles" EntityType="Self.c_userRoles" Schema="Volvo" store:Type="Tables" />
+          <EntitySet Name="h_usersPermisions" EntityType="Self.h_usersPermisions" Schema="Volvo" store:Type="Tables" />
+          <EntitySet Name="L_users" EntityType="Self.L_users" Schema="Volvo" store:Type="Tables" />
+          <AssociationSet Name="FK_h_usersPermisions_c_userRoles" Association="Self.FK_h_usersPermisions_c_userRoles">
+            <End Role="c_userRoles" EntitySet="c_userRoles" />
+            <End Role="h_usersPermisions" EntitySet="h_usersPermisions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_h_usersPermisions_L_users" Association="Self.FK_h_usersPermisions_L_users">
+            <End Role="L_users" EntitySet="L_users" />
+            <End Role="h_usersPermisions" EntitySet="h_usersPermisions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_h_usersPermisions_L_users1" Association="Self.FK_h_usersPermisions_L_users1">
+            <End Role="L_users" EntitySet="L_users" />
+            <End Role="h_usersPermisions" EntitySet="h_usersPermisions" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="GADATAModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="userRoles">
+          <Key>
+            <PropertyRef Name="Role" />
+          </Key>
+          <Property Name="Role" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="h_usersPermisions" Relationship="Self.FK_h_usersPermisions_c_userRoles" FromRole="c_userRoles" ToRole="h_usersPermisions" />
+        </EntityType>
+        <EntityType Name="usersPermisions">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <Property Name="Role" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="GrantedBy" Type="Int32" Nullable="false" />
+          <Property Name="GrantedAt" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="c_userRoles" Relationship="Self.FK_h_usersPermisions_c_userRoles" FromRole="h_usersPermisions" ToRole="c_userRoles" />
+          <NavigationProperty Name="L_users" Relationship="Self.FK_h_usersPermisions_L_users" FromRole="h_usersPermisions" ToRole="L_users" />
+          <NavigationProperty Name="L_users1" Relationship="Self.FK_h_usersPermisions_L_users1" FromRole="h_usersPermisions" ToRole="L_users" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LocationRoot" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AssetRoot" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Locked" Type="Boolean" Nullable="false" />
+          <Property Name="Blocked" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="h_usersPermisions" Relationship="Self.FK_h_usersPermisions_L_users" FromRole="L_users" ToRole="h_usersPermisions" />
+          <NavigationProperty Name="h_usersPermisions1" Relationship="Self.FK_h_usersPermisions_L_users1" FromRole="L_users" ToRole="h_usersPermisions" />
+        </EntityType>
+        <Association Name="FK_h_usersPermisions_c_userRoles">
+          <End Role="c_userRoles" Type="GADATAModel.userRoles" Multiplicity="1" />
+          <End Role="h_usersPermisions" Type="GADATAModel.usersPermisions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_userRoles">
+              <PropertyRef Name="Role" />
+            </Principal>
+            <Dependent Role="h_usersPermisions">
+              <PropertyRef Name="Role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_h_usersPermisions_L_users">
+          <End Role="L_users" Type="GADATAModel.users" Multiplicity="1" />
+          <End Role="h_usersPermisions" Type="GADATAModel.usersPermisions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="L_users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="h_usersPermisions">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_h_usersPermisions_L_users1">
+          <End Role="L_users" Type="GADATAModel.users" Multiplicity="1" />
+          <End Role="h_usersPermisions" Type="GADATAModel.usersPermisions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="L_users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="h_usersPermisions">
+              <PropertyRef Name="GrantedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="GADATAEntitiesUserManagement" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="c_userRoles" EntityType="GADATAModel.userRoles" />
+          <EntitySet Name="h_usersPermisions" EntityType="GADATAModel.usersPermisions" />
+          <EntitySet Name="L_users" EntityType="GADATAModel.users" />
+          <AssociationSet Name="FK_h_usersPermisions_c_userRoles" Association="Self.FK_h_usersPermisions_c_userRoles">
+            <End Role="c_userRoles" EntitySet="c_userRoles" />
+            <End Role="h_usersPermisions" EntitySet="h_usersPermisions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_h_usersPermisions_L_users" Association="Self.FK_h_usersPermisions_L_users">
+            <End Role="L_users" EntitySet="L_users" />
+            <End Role="h_usersPermisions" EntitySet="h_usersPermisions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_h_usersPermisions_L_users1" Association="Self.FK_h_usersPermisions_L_users1">
+            <End Role="L_users" EntitySet="L_users" />
+            <End Role="h_usersPermisions" EntitySet="h_usersPermisions" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="GADATAModelStoreContainer" CdmEntityContainer="GADATAEntitiesUserManagement">
+          <EntitySetMapping Name="c_userRoles">
+            <EntityTypeMapping TypeName="GADATAModel.userRoles">
+              <MappingFragment StoreEntitySet="c_userRoles">
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="h_usersPermisions">
+            <EntityTypeMapping TypeName="GADATAModel.usersPermisions">
+              <MappingFragment StoreEntitySet="h_usersPermisions">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="GrantedBy" ColumnName="GrantedBy" />
+                <ScalarProperty Name="GrantedAt" ColumnName="GrantedAt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="L_users">
+            <EntityTypeMapping TypeName="GADATAModel.users">
+              <MappingFragment StoreEntitySet="L_users">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="LocationRoot" ColumnName="LocationRoot" />
+                <ScalarProperty Name="AssetRoot" ColumnName="AssetRoot" />
+                <ScalarProperty Name="Locked" ColumnName="Locked" />
+                <ScalarProperty Name="Blocked" ColumnName="Blocked" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -57,7 +57,7 @@
     var ErrorTrendChart;
 
     //get chart data
-    function getChartData(_location, _errornum, _logtekst, _logtype, _startDate, _endDate, _groupType) {
+    function getChartData(_location, _errornum, _logtekst, _logtype, _refId, _startDate, _endDate, _groupType) {
         //start a wait spinner
         spinnerErrorTrent.spin(document.getElementById('graphSpinner'));
         //make ajax request
@@ -68,6 +68,7 @@
             + "&errornum=" + _errornum
             + "&logtekst=" + _logtekst
             + "&logtype=" + _logtype
+            + "&refId=" + _refId
             + "&startDate=" + _startDate
             + "&endDate=" + _endDate
             + "&grouptType=" + _groupType,
@@ -174,7 +175,7 @@
 
     //refresh the chart
     function refreshChart() {
-        getChartData("@Model.location", @Model.errornum, "@Model.logtext", "@Model.logtype", moment(startDate).toISOString(), moment(endDate).toISOString(), groupmode);
+        getChartData("@Model.location", @Model.errornum, "@Model.logtext.Replace("\n"," ").Replace("\r", " ").Replace("\t", " ")", "@Model.logtype",@Model.refid, moment(startDate).toISOString(), moment(endDate).toISOString(), groupmode);
     };
 
 

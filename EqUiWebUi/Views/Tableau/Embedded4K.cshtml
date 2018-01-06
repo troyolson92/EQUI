@@ -80,8 +80,10 @@
          * Hook into the window resize event to resize when the user resizes the screen.
          */
         $(window).resize(resize);
-        /*trigger once on load ready*/
-        //$(document).ready(resize);
+
+        //full with screen
+        $("#allcontent").removeClass("body-content");
+        $("#allcontent").removeClass("container");
 
 
     </script>

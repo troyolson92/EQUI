@@ -18,17 +18,17 @@
                     <span class="icon-bar"></span>
                 </button>
 
-                <a href='@Url.Action("Index", "Home")'>
+                <a href='@Url.Action("Index", "Home",new { area = "" }, null)'>
                     <img src="~/Content/images/volvo-50.png" />
                 </a>
 
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
                     <li><a href="https://sharepoint.volvocars.net/sites/maintenance_a_shop/Lists/Whiteboard%20Issues/AllItems.aspx">Sharepoint</a></li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("About", "About", "Home", new { area = "" }, null)</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, null)</li>
 
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">VSTO toolkit <span class="caret"></span></a>
@@ -49,7 +49,7 @@
                     <img src="~/Content/images/icons8-customer-25.png" />
                 </a>
 
-                <a href='@Url.Action("Index", "Settings")' class="nav navbar-text navbar-right">
+                <a href='@Url.Action("Settings", "Home")' class="nav navbar-text navbar-right">
                     <img src="~/Content/images/icons8-settings-25.png" />
                 </a>
             </div>
@@ -59,10 +59,15 @@
     @*load this bundle before body because of scripts in views*@
     @Scripts.Render("~/bundles/jquery")
 
-    <div id="allcontent">
+    <div class="container body-content" id="allcontent">
         @RenderBody()
         <hr />
     </div>
+
+    <footer>
+        <p>&copy; @DateTime.Now.Year - VCG GA SDEBEUL ASP.NET Application</p>
+    </footer>
+
 
     @Scripts.Render("~/bundles/MyScripts")
     <script>

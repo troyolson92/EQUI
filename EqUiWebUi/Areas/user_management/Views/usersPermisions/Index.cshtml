@@ -1,0 +1,13 @@
+﻿@model IEnumerable<EqUiWebUi.Areas.user_management.Models.usersPermisions>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>All user permisions</h2>
+
+<p>
+    @Html.ActionLink("Create New Permission", "Create")
+</p>
+
+@Html.AjaxGrid(Url.Action("_permisions"))

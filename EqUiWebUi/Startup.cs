@@ -11,7 +11,7 @@ namespace EqUiWebUi
 {
     public class Startup
     {
-  public void Configuration(Owin.IAppBuilder app)
+        public void Configuration(Owin.IAppBuilder app)
         {
         //setting up hangfire 
             GlobalConfiguration.Configuration
@@ -41,15 +41,15 @@ namespace EqUiWebUi
             RecurringJob.AddOrUpdate(() => backgroundwork.UpdatePloegreport(), Cron.Minutely);
             //**********************************Supervisie table***************************************************
             //fire and forget to init
-            //BackgroundJob.Enqueue(() => backgroundwork.UpdateSupervisie());
+            BackgroundJob.Enqueue(() => backgroundwork.UpdateSupervisie());
             //set job to refresh every minute
-            //RecurringJob.AddOrUpdate(() => backgroundwork.UpdateSupervisie(), Cron.Minutely);
+            RecurringJob.AddOrUpdate(() => backgroundwork.UpdateSupervisie(), Cron.Minutely);
             //**********************************snapshot system****************************************************
             //check every minute for new jobs 
             RecurringJob.AddOrUpdate(() => backgroundwork.HandleMaximoSnapshotWork(),Cron.Minutely);
             //**********************************STO****************************************************************
             //check every minute for new data (hystorian)
-            RecurringJob.AddOrUpdate(() => backgroundwork.PushDatafromSTOtoGADATA(), Cron.MinuteInterval(2));
+            RecurringJob.AddOrUpdate(() => backgroundwork.PushDatafromSTOtoGADATA(), Cron.MinuteInterval(5));
             //**********************************STW040 BI rapoort****************************************************
             RecurringJob.AddOrUpdate(() => backgroundwork.PushDatafromSTW040toGADATA(), Cron.HourInterval(1));
             //**********************************MX7 *****************************************************************
@@ -74,7 +74,7 @@ namespace EqUiWebUi
                 // Allow all authenticated users to see the Dashboard (potentially dangerous).
                 //return owinContext.Authentication.User.Identity.IsAuthenticated;
 
-                EquiRoleProvider equiRoleProvider = new EquiRoleProvider();
+                roleProvider equiRoleProvider = new roleProvider();
 
                 if (equiRoleProvider.IsUserInRole(HttpContext.Current.User.Identity.Name , "Administrator"))
                 {

@@ -57,7 +57,7 @@ namespace EqUiWebUi
 
 		//update the local datatable with ploeg rapport called every minute #hangfire
 		[AutomaticRetry(Attempts = 0)]
-        [DisableConcurrentExecution(120)] //locks the job from starting multible times if other one stil running.
+        [DisableConcurrentExecution(50)] //timeout
         public void UpdatePloegreport()
 		{
 			try
@@ -102,7 +102,7 @@ namespace EqUiWebUi
 
 		//update the local datatable with supervisie called every minute #hangfire
 		[AutomaticRetry(Attempts = 0)]
-        [DisableConcurrentExecution(120)] //locks the job from starting multible times if other one stil running.
+        [DisableConcurrentExecution(50)] //timeout 3minutes
         public void UpdateSupervisie()
 		{
 				GADATAEntities gADATAEntities = new GADATAEntities();
@@ -211,7 +211,7 @@ namespace EqUiWebUi
 
 		//update new data from STO to gadata. called every minute #hangfire
 		[AutomaticRetry(Attempts = 0)]
-		[DisableConcurrentExecution(120)] //locks the job from starting multible times if other one stil running.
+		[DisableConcurrentExecution(60*2)] //locks the job from starting multible times if other one stil running.
 		public void PushDatafromSTOtoGADATA()
 		{
 			GadataComm lGadataComm = new GadataComm();
@@ -312,7 +312,7 @@ ORDER BY WORKORDER.STATUSDATE DESC
 
 		//update tableau buffers. called every 20minutes #hangfire
 		[AutomaticRetry(Attempts = 0)]
-		[DisableConcurrentExecution(120)] //locks the job from starting multible times if other one stil running.
+		[DisableConcurrentExecution(60*2)] //locks the job from starting multible times if other one stil running.
 		public void UpdateTableauBuffers()
 		{
 			GadataComm lGadataComm = new GadataComm();
