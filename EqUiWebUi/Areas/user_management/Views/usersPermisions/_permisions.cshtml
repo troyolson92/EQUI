@@ -1,0 +1,15 @@
+﻿@model IEnumerable<EqUiWebUi.Areas.user_management.Models.usersPermisions>
+
+@Html.Grid(Model).Named("Users").Build(columns =>
+{
+    columns.Add(c => c.L_users.username).Titled("username");
+    columns.Add(c => c.c_userRoles.Role).Titled("role");
+    columns.Add(c => c.c_userRoles.Description).Titled("role description");
+    columns.Add(c => c.L_users1.username).Titled("GrantedBy");
+    columns.Add(c => c.GrantedAt).Titled("GrantedAt").InitialSort(GridSortOrder.Desc);
+    columns.Add(c => c.id)
+                .Titled("")
+                .Encoded(false)
+                .RenderedAs(c => @Html.ActionLink("Delete", "Delete", new { id = c.id })
+                ).InitialSort(GridSortOrder.Asc).Filterable(false);
+}).Filterable(true).Sortable(true).Empty("Did not find anything").Css("table-hover")

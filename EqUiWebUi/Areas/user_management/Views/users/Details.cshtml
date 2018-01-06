@@ -1,0 +1,70 @@
+﻿@model EqUiWebUi.Areas.user_management.Models.users
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details for user</h2>
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.username)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.username)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LocationRoot)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LocationRoot)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AssetRoot)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AssetRoot)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Locked)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Locked)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Blocked)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Blocked)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit user", "Edit", new { id = Model.id })
+</p>
+<hr />
+
+
+<div>
+    <h2>Permisions for this user</h2>
+    @Html.AjaxGrid(Url.Action("_permisions", "usersPermisions", new { id = Model.id }))
+</div>
+<p>
+    @Html.ActionLink("Add permission","Create", "usersPermisions", new { id = Model.id },null)
+</p>
+<hr />
+
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>

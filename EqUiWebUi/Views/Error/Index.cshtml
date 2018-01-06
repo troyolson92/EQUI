@@ -1,8 +1,6 @@
 ﻿@{
     ViewBag.Title = @TempData["error"];
-    Layout = null;
 }
-<div class="container body-content">
     <div class="jumbotron">
         <h1>@TempData["error"]</h1>
     </div>
@@ -28,11 +26,6 @@
 
     <p></p>
 
-</div>
-
-<footer>
-    <p>&copy; @DateTime.Now.Year - VCG GA SDEBEUL ASP.NET Application</p>
-</footer>
 
 <script>
     function goback() {

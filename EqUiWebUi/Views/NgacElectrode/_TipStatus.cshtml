@@ -7,8 +7,8 @@
     columns.Add(c => c.nDress).Titled("Aantal keer gefreest");
     columns.Add(c => c.WearRatio).Titled("%WearRatio");
     columns.Add(c => c.pWear).Titled("%wear").Filterable(true).Css("bolded");
-    columns.Add(c => c.nRspots).Titled("Resterende Spots");
-    columns.Add(c => c.nRcars).Titled("Resterende Stukken");
+    columns.Add(c => c.nRspots).Titled("Resterende Spots").Css("hidden");  //hide until trusted
+    columns.Add(c => c.nRcars).Titled("Resterende Stukken").Css("hidden"); //hide until trusted
     columns.Add(c => c.TipAge_h_).Titled("Electrode leeftijd (h)");
     columns.Add(c => c.Time_DressCycleTime).Titled("Dress ct (s)");
     columns.Add(c => c.LocationTree).Filterable(true).Css("hidden"); //used for filtering

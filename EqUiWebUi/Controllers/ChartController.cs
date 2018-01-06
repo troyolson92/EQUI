@@ -25,7 +25,7 @@ namespace EqUiWebUi.Controllers
         }
 
         [HttpGet]
-        public JsonResult _getData(string location ,int  errornum ,string logtekst ,string logtype, DateTime startDate, DateTime endDate, grouptType grouptType = grouptType.Hour)
+        public JsonResult _getData(string location ,int  errornum ,string logtekst ,string logtype, int refid, DateTime startDate, DateTime endDate, grouptType grouptType = grouptType.Hour)
         {
             GadataComm gadataComm = new GadataComm();
 
@@ -40,8 +40,8 @@ namespace EqUiWebUi.Controllers
             }
 
             //get the data
-            string qry = string.Format(@"EXEC [EqUi].[GetErrorTrentData] @Location = '{0}' ,@ERRORNUM = {1} ,@Logtext = '{2}' ,@logType = '{3}'"
-            , location, errornum, logtekst, logtype);
+            string qry = string.Format(@"EXEC [EqUi].[GetErrorTrentData] @Location = '{0}' ,@ERRORNUM = {1} ,@Logtext = '{2}' ,@logType = '{3}' ,@refID={4}"
+            , location, errornum, logtekst, logtype, refid);
             DataTable dt = gadataComm.RunQueryGadata(qry);
 
             //because of legencay app we stil have a data with count = 0 this needs to go out because this system counts the intance of timestamps

@@ -84,16 +84,14 @@
          * Hook into the window resize event to resize when the user resizes the screen.
          */
         $(window).resize(resize);
-        /*trigger once on load ready*/
-        //$(document).ready(resize);
 
-        
+        //full with screen
+        $("#allcontent").removeClass("body-content");
+        $("#allcontent").removeClass("container");
     </script>
 </head>
 <body>
     @*render the viz*@
-    <p></p>
-    <p></p>
     <div id="viz"></div>
 </body>
 </html>

@@ -147,18 +147,47 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\user_management\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\user_management\Controllers\usersController.cs" />
+    <Compile Include="Areas\user_management\Controllers\usersPermisionsController.cs" />
+    <Compile Include="Areas\user_management\Models\userRoles.cs">
+      <DependentUpon>user_management.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\user_management\Models\users.cs">
+      <DependentUpon>user_management.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\user_management\Models\usersMetaData.cs" />
+    <Compile Include="Areas\user_management\Models\usersPermisions.cs">
+      <DependentUpon>user_management.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\user_management\Models\user_management.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>user_management.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\user_management\Models\user_management.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>user_management.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\user_management\Models\user_management.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>user_management.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\user_management\userCookie.cs" />
+    <Compile Include="Areas\user_management\user_managementAreaRegistration.cs" />
     <Compile Include="Backgroundwork.cs" />
     <Compile Include="Controllers\ChartController.cs" />
     <Compile Include="Controllers\DynamicController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\NgacElectrodeController.cs" />
-    <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Controllers\SharepointController.cs" />
     <Compile Include="Controllers\SpcController.cs" />
     <Compile Include="Controllers\TableauController.cs" />
@@ -190,11 +219,8 @@
     <Compile Include="Models\TipMonitor.cs">
       <DependentUpon>GadataDatamodel.tt</DependentUpon>
     </Compile>
-    <Compile Include="EquiRoleProvider.cs" />
+    <Compile Include="Areas\user_management\roleProvider.cs" />
     <Compile Include="Models\TipwearBeforeChange.cs">
-      <DependentUpon>GadataDatamodel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UserPermisions.cs">
       <DependentUpon>GadataDatamodel.tt</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
@@ -233,6 +259,16 @@
     <Compile Include="WebGridHelpers.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\user_management\Models\user_management.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>user_management.edmx</DependentUpon>
+      <LastGenOutput>user_management.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Areas\user_management\Models\user_management.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>user_management.edmx</DependentUpon>
+      <LastGenOutput>user_management.cs</LastGenOutput>
+    </Content>
     <Content Include="Content\CustomStyleTweeks.css" />
     <Content Include="Content\Cyborg.css" />
     <Content Include="Content\bootstrap.css" />
@@ -244,6 +280,7 @@
     <Content Include="Content\images\volvo-50.png" />
     <Content Include="Content\mvc-grid.css" />
     <Content Include="Content\MvcGrid\mvc-grid.css" />
+    <Content Include="Content\Site.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Models\GadataDatamodel.Context.tt">
@@ -449,7 +486,6 @@
     <Content Include="PDFjs\web\viewer.js.map" />
     <Content Include="PDFjs\LICENSE" />
     <Content Include="PDFjs\web\Q-Mapping Dashboard.pdf" />
-    <Content Include="MvcGrid\Fonts\GridGlyphs.woff" />
     <Content Include="Content\MvcGrid\Fonts\GridGlyphs.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -460,7 +496,30 @@
     <Content Include="App_Code\MyFilters.cshtml" />
     <Content Include="App_Code\MyModals.cshtml" />
     <Content Include="App_Code\MyEquiToolkit.cshtml" />
+    <Content Include="Areas\user_management\Views\web.config" />
+    <Content Include="Areas\user_management\Views\_ViewStart.cshtml" />
+    <EntityDeploy Include="Areas\user_management\Models\user_management.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>user_management.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Areas\user_management\Models\user_management.edmx.diagram">
+      <DependentUpon>user_management.edmx</DependentUpon>
+    </Content>
+    <Content Include="Areas\user_management\Views\users\Create.cshtml" />
+    <Content Include="Areas\user_management\Views\users\Delete.cshtml" />
+    <Content Include="Areas\user_management\Views\users\Details.cshtml" />
+    <Content Include="Areas\user_management\Views\users\Edit.cshtml" />
+    <Content Include="Areas\user_management\Views\users\Index.cshtml" />
+    <Content Include="Areas\user_management\Views\usersPermisions\Create.cshtml" />
+    <Content Include="Areas\user_management\Views\usersPermisions\Delete.cshtml" />
+    <Content Include="Areas\user_management\Views\usersPermisions\Index.cshtml" />
+    <Content Include="Areas\user_management\Views\usersPermisions\_permisions.cshtml" />
     <None Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.woff2" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION.pubxml" />
     <None Include="Properties\PublishProfiles\VCC22700-Testing.pubxml" />
     <Content Include="PDFjs\build\pdf.js" />
@@ -613,8 +672,6 @@
     <Content Include="Views\Error\InternalServerError.cshtml" />
     <Content Include="Views\Maximo\_workordersOnLocation.cshtml" />
     <Content Include="Views\Dynamic\DynamicDatatable.cshtml" />
-    <Content Include="Views\Settings\Index.cshtml" />
-    <Content Include="Views\Settings\GetUserGrants.cshtml" />
     <Content Include="Views\Maximo\Workorders.cshtml" />
     <Content Include="Views\Maximo\Index.cshtml" />
     <Content Include="Views\Maximo\_woDetails.cshtml" />
@@ -642,6 +699,8 @@
     <Content Include="Views\Gadata\_ploegRapport.cshtml" />
     <Content Include="Views\Gadata\_supervisie.cshtml" />
     <Content Include="Views\NgacElectrode\_TipStatus.cshtml" />
+    <Content Include="Views\Home\UserSettings.cshtml" />
+    <Content Include="Views\Home\Settings.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EQUICommunictionLib\EQUICommunictionLib.csproj">

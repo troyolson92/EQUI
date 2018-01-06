@@ -36,7 +36,6 @@ namespace EqUiWebUi.Models
         public DbSet<TipMonitor> TipMonitor { get; set; }
         public DbSet<Breakdown> Breakdown { get; set; }
         public DbSet<logDetails> logDetails { get; set; }
-        public DbSet<UserPermisions> UserPermisions { get; set; }
         public DbSet<TipwearBeforeChange> TipwearBeforeChange { get; set; }
         public DbSet<ia_Alert> ia_Alert { get; set; }
     

@@ -6,9 +6,6 @@
     ViewBag.Title = "Alerts";
 }
 
-<div class="container body-content">
-    <p></p>
-    <p></p>
     <div class="panel panel-default">
         <div class="panel-heading">
             <h4>Alerts</h4>
@@ -49,12 +46,10 @@
             <div id="alertDetailsPartial">Click on a row for more details about the alert</div>
         </div>
     </div>
-</div>
-</div>
 
 @*render popuover modal*@
 <div>
-    @MyModals.AlertModal("AlertModal");
+    @MyModals.AlertModal("AlertModal")
 </div>
 <script type="text/javascript">
     $(document).ready(function () {

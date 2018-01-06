@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using EqUiWebUi.Models;
+using EqUiWebUi.Areas.user_management;
 
 namespace EqUiWebUi.Controllers
 {
@@ -11,29 +12,11 @@ namespace EqUiWebUi.Controllers
     {
         public ActionResult Index()
         {
-            var cookie = Request.Cookies["equi_user"];
+            userCookie userCookie = new userCookie();
+            var cookie = Request.Cookies[userCookie.name];
             if (cookie == null)
             {
-                try
-                {
-                    //test with cookie make cookie in main view
-                    cookie = new HttpCookie("equi_user");
-                    cookie["User"] = System.Web.HttpContext.Current.User.Identity.Name;
-                    GADATAEntities gADATAEntities = new GADATAEntities();
-                    cookie["LocationRoot"] = gADATAEntities.UserPermisions.FirstOrDefault(u => u.username == System.Web.HttpContext.Current.User.Identity.Name).LocationRoot;
-                    cookie.Expires = DateTime.Now.AddDays(1);
-                    Response.Cookies.Add(cookie);
-                }
-                catch (Exception ex)
-                {
-                    //failed to build a cookie make a default one
-                    //test with cookie make cookie in main view
-                    cookie = new HttpCookie("equi_user");
-                    cookie["User"] = System.Web.HttpContext.Current.User.Identity.Name;
-                    cookie["LocationRoot"] = "VCG -> A";
-                    cookie.Expires = DateTime.Now.AddDays(1);
-                    Response.Cookies.Add(cookie);
-                }
+                Response.Cookies.Add(userCookie.Cookie(System.Web.HttpContext.Current.User.Identity.Name));
             }
             return View();
         }
@@ -63,6 +46,18 @@ namespace EqUiWebUi.Controllers
             ViewBag.url3 = url3 == null ? "" : url3;
             ViewBag.url4 = url4 == null ? "" : url4;
 
+            return View();
+        }
+
+        //show user settings 
+        public ActionResult UserSettings()
+        {
+            return View();
+        }
+
+        //show settings 
+        public ActionResult Settings()
+        {
             return View();
         }
     }
