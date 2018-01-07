@@ -3,14 +3,9 @@
     ViewBag.Title = "PloegRapport";
 }
 
-<div>
     @Html.Action("_ploegRapport")
     <div class="panel-footer">
         <div class="row">
-            <div class="col-sm-2">
-                @MyFilters.LocationDropdownGlobal("PloegRapport")
-            </div>
-            <div class="col-sm-4"></div>
             <div class="col-sm-6">
                 <p class="pull-right" id="PushInfo"> Last data push: ????</p>
             </div>
@@ -27,7 +22,6 @@
         //subscribe to row clicked events
         $('#PloegRapport').mvcgrid({
             sourceUrl: '@Url.Action("_ploegRapport")',
-            query: '?search=test', // Grid query string
             rowClicked: function (row, data, e) {
 
                 var urlMoreInfo = '@Url.Action("_Moreinfo","Gadata")?location=' + encodeURIComponent(data.Location)

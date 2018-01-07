@@ -5,28 +5,23 @@
     ViewBag.Title = "Supervisie";
 }
 
-<div>
-  @Html.Action("_supervisie")
-  <div class="panel-footer">
-      <div class="row">
-          <div class="col-sm-2">
-              @MyFilters.LocationDropdownGlobal("Supervisie")
-          </div>
-          <div class="col-sm-4"></div>
-          <div class="col-sm-6">
-              <p class="pull-right" id="PushInfo"> Last data push: ????</p>
-          </div>
-     </div>
-</div>
+    @Html.Action("_supervisie")
+    <div class="panel-footer">
+        <div class="row">
+            <div class="col-sm-6">
+                <p class="pull-right" id="PushInfo"> Last data push: ????</p>
+            </div>
+        </div>
+    </div>
 
 
-@*render popuover modal*@
-<div id="MyModal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-content">Loading....</div>
-</div>
+    @*render popuover modal*@
+    <div id="MyModal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-content">Loading....</div>
+    </div>
 
 
-<script type="text/javascript">
+    <script type="text/javascript">
     $(document).ready(function () {
         //subscribe to row clicked events
         $('#Supervisie').mvcgrid({
@@ -66,5 +61,5 @@
         $("#allcontent").removeClass("body-content");
         $("#allcontent").removeClass("container");
     });
-</script>
+    </script>
 

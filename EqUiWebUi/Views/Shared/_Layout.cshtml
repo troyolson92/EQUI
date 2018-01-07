@@ -48,19 +48,15 @@
 
                 <div class="nav pull-right">
                     <div class="cb_inline_block">
-
-                        <a class="btn btn-small cb_inline_block icon timezone_help" data-content="hahaha" rel="popover" href="#" data-original-title="Time Zone">TEEST
-                          <i class="icon-question-sign icon-large"></i>
-                        </a>
-
+                        
                         <a href='@Url.Action("Settings", "Home")' class="nav navbar-text">
                             <img src="~/Content/images/icons8-settings-25.png" />
                         </a>
 
-                        <a class="nav navbar-text" data-container="body" data-toggle="popover" data-placement="bottom" data-content="@User.Identity.Name">
+                        <a class="nav navbar-text userhelp" data-container="body" data-toggle="popover" data-original-title="@User.Identity.Name">
                             <img src="~/Content/images/icons8-customer-25.png" />
                         </a>
-                    
+
                     </div>
                 </div>
 
@@ -82,6 +78,7 @@
 
 
     @Scripts.Render("~/bundles/MyScripts")
+    @Scripts.Render("~/bundles/bootstrap")
     <script>
         //subscrible renderd grids to events
         $('.mvc-grid').mvcgrid();
@@ -91,10 +88,23 @@
         $("#allcontent").animate({ "margin-top": "60px" }, "fast");
         $(".navbar-fixed-top").autoHidingNavbar();
         //for user popover
-        $('.timezone_help').popover({ placement: "bottom" });
+        $(".userhelp").popover({
+            placement: "left",
+            html: true,
+            content: function () {
+            var output = '';
+            $.ajax(
+                {
+                    url:'@Url.Action("_Details", "user", new { area = "user_management" },null)',
+                    async: false,
+                    success: function (response) {
+                    output = response;
+                        }
+                    });
+                return output;
+                },
+        })
     </script>
-    @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>
 </html>
-
