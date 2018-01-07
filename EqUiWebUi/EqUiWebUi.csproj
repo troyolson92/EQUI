@@ -147,13 +147,13 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\user_management\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\user_management\Controllers\userController.cs" />
     <Compile Include="Areas\user_management\Controllers\usersController.cs" />
     <Compile Include="Areas\user_management\Controllers\usersPermisionsController.cs" />
     <Compile Include="Areas\user_management\Models\userRoles.cs">
@@ -514,6 +514,7 @@
     <Content Include="Areas\user_management\Views\usersPermisions\Delete.cshtml" />
     <Content Include="Areas\user_management\Views\usersPermisions\Index.cshtml" />
     <Content Include="Areas\user_management\Views\usersPermisions\_permisions.cshtml" />
+    <Content Include="Areas\user_management\Views\user\_Edit.cshtml" />
     <None Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.svg" />

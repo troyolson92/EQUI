@@ -23,9 +23,10 @@
                 </a>
 
             </div>
+
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
+
                     <li><a href="https://sharepoint.volvocars.net/sites/maintenance_a_shop/Lists/Whiteboard%20Issues/AllItems.aspx">Sharepoint</a></li>
                     <li>@Html.ActionLink("About", "About", "Home", new { area = "" }, null)</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, null)</li>
@@ -45,13 +46,24 @@
 
                 </ul>
 
-                <a class="nav navbar-text navbar-right" data-container="body" data-toggle="popover" data-placement="bottom" data-content="@User.Identity.Name">
-                    <img src="~/Content/images/icons8-customer-25.png" />
-                </a>
+                <div class="nav pull-right">
+                    <div class="cb_inline_block">
 
-                <a href='@Url.Action("Settings", "Home")' class="nav navbar-text navbar-right">
-                    <img src="~/Content/images/icons8-settings-25.png" />
-                </a>
+                        <a class="btn btn-small cb_inline_block icon timezone_help" data-content="hahaha" rel="popover" href="#" data-original-title="Time Zone">TEEST
+                          <i class="icon-question-sign icon-large"></i>
+                        </a>
+
+                        <a href='@Url.Action("Settings", "Home")' class="nav navbar-text">
+                            <img src="~/Content/images/icons8-settings-25.png" />
+                        </a>
+
+                        <a class="nav navbar-text" data-container="body" data-toggle="popover" data-placement="bottom" data-content="@User.Identity.Name">
+                            <img src="~/Content/images/icons8-customer-25.png" />
+                        </a>
+                    
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -78,6 +90,8 @@
         //default no autfiding navbar
         $("#allcontent").animate({ "margin-top": "60px" }, "fast");
         $(".navbar-fixed-top").autoHidingNavbar();
+        //for user popover
+        $('.timezone_help').popover({ placement: "bottom" });
     </script>
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
