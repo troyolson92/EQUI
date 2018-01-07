@@ -514,7 +514,8 @@
     <Content Include="Areas\user_management\Views\usersPermisions\Delete.cshtml" />
     <Content Include="Areas\user_management\Views\usersPermisions\Index.cshtml" />
     <Content Include="Areas\user_management\Views\usersPermisions\_permisions.cshtml" />
-    <Content Include="Areas\user_management\Views\user\_Edit.cshtml" />
+    <Content Include="Areas\user_management\Views\user\Edit.cshtml" />
+    <Content Include="Areas\user_management\Views\user\_Details.cshtml" />
     <None Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.svg" />

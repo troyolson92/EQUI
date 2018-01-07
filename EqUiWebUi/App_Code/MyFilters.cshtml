@@ -18,6 +18,24 @@
         </select>
 }
 
+@*drop down control for filtering on 'assets'*@
+@helper AssetDropdown(string id)
+    {
+        <select class="form-control input-sm" id="@id" name="Selecteer locatie">
+            <option value="U">all assets</option>
+            <optgroup label="Robots">
+                <option value="UR">all robots</option>
+                <option value="URC">comau</option>
+                <option value="URA">abb</option>
+            </optgroup>
+            <optgroup label="Process">
+                <option value="UAW">UAW)</option>
+                <option value="UAWS">Spot</option>
+                <option value="UAWT">Tucker</option>
+            </optgroup>
+        </select>
+}
+
 @*dropdown filter that redirects to page
     Leave ID blank!
 *@

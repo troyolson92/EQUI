@@ -1,0 +1,79 @@
+﻿@model EqUiWebUi.Areas.user_management.Models.users
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h4>Settings saved on server</h4>
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.username)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.username)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LocationRoot)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LocationRoot)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AssetRoot)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AssetRoot)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Locked)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Locked)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Blocked)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Blocked)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit")
+</p>
+<hr />
+
+<h4>Change setting for just this session</h4>
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.LocationRoot)
+        </dt>
+
+        <dd>
+            @MyFilters.LocationDropdown("")
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AssetRoot)
+        </dt>
+
+        <dd>
+            @MyFilters.AssetDropdown("")
+        </dd>
+    </dl>
+</div>
+
+
+
+
