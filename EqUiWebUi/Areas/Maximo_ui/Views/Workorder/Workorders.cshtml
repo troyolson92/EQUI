@@ -1,0 +1,59 @@
+﻿@model EqUiWebUi.Areas.Maximo_ui.Models.WorkorderSelectOptions
+@{
+    ViewBag.Title = "Workorders";
+}
+
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+@using (Ajax.BeginForm("_workordersOnLocation", "Workorder", new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "formContent", LoadingElementId = "loader" }))
+{
+    <fieldset>
+        <legend>Maximo WorkorderSelectOptions</legend>
+        <ol>
+            <li>
+                @Html.LabelFor(m => m.enddate)
+                @Html.EditorFor(m => m.enddate)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.startdate)
+                @Html.EditorFor(m => m.startdate)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.b_ciblings)
+                @Html.CheckBoxFor(m => m.b_ciblings)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.b_preventive)
+                @Html.CheckBoxFor(m => m.b_preventive)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.location)
+                @Html.EditorFor(m => m.location)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.locancestor)
+                @Html.EditorFor(m => m.locancestor)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.jpnum)
+                @Html.EditorFor(m => m.jpnum)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.worktype)
+                @Html.EditorFor(m => m.worktype)
+            </li>
+
+        </ol>
+        <input type="submit" value="Load">
+    </fieldset>
+}
+
+@*only shown while loading*@
+<div id="loader" style="display:none;font-size:20px;font-weight:bold;color:#D3ACCC;">
+    loading workorders....
+</div>
+@*table will be loaded in this*@
+<div id="formContent">
+    workorders load here
+</div>
+
+

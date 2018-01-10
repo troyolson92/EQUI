@@ -57,22 +57,46 @@
 <h4>Change setting for just this session</h4>
 <div>
     <dl class="dl-horizontal">
+
         <dt>
             @Html.DisplayNameFor(model => model.LocationRoot)
         </dt>
 
         <dd>
-            @MyFilters.LocationDropdown("")
+            @MyFilters.LocationDropdownGlobal("LocationRoot")
         </dd>
+
         <dt>
             @Html.DisplayNameFor(model => model.AssetRoot)
         </dt>
 
         <dd>
-            @MyFilters.AssetDropdown("")
+            @MyFilters.AssetDropdownGlobal("AssetRoot")
         </dd>
     </dl>
+<p>
+  @Html.ActionLink("Reset to server values", "ResetCookie")
+</p>
 </div>
+
+<script>
+//change session cookie if a session change is made
+    $('#LocationRoot').on('change', function () {
+        $.ajax(
+            {
+                url: '@Url.Action("SetCookie", "user", new { area = "user_management" },null)' + '?key=LocationRoot&value=' + this.value,
+                async: false,
+            });
+    });
+
+    $('#AssetRoot').on('change', function () {
+        $.ajax(
+            {
+                url: '@Url.Action("SetCookie", "user", new { area = "user_management" },null)' + '?key=AssetRoot&value=' + this.value,
+                async: false,
+            });
+    });
+</script>
 
 
 

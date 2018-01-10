@@ -53,5 +53,35 @@ namespace EqUiWebUi.Areas.user_management.Controllers
             return View(user);
         }
 
+        // Get: user_management/user/getCookie
+        //forces reload of the user cookie.
+        public ActionResult ResetCookie()
+        {
+            userCookie userCookie = new userCookie();
+            Response.Cookies.Add(userCookie.Cookie(System.Web.HttpContext.Current.User.Identity.Name));
+            return null;
+        }
+
+        // Get: user_management/user/SetCookie/key/value
+        public ActionResult SetCookie(string key, string value)
+        {
+            userCookie userCookie = new userCookie();
+            var cookie = Request.Cookies[userCookie.name];
+            //if it does no exist build it.
+            if (cookie == null)
+            {
+                Response.Cookies.Add(userCookie.Cookie(System.Web.HttpContext.Current.User.Identity.Name));
+            }
+
+            //here we can check if the user is allow to change this value and block it...
+
+            //change value 
+            cookie[key] = value;
+            //post cookie back 
+            Response.Cookies.Add(cookie);
+            //I know i should return something to check if it worked by i'm lazy 
+            return null;
+        }
+
     }
 }

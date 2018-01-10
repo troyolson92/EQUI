@@ -24,11 +24,13 @@
             sourceUrl: '@Url.Action("_ploegRapport")',
             rowClicked: function (row, data, e) {
 
-                var urlMoreInfo = '@Url.Action("_Moreinfo","Gadata")?location=' + encodeURIComponent(data.Location)
-                    + '&errornum=' + encodeURIComponent(data.Logcode)
-                    + '&refid=' + encodeURIComponent(data.refId)
-                    + '&logtype=' + encodeURIComponent(data.Logtype)
-                    + '&logtext=' + encodeURIComponent(data.logtext)
+
+            var urlMoreInfo = '@Url.Action("_Moreinfo","Gadata")?location=' + encodeURIComponent(data.Location)
+                        + '&errornum=' + encodeURIComponent(data.Logcode)
+                        + '&refid=' + encodeURIComponent(data.refId)
+                        + '&logtype=' + encodeURIComponent(data.Logtype)
+                        + '&logtext=' + encodeURIComponent(data.logtext)
+
 
                 //launch modal
                 $('#MyModal').modal({ remote: urlMoreInfo });

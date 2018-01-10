@@ -1,0 +1,45 @@
+﻿@model EqUiWebUi.Areas.Maximo_ui.Models.WorkorderSelectOptions
+<div>hier opties zoals check box en link naar main view</div>
+@Html.ActionLink("ToWorkorders", "Workorders", "Workorder", new { area = "Maximo_ui" },null)
+<div id="workorderOnLocationGrid" class="mvc-grid">Grid wil be here</div>
+<div id="woDetailsPartial">Click on a row for more details about a workorder</div>
+
+<script>
+//render grid and subscrible to row clicked events
+    $('#workorderOnLocationGrid').mvcgrid({
+        sourceUrl: '@Url.Action("_workordersOnLocationGrid")?' +
+                   "&location=@Model.location" +
+                   "&locancestor=@Model.locancestor" +
+                   "&b_ciblings=@Model.b_ciblings" +
+                   "&b_preventive=@Model.b_preventive" +
+                   "&jpnum=@Model.jpnum" +
+                   "&worktype=@Model.worktype" +
+                   "&startdate=@Model.startdate" +
+                   "&enddate=@Model.enddate"
+                , // Grid source url string
+        //query: '?search=test', // Grid query string
+        requestType: 'get', // Ajax grid request type
+        data: {
+                // Ajax grid query data
+            },
+        filters: {
+                // Grid filters to extend or use
+            },
+        reload: true, // Grid reload indicator
+        rowClicked: function (row, data, e) {
+                    $("#woDetailsPartial").html("Loading.....");
+                var url = "@Url.Action("_woDetails", "WorkorderDetails")?wonum=" + data.WONUM;
+                    $("#woDetailsPartial").load(url);
+            },
+        reloadStarted: function () {
+                // this - grid instance which invoked the event
+            },
+        reloadEnded: function () {
+                // this - grid instance which invoked the event
+            },
+        reloadFailed: function (result) {
+                // this - grid instance which invoked the event
+                // result - failed ajax response result
+            }
+        });
+</script>
