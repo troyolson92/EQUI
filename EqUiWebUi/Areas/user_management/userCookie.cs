@@ -10,6 +10,8 @@ namespace EqUiWebUi.Areas.user_management
     {
         public string name { get { return "equi_user";} }
 
+        //get a user profile from the database.
+        //if users does not exist he gets inserted
         public users GetUser(string username)
         {
             using (Models.userCookie db = new Models.userCookie())
@@ -42,6 +44,7 @@ namespace EqUiWebUi.Areas.user_management
             }
         }
 
+       //get the  user from the database and make his users cookie.
        public HttpCookie Cookie(string username)
         {
             users user = GetUser(username);
@@ -51,5 +54,6 @@ namespace EqUiWebUi.Areas.user_management
             cookie["AssetRoot"] = user.AssetRoot;
             return cookie;
         }
+        
     }
 }

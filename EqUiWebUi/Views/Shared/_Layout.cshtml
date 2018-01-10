@@ -66,12 +66,12 @@
 
     @*load this bundle before body because of scripts in views*@
     @Scripts.Render("~/bundles/jquery")
-
+    <!--Body content -->
     <div class="container body-content" id="allcontent">
         @RenderBody()
         <hr />
     </div>
-
+    <!--footer-->
     <footer>
         <p>&copy; @DateTime.Now.Year - VCG GA SDEBEUL ASP.NET Application</p>
     </footer>
@@ -84,7 +84,7 @@
         $('.mvc-grid').mvcgrid();
         //enable general interface stuff
         initInterface();
-        //default no autfiding navbar
+        //navbar
         $("#allcontent").animate({ "margin-top": "60px" }, "fast");
         $(".navbar-fixed-top").autoHidingNavbar();
         //for user popover

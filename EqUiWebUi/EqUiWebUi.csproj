@@ -147,12 +147,18 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Maximo_ui\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\Maximo_ui\Controllers\MaximoController.cs" />
+    <Compile Include="Areas\Maximo_ui\Controllers\WorkorderController.cs" />
+    <Compile Include="Areas\Maximo_ui\Controllers\WorkorderDetailsController.cs" />
+    <Compile Include="Areas\Maximo_ui\Maximo_uiAreaRegistration.cs" />
+    <Compile Include="Areas\Maximo_ui\Models\Maximo.cs" />
     <Compile Include="Areas\user_management\Controllers\userController.cs" />
     <Compile Include="Areas\user_management\Controllers\usersController.cs" />
     <Compile Include="Areas\user_management\Controllers\usersPermisionsController.cs" />
@@ -227,7 +233,6 @@
     <Compile Include="Controllers\DifftableController.cs" />
     <Compile Include="Controllers\GadataController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\MaximoController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -247,7 +252,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>GadataDatamodel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\maximoModel.cs" />
     <Compile Include="Models\QUERYParameters.cs">
       <DependentUpon>GadataDatamodel.tt</DependentUpon>
     </Compile>
@@ -516,6 +520,17 @@
     <Content Include="Areas\user_management\Views\usersPermisions\_permisions.cshtml" />
     <Content Include="Areas\user_management\Views\user\Edit.cshtml" />
     <Content Include="Areas\user_management\Views\user\_Details.cshtml" />
+    <Content Include="Areas\Maximo_ui\Views\web.config" />
+    <Content Include="Areas\Maximo_ui\Views\Workorder\Workorders.cshtml" />
+    <Content Include="Areas\Maximo_ui\Views\Workorder\_workordersOnLocationGrid.cshtml" />
+    <Content Include="Areas\Maximo_ui\Views\Workorder\_workordersOnLocation.cshtml" />
+    <Content Include="Areas\Maximo_ui\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Maximo_ui\Views\Workorder\Index.cshtml" />
+    <Content Include="Areas\Maximo_ui\Views\WorkorderDetails\WoDetails.cshtml" />
+    <Content Include="Areas\Maximo_ui\Views\WorkorderDetails\_woDetails.cshtml" />
+    <Content Include="Areas\Maximo_ui\Views\WorkorderDetails\Index.cshtml" />
+    <Content Include="Areas\Maximo_ui\Views\Maximo\Index.cshtml" />
+    <Content Include="Areas\Maximo_ui\Views\Workorder\ExampleCall_workordersOnLocation.cshtml" />
     <None Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.svg" />
@@ -618,6 +633,8 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\daterangepicker.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\MyScripts\Interface.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />
@@ -672,12 +689,7 @@
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Error\AccessDenied.cshtml" />
     <Content Include="Views\Error\InternalServerError.cshtml" />
-    <Content Include="Views\Maximo\_workordersOnLocation.cshtml" />
     <Content Include="Views\Dynamic\DynamicDatatable.cshtml" />
-    <Content Include="Views\Maximo\Workorders.cshtml" />
-    <Content Include="Views\Maximo\Index.cshtml" />
-    <Content Include="Views\Maximo\_woDetails.cshtml" />
-    <Content Include="Views\Maximo\WoDetails.cshtml" />
     <Content Include="Views\NgacElectrode\CurrentTipstatus.cshtml" />
     <Content Include="Views\NgacElectrode\Index.cshtml" />
     <Content Include="Views\NgacElectrode\TipwearBeforeChange.cshtml" />
