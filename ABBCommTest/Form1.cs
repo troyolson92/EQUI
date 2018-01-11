@@ -331,16 +331,26 @@ COM_APP:
                 {
                     row.Cells[dataGridView1.Columns["AutoOK"].Index].Value = "OK";
 
-
-                    //check current version 
-                    RapidData rd = controller.Rapid.GetRapidData("T_ROB1", modulename.Split('.')[0], refVar);
-                    row.Cells[dataGridView1.Columns["Version"].Index].Value = rd.Value.ToString();
+                    RapidData rd = null;
+                    try
+                    {
+                        //check current version 
+                         rd = controller.Rapid.GetRapidData("T_ROB1", modulename.Split('.')[0], refVar);
+                         row.Cells[dataGridView1.Columns["Version"].Index].Value = rd.Value.ToString();
+                    }
+                    catch (Exception ex)
+                    {
+                        row.Cells[dataGridView1.Columns["VersionOK"].Index].Value = "NOT FOUND";
+                        return;
+                    }
 
                    // return; // break for testing .
 
                     if (rd.Value.ToString().Contains(refVarValueContains))
                     {
-
+                        debugger.Log("rapid value: " + rd.Value.ToString());
+                        debugger.Log("ref value: " + refVarValueContains);
+                        row.Cells[dataGridView1.Columns["VersionOK"].Index].Value = "CanLoad";
                         //put the file on the controller*****************************************************************
                         FileSystem cntrlFileSystem;
                         cntrlFileSystem = controller.FileSystem;
@@ -353,15 +363,13 @@ COM_APP:
                             //get controller mastership
                             using (Mastership master = Mastership.Request(controller))
                             {
-
-                                //put the file  on the controller
-                                controller.FileSystem.PutFile(modulename, modulename, true);
-
-
                                 //check if controller if home for load.
                                 Signal O_Homepos = controller.IOSystem.GetSignal("O_Homepos");
                                 if (O_Homepos.Value == 1)
                                 {
+                                    row.Cells[dataGridView1.Columns["RobotHome"].Index].Value = "OK";
+                                    //put the file  on the controller
+                                    controller.FileSystem.PutFile(modulename, modulename, true);
                                     // get modules from controller task trob1
                                     ABB.Robotics.Controllers.RapidDomain.Task tRob1 = controller.Rapid.GetTask("T_ROB1");
                                     //stop trob 1 if running.
@@ -375,7 +383,6 @@ COM_APP:
                                     }
 
                                     tRob1.LoadModuleFromFile(FilePathOnControler + modulename, RapidLoadMode.Replace);
-                                    row.Cells[dataGridView1.Columns["LoadOK"].Index].Value = "OK";
 
                                     //restart if was running
                                     if (bWasRunning)
@@ -384,9 +391,9 @@ COM_APP:
                                         tRob1.Start();
                                     }
                                 }
-                                else
+                                else // robot not home
                                 {
-                                    row.Cells[dataGridView1.Columns["LoadOK"].Index].Value = "NOK";
+                                    row.Cells[dataGridView1.Columns["RobotHome"].Index].Value = "NOK";
                                 }
 
                                 //release master
@@ -403,7 +410,7 @@ COM_APP:
                     }
                     else
                     {
-                        row.Cells[dataGridView1.Columns["OKtoLoad"].Index].Value = "NOK";
+                        row.Cells[dataGridView1.Columns["VersionOK"].Index].Value = "NoLoadAllowed";
                     }
 
                     }
@@ -767,11 +774,12 @@ COM_APP:
             dt_robots.Columns.Add("ControllerName", System.Type.GetType("System.String"));
             dt_robots.Columns.Add("autoOK", System.Type.GetType("System.String"));
             dt_robots.Columns.Add("Version", System.Type.GetType("System.String"));
-            dt_robots.Columns.Add("OKtoLoad", System.Type.GetType("System.String"));
+            dt_robots.Columns.Add("VersionOK", System.Type.GetType("System.String"));
+            dt_robots.Columns.Add("RobotHome", System.Type.GetType("System.String"));
             dt_robots.Columns.Add("ConnectOK", System.Type.GetType("System.String"));
             //  dt_robots.Columns.Add("ConfigOK", System.Type.GetType("System.String"));
             // dt_robots.Columns.Add("restartOK", System.Type.GetType("System.String"));
-            dt_robots.Columns.Add("WriteOk", System.Type.GetType("System.String"));
+            //dt_robots.Columns.Add("WriteOk", System.Type.GetType("System.String"));
             //  dt_robots.Columns.Add("HasTipneed", System.Type.GetType("System.String"));
             // dt_robots.Columns.Add("HasTipneedComment", System.Type.GetType("System.String"));
             //  dt_robots.Columns.Add("Found", System.Type.GetType("System.String"));
