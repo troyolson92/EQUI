@@ -4,7 +4,7 @@
 <div class="panel panel-primary">
     <div class="panel-heading">
         <h4 class="panel-title">Workorders</h4>
-        @Html.ActionLink("GoToWorkorders", "Workorders", "Workorder", new { area = "Maximo_ui" }, null)
+        <a class="btn btn-xs" id="goToWorkordersHyperlink" href="">Go to workorders</a>
         <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
     </div>
     <div class="panel-body">
@@ -16,19 +16,23 @@
 </div>
 
 
+<!--_workorderOnLocation-->
 <script>
     var workorderOnLocationGridspinner = new Spinner();
+    //build query string 
+    var workorderOnLocationGridUrlParms =  "&location=@Model.location" +
+                                           "&locancestor=@Model.locancestor" +
+                                           "&b_ciblings=@Model.b_ciblings" +
+                                           "&b_preventive=@Model.b_preventive" +
+                                           "&jpnum=@Model.jpnum" +
+                                           "&worktype=@Model.worktype" +
+                                           "&startdate=@Model.startdate.ToString("yyyy-MM-dd HH:mm:ss")" +
+                                           "&enddate=@Model.enddate.ToString("yyyy-MM-dd HH:mm:ss")"
+// set url to link back to main workorder view
+    $('#goToWorkordersHyperlink').attr('href', '@Url.Action("Workorders")?' + workorderOnLocationGridUrlParms + "&loadOnInit=true");
 //render grid and subscrible to row clicked events
     $('#workorderOnLocationGrid').mvcgrid({
-        sourceUrl: '@Url.Action("_workordersOnLocationGrid")?' +
-                   "&location=@Model.location" +
-                   "&locancestor=@Model.locancestor" +
-                   "&b_ciblings=@Model.b_ciblings" +
-                   "&b_preventive=@Model.b_preventive" +
-                   "&jpnum=@Model.jpnum" +
-                   "&worktype=@Model.worktype" +
-                   "&startdate=@Model.startdate.ToUniversalTime()" +
-                   "&enddate=@Model.enddate.ToUniversalTime()"
+        sourceUrl: '@Url.Action("_workordersOnLocationGrid")?' + workorderOnLocationGridUrlParms
                 , // Grid source url string
         //query: '?search=test', // Grid query string
         requestType: 'get', // Ajax grid request type

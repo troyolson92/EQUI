@@ -25,7 +25,8 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
 
         //full view can be intitiated by using parms or by model. 
         [HttpGet]
-        public ActionResult Workorders(string location, string locancestor, bool? b_ciblings, bool? b_preventive, string jpnum, string worktype, DateTime? startdate, DateTime? enddate, Models.WorkorderSelectOptions workorderSelectOptions, int fontSize = 12)
+        public ActionResult Workorders(string location, string locancestor, bool? b_ciblings, bool? b_preventive, string jpnum, string worktype
+            , DateTime? startdate, DateTime? enddate, Models.WorkorderSelectOptions workorderSelectOptions, bool loadOnInit = false, int fontSize = 12)
         {
             //if a parm value is appended set it to the model ELSE MODEL IS BOSS
             if (location != null) workorderSelectOptions.location = location;
@@ -51,14 +52,18 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
                 workorderSelectOptions.enddate = System.DateTime.Now; //default value
             }
             //to be able to override fontsize
-            ViewBag.fontSize = fontSize; 
+            ViewBag.fontSize = fontSize;
+            //if this is set we load the workorder directly and fold up the parms pannem
+            ViewBag.loadOnInit = loadOnInit;
+            //
             return View(workorderSelectOptions);
         }
 
 
         //can be called to be renders as partial in model or something like that...
         [HttpGet]
-        public ActionResult _workordersOnLocation(string location, string locancestor, bool? b_ciblings, bool? b_preventive, string jpnum, string worktype, DateTime? startdate, DateTime? enddate)
+        public ActionResult _workordersOnLocation(string location, string locancestor, bool? b_ciblings, bool? b_preventive, string jpnum, string worktype
+            , DateTime? startdate, DateTime? enddate)
         {
             Models.WorkorderSelectOptions workorderSelectOptions = new WorkorderSelectOptions();
             //set models to parms
@@ -90,7 +95,8 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
 
         //gets called by AJAX to render the workorder grid
         [HttpGet]
-        public ActionResult _workordersOnLocationGrid(string location, string locancestor, bool? b_ciblings, bool? b_preventive, string jpnum, string worktype, DateTime? startdate, DateTime? enddate)
+        public ActionResult _workordersOnLocationGrid(string location, string locancestor, bool? b_ciblings, bool? b_preventive, string jpnum, string worktype
+            , DateTime? startdate, DateTime? enddate)
         { 
             //build qyr
             StringBuilder sbqry = new StringBuilder();
