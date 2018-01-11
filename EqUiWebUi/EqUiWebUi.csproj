@@ -537,6 +537,7 @@
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="MvcGrid\fonts\GridGlyphs.woff" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION.pubxml" />
     <None Include="Properties\PublishProfiles\VCC22700-Testing.pubxml" />
     <Content Include="PDFjs\build\pdf.js" />

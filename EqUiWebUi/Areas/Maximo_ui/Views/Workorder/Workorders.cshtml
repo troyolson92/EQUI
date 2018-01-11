@@ -9,7 +9,7 @@
     <div class="panel panel-primary">
         <div class="panel-heading">
             <h4 class="panel-title">Maximo WorkorderSelectOptions</h4>
-            <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+            <span id="WorkorderSelectOptions" class ="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
         </div>
         <div class="panel-body">
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -26,7 +26,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group ">
+                        <div class="form-group hidden">
                             @Html.LabelFor(m => m.enddate, new { @class = "control-label col-md-3" })
                             <div class="col-md-9">
                                 @Html.TextBoxFor(m => m.enddate, new { @class = "form-control input-md" })
@@ -35,7 +35,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group ">
+                        <div class="form-group hidden">
                             @Html.LabelFor(m => m.startdate, new { @class = "control-label col-md-3" })
                             <div class="col-md-9">
                                 @Html.TextBoxFor(m => m.startdate, new { @class = "form-control input-md" })
@@ -121,6 +121,11 @@
 <script>
     //setting up datetimePicker
     $('#daterange').daterangepicker({
+        "locale": {
+            "format": "YYYY-MM-DD HH:mm"
+        },
+        "timePicker": true,
+        "timePicker24Hour": true,
         "showWeekNumbers": true,
         "showISOWeekNumbers": true,
         "ranges": {
@@ -135,10 +140,20 @@
         "endDate": moment('@Model.enddate.ToString("o")'),
       //  "opens": "left",
       //  "drops": "up"
-    }, function (end, start, label) {
+    }, function (start, end, label) {
         console.log("New date range selected: " + moment(end).toISOString() + " to " + moment(start).toISOString() + " (predefined range: " + label + ")");
         //feed to hidden fields from model so I can post back with form.
-        $("#enddate").val(moment(end).toISOString());
-        $("#startdate").val(moment(start).toISOString());
+        $("#enddate").val(moment(end).format('YYYY-MM-DD HH:mm:ss'));
+        $("#startdate").val(moment(start).format('YYYY-MM-DD HH:mm:ss'));
     });
+
+    //if loadOnInit = true  fold pannel and load
+    var loadOnInit = @(Json.Encode(ViewBag.loadOnInit ?? false));
+    if (loadOnInit == true) {
+        console.log("auto load");
+        //trigger submit
+        $("#Workorder").submit();
+        //fold up options pannel
+
+    }
 </script>

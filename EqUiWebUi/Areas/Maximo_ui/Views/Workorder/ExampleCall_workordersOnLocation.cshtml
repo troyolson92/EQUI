@@ -1,2 +1,17 @@
 ﻿<h1>Example of how to call _workordersOnLocation as partial</h1>
 
+<div id="placeholder"></div>
+<script>
+    // build url
+    var workorderOnLocationPartialUrl = '@Url.Action("_workordersOnLocation")?' +
+                   "&location=53110R01" +
+                   "&locancestor=" +
+                   "&b_ciblings=" +
+                   "&b_preventive=" +
+                   "&jpnum=" +
+                   "&worktype=" +
+                   "&startdate=" +
+                   "&enddate=" 
+    // load it 
+    $("#placeholder").load(workorderOnLocationPartialUrl);
+</script>
