@@ -1,10 +1,23 @@
 ﻿@model EqUiWebUi.Areas.Maximo_ui.Models.WorkorderSelectOptions
-<div>hier opties zoals check box en link naar main view</div>
-@Html.ActionLink("ToWorkorders", "Workorders", "Workorder", new { area = "Maximo_ui" },null)
-<div id="workorderOnLocationGrid" class="mvc-grid">Grid wil be here</div>
-<div id="woDetailsPartial">Click on a row for more details about a workorder</div>
+
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h4 class="panel-title">Workorders</h4>
+        @Html.ActionLink("GoToWorkorders", "Workorders", "Workorder", new { area = "Maximo_ui" }, null)
+        <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+    </div>
+    <div class="panel-body">
+        <div id="workorderOnLocationGridSpincontainer" style="position:relative">
+            <div id="workorderOnLocationGrid" class="mvc-grid"></div>
+        </div>
+        <div id="woDetailsPartial">Click on a row for more details about a workorder</div>
+    </div>
+</div>
+
 
 <script>
+    var workorderOnLocationGridspinner = new Spinner();
 //render grid and subscrible to row clicked events
     $('#workorderOnLocationGrid').mvcgrid({
         sourceUrl: '@Url.Action("_workordersOnLocationGrid")?' +
@@ -14,8 +27,8 @@
                    "&b_preventive=@Model.b_preventive" +
                    "&jpnum=@Model.jpnum" +
                    "&worktype=@Model.worktype" +
-                   "&startdate=@Model.startdate" +
-                   "&enddate=@Model.enddate"
+                   "&startdate=@Model.startdate.ToUniversalTime()" +
+                   "&enddate=@Model.enddate.ToUniversalTime()"
                 , // Grid source url string
         //query: '?search=test', // Grid query string
         requestType: 'get', // Ajax grid request type
@@ -32,12 +45,16 @@
                     $("#woDetailsPartial").load(url);
             },
         reloadStarted: function () {
+            workorderOnLocationGridspinner.spin(document.getElementById('workorderOnLocationGridSpincontainer'));
                 // this - grid instance which invoked the event
             },
         reloadEnded: function () {
+            workorderOnLocationGridspinner.stop();
                 // this - grid instance which invoked the event
             },
         reloadFailed: function (result) {
+            workorderOnLocationGridspinner.stop();
+            $("#workorderOnLocationGrid").html("Error while loading!!!");
                 // this - grid instance which invoked the event
                 // result - failed ajax response result
             }

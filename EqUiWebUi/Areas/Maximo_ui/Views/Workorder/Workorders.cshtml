@@ -6,45 +6,108 @@
 <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
 @using (Ajax.BeginForm("_workordersOnLocation", "Workorder", new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "formContent", LoadingElementId = "loader" }))
 {
-    <fieldset>
-        <legend>Maximo WorkorderSelectOptions</legend>
-        <ol>
-            <li>
-                @Html.LabelFor(m => m.enddate)
-                @Html.EditorFor(m => m.enddate)
-            </li>
-            <li>
-                @Html.LabelFor(m => m.startdate)
-                @Html.EditorFor(m => m.startdate)
-            </li>
-            <li>
-                @Html.LabelFor(m => m.b_ciblings)
-                @Html.CheckBoxFor(m => m.b_ciblings)
-            </li>
-            <li>
-                @Html.LabelFor(m => m.b_preventive)
-                @Html.CheckBoxFor(m => m.b_preventive)
-            </li>
-            <li>
-                @Html.LabelFor(m => m.location)
-                @Html.EditorFor(m => m.location)
-            </li>
-            <li>
-                @Html.LabelFor(m => m.locancestor)
-                @Html.EditorFor(m => m.locancestor)
-            </li>
-            <li>
-                @Html.LabelFor(m => m.jpnum)
-                @Html.EditorFor(m => m.jpnum)
-            </li>
-            <li>
-                @Html.LabelFor(m => m.worktype)
-                @Html.EditorFor(m => m.worktype)
-            </li>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h4 class="panel-title">Maximo WorkorderSelectOptions</h4>
+            <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+        </div>
+        <div class="panel-body">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <form class="form-horizontal">
+                <fieldset>
 
-        </ol>
-        <input type="submit" value="Load">
-    </fieldset>
+                    <div class="form-group form-inline">
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="startdate">Daterange</label>
+                            <div class="col-md-9">
+                                <input class="form-control input-md" id="daterange" name="daterange" type="text">
+                                <span class="help-block">date range for workorder.changedate</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group ">
+                            @Html.LabelFor(m => m.enddate, new { @class = "control-label col-md-3" })
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(m => m.enddate, new { @class = "form-control input-md" })
+                                @Html.ValidationMessageFor(m => m.enddate, "", new { @class = "text-danger" })
+                                <span class="help-block">changedate < than </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group ">
+                            @Html.LabelFor(m => m.startdate, new { @class = "control-label col-md-3" })
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(m => m.startdate, new { @class = "form-control input-md" })
+                                @Html.ValidationMessageFor(m => m.startdate, "", new { @class = "text-danger" })
+                                <span class="help-block">changedate > than</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group form-inline">
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.location, new { @class = "control-label col-md-3" })
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(m => m.location, new { @class = "form-control input-md" })
+                                @Html.ValidationMessageFor(m => m.location, "", new { @class = "text-danger" })
+                                <span title=" ie: 338010R01 or 338% or 338010R01;338010R02;.. (338010%;33820% not allowed!)." class="help-block">single wildcad or ; separated list</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.locancestor, new { @class = "control-label col-md-3" })
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(m => m.locancestor, new { @class = "form-control input-md" })
+                                @Html.ValidationMessageFor(m => m.locancestor, "", new { @class = "text-danger" })
+                                <span title="ie: A STN 331 or A STN33% or A STN 331;A STN338;... (A STN%;A LIJN% not allowed!)" class="help-block">single wildcad or ; separated list</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.jpnum, new { @class = "control-label col-md-3" })
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(m => m.jpnum, new { @class = "form-control input-md" })
+                                @Html.ValidationMessageFor(m => m.jpnum, "", new { @class = "text-danger" })
+                                <span title="ie: PGAGEO or PG% or PQAGEO;ROBSPARE;ROBANALY;... (PG%; ROB% not allowed!)" class="help-block">single wildcad or ; separated list</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.worktype, new { @class = "control-label col-md-3" })
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(m => m.worktype, new { @class = "form-control input-md" })
+                                @Html.ValidationMessageFor(m => m.worktype, "", new { @class = "text-danger" })
+                                <span title="ie: PCI or P% or PCI;WSCH;PP;... (PC%,W% not allowed!)" class="help-block">single wildcad or ; separated list</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.b_ciblings, new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.CheckBoxFor(m => m.b_ciblings, new { @class = "form-control input-ld" })
+                            </div>
+                            <span title="ie: if location 331010R01 we take 331010%01% " class="help-block">wildcards replace</span>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.b_preventive, new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.CheckBoxFor(m => m.b_preventive, new { @class = "form-control input-md" })
+                            </div>
+                            <span class="help-block">include workype ('PP','PCI','WSCH')</span>
+                        </div>
+
+                    </div>
+                    <hr />
+                    <input type="submit" value="Load workorders" class="btn btn-success">
+                </fieldset>
+            </form>
+
+
+        </div>
+    </div>
 }
 
 @*only shown while loading*@
@@ -52,8 +115,30 @@
     loading workorders....
 </div>
 @*table will be loaded in this*@
-<div id="formContent">
-    workorders load here
-</div>
+<div id="formContent"></div>
 
-
+<!--Script for workorders form-->
+<script>
+    //setting up datetimePicker
+    $('#daterange').daterangepicker({
+        "showWeekNumbers": true,
+        "showISOWeekNumbers": true,
+        "ranges": {
+            'Today': [moment(), moment()],
+            'Last 48 Hours': [moment().subtract(2, 'days'), moment()],
+            'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+            'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+            'Last 100 Days': [moment().subtract(100, 'days'), moment()],
+            'Last Year': [moment().subtract(365, 'days'), moment()]
+        },
+        "startDate": moment('@Model.startdate.ToString("o")'),
+        "endDate": moment('@Model.enddate.ToString("o")'),
+      //  "opens": "left",
+      //  "drops": "up"
+    }, function (end, start, label) {
+        console.log("New date range selected: " + moment(end).toISOString() + " to " + moment(start).toISOString() + " (predefined range: " + label + ")");
+        //feed to hidden fields from model so I can post back with form.
+        $("#enddate").val(moment(end).toISOString());
+        $("#startdate").val(moment(start).toISOString());
+    });
+</script>
