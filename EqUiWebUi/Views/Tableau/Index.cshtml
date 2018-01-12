@@ -1,63 +1,110 @@
 ﻿
+<div class="jumbotron">
+    <h2>Webviews tableau</h2>
+    <h5>(data update gebeurd nog NIET automatisch)</h5>
+    <h5>(gebruik user: e6308159 pw: e6308159 om in te loggen in tableau)</h5>
+    <h3>Welja ...misschien ooit als IT eindelijk die account aanmaakt... </h3>
+    <div style="width:100%;height:0;padding-bottom:56%;position:relative;"><iframe src="https://giphy.com/embed/ReImZejkBnqYU" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/angry-computer-frustrated-ReImZejkBnqYU"></a></p>
+</div>
 
-<div class="container body-content">
-    <div class="jumbotron">
-        <h2>Webviews tableau</h2>
-        <h5>(data update gebeurd nog NIET automatisch)</h5>
-        <h5>(gebruik user: e6308159 pw: e6308159 om in te loggen in tableau)</h5>
-    </div>
-
-        <div class="panel panel-default">
-            <h4>Desktop computers (max full HD)</h4>
-            <div class="panel-body">
-                
-                <p>
-                    <a href="~/tableau/EmbeddedDesktop?workbook=EquiEmbedded_ErrorStoNgac&sheet=ErrorLayoutDashboard" class="btn btn-primary btn-sm">LongTerm_Layout_STO_NGAC &raquo;</a>
-                    Bollen op layout data van STO (plc) en NGAC (abb robots)
-                </p>
-                
-                <p><a href="~/tableau/EmbeddedDesktop?workbook=EquiEmbedded_ErrorStoNgac&sheet=ErrorTreeLayoutDashboard" class="btn btn-primary btn-sm">LongTerm_Treemap_STO_NGAC &raquo;</a>
-                    Boommap data van STO (plc) en NGAC (abb robots) een top oneindig visualisatie</p>
-                
-                <p>
-                    <a href="~/tableau/EmbeddedDesktop?workbook=EquiEmbedded_MaximoStw040&sheet=Dash_MaximoStw040" class="btn btn-primary btn-sm">LongTerm_Layout_STW040_MAXIMO &raquo;</a>
-                    Bollen op layout data van STW040 en MAXIMO (ci)
-                </p>
-                
-                <p>
-                    <a href="~/tableau/EmbeddedDesktop?workbook=EquiEmbedded_breakdowns&sheet=Dash_Layout_Breakdown" class="btn btn-primary btn-sm">LongTerm_Layout_VCSC &raquo;</a>
-                    Bollen op layout data van VCSC (comau c3g & c4g)
-                </p>
-
-                <p>
-                    <a href="~/tableau/EmbeddedDesktop?workbook=EquiEmbedded_breakdowns&sheet=Dash_Tree_Breakdown" class="btn btn-primary btn-sm">LongTerm_Treemap_VCSC &raquo;</a>
-                    Boommap data van VCSC (comau c3g & c4g) een top oneindig visualisatie
-                </p>
-
-                <p>
-                    <a href="~/tableau/EmbeddedDesktop?workbook=EquiEmbedded_Assets&sheet=AssetLayoutDashboard" class="btn btn-primary btn-sm">AssetLayout &raquo;</a>
-                    Layout assets (om te zien of alles gemapt is)
-                </p>
-
-                <p>
-                    <a href="~/tableau/EmbeddedDesktop?workbook=RobSensorData30D&sheet=SensorDash" class="btn btn-primary btn-sm">Gripper sensor faults &raquo;</a>
-                    Gripper sensor faults (comau test)
-                </p>
-
-            </div>
+<div>
+    <h4>Desktop computers (max full HD)</h4>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h4 class="panel-title">Manuele storings regristratie (Maximo STW040)</h4>
+            <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
         </div>
-
-        <p></p>
-
-
-    <div class="panel panel-default">
-        <h4>4K Digiborden (max ultra HD)</h4>
         <div class="panel-body">
+
+            <p>
+                <a href="~/tableau/EmbeddedDesktop?workbook=EquiEmbedded_MaximoStw040&sheet=Dash_MaximoStw040" class="btn btn-primary btn-sm">LongTerm_Layout &raquo;</a>
+                layout data van STW040 en MAXIMO (ci)
+            </p>
+
+        </div>
+    </div>
+    <p></p>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h4 class="panel-title">Automatische storings regristratie (VCASC VASC)</h4>
+            <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+        </div>
+        <div class="panel-body">
+
+            <p>
+                <a href="~/tableau/EmbeddedDesktop?workbook=EquiEmbedded_breakdowns&sheet=Layout_CountofDt" class="btn btn-primary btn-sm">LongTerm_Layout &raquo;</a>
+                layout met aantal storingen
+            </p>
+
+            <p>
+                <a href="~/tableau/EmbeddedDesktop?workbook=EquiEmbedded_breakdowns&sheet=Dash_Layout_Breakdown" class="btn btn-primary btn-sm">LongTerm_Layout &raquo;</a>
+                layout met aantal storingen + error trent grafiek
+            </p>
+
+            <p>
+                <a href="~/tableau/EmbeddedDesktop?workbook=EquiEmbedded_breakdowns&sheet=Dash_Tree_Breakdown" class="btn btn-primary btn-sm">LongTerm_Treemap &raquo;</a>
+                Boommap met aantal storingen
+            </p>
+        </div>
+    </div>
+    <p></p>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h4 class="panel-title">Automatische error regristratie (VCASC VASC STO)</h4>
+            <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+        </div>
+        <div class="panel-body">
+
+            <p>
+                <a href="~/tableau/EmbeddedDesktop?workbook=EquiEmbedded_ErrorStoNgac&sheet=ErrorLayoutDashboard" class="btn btn-primary btn-sm">LongTerm_Layout &raquo;</a>
+                layout data van STO (plc) en NGAC (abb robots)
+            </p>
+
+            <p>
+                <a href="~/tableau/EmbeddedDesktop?workbook=EquiEmbedded_ErrorStoNgac&sheet=ErrorTreeLayoutDashboard" class="btn btn-primary btn-sm">LongTerm_Treemap &raquo;</a>
+                Boommap data van STO (plc) en NGAC (abb robots) 
+            </p>
+
+        </div>
+    </div>
+    <p></p>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h4 class="panel-title">Test area</h4>
+            <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+        </div>
+        <div class="panel-body">
+
+            <p>
+                <a href="~/tableau/EmbeddedDesktop?workbook=EquiEmbedded_Assets&sheet=AssetLayoutDashboard" class="btn btn-primary btn-sm">AssetLayout &raquo;</a>
+                Layout assets (om te zien of alles gemapt is)
+            </p>
+
+            <p>
+                <a href="~/tableau/EmbeddedDesktop?workbook=RobSensorData30D&sheet=SensorDash" class="btn btn-primary btn-sm">Gripper sensor faults &raquo;</a>
+                Gripper sensor faults (comau test)
+            </p>
+
+        </div>
+    </div>
+</div>
+
+<hr />
+
+<div>
+    <h4>4K Digiborden (max ultra HD)</h4>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h4 class="panel-title">4K</h4>
+            <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+        </div>
+        <div class="panel-body">
+
             <p>
                 <a href="~/tableau/Embedded4K?workbook=4K-digibord-V10&sheet=ErrorLayoutDashboard" class="btn btn-primary btn-sm">4K LongTerm_Layout_STO_NGAC &raquo;</a>
                 Bollen op layout data van STO (plc) en NGAC (abb robots)
             </p>
-            
+
             <p>
                 <a href="~/tableau/Embedded4K?workbook=4K-digibord-V10&sheet=ErrorTreeLayoutDashboard" class="btn btn-primary btn-sm">4K LongTerm_Treemap_STO_NGAC &raquo;</a>
                 Boommap data van STO (plc) en NGAC (abb robots) een top oneindig visualisatie
@@ -67,7 +114,7 @@
                 <a href="~/tableau/Embedded4K?workbook=EquiEmbedded_MaximoStw040&sheet=Dash_MaximoStw040" class="btn btn-primary btn-sm">LongTerm_Layout_STW040_MAXIMO &raquo;</a>
                 Bollen op layout data van STW040 en MAXIMO (ci) (gewoon andere wrapper gebruikt)
             </p>
+
         </div>
     </div>
-
 </div>
