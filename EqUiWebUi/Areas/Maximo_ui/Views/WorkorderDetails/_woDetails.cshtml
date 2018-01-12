@@ -3,7 +3,7 @@
     ViewBag.Title = "_woDetails";
 }
 
-<div class="panel panel-default">
+<div class="panel panel-default @(!string.IsNullOrWhiteSpace(ViewBag.LongDescription) ? "shown":"hidden")">
     <div class="panel-heading">
         <h6>LongDescription</h6>
     </div>
@@ -13,7 +13,7 @@
     </div>
 </div>
 
-<div class="panel panel-default">
+<div class="panel panel-default  @(!string.IsNullOrWhiteSpace(ViewBag.FailureRemark) ? "shown":"hidden")">
     <div class="panel-heading">
         <h6>FailureRemark</h6>
     </div>
@@ -23,7 +23,7 @@
     </div>
 </div>
 
-<div class="panel panel-default">
+<div class="panel panel-default @(Model.Data.Count() != 0 ? "shown":"hidden")">
     <div class="panel-heading">
         <h6>Labor</h6>
     </div>

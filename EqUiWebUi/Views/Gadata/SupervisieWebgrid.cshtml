@@ -5,7 +5,10 @@
     ViewBag.Title = "Supervisie";
 }
 
-    @Html.Action("_supervisie")
+<div id="SupervisieGridSpincontainer" style="position:relative">
+    <div id="SupervisieGrid" class="mvc-grid"></div>
+</div>
+
     <div class="panel-footer">
         <div class="row">
             <div class="col-sm-6">
@@ -20,46 +23,62 @@
         <div class="modal-content">Loading....</div>
     </div>
 
-
-    <script type="text/javascript">
-    $(document).ready(function () {
-        //subscribe to row clicked events
-        $('#Supervisie').mvcgrid({
-            sourceUrl: '@Url.Action("_supervisie")',
-            rowClicked: function (row, data, e) {
-
-                    var urlMoreInfo = '@Url.Action("_Moreinfo","Gadata")?location=' + encodeURIComponent(data.Location)
-                        + '&errornum=' + encodeURIComponent(data.Logcode)
-                        + '&refid=' + encodeURIComponent(data.refId)
-                        + '&logtype=' + encodeURIComponent(data.Logtype)
-                        + '&logtext=' + encodeURIComponent(data.logtext)
-
+<!--script for supervisiegrid-->
+<script type="text/javascript">
+$(document).ready(function () {
+    var SupervisieGridspinner = new Spinner();
+    //render grid and subscrible to row clicked events
+    $('#SupervisieGrid').mvcgrid({
+        sourceUrl: '@Url.Action("_supervisie")', // Grid source url string
+        //query: '?search=test', // Grid query string
+        requestType: 'get', // Ajax grid request type
+        data: {
+                // Ajax grid query data
+        },
+        filters: {
+                // Grid filters to extend or use
+        },
+        reload: true, // Grid reload indicator
+        rowClicked: function (row, data, e) {
+                var urlMoreInfo = '@Url.Action("_Moreinfo","Gadata")?location=' + encodeURIComponent(data.Location)
+                            + '&errornum=' + encodeURIComponent(data.Logcode)
+                            + '&refid=' + encodeURIComponent(data.refId)
+                            + '&logtype=' + encodeURIComponent(data.Logtype)
+                            + '&logtext=' + encodeURIComponent(data.logtext)
                     //launch modal
-                   $('#MyModal').modal({ remote: urlMoreInfo });
-            },
-            reloadEnded: function () {
-               //must call afther each reload end.
-               tableFormatLogtype(7);
-            },
-        });
-        //hide the navbar if in full screen
-        if (screen.height <= window.innerHeight) {
-            // browser is almost certainly fullscreen
-           // Navbar(false);
+                $('#MyModal').removeData('bs.modal');
+                $('#MyModal').html('<div class="modal-content">Loading....</div>');
+                $('#MyModal').modal({ remote: urlMoreInfo });
+        },
+        reloadStarted: function () {
+            SupervisieGridspinner.spin(document.getElementById('SupervisieGridSpincontainer'));
+                // this - grid instance which invoked the event
+        },
+        reloadEnded: function () {
+            tableFormatLogtype(7);
+            SupervisieGridspinner.stop();
+                // this - grid instance which invoked the event
+        },
+        reloadFailed: function (result) {
+            SupervisieGridspinner.stop();
+            $("#SupervisieGrid").html("Error while loading!!!");
+                // this - grid instance which invoked the event
+                // result - failed ajax response result
         }
+    });
+
+
         //enable blinking
         tableFormatBlink(7, 6);
-        //format table
-        tableFormatLogtype(7);
         //enable polling for new data
         CheckRefreshTable(5, '@Url.Action("SupervisiecheckNewData")', '#Supervisie');
         //on modal close
         $('#MyModal').on('hidden.bs.modal', function (e) {
-            $('#MyModal').html('<div class="modal-content">Loading....</div>');
+            $('#MyModal').html('<div class="modal-content">no content</div>');
         });
+
         //full with screen
         $("#allcontent").removeClass("body-content");
         $("#allcontent").removeClass("container");
     });
     </script>
-

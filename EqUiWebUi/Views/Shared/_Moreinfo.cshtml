@@ -26,15 +26,8 @@
 
     @Html.Partial("../Chart/_getErrorTrend", Model)
 
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-            <h4 class="panel-title">Workorders for location: @Model.location</h4>
-            <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
-        </div>
-    <div class="panel-body">
-        @Html.Action("Workorders", "Maximo", new { location = Model.location })
-    </div>
-</div>
+    @Html.Action("_workordersOnLocation", "Workorder", new { area = "Maximo_ui", location = Model.location })
+
 </div>
 
 <div class="modal-footer">
