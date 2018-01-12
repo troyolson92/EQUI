@@ -148,15 +148,21 @@
     });
 
 
-    //if loadOnInit = true  fold pannel and load
+
     $(document).ready(function () {
+        //if loadOnInit = true  fold pannel and load
         var loadOnInit = @(Json.Encode(ViewBag.loadOnInit ?? false));
         if (loadOnInit == true) {
-            console.log("auto load");
             //trigger submit
             $("#WorkorderSelectOptionsSubmit").trigger("click");
             //fold up options pannel
             $("#WorkorderSelectOptions").trigger("click");
+        }
+
+        //check if we need to go full screen mode
+        var fullscreen = @(Json.Encode(ViewBag.fullscreen ?? false));
+        if (fullscreen == true) {
+            $("#fullscreenNav").trigger("click");
         }
     });
 </script>

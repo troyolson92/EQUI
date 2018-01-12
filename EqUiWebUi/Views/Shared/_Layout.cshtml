@@ -56,11 +56,19 @@
                             <img src="~/Content/images/icons8-customer-25.png" />
                         </a>
 
+                        <a id="fullscreenNav" class="glyphicon glyphicon-fullscreen"></a>
+
                     </div>
                 </div>
 
             </div>
         </div>
+
+    </div>
+
+    @*when navbar is hidden this is visble*@
+    <div class="pull-right">
+        <a id="fullscreenBody" class="glyphicon glyphicon-fullscreen hidden"></a>
     </div>
 
     @*load this bundle before body because of scripts in views*@
@@ -103,6 +111,22 @@
                 return output;
                 },
         })
+        //for fullscreen mode
+        $("#fullscreenNav").click(function () {
+            $("#allcontent").removeClass("body-content");
+            $("#allcontent").removeClass("container");
+            $(".navbar-fixed-top").autoHidingNavbar('hide');
+            $("#allcontent").animate({ "margin-top": "0px" }, "fast");
+            $("#fullscreenBody").removeClass("hidden");
+        });
+        //out of full screen mode
+        $("#fullscreenBody").click(function () {
+            $("#allcontent").addClass("body-content");
+            $("#allcontent").addClass("container");
+            $(".navbar-fixed-top").autoHidingNavbar('show');
+            $("#allcontent").animate({ "margin-top": "60px" }, "fast");
+            $("#fullscreenBody").addClass("hidden");
+        });
     </script>
     @RenderSection("scripts", required: false)
 </body>

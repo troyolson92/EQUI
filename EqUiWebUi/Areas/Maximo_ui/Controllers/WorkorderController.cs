@@ -26,7 +26,7 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
         //full view can be intitiated by using parms or by model. 
         [HttpGet]
         public ActionResult Workorders(string location, string locancestor, bool? b_ciblings, bool? b_preventive, string jpnum, string worktype
-            , DateTime? startdate, DateTime? enddate, Models.WorkorderSelectOptions workorderSelectOptions, bool loadOnInit = false, int fontSize = 12)
+            , DateTime? startdate, DateTime? enddate, Models.WorkorderSelectOptions workorderSelectOptions, bool loadOnInit = false, bool fullscreen = false, int fontSize = 12)
         {
             //if a parm value is appended set it to the model ELSE MODEL IS BOSS
             if (location != null) workorderSelectOptions.location = location;
@@ -55,10 +55,11 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
             ViewBag.fontSize = fontSize;
             //if this is set we load the workorder directly and fold up the parms pannem
             ViewBag.loadOnInit = loadOnInit;
+            //if this is ser we hide navbar and render in full screen mode
+            ViewBag.fullscreen = fullscreen;
             //
             return View(workorderSelectOptions);
         }
-
 
         //can be called to be renders as partial in model or something like that...
         [HttpGet]
