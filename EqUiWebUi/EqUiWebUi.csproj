@@ -148,6 +148,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Maximo_ui\Views\Shared\" />
+    <Folder Include="Views\Maximo\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />

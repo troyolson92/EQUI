@@ -13,5 +13,11 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
         {
             return View();
         }
+
+        //lagency support for sharepoint list 
+        public ActionResult WoDetails(int? wonum)
+        {
+            return RedirectToAction("WoDetails", "WorkorderDetails", new {area = "Maximo_ui", wonum = wonum });
+        }
     }
 }

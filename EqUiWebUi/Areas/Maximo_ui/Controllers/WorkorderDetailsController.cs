@@ -17,7 +17,6 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
             return View();
         }
 
-
         //Standard details view about 1 workorder 
         [HttpGet]
         public ActionResult WoDetails(string wonum)
