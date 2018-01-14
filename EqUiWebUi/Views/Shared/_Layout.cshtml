@@ -56,7 +56,7 @@
                             <img src="~/Content/images/icons8-customer-25.png" />
                         </a>
 
-                        <a id="fullscreenNav" class="glyphicon glyphicon-fullscreen"></a>
+                        <a id="fullscreenNav" class="glyphicon glyphicon-fullscreen" data-toggle="tooltip" data-placement="left" title="Go fullscreen"></a>
 
                     </div>
                 </div>
@@ -64,11 +64,6 @@
             </div>
         </div>
 
-    </div>
-
-    @*when navbar is hidden this is visble*@
-    <div class="pull-right">
-        <a id="fullscreenBody" class="glyphicon glyphicon-fullscreen hidden"></a>
     </div>
 
     @*load this bundle before body because of scripts in views*@
@@ -79,9 +74,13 @@
         <hr />
     </div>
     <!--footer-->
-    <footer>
+    <footer id="footer">
         <p>&copy; @DateTime.Now.Year - VCG GA SDEBEUL ASP.NET Application</p>
     </footer>
+    @*when navbar is hidden this is visble*@
+    <div class="pull-right">
+        <a id="fullscreenBody" class="glyphicon glyphicon-fullscreen hidden" data-toggle="tooltip" data-placement="left" title="Exit fullscreen"></a>
+    </div>
 
 
     @Scripts.Render("~/bundles/MyScripts")
@@ -118,6 +117,7 @@
             $(".navbar-fixed-top").autoHidingNavbar('hide');
             $("#allcontent").animate({ "margin-top": "0px" }, "fast");
             $("#fullscreenBody").removeClass("hidden");
+            $("#footer").addClass("hidden");
         });
         //out of full screen mode
         $("#fullscreenBody").click(function () {
@@ -126,7 +126,12 @@
             $(".navbar-fixed-top").autoHidingNavbar('show');
             $("#allcontent").animate({ "margin-top": "60px" }, "fast");
             $("#fullscreenBody").addClass("hidden");
+            $("#footer").removeClass("hidden");
         });
+        //enable tooltips everywhere
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
     </script>
     @RenderSection("scripts", required: false)
 </body>
