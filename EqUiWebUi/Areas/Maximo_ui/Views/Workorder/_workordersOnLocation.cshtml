@@ -3,9 +3,12 @@
 
 <div class="panel panel-primary">
     <div class="panel-heading">
-        <h4 class="panel-title">Workorders</h4>
-        <a class="glyphicon glyphicon-new-window" id="goToWorkordersHyperlink" href=""> go to workorders</a>
-        <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+                <h4 class="panel-title">
+                    Workorders
+                    <a class="glyphicon glyphicon-cog" href="#" data-toggle="popover" data-placement="bottom" id="workorderOnLocationPopover"></a>
+                    <a class="glyphicon glyphicon-new-window" id="goToWorkordersHyperlink" href="#"></a>
+                </h4>
+                <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
     </div>
     <div class="panel-body">
         <div id="workorderOnLocationGridSpincontainer" style="position:relative">
@@ -15,52 +18,96 @@
     </div>
 </div>
 
+@*popover content*@
+<div class="hidden" id="workorderOnLocationPopoverContent">
+    <div class="panel panel-body">
+        <div class="form-group">
+            <div class="form-group">
+                @Html.LabelFor(m => m.b_ciblings, new { @class = "control-label col-6", style = "color:#000000" })
+                <div class="col-6">
+                    @Html.CheckBoxFor(m => m.b_ciblings, new { @class = "form-control input-md" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.b_preventive, new { @class = "control-label col-6", style = "color:#000000" })
+                <div class="col-6">
+                    @Html.CheckBoxFor(m => m.b_preventive, new { @class = "form-control input-md" })
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!--_workorderOnLocation-->
 <script>
+    //enable popover for settings.
+    $("#workorderOnLocationPopover").popover({
+        html: true,
+        content: function () {
+            return $('#workorderOnLocationPopoverContent').html();
+        },
+    });
+    //
     var workorderOnLocationGridspinner = new Spinner();
-    //build query string 
-    var workorderOnLocationGridUrlParms =  "&location=@Model.location" +
-                                           "&locancestor=@Model.locancestor" +
-                                           "&b_ciblings=@Model.b_ciblings" +
-                                           "&b_preventive=@Model.b_preventive" +
-                                           "&jpnum=@Model.jpnum" +
-                                           "&worktype=@Model.worktype" +
-                                           "&startdate=@Model.startdate.ToString("yyyy-MM-dd HH:mm:ss")" +
-                                           "&enddate=@Model.enddate.ToString("yyyy-MM-dd HH:mm:ss")"
+    //build query string
+    function workorderOnLocationGridUrlParms() {
+        var result = "&location=@Model.location" +
+            "&locancestor=@Model.locancestor" +
+            "&b_ciblings=" + $('#b_ciblings').is(':checked')  + 
+            "&b_preventive=" + $('#b_preventive').is(':checked') + 
+            "&jpnum=@Model.jpnum" +
+            "&worktype=@Model.worktype" +
+            "&startdate=@Model.startdate.ToString("yyyy-MM-dd HH:mm:ss")" +
+            "&enddate=@Model.enddate.ToString("yyyy-MM-dd HH:mm:ss")";
+        return result;
+    }
 // set url to link back to main workorder view
-    $('#goToWorkordersHyperlink').attr('href', '@Url.Action("Workorders")?' + workorderOnLocationGridUrlParms + "&loadOnInit=true");
+    $('#goToWorkordersHyperlink').attr('href', '@Url.Action("Workorders")?' + workorderOnLocationGridUrlParms() + "&loadOnInit=true");
 //render grid and subscrible to row clicked events
-    $('#workorderOnLocationGrid').mvcgrid({
-        sourceUrl: '@Url.Action("_workordersOnLocationGrid")?' + workorderOnLocationGridUrlParms
-                , // Grid source url string
-        //query: '?search=test', // Grid query string
-        requestType: 'get', // Ajax grid request type
-        data: {
+    function loadWorkorderOnLocationGrid() {
+        $('#workorderOnLocationGrid').mvcgrid({
+            sourceUrl: '@Url.Action("_workordersOnLocationGrid")?' + workorderOnLocationGridUrlParms(), // Grid source url string
+            //query: '?search=test', // Grid query string
+            requestType: 'get', // Ajax grid request type
+            data: {
                 // Ajax grid query data
             },
-        filters: {
+            filters: {
                 // Grid filters to extend or use
             },
-        reload: true, // Grid reload indicator
-        rowClicked: function (row, data, e) {
-                    $("#woDetailsPartial").html("Loading.....");
+            reload: true, // Grid reload indicator
+            rowClicked: function (row, data, e) {
+                $("#woDetailsPartial").html("Loading.....");
                 var url = "@Url.Action("_woDetails", "WorkorderDetails")?wonum=" + data.WONUM;
-                    $("#woDetailsPartial").load(url);
+                $("#woDetailsPartial").load(url);
             },
-        reloadStarted: function () {
-            workorderOnLocationGridspinner.spin(document.getElementById('workorderOnLocationGridSpincontainer'));
+            reloadStarted: function () {
+                workorderOnLocationGridspinner.spin(document.getElementById('workorderOnLocationGridSpincontainer'));
                 // this - grid instance which invoked the event
             },
-        reloadEnded: function () {
-            workorderOnLocationGridspinner.stop();
+            reloadEnded: function () {
+                workorderOnLocationGridspinner.stop();
                 // this - grid instance which invoked the event
             },
-        reloadFailed: function (result) {
-            workorderOnLocationGridspinner.stop();
-            $("#workorderOnLocationGrid").html("Error while loading!!!");
+            reloadFailed: function (result) {
+                workorderOnLocationGridspinner.stop();
+                $("#workorderOnLocationGrid").html("Error while loading!!!");
                 // this - grid instance which invoked the event
                 // result - failed ajax response result
             }
         });
+    }
+//init grid
+    loadWorkorderOnLocationGrid();
+    //subscrible to option checkbox click event
+    $('#b_ciblings').click(function () {
+        loadWorkorderOnLocationGrid();
+        console.log("hit");
+    });
+
+    $('#b_preventive').click(function () {
+        loadWorkorderOnLocationGrid();
+        console.log("hit");
+    });
 </script>

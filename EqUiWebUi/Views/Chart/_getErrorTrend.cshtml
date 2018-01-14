@@ -1,60 +1,60 @@
 ﻿@model EqUiWebUi.Models.LogInfo
 <div class="panel panel-primary">
     <div class="panel-heading">
-        <h4 class="panel-title">Trend for @Model.logtext on @Model.location</h4>
+        <h4 class="panel-title">
+            Trend for @Model.logtext on @Model.location
+            <a class="glyphicon glyphicon-cog" href="#" data-toggle="popover" data-placement="bottom" id="ErrorTrentCharOptionsPopover"></a>
+            <a class="glyphicon glyphicon-calendar" id="ErrorTrentCharDatepicker" href="#"></a>
+        </h4>
         <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
     </div>
-  
-        <div class="panel-body" id="graphSpinner" style="position:relative">
-            <div id="gaphContainer">
-                <canvas id='graphCanvas'></canvas>
-            </div>
+
+    <div class="panel-body" id="graphSpinner" style="position:relative">
+        <div id="gaphContainer">
+            <canvas id='graphCanvas'></canvas>
         </div>
+    </div>
+</div>
 
-        <div class="panel-footer">
-            <div class="col-sm-4 col-sm-offset-2">
-                <div class="row">
-                    <div class="col-sm-4">
-                        <h5>Date range</h5>
-                    </div>
-                    <div class="col-sm-8">
-                        <input type="text" id="demo" class="form-control input-sm">
-                    </div>
-                </div>
+@*popover content*@
+<div class="hidden" id="ErrorTrentCharOptionsPopoverContent">
+    <div class="panel panel-body">
+        <div class="row" style="color:#000000">
+            <div class=" col-2">
+                Groupmode
             </div>
 
-            <div class="row">
-                <div class=" col-sm-2">
-                    Groupmode
+            <div class="col-10">
+                <div class="btn-group" id="btnGrouping" role="group" data-toggle="tooltip" data-placement="bottom" title="Set how the graph groups the data" >
+                    <button type="button" class="btn  btn-sm btn-secondary active" id="btnGroupingAuto">auto</button>
+                    <button type="button" class="btn  btn-sm btn-secondary" id="btnGroupingHour">hour</button>
+                    <button type="button" class="btn  btn-sm btn-secondary" id="btnGroupingDay">day</button>
+                    <button type="button" class="btn  btn-sm btn-secondary" id="btnGroupingWeek">week</button>
+                    <button type="button" class="btn  btn-sm btn-secondary" id="btnGroupingMonth">month</button>
                 </div>
-
-                <div class="col-sm-4">
-                    <div class="btn-group" id="btnGrouping" role="group" aria-label="Graph grouping mode">
-                        <button type="button" class="btn  btn-sm btn-secondary active" id="btnGroupingAuto">auto</button>
-                        <button type="button" class="btn  btn-sm btn-secondary" id="btnGroupingHour">hour</button>
-                        <button type="button" class="btn  btn-sm btn-secondary" id="btnGroupingDay">day</button>
-                        <button type="button" class="btn  btn-sm btn-secondary" id="btnGroupingWeek">week</button>
-                        <button type="button" class="btn  btn-sm btn-secondary" id="btnGroupingMonth">month</button>
-                    </div>
-                </div>
-
-                <div class="col-sm-3"></div>
-
-
             </div>
         </div>
     </div>
+</div>
 
 
-    <script src="~/Scripts/d3/d3.js"></script>
-    <script src="~/Scripts/d3/Chart.bundle.js"></script>
-    <script>
+<script src="~/Scripts/d3/d3.js"></script>
+<script src="~/Scripts/d3/Chart.bundle.js"></script>
+<script>
     //global vars
     var groupmode = 0;
     var endDate = moment().subtract(29, 'days');
     var startDate = moment();
     var spinnerErrorTrent = new Spinner();
     var ErrorTrendChart;
+
+    //enable popover for settings.
+    $("#ErrorTrentCharOptionsPopover").popover({
+        html: true,
+        content: function () {
+            return $('#ErrorTrentCharOptionsPopoverContent').html();
+        },
+    });
 
     //get chart data
     function getChartData(_location, _errornum, _logtekst, _logtype, _refId, _startDate, _endDate, _groupType) {
@@ -90,7 +90,6 @@
             async: true
         });
     };
-
 
     //build the chart Calls when ajax request ends
     function buildchart(table, chartName) {
@@ -172,15 +171,13 @@
         ErrorTrendChart = new Chart(ctx, config);
     }
 
-
     //refresh the chart
     function refreshChart() {
         getChartData("@Model.location", @Model.errornum, "@Model.logtext.Replace("\n"," ").Replace("\r", " ").Replace("\t", " ")", "@Model.logtype",@Model.refid, moment(startDate).toISOString(), moment(endDate).toISOString(), groupmode);
     };
 
-
     //setting up datetimePicker
-    $('#demo').daterangepicker({
+    $('#ErrorTrentCharDatepicker').daterangepicker({
         "showWeekNumbers": true,
         "showISOWeekNumbers": true,
         "ranges": {
@@ -193,8 +190,7 @@
         },
         "startDate": startDate,
         "endDate": endDate,
-        "opens": "left",
-        "drops": "up"
+
     }, function (end, start, label) {
         console.log("New date range selected: " + start.format('YYYY-MM-DD') + " to " + end.format('YYYY-MM-DD') + " (predefined range: " + label + ")");
         startDate = start;
@@ -204,35 +200,36 @@
 
 
     //setting up groupmode events
-    $("#btnGroupingAuto").click(function () {
+    $(document).on("click", "#btnGroupingAuto", function () {
         $("#btnGrouping").find(".active").removeClass("active");
         $("#btnGroupingAuto").addClass("active");
         groupmode = 0;
         refreshChart();
     });
 
-    $("#btnGroupingHour").click(function () {
+
+    $(document).on("click", "#btnGroupingHour", function () {
         $("#btnGrouping").find(".active").removeClass("active");
         $("#btnGroupingHour").addClass("active");
         groupmode = 1;
         refreshChart();
     });
 
-    $("#btnGroupingDay").click(function () {
+    $(document).on("click", "#btnGroupingDay", function () {
         $("#btnGrouping").find(".active").removeClass("active");
         $("#btnGroupingDay").addClass("active");
         groupmode = 2;
         refreshChart();
     });
 
-    $("#btnGroupingWeek").click(function () {
+    $(document).on("click", "#btnGroupingWeek", function () {
         $("#btnGrouping").find(".active").removeClass("active");
-        $("#btnGroupingWeek").addClass("v");
+        $("#btnGroupingWeek").addClass("active");
         groupmode = 3;
         refreshChart();
     });
 
-    $("#btnGroupingMonth").click(function () {
+    $(document).on("click", "#btnGroupingMonth", function () {
         $("#btnGrouping").find(".active").removeClass("active");
         $("#btnGroupingMonth").addClass("active");
         groupmode = 4;
@@ -242,5 +239,5 @@
     $(document).ready(function () {
         refreshChart();
     });
-    </script>
+</script>
 
