@@ -6,7 +6,6 @@ using System;
 using System.Web;
 
 [assembly: log4net.Config.XmlConfigurator(Watch = true)]
-
 namespace EqUiWebUi
 {
     public class Startup
@@ -27,40 +26,6 @@ namespace EqUiWebUi
 
             app.UseHangfireServer();
         //
-            //background work
-            Backgroundwork backgroundwork = new Backgroundwork();
-            //**********************************TipDresData table***************************************************
-            //fire and forget to init
-            BackgroundJob.Enqueue(() => backgroundwork.UpdateTipstatus());
-            //set job to refresh every minute
-            RecurringJob.AddOrUpdate(() => backgroundwork.UpdateTipstatus(), Cron.Minutely);
-            //**********************************Ploegreport table***************************************************
-            //fire and forget to init
-            BackgroundJob.Enqueue(() => backgroundwork.UpdatePloegreport());
-            //set job to refresh every minute
-            RecurringJob.AddOrUpdate(() => backgroundwork.UpdatePloegreport(), Cron.Minutely);
-            //**********************************Supervisie table***************************************************
-            //fire and forget to init
-            BackgroundJob.Enqueue(() => backgroundwork.UpdateSupervisie());
-            //set job to refresh every minute
-            RecurringJob.AddOrUpdate(() => backgroundwork.UpdateSupervisie(), Cron.Minutely);
-            //**********************************snapshot system****************************************************
-            //check every minute for new jobs 
-            RecurringJob.AddOrUpdate(() => backgroundwork.HandleMaximoSnapshotWork(),Cron.Minutely);
-            //**********************************STO****************************************************************
-            //check every minute for new data (hystorian)
-            RecurringJob.AddOrUpdate(() => backgroundwork.PushDatafromSTOtoGADATA(), Cron.MinuteInterval(5));
-            //**********************************STW040 BI rapoort****************************************************
-            RecurringJob.AddOrUpdate(() => backgroundwork.PushDatafromSTW040toGADATA(), Cron.HourInterval(1));
-            //**********************************MX7 *****************************************************************
-            //BI rapport
-            //RecurringJob.AddOrUpdate(() => backgroundwork.PushDatafromMX7toGADATA(), Cron.HourInterval(1));
-            //reporting DB 
-            RecurringJob.AddOrUpdate(() => backgroundwork.PushDatafromMAXIMOtoGADATA(), Cron.HourInterval(1));
-            //**********************************Tableau buffers******************************************************
-            RecurringJob.AddOrUpdate(() => backgroundwork.UpdateTableauBuffers(), Cron.MinuteInterval(20));
-
-
         }
 
         public class MyAuthorizationFilter : IDashboardAuthorizationFilter

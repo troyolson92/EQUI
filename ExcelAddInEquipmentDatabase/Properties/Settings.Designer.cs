@@ -12,7 +12,7 @@ namespace ExcelAddInEquipmentDatabase.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.3.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.5.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -74,7 +74,7 @@ namespace ExcelAddInEquipmentDatabase.Properties {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
         [global::System.Configuration.DefaultSettingValueAttribute("Data Source=sqla001.gen.volvocars.net;Initial Catalog=GADATA;Persist Security Inf" +
-            "o=True;User ID=EqUi;Password=EqUi")]
+            "o=True;User ID=EqUiAdmin;Password=EqUiAdmin")]
         public string GADATAConnectionString {
             get {
                 return ((string)(this["GADATAConnectionString"]));

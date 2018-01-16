@@ -60,5 +60,38 @@ namespace EqUiWebUi.Controllers
         {
             return View();
         }
+
+        //init background work jobs.
+        [Authorize(Roles = "Administrator")]
+        public ActionResult ConfiureBackgroundJobs()
+        {
+            Backgroundwork backgroundwork = new Backgroundwork();
+            backgroundwork.configHangfireJobs();
+            return View();
+        }
+
+        //Fire background jobs once
+        [Authorize(Roles = "Administrator")]
+        public ActionResult FireBackgroundJobs()
+        {
+            Backgroundwork backgroundwork = new Backgroundwork();
+            backgroundwork.configHangfireJobs();
+            return View();
+        }
+
+        //Fire background jobs once
+        [Authorize(Roles = "Administrator")]
+        public ActionResult BackGroundWorkBufferStatus()
+        {
+            ViewBag.PloegreportCount =  DataBuffer.Ploegreport.Count();
+            ViewBag.SupervisieCount = DataBuffer.Supervisie.Count();
+            return View();
+        }
+
+        public ActionResult UB12Home()
+        {
+
+            return View();
+        }
     }
 }

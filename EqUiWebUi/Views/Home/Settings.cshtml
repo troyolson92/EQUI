@@ -2,13 +2,16 @@
     ViewBag.Title = "Settings";
 }
 
-    <div class="jumbotron">
-        <h2>@ViewBag.Title.</h2>
-        <h3>@ViewBag.Message</h3>
-        <p><a href="~/Hangfire" class="btn btn-primary btn-sm">Hangfire &raquo;</a>Beheer van background jobs. </p>
+<div class="jumbotron">
+    <h2>@ViewBag.Title.</h2>
+    <h3>@ViewBag.Message</h3>
+    <p><a href="~/Hangfire" class="btn btn-primary btn-sm">Hangfire &raquo;</a>Beheer van background jobs. </p>
+    <p><a href="~/Home/ConfiureBackgroundJobs" class="btn btn-danger btn-sm">Configure jobs &raquo;</a>Configure hangfire jobs. </p>
+    <p><a href="~/Home/ConfiureBackgroundJobs" class="btn btn-warning btn-sm">Fire jobs &raquo;</a>Fire and forget hangfire jobs. </p>
+    <p><a href="~/Home/BackGroundWorkBufferStatus" class="btn btn-warning btn-sm">bufferStatus &raquo;</a>show buffer count</p>
 
-        <p><a href="~/user_management/users/Index" class="btn btn-primary btn-sm">Users &raquo;</a>Beheer van gebruikers</p>
-        <p><a href="~/user_management/usersPermisions/Index" class="btn btn-primary btn-sm">UsersPermisions &raquo;</a>Beheer van rechten</p>
+    <p><a href="~/user_management/users/Index" class="btn btn-primary btn-sm">Users &raquo;</a>Beheer van gebruikers</p>
+    <p><a href="~/user_management/usersPermisions/Index" class="btn btn-primary btn-sm">UsersPermisions &raquo;</a>Beheer van rechten</p>
 
-    </div>
+</div>
 

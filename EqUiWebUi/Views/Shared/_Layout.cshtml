@@ -128,6 +128,12 @@
             $("#fullscreenBody").addClass("hidden");
             $("#footer").removeClass("hidden");
         });
+
+        //if fullscreen request in url do it.
+        if (qs("GoFullScreen")) {
+            console.log("auto Full screen");
+            $("#fullscreenNav").trigger("click");
+        } 
         //enable tooltips everywhere
         $(function () {
             $('[data-toggle="tooltip"]').tooltip()

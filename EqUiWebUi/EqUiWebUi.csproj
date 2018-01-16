@@ -148,7 +148,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Maximo_ui\Views\Shared\" />
-    <Folder Include="Views\Maximo\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -717,6 +716,10 @@
     <Content Include="Views\NgacElectrode\_TipStatus.cshtml" />
     <Content Include="Views\Home\UserSettings.cshtml" />
     <Content Include="Views\Home\Settings.cshtml" />
+    <Content Include="Views\Home\ConfiureBackgroundJobs.cshtml" />
+    <Content Include="Views\Home\FireBackgroundJobs.cshtml" />
+    <Content Include="Views\Home\UB12Home.cshtml" />
+    <Content Include="Views\Home\BackGroundWorkBufferStatus.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EQUICommunictionLib\EQUICommunictionLib.csproj">

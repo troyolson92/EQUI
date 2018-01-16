@@ -1,0 +1,24 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="WebNavigator_Gadget_Watcher.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="xmlConfig" Type="System.String" Scope="User">
+      <Value Profile="(Default)">c:\Test\test.xml</Value>
+    </Setting>
+    <Setting Name="WatchConfig" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="ExportedFile" Type="System.String" Scope="User">
+      <Value Profile="(Default)">c:\Test\File.jpg</Value>
+    </Setting>
+    <Setting Name="netExportLocation" Type="System.String" Scope="User">
+      <Value Profile="(Default)">\\gensvw1013\equipmentshare\Tia</Value>
+    </Setting>
+    <Setting Name="netExportUser" Type="System.String" Scope="User">
+      <Value Profile="(Default)">System123 </Value>
+    </Setting>
+    <Setting Name="netExportPass" Type="System.String" Scope="User">
+      <Value Profile="(Default)">appplcbck</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

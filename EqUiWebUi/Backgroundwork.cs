@@ -28,9 +28,56 @@ namespace EqUiWebUi
 	public class Backgroundwork
 	{
 		private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-		//update the local datatable with tipstatus called every minute #hangfire
+		
+        
+        /// <summary>
+        /// configure standard jobs to hangfire
+        /// </summary>
+        public void configHangfireJobs()
+        {
+            //background work
+            Backgroundwork backgroundwork = new Backgroundwork();
+            //**********************************TipDresData table***************************************************
+            //set job to refresh every minute
+            RecurringJob.AddOrUpdate(() => backgroundwork.UpdateTipstatus(), Cron.Minutely);
+            //**********************************Ploegreport table***************************************************
+            //set job to refresh every minute
+            RecurringJob.AddOrUpdate(() => backgroundwork.UpdatePloegreport(), Cron.Minutely);
+            //**********************************Supervisie table***************************************************
+            //set job to refresh every minute
+            RecurringJob.AddOrUpdate(() => backgroundwork.UpdateSupervisie(), Cron.Minutely);
+            //**********************************snapshot system****************************************************
+            //check every minute for new jobs 
+            RecurringJob.AddOrUpdate(() => backgroundwork.HandleMaximoSnapshotWork(), Cron.Minutely);
+            //**********************************STO****************************************************************
+            //check every minute for new data (hystorian)
+            //RecurringJob.AddOrUpdate(() => backgroundwork.PushDatafromSTOtoGADATA(), Cron.MinuteInterval(5));
+            //**********************************STW040 BI rapoort****************************************************
+            RecurringJob.AddOrUpdate(() => backgroundwork.PushDatafromSTW040toGADATA(), Cron.HourInterval(1));
+            //**********************************MX7 *****************************************************************
+            //BI rapport
+            //RecurringJob.AddOrUpdate(() => backgroundwork.PushDatafromMX7toGADATA(), Cron.HourInterval(1));
+            //reporting DB 
+            RecurringJob.AddOrUpdate(() => backgroundwork.PushDatafromMAXIMOtoGADATA(), Cron.HourInterval(1));
+            //**********************************Tableau buffers******************************************************
+            RecurringJob.AddOrUpdate(() => backgroundwork.UpdateTableauBuffers(), Cron.MinuteInterval(20));
+        }
+
+        public void FireAndForgetHangfirejobs()
+        {         
+            //background work
+            Backgroundwork backgroundwork = new Backgroundwork();
+            //fire and forget to init
+            BackgroundJob.Enqueue(() => backgroundwork.UpdateTipstatus());
+            //fire and forget to init
+            BackgroundJob.Enqueue(() => backgroundwork.UpdatePloegreport());
+            //fire and forget to init
+            BackgroundJob.Enqueue(() => backgroundwork.UpdateSupervisie());
+        }
+      
+        //update the local datatable with tipstatus called every minute #hangfire
 		[AutomaticRetry(Attempts = 0)]
-        [DisableConcurrentExecution(120)] //locks the job from starting multible times if other one stil running.
+        [DisableConcurrentExecution(50)] //locks the job from starting multible times if other one stil running.
         public void UpdateTipstatus()
 		{
 			GADATAEntities gADATAEntities = new GADATAEntities();
@@ -129,7 +176,8 @@ namespace EqUiWebUi
 		//check if there are snapshots that need to be run. Called every minute #hangfire.
 		//if work is needed this wil fire and forget the work.
 		[AutomaticRetry(Attempts = 0)]
-		public void HandleMaximoSnapshotWork()
+        [DisableConcurrentExecution(50)] //timeout
+        public void HandleMaximoSnapshotWork()
 		{
 			GadataComm gadataComm = new GadataComm();
 			//query to get work that needs to be run
@@ -211,7 +259,7 @@ namespace EqUiWebUi
 
 		//update new data from STO to gadata. called every minute #hangfire
 		[AutomaticRetry(Attempts = 0)]
-		[DisableConcurrentExecution(60*2)] //locks the job from starting multible times if other one stil running.
+		[DisableConcurrentExecution(60*5)] //locks the job from starting multible times if other one stil running.
 		public void PushDatafromSTOtoGADATA()
 		{
 			GadataComm lGadataComm = new GadataComm();
