@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2009
+VisualStudioVersion = 15.0.27130.2003
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelAddInEquipmentDatabase", "ExcelAddInEquipmentDatabase\ExcelAddInEquipmentDatabase.csproj", "{407E3A76-7130-4154-9EBD-9D48F523EE0F}"
 EndProject
@@ -16,6 +16,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ABBCommTest", "ABBCommTest\ABBCommTest.csproj", "{8829D91C-B9D6-4ED0-B792-0A8E69E8F9CD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EqUiWebUi", "EqUiWebUi\EqUiWebUi.csproj", "{CD7E0AC6-67F9-4187-AF37-2BC49C000A60}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebNavigator_Gadget_Watcher", "WebNavigator_Gadget_Watcher\WebNavigator_Gadget_Watcher.csproj", "{9E315D76-6909-4E81-8C3E-AB1E71F16B79}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{CD7E0AC6-67F9-4187-AF37-2BC49C000A60}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CD7E0AC6-67F9-4187-AF37-2BC49C000A60}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CD7E0AC6-67F9-4187-AF37-2BC49C000A60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E315D76-6909-4E81-8C3E-AB1E71F16B79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E315D76-6909-4E81-8C3E-AB1E71F16B79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E315D76-6909-4E81-8C3E-AB1E71F16B79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E315D76-6909-4E81-8C3E-AB1E71F16B79}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

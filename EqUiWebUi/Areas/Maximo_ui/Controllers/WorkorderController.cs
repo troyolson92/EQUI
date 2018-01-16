@@ -98,7 +98,10 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
         [HttpGet]
         public ActionResult _workordersOnLocationGrid(string location, string locancestor, bool? b_ciblings, bool? b_preventive, string jpnum, string worktype
             , DateTime? startdate, DateTime? enddate)
-        { 
+        {
+            //set controller timeout! (if somebody does a crazy query
+            System.Web.HttpContext.Current.Server.ScriptTimeout = 10; //seconds
+
             //build qyr
             StringBuilder sbqry = new StringBuilder();
             sbqry.Append(@"
@@ -117,7 +120,9 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
                 JOIN MAXIMO.locancestor locancestor on 
                 locancestor.LOCATION = WORKORDER.LOCATION
                 and locancestor.ORGID = WORKORDER.ORGID
-                and locancestor.ANCESTOR");
+                and locancestor.ANCESTOR = (
+                select ancestor from (select locancestor.ancestor 
+                from maximo.locancestor where locancestor.location");
 
             //handel ancestors.
             if (!string.IsNullOrWhiteSpace(locancestor))
@@ -146,6 +151,11 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
             {
                 sbqry.Append(" LIKE '%'");
             }
+            //append the rest of the locancestor clause
+            sbqry.AppendLine().AppendLine(@"and locancestor.ORGID = WORKORDER.ORGID
+                and locancestor.location <> locancestor.ancestor 
+                order by locancestor.LOCANCESTORID)
+                where rownum = 1)");
 
             //start where clause
             sbqry.AppendLine().Append("WHERE WORKORDER.LOCATION");

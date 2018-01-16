@@ -1,139 +1,163 @@
 ﻿@{
     ViewBag.Title = "VCG GA UB12 Homepage";
 }
-    <div class="jumbotron">
-        <h1>WELCOME IN VCG A-SHOP</h1>
+<div class="jumbotron">
+    <h1>WELCOME IN VCG A-SHOP</h1>
+</div>
+
+<p></p>
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h4 class="panel-title">Brownfield</h4>
+        <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
     </div>
+    <div class="panel-body">
+        <p>
+            <a href="~/Gadata/PloegRapportWebgrid" class="btn btn-primary btn-sm">PloegRapport &raquo;</a>
+            Bevat storingen groter dan 20 minuten of die meer dan 3 keer zijn voorgevallen
+        </p>
+        <p>
+            <a href="~/Gadata/SupervisieWebgrid" class="btn btn-primary btn-sm">Supervisie Robots &raquo;</a>
+            Bevat alles dat nu in storing staat, storingen die langer dan 10 minuten hebben geduurd en hardwarefouten van robots
+        </p>
 
-    <p></p>
-
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-            <h4 class="panel-title">Brownfield</h4>
-            <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
-        </div>
-        <div class="panel-body">
-            <p>
-                <a href="~/Gadata/PloegRapportWebgrid" class="btn btn-primary btn-sm">PloegRapport &raquo;</a>
-                Bevat storingen groter dan 20 minuten of die meer dan 3 keer zijn voorgevallen
-            </p>
-            <p>
-                <a href="~/Gadata/SupervisieWebgrid" class="btn btn-primary btn-sm">Supervisie Robots &raquo;</a>
-                Bevat alles dat nu in storing staat, storingen die langer dan 10 minuten hebben geduurd en hardwarefouten van robots
-            </p>
-
-            @{
+        @{
             string url = @Uri.EscapeDataString("http://webapps.gen.volvocars.net/applications/eng/equipment/supervisiep1/intranet");
             <p>
                 <a href="~/Home/Rendersite?url=@url" class="btn btn-primary btn-sm">Supervisie Intranet P1 &raquo;</a>
                 Supervisie intranet
             </p>
-            }
+        }
 
-        </div>
     </div>
+</div>
+
+<p></p>
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h4 class="panel-title">Greenfield</h4>
+        <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+    </div>
+    <div class="panel-body">
+        <p>
+            <a href="~/NgacElectrode/index" class="btn btn-primary btn-sm">Electrode &raquo;</a>
+            Alles in verband met de Electrode
+        </p>
+        <p>
+            <a href="~/Gadata/Stowebgrid" class="btn btn-primary btn-sm">STO &raquo;</a>
+            Data van de PLC actieve storingen
+        </p>
+        <p>
+            <a href="http://gensvw2107/cmactapp" class="btn btn-primary btn-sm">cmaCTapp &raquo;</a>
+            Tool van IE om Cycle times te bekijken.
+        </p>
+
+    </div>
+</div>
+
+<p></p>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class="panel-title">Tableau</h4>
+        <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+    </div>
+    <div class="panel-body">
+        <p>
+            <a href="~/Tableau/index" class="btn btn-primary btn-sm">Tableau &raquo;</a>
+            Een interactive manier om naar data te kijken.
+        </p>
+    </div>
+</div>
+
+<p></p>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class="panel-title">Qurt</h4>
+        <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+    </div>
+    <div class="panel-body">
+        <p>
+            <a href="~/PDFjs/web/viewer.html?file=Q-Mapping Dashboard.pdf" class="btn btn-primary btn-sm">Qurt &raquo;</a>
+            Q-Mapping Dashboard
+        </p>
+    </div>
+</div>
+
+<p></p>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class="panel-title">Maximo</h4>
+        <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+    </div>
+    <div class="panel-body">
+        <p>
+            <a href="~/Maximo_ui/Maximo/index" class="btn btn-primary btn-sm">Maximo &raquo;</a>
+            Alles in verband met maximo
+        </p>
+    </div>
+</div>
+
+<p></p>
+
+<div class="panel panel-danger">
+    <div class="panel-heading">
+        <h4 class="panel-title">Please don't touch</h4>
+        <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+    </div>
+    <div class="panel-body">
+        <p>
+            <a href="~/Dynamic/DynamicWebgrid" class="btn btn-primary btn-sm">Dynamic &raquo;</a>
+            Test met niet gebufferde query
+        </p>
+        <p>
+            <a href="~/Sharepoint/AddNewIusse?location=TestLocation&title=TestTitle&refURL=http://MyServer/sites/MySiteCollection" class="btn btn-primary btn-sm">SharepointTest &raquo;</a>
+            Test communicatie naar sharepoint.
+        </p>
+        <p>
+            <a href="~/Spc/index" class="btn btn-primary btn-sm">SPC &raquo;</a>
+            Spc index
+        </p>
+    </div>
+</div>
 
     <p></p>
 
     <div class="panel panel-primary">
         <div class="panel-heading">
-            <h4 class="panel-title">Greenfield</h4>
+            <h4 class="panel-title">Digi layouts</h4>
             <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
         </div>
         <div class="panel-body">
-            <p>
-                <a href="~/NgacElectrode/index" class="btn btn-primary btn-sm">Electrode &raquo;</a>
-                Alles in verband met de Electrode
-            </p>
-            <p>
-                <a href="~/Gadata/Stowebgrid" class="btn btn-primary btn-sm">STO &raquo;</a>
-                Data van de PLC actieve storingen
-            </p>
-            <p>
-                <a href="http://gensvw2107/cmactapp" class="btn btn-primary btn-sm">cmaCTapp &raquo;</a>
-                Tool van IE om Cycle times te bekijken.
-            </p>
-
-        </div>
-    </div>
-
-    <p></p>
-
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h4 class="panel-title">Tableau</h4>
-            <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
-        </div>
-        <div class="panel-body">
-            <p>
-                <a href="~/Tableau/index" class="btn btn-primary btn-sm">Tableau &raquo;</a>
-                Een interactive manier om naar data te kijken.
-            </p>
-        </div>
-    </div>
-
-    <p></p>
-
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h4 class="panel-title">Qurt</h4>
-            <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
-        </div>
-        <div class="panel-body">
-            <p>
-                <a href="~/PDFjs/web/viewer.html?file=Q-Mapping Dashboard.pdf" class="btn btn-primary btn-sm">Qurt &raquo;</a>
-                Q-Mapping Dashboard
-            </p>
-        </div>
-    </div>
-
-    <p></p>
-
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h4 class="panel-title">Maximo</h4>
-            <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
-        </div>
-        <div class="panel-body">
-            <p>
-                <a href="~/Maximo_ui/Maximo/index" class="btn btn-primary btn-sm">Maximo &raquo;</a>
-                Alles in verband met maximo
-            </p>
-        </div>
-    </div>
-
-    <p></p>
-
-    <div class="panel panel-danger">
-        <div class="panel-heading">
-            <h4 class="panel-title">Please don't touch</h4>
-            <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
-        </div>
-        <div class="panel-body">
-            <p>
-                <a href="~/Dynamic/DynamicWebgrid" class="btn btn-primary btn-sm">Dynamic &raquo;</a>
-                Test met niet gebufferde query
-            </p>
-            <p>
-                <a href="~/Sharepoint/AddNewIusse?location=TestLocation&title=TestTitle&refURL=http://MyServer/sites/MySiteCollection" class="btn btn-primary btn-sm">SharepointTest &raquo;</a>
-                Test communicatie naar sharepoint.
-            </p>
-            <p>
-                <a href="~/Spc/index" class="btn btn-primary btn-sm">SPC &raquo;</a>
-                Spc index
-            </p>
-
 
             @{
-                string url1 = @Uri.EscapeDataString("../NgacElectrode/CurrentTipstatus");
-                string url2 = @Uri.EscapeDataString("../Gadata/PloegRapportWebgrid");
-                string url3 = @Uri.EscapeDataString("../Gadata/SupervisieWebgrid");
-                string url4 = @Uri.EscapeDataString("http://webapps.gen.volvocars.net/applications/eng/equipment/SuperVisieP1/Framing.jpg");
-                <p>
-                    <a href="~/Home/Rendersites?url1=@url1&url2=@url2&url3=@url3&url4=@url4" class="btn btn-primary btn-sm">Test &raquo;</a>
-                    Test
-                </p>
+                string url1 = @Uri.EscapeDataString("../Home/UB12Home?GoFullScreen=true");
+                string url2 = @Uri.EscapeDataString("../Gadata/PloegRapportWebgrid?GoFullScreen=true");
+                string url3 = @Uri.EscapeDataString("../NgacElectrode/CurrentTipstatus?GoFullScreen=true");
+                string url4 = @Uri.EscapeDataString("../Tableau/index");
+        <p>
+            <a href="~/Home/Rendersites?url1=@url1&url2=@url2&url3=@url3&url4=@url4" class="btn btn-primary btn-sm">links touch &raquo;</a>
+            Layout UB12 e6308155 links TouchScreen
+        </p>
             }
-        </div>
 
+
+            <p>
+                <a href="~/Home/Rendersite?url=@Uri.EscapeDataString("http://webapps.gen.volvocars.net/applications/eng/equipment/SuperVisieP1/Framing.jpg")" class="btn btn-primary btn-sm">rechts onder &raquo;</a>
+                Layout UB12 e6308155 Screen2(rechts onder)
+            </p>
+
+            <p>
+                <a href="../Gadata/SupervisieWebgrid" class="btn btn-primary btn-sm">rechts boven &raquo;</a>
+                Layout UB12 e6308155 Screen2(rechts boven)
+            </p>
+
+        </div>
     </div>
+
+
+   
