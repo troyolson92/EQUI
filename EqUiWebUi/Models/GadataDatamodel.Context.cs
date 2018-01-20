@@ -39,7 +39,7 @@ namespace EqUiWebUi.Models
         public DbSet<TipwearBeforeChange> TipwearBeforeChange { get; set; }
         public DbSet<ia_Alert> ia_Alert { get; set; }
     
-        public virtual ObjectResult<AAOSR_PloegRaportV2_Result> AAOSR_PloegRaportV2(Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate, Nullable<int> daysBack, string assets, string locations, string lochierarchy, Nullable<int> minDowntime, Nullable<int> minCountOfDowtime, Nullable<int> minCountofWarning, Nullable<bool> getAlerts, Nullable<bool> getShifbook)
+        public virtual ObjectResult<AAOSR_PloegRaport_Result> AAOSR_PloegRaport(Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate, Nullable<int> daysBack, string assets, string locations, string lochierarchy, Nullable<int> minDowntime, Nullable<int> minCountOfDowtime, Nullable<int> minCountofWarning, Nullable<bool> getAlerts, Nullable<bool> getShifbook)
         {
             var startDateParameter = startDate.HasValue ?
                 new ObjectParameter("StartDate", startDate) :
@@ -85,7 +85,7 @@ namespace EqUiWebUi.Models
                 new ObjectParameter("getShifbook", getShifbook) :
                 new ObjectParameter("getShifbook", typeof(bool));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<AAOSR_PloegRaportV2_Result>("AAOSR_PloegRaportV2", startDateParameter, endDateParameter, daysBackParameter, assetsParameter, locationsParameter, lochierarchyParameter, minDowntimeParameter, minCountOfDowtimeParameter, minCountofWarningParameter, getAlertsParameter, getShifbookParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<AAOSR_PloegRaport_Result>("AAOSR_PloegRaport", startDateParameter, endDateParameter, daysBackParameter, assetsParameter, locationsParameter, lochierarchyParameter, minDowntimeParameter, minCountOfDowtimeParameter, minCountofWarningParameter, getAlertsParameter, getShifbookParameter);
         }
     }
 }

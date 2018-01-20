@@ -9,7 +9,7 @@
 
 <div class="panel panel-primary">
     <div class="panel-heading">
-        <h4 class="panel-title">Brownfield</h4>
+        <h4 class="panel-title">Supervisie tools algemeen GA</h4>
         <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
     </div>
     <div class="panel-body">
@@ -19,14 +19,14 @@
         </p>
         <p>
             <a href="~/Gadata/SupervisieWebgrid" class="btn btn-primary btn-sm">Supervisie Robots &raquo;</a>
-            Bevat alles dat nu in storing staat, storingen die langer dan 10 minuten hebben geduurd en hardwarefouten van robots
+            Bevat alles dat nu in storing staat, storingen die langer dan 1 minut hebben geduurd en hardwarefouten van robots
         </p>
 
         @{
             string url = @Uri.EscapeDataString("http://webapps.gen.volvocars.net/applications/eng/equipment/supervisiep1/intranet");
             <p>
                 <a href="~/Home/Rendersite?url=@url" class="btn btn-primary btn-sm">Supervisie Intranet P1 &raquo;</a>
-                Supervisie intranet
+                Supervisie (intranet)
             </p>
         }
 
@@ -37,23 +37,32 @@
 
 <div class="panel panel-primary">
     <div class="panel-heading">
-        <h4 class="panel-title">Greenfield</h4>
+        <h4 class="panel-title">Greenfield Only</h4>
         <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
     </div>
     <div class="panel-body">
         <p>
             <a href="~/NgacElectrode/index" class="btn btn-primary btn-sm">Electrode &raquo;</a>
-            Alles in verband met de Electrode
+            Alles in verband met de Electrodes van de nieuwe robots
         </p>
-        <p>
-            <a href="~/Gadata/Stowebgrid" class="btn btn-primary btn-sm">STO &raquo;</a>
-            Data van de PLC actieve storingen
-        </p>
+
         <p>
             <a href="http://gensvw2107/cmactapp" class="btn btn-primary btn-sm">cmaCTapp &raquo;</a>
             Tool van IE om Cycle times te bekijken.
         </p>
 
+        <p>
+            <a href="~/PlcSupervisie/Screenshot/Carousel" class="btn btn-primary btn-sm">UB12 supervisie &raquo;</a>
+            Plc Supervisie voor UB12 (mobile friendly)
+        </p>
+
+        @{
+        string urlGreenfieldsuperVis = @Uri.EscapeDataString("http://webapps.gen.volvocars.net/applications/eng/equipment/SuperVisieCma/");
+        <p>
+            <a href="~/Home/Rendersite?url=@urlGreenfieldsuperVis" class="btn btn-primary btn-sm">Tia supervisie index &raquo;</a>
+            Elk beschikbaar scherm van CMA supervisie.
+        </p>
+        }
     </div>
 </div>
 
@@ -122,42 +131,39 @@
             <a href="~/Spc/index" class="btn btn-primary btn-sm">SPC &raquo;</a>
             Spc index
         </p>
+   
     </div>
 </div>
 
-    <p></p>
+<p></p>
 
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-            <h4 class="panel-title">Digi layouts</h4>
-            <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
-        </div>
-        <div class="panel-body">
-
-            @{
-                string url1 = @Uri.EscapeDataString("../Home/UB12Home?GoFullScreen=true");
-                string url2 = @Uri.EscapeDataString("../Gadata/PloegRapportWebgrid?GoFullScreen=true");
-                string url3 = @Uri.EscapeDataString("../NgacElectrode/CurrentTipstatus?GoFullScreen=true");
-                string url4 = @Uri.EscapeDataString("../Tableau/index");
-        <p>
-            <a href="~/Home/Rendersites?url1=@url1&url2=@url2&url3=@url3&url4=@url4" class="btn btn-primary btn-sm">links touch &raquo;</a>
-            Layout UB12 e6308155 links TouchScreen
-        </p>
-            }
-
-
-            <p>
-                <a href="~/Home/Rendersite?url=@Uri.EscapeDataString("http://webapps.gen.volvocars.net/applications/eng/equipment/SuperVisieP1/Framing.jpg")" class="btn btn-primary btn-sm">rechts onder &raquo;</a>
-                Layout UB12 e6308155 Screen2(rechts onder)
-            </p>
-
-            <p>
-                <a href="../Gadata/SupervisieWebgrid" class="btn btn-primary btn-sm">rechts boven &raquo;</a>
-                Layout UB12 e6308155 Screen2(rechts boven)
-            </p>
-
-        </div>
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h4 class="panel-title">Digi layouts</h4>
+        <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
     </div>
+    <div class="panel-body">
 
+        @{
+            string url1 = @Uri.EscapeDataString("../Home/UB12Home?GoFullScreen=true");
+            string url2 = @Uri.EscapeDataString("../Gadata/PloegRapportWebgrid?GoFullScreen=true");
+            string url3 = @Uri.EscapeDataString("../NgacElectrode/CurrentTipstatus?GoFullScreen=true");
+            string url4 = @Uri.EscapeDataString("../Tableau/index");
+            <p>
+                <a href="~/Home/Rendersites?url1=@url1&url2=@url2&url3=@url3&url4=@url4" class="btn btn-primary btn-sm">links touch &raquo;</a>
+                Layout UB12 e6308155 links TouchScreen
+            </p>
+        }
 
-   
+        <p>
+            <a href="~/Home/Rendersite?url=@Uri.EscapeDataString("http://webapps.gen.volvocars.net/applications/eng/equipment/SuperVisieP1/Framing.jpg")" class="btn btn-primary btn-sm">rechts onder &raquo;</a>
+            Layout UB12 e6308155 Screen2(rechts onder)
+        </p>
+
+        <p>
+            <a href="../Gadata/SupervisieWebgrid" class="btn btn-primary btn-sm">rechts boven &raquo;</a>
+            Layout UB12 e6308155 Screen2(rechts boven)
+        </p>
+
+    </div>
+</div>

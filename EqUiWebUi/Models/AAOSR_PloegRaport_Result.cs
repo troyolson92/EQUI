@@ -11,7 +11,7 @@ namespace EqUiWebUi.Models
 {
     using System;
     
-    public partial class AAOSR_PloegRaportV2_Result
+    public partial class AAOSR_PloegRaport_Result
     {
         public string Location { get; set; }
         public string AssetID { get; set; }
@@ -24,7 +24,7 @@ namespace EqUiWebUi.Models
         public string timestamp { get; set; }
         public string time { get; set; }
         public string Subgroup { get; set; }
-        public Nullable<long> refId { get; set; }
+        public Nullable<int> refId { get; set; }
         public string LocationTree { get; set; }
     }
 }

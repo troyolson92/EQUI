@@ -37,6 +37,10 @@
             this.label1 = new System.Windows.Forms.Label();
             this.dgv_data = new System.Windows.Forms.DataGridView();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btn_saveConfig = new System.Windows.Forms.Button();
+            this.tb_HtmlExportPath = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.btn_StartMonitoring = new System.Windows.Forms.Button();
             this.tb_netExportPass = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.tb_netExportUser = new System.Windows.Forms.TextBox();
@@ -44,7 +48,6 @@
             this.tb_netExportLocation = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.btn_StartMonitoring = new System.Windows.Forms.Button();
             this.panel_setup.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_data)).BeginInit();
             this.panel1.SuspendLayout();
@@ -81,11 +84,11 @@
             // 
             // btn_readConfig
             // 
-            this.btn_readConfig.Location = new System.Drawing.Point(722, 12);
+            this.btn_readConfig.Location = new System.Drawing.Point(712, 15);
             this.btn_readConfig.Name = "btn_readConfig";
-            this.btn_readConfig.Size = new System.Drawing.Size(95, 23);
+            this.btn_readConfig.Size = new System.Drawing.Size(114, 37);
             this.btn_readConfig.TabIndex = 3;
-            this.btn_readConfig.Text = "Read config";
+            this.btn_readConfig.Text = "Read WIN CC  config";
             this.btn_readConfig.UseVisualStyleBackColor = true;
             this.btn_readConfig.Click += new System.EventHandler(this.btn_readConfig_Click);
             // 
@@ -126,6 +129,9 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btn_saveConfig);
+            this.panel1.Controls.Add(this.tb_HtmlExportPath);
+            this.panel1.Controls.Add(this.label7);
             this.panel1.Controls.Add(this.btn_StartMonitoring);
             this.panel1.Controls.Add(this.tb_netExportPass);
             this.panel1.Controls.Add(this.label5);
@@ -135,20 +141,56 @@
             this.panel1.Controls.Add(this.label4);
             this.panel1.Location = new System.Drawing.Point(13, 535);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(839, 88);
+            this.panel1.Size = new System.Drawing.Size(839, 142);
             this.panel1.TabIndex = 6;
+            // 
+            // btn_saveConfig
+            // 
+            this.btn_saveConfig.Location = new System.Drawing.Point(25, 102);
+            this.btn_saveConfig.Name = "btn_saveConfig";
+            this.btn_saveConfig.Size = new System.Drawing.Size(82, 23);
+            this.btn_saveConfig.TabIndex = 10;
+            this.btn_saveConfig.Text = "Safe Config";
+            this.btn_saveConfig.UseVisualStyleBackColor = true;
+            this.btn_saveConfig.Click += new System.EventHandler(this.btn_saveConfig_Click);
+            // 
+            // tb_HtmlExportPath
+            // 
+            this.tb_HtmlExportPath.Location = new System.Drawing.Point(167, 76);
+            this.tb_HtmlExportPath.Name = "tb_HtmlExportPath";
+            this.tb_HtmlExportPath.Size = new System.Drawing.Size(650, 20);
+            this.tb_HtmlExportPath.TabIndex = 9;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(22, 79);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(85, 13);
+            this.label7.TabIndex = 8;
+            this.label7.Text = "Html Export path";
+            // 
+            // btn_StartMonitoring
+            // 
+            this.btn_StartMonitoring.Location = new System.Drawing.Point(722, 102);
+            this.btn_StartMonitoring.Name = "btn_StartMonitoring";
+            this.btn_StartMonitoring.Size = new System.Drawing.Size(95, 23);
+            this.btn_StartMonitoring.TabIndex = 6;
+            this.btn_StartMonitoring.Text = "StartMonitoring";
+            this.btn_StartMonitoring.UseVisualStyleBackColor = true;
+            this.btn_StartMonitoring.Click += new System.EventHandler(this.btn_StartMonitoring_Click);
             // 
             // tb_netExportPass
             // 
-            this.tb_netExportPass.Location = new System.Drawing.Point(234, 44);
+            this.tb_netExportPass.Location = new System.Drawing.Point(300, 44);
             this.tb_netExportPass.Name = "tb_netExportPass";
-            this.tb_netExportPass.Size = new System.Drawing.Size(94, 20);
+            this.tb_netExportPass.Size = new System.Drawing.Size(139, 20);
             this.tb_netExportPass.TabIndex = 7;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(175, 47);
+            this.label5.Location = new System.Drawing.Point(241, 47);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(53, 13);
             this.label5.TabIndex = 6;
@@ -158,7 +200,7 @@
             // 
             this.tb_netExportUser.Location = new System.Drawing.Point(73, 44);
             this.tb_netExportUser.Name = "tb_netExportUser";
-            this.tb_netExportUser.Size = new System.Drawing.Size(94, 20);
+            this.tb_netExportUser.Size = new System.Drawing.Size(162, 20);
             this.tb_netExportUser.TabIndex = 5;
             // 
             // label3
@@ -195,25 +237,17 @@
             this.label6.TabIndex = 6;
             this.label6.Text = "Configuration";
             // 
-            // btn_StartMonitoring
-            // 
-            this.btn_StartMonitoring.Location = new System.Drawing.Point(722, 47);
-            this.btn_StartMonitoring.Name = "btn_StartMonitoring";
-            this.btn_StartMonitoring.Size = new System.Drawing.Size(95, 23);
-            this.btn_StartMonitoring.TabIndex = 6;
-            this.btn_StartMonitoring.Text = "StartMonitoring";
-            this.btn_StartMonitoring.UseVisualStyleBackColor = true;
-            this.btn_StartMonitoring.Click += new System.EventHandler(this.btn_StartMonitoring_Click);
-            // 
             // WebNavigator_Gadget_Watcher_ConfigForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(864, 648);
+            this.ClientSize = new System.Drawing.Size(864, 691);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.dgv_data);
             this.Controls.Add(this.panel_setup);
+            this.MaximumSize = new System.Drawing.Size(880, 729);
+            this.MinimumSize = new System.Drawing.Size(880, 729);
             this.Name = "WebNavigator_Gadget_Watcher_ConfigForm";
             this.Text = "WebNavigator_Gadget_Watcher";
             this.panel_setup.ResumeLayout(false);
@@ -245,6 +279,9 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button btn_StartMonitoring;
+        private System.Windows.Forms.Button btn_saveConfig;
+        private System.Windows.Forms.TextBox tb_HtmlExportPath;
+        private System.Windows.Forms.Label label7;
     }
 }
 

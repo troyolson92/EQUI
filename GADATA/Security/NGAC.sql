@@ -1,0 +1,9 @@
+﻿CREATE SCHEMA [NGAC]
+    AUTHORIZATION [VASC_a];
+
+
+
+
+
+
+

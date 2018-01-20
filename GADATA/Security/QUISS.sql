@@ -1,0 +1,11 @@
+﻿CREATE SCHEMA [QUISS]
+    AUTHORIZATION [GADATA];
+
+
+
+
+
+
+
+
+

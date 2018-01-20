@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("WebNavigator_Gadget_Watcher")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Tool to export jpg image from win CC")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft")]
+[assembly: AssemblyCompany("VCG")]
 [assembly: AssemblyProduct("WebNavigator_Gadget_Watcher")]
-[assembly: AssemblyCopyright("Copyright © Microsoft 2018")]
+[assembly: AssemblyCopyright("SDEBEUL")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

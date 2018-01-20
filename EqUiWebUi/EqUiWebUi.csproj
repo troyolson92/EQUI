@@ -148,6 +148,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Maximo_ui\Views\Shared\" />
+    <Folder Include="Areas\PlcSupervisie\Models\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -159,6 +160,8 @@
     <Compile Include="Areas\Maximo_ui\Controllers\WorkorderDetailsController.cs" />
     <Compile Include="Areas\Maximo_ui\Maximo_uiAreaRegistration.cs" />
     <Compile Include="Areas\Maximo_ui\Models\Maximo.cs" />
+    <Compile Include="Areas\PlcSupervisie\Controllers\ScreenshotController.cs" />
+    <Compile Include="Areas\PlcSupervisie\PlcSupervisieAreaRegistration.cs" />
     <Compile Include="Areas\user_management\Controllers\userController.cs" />
     <Compile Include="Areas\user_management\Controllers\usersController.cs" />
     <Compile Include="Areas\user_management\Controllers\usersPermisionsController.cs" />
@@ -197,7 +200,7 @@
     <Compile Include="Controllers\SharepointController.cs" />
     <Compile Include="Controllers\SpcController.cs" />
     <Compile Include="Controllers\TableauController.cs" />
-    <Compile Include="Models\AAOSR_PloegRaportV2_Result.cs">
+    <Compile Include="Models\AAOSR_PloegRaport_Result.cs">
       <DependentUpon>GadataDatamodel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Breakdown.cs">
@@ -531,6 +534,9 @@
     <Content Include="Areas\Maximo_ui\Views\WorkorderDetails\Index.cshtml" />
     <Content Include="Areas\Maximo_ui\Views\Maximo\Index.cshtml" />
     <Content Include="Areas\Maximo_ui\Views\Workorder\ExampleCall_workordersOnLocation.cshtml" />
+    <Content Include="Areas\PlcSupervisie\Views\web.config" />
+    <Content Include="Areas\PlcSupervisie\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\PlcSupervisie\Views\Screenshot\Carousel.cshtml" />
     <None Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.svg" />

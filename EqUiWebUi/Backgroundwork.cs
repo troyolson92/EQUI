@@ -17,7 +17,7 @@ namespace EqUiWebUi
 		public static List<Supervisie> Supervisie { get; set; }
 		public static DateTime SupervisieLastDt { get; set; }
 		//
-		public static List<AAOSR_PloegRaportV2_Result> Ploegreport { get; set;}
+		public static List<AAOSR_PloegRaport_Result> Ploegreport { get; set;}
 		public static DateTime PloegreportLastDt { get; set; }
 		//
 		public static List<Breakdown> StoBreakdown { get; set; }
@@ -41,8 +41,8 @@ namespace EqUiWebUi
             //set job to refresh every minute
             RecurringJob.AddOrUpdate(() => backgroundwork.UpdateTipstatus(), Cron.Minutely);
             //**********************************Ploegreport table***************************************************
-            //set job to refresh every minute
-            RecurringJob.AddOrUpdate(() => backgroundwork.UpdatePloegreport(), Cron.Minutely);
+            //set job to refresh every 5 minutes
+            RecurringJob.AddOrUpdate(() => backgroundwork.UpdatePloegreport(), Cron.MinuteInterval(5));
             //**********************************Supervisie table***************************************************
             //set job to refresh every minute
             RecurringJob.AddOrUpdate(() => backgroundwork.UpdateSupervisie(), Cron.Minutely);
@@ -110,8 +110,10 @@ namespace EqUiWebUi
 			try
 			{
 				GADATAEntities gADATAEntities = new GADATAEntities();
-			List<AAOSR_PloegRaportV2_Result> data = (from ploegrapport in gADATAEntities.AAOSR_PloegRaportV2
-								(startDate: null,
+                
+
+            List<AAOSR_PloegRaport_Result> data = (from ploegrapport in gADATAEntities.AAOSR_PloegRaport
+                                (startDate: null,
 								   endDate: null,
 								   daysBack: null,
 								   assets: "%",

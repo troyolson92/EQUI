@@ -3,22 +3,28 @@
   <Profiles />
   <Settings>
     <Setting Name="xmlConfig" Type="System.String" Scope="User">
-      <Value Profile="(Default)">c:\Test\test.xml</Value>
+      <Value Profile="(Default)">E:\Scada\MultiClient\WebNavigator\GadgetScreens.xml</Value>
     </Setting>
     <Setting Name="WatchConfig" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="ExportedFile" Type="System.String" Scope="User">
-      <Value Profile="(Default)">c:\Test\File.jpg</Value>
+      <Value Profile="(Default)">C:\Program Files (x86)\Siemens\WinCC\Webnavigator\Server\Web\Image\_gadget\pdlImage.jpg</Value>
     </Setting>
     <Setting Name="netExportLocation" Type="System.String" Scope="User">
-      <Value Profile="(Default)">\\gensvw1013\equipmentshare\Tia</Value>
+      <Value Profile="(Default)">\\10.249.2.26\equipmentshare\SupervisieCMA</Value>
     </Setting>
     <Setting Name="netExportUser" Type="System.String" Scope="User">
-      <Value Profile="(Default)">System123 </Value>
+      <Value Profile="(Default)">VCGENT\appplcbck</Value>
     </Setting>
     <Setting Name="netExportPass" Type="System.String" Scope="User">
-      <Value Profile="(Default)">appplcbck</Value>
+      <Value Profile="(Default)">System123</Value>
+    </Setting>
+    <Setting Name="autostart" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="htmlExportPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://webapps.gen.volvocars.net/applications/eng/equipment/SuperVisieCma/</Value>
     </Setting>
   </Settings>
 </SettingsFile>
