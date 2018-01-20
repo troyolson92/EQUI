@@ -1,0 +1,27 @@
+﻿CREATE TABLE [PJC].[RobotPoint] (
+    [id]             INT           IDENTITY (1, 1) NOT NULL,
+    [isDead]         BIT           NULL,
+    [_timestamp]     DATETIME      NULL,
+    [_lasttimestamp] DATETIME      NULL,
+    [v_name]         VARCHAR (MAX) NULL,
+    [robotRoutineId] INT           NULL,
+    [datatype]       INT           NULL,
+    [X]              FLOAT (53)    NULL,
+    [Y]              FLOAT (53)    NULL,
+    [Z]              FLOAT (53)    NULL,
+    [switchon]       INT           NULL,
+    [processValue1]  VARCHAR (50)  NULL,
+    [processValue2]  VARCHAR (50)  NULL,
+    [frame]          VARCHAR (50)  NULL,
+    [tool]           VARCHAR (50)  NULL,
+    [vel]            VARCHAR (50)  NULL,
+    [remote_tool]    INT           NULL,
+    [spd]            VARCHAR (50)  NULL,
+    [traj]           VARCHAR (50)  NULL,
+    [zone]           VARCHAR (50)  NULL,
+    [programLine]    INT           NULL,
+    [process]        VARCHAR (50)  NULL,
+    CONSTRAINT [PK_RobotPoint] PRIMARY KEY CLUSTERED ([id] ASC),
+    CONSTRAINT [FK_RobotPoint_RobotRoutine] FOREIGN KEY ([robotRoutineId]) REFERENCES [PJC].[RobotRoutine] ([id])
+);
+
