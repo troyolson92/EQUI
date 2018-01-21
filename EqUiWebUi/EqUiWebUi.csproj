@@ -200,6 +200,7 @@
     <Compile Include="Controllers\SharepointController.cs" />
     <Compile Include="Controllers\SpcController.cs" />
     <Compile Include="Controllers\TableauController.cs" />
+    <Compile Include="Log.cs" />
     <Compile Include="Models\AAOSR_PloegRaport_Result.cs">
       <DependentUpon>GadataDatamodel.tt</DependentUpon>
     </Compile>
@@ -725,7 +726,6 @@
     <Content Include="Views\Home\ConfiureBackgroundJobs.cshtml" />
     <Content Include="Views\Home\FireBackgroundJobs.cshtml" />
     <Content Include="Views\Home\UB12Home.cshtml" />
-    <Content Include="Views\Home\BackGroundWorkBufferStatus.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EQUICommunictionLib\EQUICommunictionLib.csproj">

@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using EqUiWebUi.Models;
 using EqUiWebUi.Areas.user_management;
 
 namespace EqUiWebUi.Controllers
@@ -16,6 +13,7 @@ namespace EqUiWebUi.Controllers
             var cookie = Request.Cookies[userCookie.name];
             if (cookie == null)
             {
+                Log.Info(String.Format("Handed out cookie for: {0}", System.Web.HttpContext.Current.User.Identity.Name));
                 Response.Cookies.Add(userCookie.Cookie(System.Web.HttpContext.Current.User.Identity.Name));
             }
             return View();
@@ -39,6 +37,7 @@ namespace EqUiWebUi.Controllers
             return View();
         }
 
+        //render up to 4 sites in our content
         public ActionResult Rendersites(string url1, string url2, string url3, string url4)
         {
             ViewBag.url1 = url1 == null ? "" : url1;
@@ -49,15 +48,17 @@ namespace EqUiWebUi.Controllers
             return View();
         }
 
-        //show user settings 
+        //show user settings  for current users
         public ActionResult UserSettings()
         {
             return View();
         }
 
-        //show settings 
+        //show settings page
         public ActionResult Settings()
         {
+            ViewBag.ActiveSessions = 0; // MvcApplication.
+
             return View();
         }
 
@@ -79,18 +80,9 @@ namespace EqUiWebUi.Controllers
             return View();
         }
 
-        //Fire background jobs once
-        [Authorize(Roles = "Administrator")]
-        public ActionResult BackGroundWorkBufferStatus()
-        {
-            ViewBag.PloegreportCount =  DataBuffer.Ploegreport.Count();
-            ViewBag.SupervisieCount = DataBuffer.Supervisie.Count();
-            return View();
-        }
-
+        //temp for ub12 (top left corner of big screen need to make this custom for a user)
         public ActionResult UB12Home()
         {
-
             return View();
         }
     }

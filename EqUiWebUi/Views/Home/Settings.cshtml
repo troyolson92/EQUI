@@ -3,15 +3,39 @@
 }
 
 <div class="jumbotron">
-    <h2>@ViewBag.Title.</h2>
-    <h3>@ViewBag.Message</h3>
-    <p><a href="~/Hangfire" class="btn btn-primary btn-sm">Hangfire &raquo;</a>Beheer van background jobs. </p>
-    <p><a href="~/Home/ConfiureBackgroundJobs" class="btn btn-danger btn-sm">Configure jobs &raquo;</a>Configure hangfire jobs. </p>
-    <p><a href="~/Home/ConfiureBackgroundJobs" class="btn btn-warning btn-sm">Fire jobs &raquo;</a>Fire and forget hangfire jobs. </p>
-    <p><a href="~/Home/BackGroundWorkBufferStatus" class="btn btn-warning btn-sm">bufferStatus &raquo;</a>show buffer count</p>
-
-    <p><a href="~/user_management/users/Index" class="btn btn-primary btn-sm">Users &raquo;</a>Beheer van gebruikers</p>
-    <p><a href="~/user_management/usersPermisions/Index" class="btn btn-primary btn-sm">UsersPermisions &raquo;</a>Beheer van rechten</p>
-
+    <h1>This is an Admin area!</h1>
 </div>
 
+<p></p>
+
+<div class="panel panel-danger">
+    <div class="panel-heading">
+        <h4 class="panel-title">Hangfire</h4>
+        <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+    </div>
+    <div class="panel-body">
+        <p><a href="~/Hangfire" class="btn btn-primary btn-sm">Hangfire &raquo;</a>Beheer van background jobs. </p>
+        <p><a href="~/Home/ConfiureBackgroundJobs" class="btn btn-danger btn-sm">Configure jobs &raquo;</a>Configure hangfire jobs. (reset al to default)</p>
+        <p><a href="~/Home/ConfiureBackgroundJobs" class="btn btn-warning btn-sm">Fire jobs &raquo;</a>Fire and forget hangfire jobs. </p>
+    </div>
+</div>
+
+<p></p>
+
+<div class="panel panel-warning">
+    <div class="panel-heading">
+        <h4 class="panel-title">User managment</h4>
+        <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+    </div>
+    <div class="panel-body">
+        <p><a href="~/user_management/users/Index" class="btn btn-primary btn-sm">Users &raquo;</a>Beheer van gebruikers</p>
+        <p><a href="~/user_management/usersPermisions/Index" class="btn btn-primary btn-sm">UsersPermisions &raquo;</a>Beheer van rechten</p>
+    </div>
+    <div class="panel-footer">
+        <h6>Active sessions: @ViewBag.ActiveSessions</h6>
+    </div>
+</div>
+
+<p></p>
+
+<hr />

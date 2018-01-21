@@ -32,6 +32,7 @@ namespace EqUiWebUi.Controllers
             //in case hangfire is taking a day off
             if (data == null)
             {
+                Log.Info("_ploegRapport local data fetch");
                 Backgroundwork backgroundwork = new Backgroundwork();
                 backgroundwork.UpdatePloegreport();
                 data = DataBuffer.Ploegreport;
@@ -40,6 +41,7 @@ namespace EqUiWebUi.Controllers
             //in case still null trow error 
             if (data ==null)
             {
+                Log.Error("_ploegRapport Failed to fetch data");
                 return new HttpNotFoundResult("Woeps there seems to be an error");
             }
 
@@ -92,6 +94,7 @@ namespace EqUiWebUi.Controllers
             //in case hangfire is taking a day off
             if (data == null)
             {
+                Log.Info("_supervisie local data fetch");
                 Backgroundwork backgroundwork = new Backgroundwork();
                 backgroundwork.UpdateSupervisie();
                 data = DataBuffer.Supervisie;
@@ -99,6 +102,7 @@ namespace EqUiWebUi.Controllers
             //in case still null trow error 
             if (data == null)
             {
+                Log.Error("_supervisie Failed to fetch data");
                 return new HttpNotFoundResult("Woeps there seems to be an error");
             }
 

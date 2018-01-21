@@ -26,10 +26,7 @@ namespace EqUiWebUi
 
   
 	public class Backgroundwork
-	{
-		private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-		
-        
+	{       
         /// <summary>
         /// configure standard jobs to hangfire
         /// </summary>
@@ -94,11 +91,11 @@ namespace EqUiWebUi
 							.Max();
 
 				DataBuffer.TipstatusLastDt = maxDate;
-				log.Info(string.Format("UpdateTipstatus {0} records", data.Count));
+				Log.Info(string.Format("UpdateTipstatus {0} records", data.Count));
 			}
 			else
 			{
-				log.Error("UpdateTipstatus did not return any data");
+                Log.Error("UpdateTipstatus did not return any data");
 			}
 		}
 
@@ -107,11 +104,8 @@ namespace EqUiWebUi
         [DisableConcurrentExecution(50)] //timeout
         public void UpdatePloegreport()
 		{
-			try
-			{
-				GADATAEntities gADATAEntities = new GADATAEntities();
+		    GADATAEntities gADATAEntities = new GADATAEntities();
                 
-
             List<AAOSR_PloegRaport_Result> data = (from ploegrapport in gADATAEntities.AAOSR_PloegRaport
                                 (startDate: null,
 								   endDate: null,
@@ -140,13 +134,8 @@ namespace EqUiWebUi
 				}
 				else
 				{
-					log.Error("UpdatePloegreport did not return any data");
+                    Log.Error("UpdatePloegreport did not return any data");
 				}
-			}
-			catch(Exception ex)
-			{
-				log.Error("UpdatePloegreport", ex);
-			}
 		}
 
 		//update the local datatable with supervisie called every minute #hangfire
@@ -171,7 +160,7 @@ namespace EqUiWebUi
 				}
 				else
 				{
-					log.Error("UpdateSupervisie did not return any data");
+                 Log.Error("UpdateSupervisie did not return any data");
 				}
 		}
 
@@ -215,7 +204,7 @@ namespace EqUiWebUi
 			}
 			else
 			{
-				log.Debug("HandleMaximoSnapshotWork no work to do");
+                Log.Debug("HandleMaximoSnapshotWork no work to do");
 			}
 		}
 
