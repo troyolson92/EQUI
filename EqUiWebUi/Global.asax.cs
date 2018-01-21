@@ -1,5 +1,6 @@
 ﻿using EqUiWebUi.Controllers;
 using System;
+using System.Collections.Generic;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
@@ -11,12 +12,17 @@ namespace EqUiWebUi
     {
         protected void Application_Start()
         {
+            Log.Warn("Site startup");
+            //
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            //log 4 net 
+            log4net.Config.XmlConfigurator.Configure();
         }
 
+        //custom handelers for errors 
         protected void Application_Error(object sender, EventArgs e)
         {
             var httpContext = ((MvcApplication)sender).Context;
@@ -41,6 +47,8 @@ namespace EqUiWebUi
             var controller = new ErrorController();
             var routeData = new RouteData();
             var action = "Index";
+
+            Log.Error("Application error for: " + httpContext.User.Identity.Name, ex);
 
             if (ex is HttpException)
             {
@@ -73,5 +81,43 @@ namespace EqUiWebUi
             controller.ViewData.Model = new HandleErrorInfo(ex, currentController, currentAction);
             ((IController)controller).Execute(new RequestContext(new HttpContextWrapper(httpContext), routeData));
         }
+
+
+        //keeping track of active sessions..
+        private static readonly List<string> _sessions = new List<string>();
+        private static readonly object padlock = new object();
+
+        //on session start
+        void Session_Start(object sender, EventArgs e)
+        {
+            lock (padlock)
+            {
+                _sessions.Add(Session.SessionID);
+            }
+
+        }
+
+        //on session start
+        void Session_End(object sender, EventArgs e)
+        {
+            lock (padlock)
+            {
+                _sessions.Remove(Session.SessionID);
+            }
+
+        }
+
+        //on user authenticated
+        void Application_AuthenticateRequest(object sender, EventArgs e)
+        {
+        }
+        
+
+        //returns a list of all active sessions.
+        public List<string> Sessions()
+        {
+                return _sessions;
+        }
+
     }
 }
