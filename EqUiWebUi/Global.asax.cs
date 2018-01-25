@@ -104,7 +104,7 @@ namespace EqUiWebUi
             {
                 _sessions.Remove(Session.SessionID);
             }
-
+            
         }
 
         //on user authenticated

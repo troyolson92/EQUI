@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="GADATAModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="GADATAModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="c_userRoles">
           <Key>
             <PropertyRef Name="Role" />
@@ -21,6 +21,19 @@
           <Property Name="Role" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="GrantedBy" Type="int" Nullable="false" />
           <Property Name="GrantedAt" Type="datetime" />
+        </EntityType>
+        <EntityType Name="L_Screens">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Screen_num" Type="int" Nullable="false" />
+          <Property Name="Discription" Type="varchar(max)" />
+          <Property Name="User_id" Type="int" Nullable="false" />
+          <Property Name="ScreenUrl" Type="varchar(max)" Nullable="false" />
+          <Property Name="StartDisplayTime" Type="datetime" />
+          <Property Name="StopDisplayTime" Type="datetime" />
+          <Property Name="ResetRate" Type="int" />
         </EntityType>
         <EntityType Name="L_users">
           <Key>
@@ -69,9 +82,22 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_L_Screens_L_users">
+          <End Role="L_users" Type="Self.L_users" Multiplicity="1" />
+          <End Role="L_Screens" Type="Self.L_Screens" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="L_users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="L_Screens">
+              <PropertyRef Name="User_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="GADATAModelStoreContainer">
           <EntitySet Name="c_userRoles" EntityType="Self.c_userRoles" Schema="Volvo" store:Type="Tables" />
           <EntitySet Name="h_usersPermisions" EntityType="Self.h_usersPermisions" Schema="Volvo" store:Type="Tables" />
+          <EntitySet Name="L_Screens" EntityType="Self.L_Screens" Schema="Volvo" store:Type="Tables" />
           <EntitySet Name="L_users" EntityType="Self.L_users" Schema="Volvo" store:Type="Tables" />
           <AssociationSet Name="FK_h_usersPermisions_c_userRoles" Association="Self.FK_h_usersPermisions_c_userRoles">
             <End Role="c_userRoles" EntitySet="c_userRoles" />
@@ -85,9 +111,12 @@
             <End Role="L_users" EntitySet="L_users" />
             <End Role="h_usersPermisions" EntitySet="h_usersPermisions" />
           </AssociationSet>
+          <AssociationSet Name="FK_L_Screens_L_users" Association="Self.FK_L_Screens_L_users">
+            <End Role="L_users" EntitySet="L_users" />
+            <End Role="L_Screens" EntitySet="L_Screens" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="GADATAModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -124,6 +153,7 @@
           <Property Name="Blocked" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="h_usersPermisions" Relationship="Self.FK_h_usersPermisions_L_users" FromRole="L_users" ToRole="h_usersPermisions" />
           <NavigationProperty Name="h_usersPermisions1" Relationship="Self.FK_h_usersPermisions_L_users1" FromRole="L_users" ToRole="h_usersPermisions" />
+          <NavigationProperty Name="L_Screens" Relationship="GADATAModel.FK_L_Screens_L_users" FromRole="users" ToRole="L_Screens" />
         </EntityType>
         <Association Name="FK_h_usersPermisions_c_userRoles">
           <End Role="c_userRoles" Type="GADATAModel.userRoles" Multiplicity="1" />
@@ -177,7 +207,38 @@
             <End Role="L_users" EntitySet="L_users" />
             <End Role="h_usersPermisions" EntitySet="h_usersPermisions" />
           </AssociationSet>
+          <EntitySet Name="L_Screens" EntityType="GADATAModel.L_Screens" />
+          <AssociationSet Name="FK_L_Screens_L_users" Association="GADATAModel.FK_L_Screens_L_users">
+            <End Role="users" EntitySet="L_users" />
+            <End Role="L_Screens" EntitySet="L_Screens" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="L_Screens">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Screen_num" Type="Int32" Nullable="false" />
+          <Property Name="Discription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="User_id" Type="Int32" Nullable="false" />
+          <Property Name="ScreenUrl" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="StartDisplayTime" Type="DateTime" Precision="3" />
+          <Property Name="StopDisplayTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="L_users" Relationship="GADATAModel.FK_L_Screens_L_users" FromRole="L_Screens" ToRole="users" />
+          <Property Name="ResetRate" Type="Int32" />
+        </EntityType>
+        <Association Name="FK_L_Screens_L_users">
+          <End Type="GADATAModel.users" Role="users" Multiplicity="1" />
+          <End Type="GADATAModel.L_Screens" Role="L_Screens" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="L_Screens">
+              <PropertyRef Name="User_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -212,6 +273,20 @@
                 <ScalarProperty Name="AssetRoot" ColumnName="AssetRoot" />
                 <ScalarProperty Name="Locked" ColumnName="Locked" />
                 <ScalarProperty Name="Blocked" ColumnName="Blocked" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="L_Screens">
+            <EntityTypeMapping TypeName="GADATAModel.L_Screens">
+              <MappingFragment StoreEntitySet="L_Screens">
+                <ScalarProperty Name="ResetRate" ColumnName="ResetRate" />
+                <ScalarProperty Name="StopDisplayTime" ColumnName="StopDisplayTime" />
+                <ScalarProperty Name="StartDisplayTime" ColumnName="StartDisplayTime" />
+                <ScalarProperty Name="ScreenUrl" ColumnName="ScreenUrl" />
+                <ScalarProperty Name="User_id" ColumnName="User_id" />
+                <ScalarProperty Name="Discription" ColumnName="Discription" />
+                <ScalarProperty Name="Screen_num" ColumnName="Screen_num" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

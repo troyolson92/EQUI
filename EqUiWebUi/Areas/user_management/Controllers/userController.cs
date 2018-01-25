@@ -12,7 +12,7 @@ namespace EqUiWebUi.Areas.user_management.Controllers
 {
     public class userController : Controller
     {
-        private Models.userCookie db = new Models.userCookie();
+        private Models.GADATAEntitiesUserManagement db = new Models.GADATAEntitiesUserManagement();
 
         // GET: user_management/user/Details
         public ActionResult _Details()

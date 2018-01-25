@@ -1,0 +1,71 @@
+﻿@model IEnumerable<EqUiWebUi.Areas.user_management.Models.L_Screens>
+
+@{
+    ViewBag.Title = "Index of users screens";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Screen_num)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Discription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ScreenUrl)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StartDisplayTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StopDisplayTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ResetRate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.L_users.username)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Screen_num)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Discription)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ScreenUrl)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StartDisplayTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StopDisplayTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ResetRate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.L_users.username)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+            @Html.ActionLink("Details", "Details", new { id = item.id }) |
+            @Html.ActionLink("Go to screen", "RenderUserScreen", new { screenID = item.id }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.id })
+        </td>
+    </tr>
+}
+
+</table>

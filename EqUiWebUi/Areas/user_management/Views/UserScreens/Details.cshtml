@@ -1,0 +1,75 @@
+﻿@model EqUiWebUi.Areas.user_management.Models.L_Screens
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Screen_num)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Screen_num)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Discription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Discription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ScreenUrl)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ScreenUrl)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StartDisplayTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StartDisplayTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StopDisplayTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StopDisplayTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ResetRate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ResetRate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.L_users.username)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.L_users.username)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Go to screen", "RenderUserScreen", new { screenID = Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

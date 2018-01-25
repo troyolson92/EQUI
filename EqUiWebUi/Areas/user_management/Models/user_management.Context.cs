@@ -13,9 +13,9 @@ namespace EqUiWebUi.Areas.user_management.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class userCookie : DbContext
+    public partial class GADATAEntitiesUserManagement : DbContext
     {
-        public userCookie()
+        public GADATAEntitiesUserManagement()
             : base("name=GADATAEntitiesUserManagement")
         {
         }
@@ -28,5 +28,6 @@ namespace EqUiWebUi.Areas.user_management.Models
         public virtual DbSet<userRoles> c_userRoles { get; set; }
         public virtual DbSet<usersPermisions> h_usersPermisions { get; set; }
         public virtual DbSet<users> L_users { get; set; }
+        public virtual DbSet<L_Screens> L_Screens { get; set; }
     }
 }
