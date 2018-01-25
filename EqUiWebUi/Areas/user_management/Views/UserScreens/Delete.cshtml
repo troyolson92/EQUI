@@ -1,0 +1,80 @@
+﻿@model EqUiWebUi.Areas.user_management.Models.L_Screens
+
+@{
+    ViewBag.Title = "Delete this screen?";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Screen_num)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Screen_num)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Discription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Discription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ScreenUrl)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ScreenUrl)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StartDisplayTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StartDisplayTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StopDisplayTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StopDisplayTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ResetRate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ResetRate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.L_users.username)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.L_users.username)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

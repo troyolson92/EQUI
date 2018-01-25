@@ -14,7 +14,7 @@ namespace EqUiWebUi.Areas.user_management
         //if users does not exist he gets inserted
         public users GetUser(string username)
         {
-            using (Models.userCookie db = new Models.userCookie())
+            using (Models.GADATAEntitiesUserManagement db = new Models.GADATAEntitiesUserManagement())
             {
                 users user = (from users in db.L_users
                               where users.username == username

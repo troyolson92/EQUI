@@ -15,9 +15,12 @@ namespace EqUiWebUi.Areas.PlcSupervisie.Controllers
         }
 
         //display a list of jpg pictures
-        public ActionResult Carousel()
+        public ActionResult Carousel(int? ReloadInterval)
         {
-
+            if (ReloadInterval.HasValue)
+            {
+                Response.AddHeader("Refresh", ReloadInterval.ToString());
+            }
 
             return View();
         }

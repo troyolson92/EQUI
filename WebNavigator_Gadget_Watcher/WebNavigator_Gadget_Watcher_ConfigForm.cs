@@ -401,6 +401,13 @@ namespace WebNavigator_Gadget_Watcher
                     catch (Exception ex)
                     {
                         log.Error("Failed to copy file to net location", ex);
+
+                        //after a while password was always failing so need to remap the drive than ?
+                        //13:32:17,669[47] ERROR WebNavigator_Gadget_Watcher.WebNavigator_Gadget_Watcher_ConfigForm - Failed to copy file to net location System.IO.IOException: The user name or password is incorrect.
+                            log.Warn("try remapping drive");
+                            map_drive();
+
+
                     }
 
                 }

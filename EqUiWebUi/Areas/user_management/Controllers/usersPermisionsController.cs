@@ -14,7 +14,7 @@ namespace EqUiWebUi.Areas.user_management.Controllers
     [Authorize(Roles = "Administrator")]
     public class usersPermisionsController : Controller
     {
-        private Models.userCookie db = new Models.userCookie();
+        private Models.GADATAEntitiesUserManagement db = new Models.GADATAEntitiesUserManagement();
 
         // GET: user_management/usersPermisions
         public ActionResult Index()
@@ -62,7 +62,7 @@ namespace EqUiWebUi.Areas.user_management.Controllers
         public async Task<ActionResult> Create([Bind(Include = "id,user_id,Role")] usersPermisions usersPermisions)
         {
             //get current user ID 
-            using (Models.userCookie db = new Models.userCookie())
+            using (Models.GADATAEntitiesUserManagement db = new Models.GADATAEntitiesUserManagement())
             {
                 int userID = (from users in db.L_users
                               where users.username == HttpContext.User.Identity.Name

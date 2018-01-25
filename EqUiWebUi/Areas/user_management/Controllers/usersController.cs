@@ -14,7 +14,7 @@ namespace EqUiWebUi.Areas.user_management.Controllers
     [Authorize(Roles = "Administrator")]
     public class usersController : Controller
     {
-        private Models.userCookie db = new Models.userCookie();
+        private Models.GADATAEntitiesUserManagement db = new Models.GADATAEntitiesUserManagement();
 
         // GET: user_management/users
         public async Task<ActionResult> Index()

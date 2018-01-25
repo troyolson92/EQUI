@@ -164,7 +164,11 @@
     <Compile Include="Areas\PlcSupervisie\PlcSupervisieAreaRegistration.cs" />
     <Compile Include="Areas\user_management\Controllers\userController.cs" />
     <Compile Include="Areas\user_management\Controllers\usersController.cs" />
+    <Compile Include="Areas\user_management\Controllers\UserScreensController.cs" />
     <Compile Include="Areas\user_management\Controllers\usersPermisionsController.cs" />
+    <Compile Include="Areas\user_management\Models\L_Screens.cs">
+      <DependentUpon>user_management.tt</DependentUpon>
+    </Compile>
     <Compile Include="Areas\user_management\Models\userRoles.cs">
       <DependentUpon>user_management.tt</DependentUpon>
     </Compile>
@@ -538,6 +542,12 @@
     <Content Include="Areas\PlcSupervisie\Views\web.config" />
     <Content Include="Areas\PlcSupervisie\Views\_ViewStart.cshtml" />
     <Content Include="Areas\PlcSupervisie\Views\Screenshot\Carousel.cshtml" />
+    <Content Include="Areas\user_management\Views\UserScreens\Create.cshtml" />
+    <Content Include="Areas\user_management\Views\UserScreens\Delete.cshtml" />
+    <Content Include="Areas\user_management\Views\UserScreens\Details.cshtml" />
+    <Content Include="Areas\user_management\Views\UserScreens\Edit.cshtml" />
+    <Content Include="Areas\user_management\Views\UserScreens\Index.cshtml" />
+    <Content Include="Areas\user_management\Views\UserScreens\RenderUserScreen.cshtml" />
     <None Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.svg" />
@@ -726,6 +736,7 @@
     <Content Include="Views\Home\ConfiureBackgroundJobs.cshtml" />
     <Content Include="Views\Home\FireBackgroundJobs.cshtml" />
     <Content Include="Views\Home\UB12Home.cshtml" />
+    <Content Include="Views\Shared\_MinimalLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EQUICommunictionLib\EQUICommunictionLib.csproj">

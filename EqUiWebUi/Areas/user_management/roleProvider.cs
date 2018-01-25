@@ -38,7 +38,7 @@ namespace EqUiWebUi
 
         public override string[] GetRolesForUser(string username)
         {
-            using (userCookie db = new userCookie())
+            using (GADATAEntitiesUserManagement db = new GADATAEntitiesUserManagement())
             {
                 var roles = from perm in db.h_usersPermisions
                             where perm.L_users.username == username
@@ -59,7 +59,7 @@ namespace EqUiWebUi
         public override bool IsUserInRole(string username, string roleName)
         {
 
-            using (userCookie db = new userCookie())
+            using (GADATAEntitiesUserManagement db = new GADATAEntitiesUserManagement())
             {
                 var roles = from perm in db.h_usersPermisions
                             where perm.L_users.username == username

@@ -19,6 +19,7 @@ namespace EqUiWebUi.Areas.user_management.Models
         {
             this.h_usersPermisions = new HashSet<usersPermisions>();
             this.h_usersPermisions1 = new HashSet<usersPermisions>();
+            this.L_Screens = new HashSet<L_Screens>();
         }
     
         public int id { get; set; }
@@ -32,5 +33,7 @@ namespace EqUiWebUi.Areas.user_management.Models
         public virtual ICollection<usersPermisions> h_usersPermisions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<usersPermisions> h_usersPermisions1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<L_Screens> L_Screens { get; set; }
     }
 }
