@@ -9,13 +9,6 @@ namespace EqUiWebUi.Controllers
     {
         public ActionResult Index()
         {
-            userCookie userCookie = new userCookie();
-            var cookie = Request.Cookies[userCookie.name];
-            if (cookie == null)
-            {
-                Log.Info(String.Format("Handed out cookie for: {0}", System.Web.HttpContext.Current.User.Identity.Name));
-                Response.Cookies.Add(userCookie.Cookie(System.Web.HttpContext.Current.User.Identity.Name));
-            }
             return View();
         }
 

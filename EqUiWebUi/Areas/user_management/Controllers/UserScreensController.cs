@@ -11,7 +11,6 @@ using EqUiWebUi.Areas.user_management.Models;
 
 namespace EqUiWebUi.Areas.user_management.Controllers
 {
-    [Authorize(Roles = "Administrator")]
     public class UserScreensController : Controller
     {
         private GADATAEntitiesUserManagement db = new GADATAEntitiesUserManagement();
@@ -39,6 +38,7 @@ namespace EqUiWebUi.Areas.user_management.Controllers
         }
 
         // GET: user_management/UserScreens/Create
+        [Authorize(Roles = "Administrator")]
         public ActionResult Create()
         {
             ViewBag.User_id = new SelectList(db.L_users, "id", "username");
@@ -50,6 +50,7 @@ namespace EqUiWebUi.Areas.user_management.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult> Create([Bind(Include = "id,Screen_num,Discription,User_id,ScreenUrl,StartDisplayTime,StopDisplayTime,ResetRate")] L_Screens l_Screens)
         {
             if (ModelState.IsValid)
@@ -64,6 +65,7 @@ namespace EqUiWebUi.Areas.user_management.Controllers
         }
 
         // GET: user_management/UserScreens/Edit/5
+        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
@@ -84,6 +86,7 @@ namespace EqUiWebUi.Areas.user_management.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult> Edit([Bind(Include = "id,Screen_num,Discription,User_id,ScreenUrl,StartDisplayTime,StopDisplayTime,ResetRate")] L_Screens l_Screens)
         {
             if (ModelState.IsValid)
@@ -97,6 +100,7 @@ namespace EqUiWebUi.Areas.user_management.Controllers
         }
 
         // GET: user_management/UserScreens/Delete/5
+        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
@@ -114,6 +118,7 @@ namespace EqUiWebUi.Areas.user_management.Controllers
         // POST: user_management/UserScreens/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
             L_Screens l_Screens = await db.L_Screens.FindAsync(id);
@@ -122,11 +127,10 @@ namespace EqUiWebUi.Areas.user_management.Controllers
             return RedirectToAction("Index");
         }
 
-        // GET: Render selected screen in the screen wrapper
+        // GET: Render selected screen in the screen wrapper (single screen)
         public ActionResult RenderUserScreen(int screenID)
         {
             //Get screen
-          //  string username = System.Web.HttpContext.Current.User.Identity.Name;
             L_Screens Screen = db.L_Screens.Where(s => s.id == screenID).First();
             if (Screen == null)
             {
@@ -143,6 +147,61 @@ namespace EqUiWebUi.Areas.user_management.Controllers
             return View("RenderUserScreen", "~/Views/Shared/_MinimalLayout.cshtml", Screen);
         }
 
+        // GET: Render selected screen in the screen wrapper (multible screens MAX =4)
+        public ActionResult RenderUserScreens(int? screenID1, int? screenID2, int? screenID3, int? screenID4)
+        {
+            //Get screen1
+            L_Screens Screen1 = db.L_Screens.Where(s => s.id == screenID1).FirstOrDefault();
+            if (Screen1 == null)
+            {
+                Screen1 = new L_Screens();
+                Screen1.ScreenUrl = "HTTP://EQUI";
+                Screen1.Discription = "Default";
+            }
+            //Get screen2
+            L_Screens Screen2 = db.L_Screens.Where(s => s.id == screenID2).FirstOrDefault();
+            if (Screen2 == null)
+            {
+                Screen2 = new L_Screens();
+                Screen2.ScreenUrl = "HTTP://EQUI";
+                Screen2.Discription = "Default";
+            }
+            //Get screen3
+            L_Screens Screen3 = db.L_Screens.Where(s => s.id == screenID3).FirstOrDefault();
+            if (Screen3 == null)
+            {
+                Screen3 = new L_Screens();
+                Screen3.ScreenUrl = "HTTP://EQUI";
+                Screen3.Discription = "Default";
+            }
+            //Get screen4
+            L_Screens Screen4 = db.L_Screens.Where(s => s.id == screenID4).FirstOrDefault();
+            if (Screen4 == null)
+            {
+                Screen4 = new L_Screens();
+                Screen4.ScreenUrl = "HTTP://EQUI";
+                Screen4.Discription = "Default";
+            }
+
+            //add all in one object
+            List<L_Screens> ScreenS = new List<L_Screens>();
+            ScreenS.Add(Screen1);
+            ScreenS.Add(Screen2);
+            ScreenS.Add(Screen3);
+            ScreenS.Add(Screen4);
+
+            //Pass screen lifecycle
+
+            //add refresh rate if needed.
+            if (Screen1.ResetRate.HasValue)
+            {
+                Response.AddHeader("Refresh", Screen1.ResetRate.ToString());
+            }
+            //Pass correct layout (empty layout)
+            return View("RenderUserScreens", "~/Views/Shared/_MinimalLayout.cshtml", ScreenS);
+        }
+
+        //celanup
         protected override void Dispose(bool disposing)
         {
             if (disposing)

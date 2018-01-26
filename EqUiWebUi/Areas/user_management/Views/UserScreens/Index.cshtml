@@ -13,6 +13,9 @@
 <table class="table">
     <tr>
         <th>
+            @Html.DisplayNameFor(model => model.id)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Screen_num)
         </th>
         <th>
@@ -20,12 +23,6 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.ScreenUrl)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.StartDisplayTime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.StopDisplayTime)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.ResetRate)
@@ -39,6 +36,9 @@
 @foreach (var item in Model) {
     <tr>
         <td>
+            @Html.DisplayFor(modelItem => item.id)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.Screen_num)
         </td>
         <td>
@@ -46,12 +46,6 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.ScreenUrl)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.StartDisplayTime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.StopDisplayTime)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.ResetRate)

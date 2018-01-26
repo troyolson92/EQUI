@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using EqUiWebUi.Areas.user_management.Models;
 
 namespace EqUiWebUi
 {
@@ -107,11 +108,33 @@ namespace EqUiWebUi
             
         }
 
-        //on user authenticated
-        void Application_AuthenticateRequest(object sender, EventArgs e)
+        //on user Autherize.
+        void Application_AcquireRequestState(object sender, EventArgs e)
         {
+            //try init session vars 
+            try
+            {
+                if (Session["InitDone"] == null)
+                {
+                    Areas.user_management.Controllers.userController userController = new Areas.user_management.Controllers.userController();
+                    users user = userController.GetUser(System.Web.HttpContext.Current.User.Identity.Name);
+                    //set user variables
+                    lock (padlock)
+                    {
+                        Session["Username"] = user.username;
+                        Session["LocationRoot"] = user.LocationRoot;
+                        Session["AssetRoot"] = user.AssetRoot;
+                        // set init done
+                        Session["InitDone"] = true;
+                    }
+                    Log.Info(string.Format("Session init done for: {0}  id: {1}", user.username, Session.SessionID.ToString()));
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error("TEMP session state not available", ex);
+            }
         }
-        
 
         //returns a list of all active sessions.
         public List<string> Sessions()
