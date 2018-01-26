@@ -1,0 +1,98 @@
+﻿@model List<EqUiWebUi.Areas.user_management.Models.L_Screens>
+
+<div class="panel-body" id="placecontainer" style="position:relative">
+    <div class="row">
+        <div class="col-lg-6">
+            <a href="@Model[0].ScreenUrl"><span class="badge">@Model[0].Discription</span></a>
+            <div class="intrinsic-container intrinsic-container-16x9">
+                <iframe src="@Model[0].ScreenUrl" allowfullscreen frameBorder="0"></iframe>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <a href="@Model[1].ScreenUrl"><span class="badge">@Model[1].Discription</span></a>
+            <div class="intrinsic-container intrinsic-container-16x9">
+                <iframe src="@Model[1].ScreenUrl" allowfullscreen frameBorder="0"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <p></p>
+
+    <div class="row">
+        <div class="col-lg-6">
+            <a href="@Model[2].ScreenUrl"><span class="badge">@Model[2].Discription</span></a>
+            <div class="intrinsic-container intrinsic-container-16x9">
+                <iframe src="@Model[2].ScreenUrl" allowfullscreen frameBorder="0"></iframe>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <a href="@Model[3].ScreenUrl"><span class="badge">@Model[3].Discription</span></a>
+            <div class="intrinsic-container intrinsic-container-16x9">
+                <iframe src="@Model[3].ScreenUrl" allowfullscreen frameBorder="0"></iframe>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<style>
+    .intrinsic-container {
+        position: relative;
+        height: 0;
+        overflow: hidden;
+    }
+
+    /* 16x9 Aspect Ratio */
+    .intrinsic-container-16x9 {
+        padding-bottom: 56.25%;
+    }
+
+    /* 4x3 Aspect Ratio */
+    .intrinsic-container-4x3 {
+        padding-bottom: 75%;
+    }
+
+    .intrinsic-container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+    
+    body {
+        background-color: black;
+    }
+</style>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+
+        // Find all iframes
+        var $iframes = $("iframe");
+
+        // Find &#x26; save the aspect ratio for all iframes
+        $iframes.each(function () {
+            $(this).data("ratio", this.height / this.width)
+                // Remove the hardcoded width &#x26; height attributes
+                .removeAttr("width")
+                .removeAttr("height");
+        });
+
+        // Resize the iframes when the window is resized
+        $(window).resize(function () {
+            $iframes.each(function () {
+                // Get the parent container&#x27;s width
+                var width = $(this).parent().width();
+                $(this).width(width)
+                    .height(width * $(this).data("ratio"));
+            });
+            // Resize to fix all iframes on page load.
+        }).resize()
+    });
+    //https://benmarshall.me/responsive-iframes/
+</script>
+

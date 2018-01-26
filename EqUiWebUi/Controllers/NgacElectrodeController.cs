@@ -43,17 +43,12 @@ namespace EqUiWebUi.Controllers
                 return new HttpNotFoundResult("Woeps there seems to be an error");
             }
 
-            //test with cookie
-            var cookie = Request.Cookies["equi_user"];
-            if (cookie != null)
-            {
-                if (cookie["LocationRoot"] != "")
+            if (Session["LocationRoot"].ToString() != "")
                 {
                     data = (from d in data
-                            where (d.LocationTree ?? "").Contains(cookie["LocationRoot"])
+                            where (d.LocationTree ?? "").Contains(Session["LocationRoot"].ToString())
                             select d).ToList();
                 }
-            }
             //
             return PartialView(data);
         }

@@ -194,7 +194,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>user_management.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Areas\user_management\userCookie.cs" />
     <Compile Include="Areas\user_management\user_managementAreaRegistration.cs" />
     <Compile Include="Backgroundwork.cs" />
     <Compile Include="Controllers\ChartController.cs" />
@@ -548,6 +547,7 @@
     <Content Include="Areas\user_management\Views\UserScreens\Edit.cshtml" />
     <Content Include="Areas\user_management\Views\UserScreens\Index.cshtml" />
     <Content Include="Areas\user_management\Views\UserScreens\RenderUserScreen.cshtml" />
+    <Content Include="Areas\user_management\Views\UserScreens\RenderUserScreens.cshtml" />
     <None Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.svg" />

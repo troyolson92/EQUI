@@ -57,30 +57,52 @@ namespace EqUiWebUi.Areas.user_management.Controllers
         //forces reload of the user cookie.
         public ActionResult ResetCookie()
         {
-            userCookie userCookie = new userCookie();
-            Response.Cookies.Add(userCookie.Cookie(System.Web.HttpContext.Current.User.Identity.Name));
+            users user = GetUser(System.Web.HttpContext.Current.User.Identity.Name);
+            //set user variables
+            Session["Username"] = user.username;
+            Session["LocationRoot"] = user.LocationRoot;
+            Session["AssetRoot"] = user.AssetRoot;
             return null;
         }
 
         // Get: user_management/user/SetCookie/key/value
         public ActionResult SetCookie(string key, string value)
         {
-            userCookie userCookie = new userCookie();
-            var cookie = Request.Cookies[userCookie.name];
-            //if it does no exist build it.
-            if (cookie == null)
-            {
-                Response.Cookies.Add(userCookie.Cookie(System.Web.HttpContext.Current.User.Identity.Name));
-            }
-
-            //here we can check if the user is allow to change this value and block it...
-
-            //change value 
-            cookie[key] = value;
-            //post cookie back 
-            Response.Cookies.Add(cookie);
-            //I know i should return something to check if it worked by i'm lazy 
+            Session[key] = value;
             return null;
+        }
+
+        //get user info and make user if not exist
+        public users GetUser(string username)
+        {
+            using (Models.GADATAEntitiesUserManagement db = new Models.GADATAEntitiesUserManagement())
+            {
+                users user = (from users in db.L_users
+                              where users.username == username
+                              select users).FirstOrDefault();
+
+                if (user == null)
+                {
+                    //add new user to database
+                    users newUser = new users();
+                    newUser.username = username;
+                    newUser.LocationRoot = "VCG";
+                    newUser.AssetRoot = "U";
+                    newUser.Blocked = false;
+                    newUser.Locked = false;
+                    db.L_users.Add(newUser);
+                    db.SaveChanges();
+                    //get it back to be sure
+                    user = (from users in db.L_users
+                            where users.username == username
+                            select users).FirstOrDefault();
+                    if (user == null)
+                    {
+                        //error
+                    }
+                }
+                return user;
+            }
         }
 
     }
