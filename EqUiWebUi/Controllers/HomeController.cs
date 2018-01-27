@@ -30,17 +30,6 @@ namespace EqUiWebUi.Controllers
             return View();
         }
 
-        //render up to 4 sites in our content
-        public ActionResult Rendersites(string url1, string url2, string url3, string url4)
-        {
-            ViewBag.url1 = url1 == null ? "" : url1;
-            ViewBag.url2 = url2 == null ? "" : url2;
-            ViewBag.url3 = url3 == null ? "" : url3;
-            ViewBag.url4 = url4 == null ? "" : url4;
-
-            return View();
-        }
-
         //show user settings  for current users
         public ActionResult UserSettings()
         {

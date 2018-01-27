@@ -53,6 +53,9 @@
 <p>
     @Html.ActionLink("Edit user", "Edit", new { id = Model.id })
 </p>
+<p>
+    @Html.ActionLink("Impersonate user", "ViewAsUser", "UserScreens", new { username = Model.username, url = Url.Action("Index", "Home", new { area = "" }, null) }, new { area = "user_management" })
+</p>
 <hr />
 
 

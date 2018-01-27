@@ -5,6 +5,16 @@
 }
 
 <h4>Settings saved on server</h4>
+
+@if(@HttpContext.Current.Session["Impersonating"] != "")
+{
+<div class="label label-danger">
+    You are impersonating!
+    @HttpContext.Current.Session["Impersonating"]
+</div>
+}
+
+
 <div>
     <dl class="dl-horizontal">
         <dt>
@@ -63,9 +73,11 @@
         </dt>
 
         <dd>
-            @MyFilters.LocationDropdownGlobal("LocationRoot");
+            @MyFilters.LocationDropdownGlobal("LocationRoot")
         </dd>
 
+        <p></p>
+        
         <dt>
             @Html.DisplayNameFor(model => model.AssetRoot)
         </dt>

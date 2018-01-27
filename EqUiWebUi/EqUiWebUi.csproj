@@ -148,7 +148,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Maximo_ui\Views\Shared\" />
-    <Folder Include="Areas\PlcSupervisie\Models\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -161,6 +160,24 @@
     <Compile Include="Areas\Maximo_ui\Maximo_uiAreaRegistration.cs" />
     <Compile Include="Areas\Maximo_ui\Models\Maximo.cs" />
     <Compile Include="Areas\PlcSupervisie\Controllers\ScreenshotController.cs" />
+    <Compile Include="Areas\PlcSupervisie\Models\EQpluginNewformat1_Result.cs">
+      <DependentUpon>Gadata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\PlcSupervisie\Models\Gadata.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Gadata.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\PlcSupervisie\Models\Gadata.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Gadata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\PlcSupervisie\Models\Gadata.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Gadata.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Areas\PlcSupervisie\PlcSupervisieAreaRegistration.cs" />
     <Compile Include="Areas\user_management\Controllers\userController.cs" />
     <Compile Include="Areas\user_management\Controllers\usersController.cs" />
@@ -211,6 +228,9 @@
       <DependentUpon>GadataDatamodel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\c_querySnapshots.cs">
+      <DependentUpon>GadataDatamodel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EQpluginDefaultNGAC_Result.cs">
       <DependentUpon>GadataDatamodel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\gadataModel.cs" />
@@ -270,6 +290,16 @@
     <Compile Include="WebGridHelpers.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\PlcSupervisie\Models\Gadata.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Gadata.edmx</DependentUpon>
+      <LastGenOutput>Gadata.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Areas\PlcSupervisie\Models\Gadata.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Gadata.edmx</DependentUpon>
+      <LastGenOutput>Gadata.cs</LastGenOutput>
+    </Content>
     <Content Include="Areas\user_management\Models\user_management.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>user_management.edmx</DependentUpon>
@@ -548,6 +578,14 @@
     <Content Include="Areas\user_management\Views\UserScreens\Index.cshtml" />
     <Content Include="Areas\user_management\Views\UserScreens\RenderUserScreen.cshtml" />
     <Content Include="Areas\user_management\Views\UserScreens\RenderUserScreens.cshtml" />
+    <Content Include="Areas\user_management\Views\UserScreens\ViewAsUser.cshtml" />
+    <EntityDeploy Include="Areas\PlcSupervisie\Models\Gadata.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Gadata.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Areas\PlcSupervisie\Models\Gadata.edmx.diagram">
+      <DependentUpon>Gadata.edmx</DependentUpon>
+    </Content>
     <None Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.svg" />
@@ -725,7 +763,6 @@
     <Content Include="Views\Spc\_setState.cshtml" />
     <Content Include="Views\Spc\_details.cshtml" />
     <Content Include="Views\Spc\GetAlerts.cshtml" />
-    <Content Include="Views\Home\Rendersites.cshtml" />
     <Content Include="Views\Chart\Index.cshtml" />
     <Content Include="Views\Chart\_getErrorTrend.cshtml" />
     <Content Include="Views\Gadata\_ploegRapport.cshtml" />
@@ -737,6 +774,8 @@
     <Content Include="Views\Home\FireBackgroundJobs.cshtml" />
     <Content Include="Views\Home\UB12Home.cshtml" />
     <Content Include="Views\Shared\_MinimalLayout.cshtml" />
+    <Content Include="Views\Gadata\EQpluginDefaultNGACWebgrid.cshtml" />
+    <Content Include="Views\Gadata\_EQpluginDefaultNGAC.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EQUICommunictionLib\EQUICommunictionLib.csproj">
