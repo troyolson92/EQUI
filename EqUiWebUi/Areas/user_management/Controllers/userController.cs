@@ -6,6 +6,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 using EqUiWebUi.Areas.user_management.Models;
 
 namespace EqUiWebUi.Areas.user_management.Controllers
@@ -62,7 +63,18 @@ namespace EqUiWebUi.Areas.user_management.Controllers
             Session["Username"] = user.username;
             Session["LocationRoot"] = user.LocationRoot;
             Session["AssetRoot"] = user.AssetRoot;
-            return null;
+            Session["Impersonating"] = "";
+            //redirect to home page
+            return new RedirectToRouteResult(
+               new RouteValueDictionary(
+                   new
+                   {
+                       area = "",
+                       controller = "Home",
+                       action = "Index"
+                   }
+               )
+           );
         }
 
         // Get: user_management/user/SetCookie/key/value

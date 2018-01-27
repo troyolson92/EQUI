@@ -127,6 +127,10 @@ namespace EqUiWebUi.Areas.user_management.Controllers
             return RedirectToAction("Index");
         }
 
+
+ //*****************************************************RENDER SCREENS*****************************************************************************
+
+
         // GET: Render selected screen in the screen wrapper (single screen)
         public ActionResult RenderUserScreen(int screenID)
         {
@@ -136,7 +140,17 @@ namespace EqUiWebUi.Areas.user_management.Controllers
             {
                 return HttpNotFound("Did not find the screen you where looking for");
             }
+            //get render user session
+            //Must render screen using the provided user session credentials.
+            Areas.user_management.Controllers.userController userController = new Areas.user_management.Controllers.userController();
+            users user = userController.GetUser(Screen.L_users.username);
+            //change session data to view an url as a specifc user
+            Session["LocationRoot"] = user.LocationRoot;
+            Session["AssetRoot"] = user.AssetRoot;
+            Session["Impersonating"] = user.username;
+
             //Pass screen lifecycle
+
 
             //add refresh rate if needed.
             if (Screen.ResetRate.HasValue)
@@ -156,7 +170,7 @@ namespace EqUiWebUi.Areas.user_management.Controllers
             {
                 Screen1 = new L_Screens();
                 Screen1.ScreenUrl = "HTTP://EQUI";
-                Screen1.Discription = "Default";
+                Screen1.Discription = "Did not find the screen you where looking for";
             }
             //Get screen2
             L_Screens Screen2 = db.L_Screens.Where(s => s.id == screenID2).FirstOrDefault();
@@ -164,7 +178,7 @@ namespace EqUiWebUi.Areas.user_management.Controllers
             {
                 Screen2 = new L_Screens();
                 Screen2.ScreenUrl = "HTTP://EQUI";
-                Screen2.Discription = "Default";
+                Screen2.Discription = "Did not find the screen you where looking for";
             }
             //Get screen3
             L_Screens Screen3 = db.L_Screens.Where(s => s.id == screenID3).FirstOrDefault();
@@ -172,7 +186,7 @@ namespace EqUiWebUi.Areas.user_management.Controllers
             {
                 Screen3 = new L_Screens();
                 Screen3.ScreenUrl = "HTTP://EQUI";
-                Screen3.Discription = "Default";
+                Screen3.Discription = "Did not find the screen you where looking for";
             }
             //Get screen4
             L_Screens Screen4 = db.L_Screens.Where(s => s.id == screenID4).FirstOrDefault();
@@ -180,7 +194,7 @@ namespace EqUiWebUi.Areas.user_management.Controllers
             {
                 Screen4 = new L_Screens();
                 Screen4.ScreenUrl = "HTTP://EQUI";
-                Screen4.Discription = "Default";
+                Screen4.Discription = "Did not find the screen you where looking for";
             }
 
             //add all in one object
@@ -192,6 +206,7 @@ namespace EqUiWebUi.Areas.user_management.Controllers
 
             //Pass screen lifecycle
 
+
             //add refresh rate if needed.
             if (Screen1.ResetRate.HasValue)
             {
@@ -201,7 +216,27 @@ namespace EqUiWebUi.Areas.user_management.Controllers
             return View("RenderUserScreens", "~/Views/Shared/_MinimalLayout.cshtml", ScreenS);
         }
 
-        //celanup
+        //*****************************************************Inpersonate*****************************************************************************
+
+
+        // GET: View an url like some other users. (for admin testing)
+        [Authorize(Roles = "Administrator")]
+        public ActionResult ViewAsUser(string username, string url)
+        {
+            Areas.user_management.Controllers.userController userController = new Areas.user_management.Controllers.userController();
+            users user = userController.GetUser(username);
+
+            //change session data to view an url as a specifc user
+                Session["LocationRoot"] = user.LocationRoot;
+                Session["AssetRoot"] = user.AssetRoot;
+                Session["Impersonating"] = user.username;
+
+            //Pass correct layout (empty layout)
+            return View("ViewAsUser", "~/Views/Shared/_MinimalLayout.cshtml", url);
+        }
+        //************************************************************************************************************************************************
+
+        //cleanup Dispose of controller
         protected override void Dispose(bool disposing)
         {
             if (disposing)

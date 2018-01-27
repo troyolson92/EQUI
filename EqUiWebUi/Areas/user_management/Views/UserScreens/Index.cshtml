@@ -1,65 +1,31 @@
 ﻿@model IEnumerable<EqUiWebUi.Areas.user_management.Models.L_Screens>
 
 @{
-    ViewBag.Title = "Index of users screens";
+    ViewBag.Title = "Index of user screens";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Index of user screens</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New screen", "Create")
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.id)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Screen_num)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Discription)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ScreenUrl)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ResetRate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.L_users.username)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.id)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Screen_num)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Discription)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ScreenUrl)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ResetRate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.L_users.username)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
-            @Html.ActionLink("Details", "Details", new { id = item.id }) |
-            @Html.ActionLink("Go to screen", "RenderUserScreen", new { screenID = item.id }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.id })
-        </td>
-    </tr>
-}
 
-</table>
+@Html.Grid(Model).Named("Screens").Build(columns =>
+{
+    columns.Add(c => c.id).Titled("ID").InitialSort(GridSortOrder.Asc);
+    columns.Add(c => c.Screen_num).Titled("scrNum");
+    columns.Add(c => c.L_users.username).Titled("Render as");
+    columns.Add(c => c.Discription).Titled("Discription");
+    columns.Add(c => c.ScreenUrl).Titled("ScreenUrl").Css("hidden");
+    columns.Add(c => c.ResetRate).Titled("ResetRate");
+    columns.Add(c => c.id)
+                .Titled("")
+                .Encoded(false)
+                .RenderedAs(c => @Html.ActionLink("Edit", "Edit", new { id = c.id }) + " | " +
+                                 @Html.ActionLink("Details", "Details", new { id = c.id }) + " | " +
+                                 @Html.ActionLink("Delete", "Delete", new { id = c.id }) + "  | " +
+                                 @Html.ActionLink("Show", "RenderUserScreen", new { screenID = c.id })
+                ).InitialSort(GridSortOrder.Asc).Filterable(false);
+}).Filterable(true).Sortable(true).Empty("Did not find anything").Css("table-hover")

@@ -124,6 +124,7 @@ namespace EqUiWebUi
                         Session["Username"] = user.username;
                         Session["LocationRoot"] = user.LocationRoot;
                         Session["AssetRoot"] = user.AssetRoot;
+                        Session["Impersonating"] = "";
                         // set init done
                         Session["InitDone"] = true;
                     }

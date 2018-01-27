@@ -127,6 +127,63 @@ namespace EqUiWebUi.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
+        //-------------------------------------------------------------------------------------------------
+
+        //------------------------------------EQpluginDefaultNGAC-------------------------------------------------
+        [HttpGet]
+        public ActionResult EQpluginDefaultNGACWebgrid()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult _EQpluginDefaultNGAC()
+        {
+            //
+            var data = DataBuffer.EQpluginDefaultNGAC;
+            //in case hangfire is taking a day off
+            if (data == null)
+            {
+                Log.Info("_EQpluginDefaultNGAC local data fetch");
+                Backgroundwork backgroundwork = new Backgroundwork();
+                backgroundwork.UpdateEQpluginDefaultNGAC();
+                data = DataBuffer.EQpluginDefaultNGAC;
+            }
+            //in case still null trow error 
+            if (data == null)
+            {
+                Log.Error("_EQpluginDefaultNGAC Failed to fetch data");
+                return new HttpNotFoundResult("Woeps there seems to be an error");
+            }
+
+            
+            if (Session["LocationRoot"].ToString() != "")
+            {
+                data = (from d in data
+                        where (d.LocationTree ?? "").Contains(Session["LocationRoot"].ToString())
+                        || d.Logtype == "TIMELINE"
+                        select d).ToList();
+            }
+            //
+            return PartialView(data);
+        }
+
+        [HttpGet]
+        public JsonResult EQpluginDefaultNGACcheckNewData(DateTime dataTimestamp)
+        {
+            Boolean breload = false;
+            if (DataBuffer.EQpluginDefaultNGAC_DT > dataTimestamp.AddSeconds(1))
+            {
+                breload = true;
+            }
+            //
+            return new JsonResult()
+            {
+                Data = new { doReload = breload, dataTimestamp = DataBuffer.EQpluginDefaultNGAC_DT.ToString("yyyy-MM-dd HH:mm:ss"), lastCheck = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") },
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
 
         //------------------------------------Supervisie STO-------------------------------------------------
         [HttpGet]

@@ -4,6 +4,7 @@ using System;
 using System.Linq;
 using Hangfire;
 using EqUiWebUi.Models;
+
 using System.Collections.Generic;
 
 namespace EqUiWebUi
@@ -22,7 +23,10 @@ namespace EqUiWebUi
 		//
 		public static List<Breakdown> StoBreakdown { get; set; }
 		public static DateTime StoBreakdownLastDt { get; set; }
-	}
+        //
+        public static List<EQpluginDefaultNGAC_Result> EQpluginDefaultNGAC { get; set; }
+        public static DateTime EQpluginDefaultNGAC_DT { get; set; }
+    }
 
   
 	public class Backgroundwork
@@ -40,6 +44,9 @@ namespace EqUiWebUi
             //**********************************Ploegreport table***************************************************
             //set job to refresh every 5 minutes
             RecurringJob.AddOrUpdate(() => backgroundwork.UpdatePloegreport(), Cron.MinuteInterval(5));
+            //**********************************Ploegreport table***************************************************
+            //set job to refresh every 5 minutes
+            RecurringJob.AddOrUpdate(() => backgroundwork.UpdateEQpluginDefaultNGAC(), Cron.MinuteInterval(5));
             //**********************************Supervisie table***************************************************
             //set job to refresh every minute
             RecurringJob.AddOrUpdate(() => backgroundwork.UpdateSupervisie(), Cron.Minutely);
@@ -70,6 +77,8 @@ namespace EqUiWebUi
             BackgroundJob.Enqueue(() => backgroundwork.UpdatePloegreport());
             //fire and forget to init
             BackgroundJob.Enqueue(() => backgroundwork.UpdateSupervisie());
+            //fire and forget to init 
+            BackgroundJob.Enqueue(() => backgroundwork.UpdateEQpluginDefaultNGAC());
         }
       
         //update the local datatable with tipstatus called every minute #hangfire
@@ -164,9 +173,54 @@ namespace EqUiWebUi
 				}
 		}
 
-		//check if there are snapshots that need to be run. Called every minute #hangfire.
-		//if work is needed this wil fire and forget the work.
-		[AutomaticRetry(Attempts = 0)]
+        //update the local datatable with detail robot data called every minute #hangfire
+        [AutomaticRetry(Attempts = 0)]
+        [DisableConcurrentExecution(50)] //timeout
+        public void UpdateEQpluginDefaultNGAC()
+        {
+            GADATAEntities gADATAEntities = new GADATAEntities();
+
+            List<EQpluginDefaultNGAC_Result> data = (from DefaultNgac in gADATAEntities.EQpluginDefaultNGAC
+                                (startDate: null,
+                                   endDate: null,
+                                   daysBack: 1,
+                                   assets: "%",
+                                   locations: "%",
+                                   lochierarchy: "%",
+                                   timeline: true, 
+                                   controllerEventLog: false, 
+                                   errDispLog: true, 
+                                   variableLog: false, 
+                                   deviceProperty: false, 
+                                   breakdown: true, 
+                                   breakdownStart: false, 
+                                   displayLevel: 0, 
+                                   displayFullLogtext: true,
+                                   excludeOperational: true               
+                                   )
+                                   select DefaultNgac).ToList();
+
+            if (data.Count != 0)
+            {
+                DataBuffer.EQpluginDefaultNGAC = data;
+
+                DateTime maxDate = data
+                    .Where(r => Convert.ToDateTime(r.timestamp) < System.DateTime.Now)
+                    // .Where(r => r.Logtype.Contains("Ruleinfo") == false)
+                    .Select(r => Convert.ToDateTime(r.timestamp))
+                    .Max();
+
+                DataBuffer.EQpluginDefaultNGAC_DT = maxDate;
+            }
+            else
+            {
+                Log.Error("UpdateEQpluginDefaultNGAC did not return any data");
+            }
+        }
+
+        //check if there are snapshots that need to be run. Called every minute #hangfire.
+        //if work is needed this wil fire and forget the work.
+        [AutomaticRetry(Attempts = 0)]
         [DisableConcurrentExecution(50)] //timeout
         public void HandleMaximoSnapshotWork()
 		{
