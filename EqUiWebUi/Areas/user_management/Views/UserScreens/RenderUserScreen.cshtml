@@ -3,18 +3,17 @@
     ViewBag.Title = Model.Discription;
 }
 
-
+@*If you are 'impersonating' somebody else show it*@
 @if (@HttpContext.Current.Session["Impersonating"].ToString() != "")
-    {
+{
     <div class="label" style="background:black;">
         <div style="z-index: 2; position: absolute; top: 0px; left: 0px;">
             <h6>Viewing As @HttpContext.Current.Session["Impersonating"]</h6>
         </div>
     </div>
-    }
- 
+}
 
+<!--page gets renderd in this iframe-->
 <body style="margin:0px;padding:0px">
     <iframe src="@Model.ScreenUrl" frameborder="0" style="overflow:hidden;overflow-x:hidden;height:150%;width:100%;position:absolute;top:0px;left:0px;right:0px;bottom:0px" height="150%" width="150%"></iframe>
 </body>
-

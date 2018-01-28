@@ -2,6 +2,7 @@
 using Hangfire.Dashboard;
 using Hangfire.SqlServer;
 using Microsoft.Owin;
+using Owin;
 using System;
 using System.Web;
 
@@ -11,6 +12,8 @@ namespace EqUiWebUi
     {
         public void Configuration(Owin.IAppBuilder app)
         {
+            //setup signal r
+            app.MapSignalR();
 
             //setting up hangfire 
             GlobalConfiguration.Configuration
