@@ -234,6 +234,11 @@ namespace EqUiWebUi.Areas.user_management.Controllers
             //Pass correct layout (empty layout)
             return View("ViewAsUser", "~/Views/Shared/_MinimalLayout.cshtml", url);
         }
+
+        public ActionResult TEST()
+        {
+            return View();
+        }
         //************************************************************************************************************************************************
 
         //cleanup Dispose of controller

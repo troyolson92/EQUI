@@ -15,7 +15,6 @@ namespace EqUiWebUi
                          "~/Scripts/moment.js", //https://github.com/moment/moment/
                          "~/Scripts/spin.js", //https://github.com/fgnass/spin.js/
                          "~/Scripts/daterangepicker.js" //https://github.com/dangrossman/bootstrap-daterangepicker
-
                             ));
 
             //loads afther content

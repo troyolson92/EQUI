@@ -16,11 +16,13 @@ namespace EqUiWebUi
             Log.Warn("Site startup");
             //
             AreaRegistration.RegisterAllAreas();
+            //
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             //log 4 net 
             log4net.Config.XmlConfigurator.Configure();
+
         }
 
         //custom handelers for errors 
