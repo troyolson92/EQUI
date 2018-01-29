@@ -596,7 +596,6 @@
     <Content Include="Areas\PlcSupervisie\Models\Gadata.edmx.diagram">
       <DependentUpon>Gadata.edmx</DependentUpon>
     </Content>
-    <Content Include="Areas\user_management\Views\UserScreens\TEST.cshtml" />
     <None Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.svg" />

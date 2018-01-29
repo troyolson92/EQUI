@@ -54,10 +54,11 @@
     function workorderOnLocationGridUrlParms() {
         var result = "&location=@Model.location" +
             "&locancestor=@Model.locancestor" +
-            "&b_ciblings=" + $('#b_ciblings').is(':checked')  + 
-            "&b_preventive=" + $('#b_preventive').is(':checked') + 
+            "&b_ciblings=" + $('#b_ciblings').is(':checked')  +
+            "&b_preventive=" + $('#b_preventive').is(':checked') +
             "&jpnum=@Model.jpnum" +
             "&worktype=@Model.worktype" +
+            "&wonum=@Model.wonum" +
             "&startdate=@Model.startdate.ToString("yyyy-MM-dd HH:mm:ss")" +
             "&enddate=@Model.enddate.ToString("yyyy-MM-dd HH:mm:ss")";
         return result;

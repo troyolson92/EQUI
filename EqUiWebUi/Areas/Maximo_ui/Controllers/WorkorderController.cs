@@ -25,7 +25,7 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
 
         //full view can be intitiated by using parms or by model. 
         [HttpGet]
-        public ActionResult Workorders(string location, string locancestor, bool? b_ciblings, bool? b_preventive, string jpnum, string worktype
+        public ActionResult Workorders(string location, string locancestor, bool? b_ciblings, bool? b_preventive, string jpnum, string worktype, string wonum
             , DateTime? startdate, DateTime? enddate, Models.WorkorderSelectOptions workorderSelectOptions, bool loadOnInit = false, bool fullscreen = false, int fontSize = 12)
         {
             //if a parm value is appended set it to the model ELSE MODEL IS BOSS
@@ -35,6 +35,7 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
             if (b_preventive != null) workorderSelectOptions.b_preventive = b_preventive.GetValueOrDefault();
             if (jpnum != null) workorderSelectOptions.jpnum = jpnum;
             if (worktype != null) workorderSelectOptions.worktype = worktype;
+            if (wonum != null) workorderSelectOptions.wonum = wonum;
             if (startdate != null)
             {
                 workorderSelectOptions.startdate = startdate.GetValueOrDefault(); //if a value is passed (nullcheck)
@@ -63,7 +64,7 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
 
         //can be called to be renders as partial in model or something like that...
         [HttpGet]
-        public ActionResult _workordersOnLocation(string location, string locancestor, bool? b_ciblings, bool? b_preventive, string jpnum, string worktype
+        public ActionResult _workordersOnLocation(string location, string locancestor, bool? b_ciblings, bool? b_preventive, string jpnum, string worktype, string wonum
             , DateTime? startdate, DateTime? enddate)
         {
             Models.WorkorderSelectOptions workorderSelectOptions = new WorkorderSelectOptions();
@@ -74,6 +75,7 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
             workorderSelectOptions.b_preventive = b_preventive.GetValueOrDefault();
             workorderSelectOptions.jpnum = jpnum;
             workorderSelectOptions.worktype = worktype;
+            workorderSelectOptions.wonum = wonum;
             workorderSelectOptions.startdate = startdate.GetValueOrDefault(System.DateTime.Now.AddDays(MaximoWorkordersDaysback));
             workorderSelectOptions.enddate = enddate.GetValueOrDefault(System.DateTime.Now);
             //
@@ -96,7 +98,7 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
 
         //gets called by AJAX to render the workorder grid
         [HttpGet]
-        public ActionResult _workordersOnLocationGrid(string location, string locancestor, bool? b_ciblings, bool? b_preventive, string jpnum, string worktype
+        public ActionResult _workordersOnLocationGrid(string location, string locancestor, bool? b_ciblings, bool? b_preventive, string jpnum, string worktype, string wonum
             , DateTime? startdate, DateTime? enddate)
         {
             //set controller timeout! (if somebody does a crazy query
@@ -229,7 +231,23 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
                 }
                 sbqry.AppendLine(") ");
             }
- 
+
+            //handle wonum
+            if (!string.IsNullOrWhiteSpace(wonum))
+            {
+                sbqry.Append("AND WORKORDER.WONUM in (");
+                string[] wonums = wonum.Split(';');
+                foreach (string wo in wonums)
+                {
+                    sbqry.Append("'").Append(wo).Append("'");
+                    if (wo != wonums.Last())
+                    {
+                        sbqry.Append(",");
+                    }
+                }
+                sbqry.AppendLine(") ");
+            }
+
             //handle timerange
             if (enddate != null)
             {

@@ -15,5 +15,47 @@
 
 <!--page gets renderd in this iframe-->
 <body style="margin:0px;padding:0px">
-    <iframe src="@Model.ScreenUrl" frameborder="0" style="overflow:hidden;overflow-x:hidden;height:150%;width:100%;position:absolute;top:0px;left:0px;right:0px;bottom:0px" height="150%" width="150%"></iframe>
+    <iframe id="UserScreenIframe" src="@Model.ScreenUrl" frameborder="0" style="overflow:hidden;overflow-x:hidden;height:150%;width:100%;position:absolute;top:0px;left:0px;right:0px;bottom:0px" height="150%" width="150%"></iframe>
 </body>
+
+
+@section scripts{
+    <script src="~/Scripts/jquery.signalR-2.2.2.js"></script>
+    <script src="~/signalr/js"></script>
+    <script>
+        $.connection.hub.start()
+            .done(function () {
+                console.log("SignalR connected");
+                $.connection.screenHub.server.joinGroup("ScreenID"+"@Model.id");
+                $.connection.screenHub.server.joinGroup("ScreenNum"+"@Model.Screen_num");
+                $.connection.screenHub.server.announce("Screen connected ID: " + "@Model.id");
+            })
+            .fail(function () { console.log("SignalR connect ERROR") });
+
+        //trigger full window reload
+        $.connection.screenHub.client.FullRefresh = function () {
+            console.log("FullRefresh triggerd");
+            location.reload();
+        }
+
+        //trigger iframe  reload
+        $.connection.screenHub.client.Refresh = function () {
+            console.log("Refresh triggerd");
+            document.getElementById("#UserScreenIframe").contentDocument.location.reload(true);
+        }
+
+        //trigger show message
+        $.connection.screenHub.client.DisplayMessage = function (showtime, message) {
+            console.log("DisplayMessage triggerd");
+            console.log(message);
+            console.log(showtime);
+        }
+
+        //trigger how popover Iframe
+        $.connection.screenHub.client.DisplayPage = function (showtime, url) {
+            console.log("DisplayPage triggerd");
+            console.log(url);
+            console.log(showtime);
+        }
+
+    </script>
