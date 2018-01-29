@@ -18,11 +18,22 @@
     <iframe id="UserScreenIframe" src="@Model.ScreenUrl" frameborder="0" style="overflow:hidden;overflow-x:hidden;height:150%;width:100%;position:absolute;top:0px;left:0px;right:0px;bottom:0px" height="150%" width="150%"></iframe>
 </body>
 
+<!--Modal for messages-->
+<div id="RenderUserScreenMessage" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-content">Loading....</div>
+</div>
 
-@section scripts{
-    <script src="~/Scripts/jquery.signalR-2.2.2.js"></script>
-    <script src="~/signalr/js"></script>
-    <script>
+    <div id="RenderUserMessageIframe" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-content">Loading....</div>
+    </div>
+
+
+
+
+    @section scripts{
+        <script src="~/Scripts/jquery.signalR-2.2.2.js"></script>
+        <script src="~/signalr/js"></script>
+        <script>
         $.connection.hub.start()
             .done(function () {
                 console.log("SignalR connected");
@@ -49,6 +60,9 @@
             console.log("DisplayMessage triggerd");
             console.log(message);
             console.log(showtime);
+            $('#RenderUserScreenMessage').removeData('bs.modal');
+            $('#RenderUserScreenMessage').html('<div class="modal-content">' + message +  '</div>');
+            $('#RenderUserScreenMessage').modal();
         }
 
         //trigger how popover Iframe
@@ -56,6 +70,18 @@
             console.log("DisplayPage triggerd");
             console.log(url);
             console.log(showtime);
+            $('#RenderUserMessageIframe').removeData('bs.modal');
+            $('#RenderUserMessageIframe').html('<div class="modal-content"><iframe src="' + url + '"></iframe></div >');
+            $('#RenderUserMessageIframe').modal();
         }
 
-    </script>
+        //on model close
+        $('#RenderUserScreenMessage').on('hidden.bs.modal', function (e) {
+            $('#RenderUserScreenMessage').html('<div class="modal-content">No content</div>');
+        });
+        $('#RenderUserMessageIframe').on('hidden.bs.modal', function (e) {
+            $('#RenderUserMessageIframe').html('<div class="modal-content">No content</div>');
+        });
+
+        </script>
+    }

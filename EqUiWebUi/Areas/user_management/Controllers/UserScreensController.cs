@@ -240,14 +240,14 @@ namespace EqUiWebUi.Areas.user_management.Controllers
         // GET: force full refresh of a screen.
         //possible to refresh a ALL CLIENTS  / Specific screenID / Specific Screennum
         [Authorize(Roles = "Administrator, ScreenManager")]
-        public ActionResult FullRefresh(int? screenId, int? screenNum)
+        public void FullRefresh(int? screenId, int? screenNum)
         {
             var context = Microsoft.AspNet.SignalR.GlobalHost.ConnectionManager.GetHubContext<ScreenHub>();
             //full refresh all connected clients.
             if (!screenId.HasValue && !screenNum.HasValue)
             {
                 context.Clients.All.FullRefresh();
-                return View();
+                return;
             }
 
             //full refresh specific screenid
@@ -263,19 +263,19 @@ namespace EqUiWebUi.Areas.user_management.Controllers
                 //get all clients in group
                 context.Clients.Group("ScreenNum" + screenNum.GetValueOrDefault().ToString()).FullRefresh();
             }
-            return View();
+            return;
         }
 
         // GET: force full refresh of the iframe only.
         [Authorize(Roles = "Administrator, ScreenManager")]
-        public ActionResult Refresh(int? screenId, int? screenNum)
+        public void Refresh(int? screenId, int? screenNum)
         {
             var context = Microsoft.AspNet.SignalR.GlobalHost.ConnectionManager.GetHubContext<ScreenHub>();
             //full refresh all connected clients.
             if (!screenId.HasValue && !screenNum.HasValue)
             {
                 context.Clients.All.FullRefresh();
-                return View();
+                return;
             }
 
             //full refresh specific screenid
@@ -291,20 +291,20 @@ namespace EqUiWebUi.Areas.user_management.Controllers
                 //get all clients in group
                 context.Clients.Group("ScreenNum" + screenNum.GetValueOrDefault().ToString()).FullRefresh();
             }
-            return View();
+            return;
         }
 
         // GET: display a message
         //possible to refresh a ALL CLIENTS  / Specific screenID / Specific Screennum
         [Authorize(Roles = "Administrator, ScreenManager")]
-        public ActionResult DisplayMessage(int? screenId, int? screenNum, int? showtime, string message)
+        public void DisplayMessage(int? screenId, int? screenNum, int? showtime, string message)
         {
             var context = Microsoft.AspNet.SignalR.GlobalHost.ConnectionManager.GetHubContext<ScreenHub>();
             //if showtime is null show until user closes it
             if (!screenId.HasValue && !screenNum.HasValue)
             {
                 context.Clients.All.DisplayMessage(showtime, message);
-                return View();
+                return;
             }
 
             //full refresh specific screenid
@@ -320,20 +320,20 @@ namespace EqUiWebUi.Areas.user_management.Controllers
                 //get all clients in group
                 context.Clients.Group("ScreenNum" + screenNum.GetValueOrDefault().ToString()).DisplayMessage(showtime, message);
             }
-            return View();
+            return;
         }
 
         // GET: display a site
         //possible to refresh a ALL CLIENTS  / Specific screenID / Specific Screennum
         [Authorize(Roles = "Administrator, ScreenManager")]
-        public ActionResult DisplayPage(int? screenId, int? screenNum, int? showtime, string url)
+        public void DisplayPage(int? screenId, int? screenNum, int? showtime, string url)
         {
             var context = Microsoft.AspNet.SignalR.GlobalHost.ConnectionManager.GetHubContext<ScreenHub>();
             //if showtime is null show until user closes it
             if (!screenId.HasValue && !screenNum.HasValue)
             {
                 context.Clients.All.DisplayPage(showtime, url);
-                return View();
+                return;
             }
 
             //full refresh specific screenid
@@ -349,6 +349,13 @@ namespace EqUiWebUi.Areas.user_management.Controllers
                 //get all clients in group
                 context.Clients.Group("ScreenNum" + screenNum.GetValueOrDefault().ToString()).DisplayPage(showtime, url);
             }
+            return;
+        }
+
+        //GET: Screen master page. (can send messages and data to screens) or force refresh
+        [Authorize(Roles = "Administrator, ScreenManager")]
+        public ActionResult Screenmaster()
+        {
             return View();
         }
         //************************************************************************************************************************************************

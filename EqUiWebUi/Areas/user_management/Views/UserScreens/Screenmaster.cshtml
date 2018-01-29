@@ -1,0 +1,34 @@
+﻿
+@{
+    ViewBag.Title = "Screenmaster";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Screenmaster</h2>
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h4 class="panel-title">ScreenMaster Toolbox</h4>
+        <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+    </div>
+    <div class="panel-body">
+        <input  class="btn btn-warning"type="button" value="FullRefresh" onclick="location.href='@Url.Action("FullRefresh")'" />
+
+    </div>
+</div>
+
+
+<p>
+    @Html.ActionLink("Send FullRefresh ALL SCREENS", "FullRefresh")
+</p>
+<p>
+    @Html.ActionLink("Send IframeRefresh ALL SCREENS", "Refresh")
+</p>
+<hr />
+<p>
+    @Html.ActionLink("Send Message ALL SCREENS", "DisplayMessage", new { message = "Test message....... this is a test message", showtime = 10 })
+</p>
+<p>
+    @Html.ActionLink("Send URL ALL SCREENS", "DisplayPage", new { url = "http://equi", showtime = 10 })
+</p>
+
