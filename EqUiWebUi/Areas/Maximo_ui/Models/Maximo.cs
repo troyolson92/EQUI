@@ -18,6 +18,7 @@ namespace EqUiWebUi.Areas.Maximo_ui.Models
         public bool b_preventive { get; set; } // if set not worktype ('PP','PCI','WSCH')
         public string jpnum { get; set; } //taakplan (blank = all)
         public string worktype { get; set; } //worktypes (blank = all)
+        public string wonum { get; set; } //wonum (blank = all)
         public DateTime startdate { get; set; } //point to start looking 
         public DateTime enddate { get; set; } //point to stop looking 
     }

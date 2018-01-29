@@ -50,7 +50,7 @@ namespace EqUiWebUi.Areas.user_management.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Administrator, ScreenManager")]
         public async Task<ActionResult> Create([Bind(Include = "id,Screen_num,Discription,User_id,ScreenUrl,StartDisplayTime,StopDisplayTime,ResetRate")] L_Screens l_Screens)
         {
             if (ModelState.IsValid)
@@ -65,7 +65,7 @@ namespace EqUiWebUi.Areas.user_management.Controllers
         }
 
         // GET: user_management/UserScreens/Edit/5
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Administrator, ScreenManager")]
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
@@ -86,7 +86,7 @@ namespace EqUiWebUi.Areas.user_management.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Administrator, ScreenManager")]
         public async Task<ActionResult> Edit([Bind(Include = "id,Screen_num,Discription,User_id,ScreenUrl,StartDisplayTime,StopDisplayTime,ResetRate")] L_Screens l_Screens)
         {
             if (ModelState.IsValid)
@@ -220,7 +220,7 @@ namespace EqUiWebUi.Areas.user_management.Controllers
 
 
         // GET: View an url like some other users. (for admin testing)
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Administrator, ScreenManager")]
         public ActionResult ViewAsUser(string username, string url)
         {
             Areas.user_management.Controllers.userController userController = new Areas.user_management.Controllers.userController();
@@ -234,9 +234,121 @@ namespace EqUiWebUi.Areas.user_management.Controllers
             //Pass correct layout (empty layout)
             return View("ViewAsUser", "~/Views/Shared/_MinimalLayout.cshtml", url);
         }
+        //************************************************************************************************************************************************
 
-        public ActionResult TEST()
+        //*****************************************************Screen manage functions********************************************************************
+        // GET: force full refresh of a screen.
+        //possible to refresh a ALL CLIENTS  / Specific screenID / Specific Screennum
+        [Authorize(Roles = "Administrator, ScreenManager")]
+        public ActionResult FullRefresh(int? screenId, int? screenNum)
         {
+            var context = Microsoft.AspNet.SignalR.GlobalHost.ConnectionManager.GetHubContext<ScreenHub>();
+            //full refresh all connected clients.
+            if (!screenId.HasValue && !screenNum.HasValue)
+            {
+                context.Clients.All.FullRefresh();
+                return View();
+            }
+
+            //full refresh specific screenid
+            if (screenId.HasValue)
+            {
+                //get all clients in group
+                context.Clients.Group("ScreenID" + screenId.GetValueOrDefault().ToString()).FullRefresh();
+            }
+
+            //full refresh specific screeNum
+            if (screenNum.HasValue)
+            {
+                //get all clients in group
+                context.Clients.Group("ScreenNum" + screenNum.GetValueOrDefault().ToString()).FullRefresh();
+            }
+            return View();
+        }
+
+        // GET: force full refresh of the iframe only.
+        [Authorize(Roles = "Administrator, ScreenManager")]
+        public ActionResult Refresh(int? screenId, int? screenNum)
+        {
+            var context = Microsoft.AspNet.SignalR.GlobalHost.ConnectionManager.GetHubContext<ScreenHub>();
+            //full refresh all connected clients.
+            if (!screenId.HasValue && !screenNum.HasValue)
+            {
+                context.Clients.All.FullRefresh();
+                return View();
+            }
+
+            //full refresh specific screenid
+            if (screenId.HasValue)
+            {
+                //get all clients in group
+                context.Clients.Group("ScreenID" + screenId.GetValueOrDefault().ToString()).FullRefresh();
+            }
+
+            //full refresh specific screeNum
+            if (screenNum.HasValue)
+            {
+                //get all clients in group
+                context.Clients.Group("ScreenNum" + screenNum.GetValueOrDefault().ToString()).FullRefresh();
+            }
+            return View();
+        }
+
+        // GET: display a message
+        //possible to refresh a ALL CLIENTS  / Specific screenID / Specific Screennum
+        [Authorize(Roles = "Administrator, ScreenManager")]
+        public ActionResult DisplayMessage(int? screenId, int? screenNum, int? showtime, string message)
+        {
+            var context = Microsoft.AspNet.SignalR.GlobalHost.ConnectionManager.GetHubContext<ScreenHub>();
+            //if showtime is null show until user closes it
+            if (!screenId.HasValue && !screenNum.HasValue)
+            {
+                context.Clients.All.DisplayMessage(showtime, message);
+                return View();
+            }
+
+            //full refresh specific screenid
+            if (screenId.HasValue)
+            {
+                //get all clients in group
+                context.Clients.Group("ScreenID" + screenId.GetValueOrDefault().ToString()).DisplayMessage(showtime, message);
+            }
+
+            //full refresh specific screeNum
+            if (screenNum.HasValue)
+            {
+                //get all clients in group
+                context.Clients.Group("ScreenNum" + screenNum.GetValueOrDefault().ToString()).DisplayMessage(showtime, message);
+            }
+            return View();
+        }
+
+        // GET: display a site
+        //possible to refresh a ALL CLIENTS  / Specific screenID / Specific Screennum
+        [Authorize(Roles = "Administrator, ScreenManager")]
+        public ActionResult DisplayPage(int? screenId, int? screenNum, int? showtime, string url)
+        {
+            var context = Microsoft.AspNet.SignalR.GlobalHost.ConnectionManager.GetHubContext<ScreenHub>();
+            //if showtime is null show until user closes it
+            if (!screenId.HasValue && !screenNum.HasValue)
+            {
+                context.Clients.All.DisplayPage(showtime, url);
+                return View();
+            }
+
+            //full refresh specific screenid
+            if (screenId.HasValue)
+            {
+                //get all clients in group
+                context.Clients.Group("ScreenID" + screenId.GetValueOrDefault().ToString()).DisplayPage(showtime, url);
+            }
+
+            //full refresh specific screeNum
+            if (screenNum.HasValue)
+            {
+                //get all clients in group
+                context.Clients.Group("ScreenNum" + screenNum.GetValueOrDefault().ToString()).DisplayPage(showtime, url);
+            }
             return View();
         }
         //************************************************************************************************************************************************

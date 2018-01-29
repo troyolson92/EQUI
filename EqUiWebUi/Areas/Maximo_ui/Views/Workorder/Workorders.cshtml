@@ -84,6 +84,15 @@
                         </div>
 
                         <div class="form-group">
+                            @Html.LabelFor(m => m.wonum, new { @class = "control-label col-md-3" })
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(m => m.wonum, new { @class = "form-control input-md" })
+                                @Html.ValidationMessageFor(m => m.wonum, "", new { @class = "text-danger" })
+                                <span title="" class="help-block">single wildcad or ; separated list</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
                             @Html.LabelFor(m => m.b_ciblings, new { @class = "control-label col-md-6" })
                             <div class="col-md-6">
                                 @Html.CheckBoxFor(m => m.b_ciblings, new { @class = "form-control input-ld" })

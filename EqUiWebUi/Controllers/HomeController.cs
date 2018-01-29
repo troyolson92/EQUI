@@ -9,14 +9,6 @@ namespace EqUiWebUi.Controllers
     {
         public ActionResult Index()
         {
-            var context = Microsoft.AspNet.SignalR.GlobalHost.ConnectionManager.GetHubContext<ScreenHub>();
-            context.Clients.All.Announce("somebody hit index");
-            // or
-            context.Clients.Group("GroupA").Announce("GroupA");
-            context.Clients.Group("GroupB").Announce("GroupB");
-            context.Clients.Group("GroupC").Announce("GroupC");
-
-
             return View();
         }
 
