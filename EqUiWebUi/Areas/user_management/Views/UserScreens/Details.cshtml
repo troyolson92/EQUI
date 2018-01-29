@@ -70,6 +70,23 @@
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
-    @Html.ActionLink("Show screen", "RenderUserScreen", new { screenID = Model.id }) |
     @Html.ActionLink("Back to List", "Index")
+</p>
+<hr />
+<h4>SignalR Screen functions</h4>
+<p>
+    @Html.ActionLink("Show screen", "RenderUserScreen", new { screenID = Model.id })
+</p>
+<p>
+    @Html.ActionLink("Send FullRefresh", "FullRefresh", new { screenId = Model.id }) 
+</p>
+<p>
+    @Html.ActionLink("Send IframeRefresh", "Refresh", new { screenId = Model.id })
+</p>
+<hr />
+<p>
+    @Html.ActionLink("Send Message", "DisplayMessage", new { screenId = Model.id, message = "Test message.......", showtime = 10 })
+</p>
+<p>
+    @Html.ActionLink("Send URL", "DisplayPage", new { screenId = Model.id, url = "http://equi", showtime = 10 })
 </p>

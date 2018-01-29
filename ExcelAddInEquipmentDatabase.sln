@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EqUiWebUi", "EqUiWebUi\EqUi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebNavigator_Gadget_Watcher", "WebNavigator_Gadget_Watcher\WebNavigator_Gadget_Watcher.csproj", "{9E315D76-6909-4E81-8C3E-AB1E71F16B79}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EqUiDigibordLauncher", "EqUiDigibordLauncher\EqUiDigibordLauncher.csproj", "{32044ADB-9261-4848-8BF1-458C93022957}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +59,10 @@ Global
 		{9E315D76-6909-4E81-8C3E-AB1E71F16B79}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9E315D76-6909-4E81-8C3E-AB1E71F16B79}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9E315D76-6909-4E81-8C3E-AB1E71F16B79}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32044ADB-9261-4848-8BF1-458C93022957}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32044ADB-9261-4848-8BF1-458C93022957}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32044ADB-9261-4848-8BF1-458C93022957}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32044ADB-9261-4848-8BF1-458C93022957}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
