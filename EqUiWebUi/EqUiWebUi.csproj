@@ -234,6 +234,9 @@
     <Compile Include="Models\AAOSR_PloegRaport_Result.cs">
       <DependentUpon>GadataDatamodel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Bodytracking.cs">
+      <DependentUpon>GadataDatamodel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Breakdown.cs">
       <DependentUpon>GadataDatamodel.tt</DependentUpon>
     </Compile>
@@ -332,6 +335,7 @@
     <Content Include="Content\mvc-grid.css" />
     <Content Include="Content\MvcGrid\mvc-grid.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="Content\summernote.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Models\GadataDatamodel.Context.tt">
@@ -597,6 +601,9 @@
       <DependentUpon>Gadata.edmx</DependentUpon>
     </Content>
     <Content Include="Areas\user_management\Views\UserScreens\Screenmaster.cshtml" />
+    <Content Include="Content\font\summernote.eot" />
+    <Content Include="Content\font\summernote.ttf" />
+    <Content Include="Content\font\summernote.woff" />
     <None Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.svg" />
@@ -725,6 +732,7 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\spin.js" />
     <Content Include="Scripts\spin.min.js" />
+    <Content Include="Scripts\summernote.js" />
     <Content Include="Scripts\viewer.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
@@ -789,6 +797,7 @@
     <Content Include="Views\Shared\_MinimalLayout.cshtml" />
     <Content Include="Views\Gadata\EQpluginDefaultNGACWebgrid.cshtml" />
     <Content Include="Views\Gadata\_EQpluginDefaultNGAC.cshtml" />
+    <Content Include="Views\Gadata\BodyTrackWebgrid.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EQUICommunictionLib\EQUICommunictionLib.csproj">
