@@ -34,6 +34,8 @@ namespace WebNavigator_Gadget_Watcher
             tb_netExportUser.Text = (string)WebNavigator_Gadget_Watcher.Properties.Settings.Default["netExportUser"];
             tb_netExportPass.Text = (string)WebNavigator_Gadget_Watcher.Properties.Settings.Default["netExportPass"];
             tb_HtmlExportPath.Text = (string)WebNavigator_Gadget_Watcher.Properties.Settings.Default["htmlExportPath"];
+            tb_INETCachePath.Text = (string)WebNavigator_Gadget_Watcher.Properties.Settings.Default["InetCachePath"];
+            cb_EnblInetCachClean.Checked = (Boolean)WebNavigator_Gadget_Watcher.Properties.Settings.Default["InetCachePathEnbl"];
 
             //build colums for datagrid
             configData.Columns.Add("screen", System.Type.GetType("System.String"));
@@ -69,6 +71,17 @@ namespace WebNavigator_Gadget_Watcher
                 }
             }
 
+            //start auto cleaning of InetCache 
+            var startTimeSpan = TimeSpan.Zero;
+            var periodCleanoutTimeSpan = TimeSpan.FromMinutes(5);
+            if (cb_EnblInetCachClean.Checked)
+            {
+                log.Info("CleanInetCache started (every 5 minutes");
+                var timer = new System.Threading.Timer((e) =>
+                {
+                    CleanInetCache();
+                }, null, startTimeSpan, periodCleanoutTimeSpan);
+            }
             //get autostart commandline args
             string[] args = Environment.GetCommandLineArgs();
             //if autostart
@@ -108,8 +121,10 @@ namespace WebNavigator_Gadget_Watcher
            WebNavigator_Gadget_Watcher.Properties.Settings.Default["netExportUser"] = tb_netExportUser.Text;
            WebNavigator_Gadget_Watcher.Properties.Settings.Default["netExportPass"] = tb_netExportPass.Text;
            WebNavigator_Gadget_Watcher.Properties.Settings.Default["htmlExportPath"] =  tb_HtmlExportPath.Text;
+           WebNavigator_Gadget_Watcher.Properties.Settings.Default["InetCachePath"] = tb_INETCachePath.Text;
+            WebNavigator_Gadget_Watcher.Properties.Settings.Default["InetCachePathEnbl"] = cb_EnblInetCachClean.Checked;
 
-           WebNavigator_Gadget_Watcher.Properties.Settings.Default.Save();
+            WebNavigator_Gadget_Watcher.Properties.Settings.Default.Save();
         }
 
         //This triggers when the config file changes.
@@ -438,6 +453,36 @@ namespace WebNavigator_Gadget_Watcher
             MonitorForPublisedImages();
         }
 
+        //manualy clean out directory
+        private void button1_Click(object sender, EventArgs e)
+        {
+            CleanInetCache();
+        }
 
+        public void CleanInetCache()
+        {
+            try
+            {
+                DirectoryInfo di = new DirectoryInfo(tb_INETCachePath.Text);
+                FileInfo[] files = di.GetFiles("*.pd_")
+                                     .Where(p => p.Extension == ".pd_").ToArray();
+                foreach (FileInfo file in files)
+                    try
+                    {
+                        file.Attributes = FileAttributes.Normal;
+                        File.Delete(file.FullName);
+                    }
+                    catch(Exception ex)
+                    {
+                        log.Error("Failed to delete file", ex);
+                    }
+                log.Info("CleanInetCache succes");
+
+            }
+            catch(Exception ex)
+            {
+                log.Error("CleanInetCache", ex);
+            }
+        }
     }
 }

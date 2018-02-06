@@ -25,3 +25,23 @@ function qs(key) {
     var match = location.search.match(new RegExp("[?&]" + key + "=([^&]+)(&|$)"));
     return match && decodeURIComponent(match[1].replace(/\+/g, " "));
 }
+
+//for calling a blind controller action from button click
+function ActionOnClick(ButtonId,action) {
+    $("#" + ButtonId).click(function (e) {
+        e.preventDefault();
+        $("#" + ButtonId).removeClass("btn-warning");
+        $("#" + ButtonId).removeClass("btn-success");
+        $.ajax({
+            url: action,
+            success: function () {
+                console.log(ButtonId + " Succes")
+                $("#" + ButtonId).addClass("btn-success");
+            },
+            error: function (ex) {
+                console.log(ButtonId + " ERROR") + console.log(ex);
+                $("#" + ButtonId).addClass("btn-warning");
+            }
+        });
+    });
+}

@@ -133,7 +133,15 @@
         if (qs("GoFullScreen")) {
             console.log("auto Full screen");
             $("#fullscreenNav").trigger("click");
-        } 
+        }
+
+        //if zoomlevel request in url do it.
+        if (qs("Zoomlevel")) {
+            console.log("Set zoom level");
+            //this works for Chrome, Safari, IE ref:http://jsfiddle.net/q6kebgbh/4/
+            $("#allcontent").css('zoom', qs("Zoomlevel"));
+        }
+
         //enable tooltips everywhere
         $(function () {
             $('[data-toggle="tooltip"]').tooltip()
@@ -142,3 +150,4 @@
     @RenderSection("scripts", required: false)
 </body>
 </html>
+

@@ -6,6 +6,7 @@ using System.Data;
 using EQUICommunictionLib;
 using System.Text;
 using System.Web;
+using System.Collections.Generic;
 
 namespace EqUiWebUi.Controllers
 {
@@ -207,6 +208,20 @@ namespace EqUiWebUi.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
+
+
+        //------------------------------------Body track webgrid-------------------------------------------------
+        [HttpGet]
+        public ActionResult BodyTrackWebgrid()
+        {
+            GADATAEntities gADATAEntities = new GADATAEntities();
+            List<Bodytracking> data = (from bodytracking in gADATAEntities.Bodytracking
+                                       select bodytracking
+                                       ).ToList();
+            return View(data);
+        }
+
+
 
         //Partial view for more info modal-------------------------------------------------------------------------------------------------
         [HttpGet]

@@ -26,5 +26,11 @@
     <Setting Name="htmlExportPath" Type="System.String" Scope="User">
       <Value Profile="(Default)">http://webapps.gen.volvocars.net/applications/eng/equipment/SuperVisieCma/</Value>
     </Setting>
+    <Setting Name="InetCachePath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">c:\Windows\SysWOW64\config\systemprofile\AppData\Local\Microsoft\Windows\INetCache\IE</Value>
+    </Setting>
+    <Setting Name="InetCachePathEnbl" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
