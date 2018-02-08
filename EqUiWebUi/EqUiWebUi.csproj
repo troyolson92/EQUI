@@ -164,9 +164,15 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Alert\AlertAreaRegistration.cs" />
+<<<<<<< HEAD
     <Compile Include="Areas\Alert\AlertEngine.cs" />
     <Compile Include="Areas\Alert\Controllers\HomeController.cs" />
     <Compile Include="Areas\Alert\Controllers\SmsController.cs" />
+=======
+    <Compile Include="Areas\Alert\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Alert\Controllers\SmsController.cs" />
+    <Compile Include="Areas\Alert\Controllers\triggersController.cs" />
+>>>>>>> 5db2146... start implementing new alert system (and sms controller)
     <Compile Include="Areas\Alert\Models\AlertModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -652,12 +658,15 @@
     <Content Include="Content\font\summernote.woff" />
     <Content Include="Areas\Alert\Views\web.config" />
     <Content Include="Areas\Alert\Views\Sms\SendSMS.cshtml" />
+<<<<<<< HEAD
     <Content Include="Areas\Alert\Views\triggers\Create.cshtml" />
     <Content Include="Areas\Alert\Views\triggers\Delete.cshtml" />
     <Content Include="Areas\Alert\Views\triggers\Details.cshtml" />
     <Content Include="Areas\Alert\Views\triggers\Edit.cshtml" />
     <Content Include="Areas\Alert\Views\triggers\Index.cshtml" />
     <Content Include="Areas\Alert\Views\Home\Index.cshtml" />
+=======
+>>>>>>> 5db2146... start implementing new alert system (and sms controller)
     <EntityDeploy Include="Areas\Alert\Models\AlertModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>AlertModel.Designer.cs</LastGenOutput>
@@ -665,7 +674,16 @@
     <Content Include="Areas\Alert\Models\AlertModel.edmx.diagram">
       <DependentUpon>AlertModel.edmx</DependentUpon>
     </Content>
+<<<<<<< HEAD
     <Content Include="Areas\Alert\Views\Home\ConfigHangfire.cshtml" />
+=======
+    <Content Include="Areas\Alert\Views\triggers\Create.cshtml" />
+    <Content Include="Areas\Alert\Views\triggers\Delete.cshtml" />
+    <Content Include="Areas\Alert\Views\triggers\Details.cshtml" />
+    <Content Include="Areas\Alert\Views\triggers\Edit.cshtml" />
+    <Content Include="Areas\Alert\Views\triggers\Index.cshtml" />
+    <Content Include="Areas\Alert\Views\Home\Index.cshtml" />
+>>>>>>> 5db2146... start implementing new alert system (and sms controller)
     <None Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.svg" />

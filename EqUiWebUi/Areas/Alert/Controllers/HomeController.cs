@@ -13,6 +13,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
         {
             return View();
         }
+<<<<<<< HEAD
 
         public ActionResult ConfigHangfire()
         {
@@ -20,5 +21,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             alertEngine.ConfigureHangfireAlertWork();
             return View();
         }
+=======
+>>>>>>> 5db2146... start implementing new alert system (and sms controller)
     }
 }
