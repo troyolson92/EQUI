@@ -351,7 +351,7 @@ SELECT ALARM_DATA_SUBASSY.*,'ALARM_DATA_SUBASSY' stoTable FROM STO_SYS.ALARM_DAT
 		{
 			//delete data in now in maximo.
 			GadataComm lGadataComm = new GadataComm();
-			lGadataComm.RunCommandGadata("DELETE GADATA.MAXIMO.WORKORDERS FROM GADATA.MAXIMO.WORKORDERS", true);
+			lGadataComm.RunCommandGadata("DELETE GADATA.MAXIMO.WORKORDERS FROM GADATA.MAXIMO.WORKORDERS",true);
 
 			//get new records from STO
 			MaximoComm maximoComm = new MaximoComm();
