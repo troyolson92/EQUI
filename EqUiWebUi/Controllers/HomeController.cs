@@ -67,5 +67,6 @@ namespace EqUiWebUi.Controllers
         {
             return View();
         }
+
     }
 }

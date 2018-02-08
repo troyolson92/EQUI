@@ -155,7 +155,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
+    <Folder Include="Areas\Alert\Views\Shared\" />
     <Folder Include="Areas\Maximo_ui\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
@@ -163,6 +163,41 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\Alert\AlertAreaRegistration.cs" />
+    <Compile Include="Areas\Alert\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Alert\Controllers\SmsController.cs" />
+    <Compile Include="Areas\Alert\Controllers\triggersController.cs" />
+    <Compile Include="Areas\Alert\Models\AlertModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AlertModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Alert\Models\AlertModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AlertModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Alert\Models\AlertModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AlertModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Alert\Models\c_smsSystem.cs">
+      <DependentUpon>AlertModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Alert\Models\c_state.cs">
+      <DependentUpon>AlertModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Alert\Models\c_triggers.cs">
+      <DependentUpon>AlertModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Alert\Models\h_alert.cs">
+      <DependentUpon>AlertModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Alert\Models\L_users.cs">
+      <DependentUpon>AlertModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Alert\SmsComm.cs" />
     <Compile Include="Areas\Maximo_ui\Controllers\MaximoController.cs" />
     <Compile Include="Areas\Maximo_ui\Controllers\WorkorderController.cs" />
     <Compile Include="Areas\Maximo_ui\Controllers\WorkorderDetailsController.cs" />
@@ -303,6 +338,17 @@
     <Compile Include="WebGridHelpers.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\DummyFile.txt" />
+    <Content Include="Areas\Alert\Models\AlertModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>AlertModel.edmx</DependentUpon>
+      <LastGenOutput>AlertModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Areas\Alert\Models\AlertModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>AlertModel.edmx</DependentUpon>
+      <LastGenOutput>AlertModel.cs</LastGenOutput>
+    </Content>
     <Content Include="Areas\PlcSupervisie\Models\Gadata.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Gadata.edmx</DependentUpon>
@@ -604,6 +650,21 @@
     <Content Include="Content\font\summernote.eot" />
     <Content Include="Content\font\summernote.ttf" />
     <Content Include="Content\font\summernote.woff" />
+    <Content Include="Areas\Alert\Views\web.config" />
+    <Content Include="Areas\Alert\Views\Sms\SendSMS.cshtml" />
+    <EntityDeploy Include="Areas\Alert\Models\AlertModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>AlertModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Areas\Alert\Models\AlertModel.edmx.diagram">
+      <DependentUpon>AlertModel.edmx</DependentUpon>
+    </Content>
+    <Content Include="Areas\Alert\Views\triggers\Create.cshtml" />
+    <Content Include="Areas\Alert\Views\triggers\Delete.cshtml" />
+    <Content Include="Areas\Alert\Views\triggers\Details.cshtml" />
+    <Content Include="Areas\Alert\Views\triggers\Edit.cshtml" />
+    <Content Include="Areas\Alert\Views\triggers\Index.cshtml" />
+    <Content Include="Areas\Alert\Views\Home\Index.cshtml" />
     <None Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.svg" />
@@ -789,7 +850,6 @@
     <Content Include="Views\Gadata\_ploegRapport.cshtml" />
     <Content Include="Views\Gadata\_supervisie.cshtml" />
     <Content Include="Views\NgacElectrode\_TipStatus.cshtml" />
-    <Content Include="Views\Home\UserSettings.cshtml" />
     <Content Include="Views\Home\Settings.cshtml" />
     <Content Include="Views\Home\ConfiureBackgroundJobs.cshtml" />
     <Content Include="Views\Home\FireBackgroundJobs.cshtml" />

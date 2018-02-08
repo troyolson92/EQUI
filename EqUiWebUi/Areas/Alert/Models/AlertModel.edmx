@@ -1,0 +1,457 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="AlertModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="c_smsSystem">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="discription" Type="varchar" MaxLength="50" />
+          <Property Name="system" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="c_state">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="discription" Type="varchar" MaxLength="50" />
+          <Property Name="state" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="c_triggers">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="enabled" Type="bit" />
+          <Property Name="discription" Type="varchar(max)" />
+          <Property Name="sqlStqStatement" Type="varchar(max)" />
+          <Property Name="locationThreeMask" Type="varchar(max)" />
+          <Property Name="smsSystem" Type="int" />
+          <Property Name="smsActivePloeg" Type="varchar" MaxLength="50" />
+          <Property Name="smsActiveStartTime" Type="datetime" />
+          <Property Name="smsActiveEndTime" Type="datetime" />
+          <Property Name="smsLimit" Type="int" />
+          <Property Name="smsSend" Type="int" />
+          <Property Name="initial_state" Type="int" />
+          <Property Name="Pollrate" Type="int" />
+          <Property Name="alertType" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="h_alert">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="c_tirgger_id" Type="int" Nullable="false" />
+          <Property Name="_timestamp" Type="datetime" Nullable="false" />
+          <Property Name="info" Type="varchar(max)" />
+          <Property Name="state" Type="int" Nullable="false" />
+          <Property Name="location" Type="varchar(max)" />
+          <Property Name="comments" Type="varchar(max)" />
+          <Property Name="acceptUserID" Type="int" />
+          <Property Name="acceptTimestamp" Type="datetime" />
+          <Property Name="closeUserID" Type="int" />
+          <Property Name="closeTimestamp" Type="datetime" />
+          <Property Name="lastChangedUserID" Type="int" />
+          <Property Name="lastChangedTimestamp" Type="datetime" />
+        </EntityType>
+        <EntityType Name="L_users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LocationRoot" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="AssetRoot" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Locked" Type="bit" Nullable="false" />
+          <Property Name="Blocked" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_c_triggers_c_smsSystem">
+          <End Role="c_smsSystem" Type="Self.c_smsSystem" Multiplicity="0..1" />
+          <End Role="c_triggers" Type="Self.c_triggers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_smsSystem">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="c_triggers">
+              <PropertyRef Name="smsSystem" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_c_triggers_c_state">
+          <End Role="c_state" Type="Self.c_state" Multiplicity="0..1" />
+          <End Role="c_triggers" Type="Self.c_triggers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_state">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="c_triggers">
+              <PropertyRef Name="initial_state" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_h_alert_c_triggers">
+          <End Role="c_triggers" Type="Self.c_triggers" Multiplicity="1" />
+          <End Role="h_alert" Type="Self.h_alert" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_triggers">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="h_alert">
+              <PropertyRef Name="c_tirgger_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_h_alert_L_users">
+          <End Role="L_users" Type="Self.L_users" Multiplicity="0..1" />
+          <End Role="h_alert" Type="Self.h_alert" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="L_users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="h_alert">
+              <PropertyRef Name="lastChangedUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_h_alert_L_users1">
+          <End Role="L_users" Type="Self.L_users" Multiplicity="0..1" />
+          <End Role="h_alert" Type="Self.h_alert" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="L_users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="h_alert">
+              <PropertyRef Name="closeUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_h_alert_L_users2">
+          <End Role="L_users" Type="Self.L_users" Multiplicity="0..1" />
+          <End Role="h_alert" Type="Self.h_alert" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="L_users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="h_alert">
+              <PropertyRef Name="acceptUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AlertModelStoreContainer">
+          <EntitySet Name="c_smsSystem" EntityType="Self.c_smsSystem" Schema="Alerts" store:Type="Tables" />
+          <EntitySet Name="c_state" EntityType="Self.c_state" Schema="Alerts" store:Type="Tables" />
+          <EntitySet Name="c_triggers" EntityType="Self.c_triggers" Schema="Alerts" store:Type="Tables" />
+          <EntitySet Name="h_alert" EntityType="Self.h_alert" Schema="Alerts" store:Type="Tables" />
+          <EntitySet Name="L_users" EntityType="Self.L_users" Schema="Volvo" store:Type="Tables" />
+          <AssociationSet Name="FK_c_triggers_c_smsSystem" Association="Self.FK_c_triggers_c_smsSystem">
+            <End Role="c_smsSystem" EntitySet="c_smsSystem" />
+            <End Role="c_triggers" EntitySet="c_triggers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_c_triggers_c_state" Association="Self.FK_c_triggers_c_state">
+            <End Role="c_state" EntitySet="c_state" />
+            <End Role="c_triggers" EntitySet="c_triggers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_h_alert_c_triggers" Association="Self.FK_h_alert_c_triggers">
+            <End Role="c_triggers" EntitySet="c_triggers" />
+            <End Role="h_alert" EntitySet="h_alert" />
+          </AssociationSet>
+          <AssociationSet Name="FK_h_alert_L_users" Association="Self.FK_h_alert_L_users">
+            <End Role="L_users" EntitySet="L_users" />
+            <End Role="h_alert" EntitySet="h_alert" />
+          </AssociationSet>
+          <AssociationSet Name="FK_h_alert_L_users1" Association="Self.FK_h_alert_L_users1">
+            <End Role="L_users" EntitySet="L_users" />
+            <End Role="h_alert" EntitySet="h_alert" />
+          </AssociationSet>
+          <AssociationSet Name="FK_h_alert_L_users2" Association="Self.FK_h_alert_L_users2">
+            <End Role="L_users" EntitySet="L_users" />
+            <End Role="h_alert" EntitySet="h_alert" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AlertModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="c_smsSystem">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="discription" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="system" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="c_triggers" Relationship="Self.FK_c_triggers_c_smsSystem" FromRole="c_smsSystem" ToRole="c_triggers" />
+        </EntityType>
+        <EntityType Name="c_state">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="discription" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="state" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="c_triggers" Relationship="Self.FK_c_triggers_c_state" FromRole="c_state" ToRole="c_triggers" />
+        </EntityType>
+        <EntityType Name="c_triggers">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="enabled" Type="Boolean" />
+          <Property Name="discription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="sqlStqStatement" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="locationThreeMask" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="smsSystem" Type="Int32" />
+          <Property Name="smsActivePloeg" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="smsActiveStartTime" Type="DateTime" Precision="3" />
+          <Property Name="smsActiveEndTime" Type="DateTime" Precision="3" />
+          <Property Name="smsLimit" Type="Int32" />
+          <Property Name="smsSend" Type="Int32" />
+          <Property Name="initial_state" Type="Int32" />
+          <Property Name="Pollrate" Type="Int32" />
+          <Property Name="alertType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="c_smsSystem" Relationship="Self.FK_c_triggers_c_smsSystem" FromRole="c_triggers" ToRole="c_smsSystem" />
+          <NavigationProperty Name="c_state" Relationship="Self.FK_c_triggers_c_state" FromRole="c_triggers" ToRole="c_state" />
+          <NavigationProperty Name="h_alert" Relationship="Self.FK_h_alert_c_triggers" FromRole="c_triggers" ToRole="h_alert" />
+        </EntityType>
+        <EntityType Name="h_alert">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="c_tirgger_id" Type="Int32" Nullable="false" />
+          <Property Name="C_timestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="info" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="state" Type="Int32" Nullable="false" />
+          <Property Name="location" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="comments" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="acceptUserID" Type="Int32" />
+          <Property Name="acceptTimestamp" Type="DateTime" Precision="3" />
+          <Property Name="closeUserID" Type="Int32" />
+          <Property Name="closeTimestamp" Type="DateTime" Precision="3" />
+          <Property Name="lastChangedUserID" Type="Int32" />
+          <Property Name="lastChangedTimestamp" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="c_triggers" Relationship="Self.FK_h_alert_c_triggers" FromRole="h_alert" ToRole="c_triggers" />
+          <NavigationProperty Name="acceptUser" Relationship="Self.FK_h_alert_L_users" FromRole="h_alert" ToRole="L_users" />
+          <NavigationProperty Name="closeUser" Relationship="Self.FK_h_alert_L_users1" FromRole="h_alert" ToRole="L_users" />
+          <NavigationProperty Name="lastChangeUser" Relationship="Self.FK_h_alert_L_users2" FromRole="h_alert" ToRole="L_users" />
+        </EntityType>
+        <EntityType Name="L_users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LocationRoot" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AssetRoot" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Locked" Type="Boolean" Nullable="false" />
+          <Property Name="Blocked" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="acceptUser" Relationship="Self.FK_h_alert_L_users" FromRole="L_users" ToRole="h_alert" />
+          <NavigationProperty Name="closeUser" Relationship="Self.FK_h_alert_L_users1" FromRole="L_users" ToRole="h_alert" />
+          <NavigationProperty Name="lastChangeUser" Relationship="Self.FK_h_alert_L_users2" FromRole="L_users" ToRole="h_alert" />
+        </EntityType>
+        <Association Name="FK_c_triggers_c_smsSystem">
+          <End Role="c_smsSystem" Type="Self.c_smsSystem" Multiplicity="0..1" />
+          <End Role="c_triggers" Type="Self.c_triggers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_smsSystem">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="c_triggers">
+              <PropertyRef Name="smsSystem" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_c_triggers_c_state">
+          <End Role="c_state" Type="Self.c_state" Multiplicity="0..1" />
+          <End Role="c_triggers" Type="Self.c_triggers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_state">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="c_triggers">
+              <PropertyRef Name="initial_state" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_h_alert_c_triggers">
+          <End Role="c_triggers" Type="Self.c_triggers" Multiplicity="1" />
+          <End Role="h_alert" Type="Self.h_alert" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_triggers">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="h_alert">
+              <PropertyRef Name="c_tirgger_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_h_alert_L_users">
+          <End Role="L_users" Type="Self.L_users" Multiplicity="0..1" />
+          <End Role="h_alert" Type="Self.h_alert" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="L_users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="h_alert">
+              <PropertyRef Name="lastChangedUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_h_alert_L_users1">
+          <End Role="L_users" Type="Self.L_users" Multiplicity="0..1" />
+          <End Role="h_alert" Type="Self.h_alert" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="L_users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="h_alert">
+              <PropertyRef Name="closeUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_h_alert_L_users2">
+          <End Role="L_users" Type="Self.L_users" Multiplicity="0..1" />
+          <End Role="h_alert" Type="Self.h_alert" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="L_users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="h_alert">
+              <PropertyRef Name="acceptUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="GADATA_AlertModel" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="c_smsSystem" EntityType="Self.c_smsSystem" />
+          <EntitySet Name="c_state" EntityType="Self.c_state" />
+          <EntitySet Name="c_triggers" EntityType="Self.c_triggers" />
+          <EntitySet Name="h_alert" EntityType="Self.h_alert" />
+          <EntitySet Name="L_users" EntityType="Self.L_users" />
+          <AssociationSet Name="FK_c_triggers_c_smsSystem" Association="Self.FK_c_triggers_c_smsSystem">
+            <End Role="c_smsSystem" EntitySet="c_smsSystem" />
+            <End Role="c_triggers" EntitySet="c_triggers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_c_triggers_c_state" Association="Self.FK_c_triggers_c_state">
+            <End Role="c_state" EntitySet="c_state" />
+            <End Role="c_triggers" EntitySet="c_triggers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_h_alert_c_triggers" Association="Self.FK_h_alert_c_triggers">
+            <End Role="c_triggers" EntitySet="c_triggers" />
+            <End Role="h_alert" EntitySet="h_alert" />
+          </AssociationSet>
+          <AssociationSet Name="FK_h_alert_L_users" Association="Self.FK_h_alert_L_users">
+            <End Role="L_users" EntitySet="L_users" />
+            <End Role="h_alert" EntitySet="h_alert" />
+          </AssociationSet>
+          <AssociationSet Name="FK_h_alert_L_users1" Association="Self.FK_h_alert_L_users1">
+            <End Role="L_users" EntitySet="L_users" />
+            <End Role="h_alert" EntitySet="h_alert" />
+          </AssociationSet>
+          <AssociationSet Name="FK_h_alert_L_users2" Association="Self.FK_h_alert_L_users2">
+            <End Role="L_users" EntitySet="L_users" />
+            <End Role="h_alert" EntitySet="h_alert" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AlertModelStoreContainer" CdmEntityContainer="GADATA_AlertModel">
+          <EntitySetMapping Name="c_smsSystem">
+            <EntityTypeMapping TypeName="AlertModel.c_smsSystem">
+              <MappingFragment StoreEntitySet="c_smsSystem">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="discription" ColumnName="discription" />
+                <ScalarProperty Name="system" ColumnName="system" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="c_state">
+            <EntityTypeMapping TypeName="AlertModel.c_state">
+              <MappingFragment StoreEntitySet="c_state">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="discription" ColumnName="discription" />
+                <ScalarProperty Name="state" ColumnName="state" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="c_triggers">
+            <EntityTypeMapping TypeName="AlertModel.c_triggers">
+              <MappingFragment StoreEntitySet="c_triggers">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="enabled" ColumnName="enabled" />
+                <ScalarProperty Name="discription" ColumnName="discription" />
+                <ScalarProperty Name="sqlStqStatement" ColumnName="sqlStqStatement" />
+                <ScalarProperty Name="locationThreeMask" ColumnName="locationThreeMask" />
+                <ScalarProperty Name="smsSystem" ColumnName="smsSystem" />
+                <ScalarProperty Name="smsActivePloeg" ColumnName="smsActivePloeg" />
+                <ScalarProperty Name="smsActiveStartTime" ColumnName="smsActiveStartTime" />
+                <ScalarProperty Name="smsActiveEndTime" ColumnName="smsActiveEndTime" />
+                <ScalarProperty Name="smsLimit" ColumnName="smsLimit" />
+                <ScalarProperty Name="smsSend" ColumnName="smsSend" />
+                <ScalarProperty Name="initial_state" ColumnName="initial_state" />
+                <ScalarProperty Name="Pollrate" ColumnName="Pollrate" />
+                <ScalarProperty Name="alertType" ColumnName="alertType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="h_alert">
+            <EntityTypeMapping TypeName="AlertModel.h_alert">
+              <MappingFragment StoreEntitySet="h_alert">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="c_tirgger_id" ColumnName="c_tirgger_id" />
+                <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
+                <ScalarProperty Name="info" ColumnName="info" />
+                <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="location" ColumnName="location" />
+                <ScalarProperty Name="comments" ColumnName="comments" />
+                <ScalarProperty Name="acceptUserID" ColumnName="acceptUserID" />
+                <ScalarProperty Name="acceptTimestamp" ColumnName="acceptTimestamp" />
+                <ScalarProperty Name="closeUserID" ColumnName="closeUserID" />
+                <ScalarProperty Name="closeTimestamp" ColumnName="closeTimestamp" />
+                <ScalarProperty Name="lastChangedUserID" ColumnName="lastChangedUserID" />
+                <ScalarProperty Name="lastChangedTimestamp" ColumnName="lastChangedTimestamp" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="L_users">
+            <EntityTypeMapping TypeName="AlertModel.L_users">
+              <MappingFragment StoreEntitySet="L_users">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="LocationRoot" ColumnName="LocationRoot" />
+                <ScalarProperty Name="AssetRoot" ColumnName="AssetRoot" />
+                <ScalarProperty Name="Locked" ColumnName="Locked" />
+                <ScalarProperty Name="Blocked" ColumnName="Blocked" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
