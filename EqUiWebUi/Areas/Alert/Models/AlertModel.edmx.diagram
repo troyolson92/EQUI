@@ -4,14 +4,15 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="64e25cdc72124ef58c7085170d9779ae" Name="Diagram1" ZoomLevel="111">
-        <EntityTypeShape EntityType="AlertModel.c_smsSystem" Width="1.5" PointX="0.75" PointY="5.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="AlertModel.c_state" Width="1.5" PointX="4.125" PointY="6.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="AlertModel.c_triggers" Width="1.5" PointX="6.125" PointY="2.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="AlertModel.h_alert" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="AlertModel.L_users" Width="1.5" PointX="0.75" PointY="1.75" IsExpanded="true" />
+      <Diagram DiagramId="a443bbb879724830a09275f259874e85" Name="Diagram1">
+        <EntityTypeShape EntityType="AlertModel.c_smsSystem" Width="1.5" PointX="3.25" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="AlertModel.c_state" Width="1.5" PointX="6" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="AlertModel.c_triggers" Width="1.5" PointX="1" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="AlertModel.h_alert" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="AlertModel.L_users" Width="1.5" PointX="0.5" PointY="1.25" IsExpanded="true" />
         <AssociationConnector Association="AlertModel.FK_c_triggers_c_smsSystem" ManuallyRouted="false" />
         <AssociationConnector Association="AlertModel.FK_c_triggers_c_state" ManuallyRouted="false" />
+        <AssociationConnector Association="AlertModel.FK_h_alert_c_state" ManuallyRouted="false" />
         <AssociationConnector Association="AlertModel.FK_h_alert_c_triggers" ManuallyRouted="false" />
         <AssociationConnector Association="AlertModel.FK_h_alert_L_users" ManuallyRouted="false" />
         <AssociationConnector Association="AlertModel.FK_h_alert_L_users1" ManuallyRouted="false" />

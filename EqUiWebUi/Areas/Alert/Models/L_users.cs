@@ -17,9 +17,9 @@ namespace EqUiWebUi.Areas.Alert.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public L_users()
         {
-            this.acceptUser = new HashSet<h_alert>();
-            this.closeUser = new HashSet<h_alert>();
-            this.lastChangeUser = new HashSet<h_alert>();
+            this.Changed = new HashSet<h_alert>();
+            this.Close = new HashSet<h_alert>();
+            this.AcceptUser = new HashSet<h_alert>();
         }
     
         public int id { get; set; }
@@ -30,10 +30,10 @@ namespace EqUiWebUi.Areas.Alert.Models
         public bool Blocked { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<h_alert> acceptUser { get; set; }
+        public virtual ICollection<h_alert> Changed { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<h_alert> closeUser { get; set; }
+        public virtual ICollection<h_alert> Close { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<h_alert> lastChangeUser { get; set; }
+        public virtual ICollection<h_alert> AcceptUser { get; set; }
     }
 }

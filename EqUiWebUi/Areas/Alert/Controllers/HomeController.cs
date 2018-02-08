@@ -13,5 +13,12 @@ namespace EqUiWebUi.Areas.Alert.Controllers
         {
             return View();
         }
+
+        public ActionResult ConfigHangfire()
+        {
+            AlertEngine alertEngine = new AlertEngine();
+            alertEngine.ConfigureHangfireAlertWork();
+            return View();
+        }
     }
 }
