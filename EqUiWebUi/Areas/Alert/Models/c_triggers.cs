@@ -31,9 +31,10 @@ namespace EqUiWebUi.Areas.Alert.Models
         public Nullable<System.DateTime> smsActiveEndTime { get; set; }
         public Nullable<int> smsLimit { get; set; }
         public Nullable<int> smsSend { get; set; }
-        public Nullable<int> initial_state { get; set; }
-        public Nullable<int> Pollrate { get; set; }
+        public int initial_state { get; set; }
+        public int Pollrate { get; set; }
         public string alertType { get; set; }
+        public string classificationMask { get; set; }
     
         public virtual c_smsSystem c_smsSystem { get; set; }
         public virtual c_state c_state { get; set; }

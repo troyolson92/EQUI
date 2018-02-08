@@ -9,7 +9,7 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="discription" Type="varchar" MaxLength="50" />
           <Property Name="system" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
@@ -17,7 +17,7 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="discription" Type="varchar" MaxLength="50" />
           <Property Name="state" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
@@ -25,7 +25,7 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="enabled" Type="bit" />
           <Property Name="discription" Type="varchar(max)" />
           <Property Name="sqlStqStatement" Type="varchar(max)" />
@@ -36,20 +36,21 @@
           <Property Name="smsActiveEndTime" Type="datetime" />
           <Property Name="smsLimit" Type="int" />
           <Property Name="smsSend" Type="int" />
-          <Property Name="initial_state" Type="int" />
-          <Property Name="Pollrate" Type="int" />
-          <Property Name="alertType" Type="varchar" MaxLength="50" />
+          <Property Name="initial_state" Type="int" Nullable="false" />
+          <Property Name="Pollrate" Type="int" Nullable="false" />
+          <Property Name="alertType" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="classificationMask" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="h_alert">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="c_tirgger_id" Type="int" Nullable="false" />
           <Property Name="_timestamp" Type="datetime" Nullable="false" />
           <Property Name="info" Type="varchar(max)" />
           <Property Name="state" Type="int" Nullable="false" />
-          <Property Name="location" Type="varchar(max)" />
+          <Property Name="location" Type="varchar(max)" Nullable="false" />
           <Property Name="comments" Type="varchar(max)" />
           <Property Name="acceptUserID" Type="int" />
           <Property Name="acceptTimestamp" Type="datetime" />
@@ -57,6 +58,8 @@
           <Property Name="closeTimestamp" Type="datetime" />
           <Property Name="lastChangedUserID" Type="int" />
           <Property Name="lastChangedTimestamp" Type="datetime" />
+          <Property Name="triggerCount" Type="int" Nullable="false" />
+          <Property Name="lastTriggerd" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="L_users">
           <Key>
@@ -82,7 +85,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_c_triggers_c_state">
-          <End Role="c_state" Type="Self.c_state" Multiplicity="0..1" />
+          <End Role="c_state" Type="Self.c_state" Multiplicity="1" />
           <End Role="c_triggers" Type="Self.c_triggers" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="c_state">
@@ -90,6 +93,18 @@
             </Principal>
             <Dependent Role="c_triggers">
               <PropertyRef Name="initial_state" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_h_alert_c_state">
+          <End Role="c_state" Type="Self.c_state" Multiplicity="1" />
+          <End Role="h_alert" Type="Self.h_alert" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_state">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="h_alert">
+              <PropertyRef Name="state" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -155,6 +170,10 @@
             <End Role="c_state" EntitySet="c_state" />
             <End Role="c_triggers" EntitySet="c_triggers" />
           </AssociationSet>
+          <AssociationSet Name="FK_h_alert_c_state" Association="Self.FK_h_alert_c_state">
+            <End Role="c_state" EntitySet="c_state" />
+            <End Role="h_alert" EntitySet="h_alert" />
+          </AssociationSet>
           <AssociationSet Name="FK_h_alert_c_triggers" Association="Self.FK_h_alert_c_triggers">
             <End Role="c_triggers" EntitySet="c_triggers" />
             <End Role="h_alert" EntitySet="h_alert" />
@@ -181,7 +200,7 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="discription" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="system" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="c_triggers" Relationship="Self.FK_c_triggers_c_smsSystem" FromRole="c_smsSystem" ToRole="c_triggers" />
@@ -190,16 +209,17 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="discription" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="state" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="c_triggers" Relationship="Self.FK_c_triggers_c_state" FromRole="c_state" ToRole="c_triggers" />
+          <NavigationProperty Name="h_alert" Relationship="Self.FK_h_alert_c_state" FromRole="c_state" ToRole="h_alert" />
         </EntityType>
         <EntityType Name="c_triggers">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="enabled" Type="Boolean" />
           <Property Name="discription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="sqlStqStatement" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
@@ -210,9 +230,10 @@
           <Property Name="smsActiveEndTime" Type="DateTime" Precision="3" />
           <Property Name="smsLimit" Type="Int32" />
           <Property Name="smsSend" Type="Int32" />
-          <Property Name="initial_state" Type="Int32" />
-          <Property Name="Pollrate" Type="Int32" />
-          <Property Name="alertType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="initial_state" Type="Int32" Nullable="false" />
+          <Property Name="Pollrate" Type="Int32" Nullable="false" />
+          <Property Name="alertType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="classificationMask" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="c_smsSystem" Relationship="Self.FK_c_triggers_c_smsSystem" FromRole="c_triggers" ToRole="c_smsSystem" />
           <NavigationProperty Name="c_state" Relationship="Self.FK_c_triggers_c_state" FromRole="c_triggers" ToRole="c_state" />
           <NavigationProperty Name="h_alert" Relationship="Self.FK_h_alert_c_triggers" FromRole="c_triggers" ToRole="h_alert" />
@@ -221,12 +242,12 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="c_tirgger_id" Type="Int32" Nullable="false" />
           <Property Name="C_timestamp" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="info" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="state" Type="Int32" Nullable="false" />
-          <Property Name="location" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="location" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="comments" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="acceptUserID" Type="Int32" />
           <Property Name="acceptTimestamp" Type="DateTime" Precision="3" />
@@ -234,10 +255,13 @@
           <Property Name="closeTimestamp" Type="DateTime" Precision="3" />
           <Property Name="lastChangedUserID" Type="Int32" />
           <Property Name="lastChangedTimestamp" Type="DateTime" Precision="3" />
+          <Property Name="triggerCount" Type="Int32" Nullable="false" />
+          <Property Name="lastTriggerd" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="c_state" Relationship="Self.FK_h_alert_c_state" FromRole="h_alert" ToRole="c_state" />
           <NavigationProperty Name="c_triggers" Relationship="Self.FK_h_alert_c_triggers" FromRole="h_alert" ToRole="c_triggers" />
-          <NavigationProperty Name="acceptUser" Relationship="Self.FK_h_alert_L_users" FromRole="h_alert" ToRole="L_users" />
-          <NavigationProperty Name="closeUser" Relationship="Self.FK_h_alert_L_users1" FromRole="h_alert" ToRole="L_users" />
-          <NavigationProperty Name="lastChangeUser" Relationship="Self.FK_h_alert_L_users2" FromRole="h_alert" ToRole="L_users" />
+          <NavigationProperty Name="ChangedUser" Relationship="Self.FK_h_alert_L_users" FromRole="h_alert" ToRole="L_users" />
+          <NavigationProperty Name="CloseUser" Relationship="Self.FK_h_alert_L_users1" FromRole="h_alert" ToRole="L_users" />
+          <NavigationProperty Name="AcceptUser" Relationship="Self.FK_h_alert_L_users2" FromRole="h_alert" ToRole="L_users" />
         </EntityType>
         <EntityType Name="L_users">
           <Key>
@@ -249,9 +273,9 @@
           <Property Name="AssetRoot" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Locked" Type="Boolean" Nullable="false" />
           <Property Name="Blocked" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="acceptUser" Relationship="Self.FK_h_alert_L_users" FromRole="L_users" ToRole="h_alert" />
-          <NavigationProperty Name="closeUser" Relationship="Self.FK_h_alert_L_users1" FromRole="L_users" ToRole="h_alert" />
-          <NavigationProperty Name="lastChangeUser" Relationship="Self.FK_h_alert_L_users2" FromRole="L_users" ToRole="h_alert" />
+          <NavigationProperty Name="Changed" Relationship="Self.FK_h_alert_L_users" FromRole="L_users" ToRole="h_alert" />
+          <NavigationProperty Name="Close" Relationship="Self.FK_h_alert_L_users1" FromRole="L_users" ToRole="h_alert" />
+          <NavigationProperty Name="AcceptUser" Relationship="Self.FK_h_alert_L_users2" FromRole="L_users" ToRole="h_alert" />
         </EntityType>
         <Association Name="FK_c_triggers_c_smsSystem">
           <End Role="c_smsSystem" Type="Self.c_smsSystem" Multiplicity="0..1" />
@@ -266,7 +290,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_c_triggers_c_state">
-          <End Role="c_state" Type="Self.c_state" Multiplicity="0..1" />
+          <End Role="c_state" Type="Self.c_state" Multiplicity="1" />
           <End Role="c_triggers" Type="Self.c_triggers" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="c_state">
@@ -274,6 +298,18 @@
             </Principal>
             <Dependent Role="c_triggers">
               <PropertyRef Name="initial_state" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_h_alert_c_state">
+          <End Role="c_state" Type="Self.c_state" Multiplicity="1" />
+          <End Role="h_alert" Type="Self.h_alert" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_state">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="h_alert">
+              <PropertyRef Name="state" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -339,6 +375,10 @@
             <End Role="c_state" EntitySet="c_state" />
             <End Role="c_triggers" EntitySet="c_triggers" />
           </AssociationSet>
+          <AssociationSet Name="FK_h_alert_c_state" Association="Self.FK_h_alert_c_state">
+            <End Role="c_state" EntitySet="c_state" />
+            <End Role="h_alert" EntitySet="h_alert" />
+          </AssociationSet>
           <AssociationSet Name="FK_h_alert_c_triggers" Association="Self.FK_h_alert_c_triggers">
             <End Role="c_triggers" EntitySet="c_triggers" />
             <End Role="h_alert" EntitySet="h_alert" />
@@ -397,6 +437,7 @@
                 <ScalarProperty Name="initial_state" ColumnName="initial_state" />
                 <ScalarProperty Name="Pollrate" ColumnName="Pollrate" />
                 <ScalarProperty Name="alertType" ColumnName="alertType" />
+                <ScalarProperty Name="classificationMask" ColumnName="classificationMask" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -416,6 +457,8 @@
                 <ScalarProperty Name="closeTimestamp" ColumnName="closeTimestamp" />
                 <ScalarProperty Name="lastChangedUserID" ColumnName="lastChangedUserID" />
                 <ScalarProperty Name="lastChangedTimestamp" ColumnName="lastChangedTimestamp" />
+                <ScalarProperty Name="triggerCount" ColumnName="triggerCount" />
+                <ScalarProperty Name="lastTriggerd" ColumnName="lastTriggerd" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
