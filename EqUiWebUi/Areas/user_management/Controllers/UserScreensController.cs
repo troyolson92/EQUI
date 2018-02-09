@@ -132,7 +132,7 @@ namespace EqUiWebUi.Areas.user_management.Controllers
 
 
         // GET: Render selected screen in the screen wrapper (single screen)
-        public ActionResult RenderUserScreen(int screenID, float ZoomLevel = 1)
+        public ActionResult RenderUserScreen(int screenID)
         {
             //Get screen
             L_Screens Screen = db.L_Screens.Where(s => s.id == screenID).First();
@@ -157,10 +157,6 @@ namespace EqUiWebUi.Areas.user_management.Controllers
             {
                 Response.AddHeader("Refresh", Screen.ResetRate.ToString());
             }
-
-            //add ZoomLevel
-            ViewBag.ZoomLevel = ZoomLevel;
-
             //Pass correct layout (empty layout)
             return View("RenderUserScreen", "~/Views/Shared/_MinimalLayout.cshtml", Screen);
         }
@@ -298,36 +294,33 @@ namespace EqUiWebUi.Areas.user_management.Controllers
             return;
         }
 
-        // POST: display a message
+        // GET: display a message
         //possible to refresh a ALL CLIENTS  / Specific screenID / Specific Screennum
-        [HttpPost]
-        [ValidateInput(false)] //to alow posting of raw html data
         [Authorize(Roles = "Administrator, ScreenManager")]
-        public void DisplayMessage(int? screenId, int? screenNum, int? showtime, string ScreenMasterMessagedata)
+        public void DisplayMessage(int? screenId, int? screenNum, int? showtime, string message)
         {
-            
             var context = Microsoft.AspNet.SignalR.GlobalHost.ConnectionManager.GetHubContext<ScreenHub>();
             //if showtime is null show until user closes it
             if (!screenId.HasValue && !screenNum.HasValue)
             {
-                context.Clients.All.DisplayMessage(showtime, ScreenMasterMessagedata);
-                return; // View();
+                context.Clients.All.DisplayMessage(showtime, message);
+                return;
             }
 
             //full refresh specific screenid
             if (screenId.HasValue)
             {
                 //get all clients in group
-                context.Clients.Group("ScreenID" + screenId.GetValueOrDefault().ToString()).DisplayMessage(showtime, ScreenMasterMessagedata);
+                context.Clients.Group("ScreenID" + screenId.GetValueOrDefault().ToString()).DisplayMessage(showtime, message);
             }
 
             //full refresh specific screeNum
             if (screenNum.HasValue)
             {
                 //get all clients in group
-                context.Clients.Group("ScreenNum" + screenNum.GetValueOrDefault().ToString()).DisplayMessage(showtime, ScreenMasterMessagedata);
+                context.Clients.Group("ScreenNum" + screenNum.GetValueOrDefault().ToString()).DisplayMessage(showtime, message);
             }
-            return; // View();
+            return;
         }
 
         // GET: display a site

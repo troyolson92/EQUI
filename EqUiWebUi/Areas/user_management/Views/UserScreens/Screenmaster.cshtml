@@ -12,61 +12,23 @@
         <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
     </div>
     <div class="panel-body">
-        <input id="ScreenMasterBtnFullRefresh" class="btn btn-warning" type="button" value="FullRefresh" />
-        Send Refresh command to all screens. (full page reload)
-        <p></p>
-        <input id="ScreenMasterBtnIframeRefresh" class="btn btn-warning" type="button" value="IframeRefresh" />
-        Send refresh command to all screens (Iframe reload)
+        <input  class="btn btn-warning"type="button" value="FullRefresh" onclick="location.href='@Url.Action("FullRefresh")'" />
+
     </div>
 </div>
 
-<div class="panel panel-primary">
-    <div class="panel-heading">
-        <h4 class="panel-title">ScreenMaster messenger</h4>
-        <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
-    </div>
-    <div class="panel-body">
-        <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
-        @using (Ajax.BeginForm("DisplayMessage","UserScreens", new AjaxOptions { HttpMethod = "POST" }))
-        {
-        <form class="form-horizontal">
-            <textarea id="ScreenMasterMessage" name="ScreenMasterMessagedata">Type a message to send to the screens</textarea>
-            <p></p>
-            <input type="submit" value="Send message" class="btn btn-success">
-        </form>
-         }
-    </div>
-</div>
 
-<div class="panel panel-primary">
-    <div class="panel-heading">
-        <h4 class="panel-title">ScreenMaster Iframe</h4>
-        <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
-    </div>
-    <div class="panel-body">
-        <input id="ScreenMasterBtnSendUrl" class="btn btn-warning" type="button" value="SendUrl" />
-        Send url to all screens
-    </div>
-</div>
-
+<p>
+    @Html.ActionLink("Send FullRefresh ALL SCREENS", "FullRefresh")
+</p>
+<p>
+    @Html.ActionLink("Send IframeRefresh ALL SCREENS", "Refresh")
+</p>
 <hr />
+<p>
+    @Html.ActionLink("Send Message ALL SCREENS", "DisplayMessage", new { message = "Test message....... this is a test message", showtime = 10 })
+</p>
+<p>
+    @Html.ActionLink("Send URL ALL SCREENS", "DisplayPage", new { url = "http://equi", showtime = 10 })
+</p>
 
-@section scripts{
-    @*https://summernote.org/getting-started/*@
-    <link href="~/Content/summernote.css" rel="stylesheet" />
-    <script src="~/Scripts/summernote.js"></script>
-    <script>
-        $('#ScreenMasterMessage').summernote({
-            height: 300,                 // set editor height
-            minHeight: null,             // set minimum height of editor
-            maxHeight: null,             // set maximum height of editor
-            focus: false                  // set focus to editable area after initializing summernote
-        });
-
-    ActionOnClick("ScreenMasterBtnFullRefresh","@Url.Action("FullRefresh")");
-    ActionOnClick("ScreenMasterBtnIframeRefresh", "@Url.Action("Refresh")");
-    ActionOnClick("ScreenMasterBtnSendUrl", "@Url.Action("DisplayPage", new { url = "http://equi", showtime = 10 })");
-
-
-    </script>
-}

@@ -11,13 +11,6 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.id)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.id)
-        </dd>
-        <dt>
             @Html.DisplayNameFor(model => model.Screen_num)
         </dt>
 
@@ -77,72 +70,23 @@
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
-    @Html.ActionLink("Back to List", "Index") |
-    @Html.ActionLink("Show screen", "RenderUserScreen", new { screenID = Model.id })
+    @Html.ActionLink("Back to List", "Index")
 </p>
 <hr />
-
-<div class="panel panel-primary">
-    <div class="panel-heading">
-        <h4 class="panel-title">ScreenMaster Toolbox</h4>
-        <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
-    </div>
-    <div class="panel-body">
-        <input id="ScreenMasterBtnFullRefresh" class="btn btn-warning" type="button" value="FullRefresh" />
-        Send Refresh command to this screen. (full page reload)
-        <p></p>
-        <input id="ScreenMasterBtnIframeRefresh" class="btn btn-warning" type="button" value="IframeRefresh" />
-        Send refresh command to this screens (Iframe reload)
-    </div>
-</div>
-
-<div class="panel panel-primary">
-    <div class="panel-heading">
-        <h4 class="panel-title">ScreenMaster messenger</h4>
-        <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
-    </div>
-    <div class="panel-body">
-        <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
-        @using (Ajax.BeginForm("DisplayMessage", "UserScreens", new { screenId = Model.id }, new AjaxOptions { HttpMethod = "POST" }))
-        {
-        <form class="form-horizontal">
-            <textarea id="ScreenMasterMessage" name="ScreenMasterMessagedata">Type a message to send to this screen</textarea>
-            <p></p>
-            <input type="submit" value="Send message" class="btn btn-success">
-        </form>
-        }
-    </div>
-</div>
-
-<div class="panel panel-primary">
-    <div class="panel-heading">
-        <h4 class="panel-title">ScreenMaster Iframe</h4>
-        <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
-    </div>
-    <div class="panel-body">
-        <input id="ScreenMasterBtnSendUrl" class="btn btn-warning" type="button" value="SendUrl" />
-        Send url to all screens
-    </div>
-</div>
-
+<h4>SignalR Screen functions</h4>
+<p>
+    @Html.ActionLink("Show screen", "RenderUserScreen", new { screenID = Model.id })
+</p>
+<p>
+    @Html.ActionLink("Send FullRefresh", "FullRefresh", new { screenId = Model.id }) 
+</p>
+<p>
+    @Html.ActionLink("Send IframeRefresh", "Refresh", new { screenId = Model.id })
+</p>
 <hr />
-
-@section scripts{
-    @*https://summernote.org/getting-started/*@
-    <link href="~/Content/summernote.css" rel="stylesheet" />
-    <script src="~/Scripts/summernote.js"></script>
-    <script>
-        $('#ScreenMasterMessage').summernote({
-            height: 300,                 // set editor height
-            minHeight: null,             // set minimum height of editor
-            maxHeight: null,             // set maximum height of editor
-            focus: false                  // set focus to editable area after initializing summernote
-        });
-
-    ActionOnClick("ScreenMasterBtnFullRefresh","@Url.Action("FullRefresh", new { screenId = Model.id})");
-    ActionOnClick("ScreenMasterBtnIframeRefresh", "@Url.Action("Refresh", new { screenId = Model.id })");
-    ActionOnClick("ScreenMasterBtnSendUrl", "@Url.Action("DisplayPage", new {screenId = Model.id, url = "http://equi", showtime = 10 })");
-
-
-    </script>
-}
+<p>
+    @Html.ActionLink("Send Message", "DisplayMessage", new { screenId = Model.id, message = "Test message.......", showtime = 10 })
+</p>
+<p>
+    @Html.ActionLink("Send URL", "DisplayPage", new { screenId = Model.id, url = "http://equi", showtime = 10 })
+</p>

@@ -48,15 +48,9 @@
             this.tb_netExportLocation = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.button1 = new System.Windows.Forms.Button();
-            this.label8 = new System.Windows.Forms.Label();
-            this.tb_INETCachePath = new System.Windows.Forms.TextBox();
-            this.cb_EnblInetCachClean = new System.Windows.Forms.CheckBox();
             this.panel_setup.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_data)).BeginInit();
             this.panel1.SuspendLayout();
-            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel_setup
@@ -128,9 +122,9 @@
             // dgv_data
             // 
             this.dgv_data.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv_data.Location = new System.Drawing.Point(12, 245);
+            this.dgv_data.Location = new System.Drawing.Point(13, 177);
             this.dgv_data.Name = "dgv_data";
-            this.dgv_data.Size = new System.Drawing.Size(839, 413);
+            this.dgv_data.Size = new System.Drawing.Size(839, 340);
             this.dgv_data.TabIndex = 1;
             // 
             // panel1
@@ -145,7 +139,7 @@
             this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.tb_netExportLocation);
             this.panel1.Controls.Add(this.label4);
-            this.panel1.Location = new System.Drawing.Point(13, 674);
+            this.panel1.Location = new System.Drawing.Point(13, 535);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(839, 142);
             this.panel1.TabIndex = 6;
@@ -237,71 +231,23 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(10, 229);
+            this.label6.Location = new System.Drawing.Point(18, 161);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(69, 13);
             this.label6.TabIndex = 6;
             this.label6.Text = "Configuration";
             // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.cb_EnblInetCachClean);
-            this.panel2.Controls.Add(this.button1);
-            this.panel2.Controls.Add(this.label8);
-            this.panel2.Controls.Add(this.tb_INETCachePath);
-            this.panel2.Location = new System.Drawing.Point(13, 148);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(839, 78);
-            this.panel2.TabIndex = 7;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(712, 18);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(114, 20);
-            this.button1.TabIndex = 6;
-            this.button1.Text = "Clean";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(22, 18);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(78, 13);
-            this.label8.TabIndex = 6;
-            this.label8.Text = "InetCachePath";
-            // 
-            // tb_INETCachePath
-            // 
-            this.tb_INETCachePath.Location = new System.Drawing.Point(167, 18);
-            this.tb_INETCachePath.Name = "tb_INETCachePath";
-            this.tb_INETCachePath.Size = new System.Drawing.Size(530, 20);
-            this.tb_INETCachePath.TabIndex = 6;
-            // 
-            // cb_EnblInetCachClean
-            // 
-            this.cb_EnblInetCachClean.AutoSize = true;
-            this.cb_EnblInetCachClean.Location = new System.Drawing.Point(25, 44);
-            this.cb_EnblInetCachClean.Name = "cb_EnblInetCachClean";
-            this.cb_EnblInetCachClean.Size = new System.Drawing.Size(90, 17);
-            this.cb_EnblInetCachClean.TabIndex = 6;
-            this.cb_EnblInetCachClean.Text = "Enbl cleaning";
-            this.cb_EnblInetCachClean.UseVisualStyleBackColor = true;
-            // 
             // WebNavigator_Gadget_Watcher_ConfigForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(864, 862);
-            this.Controls.Add(this.panel2);
+            this.ClientSize = new System.Drawing.Size(864, 691);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.dgv_data);
             this.Controls.Add(this.panel_setup);
-            this.MaximumSize = new System.Drawing.Size(880, 900);
-            this.MinimumSize = new System.Drawing.Size(880, 900);
+            this.MaximumSize = new System.Drawing.Size(880, 729);
+            this.MinimumSize = new System.Drawing.Size(880, 729);
             this.Name = "WebNavigator_Gadget_Watcher_ConfigForm";
             this.Text = "WebNavigator_Gadget_Watcher";
             this.panel_setup.ResumeLayout(false);
@@ -309,8 +255,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgv_data)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -338,11 +282,6 @@
         private System.Windows.Forms.Button btn_saveConfig;
         private System.Windows.Forms.TextBox tb_HtmlExportPath;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox tb_INETCachePath;
-        private System.Windows.Forms.CheckBox cb_EnblInetCachClean;
     }
 }
 
