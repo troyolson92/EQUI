@@ -20,10 +20,5 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             alertEngine.ConfigureHangfireAlertWork();
         }
 
-        public void Test()
-        {
-            AlertEngine alertEngine = new AlertEngine();
-            alertEngine.CheckForalerts(1, "");
-        }
     }
 }

@@ -13,8 +13,7 @@ namespace EqUiWebUi.Areas.Alert
 {
     public class AlertEngine
     {
-        [AutomaticRetry(Attempts = 0)]
-        [DisableConcurrentExecution(50)] //locks the job from starting multible times if other one stil running.
+
         public void ConfigureHangfireAlertWork()
         {
             //get alert pol config from database and configure hangfire.
@@ -25,12 +24,13 @@ namespace EqUiWebUi.Areas.Alert
             AlertEngine alertEngine = new AlertEngine();
             foreach (c_triggers trigger in c_Triggers)
             {
-                RecurringJob.AddOrUpdate(() => alertEngine.CheckForalerts(trigger.id,trigger.discription), Cron.MinuteInterval(trigger.Pollrate));
+                Hangfire.RecurringJob.AddOrUpdate(() => alertEngine.CheckForalerts(trigger.id,trigger.discription), Cron.MinuteInterval(trigger.Pollrate));
             }
 
         }
 
-
+        [AutomaticRetry(Attempts = 0)]
+        [DisableConcurrentExecution(50)] //locks the job from starting multible times if other one stil running.
         public void CheckForalerts(int c_triggerID,string AlertDiscription)
         {
             //get trigger 
@@ -65,24 +65,31 @@ namespace EqUiWebUi.Areas.Alert
 
            //handle results
            foreach (DataRow ActiveAlert in ActiveAlerts.Rows)
+           {
+
+                //can not use .Field in Linq query 
+                string AlertLocation = ActiveAlert.Field<string>("LocationTree");
+
+                List<h_alert> h_alert = (from alerts in gADATA_AlertModel.h_alert
+                                         where alerts.c_tirgger_id == c_triggerID //must be from same trigger
+                                         && alerts.location == AlertLocation //must be same location
+                                         //need to have an ID to compare for retrigger...
+                                     //    && alerts.state > 2 //1 = WGK 2 = INUITV
+                                         orderby alerts.id descending
+                                         select alerts).ToList();
+
+                //if more than one active we have a config issue
+                if (h_alert.Count > 1)
                 {
-                
-                    List<h_alert> h_alert = (from alerts in gADATA_AlertModel.h_alert
-                                             where alerts.c_tirgger_id == c_triggerID
-                                             //&& alerts.location == ActiveAlert.Field<string>("LocationTree")
-                                             && alerts.closeTimestamp != null
-                                             select alerts).ToList();
+                  Log.Error("More than one alert active for location");
+                  //allow continue ? 
+                }
 
-                    //if more than one active we have a config issue
-                    if (h_alert.Count > 1)
-                    {
-                        Log.Error("More than one alert active for location");
-                    //allow continue ? 
-                    }
+               //if alert not active make  one
+                if (h_alert.Count == 0)
+                {
+                        Log.Debug("New alert for: " + ActiveAlert.Field<string>("LocationTree") + " => "+ ActiveAlert.Field<string>("info"));
 
-                    //if alert not active make new one
-                    if (h_alert.Count == 0)
-                    {
                         h_alert newAlert = new h_alert();
                         newAlert.c_tirgger_id = c_triggerID;
                         newAlert.location = ActiveAlert.Field<string>("LocationTree");
@@ -92,19 +99,28 @@ namespace EqUiWebUi.Areas.Alert
                         newAlert.triggerCount = 1;
                         newAlert.lastTriggerd = System.DateTime.Now;
 
+                        //check if we need to send SMS
+                        if (trigger.smsSystem.HasValue && trigger.smsLimit <= trigger.smsSend)
+                        {
+                            //inc trigger sms counter
+                            trigger.smsSend += 1;
+                            HandleSms(trigger, newAlert);
+                            
+                            //handle sms limit hit
+                            if(trigger.smsLimit == trigger.smsSend)
+                            {
+                              Log.Info("Stopped sending sms for trigger: " + trigger.id + " (limit was hit)");
+                            }
+                        }
+
                         //dont forget to ADD and SAVE! 
                         gADATA_AlertModel.h_alert.Add(newAlert);
-                        gADATA_AlertModel.SaveChangesAsync();
+                        gADATA_AlertModel.SaveChanges();
 
-                    //check if we need to send SMS
-                    if (trigger.smsSystem.HasValue)
-                    {
-                        HandleSms(trigger, newAlert);
-                    }
-
-                    }
-                    else
-                    {
+                }
+                //Alert is already active (update it)
+                else
+                {
                         Log.Debug("Alert trigger but already active");
                         //update active alert with timestamp and increment trigger counter
                         h_alert[0].triggerCount += 1; //increment count
@@ -112,14 +128,13 @@ namespace EqUiWebUi.Areas.Alert
 
                     //check if we need to REsend SMS
                         if (trigger.smsOnRetrigger && trigger.smsSystem.HasValue)
-                        {
-                            
+                        {     
                             HandleSms(trigger, h_alert[0]);
                         }
                     //dont forget SAVE!!
-                    gADATA_AlertModel.SaveChangesAsync();
+                    gADATA_AlertModel.SaveChanges();
                 }
-                }
+           }
         }
 
 
@@ -135,9 +150,8 @@ namespace EqUiWebUi.Areas.Alert
             sb.Append("Alert from: ").AppendLine(alert.location);
             sb.AppendLine(trigger.alertType);
             sb.AppendLine(alert.info);
-
-            //USE HANGFIRE !
-            smsComm.SendSMS(trigger.c_smsSystem.system, sb.ToString(), path);
+            //USE HANGFIRE to send it!
+            Hangfire.BackgroundJob.Enqueue(() => smsComm.SendSMS(trigger.c_smsSystem.system, sb.ToString(), path));           
         }
 
     }
