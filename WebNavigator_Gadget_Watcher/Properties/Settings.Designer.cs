@@ -119,30 +119,5 @@ namespace WebNavigator_Gadget_Watcher.Properties {
                 this["htmlExportPath"] = value;
             }
         }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("c:\\Windows\\SysWOW64\\config\\systemprofile\\AppData\\Local\\Microsoft\\Windows\\INetCach" +
-            "e\\IE")]
-        public string InetCachePath {
-            get {
-                return ((string)(this["InetCachePath"]));
-            }
-            set {
-                this["InetCachePath"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool InetCachePathEnbl {
-            get {
-                return ((bool)(this["InetCachePathEnbl"]));
-            }
-            set {
-                this["InetCachePathEnbl"] = value;
-            }
-        }
     }
 }

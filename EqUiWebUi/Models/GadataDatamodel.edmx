@@ -103,24 +103,6 @@ warning 6002: The table/view 'GADATA.EqUi.Supervisie' does not have a primary ke
           <Property Name="ClassTree" Type="varchar(max)" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'GADATA.NGAC.Bodytracking' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="Bodytracking">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" Nullable="false" />
-          <Property Name="controller_name" Type="varchar" MaxLength="30" />
-          <Property Name="jobNo" Type="int" />
-          <Property Name="bodyNo" Type="int" />
-          <Property Name="CycleStart" Type="datetime" />
-          <Property Name="CycleEnd" Type="datetime" />
-          <Property Name="ts_breakDownStart" Type="datetime" />
-          <Property Name="ts_breakDownAck" Type="datetime" />
-          <Property Name="ts_breakDownEnd" Type="datetime" />
-          <Property Name="FullLogtext" Type="varchar(max)" />
-          <Property Name="refId" Type="int" />
-        </EntityType>
-        <!--Errors Found During Generation:
 warning 6002: The table/view 'GADATA.NGAC.TipMonitor' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="TipMonitor">
           <Key>
@@ -252,7 +234,6 @@ warning 6002: The table/view 'GADATA.Tableau.logDetails' does not have a primary
           <Parameter Name="timeline" Type="bit" Mode="In" />
           <Parameter Name="ControllerEventLog" Type="bit" Mode="In" />
           <Parameter Name="ErrDispLog" Type="bit" Mode="In" />
-          <Parameter Name="ErrDispLogS4C" Type="bit" Mode="In" />
           <Parameter Name="VariableLog" Type="bit" Mode="In" />
           <Parameter Name="DeviceProperty" Type="bit" Mode="In" />
           <Parameter Name="Breakdown" Type="bit" Mode="In" />
@@ -285,21 +266,6 @@ warning 6002: The table/view 'GADATA.Tableau.logDetails' does not have a primary
     [Supervisie].[LocationTree] AS [LocationTree], 
     [Supervisie].[ClassTree] AS [ClassTree]
     FROM [EqUi].[Supervisie] AS [Supervisie]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="Bodytracking" EntityType="Self.Bodytracking" store:Type="Views" store:Schema="NGAC">
-            <DefiningQuery>SELECT 
-    [Bodytracking].[id] AS [id], 
-    [Bodytracking].[controller_name] AS [controller_name], 
-    [Bodytracking].[jobNo] AS [jobNo], 
-    [Bodytracking].[bodyNo] AS [bodyNo], 
-    [Bodytracking].[CycleStart] AS [CycleStart], 
-    [Bodytracking].[CycleEnd] AS [CycleEnd], 
-    [Bodytracking].[ts_breakDownStart] AS [ts_breakDownStart], 
-    [Bodytracking].[ts_breakDownAck] AS [ts_breakDownAck], 
-    [Bodytracking].[ts_breakDownEnd] AS [ts_breakDownEnd], 
-    [Bodytracking].[FullLogtext] AS [FullLogtext], 
-    [Bodytracking].[refId] AS [refId]
-    FROM [NGAC].[Bodytracking] AS [Bodytracking]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="TipMonitor" EntityType="Self.TipMonitor" store:Type="Views" store:Schema="NGAC">
             <DefiningQuery>SELECT 
@@ -446,7 +412,6 @@ warning 6002: The table/view 'GADATA.Tableau.logDetails' does not have a primary
             <Parameter Name="timeline" Mode="In" Type="Boolean" />
             <Parameter Name="ControllerEventLog" Mode="In" Type="Boolean" />
             <Parameter Name="ErrDispLog" Mode="In" Type="Boolean" />
-            <Parameter Name="ErrDispLogS4C" Mode="In" Type="Boolean" />
             <Parameter Name="VariableLog" Mode="In" Type="Boolean" />
             <Parameter Name="DeviceProperty" Mode="In" Type="Boolean" />
             <Parameter Name="Breakdown" Mode="In" Type="Boolean" />
@@ -455,7 +420,6 @@ warning 6002: The table/view 'GADATA.Tableau.logDetails' does not have a primary
             <Parameter Name="DisplayFullLogtext" Mode="In" Type="Boolean" />
             <Parameter Name="ExcludeOperational" Mode="In" Type="Boolean" />
           </FunctionImport>
-          <EntitySet Name="Bodytracking" EntityType="Models.Bodytracking" />
           </EntityContainer>
         <EntityType Name="c_querySnapshots">
           <Key>
@@ -666,22 +630,6 @@ warning 6002: The table/view 'GADATA.Tableau.logDetails' does not have a primary
           <Property Type="String" Name="controller_name" Nullable="true" MaxLength="30" />
           <Property Type="String" Name="controller_type" Nullable="false" MaxLength="4" />
         </ComplexType>
-        <EntityType Name="Bodytracking">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" />
-          <Property Name="controller_name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="jobNo" Type="Int32" />
-          <Property Name="bodyNo" Type="Int32" />
-          <Property Name="CycleStart" Type="DateTime" Precision="3" />
-          <Property Name="CycleEnd" Type="DateTime" Precision="3" />
-          <Property Name="ts_breakDownStart" Type="DateTime" Precision="3" />
-          <Property Name="ts_breakDownAck" Type="DateTime" Precision="3" />
-          <Property Name="ts_breakDownEnd" Type="DateTime" Precision="3" />
-          <Property Name="FullLogtext" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="refId" Type="Int32" />
-        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -907,23 +855,6 @@ warning 6002: The table/view 'GADATA.Tableau.logDetails' does not have a primary
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <EntitySetMapping Name="Bodytracking">
-            <EntityTypeMapping TypeName="Models.Bodytracking">
-              <MappingFragment StoreEntitySet="Bodytracking">
-                <ScalarProperty Name="refId" ColumnName="refId" />
-                <ScalarProperty Name="FullLogtext" ColumnName="FullLogtext" />
-                <ScalarProperty Name="ts_breakDownEnd" ColumnName="ts_breakDownEnd" />
-                <ScalarProperty Name="ts_breakDownAck" ColumnName="ts_breakDownAck" />
-                <ScalarProperty Name="ts_breakDownStart" ColumnName="ts_breakDownStart" />
-                <ScalarProperty Name="CycleEnd" ColumnName="CycleEnd" />
-                <ScalarProperty Name="CycleStart" ColumnName="CycleStart" />
-                <ScalarProperty Name="bodyNo" ColumnName="bodyNo" />
-                <ScalarProperty Name="jobNo" ColumnName="jobNo" />
-                <ScalarProperty Name="controller_name" ColumnName="controller_name" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
