@@ -32,12 +32,14 @@ namespace EqUiWebUi.Areas.Alert
         string publishUser = "sattline";
         string publishPass = "sattline";
 
+        bool debugMode = true; //if debug mode nu sms is send 
+
         public void SendSMS(string Messagetype, string Message,string temppath)
         {
             string filenamePrefix = "XPR001-EQUI_";
             string filenameId = System.DateTime.Now.ToString("yyyyMMddHHmmssFFF");
 
-
+  
             //check message max length
 
             //make file
@@ -52,6 +54,13 @@ namespace EqUiWebUi.Areas.Alert
             catch (Exception ex)
             {
                 Log.Error("Failed to build SMS", ex);
+                return;
+            }
+
+            //debug mode
+            if(debugMode)
+            {
+                Log.Info("Sms debugmode active SMS NOT SEND");
                 return;
             }
 
