@@ -18,10 +18,7 @@ namespace EqUiWebUi.Areas.Alert.Models
         public c_state()
         {
             this.c_triggers = new HashSet<c_triggers>();
-<<<<<<< HEAD
             this.h_alert = new HashSet<h_alert>();
-=======
->>>>>>> 5db2146... start implementing new alert system (and sms controller)
         }
     
         public int id { get; set; }
@@ -30,10 +27,7 @@ namespace EqUiWebUi.Areas.Alert.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<c_triggers> c_triggers { get; set; }
-<<<<<<< HEAD
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<h_alert> h_alert { get; set; }
-=======
->>>>>>> 5db2146... start implementing new alert system (and sms controller)
     }
 }

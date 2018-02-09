@@ -1,0 +1,124 @@
+﻿@model IEnumerable<EqUiWebUi.Areas.Alert.Models.c_triggers>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.enabled)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.discription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.sqlStqStatement)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.locationThreeMask)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.smsActivePloeg)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.smsActiveStartTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.smsActiveEndTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.smsLimit)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.smsSend)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Pollrate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.alertType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.classificationMask)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AutoSetStateTechComp)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.smsOnRetrigger)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.c_smsSystem.discription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.c_state.discription)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.enabled)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.discription)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.sqlStqStatement)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.locationThreeMask)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.smsActivePloeg)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.smsActiveStartTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.smsActiveEndTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.smsLimit)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.smsSend)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Pollrate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.alertType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.classificationMask)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AutoSetStateTechComp)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.smsOnRetrigger)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.c_smsSystem.discription)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.c_state.discription)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.id })
+        </td>
+    </tr>
+}
+
+</table>

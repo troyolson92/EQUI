@@ -7,11 +7,14 @@ using System.Data;
 using EqUiWebUi.Areas.Alert.Models;
 using EQUICommunictionLib;
 using Hangfire;
+using System.Text;
 
 namespace EqUiWebUi.Areas.Alert
 {
     public class AlertEngine
     {
+        [AutomaticRetry(Attempts = 0)]
+        [DisableConcurrentExecution(50)] //locks the job from starting multible times if other one stil running.
         public void ConfigureHangfireAlertWork()
         {
             //get alert pol config from database and configure hangfire.
@@ -63,9 +66,10 @@ namespace EqUiWebUi.Areas.Alert
            //handle results
            foreach (DataRow ActiveAlert in ActiveAlerts.Rows)
                 {
+                
                     List<h_alert> h_alert = (from alerts in gADATA_AlertModel.h_alert
                                              where alerts.c_tirgger_id == c_triggerID
-                                             && alerts.location == ActiveAlert.Field<string>("Location")
+                                             //&& alerts.location == ActiveAlert.Field<string>("LocationTree")
                                              && alerts.closeTimestamp != null
                                              select alerts).ToList();
 
@@ -81,17 +85,22 @@ namespace EqUiWebUi.Areas.Alert
                     {
                         h_alert newAlert = new h_alert();
                         newAlert.c_tirgger_id = c_triggerID;
-                        newAlert.location = "";
+                        newAlert.location = ActiveAlert.Field<string>("LocationTree");
                         newAlert.C_timestamp = System.DateTime.Now;
                         newAlert.state = trigger.initial_state;
-                        newAlert.info = "";
+                        newAlert.info = ActiveAlert.Field<string>("info");
                         newAlert.triggerCount = 1;
                         newAlert.lastTriggerd = System.DateTime.Now;
 
-                        //dont forget SAVE! 
+                        //dont forget to ADD and SAVE! 
+                        gADATA_AlertModel.h_alert.Add(newAlert);
+                        gADATA_AlertModel.SaveChangesAsync();
 
-                        //check if we need to send SMS
+                    //check if we need to send SMS
+                    if (trigger.smsSystem.HasValue)
+                    {
                         HandleSms(trigger, newAlert);
+                    }
 
                     }
                     else
@@ -100,15 +109,35 @@ namespace EqUiWebUi.Areas.Alert
                         //update active alert with timestamp and increment trigger counter
                         h_alert[0].triggerCount += 1; //increment count
                         h_alert[0].lastTriggerd = System.DateTime.Now;
-                        //dont forget SAVE!!
-                    }
+
+                    //check if we need to REsend SMS
+                        if (trigger.smsOnRetrigger && trigger.smsSystem.HasValue)
+                        {
+                            
+                            HandleSms(trigger, h_alert[0]);
+                        }
+                    //dont forget SAVE!!
+                    gADATA_AlertModel.SaveChangesAsync();
+                }
                 }
         }
 
 
         public void HandleSms(c_triggers trigger, h_alert alert)
         {
+            //check if we NEED to send an SMS! 
 
+
+            SmsComm smsComm = new SmsComm();
+            var path = ("~/App_Data/tempSmsFile.txt");
+            //build message 
+            StringBuilder sb = new StringBuilder();
+            sb.Append("Alert from: ").AppendLine(alert.location);
+            sb.AppendLine(trigger.alertType);
+            sb.AppendLine(alert.info);
+
+            //USE HANGFIRE !
+            smsComm.SendSMS(trigger.c_smsSystem.system, sb.ToString(), path);
         }
 
     }

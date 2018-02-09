@@ -181,7 +181,7 @@ namespace EqUiWebUi
             GADATAEntities gADATAEntities = new GADATAEntities();
 
             List<EQpluginDefaultNGAC_Result> data = (from DefaultNgac in gADATAEntities.EQpluginDefaultNGAC
-                                (startDate: null,
+                                  (startDate: null,
                                    endDate: null,
                                    daysBack: 1,
                                    assets: "%",
@@ -196,7 +196,8 @@ namespace EqUiWebUi
                                    breakdownStart: false, 
                                    displayLevel: 0, 
                                    displayFullLogtext: true,
-                                   excludeOperational: true               
+                                   excludeOperational: true,
+                                   errDispLogS4C: true
                                    )
                                    select DefaultNgac).ToList();
 

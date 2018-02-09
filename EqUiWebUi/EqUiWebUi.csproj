@@ -164,15 +164,10 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Alert\AlertAreaRegistration.cs" />
-<<<<<<< HEAD
     <Compile Include="Areas\Alert\AlertEngine.cs" />
-    <Compile Include="Areas\Alert\Controllers\HomeController.cs" />
-    <Compile Include="Areas\Alert\Controllers\SmsController.cs" />
-=======
-    <Compile Include="Areas\Alert\Controllers\HomeController.cs" />
-    <Compile Include="Areas\Alert\Controllers\SmsController.cs" />
-    <Compile Include="Areas\Alert\Controllers\triggersController.cs" />
->>>>>>> 5db2146... start implementing new alert system (and sms controller)
+    <Compile Include="Areas\Alert\Controllers\AlertController.cs" />
+    <Compile Include="Areas\Alert\Controllers\c_triggersController.cs" />
+    <Compile Include="Areas\Alert\Controllers\h_alertController.cs" />
     <Compile Include="Areas\Alert\Models\AlertModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -273,6 +268,9 @@
     <Compile Include="Controllers\TableauController.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="Models\AAOSR_PloegRaport_Result.cs">
+      <DependentUpon>GadataDatamodel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Bodytracking.cs">
       <DependentUpon>GadataDatamodel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Breakdown.cs">
@@ -384,6 +382,7 @@
     <Content Include="Content\mvc-grid.css" />
     <Content Include="Content\MvcGrid\mvc-grid.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="Content\summernote.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Models\GadataDatamodel.Context.tt">
@@ -649,21 +648,10 @@
       <DependentUpon>Gadata.edmx</DependentUpon>
     </Content>
     <Content Include="Areas\user_management\Views\UserScreens\Screenmaster.cshtml" />
-<<<<<<< HEAD
     <Content Include="Content\font\summernote.eot" />
     <Content Include="Content\font\summernote.ttf" />
     <Content Include="Content\font\summernote.woff" />
     <Content Include="Areas\Alert\Views\web.config" />
-    <Content Include="Areas\Alert\Views\Sms\SendSMS.cshtml" />
-<<<<<<< HEAD
-    <Content Include="Areas\Alert\Views\triggers\Create.cshtml" />
-    <Content Include="Areas\Alert\Views\triggers\Delete.cshtml" />
-    <Content Include="Areas\Alert\Views\triggers\Details.cshtml" />
-    <Content Include="Areas\Alert\Views\triggers\Edit.cshtml" />
-    <Content Include="Areas\Alert\Views\triggers\Index.cshtml" />
-    <Content Include="Areas\Alert\Views\Home\Index.cshtml" />
-=======
->>>>>>> 5db2146... start implementing new alert system (and sms controller)
     <EntityDeploy Include="Areas\Alert\Models\AlertModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>AlertModel.Designer.cs</LastGenOutput>
@@ -671,18 +659,17 @@
     <Content Include="Areas\Alert\Models\AlertModel.edmx.diagram">
       <DependentUpon>AlertModel.edmx</DependentUpon>
     </Content>
-<<<<<<< HEAD
-    <Content Include="Areas\Alert\Views\Home\ConfigHangfire.cshtml" />
-=======
-    <Content Include="Areas\Alert\Views\triggers\Create.cshtml" />
-    <Content Include="Areas\Alert\Views\triggers\Delete.cshtml" />
-    <Content Include="Areas\Alert\Views\triggers\Details.cshtml" />
-    <Content Include="Areas\Alert\Views\triggers\Edit.cshtml" />
-    <Content Include="Areas\Alert\Views\triggers\Index.cshtml" />
-    <Content Include="Areas\Alert\Views\Home\Index.cshtml" />
->>>>>>> 5db2146... start implementing new alert system (and sms controller)
-=======
->>>>>>> parent of 850fb76... bodytracking
+    <Content Include="Areas\Alert\Views\c_triggers\Create.cshtml" />
+    <Content Include="Areas\Alert\Views\c_triggers\Delete.cshtml" />
+    <Content Include="Areas\Alert\Views\c_triggers\Details.cshtml" />
+    <Content Include="Areas\Alert\Views\c_triggers\Edit.cshtml" />
+    <Content Include="Areas\Alert\Views\c_triggers\Index.cshtml" />
+    <Content Include="Areas\Alert\Views\Alert\Index.cshtml" />
+    <Content Include="Areas\Alert\Views\h_alert\Create.cshtml" />
+    <Content Include="Areas\Alert\Views\h_alert\Delete.cshtml" />
+    <Content Include="Areas\Alert\Views\h_alert\Details.cshtml" />
+    <Content Include="Areas\Alert\Views\h_alert\Edit.cshtml" />
+    <Content Include="Areas\Alert\Views\h_alert\Index.cshtml" />
     <None Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.svg" />
@@ -811,6 +798,7 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\spin.js" />
     <Content Include="Scripts\spin.min.js" />
+    <Content Include="Scripts\summernote.js" />
     <Content Include="Scripts\viewer.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
@@ -874,6 +862,7 @@
     <Content Include="Views\Shared\_MinimalLayout.cshtml" />
     <Content Include="Views\Gadata\EQpluginDefaultNGACWebgrid.cshtml" />
     <Content Include="Views\Gadata\_EQpluginDefaultNGAC.cshtml" />
+    <Content Include="Views\Gadata\BodyTrackWebgrid.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EQUICommunictionLib\EQUICommunictionLib.csproj">

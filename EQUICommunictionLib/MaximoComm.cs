@@ -11,9 +11,12 @@ namespace EQUICommunictionLib
 {
     public class MaximoComm
     {
-        OracleConnection Maximo7conn = new OracleConnection(
+        OracleConnection MaximoReportingConn = new OracleConnection(
           "Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=gotsvl2149.got.volvocars.net)(PORT=1521)) (CONNECT_DATA=(SID=dpmxarct)));User Id=ARCTVCG;Password=vcg$tokfeb2017;");
-       
+
+        OracleConnection MaximoRealtimeConn = new OracleConnection(
+          "Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=gotora1mxa.got.volvocars.net)(PORT=1521)) (CONNECT_DATA=(SID=DPMXADGP)));User Id=FDENAYER;Password=volvo456;");
+
         //debugger
         myDebugger Debugger = new myDebugger();
 
@@ -44,11 +47,14 @@ namespace EQUICommunictionLib
         }
 
         //
-        public DataTable oracle_runQuery(string Query)
+        public DataTable oracle_runQuery(string Query, bool RealtimeConn = false)
         {
+            OracleConnection activeConn = MaximoReportingConn;
+            if (RealtimeConn) { activeConn = MaximoRealtimeConn; }
+
             try
             {
-                using (OracleDataAdapter dadapter = new OracleDataAdapter(Query, Maximo7conn))
+                using (OracleDataAdapter dadapter = new OracleDataAdapter(Query, activeConn))
                 {
                     //get location and asset data from maximo
                     DataTable table = new DataTable();
@@ -67,11 +73,14 @@ namespace EQUICommunictionLib
 
         //comm to maximo
 
-        public string GetClobMaximo7(string as_query)
+        public string GetClobMaximo7(string as_query, bool RealtimeConn = false)
         {
+            OracleConnection activeConn = MaximoReportingConn;
+            if (RealtimeConn) { activeConn = MaximoRealtimeConn; }
+
             try
             {
-                if (Maximo7conn.State != ConnectionState.Open) { Maximo7conn.Open(); }
+                if (activeConn.State != ConnectionState.Open) { activeConn.Open(); }
             }
             catch (Exception e)
             {
@@ -79,7 +88,7 @@ namespace EQUICommunictionLib
             }
             try
             {
-                using (OracleCommand myCommand = new OracleCommand(as_query, Maximo7conn))
+                using (OracleCommand myCommand = new OracleCommand(as_query, activeConn))
                 {
                     OracleDataReader dr = myCommand.ExecuteReader();
                     dr.Read();
@@ -89,7 +98,7 @@ namespace EQUICommunictionLib
                     dr.Close();
                     try
                     {
-                       Maximo7conn.Close();
+                        activeConn.Close();
                     }
                     catch (Exception e)
                     {

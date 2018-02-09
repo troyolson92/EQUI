@@ -27,7 +27,6 @@ namespace EqUiWebUi.Areas.Alert.Models
         public Nullable<System.DateTime> closeTimestamp { get; set; }
         public Nullable<int> lastChangedUserID { get; set; }
         public Nullable<System.DateTime> lastChangedTimestamp { get; set; }
-<<<<<<< HEAD
         public int triggerCount { get; set; }
         public System.DateTime lastTriggerd { get; set; }
     
@@ -36,12 +35,5 @@ namespace EqUiWebUi.Areas.Alert.Models
         public virtual L_users ChangedUser { get; set; }
         public virtual L_users CloseUser { get; set; }
         public virtual L_users AcceptUser { get; set; }
-=======
-    
-        public virtual c_triggers c_triggers { get; set; }
-        public virtual L_users acceptUser { get; set; }
-        public virtual L_users closeUser { get; set; }
-        public virtual L_users lastChangeUser { get; set; }
->>>>>>> 5db2146... start implementing new alert system (and sms controller)
     }
 }
