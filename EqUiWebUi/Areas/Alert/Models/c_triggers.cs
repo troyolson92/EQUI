@@ -21,7 +21,7 @@ namespace EqUiWebUi.Areas.Alert.Models
         }
     
         public int id { get; set; }
-        public Nullable<bool> enabled { get; set; }
+        public bool enabled { get; set; }
         public string discription { get; set; }
         public string sqlStqStatement { get; set; }
         public string locationThreeMask { get; set; }
@@ -31,16 +31,12 @@ namespace EqUiWebUi.Areas.Alert.Models
         public Nullable<System.DateTime> smsActiveEndTime { get; set; }
         public Nullable<int> smsLimit { get; set; }
         public Nullable<int> smsSend { get; set; }
-<<<<<<< HEAD
         public int initial_state { get; set; }
         public int Pollrate { get; set; }
         public string alertType { get; set; }
         public string classificationMask { get; set; }
-=======
-        public Nullable<int> initial_state { get; set; }
-        public Nullable<int> Pollrate { get; set; }
-        public string alertType { get; set; }
->>>>>>> 5db2146... start implementing new alert system (and sms controller)
+        public bool AutoSetStateTechComp { get; set; }
+        public bool smsOnRetrigger { get; set; }
     
         public virtual c_smsSystem c_smsSystem { get; set; }
         public virtual c_state c_state { get; set; }

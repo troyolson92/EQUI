@@ -266,7 +266,7 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
             //get data from maximo
             EQUICommunictionLib.MaximoComm maximoComm = new MaximoComm();
             DataTable dataTable = new DataTable();
-            dataTable = maximoComm.oracle_runQuery(sbqry.ToString());
+            dataTable = maximoComm.oracle_runQuery(sbqry.ToString()); 
             //parse datatable to listobject
             List<Models.Workorder> workorders = new List<Models.Workorder>();
             foreach (DataRow row in dataTable.Rows)

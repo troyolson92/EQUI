@@ -1,0 +1,137 @@
+﻿@model EqUiWebUi.Areas.Alert.Models.h_alert
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>h_alert</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.C_timestamp)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.C_timestamp)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.info)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.info)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.location)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.location)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.comments)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.comments)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.acceptTimestamp)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.acceptTimestamp)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.closeTimestamp)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.closeTimestamp)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.lastChangedTimestamp)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.lastChangedTimestamp)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.triggerCount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.triggerCount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.lastTriggerd)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.lastTriggerd)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.c_state.discription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.c_state.discription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.c_triggers.discription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.c_triggers.discription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ChangedUser.username)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ChangedUser.username)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CloseUser.username)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CloseUser.username)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AcceptUser.username)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AcceptUser.username)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>
