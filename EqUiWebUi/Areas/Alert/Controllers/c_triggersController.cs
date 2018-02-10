@@ -11,6 +11,7 @@ using EqUiWebUi.Areas.Alert.Models;
 
 namespace EqUiWebUi.Areas.Alert.Controllers
 {
+    [Authorize(Roles = "Administrator, AlertMaster")]
     public class c_triggersController : Controller
     {
         private GADATA_AlertModel db = new GADATA_AlertModel();
@@ -50,6 +51,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ValidateInput(false)] //to alow posting of raw html data
         public async Task<ActionResult> Create([Bind(Include = "id,enabled,discription,sqlStqStatement,locationThreeMask,smsSystem,smsActivePloeg,smsActiveStartTime,smsActiveEndTime,smsLimit,smsSend,initial_state,Pollrate,alertType,classificationMask,AutoSetStateTechComp,smsOnRetrigger")] c_triggers c_triggers)
         {
             if (ModelState.IsValid)
@@ -86,6 +88,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ValidateInput(false)] //to alow posting of raw html data
         public async Task<ActionResult> Edit([Bind(Include = "id,enabled,discription,sqlStqStatement,locationThreeMask,smsSystem,smsActivePloeg,smsActiveStartTime,smsActiveEndTime,smsLimit,smsSend,initial_state,Pollrate,alertType,classificationMask,AutoSetStateTechComp,smsOnRetrigger")] c_triggers c_triggers)
         {
             if (ModelState.IsValid)

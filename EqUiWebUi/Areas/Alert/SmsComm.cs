@@ -69,7 +69,7 @@ namespace EqUiWebUi.Areas.Alert
                 {
                     var credentials = new NetworkCredential(publishUser, publishPass);
                     NetworkConnection networkConnection = new NetworkConnection(publishHost, credentials);
-                    Log.Info("logged in on network using incode credentials");
+                    Log.Debug("logged in on network using incode credentials");
                 }
                 catch(Exception ex)
                 {
@@ -81,8 +81,6 @@ namespace EqUiWebUi.Areas.Alert
             try
             {
                 string publishFullname = Path.Combine(publishLocation, filenamePrefix + filenameId + ".txt");
-                Log.Debug(publishFullname);
-                Log.Debug(temppath);
                 File.Copy(temppath, publishFullname,true);
             }
             catch (Exception ex)
@@ -90,7 +88,7 @@ namespace EqUiWebUi.Areas.Alert
                 Log.Error("Failed to send SMS to server", ex);
                 return;
             }
-            Log.Info("SMS send Type: " + Message);
+            Log.Info("SMS send Type: " + Messagetype + " => " + Message);
         }
     }
 }

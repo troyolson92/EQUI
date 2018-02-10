@@ -38,7 +38,7 @@ namespace EqUiWebUi.Areas.user_management.Controllers
         }
 
         // GET: user_management/UserScreens/Create
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Administrator, ScreenManager")]
         public ActionResult Create()
         {
             ViewBag.User_id = new SelectList(db.L_users, "id", "username");
@@ -100,7 +100,7 @@ namespace EqUiWebUi.Areas.user_management.Controllers
         }
 
         // GET: user_management/UserScreens/Delete/5
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Administrator, ScreenManager")]
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
@@ -118,7 +118,7 @@ namespace EqUiWebUi.Areas.user_management.Controllers
         // POST: user_management/UserScreens/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Administrator, ScreenManager")]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
             L_Screens l_Screens = await db.L_Screens.FindAsync(id);
