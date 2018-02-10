@@ -1,9 +1,8 @@
 ﻿using EqUiWebUi.Areas.Alert.Models;
-using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -65,59 +64,79 @@ namespace EqUiWebUi.Areas.Alert.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateInput(false)] //to alow posting of raw html data
-        public async Task<ActionResult> Edit(h_alert alert)
+        public async Task<ActionResult> Edit(h_alert _alert)
         {
-            //get current users ID 
-            int ThisUsersID = 1; //to be implemented! 
-
+            //get original alert (this insures when multible users edit at the same time nothing should get lost)
+            h_alert org_alert = await db.h_alert.FindAsync(_alert.id);
+            if (org_alert == null)
+            {
+                return HttpNotFound();
+            }
+            //if the poseted model state is valid
             if (ModelState.IsValid)
             {
-                //do some stuff based on the new state request
-                switch (alert.state)
+                if (org_alert.state != _alert.state)
                 {
-                    case 1: //WGK
-                        //nothing to do
-                        break;
+                    //do some stuff based on the new state request
+                    switch (_alert.state)
+                    {
+                        case 1: //WGK
+                                //nothing to do
+                            break;
 
-                    case 2: //OKREQ
-                        if (!alert.acceptUserID.HasValue)
-                        {
-                            alert.acceptTimestamp = System.DateTime.Now;
-                            alert.acceptUserID = ThisUsersID;
-                        }
-                        break;
+                        case 2: //OKREQ
+                            if (!org_alert.acceptUserID.HasValue)
+                            {
+                                org_alert.acceptTimestamp = System.DateTime.Now;
+                                org_alert.acceptUserID = (int)Session["UserId"];
+                            }
+                            break;
 
-                    case 3: //COMP 
-                    case 4: //VOID
-                        if (!alert.closeUserID.HasValue)
-                        {
-                            alert.closeTimestamp = System.DateTime.Now;
-                            alert.closeUserID = ThisUsersID;
-                        }
-                        break;
-                    default:
-                        //unhandled state
-                        break;
+                        case 3: //COMP 
+                        case 4: //VOID
+                            if (!org_alert.closeUserID.HasValue)
+                            {
+                                org_alert.closeTimestamp = System.DateTime.Now;
+                                org_alert.closeUserID = (int)Session["UserId"]; ;
+                            }
+                            break;
+                        default:
+                            //unhandled state
+                            break;
+                    }
+                    //set the new state 
+                    org_alert.state = _alert.state;
                 }
 
                 //update last changed user 
-                alert.lastChangedTimestamp = System.DateTime.Now;
-                alert.lastChangedUserID = ThisUsersID;
+                org_alert.lastChangedTimestamp = System.DateTime.Now;
+                org_alert.lastChangedUserID = (int)Session["UserId"];
 
-                //append on each save to comments section. (include state user and datetime.)
-                string commentHeading = string.Format("=>entry for: {0}, state: {1}, dt: {2}", alert.ChangedUser,alert.c_state.state, alert.lastChangedTimestamp);
                 //append the users new comments (we do this because we don't whant the user to be able to edit previous comments)
-
-                //to be implemnted !
-
-                //
-                db.Entry(alert).State = EntityState.Modified;
+                StringBuilder sb = new StringBuilder();
+                //add existing 
+                sb.AppendLine(org_alert.comments);
+                //add break 
+                sb.AppendLine("<hr />");
+                //add new pannel
+                sb.AppendLine("<div class='card card-info'>");
+                sb.AppendLine("<div class='card-block'>");
+                sb.AppendLine("<h4 class='card-title'>" + Session["Username"].ToString() + "</h4>");
+                sb.AppendLine("<h6 class='card-subtitle mb-2 text-muted'>" + org_alert.lastChangedTimestamp + " Previous State: "+ org_alert.c_state.state + "</h6>");
+                sb.AppendLine("<p class='card-text'>");
+                sb.Append(_alert.comments);
+                sb.AppendLine("</p>");
+                sb.AppendLine("</div>");
+                sb.AppendLine("</div>");
+                org_alert.comments = sb.ToString();
+                //save it 
+                db.Entry(org_alert).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Listalerts");
             }
             //if model not valid return to revalidate
-            ViewBag.state = new SelectList(db.c_state, "id", "discription", alert.state);
-            return View(alert);
+            ViewBag.state = new SelectList(db.c_state, "id", "discription", _alert.state);
+            return View(_alert);
         }
 
     }

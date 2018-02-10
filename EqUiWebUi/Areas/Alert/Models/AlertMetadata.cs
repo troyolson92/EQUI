@@ -2,7 +2,7 @@
 
 namespace EqUiWebUi.Areas.Alert.Models
 {
-    
+ //Trigger metadata
     [MetadataType(typeof(c_triggersMetaData))]
     public partial class c_triggers
     {
@@ -27,6 +27,20 @@ namespace EqUiWebUi.Areas.Alert.Models
 
         [HelpText("ReAD MANUAL!")]
         public string sqlStqStatement { get; set; }
+
+    }
+
+
+ //Alert metadata
+    [MetadataType(typeof(h_alertMetaData))]
+    public partial class h_alert
+    {
+    }
+
+    public class h_alertMetaData
+    {
+        [Display(Name = "Alert trigger timestamp")]
+        public System.DateTime C_timestamp { get; set; }
 
     }
 
