@@ -56,6 +56,7 @@ namespace EqUiWebUi.Areas.user_management.Controllers
         {
             users user = GetUser(System.Web.HttpContext.Current.User.Identity.Name);
             //set user variables
+            Session["Username"] = user.id;
             Session["Username"] = user.username;
             Session["LocationRoot"] = user.LocationRoot;
             Session["AssetRoot"] = user.AssetRoot;

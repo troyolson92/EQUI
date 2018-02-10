@@ -145,6 +145,7 @@ namespace EqUiWebUi.Areas.user_management.Controllers
             Areas.user_management.Controllers.userController userController = new Areas.user_management.Controllers.userController();
             users user = userController.GetUser(Screen.L_users.username);
             //change session data to view an url as a specifc user
+            Session["Username"] = user.id;
             Session["LocationRoot"] = user.LocationRoot;
             Session["AssetRoot"] = user.AssetRoot;
             Session["Impersonating"] = user.username;

@@ -123,6 +123,7 @@ namespace EqUiWebUi
                     //set user variables
                     lock (padlock)
                     {
+                        Session["UserId"] = user.id;
                         Session["Username"] = user.username;
                         Session["LocationRoot"] = user.LocationRoot;
                         Session["AssetRoot"] = user.AssetRoot;
