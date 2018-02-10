@@ -23,8 +23,13 @@ namespace EqUiWebUi.Areas.Alert.Models
         public int id { get; set; }
         public bool enabled { get; set; }
         public string discription { get; set; }
+        [HelpText("Gets used in sms and shown as alert subgroup")]
+        public string alertType { get; set; }
         public string sqlStqStatement { get; set; }
+
         public string locationThreeMask { get; set; }
+        public string classificationMask { get; set; }
+
         public Nullable<int> smsSystem { get; set; }
         public string smsActivePloeg { get; set; }
         public Nullable<System.DateTime> smsActiveStartTime { get; set; }
@@ -33,13 +38,14 @@ namespace EqUiWebUi.Areas.Alert.Models
         public Nullable<int> smsSend { get; set; }
         public int initial_state { get; set; }
         public int Pollrate { get; set; }
-        public string alertType { get; set; }
-        public string classificationMask { get; set; }
+
+
         public bool AutoSetStateTechComp { get; set; }
         public bool smsOnRetrigger { get; set; }
     
         public virtual c_smsSystem c_smsSystem { get; set; }
         public virtual c_state c_state { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<h_alert> h_alert { get; set; }
     }

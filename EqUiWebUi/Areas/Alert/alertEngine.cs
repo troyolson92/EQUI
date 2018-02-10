@@ -14,6 +14,7 @@ namespace EqUiWebUi.Areas.Alert
     public class AlertEngine
     {
 
+        //write alert trigger configureation to hangfire
         public void ConfigureHangfireAlertWork()
         {
             //get alert pol config from database and configure hangfire.
@@ -24,13 +25,23 @@ namespace EqUiWebUi.Areas.Alert
             AlertEngine alertEngine = new AlertEngine();
             foreach (c_triggers trigger in c_Triggers)
             {
-                Hangfire.RecurringJob.AddOrUpdate(() => alertEngine.CheckForalerts(trigger.id,trigger.discription), Cron.MinuteInterval(trigger.Pollrate));
+                if (trigger.enabled)
+                {
+                    Hangfire.RecurringJob.AddOrUpdate(() => alertEngine.CheckForalerts(trigger.id, trigger.discription), Cron.MinuteInterval(trigger.Pollrate));
+                }
             }
 
         }
 
-        [AutomaticRetry(Attempts = 0)]
-        [DisableConcurrentExecution(50)] //locks the job from starting multible times if other one stil running.
+        //Clear al the 'inactive' triggers from hangfire
+        //if ClearAll remove everything active or not
+        public void ClearHanfireAlertwork(bool ClearALL = false)
+        {
+            Log.Error("not implmeneted ! ");
+        }
+
+        //Gets called by Hanfire to processAlertwork.
+        [AutomaticRetry(Attempts = 0)] //no hangfire retrys 
         public void CheckForalerts(int c_triggerID,string AlertDiscription)
         {
             //get trigger 
@@ -39,12 +50,14 @@ namespace EqUiWebUi.Areas.Alert
                                   where trig.id == c_triggerID
                                   select trig).FirstOrDefault();
 
+            //if trigger not found stop processing
             if (trigger == null)
             {
                 Log.Error("Did not find Alerttrigger: " + c_triggerID);
                 return;
             }
 
+            //if trigger not active stop processing
             if (trigger.enabled == false)
             {
                 Log.Debug("trigger not enabled:" + c_triggerID);
@@ -53,13 +66,13 @@ namespace EqUiWebUi.Areas.Alert
             
             //check database for active alerts
             DataTable ActiveAlerts = new DataTable();
-            GadataComm gadataComm = new GadataComm();
+            GadataComm gadataComm = new GadataComm(); 
             ActiveAlerts = gadataComm.RunQueryGadata(trigger.sqlStqStatement);
 
             //check if there is work
             if (ActiveAlerts.Rows.Count == 0)
             {
-                Log.Info("no work");
+                Log.Debug("no work");
                 return;
             }
 
@@ -88,7 +101,7 @@ namespace EqUiWebUi.Areas.Alert
                //if alert not active make  one
                 if (h_alert.Count == 0)
                 {
-                        Log.Debug("New alert for: " + ActiveAlert.Field<string>("LocationTree") + " => "+ ActiveAlert.Field<string>("info"));
+                        Log.Info("New alert for: " + ActiveAlert.Field<string>("LocationTree") + " => "+ ActiveAlert.Field<string>("info"));
 
                         h_alert newAlert = new h_alert();
                         newAlert.c_tirgger_id = c_triggerID;

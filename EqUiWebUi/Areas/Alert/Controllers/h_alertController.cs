@@ -11,6 +11,7 @@ using EqUiWebUi.Areas.Alert.Models;
 
 namespace EqUiWebUi.Areas.Alert.Controllers
 {
+    [Authorize(Roles = "Administrator, AlertMaster")]
     public class h_alertController : Controller
     {
         private GADATA_AlertModel db = new GADATA_AlertModel();
@@ -53,6 +54,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ValidateInput(false)] //to alow posting of raw html data
         public async Task<ActionResult> Create([Bind(Include = "id,c_tirgger_id,C_timestamp,info,state,location,comments,acceptUserID,acceptTimestamp,closeUserID,closeTimestamp,lastChangedUserID,lastChangedTimestamp,triggerCount,lastTriggerd")] h_alert h_alert)
         {
             if (ModelState.IsValid)
@@ -95,6 +97,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ValidateInput(false)] //to alow posting of raw html data
         public async Task<ActionResult> Edit([Bind(Include = "id,c_tirgger_id,C_timestamp,info,state,location,comments,acceptUserID,acceptTimestamp,closeUserID,closeTimestamp,lastChangedUserID,lastChangedTimestamp,triggerCount,lastTriggerd")] h_alert h_alert)
         {
             if (ModelState.IsValid)

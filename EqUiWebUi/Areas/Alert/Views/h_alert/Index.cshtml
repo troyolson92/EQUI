@@ -5,108 +5,33 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Index of all alerts in the system</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.C_timestamp)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.info)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.location)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.comments)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.acceptTimestamp)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.closeTimestamp)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.lastChangedTimestamp)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.triggerCount)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.lastTriggerd)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.c_state.discription)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.c_triggers.discription)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ChangedUser.username)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CloseUser.username)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AcceptUser.username)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.C_timestamp)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.info)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.location)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.comments)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.acceptTimestamp)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.closeTimestamp)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.lastChangedTimestamp)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.triggerCount)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.lastTriggerd)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.c_state.discription)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.c_triggers.discription)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ChangedUser.username)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CloseUser.username)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AcceptUser.username)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.id })
-        </td>
-    </tr>
-}
 
-</table>
+@Html.Grid(Model).Named("h_alert").Build(columns =>
+{
+    columns.Add(c => c.id).Titled("ID").InitialSort(GridSortOrder.Asc);
+    columns.Add(c => c.c_triggers.alertType).Titled("alertType");
+    columns.Add(c => c.C_timestamp).Titled("C_timestamp").Formatted("{0:dd-MM-yyyy HH:mm}");
+    columns.Add(c => c.location).Titled("location");
+    columns.Add(c => c.info).Titled("info");
+    columns.Add(c => c.id)
+                .Titled("")
+                .Encoded(false)
+                .RenderedAs(c => @Html.ActionLink("Edit", "Edit", new { id = c.id }) + " | " +
+                                 @Html.ActionLink("Details", "Details", new { id = c.id }) + " | " +
+                                 @Html.ActionLink("Delete", "Delete", new { id = c.id })
+                ).InitialSort(GridSortOrder.Asc).Filterable(false);
+}).Filterable(true).Sortable(true).Empty("Did not find anything").Css("table-hover")
+
+@section scripts{
+    <script>
+        //full with screen
+        $("#allcontent").removeClass("body-content");
+        $("#allcontent").removeClass("container");
+    </script>
+    }

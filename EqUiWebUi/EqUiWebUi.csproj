@@ -168,6 +168,7 @@
     <Compile Include="Areas\Alert\Controllers\AlertController.cs" />
     <Compile Include="Areas\Alert\Controllers\c_triggersController.cs" />
     <Compile Include="Areas\Alert\Controllers\h_alertController.cs" />
+    <Compile Include="Areas\Alert\Models\AlertMetadata.cs" />
     <Compile Include="Areas\Alert\Models\AlertModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -664,12 +665,13 @@
     <Content Include="Areas\Alert\Views\c_triggers\Details.cshtml" />
     <Content Include="Areas\Alert\Views\c_triggers\Edit.cshtml" />
     <Content Include="Areas\Alert\Views\c_triggers\Index.cshtml" />
-    <Content Include="Areas\Alert\Views\Alert\Index.cshtml" />
     <Content Include="Areas\Alert\Views\h_alert\Create.cshtml" />
     <Content Include="Areas\Alert\Views\h_alert\Delete.cshtml" />
     <Content Include="Areas\Alert\Views\h_alert\Details.cshtml" />
     <Content Include="Areas\Alert\Views\h_alert\Edit.cshtml" />
     <Content Include="Areas\Alert\Views\h_alert\Index.cshtml" />
+    <Content Include="Areas\Alert\Views\Alert\Listalerts.cshtml" />
+    <Content Include="Areas\Alert\Views\Alert\Edit.cshtml" />
     <None Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.svg" />
