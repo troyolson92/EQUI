@@ -7,11 +7,6 @@
 
 <h2>Index of all alerts in the system</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-
-
 @Html.Grid(Model).Named("h_alert").Build(columns =>
 {
     columns.Add(c => c.id).Titled("ID").InitialSort(GridSortOrder.Asc);
@@ -23,7 +18,6 @@
                 .Titled("")
                 .Encoded(false)
                 .RenderedAs(c => @Html.ActionLink("Edit", "Edit", new { id = c.id }) + " | " +
-                                 @Html.ActionLink("Details", "Details", new { id = c.id }) + " | " +
                                  @Html.ActionLink("Delete", "Delete", new { id = c.id })
                 ).InitialSort(GridSortOrder.Asc).Filterable(false);
 }).Filterable(true).Sortable(true).Empty("Did not find anything").Css("table-hover")

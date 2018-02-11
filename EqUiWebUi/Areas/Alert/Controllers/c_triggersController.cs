@@ -23,21 +23,6 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             return View(await c_triggers.ToListAsync());
         }
 
-        // GET: Alert/c_triggers/Details/5
-        public async Task<ActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            c_triggers c_triggers = await db.c_triggers.FindAsync(id);
-            if (c_triggers == null)
-            {
-                return HttpNotFound();
-            }
-            return View(c_triggers);
-        }
-
         // GET: Alert/c_triggers/Create
         public ActionResult Create()
         {
