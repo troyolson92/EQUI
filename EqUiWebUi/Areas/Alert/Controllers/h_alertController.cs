@@ -23,55 +23,6 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             return View(await h_alert.ToListAsync());
         }
 
-        // GET: Alert/h_alert/Details/5
-        public async Task<ActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            h_alert h_alert = await db.h_alert.FindAsync(id);
-            if (h_alert == null)
-            {
-                return HttpNotFound();
-            }
-            return View(h_alert);
-        }
-
-        // GET: Alert/h_alert/Create
-        public ActionResult Create()
-        {
-            ViewBag.state = new SelectList(db.c_state, "id", "discription");
-            ViewBag.c_tirgger_id = new SelectList(db.c_triggers, "id", "discription");
-            ViewBag.lastChangedUserID = new SelectList(db.L_users, "id", "username");
-            ViewBag.closeUserID = new SelectList(db.L_users, "id", "username");
-            ViewBag.acceptUserID = new SelectList(db.L_users, "id", "username");
-            return View();
-        }
-
-        // POST: Alert/h_alert/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [ValidateInput(false)] //to alow posting of raw html data
-        public async Task<ActionResult> Create([Bind(Include = "id,c_tirgger_id,C_timestamp,info,state,location,comments,acceptUserID,acceptTimestamp,closeUserID,closeTimestamp,lastChangedUserID,lastChangedTimestamp,triggerCount,lastTriggerd")] h_alert h_alert)
-        {
-            if (ModelState.IsValid)
-            {
-                db.h_alert.Add(h_alert);
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
-
-            ViewBag.state = new SelectList(db.c_state, "id", "discription", h_alert.state);
-            ViewBag.c_tirgger_id = new SelectList(db.c_triggers, "id", "discription", h_alert.c_tirgger_id);
-            ViewBag.lastChangedUserID = new SelectList(db.L_users, "id", "username", h_alert.lastChangedUserID);
-            ViewBag.closeUserID = new SelectList(db.L_users, "id", "username", h_alert.closeUserID);
-            ViewBag.acceptUserID = new SelectList(db.L_users, "id", "username", h_alert.acceptUserID);
-            return View(h_alert);
-        }
-
         // GET: Alert/h_alert/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
