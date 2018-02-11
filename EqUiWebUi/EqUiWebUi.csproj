@@ -371,6 +371,8 @@
       <DependentUpon>user_management.edmx</DependentUpon>
       <LastGenOutput>user_management.cs</LastGenOutput>
     </Content>
+    <Content Include="Content\codemirror\codemirror.css" />
+    <Content Include="Content\codemirror\neat.css" />
     <Content Include="Content\CustomStyleTweeks.css" />
     <Content Include="Content\Cyborg.css" />
     <Content Include="Content\bootstrap.css" />
@@ -660,7 +662,6 @@
     <Content Include="Areas\Alert\Models\AlertModel.edmx.diagram">
       <DependentUpon>AlertModel.edmx</DependentUpon>
     </Content>
-    <Content Include="Areas\Alert\Views\c_triggers\Create.cshtml" />
     <Content Include="Areas\Alert\Views\c_triggers\Delete.cshtml" />
     <Content Include="Areas\Alert\Views\c_triggers\Edit.cshtml" />
     <Content Include="Areas\Alert\Views\c_triggers\Index.cshtml" />
@@ -676,6 +677,7 @@
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="MvcGrid\fonts\GridGlyphs.woff" />
+    <Content Include="package.json" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION.pubxml" />
     <None Include="Properties\PublishProfiles\VCC22700-Testing.pubxml" />
     <Content Include="PDFjs\build\pdf.js" />
@@ -761,6 +763,8 @@
     <Content Include="PDFjs\web\viewer.css" />
     <Content Include="PDFjs\web\viewer.html" />
     <Content Include="PDFjs\web\viewer.js" />
+    <Content Include="Scripts\Codemirror\codemirror.js" />
+    <Content Include="Scripts\Codemirror\mode\sql.js" />
     <Content Include="Scripts\d3\Chart.bundle.js" />
     <Content Include="Scripts\d3\d3.js" />
     <Content Include="Scripts\d3\d3.min.js" />

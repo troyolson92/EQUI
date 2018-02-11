@@ -14,12 +14,14 @@
         @Html.LabelFor(model => model.c_triggers.alertType, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.DisplayFor(model => model.c_triggers.alertType, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.HelpTextFor(model => model.c_triggers.alertType)
         </div>
     </div>
     <div class="form-group">
         @Html.LabelFor(model => model.c_triggers.discription, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.DisplayFor(model => model.c_triggers.discription, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.HelpTextFor(model => model.c_triggers.discription)
         </div>
     </div>
 </div>
@@ -39,6 +41,7 @@
             @Html.LabelFor(model => model.location, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DisplayFor(model => model.location, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.HelpTextFor(model => model.location)
             </div>
         </div>
 
@@ -46,6 +49,7 @@
             @Html.LabelFor(model => model.info, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DisplayFor(model => model.info, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.HelpTextFor(model => model.info)
             </div>
         </div>
 
@@ -53,6 +57,7 @@
             @Html.LabelFor(model => model.C_timestamp, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DisplayFor(model => model.C_timestamp, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.HelpTextFor(model => model.C_timestamp)
             </div>
         </div>
 
@@ -61,6 +66,7 @@
             <div class="col-md-2">
                 @Html.DropDownList("state", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.state, "", new { @class = "text-danger" })
+                @Html.HelpTextFor(model => model.state)
             </div>
         </div>
 
@@ -76,12 +82,14 @@
                     @Html.Raw(Model.comments)
                 }
             </div>
+
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <textarea id="comments" name="comments"></textarea>
                 @Html.ValidationMessageFor(model => model.comments, "", new { @class = "text-danger" })
+                @Html.HelpTextFor(model => model.comments)
             </div>
         </div>
         <div class="form-group">
@@ -105,6 +113,7 @@
                 </div>
                 <div class="col-md-5">
                     @Html.DisplayFor(model => model.AcceptUser.username, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.HelpTextFor(model => model.acceptUserID)
                 </div>
             </div>
 
@@ -114,6 +123,7 @@
                 </div>
                 <div class="col-md-5">
                     @Html.DisplayFor(model => model.acceptTimestamp, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.HelpTextFor(model => model.acceptTimestamp)
                 </div>
             </div>
         </div>
@@ -127,6 +137,7 @@
                 </div>
                 <div class="col-md-5">
                     @Html.DisplayFor(model => model.CloseUser.username, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.HelpTextFor(model => model.closeUserID)
                 </div>
             </div>
 
@@ -136,6 +147,7 @@
                 </div>
                 <div class="col-md-5">
                     @Html.DisplayFor(model => model.closeTimestamp, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.HelpTextFor(model => model.closeTimestamp)
                 </div>
             </div>
         </div>
@@ -145,10 +157,11 @@
         <div class="row">
             <div class="form-group col-md-5">
                 <div class="col-md-5">
-                    @Html.LabelFor(model => model.ChangedUser.username, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.lastChangedUserID, htmlAttributes: new { @class = "control-label col-md-2" })
                 </div>
                 <div class="col-md-5">
                     @Html.DisplayFor(model => model.ChangedUser.username, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.HelpTextFor(model => model.lastChangedUserID)
                 </div>
             </div>
 
@@ -158,6 +171,7 @@
                 </div>
                 <div class="col-md-5">
                     @Html.DisplayFor(model => model.lastChangedTimestamp, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.HelpTextFor(model => model.lastChangedTimestamp)
                 </div>
             </div>
         </div>
@@ -171,6 +185,7 @@
                 </div>
                 <div class="col-md-5">
                     @Html.DisplayFor(model => model.triggerCount, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.HelpTextFor(model => model.triggerCount)
                 </div>
             </div>
 
@@ -178,9 +193,10 @@
                 <div class="col-md-5">
                     @Html.LabelFor(model => model.lastTriggerd, htmlAttributes: new { @class = "control-label col-md-2" })
                  </div>
-                 <div class="col-md-5">
-                        @Html.DisplayFor(model => model.lastTriggerd, new { htmlAttributes = new { @class = "form-control" } })
-                 </div>
+                <div class="col-md-5">
+                    @Html.DisplayFor(model => model.lastTriggerd, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.HelpTextFor(model => model.lastTriggerd)
+                </div>
             </div>
         </div>
 
