@@ -17,19 +17,26 @@ namespace EqUiWebUi.Areas.Alert.Models
         public int id { get; set; }
         public int c_tirgger_id { get; set; }
         public System.DateTime C_timestamp { get; set; }
+        [HelpText("info about this alert (from SQL statement)")]
         public string info { get; set; }
+        [HelpText("Maximo like status for this alert")]
         public int state { get; set; }
         public string location { get; set; }
         public string comments { get; set; }
+        [HelpText("User that puts alert in state 'OKREQ'")]
         public Nullable<int> acceptUserID { get; set; }
         public Nullable<System.DateTime> acceptTimestamp { get; set; }
+        [HelpText("User that puts alert in state 'COMP or VOID'")]
         public Nullable<int> closeUserID { get; set; }
         public Nullable<System.DateTime> closeTimestamp { get; set; }
+        [HelpText("User that last changed the alert (save operation)")]
         public Nullable<int> lastChangedUserID { get; set; }
         public Nullable<System.DateTime> lastChangedTimestamp { get; set; }
+        [HelpText("Number of times this alert was retriggerd")]
         public int triggerCount { get; set; }
+        [HelpText("Last time this alert was triggerd")]
         public System.DateTime lastTriggerd { get; set; }
-    
+
         public virtual c_state c_state { get; set; }
         public virtual c_triggers c_triggers { get; set; }
         public virtual L_users ChangedUser { get; set; }

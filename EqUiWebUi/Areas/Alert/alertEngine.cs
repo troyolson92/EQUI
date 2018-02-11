@@ -66,7 +66,8 @@ namespace EqUiWebUi.Areas.Alert
             
             //check database for active alerts
             DataTable ActiveAlerts = new DataTable();
-            GadataComm gadataComm = new GadataComm(); 
+            GadataComm gadataComm = new GadataComm();
+
             ActiveAlerts = gadataComm.RunQueryGadata(trigger.sqlStqStatement);
 
             //check if there is work
@@ -76,7 +77,7 @@ namespace EqUiWebUi.Areas.Alert
                 return;
             }
 
-           //handle results
+           //handle active alert results
            foreach (DataRow ActiveAlert in ActiveAlerts.Rows)
            {
 
@@ -87,7 +88,7 @@ namespace EqUiWebUi.Areas.Alert
                                          where alerts.c_tirgger_id == c_triggerID //must be from same trigger
                                          && alerts.location == AlertLocation //must be same location
                                          //need to have an ID to compare for retrigger...
-                                     //    && alerts.state > 2 //1 = WGK 2 = INUITV
+                                         && alerts.state < 2 //1 = WGK 2 = INUITV ALERT MUST BE ACTIVE
                                          orderby alerts.id descending
                                          select alerts).ToList();
 
@@ -106,7 +107,7 @@ namespace EqUiWebUi.Areas.Alert
                         h_alert newAlert = new h_alert();
                         newAlert.c_tirgger_id = c_triggerID;
                         newAlert.location = ActiveAlert.Field<string>("LocationTree");
-                        newAlert.C_timestamp = System.DateTime.Now;
+                        newAlert.C_timestamp = ActiveAlert.Field<DateTime>("timestamp");
                         newAlert.state = trigger.initial_state;
                         newAlert.info = ActiveAlert.Field<string>("info");
                         newAlert.triggerCount = 1;
@@ -134,28 +135,88 @@ namespace EqUiWebUi.Areas.Alert
                 //Alert is already active (update it)
                 else
                 {
-                        Log.Debug("Alert trigger but already active");
+                    Log.Debug("Alert already active");
+                    //if the active alert has a new timestamp tis should mean a new datapoint (retrigger event)
+                    if (h_alert[0].C_timestamp != ActiveAlert.Field<DateTime>("timestamp"))
+                    {
+                        Log.Debug("Alert is retriggerd");
+                        //adde badge to comment with retrigger event
+                        StringBuilder sb = new StringBuilder();
+                        //add existing 
+                        sb.AppendLine(h_alert[0].comments);
+                        //add break 
+                        sb.AppendLine("<hr />");
+                        //add new pannel
+                        sb.AppendLine("<div class='alert alert-warning'>");
+                        sb.AppendLine("<strong>Retriggerd: "+ ActiveAlert.Field<DateTime>("timestamp")  +"</strong>");
+                        sb.AppendLine(ActiveAlert.Field<string>("info"));
+                        sb.AppendLine("</div>");
+                        h_alert[0].comments = sb.ToString();
+
+                        //set alert info to latest message
+                        h_alert[0].info = ActiveAlert.Field<string>("info");
                         //update active alert with timestamp and increment trigger counter
                         h_alert[0].triggerCount += 1; //increment count
                         h_alert[0].lastTriggerd = System.DateTime.Now;
 
-                    //check if we need to REsend SMS
+                        //check if we need to REsend SMS
                         if (trigger.smsOnRetrigger && trigger.smsSystem.HasValue)
-                        {     
+                        {        
                             HandleSms(trigger, h_alert[0]);
                         }
-                    //dont forget SAVE!!
-                    gADATA_AlertModel.SaveChanges();
+                        //dont forget SAVE!!
+                        gADATA_AlertModel.SaveChanges();
+                    }
                 }
            }
+
+           //handle auto clossing of alerts 
+           if (trigger.AutoSetStateTechComp)
+            {
+                //get the alerts that are still open.
+                List<h_alert> OpenAlerts = (from alerts in gADATA_AlertModel.h_alert
+                                            where alerts.c_tirgger_id == trigger.id //from same trigger
+                                            && alerts.state == 1 //only auto close alerts that are in wgk
+                                            //this means that if you set autoSetSateTechComp you should have an inital state of WGK else it will not work
+                                            select alerts).ToList();
+
+                //handle the alerts that are still open
+                foreach (h_alert OpenAlert in OpenAlerts)
+                {
+                    //check aganst the active alerts and if not active anymore close it.
+                    if (ActiveAlerts.AsEnumerable().Any(row => OpenAlert.location == row.Field<String>("LocationTree")))
+                    {
+                        Log.Debug("Alert is still active must not close it");
+                    }
+                    else
+                    {
+                        Log.Debug("Alert no longer active closing it");
+                        //set state
+                        OpenAlert.state = 5; //techcomp
+                        //adde badge to comment with retrigger event
+                        StringBuilder sb = new StringBuilder();
+                        //add existing 
+                        sb.AppendLine(OpenAlert.comments);
+                        //add break 
+                        sb.AppendLine("<hr />");
+                        //add new pannel
+                        sb.AppendLine("<div class='alert alert-danger'>");
+                        sb.AppendLine("<strong>Clossed by server: " + System.DateTime.Now + "</strong>(AutoSetStateTechComp mode)");
+                        sb.AppendLine("</div>");
+                        OpenAlert.comments = sb.ToString();
+                        //dont forget SAVE!
+                        gADATA_AlertModel.SaveChanges();
+                    }
+
+                }
+
+            }
         }
 
 
         public void HandleSms(c_triggers trigger, h_alert alert)
         {
             //check if we NEED to send an SMS! 
-
-
             SmsComm smsComm = new SmsComm();
             var path = ("~/App_Data/tempSmsFile.txt");
             //build message 

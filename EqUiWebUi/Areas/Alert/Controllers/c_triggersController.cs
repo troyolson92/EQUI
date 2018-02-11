@@ -23,46 +23,30 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             return View(await c_triggers.ToListAsync());
         }
 
-        // GET: Alert/c_triggers/Create
-        public ActionResult Create()
-        {
-            ViewBag.smsSystem = new SelectList(db.c_smsSystem, "id", "discription");
-            ViewBag.initial_state = new SelectList(db.c_state, "id", "discription");
-            return View();
-        }
-
-        // POST: Alert/c_triggers/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [ValidateInput(false)] //to alow posting of raw html data
-        public async Task<ActionResult> Create([Bind(Include = "id,enabled,discription,sqlStqStatement,locationThreeMask,smsSystem,smsActivePloeg,smsActiveStartTime,smsActiveEndTime,smsLimit,smsSend,initial_state,Pollrate,alertType,classificationMask,AutoSetStateTechComp,smsOnRetrigger")] c_triggers c_triggers)
-        {
-            if (ModelState.IsValid)
-            {
-                db.c_triggers.Add(c_triggers);
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
-
-            ViewBag.smsSystem = new SelectList(db.c_smsSystem, "id", "discription", c_triggers.smsSystem);
-            ViewBag.initial_state = new SelectList(db.c_state, "id", "discription", c_triggers.initial_state);
-            return View(c_triggers);
-        }
-
         // GET: Alert/c_triggers/Edit/5
+        // We will handle the creation of a new trigger also in EDIT. (to make code simplere) to create a new trigger pass ID = -1
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            c_triggers c_triggers = await db.c_triggers.FindAsync(id);
-            if (c_triggers == null)
+
+            c_triggers c_triggers;
+
+            if (id == -1) //create new alert
             {
-                return HttpNotFound();
+                c_triggers = new c_triggers();
             }
+            else //find the existing alert 
+            {
+                c_triggers = await db.c_triggers.FindAsync(id);
+                if (c_triggers == null)
+                {
+                    return HttpNotFound();
+                }
+            }
+
             ViewBag.smsSystem = new SelectList(db.c_smsSystem, "id", "discription", c_triggers.smsSystem);
             ViewBag.initial_state = new SelectList(db.c_state, "id", "discription", c_triggers.initial_state);
             return View(c_triggers);
@@ -78,7 +62,14 @@ namespace EqUiWebUi.Areas.Alert.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(c_triggers).State = EntityState.Modified;
+                if (c_triggers.id == -1)//add new trigger
+                {
+                    db.c_triggers.Add(c_triggers);
+                }
+                else //update existing
+                {
+                    db.Entry(c_triggers).State = EntityState.Modified;
+                }
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
