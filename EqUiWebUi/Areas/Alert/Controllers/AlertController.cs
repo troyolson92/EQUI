@@ -11,6 +11,14 @@ namespace EqUiWebUi.Areas.Alert.Controllers
 {
     public class AlertController : Controller
     {
+        //Test fire sms message 
+        public void TestSendSms()
+        {
+            Log.Debug("Test sms");
+            SmsComm smsComm = new SmsComm();
+            smsComm.SendSMS("EQUI_TEST", "This is a test message " + System.DateTime.Now.ToString());
+        }
+
         //Rewrite hangfire configureAtion
         public void configureHangfire()
         {

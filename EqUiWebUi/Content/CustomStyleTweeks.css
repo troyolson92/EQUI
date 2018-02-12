@@ -36,3 +36,35 @@
 .popover {
     max-width: 100%; /* Max Width of the popover (depending on the container!) */
 }
+
+/*used in grid row styleing*/
+
+/*Status styles*/
+.TableStatusWGK {
+    background-color: #d606ff;
+}
+
+.TableStatusCOMP {
+    background-color: #49d112;
+}
+
+/*logtype*/
+.TableLogtypeSHIFTBOOK {
+    background-color: #d6d613;
+}
+
+.TableLogtypeWARNING {
+    background-color: #127bf1;
+}
+
+.TableLogtypeLIVE {
+    background-color: #f21a1a;
+}
+
+.TableLogtypeBREAKDOWN {
+    background-color: #f2af13;
+}
+
+.TableLogtypeTIMELINE {
+    background-color: #16dd76;
+}

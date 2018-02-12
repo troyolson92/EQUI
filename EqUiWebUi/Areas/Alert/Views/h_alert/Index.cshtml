@@ -9,17 +9,18 @@
 
 @Html.Grid(Model).Named("h_alert").Build(columns =>
 {
-    columns.Add(c => c.id).Titled("ID").InitialSort(GridSortOrder.Asc);
+    columns.Add(c => c.id).Titled("ID").InitialSort(GridSortOrder.Desc);
     columns.Add(c => c.c_triggers.alertType).Titled("alertType");
     columns.Add(c => c.C_timestamp).Titled("C_timestamp").Formatted("{0:dd-MM-yyyy HH:mm}");
     columns.Add(c => c.location).Titled("location");
     columns.Add(c => c.info).Titled("info");
+    columns.Add(c => c.c_state.state).Titled("state");
     columns.Add(c => c.id)
                 .Titled("")
                 .Encoded(false)
                 .RenderedAs(c => @Html.ActionLink("Edit", "Edit", new { id = c.id }) + " | " +
                                  @Html.ActionLink("Delete", "Delete", new { id = c.id })
-                ).InitialSort(GridSortOrder.Asc).Filterable(false);
+                ).Filterable(false);
 }).Filterable(true).Sortable(true).Empty("Did not find anything").Css("table-hover")
 
 @section scripts{

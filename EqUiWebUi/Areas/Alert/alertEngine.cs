@@ -27,7 +27,8 @@ namespace EqUiWebUi.Areas.Alert
             {
                 if (trigger.enabled)
                 {
-                    Hangfire.RecurringJob.AddOrUpdate(() => alertEngine.CheckForalerts(trigger.id, trigger.discription), Cron.MinuteInterval(trigger.Pollrate));
+                    Log.Info("Adding HF alertTriggerJob for: " + trigger.id);
+                    Hangfire.RecurringJob.AddOrUpdate("AlertTrigger"+trigger.id,() => alertEngine.CheckForalerts(trigger.id, trigger.discription), Cron.MinuteInterval(trigger.Pollrate));
                 }
             }
 
@@ -37,7 +38,20 @@ namespace EqUiWebUi.Areas.Alert
         //if ClearAll remove everything active or not
         public void ClearHanfireAlertwork(bool ClearALL = false)
         {
-            Log.Error("not implmeneted ! ");
+            //get alert pol config from database and configure hangfire.
+            Models.GADATA_AlertModel gADATA_AlertModel = new GADATA_AlertModel();
+            List<c_triggers> c_Triggers = (from triggers in gADATA_AlertModel.c_triggers
+                                           select triggers).ToList();
+
+            AlertEngine alertEngine = new AlertEngine();
+            foreach (c_triggers trigger in c_Triggers)
+            {
+                if (trigger.enabled == false || ClearALL == true)
+                {
+                    Log.Info("Removing HF alertTriggerJob for: " + trigger.id);
+                    RecurringJob.RemoveIfExists("AlertTrigger" + trigger.id);
+                }
+            }
         }
 
         //Gets called by Hanfire to processAlertwork.
@@ -69,13 +83,6 @@ namespace EqUiWebUi.Areas.Alert
             GadataComm gadataComm = new GadataComm();
 
             ActiveAlerts = gadataComm.RunQueryGadata(trigger.sqlStqStatement);
-
-            //check if there is work
-            if (ActiveAlerts.Rows.Count == 0)
-            {
-                Log.Debug("no work");
-                return;
-            }
 
            //handle active alert results
            foreach (DataRow ActiveAlert in ActiveAlerts.Rows)
@@ -114,18 +121,21 @@ namespace EqUiWebUi.Areas.Alert
                         newAlert.lastTriggerd = System.DateTime.Now;
 
                         //check if we need to send SMS
-                        if (trigger.smsSystem.HasValue && trigger.smsLimit <= trigger.smsSend)
-                        {
-                            //inc trigger sms counter
-                            trigger.smsSend += 1;
-                            HandleSms(trigger, newAlert);
-                            
-                            //handle sms limit hit
-                            if(trigger.smsLimit == trigger.smsSend)
+                    if (trigger.smsSystem.HasValue)
+                    {
+                        Log.Info("Sms system active");
+                        if (trigger.smsLimit >= trigger.smsSend.GetValueOrDefault(0))
                             {
-                              Log.Info("Stopped sending sms for trigger: " + trigger.id + " (limit was hit)");
+                            Log.Info("Sending SMS");
+                                //inc trigger sms counter
+                                trigger.smsSend += 1;
+                                HandleSms(trigger, newAlert);
                             }
-                        }
+                        else //sms limit hit
+                            {
+                                Log.Info("Stopped sending sms for trigger: " + trigger.id + " (limit was hit) ");
+                            }
+                    }
 
                         //dont forget to ADD and SAVE! 
                         gADATA_AlertModel.h_alert.Add(newAlert);
@@ -218,14 +228,24 @@ namespace EqUiWebUi.Areas.Alert
         {
             //check if we NEED to send an SMS! 
             SmsComm smsComm = new SmsComm();
-            var path = ("~/App_Data/tempSmsFile.txt");
             //build message 
             StringBuilder sb = new StringBuilder();
-            sb.Append("Alert from: ").AppendLine(alert.location);
+            //alert.location is the full location tree. take only the act location
+            string location;
+            try
+            {
+                 location = alert.location.Split('>')[alert.location.Split('>').Count()-1];
+            }
+            catch
+            {
+                 location = alert.location;
+            }
+            sb.Append("Alert from: ").AppendLine(location);
+            sb.AppendLine("***********");
             sb.AppendLine(trigger.alertType);
             sb.AppendLine(alert.info);
             //USE HANGFIRE to send it!
-            Hangfire.BackgroundJob.Enqueue(() => smsComm.SendSMS(trigger.c_smsSystem.system, sb.ToString(), path));           
+            Hangfire.BackgroundJob.Enqueue(() => smsComm.SendSMS(trigger.c_smsSystem.system, sb.ToString()));           
         }
 
     }

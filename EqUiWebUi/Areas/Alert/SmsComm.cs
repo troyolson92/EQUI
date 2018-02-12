@@ -32,21 +32,20 @@ namespace EqUiWebUi.Areas.Alert
         string publishUser = "sattline";
         string publishPass = "sattline";
 
-        bool debugMode = true; //if debug mode nu sms is send 
+        bool debugMode = false; //if debug mode nu sms is send 
 
-        public void SendSMS(string Messagetype, string Message,string temppath)
+        public void SendSMS(string Messagetype, string Message)
         {
             string filenamePrefix = "XPR001-EQUI_";
             string filenameId = System.DateTime.Now.ToString("yyyyMMddHHmmssFFF");
-
-  
+            var path = System.Web.Hosting.HostingEnvironment.MapPath("~/App_Data/tempSmsFile.txt");
             //check message max length
 
             //make file
             try
             {
                 using (System.IO.StreamWriter file =
-                new System.IO.StreamWriter(temppath))
+                new System.IO.StreamWriter(path))
                 {
                     file.WriteLine(Messagetype + ";" + Message);
                 }
@@ -81,7 +80,7 @@ namespace EqUiWebUi.Areas.Alert
             try
             {
                 string publishFullname = Path.Combine(publishLocation, filenamePrefix + filenameId + ".txt");
-                File.Copy(temppath, publishFullname,true);
+                File.Copy(path, publishFullname,true);
             }
             catch (Exception ex)
             {

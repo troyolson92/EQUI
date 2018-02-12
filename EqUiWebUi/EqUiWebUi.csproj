@@ -159,6 +159,7 @@
     <Folder Include="Areas\Maximo_ui\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Code\MyRowStyling.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />

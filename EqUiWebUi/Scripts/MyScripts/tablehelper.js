@@ -4,7 +4,7 @@
 
 
 //script for setting row colors based on there values
-function tableFormatLogtype(colnumLogType) {
+function DEPRECIATEDtableFormatLogtype(colnumLogType) {
     $('tbody > tr').each(function (index) {
         if ($(this).children('td:nth-child(' + colnumLogType + ')').text() == "SHIFTBOOK") { $(this).children('td').css("background-color", "#d6d613"); }
 
