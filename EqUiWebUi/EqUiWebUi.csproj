@@ -671,6 +671,7 @@
     <Content Include="Areas\Alert\Views\h_alert\Index.cshtml" />
     <Content Include="Areas\Alert\Views\Alert\Listalerts.cshtml" />
     <Content Include="Areas\Alert\Views\Alert\Edit.cshtml" />
+    <Content Include="App_Code\MyCommentHelpers.cshtml" />
     <None Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.svg" />

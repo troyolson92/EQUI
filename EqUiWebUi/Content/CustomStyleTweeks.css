@@ -40,6 +40,12 @@
 /*used in grid row styleing*/
 
 /*Status styles*/
+
+.TableStatusWGKTESTTEST:disabled { /*like this you can make a style inactive! */
+    background-color: #d606ff;
+}
+
+
 .TableStatusWGK {
     background-color: #d606ff;
 }

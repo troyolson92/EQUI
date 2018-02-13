@@ -62,6 +62,20 @@ function tableFormatBlink(logtypecolnum, subgroupcolnum) {
     }
 }
 
+//blinks alarm CSS styles on and off
+function enableCSSBlinkingStyles() {
+    //flash row 
+    $(function () {
+        setInterval(flashRow, 750);
+    });
+    var bFliper = new Boolean(false);
+    function flashRow() {
+        bFliper = !bFliper;
+        console.log('hit');
+        $("TableStatusWGK").css("disabled", bFliper);
+    }
+}
+
 
 //*****************************
 //table set fontsize
