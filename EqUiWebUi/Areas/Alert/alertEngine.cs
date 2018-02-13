@@ -8,6 +8,7 @@ using EqUiWebUi.Areas.Alert.Models;
 using EQUICommunictionLib;
 using Hangfire;
 using System.Text;
+using System.Web.Mvc;
 
 namespace EqUiWebUi.Areas.Alert
 {
@@ -118,9 +119,18 @@ namespace EqUiWebUi.Areas.Alert
                         newAlert.state = trigger.initial_state;
                         newAlert.info = ActiveAlert.Field<string>("info");
                         newAlert.triggerCount = 1;
-                        newAlert.lastTriggerd = System.DateTime.Now;
+                        newAlert.lastTriggerd = ActiveAlert.Field<DateTime>("timestamp");
+                        //adde badge to comment 
+                        StringBuilder sb = new StringBuilder();
+                        sb.AppendLine(newAlert.comments);
+                        sb.AppendLine("<hr />");
+                        sb.AppendLine("<div class='alert alert-danger'>");
+                        sb.AppendLine("<strong>Triggerd: " + ActiveAlert.Field<DateTime>("timestamp") + "</strong>");
+                        sb.AppendLine(ActiveAlert.Field<string>("info"));
+                        sb.AppendLine("</div>");
+                        newAlert.comments = sb.ToString();
 
-                        //check if we need to send SMS
+                    //check if we need to send SMS
                     if (trigger.smsSystem.HasValue)
                     {
                         Log.Info("Sms system active");
@@ -129,7 +139,7 @@ namespace EqUiWebUi.Areas.Alert
                             Log.Info("Sending SMS");
                                 //inc trigger sms counter
                                 trigger.smsSend += 1;
-                                HandleSms(trigger, newAlert);
+                                newAlert =  HandleSms(trigger, newAlert);
                             }
                         else //sms limit hit
                             {
@@ -147,16 +157,13 @@ namespace EqUiWebUi.Areas.Alert
                 {
                     Log.Debug("Alert already active");
                     //if the active alert has a new timestamp tis should mean a new datapoint (retrigger event)
-                    if (h_alert[0].C_timestamp != ActiveAlert.Field<DateTime>("timestamp"))
+                    if (h_alert[0].lastTriggerd != ActiveAlert.Field<DateTime>("timestamp"))
                     {
                         Log.Debug("Alert is retriggerd");
                         //adde badge to comment with retrigger event
-                        StringBuilder sb = new StringBuilder();
-                        //add existing 
+                        StringBuilder sb = new StringBuilder(); 
                         sb.AppendLine(h_alert[0].comments);
-                        //add break 
                         sb.AppendLine("<hr />");
-                        //add new pannel
                         sb.AppendLine("<div class='alert alert-warning'>");
                         sb.AppendLine("<strong>Retriggerd: "+ ActiveAlert.Field<DateTime>("timestamp")  +"</strong>");
                         sb.AppendLine(ActiveAlert.Field<string>("info"));
@@ -167,12 +174,12 @@ namespace EqUiWebUi.Areas.Alert
                         h_alert[0].info = ActiveAlert.Field<string>("info");
                         //update active alert with timestamp and increment trigger counter
                         h_alert[0].triggerCount += 1; //increment count
-                        h_alert[0].lastTriggerd = System.DateTime.Now;
+                        h_alert[0].lastTriggerd = ActiveAlert.Field<DateTime>("timestamp");
 
                         //check if we need to REsend SMS
                         if (trigger.smsOnRetrigger && trigger.smsSystem.HasValue)
                         {        
-                            HandleSms(trigger, h_alert[0]);
+                            h_alert[0] = HandleSms(trigger, h_alert[0]);
                         }
                         //dont forget SAVE!!
                         gADATA_AlertModel.SaveChanges();
@@ -203,14 +210,14 @@ namespace EqUiWebUi.Areas.Alert
                         Log.Debug("Alert no longer active closing it");
                         //set state
                         OpenAlert.state = 5; //techcomp
-                        //adde badge to comment with retrigger event
+                        //adde badge to comment when closses
                         StringBuilder sb = new StringBuilder();
                         //add existing 
                         sb.AppendLine(OpenAlert.comments);
                         //add break 
                         sb.AppendLine("<hr />");
                         //add new pannel
-                        sb.AppendLine("<div class='alert alert-danger'>");
+                        sb.AppendLine("<div class='alert alert-success'>");
                         sb.AppendLine("<strong>Clossed by server: " + System.DateTime.Now + "</strong>(AutoSetStateTechComp mode)");
                         sb.AppendLine("</div>");
                         OpenAlert.comments = sb.ToString();
@@ -223,8 +230,9 @@ namespace EqUiWebUi.Areas.Alert
             }
         }
 
-
-        public void HandleSms(c_triggers trigger, h_alert alert)
+        //handle the sms message 
+        //add comments alert (the ref makes alert in out parameter
+        public h_alert HandleSms(c_triggers trigger,  h_alert alert)
         {
             //check if we NEED to send an SMS! 
             SmsComm smsComm = new SmsComm();
@@ -245,7 +253,20 @@ namespace EqUiWebUi.Areas.Alert
             sb.AppendLine(trigger.alertType);
             sb.AppendLine(alert.info);
             //USE HANGFIRE to send it!
-            Hangfire.BackgroundJob.Enqueue(() => smsComm.SendSMS(trigger.c_smsSystem.system, sb.ToString()));           
+            Hangfire.BackgroundJob.Enqueue(() => smsComm.SendSMS(trigger.c_smsSystem.system, sb.ToString()));
+            //Add in the comment section that the sms was send.
+            
+            //adde badge to comment 
+            StringBuilder sb2 = new StringBuilder();
+            sb2.AppendLine(alert.comments);
+            sb2.AppendLine("<hr />");
+            sb2.AppendLine("<div class='alert alert-info'>");
+            sb2.AppendLine("<strong>SMS send: " + trigger.c_smsSystem.system + "</strong>");
+            sb2.AppendLine(sb.ToString());
+            sb2.AppendLine("</div>");
+            alert.comments = sb2.ToString();
+
+            return alert;
         }
 
     }
