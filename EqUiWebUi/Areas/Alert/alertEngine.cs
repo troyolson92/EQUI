@@ -172,25 +172,20 @@ namespace EqUiWebUi.Areas.Alert
                     Log.Debug("Alert already active");
                     //if the active alert has a new timestamp tis should mean a new datapoint (retrigger event)
 
-                    //SDB bug. timestamp.Tricks does not translate to the same in ORCALE and SQL. (milisconds does nor translate the same)
+                    //SDB bug. IN ORACLE SYSTEMS! timestamp.Tricks does not translate to the same in ORCALE and SQL. (milisconds does nor translate the same)
                     //13:51:07.4430000	DEBUG	DebugLogger	RETrigger: 636542126852930000 Active:636542126852920000	
-                    //This is bullshit... figure out why this does not translate the same.
-                    DateTime CorrectedActiveAlertTs =  ActiveAlert.Field<DateTime>("timestamp").AddTicks(10000);
+                    //14:45:09.9330000	DEBUG	DebugLogger	RETrigger: 636542162111600000 Active:636542162111610000	
                     //
 
-                    if (h_alert[0].lastTriggerd.Ticks != CorrectedActiveAlertTs.Ticks)
+                    if (h_alert[0].lastTriggerd.ToString("yyyyMMddHHmmss") != ActiveAlert.Field<DateTime>("timestamp").ToString("yyyyMMddHHmmss"))
                     {
-                        Log.Debug("RETrigger: " + h_alert[0].lastTriggerd.Ticks + " Active:" + ActiveAlert.Field<DateTime>("timestamp").Ticks);
-
-
-                      //  Log.Debug("Alert is retriggerd");
-
-                        //adde badge to comment with retrigger event
+                        Log.Debug("RETrigger: " + ActiveAlert.Field<DateTime>("timestamp"));
+                        //added badge to comment with retrigger event
                         StringBuilder sb = new StringBuilder(); 
                         sb.AppendLine(h_alert[0].comments);
                         sb.AppendLine("<hr />");
                         sb.AppendLine("<div class='alert alert-warning'>");
-                        sb.AppendLine("<strong>Retriggerd: "+ ActiveAlert.Field<DateTime>("timestamp")  +"</strong>");
+                        sb.AppendLine("<strong>Retriggerd: "+ ActiveAlert.Field<DateTime>("timestamp") +"</strong>");
                         sb.AppendLine(ActiveAlert.Field<string>("info"));
                         sb.AppendLine("</div>");
                         h_alert[0].comments = sb.ToString();
