@@ -7,6 +7,19 @@ namespace EqUiWebUi.Areas.Alert.Models
     [MetadataType(typeof(c_triggersMetaData))]
     public partial class c_triggers
     {
+        //this links our enum to the entitymodel
+        public SmsDatabases RunAgainstDatabase
+        {
+            get
+            {
+                return (SmsDatabases)Enum.ToObject(typeof(SmsDatabases), this.RunAgainst);
+            }
+            set
+            {
+                this.RunAgainst = (int)value;
+            }
+        }
+
     }
 
     public class c_triggersMetaData

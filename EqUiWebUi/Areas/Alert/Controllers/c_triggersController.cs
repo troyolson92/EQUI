@@ -58,7 +58,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateInput(false)] //to alow posting of raw html data
-        public async Task<ActionResult> Edit([Bind(Include = "id,enabled,discription,sqlStqStatement,locationThreeMask,smsSystem,smsActivePloeg,smsActiveStartTime,smsActiveEndTime,smsLimit,smsSend,initial_state,Pollrate,alertType,classificationMask,AutoSetStateTechComp,smsOnRetrigger,RunAgainst,enableSMS")] c_triggers c_triggers)
+        public async Task<ActionResult> Edit([Bind(Include = "id,enabled,discription,sqlStqStatement,locationThreeMask,smsSystem,smsActivePloeg,smsActiveStartTime,smsActiveEndTime,smsLimit,smsSend,initial_state,Pollrate,alertType,classificationMask,AutoSetStateTechComp,smsOnRetrigger,RunAgainstDatabase,enableSMS")] c_triggers c_triggers)
         {
             if (ModelState.IsValid)
             {
