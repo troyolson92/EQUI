@@ -19,46 +19,29 @@ namespace EqUiWebUi.Areas.Alert.Models
         {
             this.h_alert = new HashSet<h_alert>();
         }
-
+    
         public int id { get; set; }
-        [HelpText("turn the trigger on or off")]
         public bool enabled { get; set; }
-        [HelpText("Describe the porpuse of this alert trigger")]
         public string discription { get; set; }
-        [HelpText("Gets used in sms and shown as alert subgroup")]
-        public string alertType { get; set; }
-        [HelpText(
-@"This statement is run against gadata
-  and must return col<LocationTree, _timestamp, info>")]
+        public int RunAgainst { get; set; }
         public string sqlStqStatement { get; set; }
-        [HelpText("mask to be applied on this statement. (location filter)")]
         public string locationThreeMask { get; set; }
-        [HelpText("mask to be applied on this statement. (asset filter)")]
-        public string classificationMask { get; set; }
-        [HelpText("CPT600 sms system to be used. MUST be defined in CPT600!!!")]
         public Nullable<int> smsSystem { get; set; }
-        [HelpText("Only send sms in ploeg")]
         public string smsActivePloeg { get; set; }
-        [HelpText("Timestlot where sending sms is active (start)")]
         public Nullable<System.DateTime> smsActiveStartTime { get; set; }
-        [HelpText("Timestlot where sending sms is active (end)")]
         public Nullable<System.DateTime> smsActiveEndTime { get; set; }
-        [HelpText("Limits the number of sms this alert can send (in total)")]
         public Nullable<int> smsLimit { get; set; }
-        [HelpText("Number of sms send by this trigger (in total)")]
         public Nullable<int> smsSend { get; set; }
-        [HelpText("Inital state of alert created by this trigger")]
         public int initial_state { get; set; }
-        [HelpText("Polrate in minutes to evaluate this trigger")]
         public int Pollrate { get; set; }
-        [HelpText("When alert trigger is gone set alert state to techComp")]
+        public string alertType { get; set; }
+        public string classificationMask { get; set; }
         public bool AutoSetStateTechComp { get; set; }
-        [HelpText("Send sms on each retrigger of the alert")]
         public bool smsOnRetrigger { get; set; }
-
+        public bool enableSMS { get; set; }
+    
         public virtual c_smsSystem c_smsSystem { get; set; }
         public virtual c_state c_state { get; set; }
-
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<h_alert> h_alert { get; set; }
     }

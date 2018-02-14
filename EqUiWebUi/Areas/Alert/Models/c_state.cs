@@ -17,8 +17,8 @@ namespace EqUiWebUi.Areas.Alert.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public c_state()
         {
-            this.c_triggers = new HashSet<c_triggers>();
             this.h_alert = new HashSet<h_alert>();
+            this.c_triggers = new HashSet<c_triggers>();
         }
     
         public int id { get; set; }
@@ -26,8 +26,8 @@ namespace EqUiWebUi.Areas.Alert.Models
         public string state { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<c_triggers> c_triggers { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<h_alert> h_alert { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<c_triggers> c_triggers { get; set; }
     }
 }

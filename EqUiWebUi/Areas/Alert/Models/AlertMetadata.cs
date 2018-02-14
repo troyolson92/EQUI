@@ -62,10 +62,22 @@ namespace EqUiWebUi.Areas.Alert.Models
         public bool AutoSetStateTechComp { get; set; }
         [HelpText("Send sms on each retrigger of the alert")]
         public bool smsOnRetrigger { get; set; }
+        [HelpText("Database to run statement")]
+        public int RunAgainst { get; set; }
+        [HelpText("General on of for SMS system")]
+        public bool enableSMS { get; set; }
+
+    }
+
+    //enum for RunAgainst database type
+    public enum SmsDatabases
+    {
+        GADATA = 1,
+        STO = 2
     }
 
 
- //Alert metadata
+    //Alert metadata
     [MetadataType(typeof(h_alertMetaData))]
     public partial class h_alert
     {
