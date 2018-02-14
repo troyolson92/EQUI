@@ -81,9 +81,24 @@ namespace EqUiWebUi.Areas.Alert
             
             //check database for active alerts
             DataTable ActiveAlerts = new DataTable();
-            GadataComm gadataComm = new GadataComm();
 
-            ActiveAlerts = gadataComm.RunQueryGadata(trigger.sqlStqStatement);
+            //run command against selected database.
+            switch (trigger.RunAgainst)
+            {
+                case (int)SmsDatabases.GADATA:
+                    GadataComm gadataComm = new GadataComm();
+                    ActiveAlerts = gadataComm.RunQueryGadata(trigger.sqlStqStatement);
+                    break;
+
+                case (int)SmsDatabases.STO:
+                    StoComm stoComm = new StoComm();
+                    ActiveAlerts = stoComm.oracle_runQuery(trigger.sqlStqStatement);
+                    break;
+
+                default:
+                    Log.Error("Database not defined");
+                    break;
+            }
 
            //handle active alert results
            foreach (DataRow ActiveAlert in ActiveAlerts.Rows)
@@ -131,9 +146,8 @@ namespace EqUiWebUi.Areas.Alert
                         newAlert.comments = sb.ToString();
 
                     //check if we need to send SMS
-                    if (trigger.smsSystem.HasValue)
+                    if (trigger.enableSMS)
                     {
-                        Log.Info("Sms system active");
                         if (trigger.smsLimit >= trigger.smsSend.GetValueOrDefault(0))
                             {
                             Log.Info("Sending SMS");
@@ -157,9 +171,20 @@ namespace EqUiWebUi.Areas.Alert
                 {
                     Log.Debug("Alert already active");
                     //if the active alert has a new timestamp tis should mean a new datapoint (retrigger event)
-                    if (h_alert[0].lastTriggerd != ActiveAlert.Field<DateTime>("timestamp"))
+
+                    //SDB bug. timestamp.Tricks does not translate to the same in ORCALE and SQL. (milisconds does nor translate the same)
+                    //13:51:07.4430000	DEBUG	DebugLogger	RETrigger: 636542126852930000 Active:636542126852920000	
+                    //This is bullshit... figure out why this does not translate the same.
+                    DateTime CorrectedActiveAlertTs =  ActiveAlert.Field<DateTime>("timestamp").AddTicks(10000);
+                    //
+
+                    if (h_alert[0].lastTriggerd.Ticks != CorrectedActiveAlertTs.Ticks)
                     {
-                        Log.Debug("Alert is retriggerd");
+                        Log.Debug("RETrigger: " + h_alert[0].lastTriggerd.Ticks + " Active:" + ActiveAlert.Field<DateTime>("timestamp").Ticks);
+
+
+                      //  Log.Debug("Alert is retriggerd");
+
                         //adde badge to comment with retrigger event
                         StringBuilder sb = new StringBuilder(); 
                         sb.AppendLine(h_alert[0].comments);
@@ -177,7 +202,7 @@ namespace EqUiWebUi.Areas.Alert
                         h_alert[0].lastTriggerd = ActiveAlert.Field<DateTime>("timestamp");
 
                         //check if we need to REsend SMS
-                        if (trigger.smsOnRetrigger && trigger.smsSystem.HasValue)
+                        if (trigger.enableSMS && trigger.smsOnRetrigger)
                         {        
                             h_alert[0] = HandleSms(trigger, h_alert[0]);
                         }

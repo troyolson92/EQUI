@@ -55,6 +55,28 @@ else
                     </div>
                 </div>
 
+
+
+                Dit moet eigenlijk een RunAgainst select list worden .(met enunm input) MISERIE
+                <div class="form-group">
+                    @Html.LabelFor(model => model.RunAgainst, "RunAgainst", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @* @Html.EnumDropDownListFor(m => m.RunAgainst, "Select a server", new { @class = "form-control" })*@
+                        @Html.ValidationMessageFor(model => model.RunAgainst, "", new { @class = "text-danger" })
+                        @Html.HelpTextFor(model => model.RunAgainst)s
+                    </div>
+                </div>
+
+                @*temp input*@
+                <div class="form-group">
+                    @Html.LabelFor(model => model.RunAgainst, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.RunAgainst, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.RunAgainst, "", new { @class = "text-danger" })
+                        @Html.HelpTextFor(model => model.RunAgainst)
+                    </div>
+                </div>
+
                 <div class="form-group">
                     @Html.LabelFor(model => model.sqlStqStatement, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
@@ -128,6 +150,17 @@ else
         <div class="panel panel-primary">
             <div class="panel-heading">Sms</div>
             <div class="panel-body">
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.enableSMS, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <div class="checkbox">
+                            @Html.EditorFor(model => model.enableSMS)
+                            @Html.ValidationMessageFor(model => model.enableSMS, "", new { @class = "text-danger" })
+                            @Html.HelpTextFor(model => model.enableSMS)
+                        </div>
+                    </div>
+                </div>
 
                 <div class="form-group">
                     @Html.LabelFor(model => model.smsSystem, "smsSystem", htmlAttributes: new { @class = "control-label col-md-2" })

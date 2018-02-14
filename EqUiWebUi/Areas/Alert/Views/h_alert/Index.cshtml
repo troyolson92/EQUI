@@ -18,10 +18,11 @@
     columns.Add(c => c.id)
                 .Titled("")
                 .Encoded(false)
-                .RenderedAs(c => @Html.ActionLink("Edit", "Edit", new { id = c.id }) + " | " +
+                .RenderedAs(c => @Html.ActionLink("EditUser", "Edit","Alert", new { id = c.id },null) + " | " + 
+                                 @Html.ActionLink("EditAdmin", "Edit", new { id = c.id }) + " | " +
                                  @Html.ActionLink("Delete", "Delete", new { id = c.id })
                 ).Filterable(false);
-}).Filterable(true).Sortable(true).Empty("Did not find anything").Css("table-hover")
+}).Filterable(true).Sortable(true).Empty("Did not find anything").Css("table-hover").RowCss(row => MyRowStyling.getRowStyleStatus(row.c_state.state))
 
 @section scripts{
     <script>
