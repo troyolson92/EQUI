@@ -25,17 +25,10 @@ namespace EqUiWebUi.Areas.Alert.Models
         public string discription { get; set; }
         public int RunAgainst { get; set; }
         public string sqlStqStatement { get; set; }
-        public string locationThreeMask { get; set; }
         public Nullable<int> smsSystem { get; set; }
-        public string smsActivePloeg { get; set; }
-        public Nullable<System.DateTime> smsActiveStartTime { get; set; }
-        public Nullable<System.DateTime> smsActiveEndTime { get; set; }
-        public Nullable<int> smsLimit { get; set; }
-        public Nullable<int> smsSend { get; set; }
         public int initial_state { get; set; }
         public int Pollrate { get; set; }
         public string alertType { get; set; }
-        public string classificationMask { get; set; }
         public bool AutoSetStateTechComp { get; set; }
         public bool smsOnRetrigger { get; set; }
         public bool enableSMS { get; set; }

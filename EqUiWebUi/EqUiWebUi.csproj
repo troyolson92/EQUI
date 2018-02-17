@@ -167,6 +167,9 @@
     <Compile Include="Areas\Alert\AlertAreaRegistration.cs" />
     <Compile Include="Areas\Alert\AlertEngine.cs" />
     <Compile Include="Areas\Alert\Controllers\AlertController.cs" />
+    <Compile Include="Areas\Alert\Controllers\c_CPT600Controller.cs" />
+    <Compile Include="Areas\Alert\Controllers\c_SMSconfigController.cs" />
+    <Compile Include="Areas\Alert\Controllers\c_smsSystemController.cs" />
     <Compile Include="Areas\Alert\Controllers\c_triggersController.cs" />
     <Compile Include="Areas\Alert\Controllers\h_alertController.cs" />
     <Compile Include="Areas\Alert\Models\AlertMetadata.cs" />
@@ -184,6 +187,12 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>AlertModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Alert\Models\c_CPT600.cs">
+      <DependentUpon>AlertModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Alert\Models\c_SMSconfig.cs">
+      <DependentUpon>AlertModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Alert\Models\c_smsSystem.cs">
       <DependentUpon>AlertModel.tt</DependentUpon>
@@ -672,6 +681,21 @@
     <Content Include="Areas\Alert\Views\Alert\Listalerts.cshtml" />
     <Content Include="Areas\Alert\Views\Alert\Edit.cshtml" />
     <Content Include="App_Code\MyCommentHelpers.cshtml" />
+    <Content Include="Areas\Alert\Views\c_CPT600\Create.cshtml" />
+    <Content Include="Areas\Alert\Views\c_CPT600\Delete.cshtml" />
+    <Content Include="Areas\Alert\Views\c_CPT600\Details.cshtml" />
+    <Content Include="Areas\Alert\Views\c_CPT600\Edit.cshtml" />
+    <Content Include="Areas\Alert\Views\c_CPT600\Index.cshtml" />
+    <Content Include="Areas\Alert\Views\c_SMSconfig\Create.cshtml" />
+    <Content Include="Areas\Alert\Views\c_SMSconfig\Delete.cshtml" />
+    <Content Include="Areas\Alert\Views\c_SMSconfig\Details.cshtml" />
+    <Content Include="Areas\Alert\Views\c_SMSconfig\Edit.cshtml" />
+    <Content Include="Areas\Alert\Views\c_SMSconfig\Index.cshtml" />
+    <Content Include="Areas\Alert\Views\c_smsSystem\Create.cshtml" />
+    <Content Include="Areas\Alert\Views\c_smsSystem\Delete.cshtml" />
+    <Content Include="Areas\Alert\Views\c_smsSystem\Details.cshtml" />
+    <Content Include="Areas\Alert\Views\c_smsSystem\Edit.cshtml" />
+    <Content Include="Areas\Alert\Views\c_smsSystem\Index.cshtml" />
     <None Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.svg" />

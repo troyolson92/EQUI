@@ -1,0 +1,91 @@
+﻿@model IEnumerable<EqUiWebUi.Areas.Alert.Models.c_CPT600>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Discription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.System)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LocationTree)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AssetRoot)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ActivePloeg)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StartTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SMSlimit)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SMSsend)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Discription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.System)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LocationTree)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AssetRoot)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ActivePloeg)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SMSlimit)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SMSsend)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.id })
+            </td>
+        </tr>
+    }
+
+</table>
+
+@section scripts{
+    <script>
+        //full with screen
+        $("#allcontent").removeClass("body-content");
+        $("#allcontent").removeClass("container");
+    </script>
+}

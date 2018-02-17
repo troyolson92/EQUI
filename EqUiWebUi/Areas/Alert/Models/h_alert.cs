@@ -29,6 +29,8 @@ namespace EqUiWebUi.Areas.Alert.Models
         public Nullable<System.DateTime> lastChangedTimestamp { get; set; }
         public int triggerCount { get; set; }
         public System.DateTime lastTriggerd { get; set; }
+        public string Classification { get; set; }
+        public string locationTree { get; set; }
     
         public virtual c_state c_state { get; set; }
         public virtual L_users ChangedUser { get; set; }
