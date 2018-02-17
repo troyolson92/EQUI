@@ -4,8 +4,8 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="a443bbb879724830a09275f259874e85" Name="Diagram1">
-        <EntityTypeShape EntityType="AlertModel.c_smsSystem" Width="1.5" PointX="3.25" PointY="8.125" IsExpanded="true" />
+      <Diagram DiagramId="a443bbb879724830a09275f259874e85" Name="Diagram1" ZoomLevel="106">
+        <EntityTypeShape EntityType="AlertModel.c_smsSystem" Width="1.5" PointX="3.375" PointY="7.625" IsExpanded="true" />
         <EntityTypeShape EntityType="AlertModel.c_state" Width="1.5" PointX="6" PointY="3.875" IsExpanded="true" />
         <EntityTypeShape EntityType="AlertModel.h_alert" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
         <EntityTypeShape EntityType="AlertModel.L_users" Width="1.5" PointX="0.5" PointY="1.25" IsExpanded="true" />
@@ -17,6 +17,10 @@
         <AssociationConnector Association="AlertModel.FK_c_triggers_c_smsSystem" />
         <AssociationConnector Association="AlertModel.FK_c_triggers_c_state" />
         <AssociationConnector Association="AlertModel.FK_h_alert_c_triggers" />
+        <EntityTypeShape EntityType="AlertModel.c_CPT600" Width="1.5" PointX="2.875" PointY="10.125" />
+        <EntityTypeShape EntityType="AlertModel.c_SMSconfig" Width="1.5" PointX="5.5" PointY="8" />
+        <AssociationConnector Association="AlertModel.FK_c_SMSconfig_c_CPT600" />
+        <AssociationConnector Association="AlertModel.FK_c_SMSconfig_c_smsSystem" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

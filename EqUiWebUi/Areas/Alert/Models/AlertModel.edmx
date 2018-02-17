@@ -5,12 +5,35 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="AlertModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="c_CPT600">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Discription" Type="varchar(max)" />
+          <Property Name="System" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LocationTree" Type="varchar(max)" />
+          <Property Name="AssetRoot" Type="varchar(max)" />
+          <Property Name="ActivePloeg" Type="varchar" MaxLength="50" />
+          <Property Name="StartTime" Type="time" Precision="7" />
+          <Property Name="EndTime" Type="time" Precision="7" />
+          <Property Name="SMSlimit" Type="int" />
+          <Property Name="SMSsend" Type="int" />
+        </EntityType>
+        <EntityType Name="c_SMSconfig">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="c_smsSystem_id" Type="int" Nullable="false" />
+          <Property Name="c_CPT600_id" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="c_smsSystem">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="discription" Type="varchar" MaxLength="50" />
+          <Property Name="Discription" Type="varchar" MaxLength="50" />
           <Property Name="system" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="c_state">
@@ -30,17 +53,10 @@
           <Property Name="discription" Type="varchar(max)" Nullable="false" />
           <Property Name="RunAgainst" Type="int" Nullable="false" />
           <Property Name="sqlStqStatement" Type="varchar(max)" />
-          <Property Name="locationThreeMask" Type="varchar(max)" />
           <Property Name="smsSystem" Type="int" />
-          <Property Name="smsActivePloeg" Type="varchar" MaxLength="50" />
-          <Property Name="smsActiveStartTime" Type="datetime" />
-          <Property Name="smsActiveEndTime" Type="datetime" />
-          <Property Name="smsLimit" Type="int" />
-          <Property Name="smsSend" Type="int" />
           <Property Name="initial_state" Type="int" Nullable="false" />
           <Property Name="Pollrate" Type="int" Nullable="false" />
           <Property Name="alertType" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="classificationMask" Type="varchar" MaxLength="50" />
           <Property Name="AutoSetStateTechComp" Type="bit" Nullable="false" />
           <Property Name="smsOnRetrigger" Type="bit" Nullable="false" />
           <Property Name="enableSMS" Type="bit" Nullable="false" />
@@ -64,6 +80,8 @@
           <Property Name="lastChangedTimestamp" Type="datetime" />
           <Property Name="triggerCount" Type="int" Nullable="false" />
           <Property Name="lastTriggerd" Type="datetime" Nullable="false" />
+          <Property Name="Classification" Type="varchar(max)" />
+          <Property Name="locationTree" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="L_users">
           <Key>
@@ -76,6 +94,30 @@
           <Property Name="Locked" Type="bit" Nullable="false" />
           <Property Name="Blocked" Type="bit" Nullable="false" />
         </EntityType>
+        <Association Name="FK_c_SMSconfig_c_CPT600">
+          <End Role="c_CPT600" Type="Self.c_CPT600" Multiplicity="1" />
+          <End Role="c_SMSconfig" Type="Self.c_SMSconfig" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_CPT600">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="c_SMSconfig">
+              <PropertyRef Name="c_CPT600_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_c_SMSconfig_c_smsSystem">
+          <End Role="c_smsSystem" Type="Self.c_smsSystem" Multiplicity="1" />
+          <End Role="c_SMSconfig" Type="Self.c_SMSconfig" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_smsSystem">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="c_SMSconfig">
+              <PropertyRef Name="c_smsSystem_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_c_triggers_c_smsSystem">
           <End Role="c_smsSystem" Type="Self.c_smsSystem" Multiplicity="0..1" />
           <End Role="c_triggers" Type="Self.c_triggers" Multiplicity="*" />
@@ -161,11 +203,21 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="AlertModelStoreContainer">
+          <EntitySet Name="c_CPT600" EntityType="Self.c_CPT600" Schema="Alerts" store:Type="Tables" />
+          <EntitySet Name="c_SMSconfig" EntityType="Self.c_SMSconfig" Schema="Alerts" store:Type="Tables" />
           <EntitySet Name="c_smsSystem" EntityType="Self.c_smsSystem" Schema="Alerts" store:Type="Tables" />
           <EntitySet Name="c_state" EntityType="Self.c_state" Schema="Alerts" store:Type="Tables" />
           <EntitySet Name="c_triggers" EntityType="Self.c_triggers" Schema="Alerts" store:Type="Tables" />
           <EntitySet Name="h_alert" EntityType="Self.h_alert" Schema="Alerts" store:Type="Tables" />
           <EntitySet Name="L_users" EntityType="Self.L_users" Schema="Volvo" store:Type="Tables" />
+          <AssociationSet Name="FK_c_SMSconfig_c_CPT600" Association="Self.FK_c_SMSconfig_c_CPT600">
+            <End Role="c_CPT600" EntitySet="c_CPT600" />
+            <End Role="c_SMSconfig" EntitySet="c_SMSconfig" />
+          </AssociationSet>
+          <AssociationSet Name="FK_c_SMSconfig_c_smsSystem" Association="Self.FK_c_SMSconfig_c_smsSystem">
+            <End Role="c_smsSystem" EntitySet="c_smsSystem" />
+            <End Role="c_SMSconfig" EntitySet="c_SMSconfig" />
+          </AssociationSet>
           <AssociationSet Name="FK_c_triggers_c_smsSystem" Association="Self.FK_c_triggers_c_smsSystem">
             <End Role="c_smsSystem" EntitySet="c_smsSystem" />
             <End Role="c_triggers" EntitySet="c_triggers" />
@@ -204,9 +256,10 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="discription" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="system" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="c_triggers" Relationship="AlertModel.FK_c_triggers_c_smsSystem" FromRole="c_smsSystem" ToRole="c_triggers" />
+          <NavigationProperty Name="c_SMSconfig" Relationship="AlertModel.FK_c_SMSconfig_c_smsSystem" FromRole="c_smsSystem" ToRole="c_SMSconfig" />
+          <Property Name="Discription" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="c_state">
           <Key>
@@ -242,6 +295,8 @@
           <NavigationProperty Name="CloseUser" Relationship="Self.FK_h_alert_L_users1" FromRole="h_alert" ToRole="L_users" />
           <NavigationProperty Name="AcceptUser" Relationship="Self.FK_h_alert_L_users2" FromRole="h_alert" ToRole="L_users" />
           <NavigationProperty Name="c_triggers" Relationship="AlertModel.FK_h_alert_c_triggers" FromRole="h_alert" ToRole="c_triggers" />
+          <Property Name="Classification" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="locationTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="L_users">
           <Key>
@@ -339,6 +394,16 @@
             <End Role="c_triggers" EntitySet="c_triggers" />
             <End Role="h_alert" EntitySet="h_alert" />
           </AssociationSet>
+          <EntitySet Name="c_CPT600" EntityType="AlertModel.c_CPT600" />
+          <EntitySet Name="c_SMSconfig" EntityType="AlertModel.c_SMSconfig" />
+          <AssociationSet Name="FK_c_SMSconfig_c_CPT600" Association="AlertModel.FK_c_SMSconfig_c_CPT600">
+            <End Role="c_CPT600" EntitySet="c_CPT600" />
+            <End Role="c_SMSconfig" EntitySet="c_SMSconfig" />
+          </AssociationSet>
+          <AssociationSet Name="FK_c_SMSconfig_c_smsSystem" Association="AlertModel.FK_c_SMSconfig_c_smsSystem">
+            <End Role="c_smsSystem" EntitySet="c_smsSystem" />
+            <End Role="c_SMSconfig" EntitySet="c_SMSconfig" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="c_triggers">
           <Key>
@@ -349,17 +414,10 @@
           <Property Name="discription" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="RunAgainst" Type="Int32" Nullable="false" />
           <Property Name="sqlStqStatement" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="locationThreeMask" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="smsSystem" Type="Int32" />
-          <Property Name="smsActivePloeg" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="smsActiveStartTime" Type="DateTime" Precision="3" />
-          <Property Name="smsActiveEndTime" Type="DateTime" Precision="3" />
-          <Property Name="smsLimit" Type="Int32" />
-          <Property Name="smsSend" Type="Int32" />
           <Property Name="initial_state" Type="Int32" Nullable="false" />
           <Property Name="Pollrate" Type="Int32" Nullable="false" />
           <Property Name="alertType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="classificationMask" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="AutoSetStateTechComp" Type="Boolean" Nullable="false" />
           <Property Name="smsOnRetrigger" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="c_smsSystem" Relationship="AlertModel.FK_c_triggers_c_smsSystem" FromRole="c_triggers" ToRole="c_smsSystem" />
@@ -403,6 +461,56 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="c_CPT600">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Discription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="System" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LocationTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="AssetRoot" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="c_SMSconfig" Relationship="AlertModel.FK_c_SMSconfig_c_CPT600" FromRole="c_CPT600" ToRole="c_SMSconfig" />
+          <Property Name="ActivePloeg" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StartTime" Type="Time" Precision="7" />
+          <Property Name="EndTime" Type="Time" Precision="7" />
+          <Property Name="SMSlimit" Type="Int32" />
+          <Property Name="SMSsend" Type="Int32" />
+        </EntityType>
+        <EntityType Name="c_SMSconfig">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="c_smsSystem_id" Type="Int32" Nullable="false" />
+          <Property Name="c_CPT600_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="c_CPT600" Relationship="AlertModel.FK_c_SMSconfig_c_CPT600" FromRole="c_SMSconfig" ToRole="c_CPT600" />
+          <NavigationProperty Name="c_smsSystem" Relationship="AlertModel.FK_c_SMSconfig_c_smsSystem" FromRole="c_SMSconfig" ToRole="c_smsSystem" />
+        </EntityType>
+        <Association Name="FK_c_SMSconfig_c_CPT600">
+          <End Type="AlertModel.c_CPT600" Role="c_CPT600" Multiplicity="1" />
+          <End Type="AlertModel.c_SMSconfig" Role="c_SMSconfig" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_CPT600">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="c_SMSconfig">
+              <PropertyRef Name="c_CPT600_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_c_SMSconfig_c_smsSystem">
+          <End Type="AlertModel.c_smsSystem" Role="c_smsSystem" Multiplicity="1" />
+          <End Type="AlertModel.c_SMSconfig" Role="c_SMSconfig" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_smsSystem">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="c_SMSconfig">
+              <PropertyRef Name="c_smsSystem_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -412,8 +520,8 @@
           <EntitySetMapping Name="c_smsSystem">
             <EntityTypeMapping TypeName="AlertModel.c_smsSystem">
               <MappingFragment StoreEntitySet="c_smsSystem">
+                <ScalarProperty Name="Discription" ColumnName="Discription" />
                 <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="discription" ColumnName="discription" />
                 <ScalarProperty Name="system" ColumnName="system" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -430,6 +538,8 @@
           <EntitySetMapping Name="h_alert">
             <EntityTypeMapping TypeName="AlertModel.h_alert">
               <MappingFragment StoreEntitySet="h_alert">
+                <ScalarProperty Name="locationTree" ColumnName="locationTree" />
+                <ScalarProperty Name="Classification" ColumnName="Classification" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="c_tirgger_id" ColumnName="c_tirgger_id" />
                 <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
@@ -466,21 +576,39 @@
                 <ScalarProperty Name="enableSMS" ColumnName="enableSMS" />
                 <ScalarProperty Name="smsOnRetrigger" ColumnName="smsOnRetrigger" />
                 <ScalarProperty Name="AutoSetStateTechComp" ColumnName="AutoSetStateTechComp" />
-                <ScalarProperty Name="classificationMask" ColumnName="classificationMask" />
                 <ScalarProperty Name="alertType" ColumnName="alertType" />
                 <ScalarProperty Name="Pollrate" ColumnName="Pollrate" />
                 <ScalarProperty Name="initial_state" ColumnName="initial_state" />
-                <ScalarProperty Name="smsSend" ColumnName="smsSend" />
-                <ScalarProperty Name="smsLimit" ColumnName="smsLimit" />
-                <ScalarProperty Name="smsActiveEndTime" ColumnName="smsActiveEndTime" />
-                <ScalarProperty Name="smsActiveStartTime" ColumnName="smsActiveStartTime" />
-                <ScalarProperty Name="smsActivePloeg" ColumnName="smsActivePloeg" />
                 <ScalarProperty Name="smsSystem" ColumnName="smsSystem" />
-                <ScalarProperty Name="locationThreeMask" ColumnName="locationThreeMask" />
                 <ScalarProperty Name="sqlStqStatement" ColumnName="sqlStqStatement" />
                 <ScalarProperty Name="RunAgainst" ColumnName="RunAgainst" />
                 <ScalarProperty Name="discription" ColumnName="discription" />
                 <ScalarProperty Name="enabled" ColumnName="enabled" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="c_CPT600">
+            <EntityTypeMapping TypeName="AlertModel.c_CPT600">
+              <MappingFragment StoreEntitySet="c_CPT600">
+                <ScalarProperty Name="SMSsend" ColumnName="SMSsend" />
+                <ScalarProperty Name="SMSlimit" ColumnName="SMSlimit" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="ActivePloeg" ColumnName="ActivePloeg" />
+                <ScalarProperty Name="AssetRoot" ColumnName="AssetRoot" />
+                <ScalarProperty Name="LocationTree" ColumnName="LocationTree" />
+                <ScalarProperty Name="System" ColumnName="System" />
+                <ScalarProperty Name="Discription" ColumnName="Discription" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="c_SMSconfig">
+            <EntityTypeMapping TypeName="AlertModel.c_SMSconfig">
+              <MappingFragment StoreEntitySet="c_SMSconfig">
+                <ScalarProperty Name="c_CPT600_id" ColumnName="c_CPT600_id" />
+                <ScalarProperty Name="c_smsSystem_id" ColumnName="c_smsSystem_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -1,0 +1,91 @@
+﻿@model EqUiWebUi.Areas.Alert.Models.c_CPT600
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>c_CPT600</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Discription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Discription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.System)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.System)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LocationTree)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LocationTree)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AssetRoot)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AssetRoot)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ActivePloeg)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ActivePloeg)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StartTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StartTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EndTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EndTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SMSlimit)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SMSlimit)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SMSsend)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SMSsend)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

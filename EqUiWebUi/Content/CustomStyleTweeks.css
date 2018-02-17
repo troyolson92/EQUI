@@ -27,9 +27,9 @@
 .modal-content {
     background-color: #fefefe;
     margin: auto;
-    padding: 20px;
+    padding: 0px;
     border: 1px solid #888;
-    width: 80%;
+    width: 98%;
 }
 
 /*max with for popovers*/
@@ -73,4 +73,42 @@
 
 .TableLogtypeTIMELINE {
     background-color: #16dd76;
+}
+
+.TableLogtypeSLOWSpeed {
+    -webkit-animation: blinkPink 1s 0.5s infinite alternate linear; /*chrome*/
+    animation: blinkPink 1s 0.5s infinite alternate linear; /*IE 10+ (not working for me)*/
+}
+
+.TableLogtypeBarrelLOW {
+    -webkit-animation: PulseGreen 5s infinite alternate linear;
+    animation: PulseGreen 5s infinite alternate linear;
+}
+
+@-webkit-keyframes blinkPink {
+    0% {
+        background-color: transparent;
+    }
+
+    100% {
+        background-color: #d851ff;
+    }
+}
+
+@-webkit-keyframes PulseGreen {
+    0% {
+        background-color: transparent;
+    }
+
+    45% {
+        background-color: #49d112;
+    }
+
+    55% {
+        background-color: #fefefe;
+    }
+
+    100% {
+        background-color: #49d112;
+    }
 }

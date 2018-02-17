@@ -49,7 +49,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateInput(false)] //to alow posting of raw html data
-        public async Task<ActionResult> Edit([Bind(Include = "id,c_tirgger_id,C_timestamp,info,state,location,comments,acceptUserID,acceptTimestamp,closeUserID,closeTimestamp,lastChangedUserID,lastChangedTimestamp,triggerCount,lastTriggerd")] h_alert h_alert)
+        public async Task<ActionResult> Edit([Bind(Include = "id,c_tirgger_id,C_timestamp,info,state,location,comments,acceptUserID,acceptTimestamp,closeUserID,closeTimestamp,lastChangedUserID,lastChangedTimestamp,triggerCount,lastTriggerd,locationtree")] h_alert h_alert)
         {
             if (ModelState.IsValid)
             {

@@ -1,0 +1,36 @@
+﻿@model IEnumerable<EqUiWebUi.Areas.Alert.Models.c_SMSconfig>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index c_SMSconfig</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+@Html.Grid(Model).Named("c_SMSconfig").Build(columns =>
+{
+    columns.Add(c => c.id).Titled("ID").InitialSort(GridSortOrder.Asc);
+    columns.Add(c => c.c_smsSystem.id).Titled("c_smsSystemID").Css("hidden");
+    columns.Add(c => c.c_smsSystem.system).Titled("c_smsSystem");
+    columns.Add(c => c.c_CPT600.System).Titled("c_CPT600");
+    columns.Add(c => c.c_CPT600.LocationTree).Titled("LocationTree");
+    columns.Add(c => c.c_CPT600.AssetRoot).Titled("AssetRoot");
+    columns.Add(c => c.id)
+                .Titled("")
+                .Encoded(false)
+                .RenderedAs(c => @Html.ActionLink("Edit", "Edit", new { id = c.id }) + " | " +
+                                 @Html.ActionLink("Delete", "Delete", new { id = c.id })
+                ).InitialSort(GridSortOrder.Asc).Filterable(false);
+}).Filterable(true).Sortable(true).Empty("Did not find anything").Css("table-hover")
+
+@section scripts{
+    <script>
+        //full with screen
+        $("#allcontent").removeClass("body-content");
+        $("#allcontent").removeClass("container");
+    </script>
+}

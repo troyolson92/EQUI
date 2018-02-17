@@ -428,7 +428,10 @@ namespace WebNavigator_Gadget_Watcher
                 }
                 catch (Exception ex)
                 {
-                    log.Error("Failed to read image size", ex);
+                    log.Fatal("Failed to read image size", ex);
+                    //if something realy bad happens wait 10 seconds and restart. 
+                    System.Threading.Thread.Sleep(10000);
+                    Environment.Exit(999);
                 }
             }
             else

@@ -18,13 +18,16 @@ namespace EqUiWebUi.Areas.Alert.Models
         public c_smsSystem()
         {
             this.c_triggers = new HashSet<c_triggers>();
+            this.c_SMSconfig = new HashSet<c_SMSconfig>();
         }
     
         public int id { get; set; }
-        public string discription { get; set; }
         public string system { get; set; }
+        public string Discription { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<c_triggers> c_triggers { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<c_SMSconfig> c_SMSconfig { get; set; }
     }
 }

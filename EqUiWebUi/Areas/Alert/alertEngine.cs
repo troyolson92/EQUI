@@ -29,7 +29,7 @@ namespace EqUiWebUi.Areas.Alert
                 if (trigger.enabled)
                 {
                     Log.Info("Adding HF alertTriggerJob for: " + trigger.id);
-                    Hangfire.RecurringJob.AddOrUpdate("AlertTrigger"+trigger.id,() => alertEngine.CheckForalerts(trigger.id, trigger.discription), Cron.MinuteInterval(trigger.Pollrate));
+                    Hangfire.RecurringJob.AddOrUpdate("AT_" +trigger.alertType+ "_" +trigger.id,() => alertEngine.CheckForalerts(trigger.id, trigger.discription), Cron.MinuteInterval(trigger.Pollrate));
                 }
             }
 
@@ -50,7 +50,7 @@ namespace EqUiWebUi.Areas.Alert
                 if (trigger.enabled == false || ClearALL == true)
                 {
                     Log.Info("Removing HF alertTriggerJob for: " + trigger.id);
-                    RecurringJob.RemoveIfExists("AlertTrigger" + trigger.id);
+                    RecurringJob.RemoveIfExists("AT_" + trigger.alertType + "_" + trigger.id);
                 }
             }
         }
@@ -81,17 +81,17 @@ namespace EqUiWebUi.Areas.Alert
             
             //check database for active alerts
             DataTable ActiveAlerts = new DataTable();
+            StoComm stoComm = new StoComm();
 
             //run command against selected database.
+            GadataComm gadataComm = new GadataComm();
             switch (trigger.RunAgainst)
             {
                 case (int)SmsDatabases.GADATA:
-                    GadataComm gadataComm = new GadataComm();
                     ActiveAlerts = gadataComm.RunQueryGadata(trigger.sqlStqStatement);
                     break;
 
                 case (int)SmsDatabases.STO:
-                    StoComm stoComm = new StoComm();
                     ActiveAlerts = stoComm.oracle_runQuery(trigger.sqlStqStatement);
                     break;
 
@@ -105,7 +105,7 @@ namespace EqUiWebUi.Areas.Alert
            {
 
                 //can not use .Field in Linq query 
-                string AlertLocation = ActiveAlert.Field<string>("LocationTree");
+                string AlertLocation = ActiveAlert.Field<string>("Location");
 
                 List<h_alert> h_alert = (from alerts in gADATA_AlertModel.h_alert
                                          where alerts.c_tirgger_id == c_triggerID //must be from same trigger
@@ -125,40 +125,52 @@ namespace EqUiWebUi.Areas.Alert
                //if alert not active make  one
                 if (h_alert.Count == 0)
                 {
-                        Log.Info("New alert for: " + ActiveAlert.Field<string>("LocationTree") + " => "+ ActiveAlert.Field<string>("info"));
+                   Log.Info("New alert for: " + ActiveAlert.Field<string>("Location") + " => "+ ActiveAlert.Field<string>("info"));
 
-                        h_alert newAlert = new h_alert();
-                        newAlert.c_tirgger_id = c_triggerID;
-                        newAlert.location = ActiveAlert.Field<string>("LocationTree");
-                        newAlert.C_timestamp = ActiveAlert.Field<DateTime>("timestamp");
-                        newAlert.state = trigger.initial_state;
-                        newAlert.info = ActiveAlert.Field<string>("info");
-                        newAlert.triggerCount = 1;
-                        newAlert.lastTriggerd = ActiveAlert.Field<DateTime>("timestamp");
-                        //adde badge to comment 
-                        StringBuilder sb = new StringBuilder();
-                        sb.AppendLine(newAlert.comments);
-                        sb.AppendLine("<hr />");
-                        sb.AppendLine("<div class='alert alert-danger'>");
-                        sb.AppendLine("<strong>Triggerd: " + ActiveAlert.Field<DateTime>("timestamp") + "</strong>");
-                        sb.AppendLine(ActiveAlert.Field<string>("info"));
-                        sb.AppendLine("</div>");
-                        newAlert.comments = sb.ToString();
+                   h_alert newAlert = new h_alert();
+                   newAlert.c_tirgger_id = c_triggerID;
+                    if (trigger.RunAgainstDatabase == SmsDatabases.GADATA)
+                    {
+                        //we already have the location tree
+                        newAlert.locationTree = ActiveAlert.Field<string>("LocationTree");
+                    }
+                    else if (trigger.RunAgainstDatabase == SmsDatabases.STO)
+                    {
+                        //ask gadata 
+                        string qry =
+                            @"select top 1 LocationTree from GADATA.EqUi.ASSETS as a 
+                            where REPLACE('{0}','ZM','ZS') LIKE a.[LOCATION] + '%'";
+                        DataTable result = gadataComm.RunQueryGadata(string.Format(qry, ActiveAlert.Field<string>("alarmobject")));
+                        if (result.Rows.Count == 1)
+                        {
+                            newAlert.locationTree = result.Rows[0].Field<string>("LocationTree");
+                        }
+                        else
+                        {
+                            Log.Debug("did not get a valid location tree from gadata");
+                            newAlert.locationTree = ActiveAlert.Field<string>("alarmobject");
+                        }
+                    }
+                    newAlert.location = ActiveAlert.Field<string>("Location");
+                    newAlert.C_timestamp = ActiveAlert.Field<DateTime>("timestamp");
+                    newAlert.state = trigger.initial_state;
+                    newAlert.info = ActiveAlert.Field<string>("info");
+                    newAlert.triggerCount = 1;
+                    newAlert.lastTriggerd = ActiveAlert.Field<DateTime>("timestamp");
+                    //adde badge to comment 
+                    StringBuilder sb = new StringBuilder();
+                    sb.AppendLine(newAlert.comments);
+                    sb.AppendLine("<hr />");
+                    sb.AppendLine("<div class='alert alert-danger'>");
+                    sb.AppendLine("<strong>Triggerd: " + ActiveAlert.Field<DateTime>("timestamp") + "</strong>");
+                    sb.AppendLine(ActiveAlert.Field<string>("info"));
+                    sb.AppendLine("</div>");
+                    newAlert.comments = sb.ToString();
 
                     //check if we need to send SMS
                     if (trigger.enableSMS)
                     {
-                        if (trigger.smsLimit >= trigger.smsSend.GetValueOrDefault(0))
-                            {
-                            Log.Info("Sending SMS");
-                                //inc trigger sms counter
-                                trigger.smsSend += 1;
-                                newAlert =  HandleSms(trigger, newAlert);
-                            }
-                        else //sms limit hit
-                            {
-                                Log.Info("Stopped sending sms for trigger: " + trigger.id + " (limit was hit) ");
-                            }
+                       newAlert =  HandleSms(trigger, newAlert);
                     }
 
                         //dont forget to ADD and SAVE! 
@@ -172,20 +184,16 @@ namespace EqUiWebUi.Areas.Alert
                     Log.Debug("Alert already active");
                     //if the active alert has a new timestamp tis should mean a new datapoint (retrigger event)
 
-                    //SDB bug. IN ORACLE SYSTEMS! timestamp.Tricks does not translate to the same in ORCALE and SQL. (milisconds does nor translate the same)
-                    //13:51:07.4430000	DEBUG	DebugLogger	RETrigger: 636542126852930000 Active:636542126852920000	
-                    //14:45:09.9330000	DEBUG	DebugLogger	RETrigger: 636542162111600000 Active:636542162111610000	
-                    //
-
                     if (h_alert[0].lastTriggerd.ToString("yyyyMMddHHmmss") != ActiveAlert.Field<DateTime>("timestamp").ToString("yyyyMMddHHmmss"))
                     {
-                        Log.Debug("RETrigger: " + ActiveAlert.Field<DateTime>("timestamp"));
+                        Log.Debug("RETrigger: " + h_alert[0].lastTriggerd.ToString("yyyyMMddHHmmss") + " => " + ActiveAlert.Field<DateTime>("timestamp").ToString("yyyyMMddHHmmss"));
                         //added badge to comment with retrigger event
                         StringBuilder sb = new StringBuilder(); 
                         sb.AppendLine(h_alert[0].comments);
                         sb.AppendLine("<hr />");
                         sb.AppendLine("<div class='alert alert-warning'>");
                         sb.AppendLine("<strong>Retriggerd: "+ ActiveAlert.Field<DateTime>("timestamp") +"</strong>");
+                        sb.AppendLine(h_alert[0].lastTriggerd.ToString("yyyyMMddHHmmss") + " => " + ActiveAlert.Field<DateTime>("timestamp").ToString("yyyyMMddHHmmss"));
                         sb.AppendLine(ActiveAlert.Field<string>("info"));
                         sb.AppendLine("</div>");
                         h_alert[0].comments = sb.ToString();
@@ -221,7 +229,7 @@ namespace EqUiWebUi.Areas.Alert
                 foreach (h_alert OpenAlert in OpenAlerts)
                 {
                     //check aganst the active alerts and if not active anymore close it.
-                    if (ActiveAlerts.AsEnumerable().Any(row => OpenAlert.location == row.Field<String>("LocationTree")))
+                    if (ActiveAlerts.AsEnumerable().Any(row => OpenAlert.location == row.Field<String>("Location")))
                     {
                         Log.Debug("Alert is still active must not close it");
                     }
@@ -254,38 +262,94 @@ namespace EqUiWebUi.Areas.Alert
         //add comments alert (the ref makes alert in out parameter
         public h_alert HandleSms(c_triggers trigger,  h_alert alert)
         {
-            //check if we NEED to send an SMS! 
             SmsComm smsComm = new SmsComm();
-            //build message 
-            StringBuilder sb = new StringBuilder();
-            //alert.location is the full location tree. take only the act location
-            string location;
-            try
+            //init comments
+            StringBuilder sbComments = new StringBuilder();
+            sbComments.AppendLine(alert.comments);
+            sbComments.AppendLine("<hr />");
+            //get all CPT600 systems linked to this trigger
+            List<c_SMSconfig> SMSconfigs = trigger.c_smsSystem.c_SMSconfig.ToList();
+            foreach  (c_SMSconfig SMSconfig in SMSconfigs)
             {
-                 location = alert.location.Split('>')[alert.location.Split('>').Count()-1];
-            }
-            catch
-            {
-                 location = alert.location;
-            }
-            sb.Append("Alert from: ").AppendLine(location);
-            sb.AppendLine("***********");
-            sb.AppendLine(trigger.alertType);
-            sb.AppendLine(alert.info);
-            //USE HANGFIRE to send it!
-            Hangfire.BackgroundJob.Enqueue(() => smsComm.SendSMS(trigger.c_smsSystem.system, sb.ToString()));
-            //Add in the comment section that the sms was send.
-            
-            //adde badge to comment 
-            StringBuilder sb2 = new StringBuilder();
-            sb2.AppendLine(alert.comments);
-            sb2.AppendLine("<hr />");
-            sb2.AppendLine("<div class='alert alert-info'>");
-            sb2.AppendLine("<strong>SMS send: " + trigger.c_smsSystem.system + "</strong>");
-            sb2.AppendLine(sb.ToString());
-            sb2.AppendLine("</div>");
-            alert.comments = sb2.ToString();
+                //check if location is allow 
+                if (alert.locationTree != null)
+                {
+                    if (alert.locationTree.Contains(SMSconfig.c_CPT600.LocationTree))
+                    {
+                        Log.Debug("locationTree tree oke Can send");
+                    }
+                    else
+                    {
+                        Log.Debug("locationTree NOK next");
+                        continue;
+                    }
+                }
+                
+                //check if asset root is allow 
+                if (alert.Classification != null)
+                {
+                    if (alert.Classification.Contains(SMSconfig.c_CPT600.AssetRoot))
+                    {
+                        Log.Debug("Asset root oke Can send");
+                    }
+                    else
+                    {
+                        Log.Debug("Asser root NOK next");
+                        continue;
+                    }
+                }
+                
+                //check if were are not at limmit
+                if(SMSconfig.c_CPT600.SMSlimit.GetValueOrDefault(10000) >= SMSconfig.c_CPT600.SMSsend.GetValueOrDefault(0))
+                {
+                    Log.Debug("Sms limit oke Can Send");
+                    SMSconfig.c_CPT600.SMSsend += 1;
+                }
+                else
+                {
+                    Log.Debug("Sms limit NOK can not Send");
+                    continue;
+                }
 
+                //check if were are in right ploeg 
+                if(SMSconfig.c_CPT600.ActivePloeg != null)
+                {
+                    //not implemented
+                }
+                
+                //check if ware are in right time slot
+                if (SMSconfig.c_CPT600.StartTime.HasValue && SMSconfig.c_CPT600.EndTime.HasValue)
+                {
+                    //not implemented
+                }
+
+
+                //send SMS 
+                //build message 
+                StringBuilder sbSMS = new StringBuilder();
+                //alert.location is the full location tree. take only the act location
+                string location;
+                try
+                {
+                    location = alert.location.Split('>')[alert.location.Split('>').Count() - 1];
+                }
+                catch
+                {
+                    location = alert.location;
+                }
+                sbSMS.Append("Alert from: ").AppendLine(location);
+                sbSMS.AppendLine("***********");
+                sbSMS.AppendLine(trigger.alertType);
+                sbSMS.AppendLine(alert.info);
+                //USE HANGFIRE to send it!
+                Hangfire.BackgroundJob.Enqueue(() => smsComm.SendSMS(SMSconfig.c_CPT600.System, sbSMS.ToString()));
+                //Add in the comment section that the sms was send. (a badge for each SMS)
+                sbComments.AppendLine("<div class='alert alert-info'>");
+                sbComments.AppendLine("<strong>SMS send!: " + SMSconfig.c_CPT600.System + "</strong>");
+                sbComments.AppendLine(sbSMS.ToString());
+                sbComments.AppendLine("</div>");
+                alert.comments = sbComments.ToString();
+            }
             return alert;
         }
 

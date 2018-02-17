@@ -30,5 +30,7 @@ namespace EqUiWebUi.Areas.Alert.Models
         public virtual DbSet<h_alert> h_alert { get; set; }
         public virtual DbSet<L_users> L_users { get; set; }
         public virtual DbSet<c_triggers> c_triggers { get; set; }
+        public virtual DbSet<c_CPT600> c_CPT600 { get; set; }
+        public virtual DbSet<c_SMSconfig> c_SMSconfig { get; set; }
     }
 }

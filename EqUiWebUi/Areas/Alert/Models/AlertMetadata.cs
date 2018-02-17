@@ -51,22 +51,8 @@ namespace EqUiWebUi.Areas.Alert.Models
 @"This statement is run against gadata
   and must return col<LocationTree, _timestamp, info>")]
         public string sqlStqStatement { get; set; }
-        [HelpText("mask to be applied on this statement. (location filter)")]
-        public string locationThreeMask { get; set; }
-        [HelpText("mask to be applied on this statement. (asset filter)")]
-        public string classificationMask { get; set; }
         [HelpText("CPT600 sms system to be used. MUST be defined in CPT600!!!")]
         public Nullable<int> smsSystem { get; set; }
-        [HelpText("Only send sms in ploeg")]
-        public string smsActivePloeg { get; set; }
-        [HelpText("Timestlot where sending sms is active (start)")]
-        public Nullable<System.DateTime> smsActiveStartTime { get; set; }
-        [HelpText("Timestlot where sending sms is active (end)")]
-        public Nullable<System.DateTime> smsActiveEndTime { get; set; }
-        [HelpText("Limits the number of sms this alert can send (in total)")]
-        public Nullable<int> smsLimit { get; set; }
-        [HelpText("Number of sms send by this trigger (in total)")]
-        public Nullable<int> smsSend { get; set; }
         [HelpText("Inital state of alert created by this trigger")]
         public int initial_state { get; set; }
         [HelpText("Polrate in minutes to evaluate this trigger")]
