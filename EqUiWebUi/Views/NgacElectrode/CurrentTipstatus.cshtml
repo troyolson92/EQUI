@@ -19,28 +19,6 @@
         </div>
     </div>
 
-@*scrip for blinking a row based on there value.*@
-<script type="text/javascript">
-    $(document).ready(function () {
-        $(function () {
-            setInterval(flashRow, 750);
-        });
-        var bFlip = new Boolean(false);
-        function flashRow() {
-            bFlip = !bFlip;
-            $('tbody > tr').each(function (index) {
-                if ($(this).children('td:nth-child(5)').text() > 80) {
-                    if (bFlip) {
-                        $(this).children('td').css("background-color", "#f21a1a");
-                    } else {
-                        $(this).children('td').css("background-color", "#ffffff");
-                    }
-                }
-            });
-        }
-    });
-</script>
-
 @*scrip for playing sound based on row value.*@
 @*http://soundbible.com/grab.php?id=1252&type=mp3*@
 @*http://soundbible.com/grab.php?id=1377&type=mp3*@

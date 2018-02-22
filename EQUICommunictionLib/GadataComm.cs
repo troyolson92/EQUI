@@ -22,7 +22,7 @@ namespace EQUICommunictionLib
         {
             get { return @"ODBC;DSN=" + DsnGADATA + ";Description= GADATA;UID=EqUi;PWD=EqUi;APP=SQLFront;WSID=GNL1004ZCBQC2\\EQUI;DATABASE=GADATA"; }
         }
-        public void make_DSN() 
+        public void Make_DSN() 
         {
             ODBCManager.CreateDSN(DsnGADATA, "odbc link to sql001.gen.volvocars.net"
                 , "sqla001.gen.volvocars.net", "SQL Server", @"C:\windows\system32\SQLSRV32.dll", false, DsnGADATA);
@@ -132,7 +132,7 @@ namespace EQUICommunictionLib
 
         }
 
-        public SqlCommand get_GADATA_sp_parameters(string sp_name)
+        public SqlCommand Get_GADATA_sp_parameters(string sp_name)
         {
             SqlCommand cmd = new SqlCommand(sp_name, Gadataconn);
             cmd.CommandType = CommandType.StoredProcedure;

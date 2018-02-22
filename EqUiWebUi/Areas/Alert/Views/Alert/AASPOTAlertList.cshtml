@@ -1,0 +1,67 @@
+﻿@model IEnumerable<EqUiWebUi.Areas.Alert.Models.h_alert>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index of all alerts for this user (AASPOT)</h2>
+
+@Html.Grid(Model).Named("h_alert").Build(columns =>
+{
+    columns.Add(c => c.id).Titled("id").Filterable(true);
+    columns.Add(c => c.location).Titled("location").Filterable(true);
+    columns.Add(c => c.C_timestamp).Titled("C_timestamp").Formatted("{0:dd-MM-yyyy HH:mm}").InitialSort(GridSortOrder.Desc);
+    columns.Add(c => c.c_triggers.alertType).Titled("alertType").Filterable(true);
+    columns.Add(c => c.info).Titled("info");
+    columns.Add(c => c.AcceptUser.username.Replace(@"VCCNET\", "")).Titled("AcceptUser").Filterable(true);
+//render dropdown to set alert status
+columns.Add(c => c.c_state.state)
+   .Titled("AlertStatus")
+   .Encoded(false)
+   .Filterable(true)
+   .RenderedAs(c => "TO BE IMPLEMENTED");
+
+//launch sbcu tool
+columns.Add(c => c)
+                  .Encoded(false)
+                  .Filterable(false)
+                  .Sortable(false)
+                  //gefoefel om de tool id er uit te halen! Dit kan falen als er geen 'gun:' in de omschrijving zit dus is ROMMEL code
+                  .RenderedAs(c => MyEquiToolkit.SbcuTool(c.location, c.info.Substring(c.info.IndexOf("gun:"), 5).Replace("gun:", "")));
+    columns.Add(c => c)
+                .Titled("")
+                .Encoded(false)
+                .RenderedAs(c => @Html.ActionLink("Edit", "Edit", new { id = c.id })
+                ).Filterable(false);
+}).Filterable(true).Sortable(true).Pageable(pager =>
+{
+    pager.RowsPerPage = 20;
+}).Empty("Did not find anything").Css("table-hover").RowCss(row => MyRowStyling.getRowStyleStatus(row.c_state.state))
+
+<p></p>
+@*info model in page for alert details *@
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div id="alertDetailsPartial">Click on a row for more details about the alert</div>
+    </div>
+</div>
+
+@section scripts{
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        //subscribe to row clicked events
+        $('.mvc-grid').mvcgrid({
+            rowClicked: function (row, data, e) {
+                console.log(data);
+                $("#alertDetailsPartial").html("Loading.....");
+                var url = "@Url.Action("_Details")?id=" + data.id;
+                $("#alertDetailsPartial").load(url);
+            }
+        });
+    });
+</script>
+
+}
+

@@ -17,7 +17,7 @@
     <Install>true</Install>
     <InstallFrom>Unc</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
-    <UpdateMode>Background</UpdateMode>
+    <UpdateMode>Foreground</UpdateMode>
     <UpdateInterval>3</UpdateInterval>
     <UpdateIntervalUnits>Hours</UpdateIntervalUnits>
     <UpdatePeriodically>true</UpdatePeriodically>
@@ -28,7 +28,7 @@
     <PublisherName>SDEBEUL</PublisherName>
     <SuiteName>EQUI</SuiteName>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>6</ApplicationRevision>
+    <ApplicationRevision>8</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>

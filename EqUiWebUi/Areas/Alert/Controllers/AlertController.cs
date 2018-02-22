@@ -20,7 +20,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
         }
 
         //Rewrite hangfire configureAtion
-        public void configureHangfire()
+        public void ConfigureHangfire()
         {
             Log.Info("Hangfire config for alerts has be rewritten");
             AlertEngine alertEngine = new AlertEngine();
@@ -31,7 +31,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
         }
 
         //stop al alert processing in hangefire
-        public void stopHanfire()
+        public void StopHanfire()
         {
             Log.Info("Hangfire config for alerts has been stopped!");
             AlertEngine alertEngine = new AlertEngine();
@@ -41,13 +41,44 @@ namespace EqUiWebUi.Areas.Alert.Controllers
         //interface where users can manage the alerts
         private GADATA_AlertModel db = new GADATA_AlertModel();
 
+        //Global Alert interface
         // GET: Listalerts AND filter the alerts based on the users profile
         public async Task<ActionResult> Listalerts()
         {
             //filter alerts basted on user profile!
             string UserLocationroot = Session["LocationRoot"].ToString();
             var h_alert = db.h_alert.Include(h => h.c_state).Include(h => h.c_triggers).Include(h => h.ChangedUser).Include(h => h.CloseUser).Include(h => h.AcceptUser);
-            return View(await h_alert.Where(a => a.location.Contains(UserLocationroot)).ToListAsync());
+            return View(await h_alert.Where(a => a.locationTree.Contains(UserLocationroot)).ToListAsync());
+        }
+
+        //specific Alert interface
+        //GET: AASPOTAlertList (for SBCU and gun cylinder stuff with quick link toSbcu tool.
+        public async Task<ActionResult> AASPOTAlertList()
+        {
+            //filter alerts basted on user profile!
+            string UserLocationroot = Session["LocationRoot"].ToString();
+            var h_alert = db.h_alert.Include(h => h.c_state).Include(h => h.c_triggers).Include(h => h.ChangedUser).Include(h => h.CloseUser).Include(h => h.AcceptUser);
+            return View(await h_alert.Where(a => a.locationTree.Contains(UserLocationroot) 
+                                                &&(
+                                                   a.c_triggers.alertType == "SBCUalert" //only allow 
+                                                   ||a.c_triggers.alertType == "GUNalert"
+                                                   )
+                                                ).ToListAsync());
+        }
+
+        // GET: Alert/Details partial to get basic info about alert 
+        public async Task<ActionResult> _Details (int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            h_alert h_alert = await db.h_alert.FindAsync(id);
+            if (h_alert == null)
+            {
+                return HttpNotFound();
+            }
+            return PartialView(h_alert);
         }
 
         // GET: Alert/Edit/5
@@ -147,5 +178,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             return View(_alert);
         }
 
+
+        // 
     }
 }

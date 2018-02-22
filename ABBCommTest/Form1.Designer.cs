@@ -83,7 +83,7 @@
             this.btn_scanNetwork.TabIndex = 8;
             this.btn_scanNetwork.Text = "scanNetwork";
             this.btn_scanNetwork.UseVisualStyleBackColor = true;
-            this.btn_scanNetwork.Click += new System.EventHandler(this.btn_scanNetwork_Click);
+            this.btn_scanNetwork.Click += new System.EventHandler(this.Btn_scanNetwork_Click);
             // 
             // dataGridView1
             // 

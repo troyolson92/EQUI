@@ -83,7 +83,7 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
             EQUICommunictionLib.MaximoComm maximoComm = new MaximoComm();
             string LONGDESCRIPTION = maximoComm.GetClobMaximo7(cmdLONGDESCRIPTION);
             string FAILUREREMARK = maximoComm.GetClobMaximo7(cmdFAILUREREMARK);
-            DataTable LABOR = maximoComm.oracle_runQuery(cmdLabor);
+            DataTable LABOR = maximoComm.Oracle_runQuery(cmdLabor);
             //   DataTable WORKLOG = maximoComm.oracle_runQuery(cmdWorkLog);
 
             ViewBag.LongDescription = LONGDESCRIPTION;

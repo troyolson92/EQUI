@@ -268,7 +268,7 @@ namespace EqUiWebUi
 			GadataComm gadataComm = new GadataComm();
 			MaximoComm maximoComm = new MaximoComm();
 			//run maximo query
-			DataTable maximoResult = maximoComm.oracle_runQuery(query);
+			DataTable maximoResult = maximoComm.Oracle_runQuery(query);
 			//check result valid
 			if (maximoResult.Rows.Count < 1)
 			{
@@ -383,7 +383,7 @@ ORDER BY WORKORDER.STATUSDATE DESC
 "
 );
 
-			DataTable newMaximoDt = maximoComm.oracle_runQuery(MaximoQry);
+			DataTable newMaximoDt = maximoComm.Oracle_runQuery(MaximoQry);
 			//push to gadata
 			lGadataComm.BulkCopyToGadata("MAXIMO", newMaximoDt, "WORKORDERS");
 		}

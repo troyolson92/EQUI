@@ -223,7 +223,7 @@ ORDER BY WORKORDER.STATUSDATE DESC
 
         void bwWorkorders_DoWork(object sender, DoWorkEventArgs e)
         {
-            tableFromMx7 =  lMaximocomm.oracle_runQuery(string.Format(viewmode.DataGridQuery, viewmode.Location));
+            tableFromMx7 =  lMaximocomm.Oracle_runQuery(string.Format(viewmode.DataGridQuery, viewmode.Location));
             if (tableFromMx7.Rows.Count == 0) { Debugger.Message("no result from maximo (rowcount = 0)"); return; };
         }
 
@@ -238,7 +238,7 @@ ORDER BY WORKORDER.STATUSDATE DESC
             {
                 if (row.Cells[0].Value != null)
                 {
-                    webBrowser1.DocumentText = lMaximocomm.getMaximoDetails(row.Cells[0].Value.ToString());
+                    webBrowser1.DocumentText = lMaximocomm.GetMaximoDetails(row.Cells[0].Value.ToString());
                 }
             }
         }
@@ -263,7 +263,7 @@ ORDER BY WORKORDER.STATUSDATE DESC
             viewmode.Location = tb_location.Text; //schould store the ancestor 
             tb_location.Text = viewmode.Location;
             //
-            tableFromMx7 = lMaximocomm.oracle_runQuery(string.Format(viewmode.DataGridQuery, viewmode.Location));
+            tableFromMx7 = lMaximocomm.Oracle_runQuery(string.Format(viewmode.DataGridQuery, viewmode.Location));
             if (tableFromMx7.Rows.Count == 0) { Debugger.Message("no result from maximo"); return; };
             dataGridView1.DataSource = tableFromMx7;
             //

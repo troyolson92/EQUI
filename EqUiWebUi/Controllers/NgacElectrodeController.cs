@@ -20,8 +20,6 @@ namespace EqUiWebUi.Controllers
         [HttpGet]
         public ActionResult CurrentTipstatus()
         {
-            //refresh every 10 minutes anyway ! 
-            Response.AddHeader("Refresh", "600");
             return View();
         }
 
@@ -75,10 +73,9 @@ namespace EqUiWebUi.Controllers
         {
             var startdate = DateTime.Now.Date.AddDays(daysback*-1);
             GADATAEntities gADATAEntities = new GADATAEntities();
-            List<TipwearBeforeChange> data = (from tipwearBeforeChange in gADATAEntities.TipwearBeforeChange
-                                              where tipwearBeforeChange.TipchangeTimestamp > startdate
-                                              select tipwearBeforeChange
-                                              ).ToList();
+            IQueryable<TipwearBeforeChange> data = from tipwearBeforeChange in gADATAEntities.TipwearBeforeChange
+                                                   where tipwearBeforeChange.TipchangeTimestamp > startdate
+                                                   select tipwearBeforeChange;
             return View(data);
         }
 
@@ -86,7 +83,6 @@ namespace EqUiWebUi.Controllers
         [HttpGet]
         public ActionResult PlanTipChange()
         {
-
             return View();
         }
 
@@ -94,27 +90,25 @@ namespace EqUiWebUi.Controllers
         public ActionResult _TipsToChange(string locationFilter, int minWear = 0, int minParts = 0, int maxDress = 1000)
         {
             GADATAEntities gADATAEntities = new GADATAEntities();
-            List<TipMonitor> data = (from tipMonitor in gADATAEntities.TipMonitor
-                                     where 
-                                     (   tipMonitor.pWear > minWear
-                                    //  || tipMonitor.nRcars < minParts
-                                      || tipMonitor.nDress > maxDress
-                                     )
-                                     && tipMonitor.LocationTree.Contains(locationFilter)
-                                              select tipMonitor
-                                              ).ToList();
+            IQueryable<TipMonitor> data = from tipMonitor in gADATAEntities.TipMonitor
+                                          where
+                                          (tipMonitor.pWear > minWear
+                                           //  || tipMonitor.nRcars < minParts
+                                           || tipMonitor.nDress > maxDress
+                                          )
+                                          && tipMonitor.LocationTree.Contains(locationFilter)
+                                          select tipMonitor;
             return PartialView(data);
         }
         //get filterd list of wich need to be change
         public ActionResult _TipsChanged(string locationFilter, int minWear = 0, int minParts = 0)
         {
             GADATAEntities gADATAEntities = new GADATAEntities();
-            List<TipMonitor> data = (from tipMonitor in gADATAEntities.TipMonitor
-                                     where tipMonitor.pWear > minWear
-                                     && tipMonitor.nRcars > minParts
-                                     && tipMonitor.LocationTree.Contains(locationFilter)
-                                     select tipMonitor
-                                              ).ToList();
+            IQueryable<TipMonitor> data = from tipMonitor in gADATAEntities.TipMonitor
+                                          where tipMonitor.pWear > minWear
+                                          && tipMonitor.nRcars > minParts
+                                          && tipMonitor.LocationTree.Contains(locationFilter)
+                                          select tipMonitor;
             return PartialView(data);
         }
     }

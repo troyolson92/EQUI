@@ -102,10 +102,10 @@ namespace EQUIToolsLib
 
         void bw_DoWork(object sender, DoWorkEventArgs e)
         {
-            cb_worktype.DataSource = lMaximoComm.oracle_runQuery("select worktype from maximo.worktype;");
-            cb_status.DataSource = lMaximoComm.oracle_runQuery("select distinct status from maximo.wpeditsetting");
-            cb_owner.DataSource = lMaximoComm.oracle_runQuery("select personid from maximo.person where locationsite = 'VCG'");
-            cb_ownergroup.DataSource = lMaximoComm.oracle_runQuery("select persongroup from maximo.persongroup");
+            cb_worktype.DataSource = lMaximoComm.Oracle_runQuery("select worktype from maximo.worktype;");
+            cb_status.DataSource = lMaximoComm.Oracle_runQuery("select distinct status from maximo.wpeditsetting");
+            cb_owner.DataSource = lMaximoComm.Oracle_runQuery("select personid from maximo.person where locationsite = 'VCG'");
+            cb_ownergroup.DataSource = lMaximoComm.Oracle_runQuery("select persongroup from maximo.persongroup");
         }
 
         void getFromMx()
@@ -131,7 +131,7 @@ where
 WORKORDER.WONUM LIKE  '{0}'
             ", tb_workorder.Text);
             //
-            dtWO = lMaximoComm.oracle_runQuery(cmdWO);
+            dtWO = lMaximoComm.Oracle_runQuery(cmdWO);
             if (dtWO.Rows.Count == 0) { Debugger.Message("no result from query"); return; ; }
             //
             tb_location.Text = dtWO.Rows[0].Field<String>("LOCATION");
@@ -168,7 +168,7 @@ WORKORDER.WONUM LIKE  '{0}'
             left join MAXIMO.PERSON ON PERSON.PERSONID = LABTRANS.LABORCODE
             where LABTRANS.REFWO  = '{0}'
             ", tb_workorder.Text);
-            dtLabor = lMaximoComm.oracle_runQuery(cmdLabor);;
+            dtLabor = lMaximoComm.Oracle_runQuery(cmdLabor);;
             dg_labact.DataSource = dtLabor;
             //
         }

@@ -1,5 +1,4 @@
-AAOSR;Alert from: 338010R02
-***********
-BarrelLow
-Dispense Barrel LOW since @2018-02-16 11:59:25
+EQUI_Test;Alert from: 339120ZM01ZeissMeas.AC_QStop
+QStopZeis
+Qstop op zeis station
 

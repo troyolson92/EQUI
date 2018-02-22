@@ -215,9 +215,9 @@ namespace EqUiWebUi.Controllers
         public ActionResult BodyTrackWebgrid()
         {
             GADATAEntities gADATAEntities = new GADATAEntities();
-            List<Bodytracking> data = (from bodytracking in gADATAEntities.Bodytracking
-                                       select bodytracking
-                                       ).ToList();
+            IQueryable<Bodytracking> data = from bodytracking in gADATAEntities.Bodytracking
+                                            select bodytracking;
+
             return View(data);
         }
 
