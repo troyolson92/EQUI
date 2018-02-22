@@ -177,7 +177,7 @@ namespace ExcelAddInEquipmentDatabase
         {
             if (cb_GADTA_procedures.Text != "")
             {
-                lGadataComm.make_DSN();
+                lGadataComm.Make_DSN();
                 string Query = "use gadata EXEC " + cb_GADTA_procedures.Text.Trim();
                 string ODBCconn = lGadataComm.GADATAconnectionString; 
                 string ConnectionName = cb_GADTA_procedures.Text.Split('.')[2].Trim();
@@ -199,7 +199,7 @@ namespace ExcelAddInEquipmentDatabase
         }
         private void cb_GADATA_procedures_SelectedIndexChanged(object sender, EventArgs e)
         {
-            lb_GADATA_get_SpParams(lGadataComm.get_GADATA_sp_parameters(cb_GADTA_procedures.Text));
+            lb_GADATA_get_SpParams(lGadataComm.Get_GADATA_sp_parameters(cb_GADTA_procedures.Text));
         }
         #endregion
 
@@ -229,7 +229,7 @@ namespace ExcelAddInEquipmentDatabase
               ProcMngr.MX7_ActiveConnectionToProcMngr(lMaximoQuery.oracle_get_QueryParms_from_GADATA(cb_MX7_QueryNames.Text, lMaximoComm.SystemMX7), "It does not exist");
               Query = ProcMngr.MX7_BuildQuery_ProcMngrToActiveConnection(lMaximoQuery.oracle_get_QueryTemplate_from_GADATA(cb_MX7_QueryNames.Text, lMaximoComm.SystemMX7));
           }
-            lMaximoComm.make_DSN(lMaximoComm.SystemMX7);
+            lMaximoComm.Make_DSN(lMaximoComm.SystemMX7);
             string ODBCconn = lMaximoComm.MX7connectionString;
             string ConnectionName = cb_MX7_QueryNames.Text;
             create_ODBC_connection(Query, ODBCconn, ConnectionName);
@@ -304,7 +304,7 @@ namespace ExcelAddInEquipmentDatabase
                 (WORKORDER.location LIKE '%99070R01%') 
                 order by REPORTDATE
                     ";
-            lMaximoComm.make_DSN(lMaximoComm.SystemMX3);
+            lMaximoComm.Make_DSN(lMaximoComm.SystemMX3);
             string ODBCconn = @"ODBC;DSN=MVCGP2;Description= MVCGP2;UID=maximo_ro;PWD=maximo_ro;";
             string ConnectionName = "MX3Test";
             create_ODBC_connection(Query, ODBCconn, ConnectionName);

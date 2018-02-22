@@ -32,6 +32,11 @@
     width: 98%;
 }
 
+/*for grid filter popups to make them on top of modals.*/
+.mvc-grid-popup {
+    z-index: 2000;
+}
+
 /*max with for popovers*/
 .popover {
     max-width: 100%; /* Max Width of the popover (depending on the container!) */
@@ -40,12 +45,6 @@
 /*used in grid row styleing*/
 
 /*Status styles*/
-
-.TableStatusWGKTESTTEST:disabled { /*like this you can make a style inactive! */
-    background-color: #d606ff;
-}
-
-
 .TableStatusWGK {
     background-color: #d606ff;
 }
@@ -76,22 +75,23 @@
 }
 
 .TableLogtypeSLOWSpeed {
+    background-color: #d851ff; /*set the background color in here so if the browser does not support animation we still have style*/
     -webkit-animation: blinkPink 1s 0.5s infinite alternate linear; /*chrome*/
     animation: blinkPink 1s 0.5s infinite alternate linear; /*IE 10+ (not working for me)*/
 }
 
 .TableLogtypeBarrelLOW {
+    background-color: #49d112;
     -webkit-animation: PulseGreen 5s infinite alternate linear;
-    animation: PulseGreen 5s infinite alternate linear;
 }
 
 @-webkit-keyframes blinkPink {
     0% {
-        background-color: transparent;
+        background-color: #d851ff;
     }
 
     100% {
-        background-color: #d851ff;
+        background-color: transparent;
     }
 }
 
@@ -110,5 +110,36 @@
 
     100% {
         background-color: #49d112;
+    }
+}
+
+/*for tipwear*/
+.TableTipwearValueHigh {
+    background-color: #f21a1a;
+    -webkit-animation: PulseRed 3s infinite;
+}
+
+@-webkit-keyframes PulseRed {
+    0% {
+        background-color: #f21a1a;
+    }
+
+    100% {
+        background-color: transparent;
+    }
+}
+
+.TableTipwearValueDanger {
+    background-color: #f60c0c;
+    -webkit-animation: PulseRedFast 0.6s infinite;
+}
+
+@-webkit-keyframes PulseRedFast {
+    0% {
+        background-color: #f60c0c;
+    }
+
+    100% {
+        background-color: transparent;
     }
 }

@@ -29,7 +29,7 @@ namespace EQUICommunictionLib
         public string DsnMX7 { get { return "MAXIMO7"; } }
         public string DsnMX3 { get { return "MAXIMO3"; } }
 
-        public void make_DSN(string System)
+        public void Make_DSN(string System)
         {
             if (System == SystemMX7)
             {
@@ -47,7 +47,7 @@ namespace EQUICommunictionLib
         }
 
         //
-        public DataTable oracle_runQuery(string Query, bool RealtimeConn = false)
+        public DataTable Oracle_runQuery(string Query, bool RealtimeConn = false)
         {
             OracleConnection activeConn = MaximoReportingConn;
             if (RealtimeConn) { activeConn = MaximoRealtimeConn; }
@@ -114,7 +114,7 @@ namespace EQUICommunictionLib
             }
         }
 
-        public string getMaximoDetails(string wonum)
+        public string GetMaximoDetails(string wonum)
         {
             string cmdFAILUREREMARK = (@"
                 select  NVL2(LD.LDTEXT, LD.LDTEXT, '') LDTEXT
@@ -170,10 +170,10 @@ namespace EQUICommunictionLib
             string newline = "<p></p>";
             sb.AppendLine(StringToHTML_Table("LONGDESCRIPTION", GetClobMaximo7(cmdLONGDESCRIPTION))).AppendLine(newline);
             sb.AppendLine(StringToHTML_Table("FAILUREREMARK", GetClobMaximo7(cmdFAILUREREMARK))).AppendLine(newline);
-            sb.AppendLine(StringToHTML_Table("LABOR", DtToHTML_Table(oracle_runQuery(cmdLabor)))).AppendLine(newline);
-            sb.AppendLine(StringToHTML_Table("WORKLOG", DtToHTML_Table(oracle_runQuery(cmdWorkLog)))).AppendLine(newline);
+            sb.AppendLine(StringToHTML_Table("LABOR", DtToHTML_Table(Oracle_runQuery(cmdLabor)))).AppendLine(newline);
+            sb.AppendLine(StringToHTML_Table("WORKLOG", DtToHTML_Table(Oracle_runQuery(cmdWorkLog)))).AppendLine(newline);
 
-            DataTable dt = oracle_runQuery(cmdWorkLog);
+            DataTable dt = Oracle_runQuery(cmdWorkLog);
 
             //
             return sb.ToString();

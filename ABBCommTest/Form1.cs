@@ -83,7 +83,7 @@ namespace ABBCommTest
         }
 
         //add controllers that are exposed to the scanner
-        private void handleScanner()
+        private void HandleScanner()
         {
             scanner.Scan();
             ControllerInfoCollection controllers = scanner.Controllers;
@@ -96,7 +96,7 @@ namespace ABBCommTest
         }
 
         //construct string to make CFG file to load paramaters.
-        private string makeNFSConfig(string Robot, string UserId, string GroupId, string BasePath, string sharepath)
+        private string MakeNFSConfig(string Robot, string UserId, string GroupId, string BasePath, string sharepath)
         {
             string nfsConfigScelaton = @"
 SIO:CFG_1.0:6:1::
@@ -132,7 +132,7 @@ COM_APP:
                 //check file does not exist on local machine
                 if (File.Exists(tempdir+NFSFilename)) { File.Delete(tempdir+NFSFilename); }
                 //build config file on local machine 
-                File.WriteAllText(tempdir + NFSFilename, makeNFSConfig(controller_name, userID, GroupID, @"/ROBOTBCK/robot_ga/IRC5-NGAC/", @"/ROBOTBCK/IRC5-NGAC/IRC5-NGAC_SHARE/"));
+                File.WriteAllText(tempdir + NFSFilename, MakeNFSConfig(controller_name, userID, GroupID, @"/ROBOTBCK/robot_ga/IRC5-NGAC/", @"/ROBOTBCK/IRC5-NGAC/IRC5-NGAC_SHARE/"));
             }
             catch (Exception ex)
             {
@@ -338,7 +338,7 @@ COM_APP:
                          rd = controller.Rapid.GetRapidData("T_ROB1", modulename.Split('.')[0], refVar);
                          row.Cells[dataGridView1.Columns["Version"].Index].Value = rd.Value.ToString();
                     }
-                    catch (Exception ex)
+                    catch 
                     {
                         row.Cells[dataGridView1.Columns["VersionOK"].Index].Value = "NOT FOUND";
                         return;
@@ -642,7 +642,7 @@ COM_APP:
             }
         }
         //check configuration of robot
-        private bool checkNFSconfig(ControllerInfo ci, DataGridViewRow row)
+        private bool CheckNFSconfig(ControllerInfo ci, DataGridViewRow row)
         {
             this.controller = ControllerFactory.CreateFrom(ci);
             this.controller.Logon(UserInfo.DefaultUser);
@@ -666,11 +666,11 @@ COM_APP:
         }
 
         //buttons
-        private void btn_scanNetwork_Click(object sender, EventArgs e)
+        private void Btn_scanNetwork_Click(object sender, EventArgs e)
         {
-            handleScanner();
+            HandleScanner();
         }
-        private void btn_writeNFS_Click(object sender, EventArgs e)
+        private void Btn_writeNFS_Click(object sender, EventArgs e)
         {
             foreach (DataGridViewRow row in dataGridView1.SelectedRows)
             {
@@ -685,7 +685,7 @@ COM_APP:
                 if (scanner.TryFind(new Guid(row.Cells[dataGridView1.Columns["SystemId"].Index].Value.ToString()), out ci))
                 {
                     //check if robot needs config
-                    if (checkNFSconfig(ci, row))
+                    if (CheckNFSconfig(ci, row))
                     {
                        row.Cells[dataGridView1.Columns["ConfIsOK"].Index].Value = "OK";
 

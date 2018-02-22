@@ -73,8 +73,8 @@ namespace ExcelAddInEquipmentDatabase
             //check here for offline mode. (disabels Querys)
 
             //force the DSN connection to the host system
-            lGadataComm.make_DSN();
-            lMaximoComm.make_DSN(lMaximoComm.SystemMX7);
+            lGadataComm.Make_DSN();
+            lMaximoComm.Make_DSN(lMaximoComm.SystemMX7);
             //find connections in wb
             dd_connections_update();
             //fill with templates

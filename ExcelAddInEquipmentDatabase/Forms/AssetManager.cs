@@ -138,7 +138,7 @@ LEFT JOIN MAXIMO.LOCHIERARCHY TEAM ON (AREA.PARENT = TEAM.LOCATION AND TEAM.SYST
 --WHERE LOCATIONCTE.CHILDREN = 0 
 )
             ";
-           tableFromMx7 = lMaximoComm.oracle_runQuery(strSqlGetFromMaximo);
+           tableFromMx7 = lMaximoComm.Oracle_runQuery(strSqlGetFromMaximo);
            //clear destination table  in GADATA
            string CmdDeleteTableData = @"DELETE FROM [Equi].[ASSETS_fromMX7] FROM [Equi].[ASSETS_fromMX7]";
            lGadataComm.RunCommandGadata(CmdDeleteTableData,true);

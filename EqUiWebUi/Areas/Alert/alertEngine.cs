@@ -323,22 +323,9 @@ namespace EqUiWebUi.Areas.Alert
                     //not implemented
                 }
 
-
-                //send SMS 
-                //build message 
+                //build SMS message 
                 StringBuilder sbSMS = new StringBuilder();
-                //alert.location is the full location tree. take only the act location
-                string location;
-                try
-                {
-                    location = alert.location.Split('>')[alert.location.Split('>').Count() - 1];
-                }
-                catch
-                {
-                    location = alert.location;
-                }
-                sbSMS.Append("Alert from: ").AppendLine(location);
-                sbSMS.AppendLine("***********");
+                sbSMS.Append("Alert from: ").AppendLine(alert.location);
                 sbSMS.AppendLine(trigger.alertType);
                 sbSMS.AppendLine(alert.info);
                 //USE HANGFIRE to send it!

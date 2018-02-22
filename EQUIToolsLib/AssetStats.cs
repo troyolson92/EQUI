@@ -326,8 +326,8 @@ ORDER BY WORKORDER.STATUSDATE DESC
             #endregion
             //fill dataset with all errors
             dtGadata = lGdataComm.RunQueryGadata(strSqlGetFromGadata);
-            dtMaximoGraph = lMaximoComm.oracle_runQuery(strSqlGetFromMaximoGraph);
-            dtMaximoGrid = lMaximoComm.oracle_runQuery(strSqlGetFromMaximoDataGrid);
+            dtMaximoGraph = lMaximoComm.Oracle_runQuery(strSqlGetFromMaximoGraph);
+            dtMaximoGrid = lMaximoComm.Oracle_runQuery(strSqlGetFromMaximoDataGrid);
         }
 
         private void built_Chart() { built_Chart(false); }
@@ -644,7 +644,7 @@ ORDER BY WORKORDER.STATUSDATE DESC
             {
                 if (row.Cells[0].Value != null)
                 {
-                    webBrowser1.DocumentText = lMaximoComm.getMaximoDetails(row.Cells["WONUM"].Value.ToString());
+                    webBrowser1.DocumentText = lMaximoComm.GetMaximoDetails(row.Cells["WONUM"].Value.ToString());
                 }
             }
         }

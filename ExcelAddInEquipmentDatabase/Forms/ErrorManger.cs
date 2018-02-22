@@ -340,7 +340,7 @@ STRUC.CLASSIFICATIONID like 'U%'
 ";
             
              MaximoComm lMaximoComm = new MaximoComm();
-             DataTable MaximoClassifications = lMaximoComm.oracle_runQuery(QueryMaximoClassifications);
+             DataTable MaximoClassifications = lMaximoComm.Oracle_runQuery(QueryMaximoClassifications);
             //update gadata side with new items.
              using (applDataTableAdapters.c_ClassificationTableAdapter adapter = new applDataTableAdapters.c_ClassificationTableAdapter())
              {

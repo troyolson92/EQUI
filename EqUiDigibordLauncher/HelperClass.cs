@@ -49,7 +49,7 @@ namespace EqUiDigibordLauncher
     {
         int ChromeStartDelay = 3000;
         string chromePath = @"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe";
-        string chromeArguments = "--new-window";
+        string chromeArguments = "--new-window --incognito";
 
         public void LaunchChrome(string Url = "HTTP://EQUI", int MonitorNum = 1)
         {

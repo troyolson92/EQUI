@@ -131,7 +131,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
                 //
                 lActConn.System = lGadataComm.DsnGADATA;
                 lActConn.ProcedureName = lActConn.get_storedProcedureFromQuery(lActConn.Query);
-                GADATA_ActiveConnectionToProcMngr(lGadataComm.get_GADATA_sp_parameters(lActConn.ProcedureName), lActConn.Query);
+                GADATA_ActiveConnectionToProcMngr(lGadataComm.Get_GADATA_sp_parameters(lActConn.ProcedureName), lActConn.Query);
             }
             else
             {

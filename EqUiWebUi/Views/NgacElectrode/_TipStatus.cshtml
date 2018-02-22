@@ -21,5 +21,5 @@
 }).Sortable().Pageable(pager =>
 {
     pager.RowsPerPage = 20;
-}).Empty("No data found").Css("table-hover")
+}).Empty("No data found").Css("table-hover").RowCss(row => MyRowStyling.getRowStyleByWearValue(row.pWear,row.nDress))
 

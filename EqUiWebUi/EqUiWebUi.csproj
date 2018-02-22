@@ -696,6 +696,8 @@
     <Content Include="Areas\Alert\Views\c_smsSystem\Details.cshtml" />
     <Content Include="Areas\Alert\Views\c_smsSystem\Edit.cshtml" />
     <Content Include="Areas\Alert\Views\c_smsSystem\Index.cshtml" />
+    <Content Include="Areas\Alert\Views\Alert\AASPOTAlertList.cshtml" />
+    <Content Include="Areas\Alert\Views\Alert\_Details.cshtml" />
     <None Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.svg" />
