@@ -12,10 +12,10 @@
         <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
     </div>
     <div class="panel-body">
-        <input id="ScreenMasterBtnFullRefresh" class="btn btn-warning" type="button" value="FullRefresh" />
+        <input id="ScreenMasterBtnFullRefresh" class="btn btn-warning JQresultTriggerBtn" type="button" value="FullRefresh" href="@Url.Action("FullRefresh")" />
         Send Refresh command to all screens. (full page reload)
         <p></p>
-        <input id="ScreenMasterBtnIframeRefresh" class="btn btn-warning" type="button" value="IframeRefresh" />
+        <input id="ScreenMasterBtnIframeRefresh" class="btn btn-warning JQresultTriggerBtn" type="button" value="IframeRefresh" href="@Url.Action("Refresh")" />
         Send refresh command to all screens (Iframe reload)
     </div>
 </div>
@@ -44,7 +44,7 @@
         <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
     </div>
     <div class="panel-body">
-        <input id="ScreenMasterBtnSendUrl" class="btn btn-warning" type="button" value="SendUrl" />
+        <input id="ScreenMasterBtnSendUrl" class="btn btn-warning JQresultTriggerBtn" type="button" value="SendUrl" href="@Url.Action("DisplayPage", new { url = "http://equi", showtime = 10 })" />
         Send url to all screens
     </div>
 </div>
@@ -62,11 +62,5 @@
             maxHeight: null,             // set maximum height of editor
             focus: false                  // set focus to editable area after initializing summernote
         });
-
-    ActionOnClick("ScreenMasterBtnFullRefresh","@Url.Action("FullRefresh")");
-    ActionOnClick("ScreenMasterBtnIframeRefresh", "@Url.Action("Refresh")");
-    ActionOnClick("ScreenMasterBtnSendUrl", "@Url.Action("DisplayPage", new { url = "http://equi", showtime = 10 })");
-
-
     </script>
 }

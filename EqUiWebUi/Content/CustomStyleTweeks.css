@@ -129,6 +129,63 @@
     }
 }
 
+.PulseBlueOnce {
+    -webkit-animation: PulseBlue 3s;
+}
+
+@-webkit-keyframes PulseBlue {
+    0% {
+        background-color: #127bf1;
+    }
+
+    100% {
+        background-color: transparent;
+    }
+}
+
+.PulseBlueRepeat {
+    -webkit-animation: PulseBlue 2s infinite;
+}
+
+@-webkit-keyframes PulseBlue {
+    0% {
+        background-color: #1f97f2;
+    }
+
+    100% {
+        background-color: transparent;
+    }
+}
+
+.PulseGreenOnce {
+    -webkit-animation: PulseGreen 3s;
+}
+
+@-webkit-keyframes PulseGreen {
+    0% {
+        background-color: #49d112;
+    }
+
+    100% {
+        background-color: transparent;
+    }
+}
+
+.PulseRedRepeat {
+    background-color: #f21a1a;
+    -webkit-animation: PulseBlue 3s infinite;
+}
+
+@-webkit-keyframes PulseRed {
+    0% {
+        background-color: #f21a1a;
+    }
+
+    100% {
+        background-color: transparent;
+    }
+}
+
 .TableTipwearValueDanger {
     background-color: #f60c0c;
     -webkit-animation: PulseRedFast 0.6s infinite;
