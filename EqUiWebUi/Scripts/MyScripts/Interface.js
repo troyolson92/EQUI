@@ -1,6 +1,7 @@
 ﻿//enable general interface
 function initInterface() {
     EnablePannelCollaps();
+    EnableJQresultTriggerBtn();
 }
 
 //script for subscribing to pannel colaps
@@ -19,29 +20,38 @@ function EnablePannelCollaps() {
     })
 }
 
+//for blind fired buttons with feedback.
+function EnableJQresultTriggerBtn() {
+    $(".JQresultTriggerBtn").click(function (e) {
+        e.preventDefault();
+        var caller = this;
+        $(caller).removeClass('PulseBlueRepeat');
+        $(caller).removeClass('PulseGreenOnce');
+        $(caller).removeClass('PulseRedRepeat');
+        $(caller).addClass('PulseBlueOnce');
+        $.ajax({
+            type: "GET",
+            url: this.href,
+            success: function (result) {
+                console.log("SUCCES");
+                //console.log(result);
+                $(caller).removeClass('PulseBlueRepeat');
+                $(caller).addClass('PulseGreenOnce');
+            },
+            error: function (result) {
+                console.log("FAIL");
+                //console.log(result);
+                $(caller).removeClass('PulseBlueRepeat');
+                $(caller).addClass('PulseRedRepeat');
+            }
+        });
+    });
+}
+
+
 //get part from querystring
 function qs(key) {
     key = key.replace(/[*+?^$.\[\]{}()|\\\/]/g, "\\$&"); // escape RegEx meta chars
     var match = location.search.match(new RegExp("[?&]" + key + "=([^&]+)(&|$)"));
     return match && decodeURIComponent(match[1].replace(/\+/g, " "));
-}
-
-//for calling a blind controller action from button click
-function ActionOnClick(ButtonId,action) {
-    $("#" + ButtonId).click(function (e) {
-        e.preventDefault();
-        $("#" + ButtonId).removeClass("btn-warning");
-        $("#" + ButtonId).removeClass("btn-success");
-        $.ajax({
-            url: action,
-            success: function () {
-                console.log(ButtonId + " Succes")
-                $("#" + ButtonId).addClass("btn-success");
-            },
-            error: function (ex) {
-                console.log(ButtonId + " ERROR") + console.log(ex);
-                $("#" + ButtonId).addClass("btn-warning");
-            }
-        });
-    });
 }

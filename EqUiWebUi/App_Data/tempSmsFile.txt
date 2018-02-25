@@ -1,4 +1,4 @@
-EQUI_Test;Alert from: 339120ZM01ZeissMeas.AC_QStop
-QStopZeis
-Qstop op zeis station
+EQUI_test;Alert from: 336010R07
+SlowSpeed
+speed not 100%!! Value: 5 since @2018-02-25 12:53:08
 
