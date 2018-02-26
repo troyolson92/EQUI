@@ -46,20 +46,18 @@ namespace EqUiWebUi.Controllers
 
         //init background work jobs.
         [Authorize(Roles = "Administrator")]
-        public ActionResult ConfiureBackgroundJobs()
+        public void ConfiureBackgroundJobs()
         {
             Backgroundwork backgroundwork = new Backgroundwork();
             backgroundwork.configHangfireJobs();
-            return View();
         }
 
         //Fire background jobs once
         [Authorize(Roles = "Administrator")]
-        public ActionResult FireBackgroundJobs()
+        public void FireBackgroundJobs()
         {
             Backgroundwork backgroundwork = new Backgroundwork();
             backgroundwork.configHangfireJobs();
-            return View();
         }
 
         //temp for ub12 (top left corner of big screen need to make this custom for a user)
