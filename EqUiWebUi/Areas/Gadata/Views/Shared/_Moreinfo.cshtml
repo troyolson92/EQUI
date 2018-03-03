@@ -1,0 +1,54 @@
+﻿@model EqUiWebUi.Models.LogInfo
+
+<div class="modal-header">
+    <div class="row">
+        <div class="col-sm-11">
+            <h4>Log helper</h4>
+        </div>
+        <div class="col-sm-1">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="modal-body">
+    @Html.Partial("../Chart/_getErrorTrend", Model)
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h4 class="panel-title">@Model.logtype details for logcode: @Model.errornum  logtext: @Model.logtext</h4>
+            <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+        </div>
+        <div class="panel-body">
+            @Html.Raw(Model.logDetails)
+        </div>
+    </div>
+
+    @Html.Action("_workordersOnLocation", "Workorder", new { area = "Maximo_ui", location = Model.location })
+
+</div>
+
+<div class="modal-footer">
+        <h4 class="modal-title">These tools might also proof useful</h4>
+        <p>
+            @if (Model.logtype == "ALERT" || Model.location.Contains("WS") || Model.location.Contains("JG") || Model.location.Contains("WT"))
+            {
+                MyEquiToolkit.SbcuTool(Model.location);
+            }
+
+            @if (Model.location != "")
+            {
+                MyEquiToolkit.MaximoToolPgaGeo(Model.location);
+                MyEquiToolkit.MaximoToolWorkoders(Model.location);
+                MyEquiToolkit.MaximoToolParts(Model.location);
+            }
+
+            @if (Model.errornum.ToString() != "" && (Model.logtype == "BREAKDOWN" || Model.logtype == "ERROR" || Model.logtype == "WARNING"
+                   || Model.logtype == "ControllerEvent" || Model.logtype == "ErrDispLog" || Model.logtype == "SHIFTBOOK"))
+            {
+                MyEquiToolkit.ErrorTrentTool(Model.location, Model.logtype, Model.errornum, Model.logtext);
+            }
+        </p>
+    </div>

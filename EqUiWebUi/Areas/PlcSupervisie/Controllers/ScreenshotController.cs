@@ -15,13 +15,15 @@ namespace EqUiWebUi.Areas.PlcSupervisie.Controllers
         }
 
         //display a list of jpg pictures
-        public ActionResult Carousel(int? ReloadInterval)
+        //ReloadInterval Set reload time for refrehsing full page
+        //AutoCarousel rate to change out pictures if -1 no autorotate
+        public ActionResult Carousel(int? ReloadInterval, int AutoCarousel = -1)
         {
             if (ReloadInterval.HasValue)
             {
                 Response.AddHeader("Refresh", ReloadInterval.ToString());
             }
-
+            ViewBag.AutoCarousel = AutoCarousel;
             return View();
         }
     }

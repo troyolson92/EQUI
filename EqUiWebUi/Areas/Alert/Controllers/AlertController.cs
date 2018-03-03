@@ -11,18 +11,12 @@ namespace EqUiWebUi.Areas.Alert.Controllers
 {
     public class AlertController : Controller
     {
-        //Test fire sms message 
-        public void TestSendSms()
-        {
-            Log.Debug("Test sms");
-            SmsComm smsComm = new SmsComm();
-            smsComm.SendSMS("EQUI_TEST", "This is a test message " + System.DateTime.Now.ToString());
-        }
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         //Rewrite hangfire configureAtion
         public void ConfigureHangfire()
         {
-            Log.Info("Hangfire config for alerts has be rewritten");
+            log.Info("Hangfire config for alerts has be rewritten");
             AlertEngine alertEngine = new AlertEngine();
             //do cleanup in hangfire for triggers that are not active
             alertEngine.ClearHanfireAlertwork();
@@ -33,7 +27,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
         //stop al alert processing in hangefire
         public void StopHanfire()
         {
-            Log.Info("Hangfire config for alerts has been stopped!");
+            log.Info("Hangfire config for alerts has been stopped!");
             AlertEngine alertEngine = new AlertEngine();
             alertEngine.ClearHanfireAlertwork(true);
         }

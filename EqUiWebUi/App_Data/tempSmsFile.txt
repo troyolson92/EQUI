@@ -1,4 +1,4 @@
-EQUI_test;Alert from: 336010R07
+EQUI_test;Alert from: 338051R03
 SlowSpeed
-speed not 100%!! Value: 5 since @2018-02-25 12:53:08
+speed not 100%!! Value: 25 since @2018-03-03 16:50:03
 

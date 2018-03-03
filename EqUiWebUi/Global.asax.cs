@@ -7,13 +7,17 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using EqUiWebUi.Areas.user_management.Models;
 
+[assembly: log4net.Config.XmlConfigurator(Watch = true)]
+
 namespace EqUiWebUi
 {
     public class MvcApplication : System.Web.HttpApplication
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         protected void Application_Start()
         {
-            Log.Warn("Site startup");
+            log.Warn("Site startup");
             //
             AreaRegistration.RegisterAllAreas();
             //
@@ -51,7 +55,7 @@ namespace EqUiWebUi
             var routeData = new RouteData();
             var action = "Index";
 
-            Log.Error("Application error for: " + httpContext.User.Identity.Name, ex);
+            log.Error("Application error for: " + httpContext.User.Identity.Name, ex);
 
             if (ex is HttpException)
             {
@@ -107,7 +111,7 @@ namespace EqUiWebUi
             {
                 _sessions.Remove(Session.SessionID);
             }
-            
+
         }
 
         //on user Autherize.
@@ -131,20 +135,19 @@ namespace EqUiWebUi
                         // set init done
                         Session["InitDone"] = true;
                     }
-                    Log.Info(string.Format("Session init done for: {0}  id: {1}", user.username, Session.SessionID.ToString()));
+                    log.Info(string.Format("Session init done for: {0}  id: {1}", user.username, Session.SessionID.ToString()));
                 }
             }
             catch (Exception ex)
             {
-                Log.Error("TEMP session state not available", ex);
+                log.Error("TEMP session state not available", ex);
             }
         }
 
         //returns a list of all active sessions.
-        public List<string> Sessions()
+        public static List<string> Sessions()
         {
-                return _sessions;
+            return _sessions;
         }
-
     }
 }

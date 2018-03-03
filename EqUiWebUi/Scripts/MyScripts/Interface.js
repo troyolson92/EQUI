@@ -31,7 +31,7 @@ function EnableJQresultTriggerBtn() {
         $(caller).addClass('PulseBlueOnce');
         $.ajax({
             type: "GET",
-            url: this.href,
+            url: $(this).attr('href'),
             success: function (result) {
                 console.log("SUCCES");
                 //console.log(result);

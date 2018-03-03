@@ -1,0 +1,87 @@
+﻿@*set title*@
+@{
+    ViewBag.Title = "EQpluginDefaultNGACWebgrid";
+}
+
+<div id="EQpluginDefaultNGACSpincontainer" style="position:relative">
+    <div id="EQpluginDefaultNGACWebgridGrid" class="mvc-grid"></div>
+</div>
+
+@*render popuover modal*@
+<div id="MyModal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-content">Loading....</div>
+</div>
+
+@section scripts{
+    <!--ploegrapport script-->
+    <script type="text/javascript">
+    var EQpluginDefaultNGACGridspinner = new Spinner();
+    //render grid and subscrible to row clicked events
+    $('#EQpluginDefaultNGACWebgridGrid').mvcgrid({
+        sourceUrl: '@Url.Action("_EQpluginDefaultNGAC")', // Grid source url string
+        //query: '?search=test', // Grid query string
+        requestType: 'get', // Ajax grid request type
+        data: {
+                // Ajax grid query data
+        },
+        filters: {
+                // Grid filters to extend or use
+        },
+        reload: true, // Grid reload indicator
+        rowClicked: function (row, data, e) {
+                var urlMoreInfo = '@Url.Action("_Moreinfo", "Table")?location=' + encodeURIComponent(data.Location)
+                            + '&errornum=' + encodeURIComponent(data.Logcode)
+                            + '&refid=' + encodeURIComponent(data.refId)
+                            + '&logtype=' + encodeURIComponent(data.Logtype)
+                            + '&logtext=' + encodeURIComponent(data.logtext)
+                    //launch modal
+                $('#MyModal').removeData('bs.modal');
+                $('#MyModal').html('<div class="modal-content">Loading....</div>');
+                $('#MyModal').modal({ remote: urlMoreInfo });
+        },
+        reloadStarted: function () {
+            EQpluginDefaultNGACGridspinner.spin(document.getElementById('EQpluginDefaultNGACSpincontainer'));
+                // this - grid instance which invoked the event
+        },
+        reloadEnded: function () {
+            EQpluginDefaultNGACGridspinner.stop();
+                // this - grid instance which invoked the event
+        },
+        reloadFailed: function (result) {
+            EQpluginDefaultNGACGridspinner.stop();
+           $("#EQpluginDefaultNGACWebgridGrid").html("Error while loading!!!");
+                // this - grid instance which invoked the event
+                // result - failed ajax response result
+        }
+    });
+
+        //on modal close
+        $('#MyModal').on('hidden.bs.modal', function (e) {
+            $('#MyModal').html('<div class="modal-content">No content</div>');
+        });
+
+        //full with screen
+        $("#allcontent").removeClass("body-content");
+        $("#allcontent").removeClass("container");
+    </script>
+
+    <!--Handle signal R reload-->
+    <script src="~/Scripts/jquery.signalR-2.2.2.js"></script>
+    <script src="~/signalr/js"></script>
+    <script>
+        $.connection.hub.start()
+            .done(function () {
+                console.log("EQpluginDefaultNGACWebgridGrid SignalR connected");
+                $.connection.dataRefreshHub.server.joinGroup("EQpluginDefaultNGAC");
+            })
+            .fail(function () { console.log("EQpluginDefaultNGACWebgridGrid SignalR connect ERROR") });
+
+        //trigger full window reload
+        $.connection.dataRefreshHub.client.newData = function () {
+            console.log("EQpluginDefaultNGACWebgridGrid reload");
+            $('#EQpluginDefaultNGACWebgridGrid').mvcgrid({
+                reload: true
+            });
+        }
+    </script>
+}

@@ -156,6 +156,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Alert\Views\Shared\" />
+    <Folder Include="Areas\Gadata\Models\" />
     <Folder Include="Areas\Maximo_ui\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
@@ -210,6 +211,9 @@
       <DependentUpon>AlertModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Alert\SmsComm.cs" />
+    <Compile Include="Areas\Gadata\Controllers\TableController.cs" />
+    <Compile Include="Areas\Gadata\GadataAreaRegistration.cs" />
+    <Compile Include="Areas\Gadata\DataRefreshHub.cs" />
     <Compile Include="Areas\Maximo_ui\Controllers\MaximoController.cs" />
     <Compile Include="Areas\Maximo_ui\Controllers\WorkorderController.cs" />
     <Compile Include="Areas\Maximo_ui\Controllers\WorkorderDetailsController.cs" />
@@ -277,7 +281,6 @@
     <Compile Include="Controllers\SharepointController.cs" />
     <Compile Include="Controllers\SpcController.cs" />
     <Compile Include="Controllers\TableauController.cs" />
-    <Compile Include="Log.cs" />
     <Compile Include="Models\AAOSR_PloegRaport_Result.cs">
       <DependentUpon>GadataDatamodel.tt</DependentUpon>
     </Compile>
@@ -318,7 +321,6 @@
     </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="Controllers\DifftableController.cs" />
-    <Compile Include="Controllers\GadataController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -698,6 +700,16 @@
     <Content Include="Areas\Alert\Views\c_smsSystem\Index.cshtml" />
     <Content Include="Areas\Alert\Views\Alert\AASPOTAlertList.cshtml" />
     <Content Include="Areas\Alert\Views\Alert\_Details.cshtml" />
+    <Content Include="Areas\Gadata\Views\web.config" />
+    <Content Include="Areas\Gadata\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Gadata\Views\Table\_ploegRapport.cshtml" />
+    <Content Include="Areas\Gadata\Views\Table\PloegRapportWebgrid.cshtml" />
+    <Content Include="Areas\Gadata\Views\Shared\_Moreinfo.cshtml" />
+    <Content Include="Areas\Gadata\Views\Table\_EQpluginDefaultNGAC.cshtml" />
+    <Content Include="Areas\Gadata\Views\Table\_supervisie.cshtml" />
+    <Content Include="Areas\Gadata\Views\Table\BodyTrackWebgrid.cshtml" />
+    <Content Include="Areas\Gadata\Views\Table\EQpluginDefaultNGACWebgrid.cshtml" />
+    <Content Include="Areas\Gadata\Views\Table\SupervisieWebgrid.cshtml" />
     <None Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.svg" />
@@ -848,11 +860,7 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Difftable\Index.cshtml" />
-    <Content Include="Views\Gadata\PloegRapportWebgrid.cshtml" />
-    <Content Include="Views\Gadata\SupervisieWebgrid.cshtml" />
-    <Content Include="Views\Shared\_Moreinfo.cshtml" />
     <Content Include="Views\Dynamic\DynamicWebgrid.cshtml" />
-    <Content Include="Views\Gadata\StoWebgrid.cshtml" />
     <Content Include="Views\Tableau\logDetails.cshtml" />
     <Content Include="Views\Sharepoint\AddNewIusse.cshtml" />
     <Content Include="Views\Tableau\Index.cshtml" />
@@ -883,15 +891,10 @@
     <Content Include="Views\Spc\GetAlerts.cshtml" />
     <Content Include="Views\Chart\Index.cshtml" />
     <Content Include="Views\Chart\_getErrorTrend.cshtml" />
-    <Content Include="Views\Gadata\_ploegRapport.cshtml" />
-    <Content Include="Views\Gadata\_supervisie.cshtml" />
     <Content Include="Views\NgacElectrode\_TipStatus.cshtml" />
     <Content Include="Views\Home\Settings.cshtml" />
     <Content Include="Views\Home\UB12Home.cshtml" />
     <Content Include="Views\Shared\_MinimalLayout.cshtml" />
-    <Content Include="Views\Gadata\EQpluginDefaultNGACWebgrid.cshtml" />
-    <Content Include="Views\Gadata\_EQpluginDefaultNGAC.cshtml" />
-    <Content Include="Views\Gadata\BodyTrackWebgrid.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EQUICommunictionLib\EQUICommunictionLib.csproj">

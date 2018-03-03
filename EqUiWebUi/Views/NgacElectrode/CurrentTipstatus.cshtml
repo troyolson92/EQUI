@@ -1,59 +1,51 @@
-﻿
-
-@*set title*@
+﻿@*set title*@
 @{
     ViewBag.Title = "CurrentTipstatus";
 }
-@*html*@
-    <div class="panel panel-default">
-        <div class="panel-body">
-            @Html.Action("_TipStatus")
-        </div>
+<div id="TipstatusGridSpincontainer" style="position:relative">
+    <div id="TipstatusGrid" class="mvc-grid"></div>
+</div>
 
-        <div class="panel-footer">
-            <div class="row">
-                <div class="col-sm-6">
-                    <p class="pull-right" id="PushInfo"> Last data push: ????</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-@*scrip for playing sound based on row value.*@
-@*http://soundbible.com/grab.php?id=1252&type=mp3*@
-@*http://soundbible.com/grab.php?id=1377&type=mp3*@
-<script type="text/javascript">
-    $(document).ready(function () {
-        var bNeedToPlay = new Boolean(false);
-        var sound = new Audio(src = "http://soundbible.com/grab.php?id=1377&type=mp3");
-
-        $(function () {
-            setInterval(CheckSound, 1000 * 60);
-            CheckSound();
-        });
-
-        function CheckSound() {
-            bNeedToPlay = false;
-            $('#gridMapping > tbody > tr').each(function (index) {
-                if ($(this).children('td:nth-child(5)').text() > 30) {
-                    bNeedToPlay = true;
-                }
-            });
-            if (bNeedToPlay) {
-                console.log("playing sound");
-                sound.play();
+@section scripts{
+    <!--ploegrapport script-->
+    <script type="text/javascript">
+    var TipstatusGridspinner = new Spinner();
+    //render grid and subscrible to row clicked events
+        $('#TipstatusGrid').mvcgrid({
+            sourceUrl: '@Url.Action("_TipStatus")', // Grid source url string
+            requestType: 'get', // Ajax grid request type
+            reload: true, // Grid reload indicator
+        
+            reloadStarted: function () {
+                TipstatusGridspinner.spin(document.getElementById('TipstatusGridSpincontainer'));
+            },
+            reloadEnded: function () {
+                TipstatusGridspinner.stop();
+            },
+            reloadFailed: function (result) {
+                TipstatusGridspinner.stop();
+                $("#TipstatusGrid").html("Error while loading!!!");
             }
-        }
-    });
-</script>
-
-<script type="text/javascript">
-    $(document).ready(function () {
-        //subscribe to row clicked events
-        $('#NgacTipStatus').mvcgrid({
-            sourceUrl: '@Url.Action("_TipStatus")',
         });
-        //enable polling for new data
-        CheckRefreshTable(5, '@Url.Action("TipwearCheckNewData")','#NgacTipStatus');
-    });
-</script>
+    </script>
+
+    <!--Handle signal R reload-->
+    <script src="~/Scripts/jquery.signalR-2.2.2.js"></script>
+    <script src="~/signalr/js"></script>
+    <script>
+        $.connection.hub.start()
+            .done(function () {
+                console.log("TipstatusGrid SignalR connected");
+                $.connection.dataRefreshHub.server.joinGroup("TipstatusGrid");
+            })
+            .fail(function () { console.log("TipstatusGrid SignalR connect ERROR") });
+
+        //trigger full window reload
+        $.connection.dataRefreshHub.client.newData = function () {
+            console.log("PloegRapportGrid reload");
+            $('#TipstatusGrid').mvcgrid({
+                reload: true
+            });
+        }
+    </script>
+}

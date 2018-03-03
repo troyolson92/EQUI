@@ -6,6 +6,7 @@ using Hangfire;
 using EqUiWebUi.Models;
 
 using System.Collections.Generic;
+using EqUiWebUi.Areas.Gadata;
 
 namespace EqUiWebUi
 {
@@ -30,7 +31,9 @@ namespace EqUiWebUi
 
   
 	public class Backgroundwork
-	{       
+	{
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         /// <summary>
         /// configure standard jobs to hangfire
         /// </summary>
@@ -100,11 +103,15 @@ namespace EqUiWebUi
 							.Max();
 
 				DataBuffer.TipstatusLastDt = maxDate;
-				Log.Info(string.Format("UpdateTipstatus {0} records", data.Count));
-			}
+                log.Info(string.Format("UpdateTipstatus {0} records", data.Count));
+
+                //add singal R 
+                var context = Microsoft.AspNet.SignalR.GlobalHost.ConnectionManager.GetHubContext<DataRefreshHub>();
+                context.Clients.Group("TipstatusGrid").newData();
+            }
 			else
 			{
-                Log.Error("UpdateTipstatus did not return any data");
+                log.Error("UpdateTipstatus did not return any data");
 			}
 		}
 
@@ -140,10 +147,14 @@ namespace EqUiWebUi
 						.Max();
 
 					DataBuffer.PloegreportLastDt = maxDate;
-				}
+
+                //add singal R 
+                var context = Microsoft.AspNet.SignalR.GlobalHost.ConnectionManager.GetHubContext<DataRefreshHub>();
+                context.Clients.Group("Ploegrapport").newData();
+            }
 				else
 				{
-                    Log.Error("UpdatePloegreport did not return any data");
+                    log.Error("UpdatePloegreport did not return any data");
 				}
 		}
 
@@ -166,10 +177,14 @@ namespace EqUiWebUi
 								.Max();
 
 					DataBuffer.SupervisieLastDt = maxDate;
-				}
+
+                //add singal R 
+                var context = Microsoft.AspNet.SignalR.GlobalHost.ConnectionManager.GetHubContext<DataRefreshHub>();
+                context.Clients.Group("Supervisie").newData();
+            }
 				else
 				{
-                 Log.Error("UpdateSupervisie did not return any data");
+                  log.Error("UpdateSupervisie did not return any data");
 				}
 		}
 
@@ -212,10 +227,14 @@ namespace EqUiWebUi
                     .Max();
 
                 DataBuffer.EQpluginDefaultNGAC_DT = maxDate;
+
+                //add singal R 
+                var context = Microsoft.AspNet.SignalR.GlobalHost.ConnectionManager.GetHubContext<DataRefreshHub>();
+                context.Clients.Group("EQpluginDefaultNGAC").newData();
             }
             else
             {
-                Log.Error("UpdateEQpluginDefaultNGAC did not return any data");
+                log.Error("UpdateEQpluginDefaultNGAC did not return any data");
             }
         }
 
@@ -259,7 +278,7 @@ namespace EqUiWebUi
 			}
 			else
 			{
-                Log.Debug("HandleMaximoSnapshotWork no work to do");
+                log.Debug("HandleMaximoSnapshotWork no work to do");
 			}
 		}
 
