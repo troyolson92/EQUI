@@ -14,6 +14,7 @@ namespace EqUiWebUi.Areas.Alert
 {
     public class AlertEngine
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         //write alert trigger configureation to hangfire
         public void ConfigureHangfireAlertWork()
@@ -28,7 +29,7 @@ namespace EqUiWebUi.Areas.Alert
             {
                 if (trigger.enabled)
                 {
-                    Log.Info("Adding HF alertTriggerJob for: " + trigger.id);
+                    log.Info("Adding HF alertTriggerJob for: " + trigger.id);
                     Hangfire.RecurringJob.AddOrUpdate("AT_" +trigger.alertType+ "_" +trigger.id,() => alertEngine.CheckForalerts(trigger.id, trigger.discription), Cron.MinuteInterval(trigger.Pollrate));
                 }
             }
@@ -49,7 +50,7 @@ namespace EqUiWebUi.Areas.Alert
             {
                 if (trigger.enabled == false || ClearALL == true)
                 {
-                    Log.Info("Removing HF alertTriggerJob for: " + trigger.id);
+                    log.Info("Removing HF alertTriggerJob for: " + trigger.id);
                     RecurringJob.RemoveIfExists("AT_" + trigger.alertType + "_" + trigger.id);
                 }
             }
@@ -68,14 +69,14 @@ namespace EqUiWebUi.Areas.Alert
             //if trigger not found stop processing
             if (trigger == null)
             {
-                Log.Error("Did not find Alerttrigger: " + c_triggerID);
+                log.Error("Did not find Alerttrigger: " + c_triggerID);
                 return;
             }
 
             //if trigger not active stop processing
             if (trigger.enabled == false)
             {
-                Log.Debug("trigger not enabled:" + c_triggerID);
+                log.Debug("trigger not enabled:" + c_triggerID);
                 return;
             }
             
@@ -96,7 +97,7 @@ namespace EqUiWebUi.Areas.Alert
                     break;
 
                 default:
-                    Log.Error("Database not defined");
+                    log.Error("Database not defined");
                     break;
             }
 
@@ -118,14 +119,14 @@ namespace EqUiWebUi.Areas.Alert
                 //if more than one active we have a config issue
                 if (h_alert.Count > 1)
                 {
-                  Log.Error("More than one alert active for location");
+                    log.Error("More than one alert active for location");
                   //allow continue ? 
                 }
 
                //if alert not active make  one
                 if (h_alert.Count == 0)
                 {
-                   Log.Info("New alert for: " + ActiveAlert.Field<string>("Location") + " => "+ ActiveAlert.Field<string>("info"));
+                    log.Info("New alert for: " + ActiveAlert.Field<string>("Location") + " => "+ ActiveAlert.Field<string>("info"));
 
                    h_alert newAlert = new h_alert();
                    newAlert.c_tirgger_id = c_triggerID;
@@ -147,7 +148,7 @@ namespace EqUiWebUi.Areas.Alert
                         }
                         else
                         {
-                            Log.Debug("did not get a valid location tree from gadata");
+                            log.Debug("did not get a valid location tree from gadata");
                             newAlert.locationTree = ActiveAlert.Field<string>("alarmobject");
                         }
                     }
@@ -181,12 +182,12 @@ namespace EqUiWebUi.Areas.Alert
                 //Alert is already active (update it)
                 else
                 {
-                    Log.Debug("Alert already active");
+                    log.Debug("Alert already active");
                     //if the active alert has a new timestamp tis should mean a new datapoint (retrigger event)
 
                     if (h_alert[0].lastTriggerd.ToString("yyyyMMddHHmmss") != ActiveAlert.Field<DateTime>("timestamp").ToString("yyyyMMddHHmmss"))
                     {
-                        Log.Debug("RETrigger: " + h_alert[0].lastTriggerd.ToString("yyyyMMddHHmmss") + " => " + ActiveAlert.Field<DateTime>("timestamp").ToString("yyyyMMddHHmmss"));
+                        log.Debug("RETrigger: " + h_alert[0].lastTriggerd.ToString("yyyyMMddHHmmss") + " => " + ActiveAlert.Field<DateTime>("timestamp").ToString("yyyyMMddHHmmss"));
                         //added badge to comment with retrigger event
                         StringBuilder sb = new StringBuilder(); 
                         sb.AppendLine(h_alert[0].comments);
@@ -231,11 +232,11 @@ namespace EqUiWebUi.Areas.Alert
                     //check aganst the active alerts and if not active anymore close it.
                     if (ActiveAlerts.AsEnumerable().Any(row => OpenAlert.location == row.Field<String>("Location")))
                     {
-                        Log.Debug("Alert is still active must not close it");
+                        log.Debug("Alert is still active must not close it");
                     }
                     else
                     {
-                        Log.Debug("Alert no longer active closing it");
+                        log.Debug("Alert no longer active closing it");
                         //set state
                         OpenAlert.state = 5; //techcomp
                         //adde badge to comment when closses
@@ -276,11 +277,11 @@ namespace EqUiWebUi.Areas.Alert
                 {
                     if (alert.locationTree.Contains(SMSconfig.c_CPT600.LocationTree))
                     {
-                        Log.Debug("locationTree tree oke Can send");
+                        log.Debug("locationTree tree oke Can send");
                     }
                     else
                     {
-                        Log.Debug("locationTree NOK next");
+                        log.Debug("locationTree NOK next");
                         continue;
                     }
                 }
@@ -290,11 +291,11 @@ namespace EqUiWebUi.Areas.Alert
                 {
                     if (alert.Classification.Contains(SMSconfig.c_CPT600.AssetRoot))
                     {
-                        Log.Debug("Asset root oke Can send");
+                        log.Debug("Asset root oke Can send");
                     }
                     else
                     {
-                        Log.Debug("Asser root NOK next");
+                        log.Debug("Asser root NOK next");
                         continue;
                     }
                 }
@@ -302,12 +303,12 @@ namespace EqUiWebUi.Areas.Alert
                 //check if were are not at limmit
                 if(SMSconfig.c_CPT600.SMSlimit.GetValueOrDefault(10000) >= SMSconfig.c_CPT600.SMSsend.GetValueOrDefault(0))
                 {
-                    Log.Debug("Sms limit oke Can Send");
+                    log.Debug("Sms limit oke Can Send");
                     SMSconfig.c_CPT600.SMSsend += 1;
                 }
                 else
                 {
-                    Log.Debug("Sms limit NOK can not Send");
+                    log.Debug("Sms limit NOK can not Send");
                     continue;
                 }
 

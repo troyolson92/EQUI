@@ -39,8 +39,7 @@ namespace EqUiWebUi.Controllers
         //show settings page
         public ActionResult Settings()
         {
-            ViewBag.ActiveSessions = 0; // MvcApplication.
-
+            ViewBag.ActiveSessions = EqUiWebUi.MvcApplication.Sessions().Count;
             return View();
         }
 

@@ -27,6 +27,8 @@ namespace EqUiWebUi.Areas.Alert
      */
     public class SmsComm
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         string publishHost = @"\\p1x_supervis1GA";
         string publishLocation = @"\\p1x_supervis1GA\D$\Send";
         string publishUser = "sattline";
@@ -52,14 +54,14 @@ namespace EqUiWebUi.Areas.Alert
             }
             catch (Exception ex)
             {
-                Log.Error("Failed to build SMS", ex);
+                log.Error("Failed to build SMS", ex);
                 return;
             }
 
             //debug mode
             if(debugMode)
             {
-                Log.Info("Sms debugmode active SMS NOT SEND");
+                log.Info("Sms debugmode active SMS NOT SEND");
                 return;
             }
 
@@ -68,11 +70,11 @@ namespace EqUiWebUi.Areas.Alert
                 {
                     var credentials = new NetworkCredential(publishUser, publishPass);
                     NetworkConnection networkConnection = new NetworkConnection(publishHost, credentials);
-                    Log.Debug("logged in on network using incode credentials");
+                    log.Debug("logged in on network using incode credentials");
                 }
                 catch(Exception ex)
                 {
-                    Log.Error("Error connecting to server", ex);
+                log.Error("Error connecting to server", ex);
                     //continue might get lucky
                 }
 
@@ -84,10 +86,10 @@ namespace EqUiWebUi.Areas.Alert
             }
             catch (Exception ex)
             {
-                Log.Error("Failed to send SMS to server", ex);
+                log.Error("Failed to send SMS to server", ex);
                 return;
             }
-            Log.Info("SMS send Type: " + Messagetype + " => " + Message);
+            log.Info("SMS send Type: " + Messagetype + " => " + Message);
         }
     }
 }

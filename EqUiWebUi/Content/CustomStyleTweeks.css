@@ -74,6 +74,10 @@
     background-color: #16dd76;
 }
 
+.TableLogtypeAlert {
+    background-color: rgba(243, 124, 9, 0.87);
+}
+
 .TableLogtypeSLOWSpeed {
     background-color: #d851ff; /*set the background color in here so if the browser does not support animation we still have style*/
     -webkit-animation: blinkPink 1s 0.5s infinite alternate linear; /*chrome*/

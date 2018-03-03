@@ -28,19 +28,11 @@ namespace EqUiWebUi.Controllers
         {
             //
             var data = DataBuffer.Tipstatus;
-            //in case hangfire is taking a day off
+            //in case still null trow error return empty result 
             if (data == null)
             {
-                Backgroundwork backgroundwork = new Backgroundwork();
-                backgroundwork.UpdateTipstatus();
-                data = DataBuffer.Tipstatus;
+                data = new List<TipMonitor>();
             }
-            //in case still null trow error 
-            if (data == null)
-            {
-                return new HttpNotFoundResult("Woeps there seems to be an error");
-            }
-
             if (Session["LocationRoot"].ToString() != "")
                 {
                     data = (from d in data
@@ -49,22 +41,6 @@ namespace EqUiWebUi.Controllers
                 }
             //
             return PartialView(data);
-        }
-
-        [HttpGet]
-        public JsonResult TipwearCheckNewData(DateTime dataTimestamp)
-        {
-            Boolean breload = false;
-            if (DataBuffer.TipstatusLastDt > dataTimestamp.AddSeconds(1))
-            {
-                breload = true;
-            }
-            //
-            return new JsonResult()
-            {
-                Data = new { doReload = breload, dataTimestamp = DataBuffer.TipstatusLastDt.ToString("yyyy-MM-dd HH:mm:ss"), lastCheck = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") },
-                JsonRequestBehavior = JsonRequestBehavior.AllowGet
-            };
         }
 
         //------------------------------------tabel met elektrode wissels.-------------------------------------------------

@@ -31,29 +31,32 @@
 </div>
 
 <!--carousel script-->
-<script>
-    jQuery(document).ready(function ($) {
-
+@section scripts{
+    <script>
         //auto rotate pictures
-     //   $('#myCarousel').carousel({ interval: false });
-        $('#myCarousel').carousel({ interval: 10000 });
+        var carouselrate = @ViewBag.AutoCarousel;
+        if (carouselrate = -1) {
+          $('#myCarousel').carousel({ interval: false });
+        }
+        else {
+          $('#myCarousel').carousel({ interval: carouselrate });
+        }
         //full with screen
         $("#allcontent").removeClass("body-content");
         $("#allcontent").removeClass("container");
     });
-</script>
-
-
-<!--carousel style -->
-<style>
-
-    .carousel-inner > .item > img, .carousel-inner > .item > a > img {
-        width: 100%;
-    }
-
-    .carousel-control.left, .carousel-control.right {
-        background-image: none
+    </script>
     }
 
 
-</style>
+    <!--carousel style -->
+    <style>
+
+        .carousel-inner > .item > img, .carousel-inner > .item > a > img {
+            width: 100%;
+        }
+
+        .carousel-control.left, .carousel-control.right {
+            background-image: none
+        }
+    </style>
