@@ -22,7 +22,8 @@ namespace EqUiWebUi
                          "~/Scripts/MyScripts/tablehelper.js",
                          "~/Scripts/MyScripts/Interface.js",
                          "~/Scripts/MvcGrid/mvc-grid.js", //https://github.com/NonFactors/MVC5.Grid
-                         "~/Scripts/printThis.js" //https://github.com/jasonday/printThis
+                         "~/Scripts/printThis.js", //https://github.com/jasonday/printThis
+                         "~/Scripts/jquery.toaster.js" //https://github.com/scottoffen/jquery.toaster/wiki
             ));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're

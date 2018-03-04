@@ -42,8 +42,8 @@
 
         //trigger full window reload
         $.connection.dataRefreshHub.client.newData = function () {
-            console.log("PloegRapportGrid reload");
-            $('#TipstatusGrid').mvcgrid({
+            console.log("TipstatusGrid reload");
+            $('#NgacTipStatus').mvcgrid({
                 reload: true
             });
         }

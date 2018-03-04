@@ -2,6 +2,7 @@
 function initInterface() {
     EnablePannelCollaps();
     EnableJQresultTriggerBtn();
+    initToaster();
 }
 
 //script for subscribing to pannel colaps
@@ -25,24 +26,16 @@ function EnableJQresultTriggerBtn() {
     $(".JQresultTriggerBtn").click(function (e) {
         e.preventDefault();
         var caller = this;
-        $(caller).removeClass('PulseBlueRepeat');
-        $(caller).removeClass('PulseGreenOnce');
-        $(caller).removeClass('PulseRedRepeat');
-        $(caller).addClass('PulseBlueOnce');
         $.ajax({
             type: "GET",
             url: $(this).attr('href'),
             success: function (result) {
                 console.log("SUCCES");
-                //console.log(result);
-                $(caller).removeClass('PulseBlueRepeat');
-                $(caller).addClass('PulseGreenOnce');
+                $.toaster({ title: 'Success', priority: 'success', message: 'Whatever you did worked!' });
             },
             error: function (result) {
                 console.log("FAIL");
-                //console.log(result);
-                $(caller).removeClass('PulseBlueRepeat');
-                $(caller).addClass('PulseRedRepeat');
+                $.toaster({ title: 'Failure', priority: 'danger', message: 'Whatever you did failed!' });
             }
         });
     });
@@ -54,4 +47,14 @@ function qs(key) {
     key = key.replace(/[*+?^$.\[\]{}()|\\\/]/g, "\\$&"); // escape RegEx meta chars
     var match = location.search.match(new RegExp("[?&]" + key + "=([^&]+)(&|$)"));
     return match && decodeURIComponent(match[1].replace(/\+/g, " "));
+}
+
+//set default settings for toaster
+function initToaster() {
+    $.toaster({
+        settings: {
+            'timeout': 5000, //set autodismis timeout to 5 seconds
+            'donotdismiss': ['danger'] //disble autodismis for these types
+        }
+    });
 }
