@@ -106,11 +106,11 @@ namespace EqUiWebUi.Areas.Alert
            {
 
                 //can not use .Field in Linq query 
-                string AlertLocation = ActiveAlert.Field<string>("Location");
+                string Alertalarmobject = ActiveAlert.Field<string>("alarmobject");
 
                 List<h_alert> h_alert = (from alerts in gADATA_AlertModel.h_alert
                                          where alerts.c_tirgger_id == c_triggerID //must be from same trigger
-                                         && alerts.location == AlertLocation //must be same location
+                                         && alerts.alarmobject == Alertalarmobject //must be same location
                                          //need to have an ID to compare for retrigger...
                                          && alerts.state < 2 //1 = WGK 2 = INUITV ALERT MUST BE ACTIVE
                                          orderby alerts.id descending
@@ -132,27 +132,30 @@ namespace EqUiWebUi.Areas.Alert
                    newAlert.c_tirgger_id = c_triggerID;
                     if (trigger.RunAgainstDatabase == SmsDatabases.GADATA)
                     {
-                        //we already have the location tree
+                        //we already have the location tree and location
                         newAlert.locationTree = ActiveAlert.Field<string>("LocationTree");
+                        newAlert.location = ActiveAlert.Field<string>("Location");
                     }
                     else if (trigger.RunAgainstDatabase == SmsDatabases.STO)
                     {
-                        //ask gadata 
+                        //ask gadata for location tree and location
                         string qry =
-                            @"select top 1 LocationTree from GADATA.EqUi.ASSETS as a 
+                            @"select top 1 LocationTree, Location from GADATA.EqUi.ASSETS as a 
                             where REPLACE('{0}','ZM','ZS') LIKE a.[LOCATION] + '%'";
                         DataTable result = gadataComm.RunQueryGadata(string.Format(qry, ActiveAlert.Field<string>("alarmobject")));
                         if (result.Rows.Count == 1)
                         {
                             newAlert.locationTree = result.Rows[0].Field<string>("LocationTree");
+                            newAlert.location = result.Rows[0].Field<string>("Location");
                         }
-                        else
+                        else //handle if we don't get a response from gadata
                         {
                             log.Debug("did not get a valid location tree from gadata");
                             newAlert.locationTree = ActiveAlert.Field<string>("alarmobject");
+                            newAlert.location = ActiveAlert.Field<string>("alarmobject");
                         }
                     }
-                    newAlert.location = ActiveAlert.Field<string>("Location");
+                    newAlert.alarmobject = ActiveAlert.Field<string>("alarmobject");
                     newAlert.C_timestamp = ActiveAlert.Field<DateTime>("timestamp");
                     newAlert.state = trigger.initial_state;
                     newAlert.info = ActiveAlert.Field<string>("info");
@@ -230,7 +233,7 @@ namespace EqUiWebUi.Areas.Alert
                 foreach (h_alert OpenAlert in OpenAlerts)
                 {
                     //check aganst the active alerts and if not active anymore close it.
-                    if (ActiveAlerts.AsEnumerable().Any(row => OpenAlert.location == row.Field<String>("Location")))
+                    if (ActiveAlerts.AsEnumerable().Any(row => OpenAlert.alarmobject == row.Field<String>("alarmobject")))
                     {
                         log.Debug("Alert is still active must not close it");
                     }

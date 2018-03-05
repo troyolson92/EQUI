@@ -843,6 +843,7 @@
     <Content Include="Scripts\spin.js" />
     <Content Include="Scripts\spin.min.js" />
     <Content Include="Scripts\summernote.js" />
+    <Content Include="Scripts\tableau-2.0.0.min.js" />
     <Content Include="Scripts\viewer.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">

@@ -71,6 +71,7 @@
           <Property Name="info" Type="varchar(max)" />
           <Property Name="state" Type="int" Nullable="false" />
           <Property Name="location" Type="varchar(max)" Nullable="false" />
+          <Property Name="alarmobject" Type="varchar(max)" />
           <Property Name="comments" Type="varchar(max)" />
           <Property Name="acceptUserID" Type="int" />
           <Property Name="acceptTimestamp" Type="datetime" />
@@ -297,6 +298,7 @@
           <NavigationProperty Name="c_triggers" Relationship="AlertModel.FK_h_alert_c_triggers" FromRole="h_alert" ToRole="c_triggers" />
           <Property Name="Classification" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="locationTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="alarmobject" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="L_users">
           <Key>
@@ -538,6 +540,7 @@
           <EntitySetMapping Name="h_alert">
             <EntityTypeMapping TypeName="AlertModel.h_alert">
               <MappingFragment StoreEntitySet="h_alert">
+                <ScalarProperty Name="alarmobject" ColumnName="alarmobject" />
                 <ScalarProperty Name="locationTree" ColumnName="locationTree" />
                 <ScalarProperty Name="Classification" ColumnName="Classification" />
                 <ScalarProperty Name="id" ColumnName="id" />
