@@ -26,16 +26,15 @@ function EnableJQresultTriggerBtn() {
     $(".JQresultTriggerBtn").click(function (e) {
         e.preventDefault();
         var caller = this;
+        $.toaster({ title: 'JQresultTriggerBtn', priority: 'info', message: 'Fired: ' + $(this).attr('href')});
         $.ajax({
             type: "GET",
             url: $(this).attr('href'),
             success: function (result) {
-                console.log("SUCCES");
-                $.toaster({ title: 'Success', priority: 'success', message: 'Whatever you did worked!' });
+                $.toaster({ title: 'JQresultTriggerBtn', priority: 'success', message: 'Whatever you did worked!' });
             },
             error: function (result) {
-                console.log("FAIL");
-                $.toaster({ title: 'Failure', priority: 'danger', message: 'Whatever you did failed!' });
+                $.toaster({ title: 'JQresultTriggerBtn', priority: 'danger', message: 'Whatever you did failed!' });
             }
         });
     });

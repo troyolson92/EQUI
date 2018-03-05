@@ -31,6 +31,7 @@ namespace EqUiWebUi.Areas.Alert.Models
         public System.DateTime lastTriggerd { get; set; }
         public string Classification { get; set; }
         public string locationTree { get; set; }
+        public string alarmobject { get; set; }
     
         public virtual c_state c_state { get; set; }
         public virtual L_users ChangedUser { get; set; }

@@ -1,20 +1,21 @@
-﻿<html>
-<head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script src="http://public.tableau.com/javascripts/api/tableau-2.0.0.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
+﻿<body>
+    @*render the viz*@
+    <div id="viz"></div>
+</body>
 
+@section scripts{
+    <script src="~/Scripts/tableau-2.0.0.min.js"></script>
     <script>
         /**
          * Instantiate our vizualization.
          */
         $(function () {
             var url = 'https://tableau-test.volvocars.biz/t/Ghent/views/'.concat('@ViewBag.workbook').concat('/').concat('@ViewBag.sheet');
-            
+
 
             var size = findDashboardSize();
             var vizOptions = {
-                embed: true,   
+                embed: true,
                 hideTabs: false,
                 hideToolbar: false,
                 showShareOptions: false,
@@ -25,6 +26,10 @@
                     $('.viz iframe').attr("scrolling", "no");
                     $('.viz iframe').css('overflow', 'hidden');
                 }
+                //set user filters
+                , 'Asset_png': '@ViewBag.AssetPNG'
+                , 'Week': '@ViewBag.Weeknum'
+                , 'Dag' : '@ViewBag.Weekday'
             };
 
             new tableauSoftware.Viz(document.getElementById('viz'), url, vizOptions)
@@ -59,8 +64,8 @@
                 width = maxWidth;
             }
 
-            console.log("Resize: Body:", window.innerHeight, "x", window.innerWidth, " viz:", height, " x", width);
-          
+            //console.log("Resize: Body:", window.innerHeight, "x", window.innerWidth, " viz:", height, " x", width);
+
             return {
                 'width': width,
                 'height': height
@@ -89,14 +94,4 @@
         $("#allcontent").removeClass("body-content");
         $("#allcontent").removeClass("container");
     </script>
-</head>
-<body>
-    @*render the viz*@
-    <div id="viz"></div>
-</body>
-</html>
-
-
-
-
-
+    }
