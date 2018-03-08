@@ -5,14 +5,14 @@
         <div class="col-lg-6">
             <a href="@Model[0].ScreenUrl"><span class="label label-primary">@Model[0].Discription</span></a>
             <div class="intrinsic-container intrinsic-container-16x9">
-                <iframe src="@Model[0].ScreenUrl" allowfullscreen frameBorder="0"></iframe>
+                <iframe id="frame0" src="@Model[0].ScreenUrl" allowfullscreen frameBorder="0"></iframe>
             </div>
         </div>
 
         <div class="col-lg-6">
-            <a href="@Model[1].ScreenUrl"><span  class="label label-primary">@Model[1].Discription</span></a>
+            <a href="@Model[1].ScreenUrl"><span class="label label-primary">@Model[1].Discription</span></a>
             <div class="intrinsic-container intrinsic-container-16x9">
-                <iframe src="@Model[1].ScreenUrl" allowfullscreen frameBorder="0"></iframe>
+                <iframe id="frame1" src="@Model[1].ScreenUrl" allowfullscreen frameBorder="0"></iframe>
             </div>
         </div>
     </div>
@@ -23,14 +23,14 @@
         <div class="col-lg-6">
             <a href="@Model[2].ScreenUrl"><span class="label label-primary">@Model[2].Discription</span></a>
             <div class="intrinsic-container intrinsic-container-16x9">
-                <iframe src="@Model[2].ScreenUrl" allowfullscreen frameBorder="0"></iframe>
+                <iframe id="frame2" src="@Model[2].ScreenUrl" allowfullscreen frameBorder="0"></iframe>
             </div>
         </div>
 
         <div class="col-lg-6">
-            <a href="@Model[3].ScreenUrl"><span  class="label label-primary">@Model[3].Discription</span></a>
+            <a href="@Model[3].ScreenUrl"><span class="label label-primary">@Model[3].Discription</span></a>
             <div class="intrinsic-container intrinsic-container-16x9">
-                <iframe src="@Model[3].ScreenUrl" allowfullscreen frameBorder="0"></iframe>
+                <iframe id="frame3" src="@Model[3].ScreenUrl" allowfullscreen frameBorder="0"></iframe>
             </div>
         </div>
     </div>
@@ -61,38 +61,67 @@
         width: 100%;
         height: 100%;
     }
-    
+
     body {
         background-color: black;
     }
 </style>
 
+@section scripts{
 <script type="text/javascript">
-    $(document).ready(function () {
+            // Find all iframes
+            var $iframes = $("iframe");
 
-
-        // Find all iframes
-        var $iframes = $("iframe");
-
-        // Find &#x26; save the aspect ratio for all iframes
-        $iframes.each(function () {
-            $(this).data("ratio", this.height / this.width)
-                // Remove the hardcoded width &#x26; height attributes
-                .removeAttr("width")
-                .removeAttr("height");
-        });
-
-        // Resize the iframes when the window is resized
-        $(window).resize(function () {
+            // Find &#x26; save the aspect ratio for all iframes
             $iframes.each(function () {
-                // Get the parent container&#x27;s width
-                var width = $(this).parent().width();
-                $(this).width(width)
-                    .height(width * $(this).data("ratio"));
+                $(this).data("ratio", this.height / this.width)
+                    // Remove the hardcoded width &#x26; height attributes
+                    .removeAttr("width")
+                    .removeAttr("height");
             });
-            // Resize to fix all iframes on page load.
-        }).resize()
-    });
-    //https://benmarshall.me/responsive-iframes/
-</script>
 
+            // Resize the iframes when the window is resized
+            $(window).resize(function () {
+                $iframes.each(function () {
+                    // Get the parent container&#x27;s width
+                    var width = $(this).parent().width();
+                    $(this).width(width)
+                        .height(width * $(this).data("ratio"));
+                });
+                // Resize to fix all iframes on page load.
+            }).resize()
+
+        //https://benmarshall.me/responsive-iframes/
+
+        //handle Iframes reset Rate.
+    //screen1
+            if (@Model[0].ResetRate.GetValueOrDefault(0) > 0)
+            {
+                window.setInterval("reloadIFrame0();", @Model[0].ResetRate.GetValueOrDefault(0)*1000);
+            }
+            function reloadIFrame0() {
+                $('#frame0').attr('src', function (i, val) { return val; });
+            }
+    //screen2
+            if (@Model[1].ResetRate.GetValueOrDefault(0) > 0) {
+                window.setInterval("reloadIFrame1();", @Model[1].ResetRate.GetValueOrDefault(0)*1000);
+            }
+            function reloadIFrame1() {
+                $('#frame1').attr('src', function (i, val) { return val; });
+            }
+    //screen3
+            if (@Model[2].ResetRate.GetValueOrDefault(0) > 0) {
+                window.setInterval("reloadIFrame2();", @Model[2].ResetRate.GetValueOrDefault(0)*1000);
+            }
+            function reloadIFrame2() {
+                $('#frame2').attr('src', function (i, val) { return val; });
+            }
+    //screen4
+            if (@Model[3].ResetRate.GetValueOrDefault(0) > 0) {
+                window.setInterval("reloadIFrame3();", @Model[3].ResetRate.GetValueOrDefault(0)*1000);
+            }
+            function reloadIFrame3() {
+                $('#frame3').attr('src', function (i, val) { return val; });
+            }
+</script>
+}
