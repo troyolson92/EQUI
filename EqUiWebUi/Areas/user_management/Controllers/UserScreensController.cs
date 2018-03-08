@@ -211,12 +211,6 @@ namespace EqUiWebUi.Areas.user_management.Controllers
 
             //Pass screen lifecycle
 
-
-            //add refresh rate if needed.
-            if (Screen1.ResetRate.HasValue)
-            {
-                Response.AddHeader("Refresh", Screen1.ResetRate.ToString());
-            }
             //Pass correct layout (empty layout)
             return View("RenderUserScreens", "~/Views/Shared/_MinimalLayout.cshtml", ScreenS);
         }
