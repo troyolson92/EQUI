@@ -23,6 +23,7 @@ namespace ExcelAddInEquipmentDatabase
         string wonum;
         string errornum;
         string location;
+        string locationtree;
         string assetnum;
         string Logtype;
         string LogText;
@@ -36,6 +37,7 @@ namespace ExcelAddInEquipmentDatabase
          wonum = "";
          errornum = "";
          location = "";
+         locationtree = "";
          assetnum = "";
          Logtype = "";
          LogText = "";
@@ -64,16 +66,19 @@ namespace ExcelAddInEquipmentDatabase
                  //Debug.WriteLine("ListColum: {0} Column: {1}", oListColum.Name, oListColum.Range.Column);
                     switch (oListColum.Name.ToLower())
                       {
-                          case "wonum":
+                        case "wonum":
                               wonum = (string)Convert.ToString(lClickedSheet.Cells[Target.Row, oListColum.Range.Column].Value);
                               break;
-                          case "logcode":
+                        case "logcode":
                               errornum = (string)Convert.ToString(lClickedSheet.Cells[Target.Row, oListColum.Range.Column].Value);
                               break;
                         case "location":
                               location = (string)Convert.ToString(lClickedSheet.Cells[Target.Row, oListColum.Range.Column].Value);
                               break;
-                       case "assetnum":
+                        case "locationtree":
+                            locationtree = (string)Convert.ToString(lClickedSheet.Cells[Target.Row, oListColum.Range.Column].Value) ?? location;
+                            break;
+                        case "assetnum":
                               assetnum = (string)Convert.ToString(lClickedSheet.Cells[Target.Row, oListColum.Range.Column].Value);
                               break;
                         case "logtype":
@@ -115,7 +120,7 @@ namespace ExcelAddInEquipmentDatabase
             {
                 addMaximoSubmenu(3); // if we have a reference location enable maximo tools
             }
-            if (Logtype == "SHIFTBOOK" || Logtype == "BREAKDOWN" || Logtype == "ERROR" || Logtype == "WARNING" || Logtype == "ControllerEvent")
+            if (Logtype == "SHIFTBOOK" || Logtype == "BREAKDOWN" || Logtype == "ERROR" || Logtype == "WARNING" || Logtype == "ControllerEvent" || Logtype == "TIMELINE")
             {
                 addShiftbookSubmenu(4); //shiftbook tools TEMP
             }
@@ -124,17 +129,11 @@ namespace ExcelAddInEquipmentDatabase
                     btn = AddButtonToTableMenuItem("SBCUStats", 3, 433); 
                     btn.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(SBCUStatsMenuItemClick);
             }
-            if (Logtype == "SHIFTBOOK" || Logtype == "BREAKDOWN" || Logtype == "ERROR" || Logtype == "WARNING")
-            {
-
-                    btn = AddButtonToTableMenuItem("AssetStats", 3, 610); 
-                    btn.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(AssetStatsMenuItemClick);
-            }
             if (Logtype == "TIMELINE" )
             {
                 btn = AddButtonToTableMenuItem("SetNoProduction", 3, 0);
                 btn.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(SetNoProductionItemClick);
-                if (ExcelAddInEquipmentDatabase.Properties.Settings.Default.userlevel < 10){ btn.Enabled = false;}
+                if (!ExcelAddInEquipmentDatabase.Properties.Settings.Default.IsPowerUser){ btn.Enabled = false;}
             }
             addFormattingSubmenu(5);
         }
@@ -282,14 +281,16 @@ namespace ExcelAddInEquipmentDatabase
         {
             try
             {
-            System.Windows.Forms.Application.Run(new MXxWOdetails(wonum));
+                string urlSkelation = @"http:\\equi\Maximo_ui\workorderdetails\WoDetails?wonum={0}&GoFullScreen=true";
+                string url = string.Format(urlSkelation, Uri.EscapeDataString(wonum));
+                System.Windows.Forms.Application.Run(new ExcelAddInEquipmentDatabase.Forms.EquiBrowser(url));
             }
             catch (Exception ex)
             {
                 Debugger.Exeption(ex);
                 Debugger.Message("Dam..." + ex.Message);
             }
-}
+        }
         //**********************************Error details*********************************************
         void ErrorDetailsMenuItemClick(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)
         {
@@ -300,15 +301,23 @@ namespace ExcelAddInEquipmentDatabase
         public void frmNewErrordetailsThread()
         {
             try
-            { 
-            System.Windows.Forms.Application.Run(new LogDetails(location, Logtype, errornum, refid));
+            {
+                string urlSkelation = @"http:\\equi\gadata\table\MoreInfo?location={0}&errornum={1}&refid={2}&logtype={3}&logtext={4}&GoFullScreen=true";
+                string url = string.Format(urlSkelation
+                    , Uri.EscapeDataString(location)
+                    , Uri.EscapeDataString(errornum)
+                    , Uri.EscapeDataString(refid.ToString())
+                    , Uri.EscapeDataString(Logtype)
+                    , Uri.EscapeDataString(LogText)
+                    );
+                System.Windows.Forms.Application.Run(new ExcelAddInEquipmentDatabase.Forms.EquiBrowser(url));
             }
             catch (Exception ex)
             {
                 Debugger.Exeption(ex);
                 Debugger.Message("Dam..." + ex.Message);
             }
-}
+        }
         //**********************************Error Stats*********************************************
         void ErrorStatsMenuItemClick(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)
         {
@@ -317,10 +326,18 @@ namespace ExcelAddInEquipmentDatabase
             newThread.Start();
         }
         public void frmNewErrorStatsThread()
-        {
+        { 
             try
             {
-                System.Windows.Forms.Application.Run(new ErrorStats(location, Logtype, errornum, LogText));
+                string urlSkelation = @"http:\\equi\chart\GetErrorTrend?location={0}&errornum={1}&refid={2}&logtype={3}&logtext={4}&GoFullScreen=true";
+                string url = string.Format(urlSkelation
+                    ,Uri.EscapeDataString(location)
+                    ,Uri.EscapeDataString(errornum)
+                    ,Uri.EscapeDataString(refid.ToString())
+                    ,Uri.EscapeDataString(Logtype)
+                    ,Uri.EscapeDataString(LogText) 
+                    );
+                System.Windows.Forms.Application.Run(new ExcelAddInEquipmentDatabase.Forms.EquiBrowser(url));
             }
             catch (Exception ex)
             {
@@ -347,11 +364,6 @@ namespace ExcelAddInEquipmentDatabase
                 Debugger.Message("Dam..." + ex.Message);
             }
 }
-        //**********************************ASSET Stats*********************************************
-        void AssetStatsMenuItemClick(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)
-        {
-            AssetStats lAssetStats = new AssetStats(location); //allow multible instances of the form.
-        }
         //**********************************No Production*********************************************
         void SetNoProductionItemClick(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)
         {
@@ -373,8 +385,8 @@ this shift will be out of all OEE calculations!", "Confirmation", MessageBoxButt
                 Debugger.Message(ex.Message);
             }
         }
-        
 
+        //**********************************MAXIMO*********************************************
         //submenu for mawimo tools
         public void addMaximoSubmenu(int position)
         {
@@ -398,39 +410,52 @@ this shift will be out of all OEE calculations!", "Confirmation", MessageBoxButt
             btnShowPartsWorkorder.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(btnShowPartsWorkorderClick);
             //
             //
-
-                Office.CommandBarButton btnShowCreateWO = (Office.CommandBarButton)subMenu.Controls.Add(menuItem, Type.Missing, Type.Missing, 3, true);
-                btnShowCreateWO.Style = Office.MsoButtonStyle.msoButtonIconAndCaption;
-                btnShowCreateWO.Caption = "Create Wo";
-                btnShowCreateWO.FaceId = 340;
-                btnShowCreateWO.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(btnShowCreateWOClick);
-                if (ExcelAddInEquipmentDatabase.Properties.Settings.Default.userlevel < 100)
-                {
-                   btnShowCreateWO.Enabled = false;
-                }
-            
         }
-
         void btnShowWorkorderHistoryClick(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)
         {
-            MXxWOoverview lMXxWOoverview = new MXxWOoverview(location,"vm_workordersOnLocation"); //allow multible instances of the form.
-            lMXxWOoverview.Show();
+            var newThread = new System.Threading.Thread(frmNewWorkordersThread);
+            newThread.SetApartmentState(System.Threading.ApartmentState.STA);
+            newThread.Start();
+        }
+        public void frmNewWorkordersThread()
+        {
+            try
+            {
+                string urlSkelation = @"http:\\equi\Maximo_ui\Workorder\Workorders?location={0}&GoFullScreen=true&loadOnInit=true";
+                string url = string.Format(urlSkelation, Uri.EscapeDataString(location));
+                System.Windows.Forms.Application.Run(new ExcelAddInEquipmentDatabase.Forms.EquiBrowser(url));
+            }
+            catch (Exception ex)
+            {
+                Debugger.Exeption(ex);
+                Debugger.Message("Dam..." + ex.Message);
+            }
+
         }
 
         void btnShowPartsWorkorderClick(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)
         {
-            MXxWOoverview lMXxWOoverview = new MXxWOoverview(location,"vm_PartsOnLocation"); //allow multible instances of the form.
-            lMXxWOoverview.Show();
+            var newThread = new System.Threading.Thread(frmNewPartsonlocationThread);
+            newThread.SetApartmentState(System.Threading.ApartmentState.STA);
+            newThread.Start();
+        }
+        public void frmNewPartsonlocationThread()
+        {
+            try
+            {
+                string urlSkelation = @"http:\\equi\Maximo_ui\Workorder\PartsOnLocation?location={0}&GoFullScreen=true&loadOnInit=true";
+                string url = string.Format(urlSkelation, Uri.EscapeDataString(location));
+                System.Windows.Forms.Application.Run(new ExcelAddInEquipmentDatabase.Forms.EquiBrowser(url));
+            }
+            catch (Exception ex)
+            {
+                Debugger.Exeption(ex);
+                Debugger.Message("Dam..." + ex.Message);
+            }
         }
 
-        void btnShowCreateWOClick(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)
-        {
-            MxXWoCreate lMxXWoCreate = new MxXWoCreate(location, Logtype, LogText, downtime, refid); //allow multible instances of the form.
-            lMxXWoCreate.Show();
-        }
-        
-        //shiftbook TEMP
-        //submenu for mawimo tools
+        //**********************************shiftbook*********************************************
+        //submenu for shiftbook tools
         public void addShiftbookSubmenu(int position)
         {
             Office.MsoControlType menuItem = Office.MsoControlType.msoControlButton;
@@ -438,7 +463,8 @@ this shift will be out of all OEE calculations!", "Confirmation", MessageBoxButt
             Office.MsoControlType ControlPopup = Office.MsoControlType.msoControlPopup;
             Office.CommandBarPopup subMenu = (Office.CommandBarPopup)GetTableContextMenu().Controls.Add(ControlPopup, Type.Missing, Type.Missing, position, true);
             subMenu.Caption = "Shiftbook";
-            if (ExcelAddInEquipmentDatabase.Properties.Settings.Default.usergroup != "AAOSR")
+        
+            if (!ExcelAddInEquipmentDatabase.Properties.Settings.Default.IsRobotgroup)
             {
                 subMenu.Enabled = false;
             }
@@ -446,28 +472,48 @@ this shift will be out of all OEE calculations!", "Confirmation", MessageBoxButt
             //
             Office.CommandBarButton btnShowAdd1 = (Office.CommandBarButton)subMenu.Controls.Add(menuItem, Type.Missing, Type.Missing, 1, true);
             btnShowAdd1.Style = Office.MsoButtonStyle.msoButtonCaption;
-            btnShowAdd1.Caption = "Add/Edit (gekoppled)";
+            btnShowAdd1.Caption = "Add new item";
             btnShowAdd1.FaceId = 168;
-            btnShowAdd1.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(btnShowAdd1Click);
+            btnShowAdd1.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(btnShowAddNewClick);
             //
             Office.CommandBarButton btnShowAdd2 = (Office.CommandBarButton)subMenu.Controls.Add(menuItem, Type.Missing, Type.Missing, 2, true);
             btnShowAdd2.Style = Office.MsoButtonStyle.msoButtonCaption;
-            btnShowAdd2.Caption = "Add (onafhankelijk)";
+            btnShowAdd2.Caption = "items on location";
             btnShowAdd2.FaceId = 169;
             btnShowAdd2.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(btnShowAdd2Click);
         }
 
-        void btnShowAdd1Click(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)
+        void btnShowAddNewClick(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)
         {
-            Forms.AAOSRshiftbook lAAOSRshiftbook = new Forms.AAOSRshiftbook();
-            lAAOSRshiftbook.EditShiftbook(location, refid.ToString(), "0");
+            var newThread = new System.Threading.Thread(frmNewshitbookThread);
+            newThread.SetApartmentState(System.Threading.ApartmentState.STA);
+            newThread.Start();
 
+        }
+        public void frmNewshitbookThread()
+        {
+            try
+            {
+                string urlSkelation = @"http:\\equi\alert\alert\CreateShiftbookItem?locationTree={0}&location={1}&logtype={2}&logtext={3}&refid={4}&GoFullScreen=true";
+                string url = string.Format(urlSkelation
+                    , Uri.EscapeDataString(locationtree)
+                    , Uri.EscapeDataString(location)
+                    , Uri.EscapeDataString(Logtype)
+                    , Uri.EscapeDataString(LogText)
+                    , Uri.EscapeDataString(refid.ToString())
+                    );
+                System.Windows.Forms.Application.Run(new ExcelAddInEquipmentDatabase.Forms.EquiBrowser(url));
+            }
+            catch (Exception ex)
+            {
+                Debugger.Exeption(ex);
+                Debugger.Message("Dam..." + ex.Message);
+            }
         }
 
         void btnShowAdd2Click(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)
         {
-            Forms.AAOSRshiftbook lAAOSRshiftbook = new Forms.AAOSRshiftbook();
-            lAAOSRshiftbook.AddIndependantShiftbook(location,Logtype,LogText, refid.ToString());
+            Debugger.Message("TO DO");
         }
 
     }

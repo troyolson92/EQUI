@@ -79,44 +79,15 @@ namespace EqUi_UtilManger
                             }
                             break;
 
-                        case "MaximoTool":
-                            if (col["Viewmode"] == null) { col["Viewmode"] = ""; }
-                            //
-                            if (col["target"] != null)
-                            {
-                                Application.Run(new MXxWOoverview(col["target"], col["Viewmode"]));
-                            }
-                            else
-                            {
-                                Application.Run(new MXxWOoverview(col["Viewmode"]));
-                            }
-                            break;
-
-                          case "ERRORstats":
-                                if (col["target"] != null)
-                                {
-                                    Application.Run(new ErrorStats(col["target"], col["Logtype"], col["Errornum"], col["logtext"]));
-                                }
-                                else
-                                {
-                                    MessageBox.Show(string.Format("Tool: '{0}' is not a valid tool", values[0]));
-
-                                }
-                                break;
-
-                            default:
-                            MessageBox.Show(string.Format("Tool: '{0}' is not a valid tool",values[0]));
-                            break;
-
                             case "sleepBlock":
                                 Application.Run(new SleepBlock());
                                 break;
 
-                            case "sharepoint":
-                                Sharepoint sharepoint = new Sharepoint();
-                                sharepoint.AddNewIusse("8888", "iets", "http://equi/");    
+                            default:
+                                MessageBox.Show(string.Format("Tool: '{0}' is not a valid tool", values[0]));
                                 break;
-                    }
+
+                        }
                     break;
                 //
                 default:

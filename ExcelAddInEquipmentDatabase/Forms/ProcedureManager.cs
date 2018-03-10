@@ -87,7 +87,8 @@ namespace ExcelAddInEquipmentDatabase.Forms
         {
             InitializeComponent();
             //
-            if (Properties.Settings.Default.userlevel >= 10) 
+            
+            if (Properties.Settings.Default.IsPowerUser) 
             { Btn_saveSet.Visible = true; }
             else 
             { Btn_saveSet.Visible = false; }

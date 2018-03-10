@@ -32,7 +32,8 @@ namespace ExcelAddInEquipmentDatabase
         //connection to GADATA for maximo querys
         MaximoQuery lMaximoQuery = new MaximoQuery();
         //local Users data instance 
-        applData.UsersDataTable lUsers = new applData.UsersDataTable();
+        RoleProvider roleProvider = new RoleProvider();
+        public string[] userRoles;
         //local Asset data instance
         applData.ASSETSDataTable lASSETS = new applData.ASSETSDataTable();
         //local ParameterSets data instance 
@@ -66,7 +67,6 @@ namespace ExcelAddInEquipmentDatabase
             //init debugger
             Debugger.Init();
             //Set user name and level
-            load_UserDataset();
             dd_user_update();
             //Set controls according to user level
             apply_userLevel();
@@ -102,51 +102,43 @@ namespace ExcelAddInEquipmentDatabase
             {
                 SetWrapText(true);
             }
-
             TriggerRefresh = false;
         }
 
         void apply_userLevel()
         {
-            //get user level
-            var Ulevel = (from a in lUsers
-                          where a.CDS.Trim().ToUpper() == dd_User.SelectedItem.ToString().Trim().ToUpper()
-                          select a.UserLevel).Take(1);
-            Properties.Settings.Default.userlevel = Convert.ToInt32(Ulevel.FirstOrDefault());
-            //get user froup
-            var UserGroup = (from a in lUsers
-                             where a.CDS.Trim().ToUpper() == dd_User.SelectedItem.ToString().Trim().ToUpper()
-                             select a.UserGroup).Take(1);
-            if (UserGroup.FirstOrDefault() != null)
-            {
-                Properties.Settings.Default.usergroup = UserGroup.FirstOrDefault().ToString().Trim().ToUpper();
-            }
-            else
-            {
-                Properties.Settings.Default.usergroup = "default";
-            }
-            //
+            userRoles = roleProvider.GetRolesForUser(dd_User.SelectedItem.Tag);
+            if (userRoles.Contains("Administrator"))
+           {
+              dd_User.Enabled = true; //inpersonator 
+              btn_AssetManager.Enabled = true;
+              btn_ErrorMngr.Enabled = true;
+           }
+           else
+           {
+              dd_User.Enabled = false;
+              btn_AssetManager.Enabled = false;
+              btn_ErrorMngr.Enabled = false;
+           }
 
-            if (Properties.Settings.Default.userlevel >= 100) // admin level 
+            if(userRoles.Contains("AAOSR"))
             {
-                //everything is on
-            }
-            else if (Properties.Settings.Default.userlevel >= 10) // power user
-            {
-                dd_User.Enabled = false;
-                btn_ConnectionManager.Enabled = true;
-                btn_AssetManager.Enabled = false;
-                btn_docMngr.Enabled = false;
-                btn_ErrorMngr.Enabled = true;
+                Properties.Settings.Default.IsRobotgroup = true;
             }
             else
             {
-                //default acces level
-                dd_User.Enabled = false;
+                Properties.Settings.Default.IsRobotgroup = false;
+            }
+
+            if (userRoles.Contains("VSTOpoweruser"))
+            {
+                btn_ConnectionManager.Enabled = true;
+                Properties.Settings.Default.IsPowerUser = true;
+            }
+            else
+            {
                 btn_ConnectionManager.Enabled = false;
-                btn_AssetManager.Enabled = false;
-                btn_docMngr.Enabled = false;
-                btn_ErrorMngr.Enabled = false;
+                Properties.Settings.Default.IsPowerUser = false;
             }
         }
 
@@ -248,24 +240,6 @@ namespace ExcelAddInEquipmentDatabase
                 using (applDataTableAdapters.ASSETSTableAdapter adapter = new applDataTableAdapters.ASSETSTableAdapter())
                 {
                     adapter.Fill(lASSETS);
-                }
-            }
-        }
-        private void load_UserDataset()
-        {
-            if ((lUsers == null) || (lUsers.Count == 0))
-            {
-                //Fill local dataset
-                using (applDataTableAdapters.UsersTableAdapter adapter = new applDataTableAdapters.UsersTableAdapter())
-                {
-                    try
-                    {
-                        adapter.Fill(lUsers);
-                    }
-                    catch (Exception ex)
-                    {
-                        Debugger.Exeption(ex);
-                    }
                 }
             }
         }
@@ -407,22 +381,26 @@ namespace ExcelAddInEquipmentDatabase
             //
             RibbonDropDownItem CurrentUser = Globals.Factory.GetRibbonFactory().CreateRibbonDropDownItem();
             CurrentUser.Label = Environment.UserName; // currentuser;
+            CurrentUser.Tag = Environment.UserDomainName + "\\" + Environment.UserName; // currentuser;
             dd_User.Items.Add(CurrentUser);
             //
             RibbonDropDownItem defaultUser = Globals.Factory.GetRibbonFactory().CreateRibbonDropDownItem();
             defaultUser.Label = "default user"; // default;
+            defaultUser.Tag = "default user"; //default;
             dd_User.Items.Add(defaultUser);
             //
 
             try
             {
-                var data = from a in lUsers
-                           select a.CDS;
-                data.Distinct().ToList();
-                foreach (string user in data)
+                GADATAUserRoleProvider db = new GADATAUserRoleProvider();
+                var users = from u in db.L_users
+                            select u.username;
+                users.Distinct().ToList();
+                foreach (string user in users)
                 {
                     RibbonDropDownItem item = Globals.Factory.GetRibbonFactory().CreateRibbonDropDownItem();
-                    item.Label = user;
+                    item.Label = user.Split('\\')[1]; //get the cds id 
+                    item.Tag = user; //full user name 
                     dd_User.Items.Add(item);
                 }
             }
@@ -679,17 +657,6 @@ namespace ExcelAddInEquipmentDatabase
             }
         }
 
-        private void btn_testWs_Click(object sender, RibbonControlEventArgs e)
-        {
-            //nothing
-        }
-
-        private void btn_docMngr_Click(object sender, RibbonControlEventArgs e)
-        {
-            DocManager lDocManager = new DocManager();
-            lDocManager.Show();
-        }
-
         private void btn_ErrorMngr_Click(object sender, RibbonControlEventArgs e)
         {
             Forms.ErrorManger lErrorManager = new Forms.ErrorManger();
@@ -727,35 +694,6 @@ namespace ExcelAddInEquipmentDatabase
             apply_userLevel();
         }
 
-        // testing with pannels.
-        public Forms.Loginfo lLoginfo;
-        public Microsoft.Office.Tools.CustomTaskPane lTaskPaneErrorInfo;
-        //
-
-        //docked pannel test 
-        private void button1_Click(object sender, RibbonControlEventArgs e)
-        {
-            lLoginfo = new Forms.Loginfo(null, null);
-            lTaskPaneErrorInfo = Globals.ThisAddIn.CustomTaskPanes.Add(lLoginfo, "Loginfo");
-            lTaskPaneErrorInfo.DockPosition = Microsoft.Office.Core.MsoCTPDockPosition.msoCTPDockPositionLeft;
-            lTaskPaneErrorInfo.Width = lLoginfo.Width;
-            lTaskPaneErrorInfo.Visible = true;
-        }
-
-        //test
-        private void button1_Click_1(object sender, RibbonControlEventArgs e)
-        {
-            // SBCUStats lSBCUStats = new SBCUStats(); //crosstrheading
-            var newThread = new System.Threading.Thread(frmNewFormThread);
-            newThread.SetApartmentState(System.Threading.ApartmentState.STA);
-            newThread.Start();
-        }
-
-        public void frmNewFormThread()
-        {
-            Application.Run(new SBCUStats());
-        }
-
         private void tgbtn_Wrap_Click(object sender, RibbonControlEventArgs e)
         {
             SetWrapText(tgbtn_Wrap.Checked);
@@ -774,7 +712,6 @@ namespace ExcelAddInEquipmentDatabase
         }
 
         //
-
     }
 }
 

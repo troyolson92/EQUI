@@ -710,6 +710,7 @@
     <Content Include="Areas\Gadata\Views\Table\BodyTrackWebgrid.cshtml" />
     <Content Include="Areas\Gadata\Views\Table\EQpluginDefaultNGACWebgrid.cshtml" />
     <Content Include="Areas\Gadata\Views\Table\SupervisieWebgrid.cshtml" />
+    <Content Include="Areas\Gadata\Views\Table\MoreInfo.cshtml" />
     <None Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.svg" />
@@ -897,6 +898,7 @@
     <Content Include="Views\Home\Settings.cshtml" />
     <Content Include="Views\Home\UB12Home.cshtml" />
     <Content Include="Views\Shared\_MinimalLayout.cshtml" />
+    <Content Include="Views\Chart\GetErrorTrend.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EQUICommunictionLib\EQUICommunictionLib.csproj">

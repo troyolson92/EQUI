@@ -120,7 +120,14 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
             return View(data);
         }
 
-        //Partial view for more info modal-------------------------------------------------------------------------------------------------
+        //full view for more info 
+        [HttpGet]
+        public ActionResult MoreInfo(string location, int? errornum, int? refid, string logtype, string logtext)
+        {
+            return View();
+        }
+
+        //Partial view for more info modal with parms-------------------------------------------------------------------------------------------------
         [HttpGet]
         public ActionResult _Moreinfo(string location, int? errornum, int? refid, string logtype, string logtext)
         {

@@ -34,42 +34,6 @@ namespace ExcelAddInEquipmentDatabase.Properties {
             }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("\"sdebeul\"")]
-        public string activeuser {
-            get {
-                return ((string)(this["activeuser"]));
-            }
-            set {
-                this["activeuser"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("100")]
-        public int userlevel {
-            get {
-                return ((int)(this["userlevel"]));
-            }
-            set {
-                this["userlevel"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("\"AAOSR\"")]
-        public string usergroup {
-            get {
-                return ((string)(this["usergroup"]));
-            }
-            set {
-                this["usergroup"] = value;
-            }
-        }
-        
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
@@ -78,6 +42,30 @@ namespace ExcelAddInEquipmentDatabase.Properties {
         public string GADATAConnectionString {
             get {
                 return ((string)(this["GADATAConnectionString"]));
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool IsPowerUser {
+            get {
+                return ((bool)(this["IsPowerUser"]));
+            }
+            set {
+                this["IsPowerUser"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool IsRobotgroup {
+            get {
+                return ((bool)(this["IsRobotgroup"]));
+            }
+            set {
+                this["IsRobotgroup"] = value;
             }
         }
     }
