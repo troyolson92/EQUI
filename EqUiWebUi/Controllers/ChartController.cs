@@ -18,12 +18,27 @@ namespace EqUiWebUi.Controllers
             return View();
         }
 
+        //standalone view to get error trrend 
+        [HttpGet]
+        public ActionResult GetErrorTrend(string location, int? errornum, int? refid, string logtype, string logtext)
+        {
+            LogInfo logInfo = new LogInfo();
+            logInfo.location = location;
+            logInfo.errornum = errornum.GetValueOrDefault(0);
+            logInfo.refid = refid.GetValueOrDefault(0);
+            logInfo.logtype = logtype;
+            logInfo.logtext = logtext;
+            return View(logInfo);
+        }
+
+        //partial viaw to get error trend.
         [HttpGet]
         public ActionResult _getErrorTrend(LogInfo logInfo)
         {
             return PartialView();
         }
 
+        //get data for the chart => returns json result
         [HttpGet]
         public JsonResult _getData(string location ,int  errornum ,string logtekst ,string logtype, int refid, DateTime startDate, DateTime endDate, grouptType grouptType = grouptType.Hour)
         {

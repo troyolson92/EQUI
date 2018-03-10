@@ -151,6 +151,12 @@
   -->
   <ItemGroup>
     <Reference Include="Accessibility" />
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net40\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net40\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\MetroModernUI.1.4.0.0\lib\net\MetroFramework.dll</HintPath>
@@ -183,11 +189,14 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml" />
@@ -223,11 +232,8 @@
       <DependentUpon>applData.xsd</DependentUpon>
     </Compile>
     <Compile Include="ClickOnce.cs" />
-    <Compile Include="Forms\AAOSRshiftbook.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\AAOSRshiftbook.Designer.cs">
-      <DependentUpon>AAOSRshiftbook.cs</DependentUpon>
+    <Compile Include="c_userRoles.cs">
+      <DependentUpon>UserManagment.tt</DependentUpon>
     </Compile>
     <Compile Include="Forms\AssetManager.cs">
       <SubType>Form</SubType>
@@ -241,17 +247,17 @@
     <Compile Include="Forms\ConnectionManger.Designer.cs">
       <DependentUpon>ConnectionManger.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\EquiBrowser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\EquiBrowser.Designer.cs">
+      <DependentUpon>EquiBrowser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\ErrorManger.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\ErrorManger.Designer.cs">
       <DependentUpon>ErrorManger.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Loginfo.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Forms\Loginfo.Designer.cs">
-      <DependentUpon>Loginfo.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\MXxQueryEdit.cs">
       <SubType>Form</SubType>
@@ -295,6 +301,12 @@
     <Compile Include="Forms\uc_Inputbox.Designer.cs">
       <DependentUpon>uc_Inputbox.cs</DependentUpon>
     </Compile>
+    <Compile Include="h_usersPermisions.cs">
+      <DependentUpon>UserManagment.tt</DependentUpon>
+    </Compile>
+    <Compile Include="L_users.cs">
+      <DependentUpon>UserManagment.tt</DependentUpon>
+    </Compile>
     <Compile Include="MaximoQuery.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -302,16 +314,29 @@
     <Compile Include="Ribbon.cs">
       <XmlRibbon>true</XmlRibbon>
     </Compile>
+    <Compile Include="RoleProvider.cs" />
     <Compile Include="StringExtenstions.cs" />
+    <Compile Include="UserManagment.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UserManagment.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserManagment.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UserManagment.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserManagment.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UserManagment.edmx</DependentUpon>
+    </Compile>
     <Compile Include="WorksheetFeatures.cs" />
-    <EmbeddedResource Include="Forms\AAOSRshiftbook.resx">
-      <DependentUpon>AAOSRshiftbook.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\EquiBrowser.resx">
+      <DependentUpon>EquiBrowser.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ErrorManger.resx">
       <DependentUpon>ErrorManger.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Loginfo.resx">
-      <DependentUpon>Loginfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MXxQueryEdit.resx">
       <DependentUpon>MXxQueryEdit.cs</DependentUpon>
@@ -385,12 +410,30 @@
       <DependentUpon>ThisAddIn.Designer.xml</DependentUpon>
     </Compile>
     <AppDesigner Include="Properties\" />
+    <EntityDeploy Include="UserManagment.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>UserManagment.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="UserManagment.edmx.diagram">
+      <DependentUpon>UserManagment.edmx</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="MetroFramework.txt" />
+    <Content Include="UserManagment.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>UserManagment.Context.cs</LastGenOutput>
+      <DependentUpon>UserManagment.edmx</DependentUpon>
+    </Content>
+    <Content Include="UserManagment.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>UserManagment.edmx</DependentUpon>
+      <LastGenOutput>UserManagment.cs</LastGenOutput>
+    </Content>
     <EmbeddedResource Include="Ribbon.xml" />
   </ItemGroup>
   <ItemGroup>

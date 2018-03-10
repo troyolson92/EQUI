@@ -1,0 +1,12 @@
+﻿@model EqUiWebUi.Models.LogInfo
+@{
+    ViewBag.Title = "GetErrorTrend";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>GetErrorTrend</h2> 
+
+<!--putting this in a section this only renders onces the page is loaded-->
+@section partials{
+    @Html.Partial("_getErrorTrend", Model)
+}

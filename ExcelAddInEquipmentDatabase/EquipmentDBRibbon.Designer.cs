@@ -62,16 +62,12 @@
             this.separator4 = this.Factory.CreateRibbonSeparator();
             this.btn_ConnectionManager = this.Factory.CreateRibbonButton();
             this.btn_AssetManager = this.Factory.CreateRibbonButton();
-            this.btn_docMngr = this.Factory.CreateRibbonButton();
             this.btn_ErrorMngr = this.Factory.CreateRibbonButton();
-            this.groupTempTools = this.Factory.CreateRibbonGroup();
-            this.btn_SBCUtest = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
             this.rib2.SuspendLayout();
             this.group2.SuspendLayout();
             this.AssetManager.SuspendLayout();
             this.g_config.SuspendLayout();
-            this.groupTempTools.SuspendLayout();
             this.SuspendLayout();
             // 
             // tab1
@@ -85,7 +81,6 @@
             this.rib2.Groups.Add(this.group2);
             this.rib2.Groups.Add(this.AssetManager);
             this.rib2.Groups.Add(this.g_config);
-            this.rib2.Groups.Add(this.groupTempTools);
             this.rib2.Label = "EQDATABASE";
             this.rib2.Name = "rib2";
             // 
@@ -236,7 +231,6 @@
             this.g_config.Items.Add(this.separator4);
             this.g_config.Items.Add(this.btn_ConnectionManager);
             this.g_config.Items.Add(this.btn_AssetManager);
-            this.g_config.Items.Add(this.btn_docMngr);
             this.g_config.Items.Add(this.btn_ErrorMngr);
             this.g_config.Label = "Configuration";
             this.g_config.Name = "g_config";
@@ -320,14 +314,6 @@
             this.btn_AssetManager.SuperTip = "Tools for manageing Asset structure. !Amdins only!";
             this.btn_AssetManager.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_AssetManager_Click);
             // 
-            // btn_docMngr
-            // 
-            this.btn_docMngr.Label = "DocSearch";
-            this.btn_docMngr.Name = "btn_docMngr";
-            this.btn_docMngr.OfficeImageId = "FunctionsLookupReferenceInsertGallery";
-            this.btn_docMngr.ShowImage = true;
-            this.btn_docMngr.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_docMngr_Click);
-            // 
             // btn_ErrorMngr
             // 
             this.btn_ErrorMngr.Label = "MngErrors";
@@ -336,18 +322,6 @@
             this.btn_ErrorMngr.ShowImage = true;
             this.btn_ErrorMngr.SuperTip = "Tools for manageing error classfication. !Amdins only!";
             this.btn_ErrorMngr.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_ErrorMngr_Click);
-            // 
-            // groupTempTools
-            // 
-            this.groupTempTools.Items.Add(this.btn_SBCUtest);
-            this.groupTempTools.Label = "TempTools";
-            this.groupTempTools.Name = "groupTempTools";
-            // 
-            // btn_SBCUtest
-            // 
-            this.btn_SBCUtest.Label = "btn_SBCUtest";
-            this.btn_SBCUtest.Name = "btn_SBCUtest";
-            this.btn_SBCUtest.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button1_Click_1);
             // 
             // EquipmentDBRibbon
             // 
@@ -366,8 +340,6 @@
             this.AssetManager.PerformLayout();
             this.g_config.ResumeLayout(false);
             this.g_config.PerformLayout();
-            this.groupTempTools.ResumeLayout(false);
-            this.groupTempTools.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -395,14 +367,11 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_help;
         internal Microsoft.Office.Tools.Ribbon.RibbonToggleButton tbtn_Autorefresh;
         internal Microsoft.Office.Tools.Ribbon.RibbonDropDown dd_User;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_docMngr;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_ErrorMngr;
         internal Microsoft.Office.Tools.Ribbon.RibbonToggleButton tbtn_StopRightClick;
         internal Microsoft.Office.Tools.Ribbon.RibbonSeparator separator3;
         internal Microsoft.Office.Tools.Ribbon.RibbonToggleButton tbn_3;
         internal Microsoft.Office.Tools.Ribbon.RibbonGallery gall_templates;
-        internal Microsoft.Office.Tools.Ribbon.RibbonGroup groupTempTools;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_SBCUtest;
         internal Microsoft.Office.Tools.Ribbon.RibbonToggleButton btn_EditProcedure;
         internal Microsoft.Office.Tools.Ribbon.RibbonToggleButton tgbtn_Wrap;
         internal Microsoft.Office.Tools.Ribbon.RibbonSeparator separator4;

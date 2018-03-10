@@ -9,15 +9,6 @@
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
       <Value Profile="(Default)">Data Source=sqla001.gen.volvocars.net;Persist Security Info=True;User ID=EqUiAdmin;Password=EqUiAdmin</Value>
     </Setting>
-    <Setting Name="activeuser" Type="System.String" Scope="User">
-      <Value Profile="(Default)">"sdebeul"</Value>
-    </Setting>
-    <Setting Name="userlevel" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">100</Value>
-    </Setting>
-    <Setting Name="usergroup" Type="System.String" Scope="User">
-      <Value Profile="(Default)">"AAOSR"</Value>
-    </Setting>
     <Setting Name="GADATAConnectionString" Type="(Connection string)" Scope="Application">
       <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
@@ -25,6 +16,12 @@
   &lt;ProviderName&gt;System.Data.SqlClient&lt;/ProviderName&gt;
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
       <Value Profile="(Default)">Data Source=sqla001.gen.volvocars.net;Initial Catalog=GADATA;Persist Security Info=True;User ID=EqUiAdmin;Password=EqUiAdmin</Value>
+    </Setting>
+    <Setting Name="IsPowerUser" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="IsRobotgroup" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>
 </SettingsFile>

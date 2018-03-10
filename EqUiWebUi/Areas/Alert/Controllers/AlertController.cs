@@ -172,7 +172,41 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             return View(_alert);
         }
 
+        // Create a new shiftbook item this is also implemented in VSTO plugin
+        //returns to the default edit alert view 
+        public async Task<ActionResult> CreateShiftbookItem(string locationTree, string location, string logtype, string logtext, string refid)
+        {
+            //check if there is active item !!!!
 
-        // 
+
+
+            h_alert newAlert = new h_alert();
+            newAlert.c_triggers = (from trig in db.c_triggers
+                                   where trig.id == 13 //shiftbook trigger id 
+                                   select trig).FirstOrDefault();
+
+            newAlert.locationTree = locationTree;
+            newAlert.location = location;
+            newAlert.Classification = "AAOSR";
+            newAlert.alarmobject = newAlert.location; //set to same as location 
+            newAlert.C_timestamp = System.DateTime.Now;
+            newAlert.triggerCount = 1;
+            newAlert.lastTriggerd = newAlert.C_timestamp;
+            //update last changed user 
+            newAlert.lastChangedTimestamp = System.DateTime.Now;
+            newAlert.lastChangedUserID = (int)Session["UserId"];
+
+            newAlert.info = string.Format("{0} => {1} refid:{2}",logtype,logtext,refid.ToString());
+
+            newAlert.comments = ""; //add badge with details about the referenced object and a link to the breakdown
+            newAlert.state = 4; //inital state set to void
+
+            //commit to database
+            db.h_alert.Add(newAlert);
+            await db.SaveChangesAsync();
+
+            ViewBag.state = new SelectList(db.c_state, "id", "discription", newAlert.state);
+            return View("Edit", newAlert);
+        }
     }
 }
