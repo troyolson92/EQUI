@@ -21,7 +21,7 @@
            .Titled("State")
            .Encoded(false)
            .Filterable(true)
-           .RenderedAs(c => @MyFilters.ChangeAlertStatus(c.id, c.c_state.state));
+           .RenderedAs(c => MyFilters.ChangeAlertStatus(c.id, c.c_state.state));
 
     //launch sbcu tool
     columns.Add(c => c)

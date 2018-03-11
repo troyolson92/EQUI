@@ -1,4 +1,5 @@
 ﻿using EQUICommunictionLib;
+using EqUiWebUi.Areas.Gadata.Models;
 using EqUiWebUi.Models;
 using System;
 using System.Collections.Generic;
@@ -113,7 +114,7 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
         [HttpGet]
         public ActionResult BodyTrackWebgrid()
         {
-            GADATAEntities gADATAEntities = new GADATAEntities();
+            GADATAEntities2 gADATAEntities = new GADATAEntities2();
             IQueryable<Bodytracking> data = from bodytracking in gADATAEntities.Bodytracking
                                             select bodytracking;
 

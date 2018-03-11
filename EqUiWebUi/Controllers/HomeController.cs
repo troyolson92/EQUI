@@ -47,16 +47,13 @@ namespace EqUiWebUi.Controllers
         [Authorize(Roles = "Administrator")]
         public void ConfiureBackgroundJobs()
         {
+            //old class
             Backgroundwork backgroundwork = new Backgroundwork();
             backgroundwork.configHangfireJobs();
-        }
+            //gadata jobs 
+            Areas.Gadata.BackgroundWork backgroundWorkGADATA = new Areas.Gadata.BackgroundWork();
+            backgroundWorkGADATA.configHangfireJobs();
 
-        //Fire background jobs once
-        [Authorize(Roles = "Administrator")]
-        public void FireBackgroundJobs()
-        {
-            Backgroundwork backgroundwork = new Backgroundwork();
-            backgroundwork.configHangfireJobs();
         }
 
         //temp for ub12 (top left corner of big screen need to make this custom for a user)
