@@ -75,6 +75,15 @@ namespace EqUiWebUi.Areas.Alert.Models
         STO = 2
     }
 
+    //enum for alert states
+    public enum alertState
+    {
+        WGK = 1,
+        OKREQ = 2,
+        COMP = 3,
+        VOID = 4,
+        TECHCOMP = 5
+    }
 
     //Alert metadata
     [MetadataType(typeof(h_alertMetaData))]

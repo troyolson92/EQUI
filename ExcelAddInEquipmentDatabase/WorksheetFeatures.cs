@@ -302,7 +302,7 @@ namespace ExcelAddInEquipmentDatabase
         {
             try
             {
-                string urlSkelation = @"http:\\equi\gadata\table\MoreInfo?location={0}&errornum={1}&refid={2}&logtype={3}&logtext={4}&GoFullScreen=true";
+                string urlSkelation = @"http:\\equi\gadata\table\Loginfo?location={0}&errornum={1}&refid={2}&logtype={3}&logtext={4}&GoFullScreen=true";
                 string url = string.Format(urlSkelation
                     , Uri.EscapeDataString(location)
                     , Uri.EscapeDataString(errornum)
@@ -494,7 +494,7 @@ this shift will be out of all OEE calculations!", "Confirmation", MessageBoxButt
         {
             try
             {
-                string urlSkelation = @"http:\\equi\alert\alert\CreateShiftbookItem?locationTree={0}&location={1}&logtype={2}&logtext={3}&refid={4}&GoFullScreen=true";
+                string urlSkelation = @"http:\\equi\alert\alert\CreateShiftbookItem?locationTree={0}&location={1}&logtype={2}&logtext={3}&refid={4}";
                 string url = string.Format(urlSkelation
                     , Uri.EscapeDataString(locationtree)
                     , Uri.EscapeDataString(location)
@@ -513,7 +513,25 @@ this shift will be out of all OEE calculations!", "Confirmation", MessageBoxButt
 
         void btnShowAdd2Click(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)
         {
-            Debugger.Message("TO DO");
+            var newThread = new System.Threading.Thread(frmGetshitbookThread);
+            newThread.SetApartmentState(System.Threading.ApartmentState.STA);
+            newThread.Start();
+        }
+        public void frmGetshitbookThread()
+        {
+            try
+            {
+                string urlSkelation = @"http:\\equi\alert\alert\AAOSRAlertList?location={0}";
+                string url = string.Format(urlSkelation
+                    , Uri.EscapeDataString(location)
+                    );
+                System.Windows.Forms.Application.Run(new ExcelAddInEquipmentDatabase.Forms.EquiBrowser(url));
+            }
+            catch (Exception ex)
+            {
+                Debugger.Exeption(ex);
+                Debugger.Message("Dam..." + ex.Message);
+            }
         }
 
     }

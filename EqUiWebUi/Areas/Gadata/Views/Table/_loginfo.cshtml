@@ -1,0 +1,11 @@
+﻿@model EqUiWebUi.Models.LogInfo
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h4 class="panel-title">@Model.logtype details for logcode: @Model.errornum  logtext: @Model.logtext</h4>
+        <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+    </div>
+    <div class="panel-body">
+        @Html.Raw(Model.logDetails)
+    </div>
+</div>

@@ -711,6 +711,9 @@
     <Content Include="Areas\Gadata\Views\Table\EQpluginDefaultNGACWebgrid.cshtml" />
     <Content Include="Areas\Gadata\Views\Table\SupervisieWebgrid.cshtml" />
     <Content Include="Areas\Gadata\Views\Table\MoreInfo.cshtml" />
+    <Content Include="Areas\Gadata\Views\Table\_loginfo.cshtml" />
+    <Content Include="Areas\Gadata\Views\Table\Loginfo.cshtml" />
+    <Content Include="Areas\Alert\Views\Alert\AAOSRAlertList.cshtml" />
     <None Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.svg" />
