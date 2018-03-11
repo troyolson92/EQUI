@@ -30,7 +30,7 @@ namespace EqUiWebUi.Areas.Alert
                 if (trigger.enabled)
                 {
                     log.Info("Adding HF alertTriggerJob for: " + trigger.id);
-                    Hangfire.RecurringJob.AddOrUpdate("AT_" +trigger.alertType+ "_" +trigger.id,() => alertEngine.CheckForalerts(trigger.id, trigger.discription), Cron.MinuteInterval(trigger.Pollrate));
+                    Hangfire.RecurringJob.AddOrUpdate("AT" + trigger.id + "_" + trigger.alertType, () => alertEngine.CheckForalerts(trigger.id, trigger.discription), Cron.MinuteInterval(trigger.Pollrate));
                 }
             }
 
@@ -51,12 +51,13 @@ namespace EqUiWebUi.Areas.Alert
                 if (trigger.enabled == false || ClearALL == true)
                 {
                     log.Info("Removing HF alertTriggerJob for: " + trigger.id);
-                    RecurringJob.RemoveIfExists("AT_" + trigger.alertType + "_" + trigger.id);
+                    RecurringJob.RemoveIfExists("AT" + trigger.id + "_" + trigger.alertType);
                 }
             }
         }
 
         //Gets called by Hanfire to processAlertwork.
+        [Queue("alertengine")]
         [AutomaticRetry(Attempts = 0)] //no hangfire retrys 
         public void CheckForalerts(int c_triggerID,string AlertDiscription)
         {
@@ -128,8 +129,10 @@ namespace EqUiWebUi.Areas.Alert
                 {
                     log.Info("New alert for: " + ActiveAlert.Field<string>("Location") + " => "+ ActiveAlert.Field<string>("info"));
 
-                   h_alert newAlert = new h_alert();
-                   newAlert.c_tirgger_id = c_triggerID;
+                    h_alert newAlert = new h_alert
+                    {
+                        c_tirgger_id = c_triggerID
+                    };
                     if (trigger.RunAgainstDatabase == SmsDatabases.GADATA)
                     {
                         //we already have the location tree and location

@@ -1,4 +1,5 @@
 ﻿using EqUiWebUi.Areas.Alert.Models;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -217,7 +218,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
         {
             //store current state 
             string Oldstate = alert.c_state.state;
-
+            string test = System.Enum.GetName(typeof(alertState), 3);
             //do some stuff based on the new state request
             switch (newstate)
             {

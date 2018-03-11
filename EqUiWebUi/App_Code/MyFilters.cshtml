@@ -10,7 +10,7 @@
                 <option value="URA">abb</option>
             </optgroup>
             <optgroup label="Process">
-                <option value="UAW">UAW)</option>
+                <option value="UAW">UAW</option>
                 <option value="UAWS">Spot</option>
                 <option value="UAWT">Tucker</option>
             </optgroup>
@@ -243,11 +243,12 @@
                @currentState <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
-                <li><a class="JQresultTriggerBtn" href="/alert/alert/SetState?id=@alertId&newstate=1">WGK</a></li>
-                <li><a class="JQresultTriggerBtn" href="/alert/alert/SetState?id=@alertId&newstate=2">OKREQ</a></li>
-                <li><a class="JQresultTriggerBtn" href="/alert/alert/SetState?id=@alertId&newstate=3">COMP</a></li>
-                <li><a class="JQresultTriggerBtn" href="/alert/alert/SetState?id=@alertId&newstate=4">VOID</a></li>
-                <li><a class="JQresultTriggerBtn" href="/alert/alert/SetState?id=@alertId&newstate=5">TECHCOMP</a></li>
+                @{
+                    foreach (EqUiWebUi.Areas.Alert.Models.alertState state in System.Enum.GetValues(typeof(EqUiWebUi.Areas.Alert.Models.alertState)))
+                    {
+                        <li><a class="JQresultTriggerBtn" href="/alert/alert/SetState?id=@alertId&newstate=@state">@System.Enum.GetName(typeof(EqUiWebUi.Areas.Alert.Models.alertState), state)</a></li>
+                    }
+                }
             </ul>
         </div>
 }

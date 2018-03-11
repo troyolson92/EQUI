@@ -61,11 +61,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(131, 325);
-            this.Controls.Add(this.btn_test);
             this.Controls.Add(this.btn_blockSleep);
-            this.Controls.Add(this.Btn_MXxWoOverview);
-            this.Controls.Add(this.btn_logDetails);
-            this.Controls.Add(this.btn_DocManger);
             this.Controls.Add(this.btn_sbcuStat);
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Form1";
@@ -78,11 +74,7 @@
         #endregion
 
         private System.Windows.Forms.Button btn_sbcuStat;
-        private System.Windows.Forms.Button btn_DocManger;
-        private System.Windows.Forms.Button btn_logDetails;
-        private System.Windows.Forms.Button Btn_MXxWoOverview;
         private System.Windows.Forms.Button btn_blockSleep;
-        private System.Windows.Forms.Button btn_test;
     }
 }
 

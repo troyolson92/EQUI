@@ -16,17 +16,25 @@ namespace EqUiWebUi
             app.MapSignalR();
 
             //setting up hangfire 
+            //setup hangfire database config
             GlobalConfiguration.Configuration
                 .UseSqlServerStorage(
                     "GADATAConnectionString",
                     new SqlServerStorageOptions { QueuePollInterval = TimeSpan.FromSeconds(1) });
-
+            //set up hangefire dashboard
             app.UseHangfireDashboard("/hangfire", new DashboardOptions
             {
                 Authorization = new[] { new MyAuthorizationFilter() }
             });
-
-            app.UseHangfireServer();
+            //setup hangfire options
+            var HFoptions = new BackgroundJobServerOptions
+            {
+                //MUST BE LOWERCASE ONLY !!!!!!
+                Queues = new[] { "critical", "default", "alertengine", "gadata" },
+                //How many jobs run at the same time
+                WorkerCount = 5 // Environment.ProcessorCount * 5
+            };
+            app.UseHangfireServer(HFoptions);
         //
         }
 

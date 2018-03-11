@@ -1,0 +1,353 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="GADATAModel1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.EqUi.Supervisie' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Supervisie">
+          <Key>
+            <PropertyRef Name="Subgroup" />
+            <PropertyRef Name="Logtype" />
+            <PropertyRef Name="refId" />
+          </Key>
+          <Property Name="Location" Type="varchar" MaxLength="255" />
+          <Property Name="logtext" Type="varchar(max)" />
+          <Property Name="RT" Type="int" />
+          <Property Name="DT" Type="int" />
+          <Property Name="time" Type="char" MaxLength="19" />
+          <Property Name="Classification" Type="varchar" MaxLength="50" />
+          <Property Name="Subgroup" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Severity" Type="int" />
+          <Property Name="Logcode" Type="int" />
+          <Property Name="Logtype" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="refId" Type="int" Nullable="false" />
+          <Property Name="timestamp" Type="datetime" />
+          <Property Name="LocationTree" Type="varchar(max)" />
+          <Property Name="ClassTree" Type="varchar(max)" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.NGAC.Bodytracking' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Bodytracking">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="controller_name" Type="varchar" MaxLength="30" />
+          <Property Name="jobNo" Type="int" />
+          <Property Name="bodyNo" Type="int" />
+          <Property Name="CycleStart" Type="datetime" />
+          <Property Name="CycleEnd" Type="datetime" />
+          <Property Name="ts_breakDownStart" Type="datetime" />
+          <Property Name="ts_breakDownAck" Type="datetime" />
+          <Property Name="ts_breakDownEnd" Type="datetime" />
+          <Property Name="FullLogtext" Type="varchar(max)" />
+          <Property Name="refId" Type="int" />
+        </EntityType>
+        <Function Name="AAOSR_PloegRaport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="EqUi">
+          <Parameter Name="StartDate" Type="datetime" Mode="In" />
+          <Parameter Name="EndDate" Type="datetime" Mode="In" />
+          <Parameter Name="daysBack" Type="int" Mode="In" />
+          <Parameter Name="assets" Type="varchar" Mode="In" />
+          <Parameter Name="locations" Type="varchar" Mode="In" />
+          <Parameter Name="lochierarchy" Type="varchar" Mode="In" />
+          <Parameter Name="minDowntime" Type="int" Mode="In" />
+          <Parameter Name="minCountOfDowtime" Type="int" Mode="In" />
+          <Parameter Name="minCountofWarning" Type="int" Mode="In" />
+          <Parameter Name="getAlerts" Type="bit" Mode="In" />
+          <Parameter Name="getShifbook" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="EQpluginDefaultNGAC" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="EqUi">
+          <Parameter Name="StartDate" Type="datetime" Mode="In" />
+          <Parameter Name="EndDate" Type="datetime" Mode="In" />
+          <Parameter Name="daysBack" Type="int" Mode="In" />
+          <Parameter Name="assets" Type="varchar" Mode="In" />
+          <Parameter Name="locations" Type="varchar" Mode="In" />
+          <Parameter Name="lochierarchy" Type="varchar" Mode="In" />
+          <Parameter Name="timeline" Type="bit" Mode="In" />
+          <Parameter Name="ControllerEventLog" Type="bit" Mode="In" />
+          <Parameter Name="ErrDispLog" Type="bit" Mode="In" />
+          <Parameter Name="ErrDispLogS4C" Type="bit" Mode="In" />
+          <Parameter Name="VariableLog" Type="bit" Mode="In" />
+          <Parameter Name="DeviceProperty" Type="bit" Mode="In" />
+          <Parameter Name="Breakdown" Type="bit" Mode="In" />
+          <Parameter Name="BreakdownStart" Type="bit" Mode="In" />
+          <Parameter Name="Jobs" Type="bit" Mode="In" />
+          <Parameter Name="DisplayLevel" Type="int" Mode="In" />
+          <Parameter Name="DisplayFullLogtext" Type="bit" Mode="In" />
+          <Parameter Name="ExcludeOperational" Type="bit" Mode="In" />
+        </Function>
+        <EntityContainer Name="GADATAModel1StoreContainer">
+          <EntitySet Name="Supervisie" EntityType="Self.Supervisie" store:Type="Views" store:Schema="EqUi">
+            <DefiningQuery>SELECT 
+    [Supervisie].[Location] AS [Location], 
+    [Supervisie].[logtext] AS [logtext], 
+    [Supervisie].[RT] AS [RT], 
+    [Supervisie].[DT] AS [DT], 
+    [Supervisie].[time] AS [time], 
+    [Supervisie].[Classification] AS [Classification], 
+    [Supervisie].[Subgroup] AS [Subgroup], 
+    [Supervisie].[Severity] AS [Severity], 
+    [Supervisie].[Logcode] AS [Logcode], 
+    [Supervisie].[Logtype] AS [Logtype], 
+    [Supervisie].[refId] AS [refId], 
+    [Supervisie].[timestamp] AS [timestamp], 
+    [Supervisie].[LocationTree] AS [LocationTree], 
+    [Supervisie].[ClassTree] AS [ClassTree]
+    FROM [EqUi].[Supervisie] AS [Supervisie]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Bodytracking" EntityType="Self.Bodytracking" store:Type="Views" store:Schema="NGAC">
+            <DefiningQuery>SELECT 
+    [Bodytracking].[id] AS [id], 
+    [Bodytracking].[controller_name] AS [controller_name], 
+    [Bodytracking].[jobNo] AS [jobNo], 
+    [Bodytracking].[bodyNo] AS [bodyNo], 
+    [Bodytracking].[CycleStart] AS [CycleStart], 
+    [Bodytracking].[CycleEnd] AS [CycleEnd], 
+    [Bodytracking].[ts_breakDownStart] AS [ts_breakDownStart], 
+    [Bodytracking].[ts_breakDownAck] AS [ts_breakDownAck], 
+    [Bodytracking].[ts_breakDownEnd] AS [ts_breakDownEnd], 
+    [Bodytracking].[FullLogtext] AS [FullLogtext], 
+    [Bodytracking].[refId] AS [refId]
+    FROM [NGAC].[Bodytracking] AS [Bodytracking]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="GADATAModel1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Supervisie">
+          <Key>
+            <PropertyRef Name="Subgroup" />
+            <PropertyRef Name="Logtype" />
+            <PropertyRef Name="refId" />
+          </Key>
+          <Property Name="Location" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="logtext" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="RT" Type="Int32" />
+          <Property Name="DT" Type="Int32" />
+          <Property Name="time" Type="String" MaxLength="19" FixedLength="true" Unicode="false" />
+          <Property Name="Classification" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Subgroup" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Severity" Type="Int32" />
+          <Property Name="Logcode" Type="Int32" />
+          <Property Name="Logtype" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="refId" Type="Int32" Nullable="false" />
+          <Property Name="timestamp" Type="DateTime" Precision="3" />
+          <Property Name="LocationTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ClassTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Bodytracking">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="controller_name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="jobNo" Type="Int32" />
+          <Property Name="bodyNo" Type="Int32" />
+          <Property Name="CycleStart" Type="DateTime" Precision="3" />
+          <Property Name="CycleEnd" Type="DateTime" Precision="3" />
+          <Property Name="ts_breakDownStart" Type="DateTime" Precision="3" />
+          <Property Name="ts_breakDownAck" Type="DateTime" Precision="3" />
+          <Property Name="ts_breakDownEnd" Type="DateTime" Precision="3" />
+          <Property Name="FullLogtext" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="refId" Type="Int32" />
+        </EntityType>
+        <EntityContainer Name="GADATAEntities2" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Supervisie" EntityType="Self.Supervisie" />
+          <EntitySet Name="Bodytracking" EntityType="Self.Bodytracking" />
+          <FunctionImport Name="AAOSR_PloegRaport" ReturnType="Collection(GADATAModel1.AAOSR_PloegRaport_Result)">
+            <Parameter Name="StartDate" Mode="In" Type="DateTime" />
+            <Parameter Name="EndDate" Mode="In" Type="DateTime" />
+            <Parameter Name="daysBack" Mode="In" Type="Int32" />
+            <Parameter Name="assets" Mode="In" Type="String" />
+            <Parameter Name="locations" Mode="In" Type="String" />
+            <Parameter Name="lochierarchy" Mode="In" Type="String" />
+            <Parameter Name="minDowntime" Mode="In" Type="Int32" />
+            <Parameter Name="minCountOfDowtime" Mode="In" Type="Int32" />
+            <Parameter Name="minCountofWarning" Mode="In" Type="Int32" />
+            <Parameter Name="getAlerts" Mode="In" Type="Boolean" />
+            <Parameter Name="getShifbook" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="EQpluginDefaultNGAC" ReturnType="Collection(GADATAModel1.EQpluginDefaultNGAC_Result)">
+            <Parameter Name="StartDate" Mode="In" Type="DateTime" />
+            <Parameter Name="EndDate" Mode="In" Type="DateTime" />
+            <Parameter Name="daysBack" Mode="In" Type="Int32" />
+            <Parameter Name="assets" Mode="In" Type="String" />
+            <Parameter Name="locations" Mode="In" Type="String" />
+            <Parameter Name="lochierarchy" Mode="In" Type="String" />
+            <Parameter Name="timeline" Mode="In" Type="Boolean" />
+            <Parameter Name="ControllerEventLog" Mode="In" Type="Boolean" />
+            <Parameter Name="ErrDispLog" Mode="In" Type="Boolean" />
+            <Parameter Name="ErrDispLogS4C" Mode="In" Type="Boolean" />
+            <Parameter Name="VariableLog" Mode="In" Type="Boolean" />
+            <Parameter Name="DeviceProperty" Mode="In" Type="Boolean" />
+            <Parameter Name="Breakdown" Mode="In" Type="Boolean" />
+            <Parameter Name="BreakdownStart" Mode="In" Type="Boolean" />
+            <Parameter Name="Jobs" Mode="In" Type="Boolean" />
+            <Parameter Name="DisplayLevel" Mode="In" Type="Int32" />
+            <Parameter Name="DisplayFullLogtext" Mode="In" Type="Boolean" />
+            <Parameter Name="ExcludeOperational" Mode="In" Type="Boolean" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="AAOSR_PloegRaport_Result">
+          <Property Type="String" Name="Location" Nullable="true" MaxLength="256" />
+          <Property Type="String" Name="AssetID" Nullable="true" />
+          <Property Type="Int32" Name="Logcode" Nullable="true" />
+          <Property Type="String" Name="Logtype" Nullable="false" MaxLength="9" />
+          <Property Type="String" Name="logtext" Nullable="true" />
+          <Property Type="Int32" Name="Response_min_" Nullable="true" />
+          <Property Type="Int32" Name="Downtime_min_" Nullable="true" />
+          <Property Type="Int32" Name="Count" Nullable="true" />
+          <Property Type="String" Name="timestamp" Nullable="true" MaxLength="19" />
+          <Property Type="String" Name="time" Nullable="true" MaxLength="19" />
+          <Property Type="String" Name="Subgroup" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="refId" Nullable="true" />
+          <Property Type="String" Name="LocationTree" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="EQpluginDefaultNGAC_Result">
+          <Property Type="String" Name="Location" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="AssetID" Nullable="true" />
+          <Property Type="String" Name="Logtype" Nullable="false" MaxLength="15" />
+          <Property Type="Int32" Name="Logcode" Nullable="true" />
+          <Property Type="Int32" Name="Severity" Nullable="true" />
+          <Property Type="String" Name="logtext" Nullable="true" />
+          <Property Type="Int32" Name="Response_min_" Nullable="true" />
+          <Property Type="Int32" Name="Downtime_min_" Nullable="true" />
+          <Property Type="String" Name="timestamp" Nullable="true" MaxLength="19" />
+          <Property Type="String" Name="time" Nullable="true" MaxLength="19" />
+          <Property Type="Int32" Name="Year" Nullable="true" />
+          <Property Type="Int32" Name="Week" Nullable="true" />
+          <Property Type="Int32" Name="Day" Nullable="true" />
+          <Property Type="String" Name="Shift" Nullable="true" MaxLength="2" />
+          <Property Type="String" Name="Ploeg" Nullable="true" MaxLength="2" />
+          <Property Type="String" Name="Classification" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Subgroup" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Category" Nullable="true" />
+          <Property Type="Int32" Name="PartRef" Nullable="true" />
+          <Property Type="Int32" Name="ProcessRef" Nullable="true" />
+          <Property Type="Int32" Name="refId" Nullable="false" />
+          <Property Type="String" Name="LocationTree" Nullable="true" />
+          <Property Type="String" Name="ClassTree" Nullable="true" />
+          <Property Type="String" Name="controller_name" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="controller_type" Nullable="false" MaxLength="4" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="GADATAModel1StoreContainer" CdmEntityContainer="GADATAEntities2">
+          <EntitySetMapping Name="Supervisie">
+            <EntityTypeMapping TypeName="GADATAModel1.Supervisie">
+              <MappingFragment StoreEntitySet="Supervisie">
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="logtext" ColumnName="logtext" />
+                <ScalarProperty Name="RT" ColumnName="RT" />
+                <ScalarProperty Name="DT" ColumnName="DT" />
+                <ScalarProperty Name="time" ColumnName="time" />
+                <ScalarProperty Name="Classification" ColumnName="Classification" />
+                <ScalarProperty Name="Subgroup" ColumnName="Subgroup" />
+                <ScalarProperty Name="Severity" ColumnName="Severity" />
+                <ScalarProperty Name="Logcode" ColumnName="Logcode" />
+                <ScalarProperty Name="Logtype" ColumnName="Logtype" />
+                <ScalarProperty Name="refId" ColumnName="refId" />
+                <ScalarProperty Name="timestamp" ColumnName="timestamp" />
+                <ScalarProperty Name="LocationTree" ColumnName="LocationTree" />
+                <ScalarProperty Name="ClassTree" ColumnName="ClassTree" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Bodytracking">
+            <EntityTypeMapping TypeName="GADATAModel1.Bodytracking">
+              <MappingFragment StoreEntitySet="Bodytracking">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="controller_name" ColumnName="controller_name" />
+                <ScalarProperty Name="jobNo" ColumnName="jobNo" />
+                <ScalarProperty Name="bodyNo" ColumnName="bodyNo" />
+                <ScalarProperty Name="CycleStart" ColumnName="CycleStart" />
+                <ScalarProperty Name="CycleEnd" ColumnName="CycleEnd" />
+                <ScalarProperty Name="ts_breakDownStart" ColumnName="ts_breakDownStart" />
+                <ScalarProperty Name="ts_breakDownAck" ColumnName="ts_breakDownAck" />
+                <ScalarProperty Name="ts_breakDownEnd" ColumnName="ts_breakDownEnd" />
+                <ScalarProperty Name="FullLogtext" ColumnName="FullLogtext" />
+                <ScalarProperty Name="refId" ColumnName="refId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="AAOSR_PloegRaport" FunctionName="GADATAModel1.Store.AAOSR_PloegRaport">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GADATAModel1.AAOSR_PloegRaport_Result">
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="AssetID" ColumnName="AssetID" />
+                <ScalarProperty Name="Logcode" ColumnName="Logcode" />
+                <ScalarProperty Name="Logtype" ColumnName="Logtype" />
+                <ScalarProperty Name="logtext" ColumnName="logtext" />
+                <ScalarProperty Name="Response_min_" ColumnName="Response(min)" />
+                <ScalarProperty Name="Downtime_min_" ColumnName="Downtime(min)" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+                <ScalarProperty Name="timestamp" ColumnName="timestamp" />
+                <ScalarProperty Name="time" ColumnName="time" />
+                <ScalarProperty Name="Subgroup" ColumnName="Subgroup" />
+                <ScalarProperty Name="refId" ColumnName="refId" />
+                <ScalarProperty Name="LocationTree" ColumnName="LocationTree" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="EQpluginDefaultNGAC" FunctionName="GADATAModel1.Store.EQpluginDefaultNGAC">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GADATAModel1.EQpluginDefaultNGAC_Result">
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="AssetID" ColumnName="AssetID" />
+                <ScalarProperty Name="Logtype" ColumnName="Logtype" />
+                <ScalarProperty Name="Logcode" ColumnName="Logcode" />
+                <ScalarProperty Name="Severity" ColumnName="Severity" />
+                <ScalarProperty Name="logtext" ColumnName="logtext" />
+                <ScalarProperty Name="Response_min_" ColumnName="Response(min)" />
+                <ScalarProperty Name="Downtime_min_" ColumnName="Downtime(min)" />
+                <ScalarProperty Name="timestamp" ColumnName="timestamp" />
+                <ScalarProperty Name="time" ColumnName="time" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Week" ColumnName="Week" />
+                <ScalarProperty Name="Day" ColumnName="Day" />
+                <ScalarProperty Name="Shift" ColumnName="Shift" />
+                <ScalarProperty Name="Ploeg" ColumnName="Ploeg" />
+                <ScalarProperty Name="Classification" ColumnName="Classification" />
+                <ScalarProperty Name="Subgroup" ColumnName="Subgroup" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="PartRef" ColumnName="PartRef" />
+                <ScalarProperty Name="ProcessRef" ColumnName="ProcessRef" />
+                <ScalarProperty Name="refId" ColumnName="refId" />
+                <ScalarProperty Name="LocationTree" ColumnName="LocationTree" />
+                <ScalarProperty Name="ClassTree" ColumnName="ClassTree" />
+                <ScalarProperty Name="controller_name" ColumnName="controller_name" />
+                <ScalarProperty Name="controller_type" ColumnName="controller_type" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
