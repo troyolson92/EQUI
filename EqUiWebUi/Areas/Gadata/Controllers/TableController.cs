@@ -120,24 +120,52 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
             return View(data);
         }
 
-        //full view for more info 
+
+
+
+        //-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+        //-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+        //-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+        //full view for more info ---------------------------------------------------------------------------------------------------------------------
+        //contains _getErrorTrend _loginfo 
+        //called by vsto plugin
         [HttpGet]
         public ActionResult MoreInfo(string location, int? errornum, int? refid, string logtype, string logtext)
         {
-            return View();
-        }
-
-        //Partial view for more info modal with parms-------------------------------------------------------------------------------------------------
-        [HttpGet]
-        public ActionResult _Moreinfo(string location, int? errornum, int? refid, string logtype, string logtext)
-        {
-            //build up the model
             LogInfo logInfo = new LogInfo();
             logInfo.location = location;
             logInfo.errornum = errornum.GetValueOrDefault(0);
             logInfo.refid = refid.GetValueOrDefault(0);
             logInfo.logtype = logtype;
             logInfo.logtext = logtext;
+            return View(logInfo);
+        }
+
+        //Partial view for more info modal with model-------------------------------------------------------------------------------------------------
+        //contains _getErrorTrend _loginfo 
+        //called for the info modals in the site
+        [HttpGet]
+        public ActionResult _Moreinfo(LogInfo logInfo)
+        {
+            return PartialView(logInfo);
+        }
+
+        //full view for loginfo----------------------------------------------------------------------------------------------------------------------
+        //called by vsto plugin
+        [HttpGet]
+        public ActionResult Loginfo(LogInfo logInfo)
+        {
+            return View(logInfo);
+        }
+
+        //partial view for loginfo 
+        [HttpGet]
+        public ActionResult _loginfo(LogInfo logInfo)
+        {
             //query all instances of the error 
             GadataComm gadataComm = new GadataComm();
             string qry = string.Format(
@@ -173,8 +201,8 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
                 sb.AppendLine("<h4>No valid result from query!</h4>");
             }
             logInfo.logDetails = sb.ToString();
-            //
             return PartialView(logInfo);
         }
+
     }
 }

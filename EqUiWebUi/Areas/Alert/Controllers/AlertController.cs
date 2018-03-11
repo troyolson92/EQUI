@@ -1,4 +1,5 @@
 ﻿using EqUiWebUi.Areas.Alert.Models;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -60,6 +61,16 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                                                 ).ToListAsync());
         }
 
+        //specific Alert Interface
+        //GET: AAOSRAlertList (for shiftboek stuff)
+        public async Task<ActionResult> AAOSRAlertList(string location)
+        {
+            var h_alert = db.h_alert.Include(h => h.c_state).Include(h => h.c_triggers).Include(h => h.ChangedUser).Include(h => h.CloseUser).Include(h => h.AcceptUser);
+            return View(await h_alert.Where(a => a.c_triggers.alertType == "Shiftbook" //only allow 
+                                                && ((a.location.Trim() == location.Trim()) || (location == null)) 
+                                                ).ToListAsync());
+        }
+
         // GET: Alert/Details partial to get basic info about alert 
         public async Task<ActionResult> _Details (int? id)
         {
@@ -110,37 +121,8 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             {
                 if (org_alert.state != _alert.state)
                 {
-                    //do some stuff based on the new state request
-                    switch (_alert.state)
-                    {
-                        case 1: //WGK
-                                //nothing to do
-                            break;
-
-                        case 2: //OKREQ
-                            if (!org_alert.acceptUserID.HasValue)
-                            {
-                                org_alert.acceptTimestamp = System.DateTime.Now;
-                                org_alert.acceptUserID = (int)Session["UserId"];
-                            }
-                            break;
-
-                        case 3: //COMP 
-                        case 4: //VOID
-                            if (!org_alert.closeUserID.HasValue)
-                            {
-                                org_alert.closeTimestamp = System.DateTime.Now;
-                                org_alert.closeUserID = (int)Session["UserId"]; ;
-                            }
-                            break;
-                        default:
-                            //unhandled state
-                            break;
-                    }
-                    //set the new state 
-                    org_alert.state = _alert.state;
+                    org_alert = ChangeState(org_alert, _alert.state);
                 }
-
                 //update last changed user 
                 org_alert.lastChangedTimestamp = System.DateTime.Now;
                 org_alert.lastChangedUserID = (int)Session["UserId"];
@@ -155,7 +137,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                 sb.AppendLine("<div class='card card-info'>");
                 sb.AppendLine("<div class='card-block'>");
                 sb.AppendLine("<h4 class='card-title'>" + Session["Username"].ToString() + "</h4>");
-                sb.AppendLine("<h6 class='card-subtitle mb-2 text-muted'>" + org_alert.lastChangedTimestamp + " Previous State: "+ org_alert.c_state.state + "</h6>");
+                sb.AppendLine("<h6 class='card-subtitle mb-2 text-muted'>" + org_alert.lastChangedTimestamp + "</h6>");
                 sb.AppendLine("<p class='card-text'>");
                 sb.Append(_alert.comments);
                 sb.AppendLine("</p>");
@@ -177,7 +159,12 @@ namespace EqUiWebUi.Areas.Alert.Controllers
         public async Task<ActionResult> CreateShiftbookItem(string locationTree, string location, string logtype, string logtext, string refid)
         {
             //check if there is active item !!!!
+            List<h_alert> activeAlerts = (from a in db.h_alert
+                                               where a.location == location
+                                               select a).ToList();
+            //if there is 1 active item on this loaction open it.
 
+            //if more than 1 acitve return list 
 
 
             h_alert newAlert = new h_alert();
@@ -192,14 +179,30 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             newAlert.C_timestamp = System.DateTime.Now;
             newAlert.triggerCount = 1;
             newAlert.lastTriggerd = newAlert.C_timestamp;
+            newAlert.state = 4; //inital state set to void
             //update last changed user 
             newAlert.lastChangedTimestamp = System.DateTime.Now;
             newAlert.lastChangedUserID = (int)Session["UserId"];
 
             newAlert.info = string.Format("{0} => {1} refid:{2}",logtype,logtext,refid.ToString());
 
-            newAlert.comments = ""; //add badge with details about the referenced object and a link to the breakdown
-            newAlert.state = 4; //inital state set to void
+            //adde badge to comment 
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine(newAlert.comments);
+            sb.AppendLine("<hr />");
+            sb.AppendLine("<div class='alert alert-danger'>");
+            sb.AppendLine("<strong>Triggerd: " + newAlert.C_timestamp + "</strong>");
+
+            sb.AppendLine("<div id='logtype'>");
+            sb.AppendLine("Logtype: " + logtype);
+            sb.AppendLine("</div>");
+
+            sb.AppendLine("<div id='refid'>");
+            sb.AppendLine("Refid: " + refid.ToString());
+            sb.AppendLine("</div>");
+
+            sb.AppendLine("</div>");
+            newAlert.comments = sb.ToString();
 
             //commit to database
             db.h_alert.Add(newAlert);
@@ -207,6 +210,79 @@ namespace EqUiWebUi.Areas.Alert.Controllers
 
             ViewBag.state = new SelectList(db.c_state, "id", "discription", newAlert.state);
             return View("Edit", newAlert);
+        }
+
+        //change the state of an alert
+        private h_alert ChangeState (h_alert alert, int newstate)
+        {
+            //store current state 
+            string Oldstate = alert.c_state.state;
+
+            //do some stuff based on the new state request
+            switch (newstate)
+            {
+                case (int)alertState.WGK: 
+                        //nothing to do
+                    break;
+
+                case (int)alertState.OKREQ:
+                    if (!alert.acceptUserID.HasValue)
+                    {
+                        alert.acceptTimestamp = System.DateTime.Now;
+                        alert.acceptUserID = (int)Session["UserId"];
+                    }
+                    break;
+
+                case (int)alertState.COMP:
+                case (int)alertState.VOID:
+                    if (!alert.closeUserID.HasValue)
+                    {
+                        alert.closeTimestamp = System.DateTime.Now;
+                        alert.closeUserID = (int)Session["UserId"]; ;
+                    }
+                    break;
+                default:
+                    //unhandled state
+                    break;
+            }
+            //set the new state 
+            alert.state = newstate;
+            //add badgje for the statechange
+            StringBuilder sb = new StringBuilder();
+            //add existing 
+            sb.AppendLine(alert.comments);
+            //add break 
+            sb.AppendLine("<hr />");
+            sb.AppendLine("<div class='card card-warning'>");
+            sb.AppendLine("<div class='card-block'>");
+            sb.AppendLine("<h4 class='card-title'>State changed</h4>");
+            sb.AppendLine("<h6 class='card-subtitle mb-2 text-muted'>" + Session["Username"].ToString() + " " + System.DateTime.Now + "</h6>");
+            sb.AppendLine("<p class='card-text'>");
+            sb.Append("Previous state " + Oldstate);
+            sb.AppendLine("</p>");
+            sb.AppendLine("</div>");
+            sb.AppendLine("</div>");
+            alert.comments = sb.ToString();
+            //
+            return alert;
+        }
+
+        // Change the state of an alert. 
+        // used by quick acces dropdown 
+        // GET: alert status 
+        [HttpGet]
+        public void SetState(int id, int newstate)
+        {
+            h_alert alert = (from a in db.h_alert
+                              where a.id == id
+                              select a).ToList().First();
+            //set the new state
+            alert = ChangeState(alert, newstate);
+            //update last changed user 
+            alert.lastChangedTimestamp = System.DateTime.Now;
+            alert.lastChangedUserID = (int)Session["UserId"];
+            //
+            db.SaveChanges();
         }
     }
 }

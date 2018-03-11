@@ -1,57 +1,57 @@
 ﻿@*drop down control for filtering on 'assets'*@
 @helper AssetDropdownGlobal(string id, string value = "")
     {
-<select class="form-control input-sm" id="@id" name="Selecteer locatie">
-    <option style="display:none"> -- select a asset root -- </option>
-    <option value="U">all assets</option>
-    <optgroup label="Robots">
-        <option value="UR">all robots</option>
-        <option value="URC">comau</option>
-        <option value="URA">abb</option>
-    </optgroup>
-    <optgroup label="Process">
-        <option value="UAW">UAW)</option>
-        <option value="UAWS">Spot</option>
-        <option value="UAWT">Tucker</option>
-    </optgroup>
-</select>
+        <select class="form-control input-sm" id="@id" name="Selecteer locatie">
+            <option style="display:none"> -- select a asset root -- </option>
+            <option value="U">all assets</option>
+            <optgroup label="Robots">
+                <option value="UR">all robots</option>
+                <option value="URC">comau</option>
+                <option value="URA">abb</option>
+            </optgroup>
+            <optgroup label="Process">
+                <option value="UAW">UAW)</option>
+                <option value="UAWS">Spot</option>
+                <option value="UAWT">Tucker</option>
+            </optgroup>
+        </select>
 }
 
 @*drop down control for filtering on 'locationtree' *@
 @helper LocationDropdownGlobal(string id, string value = "")
     {
-<select class="form-control input-sm" id="@id" name="Select location">
-    <option style="display:none"> -- select a location -- </option>
-    <option value="">no Filter</option>
-    <optgroup label="CMA UB12 floorline">
-        <option value="VCG -> A -> A GA1.0 -> A LIJN 33">Floor (all)</option>
-        <option value="VCG -> A -> A GA1.0 -> A LIJN 331">Frontstructure</option>
-        <option value="VCG -> A -> A GA1.0 -> A LIJN 334">Frontfloor</option>
-        <option value="VCG -> A -> A GA1.0 -> A LIJN 336">Rearfloor</option>
-        <option value="VCG -> A -> A GA1.0 -> A LIJN 338">Marriage</option>
-        <option value="VCG -> A -> A GA1.0 -> A LIJN 339">Weldbolt</option>
-    </optgroup>
-    <optgroup label="CMA Sides">
-        <option value="VCG -> A -> A GA1.0 -> A LIJN 35">Sides (all)</option>
-    </optgroup>
-    <optgroup label="CMA Preassembly">
-        <option value="VCG -> A -> A GA4.0">GA4.0</option>
-    </optgroup>
-    <optgroup label="AAL">
-        <option value="VCG -> A -> AAL">AAL (all)</option>
-        <option value="VCG -> A -> AAL -> A FLOOR L">A FLOOR L</option>
-        <option value="VCG -> A -> AAL -> A SIBO L">A SIBO L</option>
-    </optgroup>
-    <optgroup label="AAS">
-        <option value="VCG -> A -> AAS">AAS (all)</option>
-        <option value="VCG -> A -> AAS -> A FLOOR S">A FLOOR S</option>
-        <option value="VCG -> A -> AAS -> A SIBO S">A SIBO S</option>
-    </optgroup>
-    <optgroup label="Assembly Lines">
-        <option value="VCG -> A -> A ASSEMBLY LINES">Assembly Lines (all)</option>
-        <option value="VCG -> A -> A ASSEMBLY LINES -> A HOP">HOP</option>
-    </optgroup>
-</select>
+        <select class="form-control input-sm" id="@id" name="Select location">
+            <option style="display:none"> -- select a location -- </option>
+            <option value="">no Filter</option>
+            <optgroup label="CMA UB12 floorline">
+                <option value="VCG -> A -> A GA1.0 -> A LIJN 33">Floor (all)</option>
+                <option value="VCG -> A -> A GA1.0 -> A LIJN 331">Frontstructure</option>
+                <option value="VCG -> A -> A GA1.0 -> A LIJN 334">Frontfloor</option>
+                <option value="VCG -> A -> A GA1.0 -> A LIJN 336">Rearfloor</option>
+                <option value="VCG -> A -> A GA1.0 -> A LIJN 338">Marriage</option>
+                <option value="VCG -> A -> A GA1.0 -> A LIJN 339">Weldbolt</option>
+            </optgroup>
+            <optgroup label="CMA Sides">
+                <option value="VCG -> A -> A GA1.0 -> A LIJN 35">Sides (all)</option>
+            </optgroup>
+            <optgroup label="CMA Preassembly">
+                <option value="VCG -> A -> A GA4.0">GA4.0</option>
+            </optgroup>
+            <optgroup label="AAL">
+                <option value="VCG -> A -> AAL">AAL (all)</option>
+                <option value="VCG -> A -> AAL -> A FLOOR L">A FLOOR L</option>
+                <option value="VCG -> A -> AAL -> A SIBO L">A SIBO L</option>
+            </optgroup>
+            <optgroup label="AAS">
+                <option value="VCG -> A -> AAS">AAS (all)</option>
+                <option value="VCG -> A -> AAS -> A FLOOR S">A FLOOR S</option>
+                <option value="VCG -> A -> AAS -> A SIBO S">A SIBO S</option>
+            </optgroup>
+            <optgroup label="Assembly Lines">
+                <option value="VCG -> A -> A ASSEMBLY LINES">Assembly Lines (all)</option>
+                <option value="VCG -> A -> A ASSEMBLY LINES -> A HOP">HOP</option>
+            </optgroup>
+        </select>
 }
 
 @*drop down control for filtering on 'locationtree' Greenfield only*@
@@ -80,115 +80,115 @@
 @*drop down control for filtering on 'locationtree' *@
 @helper DynLocationDropdownGlobal(string id, string value = "", string locationroot = "VCG")
     {
-var AllLocations = new List<SelectListItem>
-        {
-            //floor
-            new SelectListItem
-            {
-                Value = "VCG -> A -> A GA1.0 -> A LIJN 33",
-                Text = "CMA Floor (all)",
-
-            },
-            new SelectListItem
-            {
-                Value = "VCG -> A -> A GA1.0 -> A LIJN 331",
-                Text = "CMA Floor Frontstructure",
-
-            },
-            new SelectListItem
-            {
-                Value = "VCG -> A -> A GA1.0 -> A LIJN 334",
-                Text = "CMA Floor Frontfloor",
-
-            },
-            new SelectListItem
-            {
-                Value = "VCG -> A -> A GA1.0 -> A LIJN 336",
-                Text = "CMA Floor Rearfloor",
-            },
-            new SelectListItem
-            {
-                Value = "VCG -> A -> A GA1.0 -> A LIJN 338",
-                Text = "CMA Floor Marriage",
-            },
-            new SelectListItem
-            {
-                Value = "VCG -> A -> A GA1.0 -> A LIJN 339",
-                Text = "CMA Floor Weldbolt",
-            },
-            //sides
-            new SelectListItem
-            {
-                Value = "VCG -> A -> A GA1.0 -> A LIJN 35",
-                Text = "CMA Sides (all)",
-
-            },
-            //pre ass
-            new SelectListItem
-            {
-                Value = "VCG -> A -> A GA4.0",
-                Text = "CMA Pre assembly",
-
-            },
-            //brownfield AAL
-            new SelectListItem
-            {
-                Value = "VCG -> A -> AAL",
-                Text = "AAL",
-            },
-            new SelectListItem
-            {
-                Value = "VCG -> A -> AAL -> A FLOOR L",
-                Text = "AAL FLOOR",
-            },
-            new SelectListItem
-            {
-                Value = "VCG -> A -> AAL -> A SIBO L",
-                Text = "AAL SIBO",
-            },
-            //brownfield AAS
-            new SelectListItem
-            {
-                Value = "VCG -> A -> AAS",
-                Text = "AAS",
-            },
-            new SelectListItem
-            {
-                Value = "VCG -> A -> AAS -> A FLOOR S",
-                Text = "AAS FLOOR",
-            },
-            new SelectListItem
-            {
-                Value = "VCG -> A -> AAS -> A SIBO S",
-                Text = "AAS SIBO",
-            },
-            //HOP
-            new SelectListItem
-            {
-                Value = "VCG -> A -> A ASSEMBLY LINES",
-                Text = "Assembly Lines (all)",
-            },
-            new SelectListItem
-            {
-                Value = "VCG -> A -> A ASSEMBLY LINES -> A HOP",
-                Text = "HOP",
-            }
-        };
-
-    //filter locations based on user settings
-    var FilteredLocations = new List<SelectListItem>();
-    foreach (SelectListItem item in AllLocations)
+        var AllLocations = new List<SelectListItem>
+{
+    //floor
+    new SelectListItem
     {
-        if (item.Value.StartsWith(locationroot))
-        {
-            FilteredLocations.Add(item);
-        }
+        Value = "VCG -> A -> A GA1.0 -> A LIJN 33",
+        Text = "CMA Floor (all)",
+
+    },
+    new SelectListItem
+    {
+        Value = "VCG -> A -> A GA1.0 -> A LIJN 331",
+        Text = "CMA Floor Frontstructure",
+
+    },
+    new SelectListItem
+    {
+        Value = "VCG -> A -> A GA1.0 -> A LIJN 334",
+        Text = "CMA Floor Frontfloor",
+
+    },
+    new SelectListItem
+    {
+        Value = "VCG -> A -> A GA1.0 -> A LIJN 336",
+        Text = "CMA Floor Rearfloor",
+    },
+    new SelectListItem
+    {
+        Value = "VCG -> A -> A GA1.0 -> A LIJN 338",
+        Text = "CMA Floor Marriage",
+    },
+    new SelectListItem
+    {
+        Value = "VCG -> A -> A GA1.0 -> A LIJN 339",
+        Text = "CMA Floor Weldbolt",
+    },
+    //sides
+    new SelectListItem
+    {
+        Value = "VCG -> A -> A GA1.0 -> A LIJN 35",
+        Text = "CMA Sides (all)",
+
+    },
+    //pre ass
+    new SelectListItem
+    {
+        Value = "VCG -> A -> A GA4.0",
+        Text = "CMA Pre assembly",
+
+    },
+    //brownfield AAL
+    new SelectListItem
+    {
+        Value = "VCG -> A -> AAL",
+        Text = "AAL",
+    },
+    new SelectListItem
+    {
+        Value = "VCG -> A -> AAL -> A FLOOR L",
+        Text = "AAL FLOOR",
+    },
+    new SelectListItem
+    {
+        Value = "VCG -> A -> AAL -> A SIBO L",
+        Text = "AAL SIBO",
+    },
+    //brownfield AAS
+    new SelectListItem
+    {
+        Value = "VCG -> A -> AAS",
+        Text = "AAS",
+    },
+    new SelectListItem
+    {
+        Value = "VCG -> A -> AAS -> A FLOOR S",
+        Text = "AAS FLOOR",
+    },
+    new SelectListItem
+    {
+        Value = "VCG -> A -> AAS -> A SIBO S",
+        Text = "AAS SIBO",
+    },
+    //HOP
+    new SelectListItem
+    {
+        Value = "VCG -> A -> A ASSEMBLY LINES",
+        Text = "Assembly Lines (all)",
+    },
+    new SelectListItem
+    {
+        Value = "VCG -> A -> A ASSEMBLY LINES -> A HOP",
+        Text = "HOP",
     }
-  //build dropdonwlist
-  @Html.DropDownList("Locations",FilteredLocations);
+};
+
+        //filter locations based on user settings
+        var FilteredLocations = new List<SelectListItem>();
+        foreach (SelectListItem item in AllLocations)
+        {
+            if (item.Value.StartsWith(locationroot))
+            {
+                FilteredLocations.Add(item);
+            }
+        }
+        //build dropdonwlist
+        @Html.DropDownList("Locations", FilteredLocations);
 }
 
-@*helper to change alter status*@
+@*helper to change alter status USED IN SPC TO BE KILLED OFF !!!!!*@
 @helper SetAlertStatus(string id, int alertId, int? currentState)
     {
         <div class="dropdown" id="@id">
@@ -229,6 +229,25 @@ var AllLocations = new List<SelectListItem>
                 <li><a class="modal-link" href="/spc/_setState?id=@alertId&newstate=1">OKREQ</a></li>
                 <li><a class="modal-link" href="/spc/_setState?id=@alertId&newstate=2">COMP</a></li>
                 <li><a class="modal-link" href="/spc/_setState?id=@alertId&newstate=3">VOID</a></li>
+            </ul>
+        </div>
+}
+
+
+
+@*helper to change alter status users in ALERT ALERT*@
+@helper ChangeAlertStatus(int alertId, string currentState)
+ {
+        <div class="dropdown">
+            <button class="btn btn-xs btn-danger dropdown-toggle" type="button" data-toggle="dropdown">
+               @currentState <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="JQresultTriggerBtn" href="/alert/alert/SetState?id=@alertId&newstate=1">WGK</a></li>
+                <li><a class="JQresultTriggerBtn" href="/alert/alert/SetState?id=@alertId&newstate=2">OKREQ</a></li>
+                <li><a class="JQresultTriggerBtn" href="/alert/alert/SetState?id=@alertId&newstate=3">COMP</a></li>
+                <li><a class="JQresultTriggerBtn" href="/alert/alert/SetState?id=@alertId&newstate=4">VOID</a></li>
+                <li><a class="JQresultTriggerBtn" href="/alert/alert/SetState?id=@alertId&newstate=5">TECHCOMP</a></li>
             </ul>
         </div>
 }
