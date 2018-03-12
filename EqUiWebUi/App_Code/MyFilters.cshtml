@@ -82,97 +82,97 @@
     {
         var AllLocations = new List<SelectListItem>
 {
-    //floor
-    new SelectListItem
-    {
-        Value = "VCG -> A -> A GA1.0 -> A LIJN 33",
-        Text = "CMA Floor (all)",
+//floor
+new SelectListItem
+{
+Value = "VCG -> A -> A GA1.0 -> A LIJN 33",
+Text = "CMA Floor (all)",
 
-    },
-    new SelectListItem
-    {
-        Value = "VCG -> A -> A GA1.0 -> A LIJN 331",
-        Text = "CMA Floor Frontstructure",
+},
+new SelectListItem
+{
+Value = "VCG -> A -> A GA1.0 -> A LIJN 331",
+Text = "CMA Floor Frontstructure",
 
-    },
-    new SelectListItem
-    {
-        Value = "VCG -> A -> A GA1.0 -> A LIJN 334",
-        Text = "CMA Floor Frontfloor",
+},
+new SelectListItem
+{
+Value = "VCG -> A -> A GA1.0 -> A LIJN 334",
+Text = "CMA Floor Frontfloor",
 
-    },
-    new SelectListItem
-    {
-        Value = "VCG -> A -> A GA1.0 -> A LIJN 336",
-        Text = "CMA Floor Rearfloor",
-    },
-    new SelectListItem
-    {
-        Value = "VCG -> A -> A GA1.0 -> A LIJN 338",
-        Text = "CMA Floor Marriage",
-    },
-    new SelectListItem
-    {
-        Value = "VCG -> A -> A GA1.0 -> A LIJN 339",
-        Text = "CMA Floor Weldbolt",
-    },
-    //sides
-    new SelectListItem
-    {
-        Value = "VCG -> A -> A GA1.0 -> A LIJN 35",
-        Text = "CMA Sides (all)",
+},
+new SelectListItem
+{
+Value = "VCG -> A -> A GA1.0 -> A LIJN 336",
+Text = "CMA Floor Rearfloor",
+},
+new SelectListItem
+{
+Value = "VCG -> A -> A GA1.0 -> A LIJN 338",
+Text = "CMA Floor Marriage",
+},
+new SelectListItem
+{
+Value = "VCG -> A -> A GA1.0 -> A LIJN 339",
+Text = "CMA Floor Weldbolt",
+},
+//sides
+new SelectListItem
+{
+Value = "VCG -> A -> A GA1.0 -> A LIJN 35",
+Text = "CMA Sides (all)",
 
-    },
-    //pre ass
-    new SelectListItem
-    {
-        Value = "VCG -> A -> A GA4.0",
-        Text = "CMA Pre assembly",
+},
+//pre ass
+new SelectListItem
+{
+Value = "VCG -> A -> A GA4.0",
+Text = "CMA Pre assembly",
 
-    },
-    //brownfield AAL
-    new SelectListItem
-    {
-        Value = "VCG -> A -> AAL",
-        Text = "AAL",
-    },
-    new SelectListItem
-    {
-        Value = "VCG -> A -> AAL -> A FLOOR L",
-        Text = "AAL FLOOR",
-    },
-    new SelectListItem
-    {
-        Value = "VCG -> A -> AAL -> A SIBO L",
-        Text = "AAL SIBO",
-    },
-    //brownfield AAS
-    new SelectListItem
-    {
-        Value = "VCG -> A -> AAS",
-        Text = "AAS",
-    },
-    new SelectListItem
-    {
-        Value = "VCG -> A -> AAS -> A FLOOR S",
-        Text = "AAS FLOOR",
-    },
-    new SelectListItem
-    {
-        Value = "VCG -> A -> AAS -> A SIBO S",
-        Text = "AAS SIBO",
-    },
-    //HOP
-    new SelectListItem
-    {
-        Value = "VCG -> A -> A ASSEMBLY LINES",
-        Text = "Assembly Lines (all)",
-    },
-    new SelectListItem
-    {
-        Value = "VCG -> A -> A ASSEMBLY LINES -> A HOP",
-        Text = "HOP",
-    }
+},
+//brownfield AAL
+new SelectListItem
+{
+Value = "VCG -> A -> AAL",
+Text = "AAL",
+},
+new SelectListItem
+{
+Value = "VCG -> A -> AAL -> A FLOOR L",
+Text = "AAL FLOOR",
+},
+new SelectListItem
+{
+Value = "VCG -> A -> AAL -> A SIBO L",
+Text = "AAL SIBO",
+},
+//brownfield AAS
+new SelectListItem
+{
+Value = "VCG -> A -> AAS",
+Text = "AAS",
+},
+new SelectListItem
+{
+Value = "VCG -> A -> AAS -> A FLOOR S",
+Text = "AAS FLOOR",
+},
+new SelectListItem
+{
+Value = "VCG -> A -> AAS -> A SIBO S",
+Text = "AAS SIBO",
+},
+//HOP
+new SelectListItem
+{
+Value = "VCG -> A -> A ASSEMBLY LINES",
+Text = "Assembly Lines (all)",
+},
+new SelectListItem
+{
+Value = "VCG -> A -> A ASSEMBLY LINES -> A HOP",
+Text = "HOP",
+}
 };
 
         //filter locations based on user settings
@@ -237,18 +237,30 @@
 
 @*helper to change alter status users in ALERT ALERT*@
 @helper ChangeAlertStatus(int alertId, string currentState)
- {
+    {
         <div class="dropdown">
             <button class="btn btn-xs btn-danger dropdown-toggle" type="button" data-toggle="dropdown">
-               @currentState <span class="caret"></span>
+                @currentState <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
                 @{
                     foreach (EqUiWebUi.Areas.Alert.Models.alertState state in System.Enum.GetValues(typeof(EqUiWebUi.Areas.Alert.Models.alertState)))
                     {
-                        <li><a class="JQresultTriggerBtn" href="/alert/alert/SetState?id=@alertId&newstate=@state">@System.Enum.GetName(typeof(EqUiWebUi.Areas.Alert.Models.alertState), state)</a></li>
+                        int intState = (int)state;
+                        <li><a class="JQresultTriggerBtn" href="/alert/alert/SetState?id=@alertId&newstate=@intState">@System.Enum.GetName(typeof(EqUiWebUi.Areas.Alert.Models.alertState), state)</a></li>
                     }
                 }
             </ul>
         </div>
+}
+
+@*helper to create ation link with an icon*@
+@helper IconActionLink(string url, string icon,string linkText, string helperText, string classes = "")
+{
+        <a href="@url" class="@classes" data-toggle="tooltip" title="@helperText">
+            <i class="@icon"></i>
+            <span>
+                <strong>@linkText</strong>
+            </span>
+        </a>
 }

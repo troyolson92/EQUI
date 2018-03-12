@@ -120,10 +120,6 @@ namespace ExcelAddInEquipmentDatabase
             {
                 addMaximoSubmenu(3); // if we have a reference location enable maximo tools
             }
-            if (Logtype == "SHIFTBOOK" || Logtype == "BREAKDOWN" || Logtype == "ERROR" || Logtype == "WARNING" || Logtype == "ControllerEvent" || Logtype == "TIMELINE")
-            {
-                addShiftbookSubmenu(4); //shiftbook tools TEMP
-            }
             if (Logtype == "ALERT" || location.Like("%WS%") || location.Like("%JG%") || location.Like("%WT%"))
             {
                     btn = AddButtonToTableMenuItem("SBCUStats", 3, 433); 
@@ -453,86 +449,5 @@ this shift will be out of all OEE calculations!", "Confirmation", MessageBoxButt
                 Debugger.Message("Dam..." + ex.Message);
             }
         }
-
-        //**********************************shiftbook*********************************************
-        //submenu for shiftbook tools
-        public void addShiftbookSubmenu(int position)
-        {
-            Office.MsoControlType menuItem = Office.MsoControlType.msoControlButton;
-
-            Office.MsoControlType ControlPopup = Office.MsoControlType.msoControlPopup;
-            Office.CommandBarPopup subMenu = (Office.CommandBarPopup)GetTableContextMenu().Controls.Add(ControlPopup, Type.Missing, Type.Missing, position, true);
-            subMenu.Caption = "Shiftbook";
-        
-            if (!ExcelAddInEquipmentDatabase.Properties.Settings.Default.IsRobotgroup)
-            {
-                subMenu.Enabled = false;
-            }
-            
-            //
-            Office.CommandBarButton btnShowAdd1 = (Office.CommandBarButton)subMenu.Controls.Add(menuItem, Type.Missing, Type.Missing, 1, true);
-            btnShowAdd1.Style = Office.MsoButtonStyle.msoButtonCaption;
-            btnShowAdd1.Caption = "Add new item";
-            btnShowAdd1.FaceId = 168;
-            btnShowAdd1.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(btnShowAddNewClick);
-            //
-            Office.CommandBarButton btnShowAdd2 = (Office.CommandBarButton)subMenu.Controls.Add(menuItem, Type.Missing, Type.Missing, 2, true);
-            btnShowAdd2.Style = Office.MsoButtonStyle.msoButtonCaption;
-            btnShowAdd2.Caption = "items on location";
-            btnShowAdd2.FaceId = 169;
-            btnShowAdd2.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(btnShowAdd2Click);
-        }
-
-        void btnShowAddNewClick(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)
-        {
-            var newThread = new System.Threading.Thread(frmNewshitbookThread);
-            newThread.SetApartmentState(System.Threading.ApartmentState.STA);
-            newThread.Start();
-
-        }
-        public void frmNewshitbookThread()
-        {
-            try
-            {
-                string urlSkelation = @"http:\\equi\alert\alert\CreateShiftbookItem?locationTree={0}&location={1}&logtype={2}&logtext={3}&refid={4}";
-                string url = string.Format(urlSkelation
-                    , Uri.EscapeDataString(locationtree)
-                    , Uri.EscapeDataString(location)
-                    , Uri.EscapeDataString(Logtype)
-                    , Uri.EscapeDataString(LogText)
-                    , Uri.EscapeDataString(refid.ToString())
-                    );
-                System.Windows.Forms.Application.Run(new ExcelAddInEquipmentDatabase.Forms.EquiBrowser(url));
-            }
-            catch (Exception ex)
-            {
-                Debugger.Exeption(ex);
-                Debugger.Message("Dam..." + ex.Message);
-            }
-        }
-
-        void btnShowAdd2Click(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)
-        {
-            var newThread = new System.Threading.Thread(frmGetshitbookThread);
-            newThread.SetApartmentState(System.Threading.ApartmentState.STA);
-            newThread.Start();
-        }
-        public void frmGetshitbookThread()
-        {
-            try
-            {
-                string urlSkelation = @"http:\\equi\alert\alert\AAOSRAlertList?location={0}";
-                string url = string.Format(urlSkelation
-                    , Uri.EscapeDataString(location)
-                    );
-                System.Windows.Forms.Application.Run(new ExcelAddInEquipmentDatabase.Forms.EquiBrowser(url));
-            }
-            catch (Exception ex)
-            {
-                Debugger.Exeption(ex);
-                Debugger.Message("Dam..." + ex.Message);
-            }
-        }
-
     }
 }

@@ -76,6 +76,14 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
                         || d.Logtype == "TIMELINE"
                         select d).ToList();
             }
+
+            if (Session["AssetRoot"].ToString() != "")
+            {
+                data = (from d in data
+                        where (d.Classification ?? "").Contains(Session["AssetRoot"].ToString()) //must match asset root 
+                        || d.Logtype == "LIVE" //or item is active 
+                        select d).ToList();
+            }
             //
             return PartialView(data);
         }

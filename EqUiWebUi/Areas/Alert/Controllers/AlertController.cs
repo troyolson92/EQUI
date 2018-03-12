@@ -49,27 +49,33 @@ namespace EqUiWebUi.Areas.Alert.Controllers
 
         //specific Alert interface
         //GET: AASPOTAlertList (for SBCU and gun cylinder stuff with quick link toSbcu tool.
-        public async Task<ActionResult> AASPOTAlertList()
+        //allow to filter on single location
+        //allow to filter on open items
+        //
+        public async Task<ActionResult> AASPOTAlertList(string LocationFilter, bool ActiveAlertOnly = false)
         {
             //filter alerts basted on user profile!
             string UserLocationroot = Session["LocationRoot"].ToString();
             var h_alert = db.h_alert.Include(h => h.c_state).Include(h => h.c_triggers).Include(h => h.ChangedUser).Include(h => h.CloseUser).Include(h => h.AcceptUser);
-            return View(await h_alert.Where(a => a.locationTree.Contains(UserLocationroot) 
-                                                &&(
-                                                   a.c_triggers.alertType == "SBCUalert" //only allow 
-                                                   ||a.c_triggers.alertType == "GUNalert"
-                                                   )
+            List<h_alert>  result =  await (h_alert.Where(a => a.locationTree.Contains(UserLocationroot)
+                                               && (
+                                                  a.c_triggers.alertType == "SBCUalert" //only allow this trigger type
+                                                  || a.c_triggers.alertType == "GUNalert"
+                                               )
+                                               && (
+                                                 ActiveAlertOnly == false //Allow filtering on active items only
+                                                 || (a.state != (int)alertState.COMP && a.state != (int)alertState.TECHCOMP && a.state != (int)alertState.VOID) //not a closed item
+                                               )
+                                               && (
+                                                 LocationFilter == null //Allow filtering on a location
+                                                 || a.location.Contains(LocationFilter) //filter out specific location
+                                               )
                                                 ).ToListAsync());
-        }
 
-        //specific Alert Interface
-        //GET: AAOSRAlertList (for shiftboek stuff)
-        public async Task<ActionResult> AAOSRAlertList(string location)
-        {
-            var h_alert = db.h_alert.Include(h => h.c_state).Include(h => h.c_triggers).Include(h => h.ChangedUser).Include(h => h.CloseUser).Include(h => h.AcceptUser);
-            return View(await h_alert.Where(a => a.c_triggers.alertType == "Shiftbook" //only allow 
-                                                && ((a.location.Trim() == location.Trim()) || (location == null)) 
-                                                ).ToListAsync());
+            //count the total number of record to display as 'total triggers'
+            ViewBag.LocationFilter = LocationFilter;
+            ViewBag.AlertCount = result.Count();
+            return View(result);
         }
 
         // GET: Alert/Details partial to get basic info about alert 
@@ -153,64 +159,6 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             //if model not valid return to revalidate
             ViewBag.state = new SelectList(db.c_state, "id", "discription", _alert.state);
             return View(_alert);
-        }
-
-        // Create a new shiftbook item this is also implemented in VSTO plugin
-        //returns to the default edit alert view 
-        public async Task<ActionResult> CreateShiftbookItem(string locationTree, string location, string logtype, string logtext, string refid)
-        {
-            //check if there is active item !!!!
-            List<h_alert> activeAlerts = (from a in db.h_alert
-                                               where a.location == location
-                                               select a).ToList();
-            //if there is 1 active item on this loaction open it.
-
-            //if more than 1 acitve return list 
-
-
-            h_alert newAlert = new h_alert();
-            newAlert.c_triggers = (from trig in db.c_triggers
-                                   where trig.id == 13 //shiftbook trigger id 
-                                   select trig).FirstOrDefault();
-
-            newAlert.locationTree = locationTree;
-            newAlert.location = location;
-            newAlert.Classification = "AAOSR";
-            newAlert.alarmobject = newAlert.location; //set to same as location 
-            newAlert.C_timestamp = System.DateTime.Now;
-            newAlert.triggerCount = 1;
-            newAlert.lastTriggerd = newAlert.C_timestamp;
-            newAlert.state = 4; //inital state set to void
-            //update last changed user 
-            newAlert.lastChangedTimestamp = System.DateTime.Now;
-            newAlert.lastChangedUserID = (int)Session["UserId"];
-
-            newAlert.info = string.Format("{0} => {1} refid:{2}",logtype,logtext,refid.ToString());
-
-            //adde badge to comment 
-            StringBuilder sb = new StringBuilder();
-            sb.AppendLine(newAlert.comments);
-            sb.AppendLine("<hr />");
-            sb.AppendLine("<div class='alert alert-danger'>");
-            sb.AppendLine("<strong>Triggerd: " + newAlert.C_timestamp + "</strong>");
-
-            sb.AppendLine("<div id='logtype'>");
-            sb.AppendLine("Logtype: " + logtype);
-            sb.AppendLine("</div>");
-
-            sb.AppendLine("<div id='refid'>");
-            sb.AppendLine("Refid: " + refid.ToString());
-            sb.AppendLine("</div>");
-
-            sb.AppendLine("</div>");
-            newAlert.comments = sb.ToString();
-
-            //commit to database
-            db.h_alert.Add(newAlert);
-            await db.SaveChangesAsync();
-
-            ViewBag.state = new SelectList(db.c_state, "id", "discription", newAlert.state);
-            return View("Edit", newAlert);
         }
 
         //change the state of an alert
