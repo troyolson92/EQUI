@@ -735,7 +735,6 @@
     <Content Include="Areas\Gadata\Views\Table\MoreInfo.cshtml" />
     <Content Include="Areas\Gadata\Views\Table\_loginfo.cshtml" />
     <Content Include="Areas\Gadata\Views\Table\Loginfo.cshtml" />
-    <Content Include="Areas\Alert\Views\Alert\AAOSRAlertList.cshtml" />
     <EntityDeploy Include="Areas\Gadata\Models\Gadata.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Gadata.Designer.cs</LastGenOutput>

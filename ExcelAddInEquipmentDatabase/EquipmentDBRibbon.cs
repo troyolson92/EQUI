@@ -417,9 +417,7 @@ namespace ExcelAddInEquipmentDatabase
             List<string> Files = new List<string>(new string[] 
             { 
                @"\\gnlsnm0101.gen.volvocars.net\proj\6308-SHR-VCC22700\VSTO\Templates\EqDbGADATATemplate.xlsx"
-              ,@"\\gnlsnm0101.gen.volvocars.net\proj\6308-SHR-VCC22700\VSTO\Templates\EqDbGADATATemplateSuperVis.xlsx"
               ,@"\\gnlsnm0101.gen.volvocars.net\proj\6308-SHR-VCC22700\VSTO\Templates\EqDbGBDATATemplate.xlsx" 
-              ,@"\\gnlsnm0101.gen.volvocars.net\proj\6308-SHR-VCC22700\VSTO\Templates\NGACtemplate_beta1.xlsx" 
               ,@"\\gnlsnm0101.gen.volvocars.net\proj\6308-SHR-VCC22700\VSTO\Templates\StandAloneTemplate.xlsm"
             });
             foreach (string file in Files)

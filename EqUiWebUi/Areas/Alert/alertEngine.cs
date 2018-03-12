@@ -169,7 +169,7 @@ namespace EqUiWebUi.Areas.Alert
                     sb.AppendLine(newAlert.comments);
                     sb.AppendLine("<hr />");
                     sb.AppendLine("<div class='alert alert-danger'>");
-                    sb.AppendLine("<strong>Triggerd: " + ActiveAlert.Field<DateTime>("timestamp") + "</strong>");
+                    sb.AppendLine("<strong>Triggerd: " + ActiveAlert.Field<DateTime>("timestamp").ToString("yyyy-MM-dd HH:mm:ss") + " Detected by server: " + System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "</strong>");
                     sb.AppendLine(ActiveAlert.Field<string>("info"));
                     sb.AppendLine("</div>");
                     newAlert.comments = sb.ToString();
@@ -199,7 +199,7 @@ namespace EqUiWebUi.Areas.Alert
                         sb.AppendLine(h_alert[0].comments);
                         sb.AppendLine("<hr />");
                         sb.AppendLine("<div class='alert alert-warning'>");
-                        sb.AppendLine("<strong>Retriggerd: "+ ActiveAlert.Field<DateTime>("timestamp") +"</strong>");
+                        sb.AppendLine("<strong>Retriggerd: "+ ActiveAlert.Field<DateTime>("timestamp").ToString("yyyy-MM-dd HH:mm:ss") + " Detected by server: " + System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "</strong>");
                         sb.AppendLine(h_alert[0].lastTriggerd.ToString("yyyyMMddHHmmss") + " => " + ActiveAlert.Field<DateTime>("timestamp").ToString("yyyyMMddHHmmss"));
                         sb.AppendLine(ActiveAlert.Field<string>("info"));
                         sb.AppendLine("</div>");
@@ -228,7 +228,7 @@ namespace EqUiWebUi.Areas.Alert
                 //get the alerts that are still open.
                 List<h_alert> OpenAlerts = (from alerts in gADATA_AlertModel.h_alert
                                             where alerts.c_tirgger_id == trigger.id //from same trigger
-                                            && alerts.state == 1 //only auto close alerts that are in wgk
+                                            && alerts.state == (int)alertState.WGK //only auto close alerts that are in wgk
                                             //this means that if you set autoSetSateTechComp you should have an inital state of WGK else it will not work
                                             select alerts).ToList();
 
@@ -244,7 +244,7 @@ namespace EqUiWebUi.Areas.Alert
                     {
                         log.Debug("Alert no longer active closing it");
                         //set state
-                        OpenAlert.state = 5; //techcomp
+                        OpenAlert.state = (int)alertState.TECHCOMP; //techcomp
                         //adde badge to comment when closses
                         StringBuilder sb = new StringBuilder();
                         //add existing 
@@ -253,7 +253,7 @@ namespace EqUiWebUi.Areas.Alert
                         sb.AppendLine("<hr />");
                         //add new pannel
                         sb.AppendLine("<div class='alert alert-success'>");
-                        sb.AppendLine("<strong>Clossed by server: " + System.DateTime.Now + "</strong>(AutoSetStateTechComp mode)");
+                        sb.AppendLine("<strong>Closed by server: " + System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "</strong>(AutoSetStateTechComp mode)");
                         sb.AppendLine("</div>");
                         OpenAlert.comments = sb.ToString();
                         //dont forget SAVE!
