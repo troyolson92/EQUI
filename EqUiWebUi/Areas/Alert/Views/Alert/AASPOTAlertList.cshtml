@@ -17,7 +17,6 @@
     columns.Add(c => c.id).Titled("id").Filterable(true).InitialSort(GridSortOrder.Desc);
     columns.Add(c => c.location).Titled("location").Filterable(true);
     columns.Add(c => c.C_timestamp).Titled("C_timestamp").Formatted("{0:dd-MM-yyyy HH:mm}");
-    columns.Add(c => c.c_triggers.alertType).Titled("alertType").Filterable(true);
     columns.Add(c => c.info).Titled("info");
     columns.Add(c => c.AcceptUser.username.Replace(@"VCCNET\", "")).Titled("AcceptUser").Filterable(true);
     columns.Add(c => c.triggerCount).Titled("TC").Filterable(true);

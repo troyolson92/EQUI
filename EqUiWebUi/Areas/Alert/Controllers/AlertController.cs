@@ -15,6 +15,12 @@ namespace EqUiWebUi.Areas.Alert.Controllers
     {
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
+        //Get Index
+        public ActionResult Index()
+        {
+            return View();
+        }
+
         //Rewrite hangfire configureAtion
         public void ConfigureHangfire()
         {
@@ -31,7 +37,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
         {
             log.Info("Hangfire config for alerts has been stopped!");
             AlertEngine alertEngine = new AlertEngine();
-            alertEngine.ClearHanfireAlertwork(true);
+            alertEngine.ClearHanfireAlertwork(ClearALL: true);
         }
 
         //interface where users can manage the alerts
@@ -45,6 +51,14 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             string UserLocationroot = Session["LocationRoot"].ToString();
             var h_alert = db.h_alert.Include(h => h.c_state).Include(h => h.c_triggers).Include(h => h.ChangedUser).Include(h => h.CloseUser).Include(h => h.AcceptUser);
             return View(await h_alert.Where(a => a.locationTree.Contains(UserLocationroot)).ToListAsync());
+        }
+
+
+        //specific Alert interface for AASPOT
+        //Get AASPOTIndex
+        public ActionResult AASPOTIndex()
+        {
+            return  View();
         }
 
         //specific Alert interface
@@ -106,6 +120,8 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                 return HttpNotFound();
             }
             ViewBag.state = new SelectList(db.c_state, "id", "discription", h_alert.state);
+            //pass the previous url in the viewbag so we can return on save action
+            ViewBag.returnURL = System.Web.HttpContext.Current.Request.UrlReferrer;
             return View(h_alert);
         }
 
@@ -115,7 +131,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateInput(false)] //to alow posting of raw html data
-        public async Task<ActionResult> Edit(h_alert _alert)
+        public async Task<ActionResult> Edit(h_alert _alert, string returnURL = "Listalerts")
         {
             //get original alert (this insures when multible users edit at the same time nothing should get lost)
             h_alert org_alert = await db.h_alert.FindAsync(_alert.id);
@@ -154,7 +170,8 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                 //save it 
                 db.Entry(org_alert).State = EntityState.Modified;
                 await db.SaveChangesAsync();
-                return RedirectToAction("Listalerts");
+                //because this edit form gets called from both ListAlerts and AASPOTalert list we must redirect to the right page.
+                return Redirect(returnURL);
             }
             //if model not valid return to revalidate
             ViewBag.state = new SelectList(db.c_state, "id", "discription", _alert.state);
