@@ -1,6 +1,7 @@
 ﻿@*drop down control for filtering on 'assets'*@
 @helper AssetDropdownGlobal(string id, string value = "")
     {
+                        /**/
         <select class="form-control input-sm" id="@id" name="Selecteer locatie">
             <option style="display:none"> -- select a asset root -- </option>
             <option value="U">all assets</option>
@@ -20,6 +21,7 @@
 @*drop down control for filtering on 'locationtree' *@
 @helper LocationDropdownGlobal(string id, string value = "")
     {
+                        /**/
         <select class="form-control input-sm" id="@id" name="Select location">
             <option style="display:none"> -- select a location -- </option>
             <option value="">no Filter</option>
@@ -57,6 +59,7 @@
 @*drop down control for filtering on 'locationtree' Greenfield only*@
 @helper LocationDropdownGreenfield(string id)
     {
+                        /**/
         <select class="form-control input-sm" id="@id" name="Select location">
             <option style="display:none"> -- select a location -- </option>
             <optgroup label="CMA UB12 floorline">
@@ -80,7 +83,9 @@
 @*drop down control for filtering on 'locationtree' *@
 @helper DynLocationDropdownGlobal(string id, string value = "", string locationroot = "VCG")
     {
-        var AllLocations = new List<SelectListItem>
+                        /**/
+
+                        var AllLocations = new List<SelectListItem>
 {
 //floor
 new SelectListItem
@@ -175,22 +180,23 @@ Text = "HOP",
 }
 };
 
-        //filter locations based on user settings
-        var FilteredLocations = new List<SelectListItem>();
-        foreach (SelectListItem item in AllLocations)
-        {
-            if (item.Value.StartsWith(locationroot))
-            {
-                FilteredLocations.Add(item);
-            }
-        }
-        //build dropdonwlist
-        @Html.DropDownList("Locations", FilteredLocations);
+                        //filter locations based on user settings
+                        var FilteredLocations = new List<SelectListItem>();
+                        foreach (SelectListItem item in AllLocations)
+                        {
+                            if (item.Value.StartsWith(locationroot))
+                            {
+                                FilteredLocations.Add(item);
+                            }
+                        }
+                        //build dropdonwlist
+                        @Html.DropDownList("Locations", FilteredLocations);
 }
 
 @*helper to change alter status USED IN SPC TO BE KILLED OFF !!!!!*@
 @helper SetAlertStatus(string id, int alertId, int? currentState)
     {
+                        /**/
         <div class="dropdown" id="@id">
             <button class="btn btn-xs btn-danger dropdown-toggle" type="button" data-toggle="dropdown">
                 @{
@@ -237,7 +243,7 @@ Text = "HOP",
 
 @*helper to change alter status users in ALERT ALERT*@
 @helper ChangeAlertStatus(int alertId, string currentState)
-    {
+{
         <div class="dropdown">
             <button class="btn btn-xs btn-danger dropdown-toggle" type="button" data-toggle="dropdown">
                 @currentState <span class="caret"></span>
@@ -254,9 +260,11 @@ Text = "HOP",
         </div>
 }
 
+
 @*helper to create ation link with an icon*@
-@helper IconActionLink(string url, string icon,string linkText, string helperText, string classes = "")
-{
+@helper IconActionLink(string url, string icon, string linkText, string helperText, string classes = "")
+    {
+                        /**/
         <a href="@url" class="@classes" data-toggle="tooltip" title="@helperText">
             <i class="@icon"></i>
             <span>

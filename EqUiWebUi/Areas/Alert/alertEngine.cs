@@ -102,6 +102,14 @@ namespace EqUiWebUi.Areas.Alert
                     break;
             }
 
+            //check for errors
+            if (ActiveAlerts == null)
+            {
+                log.Error("NO RESULT FORM QUERY!! for: " + trigger.alertType + " ABORTING");
+                throw new System.ArgumentException("NO RESULT FORM QUERY","Alertengine");
+
+            }
+
            //handle active alert results
            foreach (DataRow ActiveAlert in ActiveAlerts.Rows)
            {

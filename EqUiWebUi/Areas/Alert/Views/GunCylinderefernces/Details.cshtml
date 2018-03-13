@@ -1,0 +1,99 @@
+﻿@model EqUiWebUi.Areas.Alert.Models.GunCylinderefernce
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>GunCylinderefernce</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.tool_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tool_id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SampleStart)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SampleStart)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.nDataPoints)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nDataPoints)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.avg)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.avg)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Max)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Max)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Min)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Min)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Stdev)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Stdev)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UCL)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UCL)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LCL)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LCL)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.c_controller.controller_name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.c_controller.controller_name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

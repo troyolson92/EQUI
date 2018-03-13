@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewBag.Title = "AASPOTIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>AASPOTIndex</h2>
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h4 class="panel-title">Alerts AASPOT (guncylinder en SBCU bewaking)</h4>
+        <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+    </div>
+    <div class="panel-body">
+        <p><a href="~/Alert/Alert/AASPOTAlertList" class="btn btn-primary btn-sm">AASPOTalerts &raquo;</a>AASPOT alerts</p>
+        <p><a href="~/Alert/Alert/AASPOTAlertList?ActiveAlertOnly=true" class="btn btn-warning btn-sm">AASPOTalerts Openalerts &raquo;</a>AASPOT Alerts OPEN state</p>
+        <hr />
+        <p><a href="~/Alert/GunCylinderefernces/Index" class="btn btn-primary btn-sm">GunCylinderefernces (control limits) &raquo;</a></p>
+        <p><a href="~/Alert/GunCylinderefernces/Index?maxdelta=1000" class="btn btn-warning btn-sm">GunCylinderefernces &raquo;</a>Detla > 1000ms (control limits that might be wrong)</p>
+        <hr />
+        <p><a href="~/Alert/SBCUrefernces/Index" class="btn btn-primary btn-sm">SBCUrefernces (control limits) &raquo;</a></p>
+        <p><a href="~/Alert/SBCUrefernces/Index?maxdelta=10" class="btn btn-warning btn-sm">SBCUrefernces &raquo;</a>Detla > 10mm (control limits that might be wrong)</p>
+
+    </div>
+</div>

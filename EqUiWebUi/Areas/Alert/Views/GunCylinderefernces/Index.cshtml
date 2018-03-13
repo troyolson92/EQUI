@@ -1,0 +1,42 @@
+﻿@model IEnumerable<EqUiWebUi.Areas.Alert.Models.GunCylinderefernce>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index of control limits for GunCylinder (c3g)</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+@Html.Grid(Model).Named("GunCylinderefernce").Build(columns =>
+{
+    columns.Add(c => c.id).Titled("ID").InitialSort(GridSortOrder.Desc);
+    columns.Add(c => c.c_controller.controller_name).Titled("controller");
+    columns.Add(c => c.tool_id).Titled("tool_id");
+    columns.Add(c => c.UCL).Titled("UCL");
+    columns.Add(c => c.LCL).Titled("LCL");
+    //calc delta for limits
+    columns.Add()
+                    .Titled("Delta")
+                    .Encoded(false)
+                    .RenderedAs(c => Math.Round((c.UCL - c.LCL) ?? 0, 2));
+
+    //launch sbcu tool
+    columns.Add(c => c)
+                  .Encoded(false)
+                  .Filterable(false)
+                  .Sortable(false)
+                  .RenderedAs(c => MyEquiToolkit.SbcuTool(c.c_controller.controller_name, c.tool_id.ToString()));
+
+    columns.Add(c => c.id)
+                .Titled("")
+                .Encoded(false)
+                .RenderedAs(c => @Html.ActionLink("Edit", "Edit", new { id = c.id })
+                ).Filterable(false);
+
+}).Filterable(true).Sortable(true).Pageable(pager =>
+{
+    pager.RowsPerPage = 20;
+}).Empty("Did not find anything").Css("table-hover")
