@@ -52,7 +52,8 @@
         //trigger iframe  reload
         $.connection.screenHub.client.Refresh = function () {
             console.log("Refresh triggerd");
-            document.getElementById("#UserScreenIframe").contentDocument.location.reload(true);
+            $.toaster({ title: 'Refresh', priority: 'info', message: 'Refresh' });
+            $('#UserScreenIframe').attr('src', function (i, val) { return val; });
         }
 
         //trigger show message
@@ -65,7 +66,7 @@
             $('#RenderUserScreenMessage').modal();
         }
 
-        //trigger how popover Iframe
+        //trigger show popover Iframe
         $.connection.screenHub.client.DisplayPage = function (showtime, url) {
             console.log("DisplayPage triggerd");
             console.log(url);
@@ -75,6 +76,29 @@
             $('#RenderUserMessageIframe').modal();
         }
 
+        //detect user idle
+        var idleTime = 0;
+        //Increment the idle time counter every minute.
+        var idleInterval = setInterval(timerIncrement, 60000); // 1 minute
+
+        //Zero the idle timer on mouse movement.
+        $(this).mousemove(function (e) {
+                    idleTime = 0;
+                });
+        $(this).keypress(function (e) {
+                    idleTime = 0;
+                });
+        
+        function timerIncrement() {
+                idleTime = idleTime + 1;
+                if (idleTime > @ViewBag.interactivityReset) {
+                    console.log("Refresh triggerd (idle)");
+                    $.toaster({ title: 'IdleRefresh', priority: 'info', message: 'The screen is refreshed becasue the user is idle for @ViewBag.interactivityReset minutes' });
+                    $('#UserScreenIframe').attr('src', function (i, val) { return val; });
+                }
+        }
+
+        
         //on model close
         $('#RenderUserScreenMessage').on('hidden.bs.modal', function (e) {
             $('#RenderUserScreenMessage').html('<div class="modal-content">No content</div>');

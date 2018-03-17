@@ -30,7 +30,7 @@ namespace EqUiWebUi.Areas.Alert
                 if (trigger.enabled)
                 {
                     log.Info("Adding HF alertTriggerJob for: " + trigger.id);
-                    Hangfire.RecurringJob.AddOrUpdate("AT" + trigger.id + "_" + trigger.alertType, () => alertEngine.CheckForalerts(trigger.id, trigger.discription), Cron.MinuteInterval(trigger.Pollrate));
+                    Hangfire.RecurringJob.AddOrUpdate("AT" + trigger.id + "_" + trigger.alertType, () => alertEngine.CheckForalerts(trigger.id, trigger.discription),trigger.Cron);
                 }
             }
 
@@ -62,7 +62,7 @@ namespace EqUiWebUi.Areas.Alert
         public void CheckForalerts(int c_triggerID,string AlertDiscription)
         {
             //get trigger 
-            Models.GADATA_AlertModel gADATA_AlertModel = new GADATA_AlertModel();
+            GADATA_AlertModel gADATA_AlertModel = new GADATA_AlertModel();
             c_triggers trigger = (from trig in gADATA_AlertModel.c_triggers
                                   where trig.id == c_triggerID
                                   select trig).FirstOrDefault();
@@ -71,7 +71,7 @@ namespace EqUiWebUi.Areas.Alert
             if (trigger == null)
             {
                 log.Error("Did not find Alerttrigger: " + c_triggerID);
-                return;
+                throw new System.ArgumentException("Did not find Alerttrigger: " + c_triggerID, "Alertengine");
             }
 
             //if trigger not active stop processing
@@ -99,16 +99,17 @@ namespace EqUiWebUi.Areas.Alert
 
                 default:
                     log.Error("Database not defined");
-                    break;
+                    throw new System.ArgumentException("Database not defined", "Alertengine");
             }
 
-            //check for errors
+            //check for errors in query (no result)
             if (ActiveAlerts == null)
             {
                 log.Error("NO RESULT FORM QUERY!! for: " + trigger.alertType + " ABORTING");
                 throw new System.ArgumentException("NO RESULT FORM QUERY","Alertengine");
-
             }
+            //check for no row
+            log.Debug("trigger: " + trigger.alertType + " count:" + ActiveAlerts.Rows.Count);
 
            //handle active alert results
            foreach (DataRow ActiveAlert in ActiveAlerts.Rows)
@@ -119,9 +120,10 @@ namespace EqUiWebUi.Areas.Alert
 
                 List<h_alert> h_alert = (from alerts in gADATA_AlertModel.h_alert
                                          where alerts.c_tirgger_id == c_triggerID //must be from same trigger
-                                         && alerts.alarmobject == Alertalarmobject //must be same location
-                                         //need to have an ID to compare for retrigger...
-                                         && alerts.state < 2 //1 = WGK 2 = INUITV ALERT MUST BE ACTIVE
+                                         && alerts.alarmobject == Alertalarmobject //must be same object
+                                         && alerts.state != (int)alertState.COMP //alert must be active so not in these states
+                                         && alerts.state != (int)alertState.VOID 
+                                         && alerts.state != (int)alertState.TECHCOMP
                                          orderby alerts.id descending
                                          select alerts).ToList();
 
@@ -178,7 +180,7 @@ namespace EqUiWebUi.Areas.Alert
                     sb.AppendLine("<hr />");
                     sb.AppendLine("<div class='alert alert-danger'>");
                     sb.AppendLine("<strong>Triggerd: " + ActiveAlert.Field<DateTime>("timestamp").ToString("yyyy-MM-dd HH:mm:ss") + " Detected by server: " + System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "</strong>");
-                    sb.AppendLine(ActiveAlert.Field<string>("info"));
+                    sb.AppendLine("<div>" + ActiveAlert.Field<string>("info") + "</div>");
                     sb.AppendLine("</div>");
                     newAlert.comments = sb.ToString();
 
@@ -193,23 +195,23 @@ namespace EqUiWebUi.Areas.Alert
                         gADATA_AlertModel.SaveChanges();
 
                 }
-                //Alert is already active (update it)
+                //Alert is already active RETRIGGER
                 else
                 {
-                    log.Debug("Alert already active");
+                    log.Debug("Alert already active: " + ActiveAlert.Field<string>("Location"));
                     //if the active alert has a new timestamp tis should mean a new datapoint (retrigger event)
 
-                    if (h_alert[0].lastTriggerd.ToString("yyyyMMddHHmmss") != ActiveAlert.Field<DateTime>("timestamp").ToString("yyyyMMddHHmmss"))
+                    if (h_alert[0].lastTriggerd.ToString("yyyy-MM-dd HH:mm:ss") != ActiveAlert.Field<DateTime>("timestamp").ToString("yyyy-MM-dd HH:mm:ss"))
                     {
-                        log.Debug("RETrigger: " + h_alert[0].lastTriggerd.ToString("yyyyMMddHHmmss") + " => " + ActiveAlert.Field<DateTime>("timestamp").ToString("yyyyMMddHHmmss"));
+                        log.Debug("RETrigger: " + h_alert[0].lastTriggerd.ToString("yyyy-MM-dd HH:mm:ss") + " => " + ActiveAlert.Field<DateTime>("timestamp").ToString("yyyy-MM-dd HH:mm:ss"));
                         //added badge to comment with retrigger event
                         StringBuilder sb = new StringBuilder(); 
                         sb.AppendLine(h_alert[0].comments);
                         sb.AppendLine("<hr />");
                         sb.AppendLine("<div class='alert alert-warning'>");
                         sb.AppendLine("<strong>Retriggerd: "+ ActiveAlert.Field<DateTime>("timestamp").ToString("yyyy-MM-dd HH:mm:ss") + " Detected by server: " + System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "</strong>");
-                        sb.AppendLine(h_alert[0].lastTriggerd.ToString("yyyyMMddHHmmss") + " => " + ActiveAlert.Field<DateTime>("timestamp").ToString("yyyyMMddHHmmss"));
-                        sb.AppendLine(ActiveAlert.Field<string>("info"));
+                        sb.AppendLine("<div>" + h_alert[0].lastTriggerd.ToString("yyyy-MM-dd HH:mm:ss") + " => " + ActiveAlert.Field<DateTime>("timestamp").ToString("yyyy-MM-dd HH:mm:ss") + "</div>");
+                        sb.AppendLine("<div>" + ActiveAlert.Field<string>("info") + "</div>");
                         sb.AppendLine("</div>");
                         h_alert[0].comments = sb.ToString();
 
@@ -246,11 +248,24 @@ namespace EqUiWebUi.Areas.Alert
                     //check aganst the active alerts and if not active anymore close it.
                     if (ActiveAlerts.AsEnumerable().Any(row => OpenAlert.alarmobject == row.Field<String>("alarmobject")))
                     {
-                        log.Debug("Alert is still active must not close it");
+                        log.Debug("Alert is still active must not close it <" + OpenAlert.location + ">id:" + OpenAlert.id.ToString());
+                        /*
+                        //adde badge to comment when closses
+                        StringBuilder sb = new StringBuilder();
+                        //add existing 
+                        sb.AppendLine(OpenAlert.comments);
+                        //add break 
+                        sb.AppendLine("<hr />");
+                        //add new pannel
+                        sb.AppendLine("<div class='alert alert-info'>");
+                        sb.AppendLine("<strong>Leave open " + System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "</strong>");
+                        sb.AppendLine("</div>");
+                        OpenAlert.comments = sb.ToString();
+                        */
                     }
                     else
                     {
-                        log.Debug("Alert no longer active closing it");
+                        log.Debug("Alert no longer active closing it <" + OpenAlert.location + ">id:" + OpenAlert.id.ToString());
                         //set state
                         OpenAlert.state = (int)alertState.TECHCOMP; //techcomp
                         //adde badge to comment when closses
@@ -261,15 +276,15 @@ namespace EqUiWebUi.Areas.Alert
                         sb.AppendLine("<hr />");
                         //add new pannel
                         sb.AppendLine("<div class='alert alert-success'>");
-                        sb.AppendLine("<strong>Closed by server: " + System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "</strong>(AutoSetStateTechComp mode)");
+                        sb.AppendLine("<strong>Closed by server: " + System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "</strong>");
+                        sb.AppendLine("<div>(AutoSetStateTechComp mode)</div>");
                         sb.AppendLine("</div>");
-                        OpenAlert.comments = sb.ToString();
-                        //dont forget SAVE!
-                        gADATA_AlertModel.SaveChanges();
+                        OpenAlert.comments = sb.ToString();;
                     }
 
                 }
-
+                //dont forget SAVE!
+                gADATA_AlertModel.SaveChanges();
             }
         }
 
@@ -344,6 +359,7 @@ namespace EqUiWebUi.Areas.Alert
                 sbSMS.AppendLine(trigger.alertType);
                 sbSMS.AppendLine(alert.info);
                 //USE HANGFIRE to send it!
+                
                 Hangfire.BackgroundJob.Enqueue(() => smsComm.SendSMS(SMSconfig.c_CPT600.System, sbSMS.ToString()));
                 //Add in the comment section that the sms was send. (a badge for each SMS)
                 sbComments.AppendLine("<div class='alert alert-info'>");

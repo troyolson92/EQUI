@@ -279,7 +279,8 @@ namespace ExcelAddInEquipmentDatabase
             {
                 string urlSkelation = @"http:\\equi\Maximo_ui\workorderdetails\WoDetails?wonum={0}&GoFullScreen=true";
                 string url = string.Format(urlSkelation, Uri.EscapeDataString(wonum));
-                System.Windows.Forms.Application.Run(new ExcelAddInEquipmentDatabase.Forms.EquiBrowser(url));
+                System.Diagnostics.Process.Start(url);
+                //System.Windows.Forms.Application.Run(new ExcelAddInEquipmentDatabase.Forms.EquiBrowser(url));
             }
             catch (Exception ex)
             {
@@ -306,7 +307,8 @@ namespace ExcelAddInEquipmentDatabase
                     , Uri.EscapeDataString(Logtype)
                     , Uri.EscapeDataString(LogText)
                     );
-                System.Windows.Forms.Application.Run(new ExcelAddInEquipmentDatabase.Forms.EquiBrowser(url));
+                System.Diagnostics.Process.Start(url);
+                //System.Windows.Forms.Application.Run(new ExcelAddInEquipmentDatabase.Forms.EquiBrowser(url));
             }
             catch (Exception ex)
             {
@@ -333,7 +335,8 @@ namespace ExcelAddInEquipmentDatabase
                     ,Uri.EscapeDataString(Logtype)
                     ,Uri.EscapeDataString(LogText) 
                     );
-                System.Windows.Forms.Application.Run(new ExcelAddInEquipmentDatabase.Forms.EquiBrowser(url));
+                System.Diagnostics.Process.Start(url);
+                //System.Windows.Forms.Application.Run(new ExcelAddInEquipmentDatabase.Forms.EquiBrowser(url));
             }
             catch (Exception ex)
             {
@@ -419,7 +422,8 @@ this shift will be out of all OEE calculations!", "Confirmation", MessageBoxButt
             {
                 string urlSkelation = @"http:\\equi\Maximo_ui\Workorder\Workorders?location={0}&GoFullScreen=true&loadOnInit=true";
                 string url = string.Format(urlSkelation, Uri.EscapeDataString(location));
-                System.Windows.Forms.Application.Run(new ExcelAddInEquipmentDatabase.Forms.EquiBrowser(url));
+                System.Diagnostics.Process.Start(url);
+                //System.Windows.Forms.Application.Run(new ExcelAddInEquipmentDatabase.Forms.EquiBrowser(url));
             }
             catch (Exception ex)
             {
@@ -441,7 +445,8 @@ this shift will be out of all OEE calculations!", "Confirmation", MessageBoxButt
             {
                 string urlSkelation = @"http:\\equi\Maximo_ui\Workorder\PartsOnLocation?location={0}&GoFullScreen=true&loadOnInit=true";
                 string url = string.Format(urlSkelation, Uri.EscapeDataString(location));
-                System.Windows.Forms.Application.Run(new ExcelAddInEquipmentDatabase.Forms.EquiBrowser(url));
+                System.Diagnostics.Process.Start(url);
+                //System.Windows.Forms.Application.Run(new ExcelAddInEquipmentDatabase.Forms.EquiBrowser(url));
             }
             catch (Exception ex)
             {

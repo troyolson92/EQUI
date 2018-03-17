@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
+using log4net;
+
 
 namespace EQUICommunictionLib
 {
     public class GadataComm
     {
-        //debugger
-        myDebugger Debugger = new myDebugger();
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         //connection to GADATA
         SqlConnection Gadataconn = new SqlConnection("user id=EqUi; password=EqUi; server=SQLA001.gen.volvocars.net;" +
                                                       "Trusted_Connection=no; database=gadata; connection timeout=15");
@@ -26,6 +27,7 @@ namespace EQUICommunictionLib
         {
             ODBCManager.CreateDSN(DsnGADATA, "odbc link to sql001.gen.volvocars.net"
                 , "sqla001.gen.volvocars.net", "SQL Server", @"C:\windows\system32\SQLSRV32.dll", false, DsnGADATA);
+            log.Debug("Created DSN in regEx for GADATA");
         }
 
         public void BulkCopyToGadata(string as_schema, DataTable adt_table, string as_destination)
@@ -45,7 +47,7 @@ namespace EQUICommunictionLib
                         }
                         catch (Exception ex)
                         {
-                           Debugger.Exeption(ex);
+                            log.Error("Command failed", ex);
                         }
                     }
                     GadataconnAdmin.Close();
@@ -53,78 +55,117 @@ namespace EQUICommunictionLib
             }
         }
 
-        public void RunCommandGadata(string as_command, bool ab_admin = false)
+        public void RunCommandGadata(string sqlCommand, bool runAsAdmin = false, bool enblExeptions = false, int maxEXECtime  = 300)
         {
             SqlConnection lconn;
-            if (ab_admin)
-            { lconn = GadataconnAdmin; }
-            else
-            {lconn = Gadataconn;}
+            if (runAsAdmin)
+            {
+                lconn = GadataconnAdmin;
+            }else
+            {
+                lconn = Gadataconn;
+            }
 
             try
             {
                 lconn.Open();
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-               Debugger.Exeption(e);
+                log.Error("Connection Failed",ex);
+                if (enblExeptions)
+                {
+                    throw ex;
+                }
             }
 
             try
             {
-                using (SqlCommand myCommand = new SqlCommand(as_command, lconn))
+                using (SqlCommand myCommand = new SqlCommand(sqlCommand, lconn))
                 {
-                    myCommand.CommandTimeout = 300;
+                    myCommand.CommandTimeout = maxEXECtime;
                     myCommand.ExecuteNonQuery();
+
                     try
                     {
                         lconn.Close();
                     }
-                    catch (Exception e)
+                    catch (Exception ex)
                     {
-                       Debugger.Exeption(e);
+                        log.Error("Failed to close",ex);
+                        if (enblExeptions)
+                        {
+                            throw ex;
+                        }
                     }
                 }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-               Debugger.Exeption(e);
+                log.Error("Command failed",ex);
+                if (enblExeptions)
+                {
+                    throw ex;
+                }
             }
 
 
         }
 
-        public DataTable RunQueryGadata(string as_query)
+        public DataTable RunQueryGadata(string sqlQuery, bool runAsAdmin = false, bool enblExeptions = false, int maxEXECtime = 300)
         {
-            try
+            SqlConnection lconn;
+            if (runAsAdmin)
             {
-                Gadataconn.Open();
+                lconn = GadataconnAdmin;
             }
-            catch (Exception e)
+            else
             {
-               Debugger.Exeption(e);
+                lconn = Gadataconn;
             }
 
             try
             {
-                using (SqlCommand myCommand = new SqlCommand(as_query, Gadataconn))
+                lconn.Open();
+            }
+            catch (Exception ex)
+            {
+                log.Error("Connection Failed", ex);
+                if (enblExeptions)
+                {
+                    throw ex;
+                }
+            }
+
+            try
+            {
+                using (SqlCommand myCommand = new SqlCommand(sqlQuery, lconn))
                 {
                     DataTable dt = new DataTable();
+                    myCommand.CommandTimeout = maxEXECtime;
                     dt.Load(myCommand.ExecuteReader());
                     try
                     {
-                        Gadataconn.Close();
+                        lconn.Close();
                     }
-                    catch (Exception e)
+                    catch (Exception ex)
                     {
-                       Debugger.Exeption(e);
+                        log.Error("Failed to close", ex);
+                        if (enblExeptions)
+                        {
+                            throw ex;
+                        }
                     }
                     return dt;
                 }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-               Debugger.Exeption(e);
+                log.Error("Command failed", ex);
+                if (enblExeptions)
+                {
+                    throw ex;
+                }
                 DataTable dt = new DataTable();
                 return dt;
             }
@@ -140,9 +181,9 @@ namespace EQUICommunictionLib
             {
                 Gadataconn.Open();
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-               Debugger.Exeption(e);
+                log.Error("Connection Failed", ex);
             }
             try
             {
@@ -150,9 +191,9 @@ namespace EQUICommunictionLib
                     Gadataconn.Close();
                     return cmd;
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Debugger.Exeption(e);
+                log.Error("Command failed", ex);
                 return cmd;
             }
 
@@ -165,9 +206,9 @@ namespace EQUICommunictionLib
             {
                 lconn.Open();
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Debugger.Exeption(e);
+                log.Error("Connection Failed", ex);
             }
             try
             {
@@ -182,15 +223,15 @@ namespace EQUICommunictionLib
                     {
                         lconn.Close();
                     }
-                    catch (Exception e)
+                    catch (Exception ex)
                     {
-                        Debugger.Exeption(e);
+                        log.Error("Failed to close", ex);
                     }
                 }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Debugger.Exeption(e);
+                log.Error("Command failed", ex);
             }
 
 
@@ -203,9 +244,9 @@ namespace EQUICommunictionLib
             {
                 lconn.Open();
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Debugger.Exeption(e);
+                log.Error("Connection Failed", ex);
             }
             try
             {
@@ -220,16 +261,16 @@ namespace EQUICommunictionLib
                     {
                         lconn.Close();
                     }
-                    catch (Exception e)
+                    catch (Exception ex)
                     {
-                        Debugger.Exeption(e);
+                        log.Error("Failed to close", ex);
                     }
 
                     return dt;
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Debugger.Exeption(e);
+                log.Error("Command failed", ex);
                 DataTable dt = new DataTable();
                 return dt;
             }

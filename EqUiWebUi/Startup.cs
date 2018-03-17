@@ -30,7 +30,7 @@ namespace EqUiWebUi
             var HFoptions = new BackgroundJobServerOptions
             {
                 //MUST BE LOWERCASE ONLY !!!!!!
-                Queues = new[] { "critical", "default", "alertengine", "gadata" },
+                Queues = new[] { "critical", "default", "alertengine", "gadata","jobengine" },
                 //How many jobs run at the same time
                 WorkerCount = 5 // Environment.ProcessorCount * 5
             };
@@ -50,7 +50,7 @@ namespace EqUiWebUi
                 // Allow all authenticated users to see the Dashboard (potentially dangerous).
                 //return owinContext.Authentication.User.Identity.IsAuthenticated;  
                 roleProvider equiRoleProvider = new roleProvider();
-                if (equiRoleProvider.IsUserInRole(HttpContext.Current.User.Identity.Name , "Administrator"))
+                if (equiRoleProvider.IsUserInRole(HttpContext.Current.User.Identity.Name , "Administrator") || equiRoleProvider.IsUserInRole(HttpContext.Current.User.Identity.Name, "HangFire"))
                 {
                     return true;
                 }

@@ -132,7 +132,7 @@ namespace EqUiWebUi.Areas.user_management.Controllers
 
 
         // GET: Render selected screen in the screen wrapper (single screen)
-        public ActionResult RenderUserScreen(int screenID, float ZoomLevel = 1)
+        public ActionResult RenderUserScreen(int screenID, float ZoomLevel = 1, int interactivityReset = 20)
         {
             //Get screen
             L_Screens Screen = db.L_Screens.Where(s => s.id == screenID).First();
@@ -161,6 +161,9 @@ namespace EqUiWebUi.Areas.user_management.Controllers
 
             //add ZoomLevel
             ViewBag.ZoomLevel = ZoomLevel;
+
+            //add interactivityReset
+            ViewBag.interactivityReset = interactivityReset;
 
             //Pass correct layout (empty layout)
             return View("RenderUserScreen", "~/Views/Shared/_MinimalLayout.cshtml", Screen);
@@ -273,7 +276,7 @@ namespace EqUiWebUi.Areas.user_management.Controllers
             //full refresh all connected clients.
             if (!screenId.HasValue && !screenNum.HasValue)
             {
-                context.Clients.All.FullRefresh();
+                context.Clients.All.Refresh();
                 return;
             }
 
@@ -281,14 +284,14 @@ namespace EqUiWebUi.Areas.user_management.Controllers
             if (screenId.HasValue)
             {
                 //get all clients in group
-                context.Clients.Group("ScreenID" + screenId.GetValueOrDefault().ToString()).FullRefresh();
+                context.Clients.Group("ScreenID" + screenId.GetValueOrDefault().ToString()).Refresh();
             }
 
             //full refresh specific screeNum
             if (screenNum.HasValue)
             {
                 //get all clients in group
-                context.Clients.Group("ScreenNum" + screenNum.GetValueOrDefault().ToString()).FullRefresh();
+                context.Clients.Group("ScreenNum" + screenNum.GetValueOrDefault().ToString()).Refresh();
             }
             return;
         }
