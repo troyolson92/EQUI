@@ -426,7 +426,7 @@ COM_APP:
             
         }
 
-        //load new version of lrobot.
+        //change tipdress parameter.
         private void ChangeMAxnoDress(ControllerInfo ci, DataGridViewRow row)
         {
 
@@ -779,7 +779,7 @@ COM_APP:
             dt_robots.Columns.Add("ConnectOK", System.Type.GetType("System.String"));
             //  dt_robots.Columns.Add("ConfigOK", System.Type.GetType("System.String"));
             // dt_robots.Columns.Add("restartOK", System.Type.GetType("System.String"));
-            //dt_robots.Columns.Add("WriteOk", System.Type.GetType("System.String"));
+            dt_robots.Columns.Add("WriteOk", System.Type.GetType("System.String"));
             //  dt_robots.Columns.Add("HasTipneed", System.Type.GetType("System.String"));
             // dt_robots.Columns.Add("HasTipneedComment", System.Type.GetType("System.String"));
             //  dt_robots.Columns.Add("Found", System.Type.GetType("System.String"));
@@ -789,6 +789,33 @@ COM_APP:
             //link to datagrid
             dataGridView1.DataSource = dt_robots;
             //
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in dataGridView1.SelectedRows)
+            {
+                try
+                {
+                    ControllerInfo ci;
+                    if (scanner.TryFind(new Guid(row.Cells[dataGridView1.Columns["SystemId"].Index].Value.ToString()), out ci))
+                    {
+                        this.controller = ControllerFactory.CreateFrom(ci);
+                        this.controller.Logon(UserInfo.DefaultUser);
+                        ChangeMAxnoDress(ci, row);
+                    }
+                    else
+                    {
+                        debugger.Message("can not find controller: " + row.Cells[0].Value.ToString());
+                    }
+                }
+                catch (Exception ex)
+                {
+                    debugger.Exeption(ex);
+                }
+            }
+
+            debugger.Message("done with controllers");
         }
     }
 

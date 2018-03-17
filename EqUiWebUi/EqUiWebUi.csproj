@@ -156,6 +156,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Alert\Views\Shared\" />
+    <Folder Include="Areas\HanfireArea\Models\" />
+    <Folder Include="Areas\HanfireArea\Views\Shared\" />
     <Folder Include="Areas\Maximo_ui\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
@@ -186,6 +188,11 @@
       <DependentUpon>AlertModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Alert\Models\AlertModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AlertModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Alert\Models\AlertModel1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>AlertModel.edmx</DependentUpon>
@@ -252,6 +259,9 @@
     <Compile Include="Areas\Gadata\Models\Supervisie.cs">
       <DependentUpon>Gadata.tt</DependentUpon>
     </Compile>
+    <Compile Include="Areas\HanfireArea\Controllers\JobController.cs" />
+    <Compile Include="Areas\HanfireArea\HanfireAreaAreaRegistration.cs" />
+    <Compile Include="Areas\HanfireArea\Jobengine.cs" />
     <Compile Include="Areas\Maximo_ui\Controllers\MaximoController.cs" />
     <Compile Include="Areas\Maximo_ui\Controllers\WorkorderController.cs" />
     <Compile Include="Areas\Maximo_ui\Controllers\WorkorderDetailsController.cs" />
@@ -316,7 +326,6 @@
     <Compile Include="Controllers\DynamicController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\NgacElectrodeController.cs" />
-    <Compile Include="Controllers\SharepointController.cs" />
     <Compile Include="Controllers\SpcController.cs" />
     <Compile Include="Controllers\TableauController.cs" />
     <Compile Include="Models\c_querySnapshots.cs">
@@ -427,6 +436,7 @@
     <Content Include="Content\images\icons8-home-button-25.png" />
     <Content Include="Content\images\icons8-settings-25.png" />
     <Content Include="Content\images\volvo-50.png" />
+    <Content Include="Content\jquery-cron.css" />
     <Content Include="Content\mvc-grid.css" />
     <Content Include="Content\MvcGrid\mvc-grid.css" />
     <Content Include="Content\Site.css" />
@@ -702,6 +712,7 @@
     <Content Include="Areas\Alert\Views\web.config" />
     <EntityDeploy Include="Areas\Alert\Models\AlertModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>AlertModel1.Designer.cs</LastGenOutput>
     </EntityDeploy>
     <Content Include="Areas\Alert\Models\AlertModel.edmx.diagram">
       <DependentUpon>AlertModel.edmx</DependentUpon>
@@ -764,6 +775,9 @@
     <Content Include="Areas\Alert\Views\SBCUrefernces\Index.cshtml" />
     <Content Include="Areas\Alert\Views\Alert\AASPOTIndex.cshtml" />
     <Content Include="Areas\Alert\Views\Alert\Index.cshtml" />
+    <Content Include="Areas\HanfireArea\Views\web.config" />
+    <Content Include="Areas\HanfireArea\Views\Job\MakeJob.cshtml" />
+    <Content Include="Areas\HanfireArea\Views\Job\Index.cshtml" />
     <None Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.svg" />
@@ -870,6 +884,11 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\daterangepicker.js" />
+    <Content Include="Scripts\gentleSelect\img\expand.png" />
+    <Content Include="Scripts\gentleSelect\jquery-gentleSelect-min.js" />
+    <Content Include="Scripts\gentleSelect\jquery-gentleSelect.css" />
+    <Content Include="Scripts\gentleSelect\jquery-gentleSelect.js" />
+    <Content Include="Scripts\jquery-cron.js" />
     <Content Include="Scripts\jquery.signalR-2.2.2.js" />
     <Content Include="Scripts\jquery.signalR-2.2.2.min.js" />
     <Content Include="Scripts\jquery.toaster.js" />
@@ -918,7 +937,6 @@
     <Content Include="Views\Difftable\Index.cshtml" />
     <Content Include="Views\Dynamic\DynamicWebgrid.cshtml" />
     <Content Include="Views\Tableau\logDetails.cshtml" />
-    <Content Include="Views\Sharepoint\AddNewIusse.cshtml" />
     <Content Include="Views\Tableau\Index.cshtml" />
     <Content Include="Views\Tableau\EmbeddedDesktop.cshtml" />
     <Content Include="Views\Tableau\Embedded4K.cshtml" />

@@ -99,6 +99,7 @@
                 url: '@Url.Action("SetCookie", "user", new { area = "user_management" },null)' + '?key=LocationRoot&value=' + this.value,
                 async: false,
             });
+        location.reload();
     });
 
     $('#AssetRoot').on('change', function () {
@@ -107,6 +108,7 @@
                 url: '@Url.Action("SetCookie", "user", new { area = "user_management" },null)' + '?key=AssetRoot&value=' + this.value,
                 async: false,
             });
+        location.reload();
     });
 </script>
 

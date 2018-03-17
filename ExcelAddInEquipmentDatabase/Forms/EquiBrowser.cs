@@ -13,15 +13,15 @@ namespace ExcelAddInEquipmentDatabase.Forms
     {
         public EquiBrowser(string url)
         {
-            System.Diagnostics.Process.Start(url);
-
-            this.Close();
+            //System.Diagnostics.Process.Start(url);
+            //this.Close();
             //temp 
-            /*
+           
             InitializeComponent();
-            webBrowser1.ScriptErrorsSuppressed = true;
+           
+           // webBrowser1.ScriptErrorsSuppressed = true;
             webBrowser1.Navigate(url);  
-            */
+           
         }
     }
 }

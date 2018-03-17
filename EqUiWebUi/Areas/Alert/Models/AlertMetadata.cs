@@ -55,8 +55,8 @@ namespace EqUiWebUi.Areas.Alert.Models
         public Nullable<int> smsSystem { get; set; }
         [HelpText("Inital state of alert created by this trigger")]
         public int initial_state { get; set; }
-        [HelpText("Polrate in minutes to evaluate this trigger")]
-        public int Pollrate { get; set; }
+        [HelpText("Cron expresion to evaluate this trigger")]
+        public string Cron { get; set; }
         [HelpText("When alert trigger is gone set alert state to techComp")]
         public bool AutoSetStateTechComp { get; set; }
         [HelpText("Send sms on each retrigger of the alert")]

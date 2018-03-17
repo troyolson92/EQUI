@@ -38,14 +38,15 @@
             this.btn_loadGrid = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.tbVerVarName = new System.Windows.Forms.TextBox();
-            this.tb_verfileValue = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.tb_module = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.tb_workfolder = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.tb_module = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.tb_verfileValue = new System.Windows.Forms.TextBox();
+            this.tbVerVarName = new System.Windows.Forms.TextBox();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -97,7 +98,7 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 24;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(1308, 455);
+            this.dataGridView1.Size = new System.Drawing.Size(1436, 470);
             this.dataGridView1.TabIndex = 10;
             // 
             // btn_expose
@@ -115,7 +116,7 @@
             // btnDoWork
             // 
             this.btnDoWork.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnDoWork.Location = new System.Drawing.Point(1167, 489);
+            this.btnDoWork.Location = new System.Drawing.Point(1167, 504);
             this.btnDoWork.Margin = new System.Windows.Forms.Padding(2);
             this.btnDoWork.Name = "btnDoWork";
             this.btnDoWork.Size = new System.Drawing.Size(122, 57);
@@ -155,7 +156,7 @@
             this.groupBox1.Controls.Add(this.tbGridWhereClause);
             this.groupBox1.Controls.Add(this.btn_scanNetwork);
             this.groupBox1.Controls.Add(this.btn_expose);
-            this.groupBox1.Location = new System.Drawing.Point(9, 470);
+            this.groupBox1.Location = new System.Drawing.Point(9, 485);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(556, 84);
             this.groupBox1.TabIndex = 16;
@@ -173,69 +174,12 @@
             this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Controls.Add(this.tb_verfileValue);
             this.groupBox2.Controls.Add(this.tbVerVarName);
-            this.groupBox2.Location = new System.Drawing.Point(580, 470);
+            this.groupBox2.Location = new System.Drawing.Point(580, 485);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(534, 86);
             this.groupBox2.TabIndex = 17;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "LoadModule";
-            // 
-            // tbVerVarName
-            // 
-            this.tbVerVarName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.tbVerVarName.Location = new System.Drawing.Point(108, 56);
-            this.tbVerVarName.Margin = new System.Windows.Forms.Padding(2);
-            this.tbVerVarName.Name = "tbVerVarName";
-            this.tbVerVarName.Size = new System.Drawing.Size(177, 20);
-            this.tbVerVarName.TabIndex = 16;
-            this.tbVerVarName.Text = "Version_DTipChange_EDAG";
-            // 
-            // tb_verfileValue
-            // 
-            this.tb_verfileValue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.tb_verfileValue.Location = new System.Drawing.Point(343, 56);
-            this.tb_verfileValue.Margin = new System.Windows.Forms.Padding(2);
-            this.tb_verfileValue.Name = "tb_verfileValue";
-            this.tb_verfileValue.Size = new System.Drawing.Size(177, 20);
-            this.tb_verfileValue.TabIndex = 17;
-            this.tb_verfileValue.Text = "ABB 6.0.5 - 2018-01-03 ";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(16, 59);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(87, 13);
-            this.label1.TabIndex = 18;
-            this.label1.Text = "Load if: Varname";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(290, 59);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(48, 13);
-            this.label2.TabIndex = 19;
-            this.label2.Text = "Contains";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(16, 22);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(42, 13);
-            this.label3.TabIndex = 21;
-            this.label3.Text = "Module";
-            // 
-            // tb_module
-            // 
-            this.tb_module.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.tb_module.Location = new System.Drawing.Point(78, 19);
-            this.tb_module.Margin = new System.Windows.Forms.Padding(2);
-            this.tb_module.Name = "tb_module";
-            this.tb_module.Size = new System.Drawing.Size(160, 20);
-            this.tb_module.TabIndex = 20;
-            this.tb_module.Text = "DTipChange.sys";
             // 
             // label4
             // 
@@ -256,11 +200,81 @@
             this.tb_workfolder.TabIndex = 22;
             this.tb_workfolder.Text = "c:\\temp\\debug\\";
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(16, 22);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(42, 13);
+            this.label3.TabIndex = 21;
+            this.label3.Text = "Module";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(290, 59);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(48, 13);
+            this.label2.TabIndex = 19;
+            this.label2.Text = "Contains";
+            // 
+            // tb_module
+            // 
+            this.tb_module.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.tb_module.Location = new System.Drawing.Point(78, 19);
+            this.tb_module.Margin = new System.Windows.Forms.Padding(2);
+            this.tb_module.Name = "tb_module";
+            this.tb_module.Size = new System.Drawing.Size(160, 20);
+            this.tb_module.TabIndex = 20;
+            this.tb_module.Text = "DTipChange.sys";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(16, 59);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(87, 13);
+            this.label1.TabIndex = 18;
+            this.label1.Text = "Load if: Varname";
+            // 
+            // tb_verfileValue
+            // 
+            this.tb_verfileValue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.tb_verfileValue.Location = new System.Drawing.Point(343, 56);
+            this.tb_verfileValue.Margin = new System.Windows.Forms.Padding(2);
+            this.tb_verfileValue.Name = "tb_verfileValue";
+            this.tb_verfileValue.Size = new System.Drawing.Size(177, 20);
+            this.tb_verfileValue.TabIndex = 17;
+            this.tb_verfileValue.Text = "ABB 6.0.5 - 2018-01-03 ";
+            // 
+            // tbVerVarName
+            // 
+            this.tbVerVarName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.tbVerVarName.Location = new System.Drawing.Point(108, 56);
+            this.tbVerVarName.Margin = new System.Windows.Forms.Padding(2);
+            this.tbVerVarName.Name = "tbVerVarName";
+            this.tbVerVarName.Size = new System.Drawing.Size(177, 20);
+            this.tbVerVarName.TabIndex = 16;
+            this.tbVerVarName.Text = "Version_DTipChange_EDAG";
+            // 
+            // button1
+            // 
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.button1.Location = new System.Drawing.Point(1344, 511);
+            this.button1.Margin = new System.Windows.Forms.Padding(2);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(82, 42);
+            this.button1.TabIndex = 18;
+            this.button1.Text = "dosometing";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1327, 566);
+            this.ClientSize = new System.Drawing.Size(1455, 581);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.dataGridView1);
@@ -297,6 +311,7 @@
         private System.Windows.Forms.TextBox tb_module;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox tb_workfolder;
+        private System.Windows.Forms.Button button1;
     }
 }
 

@@ -55,7 +55,7 @@
           <Property Name="sqlStqStatement" Type="varchar(max)" />
           <Property Name="smsSystem" Type="int" />
           <Property Name="initial_state" Type="int" Nullable="false" />
-          <Property Name="Pollrate" Type="int" Nullable="false" />
+          <Property Name="Cron" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="alertType" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="AutoSetStateTechComp" Type="bit" Nullable="false" />
           <Property Name="smsOnRetrigger" Type="bit" Nullable="false" />
@@ -545,7 +545,6 @@
           <Property Name="sqlStqStatement" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="smsSystem" Type="Int32" />
           <Property Name="initial_state" Type="Int32" Nullable="false" />
-          <Property Name="Pollrate" Type="Int32" Nullable="false" />
           <Property Name="alertType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="AutoSetStateTechComp" Type="Boolean" Nullable="false" />
           <Property Name="smsOnRetrigger" Type="Boolean" Nullable="false" />
@@ -553,6 +552,7 @@
           <NavigationProperty Name="c_state" Relationship="AlertModel.FK_c_triggers_c_state" FromRole="c_triggers" ToRole="c_state" />
           <NavigationProperty Name="h_alert" Relationship="AlertModel.FK_h_alert_c_triggers" FromRole="c_triggers" ToRole="h_alert" />
           <Property Name="enableSMS" Type="Boolean" Nullable="false" />
+          <Property Name="Cron" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_c_triggers_c_smsSystem">
           <End Type="AlertModel.c_smsSystem" Role="c_smsSystem" Multiplicity="0..1" />
@@ -812,11 +812,11 @@
           <EntitySetMapping Name="c_triggers">
             <EntityTypeMapping TypeName="AlertModel.c_triggers">
               <MappingFragment StoreEntitySet="c_triggers">
+                <ScalarProperty Name="Cron" ColumnName="Cron" />
                 <ScalarProperty Name="enableSMS" ColumnName="enableSMS" />
                 <ScalarProperty Name="smsOnRetrigger" ColumnName="smsOnRetrigger" />
                 <ScalarProperty Name="AutoSetStateTechComp" ColumnName="AutoSetStateTechComp" />
                 <ScalarProperty Name="alertType" ColumnName="alertType" />
-                <ScalarProperty Name="Pollrate" ColumnName="Pollrate" />
                 <ScalarProperty Name="initial_state" ColumnName="initial_state" />
                 <ScalarProperty Name="smsSystem" ColumnName="smsSystem" />
                 <ScalarProperty Name="sqlStqStatement" ColumnName="sqlStqStatement" />
