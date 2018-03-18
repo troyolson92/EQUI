@@ -1,0 +1,14 @@
+﻿@model  List<EqUiWebUi.Areas.user_management.Models.userSession>
+@{
+    ViewBag.Title = "ListSessions";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>ListSessions</h2>
+
+@Html.Grid(Model).Named("ListSessions").Build(columns =>
+{
+    columns.Add(c => c.username).Titled("Username").InitialSort(GridSortOrder.Asc);
+    columns.Add(c => c.sessionId).Titled("sessionId");
+
+}).Filterable(true).Sortable(true).Empty("Did not find anything").Css("table-hover")

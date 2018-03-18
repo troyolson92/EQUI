@@ -82,6 +82,7 @@ namespace EqUiWebUi
             httpContext.Response.StatusCode = ex is HttpException ? ((HttpException)ex).GetHttpCode() : 500;
             httpContext.Response.TrySkipIisCustomErrors = true;
 
+            routeData.Values["area"] = "";
             routeData.Values["controller"] = "Error";
             routeData.Values["action"] = action;
 
@@ -143,6 +144,7 @@ namespace EqUiWebUi
                 log.Error("TEMP session state not available", ex);
             }
         }
+
 
         //returns a list of all active sessions.
         public static List<string> Sessions()

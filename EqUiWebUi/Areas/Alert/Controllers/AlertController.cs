@@ -21,6 +21,12 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             return View();
         }
 
+        //Get Partial settings
+        public ActionResult _settings()
+        {
+            return PartialView();
+        }
+
         //Rewrite hangfire configureAtion
         public void ConfigureHangfire()
         {

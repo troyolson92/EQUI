@@ -26,6 +26,12 @@ namespace EqUiWebUi.Areas.HanfireArea.Controllers
             return View();
         }
 
+        //GEt: hanfireAre/_settings
+        public ActionResult _settings()
+        {
+            return PartialView();
+        }
+
         // GET: hanfireArea/Makejob
         [HttpGet]
         public ActionResult MakeJob()
@@ -41,6 +47,18 @@ namespace EqUiWebUi.Areas.HanfireArea.Controllers
             Jobengine jobengine = new Jobengine();
             jobengine.Makejob(job.name, job.command, job.cron);
             Response.Redirect("~/hangfire/recurring");
+        }
+
+        //init background work jobs.
+        public void ConfiureBackgroundJobs()
+        {
+            //old class
+            Backgroundwork backgroundwork = new Backgroundwork();
+            backgroundwork.configHangfireJobs();
+            //gadata jobs 
+            Areas.Gadata.BackgroundWork backgroundWorkGADATA = new Areas.Gadata.BackgroundWork();
+            backgroundWorkGADATA.configHangfireJobs();
+
         }
 
     }

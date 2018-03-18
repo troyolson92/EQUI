@@ -8,69 +8,21 @@
 
 <p></p>
 
-<div class="panel panel-danger">
-    <div class="panel-heading">
-        <h4 class="panel-title">Hangfire</h4>
-        <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
-    </div>
-    <div class="panel-body">
-        <p><a href="~/Hangfire" class="btn btn-primary btn-sm">Hangfire &raquo;</a>Beheer van background jobs. </p>
-        <p><a href="~/Home/ConfiureBackgroundJobs" class="btn btn-danger btn-sm JQresultTriggerBtn">Configure jobs &raquo;</a>Configure hangfire jobs. (reset al to default)</p>
-        <p><a href="~/HanfireArea/job/MakeJob" class="btn btn-danger btn-sm">Make job &raquo;</a>Make hangfire jobs.</p>
-    </div>
-</div>
+@Html.Action("_settings", "job", new { area = "hanfirearea" })
 
 <p></p>
 
-<div class="panel panel-warning">
-    <div class="panel-heading">
-        <h4 class="panel-title">User managment</h4>
-        <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
-    </div>
-    <div class="panel-body">
-        <p><a href="~/user_management/users/Index" class="btn btn-primary btn-sm">Users &raquo;</a>Beheer van gebruikers</p>
-        <p><a href="~/user_management/usersPermisions/Index" class="btn btn-primary btn-sm">UsersPermisions &raquo;</a>Beheer van rechten</p>
-    </div>
-    <div class="panel-footer">
-        <h6>Active sessions: @ViewBag.ActiveSessions</h6>
-    </div>
-</div>
+@Html.Action("_settings", "Users", new { area = "user_management" })
 
 <p></p>
 
-<div class="panel panel-warning">
-    <div class="panel-heading">
-        <h4 class="panel-title">Screen managment</h4>
-        <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
-    </div>
-    <div class="panel-body">
-        <p><a href="~/user_management/UserScreens/Index" class="btn btn-primary btn-sm">Screens &raquo;</a>Beheer van schermen. (sommige gebruikers zoals de digiborden hebben voorgedefineerde schermen)</p>
-        <p><a href="~/user_management/UserScreens/Screenmaster" class="btn btn-danger btn-sm">ScreenMaster &raquo;</a>Commandos sturen naar schermen</p>
-        file:////gnlsnm0101.gen.volvocars.net/proj/6308-SHR-VCC22700/LegancyTools/DEPLOYMENTBASE/EqUiDigibordLauncher Config tool om kiosk op te starten.
-    </div>
-</div>
+@Html.Action("_settings", "UserScreens", new { area = "user_management" })
 
 <p></p>
 
-<div class="panel panel-danger">
-    <div class="panel-heading">
-        <h4 class="panel-title">Alerts</h4>
-        <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
-    </div>
-    <div class="panel-body">
-        <p><a href="~/Alert/c_triggers/index" class="btn btn-danger btn-sm">c_trigger &raquo;</a>Manage alert triggers</p>
-        <p><a href="~/Alert/h_alert/index" class="btn btn-danger btn-sm">h_alert &raquo;</a>Manager alerts</p>
-        <hr />
-        <p><a href="~/Alert/Alert/configureHangfire" class="btn btn-warning btn-sm JQresultTriggerBtn">configureHangfire &raquo;</a>configureHangfire</p>
-        <hr />
-        <p><a href="~/Alert/Alert/Index" class="btn btn-primary btn-sm">Main user index &raquo;</a>Index</p>
-        <hr />
-        <p><a href="~/Alert/c_SMSsystem/index" class="btn btn-warning btn-sm">c_SMSsystem &raquo;</a></p>
-        <p><a href="~/Alert/c_SMSconfig/index" class="btn btn-warning btn-sm">c_SMS_config &raquo;</a></p>
-        <p><a href="~/Alert/c_CPT600/index" class="btn btn-warning btn-sm">c_CPT600 &raquo;</a></p>
+@Html.Action("_settings", "alert", new { area = "alert" })
 
-    </div>
-</div>
+<p></p>
 
 <div class="panel panel-danger">
     <div class="panel-heading">
@@ -78,8 +30,6 @@
         <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
     </div>
     <div class="panel-body">
-        <p><a href="http://gensvw1051:5601/app/kibana#/discover?_g=()" class="btn btn-danger btn-sm">Kibana &raquo;</a></p>
+        <p><a href="http://gensvw1051:5601/app/kibana#/discover?_g=()" class="btn btn-danger btn-sm">Kibana (VIDS) &raquo;</a></p>
     </div>
 </div>
-
-<hr />
