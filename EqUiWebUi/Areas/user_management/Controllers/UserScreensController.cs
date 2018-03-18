@@ -22,6 +22,12 @@ namespace EqUiWebUi.Areas.user_management.Controllers
             return View(await l_Screens.ToListAsync());
         }
 
+        //GET: user_management/_settings
+        public ActionResult _settings()
+        {
+            return  PartialView();
+        }
+
         // GET: user_management/UserScreens/Details/5
         public async Task<ActionResult> Details(int? id)
         {

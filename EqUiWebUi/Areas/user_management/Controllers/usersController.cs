@@ -22,6 +22,32 @@ namespace EqUiWebUi.Areas.user_management.Controllers
             return View(await db.L_users.ToListAsync());
         }
 
+        //GET: user_management/user/_settings
+        public ActionResult _settings()
+        {
+            ViewBag.ActiveSessions = EqUiWebUi.MvcApplication.Sessions().Count;
+            return PartialView();
+        }
+
+        // GET: user_management/ListSessions
+        public ActionResult ListSessions()
+        {
+            //get the list of active sessionIDs
+            List<string> activeSessions = EqUiWebUi.MvcApplication.Sessions();
+            //make model object with all session details
+            List<userSession> sessionList = new List<userSession>();
+            foreach (string sessionID in activeSessions)
+            {
+                userSession userSession = new userSession();
+                userSession.sessionId = sessionID;
+
+                //HOW DO I GET THE SESSIONS???
+
+                sessionList.Add(userSession);
+            }
+            return View(sessionList);
+        }
+
         // GET: user_management/users/Details/5
         public async Task<ActionResult> Details(int? id)
         {

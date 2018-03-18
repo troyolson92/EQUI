@@ -300,6 +300,7 @@
     <Compile Include="Areas\user_management\Models\users.cs">
       <DependentUpon>user_management.tt</DependentUpon>
     </Compile>
+    <Compile Include="Areas\user_management\Models\userSession.cs" />
     <Compile Include="Areas\user_management\Models\usersMetaData.cs" />
     <Compile Include="Areas\user_management\Models\usersPermisions.cs">
       <DependentUpon>user_management.tt</DependentUpon>
@@ -328,20 +329,11 @@
     <Compile Include="Controllers\NgacElectrodeController.cs" />
     <Compile Include="Controllers\SpcController.cs" />
     <Compile Include="Controllers\TableauController.cs" />
-    <Compile Include="Models\c_querySnapshots.cs">
-      <DependentUpon>GadataDatamodel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\gadataModel.cs" />
-    <Compile Include="Models\h_querySnapshots.cs">
-      <DependentUpon>GadataDatamodel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\ia_Alert.cs">
       <DependentUpon>GadataDatamodel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\logDetails.cs">
-      <DependentUpon>GadataDatamodel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\l_querySnapshots.cs">
       <DependentUpon>GadataDatamodel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TipMonitor.cs">
@@ -352,12 +344,10 @@
       <DependentUpon>GadataDatamodel.tt</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
-    <Compile Include="Controllers\DifftableController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\DifftableModel.cs" />
     <Compile Include="Models\GadataDatamodel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -372,12 +362,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>GadataDatamodel.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Models\QUERYParameters.cs">
-      <DependentUpon>GadataDatamodel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\QUERYS.cs">
-      <DependentUpon>GadataDatamodel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MyExtenstions.cs" />
@@ -441,7 +425,6 @@
     <Content Include="Content\MvcGrid\mvc-grid.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\summernote.css" />
-    <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Models\GadataDatamodel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -778,6 +761,11 @@
     <Content Include="Areas\HanfireArea\Views\web.config" />
     <Content Include="Areas\HanfireArea\Views\Job\MakeJob.cshtml" />
     <Content Include="Areas\HanfireArea\Views\Job\Index.cshtml" />
+    <Content Include="Areas\Alert\Views\Alert\_settings.cshtml" />
+    <Content Include="Areas\user_management\Views\UserScreens\_settings.cshtml" />
+    <Content Include="Areas\HanfireArea\Views\Job\_settings.cshtml" />
+    <Content Include="Areas\user_management\Views\users\ListSessions.cshtml" />
+    <Content Include="Areas\user_management\Views\users\_settings.cshtml" />
     <None Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.svg" />
@@ -934,7 +922,6 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Difftable\Index.cshtml" />
     <Content Include="Views\Dynamic\DynamicWebgrid.cshtml" />
     <Content Include="Views\Tableau\logDetails.cshtml" />
     <Content Include="Views\Tableau\Index.cshtml" />
@@ -942,9 +929,6 @@
     <Content Include="Views\Tableau\Embedded4K.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Error\Index.cshtml" />
-    <Content Include="Views\Error\NotFound.cshtml" />
-    <Content Include="Views\Error\AccessDenied.cshtml" />
-    <Content Include="Views\Error\InternalServerError.cshtml" />
     <Content Include="Views\Dynamic\DynamicDatatable.cshtml" />
     <Content Include="Views\NgacElectrode\CurrentTipstatus.cshtml" />
     <Content Include="Views\NgacElectrode\Index.cshtml" />
@@ -958,7 +942,6 @@
     <Content Include="Scripts\jquery-3.2.1.min.map" />
     <Content Include="Views\NgacElectrode\_TipsChanged.cshtml" />
     <Content Include="Views\Home\Rendersite.cshtml" />
-    <Content Include="Views\Difftable\_diffWebgrid.cshtml" />
     <Content Include="Views\Spc\Index.cshtml" />
     <Content Include="Views\Spc\_setState.cshtml" />
     <Content Include="Views\Spc\_details.cshtml" />
@@ -967,7 +950,6 @@
     <Content Include="Views\Chart\_getErrorTrend.cshtml" />
     <Content Include="Views\NgacElectrode\_TipStatus.cshtml" />
     <Content Include="Views\Home\Settings.cshtml" />
-    <Content Include="Views\Home\UB12Home.cshtml" />
     <Content Include="Views\Shared\_MinimalLayout.cshtml" />
     <Content Include="Views\Chart\GetErrorTrend.cshtml" />
   </ItemGroup>

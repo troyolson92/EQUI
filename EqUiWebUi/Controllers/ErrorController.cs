@@ -14,7 +14,7 @@ namespace EqUiWebUi.Controllers
         public ActionResult Index()
         {
             TempData["error"] = "Error Occurred!";
-            return View();
+            return View("Index");
         }
         /// <summary>    /// Track Page Not Found Error
         /// </summary>
@@ -23,7 +23,7 @@ namespace EqUiWebUi.Controllers
         public ActionResult NotFound()
         {
             TempData["error"] = "Page not Found";
-            return View();
+            return View("Index");
         }
         /// <summary>
         /// Track Access Denied

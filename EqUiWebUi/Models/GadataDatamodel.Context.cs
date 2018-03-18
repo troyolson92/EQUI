@@ -25,11 +25,6 @@ namespace EqUiWebUi.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public DbSet<QUERYParameters> QUERYParameters { get; set; }
-        public DbSet<QUERYS> QUERYS { get; set; }
-        public DbSet<c_querySnapshots> c_querySnapshots { get; set; }
-        public DbSet<h_querySnapshots> h_querySnapshots { get; set; }
-        public DbSet<l_querySnapshots> l_querySnapshots { get; set; }
         public DbSet<TipMonitor> TipMonitor { get; set; }
         public DbSet<logDetails> logDetails { get; set; }
         public DbSet<TipwearBeforeChange> TipwearBeforeChange { get; set; }
