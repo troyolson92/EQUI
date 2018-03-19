@@ -19,16 +19,28 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
 
         //Standard details view about 1 workorder 
         [HttpGet]
-        public ActionResult WoDetails(string wonum)
+        public ActionResult WoDetails(string wonum, bool RealtimeConn = false)
         {
             ViewBag.wonum = wonum;
+            ViewBag.RealtimeConn = RealtimeConn;
             return View();
         }
 
         //standard details partial about 1 workorder (long text, failure, labor)
         [HttpGet]
-        public ActionResult _woDetails(string wonum)
+        public ActionResult _woDetails(string wonum, bool RealtimeConn = false)
         {
+            //check if user is allowed to user realtimeConn
+            if (RealtimeConn)
+            {
+                roleProvider roleProvider = new roleProvider();
+                if (!roleProvider.IsUserInRole(System.Web.HttpContext.Current.User.Identity.Name, "MAXIMOrealtime"))
+                {
+                    RealtimeConn = false;
+                }
+            }
+            ViewBag.RealtimeConn = RealtimeConn;
+
             if (wonum == null) wonum = "NoWonum";
             if (wonum == "") wonum = "NoWonum";
             #region querys
@@ -81,10 +93,10 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
             #endregion
             //
             EQUICommunictionLib.MaximoComm maximoComm = new MaximoComm();
-            string LONGDESCRIPTION = maximoComm.GetClobMaximo7(cmdLONGDESCRIPTION);
-            string FAILUREREMARK = maximoComm.GetClobMaximo7(cmdFAILUREREMARK);
-            DataTable LABOR = maximoComm.Oracle_runQuery(cmdLabor);
-            //   DataTable WORKLOG = maximoComm.oracle_runQuery(cmdWorkLog);
+            string LONGDESCRIPTION = maximoComm.GetClobMaximo7(cmdLONGDESCRIPTION,RealtimeConn:RealtimeConn);
+            string FAILUREREMARK = maximoComm.GetClobMaximo7(cmdFAILUREREMARK, RealtimeConn: RealtimeConn);
+            DataTable LABOR = maximoComm.Oracle_runQuery(cmdLabor, RealtimeConn: RealtimeConn);
+            //   DataTable WORKLOG = maximoComm.oracle_runQuery(cmdWorkLog, RealtimeConn:RealtimeConn);
 
             ViewBag.LongDescription = LONGDESCRIPTION;
             ViewBag.FailureRemark = FAILUREREMARK;

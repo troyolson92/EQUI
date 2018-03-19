@@ -31,13 +31,13 @@ namespace EqUiWebUi.Areas.Gadata
                 BackgroundWork backgroundwork = new BackgroundWork();
                 //**********************************Ploegreport table***************************************************
                 //set job to refresh every 5 minutes
-                RecurringJob.AddOrUpdate(() => backgroundwork.UpdatePloegreport(), Cron.MinuteInterval(5));
+                RecurringJob.AddOrUpdate("BT_PloegReport",() => backgroundwork.UpdatePloegreport(), Cron.MinuteInterval(5));
                 //**********************************Ploegreport table***************************************************
                 //set job to refresh every 5 minutes
-                RecurringJob.AddOrUpdate(() => backgroundwork.UpdateEQpluginDefaultNGAC(), Cron.MinuteInterval(5));
+                RecurringJob.AddOrUpdate("BT_SupervisHigh",() => backgroundwork.UpdateEQpluginDefaultNGAC(), Cron.MinuteInterval(5));
                 //**********************************Supervisie table***************************************************
                 //set job to refresh every minute
-                RecurringJob.AddOrUpdate(() => backgroundwork.UpdateSupervisie(), Cron.Minutely);
+                RecurringJob.AddOrUpdate("BT_Supervis",() => backgroundwork.UpdateSupervisie(), Cron.Minutely);
             }
 
             //update the local datatable with ploeg rapport called every minute #hangfire

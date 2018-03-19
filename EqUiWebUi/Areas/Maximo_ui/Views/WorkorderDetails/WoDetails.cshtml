@@ -18,7 +18,7 @@
     @*run on doc ready *@
     $(document).ready(function () {
         $("#woDetailsPartial").html("Loading.....");
-        var url = "@Url.Action("_woDetails", "WorkorderDetails")?wonum=" + @ViewBag.wonum;
+        var url = "@Url.Action("_woDetails", "WorkorderDetails")?wonum=" + @ViewBag.wonum + "&RealtimeConn=" + @ViewBag.RealtimeConn;
         $("#woDetailsPartial").load(url);
     })
 </script>

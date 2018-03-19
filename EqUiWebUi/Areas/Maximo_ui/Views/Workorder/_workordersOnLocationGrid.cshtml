@@ -14,3 +14,14 @@
 {
     pager.RowsPerPage = 10;
 }).Empty("No workorders found").Css("table-hover")
+
+
+@*inform user that this is a realtime connection*@
+@if (ViewBag.RealtimeConn)
+{
+    <div class="label">
+        <div class="label label-danger">
+            RT
+        </div>
+    </div>
+}

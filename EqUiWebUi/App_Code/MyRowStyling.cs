@@ -50,7 +50,7 @@ namespace EqUiWebUi
                 case "BarrelLOW":
                     return "TableLogtypeBarrelLOW";
 
-                case "Alert":
+                case "ALERT":
                     return "TableLogtypeAlert";
 
                 default:

@@ -3,6 +3,7 @@
     ViewBag.Title = "_woDetails";
 }
 
+
 <div class="panel panel-default @(!string.IsNullOrWhiteSpace(ViewBag.LongDescription) ? "shown":"hidden")">
     <div class="panel-heading">
         <h6>LongDescription</h6>
@@ -35,20 +36,29 @@
         }
 
         @grid.GetHtml(
-                         htmlAttributes: new { id = "gridMapping", style = "font-size: 12px" },
-                         tableStyle: "table table-striped grid-table",
-                         headerStyle: "grid-header-title",
-                         footerStyle: "grid-footer",
-                         alternatingRowStyle: "webgrid-alternating-row",
-                         selectedRowStyle: "grid-row grid-row-selected",
-                         rowStyle: "grid-row",
-                         mode: WebGridPagerModes.All,
-                         firstText: "<< First",
-                         previousText: "< Prev",
-                         nextText: "Next >",
-                         lastText: "Last >>",
-                         columns: ViewBag.LABORColumns
-             )
+                                   htmlAttributes: new { id = "gridMapping", style = "font-size: 12px" },
+                                   tableStyle: "table table-striped grid-table",
+                                   headerStyle: "grid-header-title",
+                                   footerStyle: "grid-footer",
+                                   alternatingRowStyle: "webgrid-alternating-row",
+                                   selectedRowStyle: "grid-row grid-row-selected",
+                                   rowStyle: "grid-row",
+                                   mode: WebGridPagerModes.All,
+                                   firstText: "<< First",
+                                   previousText: "< Prev",
+                                   nextText: "Next >",
+                                   lastText: "Last >>",
+                                   columns: ViewBag.LABORColumns
+                       )
     </div>
 </div>
 
+@*inform user that this is a realtime connection*@
+@if (ViewBag.RealtimeConn)
+{
+    <div class="label">
+        <div class="label label-danger">
+            RT
+        </div>
+    </div>
+}
