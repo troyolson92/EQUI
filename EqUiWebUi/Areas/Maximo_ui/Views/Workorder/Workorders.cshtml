@@ -108,6 +108,14 @@
                             <span class="help-block">include workype ('PP','PCI','WSCH')</span>
                         </div>
 
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.realtimeConn, new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.CheckBoxFor(m => m.realtimeConn, new { @class = "form-control input-md" })
+                            </div>
+                            <span class="help-block">use realtime mx connection (need role MAXIMOrealtime)</span>
+                        </div>
+
                     </div>
                     <hr />
                     <input type="submit" value="Load workorders" id="WorkorderSelectOptionsSubmit" class="btn btn-success">

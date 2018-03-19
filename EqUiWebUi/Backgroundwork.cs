@@ -31,18 +31,15 @@ namespace EqUiWebUi
             Backgroundwork backgroundwork = new Backgroundwork();
             //**********************************TipDresData table***************************************************
             //set job to refresh every minute
-            RecurringJob.AddOrUpdate(() => backgroundwork.UpdateTipstatus(), Cron.Minutely);  
-
+            RecurringJob.AddOrUpdate("BT_NGAC_tipSTS",() => backgroundwork.UpdateTipstatus(), Cron.Minutely);  
             //**********************************STO****************************************************************
             //check every minute for new data (hystorian)
             //RecurringJob.AddOrUpdate(() => backgroundwork.PushDatafromSTOtoGADATA(), Cron.MinuteInterval(5));
             //**********************************STW040 BI rapoort****************************************************
-            RecurringJob.AddOrUpdate(() => backgroundwork.PushDatafromSTW040toGADATA(), Cron.HourInterval(1));
+            RecurringJob.AddOrUpdate("BI_STW=>GADATA",() => backgroundwork.PushDatafromSTW040toGADATA(), Cron.HourInterval(1));
             //**********************************MX7 *****************************************************************
-            //BI rapport
-            //RecurringJob.AddOrUpdate(() => backgroundwork.PushDatafromMX7toGADATA(), Cron.HourInterval(1));
             //reporting DB 
-            RecurringJob.AddOrUpdate(() => backgroundwork.PushDatafromMAXIMOtoGADATA(), Cron.HourInterval(1));
+            RecurringJob.AddOrUpdate("RT_MX=>GADATA",() => backgroundwork.PushDatafromMAXIMOtoGADATA(), Cron.HourInterval(1));
         }
 
      
@@ -145,7 +142,6 @@ join MAXIMO.locancestor locancestor on
 locancestor.LOCATION = WORKORDER.LOCATION
 and 
 locancestor.ORGID = 'VCCBE'
-
 and
 workorder.changedate >= sysdate - 200
 and
@@ -157,7 +153,7 @@ ORDER BY WORKORDER.STATUSDATE DESC
 "
 );
 
-			DataTable newMaximoDt = maximoComm.Oracle_runQuery(MaximoQry);
+			DataTable newMaximoDt = maximoComm.Oracle_runQuery(MaximoQry,RealtimeConn:true,maxEXECtime:120,enblExeptions:true);
 			//push to gadata
 			lGadataComm.BulkCopyToGadata("MAXIMO", newMaximoDt, "WORKORDERS");
 		}
@@ -169,14 +165,5 @@ ORDER BY WORKORDER.STATUSDATE DESC
 			stw040Sync lstw040Sync = new stw040Sync();
 			lstw040Sync.get_swt040data();
 		}
-
-		//update new data from MX7 (BI RAPPORT) to gadata. called every minute #hangfire
-		[AutomaticRetry(Attempts = 0)]
-		public void PushDatafromMX7toGADATA()
-		{
-			mx7Sync mx7Sync = new mx7Sync();
-			mx7Sync.get_mx7data();
-		}
-
 	}
 }

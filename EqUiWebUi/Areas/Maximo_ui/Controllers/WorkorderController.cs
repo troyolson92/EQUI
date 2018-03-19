@@ -16,7 +16,6 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
         //default number of days we search back in hystory
         int MaximoWorkordersDaysback = -1000;
 
-
         // GET: Maximo_ui/Workorder
         public ActionResult Index()
         {
@@ -26,7 +25,8 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
         //full view can be intitiated by using parms or by model. 
         [HttpGet]
         public ActionResult Workorders(string location, string locancestor, bool? b_ciblings, bool? b_preventive, string jpnum, string worktype, string wonum
-            , DateTime? startdate, DateTime? enddate, Models.WorkorderSelectOptions workorderSelectOptions, bool loadOnInit = false, bool fullscreen = false, int fontSize = 12)
+            , DateTime? startdate, DateTime? enddate, Models.WorkorderSelectOptions workorderSelectOptions
+            , bool loadOnInit = false, bool fullscreen = false, int fontSize = 12, bool RealtimeConn = false)
         {
             //if a parm value is appended set it to the model ELSE MODEL IS BOSS
             if (location != null) workorderSelectOptions.location = location;
@@ -56,8 +56,10 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
             ViewBag.fontSize = fontSize;
             //if this is set we load the workorder directly and fold up the parms pannem
             ViewBag.loadOnInit = loadOnInit;
-            //if this is ser we hide navbar and render in full screen mode
+            //if this is set we hide navbar and render in full screen mode
             ViewBag.fullscreen = fullscreen;
+            //if this is set we run on the production server.
+            workorderSelectOptions.realtimeConn = RealtimeConn;
             //
             return View(workorderSelectOptions);
         }
@@ -65,7 +67,7 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
         //can be called to be renders as partial in model or something like that...
         [HttpGet]
         public ActionResult _workordersOnLocation(string location, string locancestor, bool? b_ciblings, bool? b_preventive, string jpnum, string worktype, string wonum
-            , DateTime? startdate, DateTime? enddate)
+            , DateTime? startdate, DateTime? enddate, bool RealtimeConn = false)
         {
             Models.WorkorderSelectOptions workorderSelectOptions = new WorkorderSelectOptions();
             //set models to parms
@@ -78,6 +80,7 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
             workorderSelectOptions.wonum = wonum;
             workorderSelectOptions.startdate = startdate.GetValueOrDefault(System.DateTime.Now.AddDays(MaximoWorkordersDaysback));
             workorderSelectOptions.enddate = enddate.GetValueOrDefault(System.DateTime.Now);
+            workorderSelectOptions.realtimeConn = RealtimeConn;
             //
             return PartialView(workorderSelectOptions);
         }
@@ -99,9 +102,20 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
         //gets called by AJAX to render the workorder grid
         [HttpGet]
         public ActionResult _workordersOnLocationGrid(string location, string locancestor, bool? b_ciblings, bool? b_preventive, string jpnum, string worktype, string wonum
-            , DateTime? startdate, DateTime? enddate)
+            , DateTime? startdate, DateTime? enddate, bool RealtimeConn = false)
         {
-            //set controller timeout! (if somebody does a crazy query
+            //check if user is allowed to user realtimeConn
+            if (RealtimeConn)
+            {
+                roleProvider roleProvider = new roleProvider();
+                if (!roleProvider.IsUserInRole(System.Web.HttpContext.Current.User.Identity.Name, "MAXIMOrealtime"))
+                {
+                    RealtimeConn = false;
+                }
+            }
+            ViewBag.RealtimeConn = RealtimeConn;
+
+            //set controller timeout! (if somebody does a crazy query)
             System.Web.HttpContext.Current.Server.ScriptTimeout = 10; //seconds
 
             //build qyr

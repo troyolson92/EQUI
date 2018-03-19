@@ -60,7 +60,8 @@
             "&worktype=@Model.worktype" +
             "&wonum=@Model.wonum" +
             "&startdate=@Model.startdate.ToString("yyyy-MM-dd HH:mm:ss")" +
-            "&enddate=@Model.enddate.ToString("yyyy-MM-dd HH:mm:ss")";
+            "&enddate=@Model.enddate.ToString("yyyy-MM-dd HH:mm:ss")" + 
+            "&RealtimeConn=@Model.realtimeConn" 
         return result;
     }
 // set url to link back to main workorder view
@@ -80,7 +81,7 @@
             reload: true, // Grid reload indicator
             rowClicked: function (row, data, e) {
                 $("#woDetailsPartial").html("Loading.....");
-                var url = "@Url.Action("_woDetails", "WorkorderDetails")?wonum=" + data.WONUM;
+                var url = "@Url.Action("_woDetails", "WorkorderDetails")?RealtimeConn=@Model.realtimeConn&wonum=" + data.WONUM;
                 $("#woDetailsPartial").load(url);
             },
             reloadStarted: function () {

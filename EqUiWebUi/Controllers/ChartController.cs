@@ -59,16 +59,6 @@ namespace EqUiWebUi.Controllers
             , location, errornum, logtekst, logtype, refid);
             DataTable dt = gadataComm.RunQueryGadata(qry);
 
-            //because of legencay app we stil have a data with count = 0 this needs to go out because this system counts the intance of timestamps
-            DataTable tblFiltered = dt;
-            if (dt.Rows.Count > 1)
-            { 
-                 tblFiltered = dt.AsEnumerable()
-                  .Where(row => row.Field<int>("Count") != 0)
-                  .CopyToDataTable();
-            }
-            //
-
             //if groupmode auto (0) find out best grouping mode based on set timespan.
             if (grouptType == grouptType.auto)
             {
@@ -96,19 +86,19 @@ namespace EqUiWebUi.Controllers
             switch (grouptType)
             {
                 case grouptType.Hour:
-                    data = completeDataAndGroupByHour(tblFiltered, "starttime", startDate, endDate);
+                    data = completeDataAndGroupByHour(dt, "starttime", startDate, endDate);
                     break;
 
                 case grouptType.Day:
-                    data = completeDataAndGroupByDay(tblFiltered, "starttime", startDate, endDate);
+                    data = completeDataAndGroupByDay(dt, "starttime", startDate, endDate);
                     break;
 
                 case grouptType.Week:
-                    data = completeDataAndGroupByWeek(tblFiltered, "starttime", startDate, endDate);
+                    data = completeDataAndGroupByWeek(dt, "starttime", startDate, endDate);
                     break;
 
                 case grouptType.Month:
-                    data = completeDataAndGroupByMonth(tblFiltered, "starttime", startDate, endDate);
+                    data = completeDataAndGroupByMonth(dt, "starttime", startDate, endDate);
                     break;
 
                 default:

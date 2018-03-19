@@ -6,11 +6,14 @@ using System.Data;
 using System.Diagnostics;
 using Oracle.ManagedDataAccess.Client;
 using Oracle.ManagedDataAccess.Types;
+using log4net;
 
 namespace EQUICommunictionLib
 {
     public class MaximoComm
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         OracleConnection MaximoReportingConn = new OracleConnection(
           "Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=gotsvl2149.got.volvocars.net)(PORT=1521)) (CONNECT_DATA=(SID=dpmxarct)));User Id=ARCTVCG;Password=vcg$tokfeb2017;");
 
@@ -46,32 +49,33 @@ namespace EQUICommunictionLib
 
         }
 
-        //
-        public DataTable Oracle_runQuery(string Query, bool RealtimeConn = false)
+        public DataTable Oracle_runQuery(string Query, bool RealtimeConn = false, bool enblExeptions = false, int maxEXECtime = 300)
         {
             OracleConnection activeConn = MaximoReportingConn;
             if (RealtimeConn) { activeConn = MaximoRealtimeConn; }
 
             try
             {
-                using (OracleDataAdapter dadapter = new OracleDataAdapter(Query, activeConn))
+                using (OracleDataAdapter adapter = new OracleDataAdapter(Query, activeConn))
                 {
-                    //get location and asset data from maximo
+                    adapter.SelectCommand.CommandTimeout = maxEXECtime;
                     DataTable table = new DataTable();
-                    dadapter.Fill(table);
+                    adapter.Fill(table);
                     return table;
                 }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-               Debugger.Exeption(e);
+                log.Error("Command Failed", ex);
+                if (enblExeptions)
+                {
+                    throw ex;
+                }
                 DataTable table = new DataTable();
                 return table;
             }
 
         }
-
-        //comm to maximo
 
         public string GetClobMaximo7(string as_query, bool RealtimeConn = false)
         {
@@ -82,9 +86,9 @@ namespace EQUICommunictionLib
             {
                 if (activeConn.State != ConnectionState.Open) { activeConn.Open(); }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-               Debugger.Exeption(e);
+                log.Error("Open Failed", ex);
             }
             try
             {
@@ -100,21 +104,24 @@ namespace EQUICommunictionLib
                     {
                         activeConn.Close();
                     }
-                    catch (Exception e)
+                    catch (Exception ex)
                     {
-                       Debugger.Exeption(e);
+                        log.Error("Close Failed", ex);
                     }
                     return result;
                 }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-               Debugger.Exeption(e);
+                log.Error("Command Failed", ex);
                 return null;
             }
         }
 
-        public string GetMaximoDetails(string wonum)
+
+        //dePRECIATED ? 
+        /*
+        public string GetMaximoDetails(string wonum,bool RealtimeConn = false)
         {
             string cmdFAILUREREMARK = (@"
                 select  NVL2(LD.LDTEXT, LD.LDTEXT, '') LDTEXT
@@ -168,17 +175,15 @@ namespace EQUICommunictionLib
             //
             StringBuilder sb = new StringBuilder();
             string newline = "<p></p>";
-            sb.AppendLine(StringToHTML_Table("LONGDESCRIPTION", GetClobMaximo7(cmdLONGDESCRIPTION))).AppendLine(newline);
-            sb.AppendLine(StringToHTML_Table("FAILUREREMARK", GetClobMaximo7(cmdFAILUREREMARK))).AppendLine(newline);
-            sb.AppendLine(StringToHTML_Table("LABOR", DtToHTML_Table(Oracle_runQuery(cmdLabor)))).AppendLine(newline);
-            sb.AppendLine(StringToHTML_Table("WORKLOG", DtToHTML_Table(Oracle_runQuery(cmdWorkLog)))).AppendLine(newline);
-
-            DataTable dt = Oracle_runQuery(cmdWorkLog);
-
+            sb.AppendLine(StringToHTML_Table("LONGDESCRIPTION", GetClobMaximo7(cmdLONGDESCRIPTION,RealtimeConn:RealtimeConn))).AppendLine(newline);
+            sb.AppendLine(StringToHTML_Table("FAILUREREMARK", GetClobMaximo7(cmdFAILUREREMARK, RealtimeConn: RealtimeConn))).AppendLine(newline);
+            sb.AppendLine(StringToHTML_Table("LABOR", DtToHTML_Table(Oracle_runQuery(cmdLabor, RealtimeConn: RealtimeConn)))).AppendLine(newline);
+            sb.AppendLine(StringToHTML_Table("WORKLOG", DtToHTML_Table(Oracle_runQuery(cmdWorkLog, RealtimeConn: RealtimeConn)))).AppendLine(newline);
             //
             return sb.ToString();
         }
-
+        */
+        
         public  string DtToHTML_Table(DataTable dt)
         {
             if (dt.Rows.Count == 0) return ""; // enter code here
