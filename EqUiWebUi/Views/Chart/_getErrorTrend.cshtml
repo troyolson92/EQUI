@@ -181,12 +181,12 @@
         "showWeekNumbers": true,
         "showISOWeekNumbers": true,
         "ranges": {
-            'Today': [moment(), moment()],
             'Last 48 Hours': [moment().subtract(2, 'days'), moment()],
             'Last 7 Days': [moment().subtract(6, 'days'), moment()],
             'Last 30 Days': [moment().subtract(29, 'days'), moment()],
             'Last 100 Days': [moment().subtract(100, 'days'), moment()],
-            'Last Year': [moment().subtract(365, 'days'), moment()]
+            'Last Year': [moment().subtract(365, 'days'), moment()],
+            'Last 5Year': [moment().subtract(365*5, 'days'), moment()]
         },
         "startDate": startDate,
         "endDate": endDate,

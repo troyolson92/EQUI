@@ -84,17 +84,26 @@ namespace EqUiWebUi.Areas.Alert
             //check database for active alerts
             DataTable ActiveAlerts = new DataTable();
             StoComm stoComm = new StoComm();
+            MaximoComm maximoComm = new MaximoComm();
 
             //run command against selected database.
             GadataComm gadataComm = new GadataComm();
             switch (trigger.RunAgainst)
             {
                 case (int)SmsDatabases.GADATA:
-                    ActiveAlerts = gadataComm.RunQueryGadata(trigger.sqlStqStatement);
+                    ActiveAlerts = gadataComm.RunQueryGadata(trigger.sqlStqStatement,enblExeptions:true);
                     break;
 
                 case (int)SmsDatabases.STO:
-                    ActiveAlerts = stoComm.oracle_runQuery(trigger.sqlStqStatement);
+                    ActiveAlerts = stoComm.oracle_runQuery(trigger.sqlStqStatement); //exeptions enabled by default
+                    break;
+
+                case (int)SmsDatabases.MAXIMOrt:
+                    ActiveAlerts = maximoComm.Oracle_runQuery(trigger.sqlStqStatement, RealtimeConn: true, enblExeptions: true);
+                    break;
+
+                case (int)SmsDatabases.MAXIMOrep:
+                    ActiveAlerts = maximoComm.Oracle_runQuery(trigger.sqlStqStatement, RealtimeConn: false, enblExeptions: true);
                     break;
 
                 default:
@@ -168,6 +177,26 @@ namespace EqUiWebUi.Areas.Alert
                             newAlert.location = ActiveAlert.Field<string>("alarmobject");
                         }
                     }
+                    else if(trigger.RunAgainstDatabase == SmsDatabases.MAXIMOrep && trigger.RunAgainstDatabase == SmsDatabases.MAXIMOrt)
+                    {
+                        //ask gadata for location tree and location
+                        string qry =
+                            @"select top 1 LocationTree, Location from GADATA.EqUi.ASSETS as a 
+                            where '{0}' LIKE a.[LOCATION] + '%'";
+                        DataTable result = gadataComm.RunQueryGadata(string.Format(qry, ActiveAlert.Field<string>("alarmobject")));
+                        if (result.Rows.Count == 1)
+                        {
+                            newAlert.locationTree = result.Rows[0].Field<string>("LocationTree");
+                            newAlert.location = result.Rows[0].Field<string>("Location");
+                        }
+                        else //handle if we don't get a response from gadata
+                        {
+                            log.Debug("did not get a valid location tree from gadata");
+                            newAlert.locationTree = ActiveAlert.Field<string>("alarmobject");
+                            newAlert.location = ActiveAlert.Field<string>("alarmobject");
+                        }
+                    }
+
                     newAlert.alarmobject = ActiveAlert.Field<string>("alarmobject");
                     newAlert.C_timestamp = ActiveAlert.Field<DateTime>("timestamp");
                     newAlert.state = trigger.initial_state;

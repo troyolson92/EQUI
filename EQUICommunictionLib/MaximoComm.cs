@@ -56,6 +56,8 @@ namespace EQUICommunictionLib
 
             try
             {
+                //SDB like this we alway close the connection ? should we try to keep it open like in GADATACOM???
+
                 using (OracleDataAdapter adapter = new OracleDataAdapter(Query, activeConn))
                 {
                     adapter.SelectCommand.CommandTimeout = maxEXECtime;

@@ -168,7 +168,10 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
                 sbqry.Append(" LIKE '%'");
             }
             //append the rest of the locancestor clause
-            sbqry.AppendLine().AppendLine(@"and locancestor.ORGID = WORKORDER.ORGID
+
+            //SDB BUG 18w12D1 if we do "and locancestor.ORGID = WORKORDER.ORGID" I crap out with the realtime MX on invalid collum name...
+
+            sbqry.AppendLine().AppendLine(@"and locancestor.ORGID = 'VCCBE'
                 and locancestor.location <> locancestor.ancestor 
                 order by locancestor.LOCANCESTORID)
                 where rownum = 1)");
@@ -280,7 +283,7 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
             //get data from maximo
             EQUICommunictionLib.MaximoComm maximoComm = new MaximoComm();
             DataTable dataTable = new DataTable();
-            dataTable = maximoComm.Oracle_runQuery(sbqry.ToString()); 
+            dataTable = maximoComm.Oracle_runQuery(sbqry.ToString(),RealtimeConn:RealtimeConn,maxEXECtime:15,enblExeptions:true); 
             //parse datatable to listobject
             List<Models.Workorder> workorders = new List<Models.Workorder>();
             foreach (DataRow row in dataTable.Rows)

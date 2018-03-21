@@ -18,7 +18,7 @@
 
     <!--page gets renderd in this iframe-->
     <body style="margin:0px;padding:0px">
-        <iframe id="UserScreenIframe" src="@Model.ScreenUrl" frameborder="0" style="overflow:hidden;overflow-x:hidden;height:150%;width:100%;position:absolute;top:0px;left:0px;right:0px;bottom:0px" height="150%" width="150%"></iframe>
+        <iframe id="@("IframeScreenID" + Model.id)" src="@Model.ScreenUrl" frameborder="0" style="overflow:hidden;overflow-x:hidden;height:150%;width:100%;position:absolute;top:0px;left:0px;right:0px;bottom:0px" height="150%" width="150%"></iframe>
     </body>
 
     <!--Modal for messages-->
@@ -77,28 +77,39 @@
         }
 
         //detect user idle
-        var idleTime = 0;
+            var @("IdleScreenID" + Model.id) = 0;
+            var @("MotionScreenID" + Model.id) = false;
         //Increment the idle time counter every minute.
-        var idleInterval = setInterval(timerIncrement, 60000); // 1 minute
+
+        var @("idleInterval" + Model.id ) = setInterval(@("timerIncrementScreenID" + Model.id ), 60000); // 1 minute
 
         //Zero the idle timer on mouse movement.
-        $(this).mousemove(function (e) {
-                    idleTime = 0;
+            $(this).mousemove(function (e) {
+                    @("MotionScreenID" + Model.id) = true;
+                    @("IdleScreenID" + Model.id) = 0;
+                    console.log("mouse");
                 });
-        $(this).keypress(function (e) {
-                    idleTime = 0;
+            $(this).keypress(function (e) {
+                    @("MotionScreenID" + Model.id) = true;
+                    @("IdleScreenID" + Model.id) = 0;
+                    console.log("key");
                 });
-        
-        function timerIncrement() {
-                idleTime = idleTime + 1;
-                if (idleTime > @ViewBag.interactivityReset) {
-                    console.log("Refresh triggerd (idle)");
-                    $.toaster({ title: 'IdleRefresh', priority: 'info', message: 'The screen is refreshed becasue the user is idle for @ViewBag.interactivityReset minutes' });
-                    $('#UserScreenIframe').attr('src', function (i, val) { return val; });
-                }
-        }
 
-        
+            function @("timerIncrementScreenID" + Model.id )() {
+                console.log("hit @Model.id" + @("MotionScreenID" + Model.id) );
+               @("IdleScreenID" + Model.id) = @("IdleScreenID" + Model.id) + 1;
+               if ((@("IdleScreenID" + Model.id) > @ViewBag.interactivityReset)) {
+                   if (( @("MotionScreenID" + Model.id) = true)) {
+                        console.log("Refresh triggerd (idle)");
+                        $.toaster({ title: 'IdleRefresh', priority: 'info', message: 'The screen is refreshed becasue the user is idle for @ViewBag.interactivityReset minutes' });
+                        $('@("#IframeScreenID" + Model.id)').attr('src', function (i, val) { return val; });
+                        @("MotionScreenID" + Model.id) = false;
+                        @("IdleScreenID" + Model.id) = 0;
+                   }
+               }
+            }
+
+
         //on model close
         $('#RenderUserScreenMessage').on('hidden.bs.modal', function (e) {
             $('#RenderUserScreenMessage').html('<div class="modal-content">No content</div>');

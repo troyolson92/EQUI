@@ -72,7 +72,9 @@ namespace EqUiWebUi.Areas.Alert.Models
     public enum SmsDatabases
     {
         GADATA = 1,
-        STO = 2
+        STO = 2,
+        MAXIMOrt = 3,
+        MAXIMOrep = 4
     }
 
     //enum for alert states

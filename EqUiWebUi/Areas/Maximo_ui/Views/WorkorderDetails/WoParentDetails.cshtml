@@ -1,0 +1,16 @@
+﻿@model EqUiWebUi.WebGridHelpers.DefaultModel
+@{
+    ViewBag.Title = "WoParentDetails";
+}
+<h4>WoDetails @ViewBag.parentwonum (inc childeren)</h4>
+
+<div id="woDetailsPartial">more details about a workorder</div>
+
+<script type="text/javascript">
+    @*run on doc ready *@
+    $(document).ready(function () {
+        $("#woDetailsPartial").html("Loading.....");
+        var url = "@Url.Action("_woParentDetails", "WorkorderDetails")?parentwonum=" + @ViewBag.parentwonum + "&RealtimeConn=" + @ViewBag.RealtimeConn.ToString().ToLower();
+        $("#woDetailsPartial").load(url);
+    })
+</script>
