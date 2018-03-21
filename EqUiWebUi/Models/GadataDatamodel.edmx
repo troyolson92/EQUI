@@ -28,10 +28,6 @@
           <Property Name="AlertStatus" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'GADATA.EqUi.Supervisie' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'GADATA.NGAC.Bodytracking' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <!--Errors Found During Generation:
 warning 6002: The table/view 'GADATA.NGAC.TipMonitor' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="TipMonitor">
           <Key>
@@ -50,16 +46,20 @@ warning 6002: The table/view 'GADATA.NGAC.TipMonitor' does not have a primary ke
           <Property Name="Time_DressCycleTime" Type="float" />
           <Property Name="id" Type="int" Nullable="false" />
           <Property Name="LocationTree" Type="varchar(max)" />
+          <Property Name="MagicFiXedWear" Type="float" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'GADATA.NGAC.TipwearBeforeChange' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="TipwearBeforeChange">
           <Key>
+            <PropertyRef Name="tipDressID" />
             
             <PropertyRef Name="controller_name" />
             <PropertyRef Name="TipchangeTimestamp" />
           </Key>
           <Property Name="controller_name" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="controller_id" Type="int" />
+          <Property Name="tipDressID" Type="int" Nullable="false" />
           <Property Name="Tool_Nr" Type="smallint" Nullable="false" />
           <Property Name="TipchangeTimestamp" Type="datetime" Nullable="false" />
           <Property Name="FixedWearBeforeChange" Type="float" />
@@ -72,9 +72,9 @@ warning 6002: The table/view 'GADATA.NGAC.TipwearBeforeChange' does not have a p
           <Property Name="ESTnSpotsFixedWearBefore100" Type="float" />
           <Property Name="ESTnSpotsMoveWearBefore100" Type="float" />
           <Property Name="TipAge(h)" Type="int" />
+          <Property Name="DeltaNom" Type="float" />
+          <Property Name="DeltaNomBeforeChange" Type="float" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'GADATA.STO.Breakdown' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <!--Errors Found During Generation:
 warning 6002: The table/view 'GADATA.Tableau.logDetails' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="logDetails">
@@ -104,12 +104,15 @@ warning 6002: The table/view 'GADATA.Tableau.logDetails' does not have a primary
     [TipMonitor].[LastTipchange] AS [LastTipchange], 
     [TipMonitor].[Time_DressCycleTime] AS [Time_DressCycleTime], 
     [TipMonitor].[id] AS [id], 
-    [TipMonitor].[LocationTree] AS [LocationTree]
+    [TipMonitor].[LocationTree] AS [LocationTree], 
+    [TipMonitor].[MagicFiXedWear] AS [MagicFiXedWear]
     FROM [NGAC].[TipMonitor] AS [TipMonitor]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="TipwearBeforeChange" EntityType="Self.TipwearBeforeChange" store:Type="Views" store:Schema="NGAC">
             <DefiningQuery>SELECT 
     [TipwearBeforeChange].[controller_name] AS [controller_name], 
+    [TipwearBeforeChange].[controller_id] AS [controller_id], 
+    [TipwearBeforeChange].[tipDressID] AS [tipDressID], 
     [TipwearBeforeChange].[Tool_Nr] AS [Tool_Nr], 
     [TipwearBeforeChange].[TipchangeTimestamp] AS [TipchangeTimestamp], 
     [TipwearBeforeChange].[FixedWearBeforeChange] AS [FixedWearBeforeChange], 
@@ -121,7 +124,9 @@ warning 6002: The table/view 'GADATA.Tableau.logDetails' does not have a primary
     [TipwearBeforeChange].[%MoveWearBeforeChange] AS [%MoveWearBeforeChange], 
     [TipwearBeforeChange].[ESTnSpotsFixedWearBefore100] AS [ESTnSpotsFixedWearBefore100], 
     [TipwearBeforeChange].[ESTnSpotsMoveWearBefore100] AS [ESTnSpotsMoveWearBefore100], 
-    [TipwearBeforeChange].[TipAge(h)] AS [TipAge(h)]
+    [TipwearBeforeChange].[TipAge(h)] AS [TipAge(h)], 
+    [TipwearBeforeChange].[DeltaNom] AS [DeltaNom], 
+    [TipwearBeforeChange].[DeltaNomBeforeChange] AS [DeltaNomBeforeChange]
     FROM [NGAC].[TipwearBeforeChange] AS [TipwearBeforeChange]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="logDetails" EntityType="Self.logDetails" store:Type="Views" store:Schema="Tableau">
@@ -133,7 +138,7 @@ warning 6002: The table/view 'GADATA.Tableau.logDetails' does not have a primary
     [logDetails].[refid] AS [refid]
     FROM [Tableau].[logDetails] AS [logDetails]</DefiningQuery>
           </EntitySet>
-          </EntityContainer>
+        </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -161,6 +166,7 @@ warning 6002: The table/view 'GADATA.Tableau.logDetails' does not have a primary
           <Property Name="TipAge_h_" Type="Int32" />
           <Property Name="LastTipchange" Type="DateTime" Precision="3" />
           <Property Name="Time_DressCycleTime" Type="Double" />
+          <Property Name="MagicFiXedWear" Type="Double" />
         </EntityType>
         <EntityType Name="logDetails">
           <Key>
@@ -176,6 +182,7 @@ warning 6002: The table/view 'GADATA.Tableau.logDetails' does not have a primary
           <Key>
             <PropertyRef Name="TipchangeTimestamp" />
             <PropertyRef Name="controller_name" />
+            <PropertyRef Name="tipDressID" />
           </Key>
           <Property Name="controller_name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Tool_Nr" Type="Int16" Nullable="false" />
@@ -190,6 +197,10 @@ warning 6002: The table/view 'GADATA.Tableau.logDetails' does not have a primary
           <Property Name="ESTnSpotsFixedWearBefore100" Type="Double" />
           <Property Name="ESTnSpotsMoveWearBefore100" Type="Double" />
           <Property Name="TipAge_h_" Type="Int32" />
+          <Property Name="controller_id" Type="Int32" />
+          <Property Name="tipDressID" Type="Int32" Nullable="false" />
+          <Property Name="DeltaNom" Type="Double" />
+          <Property Name="DeltaNomBeforeChange" Type="Double" />
         </EntityType>
         <EntityType Name="ia_Alert">
           <Key>
@@ -222,6 +233,7 @@ warning 6002: The table/view 'GADATA.Tableau.logDetails' does not have a primary
           <EntitySetMapping Name="TipMonitor">
             <EntityTypeMapping TypeName="Models.TipMonitor">
               <MappingFragment StoreEntitySet="TipMonitor">
+                <ScalarProperty Name="MagicFiXedWear" ColumnName="MagicFiXedWear" />
                 <ScalarProperty Name="Time_DressCycleTime" ColumnName="Time_DressCycleTime" />
                 <ScalarProperty Name="LastTipchange" ColumnName="LastTipchange" />
                 <ScalarProperty Name="TipAge_h_" ColumnName="TipAge(h)" />
@@ -252,6 +264,10 @@ warning 6002: The table/view 'GADATA.Tableau.logDetails' does not have a primary
           <EntitySetMapping Name="TipwearBeforeChange">
             <EntityTypeMapping TypeName="Models.TipwearBeforeChange">
               <MappingFragment StoreEntitySet="TipwearBeforeChange">
+                <ScalarProperty Name="DeltaNomBeforeChange" ColumnName="DeltaNomBeforeChange" />
+                <ScalarProperty Name="DeltaNom" ColumnName="DeltaNom" />
+                <ScalarProperty Name="tipDressID" ColumnName="tipDressID" />
+                <ScalarProperty Name="controller_id" ColumnName="controller_id" />
                 <ScalarProperty Name="TipAge_h_" ColumnName="TipAge(h)" />
                 <ScalarProperty Name="ESTnSpotsMoveWearBefore100" ColumnName="ESTnSpotsMoveWearBefore100" />
                 <ScalarProperty Name="ESTnSpotsFixedWearBefore100" ColumnName="ESTnSpotsFixedWearBefore100" />

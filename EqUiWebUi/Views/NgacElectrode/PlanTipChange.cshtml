@@ -142,11 +142,13 @@
             var locationfilter = $('#location').val();
             var minwear = $('#minwear').val();
             var minparts = $('#minparts').val();
+            var maxdress = $('#maxdress').val();
             $("#tipsToChange").load(urlTipsToChange,
                 {
                     locationFilter: locationfilter,
                     minWear: minwear,
-                    minParts: minparts
+                    minParts: minparts,
+                    maxDress: maxdress
                 },
                 //this runs when load done
                 function () {

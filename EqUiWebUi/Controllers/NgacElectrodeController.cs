@@ -45,7 +45,7 @@ namespace EqUiWebUi.Controllers
 
         //------------------------------------tabel met elektrode wissels.-------------------------------------------------
         [HttpGet]
-        public ActionResult TipwearBeforeChange(int daysback = 30)
+        public ActionResult TipwearBeforeChange(int daysback = 360)
         {
             var startdate = DateTime.Now.Date.AddDays(daysback*-1);
             GADATAEntities gADATAEntities = new GADATAEntities();

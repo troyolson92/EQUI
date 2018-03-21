@@ -3,23 +3,22 @@
     ViewBag.Title = "_woDetails";
 }
 
-
-<div class="panel panel-default @(!string.IsNullOrWhiteSpace(ViewBag.LongDescription) ? "shown":"hidden")">
+<div class="panel panel-default @((!string.IsNullOrWhiteSpace(ViewBag.DESCRIPTION) || !string.IsNullOrWhiteSpace(ViewBag.LongDescription)) ? "shown":"hidden")">
     <div class="panel-heading">
-        <h6>LongDescription</h6>
+        <h6>Description: <strong>@ViewBag.DESCRIPTION</strong></h6>
     </div>
 
-    <div class="panel-body">
+    <div class="panel-body @(!string.IsNullOrWhiteSpace(ViewBag.LongDescription) ? "shown":"hidden")">
         @Html.Raw(ViewBag.LongDescription)
     </div>
 </div>
 
-<div class="panel panel-default  @(!string.IsNullOrWhiteSpace(ViewBag.FailureRemark) ? "shown":"hidden")">
+<div class="panel panel-default  @((!string.IsNullOrWhiteSpace(ViewBag.REMARKDESC) || !string.IsNullOrWhiteSpace(ViewBag.FailureRemark)) ? "shown":"hidden")">
     <div class="panel-heading">
-        <h6>FailureRemark</h6>
+        <h6>FailureRemark: <strong> @ViewBag.REMARKDESC</strong></h6>
     </div>
 
-    <div class="panel-body">
+    <div class="panel-body  @(!string.IsNullOrWhiteSpace(ViewBag.FailureRemark) ? "shown":"hidden")">
         @Html.Raw(ViewBag.FailureRemark)
     </div>
 </div>
@@ -36,20 +35,20 @@
         }
 
         @grid.GetHtml(
-                                   htmlAttributes: new { id = "gridMapping", style = "font-size: 12px" },
-                                   tableStyle: "table table-striped grid-table",
-                                   headerStyle: "grid-header-title",
-                                   footerStyle: "grid-footer",
-                                   alternatingRowStyle: "webgrid-alternating-row",
-                                   selectedRowStyle: "grid-row grid-row-selected",
-                                   rowStyle: "grid-row",
-                                   mode: WebGridPagerModes.All,
-                                   firstText: "<< First",
-                                   previousText: "< Prev",
-                                   nextText: "Next >",
-                                   lastText: "Last >>",
-                                   columns: ViewBag.LABORColumns
-                       )
+                                        htmlAttributes: new { id = "gridMapping", style = "font-size: 12px" },
+                                        tableStyle: "table table-striped grid-table",
+                                        headerStyle: "grid-header-title",
+                                        footerStyle: "grid-footer",
+                                        alternatingRowStyle: "webgrid-alternating-row",
+                                        selectedRowStyle: "grid-row grid-row-selected",
+                                        rowStyle: "grid-row",
+                                        mode: WebGridPagerModes.All,
+                                        firstText: "<< First",
+                                        previousText: "< Prev",
+                                        nextText: "Next >",
+                                        lastText: "Last >>",
+                                        columns: ViewBag.LABORColumns
+                            )
     </div>
 </div>
 

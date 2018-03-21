@@ -27,5 +27,9 @@ namespace EqUiWebUi.Models
         public Nullable<double> ESTnSpotsFixedWearBefore100 { get; set; }
         public Nullable<double> ESTnSpotsMoveWearBefore100 { get; set; }
         public Nullable<int> TipAge_h_ { get; set; }
+        public Nullable<int> controller_id { get; set; }
+        public int tipDressID { get; set; }
+        public Nullable<double> DeltaNom { get; set; }
+        public Nullable<double> DeltaNomBeforeChange { get; set; }
     }
 }

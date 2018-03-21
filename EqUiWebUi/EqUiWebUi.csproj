@@ -766,6 +766,8 @@
     <Content Include="Areas\HanfireArea\Views\Job\_settings.cshtml" />
     <Content Include="Areas\user_management\Views\users\ListSessions.cshtml" />
     <Content Include="Areas\user_management\Views\users\_settings.cshtml" />
+    <Content Include="Areas\Maximo_ui\Views\WorkorderDetails\_woParentDetails.cshtml" />
+    <Content Include="Areas\Maximo_ui\Views\WorkorderDetails\WoParentDetails.cshtml" />
     <None Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.svg" />

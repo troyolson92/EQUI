@@ -32,7 +32,7 @@ namespace EqUiWebUi
                 //MUST BE LOWERCASE ONLY !!!!!!
                 Queues = new[] { "critical", "default", "alertengine", "gadata","jobengine" },
                 //How many jobs run at the same time
-                WorkerCount = 5 // Environment.ProcessorCount * 5
+                WorkerCount = Environment.ProcessorCount * 5
             };
             app.UseHangfireServer(HFoptions);
         //

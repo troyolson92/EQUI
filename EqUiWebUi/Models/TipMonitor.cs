@@ -27,5 +27,6 @@ namespace EqUiWebUi.Models
         public Nullable<int> TipAge_h_ { get; set; }
         public Nullable<System.DateTime> LastTipchange { get; set; }
         public Nullable<double> Time_DressCycleTime { get; set; }
+        public Nullable<double> MagicFiXedWear { get; set; }
     }
 }
