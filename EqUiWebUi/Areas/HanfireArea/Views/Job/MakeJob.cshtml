@@ -18,6 +18,7 @@
         @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
             @Html.HelpTextFor(model => model.name)
         </div>
     </div>
@@ -44,7 +45,26 @@
             <div>
                 <input class="form-control text-box single-line" id="cron" name="cron" type="text" value="">
             </div>
+            @Html.ValidationMessageFor(model => model.cron, "", new { @class = "text-danger" })
             @Html.HelpTextFor(model => model.cron)
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.maxExectime, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.maxExectime, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.maxExectime, "", new { @class = "text-danger" })
+            @Html.HelpTextFor(model => model.maxExectime)
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.maxRetry, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.maxRetry, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.maxRetry, "", new { @class = "text-danger" })
+            @Html.HelpTextFor(model => model.maxRetry)
         </div>
     </div>
 

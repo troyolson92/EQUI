@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -15,6 +16,12 @@ namespace EqUiWebUi.Areas.HanfireArea.Controllers
         public string command { get; set; }
         [HelpText("when to run the job")]
         public string cron { get; set; }
+        [HelpText("Max time to run the job (second)")]
+        [Range(10, 60*10)]
+        public int maxExectime { get; set; }
+        [HelpText("Max # of retry on fail")]
+        [Range(0, 5)]
+        public int maxRetry { get; set; }
     }
 
     [Authorize(Roles = "Administrator,HangFire")]
@@ -45,7 +52,7 @@ namespace EqUiWebUi.Areas.HanfireArea.Controllers
         public void MakeJob(Job job)
         {
             Jobengine jobengine = new Jobengine();
-            jobengine.Makejob(job.name, job.command, job.cron);
+            jobengine.Makejob(job.name, job.command, job.cron, job.maxExectime, job.maxRetry);
             Response.Redirect("~/hangfire/recurring");
         }
 
