@@ -1,0 +1,776 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="GADATAModelTiplife.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.NGAC.TipDressLogFile' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="TipDressLogFile">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="Tool_Nr" />
+          </Key>
+          <Property Name="controller_name" Type="varchar" MaxLength="30" />
+          <Property Name="LocationTree" Type="varchar(max)" />
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="rt_csv_file_id" Type="int" />
+          <Property Name="Date Time" Type="datetime" />
+          <Property Name="Tool_Nr" Type="smallint" Nullable="false" />
+          <Property Name="Dress_Num" Type="smallint" />
+          <Property Name="Weld_Counter" Type="smallint" />
+          <Property Name="Dress_Reason" Type="varchar" MaxLength="30" />
+          <Property Name="Weld_Result" Type="varchar" MaxLength="30" />
+          <Property Name="Length_Fixed_Result" Type="varchar" MaxLength="30" />
+          <Property Name="Length_Move_Result" Type="varchar" MaxLength="30" />
+          <Property Name="Max_Wear_Fixed" Type="float" />
+          <Property Name="Wear_Fixed" Type="float" />
+          <Property Name="DiffFrLastWear_Fixed" Type="float" />
+          <Property Name="Max_Wear_Move" Type="float" />
+          <Property Name="Wear_Move" Type="float" />
+          <Property Name="DiffFrLastWear_Move" Type="float" />
+          <Property Name="MaxDiffFrLastMeas" Type="float" />
+          <Property Name="Current_TipWear" Type="float" />
+          <Property Name="TipWearRatio" Type="float" />
+          <Property Name="Dress_Time1" Type="float" />
+          <Property Name="Dress_Pressure1" Type="float" />
+          <Property Name="Dress_Time2" Type="float" />
+          <Property Name="Dress_Pressure2" Type="float" />
+          <Property Name="CleanDress_Time" Type="float" />
+          <Property Name="CleanDress_Pressure" Type="float" />
+          <Property Name="Time_DressCycleTime" Type="float" />
+          <Property Name="ErrorType" Type="varchar(max)" />
+          <Property Name="ExtraInfo" Type="varchar(max)" />
+          <Property Name="GunTCP_X" Type="float" />
+          <Property Name="GunTCP_Y" Type="float" />
+          <Property Name="GunTCP_Z" Type="float" />
+          <Property Name="GunRefTCP_X" Type="float" />
+          <Property Name="GunRefTCP_Y" Type="float" />
+          <Property Name="GunRefTCP_Z" Type="float" />
+          <Property Name="NomTCP_X" Type="float" />
+          <Property Name="NomTCP_Y" Type="float" />
+          <Property Name="NomTCP_Z" Type="float" />
+          <Property Name="Tool_NrHs" Type="varchar(max)" />
+          <Property Name="ChkDrWear_Fixed_Result" Type="varchar(max)" />
+          <Property Name="ChkDrWear_Move_Result" Type="varchar(max)" />
+          <Property Name="FxSens_SetupVal" Type="float" />
+          <Property Name="FxSens_StartVal" Type="float" />
+          <Property Name="FxSens_PrevVal" Type="float" />
+          <Property Name="FxSens_PrevWare" Type="float" />
+          <Property Name="FxSens_DiffValue" Type="float" />
+          <Property Name="FxSens_MaxSensZComp" Type="float" />
+          <Property Name="FxSens_WarmSensZComp" Type="float" />
+          <Property Name="FxSens_FlPinPrevVal" Type="float" />
+          <Property Name="FxSens_FlPinSetupVal" Type="float" />
+          <Property Name="FxSens_FlPinPhysActVal" Type="float" />
+          <Property Name="FxSens_FlPinPhysSetupVal" Type="float" />
+          <Property Name="Internal_Arg" Type="varchar(max)" />
+          <Property Name="DeltaRef" Type="float" />
+          <Property Name="DeltaNom" Type="float" />
+          <Property Name="_timestamp" Type="datetime" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.NGAC.TipMonitor' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="TipMonitor">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="Robot" Type="varchar" MaxLength="30" />
+          <Property Name="Date Time" Type="datetime" />
+          <Property Name="nDress" Type="smallint" />
+          <Property Name="nWelds" Type="smallint" />
+          <Property Name="WearRatio" Type="float" />
+          <Property Name="pWear" Type="float" />
+          <Property Name="nRspots" Type="float" />
+          <Property Name="nRcars" Type="float" />
+          <Property Name="TipAge(h)" Type="int" />
+          <Property Name="LastTipchange" Type="datetime" />
+          <Property Name="Time_DressCycleTime" Type="float" />
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="LocationTree" Type="varchar(max)" />
+          <Property Name="MagicFiXedWear" Type="float" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.NGAC.TipwearBeforeChange' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="TipwearBeforeChange">
+          <Key>
+            <PropertyRef Name="tipDressID" />
+            <PropertyRef Name="Tool_Nr" />
+          </Key>
+          <Property Name="controller_name" Type="varchar" MaxLength="30" />
+          <Property Name="controller_id" Type="int" />
+          <Property Name="tipDressID" Type="int" Nullable="false" />
+          <Property Name="Tool_Nr" Type="smallint" Nullable="false" />
+          <Property Name="TipchangeTimestamp" Type="datetime" />
+          <Property Name="FixedWearBeforeChange" Type="float" />
+          <Property Name="MoveWearBeforeChange" Type="float" />
+          <Property Name="WearBeforeChange" Type="float" />
+          <Property Name="WeldsBeforeChange" Type="int" />
+          <Property Name="DressBeforeChange" Type="smallint" />
+          <Property Name="%FixedWearBeforeChange" Type="float" />
+          <Property Name="%MoveWearBeforeChange" Type="float" />
+          <Property Name="ESTnSpotsFixedWearBefore100" Type="float" />
+          <Property Name="ESTnSpotsMoveWearBefore100" Type="float" />
+          <Property Name="TipAge(h)" Type="int" />
+          <Property Name="DeltaNom" Type="float" />
+          <Property Name="DeltaNomBeforeChange" Type="float" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.NGAC.TipwearLast' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="TipwearLast">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="Tool_Nr" />
+          </Key>
+          <Property Name="controller_name" Type="varchar" MaxLength="30" />
+          <Property Name="LocationTree" Type="varchar(max)" />
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="rt_csv_file_id" Type="int" />
+          <Property Name="Date Time" Type="datetime" />
+          <Property Name="Tool_Nr" Type="smallint" Nullable="false" />
+          <Property Name="Dress_Num" Type="smallint" />
+          <Property Name="Weld_Counter" Type="smallint" />
+          <Property Name="Dress_Reason" Type="varchar" MaxLength="30" />
+          <Property Name="Weld_Result" Type="varchar" MaxLength="30" />
+          <Property Name="Length_Fixed_Result" Type="varchar" MaxLength="30" />
+          <Property Name="Length_Move_Result" Type="varchar" MaxLength="30" />
+          <Property Name="Max_Wear_Fixed" Type="float" />
+          <Property Name="Wear_Fixed" Type="float" />
+          <Property Name="DiffFrLastWear_Fixed" Type="float" />
+          <Property Name="Max_Wear_Move" Type="float" />
+          <Property Name="Wear_Move" Type="float" />
+          <Property Name="DiffFrLastWear_Move" Type="float" />
+          <Property Name="MaxDiffFrLastMeas" Type="float" />
+          <Property Name="Current_TipWear" Type="float" />
+          <Property Name="TipWearRatio" Type="float" />
+          <Property Name="Dress_Time1" Type="float" />
+          <Property Name="Dress_Pressure1" Type="float" />
+          <Property Name="Dress_Time2" Type="float" />
+          <Property Name="Dress_Pressure2" Type="float" />
+          <Property Name="CleanDress_Time" Type="float" />
+          <Property Name="CleanDress_Pressure" Type="float" />
+          <Property Name="Time_DressCycleTime" Type="float" />
+          <Property Name="ErrorType" Type="varchar(max)" />
+          <Property Name="ExtraInfo" Type="varchar(max)" />
+          <Property Name="GunTCP_X" Type="float" />
+          <Property Name="GunTCP_Y" Type="float" />
+          <Property Name="GunTCP_Z" Type="float" />
+          <Property Name="GunRefTCP_X" Type="float" />
+          <Property Name="GunRefTCP_Y" Type="float" />
+          <Property Name="GunRefTCP_Z" Type="float" />
+          <Property Name="NomTCP_X" Type="float" />
+          <Property Name="NomTCP_Y" Type="float" />
+          <Property Name="NomTCP_Z" Type="float" />
+          <Property Name="Tool_NrHs" Type="varchar(max)" />
+          <Property Name="ChkDrWear_Fixed_Result" Type="varchar(max)" />
+          <Property Name="ChkDrWear_Move_Result" Type="varchar(max)" />
+          <Property Name="FxSens_SetupVal" Type="float" />
+          <Property Name="FxSens_StartVal" Type="float" />
+          <Property Name="FxSens_PrevVal" Type="float" />
+          <Property Name="FxSens_PrevWare" Type="float" />
+          <Property Name="FxSens_DiffValue" Type="float" />
+          <Property Name="FxSens_MaxSensZComp" Type="float" />
+          <Property Name="FxSens_WarmSensZComp" Type="float" />
+          <Property Name="FxSens_FlPinPrevVal" Type="float" />
+          <Property Name="FxSens_FlPinSetupVal" Type="float" />
+          <Property Name="FxSens_FlPinPhysActVal" Type="float" />
+          <Property Name="FxSens_FlPinPhysSetupVal" Type="float" />
+          <Property Name="Internal_Arg" Type="varchar(max)" />
+          <Property Name="DeltaRef" Type="float" />
+          <Property Name="DeltaNom" Type="float" />
+          <Property Name="_timestamp" Type="datetime" />
+          <Property Name="rnDesc" Type="bigint" />
+          <Property Name="avgESTnSpotsFixedWearBefore100" Type="float" />
+          <Property Name="avgESTnSpotsMoveWearBefore100" Type="float" />
+          <Property Name="maxWearInCalc" Type="float" />
+          <Property Name="minWearInCalc" Type="float" />
+          <Property Name="countWearInCalc" Type="int" />
+          <Property Name="ESTremainingspotsFixed" Type="float" />
+          <Property Name="ESTremainingspotsMove" Type="float" />
+          <Property Name="ESTremainingCarsFixed" Type="float" />
+          <Property Name="ESTremainingsCarsMove" Type="float" />
+          <Property Name="nSpots44" Type="int" />
+          <Property Name="LastTipchange" Type="datetime" />
+          <Property Name="avgDeltaNomAfterchange" Type="float" />
+        </EntityType>
+        <EntityContainer Name="GADATAModelTiplifeStoreContainer">
+          <EntitySet Name="TipDressLogFile" EntityType="Self.TipDressLogFile" store:Type="Views" store:Schema="NGAC">
+            <DefiningQuery>SELECT 
+    [TipDressLogFile].[controller_name] AS [controller_name], 
+    [TipDressLogFile].[LocationTree] AS [LocationTree], 
+    [TipDressLogFile].[id] AS [id], 
+    [TipDressLogFile].[rt_csv_file_id] AS [rt_csv_file_id], 
+    [TipDressLogFile].[Date Time] AS [Date Time], 
+    [TipDressLogFile].[Tool_Nr] AS [Tool_Nr], 
+    [TipDressLogFile].[Dress_Num] AS [Dress_Num], 
+    [TipDressLogFile].[Weld_Counter] AS [Weld_Counter], 
+    [TipDressLogFile].[Dress_Reason] AS [Dress_Reason], 
+    [TipDressLogFile].[Weld_Result] AS [Weld_Result], 
+    [TipDressLogFile].[Length_Fixed_Result] AS [Length_Fixed_Result], 
+    [TipDressLogFile].[Length_Move_Result] AS [Length_Move_Result], 
+    [TipDressLogFile].[Max_Wear_Fixed] AS [Max_Wear_Fixed], 
+    [TipDressLogFile].[Wear_Fixed] AS [Wear_Fixed], 
+    [TipDressLogFile].[DiffFrLastWear_Fixed] AS [DiffFrLastWear_Fixed], 
+    [TipDressLogFile].[Max_Wear_Move] AS [Max_Wear_Move], 
+    [TipDressLogFile].[Wear_Move] AS [Wear_Move], 
+    [TipDressLogFile].[DiffFrLastWear_Move] AS [DiffFrLastWear_Move], 
+    [TipDressLogFile].[MaxDiffFrLastMeas] AS [MaxDiffFrLastMeas], 
+    [TipDressLogFile].[Current_TipWear] AS [Current_TipWear], 
+    [TipDressLogFile].[TipWearRatio] AS [TipWearRatio], 
+    [TipDressLogFile].[Dress_Time1] AS [Dress_Time1], 
+    [TipDressLogFile].[Dress_Pressure1] AS [Dress_Pressure1], 
+    [TipDressLogFile].[Dress_Time2] AS [Dress_Time2], 
+    [TipDressLogFile].[Dress_Pressure2] AS [Dress_Pressure2], 
+    [TipDressLogFile].[CleanDress_Time] AS [CleanDress_Time], 
+    [TipDressLogFile].[CleanDress_Pressure] AS [CleanDress_Pressure], 
+    [TipDressLogFile].[Time_DressCycleTime] AS [Time_DressCycleTime], 
+    [TipDressLogFile].[ErrorType] AS [ErrorType], 
+    [TipDressLogFile].[ExtraInfo] AS [ExtraInfo], 
+    [TipDressLogFile].[GunTCP_X] AS [GunTCP_X], 
+    [TipDressLogFile].[GunTCP_Y] AS [GunTCP_Y], 
+    [TipDressLogFile].[GunTCP_Z] AS [GunTCP_Z], 
+    [TipDressLogFile].[GunRefTCP_X] AS [GunRefTCP_X], 
+    [TipDressLogFile].[GunRefTCP_Y] AS [GunRefTCP_Y], 
+    [TipDressLogFile].[GunRefTCP_Z] AS [GunRefTCP_Z], 
+    [TipDressLogFile].[NomTCP_X] AS [NomTCP_X], 
+    [TipDressLogFile].[NomTCP_Y] AS [NomTCP_Y], 
+    [TipDressLogFile].[NomTCP_Z] AS [NomTCP_Z], 
+    [TipDressLogFile].[Tool_NrHs] AS [Tool_NrHs], 
+    [TipDressLogFile].[ChkDrWear_Fixed_Result] AS [ChkDrWear_Fixed_Result], 
+    [TipDressLogFile].[ChkDrWear_Move_Result] AS [ChkDrWear_Move_Result], 
+    [TipDressLogFile].[FxSens_SetupVal] AS [FxSens_SetupVal], 
+    [TipDressLogFile].[FxSens_StartVal] AS [FxSens_StartVal], 
+    [TipDressLogFile].[FxSens_PrevVal] AS [FxSens_PrevVal], 
+    [TipDressLogFile].[FxSens_PrevWare] AS [FxSens_PrevWare], 
+    [TipDressLogFile].[FxSens_DiffValue] AS [FxSens_DiffValue], 
+    [TipDressLogFile].[FxSens_MaxSensZComp] AS [FxSens_MaxSensZComp], 
+    [TipDressLogFile].[FxSens_WarmSensZComp] AS [FxSens_WarmSensZComp], 
+    [TipDressLogFile].[FxSens_FlPinPrevVal] AS [FxSens_FlPinPrevVal], 
+    [TipDressLogFile].[FxSens_FlPinSetupVal] AS [FxSens_FlPinSetupVal], 
+    [TipDressLogFile].[FxSens_FlPinPhysActVal] AS [FxSens_FlPinPhysActVal], 
+    [TipDressLogFile].[FxSens_FlPinPhysSetupVal] AS [FxSens_FlPinPhysSetupVal], 
+    [TipDressLogFile].[Internal_Arg] AS [Internal_Arg], 
+    [TipDressLogFile].[DeltaRef] AS [DeltaRef], 
+    [TipDressLogFile].[DeltaNom] AS [DeltaNom], 
+    [TipDressLogFile].[_timestamp] AS [_timestamp]
+    FROM [NGAC].[TipDressLogFile] AS [TipDressLogFile]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="TipMonitor" EntityType="Self.TipMonitor" store:Type="Views" store:Schema="NGAC">
+            <DefiningQuery>SELECT 
+    [TipMonitor].[Robot] AS [Robot], 
+    [TipMonitor].[Date Time] AS [Date Time], 
+    [TipMonitor].[nDress] AS [nDress], 
+    [TipMonitor].[nWelds] AS [nWelds], 
+    [TipMonitor].[WearRatio] AS [WearRatio], 
+    [TipMonitor].[pWear] AS [pWear], 
+    [TipMonitor].[nRspots] AS [nRspots], 
+    [TipMonitor].[nRcars] AS [nRcars], 
+    [TipMonitor].[TipAge(h)] AS [TipAge(h)], 
+    [TipMonitor].[LastTipchange] AS [LastTipchange], 
+    [TipMonitor].[Time_DressCycleTime] AS [Time_DressCycleTime], 
+    [TipMonitor].[id] AS [id], 
+    [TipMonitor].[LocationTree] AS [LocationTree], 
+    [TipMonitor].[MagicFiXedWear] AS [MagicFiXedWear]
+    FROM [NGAC].[TipMonitor] AS [TipMonitor]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="TipwearBeforeChange" EntityType="Self.TipwearBeforeChange" store:Type="Views" store:Schema="NGAC">
+            <DefiningQuery>SELECT 
+    [TipwearBeforeChange].[controller_name] AS [controller_name], 
+    [TipwearBeforeChange].[controller_id] AS [controller_id], 
+    [TipwearBeforeChange].[tipDressID] AS [tipDressID], 
+    [TipwearBeforeChange].[Tool_Nr] AS [Tool_Nr], 
+    [TipwearBeforeChange].[TipchangeTimestamp] AS [TipchangeTimestamp], 
+    [TipwearBeforeChange].[FixedWearBeforeChange] AS [FixedWearBeforeChange], 
+    [TipwearBeforeChange].[MoveWearBeforeChange] AS [MoveWearBeforeChange], 
+    [TipwearBeforeChange].[WearBeforeChange] AS [WearBeforeChange], 
+    [TipwearBeforeChange].[WeldsBeforeChange] AS [WeldsBeforeChange], 
+    [TipwearBeforeChange].[DressBeforeChange] AS [DressBeforeChange], 
+    [TipwearBeforeChange].[%FixedWearBeforeChange] AS [%FixedWearBeforeChange], 
+    [TipwearBeforeChange].[%MoveWearBeforeChange] AS [%MoveWearBeforeChange], 
+    [TipwearBeforeChange].[ESTnSpotsFixedWearBefore100] AS [ESTnSpotsFixedWearBefore100], 
+    [TipwearBeforeChange].[ESTnSpotsMoveWearBefore100] AS [ESTnSpotsMoveWearBefore100], 
+    [TipwearBeforeChange].[TipAge(h)] AS [TipAge(h)], 
+    [TipwearBeforeChange].[DeltaNom] AS [DeltaNom], 
+    [TipwearBeforeChange].[DeltaNomBeforeChange] AS [DeltaNomBeforeChange]
+    FROM [NGAC].[TipwearBeforeChange] AS [TipwearBeforeChange]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="TipwearLast" EntityType="Self.TipwearLast" store:Type="Views" store:Schema="NGAC">
+            <DefiningQuery>SELECT 
+    [TipwearLast].[controller_name] AS [controller_name], 
+    [TipwearLast].[LocationTree] AS [LocationTree], 
+    [TipwearLast].[id] AS [id], 
+    [TipwearLast].[rt_csv_file_id] AS [rt_csv_file_id], 
+    [TipwearLast].[Date Time] AS [Date Time], 
+    [TipwearLast].[Tool_Nr] AS [Tool_Nr], 
+    [TipwearLast].[Dress_Num] AS [Dress_Num], 
+    [TipwearLast].[Weld_Counter] AS [Weld_Counter], 
+    [TipwearLast].[Dress_Reason] AS [Dress_Reason], 
+    [TipwearLast].[Weld_Result] AS [Weld_Result], 
+    [TipwearLast].[Length_Fixed_Result] AS [Length_Fixed_Result], 
+    [TipwearLast].[Length_Move_Result] AS [Length_Move_Result], 
+    [TipwearLast].[Max_Wear_Fixed] AS [Max_Wear_Fixed], 
+    [TipwearLast].[Wear_Fixed] AS [Wear_Fixed], 
+    [TipwearLast].[DiffFrLastWear_Fixed] AS [DiffFrLastWear_Fixed], 
+    [TipwearLast].[Max_Wear_Move] AS [Max_Wear_Move], 
+    [TipwearLast].[Wear_Move] AS [Wear_Move], 
+    [TipwearLast].[DiffFrLastWear_Move] AS [DiffFrLastWear_Move], 
+    [TipwearLast].[MaxDiffFrLastMeas] AS [MaxDiffFrLastMeas], 
+    [TipwearLast].[Current_TipWear] AS [Current_TipWear], 
+    [TipwearLast].[TipWearRatio] AS [TipWearRatio], 
+    [TipwearLast].[Dress_Time1] AS [Dress_Time1], 
+    [TipwearLast].[Dress_Pressure1] AS [Dress_Pressure1], 
+    [TipwearLast].[Dress_Time2] AS [Dress_Time2], 
+    [TipwearLast].[Dress_Pressure2] AS [Dress_Pressure2], 
+    [TipwearLast].[CleanDress_Time] AS [CleanDress_Time], 
+    [TipwearLast].[CleanDress_Pressure] AS [CleanDress_Pressure], 
+    [TipwearLast].[Time_DressCycleTime] AS [Time_DressCycleTime], 
+    [TipwearLast].[ErrorType] AS [ErrorType], 
+    [TipwearLast].[ExtraInfo] AS [ExtraInfo], 
+    [TipwearLast].[GunTCP_X] AS [GunTCP_X], 
+    [TipwearLast].[GunTCP_Y] AS [GunTCP_Y], 
+    [TipwearLast].[GunTCP_Z] AS [GunTCP_Z], 
+    [TipwearLast].[GunRefTCP_X] AS [GunRefTCP_X], 
+    [TipwearLast].[GunRefTCP_Y] AS [GunRefTCP_Y], 
+    [TipwearLast].[GunRefTCP_Z] AS [GunRefTCP_Z], 
+    [TipwearLast].[NomTCP_X] AS [NomTCP_X], 
+    [TipwearLast].[NomTCP_Y] AS [NomTCP_Y], 
+    [TipwearLast].[NomTCP_Z] AS [NomTCP_Z], 
+    [TipwearLast].[Tool_NrHs] AS [Tool_NrHs], 
+    [TipwearLast].[ChkDrWear_Fixed_Result] AS [ChkDrWear_Fixed_Result], 
+    [TipwearLast].[ChkDrWear_Move_Result] AS [ChkDrWear_Move_Result], 
+    [TipwearLast].[FxSens_SetupVal] AS [FxSens_SetupVal], 
+    [TipwearLast].[FxSens_StartVal] AS [FxSens_StartVal], 
+    [TipwearLast].[FxSens_PrevVal] AS [FxSens_PrevVal], 
+    [TipwearLast].[FxSens_PrevWare] AS [FxSens_PrevWare], 
+    [TipwearLast].[FxSens_DiffValue] AS [FxSens_DiffValue], 
+    [TipwearLast].[FxSens_MaxSensZComp] AS [FxSens_MaxSensZComp], 
+    [TipwearLast].[FxSens_WarmSensZComp] AS [FxSens_WarmSensZComp], 
+    [TipwearLast].[FxSens_FlPinPrevVal] AS [FxSens_FlPinPrevVal], 
+    [TipwearLast].[FxSens_FlPinSetupVal] AS [FxSens_FlPinSetupVal], 
+    [TipwearLast].[FxSens_FlPinPhysActVal] AS [FxSens_FlPinPhysActVal], 
+    [TipwearLast].[FxSens_FlPinPhysSetupVal] AS [FxSens_FlPinPhysSetupVal], 
+    [TipwearLast].[Internal_Arg] AS [Internal_Arg], 
+    [TipwearLast].[DeltaRef] AS [DeltaRef], 
+    [TipwearLast].[DeltaNom] AS [DeltaNom], 
+    [TipwearLast].[_timestamp] AS [_timestamp], 
+    [TipwearLast].[rnDesc] AS [rnDesc], 
+    [TipwearLast].[avgESTnSpotsFixedWearBefore100] AS [avgESTnSpotsFixedWearBefore100], 
+    [TipwearLast].[avgESTnSpotsMoveWearBefore100] AS [avgESTnSpotsMoveWearBefore100], 
+    [TipwearLast].[maxWearInCalc] AS [maxWearInCalc], 
+    [TipwearLast].[minWearInCalc] AS [minWearInCalc], 
+    [TipwearLast].[countWearInCalc] AS [countWearInCalc], 
+    [TipwearLast].[ESTremainingspotsFixed] AS [ESTremainingspotsFixed], 
+    [TipwearLast].[ESTremainingspotsMove] AS [ESTremainingspotsMove], 
+    [TipwearLast].[ESTremainingCarsFixed] AS [ESTremainingCarsFixed], 
+    [TipwearLast].[ESTremainingsCarsMove] AS [ESTremainingsCarsMove], 
+    [TipwearLast].[nSpots44] AS [nSpots44], 
+    [TipwearLast].[LastTipchange] AS [LastTipchange], 
+    [TipwearLast].[avgDeltaNomAfterchange] AS [avgDeltaNomAfterchange]
+    FROM [NGAC].[TipwearLast] AS [TipwearLast]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="GADATAModelTiplife" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="TipDressLogFile">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="Tool_Nr" />
+          </Key>
+          <Property Name="controller_name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="LocationTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="rt_csv_file_id" Type="Int32" />
+          <Property Name="Date_Time" Type="DateTime" Precision="3" />
+          <Property Name="Tool_Nr" Type="Int16" Nullable="false" />
+          <Property Name="Dress_Num" Type="Int16" />
+          <Property Name="Weld_Counter" Type="Int16" />
+          <Property Name="Dress_Reason" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Weld_Result" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Length_Fixed_Result" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Length_Move_Result" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Max_Wear_Fixed" Type="Double" />
+          <Property Name="Wear_Fixed" Type="Double" />
+          <Property Name="DiffFrLastWear_Fixed" Type="Double" />
+          <Property Name="Max_Wear_Move" Type="Double" />
+          <Property Name="Wear_Move" Type="Double" />
+          <Property Name="DiffFrLastWear_Move" Type="Double" />
+          <Property Name="MaxDiffFrLastMeas" Type="Double" />
+          <Property Name="Current_TipWear" Type="Double" />
+          <Property Name="TipWearRatio" Type="Double" />
+          <Property Name="Dress_Time1" Type="Double" />
+          <Property Name="Dress_Pressure1" Type="Double" />
+          <Property Name="Dress_Time2" Type="Double" />
+          <Property Name="Dress_Pressure2" Type="Double" />
+          <Property Name="CleanDress_Time" Type="Double" />
+          <Property Name="CleanDress_Pressure" Type="Double" />
+          <Property Name="Time_DressCycleTime" Type="Double" />
+          <Property Name="ErrorType" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ExtraInfo" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="GunTCP_X" Type="Double" />
+          <Property Name="GunTCP_Y" Type="Double" />
+          <Property Name="GunTCP_Z" Type="Double" />
+          <Property Name="GunRefTCP_X" Type="Double" />
+          <Property Name="GunRefTCP_Y" Type="Double" />
+          <Property Name="GunRefTCP_Z" Type="Double" />
+          <Property Name="NomTCP_X" Type="Double" />
+          <Property Name="NomTCP_Y" Type="Double" />
+          <Property Name="NomTCP_Z" Type="Double" />
+          <Property Name="Tool_NrHs" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ChkDrWear_Fixed_Result" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ChkDrWear_Move_Result" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="FxSens_SetupVal" Type="Double" />
+          <Property Name="FxSens_StartVal" Type="Double" />
+          <Property Name="FxSens_PrevVal" Type="Double" />
+          <Property Name="FxSens_PrevWare" Type="Double" />
+          <Property Name="FxSens_DiffValue" Type="Double" />
+          <Property Name="FxSens_MaxSensZComp" Type="Double" />
+          <Property Name="FxSens_WarmSensZComp" Type="Double" />
+          <Property Name="FxSens_FlPinPrevVal" Type="Double" />
+          <Property Name="FxSens_FlPinSetupVal" Type="Double" />
+          <Property Name="FxSens_FlPinPhysActVal" Type="Double" />
+          <Property Name="FxSens_FlPinPhysSetupVal" Type="Double" />
+          <Property Name="Internal_Arg" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="DeltaRef" Type="Double" />
+          <Property Name="DeltaNom" Type="Double" />
+          <Property Name="C_timestamp" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="TipMonitor">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="Robot" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Date_Time" Type="DateTime" Precision="3" />
+          <Property Name="nDress" Type="Int16" />
+          <Property Name="nWelds" Type="Int16" />
+          <Property Name="WearRatio" Type="Double" />
+          <Property Name="pWear" Type="Double" />
+          <Property Name="nRspots" Type="Double" />
+          <Property Name="nRcars" Type="Double" />
+          <Property Name="TipAge_h_" Type="Int32" />
+          <Property Name="LastTipchange" Type="DateTime" Precision="3" />
+          <Property Name="Time_DressCycleTime" Type="Double" />
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="LocationTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="MagicFiXedWear" Type="Double" />
+        </EntityType>
+        <EntityType Name="TipwearBeforeChange">
+          <Key>
+            <PropertyRef Name="tipDressID" />
+            <PropertyRef Name="Tool_Nr" />
+          </Key>
+          <Property Name="controller_name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="controller_id" Type="Int32" />
+          <Property Name="tipDressID" Type="Int32" Nullable="false" />
+          <Property Name="Tool_Nr" Type="Int16" Nullable="false" />
+          <Property Name="TipchangeTimestamp" Type="DateTime" Precision="3" />
+          <Property Name="FixedWearBeforeChange" Type="Double" />
+          <Property Name="MoveWearBeforeChange" Type="Double" />
+          <Property Name="WearBeforeChange" Type="Double" />
+          <Property Name="WeldsBeforeChange" Type="Int32" />
+          <Property Name="DressBeforeChange" Type="Int16" />
+          <Property Name="C_FixedWearBeforeChange" Type="Double" />
+          <Property Name="C_MoveWearBeforeChange" Type="Double" />
+          <Property Name="ESTnSpotsFixedWearBefore100" Type="Double" />
+          <Property Name="ESTnSpotsMoveWearBefore100" Type="Double" />
+          <Property Name="TipAge_h_" Type="Int32" />
+          <Property Name="DeltaNom" Type="Double" />
+          <Property Name="DeltaNomBeforeChange" Type="Double" />
+        </EntityType>
+        <EntityType Name="TipwearLast">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="Tool_Nr" />
+          </Key>
+          <Property Name="controller_name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="LocationTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="rt_csv_file_id" Type="Int32" />
+          <Property Name="Date_Time" Type="DateTime" Precision="3" />
+          <Property Name="Tool_Nr" Type="Int16" Nullable="false" />
+          <Property Name="Dress_Num" Type="Int16" />
+          <Property Name="Weld_Counter" Type="Int16" />
+          <Property Name="Dress_Reason" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Weld_Result" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Length_Fixed_Result" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Length_Move_Result" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Max_Wear_Fixed" Type="Double" />
+          <Property Name="Wear_Fixed" Type="Double" />
+          <Property Name="DiffFrLastWear_Fixed" Type="Double" />
+          <Property Name="Max_Wear_Move" Type="Double" />
+          <Property Name="Wear_Move" Type="Double" />
+          <Property Name="DiffFrLastWear_Move" Type="Double" />
+          <Property Name="MaxDiffFrLastMeas" Type="Double" />
+          <Property Name="Current_TipWear" Type="Double" />
+          <Property Name="TipWearRatio" Type="Double" />
+          <Property Name="Dress_Time1" Type="Double" />
+          <Property Name="Dress_Pressure1" Type="Double" />
+          <Property Name="Dress_Time2" Type="Double" />
+          <Property Name="Dress_Pressure2" Type="Double" />
+          <Property Name="CleanDress_Time" Type="Double" />
+          <Property Name="CleanDress_Pressure" Type="Double" />
+          <Property Name="Time_DressCycleTime" Type="Double" />
+          <Property Name="ErrorType" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ExtraInfo" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="GunTCP_X" Type="Double" />
+          <Property Name="GunTCP_Y" Type="Double" />
+          <Property Name="GunTCP_Z" Type="Double" />
+          <Property Name="GunRefTCP_X" Type="Double" />
+          <Property Name="GunRefTCP_Y" Type="Double" />
+          <Property Name="GunRefTCP_Z" Type="Double" />
+          <Property Name="NomTCP_X" Type="Double" />
+          <Property Name="NomTCP_Y" Type="Double" />
+          <Property Name="NomTCP_Z" Type="Double" />
+          <Property Name="Tool_NrHs" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ChkDrWear_Fixed_Result" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ChkDrWear_Move_Result" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="FxSens_SetupVal" Type="Double" />
+          <Property Name="FxSens_StartVal" Type="Double" />
+          <Property Name="FxSens_PrevVal" Type="Double" />
+          <Property Name="FxSens_PrevWare" Type="Double" />
+          <Property Name="FxSens_DiffValue" Type="Double" />
+          <Property Name="FxSens_MaxSensZComp" Type="Double" />
+          <Property Name="FxSens_WarmSensZComp" Type="Double" />
+          <Property Name="FxSens_FlPinPrevVal" Type="Double" />
+          <Property Name="FxSens_FlPinSetupVal" Type="Double" />
+          <Property Name="FxSens_FlPinPhysActVal" Type="Double" />
+          <Property Name="FxSens_FlPinPhysSetupVal" Type="Double" />
+          <Property Name="Internal_Arg" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="DeltaRef" Type="Double" />
+          <Property Name="DeltaNom" Type="Double" />
+          <Property Name="C_timestamp" Type="DateTime" Precision="3" />
+          <Property Name="rnDesc" Type="Int64" />
+          <Property Name="avgESTnSpotsFixedWearBefore100" Type="Double" />
+          <Property Name="avgESTnSpotsMoveWearBefore100" Type="Double" />
+          <Property Name="maxWearInCalc" Type="Double" />
+          <Property Name="minWearInCalc" Type="Double" />
+          <Property Name="countWearInCalc" Type="Int32" />
+          <Property Name="ESTremainingspotsFixed" Type="Double" />
+          <Property Name="ESTremainingspotsMove" Type="Double" />
+          <Property Name="ESTremainingCarsFixed" Type="Double" />
+          <Property Name="ESTremainingsCarsMove" Type="Double" />
+          <Property Name="nSpots44" Type="Int32" />
+          <Property Name="LastTipchange" Type="DateTime" Precision="3" />
+          <Property Name="avgDeltaNomAfterchange" Type="Double" />
+        </EntityType>
+        <EntityContainer Name="GADATAEntitiesTiplife" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="TipDressLogFile" EntityType="Self.TipDressLogFile" />
+          <EntitySet Name="TipMonitor" EntityType="Self.TipMonitor" />
+          <EntitySet Name="TipwearBeforeChange" EntityType="Self.TipwearBeforeChange" />
+          <EntitySet Name="TipwearLast" EntityType="Self.TipwearLast" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="GADATAModelTiplifeStoreContainer" CdmEntityContainer="GADATAEntitiesTiplife">
+          <EntitySetMapping Name="TipDressLogFile">
+            <EntityTypeMapping TypeName="GADATAModelTiplife.TipDressLogFile">
+              <MappingFragment StoreEntitySet="TipDressLogFile">
+                <ScalarProperty Name="controller_name" ColumnName="controller_name" />
+                <ScalarProperty Name="LocationTree" ColumnName="LocationTree" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="rt_csv_file_id" ColumnName="rt_csv_file_id" />
+                <ScalarProperty Name="Date_Time" ColumnName="Date Time" />
+                <ScalarProperty Name="Tool_Nr" ColumnName="Tool_Nr" />
+                <ScalarProperty Name="Dress_Num" ColumnName="Dress_Num" />
+                <ScalarProperty Name="Weld_Counter" ColumnName="Weld_Counter" />
+                <ScalarProperty Name="Dress_Reason" ColumnName="Dress_Reason" />
+                <ScalarProperty Name="Weld_Result" ColumnName="Weld_Result" />
+                <ScalarProperty Name="Length_Fixed_Result" ColumnName="Length_Fixed_Result" />
+                <ScalarProperty Name="Length_Move_Result" ColumnName="Length_Move_Result" />
+                <ScalarProperty Name="Max_Wear_Fixed" ColumnName="Max_Wear_Fixed" />
+                <ScalarProperty Name="Wear_Fixed" ColumnName="Wear_Fixed" />
+                <ScalarProperty Name="DiffFrLastWear_Fixed" ColumnName="DiffFrLastWear_Fixed" />
+                <ScalarProperty Name="Max_Wear_Move" ColumnName="Max_Wear_Move" />
+                <ScalarProperty Name="Wear_Move" ColumnName="Wear_Move" />
+                <ScalarProperty Name="DiffFrLastWear_Move" ColumnName="DiffFrLastWear_Move" />
+                <ScalarProperty Name="MaxDiffFrLastMeas" ColumnName="MaxDiffFrLastMeas" />
+                <ScalarProperty Name="Current_TipWear" ColumnName="Current_TipWear" />
+                <ScalarProperty Name="TipWearRatio" ColumnName="TipWearRatio" />
+                <ScalarProperty Name="Dress_Time1" ColumnName="Dress_Time1" />
+                <ScalarProperty Name="Dress_Pressure1" ColumnName="Dress_Pressure1" />
+                <ScalarProperty Name="Dress_Time2" ColumnName="Dress_Time2" />
+                <ScalarProperty Name="Dress_Pressure2" ColumnName="Dress_Pressure2" />
+                <ScalarProperty Name="CleanDress_Time" ColumnName="CleanDress_Time" />
+                <ScalarProperty Name="CleanDress_Pressure" ColumnName="CleanDress_Pressure" />
+                <ScalarProperty Name="Time_DressCycleTime" ColumnName="Time_DressCycleTime" />
+                <ScalarProperty Name="ErrorType" ColumnName="ErrorType" />
+                <ScalarProperty Name="ExtraInfo" ColumnName="ExtraInfo" />
+                <ScalarProperty Name="GunTCP_X" ColumnName="GunTCP_X" />
+                <ScalarProperty Name="GunTCP_Y" ColumnName="GunTCP_Y" />
+                <ScalarProperty Name="GunTCP_Z" ColumnName="GunTCP_Z" />
+                <ScalarProperty Name="GunRefTCP_X" ColumnName="GunRefTCP_X" />
+                <ScalarProperty Name="GunRefTCP_Y" ColumnName="GunRefTCP_Y" />
+                <ScalarProperty Name="GunRefTCP_Z" ColumnName="GunRefTCP_Z" />
+                <ScalarProperty Name="NomTCP_X" ColumnName="NomTCP_X" />
+                <ScalarProperty Name="NomTCP_Y" ColumnName="NomTCP_Y" />
+                <ScalarProperty Name="NomTCP_Z" ColumnName="NomTCP_Z" />
+                <ScalarProperty Name="Tool_NrHs" ColumnName="Tool_NrHs" />
+                <ScalarProperty Name="ChkDrWear_Fixed_Result" ColumnName="ChkDrWear_Fixed_Result" />
+                <ScalarProperty Name="ChkDrWear_Move_Result" ColumnName="ChkDrWear_Move_Result" />
+                <ScalarProperty Name="FxSens_SetupVal" ColumnName="FxSens_SetupVal" />
+                <ScalarProperty Name="FxSens_StartVal" ColumnName="FxSens_StartVal" />
+                <ScalarProperty Name="FxSens_PrevVal" ColumnName="FxSens_PrevVal" />
+                <ScalarProperty Name="FxSens_PrevWare" ColumnName="FxSens_PrevWare" />
+                <ScalarProperty Name="FxSens_DiffValue" ColumnName="FxSens_DiffValue" />
+                <ScalarProperty Name="FxSens_MaxSensZComp" ColumnName="FxSens_MaxSensZComp" />
+                <ScalarProperty Name="FxSens_WarmSensZComp" ColumnName="FxSens_WarmSensZComp" />
+                <ScalarProperty Name="FxSens_FlPinPrevVal" ColumnName="FxSens_FlPinPrevVal" />
+                <ScalarProperty Name="FxSens_FlPinSetupVal" ColumnName="FxSens_FlPinSetupVal" />
+                <ScalarProperty Name="FxSens_FlPinPhysActVal" ColumnName="FxSens_FlPinPhysActVal" />
+                <ScalarProperty Name="FxSens_FlPinPhysSetupVal" ColumnName="FxSens_FlPinPhysSetupVal" />
+                <ScalarProperty Name="Internal_Arg" ColumnName="Internal_Arg" />
+                <ScalarProperty Name="DeltaRef" ColumnName="DeltaRef" />
+                <ScalarProperty Name="DeltaNom" ColumnName="DeltaNom" />
+                <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipMonitor">
+            <EntityTypeMapping TypeName="GADATAModelTiplife.TipMonitor">
+              <MappingFragment StoreEntitySet="TipMonitor">
+                <ScalarProperty Name="Robot" ColumnName="Robot" />
+                <ScalarProperty Name="Date_Time" ColumnName="Date Time" />
+                <ScalarProperty Name="nDress" ColumnName="nDress" />
+                <ScalarProperty Name="nWelds" ColumnName="nWelds" />
+                <ScalarProperty Name="WearRatio" ColumnName="WearRatio" />
+                <ScalarProperty Name="pWear" ColumnName="pWear" />
+                <ScalarProperty Name="nRspots" ColumnName="nRspots" />
+                <ScalarProperty Name="nRcars" ColumnName="nRcars" />
+                <ScalarProperty Name="TipAge_h_" ColumnName="TipAge(h)" />
+                <ScalarProperty Name="LastTipchange" ColumnName="LastTipchange" />
+                <ScalarProperty Name="Time_DressCycleTime" ColumnName="Time_DressCycleTime" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="LocationTree" ColumnName="LocationTree" />
+                <ScalarProperty Name="MagicFiXedWear" ColumnName="MagicFiXedWear" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipwearBeforeChange">
+            <EntityTypeMapping TypeName="GADATAModelTiplife.TipwearBeforeChange">
+              <MappingFragment StoreEntitySet="TipwearBeforeChange">
+                <ScalarProperty Name="controller_name" ColumnName="controller_name" />
+                <ScalarProperty Name="controller_id" ColumnName="controller_id" />
+                <ScalarProperty Name="tipDressID" ColumnName="tipDressID" />
+                <ScalarProperty Name="Tool_Nr" ColumnName="Tool_Nr" />
+                <ScalarProperty Name="TipchangeTimestamp" ColumnName="TipchangeTimestamp" />
+                <ScalarProperty Name="FixedWearBeforeChange" ColumnName="FixedWearBeforeChange" />
+                <ScalarProperty Name="MoveWearBeforeChange" ColumnName="MoveWearBeforeChange" />
+                <ScalarProperty Name="WearBeforeChange" ColumnName="WearBeforeChange" />
+                <ScalarProperty Name="WeldsBeforeChange" ColumnName="WeldsBeforeChange" />
+                <ScalarProperty Name="DressBeforeChange" ColumnName="DressBeforeChange" />
+                <ScalarProperty Name="C_FixedWearBeforeChange" ColumnName="%FixedWearBeforeChange" />
+                <ScalarProperty Name="C_MoveWearBeforeChange" ColumnName="%MoveWearBeforeChange" />
+                <ScalarProperty Name="ESTnSpotsFixedWearBefore100" ColumnName="ESTnSpotsFixedWearBefore100" />
+                <ScalarProperty Name="ESTnSpotsMoveWearBefore100" ColumnName="ESTnSpotsMoveWearBefore100" />
+                <ScalarProperty Name="TipAge_h_" ColumnName="TipAge(h)" />
+                <ScalarProperty Name="DeltaNom" ColumnName="DeltaNom" />
+                <ScalarProperty Name="DeltaNomBeforeChange" ColumnName="DeltaNomBeforeChange" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipwearLast">
+            <EntityTypeMapping TypeName="GADATAModelTiplife.TipwearLast">
+              <MappingFragment StoreEntitySet="TipwearLast">
+                <ScalarProperty Name="controller_name" ColumnName="controller_name" />
+                <ScalarProperty Name="LocationTree" ColumnName="LocationTree" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="rt_csv_file_id" ColumnName="rt_csv_file_id" />
+                <ScalarProperty Name="Date_Time" ColumnName="Date Time" />
+                <ScalarProperty Name="Tool_Nr" ColumnName="Tool_Nr" />
+                <ScalarProperty Name="Dress_Num" ColumnName="Dress_Num" />
+                <ScalarProperty Name="Weld_Counter" ColumnName="Weld_Counter" />
+                <ScalarProperty Name="Dress_Reason" ColumnName="Dress_Reason" />
+                <ScalarProperty Name="Weld_Result" ColumnName="Weld_Result" />
+                <ScalarProperty Name="Length_Fixed_Result" ColumnName="Length_Fixed_Result" />
+                <ScalarProperty Name="Length_Move_Result" ColumnName="Length_Move_Result" />
+                <ScalarProperty Name="Max_Wear_Fixed" ColumnName="Max_Wear_Fixed" />
+                <ScalarProperty Name="Wear_Fixed" ColumnName="Wear_Fixed" />
+                <ScalarProperty Name="DiffFrLastWear_Fixed" ColumnName="DiffFrLastWear_Fixed" />
+                <ScalarProperty Name="Max_Wear_Move" ColumnName="Max_Wear_Move" />
+                <ScalarProperty Name="Wear_Move" ColumnName="Wear_Move" />
+                <ScalarProperty Name="DiffFrLastWear_Move" ColumnName="DiffFrLastWear_Move" />
+                <ScalarProperty Name="MaxDiffFrLastMeas" ColumnName="MaxDiffFrLastMeas" />
+                <ScalarProperty Name="Current_TipWear" ColumnName="Current_TipWear" />
+                <ScalarProperty Name="TipWearRatio" ColumnName="TipWearRatio" />
+                <ScalarProperty Name="Dress_Time1" ColumnName="Dress_Time1" />
+                <ScalarProperty Name="Dress_Pressure1" ColumnName="Dress_Pressure1" />
+                <ScalarProperty Name="Dress_Time2" ColumnName="Dress_Time2" />
+                <ScalarProperty Name="Dress_Pressure2" ColumnName="Dress_Pressure2" />
+                <ScalarProperty Name="CleanDress_Time" ColumnName="CleanDress_Time" />
+                <ScalarProperty Name="CleanDress_Pressure" ColumnName="CleanDress_Pressure" />
+                <ScalarProperty Name="Time_DressCycleTime" ColumnName="Time_DressCycleTime" />
+                <ScalarProperty Name="ErrorType" ColumnName="ErrorType" />
+                <ScalarProperty Name="ExtraInfo" ColumnName="ExtraInfo" />
+                <ScalarProperty Name="GunTCP_X" ColumnName="GunTCP_X" />
+                <ScalarProperty Name="GunTCP_Y" ColumnName="GunTCP_Y" />
+                <ScalarProperty Name="GunTCP_Z" ColumnName="GunTCP_Z" />
+                <ScalarProperty Name="GunRefTCP_X" ColumnName="GunRefTCP_X" />
+                <ScalarProperty Name="GunRefTCP_Y" ColumnName="GunRefTCP_Y" />
+                <ScalarProperty Name="GunRefTCP_Z" ColumnName="GunRefTCP_Z" />
+                <ScalarProperty Name="NomTCP_X" ColumnName="NomTCP_X" />
+                <ScalarProperty Name="NomTCP_Y" ColumnName="NomTCP_Y" />
+                <ScalarProperty Name="NomTCP_Z" ColumnName="NomTCP_Z" />
+                <ScalarProperty Name="Tool_NrHs" ColumnName="Tool_NrHs" />
+                <ScalarProperty Name="ChkDrWear_Fixed_Result" ColumnName="ChkDrWear_Fixed_Result" />
+                <ScalarProperty Name="ChkDrWear_Move_Result" ColumnName="ChkDrWear_Move_Result" />
+                <ScalarProperty Name="FxSens_SetupVal" ColumnName="FxSens_SetupVal" />
+                <ScalarProperty Name="FxSens_StartVal" ColumnName="FxSens_StartVal" />
+                <ScalarProperty Name="FxSens_PrevVal" ColumnName="FxSens_PrevVal" />
+                <ScalarProperty Name="FxSens_PrevWare" ColumnName="FxSens_PrevWare" />
+                <ScalarProperty Name="FxSens_DiffValue" ColumnName="FxSens_DiffValue" />
+                <ScalarProperty Name="FxSens_MaxSensZComp" ColumnName="FxSens_MaxSensZComp" />
+                <ScalarProperty Name="FxSens_WarmSensZComp" ColumnName="FxSens_WarmSensZComp" />
+                <ScalarProperty Name="FxSens_FlPinPrevVal" ColumnName="FxSens_FlPinPrevVal" />
+                <ScalarProperty Name="FxSens_FlPinSetupVal" ColumnName="FxSens_FlPinSetupVal" />
+                <ScalarProperty Name="FxSens_FlPinPhysActVal" ColumnName="FxSens_FlPinPhysActVal" />
+                <ScalarProperty Name="FxSens_FlPinPhysSetupVal" ColumnName="FxSens_FlPinPhysSetupVal" />
+                <ScalarProperty Name="Internal_Arg" ColumnName="Internal_Arg" />
+                <ScalarProperty Name="DeltaRef" ColumnName="DeltaRef" />
+                <ScalarProperty Name="DeltaNom" ColumnName="DeltaNom" />
+                <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
+                <ScalarProperty Name="rnDesc" ColumnName="rnDesc" />
+                <ScalarProperty Name="avgESTnSpotsFixedWearBefore100" ColumnName="avgESTnSpotsFixedWearBefore100" />
+                <ScalarProperty Name="avgESTnSpotsMoveWearBefore100" ColumnName="avgESTnSpotsMoveWearBefore100" />
+                <ScalarProperty Name="maxWearInCalc" ColumnName="maxWearInCalc" />
+                <ScalarProperty Name="minWearInCalc" ColumnName="minWearInCalc" />
+                <ScalarProperty Name="countWearInCalc" ColumnName="countWearInCalc" />
+                <ScalarProperty Name="ESTremainingspotsFixed" ColumnName="ESTremainingspotsFixed" />
+                <ScalarProperty Name="ESTremainingspotsMove" ColumnName="ESTremainingspotsMove" />
+                <ScalarProperty Name="ESTremainingCarsFixed" ColumnName="ESTremainingCarsFixed" />
+                <ScalarProperty Name="ESTremainingsCarsMove" ColumnName="ESTremainingsCarsMove" />
+                <ScalarProperty Name="nSpots44" ColumnName="nSpots44" />
+                <ScalarProperty Name="LastTipchange" ColumnName="LastTipchange" />
+                <ScalarProperty Name="avgDeltaNomAfterchange" ColumnName="avgDeltaNomAfterchange" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

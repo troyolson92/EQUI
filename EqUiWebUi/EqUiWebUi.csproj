@@ -287,6 +287,36 @@
       <DependentUpon>Gadata.edmx</DependentUpon>
     </Compile>
     <Compile Include="Areas\PlcSupervisie\PlcSupervisieAreaRegistration.cs" />
+    <Compile Include="Areas\Tiplife\Backgroundwork.cs" />
+    <Compile Include="Areas\Tiplife\Controllers\NgacElectrodeController.cs" />
+    <Compile Include="Areas\Tiplife\Models\TipDressLogFile.cs">
+      <DependentUpon>TiplifeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Tiplife\Models\TiplifeModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TiplifeModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Tiplife\Models\TiplifeModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TiplifeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Tiplife\Models\TiplifeModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TiplifeModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Tiplife\Models\TipMonitor.cs">
+      <DependentUpon>TiplifeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Tiplife\Models\TipwearBeforeChange.cs">
+      <DependentUpon>TiplifeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Tiplife\Models\TipwearLast.cs">
+      <DependentUpon>TiplifeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Tiplife\TiplifeAreaRegistration.cs" />
     <Compile Include="Areas\user_management\Controllers\userController.cs" />
     <Compile Include="Areas\user_management\Controllers\usersController.cs" />
     <Compile Include="Areas\user_management\Controllers\UserScreensController.cs" />
@@ -326,23 +356,13 @@
     <Compile Include="Controllers\ChartController.cs" />
     <Compile Include="Controllers\DynamicController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
-    <Compile Include="Controllers\NgacElectrodeController.cs" />
     <Compile Include="Controllers\SpcController.cs" />
     <Compile Include="Controllers\TableauController.cs" />
     <Compile Include="Models\gadataModel.cs" />
     <Compile Include="Models\ia_Alert.cs">
       <DependentUpon>GadataDatamodel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\logDetails.cs">
-      <DependentUpon>GadataDatamodel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TipMonitor.cs">
-      <DependentUpon>GadataDatamodel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Areas\user_management\roleProvider.cs" />
-    <Compile Include="Models\TipwearBeforeChange.cs">
-      <DependentUpon>GadataDatamodel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -398,6 +418,16 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Gadata.edmx</DependentUpon>
       <LastGenOutput>Gadata.cs</LastGenOutput>
+    </Content>
+    <Content Include="Areas\Tiplife\Models\TiplifeModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>TiplifeModel.edmx</DependentUpon>
+      <LastGenOutput>TiplifeModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Areas\Tiplife\Models\TiplifeModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>TiplifeModel.edmx</DependentUpon>
+      <LastGenOutput>TiplifeModel.cs</LastGenOutput>
     </Content>
     <Content Include="Areas\user_management\Models\user_management.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -768,6 +798,22 @@
     <Content Include="Areas\user_management\Views\users\_settings.cshtml" />
     <Content Include="Areas\Maximo_ui\Views\WorkorderDetails\_woParentDetails.cshtml" />
     <Content Include="Areas\Maximo_ui\Views\WorkorderDetails\WoParentDetails.cshtml" />
+    <Content Include="Areas\Tiplife\Views\web.config" />
+    <EntityDeploy Include="Areas\Tiplife\Models\TiplifeModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>TiplifeModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Areas\Tiplife\Models\TiplifeModel.edmx.diagram">
+      <DependentUpon>TiplifeModel.edmx</DependentUpon>
+    </Content>
+    <Content Include="Areas\Tiplife\Views\NgacElectrode\_TipsChanged.cshtml" />
+    <Content Include="Areas\Tiplife\Views\NgacElectrode\_TipStatus.cshtml" />
+    <Content Include="Areas\Tiplife\Views\NgacElectrode\_TipsToChange.cshtml" />
+    <Content Include="Areas\Tiplife\Views\NgacElectrode\CurrentTipstatus.cshtml" />
+    <Content Include="Areas\Tiplife\Views\NgacElectrode\Index.cshtml" />
+    <Content Include="Areas\Tiplife\Views\NgacElectrode\PlanTipChange.cshtml" />
+    <Content Include="Areas\Tiplife\Views\NgacElectrode\TipwearBeforeChange.cshtml" />
+    <Content Include="Areas\Tiplife\Views\_ViewStart.cshtml" />
     <None Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.svg" />
@@ -925,24 +971,17 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Dynamic\DynamicWebgrid.cshtml" />
-    <Content Include="Views\Tableau\logDetails.cshtml" />
     <Content Include="Views\Tableau\Index.cshtml" />
     <Content Include="Views\Tableau\EmbeddedDesktop.cshtml" />
     <Content Include="Views\Tableau\Embedded4K.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Error\Index.cshtml" />
     <Content Include="Views\Dynamic\DynamicDatatable.cshtml" />
-    <Content Include="Views\NgacElectrode\CurrentTipstatus.cshtml" />
-    <Content Include="Views\NgacElectrode\Index.cshtml" />
-    <Content Include="Views\NgacElectrode\TipwearBeforeChange.cshtml" />
-    <Content Include="Views\NgacElectrode\PlanTipChange.cshtml" />
-    <Content Include="Views\NgacElectrode\_TipsToChange.cshtml" />
     <Content Include="Views\Shared\MvcGrid\_Pager.cshtml" />
     <Content Include="Views\Shared\MvcGrid\_Grid.cshtml" />
     <Content Include="Views\Shared\MvcGrid\_AjaxGrid.cshtml" />
     <Content Include="Scripts\jquery-3.2.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.2.1.min.map" />
-    <Content Include="Views\NgacElectrode\_TipsChanged.cshtml" />
     <Content Include="Views\Home\Rendersite.cshtml" />
     <Content Include="Views\Spc\Index.cshtml" />
     <Content Include="Views\Spc\_setState.cshtml" />
@@ -950,7 +989,6 @@
     <Content Include="Views\Spc\GetAlerts.cshtml" />
     <Content Include="Views\Chart\Index.cshtml" />
     <Content Include="Views\Chart\_getErrorTrend.cshtml" />
-    <Content Include="Views\NgacElectrode\_TipStatus.cshtml" />
     <Content Include="Views\Home\Settings.cshtml" />
     <Content Include="Views\Shared\_MinimalLayout.cshtml" />
     <Content Include="Views\Chart\GetErrorTrend.cshtml" />

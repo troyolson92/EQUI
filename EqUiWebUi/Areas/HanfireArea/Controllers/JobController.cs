@@ -59,12 +59,15 @@ namespace EqUiWebUi.Areas.HanfireArea.Controllers
         //init background work jobs.
         public void ConfiureBackgroundJobs()
         {
-            //old class
+            //old class (maximo stuff)
             Backgroundwork backgroundwork = new Backgroundwork();
             backgroundwork.configHangfireJobs();
             //gadata jobs 
             Areas.Gadata.BackgroundWork backgroundWorkGADATA = new Areas.Gadata.BackgroundWork();
             backgroundWorkGADATA.configHangfireJobs();
+            //tiplife jobs 
+            Areas.Tiplife.Backgroundwork backgroundworkTiplife = new Tiplife.Backgroundwork();
+            backgroundworkTiplife.configHangfireJobs();
 
         }
 

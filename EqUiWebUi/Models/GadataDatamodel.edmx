@@ -29,179 +29,20 @@
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'GADATA.NGAC.TipMonitor' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="TipMonitor">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="Robot" Type="varchar" MaxLength="30" />
-          <Property Name="Date Time" Type="datetime" />
-          <Property Name="nDress" Type="smallint" />
-          <Property Name="nWelds" Type="smallint" />
-          <Property Name="WearRatio" Type="float" />
-          <Property Name="pWear" Type="float" />
-          <Property Name="nRspots" Type="float" />
-          <Property Name="nRcars" Type="float" />
-          <Property Name="TipAge(h)" Type="int" />
-          <Property Name="LastTipchange" Type="datetime" />
-          <Property Name="Time_DressCycleTime" Type="float" />
-          <Property Name="id" Type="int" Nullable="false" />
-          <Property Name="LocationTree" Type="varchar(max)" />
-          <Property Name="MagicFiXedWear" Type="float" />
-        </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'GADATA.NGAC.TipwearBeforeChange' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="TipwearBeforeChange">
-          <Key>
-            <PropertyRef Name="tipDressID" />
-            
-            <PropertyRef Name="controller_name" />
-            <PropertyRef Name="TipchangeTimestamp" />
-          </Key>
-          <Property Name="controller_name" Type="varchar" MaxLength="30" Nullable="false" />
-          <Property Name="controller_id" Type="int" />
-          <Property Name="tipDressID" Type="int" Nullable="false" />
-          <Property Name="Tool_Nr" Type="smallint" Nullable="false" />
-          <Property Name="TipchangeTimestamp" Type="datetime" Nullable="false" />
-          <Property Name="FixedWearBeforeChange" Type="float" />
-          <Property Name="MoveWearBeforeChange" Type="float" />
-          <Property Name="WearBeforeChange" Type="float" />
-          <Property Name="WeldsBeforeChange" Type="int" />
-          <Property Name="DressBeforeChange" Type="smallint" />
-          <Property Name="%FixedWearBeforeChange" Type="float" />
-          <Property Name="%MoveWearBeforeChange" Type="float" />
-          <Property Name="ESTnSpotsFixedWearBefore100" Type="float" />
-          <Property Name="ESTnSpotsMoveWearBefore100" Type="float" />
-          <Property Name="TipAge(h)" Type="int" />
-          <Property Name="DeltaNom" Type="float" />
-          <Property Name="DeltaNomBeforeChange" Type="float" />
-        </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'GADATA.Tableau.logDetails' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="logDetails">
-          <Key>
-            
-            <PropertyRef Name="refid" />
-          </Key>
-          <Property Name="location" Type="varchar" MaxLength="255" />
-          <Property Name="Subgroup" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="timestamp" Type="datetime" />
-          <Property Name="Fulllogtext" Type="varchar(max)" />
-          <Property Name="refid" Type="int" Nullable="false" />
-        </EntityType>
         <EntityContainer Name="ModelsStoreContainer">
           <EntitySet Name="ia_Alert" EntityType="Self.ia_Alert" Schema="Volvo" store:Type="Tables" />
-          <EntitySet Name="TipMonitor" EntityType="Self.TipMonitor" store:Type="Views" store:Schema="NGAC">
-            <DefiningQuery>SELECT 
-    [TipMonitor].[Robot] AS [Robot], 
-    [TipMonitor].[Date Time] AS [Date Time], 
-    [TipMonitor].[nDress] AS [nDress], 
-    [TipMonitor].[nWelds] AS [nWelds], 
-    [TipMonitor].[WearRatio] AS [WearRatio], 
-    [TipMonitor].[pWear] AS [pWear], 
-    [TipMonitor].[nRspots] AS [nRspots], 
-    [TipMonitor].[nRcars] AS [nRcars], 
-    [TipMonitor].[TipAge(h)] AS [TipAge(h)], 
-    [TipMonitor].[LastTipchange] AS [LastTipchange], 
-    [TipMonitor].[Time_DressCycleTime] AS [Time_DressCycleTime], 
-    [TipMonitor].[id] AS [id], 
-    [TipMonitor].[LocationTree] AS [LocationTree], 
-    [TipMonitor].[MagicFiXedWear] AS [MagicFiXedWear]
-    FROM [NGAC].[TipMonitor] AS [TipMonitor]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="TipwearBeforeChange" EntityType="Self.TipwearBeforeChange" store:Type="Views" store:Schema="NGAC">
-            <DefiningQuery>SELECT 
-    [TipwearBeforeChange].[controller_name] AS [controller_name], 
-    [TipwearBeforeChange].[controller_id] AS [controller_id], 
-    [TipwearBeforeChange].[tipDressID] AS [tipDressID], 
-    [TipwearBeforeChange].[Tool_Nr] AS [Tool_Nr], 
-    [TipwearBeforeChange].[TipchangeTimestamp] AS [TipchangeTimestamp], 
-    [TipwearBeforeChange].[FixedWearBeforeChange] AS [FixedWearBeforeChange], 
-    [TipwearBeforeChange].[MoveWearBeforeChange] AS [MoveWearBeforeChange], 
-    [TipwearBeforeChange].[WearBeforeChange] AS [WearBeforeChange], 
-    [TipwearBeforeChange].[WeldsBeforeChange] AS [WeldsBeforeChange], 
-    [TipwearBeforeChange].[DressBeforeChange] AS [DressBeforeChange], 
-    [TipwearBeforeChange].[%FixedWearBeforeChange] AS [%FixedWearBeforeChange], 
-    [TipwearBeforeChange].[%MoveWearBeforeChange] AS [%MoveWearBeforeChange], 
-    [TipwearBeforeChange].[ESTnSpotsFixedWearBefore100] AS [ESTnSpotsFixedWearBefore100], 
-    [TipwearBeforeChange].[ESTnSpotsMoveWearBefore100] AS [ESTnSpotsMoveWearBefore100], 
-    [TipwearBeforeChange].[TipAge(h)] AS [TipAge(h)], 
-    [TipwearBeforeChange].[DeltaNom] AS [DeltaNom], 
-    [TipwearBeforeChange].[DeltaNomBeforeChange] AS [DeltaNomBeforeChange]
-    FROM [NGAC].[TipwearBeforeChange] AS [TipwearBeforeChange]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="logDetails" EntityType="Self.logDetails" store:Type="Views" store:Schema="Tableau">
-            <DefiningQuery>SELECT 
-    [logDetails].[location] AS [location], 
-    [logDetails].[Subgroup] AS [Subgroup], 
-    [logDetails].[timestamp] AS [timestamp], 
-    [logDetails].[Fulllogtext] AS [Fulllogtext], 
-    [logDetails].[refid] AS [refid]
-    FROM [Tableau].[logDetails] AS [logDetails]</DefiningQuery>
-          </EntitySet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Models" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="GADATAEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="TipMonitor" EntityType="Models.TipMonitor" />
-          <EntitySet Name="logDetails" EntityType="Models.logDetails" />
-          <EntitySet Name="TipwearBeforeChange" EntityType="Models.TipwearBeforeChange" />
           <EntitySet Name="ia_Alert" EntityType="Models.ia_Alert" />
           </EntityContainer>
-        <EntityType Name="TipMonitor">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="Robot" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="Date_Time" Type="DateTime" Precision="3" />
-          <Property Name="nDress" Type="Int16" />
-          <Property Name="nWelds" Type="Int16" />
-          <Property Name="pWear" Type="Double" />
-          <Property Name="nRspots" Type="Double" />
-          <Property Name="nRcars" Type="Double" />
-          <Property Name="id" Type="Int32" Nullable="false" />
-          <Property Name="LocationTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="WearRatio" Type="Double" />
-          <Property Name="TipAge_h_" Type="Int32" />
-          <Property Name="LastTipchange" Type="DateTime" Precision="3" />
-          <Property Name="Time_DressCycleTime" Type="Double" />
-          <Property Name="MagicFiXedWear" Type="Double" />
-        </EntityType>
-        <EntityType Name="logDetails">
-          <Key>
-            <PropertyRef Name="refid" />
-          </Key>
-          <Property Name="location" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="Subgroup" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="timestamp" Type="DateTime" Precision="3" />
-          <Property Name="Fulllogtext" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="refid" Type="Int32" Nullable="false" />
-        </EntityType>
-        <EntityType Name="TipwearBeforeChange">
-          <Key>
-            <PropertyRef Name="TipchangeTimestamp" />
-            <PropertyRef Name="controller_name" />
-            <PropertyRef Name="tipDressID" />
-          </Key>
-          <Property Name="controller_name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Tool_Nr" Type="Int16" Nullable="false" />
-          <Property Name="TipchangeTimestamp" Type="DateTime" Precision="3" Nullable="false" />
-          <Property Name="FixedWearBeforeChange" Type="Double" />
-          <Property Name="MoveWearBeforeChange" Type="Double" />
-          <Property Name="WearBeforeChange" Type="Double" />
-          <Property Name="WeldsBeforeChange" Type="Int32" />
-          <Property Name="DressBeforeChange" Type="Int16" />
-          <Property Name="C_FixedWearBeforeChange" Type="Double" />
-          <Property Name="C_MoveWearBeforeChange" Type="Double" />
-          <Property Name="ESTnSpotsFixedWearBefore100" Type="Double" />
-          <Property Name="ESTnSpotsMoveWearBefore100" Type="Double" />
-          <Property Name="TipAge_h_" Type="Int32" />
-          <Property Name="controller_id" Type="Int32" />
-          <Property Name="tipDressID" Type="Int32" Nullable="false" />
-          <Property Name="DeltaNom" Type="Double" />
-          <Property Name="DeltaNomBeforeChange" Type="Double" />
-        </EntityType>
         <EntityType Name="ia_Alert">
           <Key>
             <PropertyRef Name="id" />
@@ -230,60 +71,6 @@ warning 6002: The table/view 'GADATA.Tableau.logDetails' does not have a primary
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="ModelsStoreContainer" CdmEntityContainer="GADATAEntities">
-          <EntitySetMapping Name="TipMonitor">
-            <EntityTypeMapping TypeName="Models.TipMonitor">
-              <MappingFragment StoreEntitySet="TipMonitor">
-                <ScalarProperty Name="MagicFiXedWear" ColumnName="MagicFiXedWear" />
-                <ScalarProperty Name="Time_DressCycleTime" ColumnName="Time_DressCycleTime" />
-                <ScalarProperty Name="LastTipchange" ColumnName="LastTipchange" />
-                <ScalarProperty Name="TipAge_h_" ColumnName="TipAge(h)" />
-                <ScalarProperty Name="WearRatio" ColumnName="WearRatio" />
-                <ScalarProperty Name="LocationTree" ColumnName="LocationTree" />
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="nRcars" ColumnName="nRcars" />
-                <ScalarProperty Name="nRspots" ColumnName="nRspots" />
-                <ScalarProperty Name="pWear" ColumnName="pWear" />
-                <ScalarProperty Name="nWelds" ColumnName="nWelds" />
-                <ScalarProperty Name="nDress" ColumnName="nDress" />
-                <ScalarProperty Name="Date_Time" ColumnName="Date Time" />
-                <ScalarProperty Name="Robot" ColumnName="Robot" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="logDetails">
-            <EntityTypeMapping TypeName="Models.logDetails">
-              <MappingFragment StoreEntitySet="logDetails">
-                <ScalarProperty Name="refid" ColumnName="refid" />
-                <ScalarProperty Name="Fulllogtext" ColumnName="Fulllogtext" />
-                <ScalarProperty Name="timestamp" ColumnName="timestamp" />
-                <ScalarProperty Name="Subgroup" ColumnName="Subgroup" />
-                <ScalarProperty Name="location" ColumnName="location" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TipwearBeforeChange">
-            <EntityTypeMapping TypeName="Models.TipwearBeforeChange">
-              <MappingFragment StoreEntitySet="TipwearBeforeChange">
-                <ScalarProperty Name="DeltaNomBeforeChange" ColumnName="DeltaNomBeforeChange" />
-                <ScalarProperty Name="DeltaNom" ColumnName="DeltaNom" />
-                <ScalarProperty Name="tipDressID" ColumnName="tipDressID" />
-                <ScalarProperty Name="controller_id" ColumnName="controller_id" />
-                <ScalarProperty Name="TipAge_h_" ColumnName="TipAge(h)" />
-                <ScalarProperty Name="ESTnSpotsMoveWearBefore100" ColumnName="ESTnSpotsMoveWearBefore100" />
-                <ScalarProperty Name="ESTnSpotsFixedWearBefore100" ColumnName="ESTnSpotsFixedWearBefore100" />
-                <ScalarProperty Name="C_MoveWearBeforeChange" ColumnName="%MoveWearBeforeChange" />
-                <ScalarProperty Name="C_FixedWearBeforeChange" ColumnName="%FixedWearBeforeChange" />
-                <ScalarProperty Name="DressBeforeChange" ColumnName="DressBeforeChange" />
-                <ScalarProperty Name="WeldsBeforeChange" ColumnName="WeldsBeforeChange" />
-                <ScalarProperty Name="WearBeforeChange" ColumnName="WearBeforeChange" />
-                <ScalarProperty Name="MoveWearBeforeChange" ColumnName="MoveWearBeforeChange" />
-                <ScalarProperty Name="FixedWearBeforeChange" ColumnName="FixedWearBeforeChange" />
-                <ScalarProperty Name="TipchangeTimestamp" ColumnName="TipchangeTimestamp" />
-                <ScalarProperty Name="Tool_Nr" ColumnName="Tool_Nr" />
-                <ScalarProperty Name="controller_name" ColumnName="controller_name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="ia_Alert">
             <EntityTypeMapping TypeName="Models.ia_Alert">
               <MappingFragment StoreEntitySet="ia_Alert">
