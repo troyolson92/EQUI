@@ -1,0 +1,51 @@
+﻿@*set title*@
+@{
+    ViewBag.Title = "CurrentTipstatus";
+}
+<div id="TipstatusGridSpincontainer" style="position:relative">
+    <div id="TipstatusGrid" class="mvc-grid"></div>
+</div>
+
+@section scripts{
+    <!--ploegrapport script-->
+    <script type="text/javascript">
+    var TipstatusGridspinner = new Spinner();
+    //render grid and subscrible to row clicked events
+        $('#TipstatusGrid').mvcgrid({
+            sourceUrl: '@Url.Action("_TipStatus")', // Grid source url string
+            requestType: 'get', // Ajax grid request type
+            reload: true, // Grid reload indicator
+        
+            reloadStarted: function () {
+                TipstatusGridspinner.spin(document.getElementById('TipstatusGridSpincontainer'));
+            },
+            reloadEnded: function () {
+                TipstatusGridspinner.stop();
+            },
+            reloadFailed: function (result) {
+                TipstatusGridspinner.stop();
+                $("#TipstatusGrid").html("Error while loading!!!");
+            }
+        });
+    </script>
+
+    <!--Handle signal R reload-->
+    <script src="~/Scripts/jquery.signalR-2.2.2.js"></script>
+    <script src="~/signalr/js"></script>
+    <script>
+        $.connection.hub.start()
+            .done(function () {
+                console.log("TipstatusGrid SignalR connected");
+                $.connection.dataRefreshHub.server.joinGroup("TipstatusGrid");
+            })
+            .fail(function () { console.log("TipstatusGrid SignalR connect ERROR") });
+
+        //trigger full window reload
+        $.connection.dataRefreshHub.client.newData = function () {
+            console.log("TipstatusGrid reload");
+            $('#NgacTipStatus').mvcgrid({
+                reload: true
+            });
+        }
+    </script>
+}

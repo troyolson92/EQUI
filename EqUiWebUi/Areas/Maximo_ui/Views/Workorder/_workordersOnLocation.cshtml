@@ -90,7 +90,8 @@
             },
             reloadEnded: function () {
                 workorderOnLocationGridspinner.stop();
-                // this - grid instance which invoked the event
+                //simulate click on first row so that the details load automatic
+                $("#Workorders>table>tbody>tr:first").trigger('click');
             },
             reloadFailed: function (result) {
                 workorderOnLocationGridspinner.stop();

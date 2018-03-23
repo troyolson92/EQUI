@@ -10,13 +10,7 @@ using EqUiWebUi.Areas.Gadata;
 
 namespace EqUiWebUi
 {
-	public static class DataBuffer
-	{
-		//
-		public static List<TipMonitor> Tipstatus { get; set; }
-		public static DateTime TipstatusLastDt { get; set; }
 
-    }
 
 	public class Backgroundwork
 	{
@@ -29,10 +23,6 @@ namespace EqUiWebUi
         {
             //background work
             Backgroundwork backgroundwork = new Backgroundwork();
-            //**********************************TipDresData table***************************************************
-            //set job to refresh every minute
-            RecurringJob.AddOrUpdate("BT_NGAC_tipSTS",() => backgroundwork.UpdateTipstatus(), Cron.Minutely);  
-            //**********************************STO****************************************************************
             //check every minute for new data (hystorian)
             //RecurringJob.AddOrUpdate(() => backgroundwork.PushDatafromSTOtoGADATA(), Cron.MinuteInterval(5));
             //**********************************STW040 BI rapoort****************************************************
@@ -41,38 +31,6 @@ namespace EqUiWebUi
             //reporting DB 
             RecurringJob.AddOrUpdate("RT_MX=>GADATA",() => backgroundwork.PushDatafromMAXIMOtoGADATA(), Cron.HourInterval(1));
         }
-
-     
-        //update the local datatable with tipstatus called every minute #hangfire
-		[AutomaticRetry(Attempts = 0)]
-        [DisableConcurrentExecution(50)] //locks the job from starting multible times if other one stil running.
-        public void UpdateTipstatus()
-		{
-			GADATAEntities gADATAEntities = new GADATAEntities();
-			List<TipMonitor> data = (from tipstatus in gADATAEntities.TipMonitor
-									 select tipstatus).ToList();
-
-			if (data.Count != 0)
-			{
-				DataBuffer.Tipstatus = data;
-
-				DateTime maxDate = data
-							.Where(r => r != null)
-							.Select(r => r.Date_Time.Value)
-							.Max();
-
-				DataBuffer.TipstatusLastDt = maxDate;
-                log.Info(string.Format("UpdateTipstatus {0} records", data.Count));
-
-                //add singal R 
-                var context = Microsoft.AspNet.SignalR.GlobalHost.ConnectionManager.GetHubContext<DataRefreshHub>();
-                context.Clients.Group("TipstatusGrid").newData();
-            }
-			else
-			{
-                log.Error("UpdateTipstatus did not return any data");
-			}
-		}
 
 		//update new data from STO to gadata. called every minute #hangfire
 		[AutomaticRetry(Attempts = 0)]

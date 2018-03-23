@@ -1,0 +1,217 @@
+﻿@*set title*@
+@{
+    ViewBag.Title = "PlanTipChange";
+}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4>Tipchange toolbox</h4>
+        </div>
+
+        <div class="panel-body">
+            @*plan false
+                gebruiker geeft in het formulier waar en met welke voorwaardes hij elektrodes wil wisselen*@
+            <div class="panel panel-default">
+
+                <div class="panel-heading">
+                    <h4>Plan het onderhoud</h4>
+                </div>
+
+                <div class="panel-body">
+
+                    <div class="row">
+                        <div class="col-sm-5">
+                            <label class="control-label col-sm-4" for="location">Op locatie</label>
+                            <div class="col-sm-8">
+                                @MyFilters.LocationDropdownGreenfield("location")
+                            </div>
+                        </div>
+                    </div>
+
+                    @*sam snapt het niet....*@
+                    <div class="row"><a>.</a></div>
+
+                    <div class="row">
+                        <div class="col-sm-5">
+                            <label class="control-label col-sm-8" for="minwear">waar de wear groter is dan</label>
+                            <div class="col-sm-4">
+                                <input class="form-control input-sm" type="number" min="0" max="100" step="5" value="60" id="minwear" />
+                            </div>
+                        </div>
+                        
+                        <div class="col-sm-7">
+                            <label class="control-label col-sm-8" for="minparts">minimum resterende stukken kleiner dan</label>
+                            <div class="col-sm-4">
+                                <input class="form-control input-sm" type="number" min="0"  step="10" value="200" id="minparts" disabled />
+                            </div>
+                        </div>
+
+                    </div>
+
+                    @*sam snapt het niet....*@
+                    <div class="row"><a>.</a></div>
+
+                    <div class="row">
+                        <div class="col-sm-5">
+                            <label class="control-label col-sm-8" for="maxdress">aantal keer gefreest groter dan</label>
+                            <div class="col-sm-4">
+                                <input class="form-control input-sm" type="number" min="0" max="200" step="10" value="120" id="maxdress" />
+                            </div>
+                        </div>
+
+                        <div class="col-sm-7"></div>
+                    </div>
+                </div>
+
+                <div class="panel-footer">
+                    <button class="btn-sm btn-primary" id="loadLocations">Zoek</button>
+                </div>
+            </div>
+            @****************************************************************************************************************************@
+
+            @*DO Hier word de lijst getoond met waar er moet gewisselde worden*@
+            <div class="panel panel-default" id="tipsToChangeContainer" style="display:none">
+
+                <div class="panel-heading">
+                    <div class="row">
+                        <h4 class="col-sm-6">Deze robots moeten gewisseld worden.</h4>
+                        <div class="col-sm-3" style="float:right">
+                            <input class="form-control input-sm" type="datetime-local" id="changeStartlistDatepicker" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-body" id="tipsToChangecontainer" style="position:relative">
+                    <div id="tipsToChange" style="display:none">result wil be here</div>
+                </div>
+
+                <div class="panel-footer">
+                    <button class="btn-sm btn-primary" id="loadverification">Verificatie</button>
+                    <button class="btn-sm btn-success" id="printTipsToChange" style="float:right">Print &raquo;</button>
+                </div>
+            </div>
+            @****************************************************************************************************************************@
+
+            @*CHECK Hier moet een soort van bevestiging komen. user moet elke keer op refresh duwen en crossmatch met lijst van hierboven
+                gebruik refernetie timestime van hierboven.*@
+            <div class="panel panel-default" id="tipsChangedContainer" style="display:none">
+
+                <div class="panel-heading">
+                    <div class="row">
+                        <h4 class="col-sm-6">Deze wissels NIET zijn gedetecteerd.</h4>
+                        <div class="col-sm-3" style="float:right">
+                            <input class="form-control input-sm" type="datetime-local" id="changeDonelistDatepicker" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-body" id="tipsChangedcontainer" style="position:relative">
+                    <div id="tipsChanged" style="display:none">result wil be here</div>
+                </div>
+
+                <div class="panel-footer">
+                    <button class="btn-sm btn-primary" id="RefreshVerification">Refresh</button>
+                </div>
+            </div>
+            @****************************************************************************************************************************@
+        </div>
+
+        <div class="panel-footer">
+            <a href="~/NgacElectrode/Index" class="btn-xs btn-primary">Electrode home &raquo;</a>
+        </div>
+    </div>
+
+
+
+<script type="text/javascript">
+//loading of first container and table "tips to change"
+    var urlTipsToChange = '@Url.Action("_TipsToChange")';
+    var spinner1 = new Spinner();
+    $('#loadLocations').click(function () {
+        //disable button
+        $('#loadLocations').attr("disabled", true);
+        //clear table if its there
+        $("#tipsToChange").empty();
+        //set timestamp
+        $("#changeStartlistDatepicker").val(new Date().toJSON().slice(0, 19));
+        //start a wait spinner
+        spinner1.spin(document.getElementById('tipsToChangecontainer'));
+
+        //first fade in the container (will only fade in on first run)
+        $("#tipsToChangeContainer").fadeIn();
+        //load partial
+            var locationfilter = $('#location').val();
+            var minwear = $('#minwear').val();
+            var minparts = $('#minparts').val();
+            var maxdress = $('#maxdress').val();
+            $("#tipsToChange").load(urlTipsToChange,
+                {
+                    locationFilter: locationfilter,
+                    minWear: minwear,
+                    minParts: minparts,
+                    maxDress: maxdress
+                },
+                //this runs when load done
+                function () {
+                    //fade in the result table
+                    $('#tipsToChange').fadeIn(1000,function () {
+                        //hide spinner when fade completes
+                        spinner1.stop();
+                    });
+                    //enable button
+                    $('#loadLocations').removeAttr("disabled");
+                }
+            );
+    })
+
+//loading of second container and table "change check"
+    var urlTipsChanged = '@Url.Action("_TipsChanged")';
+    var spinner2 = new Spinner();
+    $('#loadverification, #RefreshVerification').click(function () {
+        //disable buttons
+        $('#loadverification').attr("disabled", true);
+        //clear table if its there
+        $("#tipsChanged").empty();
+        //set timestamp
+        $("#changeDonelistDatepicker").val(new Date().toJSON().slice(0, 19));
+        //start a wait spinner
+        spinner2.spin(document.getElementById('tipsChangedcontainer'));
+        //first fade in the container (will only fade in on first run)
+        $("#tipsChangedContainer").fadeIn();
+        //load partial
+            var locationfilter = $('#location').val();
+            var minwear = $('#minwear').val();
+            var minparts = $('#minparts').val();
+            var maxdress = $('#maxdress').val();
+            var reportTimestamp = $("#changelistDatepicker").val();
+            $("#tipsChanged").load(urlTipsChanged,
+                {
+                    locationFilter: locationfilter,
+                    minWear: minwear,
+                    minParts: minparts,
+                    maxDress: maxdress
+                },
+                //this runs when load done
+                function () {
+                    //fade in the result table
+                    $('#tipsChanged').fadeIn(1000,function () {
+                        //hide spinner when fade completes
+                        spinner2.stop();
+                    });
+                    //enable button
+                    $('#loadverification').removeAttr("disabled");
+                    console.log("hit1");
+                }
+            );
+    })
+</script>
+
+
+@*print.js*@
+<script type="text/javascript">
+        $('#printTipsToChange').click(function () {
+            console.log("print started");
+            $('#tipsToChangeContainer').printThis({
+                header: "<h1>Tipchange plan</h1>"
+            });
+        });
+</script>
