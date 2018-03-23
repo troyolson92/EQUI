@@ -814,6 +814,7 @@
     <Content Include="Areas\Tiplife\Views\NgacElectrode\PlanTipChange.cshtml" />
     <Content Include="Areas\Tiplife\Views\NgacElectrode\TipwearBeforeChange.cshtml" />
     <Content Include="Areas\Tiplife\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Tiplife\Views\NgacElectrode\TipDressData.cshtml" />
     <None Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.svg" />

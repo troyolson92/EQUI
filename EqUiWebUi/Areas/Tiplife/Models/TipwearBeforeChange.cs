@@ -31,5 +31,6 @@ namespace EqUiWebUi.Areas.Tiplife.Models
         public Nullable<int> TipAge_h_ { get; set; }
         public Nullable<double> DeltaNom { get; set; }
         public Nullable<double> DeltaNomBeforeChange { get; set; }
+        public string LocationTree { get; set; }
     }
 }
