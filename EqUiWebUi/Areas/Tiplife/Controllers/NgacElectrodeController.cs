@@ -48,9 +48,25 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
         {
             var startdate = DateTime.Now.Date.AddDays(daysback * -1);
             GADATAEntitiesTiplife gADATAEntities = new GADATAEntitiesTiplife();
-            IQueryable<TipwearBeforeChange> data = from tipwearBeforeChange in gADATAEntities.TipwearBeforeChange
-                                                   where tipwearBeforeChange.TipchangeTimestamp > startdate
-                                                   select tipwearBeforeChange;
+            string locationroot = Session["LocationRoot"].ToString();
+            IQueryable<TipwearBeforeChange> data = from t in gADATAEntities.TipwearBeforeChange
+                                                   where t.TipchangeTimestamp > startdate
+                                                   && (t.LocationTree ?? "").Contains(locationroot)
+                                                   select t;
+            return View(data);
+        }
+
+        //------------------------------------tabel met ruwe tipdress data.-------------------------------------------------
+        [HttpGet]
+        public ActionResult TipDressData(int daysback = 360)
+        {
+            var startdate = DateTime.Now.Date.AddDays(daysback * -1);
+            GADATAEntitiesTiplife gADATAEntities = new GADATAEntitiesTiplife();
+            string locationroot = Session["LocationRoot"].ToString();
+            IQueryable<TipDressLogFile> data = from t in gADATAEntities.TipDressLogFile
+                                               where t.Date_Time > startdate
+                                               && (t.LocationTree ?? "").Contains(locationroot)
+                                               select t;
             return View(data);
         }
 

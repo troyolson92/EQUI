@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="GADATAModelTiplife.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="GADATAModelTiplife.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <!--Errors Found During Generation:
 warning 6002: The table/view 'GADATA.NGAC.TipDressLogFile' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="TipDressLogFile">
@@ -99,6 +99,7 @@ warning 6002: The table/view 'GADATA.NGAC.TipwearBeforeChange' does not have a p
             <PropertyRef Name="Tool_Nr" />
           </Key>
           <Property Name="controller_name" Type="varchar" MaxLength="30" />
+          <Property Name="LocationTree" Type="varchar(max)" />
           <Property Name="controller_id" Type="int" />
           <Property Name="tipDressID" Type="int" Nullable="false" />
           <Property Name="Tool_Nr" Type="smallint" Nullable="false" />
@@ -277,6 +278,7 @@ warning 6002: The table/view 'GADATA.NGAC.TipwearLast' does not have a primary k
           <EntitySet Name="TipwearBeforeChange" EntityType="Self.TipwearBeforeChange" store:Type="Views" store:Schema="NGAC">
             <DefiningQuery>SELECT 
     [TipwearBeforeChange].[controller_name] AS [controller_name], 
+    [TipwearBeforeChange].[LocationTree] AS [LocationTree], 
     [TipwearBeforeChange].[controller_id] AS [controller_id], 
     [TipwearBeforeChange].[tipDressID] AS [tipDressID], 
     [TipwearBeforeChange].[Tool_Nr] AS [Tool_Nr], 
@@ -370,8 +372,7 @@ warning 6002: The table/view 'GADATA.NGAC.TipwearLast' does not have a primary k
     FROM [NGAC].[TipwearLast] AS [TipwearLast]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="GADATAModelTiplife" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -479,6 +480,7 @@ warning 6002: The table/view 'GADATA.NGAC.TipwearLast' does not have a primary k
           <Property Name="TipAge_h_" Type="Int32" />
           <Property Name="DeltaNom" Type="Double" />
           <Property Name="DeltaNomBeforeChange" Type="Double" />
+          <Property Name="LocationTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="TipwearLast">
           <Key>
@@ -654,6 +656,7 @@ warning 6002: The table/view 'GADATA.NGAC.TipwearLast' does not have a primary k
           <EntitySetMapping Name="TipwearBeforeChange">
             <EntityTypeMapping TypeName="GADATAModelTiplife.TipwearBeforeChange">
               <MappingFragment StoreEntitySet="TipwearBeforeChange">
+                <ScalarProperty Name="LocationTree" ColumnName="LocationTree" />
                 <ScalarProperty Name="controller_name" ColumnName="controller_name" />
                 <ScalarProperty Name="controller_id" ColumnName="controller_id" />
                 <ScalarProperty Name="tipDressID" ColumnName="tipDressID" />
