@@ -1,0 +1,30 @@
+﻿
+@model EqUiWebUi.WebGridHelpers.DefaultModel
+
+@*main body*@
+@{
+    ViewBag.Title = "Dynamic Gridview";
+    WebGrid grid = new WebGrid(null, rowsPerPage: @Model.PageSize);
+    grid.Bind(Model.Data, autoSortAndPage: true, rowCount: @Model.PageSize);
+}
+
+    <div class="modal-header">
+        <h2>CheckStatement Result</h2>
+    </div>
+    <div class="modal-body">
+        @grid.GetHtml(
+                     htmlAttributes: new { id = "gridMapping" },
+                     tableStyle: "table table-bordered",
+                     headerStyle: "info",
+                     footerStyle: "webgrid-footer",
+                     alternatingRowStyle: "webgrid-alternating-row",
+                     selectedRowStyle: "webgrid-selected-row",
+                     rowStyle: "gridrow",
+                     mode: WebGridPagerModes.All,
+                     firstText: "<< First",
+                     previousText: "< Prev",
+                     nextText: "Next >",
+                     lastText: "Last >>",
+                     columns: ViewBag.Columns
+         )
+    </div>

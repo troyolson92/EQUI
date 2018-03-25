@@ -73,7 +73,7 @@ else
                         @Html.ValidationMessageFor(model => model.sqlStqStatement, "", new { @class = "text-danger" })
                         @Html.HelpTextFor(model => model.sqlStqStatement)
                         <div class="col-md-10">
-                            <button class="btn-sm btn-primary">Check statement</button>
+                            <button id="checkstatement" type="button" class="btn-sm btn-primary">Check statement</button>
                         </div>
                     </div>
                 </div>
@@ -168,6 +168,11 @@ else
     @Html.ActionLink("Back to List", "Index")
 </div>
 
+@*render popuover modal*@
+<div id="checkstatementModal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-content">Loading....</div>
+</div>
+
 
 @section scripts{
     @*http://codemirror.net/doc/manual.html*@
@@ -183,17 +188,31 @@ else
     <script src="~/Scripts/jquery-cron.js"></script>
 
     <script>
+        //for code mirror editor
         var sqlCodeMirror = CodeMirror.fromTextArea(document.getElementById("sqlStqStatement"), {
             lineNumbers: true,
             mode: "sql",
             theme: "neat"
         });
-
+        //for jcron editor
         $('#jCron').cron({
             initial: "@(Model.Cron == null ? "0 * * * *" : Model.Cron)",
             onChange: function () {
                 $('#Cron').val($(this).cron("value"));
             }
         });
+        //for check statement
+            //on check statementClick
+            $('#checkstatement').click(function () {
+                var urlDynamicWebgrid = '@Url.Action("_dynamicWebgridRunQueryAgainstDB", "Dynamic", new { area = "" })?qry=' + encodeURIComponent(sqlCodeMirror.getValue()) +
+                    '&db=' + $('#RunAgainstDatabase').val();
+                    $('#checkstatementModal').removeData('bs.modal');
+                    $('#checkstatementModal').html('<div class="modal-content">Loading....</div>');
+                    $('#checkstatementModal').modal({ remote: urlDynamicWebgrid });
+            });
+            //clear on close
+            $('#checkstatementModal').on('hidden.bs.modal', function (e) {
+                $('#checkstatementModal').html('<div class="modal-content">No content</div>');
+            });
     </script>
 }

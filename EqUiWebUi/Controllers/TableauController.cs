@@ -37,6 +37,13 @@ namespace EqUiWebUi.Controllers
             return View();
         }
 
+
+        [HttpGet]
+        public ActionResult Test()
+        {
+            return View();
+        }
+
         //handles getting the user filter settings for tableu bassed on client session
         //This should be reassest... you should be able to just pass the session location root to tableau. 
         //This is an unneeded configuration part.

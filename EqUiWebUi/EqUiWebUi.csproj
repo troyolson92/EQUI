@@ -451,6 +451,7 @@
     <Content Include="Content\images\icons8-settings-25.png" />
     <Content Include="Content\images\volvo-50.png" />
     <Content Include="Content\jquery-cron.css" />
+    <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\mvc-grid.css" />
     <Content Include="Content\MvcGrid\mvc-grid.css" />
     <Content Include="Content\Site.css" />
@@ -993,6 +994,8 @@
     <Content Include="Views\Home\Settings.cshtml" />
     <Content Include="Views\Shared\_MinimalLayout.cshtml" />
     <Content Include="Views\Chart\GetErrorTrend.cshtml" />
+    <Content Include="Views\Tableau\Test.cshtml" />
+    <Content Include="Views\Dynamic\_dynamicWebgridRunQueryAgainstDB.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EQUICommunictionLib\EQUICommunictionLib.csproj">

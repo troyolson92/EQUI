@@ -5,6 +5,7 @@
 
 @section scripts{
     <script src="~/Scripts/tableau-2.0.0.min.js"></script>
+    <!--tableau scripts-->
     <script>
         /**
          * Instantiate our vizualization.
@@ -15,7 +16,7 @@
 
             var size = findDashboardSize();
             var vizOptions = {
-                embed: true,
+                embed: false, //setting embed false force prompt login
                 hideTabs: false,
                 hideToolbar: false,
                 showShareOptions: false,
@@ -94,4 +95,4 @@
         $("#allcontent").removeClass("body-content");
         $("#allcontent").removeClass("container");
     </script>
-    }
+}
