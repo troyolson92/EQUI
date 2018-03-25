@@ -85,9 +85,9 @@ namespace EqUiWebUi.Areas.Alert
             DataTable ActiveAlerts = new DataTable();
             StoComm stoComm = new StoComm();
             MaximoComm maximoComm = new MaximoComm();
-
-            //run command against selected database.
             GadataComm gadataComm = new GadataComm();
+            //run command against selected database.
+
             switch (trigger.RunAgainst)
             {
                 case (int)SmsDatabases.GADATA:
