@@ -159,6 +159,7 @@
     <Folder Include="Areas\HanfireArea\Models\" />
     <Folder Include="Areas\HanfireArea\Views\Shared\" />
     <Folder Include="Areas\Maximo_ui\Views\Shared\" />
+    <Folder Include="Areas\VASC\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Code\MyRowStyling.cs" />
@@ -353,6 +354,60 @@
     </Compile>
     <Compile Include="Areas\user_management\SreenHub.cs" />
     <Compile Include="Areas\user_management\user_managementAreaRegistration.cs" />
+    <Compile Include="Areas\VASC\Controllers\c_controller_classController.cs" />
+    <Compile Include="Areas\VASC\Controllers\c_csv_logController.cs" />
+    <Compile Include="Areas\VASC\Controllers\c_device_infoController.cs" />
+    <Compile Include="Areas\VASC\Controllers\vascController.cs" />
+    <Compile Include="Areas\VASC\Models\c_alarm_ignore.cs">
+      <DependentUpon>VASC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VASC\Models\c_controller.cs">
+      <DependentUpon>VASC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VASC\Models\c_controller_class.cs">
+      <DependentUpon>VASC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VASC\Models\c_controller_classMetadata.cs" />
+    <Compile Include="Areas\VASC\Models\c_csv_log.cs">
+      <DependentUpon>VASC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VASC\Models\c_csv_logMetadata.cs" />
+    <Compile Include="Areas\VASC\Models\c_device_info.cs">
+      <DependentUpon>VASC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VASC\Models\c_device_infoMetadata.cs" />
+    <Compile Include="Areas\VASC\Models\c_error_no_log.cs">
+      <DependentUpon>VASC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VASC\Models\c_job.cs">
+      <DependentUpon>VASC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VASC\Models\c_service_setup.cs">
+      <DependentUpon>VASC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VASC\Models\c_variable.cs">
+      <DependentUpon>VASC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VASC\Models\c_variable_search.cs">
+      <DependentUpon>VASC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VASC\Models\VASC.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>VASC.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VASC\Models\VASC.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>VASC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VASC\Models\VASC.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>VASC.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VASC\Models\VASCenums.cs" />
+    <Compile Include="Areas\VASC\VASCAreaRegistration.cs" />
     <Compile Include="Backgroundwork.cs" />
     <Compile Include="Controllers\ChartController.cs" />
     <Compile Include="Controllers\DynamicController.cs" />
@@ -439,6 +494,16 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>user_management.edmx</DependentUpon>
       <LastGenOutput>user_management.cs</LastGenOutput>
+    </Content>
+    <Content Include="Areas\VASC\Models\VASC.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>VASC.edmx</DependentUpon>
+      <LastGenOutput>VASC.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Areas\VASC\Models\VASC.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>VASC.edmx</DependentUpon>
+      <LastGenOutput>VASC.cs</LastGenOutput>
     </Content>
     <Content Include="Content\codemirror\codemirror.css" />
     <Content Include="Content\codemirror\neat.css" />
@@ -818,6 +883,22 @@
     <Content Include="Areas\Tiplife\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Tiplife\Views\NgacElectrode\TipDressData.cshtml" />
     <Content Include="Areas\PlcSupervisie\Views\Screenshot\ShowJpg.cshtml" />
+    <Content Include="Areas\VASC\Views\web.config" />
+    <Content Include="Areas\VASC\Views\_ViewStart.cshtml" />
+    <EntityDeploy Include="Areas\VASC\Models\VASC.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>VASC.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Areas\VASC\Models\VASC.edmx.diagram">
+      <DependentUpon>VASC.edmx</DependentUpon>
+    </Content>
+    <Content Include="Areas\VASC\Views\c_device_info\Edit.cshtml" />
+    <Content Include="Areas\VASC\Views\c_device_info\Index.cshtml" />
+    <Content Include="Areas\VASC\Views\c_csv_log\Edit.cshtml" />
+    <Content Include="Areas\VASC\Views\c_csv_log\Index.cshtml" />
+    <Content Include="Areas\VASC\Views\c_controller_class\Edit.cshtml" />
+    <Content Include="Areas\VASC\Views\c_controller_class\Index.cshtml" />
+    <Content Include="Areas\VASC\Views\vasc\Index.cshtml" />
     <None Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.svg" />

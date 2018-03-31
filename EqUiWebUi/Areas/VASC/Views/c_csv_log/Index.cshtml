@@ -1,0 +1,47 @@
+﻿@model IEnumerable<EqUiWebUi.Areas.VASC.Models.c_csv_log>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <h2>Index c_csv_log</h2>
+    <div class="alert alert-info">
+        <h4>
+            The list of CSV log files to be read. Some files are read based on change of monitored variables and others based on a poll value
+        </h4>
+
+        <div class="text-muted">
+            See ABB FUPA for more info about the CSV log file
+        </div>
+    </div>
+</div>
+
+<p>
+    @Html.ActionLink("ADD CSV file", "Edit", new { id = -1 })
+</p>
+
+
+@Html.Grid(Model).Named("c_csv_log").Build(columns =>
+{
+    columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Asc);
+    columns.Add(c => c._Enable_bit).Titled("enable_bit");
+    columns.Add(c => c.csv_filename).Titled("csv_filename");
+    columns.Add(c => c.rt_table).Titled("rt_table");
+    columns.Add(c => c._Poll_Rate).Titled("Poll_Rate");
+    columns.Add(c => c.comment).Titled("comment");
+    columns.Add(c => c)
+                    .Titled("")
+                    .Encoded(false)
+                    .RenderedAs(c => @Html.ActionLink("Edit", "Edit", new { id = c.id })
+                    ).Filterable(false);
+}).Filterable(true).Sortable(true).Empty("Did not find anything").Css("table-hover")
+
+@section scripts{
+    <script>
+        //full with screen
+        $("#allcontent").removeClass("body-content");
+        $("#allcontent").removeClass("container");
+    </script>
+}

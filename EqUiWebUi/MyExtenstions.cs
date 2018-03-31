@@ -67,4 +67,19 @@ namespace EqUiWebUi
             return html.Encode(firstAttribute?.Description ?? string.Empty);
         }
     }
+
+    //extension for convertion enum to select list
+    public static class SelectListExtensions
+    {
+        public static System.Web.Mvc.SelectList ToSelectList<TEnum>(this TEnum enumObj) where TEnum : struct, IComparable, IFormattable, IConvertible
+        {
+            List<SelectListItem> selist = new List<SelectListItem>();
+            foreach (int value in Enum.GetValues(typeof(TEnum)))
+            {
+                TEnum type = (TEnum)Enum.Parse(typeof(TEnum), value.ToString());
+                selist.Add(new SelectListItem { Value = value.ToString(), Text = type.ToString() });
+            }
+            return new System.Web.Mvc.SelectList(selist, "Value", "Text");
+        }
+    }
 }
