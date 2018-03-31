@@ -60,6 +60,8 @@
           <Property Name="AutoSetStateTechComp" Type="bit" Nullable="false" />
           <Property Name="smsOnRetrigger" Type="bit" Nullable="false" />
           <Property Name="enableSMS" Type="bit" Nullable="false" />
+          <Property Name="isDowntime" Type="bit" Nullable="false" />
+          <Property Name="isInReport" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="h_alert">
           <Key>
@@ -553,6 +555,8 @@
           <NavigationProperty Name="h_alert" Relationship="AlertModel.FK_h_alert_c_triggers" FromRole="c_triggers" ToRole="h_alert" />
           <Property Name="enableSMS" Type="Boolean" Nullable="false" />
           <Property Name="Cron" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="isDowntime" Type="Boolean" Nullable="false" />
+          <Property Name="isInReport" Type="Boolean" Nullable="false" />
         </EntityType>
         <Association Name="FK_c_triggers_c_smsSystem">
           <End Type="AlertModel.c_smsSystem" Role="c_smsSystem" Multiplicity="0..1" />
@@ -812,6 +816,8 @@
           <EntitySetMapping Name="c_triggers">
             <EntityTypeMapping TypeName="AlertModel.c_triggers">
               <MappingFragment StoreEntitySet="c_triggers">
+                <ScalarProperty Name="isInReport" ColumnName="isInReport" />
+                <ScalarProperty Name="isDowntime" ColumnName="isDowntime" />
                 <ScalarProperty Name="Cron" ColumnName="Cron" />
                 <ScalarProperty Name="enableSMS" ColumnName="enableSMS" />
                 <ScalarProperty Name="smsOnRetrigger" ColumnName="smsOnRetrigger" />

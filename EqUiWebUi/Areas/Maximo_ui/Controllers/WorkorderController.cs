@@ -24,7 +24,7 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
 
         //full view can be intitiated by using parms or by model. 
         [HttpGet]
-        public ActionResult Workorders(string location, string locancestor, bool? b_ciblings, bool? b_preventive, string jpnum, string worktype, string wonum
+        public ActionResult Workorders(string location, string locancestor, bool? b_ciblings, bool? b_preventive, string jpnum, string worktype, string wonum, string status
             , DateTime? startdate, DateTime? enddate, Models.WorkorderSelectOptions workorderSelectOptions
             , bool loadOnInit = false, bool fullscreen = false, int fontSize = 12, bool RealtimeConn = false)
         {
@@ -36,6 +36,7 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
             if (jpnum != null) workorderSelectOptions.jpnum = jpnum;
             if (worktype != null) workorderSelectOptions.worktype = worktype;
             if (wonum != null) workorderSelectOptions.wonum = wonum;
+            if (status != null) workorderSelectOptions.status = status;
             if (startdate != null)
             {
                 workorderSelectOptions.startdate = startdate.GetValueOrDefault(); //if a value is passed (nullcheck)
@@ -66,7 +67,7 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
 
         //can be called to be renders as partial in model or something like that...
         [HttpGet]
-        public ActionResult _workordersOnLocation(string location, string locancestor, bool? b_ciblings, bool? b_preventive, string jpnum, string worktype, string wonum
+        public ActionResult _workordersOnLocation(string location, string locancestor, bool? b_ciblings, bool? b_preventive, string jpnum, string worktype, string wonum, string status
             , DateTime? startdate, DateTime? enddate, bool RealtimeConn = false)
         {
             Models.WorkorderSelectOptions workorderSelectOptions = new WorkorderSelectOptions();
@@ -78,6 +79,7 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
             workorderSelectOptions.jpnum = jpnum;
             workorderSelectOptions.worktype = worktype;
             workorderSelectOptions.wonum = wonum;
+            workorderSelectOptions.status = status;
             workorderSelectOptions.startdate = startdate.GetValueOrDefault(System.DateTime.Now.AddDays(MaximoWorkordersDaysback));
             workorderSelectOptions.enddate = enddate.GetValueOrDefault(System.DateTime.Now);
             workorderSelectOptions.realtimeConn = RealtimeConn;
@@ -101,7 +103,7 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
 
         //gets called by AJAX to render the workorder grid
         [HttpGet]
-        public ActionResult _workordersOnLocationGrid(string location, string locancestor, bool? b_ciblings, bool? b_preventive, string jpnum, string worktype, string wonum
+        public ActionResult _workordersOnLocationGrid(string location, string locancestor, bool? b_ciblings, bool? b_preventive, string jpnum, string worktype, string wonum, string status
             , DateTime? startdate, DateTime? enddate, bool RealtimeConn = false)
         {
             //check if user is allowed to user realtimeConn
@@ -120,7 +122,7 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
 
             //build qyr
             StringBuilder sbqry = new StringBuilder();
-            sbqry.Append(@"
+            sbqry.AppendLine(@"
                SELECT 
                  WORKORDER.WONUM WONUM
                 ,WORKORDER.STATUS
@@ -133,138 +135,30 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
                 ,WORKORDER.CHANGEDATE
                 ,locancestor.ANCESTOR
                 FROM MAXIMO.WORKORDER WORKORDER
-                JOIN MAXIMO.locancestor locancestor on 
-                locancestor.LOCATION = WORKORDER.LOCATION
-                and locancestor.ORGID = WORKORDER.ORGID
-                and locancestor.ANCESTOR = (
-                select ancestor from (select locancestor.ancestor 
-                from maximo.locancestor where locancestor.location");
+                left join MAXIMO.LOCANCESTOR LOCANCESTOR on WORKORDER.LOCATION = LOCANCESTOR.LOCATION AND LOCANCESTOR.SYSTEMID = 'PRODMID'");
 
-            //handel ancestors.
-            if (!string.IsNullOrWhiteSpace(locancestor))
-            {
-                string[] locancestors = locancestor.Split(';');
-                //if only 1 location is passed we allow wildcards (like) 
-                if (locancestors.Count() == 1)
-                {
-                    sbqry.Append(string.Format(" LIKE '%{0}%'", locancestors[0].Trim()));
-                }
-                else // if more than one location use in statement
-                {
-                    sbqry.Append(" IN (");
-                    foreach (string ancestor in locancestors)
-                    {
-                        sbqry.Append("'").Append(ancestor.Trim()).Append("'");
-                        if (ancestor != locancestors.Last())
-                        {
-                            sbqry.Append(",");
-                        }
-                    }
-                    sbqry.AppendLine(") ");
-                }
-            }
-            else //if no location is passed set wildcard for everything
-            {
-                sbqry.Append(" LIKE '%'");
-            }
-            //append the rest of the locancestor clause
-
-            //SDB BUG 18w12D1 if we do "and locancestor.ORGID = WORKORDER.ORGID" I crap out with the realtime MX on invalid collum name...
-
-            sbqry.AppendLine().AppendLine(@"and locancestor.ORGID = 'VCCBE'
-                and locancestor.location <> locancestor.ancestor 
-                order by locancestor.LOCANCESTORID)
-                where rownum = 1)");
 
             //start where clause
-            sbqry.AppendLine().Append("WHERE WORKORDER.LOCATION");
+            sbqry.AppendLine("WHERE ((WORKORDER.woclass = 'WORKORDER' or WORKORDER.woclass = 'ACTIVITY') and WORKORDER.historyflag = 0 and WORKORDER.istask = 0)");
 
+            //handel ancestors.
+            sbqry.AppendLine(handleParm("LOCANCESTOR.ANCESTOR", locancestor));
             //handle locations.
-            if (!string.IsNullOrWhiteSpace(location))
-            {
-                string[] locations = location.Split(';');
-                //if only 1 location is passed we allow wildcards (like) 
-                if (locations.Count() == 1)
-                {
-                    sbqry.Append(string.Format(" LIKE '%{0}%'", locations[0].Trim()));
-                }
-                else // if more than one location use in statement
-                {
-                    sbqry.Append(" IN (");
-                    foreach (string loc in locations)
-                    {
-                        sbqry.Append("'").Append(loc.Trim()).Append("'");
-                        if (loc != locations.Last())
-                        {
-                            sbqry.Append(",");
-                        }
-                    }
-                    sbqry.AppendLine(") ");
-                }
-            }
-            else //if no location is passed set wildcard for everything
-            {
-                sbqry.Append(" LIKE '%'");
-            }
-
-            //new line 
-            sbqry.AppendLine();
-
+            sbqry.AppendLine(handleParm("WORKORDER.LOCATION", location));
             //handle preventive
             b_preventive = b_preventive ?? false; //default no preventive
             if (b_preventive == false)
             {
                 sbqry.AppendLine("AND WORKORDER.WORKTYPE not in ('PP','PCI','WSCH')");
             }
-
             //hande worktype
-            if (!string.IsNullOrWhiteSpace(worktype))
-            {
-                sbqry.Append("AND WORKORDER.WORKTYPE in (");
-                string[] worktypes = worktype.Split(';');
-                foreach(string type in worktypes)
-                {
-                    sbqry.Append("'").Append(type.Trim()).Append("'");
-                    if (type != worktypes.Last())
-                    {
-                        sbqry.Append(",");
-                    }                    
-                }
-                sbqry.AppendLine(") ");
-            }
-
+            sbqry.AppendLine(handleParm("WORKORDER.WORKTYPE", worktype));
             //handle JPnum
-            if (!string.IsNullOrWhiteSpace(jpnum))
-            {
-                sbqry.Append("AND WORKORDER.JPNUM in (");
-                string[] jpnums = jpnum.Split(';');
-                foreach (string jp in jpnums)
-                {
-                    sbqry.Append("'").Append(jp).Append("'");
-                    if (jp != jpnums.Last())
-                    {
-                        sbqry.Append(",");
-                    }
-                }
-                sbqry.AppendLine(") ");
-            }
-
+            sbqry.AppendLine(handleParm("WORKORDER.JPNUM", jpnum));
             //handle wonum
-            if (!string.IsNullOrWhiteSpace(wonum))
-            {
-                sbqry.Append("AND WORKORDER.WONUM in (");
-                string[] wonums = wonum.Split(';');
-                foreach (string wo in wonums)
-                {
-                    sbqry.Append("'").Append(wo).Append("'");
-                    if (wo != wonums.Last())
-                    {
-                        sbqry.Append(",");
-                    }
-                }
-                sbqry.AppendLine(") ");
-            }
-
+            sbqry.AppendLine(handleParm("WORKORDER.WONUM", wonum));
+            //handle status
+            sbqry.AppendLine(handleParm("WORKORDER.STATUS", status));
             //handle timerange
             if (enddate != null)
             {
@@ -302,6 +196,70 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
                 workorders.Add(workorder);
             }
             return PartialView(workorders);
+        }
+
+        //helper procedure for adding parms to query
+        string handleParm(string parmname, string value)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            if (!string.IsNullOrWhiteSpace(value))
+            {
+                bool not = false;
+                if (value.StartsWith("!"))
+                {
+                    not = true;
+                    value = value.Replace("!", "");
+                }
+                string[] values = value.Split(';');
+                //if only 1 location is passed we allow wildcards (like) 
+                if (values.Count() == 1)
+                {
+                    if (!values[0].Trim().Contains("%"))  //if no wildcard exact match 
+                    {
+                        if (not)
+                        {
+                            sb.AppendLine(string.Format("AND {1} <> '{0}'", values[0].Trim(), parmname));
+                        }
+                        else
+                        {
+                            sb.AppendLine(string.Format("AND {1} = '{0}'", values[0].Trim(), parmname));
+                        }
+                    }
+                    else //wrap with wildcards. 
+                    {
+                        if (not)
+                        {
+                            sb.AppendLine(string.Format("AND {1} NOT LIKE '%{0}%'", values[0].Trim(), parmname));
+                        }
+                        else
+                        {
+                            sb.AppendLine(string.Format("AND {1} LIKE '%{0}%'", values[0].Trim(), parmname));
+                        }
+                    }
+                }
+                else // if more than one location use in statement
+                {
+                    if (not)
+                    {
+                        sb.Append(string.Format("AND {0} NOT IN (", parmname));
+                    }
+                    else
+                    {
+                        sb.Append(string.Format("AND {0} IN (", parmname));
+                    }
+                    foreach (string val in values)
+                    {
+                        sb.Append("'").Append(val.Trim()).Append("'");
+                        if (val != values.Last())
+                        {
+                            sb.Append(",");
+                        }
+                    }
+                    sb.AppendLine(") ");
+                }
+            }
+            return sb.ToString();
         }
 
     }

@@ -59,9 +59,10 @@
             "&jpnum=@Model.jpnum" +
             "&worktype=@Model.worktype" +
             "&wonum=@Model.wonum" +
+            "&status=@Model.status" +
             "&startdate=@Model.startdate.ToString("yyyy-MM-dd HH:mm:ss")" +
-            "&enddate=@Model.enddate.ToString("yyyy-MM-dd HH:mm:ss")" + 
-            "&RealtimeConn=@Model.realtimeConn" 
+            "&enddate=@Model.enddate.ToString("yyyy-MM-dd HH:mm:ss")" +
+            "&RealtimeConn=@Model.realtimeConn"
         return result;
     }
 // set url to link back to main workorder view
@@ -92,6 +93,8 @@
                 workorderOnLocationGridspinner.stop();
                 //simulate click on first row so that the details load automatic
                 $("#Workorders>table>tbody>tr:first").trigger('click');
+                //subscribe to click event (launch external window)
+                initUrlNewWindow();
             },
             reloadFailed: function (result) {
                 workorderOnLocationGridspinner.stop();

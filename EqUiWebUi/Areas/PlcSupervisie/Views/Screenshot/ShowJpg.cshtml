@@ -1,0 +1,30 @@
+﻿<div id="main_area">
+    <div class="col-sm-12" id="carousel-bounding-box">
+        <div class="carousel slide" id="myCarousel">
+            <!-- Carousel items -->
+            <div class="carousel-inner">
+                <div class="active item" data-slide-number="0">
+                    <img src="@ViewBag.url" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--carousel script-->
+@section scripts{
+    <script>
+        //full with screen
+        $("#allcontent").removeClass("body-content");
+        $("#allcontent").removeClass("container");
+    </script>
+}
+
+
+<!--carousel style -->
+<style>
+
+    .carousel-inner > .item > img, .carousel-inner > .item > a > img {
+        width: 100%;
+    }
+</style>

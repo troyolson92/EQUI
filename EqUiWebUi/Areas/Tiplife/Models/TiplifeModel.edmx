@@ -6,6 +6,18 @@
     <edmx:StorageModels>
     <Schema Namespace="GADATAModelTiplife.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <!--Errors Found During Generation:
+warning 6013: The table/view 'GADATA.NGAC.TipDressAvgWear' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="TipDressAvgWear">
+          <Property Name="controller_name" Type="varchar" MaxLength="30" />
+          <Property Name="LocationTree" Type="varchar(max)" />
+          <Property Name="id" Type="int" />
+          <Property Name="LastTipchangeTimestamp" Type="datetime" />
+          <Property Name="FirstTipchangeTimestamp" Type="datetime" />
+          <Property Name="FixedWear/dress" Type="float" />
+          <Property Name="MovWear/dress" Type="float" />
+          <Property Name="Wear/dress" Type="float" />
+        </EntityType>-->
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'GADATA.NGAC.TipDressLogFile' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="TipDressLogFile">
           <Key>

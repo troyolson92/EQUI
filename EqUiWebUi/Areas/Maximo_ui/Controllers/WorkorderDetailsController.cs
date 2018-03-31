@@ -164,7 +164,8 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
                 Models.Workorder workorder = new Models.Workorder();
                 workorder.WONUM = row.Field<string>("WONUM");
                 workorder.LOCATION = row.Field<string>("LOCATION");
-                workorder.STATUS = row.Field<string>("STATUS");
+                workorder.STATUS = row.Field<string>("STATUS"); 
+                workorder.OWNERGROUP = row.Field<string>("OWNERGROUP");
                 SubWoList.Add(workorder);
             }
             return PartialView(SubWoList);

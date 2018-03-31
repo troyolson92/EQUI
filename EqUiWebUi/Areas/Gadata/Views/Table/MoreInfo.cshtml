@@ -4,9 +4,11 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>MoreInfo</h2>
-
 <!--putting this in a section this only renders onces the page is loaded-->
+
 @section partials{
-    @Html.Partial("_Moreinfo", Model)
+    <div class="modal-content">
+        @Html.Partial("_Moreinfo", Model)
+    </div>
+
 }

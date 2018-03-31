@@ -3,6 +3,7 @@ function initInterface() {
     EnablePannelCollaps();
     EnableJQresultTriggerBtn();
     initToaster();
+    initUrlNewWindow();
 }
 
 //script for subscribing to pannel colaps
@@ -56,4 +57,14 @@ function initToaster() {
             'donotdismiss': ['danger'] //disble autodismis for these types
         }
     });
+}
+
+//if click link has this class open it in a new window
+function initUrlNewWindow() {
+    $('.OpenNewWindow').click(function () {
+        console.log("hit");
+        window.open($(this).attr('href'), 'Maximo', 'window settings');
+        return false;
+    });
+    
 }

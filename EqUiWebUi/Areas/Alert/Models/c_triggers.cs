@@ -31,9 +31,7 @@ namespace EqUiWebUi.Areas.Alert.Models
         [StringLength(16, MinimumLength = 3)]
         [HelpText("Gets used in sms and shown as alert subgroup")]
         public string alertType { get; set; }
-        [HelpText(
-@"This statement is run against gadata
-  and must return col<LocationTree, _timestamp, info>")]
+        [HelpText("This statement is run against db")]
         public string sqlStqStatement { get; set; }
         [HelpText("CPT600 sms system to be used. MUST be defined in CPT600!!!")]
         public Nullable<int> smsSystem { get; set; }
@@ -49,6 +47,10 @@ namespace EqUiWebUi.Areas.Alert.Models
         public int RunAgainst { get; set; }
         [HelpText("General on of for SMS system")]
         public bool enableSMS { get; set; }
+        [HelpText("if on this alert shows downtime")]
+        public bool isDowntime { get; set; }
+        [HelpText("if on is show in reports")]
+        public bool isInReport { get; set; }
 
         public virtual c_smsSystem c_smsSystem { get; set; }
         public virtual c_state c_state { get; set; }
