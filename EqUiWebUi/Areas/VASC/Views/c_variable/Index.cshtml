@@ -1,0 +1,49 @@
+﻿@model IEnumerable<EqUiWebUi.Areas.VASC.Models.c_variable>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <h2>Index c_variable</h2>
+    <div class="alert alert-info">
+        <h4>
+            The list of variables to be monitored.
+        </h4>
+
+        <div class="text-muted">
+            The difference between c_variable and c_variable_search is that this table can look for a variable that meets the requirement
+            See VASC manual for more details (2.5)
+        </div>
+    </div>
+</div>
+
+<p>
+    @Html.ActionLink("ADD new variable to log", "Edit", new { id = -1 })
+</p>
+
+
+@Html.Grid(Model).Named("c_controller_class").Build(columns =>
+{
+    columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Asc);
+    columns.Add(c => c.variable).Titled("variable");
+    columns.Add(c => c._Poll_Rate).Titled("_Poll_Rate");
+    columns.Add(c => c._Enable_bit).Titled("_Enable_bit");
+    columns.Add(c => c._Event_code).Titled("_Event_code");
+    columns.Add(c => c._SQL_Action).Titled("_SQL_Action"); //this should be multiselect!
+    columns.Add(c => c.rt_table).Titled("rt_table");
+    columns.Add(c => c)
+                    .Titled("")
+                    .Encoded(false)
+                    .RenderedAs(c => @Html.ActionLink("Edit", "Edit", new { id = c.id })
+                    ).Filterable(false);
+}).Filterable(true).Sortable(true).Empty("Did not find anything").Css("table-hover")
+
+@section scripts{
+    <script>
+        //full with screen
+        $("#allcontent").removeClass("body-content");
+        $("#allcontent").removeClass("container");
+    </script>
+}
