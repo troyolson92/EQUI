@@ -112,6 +112,28 @@ else
                     </div>
                 </div>
 
+                <div class="form-group">
+                    @Html.LabelFor(model => model.isDowntime, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <div class="checkbox">
+                            @Html.EditorFor(model => model.isDowntime)
+                            @Html.ValidationMessageFor(model => model.isDowntime, "", new { @class = "text-danger" })
+                            @Html.HelpTextFor(model => model.isDowntime)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.isInReport, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <div class="checkbox">
+                            @Html.EditorFor(model => model.isInReport)
+                            @Html.ValidationMessageFor(model => model.isInReport, "", new { @class = "text-danger" })
+                            @Html.HelpTextFor(model => model.isInReport)
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
 

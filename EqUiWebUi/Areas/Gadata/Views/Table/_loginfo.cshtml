@@ -2,7 +2,9 @@
 
 <div class="panel panel-primary">
     <div class="panel-heading">
-        <h4 class="panel-title">@Model.logtype details for logcode: @Model.errornum  logtext: @Model.logtext</h4>
+        <h4 class="panel-title">
+            Details for logcode: <strong>@Model.errornum</strong> logtext: <strong>@Model.logtext.Trim()</strong>
+        </h4>
         <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
     </div>
     <div class="panel-body">

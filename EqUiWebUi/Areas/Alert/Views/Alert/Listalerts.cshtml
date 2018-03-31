@@ -15,22 +15,47 @@
     columns.Add(c => c.location).Titled("location");
     columns.Add(c => c.alarmobject).Titled("alarmobject");
     columns.Add(c => c.info).Titled("info");
+    columns.Add(c => c.ChangedUser.username.Replace(@"VCCNET\", "")).Titled("ChangedUser").Filterable(true);
+    columns.Add(c => c.triggerCount).Titled("TC").Filterable(true);
     columns.Add(c => c.c_state.state).Titled("state");
-    columns.Add(c => c.id)
+
+    //add edit button
+    columns.Add(c => c)
                 .Titled("")
                 .Encoded(false)
-                .RenderedAs(c => @Html.ActionLink("Edit", "Edit", new { id = c.id })
+                .RenderedAs(c => MyFilters.IconActionLink(Url.Action("Edit", new { id = c.id }), "glyphicon glyphicon-pencil", "", "Edit this alert")
                 ).Filterable(false);
+
 }).Filterable(true).Sortable(true).Pageable(pager =>
 {
-    pager.RowsPerPage = 20;
+    pager.RowsPerPage = 15;
 }).Empty("Did not find anything").Css("table-hover").RowCss(row => MyRowStyling.getRowStyleStatus(row.c_state.state))
 
+<p></p>
+@*info model in page for alert details *@
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div id="alertDetailsPartial">Click on a row for more details about the alert</div>
+        </div>
+    </div>
+</div>
 @section scripts{
     <script>
         //full with screen
         $("#allcontent").removeClass("body-content");
         $("#allcontent").removeClass("container");
+
+        //subscribe to row clicked events
+        $('.mvc-grid').mvcgrid({
+            rowClicked: function (row, data, e) {
+                console.log(data);
+                $(row).addClass('active').siblings().removeClass('active');
+                $("#alertDetailsPartial").html("Loading.....");
+                var url = "@Url.Action("_Details")?id=" + data.id;
+                $("#alertDetailsPartial").load(url);
+            }
+        });
     </script>
 }
 

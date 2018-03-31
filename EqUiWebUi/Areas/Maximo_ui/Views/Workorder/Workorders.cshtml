@@ -15,14 +15,10 @@
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <form class="form-horizontal">
                 <fieldset>
-
-                    <div class="form-group form-inline">
-
                         <div class="form-group">
                             <label class="control-label col-md-3" for="startdate">Daterange</label>
                             <div class="col-md-9">
                                 <input class="form-control input-md" id="daterange" name="daterange" type="text">
-                                <span class="help-block">date range for workorder.changedate</span>
                             </div>
                         </div>
 
@@ -43,16 +39,12 @@
                                 <span class="help-block">changedate > than</span>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="form-group form-inline">
 
                         <div class="form-group">
                             @Html.LabelFor(m => m.location, new { @class = "control-label col-md-3" })
                             <div class="col-md-9">
                                 @Html.TextBoxFor(m => m.location, new { @class = "form-control input-md" })
                                 @Html.ValidationMessageFor(m => m.location, "", new { @class = "text-danger" })
-                                <span title=" ie: 338010R01 or 338% or 338010R01;338010R02;.. (338010%;33820% not allowed!)." class="help-block">single wildcad or ; separated list</span>
                             </div>
                         </div>
 
@@ -61,7 +53,6 @@
                             <div class="col-md-9">
                                 @Html.TextBoxFor(m => m.locancestor, new { @class = "form-control input-md" })
                                 @Html.ValidationMessageFor(m => m.locancestor, "", new { @class = "text-danger" })
-                                <span title="ie: A STN 331 or A STN33% or A STN 331;A STN338;... (A STN%;A LIJN% not allowed!)" class="help-block">single wildcad or ; separated list</span>
                             </div>
                         </div>
 
@@ -70,7 +61,6 @@
                             <div class="col-md-9">
                                 @Html.TextBoxFor(m => m.jpnum, new { @class = "form-control input-md" })
                                 @Html.ValidationMessageFor(m => m.jpnum, "", new { @class = "text-danger" })
-                                <span title="ie: PGAGEO or PG% or PQAGEO;ROBSPARE;ROBANALY;... (PG%; ROB% not allowed!)" class="help-block">single wildcad or ; separated list</span>
                             </div>
                         </div>
 
@@ -79,7 +69,6 @@
                             <div class="col-md-9">
                                 @Html.TextBoxFor(m => m.worktype, new { @class = "form-control input-md" })
                                 @Html.ValidationMessageFor(m => m.worktype, "", new { @class = "text-danger" })
-                                <span title="ie: PCI or P% or PCI;WSCH;PP;... (PC%,W% not allowed!)" class="help-block">single wildcad or ; separated list</span>
                             </div>
                         </div>
 
@@ -88,7 +77,14 @@
                             <div class="col-md-9">
                                 @Html.TextBoxFor(m => m.wonum, new { @class = "form-control input-md" })
                                 @Html.ValidationMessageFor(m => m.wonum, "", new { @class = "text-danger" })
-                                <span title="" class="help-block">single wildcad or ; separated list</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.status, new { @class = "control-label col-md-3" })
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(m => m.status, new { @class = "form-control input-md" })
+                                @Html.ValidationMessageFor(m => m.status, "", new { @class = "text-danger" })
                             </div>
                         </div>
 
@@ -97,7 +93,6 @@
                             <div class="col-md-6">
                                 @Html.CheckBoxFor(m => m.b_ciblings, new { @class = "form-control input-ld" })
                             </div>
-                            <span title="ie: if location 331010R01 we take 331010%01% " class="help-block">wildcards replace</span>
                         </div>
 
                         <div class="form-group">
@@ -105,7 +100,6 @@
                             <div class="col-md-6">
                                 @Html.CheckBoxFor(m => m.b_preventive, new { @class = "form-control input-md" })
                             </div>
-                            <span class="help-block">include workype ('PP','PCI','WSCH')</span>
                         </div>
 
                         <div class="form-group">
@@ -113,10 +107,8 @@
                             <div class="col-md-6">
                                 @Html.CheckBoxFor(m => m.realtimeConn, new { @class = "form-control input-md" })
                             </div>
-                            <span class="help-block">use realtime mx connection (need role MAXIMOrealtime)</span>
                         </div>
 
-                    </div>
                     <hr />
                     <input type="submit" value="Load workorders" id="WorkorderSelectOptionsSubmit" class="btn btn-success">
                 </fieldset>

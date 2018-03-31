@@ -68,15 +68,6 @@
     <!--Body content -->
     <div class="container body-content" id="allcontent">
         @RenderBody()
-        <hr />
-    </div>
-    <!--footer-->
-    <footer id="footer">
-        <p>&copy; @DateTime.Now.Year - VCG GA SDEBEUL ASP.NET Application</p>
-    </footer>
-    @*when navbar is hidden this is visble*@
-    <div class="pull-right">
-        <a id="fullscreenBody" class="glyphicon glyphicon-fullscreen hidden" data-toggle="tooltip" data-placement="left" title="Exit fullscreen"></a>
     </div>
 
 
@@ -111,7 +102,10 @@
         $("#fullscreenNav").click(function () {
             $("#allcontent").removeClass("body-content");
             $("#allcontent").removeClass("container");
-            $(".navbar-fixed-top").autoHidingNavbar('hide');
+
+            $(".navbar-fixed-top").autoHidingNavbar('setDisableAutohide',true); //disable autohide
+            $(".navbar-fixed-top").autoHidingNavbar('hide'); //hide navbar
+
             $("#allcontent").animate({ "margin-top": "0px" }, "fast");
             $("#fullscreenBody").removeClass("hidden");
             $("#footer").addClass("hidden");
@@ -120,7 +114,10 @@
         $("#fullscreenBody").click(function () {
             $("#allcontent").addClass("body-content");
             $("#allcontent").addClass("container");
-            $(".navbar-fixed-top").autoHidingNavbar('show');
+
+            $(".navbar-fixed-top").autoHidingNavbar('setDisableAutohide', false); //enable autohide
+            $(".navbar-fixed-top").autoHidingNavbar('show'); //show navbar
+
             $("#allcontent").animate({ "margin-top": "60px" }, "fast");
             $("#fullscreenBody").addClass("hidden");
             $("#footer").removeClass("hidden");
@@ -146,6 +143,18 @@
     </script>
     @RenderSection("scripts", required: false)
     @RenderSection("partials", required: false)
+
+    <hr />
+    <!--footer-->
+    <footer id="footer">
+        <p>&copy; @DateTime.Now.Year - VCG GA SDEBEUL ASP.NET Application</p>
+    </footer>
+    @*when navbar is hidden this is visble*@
+    <div class="pull-right">
+        <a id="fullscreenBody" class="glyphicon glyphicon-fullscreen hidden" data-toggle="tooltip" data-placement="left" title="Exit fullscreen"></a>
+    </div>
+
+
 </body>
 </html>
 

@@ -31,22 +31,24 @@
 </div>
 
 <!--carousel script-->
-@section scripts{
     <script>
-        //auto rotate pictures
-        var carouselrate = @ViewBag.AutoCarousel;
-        if (carouselrate = -1) {
-          $('#myCarousel').carousel({ interval: false });
-        }
-        else {
-          $('#myCarousel').carousel({ interval: carouselrate });
-        }
-        //full with screen
-        $("#allcontent").removeClass("body-content");
-        $("#allcontent").removeClass("container");
-    });
+        $(function () {
+            //auto rotate pictures
+            var carouselrate = @ViewBag.AutoCarousel;
+            if (carouselrate < 0) {
+                $('#myCarousel').carousel({ interval: false });
+                console.log("hit2");
+            }
+            else {
+                $('#myCarousel').carousel({ interval: carouselrate });
+                console.log("hit");
+            }
+            //full with screen
+            $("#allcontent").removeClass("body-content");
+            $("#allcontent").removeClass("container");
+        });
     </script>
-    }
+ 
 
 
     <!--carousel style -->

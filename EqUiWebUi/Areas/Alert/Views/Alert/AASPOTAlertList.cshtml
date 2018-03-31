@@ -56,27 +56,32 @@
 
 <p></p>
 @*info model in page for alert details *@
-<div class="panel panel-default">
-    <div class="panel-body">
-        <div id="alertDetailsPartial">Click on a row for more details about the alert</div>
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div id="alertDetailsPartial">Click on a row for more details about the alert</div>
+        </div>
     </div>
 </div>
 
-@section scripts{
+    @section scripts{
 
-<script type="text/javascript">
-    $(document).ready(function () {
+        <script type="text/javascript">
+            //full with screen
+            $("#allcontent").removeClass("body-content");
+            $("#allcontent").removeClass("container");
+
         //subscribe to row clicked events
         $('.mvc-grid').mvcgrid({
             rowClicked: function (row, data, e) {
                 console.log(data);
+                $(row).addClass('active').siblings().removeClass('active');
                 $("#alertDetailsPartial").html("Loading.....");
                 var url = "@Url.Action("_Details")?id=" + data.id;
                 $("#alertDetailsPartial").load(url);
             }
         });
-    });
-</script>
+        </script>
 
-}
+    }
 

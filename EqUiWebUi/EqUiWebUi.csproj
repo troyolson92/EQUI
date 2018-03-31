@@ -265,6 +265,7 @@
     <Compile Include="Areas\Maximo_ui\Controllers\MaximoController.cs" />
     <Compile Include="Areas\Maximo_ui\Controllers\WorkorderController.cs" />
     <Compile Include="Areas\Maximo_ui\Controllers\WorkorderDetailsController.cs" />
+    <Compile Include="Areas\Maximo_ui\Interface\MaximoInterface.cs" />
     <Compile Include="Areas\Maximo_ui\Maximo_uiAreaRegistration.cs" />
     <Compile Include="Areas\Maximo_ui\Models\Maximo.cs" />
     <Compile Include="Areas\PlcSupervisie\Controllers\ScreenshotController.cs" />
@@ -816,6 +817,7 @@
     <Content Include="Areas\Tiplife\Views\NgacElectrode\TipwearBeforeChange.cshtml" />
     <Content Include="Areas\Tiplife\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Tiplife\Views\NgacElectrode\TipDressData.cshtml" />
+    <Content Include="Areas\PlcSupervisie\Views\Screenshot\ShowJpg.cshtml" />
     <None Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.svg" />
