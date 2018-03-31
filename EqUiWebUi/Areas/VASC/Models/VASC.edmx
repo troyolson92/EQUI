@@ -1,0 +1,628 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="GADATAModelVASC.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.NGAC.c_alarm_ignore' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="c_alarm_ignore">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="enable_bit" Type="int" />
+          <Property Name="error_number" Type="int" />
+          <Property Name="error_category" Type="int" />
+          <Property Name="error_number_mask" Type="int" />
+          <Property Name="error_category_mask" Type="int" />
+          <Property Name="_operator" Type="int" />
+          <Property Name="Ignore" Type="varchar" MaxLength="50" />
+          <Property Name="UserComment" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="c_controller">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="controller_name" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="enable_bit" Type="int" />
+          <Property Name="systemId" Type="varchar" MaxLength="50" />
+          <Property Name="ip" Type="varchar" MaxLength="50" />
+          <Property Name="class_id" Type="int" />
+          <Property Name="flags" Type="int" />
+          <Property Name="LocationTree" Type="varchar(max)" />
+          <Property Name="Assetnum" Type="varchar(max)" />
+          <Property Name="ProductionTeam" Type="varchar(max)" />
+          <Property Name="ResponsiblePloeg" Type="varchar(max)" />
+          <Property Name="ClassificationTree" Type="varchar(max)" />
+          <Property Name="CLassificationId" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="c_controller_class">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="doConnect" Type="bit" />
+          <Property Name="evStateChange" Type="int" />
+          <Property Name="evOperatingModeChange" Type="int" />
+          <Property Name="evConnectionChange" Type="int" />
+          <Property Name="evExecutionStatus" Type="int" />
+          <Property Name="evExecutionStatusTRob1" Type="int" />
+          <Property Name="evBackupCompleted" Type="int" />
+          <Property Name="evDataResolveChange" Type="int" />
+          <Property Name="evExecutionCycleChange" Type="int" />
+          <Property Name="evTaskEnabledChange" Type="int" />
+          <Property Name="evMasterChange" Type="int" />
+          <Property Name="evMotionPointerTRob1Change" Type="int" />
+          <Property Name="evProgramPointerTRob1Change" Type="int" />
+          <Property Name="evMotionPointerTRob1ManualChange" Type="int" />
+          <Property Name="evProgramPointerTRob1ManualChange" Type="int" />
+          <Property Name="cVariableMask" Type="int" />
+          <Property Name="cVariableSearchMask" Type="int" />
+          <Property Name="cDeviceInfoMask" Type="int" />
+          <Property Name="cCSVLogMask" Type="int" />
+          <Property Name="cJobMask" Type="int" />
+          <Property Name="logCategoryMask" Type="int" />
+          <Property Name="handleHSocket" Type="bit" />
+          <Property Name="Username" Type="varchar" MaxLength="50" />
+          <Property Name="Password" Type="varchar" MaxLength="50" />
+          <Property Name="setClock" Type="int" />
+          <Property Name="evLogMessageAction" Type="int" />
+          <Property Name="cPJVEventMask" Type="int" />
+          <Property Name="cErrorNoLogMask" Type="int" />
+          <Property Name="cAlarmIgnoreMask" Type="int" />
+        </EntityType>
+        <EntityType Name="c_csv_log">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="enable_bit" Type="int" />
+          <Property Name="csv_filename" Type="varchar" MaxLength="50" />
+          <Property Name="logcount_variable" Type="varchar" MaxLength="50" />
+          <Property Name="rt_table" Type="varchar" MaxLength="50" />
+          <Property Name="poll_rate" Type="int" />
+          <Property Name="comment" Type="varchar" MaxLength="250" />
+          <Property Name="Tempnote" Type="varchar" MaxLength="250" />
+          <Property Name="flags" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.NGAC.c_device_info' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="c_device_info">
+          <Key>
+            <PropertyRef Name="id" />
+            
+            
+            
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar(max)" />
+          <Property Name="enable_bit" Type="int" Nullable="false" />
+          <Property Name="poll_rate" Type="int" Nullable="false" />
+          <Property Name="insert_update" Type="int" Nullable="false" />
+          <Property Name="URL" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="c_error_no_log">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="enable_bit" Type="int" />
+          <Property Name="error_number" Type="int" />
+          <Property Name="error_category" Type="int" />
+          <Property Name="error_number_mask" Type="int" />
+          <Property Name="error_category_mask" Type="int" />
+          <Property Name="_operator" Type="int" />
+          <Property Name="Ignore" Type="varchar" MaxLength="50" />
+          <Property Name="UserComment" Type="varchar" MaxLength="256" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.NGAC.c_job' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="c_job">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="jobNumber" Type="int" />
+          <Property Name="enable_bit" Type="int" />
+          <Property Name="flags" Type="int" />
+          <Property Name="comment" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="c_service_setup">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="bit_id" Type="int" />
+          <Property Name="name" Type="varchar" MaxLength="40" />
+          <Property Name="value" Type="varchar" MaxLength="128" />
+          <Property Name="description" Type="varchar" MaxLength="256" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.NGAC.c_variable' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="c_variable">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="variable" Type="varchar(max)" />
+          <Property Name="poll_rate" Type="int" />
+          <Property Name="enable_bit" Type="int" />
+          <Property Name="event_enum" Type="int" />
+          <Property Name="sql_action" Type="int" />
+          <Property Name="rt_table" Type="varchar(max)" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.NGAC.c_variable_search' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="c_variable_search">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="variable" Type="varchar(max)" />
+          <Property Name="property" Type="int" />
+          <Property Name="datatype" Type="varchar" MaxLength="100" />
+          <Property Name="poll_rate" Type="int" />
+          <Property Name="enable_bit" Type="int" />
+          <Property Name="insert_update" Type="int" />
+          <Property Name="rt_table" Type="varchar(max)" />
+        </EntityType>
+        <Association Name="FK_c_controller_c_controller_class">
+          <End Role="c_controller_class" Type="Self.c_controller_class" Multiplicity="0..1" />
+          <End Role="c_controller" Type="Self.c_controller" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_controller_class">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="c_controller">
+              <PropertyRef Name="class_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="GADATAModelVASCStoreContainer">
+          <EntitySet Name="c_controller" EntityType="Self.c_controller" Schema="NGAC" store:Type="Tables" />
+          <EntitySet Name="c_controller_class" EntityType="Self.c_controller_class" Schema="NGAC" store:Type="Tables" />
+          <EntitySet Name="c_csv_log" EntityType="Self.c_csv_log" Schema="NGAC" store:Type="Tables" />
+          <EntitySet Name="c_error_no_log" EntityType="Self.c_error_no_log" Schema="NGAC" store:Type="Tables" />
+          <EntitySet Name="c_service_setup" EntityType="Self.c_service_setup" Schema="NGAC" store:Type="Tables" />
+          <EntitySet Name="c_alarm_ignore" EntityType="Self.c_alarm_ignore" store:Type="Tables" store:Schema="NGAC">
+            <DefiningQuery>SELECT 
+    [c_alarm_ignore].[id] AS [id], 
+    [c_alarm_ignore].[enable_bit] AS [enable_bit], 
+    [c_alarm_ignore].[error_number] AS [error_number], 
+    [c_alarm_ignore].[error_category] AS [error_category], 
+    [c_alarm_ignore].[error_number_mask] AS [error_number_mask], 
+    [c_alarm_ignore].[error_category_mask] AS [error_category_mask], 
+    [c_alarm_ignore].[_operator] AS [_operator], 
+    [c_alarm_ignore].[Ignore] AS [Ignore], 
+    [c_alarm_ignore].[UserComment] AS [UserComment]
+    FROM [NGAC].[c_alarm_ignore] AS [c_alarm_ignore]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="c_device_info" EntityType="Self.c_device_info" store:Type="Tables" store:Schema="NGAC">
+            <DefiningQuery>SELECT 
+    [c_device_info].[id] AS [id], 
+    [c_device_info].[name] AS [name], 
+    [c_device_info].[enable_bit] AS [enable_bit], 
+    [c_device_info].[poll_rate] AS [poll_rate], 
+    [c_device_info].[insert_update] AS [insert_update], 
+    [c_device_info].[URL] AS [URL]
+    FROM [NGAC].[c_device_info] AS [c_device_info]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="c_job" EntityType="Self.c_job" store:Type="Tables" store:Schema="NGAC">
+            <DefiningQuery>SELECT 
+    [c_job].[id] AS [id], 
+    [c_job].[jobNumber] AS [jobNumber], 
+    [c_job].[enable_bit] AS [enable_bit], 
+    [c_job].[flags] AS [flags], 
+    [c_job].[comment] AS [comment]
+    FROM [NGAC].[c_job] AS [c_job]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="c_variable" EntityType="Self.c_variable" store:Type="Tables" store:Schema="NGAC">
+            <DefiningQuery>SELECT 
+    [c_variable].[id] AS [id], 
+    [c_variable].[variable] AS [variable], 
+    [c_variable].[poll_rate] AS [poll_rate], 
+    [c_variable].[enable_bit] AS [enable_bit], 
+    [c_variable].[event_enum] AS [event_enum], 
+    [c_variable].[sql_action] AS [sql_action], 
+    [c_variable].[rt_table] AS [rt_table]
+    FROM [NGAC].[c_variable] AS [c_variable]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="c_variable_search" EntityType="Self.c_variable_search" store:Type="Tables" store:Schema="NGAC">
+            <DefiningQuery>SELECT 
+    [c_variable_search].[id] AS [id], 
+    [c_variable_search].[variable] AS [variable], 
+    [c_variable_search].[property] AS [property], 
+    [c_variable_search].[datatype] AS [datatype], 
+    [c_variable_search].[poll_rate] AS [poll_rate], 
+    [c_variable_search].[enable_bit] AS [enable_bit], 
+    [c_variable_search].[insert_update] AS [insert_update], 
+    [c_variable_search].[rt_table] AS [rt_table]
+    FROM [NGAC].[c_variable_search] AS [c_variable_search]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_c_controller_c_controller_class" Association="Self.FK_c_controller_c_controller_class">
+            <End Role="c_controller_class" EntitySet="c_controller_class" />
+            <End Role="c_controller" EntitySet="c_controller" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="GADATAModelVASC" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="c_controller">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="controller_name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="enable_bit" Type="Int32" />
+          <Property Name="systemId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ip" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="class_id" Type="Int32" />
+          <Property Name="flags" Type="Int32" />
+          <Property Name="LocationTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Assetnum" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ProductionTeam" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ResponsiblePloeg" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ClassificationTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CLassificationId" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="c_controller_class" Relationship="Self.FK_c_controller_c_controller_class" FromRole="c_controller" ToRole="c_controller_class" />
+        </EntityType>
+        <EntityType Name="c_controller_class">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="doConnect" Type="Boolean" />
+          <Property Name="evStateChange" Type="Int32" />
+          <Property Name="evOperatingModeChange" Type="Int32" />
+          <Property Name="evConnectionChange" Type="Int32" />
+          <Property Name="evExecutionStatus" Type="Int32" />
+          <Property Name="evExecutionStatusTRob1" Type="Int32" />
+          <Property Name="evBackupCompleted" Type="Int32" />
+          <Property Name="evDataResolveChange" Type="Int32" />
+          <Property Name="evExecutionCycleChange" Type="Int32" />
+          <Property Name="evTaskEnabledChange" Type="Int32" />
+          <Property Name="evMasterChange" Type="Int32" />
+          <Property Name="evMotionPointerTRob1Change" Type="Int32" />
+          <Property Name="evProgramPointerTRob1Change" Type="Int32" />
+          <Property Name="evMotionPointerTRob1ManualChange" Type="Int32" />
+          <Property Name="evProgramPointerTRob1ManualChange" Type="Int32" />
+          <Property Name="cVariableMask" Type="Int32" />
+          <Property Name="cVariableSearchMask" Type="Int32" />
+          <Property Name="cDeviceInfoMask" Type="Int32" />
+          <Property Name="cCSVLogMask" Type="Int32" />
+          <Property Name="cJobMask" Type="Int32" />
+          <Property Name="logCategoryMask" Type="Int32" />
+          <Property Name="handleHSocket" Type="Boolean" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="setClock" Type="Int32" />
+          <Property Name="evLogMessageAction" Type="Int32" />
+          <Property Name="cPJVEventMask" Type="Int32" />
+          <Property Name="cErrorNoLogMask" Type="Int32" />
+          <Property Name="cAlarmIgnoreMask" Type="Int32" />
+          <NavigationProperty Name="c_controller" Relationship="Self.FK_c_controller_c_controller_class" FromRole="c_controller_class" ToRole="c_controller" />
+        </EntityType>
+        <EntityType Name="c_csv_log">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="enable_bit" Type="Int32" />
+          <Property Name="csv_filename" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="logcount_variable" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="rt_table" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="poll_rate" Type="Int32" />
+          <Property Name="comment" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Tempnote" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="flags" Type="Int32" />
+        </EntityType>
+        <EntityType Name="c_error_no_log">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="enable_bit" Type="Int32" />
+          <Property Name="error_number" Type="Int32" />
+          <Property Name="error_category" Type="Int32" />
+          <Property Name="error_number_mask" Type="Int32" />
+          <Property Name="error_category_mask" Type="Int32" />
+          <Property Name="C_operator" Type="Int32" />
+          <Property Name="Ignore" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UserComment" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="c_service_setup">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="bit_id" Type="Int32" />
+          <Property Name="name" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="value" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="c_alarm_ignore">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="enable_bit" Type="Int32" />
+          <Property Name="error_number" Type="Int32" />
+          <Property Name="error_category" Type="Int32" />
+          <Property Name="error_number_mask" Type="Int32" />
+          <Property Name="error_category_mask" Type="Int32" />
+          <Property Name="C_operator" Type="Int32" />
+          <Property Name="Ignore" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UserComment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="c_device_info">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="enable_bit" Type="Int32" Nullable="false" />
+          <Property Name="poll_rate" Type="Int32" Nullable="false" />
+          <Property Name="insert_update" Type="Int32" Nullable="false" />
+          <Property Name="URL" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="c_job">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="jobNumber" Type="Int32" />
+          <Property Name="enable_bit" Type="Int32" />
+          <Property Name="flags" Type="Int32" />
+          <Property Name="comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="c_variable">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="variable" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="poll_rate" Type="Int32" />
+          <Property Name="enable_bit" Type="Int32" />
+          <Property Name="event_enum" Type="Int32" />
+          <Property Name="sql_action" Type="Int32" />
+          <Property Name="rt_table" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="c_variable_search">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="variable" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="property" Type="Int32" />
+          <Property Name="datatype" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="poll_rate" Type="Int32" />
+          <Property Name="enable_bit" Type="Int32" />
+          <Property Name="insert_update" Type="Int32" />
+          <Property Name="rt_table" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_c_controller_c_controller_class">
+          <End Role="c_controller_class" Type="Self.c_controller_class" Multiplicity="0..1" />
+          <End Role="c_controller" Type="Self.c_controller" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_controller_class">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="c_controller">
+              <PropertyRef Name="class_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="GADATAEntitiesVASC" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="c_controller" EntityType="Self.c_controller" />
+          <EntitySet Name="c_controller_class" EntityType="Self.c_controller_class" />
+          <EntitySet Name="c_csv_log" EntityType="Self.c_csv_log" />
+          <EntitySet Name="c_error_no_log" EntityType="Self.c_error_no_log" />
+          <EntitySet Name="c_service_setup" EntityType="Self.c_service_setup" />
+          <EntitySet Name="c_alarm_ignore" EntityType="Self.c_alarm_ignore" />
+          <EntitySet Name="c_device_info" EntityType="Self.c_device_info" />
+          <EntitySet Name="c_job" EntityType="Self.c_job" />
+          <EntitySet Name="c_variable" EntityType="Self.c_variable" />
+          <EntitySet Name="c_variable_search" EntityType="Self.c_variable_search" />
+          <AssociationSet Name="FK_c_controller_c_controller_class" Association="Self.FK_c_controller_c_controller_class">
+            <End Role="c_controller_class" EntitySet="c_controller_class" />
+            <End Role="c_controller" EntitySet="c_controller" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="GADATAModelVASCStoreContainer" CdmEntityContainer="GADATAEntitiesVASC">
+          <EntitySetMapping Name="c_controller">
+            <EntityTypeMapping TypeName="GADATAModelVASC.c_controller">
+              <MappingFragment StoreEntitySet="c_controller">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="controller_name" ColumnName="controller_name" />
+                <ScalarProperty Name="enable_bit" ColumnName="enable_bit" />
+                <ScalarProperty Name="systemId" ColumnName="systemId" />
+                <ScalarProperty Name="ip" ColumnName="ip" />
+                <ScalarProperty Name="class_id" ColumnName="class_id" />
+                <ScalarProperty Name="flags" ColumnName="flags" />
+                <ScalarProperty Name="LocationTree" ColumnName="LocationTree" />
+                <ScalarProperty Name="Assetnum" ColumnName="Assetnum" />
+                <ScalarProperty Name="ProductionTeam" ColumnName="ProductionTeam" />
+                <ScalarProperty Name="ResponsiblePloeg" ColumnName="ResponsiblePloeg" />
+                <ScalarProperty Name="ClassificationTree" ColumnName="ClassificationTree" />
+                <ScalarProperty Name="CLassificationId" ColumnName="CLassificationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="c_controller_class">
+            <EntityTypeMapping TypeName="GADATAModelVASC.c_controller_class">
+              <MappingFragment StoreEntitySet="c_controller_class">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="doConnect" ColumnName="doConnect" />
+                <ScalarProperty Name="evStateChange" ColumnName="evStateChange" />
+                <ScalarProperty Name="evOperatingModeChange" ColumnName="evOperatingModeChange" />
+                <ScalarProperty Name="evConnectionChange" ColumnName="evConnectionChange" />
+                <ScalarProperty Name="evExecutionStatus" ColumnName="evExecutionStatus" />
+                <ScalarProperty Name="evExecutionStatusTRob1" ColumnName="evExecutionStatusTRob1" />
+                <ScalarProperty Name="evBackupCompleted" ColumnName="evBackupCompleted" />
+                <ScalarProperty Name="evDataResolveChange" ColumnName="evDataResolveChange" />
+                <ScalarProperty Name="evExecutionCycleChange" ColumnName="evExecutionCycleChange" />
+                <ScalarProperty Name="evTaskEnabledChange" ColumnName="evTaskEnabledChange" />
+                <ScalarProperty Name="evMasterChange" ColumnName="evMasterChange" />
+                <ScalarProperty Name="evMotionPointerTRob1Change" ColumnName="evMotionPointerTRob1Change" />
+                <ScalarProperty Name="evProgramPointerTRob1Change" ColumnName="evProgramPointerTRob1Change" />
+                <ScalarProperty Name="evMotionPointerTRob1ManualChange" ColumnName="evMotionPointerTRob1ManualChange" />
+                <ScalarProperty Name="evProgramPointerTRob1ManualChange" ColumnName="evProgramPointerTRob1ManualChange" />
+                <ScalarProperty Name="cVariableMask" ColumnName="cVariableMask" />
+                <ScalarProperty Name="cVariableSearchMask" ColumnName="cVariableSearchMask" />
+                <ScalarProperty Name="cDeviceInfoMask" ColumnName="cDeviceInfoMask" />
+                <ScalarProperty Name="cCSVLogMask" ColumnName="cCSVLogMask" />
+                <ScalarProperty Name="cJobMask" ColumnName="cJobMask" />
+                <ScalarProperty Name="logCategoryMask" ColumnName="logCategoryMask" />
+                <ScalarProperty Name="handleHSocket" ColumnName="handleHSocket" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="setClock" ColumnName="setClock" />
+                <ScalarProperty Name="evLogMessageAction" ColumnName="evLogMessageAction" />
+                <ScalarProperty Name="cPJVEventMask" ColumnName="cPJVEventMask" />
+                <ScalarProperty Name="cErrorNoLogMask" ColumnName="cErrorNoLogMask" />
+                <ScalarProperty Name="cAlarmIgnoreMask" ColumnName="cAlarmIgnoreMask" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="c_csv_log">
+            <EntityTypeMapping TypeName="GADATAModelVASC.c_csv_log">
+              <MappingFragment StoreEntitySet="c_csv_log">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="enable_bit" ColumnName="enable_bit" />
+                <ScalarProperty Name="csv_filename" ColumnName="csv_filename" />
+                <ScalarProperty Name="logcount_variable" ColumnName="logcount_variable" />
+                <ScalarProperty Name="rt_table" ColumnName="rt_table" />
+                <ScalarProperty Name="poll_rate" ColumnName="poll_rate" />
+                <ScalarProperty Name="comment" ColumnName="comment" />
+                <ScalarProperty Name="Tempnote" ColumnName="Tempnote" />
+                <ScalarProperty Name="flags" ColumnName="flags" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="c_error_no_log">
+            <EntityTypeMapping TypeName="GADATAModelVASC.c_error_no_log">
+              <MappingFragment StoreEntitySet="c_error_no_log">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="enable_bit" ColumnName="enable_bit" />
+                <ScalarProperty Name="error_number" ColumnName="error_number" />
+                <ScalarProperty Name="error_category" ColumnName="error_category" />
+                <ScalarProperty Name="error_number_mask" ColumnName="error_number_mask" />
+                <ScalarProperty Name="error_category_mask" ColumnName="error_category_mask" />
+                <ScalarProperty Name="C_operator" ColumnName="_operator" />
+                <ScalarProperty Name="Ignore" ColumnName="Ignore" />
+                <ScalarProperty Name="UserComment" ColumnName="UserComment" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="c_service_setup">
+            <EntityTypeMapping TypeName="GADATAModelVASC.c_service_setup">
+              <MappingFragment StoreEntitySet="c_service_setup">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="bit_id" ColumnName="bit_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="value" ColumnName="value" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="c_alarm_ignore">
+            <EntityTypeMapping TypeName="GADATAModelVASC.c_alarm_ignore">
+              <MappingFragment StoreEntitySet="c_alarm_ignore">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="enable_bit" ColumnName="enable_bit" />
+                <ScalarProperty Name="error_number" ColumnName="error_number" />
+                <ScalarProperty Name="error_category" ColumnName="error_category" />
+                <ScalarProperty Name="error_number_mask" ColumnName="error_number_mask" />
+                <ScalarProperty Name="error_category_mask" ColumnName="error_category_mask" />
+                <ScalarProperty Name="C_operator" ColumnName="_operator" />
+                <ScalarProperty Name="Ignore" ColumnName="Ignore" />
+                <ScalarProperty Name="UserComment" ColumnName="UserComment" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="c_device_info">
+            <EntityTypeMapping TypeName="GADATAModelVASC.c_device_info">
+              <MappingFragment StoreEntitySet="c_device_info">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="enable_bit" ColumnName="enable_bit" />
+                <ScalarProperty Name="poll_rate" ColumnName="poll_rate" />
+                <ScalarProperty Name="insert_update" ColumnName="insert_update" />
+                <ScalarProperty Name="URL" ColumnName="URL" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="c_job">
+            <EntityTypeMapping TypeName="GADATAModelVASC.c_job">
+              <MappingFragment StoreEntitySet="c_job">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="jobNumber" ColumnName="jobNumber" />
+                <ScalarProperty Name="enable_bit" ColumnName="enable_bit" />
+                <ScalarProperty Name="flags" ColumnName="flags" />
+                <ScalarProperty Name="comment" ColumnName="comment" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="c_variable">
+            <EntityTypeMapping TypeName="GADATAModelVASC.c_variable">
+              <MappingFragment StoreEntitySet="c_variable">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="variable" ColumnName="variable" />
+                <ScalarProperty Name="poll_rate" ColumnName="poll_rate" />
+                <ScalarProperty Name="enable_bit" ColumnName="enable_bit" />
+                <ScalarProperty Name="event_enum" ColumnName="event_enum" />
+                <ScalarProperty Name="sql_action" ColumnName="sql_action" />
+                <ScalarProperty Name="rt_table" ColumnName="rt_table" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="c_variable_search">
+            <EntityTypeMapping TypeName="GADATAModelVASC.c_variable_search">
+              <MappingFragment StoreEntitySet="c_variable_search">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="variable" ColumnName="variable" />
+                <ScalarProperty Name="property" ColumnName="property" />
+                <ScalarProperty Name="datatype" ColumnName="datatype" />
+                <ScalarProperty Name="poll_rate" ColumnName="poll_rate" />
+                <ScalarProperty Name="enable_bit" ColumnName="enable_bit" />
+                <ScalarProperty Name="insert_update" ColumnName="insert_update" />
+                <ScalarProperty Name="rt_table" ColumnName="rt_table" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

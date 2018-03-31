@@ -1,0 +1,44 @@
+﻿@model IEnumerable<EqUiWebUi.Areas.VASC.Models.c_device_info>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container">
+    <h2>Index c_device_info</h2>
+    <div class="alert alert-info">
+        <h4>
+            The list of device information to be obtained from a controller.
+        </h4>
+
+        <div class="text-muted">
+            This table is dynamically created with default values of enable_bit = 1, poll_rate of 0 (ReadOnConnect) and insert if value changed.
+        </div>
+    </div>
+</div>
+
+
+@Html.Grid(Model).Named("c_device_info").Build(columns =>
+    {
+        columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Asc);
+        columns.Add(c => c.name).Titled("name");
+        columns.Add(c => c._Enable_bit).Titled("enable_bit");
+        columns.Add(c => c._Poll_Rate).Titled("Poll_Rate");
+        columns.Add(c => c._Insert_update).Titled("Insert_update");
+       // columns.Add(c => c.URL).Titled("URL");
+        columns.Add(c => c)
+                    .Titled("")
+                    .Encoded(false)
+                    .RenderedAs(c => @Html.ActionLink("Edit", "Edit", new { id = c.id })
+                    ).Filterable(false);
+    }).Filterable(true).Sortable(true).Empty("Did not find anything").Css("table-hover")
+
+    @section scripts{
+        <script>
+        //full with screen
+        $("#allcontent").removeClass("body-content");
+        $("#allcontent").removeClass("container");
+        </script>
+    }

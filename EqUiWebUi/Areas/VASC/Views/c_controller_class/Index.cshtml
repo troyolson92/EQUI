@@ -1,0 +1,43 @@
+﻿@model IEnumerable<EqUiWebUi.Areas.VASC.Models.c_controller_class>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <h2>Index c_controller_class</h2>
+    <div class="alert alert-info">
+        <h4>
+            Configuration as to what the operations of a VASCService on a controller that is within the class.
+        </h4>
+
+        <div class="text-muted">
+            See VASC manual for more details (2.5)
+        </div>
+    </div>
+</div>
+
+<p>
+    @Html.ActionLink("ADD controller class", "Edit", new { id = -1 })
+</p>
+
+
+@Html.Grid(Model).Named("c_controller_class").Build(columns =>
+{
+    columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Asc);
+    columns.Add(c => c.name).Titled("name");
+    columns.Add(c => c)
+                    .Titled("")
+                    .Encoded(false)
+                    .RenderedAs(c => @Html.ActionLink("Edit", "Edit", new { id = c.id })
+                    ).Filterable(false);
+}).Filterable(true).Sortable(true).Empty("Did not find anything").Css("table-hover")
+
+@section scripts{
+    <script>
+        //full with screen
+        $("#allcontent").removeClass("body-content");
+        $("#allcontent").removeClass("container");
+    </script>
+}
