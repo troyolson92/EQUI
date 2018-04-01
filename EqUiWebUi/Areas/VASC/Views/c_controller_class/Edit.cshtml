@@ -10,7 +10,7 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>c_controller_class</h4>
         <hr />
@@ -40,10 +40,9 @@
             <div class="col-md-10">
 
 
-                @Html.ListBoxFor(model => model._evStateChange, Model._evStateChange,  new { htmlAttributes = new { @class = "form-control" } })
-                
-                
-                
+                @Html.DropDownList("tsusers", Model._evStateChange, "optlabel", new { @class = "form-control", multiple = "multiple", size = "5" })
+
+
                 @Html.EditorFor(model => model.evStateChange, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.evStateChange, "", new { @class = "text-danger" })
             </div>
@@ -278,3 +277,14 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+
+<!--Edit script-->
+@section scripts{
+    @*http://davidstutz.de/bootstrap-multiselect/*@
+    <script src="~/Scripts/bootstrap-multiselect.js"></script>
+    <link href="~/Content/bootstrap-multiselect.css" rel="stylesheet" />
+    <script>
+        //https://forums.asp.net/t/2121112.aspx?Html+Dropdown+with+multiple+selections
+        $('#tsusers').multiselect();
+    </script>
+}

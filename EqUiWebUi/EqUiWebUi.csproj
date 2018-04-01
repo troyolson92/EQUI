@@ -509,6 +509,7 @@
       <DependentUpon>VASC.edmx</DependentUpon>
       <LastGenOutput>VASC.cs</LastGenOutput>
     </Content>
+    <Content Include="Content\bootstrap-multiselect.css" />
     <Content Include="Content\codemirror\codemirror.css" />
     <Content Include="Content\codemirror\neat.css" />
     <Content Include="Content\CustomStyleTweeks.css" />
@@ -1000,6 +1001,7 @@
     <Content Include="PDFjs\web\viewer.css" />
     <Content Include="PDFjs\web\viewer.html" />
     <Content Include="PDFjs\web\viewer.js" />
+    <Content Include="Scripts\bootstrap-multiselect.js" />
     <Content Include="Scripts\Codemirror\codemirror.js" />
     <Content Include="Scripts\Codemirror\mode\sql.js" />
     <Content Include="Scripts\d3\Chart.bundle.js" />
