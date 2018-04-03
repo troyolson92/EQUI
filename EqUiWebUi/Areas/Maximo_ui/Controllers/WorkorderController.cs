@@ -133,16 +133,23 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
                 ,WORKORDER.REPORTEDBY
                 ,WORKORDER.REPORTDATE
                 ,WORKORDER.CHANGEDATE
-                ,locancestor.ANCESTOR
+                ,LOCANCESTOR.ANCESTOR
                 FROM MAXIMO.WORKORDER WORKORDER
                 left join MAXIMO.LOCANCESTOR LOCANCESTOR on WORKORDER.LOCATION = LOCANCESTOR.LOCATION AND LOCANCESTOR.SYSTEMID = 'PRODMID'");
 
 
             //start where clause
             sbqry.AppendLine("WHERE ((WORKORDER.woclass = 'WORKORDER' or WORKORDER.woclass = 'ACTIVITY') and WORKORDER.historyflag = 0 and WORKORDER.istask = 0)");
-
-            //handel ancestors.
-            sbqry.AppendLine(handleParm("LOCANCESTOR.ANCESTOR", locancestor));
+            //SDB bugfix case no ancestor 
+            if (string.IsNullOrWhiteSpace(locancestor)) //to prevent dups 
+            {
+                sbqry.AppendLine("AND LOCANCESTOR.ANCESTOR = WORKORDER.LOCATION");
+            }
+            else
+            {
+                //handel ancestors.
+                sbqry.AppendLine(handleParm("LOCANCESTOR.ANCESTOR", locancestor));
+            }
             //handle locations.
             sbqry.AppendLine(handleParm("WORKORDER.LOCATION", location));
             //handle preventive

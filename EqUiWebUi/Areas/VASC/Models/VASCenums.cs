@@ -25,7 +25,6 @@ namespace EqUiWebUi.Areas.VASC.Models
     public enum SQL_Action
     {
         noAction = 0,
-
         Insert_a_new_record_into_the_rt_event_table = 0x01,
         Update_the_last_record_for_this_controller_event = 0x02,
         Use_the_event_for_breakdown_analysis = 0x04,
