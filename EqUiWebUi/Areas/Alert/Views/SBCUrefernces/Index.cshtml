@@ -8,11 +8,12 @@
 <h2>Index of control limits for SBCU (c3g)</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Edit", new { id = -1 })
 </p>
 @Html.Grid(Model).Named("SBCUrefernce").Build(columns =>
 {
     columns.Add(c => c.id).Titled("ID").InitialSort(GridSortOrder.Desc);
+    columns.Add(c => c.Variant).Titled("Variant");
     columns.Add(c => c.c_controller.controller_name).Titled("controller");
     columns.Add(c => c.tool_id).Titled("tool_id");
     columns.Add(c => c.UCL).Titled("UCL");

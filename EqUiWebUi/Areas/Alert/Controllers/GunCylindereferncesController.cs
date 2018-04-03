@@ -22,46 +22,6 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             return View(await GunCylinderefernce.ToListAsync());
         }
 
-        // GET: Alert/GunCylinderefernces/Details/5
-        public async Task<ActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            GunCylinderefernce gunCylinderefernce = await db.GunCylinderefernce.FindAsync(id);
-            if (gunCylinderefernce == null)
-            {
-                return HttpNotFound();
-            }
-            return View(gunCylinderefernce);
-        }
-
-        // GET: Alert/GunCylinderefernces/Create
-        public ActionResult Create()
-        {
-            ViewBag.Controller_id = new SelectList(db.c_controller, "id", "controller_name");
-            return View();
-        }
-
-        // POST: Alert/GunCylinderefernces/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Controller_id,tool_id,SampleStart,nDataPoints,avg,Max,Min,Stdev,UCL,LCL,id")] GunCylinderefernce gunCylinderefernce)
-        {
-            if (ModelState.IsValid)
-            {
-                db.GunCylinderefernce.Add(gunCylinderefernce);
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
-
-            ViewBag.Controller_id = new SelectList(db.c_controller, "id", "controller_name", gunCylinderefernce.Controller_id);
-            return View(gunCylinderefernce);
-        }
-
         // GET: Alert/GunCylinderefernces/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
@@ -69,56 +29,47 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            GunCylinderefernce gunCylinderefernce = await db.GunCylinderefernce.FindAsync(id);
-            if (gunCylinderefernce == null)
+
+            GunCylinderefernce gunCylinderefernce;
+
+            if (id == -1) //create new alert
             {
-                return HttpNotFound();
+                gunCylinderefernce = new GunCylinderefernce();
             }
+            else //find the existing alert 
+            {
+                gunCylinderefernce = await db.GunCylinderefernce.FindAsync(id);
+                if (gunCylinderefernce == null)
+                {
+                    return HttpNotFound();
+                }
+            }
+
             ViewBag.Controller_id = new SelectList(db.c_controller, "id", "controller_name", gunCylinderefernce.Controller_id);
             return View(gunCylinderefernce);
         }
 
         // POST: Alert/GunCylinderefernces/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        //special EDIT. "We don't EDIT" control limits. We make a new one each time we save and use the Active bit to set the active set. 
+        // if ChangeForVariant set limits for all using this variant.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Controller_id,tool_id,SampleStart,nDataPoints,avg,Max,Min,Stdev,UCL,LCL,id")] GunCylinderefernce gunCylinderefernce)
+        public async Task<ActionResult> Edit(GunCylinderefernce gunCylinderefernce, bool ChangeForVariant = false)
         {
             if (ModelState.IsValid)
             {
+                if (ChangeForVariant && gunCylinderefernce.Variant != null)
+                {
+
+                }
+
+
                 db.Entry(gunCylinderefernce).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
             ViewBag.Controller_id = new SelectList(db.c_controller, "id", "controller_name", gunCylinderefernce.Controller_id);
             return View(gunCylinderefernce);
-        }
-
-        // GET: Alert/GunCylinderefernces/Delete/5
-        public async Task<ActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            GunCylinderefernce gunCylinderefernce = await db.GunCylinderefernce.FindAsync(id);
-            if (gunCylinderefernce == null)
-            {
-                return HttpNotFound();
-            }
-            return View(gunCylinderefernce);
-        }
-
-        // POST: Alert/GunCylinderefernces/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id)
-        {
-            GunCylinderefernce gunCylinderefernce = await db.GunCylinderefernce.FindAsync(id);
-            db.GunCylinderefernce.Remove(gunCylinderefernce);
-            await db.SaveChangesAsync();
-            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)

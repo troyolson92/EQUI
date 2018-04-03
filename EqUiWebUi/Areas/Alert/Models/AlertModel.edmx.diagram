@@ -22,7 +22,7 @@
         <AssociationConnector Association="AlertModel.FK_c_SMSconfig_c_CPT600" />
         <AssociationConnector Association="AlertModel.FK_c_SMSconfig_c_smsSystem" />
         <EntityTypeShape EntityType="AlertModel.GunCylinderefernce" Width="1.5" PointX="14.125" PointY="1.625" />
-        <EntityTypeShape EntityType="AlertModel.SBCUrefernce" Width="1.5" PointX="14.125" PointY="5.5" />
+        <EntityTypeShape EntityType="AlertModel.SBCUrefernce" Width="1.5" PointX="14.125" PointY="6.125" />
         <EntityTypeShape EntityType="AlertModel.c_controller" Width="1.5" PointX="11.75" PointY="0.875" />
         <AssociationConnector Association="AlertModel.FK_GunCylinderefernce_c_controller" />
         <AssociationConnector Association="AlertModel.FK_SBCUrefernce_c_controller" />

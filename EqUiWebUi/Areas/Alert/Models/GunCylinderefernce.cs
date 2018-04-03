@@ -25,6 +25,10 @@ namespace EqUiWebUi.Areas.Alert.Models
         public Nullable<double> UCL { get; set; }
         public Nullable<double> LCL { get; set; }
         public int id { get; set; }
+        public string Variant { get; set; }
+        public Nullable<bool> Active { get; set; }
+        public byte[] C_timestamp { get; set; }
+        public string Comment { get; set; }
     
         public virtual c_controller c_controller { get; set; }
     }

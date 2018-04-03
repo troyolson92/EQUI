@@ -848,14 +848,8 @@
     <Content Include="Areas\Gadata\Models\Gadata.edmx.diagram">
       <DependentUpon>Gadata.edmx</DependentUpon>
     </Content>
-    <Content Include="Areas\Alert\Views\GunCylinderefernces\Create.cshtml" />
-    <Content Include="Areas\Alert\Views\GunCylinderefernces\Delete.cshtml" />
-    <Content Include="Areas\Alert\Views\GunCylinderefernces\Details.cshtml" />
     <Content Include="Areas\Alert\Views\GunCylinderefernces\Edit.cshtml" />
     <Content Include="Areas\Alert\Views\GunCylinderefernces\Index.cshtml" />
-    <Content Include="Areas\Alert\Views\SBCUrefernces\Create.cshtml" />
-    <Content Include="Areas\Alert\Views\SBCUrefernces\Delete.cshtml" />
-    <Content Include="Areas\Alert\Views\SBCUrefernces\Details.cshtml" />
     <Content Include="Areas\Alert\Views\SBCUrefernces\Edit.cshtml" />
     <Content Include="Areas\Alert\Views\SBCUrefernces\Index.cshtml" />
     <Content Include="Areas\Alert\Views\Alert\AASPOTIndex.cshtml" />

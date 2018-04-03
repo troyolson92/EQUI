@@ -149,6 +149,10 @@
           <Property Name="UCL" Type="float" />
           <Property Name="LCL" Type="float" />
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Variant" Type="varchar(max)" />
+          <Property Name="Active" Type="bit" />
+          <Property Name="_timestamp" Type="timestamp" StoreGeneratedPattern="Computed" />
+          <Property Name="Comment" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="SBCUrefernce">
           <Key>
@@ -166,6 +170,10 @@
           <Property Name="UCL" Type="float" />
           <Property Name="LCL" Type="float" />
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Variant" Type="varchar(max)" />
+          <Property Name="Active" Type="bit" />
+          <Property Name="_timestamp" Type="timestamp" StoreGeneratedPattern="Computed" />
+          <Property Name="Comment" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="L_users">
           <Key>
@@ -660,6 +668,10 @@
           <Property Name="LCL" Type="Double" />
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="c_controller" Relationship="AlertModel.FK_GunCylinderefernce_c_controller" FromRole="GunCylinderefernce" ToRole="c_controller" />
+          <Property Name="Variant" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Active" Type="Boolean" />
+          <Property Name="C_timestamp" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="SBCUrefernce">
           <Key>
@@ -678,6 +690,10 @@
           <Property Name="LCL" Type="Double" />
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="c_controller" Relationship="AlertModel.FK_SBCUrefernce_c_controller" FromRole="SBCUrefernce" ToRole="c_controller" />
+          <Property Name="Variant" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Active" Type="Boolean" />
+          <Property Name="C_timestamp" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="c_controller">
           <Key>
@@ -861,6 +877,10 @@
           <EntitySetMapping Name="GunCylinderefernce">
             <EntityTypeMapping TypeName="AlertModel.GunCylinderefernce">
               <MappingFragment StoreEntitySet="GunCylinderefernce">
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Variant" ColumnName="Variant" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="LCL" ColumnName="LCL" />
                 <ScalarProperty Name="UCL" ColumnName="UCL" />
@@ -878,6 +898,10 @@
           <EntitySetMapping Name="SBCUrefernce">
             <EntityTypeMapping TypeName="AlertModel.SBCUrefernce">
               <MappingFragment StoreEntitySet="SBCUrefernce">
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Variant" ColumnName="Variant" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="LCL" ColumnName="LCL" />
                 <ScalarProperty Name="UCL" ColumnName="UCL" />

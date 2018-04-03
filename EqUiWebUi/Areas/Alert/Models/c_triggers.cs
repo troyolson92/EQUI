@@ -11,8 +11,7 @@ namespace EqUiWebUi.Areas.Alert.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class c_triggers
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -20,38 +19,22 @@ namespace EqUiWebUi.Areas.Alert.Models
         {
             this.h_alert = new HashSet<h_alert>();
         }
-
+    
         public int id { get; set; }
-        [HelpText("turn the trigger on or off")]
         public bool enabled { get; set; }
-        [Display(Name = "Omschrijving")]
-        [HelpText("Describe the porpuse of this alert trigger")]
         public string discription { get; set; }
-        [Required]
-        [StringLength(16, MinimumLength = 3)]
-        [HelpText("Gets used in sms and shown as alert subgroup")]
-        public string alertType { get; set; }
-        [HelpText("This statement is run against db")]
-        public string sqlStqStatement { get; set; }
-        [HelpText("CPT600 sms system to be used. MUST be defined in CPT600!!!")]
-        public Nullable<int> smsSystem { get; set; }
-        [HelpText("Inital state of alert created by this trigger")]
-        public int initial_state { get; set; }
-        [HelpText("Cron expresion to evaluate this trigger")]
-        public string Cron { get; set; }
-        [HelpText("When alert trigger is gone set alert state to techComp")]
-        public bool AutoSetStateTechComp { get; set; }
-        [HelpText("Send sms on each retrigger of the alert")]
-        public bool smsOnRetrigger { get; set; }
-        [HelpText("Database to run statement")]
         public int RunAgainst { get; set; }
-        [HelpText("General on of for SMS system")]
+        public string sqlStqStatement { get; set; }
+        public Nullable<int> smsSystem { get; set; }
+        public int initial_state { get; set; }
+        public string alertType { get; set; }
+        public bool AutoSetStateTechComp { get; set; }
+        public bool smsOnRetrigger { get; set; }
         public bool enableSMS { get; set; }
-        [HelpText("if on this alert shows downtime")]
+        public string Cron { get; set; }
         public bool isDowntime { get; set; }
-        [HelpText("if on is show in reports")]
         public bool isInReport { get; set; }
-
+    
         public virtual c_smsSystem c_smsSystem { get; set; }
         public virtual c_state c_state { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
