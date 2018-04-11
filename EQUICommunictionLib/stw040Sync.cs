@@ -19,10 +19,13 @@ namespace EQUICommunictionLib
         {
             //download
             WebClient Client = new WebClient();
-                Client.DownloadFile("http://biwebreports.got.volvocars.net:8080/reports/vcg/VCG_Manufacturing_And_Supply_Chain/Manufacturing/Disturbances_And_Maintenance/Storingsrapport%20GA_dumpfile%20sched%202.xlsx"
+
+         
+               Client.DownloadFile("http://biwebreports.got.volvocars.net:8080/reports/vcg/VCG_Manufacturing_And_Supply_Chain/Manufacturing/Disturbances_And_Maintenance/Storingsrapport%20GA_dumpfile%20sched%202.xlsx"
                     , @"C:\GADATA\IIS\Temp\Storingsrapport GA _dumpfile sched 2.xlsx");
-                //read into dt 
-                DataTable dt = LoadWorksheetInDataTable(@"C:\GADATA\IIS\Temp\Storingsrapport GA _dumpfile sched 2.xlsx", "Zone - Lijst - Laatste werkdag$");
+
+            //read into dt 
+            DataTable dt = LoadWorksheetInDataTable(@"C:\GADATA\IIS\Temp\Storingsrapport GA _dumpfile sched 2.xlsx", "Zone - Lijst - Laatste werkdag$");
                 //check how many records are now in gadata.
                 GadataComm lGadataComm = new GadataComm();
                 string qryCount = @"select count(id) 'count' from gadata.equi.['Zone - Lijst - Laatste werkdag$']";

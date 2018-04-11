@@ -95,6 +95,32 @@ namespace EqUiWebUi.Areas.VASC.Models
         obtained_FTP = 0x2
     }
 
+    public enum LogicOperator
+    {
+        AND = 0,
+        OR = 1,
+        XOR = 2
+    }
+
+    public enum ErrorCategory
+    {
+	    Common = 0,
+	    Operational = 1,
+	    System = 2,
+	    Hardware = 3,
+	    Program = 4,
+	    Motion = 5,
+	    Operator = 6,
+	    IOCommunication = 7,
+	    User = 8,
+	    Safemove = 9,
+	    Internal = 10,
+        Process = 11,
+	    Configuration = 12,
+	    Paint = 13,
+	    Picker = 14
+    }
+
     public enum Event_code
     {
         noEvent = 0, // ask GM if this is oke? 

@@ -1,0 +1,47 @@
+﻿@model IEnumerable<EqUiWebUi.Areas.VASC.Models.c_alarm_ignore>
+
+    @{
+        ViewBag.Title = "Index";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+    <div class="container">
+        <h2>Index c_controller_class</h2>
+        <div class="alert alert-info">
+            <h4>
+                Alarms configured here are ignored in the breakdown system
+            </h4>
+
+            <div class="text-muted">
+            </div>
+        </div>
+    </div>
+
+    <p>
+        @Html.ActionLink("ADD alarm ignore record", "Edit", new { id = -1 })
+    </p>
+
+
+    @Html.Grid(Model).Named("c_alarm_ignore").Build(columns =>
+    {
+        columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Asc);
+        columns.Add(c => c._Enable_bit).Titled("enable_bit");
+        columns.Add(c => c._ErrorCategory).Titled("ErrorCategory");
+        columns.Add(c => c.error_number).Titled("error_number");
+        columns.Add(c => c._Operator).Titled("Operator");
+        columns.Add(c => c.Ignore).Titled("Logtext");
+        columns.Add(c => c.UserComment).Titled("UserComment");
+        columns.Add(c => c)
+                        .Titled("")
+                        .Encoded(false)
+                        .RenderedAs(c => @Html.ActionLink("Edit", "Edit", new { id = c.id })
+                        ).Filterable(false);
+    }).Filterable(true).Sortable(true).Empty("Did not find anything").Css("table-hover")
+
+    @section scripts{
+        <script>
+        //full with screen
+        $("#allcontent").removeClass("body-content");
+        $("#allcontent").removeClass("container");
+        </script>
+    }

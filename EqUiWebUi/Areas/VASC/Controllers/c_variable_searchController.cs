@@ -21,6 +21,15 @@ namespace EqUiWebUi.Areas.VASC.Controllers
             return View(db.c_variable_search.ToList());
         }
 
+        // GET: VASC/c_variable_search/_List
+        //Will return partial view with a list of the c_variable_search.
+        //Filterable by enable bit
+        public ActionResult _List(Enable_bit_MASK enable_Bit_MASK)
+        {
+            //make new extension method like HasValue but for HasBit
+            return PartialView(db.c_variable_search.Where(c => c.enable_bit.HasValue == true).ToList());
+        }
+
         // GET: VASC/c_variable_search/Edit/5
         public ActionResult Edit(int? id)
         {

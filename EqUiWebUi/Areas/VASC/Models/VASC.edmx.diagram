@@ -8,7 +8,7 @@
         <EntityTypeShape EntityType="GADATAModelVASC.c_controller" Width="1.5" PointX="5.5" PointY="1.125" IsExpanded="true" />
         <EntityTypeShape EntityType="GADATAModelVASC.c_controller_class" Width="1.5" PointX="3.25" PointY="1.125" IsExpanded="true" />
         <EntityTypeShape EntityType="GADATAModelVASC.c_csv_log" Width="1.5" PointX="17" PointY="5.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="GADATAModelVASC.c_error_no_log" Width="1.5" PointX="7.875" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="GADATAModelVASC.c_error_no_log" Width="1.5" PointX="8" PointY="1.125" IsExpanded="true" />
         <EntityTypeShape EntityType="GADATAModelVASC.c_service_setup" Width="1.5" PointX="0.5" PointY="1.125" IsExpanded="true" />
         <EntityTypeShape EntityType="GADATAModelVASC.c_alarm_ignore" Width="1.5" PointX="10.125" PointY="1.125" IsExpanded="true" />
         <EntityTypeShape EntityType="GADATAModelVASC.c_device_info" Width="1.5" PointX="14.625" PointY="5.75" IsExpanded="true" />

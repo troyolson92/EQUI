@@ -72,6 +72,7 @@ warning 6002: The table/view 'GADATA.NGAC.c_alarm_ignore' does not have a primar
           <Property Name="setClock" Type="int" />
           <Property Name="evLogMessageAction" Type="int" />
           <Property Name="cPJVEventMask" Type="int" />
+          <Property Name="cPJVActionMask" Type="int" />
           <Property Name="cErrorNoLogMask" Type="int" />
           <Property Name="cAlarmIgnoreMask" Type="int" />
         </EntityType>
@@ -307,6 +308,7 @@ warning 6002: The table/view 'GADATA.NGAC.c_variable_search' does not have a pri
           <Property Name="cErrorNoLogMask" Type="Int32" />
           <Property Name="cAlarmIgnoreMask" Type="Int32" />
           <NavigationProperty Name="c_controller" Relationship="Self.FK_c_controller_c_controller_class" FromRole="c_controller_class" ToRole="c_controller" />
+          <Property Name="cPJVActionMask" Type="Int32" />
         </EntityType>
         <EntityType Name="c_csv_log">
           <Key>
@@ -462,6 +464,7 @@ warning 6002: The table/view 'GADATA.NGAC.c_variable_search' does not have a pri
           <EntitySetMapping Name="c_controller_class">
             <EntityTypeMapping TypeName="GADATAModelVASC.c_controller_class">
               <MappingFragment StoreEntitySet="c_controller_class">
+                <ScalarProperty Name="cPJVActionMask" ColumnName="cPJVActionMask" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="doConnect" ColumnName="doConnect" />
