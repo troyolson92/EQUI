@@ -219,11 +219,6 @@
                     @Html.ValidationMessageFor(model => model.cVariableMask, "", new { @class = "text-danger" })
                 </div>
             </div>
-
-            <div class="alert">
-                <div id="c_variableGrid" class="mvc-grid"></div>
-            </div>
-
         </div>
     </div>
 
@@ -332,35 +327,3 @@
                 $('.bsMultiselect').multiselect();
             </script>
         }
-
-        @section partials{
-            <script>
-                //load c_variable grid for active selection.
-                function load_c_variableGrid() {
-                        $('#c_variableGrid').mvcgrid({
-                            sourceUrl: '@Url.Action("_List","c_variable")' ,
-                            //query: '?search=test', // Grid query string
-                            requestType: 'get', // Ajax grid request type
-                            data: {
-                                // Ajax grid query data
-                            },
-                            filters: {
-                                // Grid filters to extend or use
-                            },
-                            reload: true, // Grid reload indicator
-                            rowClicked: function (row, data, e) {
-                            },
-                            reloadStarted: function () {
-                            },
-                            reloadEnded: function () {
-                            },
-                            reloadFailed: function (result) {
-                                $("#c_variableGrid").html("Error while loading!!!");
-                            }
-                         });
-                }
-
-                    console.log("hit");
-                    load_c_variableGrid();
-            </script>
-            }

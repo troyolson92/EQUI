@@ -916,6 +916,7 @@
     <Content Include="Areas\VASC\Views\c_error_no_log\Delete.cshtml" />
     <Content Include="Areas\VASC\Views\c_error_no_log\Edit.cshtml" />
     <Content Include="Areas\VASC\Views\c_error_no_log\Index.cshtml" />
+    <Content Include="Areas\VASC\Views\c_controller_class\_Details.cshtml" />
     <None Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.svg" />

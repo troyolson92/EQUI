@@ -34,10 +34,27 @@
                     ).Filterable(false);
 }).Filterable(true).Sortable(true).Empty("Did not find anything").Css("table-hover")
 
+
+<div class="panel">
+    <div class="panel-body">
+        <div id="c_controller_classDetails"></div>
+    </div>
+</div>
+
+
 @section scripts{
-    <script>
+<script>
         //full with screen
         $("#allcontent").removeClass("body-content");
         $("#allcontent").removeClass("container");
-    </script>
+
+        //render details when they click on it.
+        $('#c_controller_class').mvcgrid({
+            rowClicked: function (row, data, e) {
+                $("#c_controller_classDetails").html("Loading.....");
+                var url = '@Url.Action("_Details")?id=' + data.id
+                $("#c_controller_classDetails").load(url);
+            }
+        });
+</script>
 }
