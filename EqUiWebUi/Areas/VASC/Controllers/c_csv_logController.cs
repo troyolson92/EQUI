@@ -21,6 +21,15 @@ namespace EqUiWebUi.Areas.VASC.Controllers
             return View(db.c_csv_log.ToList());
         }
 
+        // GET: VASC/c_csv_log/_List
+        //Will return partial view with a list of the c_csv_log.
+        //Filterable by enable bit
+        public ActionResult _List(Enable_bit_MASK enable_Bit_MASK)
+        {
+            //make new extension method like HasValue but for HasBit
+            return PartialView(db.c_csv_log.Where(c => c.enable_bit.HasValue == true).ToList());
+        }
+
         // GET: VASC/c_csv_log/Edit/5
         // We will handle the creation of a new trigger also in EDIT. (to make code simplere) to create a new trigger pass ID = -1
         public ActionResult Edit(int? id)

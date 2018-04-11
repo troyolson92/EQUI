@@ -21,6 +21,17 @@ namespace EqUiWebUi.Areas.VASC.Controllers
             return View(db.c_device_info.ToList());
         }
 
+        // GET: VASC/c_device_info/_List
+        //Will return partial view with a list of the c_device_info.
+        //Filterable by enable bit
+        public ActionResult _List(Enable_bit_MASK enable_Bit_MASK)
+        {
+            //make new extension method like HasValue but for HasBit
+
+            //this enable bit is not nullable the others are ?
+            return PartialView(db.c_device_info.Where(c => c.enable_bit == 1));
+        }
+
         // GET: VASC/c_device_info/Edit/5
         public ActionResult Edit(int? id)
         {

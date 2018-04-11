@@ -354,6 +354,7 @@
     </Compile>
     <Compile Include="Areas\user_management\SreenHub.cs" />
     <Compile Include="Areas\user_management\user_managementAreaRegistration.cs" />
+    <Compile Include="Areas\VASC\Controllers\c_alarm_ignoreController.cs" />
     <Compile Include="Areas\VASC\Controllers\c_controller_classController.cs" />
     <Compile Include="Areas\VASC\Controllers\c_csv_logController.cs" />
     <Compile Include="Areas\VASC\Controllers\c_device_infoController.cs" />
@@ -363,6 +364,7 @@
     <Compile Include="Areas\VASC\Models\c_alarm_ignore.cs">
       <DependentUpon>VASC.tt</DependentUpon>
     </Compile>
+    <Compile Include="Areas\VASC\Models\c_alarm_ignoreMetadata.cs" />
     <Compile Include="Areas\VASC\Models\c_controller.cs">
       <DependentUpon>VASC.tt</DependentUpon>
     </Compile>
@@ -381,6 +383,8 @@
     <Compile Include="Areas\VASC\Models\c_error_no_log.cs">
       <DependentUpon>VASC.tt</DependentUpon>
     </Compile>
+    <Compile Include="Areas\VASC\Models\c_error_no_logController.cs" />
+    <Compile Include="Areas\VASC\Models\c_error_no_logMetadata.cs" />
     <Compile Include="Areas\VASC\Models\c_job.cs">
       <DependentUpon>VASC.tt</DependentUpon>
     </Compile>
@@ -902,6 +906,16 @@
     <Content Include="Areas\VASC\Views\c_variable\Index.cshtml" />
     <Content Include="Areas\VASC\Views\c_variable_search\Edit.cshtml" />
     <Content Include="Areas\VASC\Views\c_variable_search\Index.cshtml" />
+    <Content Include="Areas\VASC\Views\c_variable\_List.cshtml" />
+    <Content Include="Areas\VASC\Views\c_variable_search\_List.cshtml" />
+    <Content Include="Areas\VASC\Views\c_csv_log\_List.cshtml" />
+    <Content Include="Areas\VASC\Views\c_device_info\_List.cshtml" />
+    <Content Include="Areas\VASC\Views\c_alarm_ignore\Delete.cshtml" />
+    <Content Include="Areas\VASC\Views\c_alarm_ignore\Edit.cshtml" />
+    <Content Include="Areas\VASC\Views\c_alarm_ignore\Index.cshtml" />
+    <Content Include="Areas\VASC\Views\c_error_no_log\Delete.cshtml" />
+    <Content Include="Areas\VASC\Views\c_error_no_log\Edit.cshtml" />
+    <Content Include="Areas\VASC\Views\c_error_no_log\Index.cshtml" />
     <None Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.svg" />

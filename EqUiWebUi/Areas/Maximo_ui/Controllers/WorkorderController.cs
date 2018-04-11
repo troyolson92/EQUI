@@ -24,7 +24,7 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
 
         //full view can be intitiated by using parms or by model. 
         [HttpGet]
-        public ActionResult Workorders(string location, string locancestor, bool? b_ciblings, bool? b_preventive, string jpnum, string worktype, string wonum, string status
+        public ActionResult Workorders(string location, string locancestor, bool? b_ciblings, bool? b_preventive, string jpnum, string worktype, string wonum, string status, string ownergroup
             , DateTime? startdate, DateTime? enddate, Models.WorkorderSelectOptions workorderSelectOptions
             , bool loadOnInit = false, bool fullscreen = false, int fontSize = 12, bool RealtimeConn = false)
         {
@@ -37,6 +37,7 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
             if (worktype != null) workorderSelectOptions.worktype = worktype;
             if (wonum != null) workorderSelectOptions.wonum = wonum;
             if (status != null) workorderSelectOptions.status = status;
+            if (ownergroup != null) workorderSelectOptions.ownergroup = ownergroup;
             if (startdate != null)
             {
                 workorderSelectOptions.startdate = startdate.GetValueOrDefault(); //if a value is passed (nullcheck)
@@ -67,7 +68,7 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
 
         //can be called to be renders as partial in model or something like that...
         [HttpGet]
-        public ActionResult _workordersOnLocation(string location, string locancestor, bool? b_ciblings, bool? b_preventive, string jpnum, string worktype, string wonum, string status
+        public ActionResult _workordersOnLocation(string location, string locancestor, bool? b_ciblings, bool? b_preventive, string jpnum, string worktype, string wonum, string status, string ownergroup
             , DateTime? startdate, DateTime? enddate, bool RealtimeConn = false)
         {
             Models.WorkorderSelectOptions workorderSelectOptions = new WorkorderSelectOptions();
@@ -80,6 +81,7 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
             workorderSelectOptions.worktype = worktype;
             workorderSelectOptions.wonum = wonum;
             workorderSelectOptions.status = status;
+            workorderSelectOptions.ownergroup = ownergroup;
             workorderSelectOptions.startdate = startdate.GetValueOrDefault(System.DateTime.Now.AddDays(MaximoWorkordersDaysback));
             workorderSelectOptions.enddate = enddate.GetValueOrDefault(System.DateTime.Now);
             workorderSelectOptions.realtimeConn = RealtimeConn;
@@ -103,7 +105,7 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
 
         //gets called by AJAX to render the workorder grid
         [HttpGet]
-        public ActionResult _workordersOnLocationGrid(string location, string locancestor, bool? b_ciblings, bool? b_preventive, string jpnum, string worktype, string wonum, string status
+        public ActionResult _workordersOnLocationGrid(string location, string locancestor, bool? b_ciblings, bool? b_preventive, string jpnum, string worktype, string wonum, string status, string ownergroup
             , DateTime? startdate, DateTime? enddate, bool RealtimeConn = false)
         {
             //check if user is allowed to user realtimeConn
@@ -133,6 +135,7 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
                 ,WORKORDER.REPORTEDBY
                 ,WORKORDER.REPORTDATE
                 ,WORKORDER.CHANGEDATE
+                ,WORKORDER.OWNERGROUP
                 ,LOCANCESTOR.ANCESTOR
                 FROM MAXIMO.WORKORDER WORKORDER
                 left join MAXIMO.LOCANCESTOR LOCANCESTOR on WORKORDER.LOCATION = LOCANCESTOR.LOCATION AND LOCANCESTOR.SYSTEMID = 'PRODMID'");
@@ -166,6 +169,9 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
             sbqry.AppendLine(handleParm("WORKORDER.WONUM", wonum));
             //handle status
             sbqry.AppendLine(handleParm("WORKORDER.STATUS", status));
+            //hanlde ownergroup
+            sbqry.AppendLine(handleParm("WORKORDER.OWNERGROUP", ownergroup));
+
             //handle timerange
             if (enddate != null)
             {
@@ -199,6 +205,7 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
                 workorder.REPORTEDBY = row.Field<string>("REPORTEDBY");
                 workorder.REPORTDATE = row.Field<DateTime>("REPORTDATE");
                 workorder.ANCESTOR = row.Field<string>("ANCESTOR");
+                workorder.OWNERGROUP = row.Field<string>("OWNERGROUP");
                 //
                 workorders.Add(workorder);
             }

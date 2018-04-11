@@ -20,6 +20,7 @@ namespace EqUiWebUi.Areas.Maximo_ui.Models
         public string worktype { get; set; } //worktypes (blank = all)
         public string wonum { get; set; } //wonum (blank = all)
         public string status { get; set; }
+        public string ownergroup { get; set; } //OWNERGROUP (blank = all)
         public DateTime startdate { get; set; } //point to start looking 
         public DateTime enddate { get; set; } //point to stop looking 
         public bool realtimeConn { get; set; } //run on realtime maximo
