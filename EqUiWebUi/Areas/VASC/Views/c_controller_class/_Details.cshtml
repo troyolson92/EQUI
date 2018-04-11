@@ -1,0 +1,31 @@
+﻿@model EqUiWebUi.Areas.VASC.Models.c_controller_class
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class="panel-title">c variable </h4>
+        <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+    </div>
+    <div class="alert-info">
+    </div>
+    <div class="panel-body">
+
+
+        <div class="alert">
+            <div id="c_variableGrid" class="mvc-grid"></div>
+        </div>
+
+    </div>
+</div>
+
+    <script>
+                //load c_variable grid for active selection.
+                        $('#c_variableGrid').mvcgrid({
+                            sourceUrl: '@Url.Action("_List","c_variable", new {enable_mask = Model.cVariableMask })',
+                            requestType: 'get', // Ajax grid request type
+                            reloadFailed: function (result) {
+                                $("#c_variableGrid").html("Error while loading!!!");
+                            }
+                         });
+
+                    console.log("hit");
+    </script>

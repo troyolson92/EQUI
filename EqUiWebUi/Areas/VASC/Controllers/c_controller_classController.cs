@@ -21,6 +21,17 @@ namespace EqUiWebUi.Areas.VASC.Controllers
             return View(db.c_controller_class.ToList());
         }
 
+        // GET: VASC/c_controller_class/Details/5
+        public ActionResult _Details (int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            c_controller_class c_Controller_Class = db.c_controller_class.Find(id);
+            return PartialView(c_Controller_Class);
+        }
+
         // GET: VASC/c_controller_class/Edit/5
         // We will handle the creation of a new trigger also in EDIT. (to make code simplere) to create a new trigger pass ID = -1
         public ActionResult Edit(int? id)
