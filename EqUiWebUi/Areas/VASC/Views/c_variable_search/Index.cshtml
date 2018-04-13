@@ -24,22 +24,7 @@
 </p>
 
 
-@Html.Grid(Model).Named("c_variable_search").Build(columns =>
-{
-    columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Asc);
-    columns.Add(c => c.variable).Titled("variable");
-    columns.Add(c => c._SymbolTypes).Titled("_SymbolTypes"); //must check doc to make this enum
-    columns.Add(c => c.datatype).Titled("datatype"); //idem
-    columns.Add(c => c._Poll_Rate).Titled("_Poll_Rate");
-    columns.Add(c => c._Enable_bit).Titled("_Enable_bit");
-    columns.Add(c => c._Insert_update).Titled("_Insert_update");
-    columns.Add(c => c.rt_table).Titled("rt_table");
-    columns.Add(c => c)
-                    .Titled("")
-                    .Encoded(false)
-                    .RenderedAs(c => @Html.ActionLink("Edit", "Edit", new { id = c.id })
-                    ).Filterable(false);
-}).Filterable(true).Sortable(true).Empty("Did not find anything").Css("table-hover")
+@Html.AjaxGrid(Url.Action("_List"))
 
 @section scripts{
     <script>

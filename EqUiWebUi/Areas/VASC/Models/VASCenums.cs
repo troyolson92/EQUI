@@ -6,9 +6,97 @@ using System.Web.Mvc;
 
 namespace EqUiWebUi.Areas.VASC.Models
 {
-    public class VASCenums
+    public static class VASCenums
     {
+        //this makes a selectlist for the _sql_action 
+        public static List<SelectListItem> SQL_Action_SelectList
+        {
+            get
+            {
+                List<SelectListItem> items = new List<SelectListItem>();
+                foreach (string action in Enum.GetNames(typeof(SQL_Action)))
+                {
+                    if ((int)Enum.Parse(typeof(SQL_Action), action) == 0) continue; //skip 0 value (nothing active label)
+                    SelectListItem listItem = new SelectListItem
+                    {
+                        Text = action,
+                        Value = ((int)Enum.Parse(typeof(SQL_Action), action)).ToString(),
+                    };
+                    items.Add(listItem);
+                }
+                return items;
+            }
+            set
+            {
+                //does not need a set
+            }
+
+        }
+
+        public static List<SelectListItem> Enable_bit_MASK_SelectList
+        {
+            get
+            {
+                List<SelectListItem> items = new List<SelectListItem>();
+                foreach (string action in Enum.GetNames(typeof(Enable_bit_MASK)))
+                {
+                    if ((int)Enum.Parse(typeof(Enable_bit_MASK), action) == 0) continue; //skip 0 value (nothing active label)
+                    SelectListItem listItem = new SelectListItem
+                    {
+                        Text = action,
+                        Value = ((int)Enum.Parse(typeof(Enable_bit_MASK), action)).ToString(),
+                    };
+                    items.Add(listItem);
+                }
+                return items;
+            }
+            set
+            {
+                //does not need a set
+            }
+        }
+
+        public static List<SelectListItem> ErrorFlags_SelectList
+        {
+            get
+            {
+                List<SelectListItem> items = new List<SelectListItem>();
+                foreach (string action in Enum.GetNames(typeof(ErrorFlags)))
+                {
+                    if ((int)Enum.Parse(typeof(ErrorFlags), action) == 0) continue; //skip 0 value (nothing active label)
+                    SelectListItem listItem = new SelectListItem
+                    {
+                        Text = action,
+                        Value = ((int)Enum.Parse(typeof(ErrorFlags), action)).ToString(),
+                    };
+                    items.Add(listItem);
+                }
+                return items;
+            }
+            set
+            {
+                //does not need a set
+            }
+        }
+
+        //helper from int to array of int
+        public static int[] IntMaskToIntArray(int? inputValue, int enumLength)
+        {
+            //GHM 
+            int value = inputValue ?? 0;
+            List<int> listValue = new List<int>();
+            for (int lcv = 0; lcv < enumLength; lcv++)
+            {
+                if ((value & (1 << lcv)) != 0)
+                {
+                    listValue.Add(1 << lcv);
+                }
+            }
+            return listValue.ToArray();
+        }
     }
+
+
 
     //graham his bitmasks
     public enum Poll_rate
@@ -100,6 +188,13 @@ namespace EqUiWebUi.Areas.VASC.Models
         AND = 0,
         OR = 1,
         XOR = 2
+    }
+
+    public enum ErrorFlags
+    {
+        Insert_into_h_alarm = 0x01,
+        Insert_into_rt_alarm = 0x02,
+        Used_in_breakdown = 0x04
     }
 
     public enum ErrorCategory

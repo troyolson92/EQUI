@@ -19,7 +19,7 @@ namespace EqUiWebUi.Areas.VASC.Models
         {
             get
             {
-                return (Poll_rate)Enum.ToObject(typeof(Poll_rate), this.poll_rate);
+                return (Poll_rate)Enum.ToObject(typeof(Poll_rate), this.poll_rate.GetValueOrDefault());
             }
             set
             {
@@ -27,23 +27,11 @@ namespace EqUiWebUi.Areas.VASC.Models
             }
         }
 
-        public SQL_Action _SQL_Action
-        {
-            get
-            {
-                return (SQL_Action)Enum.ToObject(typeof(SQL_Action), this.sql_action);
-            }
-            set
-            {
-                this.sql_action = (int)value;
-            }
-        }
-
         public Enable_bit _Enable_bit
         {
             get
             {
-                return (Enable_bit)Enum.ToObject(typeof(Enable_bit), this.enable_bit);
+                return (Enable_bit)Enum.ToObject(typeof(Enable_bit), this.enable_bit.GetValueOrDefault());
             }
             set
             {
@@ -55,11 +43,23 @@ namespace EqUiWebUi.Areas.VASC.Models
         {
             get
             {
-                return (Event_code)Enum.ToObject(typeof(Event_code), this.event_enum);
+                return (Event_code)Enum.ToObject(typeof(Event_code), this.event_enum.GetValueOrDefault());
             }
             set
             {
                 this.event_enum = (int)value;
+            }
+        }
+
+        public int[] _SQL_Action
+        {
+            get
+            {
+                return VASCenums.IntMaskToIntArray(this.sql_action, Enum.GetNames(typeof(SQL_Action)).Length);
+            }
+            set
+            {
+                this.sql_action = value.Sum();
             }
         }
 

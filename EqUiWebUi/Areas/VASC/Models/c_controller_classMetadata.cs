@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using EqUiWebUi.Areas.VASC.Models;
 
 namespace EqUiWebUi.Areas.VASC.Models
 {
@@ -19,7 +20,7 @@ namespace EqUiWebUi.Areas.VASC.Models
         {
             get
             {
-                return IntMaskToIntArray(this.evStateChange, Enum.GetNames(typeof(SQL_Action)).Length);
+                return VASCenums.IntMaskToIntArray(this.evStateChange, Enum.GetNames(typeof(SQL_Action)).Length);
             }
             set
             {
@@ -31,7 +32,7 @@ namespace EqUiWebUi.Areas.VASC.Models
         {
             get
             {
-                return IntMaskToIntArray(this.evOperatingModeChange, Enum.GetNames(typeof(SQL_Action)).Length);
+                return VASCenums.IntMaskToIntArray(this.evOperatingModeChange, Enum.GetNames(typeof(SQL_Action)).Length);
             }
             set
             {
@@ -43,7 +44,7 @@ namespace EqUiWebUi.Areas.VASC.Models
         {
             get
             {
-                return IntMaskToIntArray(this.evConnectionChange, Enum.GetNames(typeof(SQL_Action)).Length);
+                return VASCenums.IntMaskToIntArray(this.evConnectionChange, Enum.GetNames(typeof(SQL_Action)).Length);
             }
             set
             {
@@ -55,7 +56,7 @@ namespace EqUiWebUi.Areas.VASC.Models
         {
             get
             {
-                return IntMaskToIntArray(this.evExecutionStatus, Enum.GetNames(typeof(SQL_Action)).Length);
+                return VASCenums.IntMaskToIntArray(this.evExecutionStatus, Enum.GetNames(typeof(SQL_Action)).Length);
             }
             set
             {
@@ -67,7 +68,7 @@ namespace EqUiWebUi.Areas.VASC.Models
         {
             get
             {
-                return IntMaskToIntArray(this.evExecutionStatusTRob1, Enum.GetNames(typeof(SQL_Action)).Length);
+                return VASCenums.IntMaskToIntArray(this.evExecutionStatusTRob1, Enum.GetNames(typeof(SQL_Action)).Length);
             }
             set
             {
@@ -79,7 +80,7 @@ namespace EqUiWebUi.Areas.VASC.Models
         {
             get
             {
-                return IntMaskToIntArray(this.evBackupCompleted, Enum.GetNames(typeof(SQL_Action)).Length);
+                return VASCenums.IntMaskToIntArray(this.evBackupCompleted, Enum.GetNames(typeof(SQL_Action)).Length);
             }
             set
             {
@@ -91,7 +92,7 @@ namespace EqUiWebUi.Areas.VASC.Models
         {
             get
             {
-                return IntMaskToIntArray(this.evDataResolveChange, Enum.GetNames(typeof(SQL_Action)).Length);
+                return VASCenums.IntMaskToIntArray(this.evDataResolveChange, Enum.GetNames(typeof(SQL_Action)).Length);
             }
             set
             {
@@ -103,7 +104,7 @@ namespace EqUiWebUi.Areas.VASC.Models
         {
             get
             {
-                return IntMaskToIntArray(this.evExecutionCycleChange, Enum.GetNames(typeof(SQL_Action)).Length);
+                return VASCenums.IntMaskToIntArray(this.evExecutionCycleChange, Enum.GetNames(typeof(SQL_Action)).Length);
             }
             set
             {
@@ -115,7 +116,7 @@ namespace EqUiWebUi.Areas.VASC.Models
         {
             get
             {
-                return IntMaskToIntArray(this.evTaskEnabledChange, Enum.GetNames(typeof(SQL_Action)).Length);
+                return VASCenums.IntMaskToIntArray(this.evTaskEnabledChange, Enum.GetNames(typeof(SQL_Action)).Length);
             }
             set
             {
@@ -127,7 +128,7 @@ namespace EqUiWebUi.Areas.VASC.Models
         {
             get
             {
-                return IntMaskToIntArray(this.evMasterChange, Enum.GetNames(typeof(SQL_Action)).Length);
+                return VASCenums.IntMaskToIntArray(this.evMasterChange, Enum.GetNames(typeof(SQL_Action)).Length);
             }
             set
             {
@@ -139,7 +140,7 @@ namespace EqUiWebUi.Areas.VASC.Models
         {
             get
             {
-                return IntMaskToIntArray(this.evMotionPointerTRob1Change, Enum.GetNames(typeof(SQL_Action)).Length);
+                return VASCenums.IntMaskToIntArray(this.evMotionPointerTRob1Change, Enum.GetNames(typeof(SQL_Action)).Length);
             }
             set
             {
@@ -151,7 +152,7 @@ namespace EqUiWebUi.Areas.VASC.Models
         {
             get
             {
-                return IntMaskToIntArray(this.evProgramPointerTRob1Change, Enum.GetNames(typeof(SQL_Action)).Length);
+                return VASCenums.IntMaskToIntArray(this.evProgramPointerTRob1Change, Enum.GetNames(typeof(SQL_Action)).Length);
             }
             set
             {
@@ -163,7 +164,7 @@ namespace EqUiWebUi.Areas.VASC.Models
         {
             get
             {
-                return IntMaskToIntArray(this.evMotionPointerTRob1ManualChange, Enum.GetNames(typeof(SQL_Action)).Length);
+                return VASCenums.IntMaskToIntArray(this.evMotionPointerTRob1ManualChange, Enum.GetNames(typeof(SQL_Action)).Length);
             }
             set
             {
@@ -175,7 +176,7 @@ namespace EqUiWebUi.Areas.VASC.Models
         {
             get
             {
-                return IntMaskToIntArray(this.evProgramPointerTRob1ManualChange, Enum.GetNames(typeof(SQL_Action)).Length);
+                return VASCenums.IntMaskToIntArray(this.evProgramPointerTRob1ManualChange, Enum.GetNames(typeof(SQL_Action)).Length);
             }
             set
             {
@@ -187,7 +188,7 @@ namespace EqUiWebUi.Areas.VASC.Models
         {
             get
             {
-                return IntMaskToIntArray(this.cVariableMask, Enum.GetNames(typeof(Enable_bit_MASK)).Length);
+                return VASCenums.IntMaskToIntArray(this.cVariableMask, Enum.GetNames(typeof(Enable_bit_MASK)).Length);
             }
             set
             {
@@ -199,7 +200,7 @@ namespace EqUiWebUi.Areas.VASC.Models
         {
             get
             {
-                return IntMaskToIntArray(this.cVariableSearchMask, Enum.GetNames(typeof(Enable_bit_MASK)).Length);
+                return VASCenums.IntMaskToIntArray(this.cVariableSearchMask, Enum.GetNames(typeof(Enable_bit_MASK)).Length);
             }
             set
             {
@@ -211,7 +212,7 @@ namespace EqUiWebUi.Areas.VASC.Models
         {
             get
             {
-                return IntMaskToIntArray(this.cDeviceInfoMask, Enum.GetNames(typeof(Enable_bit_MASK)).Length);
+                return VASCenums.IntMaskToIntArray(this.cDeviceInfoMask, Enum.GetNames(typeof(Enable_bit_MASK)).Length);
             }
             set
             {
@@ -223,7 +224,7 @@ namespace EqUiWebUi.Areas.VASC.Models
         {
             get
             {
-                return IntMaskToIntArray(this.cCSVLogMask, Enum.GetNames(typeof(Enable_bit_MASK)).Length);
+                return VASCenums.IntMaskToIntArray(this.cCSVLogMask, Enum.GetNames(typeof(Enable_bit_MASK)).Length);
             }
             set
             {
@@ -235,7 +236,7 @@ namespace EqUiWebUi.Areas.VASC.Models
         {
             get
             {
-                return IntMaskToIntArray(this.cJobMask, Enum.GetNames(typeof(Enable_bit_MASK)).Length);
+                return VASCenums.IntMaskToIntArray(this.cJobMask, Enum.GetNames(typeof(Enable_bit_MASK)).Length);
             }
             set
             {
@@ -247,7 +248,7 @@ namespace EqUiWebUi.Areas.VASC.Models
         {
             get
             {
-                return IntMaskToIntArray(this.cErrorNoLogMask, Enum.GetNames(typeof(Enable_bit_MASK)).Length);
+                return VASCenums.IntMaskToIntArray(this.cErrorNoLogMask, Enum.GetNames(typeof(Enable_bit_MASK)).Length);
             }
             set
             {
@@ -259,7 +260,7 @@ namespace EqUiWebUi.Areas.VASC.Models
         {
             get
             {
-                return IntMaskToIntArray(this.cAlarmIgnoreMask, Enum.GetNames(typeof(Enable_bit_MASK)).Length);
+                return VASCenums.IntMaskToIntArray(this.cAlarmIgnoreMask, Enum.GetNames(typeof(Enable_bit_MASK)).Length);
             }
             set
             {
@@ -271,7 +272,7 @@ namespace EqUiWebUi.Areas.VASC.Models
         {
             get
             {
-                return IntMaskToIntArray(this.cPJVEventMask, Enum.GetNames(typeof(Enable_bit_MASK)).Length);
+                return VASCenums.IntMaskToIntArray(this.cPJVEventMask, Enum.GetNames(typeof(Enable_bit_MASK)).Length);
             }
             set
             {
@@ -279,69 +280,5 @@ namespace EqUiWebUi.Areas.VASC.Models
             }
         }
 
-
-        //helper from int to array of int
-        public int[] IntMaskToIntArray(int? inputValue, int enumLength)
-        {
-            //GHM 
-            int value = inputValue ?? 0;
-            List<int> listValue = new List<int>();
-            for (int lcv = 0; lcv < enumLength; lcv++)
-            {
-                if ((value & (1 << lcv)) != 0)
-                {
-                    listValue.Add(1 << lcv);
-                }
-            }
-            return listValue.ToArray();
-        }
-
-        //this links our enum to the entitymodel
-        public List<SelectListItem> _SQL_Action
-        {
-            get
-            {
-                List<SelectListItem> items = new List<SelectListItem>();
-                foreach (string action in Enum.GetNames(typeof(SQL_Action)))
-                {
-                    if ((int)Enum.Parse(typeof(SQL_Action), action) == 0) continue; //skip 0 value (nothing active label)
-                    SelectListItem listItem = new SelectListItem
-                    {
-                        Text = action,
-                        Value = ((int)Enum.Parse(typeof(SQL_Action), action)).ToString(),
-                    };
-                    items.Add(listItem);
-                }
-                return items;
-            }
-            set
-            {
-                //does not need a set
-            }
-
-        }
-
-        public List<SelectListItem> _Enable_bit_MASK
-        {
-            get
-            {
-                List<SelectListItem> items = new List<SelectListItem>();
-                foreach (string action in Enum.GetNames(typeof(Enable_bit_MASK)))
-                {
-                    if ((int)Enum.Parse(typeof(Enable_bit_MASK), action) == 0) continue; //skip 0 value (nothing active label)
-                    SelectListItem listItem = new SelectListItem
-                    {
-                        Text = action,
-                        Value = ((int)Enum.Parse(typeof(Enable_bit_MASK), action)).ToString(),
-                    };
-                    items.Add(listItem);
-                }
-                return items;
-            }
-            set
-            {
-                //does not need a set
-            }
-        }
     }
 }

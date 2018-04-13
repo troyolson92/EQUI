@@ -22,21 +22,7 @@
     @Html.ActionLink("ADD CSV file", "Edit", new { id = -1 })
 </p>
 
-
-@Html.Grid(Model).Named("c_csv_log").Build(columns =>
-{
-    columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Asc);
-    columns.Add(c => c._Enable_bit).Titled("enable_bit");
-    columns.Add(c => c.csv_filename).Titled("csv_filename");
-    columns.Add(c => c.rt_table).Titled("rt_table");
-    columns.Add(c => c._Poll_Rate).Titled("Poll_Rate");
-    columns.Add(c => c.comment).Titled("comment");
-    columns.Add(c => c)
-                    .Titled("")
-                    .Encoded(false)
-                    .RenderedAs(c => @Html.ActionLink("Edit", "Edit", new { id = c.id })
-                    ).Filterable(false);
-}).Filterable(true).Sortable(true).Empty("Did not find anything").Css("table-hover")
+@Html.AjaxGrid(Url.Action("_List"))
 
 @section scripts{
     <script>

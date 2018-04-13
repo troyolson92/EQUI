@@ -20,25 +20,12 @@
 </div>
 
 
-@Html.Grid(Model).Named("c_device_info").Build(columns =>
-    {
-        columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Asc);
-        columns.Add(c => c.name).Titled("name");
-        columns.Add(c => c._Enable_bit).Titled("enable_bit");
-        columns.Add(c => c._Poll_Rate).Titled("Poll_Rate");
-        columns.Add(c => c._Insert_update).Titled("Insert_update");
-       // columns.Add(c => c.URL).Titled("URL");
-        columns.Add(c => c)
-                    .Titled("")
-                    .Encoded(false)
-                    .RenderedAs(c => @Html.ActionLink("Edit", "Edit", new { id = c.id })
-                    ).Filterable(false);
-    }).Filterable(true).Sortable(true).Empty("Did not find anything").Css("table-hover")
+@Html.AjaxGrid(Url.Action("_List"))
 
-    @section scripts{
-        <script>
+@section scripts{
+    <script>
         //full with screen
         $("#allcontent").removeClass("body-content");
         $("#allcontent").removeClass("container");
-        </script>
-    }
+    </script>
+}

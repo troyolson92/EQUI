@@ -18,16 +18,29 @@ namespace EqUiWebUi.Areas.VASC.Controllers
         // GET: VASC/c_variable_search
         public ActionResult Index()
         {
-            return View(db.c_variable_search.ToList());
+            return View();
         }
 
         // GET: VASC/c_variable_search/_List
         //Will return partial view with a list of the c_variable_search.
-        //Filterable by enable bit
-        public ActionResult _List(Enable_bit_MASK enable_Bit_MASK)
+        //Filterable by enable mask
+        public ActionResult _List(int? enable_mask)
         {
-            //make new extension method like HasValue but for HasBit
-            return PartialView(db.c_variable_search.Where(c => c.enable_bit.HasValue == true).ToList());
+            List<c_variable_search> list = new List<c_variable_search>();
+            if (enable_mask is null)
+            {
+                list = db.c_variable_search.ToList();
+            }
+            else
+            {
+                var setbits = Enumerable.Range(0, 32).Where(x => ((enable_mask + 1 >> x) & 1) == 1);
+
+                foreach (int setbit in setbits)
+                {
+                    list.AddRange(db.c_variable_search.Where(c => c.enable_bit == setbit && c.enable_bit != 0).ToList());
+                }
+            }
+            return PartialView(list);
         }
 
         // GET: VASC/c_variable_search/Edit/5

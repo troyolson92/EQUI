@@ -18,7 +18,7 @@ namespace EqUiWebUi.Areas.VASC.Controllers
         // GET: VASC/c_variable
         public ActionResult Index()
         {
-            return View(db.c_variable.ToList());
+            return View();
         }
 
         // GET: VASC/c_variable/_List
@@ -26,11 +26,19 @@ namespace EqUiWebUi.Areas.VASC.Controllers
         //Filterable by enable mask
         public ActionResult _List(int? enable_mask)
         {
-            var setbits = Enumerable.Range(0, 32).Where(x => ((enable_mask+1 >> x) & 1) == 1);
             List<c_variable> list = new List<c_variable>();
-            foreach (int setbit in setbits)
+            if (enable_mask is null)
             {
-                list.AddRange(db.c_variable.Where(c => c.enable_bit == setbit && c.enable_bit != 0).ToList());
+                list = db.c_variable.ToList();
+            }
+            else
+            {
+                var setbits = Enumerable.Range(0, 32).Where(x => ((enable_mask + 1 >> x) & 1) == 1);
+
+                foreach (int setbit in setbits)
+                {
+                    list.AddRange(db.c_variable.Where(c => c.enable_bit == setbit && c.enable_bit != 0).ToList());
+                }
             }
             return PartialView(list);
         }
@@ -52,7 +60,6 @@ namespace EqUiWebUi.Areas.VASC.Controllers
                 //set default
                 c_variable._Poll_Rate = Poll_rate.ReadOnConnect;
                 c_variable._Enable_bit = Enable_bit.Disabled;
-                c_variable._SQL_Action = SQL_Action.noAction;
                 c_variable._Event_code = Event_code.noEvent;
 
             }
