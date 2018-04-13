@@ -14,6 +14,12 @@ namespace EqUiWebUi.Areas.VASC.Models
     
     public partial class c_controller
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public c_controller()
+        {
+            this.rt_active_info = new HashSet<rt_active_info>();
+        }
+    
         public int id { get; set; }
         public string controller_name { get; set; }
         public Nullable<int> enable_bit { get; set; }
@@ -29,5 +35,7 @@ namespace EqUiWebUi.Areas.VASC.Models
         public string CLassificationId { get; set; }
     
         public virtual c_controller_class c_controller_class { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<rt_active_info> rt_active_info { get; set; }
     }
 }

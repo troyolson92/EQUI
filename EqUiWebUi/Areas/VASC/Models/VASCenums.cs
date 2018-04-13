@@ -197,6 +197,25 @@ namespace EqUiWebUi.Areas.VASC.Models
         Used_in_breakdown = 0x04
     }
 
+    public enum ControllerFlags
+    {
+       noflags = 0x0,
+       allowPjvAction= 0x01
+    }
+
+    public enum VASCState
+    {
+        STATE_NOTHING = 0, /* Done nothing */
+        STATE_CONNECTED = 1, /* Fully connected */
+        STATE_CONNECTING = 2, /* Processing of connecting */
+        STATE_NO_CONN = -1, /* ABB error no connection */
+        STATE_LOST_CONN = -2, /* Lost connection */
+        STATE_NO_PING = -3, /* No ping */
+        STATE_NO_NAME = -4, /* No Name */
+        STATE_NO_IP_SYSID = -5, /* No IP/SYSID */
+        STATE_VASC_SHUTDOWN = -15
+    }
+
     public enum ErrorCategory
     {
 	    Common = 0,

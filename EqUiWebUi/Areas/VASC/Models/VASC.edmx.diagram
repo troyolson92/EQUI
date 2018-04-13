@@ -14,7 +14,9 @@
         <EntityTypeShape EntityType="GADATAModelVASC.c_variable" Width="1.5" PointX="12.375" PointY="5.75" IsExpanded="true" />
         <EntityTypeShape EntityType="GADATAModelVASC.c_variable_search" Width="1.5" PointX="10.25" PointY="5.75" IsExpanded="true" />
         <AssociationConnector Association="GADATAModelVASC.FK_c_controller_c_controller_class" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="GADATAModelVASC.c_error" Width="1.5" PointX="12.25" PointY="1.125" />
+        <EntityTypeShape EntityType="GADATAModelVASC.c_error" Width="1.5" PointX="0.5" PointY="3.625" />
+        <EntityTypeShape EntityType="GADATAModelVASC.rt_active_info" Width="1.5" PointX="8" PointY="1.125" />
+        <AssociationConnector Association="GADATAModelVASC.FK_rt_active_info_c_controller" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
