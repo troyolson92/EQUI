@@ -52,6 +52,7 @@ namespace EqUiWebUi.Areas.VASC.Models
         public Nullable<int> cErrorNoLogMask { get; set; }
         public Nullable<int> cAlarmIgnoreMask { get; set; }
         public Nullable<int> cPJVActionMask { get; set; }
+        public Nullable<int> cErrorMask { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<c_controller> c_controller { get; set; }

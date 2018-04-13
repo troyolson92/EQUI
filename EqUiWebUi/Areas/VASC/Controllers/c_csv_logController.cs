@@ -18,16 +18,28 @@ namespace EqUiWebUi.Areas.VASC.Controllers
         // GET: VASC/c_csv_log
         public ActionResult Index()
         {
-            return View(db.c_csv_log.ToList());
+            return View();
         }
 
         // GET: VASC/c_csv_log/_List
         //Will return partial view with a list of the c_csv_log.
         //Filterable by enable bit
-        public ActionResult _List(Enable_bit_MASK enable_Bit_MASK)
+        public ActionResult _List(int? enable_mask)
         {
-            //make new extension method like HasValue but for HasBit
-            return PartialView(db.c_csv_log.Where(c => c.enable_bit.HasValue == true).ToList());
+            List<c_csv_log> list = new List<c_csv_log>();
+            if (enable_mask is null)
+            {
+                list = db.c_csv_log.ToList();
+            }
+            else
+            {
+                var setbits = Enumerable.Range(0, 32).Where(x => ((enable_mask + 1 >> x) & 1) == 1);
+                foreach (int setbit in setbits)
+                {
+                    list.AddRange(db.c_csv_log.Where(c => c.enable_bit == setbit && c.enable_bit != 0).ToList());
+                }
+            }
+            return PartialView(list);
         }
 
         // GET: VASC/c_csv_log/Edit/5

@@ -7,20 +7,6 @@
     <Schema Namespace="GADATAModelVASC.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <!--Errors Found During Generation:
 warning 6002: The table/view 'GADATA.NGAC.c_alarm_ignore' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="c_alarm_ignore">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="enable_bit" Type="int" />
-          <Property Name="error_number" Type="int" />
-          <Property Name="error_category" Type="int" />
-          <Property Name="error_number_mask" Type="int" />
-          <Property Name="error_category_mask" Type="int" />
-          <Property Name="_operator" Type="int" />
-          <Property Name="Ignore" Type="varchar" MaxLength="50" />
-          <Property Name="UserComment" Type="varchar(max)" />
-        </EntityType>
         <EntityType Name="c_controller">
           <Key>
             <PropertyRef Name="id" />
@@ -75,6 +61,7 @@ warning 6002: The table/view 'GADATA.NGAC.c_alarm_ignore' does not have a primar
           <Property Name="cPJVActionMask" Type="int" />
           <Property Name="cErrorNoLogMask" Type="int" />
           <Property Name="cAlarmIgnoreMask" Type="int" />
+          <Property Name="cErrorMask" Type="int" />
         </EntityType>
         <EntityType Name="c_csv_log">
           <Key>
@@ -106,7 +93,7 @@ warning 6002: The table/view 'GADATA.NGAC.c_device_info' does not have a primary
           <Property Name="insert_update" Type="int" Nullable="false" />
           <Property Name="URL" Type="varchar(max)" />
         </EntityType>
-        <EntityType Name="c_error_no_log">
+        <EntityType Name="c_error">
           <Key>
             <PropertyRef Name="id" />
           </Key>
@@ -117,6 +104,7 @@ warning 6002: The table/view 'GADATA.NGAC.c_device_info' does not have a primary
           <Property Name="error_number_mask" Type="int" />
           <Property Name="error_category_mask" Type="int" />
           <Property Name="_operator" Type="int" />
+          <Property Name="flags" Type="int" />
           <Property Name="Ignore" Type="varchar" MaxLength="50" />
           <Property Name="UserComment" Type="varchar" MaxLength="256" />
         </EntityType>
@@ -187,21 +175,8 @@ warning 6002: The table/view 'GADATA.NGAC.c_variable_search' does not have a pri
           <EntitySet Name="c_controller" EntityType="Self.c_controller" Schema="NGAC" store:Type="Tables" />
           <EntitySet Name="c_controller_class" EntityType="Self.c_controller_class" Schema="NGAC" store:Type="Tables" />
           <EntitySet Name="c_csv_log" EntityType="Self.c_csv_log" Schema="NGAC" store:Type="Tables" />
-          <EntitySet Name="c_error_no_log" EntityType="Self.c_error_no_log" Schema="NGAC" store:Type="Tables" />
+          <EntitySet Name="c_error" EntityType="Self.c_error" Schema="NGAC" store:Type="Tables" />
           <EntitySet Name="c_service_setup" EntityType="Self.c_service_setup" Schema="NGAC" store:Type="Tables" />
-          <EntitySet Name="c_alarm_ignore" EntityType="Self.c_alarm_ignore" store:Type="Tables" store:Schema="NGAC">
-            <DefiningQuery>SELECT 
-    [c_alarm_ignore].[id] AS [id], 
-    [c_alarm_ignore].[enable_bit] AS [enable_bit], 
-    [c_alarm_ignore].[error_number] AS [error_number], 
-    [c_alarm_ignore].[error_category] AS [error_category], 
-    [c_alarm_ignore].[error_number_mask] AS [error_number_mask], 
-    [c_alarm_ignore].[error_category_mask] AS [error_category_mask], 
-    [c_alarm_ignore].[_operator] AS [_operator], 
-    [c_alarm_ignore].[Ignore] AS [Ignore], 
-    [c_alarm_ignore].[UserComment] AS [UserComment]
-    FROM [NGAC].[c_alarm_ignore] AS [c_alarm_ignore]</DefiningQuery>
-          </EntitySet>
           <EntitySet Name="c_device_info" EntityType="Self.c_device_info" store:Type="Tables" store:Schema="NGAC">
             <DefiningQuery>SELECT 
     [c_device_info].[id] AS [id], 
@@ -309,6 +284,7 @@ warning 6002: The table/view 'GADATA.NGAC.c_variable_search' does not have a pri
           <Property Name="cAlarmIgnoreMask" Type="Int32" />
           <NavigationProperty Name="c_controller" Relationship="Self.FK_c_controller_c_controller_class" FromRole="c_controller_class" ToRole="c_controller" />
           <Property Name="cPJVActionMask" Type="Int32" />
+          <Property Name="cErrorMask" Type="Int32" />
         </EntityType>
         <EntityType Name="c_csv_log">
           <Key>
@@ -324,20 +300,6 @@ warning 6002: The table/view 'GADATA.NGAC.c_variable_search' does not have a pri
           <Property Name="Tempnote" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="flags" Type="Int32" />
         </EntityType>
-        <EntityType Name="c_error_no_log">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="enable_bit" Type="Int32" />
-          <Property Name="error_number" Type="Int32" />
-          <Property Name="error_category" Type="Int32" />
-          <Property Name="error_number_mask" Type="Int32" />
-          <Property Name="error_category_mask" Type="Int32" />
-          <Property Name="C_operator" Type="Int32" />
-          <Property Name="Ignore" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="UserComment" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityType Name="c_service_setup">
           <Key>
             <PropertyRef Name="id" />
@@ -347,20 +309,6 @@ warning 6002: The table/view 'GADATA.NGAC.c_variable_search' does not have a pri
           <Property Name="name" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="value" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
           <Property Name="description" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="c_alarm_ignore">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="enable_bit" Type="Int32" />
-          <Property Name="error_number" Type="Int32" />
-          <Property Name="error_category" Type="Int32" />
-          <Property Name="error_number_mask" Type="Int32" />
-          <Property Name="error_category_mask" Type="Int32" />
-          <Property Name="C_operator" Type="Int32" />
-          <Property Name="Ignore" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="UserComment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="c_device_info">
           <Key>
@@ -424,9 +372,7 @@ warning 6002: The table/view 'GADATA.NGAC.c_variable_search' does not have a pri
           <EntitySet Name="c_controller" EntityType="Self.c_controller" />
           <EntitySet Name="c_controller_class" EntityType="Self.c_controller_class" />
           <EntitySet Name="c_csv_log" EntityType="Self.c_csv_log" />
-          <EntitySet Name="c_error_no_log" EntityType="Self.c_error_no_log" />
           <EntitySet Name="c_service_setup" EntityType="Self.c_service_setup" />
-          <EntitySet Name="c_alarm_ignore" EntityType="Self.c_alarm_ignore" />
           <EntitySet Name="c_device_info" EntityType="Self.c_device_info" />
           <EntitySet Name="c_job" EntityType="Self.c_job" />
           <EntitySet Name="c_variable" EntityType="Self.c_variable" />
@@ -435,7 +381,23 @@ warning 6002: The table/view 'GADATA.NGAC.c_variable_search' does not have a pri
             <End Role="c_controller_class" EntitySet="c_controller_class" />
             <End Role="c_controller" EntitySet="c_controller" />
           </AssociationSet>
+          <EntitySet Name="c_error" EntityType="GADATAModelVASC.c_error" />
         </EntityContainer>
+        <EntityType Name="c_error">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="enable_bit" Type="Int32" />
+          <Property Name="error_number" Type="Int32" />
+          <Property Name="error_category" Type="Int32" />
+          <Property Name="error_number_mask" Type="Int32" />
+          <Property Name="error_category_mask" Type="Int32" />
+          <Property Name="C_operator" Type="Int32" />
+          <Property Name="flags" Type="Int32" />
+          <Property Name="Ignore" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UserComment" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -464,6 +426,7 @@ warning 6002: The table/view 'GADATA.NGAC.c_variable_search' does not have a pri
           <EntitySetMapping Name="c_controller_class">
             <EntityTypeMapping TypeName="GADATAModelVASC.c_controller_class">
               <MappingFragment StoreEntitySet="c_controller_class">
+                <ScalarProperty Name="cErrorMask" ColumnName="cErrorMask" />
                 <ScalarProperty Name="cPJVActionMask" ColumnName="cPJVActionMask" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -514,21 +477,6 @@ warning 6002: The table/view 'GADATA.NGAC.c_variable_search' does not have a pri
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="c_error_no_log">
-            <EntityTypeMapping TypeName="GADATAModelVASC.c_error_no_log">
-              <MappingFragment StoreEntitySet="c_error_no_log">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="enable_bit" ColumnName="enable_bit" />
-                <ScalarProperty Name="error_number" ColumnName="error_number" />
-                <ScalarProperty Name="error_category" ColumnName="error_category" />
-                <ScalarProperty Name="error_number_mask" ColumnName="error_number_mask" />
-                <ScalarProperty Name="error_category_mask" ColumnName="error_category_mask" />
-                <ScalarProperty Name="C_operator" ColumnName="_operator" />
-                <ScalarProperty Name="Ignore" ColumnName="Ignore" />
-                <ScalarProperty Name="UserComment" ColumnName="UserComment" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="c_service_setup">
             <EntityTypeMapping TypeName="GADATAModelVASC.c_service_setup">
               <MappingFragment StoreEntitySet="c_service_setup">
@@ -537,21 +485,6 @@ warning 6002: The table/view 'GADATA.NGAC.c_variable_search' does not have a pri
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="value" ColumnName="value" />
                 <ScalarProperty Name="description" ColumnName="description" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="c_alarm_ignore">
-            <EntityTypeMapping TypeName="GADATAModelVASC.c_alarm_ignore">
-              <MappingFragment StoreEntitySet="c_alarm_ignore">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="enable_bit" ColumnName="enable_bit" />
-                <ScalarProperty Name="error_number" ColumnName="error_number" />
-                <ScalarProperty Name="error_category" ColumnName="error_category" />
-                <ScalarProperty Name="error_number_mask" ColumnName="error_number_mask" />
-                <ScalarProperty Name="error_category_mask" ColumnName="error_category_mask" />
-                <ScalarProperty Name="C_operator" ColumnName="_operator" />
-                <ScalarProperty Name="Ignore" ColumnName="Ignore" />
-                <ScalarProperty Name="UserComment" ColumnName="UserComment" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -602,6 +535,22 @@ warning 6002: The table/view 'GADATA.NGAC.c_variable_search' does not have a pri
                 <ScalarProperty Name="enable_bit" ColumnName="enable_bit" />
                 <ScalarProperty Name="insert_update" ColumnName="insert_update" />
                 <ScalarProperty Name="rt_table" ColumnName="rt_table" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="c_error">
+            <EntityTypeMapping TypeName="GADATAModelVASC.c_error">
+              <MappingFragment StoreEntitySet="c_error">
+                <ScalarProperty Name="UserComment" ColumnName="UserComment" />
+                <ScalarProperty Name="Ignore" ColumnName="Ignore" />
+                <ScalarProperty Name="flags" ColumnName="flags" />
+                <ScalarProperty Name="C_operator" ColumnName="_operator" />
+                <ScalarProperty Name="error_category_mask" ColumnName="error_category_mask" />
+                <ScalarProperty Name="error_number_mask" ColumnName="error_number_mask" />
+                <ScalarProperty Name="error_category" ColumnName="error_category" />
+                <ScalarProperty Name="error_number" ColumnName="error_number" />
+                <ScalarProperty Name="enable_bit" ColumnName="enable_bit" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

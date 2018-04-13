@@ -28,12 +28,11 @@ namespace EqUiWebUi.Areas.VASC.Models
         public virtual DbSet<c_controller> c_controller { get; set; }
         public virtual DbSet<c_controller_class> c_controller_class { get; set; }
         public virtual DbSet<c_csv_log> c_csv_log { get; set; }
-        public virtual DbSet<c_error_no_log> c_error_no_log { get; set; }
         public virtual DbSet<c_service_setup> c_service_setup { get; set; }
-        public virtual DbSet<c_alarm_ignore> c_alarm_ignore { get; set; }
         public virtual DbSet<c_device_info> c_device_info { get; set; }
         public virtual DbSet<c_job> c_job { get; set; }
         public virtual DbSet<c_variable> c_variable { get; set; }
         public virtual DbSet<c_variable_search> c_variable_search { get; set; }
+        public virtual DbSet<c_error> c_error { get; set; }
     }
 }
