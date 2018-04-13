@@ -84,7 +84,14 @@ namespace EqUiWebUi.Areas.VASC.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(c_variable_search).State = EntityState.Modified;
+                if (c_variable_search.id == -1)//add new 
+                {
+                    db.c_variable_search.Add(c_variable_search);
+                }
+                else
+                {
+                    db.Entry(c_variable_search).State = EntityState.Modified;
+                }
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

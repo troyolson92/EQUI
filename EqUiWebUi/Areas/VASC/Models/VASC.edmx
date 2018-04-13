@@ -5,8 +5,6 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="GADATAModelVASC.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'GADATA.NGAC.c_alarm_ignore' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="c_controller">
           <Key>
             <PropertyRef Name="id" />
@@ -77,14 +75,9 @@ warning 6002: The table/view 'GADATA.NGAC.c_alarm_ignore' does not have a primar
           <Property Name="Tempnote" Type="varchar" MaxLength="250" />
           <Property Name="flags" Type="int" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'GADATA.NGAC.c_device_info' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="c_device_info">
           <Key>
             <PropertyRef Name="id" />
-            
-            
-            
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="varchar(max)" />
@@ -130,8 +123,6 @@ warning 6002: The table/view 'GADATA.NGAC.c_job' does not have a primary key def
           <Property Name="value" Type="varchar" MaxLength="128" />
           <Property Name="description" Type="varchar" MaxLength="256" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'GADATA.NGAC.c_variable' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="c_variable">
           <Key>
             <PropertyRef Name="id" />
@@ -144,8 +135,6 @@ warning 6002: The table/view 'GADATA.NGAC.c_variable' does not have a primary ke
           <Property Name="sql_action" Type="int" />
           <Property Name="rt_table" Type="varchar(max)" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'GADATA.NGAC.c_variable_search' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="c_variable_search">
           <Key>
             <PropertyRef Name="id" />
@@ -159,6 +148,31 @@ warning 6002: The table/view 'GADATA.NGAC.c_variable_search' does not have a pri
           <Property Name="insert_update" Type="int" />
           <Property Name="rt_table" Type="varchar(max)" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.NGAC.rt_active_info' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="rt_active_info">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="c_controller_id" Type="int" />
+          <Property Name="h_alarm_id" Type="int" />
+          <Property Name="rt_alarm_id" Type="int" />
+          <Property Name="rt_job_id" Type="int" />
+          <Property Name="_timestamp" Type="datetime" />
+          <Property Name="program_number" Type="int" />
+          <Property Name="body_number" Type="int" />
+          <Property Name="application_error" Type="int" />
+          <Property Name="operating_mode" Type="int" />
+          <Property Name="execution_status" Type="int" />
+          <Property Name="controller_state" Type="int" />
+          <Property Name="master_state" Type="int" />
+          <Property Name="at_home" Type="int" />
+          <Property Name="vasc_state" Type="int" />
+          <Property Name="task_execution_status" Type="int" />
+          <Property Name="ts_breakDownAck" Type="datetime" />
+          <Property Name="ts_breakDownStart" Type="datetime" />
+        </EntityType>
         <Association Name="FK_c_controller_c_controller_class">
           <End Role="c_controller_class" Type="Self.c_controller_class" Multiplicity="0..1" />
           <End Role="c_controller" Type="Self.c_controller" Multiplicity="*" />
@@ -171,22 +185,27 @@ warning 6002: The table/view 'GADATA.NGAC.c_variable_search' does not have a pri
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_rt_active_info_c_controller">
+          <End Role="c_controller" Type="Self.c_controller" Multiplicity="0..1" />
+          <End Role="rt_active_info" Type="Self.rt_active_info" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_controller">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="rt_active_info">
+              <PropertyRef Name="c_controller_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="GADATAModelVASCStoreContainer">
           <EntitySet Name="c_controller" EntityType="Self.c_controller" Schema="NGAC" store:Type="Tables" />
           <EntitySet Name="c_controller_class" EntityType="Self.c_controller_class" Schema="NGAC" store:Type="Tables" />
           <EntitySet Name="c_csv_log" EntityType="Self.c_csv_log" Schema="NGAC" store:Type="Tables" />
+          <EntitySet Name="c_device_info" EntityType="Self.c_device_info" Schema="NGAC" store:Type="Tables" />
           <EntitySet Name="c_error" EntityType="Self.c_error" Schema="NGAC" store:Type="Tables" />
           <EntitySet Name="c_service_setup" EntityType="Self.c_service_setup" Schema="NGAC" store:Type="Tables" />
-          <EntitySet Name="c_device_info" EntityType="Self.c_device_info" store:Type="Tables" store:Schema="NGAC">
-            <DefiningQuery>SELECT 
-    [c_device_info].[id] AS [id], 
-    [c_device_info].[name] AS [name], 
-    [c_device_info].[enable_bit] AS [enable_bit], 
-    [c_device_info].[poll_rate] AS [poll_rate], 
-    [c_device_info].[insert_update] AS [insert_update], 
-    [c_device_info].[URL] AS [URL]
-    FROM [NGAC].[c_device_info] AS [c_device_info]</DefiningQuery>
-          </EntitySet>
+          <EntitySet Name="c_variable" EntityType="Self.c_variable" Schema="NGAC" store:Type="Tables" />
+          <EntitySet Name="c_variable_search" EntityType="Self.c_variable_search" Schema="NGAC" store:Type="Tables" />
           <EntitySet Name="c_job" EntityType="Self.c_job" store:Type="Tables" store:Schema="NGAC">
             <DefiningQuery>SELECT 
     [c_job].[id] AS [id], 
@@ -196,32 +215,35 @@ warning 6002: The table/view 'GADATA.NGAC.c_variable_search' does not have a pri
     [c_job].[comment] AS [comment]
     FROM [NGAC].[c_job] AS [c_job]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="c_variable" EntityType="Self.c_variable" store:Type="Tables" store:Schema="NGAC">
+          <EntitySet Name="rt_active_info" EntityType="Self.rt_active_info" store:Type="Tables" store:Schema="NGAC">
             <DefiningQuery>SELECT 
-    [c_variable].[id] AS [id], 
-    [c_variable].[variable] AS [variable], 
-    [c_variable].[poll_rate] AS [poll_rate], 
-    [c_variable].[enable_bit] AS [enable_bit], 
-    [c_variable].[event_enum] AS [event_enum], 
-    [c_variable].[sql_action] AS [sql_action], 
-    [c_variable].[rt_table] AS [rt_table]
-    FROM [NGAC].[c_variable] AS [c_variable]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="c_variable_search" EntityType="Self.c_variable_search" store:Type="Tables" store:Schema="NGAC">
-            <DefiningQuery>SELECT 
-    [c_variable_search].[id] AS [id], 
-    [c_variable_search].[variable] AS [variable], 
-    [c_variable_search].[property] AS [property], 
-    [c_variable_search].[datatype] AS [datatype], 
-    [c_variable_search].[poll_rate] AS [poll_rate], 
-    [c_variable_search].[enable_bit] AS [enable_bit], 
-    [c_variable_search].[insert_update] AS [insert_update], 
-    [c_variable_search].[rt_table] AS [rt_table]
-    FROM [NGAC].[c_variable_search] AS [c_variable_search]</DefiningQuery>
+    [rt_active_info].[id] AS [id], 
+    [rt_active_info].[c_controller_id] AS [c_controller_id], 
+    [rt_active_info].[h_alarm_id] AS [h_alarm_id], 
+    [rt_active_info].[rt_alarm_id] AS [rt_alarm_id], 
+    [rt_active_info].[rt_job_id] AS [rt_job_id], 
+    [rt_active_info].[_timestamp] AS [_timestamp], 
+    [rt_active_info].[program_number] AS [program_number], 
+    [rt_active_info].[body_number] AS [body_number], 
+    [rt_active_info].[application_error] AS [application_error], 
+    [rt_active_info].[operating_mode] AS [operating_mode], 
+    [rt_active_info].[execution_status] AS [execution_status], 
+    [rt_active_info].[controller_state] AS [controller_state], 
+    [rt_active_info].[master_state] AS [master_state], 
+    [rt_active_info].[at_home] AS [at_home], 
+    [rt_active_info].[vasc_state] AS [vasc_state], 
+    [rt_active_info].[task_execution_status] AS [task_execution_status], 
+    [rt_active_info].[ts_breakDownAck] AS [ts_breakDownAck], 
+    [rt_active_info].[ts_breakDownStart] AS [ts_breakDownStart]
+    FROM [NGAC].[rt_active_info] AS [rt_active_info]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_c_controller_c_controller_class" Association="Self.FK_c_controller_c_controller_class">
             <End Role="c_controller_class" EntitySet="c_controller_class" />
             <End Role="c_controller" EntitySet="c_controller" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rt_active_info_c_controller" Association="Self.FK_rt_active_info_c_controller">
+            <End Role="c_controller" EntitySet="c_controller" />
+            <End Role="rt_active_info" EntitySet="rt_active_info" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -246,6 +268,7 @@ warning 6002: The table/view 'GADATA.NGAC.c_variable_search' does not have a pri
           <Property Name="ClassificationTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="CLassificationId" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="c_controller_class" Relationship="Self.FK_c_controller_c_controller_class" FromRole="c_controller" ToRole="c_controller_class" />
+          <NavigationProperty Name="rt_active_info" Relationship="GADATAModelVASC.FK_rt_active_info_c_controller" FromRole="c_controller" ToRole="rt_active_info" />
         </EntityType>
         <EntityType Name="c_controller_class">
           <Key>
@@ -382,6 +405,11 @@ warning 6002: The table/view 'GADATA.NGAC.c_variable_search' does not have a pri
             <End Role="c_controller" EntitySet="c_controller" />
           </AssociationSet>
           <EntitySet Name="c_error" EntityType="GADATAModelVASC.c_error" />
+          <EntitySet Name="rt_active_info" EntityType="GADATAModelVASC.rt_active_info" />
+          <AssociationSet Name="FK_rt_active_info_c_controller" Association="GADATAModelVASC.FK_rt_active_info_c_controller">
+            <End Role="c_controller" EntitySet="c_controller" />
+            <End Role="rt_active_info" EntitySet="rt_active_info" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="c_error">
           <Key>
@@ -398,6 +426,42 @@ warning 6002: The table/view 'GADATA.NGAC.c_variable_search' does not have a pri
           <Property Name="Ignore" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="UserComment" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="rt_active_info">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="c_controller_id" Type="Int32" />
+          <Property Name="h_alarm_id" Type="Int32" />
+          <Property Name="rt_alarm_id" Type="Int32" />
+          <Property Name="rt_job_id" Type="Int32" />
+          <Property Name="C_timestamp" Type="DateTime" Precision="3" />
+          <Property Name="program_number" Type="Int32" />
+          <Property Name="body_number" Type="Int32" />
+          <Property Name="application_error" Type="Int32" />
+          <Property Name="operating_mode" Type="Int32" />
+          <Property Name="execution_status" Type="Int32" />
+          <Property Name="controller_state" Type="Int32" />
+          <Property Name="master_state" Type="Int32" />
+          <Property Name="at_home" Type="Int32" />
+          <Property Name="vasc_state" Type="Int32" />
+          <Property Name="task_execution_status" Type="Int32" />
+          <Property Name="ts_breakDownAck" Type="DateTime" Precision="3" />
+          <Property Name="ts_breakDownStart" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="c_controller" Relationship="GADATAModelVASC.FK_rt_active_info_c_controller" FromRole="rt_active_info" ToRole="c_controller" />
+        </EntityType>
+        <Association Name="FK_rt_active_info_c_controller">
+          <End Type="GADATAModelVASC.c_controller" Role="c_controller" Multiplicity="0..1" />
+          <End Type="GADATAModelVASC.rt_active_info" Role="rt_active_info" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_controller">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="rt_active_info">
+              <PropertyRef Name="c_controller_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -550,6 +614,30 @@ warning 6002: The table/view 'GADATA.NGAC.c_variable_search' does not have a pri
                 <ScalarProperty Name="error_category" ColumnName="error_category" />
                 <ScalarProperty Name="error_number" ColumnName="error_number" />
                 <ScalarProperty Name="enable_bit" ColumnName="enable_bit" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="rt_active_info">
+            <EntityTypeMapping TypeName="GADATAModelVASC.rt_active_info">
+              <MappingFragment StoreEntitySet="rt_active_info">
+                <ScalarProperty Name="ts_breakDownStart" ColumnName="ts_breakDownStart" />
+                <ScalarProperty Name="ts_breakDownAck" ColumnName="ts_breakDownAck" />
+                <ScalarProperty Name="task_execution_status" ColumnName="task_execution_status" />
+                <ScalarProperty Name="vasc_state" ColumnName="vasc_state" />
+                <ScalarProperty Name="at_home" ColumnName="at_home" />
+                <ScalarProperty Name="master_state" ColumnName="master_state" />
+                <ScalarProperty Name="controller_state" ColumnName="controller_state" />
+                <ScalarProperty Name="execution_status" ColumnName="execution_status" />
+                <ScalarProperty Name="operating_mode" ColumnName="operating_mode" />
+                <ScalarProperty Name="application_error" ColumnName="application_error" />
+                <ScalarProperty Name="body_number" ColumnName="body_number" />
+                <ScalarProperty Name="program_number" ColumnName="program_number" />
+                <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
+                <ScalarProperty Name="rt_job_id" ColumnName="rt_job_id" />
+                <ScalarProperty Name="rt_alarm_id" ColumnName="rt_alarm_id" />
+                <ScalarProperty Name="h_alarm_id" ColumnName="h_alarm_id" />
+                <ScalarProperty Name="c_controller_id" ColumnName="c_controller_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

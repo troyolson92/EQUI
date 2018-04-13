@@ -82,7 +82,14 @@ namespace EqUiWebUi.Areas.VASC.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(c_csv_log).State = EntityState.Modified;
+                if (c_csv_log.id == -1)//add new 
+                {
+                    db.c_csv_log.Add(c_csv_log);
+                }
+                else
+                {
+                    db.Entry(c_csv_log).State = EntityState.Modified;
+                }
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

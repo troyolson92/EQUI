@@ -70,7 +70,14 @@ namespace EqUiWebUi.Areas.VASC.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(c_controller_class).State = EntityState.Modified;
+                if (c_controller_class.id == -1)//add new 
+                {
+                    db.c_controller_class.Add(c_controller_class);
+                }
+                else
+                {
+                    db.Entry(c_controller_class).State = EntityState.Modified;
+                }
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

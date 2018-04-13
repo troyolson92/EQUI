@@ -4,24 +4,71 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index of VASC</h2>
+<h2>VASC... If you are not GM or SDB why are you here?</h2>
 
-<div class="panel panel-warning">
+<div class="panel panel-primary">
     <div class="panel-heading">
-        <h4 class="panel-title">VASC settings</h4>
+        <h4 class="panel-title">VASC MAIN settings</h4>
         <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
     </div>
     <div class="panel-body">
-        <p><a href="~/vasc/c_csv_log/index" class="btn btn-danger btn-sm">c_csv_log &raquo;</a>Manage c_csv_log</p>
-        <p><a href="~/vasc/c_device_info/index" class="btn btn-danger btn-sm">c_device_info &raquo;</a>Manage c_device_info</p>
-        <p><a href="~/vasc/c_controller_class/index" class="btn btn-danger btn-sm">c_controller_class &raquo;</a>Manage c_controller_class</p>
-        <p><a href="~/vasc/c_variable/index" class="btn btn-danger btn-sm">c_variable &raquo;</a>Manage c_variable</p>
-        <p><a href="~/vasc/c_variable_search/index" class="btn btn-danger btn-sm">c_variable_search &raquo;</a>Manage c_variable_search</p>
-        <p><a href="~/vasc/c_error/index" class="btn btn-danger btn-sm">c_error &raquo;</a>Manage c_error</p>
+        <div class="alert alert-danger">
+            <strong>Add/Edit service setup</strong>
+            <p>*Here we can setup how different sessions of vasc should run</p>
+        </div>
+        <p><a href="~/vasc/c_service_setup/index" class="btn btn-danger btn-sm">c_service_setup &raquo;</a></p>
+
+        <div class="alert alert-danger">
+            <strong>Add/Edit controller class</strong>
+            <p>*A controller class set what is done for a certain 'type' of robots</p>
+            <p>*You can only add something that is defined in one of the vasc subsystems</p>
+        </div>
+        <p><a href="~/vasc/c_controller_class/index" class="btn btn-danger btn-sm">c_controller_class &raquo;</a></p>
+
+        <div class="alert alert-success">
+            <strong>Add/Edit robots</strong>
+            <p>*set the controller class for a robots connected to VASC</p>
+            <p>*Set the what VASC SESSION controls the robot</p>
+        </div>
+        <p><a href="~/vasc/c_controller/index" class="btn btn-danger btn-sm">c_controller &raquo;</a></p>
+        <p><a href="~/vasc/rt_active_info/index" class="btn btn-success btn-sm">rt_active_info &raquo;</a>See current connection status for a controller</p>
+    </div>
+</div>
+
+<div class="panel panel-warning">
+    <div class="panel-heading">
+        <h4 class="panel-title">VASC subsystem settings</h4>
+        <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+    </div>
+
+    <div class="panel-body">
+        <div class="alert alert-info">
+            <strong>Add/Edit csv files to be logged</strong>
+        </div>
+        <p><a href="~/vasc/c_csv_log/index" class="btn btn-danger btn-sm">c_csv_log &raquo;</a></p>
+
+        <div class="alert alert-info">
+            <strong>Edit c_device_info to be logged</strong>
+        </div>
+        <p><a href="~/vasc/c_device_info/index" class="btn btn-danger btn-sm">c_device_info &raquo;</a></p>
+
+        <div class="alert alert-info">
+            <strong>Add/Edit variables/IO to be logged</strong>
+        </div>
+        <p><a href="~/vasc/c_variable/index" class="btn btn-danger btn-sm">c_variable &raquo;</a></p>
+
+        <div class="alert alert-info">
+            <strong>Add/Edit variables to be first searched for and than logged</strong>
+        </div>
+        <p><a href="~/vasc/c_variable_search/index" class="btn btn-danger btn-sm">c_variable_search &raquo;</a></p>
+
+        <div class="alert alert-info">
+            <strong>Add/Edit/Remove ignore/log rules for stupid faults we don't whant in the system.</strong>
+        </div>
+        <p><a href="~/vasc/c_error/index" class="btn btn-danger btn-sm">c_error &raquo;</a></p>
 
         <hr />
         TODO
-        <p><a href="~/vasc/c_controller/index" class="btn btn-danger btn-sm">c_controller &raquo;</a>Manage c_controller</p>
         <p><a href="~/vasc/c_job/index" class="btn btn-danger btn-sm">c_job &raquo;</a>Manage c_job</p>
     </div>
 </div>

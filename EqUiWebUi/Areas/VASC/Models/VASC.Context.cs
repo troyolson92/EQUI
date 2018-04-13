@@ -34,5 +34,6 @@ namespace EqUiWebUi.Areas.VASC.Models
         public virtual DbSet<c_variable> c_variable { get; set; }
         public virtual DbSet<c_variable_search> c_variable_search { get; set; }
         public virtual DbSet<c_error> c_error { get; set; }
+        public virtual DbSet<rt_active_info> rt_active_info { get; set; }
     }
 }

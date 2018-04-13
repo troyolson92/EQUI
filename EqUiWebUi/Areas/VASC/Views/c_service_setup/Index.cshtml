@@ -1,0 +1,55 @@
+﻿@model IEnumerable<EqUiWebUi.Areas.VASC.Models.c_service_setup>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>List of all VASC sessions</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+@Html.Grid(Model).Named("c_service_setupSessions").Build(columns =>
+    {
+        columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Asc);
+        columns.Add(c => c.bit_id).Titled("SessionDataBit"); //is this an enable mask?  so use enable mask 
+        columns.Add(c => c.value).Titled("SessionName");
+        columns.Add(c => c.description).Titled("ip");
+        columns.Add(c => c)
+                        .Titled("")
+                        .Encoded(false)
+                        .RenderedAs(c => @Html.ActionLink("Edit", "Edit", new { id = c.id })
+                        ).Filterable(false);
+    }).Filterable(true).Sortable(true).Empty("Did not find anything").Css("table-hover")
+
+
+<hr />
+
+<div class="alert alert-danger">
+    <strong>WARNING!</strong>
+    if the option has a sessiondatabit set to -1 this means its for <strong>ALL SESSIONS</strong>
+</div> 
+
+<div class=" modal-body">
+    <div class="modal-content">
+        <div class="alert alert-info">More info about the selected session</div>
+        <div id="c_service_setupDetails">Click on a session to see what is configured</div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script>
+        //render details when they click on it.
+        $('#c_service_setupSessions').mvcgrid({
+            rowClicked: function (row, data, e) {
+                $("#c_service_setupDetails").html("Loading.....");
+                var url = '@Url.Action("_sessionSetup")?SessionDataBit=' + data.SessionDataBit
+                $("#c_service_setupDetails").load(url);
+            }
+        });
+    </script>
+}
+

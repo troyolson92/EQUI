@@ -354,16 +354,20 @@
     </Compile>
     <Compile Include="Areas\user_management\SreenHub.cs" />
     <Compile Include="Areas\user_management\user_managementAreaRegistration.cs" />
+    <Compile Include="Areas\VASC\Controllers\c_controllerController.cs" />
     <Compile Include="Areas\VASC\Controllers\c_controller_classController.cs" />
     <Compile Include="Areas\VASC\Controllers\c_csv_logController.cs" />
     <Compile Include="Areas\VASC\Controllers\c_device_infoController.cs" />
     <Compile Include="Areas\VASC\Controllers\c_errorController.cs" />
+    <Compile Include="Areas\VASC\Controllers\c_service_setupController.cs" />
     <Compile Include="Areas\VASC\Controllers\c_variableController.cs" />
     <Compile Include="Areas\VASC\Controllers\c_variable_searchController.cs" />
+    <Compile Include="Areas\VASC\Controllers\rt_active_infoController.cs" />
     <Compile Include="Areas\VASC\Controllers\vascController.cs" />
     <Compile Include="Areas\VASC\Models\c_controller.cs">
       <DependentUpon>VASC.tt</DependentUpon>
     </Compile>
+    <Compile Include="Areas\VASC\Models\c_controllerMetadata.cs" />
     <Compile Include="Areas\VASC\Models\c_controller_class.cs">
       <DependentUpon>VASC.tt</DependentUpon>
     </Compile>
@@ -394,6 +398,10 @@
       <DependentUpon>VASC.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\VASC\Models\c_variable_searchMetadata.cs" />
+    <Compile Include="Areas\VASC\Models\rt_active_info.cs">
+      <DependentUpon>VASC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VASC\Models\rt_active_infoMetadata.cs" />
     <Compile Include="Areas\VASC\Models\VASC.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -910,6 +918,17 @@
     <Content Include="Areas\VASC\Views\c_error\Edit.cshtml" />
     <Content Include="Areas\VASC\Views\c_error\Index.cshtml" />
     <Content Include="Areas\VASC\Views\c_error\_List.cshtml" />
+    <Content Include="Areas\VASC\Views\c_controller\Delete.cshtml" />
+    <Content Include="Areas\VASC\Views\c_controller\Edit.cshtml" />
+    <Content Include="Areas\VASC\Views\c_controller\Index.cshtml" />
+    <Content Include="Areas\VASC\Views\rt_active_info\Details.cshtml" />
+    <Content Include="Areas\VASC\Views\rt_active_info\Index.cshtml" />
+    <Content Include="Areas\VASC\Views\c_service_setup\Create.cshtml" />
+    <Content Include="Areas\VASC\Views\c_service_setup\Delete.cshtml" />
+    <Content Include="Areas\VASC\Views\c_service_setup\Details.cshtml" />
+    <Content Include="Areas\VASC\Views\c_service_setup\Edit.cshtml" />
+    <Content Include="Areas\VASC\Views\c_service_setup\Index.cshtml" />
+    <Content Include="Areas\VASC\Views\c_service_setup\_sessionSetup.cshtml" />
     <None Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.svg" />

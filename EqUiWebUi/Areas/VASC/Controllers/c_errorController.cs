@@ -52,14 +52,14 @@ namespace EqUiWebUi.Areas.VASC.Controllers
             }
             c_error c_error;
 
-            if (id == -1) //create new alert
+            if (id == -1) //create new
             {
                 c_error = new c_error();
                 c_error.enable_bit = (int)Enable_bit.Disabled;
                 c_error.C_operator = (int)LogicOperator.AND;
-               // c_error._ErrorCategory = (int)ErrorCategory.Common;
-                //set default
-
+                c_error.error_category_mask = 0;
+                c_error.error_number_mask = -1;
+      
             }
             else //find the existing alert 
             {
@@ -82,7 +82,14 @@ namespace EqUiWebUi.Areas.VASC.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(c_error).State = EntityState.Modified;
+                if (c_error.id == -1)//add new 
+                {
+                    db.c_error.Add(c_error);
+                }
+                else
+                {
+                    db.Entry(c_error).State = EntityState.Modified;
+                }
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
