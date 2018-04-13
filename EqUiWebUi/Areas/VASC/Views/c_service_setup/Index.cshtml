@@ -14,7 +14,8 @@
 @Html.Grid(Model).Named("c_service_setupSessions").Build(columns =>
     {
         columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Asc);
-        columns.Add(c => c.bit_id).Titled("SessionDataBit"); //is this an enable mask?  so use enable mask 
+        columns.Add(c => c._Enable_bit).Titled("enable_mask"); //is this an enable mask?  so use enable mask 
+        columns.Add(c => c.bit_id).Titled("bit_id");
         columns.Add(c => c.value).Titled("SessionName");
         columns.Add(c => c.description).Titled("ip");
         columns.Add(c => c)
@@ -27,6 +28,14 @@
 
 <hr />
 
+<div class=" modal-body">
+    <div class="modal-content">
+        <div class="alert alert-warning">More options for selected session</div>
+        <div id="sessiondetails"></div>
+    </div>
+</div>
+
+
 <div class="alert alert-danger">
     <strong>WARNING!</strong>
     if the option has a sessiondatabit set to -1 this means its for <strong>ALL SESSIONS</strong>
@@ -34,22 +43,30 @@
 
 <div class=" modal-body">
     <div class="modal-content">
-        <div class="alert alert-info">More info about the selected session</div>
+        <div class="alert alert-info">settings for the selected session</div>
         <div id="c_service_setupDetails">Click on a session to see what is configured</div>
     </div>
 </div>
 
 
 @section scripts{
-    <script>
+<script>
+        //full with screen
+        $("#allcontent").removeClass("body-content");
+        $("#allcontent").removeClass("container");
+
         //render details when they click on it.
         $('#c_service_setupSessions').mvcgrid({
             rowClicked: function (row, data, e) {
+                $("#sessiondetails").html("Loading.....");
+                var url = '@Url.Action("_sessionDetails")?enable_mask=' + data.bit_id
+                $("#sessiondetails").load(url);
+
                 $("#c_service_setupDetails").html("Loading.....");
-                var url = '@Url.Action("_sessionSetup")?SessionDataBit=' + data.SessionDataBit
+                var url = '@Url.Action("_sessionSetup")?enable_mask=' + data.bit_id
                 $("#c_service_setupDetails").load(url);
             }
         });
-    </script>
+</script>
 }
 

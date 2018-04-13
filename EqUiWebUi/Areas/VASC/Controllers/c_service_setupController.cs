@@ -23,13 +23,32 @@ namespace EqUiWebUi.Areas.VASC.Controllers
         }
 
         // GET: VASC/c_service_setup/_sessionSetup
-        public ActionResult _sessionSetup(int? SessionDataBit)
+        public ActionResult _sessionSetup(int? enable_mask)
         {
-            //must use like _list with enable mask and get bits !
-
             List<c_service_setup> list = new List<c_service_setup>();
-            list.AddRange(db.c_service_setup.Where(c => c.bit_id == SessionDataBit || c.bit_id == -1).ToList());
+            if (enable_mask is null)
+            {
+                list = db.c_service_setup.ToList();
+            }
+            else
+            {
+                var setbits = Enumerable.Range(0, 32).Where(x => ((enable_mask + 1 >> x) & 1) == 1);
+
+                foreach (int setbit in setbits)
+                {
+                    list.AddRange(db.c_service_setup.Where(c => c.bit_id == setbit && c.bit_id != 0).ToList());
+                }
+                //also add everything with bit_id set to -1 because these are global parameters for all sessions.
+                list.AddRange(db.c_service_setup.Where(c => c.bit_id == -1).ToList());
+            }
             return PartialView(list);
+        }
+
+
+        // GET: VASC/c_service_setup/_sessionSetup
+        public ActionResult _sessionDetails(int? enable_mask)
+        {
+            return PartialView();
         }
 
         // GET: VASC/c_service_setup/Details/5
