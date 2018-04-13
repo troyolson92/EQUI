@@ -390,6 +390,7 @@
     <Compile Include="Areas\VASC\Models\c_service_setup.cs">
       <DependentUpon>VASC.tt</DependentUpon>
     </Compile>
+    <Compile Include="Areas\VASC\Models\c_service_setupMetadata.cs" />
     <Compile Include="Areas\VASC\Models\c_variable.cs">
       <DependentUpon>VASC.tt</DependentUpon>
     </Compile>
@@ -929,6 +930,7 @@
     <Content Include="Areas\VASC\Views\c_service_setup\Edit.cshtml" />
     <Content Include="Areas\VASC\Views\c_service_setup\Index.cshtml" />
     <Content Include="Areas\VASC\Views\c_service_setup\_sessionSetup.cshtml" />
+    <Content Include="Areas\VASC\Views\c_service_setup\_sessionDetails.cshtml" />
     <None Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.svg" />
