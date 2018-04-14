@@ -15,13 +15,13 @@ namespace EqUiWebUi.Areas.VASC.Models
     public partial class c_error
     {
         public int id { get; set; }
-        public Nullable<int> enable_bit { get; set; }
-        public Nullable<int> error_number { get; set; }
-        public Nullable<int> error_category { get; set; }
-        public Nullable<int> error_number_mask { get; set; }
-        public Nullable<int> error_category_mask { get; set; }
-        public Nullable<int> C_operator { get; set; }
-        public Nullable<int> flags { get; set; }
+        public int enable_bit { get; set; }
+        public int error_number { get; set; }
+        public int error_category { get; set; }
+        public int error_number_mask { get; set; }
+        public int error_category_mask { get; set; }
+        public int C_operator { get; set; }
+        public int flags { get; set; }
         public string Ignore { get; set; }
         public string UserComment { get; set; }
     }

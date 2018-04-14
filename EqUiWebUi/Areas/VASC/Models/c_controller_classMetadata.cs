@@ -244,27 +244,15 @@ namespace EqUiWebUi.Areas.VASC.Models
             }
         }
 
-        public int[] _cErrorNoLogMask
+        public int[] _cErrorMask
         {
             get
             {
-                return VASCenums.IntMaskToIntArray(this.cErrorNoLogMask, Enum.GetNames(typeof(Enable_bit_MASK)).Length);
+                return VASCenums.IntMaskToIntArray(this.cErrorMask, Enum.GetNames(typeof(Enable_bit_MASK)).Length);
             }
             set
             {
-                this.cErrorNoLogMask = value.Sum();
-            }
-        }
-
-        public int[] _cAlarmIgnoreMask
-        {
-            get
-            {
-                return VASCenums.IntMaskToIntArray(this.cAlarmIgnoreMask, Enum.GetNames(typeof(Enable_bit_MASK)).Length);
-            }
-            set
-            {
-                this.cAlarmIgnoreMask = value.Sum();
+                this.cErrorMask = value.Sum();
             }
         }
 

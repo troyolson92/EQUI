@@ -16,11 +16,11 @@ namespace EqUiWebUi.Areas.VASC.Models
     {
         public int id { get; set; }
         public string variable { get; set; }
-        public Nullable<int> property { get; set; }
+        public int property { get; set; }
         public string datatype { get; set; }
-        public Nullable<int> poll_rate { get; set; }
-        public Nullable<int> enable_bit { get; set; }
-        public Nullable<int> insert_update { get; set; }
+        public int poll_rate { get; set; }
+        public int enable_bit { get; set; }
+        public int insert_update { get; set; }
         public string rt_table { get; set; }
     }
 }

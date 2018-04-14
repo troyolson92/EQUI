@@ -16,18 +16,23 @@ namespace EqUiWebUi.Areas.VASC.Controllers
         private GADATAEntitiesVASC db = new GADATAEntitiesVASC();
 
         // GET: VASC/c_controller_class
-        public ActionResult Index()
+        public ActionResult Index(int? controller_id)
         {
-            return View(db.c_controller_class.ToList());
+            ViewBag.controller_id = controller_id;
+            if (controller_id == null)
+            {
+                return View(db.c_controller_class.ToList());
+            }
+            else
+            {
+                return View(db.c_controller_class.Where(c => c.id == db.c_controller.Where(cc => cc.id == controller_id).FirstOrDefault().c_controller_class.id).ToList());
+            }
         }
 
         // GET: VASC/c_controller_class/Details/5
-        public ActionResult _Details (int? id)
+        public ActionResult _Details (int id, int? controller_id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            ViewBag.controller_id = controller_id;
             c_controller_class c_Controller_Class = db.c_controller_class.Find(id);
             return PartialView(c_Controller_Class);
         }
@@ -84,6 +89,31 @@ namespace EqUiWebUi.Areas.VASC.Controllers
             return View(c_controller_class);
         }
 
+        // GET: VASC/c_controller_class/Delete/5
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            c_controller_class c_controller_class = db.c_controller_class.Find(id);
+            if (c_controller_class == null)
+            {
+                return HttpNotFound();
+            }
+            return View(c_controller_class);
+        }
+
+        // POST: VASC/c_controller_class/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            c_controller_class c_controller_class = db.c_controller_class.Find(id);
+            db.c_controller_class.Remove(c_controller_class);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
 
         protected override void Dispose(bool disposing)
         {

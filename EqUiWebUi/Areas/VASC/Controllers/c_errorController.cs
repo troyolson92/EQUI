@@ -33,10 +33,10 @@ namespace EqUiWebUi.Areas.VASC.Controllers
             }
             else
             {
-                var setbits = Enumerable.Range(0, 32).Where(x => ((enable_mask + 1 >> x) & 1) == 1);
+                var setbits = Enumerable.Range(0, 32).Where(x => ((enable_mask >> x) & 1) == 1);
                 foreach (int setbit in setbits)
                 {
-                    list.AddRange(db.c_error.Where(c => c.enable_bit == setbit && c.enable_bit != 0).ToList());
+                    list.AddRange(db.c_error.Where(c => c.enable_bit == setbit+1 && c.enable_bit != 0).ToList());
                 }
             }
             return PartialView(list);

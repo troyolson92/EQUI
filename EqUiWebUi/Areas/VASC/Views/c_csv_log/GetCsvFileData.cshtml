@@ -1,0 +1,28 @@
+﻿@model IQueryable<EqUiWebUi.Areas.VASC.Models.rt_csv_file>
+@{
+    ViewBag.Title = "GetCsvFileData";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>GetCsvFileData</h2>
+
+@Html.Grid(Model).Named("rt_device_info").Build(columns =>
+{
+    columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Desc);
+    columns.Add(c => c.c_controller.controller_name).Titled("controller_name");
+    columns.Add(c => c.c_csv_log.csv_filename).Titled("csv_filename");
+    columns.Add(c => c.lastDateRecord).Titled("lastDateRecord");
+    columns.Add(c => c.lastLineRead).Titled("lastLineRead");
+    columns.Add(c => c.lastFileSize).Titled("lastFileSize");
+}).Filterable(true).Sortable(true).Pageable(pager =>
+{
+    pager.RowsPerPage = 30;
+}).Empty("Did not find anything").Css("table-hover")
+
+@section scripts{
+    <script>
+        //full with screen
+        $("#allcontent").removeClass("body-content");
+        $("#allcontent").removeClass("container");
+    </script>
+}

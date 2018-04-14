@@ -403,6 +403,12 @@
       <DependentUpon>VASC.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\VASC\Models\rt_active_infoMetadata.cs" />
+    <Compile Include="Areas\VASC\Models\rt_csv_file.cs">
+      <DependentUpon>VASC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VASC\Models\rt_device_info.cs">
+      <DependentUpon>VASC.tt</DependentUpon>
+    </Compile>
     <Compile Include="Areas\VASC\Models\VASC.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -931,6 +937,14 @@
     <Content Include="Areas\VASC\Views\c_service_setup\Index.cshtml" />
     <Content Include="Areas\VASC\Views\c_service_setup\_sessionSetup.cshtml" />
     <Content Include="Areas\VASC\Views\c_service_setup\_sessionDetails.cshtml" />
+    <Content Include="Areas\VASC\Views\c_variable\Delete.cshtml" />
+    <Content Include="Areas\VASC\Views\c_variable_search\Delete.cshtml" />
+    <Content Include="Areas\VASC\Views\c_controller\_List.cshtml" />
+    <Content Include="Areas\VASC\Views\c_controller_class\Delete.cshtml" />
+    <Content Include="Areas\VASC\Views\c_device_info\GetDeviceInfoData.cshtml" />
+    <Content Include="Areas\VASC\Views\c_variable\GetVariableData.cshtml" />
+    <Content Include="Areas\VASC\Views\c_variable_search\GetVariableData.cshtml" />
+    <Content Include="Areas\VASC\Views\c_csv_log\GetCsvFileData.cshtml" />
     <None Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.svg" />

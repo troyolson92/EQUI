@@ -2,6 +2,18 @@
 
 <div class="panel panel-default">
     <div class="panel-heading">
+        <h4 class="panel-title">c controllers (controllers in this class)</h4>
+        <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+    </div>
+    <div class="alert-info">
+    </div>
+    <div class="panel-body">
+        <div id="c_controllerGrid" class="mvc-grid"></div>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
         <h4 class="panel-title">c variable </h4>
         <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
     </div>
@@ -63,43 +75,57 @@
 
 <script>
     //load girds
+    console.log("c_variableGrid");
     $('#c_variableGrid').mvcgrid({
-      sourceUrl: '@Url.Action("_List","c_variable", new {enable_mask = Model.cVariableMask })',
+      sourceUrl: '@Html.Raw(@Url.Action("_List","c_variable", new {enable_mask = Model.cVariableMask, controller_id = ViewBag.controller_id }))',
       requestType: 'get', // Ajax grid request type
       reloadFailed: function (result) {
          $("#c_variableGrid").html("Error while loading!!!");
       }
     });
 
+    console.log("c_variable_searchGrid");
     $('#c_variable_searchGrid').mvcgrid({
-      sourceUrl: '@Url.Action("_List", "c_variable_search", new {enable_mask = Model.cVariableMask })',
+      sourceUrl: '@Html.Raw(@Url.Action("_List", "c_variable_search", new {enable_mask = Model.cVariableSearchMask, controller_id = ViewBag.controller_id }))',
       requestType: 'get', // Ajax grid request type
       reloadFailed: function (result) {
           $("#c_variable_searchGrid").html("Error while loading!!!");
       }
     });
 
+    console.log("c_errorGrid");
     $('#c_errorGrid').mvcgrid({
-      sourceUrl: '@Url.Action("_List", "c_error", new {enable_mask = Model.cVariableMask })',
+      sourceUrl: '@Html.Raw(@Url.Action("_List", "c_error", new {enable_mask = Model.cErrorMask, controller_id = ViewBag.controller_id }))',
       requestType: 'get', // Ajax grid request type
       reloadFailed: function (result) {
           $("#c_errorGrid").html("Error while loading!!!");
       }
     });
 
+    console.log("c_csv_logGrid");
     $('#c_csv_logGrid').mvcgrid({
-        sourceUrl: '@Url.Action("_List", "c_csv_log", new {enable_mask = Model.cVariableMask })',
+        sourceUrl: '@Html.Raw(@Url.Action("_List", "c_csv_log", new {enable_mask = Model.cCSVLogMask, controller_id = ViewBag.controller_id }))',
         requestType: 'get', // Ajax grid request type
         reloadFailed: function (result) {
             $("#c_csv_logGrid").html("Error while loading!!!");
         }
     });
 
+    console.log("c_device_infoGrid");
     $('#c_device_infoGrid').mvcgrid({
-        sourceUrl: '@Url.Action("_List", "c_device_info", new {enable_mask = Model.cVariableMask })',
+        sourceUrl: '@Html.Raw(@Url.Action("_List", "c_device_info", new {enable_mask = Model.cDeviceInfoMask, controller_id = ViewBag.controller_id }))',
         requestType: 'get', // Ajax grid request type
         reloadFailed: function (result) {
             $("#c_device_infoGrid").html("Error while loading!!!");
+        }
+    });
+
+    console.log("c_controllerGrid");
+    $('#c_controllerGrid').mvcgrid({
+        sourceUrl: '@Html.Raw(@Url.Action("_List", "c_controller", new { controllerclass = Model.id, controller_id = ViewBag.controller_id }))',
+        requestType: 'get', // Ajax grid request type
+        reloadFailed: function (result) {
+            $("#c_controllerGrid").html("Error while loading!!!");
         }
     });
 

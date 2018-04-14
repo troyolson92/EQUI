@@ -8,20 +8,15 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Add a new controller", "Edit", new {id = -1 })
+    @Html.ActionLink("Add a new controller", "Edit", new { id = -1 })
 </p>
 
-@Html.Grid(Model).Named("c_controller").Build(columns =>
-{
-    columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Asc);
-    columns.Add(c => c._Enable_bit).Titled("enable_bit");
-    columns.Add(c => c.controller_name).Titled("controller_name");
-    columns.Add(c => c.systemId).Titled("systemId");
-    columns.Add(c => c.ip).Titled("ip");
-    columns.Add(c => c._ControllerFlags).Titled("flags");
-    columns.Add(c => c)
-                    .Titled("")
-                    .Encoded(false)
-                    .RenderedAs(c => @Html.ActionLink("Edit", "Edit", new { id = c.id })
-                    ).Filterable(false);
-}).Filterable(true).Sortable(true).Empty("Did not find anything").Css("table-hover")
+@Html.AjaxGrid(Url.Action("_List"))
+
+@section scripts{
+    <script>
+        //full with screen
+        $("#allcontent").removeClass("body-content");
+        $("#allcontent").removeClass("container");
+    </script>
+}

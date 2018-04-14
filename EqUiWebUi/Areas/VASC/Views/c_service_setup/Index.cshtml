@@ -7,22 +7,15 @@
 
 <h2>List of all VASC sessions</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+
 
 @Html.Grid(Model).Named("c_service_setupSessions").Build(columns =>
     {
         columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Asc);
-        columns.Add(c => c._Enable_bit).Titled("enable_mask"); //is this an enable mask?  so use enable mask 
-        columns.Add(c => c.bit_id).Titled("bit_id");
+        columns.Add(c => c._Enable_bit).Titled("enable_mask"); 
+        columns.Add(c => c.bit_id).Titled("bit_id").Css("hidden");
         columns.Add(c => c.value).Titled("SessionName");
-        columns.Add(c => c.description).Titled("ip");
-        columns.Add(c => c)
-                        .Titled("")
-                        .Encoded(false)
-                        .RenderedAs(c => @Html.ActionLink("Edit", "Edit", new { id = c.id })
-                        ).Filterable(false);
+        columns.Add(c => c.description).Titled("description");
     }).Filterable(true).Sortable(true).Empty("Did not find anything").Css("table-hover")
 
 
@@ -45,6 +38,9 @@
     <div class="modal-content">
         <div class="alert alert-info">settings for the selected session</div>
         <div id="c_service_setupDetails">Click on a session to see what is configured</div>
+        <p>
+            @Html.ActionLink("Create New parameter", "Create")
+        </p>
     </div>
 </div>
 

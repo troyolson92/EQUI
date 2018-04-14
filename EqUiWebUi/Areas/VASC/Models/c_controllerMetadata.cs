@@ -18,7 +18,7 @@ namespace EqUiWebUi.Areas.VASC.Models
         {
             get
             {
-                return (Enable_bit)Enum.ToObject(typeof(Enable_bit), this.enable_bit.GetValueOrDefault());
+                return (Enable_bit)Enum.ToObject(typeof(Enable_bit), this.enable_bit);
             }
             set
             {
@@ -30,7 +30,7 @@ namespace EqUiWebUi.Areas.VASC.Models
         {
             get
             {
-                return (ControllerFlags)Enum.ToObject(typeof(ControllerFlags), this.flags.GetValueOrDefault());
+                return (ControllerFlags)Enum.ToObject(typeof(ControllerFlags), this.flags);
             }
             set
             {

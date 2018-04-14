@@ -1,0 +1,27 @@
+﻿@model IQueryable<EqUiWebUi.Areas.VASC.Models.rt_device_info>
+@{
+    ViewBag.Title = "GetDeviceInfoData";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>GetDeviceInfoData</h2>
+
+@Html.Grid(Model).Named("rt_device_info").Build(columns =>
+{
+    columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Desc);
+    columns.Add(c => c.c_controller.controller_name).Titled("controller_name");
+    columns.Add(c => c.C_timestamp).Titled("_timestamp");
+    columns.Add(c => c.c_device_info.URL).Titled("URL");
+    columns.Add(c => c.value).Titled("value");
+}).Filterable(true).Sortable(true).Pageable(pager =>
+{
+    pager.RowsPerPage = 30;
+}).Empty("Did not find anything").Css("table-hover")
+
+@section scripts{
+    <script>
+        //full with screen
+        $("#allcontent").removeClass("body-content");
+        $("#allcontent").removeClass("container");
+    </script>
+}

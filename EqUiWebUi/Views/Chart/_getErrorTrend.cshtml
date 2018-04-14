@@ -72,15 +72,15 @@
             + "&startDate=" + _startDate
             + "&endDate=" + _endDate
             + "&grouptType=" + _groupType,
-            data: JSON.stringify(),
+          //  data: JSON.stringify(), this stringify cause us to fail on IOS WHY ?
             success: function (returnPayload) {
-                console && console.log("request succeeded");
+                console && console.log("request chart data succeeded");
                 buildchart(returnPayload, "chartName");
                 //hide spinner when completes
                 spinnerErrorTrent.stop();
             },
             error: function (xhr, ajaxOptions, thrownError) {
-                console && console.log("request failed!!");
+                console && console.log("request chart data failed!!");
                 $("#gaphContainer").html('<div>Request failed!!</div>');
                 spinnerErrorTrent.stop();
             },

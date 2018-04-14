@@ -15,10 +15,16 @@ namespace EqUiWebUi.Areas.VASC.Controllers
         private GADATAEntitiesVASC db = new GADATAEntitiesVASC();
 
         // GET: VASC/rt_active_info
-        public ActionResult Index()
+        public ActionResult Index(bool ShowNOKonly = false)
         {
-            var rt_active_info = db.rt_active_info.Include(r => r.c_controller);
-            return View(rt_active_info);
+            if (ShowNOKonly)
+            {
+                return View(db.rt_active_info.Where(c => c.vasc_state != (int)VASCState.STATE_CONNECTED).Include(r => r.c_controller));
+            }
+            else
+            {
+                return View(db.rt_active_info.Include(r => r.c_controller));
+            }
         }
 
         // GET: VASC/rt_active_info/Details/5

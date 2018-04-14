@@ -25,7 +25,11 @@
 
 
 @Html.AjaxGrid(Url.Action("_List"))
-
+<hr />
+<div class="alert alert-danger">
+    <input id="CleanRt_value_Search" class="btn btn-warning JQresultTriggerBtn" type="button" value="CLEAN Rt_value_Search" href="@Url.Action("CleanUpRt_value_Search")" />
+    <strong>Clean all data from Rt_value_Search table that is no longer in setup table.</strong>
+</div>
 @section scripts{
     <script>
         //full with screen

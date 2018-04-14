@@ -12,6 +12,11 @@
                         .Encoded(false)
                         .RenderedAs(c => @Html.ActionLink("Edit", "Edit", new { id = c.id })
                         ).Filterable(false);
+    columns.Add(c => c)
+                    .Titled("")
+                    .Encoded(false)
+                    .RenderedAs(c => @Html.ActionLink("Show", "GetDeviceInfoData", new { c_device_info_id = c.id, controller_id = ViewBag.controller_id })
+                    ).Filterable(false);
 }).Filterable(true).Sortable(true).Pageable(pager =>
 {
     pager.RowsPerPage = 10;

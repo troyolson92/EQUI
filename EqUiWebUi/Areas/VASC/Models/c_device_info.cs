@@ -14,11 +14,20 @@ namespace EqUiWebUi.Areas.VASC.Models
     
     public partial class c_device_info
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public c_device_info()
+        {
+            this.rt_device_info = new HashSet<rt_device_info>();
+        }
+    
         public int id { get; set; }
         public string name { get; set; }
         public int enable_bit { get; set; }
         public int poll_rate { get; set; }
         public int insert_update { get; set; }
         public string URL { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<rt_device_info> rt_device_info { get; set; }
     }
 }

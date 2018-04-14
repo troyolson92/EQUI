@@ -15,9 +15,9 @@ namespace EqUiWebUi.Areas.VASC.Models
     public partial class c_job
     {
         public int id { get; set; }
-        public Nullable<int> jobNumber { get; set; }
-        public Nullable<int> enable_bit { get; set; }
-        public Nullable<int> flags { get; set; }
+        public int jobNumber { get; set; }
+        public int enable_bit { get; set; }
+        public int flags { get; set; }
         public string comment { get; set; }
     }
 }
