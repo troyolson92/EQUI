@@ -206,21 +206,12 @@
 
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h4 class="panel-title">c variable </h4>
+            <h4 class="panel-title">Sub system masks </h4>
             <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
         </div>
         <div class="alert-info">
         </div>
         <div class="panel-body">
-            <div class="form-group">
-                @Html.LabelFor(model => model.cVariableMask, htmlAttributes: new { @class = "control-label col-md-4" })
-                <div class="col-md-8">
-                    @Html.ListBoxFor(model => model._cVariableMask, EqUiWebUi.Areas.VASC.Models.VASCenums.Enable_bit_MASK_SelectList, new { @class = "form-control bsMultiselect", multiple = "multiple" })
-                    @Html.ValidationMessageFor(model => model.cVariableMask, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-    </div>
 
             <div class="form-group">
                 @Html.LabelFor(model => model.cVariableMask, htmlAttributes: new { @class = "control-label col-md-4" })
@@ -263,14 +254,31 @@
             </div>
 
             <div class="form-group">
+                @Html.LabelFor(model => model.cErrorMask, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.ListBoxFor(model => model._cErrorMask, EqUiWebUi.Areas.VASC.Models.VASCenums.Enable_bit_MASK_SelectList, new { @class = "form-control bsMultiselect", multiple = "multiple" })
+                    @Html.ValidationMessageFor(model => model.cErrorMask, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">other stuff </h4>
+            <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+        </div>
+        <div class="alert-info">
+        </div>
+        <div class="panel-body">
+            <div class="form-group">
                 @Html.LabelFor(model => model.logCategoryMask, htmlAttributes: new { @class = "control-label col-md-4" })
                 <div class="col-md-8">
                     @Html.EditorFor(model => model.logCategoryMask, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.logCategoryMask, "", new { @class = "text-danger" })
                 </div>
             </div>
-
-
 
             <div class="form-group">
                 @Html.LabelFor(model => model.evLogMessageAction, htmlAttributes: new { @class = "control-label col-md-4" })
@@ -287,31 +295,21 @@
                     @Html.ValidationMessageFor(model => model.cPJVEventMask, "", new { @class = "text-danger" })
                 </div>
             </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.cErrorNoLogMask, htmlAttributes: new { @class = "control-label col-md-4" })
-                <div class="col-md-8">
-                    @Html.ListBoxFor(model => model._cErrorNoLogMask, EqUiWebUi.Areas.VASC.Models.VASCenums.Enable_bit_MASK_SelectList, new { @class = "form-control bsMultiselect", multiple = "multiple" })
-                    @Html.ValidationMessageFor(model => model.cErrorNoLogMask, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.cAlarmIgnoreMask, htmlAttributes: new { @class = "control-label col-md-4" })
-                <div class="col-md-8">
-                    @Html.ListBoxFor(model => model._cAlarmIgnoreMask, EqUiWebUi.Areas.VASC.Models.VASCenums.Enable_bit_MASK_SelectList, new { @class = "form-control bsMultiselect", multiple = "multiple" })
-                    @Html.ValidationMessageFor(model => model.cAlarmIgnoreMask, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-8">
-                    <input type="submit" value="Save" class="btn btn-default" />
-                </div>
-            </div>
         </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-8">
+            <input type="submit" value="Save" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+
         }
 
+        <p>
+            @Html.ActionLink("DELETE record", "Delete", new { id = Model.id })
+        </p>
         <div>
             @Html.ActionLink("Back to List", "Index")
         </div>

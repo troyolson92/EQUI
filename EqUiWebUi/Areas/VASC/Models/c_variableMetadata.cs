@@ -19,7 +19,7 @@ namespace EqUiWebUi.Areas.VASC.Models
         {
             get
             {
-                return (Poll_rate)Enum.ToObject(typeof(Poll_rate), this.poll_rate.GetValueOrDefault());
+                return (Poll_rate)Enum.ToObject(typeof(Poll_rate), this.poll_rate);
             }
             set
             {
@@ -31,7 +31,7 @@ namespace EqUiWebUi.Areas.VASC.Models
         {
             get
             {
-                return (Enable_bit)Enum.ToObject(typeof(Enable_bit), this.enable_bit.GetValueOrDefault());
+                return (Enable_bit)Enum.ToObject(typeof(Enable_bit), this.enable_bit);
             }
             set
             {
@@ -43,7 +43,7 @@ namespace EqUiWebUi.Areas.VASC.Models
         {
             get
             {
-                return (Event_code)Enum.ToObject(typeof(Event_code), this.event_enum.GetValueOrDefault());
+                return (Event_code)Enum.ToObject(typeof(Event_code), this.event_enum);
             }
             set
             {

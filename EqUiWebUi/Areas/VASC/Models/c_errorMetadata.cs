@@ -20,7 +20,7 @@ namespace EqUiWebUi.Areas.VASC.Models
         {
             get
             {
-                return (LogicOperator)Enum.ToObject(typeof(LogicOperator), this.C_operator.GetValueOrDefault());
+                return (LogicOperator)Enum.ToObject(typeof(LogicOperator), this.C_operator);
             }
             set
             {
@@ -32,7 +32,7 @@ namespace EqUiWebUi.Areas.VASC.Models
         {
             get
             {
-                return (Enable_bit)Enum.ToObject(typeof(Enable_bit), this.enable_bit.GetValueOrDefault());
+                return (Enable_bit)Enum.ToObject(typeof(Enable_bit), this.enable_bit);
             }
             set
             {
@@ -44,7 +44,7 @@ namespace EqUiWebUi.Areas.VASC.Models
         {
             get
             {
-                return (ErrorCategory)Enum.ToObject(typeof(ErrorCategory), this.error_category.GetValueOrDefault());
+                return (ErrorCategory)Enum.ToObject(typeof(ErrorCategory), this.error_category);
             }
             set
             {

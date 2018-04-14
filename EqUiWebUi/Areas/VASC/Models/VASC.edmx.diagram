@@ -4,19 +4,25 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="13109bf0c8b04f4e9dba006e3bff02de" Name="Diagram1" ZoomLevel="74">
-        <EntityTypeShape EntityType="GADATAModelVASC.c_controller" Width="1.5" PointX="5.5" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="GADATAModelVASC.c_controller_class" Width="1.5" PointX="3.25" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="GADATAModelVASC.c_csv_log" Width="1.5" PointX="17" PointY="5.75" IsExpanded="true" />
+      <Diagram DiagramId="13109bf0c8b04f4e9dba006e3bff02de" Name="Diagram1" ZoomLevel="64">
+        <EntityTypeShape EntityType="GADATAModelVASC.c_csv_log" Width="1.5" PointX="15.125" PointY="2.875" IsExpanded="true" />
         <EntityTypeShape EntityType="GADATAModelVASC.c_service_setup" Width="1.5" PointX="0.5" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="GADATAModelVASC.c_device_info" Width="1.5" PointX="14.625" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GADATAModelVASC.c_device_info" Width="1.5" PointX="4.75" PointY="11.625" IsExpanded="true" />
         <EntityTypeShape EntityType="GADATAModelVASC.c_job" Width="1.5" PointX="5.5" PointY="5.875" IsExpanded="true" />
         <EntityTypeShape EntityType="GADATAModelVASC.c_variable" Width="1.5" PointX="12.375" PointY="5.75" IsExpanded="true" />
         <EntityTypeShape EntityType="GADATAModelVASC.c_variable_search" Width="1.5" PointX="10.25" PointY="5.75" IsExpanded="true" />
-        <AssociationConnector Association="GADATAModelVASC.FK_c_controller_c_controller_class" ManuallyRouted="false" />
         <EntityTypeShape EntityType="GADATAModelVASC.c_error" Width="1.5" PointX="0.5" PointY="3.625" />
-        <EntityTypeShape EntityType="GADATAModelVASC.rt_active_info" Width="1.5" PointX="8" PointY="1.125" />
+        <EntityTypeShape EntityType="GADATAModelVASC.c_controller" Width="1.5" PointX="5.5" PointY="1.125" />
+        <EntityTypeShape EntityType="GADATAModelVASC.c_controller_class" Width="1.5" PointX="3.25" PointY="0.5" />
+        <EntityTypeShape EntityType="GADATAModelVASC.rt_active_info" Width="1.5" PointX="7.75" PointY="1.875" />
+        <AssociationConnector Association="GADATAModelVASC.FK_c_controller_c_controller_class" />
         <AssociationConnector Association="GADATAModelVASC.FK_rt_active_info_c_controller" />
+        <EntityTypeShape EntityType="GADATAModelVASC.rt_csv_file" Width="1.5" PointX="17.125" PointY="2.875" />
+        <EntityTypeShape EntityType="GADATAModelVASC.rt_device_info" Width="1.5" PointX="2.75" PointY="11.625" />
+        <AssociationConnector Association="GADATAModelVASC.FK_rt_csv_file_c_controller" />
+        <AssociationConnector Association="GADATAModelVASC.FK_rt_csv_file_c_csv_log" />
+        <AssociationConnector Association="GADATAModelVASC.FK_rt_device_info_c_controller" />
+        <AssociationConnector Association="GADATAModelVASC.FK_rt_device_info_c_device_info" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

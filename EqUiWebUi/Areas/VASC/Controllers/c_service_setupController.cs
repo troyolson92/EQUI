@@ -16,9 +16,15 @@ namespace EqUiWebUi.Areas.VASC.Controllers
         private GADATAEntitiesVASC db = new GADATAEntitiesVASC();
 
         // GET: VASC/c_service_setup
-        //show a list of session configured
+        //show a list of session configured join the controller enable mask.
         public ActionResult Index()
         {
+
+            var query = (from s in db.c_service_setup.AsEnumerable().Where(c => c.name == "SESSION_NAME")
+                        from sd in db.c_service_setup.AsEnumerable().Where(c => c.name == "CONTROLLER_ENABLE_MASK" && c.bit_id == s.bit_id)
+                        select new { sessionname = s.value, sessionEnableMask = s.bit_id, CONTROLLER_ENABLE_MASK = sd.value, controllerenablebitId= sd.bit_id }).ToList();
+
+            //CONTROLLER_ENABLE_MASK
             return View(db.c_service_setup.Where(c => c.name == "SESSION_NAME").ToList());
         }
 
@@ -32,11 +38,11 @@ namespace EqUiWebUi.Areas.VASC.Controllers
             }
             else
             {
-                var setbits = Enumerable.Range(0, 32).Where(x => ((enable_mask + 1 >> x) & 1) == 1);
+                var setbits = Enumerable.Range(0, 32).Where(x => ((enable_mask >> x) & 1) == 1);
 
                 foreach (int setbit in setbits)
                 {
-                    list.AddRange(db.c_service_setup.Where(c => c.bit_id == setbit && c.bit_id != 0).ToList());
+                    list.AddRange(db.c_service_setup.Where(c => c.bit_id == setbit+1 && c.bit_id != 0).ToList());
                 }
                 //also add everything with bit_id set to -1 because these are global parameters for all sessions.
                 list.AddRange(db.c_service_setup.Where(c => c.bit_id == -1).ToList());

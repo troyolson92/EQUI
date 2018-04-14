@@ -18,8 +18,27 @@ namespace EqUiWebUi.Areas.VASC.Controllers
         // GET: VASC/c_controller
         public ActionResult Index()
         {
-            var c_controller = db.c_controller.Include(c => c.c_controller_class);
-            return View(c_controller.ToList());
+            return View();
+        }
+
+        // GET: VASC/c_controller/_List
+        //Will return partial view with a list of the controllers in a controller class.
+        //Filterable by enable bit
+        public ActionResult _List(int? controllerclass, int? controller_id)
+        {
+            if (controller_id != null)
+            {
+                return PartialView(db.c_controller.Where(c => c.id == controller_id));
+            }
+
+            if (controllerclass is null)
+            {
+                return PartialView(db.c_controller);
+            }
+            else
+            {
+                return PartialView(db.c_controller.Where(c => c.class_id == controllerclass));
+            }
         }
 
         // GET: VASC/c_controller/Details/5

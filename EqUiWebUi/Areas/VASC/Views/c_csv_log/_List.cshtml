@@ -15,4 +15,9 @@
                     .Encoded(false)
                     .RenderedAs(c => @Html.ActionLink("Edit", "Edit", new { id = c.id })
                     ).Filterable(false);
+    columns.Add(c => c)
+                    .Titled("")
+                    .Encoded(false)
+                    .RenderedAs(c => @Html.ActionLink("Show", "GetCsvFileData", new { c_csv_log_id = c.id, controller_id = ViewBag.controller_id })
+                    ).Filterable(false);
 }).Filterable(true).Sortable(true).Empty("Did not find anything").Css("table-hover")

@@ -5,6 +5,11 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@if (ViewBag.controller_id != null)
+{
+    <h3>Filtered on controllerID: @ViewBag.controller_id</h3>
+}
+
 <div class="container">
     <h2>Index c_controller_class</h2>
     <div class="alert alert-info">
@@ -27,6 +32,11 @@
 {
     columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Asc);
     columns.Add(c => c.name).Titled("name");
+    columns.Add(c => c.cVariableMask).Titled("cVariableMask");
+    columns.Add(c => c.cVariableSearchMask).Titled("cVariableSearchMask");
+    columns.Add(c => c.cErrorMask).Titled("cErrorMask");
+    columns.Add(c => c.cCSVLogMask).Titled("cCSVLogMask");
+    columns.Add(c => c.cDeviceInfoMask).Titled("cDeviceInfoMask");
     columns.Add(c => c)
                     .Titled("")
                     .Encoded(false)
@@ -36,16 +46,16 @@
 
 <hr />
 
-    <div class=" modal-body">
-        <div class="modal-content">
-            <div class="alert alert-info">More info about the selected controller class</div>
-            <div id="c_controller_classDetails">Click on a controller class to see what is configured</div>
-        </div>
+<div class=" modal-body">
+    <div class="modal-content">
+        <div class="alert alert-info">More info about the selected controller class</div>
+        <div id="c_controller_classDetails">Click on a controller class to see what is configured</div>
     </div>
+</div>
 
 
 @section scripts{
-<script>
+    <script>
         //full with screen
         $("#allcontent").removeClass("body-content");
         $("#allcontent").removeClass("container");
@@ -54,9 +64,9 @@
         $('#c_controller_class').mvcgrid({
             rowClicked: function (row, data, e) {
                 $("#c_controller_classDetails").html("Loading.....");
-                var url = '@Url.Action("_Details")?id=' + data.id
+                var url = '@Url.Action("_Details")?id=' + data.id + '&controller_id=@ViewBag.controller_id'
                 $("#c_controller_classDetails").load(url);
             }
         });
-</script>
+    </script>
 }

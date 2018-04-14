@@ -14,14 +14,23 @@ namespace EqUiWebUi.Areas.VASC.Models
     
     public partial class c_csv_log
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public c_csv_log()
+        {
+            this.rt_csv_file = new HashSet<rt_csv_file>();
+        }
+    
         public int id { get; set; }
-        public Nullable<int> enable_bit { get; set; }
+        public int enable_bit { get; set; }
         public string csv_filename { get; set; }
         public string logcount_variable { get; set; }
         public string rt_table { get; set; }
-        public Nullable<int> poll_rate { get; set; }
+        public int poll_rate { get; set; }
         public string comment { get; set; }
         public string Tempnote { get; set; }
-        public Nullable<int> flags { get; set; }
+        public int flags { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<rt_csv_file> rt_csv_file { get; set; }
     }
 }

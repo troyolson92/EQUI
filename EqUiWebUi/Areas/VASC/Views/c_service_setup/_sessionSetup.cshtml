@@ -3,7 +3,7 @@
 @Html.Grid(Model).Named("c_service_setup").Build(columns =>
 {
     columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Asc);
-    columns.Add(c => c._Enable_bit).Titled("_Enable_bit"); //this is like enable bit
+    columns.Add(c => c._Enable_bit).Titled("enable_mask"); //this is like enable bit
     columns.Add(c => c.name).Titled("name");
     columns.Add(c => c.value).Titled("value");
     columns.Add(c => c.description).Titled("description");

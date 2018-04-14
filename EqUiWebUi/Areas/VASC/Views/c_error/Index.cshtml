@@ -6,17 +6,19 @@
 }
 
 <div class="container">
-    <h2>Index c_error</h2>
+    <h2>Index of c_error</h2>
     <div class="alert alert-info">
         <h4>
-            <strong>Alarms configured here can be ignored or redirected.</strong>
+            <strong>Alarms configured here can be ignored or redirected from the standard h_alarm system.</strong>
         </h4>
-        <p>*in the breakdown system</p>
-        <p>*in the h_alarm system</p>
-        <p>*Redirect to rt_alarm</p>
 
+        <strong>A combination of these flags is allowed</strong>
+        <p>*Insert into h_alarm</p>
+        <p>*Insert into rt_alarm (junk table)</p>
+        <p>*Allow this type to be used in breakdown calculation.</p>
 
         <div class="text-muted">
+             If an alarm is NOT machted here it will be treated with a standard flagcode of 5. (insert into h_alarm and allowed to be used in breakdown)
         </div>
     </div>
 </div>

@@ -6,6 +6,7 @@
 }
 
 <h2>active controller state</h2>
+COUNT: @Model.Count() 
 
 @Html.Grid(Model).Named("rt_active_info").Build(columns =>
 {

@@ -25,8 +25,6 @@ namespace EqUiWebUi.Areas.VASC.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<c_controller> c_controller { get; set; }
-        public virtual DbSet<c_controller_class> c_controller_class { get; set; }
         public virtual DbSet<c_csv_log> c_csv_log { get; set; }
         public virtual DbSet<c_service_setup> c_service_setup { get; set; }
         public virtual DbSet<c_device_info> c_device_info { get; set; }
@@ -34,6 +32,10 @@ namespace EqUiWebUi.Areas.VASC.Models
         public virtual DbSet<c_variable> c_variable { get; set; }
         public virtual DbSet<c_variable_search> c_variable_search { get; set; }
         public virtual DbSet<c_error> c_error { get; set; }
+        public virtual DbSet<c_controller> c_controller { get; set; }
+        public virtual DbSet<c_controller_class> c_controller_class { get; set; }
         public virtual DbSet<rt_active_info> rt_active_info { get; set; }
+        public virtual DbSet<rt_csv_file> rt_csv_file { get; set; }
+        public virtual DbSet<rt_device_info> rt_device_info { get; set; }
     }
 }

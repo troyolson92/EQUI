@@ -22,37 +22,37 @@ namespace EqUiWebUi.Areas.VASC.Models
     
         public int id { get; set; }
         public string name { get; set; }
-        public Nullable<bool> doConnect { get; set; }
-        public Nullable<int> evStateChange { get; set; }
-        public Nullable<int> evOperatingModeChange { get; set; }
-        public Nullable<int> evConnectionChange { get; set; }
-        public Nullable<int> evExecutionStatus { get; set; }
-        public Nullable<int> evExecutionStatusTRob1 { get; set; }
-        public Nullable<int> evBackupCompleted { get; set; }
-        public Nullable<int> evDataResolveChange { get; set; }
-        public Nullable<int> evExecutionCycleChange { get; set; }
-        public Nullable<int> evTaskEnabledChange { get; set; }
-        public Nullable<int> evMasterChange { get; set; }
-        public Nullable<int> evMotionPointerTRob1Change { get; set; }
-        public Nullable<int> evProgramPointerTRob1Change { get; set; }
-        public Nullable<int> evMotionPointerTRob1ManualChange { get; set; }
-        public Nullable<int> evProgramPointerTRob1ManualChange { get; set; }
-        public Nullable<int> cVariableMask { get; set; }
-        public Nullable<int> cVariableSearchMask { get; set; }
-        public Nullable<int> cDeviceInfoMask { get; set; }
-        public Nullable<int> cCSVLogMask { get; set; }
-        public Nullable<int> cJobMask { get; set; }
-        public Nullable<int> logCategoryMask { get; set; }
-        public Nullable<bool> handleHSocket { get; set; }
+        public bool doConnect { get; set; }
+        public int evStateChange { get; set; }
+        public int evOperatingModeChange { get; set; }
+        public int evConnectionChange { get; set; }
+        public int evExecutionStatus { get; set; }
+        public int evExecutionStatusTRob1 { get; set; }
+        public int evBackupCompleted { get; set; }
+        public int evDataResolveChange { get; set; }
+        public int evExecutionCycleChange { get; set; }
+        public int evTaskEnabledChange { get; set; }
+        public int evMasterChange { get; set; }
+        public int evMotionPointerTRob1Change { get; set; }
+        public int evProgramPointerTRob1Change { get; set; }
+        public int evMotionPointerTRob1ManualChange { get; set; }
+        public int evProgramPointerTRob1ManualChange { get; set; }
+        public int cVariableMask { get; set; }
+        public int cVariableSearchMask { get; set; }
+        public int cDeviceInfoMask { get; set; }
+        public int cCSVLogMask { get; set; }
+        public int cJobMask { get; set; }
+        public int logCategoryMask { get; set; }
+        public bool handleHSocket { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
-        public Nullable<int> setClock { get; set; }
-        public Nullable<int> evLogMessageAction { get; set; }
-        public Nullable<int> cPJVEventMask { get; set; }
-        public Nullable<int> cErrorNoLogMask { get; set; }
-        public Nullable<int> cAlarmIgnoreMask { get; set; }
-        public Nullable<int> cPJVActionMask { get; set; }
-        public Nullable<int> cErrorMask { get; set; }
+        public int setClock { get; set; }
+        public int evLogMessageAction { get; set; }
+        public int cPJVEventMask { get; set; }
+        public int cPJVActionMask { get; set; }
+        public int xxcErrorNoLogMask { get; set; }
+        public int xxcAlarmIgnoreMask { get; set; }
+        public int cErrorMask { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<c_controller> c_controller { get; set; }
