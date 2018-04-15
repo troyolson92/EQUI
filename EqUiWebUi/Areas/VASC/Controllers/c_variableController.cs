@@ -142,13 +142,19 @@ namespace EqUiWebUi.Areas.VASC.Controllers
         {
             //get variable config by ID
 
-            //build Qry 
+            IQueryable<EqUiWebUi.Areas.VASC.Models.rt_value> linqQry;
+            if (controller_id != null)
+            {
+                linqQry = db.rt_value.Where(c => c.c_variable_id == c_variable_id && c.c_controller_id == controller_id);
+            }
+            else
+            {
+                linqQry = db.rt_value.Where(c => c.c_variable_id == c_variable_id);
+            }
 
-            //get data 
 
-            //build object 
 
-            return View();
+            return View(linqQry);
         }
 
         protected override void Dispose(bool disposing)

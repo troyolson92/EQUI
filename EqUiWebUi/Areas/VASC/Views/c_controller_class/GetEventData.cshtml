@@ -1,0 +1,32 @@
+﻿@model IQueryable<EqUiWebUi.Areas.VASC.Models.rt_event>
+@{
+    ViewBag.Title = "GetEventdata";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>GetEventdata</h2>
+COUNT:@Model.Count()
+
+@Html.Grid(Model).Named("rt_event").Build(columns =>
+{
+    columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Desc);
+    columns.Add(c => c.c_controller.controller_name).Titled("controller_name");
+    columns.Add(c => c.C_timestamp).Titled("_timestamp");
+    columns.Add(c => c.abbDateTime).Titled("abbDateTime");
+    columns.Add(c => c.event_enum).Titled("event_enum");
+    columns.Add(c => c._Event_code).Titled("_Event_code");
+    columns.Add(c => c.description).Titled("description");
+    columns.Add(c => c.event_value).Titled("event_value");
+    columns.Add(c => c.isEvent).Titled("isEvent");
+}).Filterable(true).Sortable(true).Pageable(pager =>
+{
+    pager.RowsPerPage = 30;
+}).Empty("Did not find anything").Css("table-hover")
+
+@section scripts{
+    <script>
+        //full with screen
+        $("#allcontent").removeClass("body-content");
+        $("#allcontent").removeClass("container");
+    </script>
+}

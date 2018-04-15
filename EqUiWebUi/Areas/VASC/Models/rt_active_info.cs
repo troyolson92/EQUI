@@ -32,6 +32,7 @@ namespace EqUiWebUi.Areas.VASC.Models
         public Nullable<int> task_execution_status { get; set; }
         public Nullable<System.DateTime> ts_breakDownAck { get; set; }
         public Nullable<System.DateTime> ts_breakDownStart { get; set; }
+        public string vasc_session { get; set; }
     
         public virtual c_controller c_controller { get; set; }
     }

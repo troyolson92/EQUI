@@ -1,6 +1,6 @@
 ﻿@model IQueryable<EqUiWebUi.Areas.VASC.Models.c_controller>
 
-<div>Count: @Model.Count()</div>
+<div class="badge">Count: @Model.Count()</div>
 
 @Html.Grid(Model).Named("c_controller").Build(columns =>
 {
@@ -15,6 +15,11 @@
                     .Encoded(false)
                     .RenderedAs(c => @Html.ActionLink("Edit", "Edit", new { id = c.id })
                     ).Filterable(false);
+    columns.Add(c => c)
+        .Titled("")
+        .Encoded(false)
+        .RenderedAs(c => @Html.ActionLink("Show", "Index", "c_controller_class", new { controller_id = c.id }, null)
+        ).Filterable(false);
 }).Filterable(true).Sortable(true).Pageable(pager =>
 {
     pager.RowsPerPage = 10;

@@ -7,8 +7,6 @@
 
 <h2>List of all VASC sessions</h2>
 
-
-
 @Html.Grid(Model).Named("c_service_setupSessions").Build(columns =>
     {
         columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Asc);
@@ -17,7 +15,6 @@
         columns.Add(c => c.value).Titled("SessionName");
         columns.Add(c => c.description).Titled("description");
     }).Filterable(true).Sortable(true).Empty("Did not find anything").Css("table-hover")
-
 
 <hr />
 
@@ -55,12 +52,12 @@
         $('#c_service_setupSessions').mvcgrid({
             rowClicked: function (row, data, e) {
                 $("#sessiondetails").html("Loading.....");
-                var url = '@Url.Action("_sessionDetails")?enable_mask=' + data.bit_id
-                $("#sessiondetails").load(url);
+                var url1 = '@Url.Action("_sessionDetails")?sessionName=' + data.value
+                $("#sessiondetails").load(url1);
 
                 $("#c_service_setupDetails").html("Loading.....");
-                var url = '@Url.Action("_sessionSetup")?enable_mask=' + data.bit_id
-                $("#c_service_setupDetails").load(url);
+                var url2 = '@Url.Action("_sessionSetup")?enable_mask=' + data.bit_id
+                $("#c_service_setupDetails").load(url2);
             }
         });
 </script>

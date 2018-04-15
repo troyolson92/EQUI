@@ -115,6 +115,19 @@ namespace EqUiWebUi.Areas.VASC.Controllers
             return RedirectToAction("Index");
         }
 
+        // GET: VASC/c_device_info/_getDeviceInfoData
+        public ActionResult GetEventData(int? controller_id)
+        {
+            if (controller_id != null)
+            {
+                return View(db.rt_event.Where(c => c.c_controller_id == controller_id));
+            }
+            else
+            {
+                return View(db.rt_event);
+            }
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
