@@ -12,7 +12,18 @@ COUNT: @Model.Count()
 {
     columns.Add(c => c.c_controller_id).Titled("c_controller_id").InitialSort(GridSortOrder.Asc);
     columns.Add(c => c.c_controller._Enable_bit).Titled("enable_bit");
+    columns.Add(c => c.vasc_session).Titled("vasc_session");
     columns.Add(c => c.c_controller.controller_name).Titled("controller_name");
     columns.Add(c => c.controller_state).Titled("controller_state");
     columns.Add(c => c._VASCState).Titled("vasc_state");
+    columns.Add(c => c)
+            .Titled("")
+            .Encoded(false)
+            .RenderedAs(c => @Html.ActionLink("Show", "Index","c_controller_class", new {controller_id = c.c_controller_id }, null)
+            ).Filterable(false);
+    columns.Add(c => c)
+        .Titled("")
+        .Encoded(false)
+        .RenderedAs(c => @Html.ActionLink("l_operation", "Index", "l_operation", new { controller_id = c.c_controller_id, sessionName = c.vasc_session }, null)
+        ).Filterable(false);
 }).Filterable(true).Sortable(true).Empty("Did not find anything").Css("table-hover")

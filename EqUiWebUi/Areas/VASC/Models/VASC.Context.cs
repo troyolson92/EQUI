@@ -37,5 +37,9 @@ namespace EqUiWebUi.Areas.VASC.Models
         public virtual DbSet<rt_active_info> rt_active_info { get; set; }
         public virtual DbSet<rt_csv_file> rt_csv_file { get; set; }
         public virtual DbSet<rt_device_info> rt_device_info { get; set; }
+        public virtual DbSet<rt_event> rt_event { get; set; }
+        public virtual DbSet<rt_value> rt_value { get; set; }
+        public virtual DbSet<L_operation> L_operation { get; set; }
+        public virtual DbSet<rt_controller> rt_controller { get; set; }
     }
 }

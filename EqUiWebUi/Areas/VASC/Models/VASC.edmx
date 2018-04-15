@@ -151,6 +151,17 @@ warning 6002: The table/view 'GADATA.NGAC.c_job' does not have a primary key def
           <Property Name="insert_update" Type="int" Nullable="false" />
           <Property Name="rt_table" Type="varchar(max)" />
         </EntityType>
+        <EntityType Name="L_operation">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="_timestamp" Type="datetime" />
+          <Property Name="code" Type="int" />
+          <Property Name="Vasc_name" Type="varchar" MaxLength="50" />
+          <Property Name="controller_id" Type="int" />
+          <Property Name="Description" Type="varchar" MaxLength="250" />
+        </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'GADATA.NGAC.rt_active_info' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="rt_active_info">
@@ -172,9 +183,36 @@ warning 6002: The table/view 'GADATA.NGAC.rt_active_info' does not have a primar
           <Property Name="master_state" Type="int" />
           <Property Name="at_home" Type="int" />
           <Property Name="vasc_state" Type="int" />
+          <Property Name="vasc_session" Type="varchar" MaxLength="20" />
           <Property Name="task_execution_status" Type="int" />
           <Property Name="ts_breakDownAck" Type="datetime" />
           <Property Name="ts_breakDownStart" Type="datetime" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.NGAC.rt_controller' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="rt_controller">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="c_controller_id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="c_controller_id" Type="int" Nullable="false" />
+          <Property Name="Availability" Type="varchar" MaxLength="128" />
+          <Property Name="BaseDirectory" Type="varchar" MaxLength="128" />
+          <Property Name="ControllerName" Type="varchar" MaxLength="30" />
+          <Property Name="HostName" Type="varchar" MaxLength="230" />
+          <Property Name="Controller_Id" Type="varchar" MaxLength="130" />
+          <Property Name="IPaddress" Type="varchar" MaxLength="30" />
+          <Property Name="IsVirtual" Type="int" />
+          <Property Name="MacAddress" Type="varchar" MaxLength="50" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="RunLevel" Type="varchar" MaxLength="50" />
+          <Property Name="SystemId" Type="varchar" MaxLength="60" />
+          <Property Name="SystemName" Type="varchar" MaxLength="50" />
+          <Property Name="Version" Type="varchar" MaxLength="50" />
+          <Property Name="VersionName" Type="varchar" MaxLength="50" />
+          <Property Name="WebServicesPort" Type="int" />
+          <Property Name="_timestamp" Type="datetime" />
         </EntityType>
         <EntityType Name="rt_csv_file">
           <Key>
@@ -204,6 +242,35 @@ warning 6002: The table/view 'GADATA.NGAC.rt_device_info' does not have a primar
           <Property Name="_timestamp" Type="datetime" />
           <Property Name="value" Type="varchar(max)" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.NGAC.rt_event' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="rt_event">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="event_enum" Type="int" />
+          <Property Name="c_controller_id" Type="int" />
+          <Property Name="_timestamp" Type="datetime" />
+          <Property Name="abbDateTime" Type="datetime" />
+          <Property Name="description" Type="varchar(max)" />
+          <Property Name="isEvent" Type="bit" />
+          <Property Name="event_value" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.NGAC.rt_value' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="rt_value">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="c_variable_id" Type="int" />
+          <Property Name="c_controller_id" Type="int" />
+          <Property Name="_timestamp" Type="datetime" />
+          <Property Name="value" Type="varchar(max)" />
+          <Property Name="isEvent" Type="bit" />
+          <Property Name="abbDateTime" Type="datetime" />
+        </EntityType>
         <Association Name="FK_c_controller_c_controller_class">
           <End Role="c_controller_class" Type="Self.c_controller_class" Multiplicity="1" />
           <End Role="c_controller" Type="Self.c_controller" Multiplicity="*" />
@@ -224,6 +291,18 @@ warning 6002: The table/view 'GADATA.NGAC.rt_device_info' does not have a primar
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="rt_active_info">
+              <PropertyRef Name="c_controller_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rt_controller_c_controller">
+          <End Role="c_controller" Type="Self.c_controller" Multiplicity="1" />
+          <End Role="rt_controller" Type="Self.rt_controller" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_controller">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="rt_controller">
               <PropertyRef Name="c_controller_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -276,6 +355,42 @@ warning 6002: The table/view 'GADATA.NGAC.rt_device_info' does not have a primar
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_rt_event_c_controller">
+          <End Role="c_controller" Type="Self.c_controller" Multiplicity="0..1" />
+          <End Role="rt_event" Type="Self.rt_event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_controller">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="rt_event">
+              <PropertyRef Name="c_controller_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rt_value_c_controller">
+          <End Role="c_controller" Type="Self.c_controller" Multiplicity="0..1" />
+          <End Role="rt_value" Type="Self.rt_value" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_controller">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="rt_value">
+              <PropertyRef Name="c_controller_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rt_value_c_variable">
+          <End Role="c_variable" Type="Self.c_variable" Multiplicity="0..1" />
+          <End Role="rt_value" Type="Self.rt_value" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_variable">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="rt_value">
+              <PropertyRef Name="c_variable_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="GADATAModelVASCStoreContainer">
           <EntitySet Name="c_controller" EntityType="Self.c_controller" Schema="NGAC" store:Type="Tables" />
           <EntitySet Name="c_controller_class" EntityType="Self.c_controller_class" Schema="NGAC" store:Type="Tables" />
@@ -285,6 +400,7 @@ warning 6002: The table/view 'GADATA.NGAC.rt_device_info' does not have a primar
           <EntitySet Name="c_service_setup" EntityType="Self.c_service_setup" Schema="NGAC" store:Type="Tables" />
           <EntitySet Name="c_variable" EntityType="Self.c_variable" Schema="NGAC" store:Type="Tables" />
           <EntitySet Name="c_variable_search" EntityType="Self.c_variable_search" Schema="NGAC" store:Type="Tables" />
+          <EntitySet Name="L_operation" EntityType="Self.L_operation" Schema="NGAC" store:Type="Tables" />
           <EntitySet Name="rt_csv_file" EntityType="Self.rt_csv_file" Schema="NGAC" store:Type="Tables" />
           <EntitySet Name="c_job" EntityType="Self.c_job" store:Type="Tables" store:Schema="NGAC">
             <DefiningQuery>SELECT 
@@ -312,10 +428,33 @@ warning 6002: The table/view 'GADATA.NGAC.rt_device_info' does not have a primar
     [rt_active_info].[master_state] AS [master_state], 
     [rt_active_info].[at_home] AS [at_home], 
     [rt_active_info].[vasc_state] AS [vasc_state], 
+    [rt_active_info].[vasc_session] AS [vasc_session], 
     [rt_active_info].[task_execution_status] AS [task_execution_status], 
     [rt_active_info].[ts_breakDownAck] AS [ts_breakDownAck], 
     [rt_active_info].[ts_breakDownStart] AS [ts_breakDownStart]
     FROM [NGAC].[rt_active_info] AS [rt_active_info]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="rt_controller" EntityType="Self.rt_controller" store:Type="Tables" store:Schema="NGAC">
+            <DefiningQuery>SELECT 
+    [rt_controller].[id] AS [id], 
+    [rt_controller].[c_controller_id] AS [c_controller_id], 
+    [rt_controller].[Availability] AS [Availability], 
+    [rt_controller].[BaseDirectory] AS [BaseDirectory], 
+    [rt_controller].[ControllerName] AS [ControllerName], 
+    [rt_controller].[HostName] AS [HostName], 
+    [rt_controller].[Controller_Id] AS [Controller_Id], 
+    [rt_controller].[IPaddress] AS [IPaddress], 
+    [rt_controller].[IsVirtual] AS [IsVirtual], 
+    [rt_controller].[MacAddress] AS [MacAddress], 
+    [rt_controller].[Name] AS [Name], 
+    [rt_controller].[RunLevel] AS [RunLevel], 
+    [rt_controller].[SystemId] AS [SystemId], 
+    [rt_controller].[SystemName] AS [SystemName], 
+    [rt_controller].[Version] AS [Version], 
+    [rt_controller].[VersionName] AS [VersionName], 
+    [rt_controller].[WebServicesPort] AS [WebServicesPort], 
+    [rt_controller].[_timestamp] AS [_timestamp]
+    FROM [NGAC].[rt_controller] AS [rt_controller]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="rt_device_info" EntityType="Self.rt_device_info" store:Type="Tables" store:Schema="NGAC">
             <DefiningQuery>SELECT 
@@ -326,6 +465,29 @@ warning 6002: The table/view 'GADATA.NGAC.rt_device_info' does not have a primar
     [rt_device_info].[value] AS [value]
     FROM [NGAC].[rt_device_info] AS [rt_device_info]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="rt_event" EntityType="Self.rt_event" store:Type="Tables" store:Schema="NGAC">
+            <DefiningQuery>SELECT 
+    [rt_event].[id] AS [id], 
+    [rt_event].[event_enum] AS [event_enum], 
+    [rt_event].[c_controller_id] AS [c_controller_id], 
+    [rt_event].[_timestamp] AS [_timestamp], 
+    [rt_event].[abbDateTime] AS [abbDateTime], 
+    [rt_event].[description] AS [description], 
+    [rt_event].[isEvent] AS [isEvent], 
+    [rt_event].[event_value] AS [event_value]
+    FROM [NGAC].[rt_event] AS [rt_event]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="rt_value" EntityType="Self.rt_value" store:Type="Tables" store:Schema="NGAC">
+            <DefiningQuery>SELECT 
+    [rt_value].[id] AS [id], 
+    [rt_value].[c_variable_id] AS [c_variable_id], 
+    [rt_value].[c_controller_id] AS [c_controller_id], 
+    [rt_value].[_timestamp] AS [_timestamp], 
+    [rt_value].[value] AS [value], 
+    [rt_value].[isEvent] AS [isEvent], 
+    [rt_value].[abbDateTime] AS [abbDateTime]
+    FROM [NGAC].[rt_value] AS [rt_value]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_c_controller_c_controller_class" Association="Self.FK_c_controller_c_controller_class">
             <End Role="c_controller_class" EntitySet="c_controller_class" />
             <End Role="c_controller" EntitySet="c_controller" />
@@ -333,6 +495,10 @@ warning 6002: The table/view 'GADATA.NGAC.rt_device_info' does not have a primar
           <AssociationSet Name="FK_rt_active_info_c_controller" Association="Self.FK_rt_active_info_c_controller">
             <End Role="c_controller" EntitySet="c_controller" />
             <End Role="rt_active_info" EntitySet="rt_active_info" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rt_controller_c_controller" Association="Self.FK_rt_controller_c_controller">
+            <End Role="c_controller" EntitySet="c_controller" />
+            <End Role="rt_controller" EntitySet="rt_controller" />
           </AssociationSet>
           <AssociationSet Name="FK_rt_csv_file_c_controller" Association="Self.FK_rt_csv_file_c_controller">
             <End Role="c_controller" EntitySet="c_controller" />
@@ -349,6 +515,18 @@ warning 6002: The table/view 'GADATA.NGAC.rt_device_info' does not have a primar
           <AssociationSet Name="FK_rt_device_info_c_device_info" Association="Self.FK_rt_device_info_c_device_info">
             <End Role="c_device_info" EntitySet="c_device_info" />
             <End Role="rt_device_info" EntitySet="rt_device_info" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rt_event_c_controller" Association="Self.FK_rt_event_c_controller">
+            <End Role="c_controller" EntitySet="c_controller" />
+            <End Role="rt_event" EntitySet="rt_event" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rt_value_c_controller" Association="Self.FK_rt_value_c_controller">
+            <End Role="c_controller" EntitySet="c_controller" />
+            <End Role="rt_value" EntitySet="rt_value" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rt_value_c_variable" Association="Self.FK_rt_value_c_variable">
+            <End Role="c_variable" EntitySet="c_variable" />
+            <End Role="rt_value" EntitySet="rt_value" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -413,6 +591,7 @@ warning 6002: The table/view 'GADATA.NGAC.rt_device_info' does not have a primar
           <Property Name="event_enum" Type="Int32" Nullable="false" />
           <Property Name="sql_action" Type="Int32" Nullable="false" />
           <Property Name="rt_table" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="rt_value" Relationship="GADATAModelVASC.FK_rt_value_c_variable" FromRole="c_variable" ToRole="rt_value" />
         </EntityType>
         <EntityType Name="c_variable_search">
           <Key>
@@ -464,6 +643,26 @@ warning 6002: The table/view 'GADATA.NGAC.rt_device_info' does not have a primar
             <End Role="c_device_info" EntitySet="c_device_info" />
             <End Role="rt_device_info" EntitySet="rt_device_info" />
           </AssociationSet>
+          <EntitySet Name="rt_event" EntityType="GADATAModelVASC.rt_event" />
+          <EntitySet Name="rt_value" EntityType="GADATAModelVASC.rt_value" />
+          <AssociationSet Name="FK_rt_value_c_controller" Association="GADATAModelVASC.FK_rt_value_c_controller">
+            <End Role="c_controller" EntitySet="c_controller" />
+            <End Role="rt_value" EntitySet="rt_value" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rt_value_c_variable" Association="GADATAModelVASC.FK_rt_value_c_variable">
+            <End Role="c_variable" EntitySet="c_variable" />
+            <End Role="rt_value" EntitySet="rt_value" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rt_event_c_controller" Association="GADATAModelVASC.FK_rt_event_c_controller">
+            <End Role="c_controller" EntitySet="c_controller" />
+            <End Role="rt_event" EntitySet="rt_event" />
+          </AssociationSet>
+          <EntitySet Name="L_operation" EntityType="GADATAModelVASC.L_operation" />
+          <EntitySet Name="rt_controller" EntityType="GADATAModelVASC.rt_controller" />
+          <AssociationSet Name="FK_rt_controller_c_controller" Association="GADATAModelVASC.FK_rt_controller_c_controller">
+            <End Role="c_controller" EntitySet="c_controller" />
+            <End Role="rt_controller" EntitySet="rt_controller" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="c_error">
           <Key>
@@ -501,6 +700,9 @@ warning 6002: The table/view 'GADATA.NGAC.rt_device_info' does not have a primar
           <NavigationProperty Name="rt_active_info" Relationship="GADATAModelVASC.FK_rt_active_info_c_controller" FromRole="c_controller" ToRole="rt_active_info" />
           <NavigationProperty Name="rt_csv_file" Relationship="GADATAModelVASC.FK_rt_csv_file_c_controller" FromRole="c_controller" ToRole="rt_csv_file" />
           <NavigationProperty Name="rt_device_info" Relationship="GADATAModelVASC.FK_rt_device_info_c_controller" FromRole="c_controller" ToRole="rt_device_info" />
+          <NavigationProperty Name="rt_value" Relationship="GADATAModelVASC.FK_rt_value_c_controller" FromRole="c_controller" ToRole="rt_value" />
+          <NavigationProperty Name="rt_event" Relationship="GADATAModelVASC.FK_rt_event_c_controller" FromRole="c_controller" ToRole="rt_event" />
+          <NavigationProperty Name="rt_controller" Relationship="GADATAModelVASC.FK_rt_controller_c_controller" FromRole="c_controller" ToRole="rt_controller" />
         </EntityType>
         <EntityType Name="c_controller_class">
           <Key>
@@ -564,6 +766,7 @@ warning 6002: The table/view 'GADATA.NGAC.rt_device_info' does not have a primar
           <Property Name="ts_breakDownAck" Type="DateTime" Precision="3" />
           <Property Name="ts_breakDownStart" Type="DateTime" Precision="3" />
           <NavigationProperty Name="c_controller" Relationship="GADATAModelVASC.FK_rt_active_info_c_controller" FromRole="rt_active_info" ToRole="c_controller" />
+          <Property Name="vasc_session" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_c_controller_c_controller_class">
           <End Type="GADATAModelVASC.c_controller_class" Role="c_controller_class" Multiplicity="1" />
@@ -664,6 +867,118 @@ warning 6002: The table/view 'GADATA.NGAC.rt_device_info' does not have a primar
             </Principal>
             <Dependent Role="rt_device_info">
               <PropertyRef Name="c_device_info_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="rt_event">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="event_enum" Type="Int32" />
+          <Property Name="c_controller_id" Type="Int32" />
+          <Property Name="C_timestamp" Type="DateTime" Precision="3" />
+          <Property Name="abbDateTime" Type="DateTime" Precision="3" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="isEvent" Type="Boolean" />
+          <Property Name="event_value" Type="Int32" />
+          <NavigationProperty Name="c_controller" Relationship="GADATAModelVASC.FK_rt_event_c_controller" FromRole="rt_event" ToRole="c_controller" />
+        </EntityType>
+        <EntityType Name="rt_value">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="c_variable_id" Type="Int32" />
+          <Property Name="c_controller_id" Type="Int32" />
+          <Property Name="C_timestamp" Type="DateTime" Precision="3" />
+          <Property Name="value" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="isEvent" Type="Boolean" />
+          <Property Name="abbDateTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="c_controller" Relationship="GADATAModelVASC.FK_rt_value_c_controller" FromRole="rt_value" ToRole="c_controller" />
+          <NavigationProperty Name="c_variable" Relationship="GADATAModelVASC.FK_rt_value_c_variable" FromRole="rt_value" ToRole="c_variable" />
+        </EntityType>
+        <Association Name="FK_rt_value_c_controller">
+          <End Type="GADATAModelVASC.c_controller" Role="c_controller" Multiplicity="0..1" />
+          <End Type="GADATAModelVASC.rt_value" Role="rt_value" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_controller">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="rt_value">
+              <PropertyRef Name="c_controller_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rt_value_c_variable">
+          <End Type="GADATAModelVASC.c_variable" Role="c_variable" Multiplicity="0..1" />
+          <End Type="GADATAModelVASC.rt_value" Role="rt_value" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_variable">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="rt_value">
+              <PropertyRef Name="c_variable_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rt_event_c_controller">
+          <End Type="GADATAModelVASC.c_controller" Role="c_controller" Multiplicity="0..1" />
+          <End Type="GADATAModelVASC.rt_event" Role="rt_event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_controller">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="rt_event">
+              <PropertyRef Name="c_controller_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="L_operation">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="C_timestamp" Type="DateTime" Precision="3" />
+          <Property Name="code" Type="Int32" />
+          <Property Name="Vasc_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="controller_id" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="rt_controller">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="c_controller_id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="c_controller_id" Type="Int32" Nullable="false" />
+          <Property Name="Availability" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="BaseDirectory" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="ControllerName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="HostName" Type="String" MaxLength="230" FixedLength="false" Unicode="false" />
+          <Property Name="Controller_Id" Type="String" MaxLength="130" FixedLength="false" Unicode="false" />
+          <Property Name="IPaddress" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="IsVirtual" Type="Int32" />
+          <Property Name="MacAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RunLevel" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SystemId" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="SystemName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Version" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="VersionName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="WebServicesPort" Type="Int32" />
+          <Property Name="C_timestamp" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="c_controller" Relationship="GADATAModelVASC.FK_rt_controller_c_controller" FromRole="rt_controller" ToRole="c_controller" />
+        </EntityType>
+        <Association Name="FK_rt_controller_c_controller">
+          <End Type="GADATAModelVASC.c_controller" Role="c_controller" Multiplicity="1" />
+          <End Type="GADATAModelVASC.rt_controller" Role="rt_controller" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_controller">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="rt_controller">
+              <PropertyRef Name="c_controller_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -826,6 +1141,7 @@ warning 6002: The table/view 'GADATA.NGAC.rt_device_info' does not have a primar
           <EntitySetMapping Name="rt_active_info">
             <EntityTypeMapping TypeName="GADATAModelVASC.rt_active_info">
               <MappingFragment StoreEntitySet="rt_active_info">
+                <ScalarProperty Name="vasc_session" ColumnName="vasc_session" />
                 <ScalarProperty Name="ts_breakDownStart" ColumnName="ts_breakDownStart" />
                 <ScalarProperty Name="ts_breakDownAck" ColumnName="ts_breakDownAck" />
                 <ScalarProperty Name="task_execution_status" ColumnName="task_execution_status" />
@@ -870,6 +1186,69 @@ warning 6002: The table/view 'GADATA.NGAC.rt_device_info' does not have a primar
                 <ScalarProperty Name="value" ColumnName="value" />
                 <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
                 <ScalarProperty Name="c_device_info_id" ColumnName="c_device_info_id" />
+                <ScalarProperty Name="c_controller_id" ColumnName="c_controller_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="rt_event">
+            <EntityTypeMapping TypeName="GADATAModelVASC.rt_event">
+              <MappingFragment StoreEntitySet="rt_event">
+                <ScalarProperty Name="event_value" ColumnName="event_value" />
+                <ScalarProperty Name="isEvent" ColumnName="isEvent" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="abbDateTime" ColumnName="abbDateTime" />
+                <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
+                <ScalarProperty Name="c_controller_id" ColumnName="c_controller_id" />
+                <ScalarProperty Name="event_enum" ColumnName="event_enum" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="rt_value">
+            <EntityTypeMapping TypeName="GADATAModelVASC.rt_value">
+              <MappingFragment StoreEntitySet="rt_value">
+                <ScalarProperty Name="abbDateTime" ColumnName="abbDateTime" />
+                <ScalarProperty Name="isEvent" ColumnName="isEvent" />
+                <ScalarProperty Name="value" ColumnName="value" />
+                <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
+                <ScalarProperty Name="c_controller_id" ColumnName="c_controller_id" />
+                <ScalarProperty Name="c_variable_id" ColumnName="c_variable_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="L_operation">
+            <EntityTypeMapping TypeName="GADATAModelVASC.L_operation">
+              <MappingFragment StoreEntitySet="L_operation">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="controller_id" ColumnName="controller_id" />
+                <ScalarProperty Name="Vasc_name" ColumnName="Vasc_name" />
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="rt_controller">
+            <EntityTypeMapping TypeName="GADATAModelVASC.rt_controller">
+              <MappingFragment StoreEntitySet="rt_controller">
+                <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
+                <ScalarProperty Name="WebServicesPort" ColumnName="WebServicesPort" />
+                <ScalarProperty Name="VersionName" ColumnName="VersionName" />
+                <ScalarProperty Name="Version" ColumnName="Version" />
+                <ScalarProperty Name="SystemName" ColumnName="SystemName" />
+                <ScalarProperty Name="SystemId" ColumnName="SystemId" />
+                <ScalarProperty Name="RunLevel" ColumnName="RunLevel" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="MacAddress" ColumnName="MacAddress" />
+                <ScalarProperty Name="IsVirtual" ColumnName="IsVirtual" />
+                <ScalarProperty Name="IPaddress" ColumnName="IPaddress" />
+                <ScalarProperty Name="Controller_Id" ColumnName="Controller_Id" />
+                <ScalarProperty Name="HostName" ColumnName="HostName" />
+                <ScalarProperty Name="ControllerName" ColumnName="ControllerName" />
+                <ScalarProperty Name="BaseDirectory" ColumnName="BaseDirectory" />
+                <ScalarProperty Name="Availability" ColumnName="Availability" />
                 <ScalarProperty Name="c_controller_id" ColumnName="c_controller_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>

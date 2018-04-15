@@ -20,6 +20,9 @@ namespace EqUiWebUi.Areas.VASC.Models
             this.rt_active_info = new HashSet<rt_active_info>();
             this.rt_csv_file = new HashSet<rt_csv_file>();
             this.rt_device_info = new HashSet<rt_device_info>();
+            this.rt_value = new HashSet<rt_value>();
+            this.rt_event = new HashSet<rt_event>();
+            this.rt_controller = new HashSet<rt_controller>();
         }
     
         public int id { get; set; }
@@ -43,5 +46,11 @@ namespace EqUiWebUi.Areas.VASC.Models
         public virtual ICollection<rt_csv_file> rt_csv_file { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<rt_device_info> rt_device_info { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<rt_value> rt_value { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<rt_event> rt_event { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<rt_controller> rt_controller { get; set; }
     }
 }

@@ -1,5 +1,7 @@
 ﻿@model IEnumerable<EqUiWebUi.Areas.VASC.Models.c_variable_search>
 
+<div class="badge">Count: @Model.Count()</div>
+
 @Html.Grid(Model).Named("c_variable_search").Build(columns =>
 {
     columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Asc);
@@ -20,4 +22,7 @@
             .Encoded(false)
             .RenderedAs(c => @Html.ActionLink("Show", "GetVariableData", new { c_variable_id = c.id, controller_id = ViewBag.controller_id })
             ).Filterable(false);
-}).Filterable(true).Sortable(true).Empty("Did not find anything").Css("table-hover")
+}).Filterable(true).Sortable(true).Pageable(pager =>
+{
+    pager.RowsPerPage = 10;
+}).Empty("Did not find anything").Css("table-hover")

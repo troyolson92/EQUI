@@ -1,1 +1,28 @@
-﻿<div class="alert alert-danger">load shit here</div>
+﻿
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class="panel-title">l operation</h4>
+        <div class="text-muted">
+            (log records in table l_operation for this session)
+            @Html.ActionLink("l_operation_index", "Index", "l_operation")
+        </div>
+        <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+    </div>
+    <div class="alert-info">
+    </div>
+    <div class="panel-body">
+        <div id="l_operationGrid" class="mvc-grid"></div>
+    </div>
+</div>
+
+
+<script>
+    $('#l_operationGrid').mvcgrid({
+        sourceUrl: '@Html.Raw(@Url.Action("_List", "l_operation"))',
+        requestType: 'get', // Ajax grid request type
+        reloadFailed: function (result) {
+            $("#l_operationGrid").html("Error while loading!!!");
+        }
+    });
+</script>

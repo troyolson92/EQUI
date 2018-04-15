@@ -1,0 +1,17 @@
+﻿@model IQueryable<EqUiWebUi.Areas.VASC.Models.L_operation>
+
+<div class="badge">Count: @Model.Count()</div>
+
+@Html.Grid(Model).Named("L_operation").Build(columns =>
+{
+    columns.Add(c => c.ID).Titled("id").InitialSort(GridSortOrder.Desc);
+    columns.Add(c => c.C_timestamp).Titled("_timestamp");
+    columns.Add(c => c.code).Titled("code");
+    columns.Add(c => c._L_operationCode).Titled("Operation");
+    columns.Add(c => c.Vasc_name).Titled("Vasc_name");
+    columns.Add(c => c.controller_id).Titled("controller_id");
+    columns.Add(c => c.Description).Titled("Desciption");
+}).Filterable(true).Sortable(true).Pageable(pager =>
+{
+    pager.RowsPerPage = 10;
+}).Empty("Did not find anything").Css("table-hover")

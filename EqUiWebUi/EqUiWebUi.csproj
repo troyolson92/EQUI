@@ -362,6 +362,7 @@
     <Compile Include="Areas\VASC\Controllers\c_service_setupController.cs" />
     <Compile Include="Areas\VASC\Controllers\c_variableController.cs" />
     <Compile Include="Areas\VASC\Controllers\c_variable_searchController.cs" />
+    <Compile Include="Areas\VASC\Controllers\L_operationController.cs" />
     <Compile Include="Areas\VASC\Controllers\rt_active_infoController.cs" />
     <Compile Include="Areas\VASC\Controllers\vascController.cs" />
     <Compile Include="Areas\VASC\Models\c_controller.cs">
@@ -399,14 +400,28 @@
       <DependentUpon>VASC.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\VASC\Models\c_variable_searchMetadata.cs" />
+    <Compile Include="Areas\VASC\Models\L_operation.cs">
+      <DependentUpon>VASC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VASC\Models\l_operationMetadata.cs" />
     <Compile Include="Areas\VASC\Models\rt_active_info.cs">
       <DependentUpon>VASC.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\VASC\Models\rt_active_infoMetadata.cs" />
+    <Compile Include="Areas\VASC\Models\rt_controller.cs">
+      <DependentUpon>VASC.tt</DependentUpon>
+    </Compile>
     <Compile Include="Areas\VASC\Models\rt_csv_file.cs">
       <DependentUpon>VASC.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\VASC\Models\rt_device_info.cs">
+      <DependentUpon>VASC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VASC\Models\rt_event.cs">
+      <DependentUpon>VASC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VASC\Models\rt_eventMetadata.cs" />
+    <Compile Include="Areas\VASC\Models\rt_value.cs">
       <DependentUpon>VASC.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\VASC\Models\VASC.Context.cs">
@@ -945,6 +960,9 @@
     <Content Include="Areas\VASC\Views\c_variable\GetVariableData.cshtml" />
     <Content Include="Areas\VASC\Views\c_variable_search\GetVariableData.cshtml" />
     <Content Include="Areas\VASC\Views\c_csv_log\GetCsvFileData.cshtml" />
+    <Content Include="Areas\VASC\Views\c_controller_class\GetEventData.cshtml" />
+    <Content Include="Areas\VASC\Views\L_operation\_List.cshtml" />
+    <Content Include="Areas\VASC\Views\L_operation\Index.cshtml" />
     <None Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.svg" />

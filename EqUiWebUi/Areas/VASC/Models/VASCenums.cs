@@ -353,4 +353,13 @@ namespace EqUiWebUi.Areas.VASC.Models
         Task = 16384
     }
 
+    public enum L_operationCode
+    {
+        Session_started = 1,
+        Session_stopped = 2,
+        Controller_connected = 3,
+        Ping_status = 4,
+        Error = 5
+    }
+
 }

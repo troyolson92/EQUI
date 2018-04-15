@@ -14,6 +14,12 @@ namespace EqUiWebUi.Areas.VASC.Models
     
     public partial class c_variable
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public c_variable()
+        {
+            this.rt_value = new HashSet<rt_value>();
+        }
+    
         public int id { get; set; }
         public string variable { get; set; }
         public int poll_rate { get; set; }
@@ -21,5 +27,8 @@ namespace EqUiWebUi.Areas.VASC.Models
         public int event_enum { get; set; }
         public int sql_action { get; set; }
         public string rt_table { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<rt_value> rt_value { get; set; }
     }
 }
