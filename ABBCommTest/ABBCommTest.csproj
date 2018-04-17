@@ -69,6 +69,9 @@
     <Reference Include="ABB.Robotics.Controllers.PC">
       <HintPath>..\..\..\..\..\Program Files (x86)\ABB Industrial IT\Robotics IT\SDK\PCSDK 6.05\ABB.Robotics.Controllers.PC.dll</HintPath>
     </Reference>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AspNetCore.Cryptography.Internal, Version=2.0.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNetCore.Cryptography.Internal.2.0.1\lib\netstandard2.0\Microsoft.AspNetCore.Cryptography.Internal.dll</HintPath>
     </Reference>

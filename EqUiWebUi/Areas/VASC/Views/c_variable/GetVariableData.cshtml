@@ -5,9 +5,10 @@
 }
 
 <h2>GetVariableData</h2>
-COUNT: @Model.Count()
+<div class="badge">Count: @Model.Count()</div>
+<div class="badge">SourceTable: @ViewBag.SourceTable</div>
 
-@Html.Grid(Model).Named("rt_value").Build(columns =>
+@Html.Grid(Model).Named("rt_valueGrid").Build(columns =>
 {
     columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Desc);
     columns.Add(c => c.c_controller.controller_name).Titled("controller_name");

@@ -12,17 +12,17 @@
     <div class="alert-info">
     </div>
     <div class="panel-body">
-        <div id="l_operationGrid" class="mvc-grid"></div>
+        <div id="l_operationGridContainer" class="mvc-grid"></div>
     </div>
 </div>
 
 
 <script>
-    $('#l_operationGrid').mvcgrid({
+    $('#l_operationGridContainer').mvcgrid({
         sourceUrl: '@Html.Raw(@Url.Action("_List", "l_operation"))',
         requestType: 'get', // Ajax grid request type
         reloadFailed: function (result) {
-            $("#l_operationGrid").html("Error while loading!!!");
+            $("#l_operationGridContainer").html("Error while loading!!!");
         }
     });
 </script>

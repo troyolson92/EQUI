@@ -283,6 +283,18 @@ warning 6002: The table/view 'GADATA.NGAC.rt_value' does not have a primary key 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_L_operation_c_controller">
+          <End Role="c_controller" Type="Self.c_controller" Multiplicity="0..1" />
+          <End Role="L_operation" Type="Self.L_operation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_controller">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="L_operation">
+              <PropertyRef Name="controller_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_rt_active_info_c_controller">
           <End Role="c_controller" Type="Self.c_controller" Multiplicity="0..1" />
           <End Role="rt_active_info" Type="Self.rt_active_info" Multiplicity="*" />
@@ -492,6 +504,10 @@ warning 6002: The table/view 'GADATA.NGAC.rt_value' does not have a primary key 
             <End Role="c_controller_class" EntitySet="c_controller_class" />
             <End Role="c_controller" EntitySet="c_controller" />
           </AssociationSet>
+          <AssociationSet Name="FK_L_operation_c_controller" Association="Self.FK_L_operation_c_controller">
+            <End Role="c_controller" EntitySet="c_controller" />
+            <End Role="L_operation" EntitySet="L_operation" />
+          </AssociationSet>
           <AssociationSet Name="FK_rt_active_info_c_controller" Association="Self.FK_rt_active_info_c_controller">
             <End Role="c_controller" EntitySet="c_controller" />
             <End Role="rt_active_info" EntitySet="rt_active_info" />
@@ -663,6 +679,10 @@ warning 6002: The table/view 'GADATA.NGAC.rt_value' does not have a primary key 
             <End Role="c_controller" EntitySet="c_controller" />
             <End Role="rt_controller" EntitySet="rt_controller" />
           </AssociationSet>
+          <AssociationSet Name="FK_L_operation_c_controller" Association="GADATAModelVASC.FK_L_operation_c_controller">
+            <End Role="c_controller" EntitySet="c_controller" />
+            <End Role="L_operation" EntitySet="L_operation" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="c_error">
           <Key>
@@ -703,6 +723,7 @@ warning 6002: The table/view 'GADATA.NGAC.rt_value' does not have a primary key 
           <NavigationProperty Name="rt_value" Relationship="GADATAModelVASC.FK_rt_value_c_controller" FromRole="c_controller" ToRole="rt_value" />
           <NavigationProperty Name="rt_event" Relationship="GADATAModelVASC.FK_rt_event_c_controller" FromRole="c_controller" ToRole="rt_event" />
           <NavigationProperty Name="rt_controller" Relationship="GADATAModelVASC.FK_rt_controller_c_controller" FromRole="c_controller" ToRole="rt_controller" />
+          <NavigationProperty Name="L_operation" Relationship="GADATAModelVASC.FK_L_operation_c_controller" FromRole="c_controller" ToRole="L_operation" />
         </EntityType>
         <EntityType Name="c_controller_class">
           <Key>
@@ -944,6 +965,7 @@ warning 6002: The table/view 'GADATA.NGAC.rt_value' does not have a primary key 
           <Property Name="Vasc_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="controller_id" Type="Int32" />
           <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="c_controller" Relationship="GADATAModelVASC.FK_L_operation_c_controller" FromRole="L_operation" ToRole="c_controller" />
         </EntityType>
         <EntityType Name="rt_controller">
           <Key>
@@ -979,6 +1001,18 @@ warning 6002: The table/view 'GADATA.NGAC.rt_value' does not have a primary key 
             </Principal>
             <Dependent Role="rt_controller">
               <PropertyRef Name="c_controller_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_L_operation_c_controller">
+          <End Type="GADATAModelVASC.c_controller" Role="c_controller" Multiplicity="0..1" />
+          <End Type="GADATAModelVASC.L_operation" Role="L_operation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_controller">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="L_operation">
+              <PropertyRef Name="controller_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>

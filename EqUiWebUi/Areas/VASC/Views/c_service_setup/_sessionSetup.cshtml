@@ -12,5 +12,10 @@
                     .Encoded(false)
                     .RenderedAs(c => @Html.ActionLink("Edit", "Edit", new { id = c.id })
                     ).Filterable(false);
-}).Filterable(true).Sortable(true).Empty("Did not find anything").Css("table-hover")
+}).Filterable(true).Sortable(true).Pageable(pager =>
+{
+    pager.RowsPerPage = 10;
+}).Empty("Did not find anything").Css("table-hover")
+
+<div class="badge">Count: @Model.Count()</div> 
 
