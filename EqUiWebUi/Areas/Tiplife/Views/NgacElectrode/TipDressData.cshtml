@@ -16,6 +16,7 @@
        columns.Add(c => c.controller_name).Titled("Robot").Filterable(true);
        columns.Add(c => c.Date_Time).Titled("Time_Robot").Formatted("{0:dd-MM-yyyy HH:mm}").InitialSort(GridSortOrder.Desc);
        columns.Add(c => c.C_timestamp).Titled("Time_db").Formatted("{0:dd-MM-yyyy HH:mm}");
+       columns.Add(c => c.Weld_Counter).Titled("Weld_Counter").Filterable(true);
        columns.Add(c => c.Dress_Num).Titled("#Dress").Filterable(true);
        columns.Add(c => c.Wear_Fixed).Titled("Wear_Fixed").Filterable(true);
        columns.Add(c => c.Wear_Move).Titled("Wear_Move").Filterable(true);

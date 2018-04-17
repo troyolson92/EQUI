@@ -96,11 +96,13 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -364,6 +366,7 @@
     <Compile Include="Areas\VASC\Controllers\c_variable_searchController.cs" />
     <Compile Include="Areas\VASC\Controllers\L_operationController.cs" />
     <Compile Include="Areas\VASC\Controllers\rt_active_infoController.cs" />
+    <Compile Include="Areas\VASC\Controllers\serviceController.cs" />
     <Compile Include="Areas\VASC\Controllers\vascController.cs" />
     <Compile Include="Areas\VASC\Models\c_controller.cs">
       <DependentUpon>VASC.tt</DependentUpon>
@@ -440,6 +443,7 @@
       <DependentUpon>VASC.edmx</DependentUpon>
     </Compile>
     <Compile Include="Areas\VASC\Models\VASCenums.cs" />
+    <Compile Include="Areas\VASC\Models\winService.cs" />
     <Compile Include="Areas\VASC\VASCAreaRegistration.cs" />
     <Compile Include="Backgroundwork.cs" />
     <Compile Include="Controllers\ChartController.cs" />
@@ -963,6 +967,7 @@
     <Content Include="Areas\VASC\Views\c_controller_class\GetEventData.cshtml" />
     <Content Include="Areas\VASC\Views\L_operation\_List.cshtml" />
     <Content Include="Areas\VASC\Views\L_operation\Index.cshtml" />
+    <Content Include="Areas\VASC\Views\service\GetServices.cshtml" />
     <None Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.svg" />

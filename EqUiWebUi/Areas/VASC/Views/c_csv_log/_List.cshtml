@@ -1,8 +1,6 @@
 ﻿@model IEnumerable<EqUiWebUi.Areas.VASC.Models.c_csv_log>
 
-<div class="badge">Count: @Model.Count()</div>
-
-@Html.Grid(Model).Named("c_csv_log").Build(columns =>
+@Html.Grid(Model).Named("c_csv_logGrid").Build(columns =>
 {
     columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Asc);
     columns.Add(c => c._Enable_bit).Titled("enable_bit");
@@ -25,3 +23,5 @@
 {
     pager.RowsPerPage = 10;
 }).Empty("Did not find anything").Css("table-hover")
+
+<div class="badge">Count: @Model.Count()</div>

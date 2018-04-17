@@ -20,5 +20,7 @@ namespace EqUiWebUi.Areas.VASC.Models
         public string Vasc_name { get; set; }
         public Nullable<int> controller_id { get; set; }
         public string Description { get; set; }
+    
+        public virtual c_controller c_controller { get; set; }
     }
 }

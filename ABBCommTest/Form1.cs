@@ -24,6 +24,7 @@ namespace ABBCommTest
 {
     public partial class Form1 : Form
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         private NetworkScanner scanner = new NetworkScanner();
         private Controller controller = null;
@@ -31,10 +32,9 @@ namespace ABBCommTest
         private GadataComm lgadatacomm = new GadataComm();
         private DataTable dt_robots;
 
-        int COUNT = 0;
-
         public Form1()
         {
+            log.Error("Start");
             debugger.Init(@"c:\temp\ABBcomm.log");
             //
             InitializeComponent();
@@ -93,122 +93,6 @@ namespace ABBCommTest
                 LinkControllertoList(controllerInfo);
             }
             debugger.Message("done with scan");
-        }
-
-        //construct string to make CFG file to load paramaters.
-        private string MakeNFSConfig(string Robot, string UserId, string GroupId, string BasePath, string sharepath)
-        {
-            string nfsConfigScelaton = @"
-SIO:CFG_1.0:6:1::
-
-COM_APP:
-
-      -Name ""robot_ga"" -Type ""NFS"" -Trp ""TCPIP1"" -ServerAddress ""10.249.2.103""\
-      -Trusted 1 -LocalPath ""robot_ga:""\
-      -ServerPath ""{0}{1}"" -UserID {2}\
-      -GroupID {3}
-
-";
-            return string.Format(nfsConfigScelaton,BasePath,Robot,UserId,GroupId,sharepath);
-            /*
-             *       -Name ""share_ga"" -Type ""NFS"" -Trp ""TCPIP1"" -ServerAddress ""10.249.2.103""\
-      -Trusted 1 -LocalPath ""share_ga:""\
-      -ServerPath ""{4}{1}"" -UserID {2}\
-      -GroupID {3}*/
-        }
-
-        //write configuration to robot
-        private void NFSConfigureRobot(ControllerInfo ci, DataGridViewRow row)
-        {
-            string tempdir =  @"c:\temp\";
-            string NFSFilePathOnControler = @"/hd0a/Param/";
-            string NFSFilename = "NFS.CFG";
-
-            string controller_name = row.Cells[dataGridView1.Columns["controller_name"].Index].Value.ToString();
-            string userID = "0"; //0 = root // row.Cells[dataGridView1.Columns["controller_name"].Index].Value.ToString();
-            string GroupID = "1"; //1 = root  row.Cells[dataGridView1.Columns["controller_name"].Index].Value.ToString();
-            try
-            {
-                //check file does not exist on local machine
-                if (File.Exists(tempdir+NFSFilename)) { File.Delete(tempdir+NFSFilename); }
-                //build config file on local machine 
-                File.WriteAllText(tempdir + NFSFilename, MakeNFSConfig(controller_name, userID, GroupID, @"/ROBOTBCK/robot_ga/IRC5-NGAC/", @"/ROBOTBCK/IRC5-NGAC/IRC5-NGAC_SHARE/"));
-            }
-            catch (Exception ex)
-            {
-                debugger.Exeption(ex);
-                debugger.Message("Create CNFG file error");
-                return;
-            }
-
-            ConfigurationDatabase cfg;
-            FileSystem cntrlFileSystem;
-
-            try
-            {
-                if (ci.Availability != Availability.Available) { debugger.Message("controller busy: " + ci.Id); return; } //stop if controller is not available
-                //
-                controller = ControllerFactory.CreateFrom(ci); //get controller from factory
-                if (controller.OperatingMode != ControllerOperatingMode.Auto) //controller must be on auto to take master 
-                {
-                    row.Cells[dataGridView1.Columns["AutoOK"].Index].Value = "NOK";
-                    return;
-                }
-                else
-                { 
-                    row.Cells[dataGridView1.Columns["AutoOK"].Index].Value = "OK";
-                }
-                controller.Logon(UserInfo.DefaultUser); //logon to controller
-                cfg = controller.Configuration; //get controller configruation database
-                row.Cells[dataGridView1.Columns["ConnectOK"].Index].Value = "OK";
-            }
-            catch(Exception ex)
-            {
-                row.Cells[dataGridView1.Columns["ConnectOK"].Index].Value = "NOK";
-                debugger.Exeption(ex);
-                debugger.Message("Error connecting to controller");
-                return;
-            }
-            try
-            {
-                //get controller mastership
-                using (Mastership m = Mastership.Request(controller))
-                {
-                    cntrlFileSystem = controller.FileSystem;
-                    controller.FileSystem.RemoteDirectory = NFSFilePathOnControler;
-                    controller.FileSystem.LocalDirectory = tempdir;
-                    
-                    //move file to controler
-                    controller.FileSystem.PutFile(NFSFilename, NFSFilename, true);
-                    //load file on controller
-                    cfg.Load("ctrl:" + NFSFilePathOnControler + NFSFilename, LoadMode.Replace);
-                    //check if controller if home for restart.
-                    Signal O_Homepos = controller.IOSystem.GetSignal("O_Homepos");
-                    if (O_Homepos.Value == 1 )
-                    {
-                        //RESTART !!!!!!!!!!!!!!!!!
-                        controller.State = ControllerState.MotorsOff;
-                        controller.Restart(ControllerStartMode.Warm);
-                        //
-                        row.Cells[dataGridView1.Columns["restartOK"].Index].Value = "OK";
-                    }
-                    else
-                    {
-                        row.Cells[dataGridView1.Columns["restartOK"].Index].Value = "NOK";
-                    }
-
-                    //release master
-                    m.Release();
-                    row.Cells[dataGridView1.Columns["ConfigOK"].Index].Value = "OK";
-                }
-            }
-            catch (System.InvalidOperationException ex)
-            {
-                row.Cells[dataGridView1.Columns["ConfigOK"].Index].Value = "NOK";
-                debugger.Exeption(ex);
-                debugger.Message("error in write to controller");
-                return;
-            }
         }
 
         //change socket config in autorun. to robot
@@ -505,75 +389,85 @@ COM_APP:
 
         }
 
-        //check doTipneed active
-        //write configuration to robot
-        private void DoTipneedcheckRobot(ControllerInfo ci, DataGridViewRow row)
+        //change tipwearRatioInterval parameter.
+        private void ChangeTipwearRatio(ControllerInfo ci, DataGridViewRow row)
         {
-            string tempdir = @"c:\temp\debug\";
-            string FilePathOnControler = @"/hd0a/TEMP/";
 
             try
             {
                 if (ci.Availability != Availability.Available) { debugger.Message("controller busy: " + ci.Id); return; } //stop if controller is not available
                 //
                 controller = ControllerFactory.CreateFrom(ci); //get controller from factory
-                    // get modules from controller task trob1
+                if (controller.OperatingMode != ControllerOperatingMode.Auto) //controller must be on auto to take master 
+                {
+                    row.Cells[dataGridView1.Columns["AutoOK"].Index].Value = "NOK";
+                    return;
+                }
+                else
+                {
+                    row.Cells[dataGridView1.Columns["AutoOK"].Index].Value = "OK";
+
+                    RapidSymbolSearchProperties sProp = RapidSymbolSearchProperties.CreateDefault();
+                    sProp.Recursive = true;
+                    sProp.Types = SymbolTypes.Constant | SymbolTypes.Persistent;
+                    sProp.SearchMethod = SymbolSearchMethod.Block;
+
                     ABB.Robotics.Controllers.RapidDomain.Task tRob1 = controller.Rapid.GetTask("T_ROB1");
-                    Module[] mx = tRob1.GetModules();
-                    //find the one we need 
-                    foreach (Module m in mx)
+                    RapidSymbol[] rsCol = tRob1.SearchRapidSymbol(sProp, "", string.Empty);
+
+                    RapidDataType theDataType;
+
+                    foreach (RapidSymbol rs in rsCol)
                     {
-                        if (m.Name.StartsWith("LR", StringComparison.InvariantCulture))
+                        theDataType = RapidDataType.GetDataType(rs);
+
+                        if (theDataType.Name.StartsWith("TipMeasdata") && rs.Scope[1].EndsWith("UserData")) 
                         {
-                            Routine proc = m.GetRoutine("AutoRunUser");
-                            if (proc != null) //check if we have the right module
-                            {
-                                //find the module on the controller and get it **************************************
-                                //save it on the controller
-                                m.SaveToFile(FilePathOnControler);
-                                System.Threading.Thread.Sleep(1000);
-                                //get file from controler to pc 
-                                FileSystem cntrlFileSystem;
-                                cntrlFileSystem = controller.FileSystem;
-                                controller.FileSystem.RemoteDirectory = FilePathOnControler;
-                                controller.FileSystem.LocalDirectory = tempdir;
-                                //move file to pc
-                                controller.FileSystem.GetFile(m.Name + ".mod", m.Name + ".mod", true);
-                                //process the file******************************************************************
-                                string lrModule = File.ReadAllText(tempdir + m.Name + ".mod");
+                            RapidData rd = controller.Rapid.GetRapidData(rs.Scope[0], rs.Scope[1], rs.Scope[2]);
 
-                                if (lrModule.Contains("DoTipNeed;"))
+                            RapidDataType rdt = controller.Rapid.GetRapidDataType(rs.Scope[0], rs.Scope[1], rs.Scope[2]);
+                            UserDefined TipMeasdata = new UserDefined(rdt);
+
+                            TipMeasdata = (UserDefined)rd.Value;
+                            string TipwearRatioInterval = TipMeasdata.Components[1].ToString(); //take 2nd element of data
+                            Console.WriteLine("FOUND:{0}; {1}; {2}", controller.Name, rs.Scope[2], TipMeasdata);
+                            log.Debug(string.Format("FOUND:{0}; {1}; {2}", controller.Name, rs.Scope[2], TipMeasdata));
+                            if (TipwearRatioInterval == "1")
+                            {         
+                                //change it 
+                                try
                                 {
-                                    row.Cells[dataGridView1.Columns["HasTipneed"].Index].Value = "Y";
-                                    string[] lines = System.IO.File.ReadAllLines(tempdir + m.Name + ".mod");
-
-                                    foreach (string r in lines)
+                                
+                                    //get controller mastership
+                                    using (Mastership master = Mastership.Request(controller))
                                     {
-                                        if (r.Contains("DoTipNeed") && r.Contains("!"))
-                                        {
-                                            row.Cells[dataGridView1.Columns["HasTipneedComment"].Index].Value = "Y";
-                                            debugger.Log(string.Format("ERROR controller: {0} checkline= {1}",ci.ControllerName,r));
-                                            return;
-
-                                        }
-                                        else
-                                        {
-                                            row.Cells[dataGridView1.Columns["HasTipneedComment"].Index].Value = "N";
-                                        }
-                                        
+                                        TipMeasdata.Components[1].FillFromString("2"); // set new value to 2
+                                        rd.Value = TipMeasdata;
+                                        //new value 
+                                        string TipwearRatioIntervalNEW = TipMeasdata.Components[1].ToString();
+                                        Console.WriteLine("SETVALUE:{0}; {1}; {2}", controller.Name, rs.Scope[2], TipwearRatioIntervalNEW);
+                                        log.Debug(string.Format("SETVALUE:{0}; {1}; {2}", controller.Name, rs.Scope[2], TipwearRatioIntervalNEW));
+                                        row.Cells[dataGridView1.Columns["WriteOk"].Index].Value = "OK";
+                                        //release master
+                                        master.Release();
                                     }
+                                
                                 }
-                                else
+                                catch (System.InvalidOperationException ex)
                                 {
-                                    row.Cells[dataGridView1.Columns["HasTipneed"].Index].Value = "N";
+                                    log.Error("Error in write to controller", ex);
+                                    return;
                                 }
-
                             }
-
+                            else
+                            {
+                                Console.WriteLine("Data not as expected did nothing");
+                                log.Debug("Data not as expected did nothing");
+                            }
                         }
-
                     }
-               
+
+                }
                 row.Cells[dataGridView1.Columns["ConnectOK"].Index].Value = "OK";
             }
             catch (Exception ex)
@@ -583,129 +477,14 @@ COM_APP:
                 debugger.Message("Error connecting to controller");
                 return;
             }
+
         }
 
-        //try delete robotbackupprogramma folder 
-        private void DoRobbieFupCheck(ControllerInfo ci, DataGridViewRow row)
-        {
-            string FilePathOnControler = @"/hd0a/";
-            try
-            {
-                if (ci.Availability != Availability.Available) { debugger.Message("controller busy: " + ci.Id); return; } //stop if controller is not available
-                //
-                controller = ControllerFactory.CreateFrom(ci); //get controller from factory
-
-                            FileSystem cntrlFileSystem;
-                            cntrlFileSystem = controller.FileSystem;
-                            controller.FileSystem.RemoteDirectory = FilePathOnControler;
-
-              if (controller.FileSystem.DirectoryExists("ROBOTBACKUPPROGRAMMA"))
-                {
-                    row.Cells[dataGridView1.Columns["Found"].Index].Value = "YES";
-                    try
-                    {
-                        controller.FileSystem.RemoveDirectory("ROBOTBACKUPPROGRAMMA", true);
-                        if (controller.FileSystem.DirectoryExists("ROBOTBACKUPPROGRAMMA"))
-                        {
-                            row.Cells[dataGridView1.Columns["Deleted"].Index].Value = "NOK";
-                        }
-                        else
-                        {
-                            row.Cells[dataGridView1.Columns["Deleted"].Index].Value = "OK";
-                        }
-                        row.Cells[dataGridView1.Columns["Exeption"].Index].Value = "NO";
-                    }
-                    catch (Exception ex)
-                    {
-                        //fail 
-                        row.Cells[dataGridView1.Columns["Exeption"].Index].Value = "YES";
-
-                        COUNT++;
-                        debugger.Log(ex.Message);
-                        debugger.Log(string.Format("Found one: {0}", COUNT));
-                    }
-                }
-                 else
-                {
-                    //not there 
-                    row.Cells[dataGridView1.Columns["Found"].Index].Value = "NOdir";
-                }
-
-                row.Cells[dataGridView1.Columns["ConnectOK"].Index].Value = "OK";
-            }
-            catch (Exception ex)
-            {
-                row.Cells[dataGridView1.Columns["ConnectOK"].Index].Value = "NOK";
-                debugger.Exeption(ex);
-                debugger.Message("Error connecting to controller");
-                return;
-            }
-        }
-        //check configuration of robot
-        private bool CheckNFSconfig(ControllerInfo ci, DataGridViewRow row)
-        {
-            this.controller = ControllerFactory.CreateFrom(ci);
-            this.controller.Logon(UserInfo.DefaultUser);
-
-            ConfigurationDatabase cfg = controller.Configuration;
-            Domain sioDomain = controller.Configuration.SerialIO;
-
-            // read parm to see if config was done
-             string[] path = { "SIO", "COM_APP","robot_ga","ServerAddress" };
-             string data = null;
-             try { data = cfg.Read(path); }
-             catch (Exception) { }
-             if (data == "10.249.2.103")
-             {
-                 return true;
-             }
-             else
-             {
-                 return false;
-             }
-        }
 
         //buttons
         private void Btn_scanNetwork_Click(object sender, EventArgs e)
         {
             HandleScanner();
-        }
-        private void Btn_writeNFS_Click(object sender, EventArgs e)
-        {
-            foreach (DataGridViewRow row in dataGridView1.SelectedRows)
-            {
-                //make sure dir exists for robot.
-                string rootDir = @"\\gnlsnm0101\6308-APP-NASROBOTBCK0001\robot_ga\IRC5-NGAC\";
-                if (!Directory.Exists(rootDir + row.Cells[dataGridView1.Columns["controller_name"].Index].Value.ToString()))
-                {
-                    Directory.CreateDirectory(rootDir + row.Cells[dataGridView1.Columns["controller_name"].Index].Value.ToString());
-                }
-               
-                ControllerInfo ci;
-                if (scanner.TryFind(new Guid(row.Cells[dataGridView1.Columns["SystemId"].Index].Value.ToString()), out ci))
-                {
-                    //check if robot needs config
-                    if (CheckNFSconfig(ci, row))
-                    {
-                       row.Cells[dataGridView1.Columns["ConfIsOK"].Index].Value = "OK";
-
-                    }
-                    else
-                    {
-                        row.Cells[dataGridView1.Columns["ConfIsOK"].Index].Value = "NOK->";
-                        //load NFS config.
-                         debugger.Message("OUT OF USE");
-                        //NFSConfigureRobot(ci, row);
-                    }
-                }
-                else
-                {
-                    debugger.Message("can not find controller: " + row.Cells[0].Value.ToString());
-                }
-                 
-            }
-            debugger.Message("done with controllers");
-
         }
         private void btn_addCtrl_Click(object sender, EventArgs e)
         {
@@ -767,7 +546,7 @@ COM_APP:
         private void btn_loadGrid_Click(object sender, EventArgs e)
         {
             //get greenfield list from GADATA
-            string qry = string.Format(@"select * from gadata.ngac.c_controller where assetnum like 'URA%' AND CONTROLLER_NAME LIKE '{0}'",tbGridWhereClause.Text.Trim());
+            string qry = string.Format(@"select controller_name, IP from gadata.ngac.c_controller where assetnum like 'URA%' AND CONTROLLER_NAME LIKE '{0}'",tbGridWhereClause.Text.Trim());
             dt_robots = lgadatacomm.RunQueryGadata(qry); 
             //add colums for extra data
             dt_robots.Columns.Add("SystemId", System.Type.GetType("System.String"));
@@ -802,7 +581,7 @@ COM_APP:
                     {
                         this.controller = ControllerFactory.CreateFrom(ci);
                         this.controller.Logon(UserInfo.DefaultUser);
-                        ChangeMAxnoDress(ci, row);
+                        ChangeTipwearRatio(ci, row);
                     }
                     else
                     {
@@ -811,7 +590,7 @@ COM_APP:
                 }
                 catch (Exception ex)
                 {
-                    debugger.Exeption(ex);
+                    log.Error("Main catch", ex);
                 }
             }
 

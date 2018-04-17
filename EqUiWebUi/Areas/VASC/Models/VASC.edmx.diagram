@@ -31,6 +31,7 @@
         <EntityTypeShape EntityType="GADATAModelVASC.L_operation" Width="1.5" PointX="3.75" PointY="9.375" />
         <EntityTypeShape EntityType="GADATAModelVASC.rt_controller" Width="1.5" PointX="5.5" PointY="9.375" />
         <AssociationConnector Association="GADATAModelVASC.FK_rt_controller_c_controller" />
+        <AssociationConnector Association="GADATAModelVASC.FK_L_operation_c_controller" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

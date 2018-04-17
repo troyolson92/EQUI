@@ -1,7 +1,5 @@
 ﻿@model IEnumerable<EqUiWebUi.Areas.VASC.Models.c_variable_search>
 
-<div class="badge">Count: @Model.Count()</div>
-
 @Html.Grid(Model).Named("c_variable_search").Build(columns =>
 {
     columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Asc);
@@ -26,3 +24,5 @@
 {
     pager.RowsPerPage = 10;
 }).Empty("Did not find anything").Css("table-hover")
+
+<div class="badge">Count: @Model.Count()</div>

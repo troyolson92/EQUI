@@ -140,21 +140,36 @@ namespace EqUiWebUi.Areas.VASC.Controllers
         // GET: VASC/c_variable/GetVariableData
         public ActionResult GetVariableData(int c_variable_id, int? controller_id)
         {
-            //get variable config by ID
+            //get config for this variable_id
+            EqUiWebUi.Areas.VASC.Models.c_variable c_Variable = db.c_variable.Where(c => c.id == c_variable_id).FirstOrDefault();
 
-            IQueryable<EqUiWebUi.Areas.VASC.Models.rt_value> linqQry;
+            //base qry for c_variable system table name is injected
+            string Qry = string.Format(@"
+                            SELECT
+                            [rt_value].[id] AS [id], 
+                            [rt_value].[c_variable_id] AS [c_variable_id], 
+                            [rt_value].[c_controller_id] AS [c_controller_id], 
+                            [rt_value].[_timestamp] AS [C_timestamp], 
+                            [rt_value].[value] AS [value], 
+                            [rt_value].[isEvent] AS [isEvent], 
+                            [rt_value].[abbDateTime] AS [abbDateTime]
+                            FROM {0} AS [rt_value]",c_Variable.rt_table);
+
+            ViewBag.SourceTable = c_Variable.rt_table;
+
+            //IEnumerable does not work as nice like Iquery because the pager does not inset to fetch next... we need to do this here.
+            IEnumerable<EqUiWebUi.Areas.VASC.Models.rt_value> result;
+
             if (controller_id != null)
             {
-                linqQry = db.rt_value.Where(c => c.c_variable_id == c_variable_id && c.c_controller_id == controller_id);
+                result = db.rt_value.SqlQuery(Qry).Where(c => c.c_variable_id == c_variable_id && c.c_controller_id == controller_id);
             }
             else
             {
-                linqQry = db.rt_value.Where(c => c.c_variable_id == c_variable_id);
+                result = db.rt_value.SqlQuery(Qry).Where(c => c.c_variable_id == c_variable_id);
             }
 
-
-
-            return View(linqQry);
+            return View(result.AsQueryable());
         }
 
         protected override void Dispose(bool disposing)
