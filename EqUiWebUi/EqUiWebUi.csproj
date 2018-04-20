@@ -424,6 +424,9 @@
       <DependentUpon>VASC.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\VASC\Models\rt_eventMetadata.cs" />
+    <Compile Include="Areas\VASC\Models\rt_search_value.cs">
+      <DependentUpon>VASC.tt</DependentUpon>
+    </Compile>
     <Compile Include="Areas\VASC\Models\rt_value.cs">
       <DependentUpon>VASC.tt</DependentUpon>
     </Compile>

@@ -14,6 +14,12 @@ namespace EqUiWebUi.Areas.VASC.Models
     
     public partial class c_variable_search
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public c_variable_search()
+        {
+            this.rt_search_value = new HashSet<rt_search_value>();
+        }
+    
         public int id { get; set; }
         public string variable { get; set; }
         public int property { get; set; }
@@ -22,5 +28,8 @@ namespace EqUiWebUi.Areas.VASC.Models
         public int enable_bit { get; set; }
         public int insert_update { get; set; }
         public string rt_table { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<rt_search_value> rt_search_value { get; set; }
     }
 }

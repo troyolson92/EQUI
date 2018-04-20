@@ -138,17 +138,39 @@ namespace EqUiWebUi.Areas.VASC.Controllers
         }
 
         // GET: VASC/c_variable/GetVariableData
-        public ActionResult GetVariableData(int c_variable_id, int? controller_id)
+        public ActionResult GetVariableData(int c_variable_search_id, int? controller_id)
         {
-            //get variable config by ID
+            //get config for this variable_id
+            EqUiWebUi.Areas.VASC.Models.c_variable_search c_variable_search = db.c_variable_search.Where(c => c.id == c_variable_search_id).FirstOrDefault();
 
-            //build Qry 
+            //base qry for c_variable system table name is injected
+            string Qry = string.Format(@"
+                    SELECT 
+                    [rt_search_value].[id] AS [id], 
+                    [rt_search_value].[c_variable_search_id] AS [c_variable_search_id], 
+                    [rt_search_value].[c_controller_id] AS [c_controller_id], 
+                    [rt_search_value].[_timestamp] AS [C_timestamp], 
+                    [rt_search_value].[task] AS [task], 
+                    [rt_search_value].[module] AS [module], 
+                    [rt_search_value].[variable] AS [variable], 
+                    [rt_search_value].[value] AS [value]
+                    FROM {0} AS [rt_search_value]", c_variable_search.rt_table);
 
-            //get data 
+            ViewBag.SourceTable = c_variable_search.rt_table;
 
-            //build object 
+            //IEnumerable does not work as nice like Iquery because the pager does not inset to fetch next... we need to do this here.
+            IEnumerable<EqUiWebUi.Areas.VASC.Models.rt_search_value> result;
 
-            return View();
+            if (controller_id != null)
+            {
+                result = db.rt_search_value.SqlQuery(Qry).Where(c => c.c_variable_search_id == c_variable_search_id && c.c_controller_id == controller_id);
+            }
+            else
+            {
+                result = db.rt_search_value.SqlQuery(Qry).Where(c => c.c_variable_search_id == c_variable_search_id);
+            }
+
+            return View(result.AsQueryable());
         }
 
         protected override void Dispose(bool disposing)

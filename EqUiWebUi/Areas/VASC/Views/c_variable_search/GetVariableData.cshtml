@@ -1,8 +1,33 @@
-﻿
+﻿@model IQueryable<EqUiWebUi.Areas.VASC.Models.rt_search_value>
 @{
-    ViewBag.Title = "GetVariableData";
+    ViewBag.Title = "GetSearchVariableData";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>GetVariableData</h2>
+<h2>GetSearchVariableData</h2>
+<div class="badge">Count: @Model.Count()</div>
+<div class="badge">SourceTable: @ViewBag.SourceTable</div>
 
+@Html.Grid(Model).Named("rt_search_valueGrid").Build(columns =>
+{
+    columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Desc);
+    columns.Add(c => c.c_controller.controller_name).Titled("controller_name");
+    columns.Add(c => c.C_timestamp).Titled("_timestamp");
+    columns.Add(c => c.c_variable_search_id).Titled("c_variable_search_id");
+    columns.Add(c => c.c_variable_search.variable).Titled("searchString");
+    columns.Add(c => c.task).Titled("task");
+    columns.Add(c => c.module).Titled("module");
+    columns.Add(c => c.variable).Titled("variable");
+    columns.Add(c => c.value).Titled("value");
+}).Filterable(true).Sortable(true).Pageable(pager =>
+{
+    pager.RowsPerPage = 30;
+}).Empty("Did not find anything").Css("table-hover")
+
+@section scripts{
+    <script>
+        //full with screen
+        $("#allcontent").removeClass("body-content");
+        $("#allcontent").removeClass("container");
+    </script>
+}

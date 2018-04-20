@@ -41,5 +41,6 @@ namespace EqUiWebUi.Areas.VASC.Models
         public virtual DbSet<rt_value> rt_value { get; set; }
         public virtual DbSet<L_operation> L_operation { get; set; }
         public virtual DbSet<rt_controller> rt_controller { get; set; }
+        public virtual DbSet<rt_search_value> rt_search_value { get; set; }
     }
 }
