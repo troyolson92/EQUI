@@ -258,6 +258,21 @@ warning 6002: The table/view 'GADATA.NGAC.rt_event' does not have a primary key 
           <Property Name="event_value" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.NGAC.rt_search_value' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="rt_search_value">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="c_variable_search_id" Type="int" />
+          <Property Name="c_controller_id" Type="int" />
+          <Property Name="_timestamp" Type="datetime" />
+          <Property Name="task" Type="varchar(max)" />
+          <Property Name="module" Type="varchar(max)" />
+          <Property Name="variable" Type="varchar(max)" />
+          <Property Name="value" Type="varchar(max)" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'GADATA.NGAC.rt_value' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="rt_value">
           <Key>
@@ -379,6 +394,30 @@ warning 6002: The table/view 'GADATA.NGAC.rt_value' does not have a primary key 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_rt_Search_value_c_controller">
+          <End Role="c_controller" Type="Self.c_controller" Multiplicity="0..1" />
+          <End Role="rt_search_value" Type="Self.rt_search_value" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_controller">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="rt_search_value">
+              <PropertyRef Name="c_controller_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rt_Search_value_c_variable_search">
+          <End Role="c_variable_search" Type="Self.c_variable_search" Multiplicity="0..1" />
+          <End Role="rt_search_value" Type="Self.rt_search_value" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_variable_search">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="rt_search_value">
+              <PropertyRef Name="c_variable_search_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_rt_value_c_controller">
           <End Role="c_controller" Type="Self.c_controller" Multiplicity="0..1" />
           <End Role="rt_value" Type="Self.rt_value" Multiplicity="*" />
@@ -489,6 +528,18 @@ warning 6002: The table/view 'GADATA.NGAC.rt_value' does not have a primary key 
     [rt_event].[event_value] AS [event_value]
     FROM [NGAC].[rt_event] AS [rt_event]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="rt_search_value" EntityType="Self.rt_search_value" store:Type="Tables" store:Schema="NGAC">
+            <DefiningQuery>SELECT 
+    [rt_search_value].[id] AS [id], 
+    [rt_search_value].[c_variable_search_id] AS [c_variable_search_id], 
+    [rt_search_value].[c_controller_id] AS [c_controller_id], 
+    [rt_search_value].[_timestamp] AS [_timestamp], 
+    [rt_search_value].[task] AS [task], 
+    [rt_search_value].[module] AS [module], 
+    [rt_search_value].[variable] AS [variable], 
+    [rt_search_value].[value] AS [value]
+    FROM [NGAC].[rt_search_value] AS [rt_search_value]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="rt_value" EntityType="Self.rt_value" store:Type="Tables" store:Schema="NGAC">
             <DefiningQuery>SELECT 
     [rt_value].[id] AS [id], 
@@ -535,6 +586,14 @@ warning 6002: The table/view 'GADATA.NGAC.rt_value' does not have a primary key 
           <AssociationSet Name="FK_rt_event_c_controller" Association="Self.FK_rt_event_c_controller">
             <End Role="c_controller" EntitySet="c_controller" />
             <End Role="rt_event" EntitySet="rt_event" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rt_Search_value_c_controller" Association="Self.FK_rt_Search_value_c_controller">
+            <End Role="c_controller" EntitySet="c_controller" />
+            <End Role="rt_search_value" EntitySet="rt_search_value" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rt_Search_value_c_variable_search" Association="Self.FK_rt_Search_value_c_variable_search">
+            <End Role="c_variable_search" EntitySet="c_variable_search" />
+            <End Role="rt_search_value" EntitySet="rt_search_value" />
           </AssociationSet>
           <AssociationSet Name="FK_rt_value_c_controller" Association="Self.FK_rt_value_c_controller">
             <End Role="c_controller" EntitySet="c_controller" />
@@ -621,6 +680,7 @@ warning 6002: The table/view 'GADATA.NGAC.rt_value' does not have a primary key 
           <Property Name="enable_bit" Type="Int32" Nullable="false" />
           <Property Name="insert_update" Type="Int32" Nullable="false" />
           <Property Name="rt_table" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="rt_search_value" Relationship="GADATAModelVASC.FK_rt_Search_value_c_variable_search" FromRole="c_variable_search" ToRole="rt_search_value" />
         </EntityType>
         <EntityContainer Name="GADATAEntitiesVASC" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="c_csv_log" EntityType="Self.c_csv_log" />
@@ -683,6 +743,15 @@ warning 6002: The table/view 'GADATA.NGAC.rt_value' does not have a primary key 
             <End Role="c_controller" EntitySet="c_controller" />
             <End Role="L_operation" EntitySet="L_operation" />
           </AssociationSet>
+          <EntitySet Name="rt_search_value" EntityType="GADATAModelVASC.rt_search_value" />
+          <AssociationSet Name="FK_rt_Search_value_c_controller" Association="GADATAModelVASC.FK_rt_Search_value_c_controller">
+            <End Role="c_controller" EntitySet="c_controller" />
+            <End Role="rt_search_value" EntitySet="rt_search_value" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rt_Search_value_c_variable_search" Association="GADATAModelVASC.FK_rt_Search_value_c_variable_search">
+            <End Role="c_variable_search" EntitySet="c_variable_search" />
+            <End Role="rt_search_value" EntitySet="rt_search_value" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="c_error">
           <Key>
@@ -724,6 +793,7 @@ warning 6002: The table/view 'GADATA.NGAC.rt_value' does not have a primary key 
           <NavigationProperty Name="rt_event" Relationship="GADATAModelVASC.FK_rt_event_c_controller" FromRole="c_controller" ToRole="rt_event" />
           <NavigationProperty Name="rt_controller" Relationship="GADATAModelVASC.FK_rt_controller_c_controller" FromRole="c_controller" ToRole="rt_controller" />
           <NavigationProperty Name="L_operation" Relationship="GADATAModelVASC.FK_L_operation_c_controller" FromRole="c_controller" ToRole="L_operation" />
+          <NavigationProperty Name="rt_search_value" Relationship="GADATAModelVASC.FK_rt_Search_value_c_controller" FromRole="c_controller" ToRole="rt_search_value" />
         </EntityType>
         <EntityType Name="c_controller_class">
           <Key>
@@ -1016,6 +1086,45 @@ warning 6002: The table/view 'GADATA.NGAC.rt_value' does not have a primary key 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="rt_search_value">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="c_variable_search_id" Type="Int32" />
+          <Property Name="c_controller_id" Type="Int32" />
+          <Property Name="C_timestamp" Type="DateTime" Precision="3" />
+          <Property Name="task" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="module" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="variable" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="value" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="c_controller" Relationship="GADATAModelVASC.FK_rt_Search_value_c_controller" FromRole="rt_search_value" ToRole="c_controller" />
+          <NavigationProperty Name="c_variable_search" Relationship="GADATAModelVASC.FK_rt_Search_value_c_variable_search" FromRole="rt_search_value" ToRole="c_variable_search" />
+        </EntityType>
+        <Association Name="FK_rt_Search_value_c_controller">
+          <End Type="GADATAModelVASC.c_controller" Role="c_controller" Multiplicity="0..1" />
+          <End Type="GADATAModelVASC.rt_search_value" Role="rt_search_value" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_controller">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="rt_search_value">
+              <PropertyRef Name="c_controller_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rt_Search_value_c_variable_search">
+          <End Type="GADATAModelVASC.c_variable_search" Role="c_variable_search" Multiplicity="0..1" />
+          <End Type="GADATAModelVASC.rt_search_value" Role="rt_search_value" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_variable_search">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="rt_search_value">
+              <PropertyRef Name="c_variable_search_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1284,6 +1393,20 @@ warning 6002: The table/view 'GADATA.NGAC.rt_value' does not have a primary key 
                 <ScalarProperty Name="BaseDirectory" ColumnName="BaseDirectory" />
                 <ScalarProperty Name="Availability" ColumnName="Availability" />
                 <ScalarProperty Name="c_controller_id" ColumnName="c_controller_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="rt_search_value">
+            <EntityTypeMapping TypeName="GADATAModelVASC.rt_search_value">
+              <MappingFragment StoreEntitySet="rt_search_value">
+                <ScalarProperty Name="value" ColumnName="value" />
+                <ScalarProperty Name="variable" ColumnName="variable" />
+                <ScalarProperty Name="module" ColumnName="module" />
+                <ScalarProperty Name="task" ColumnName="task" />
+                <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
+                <ScalarProperty Name="c_controller_id" ColumnName="c_controller_id" />
+                <ScalarProperty Name="c_variable_search_id" ColumnName="c_variable_search_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

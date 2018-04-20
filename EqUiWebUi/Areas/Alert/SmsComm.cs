@@ -40,7 +40,7 @@ namespace EqUiWebUi.Areas.Alert
         {
             string filenamePrefix = "XPR001-EQUI_";
             string filenameId = System.DateTime.Now.ToString("yyyyMMddHHmmssFFF");
-            var path = System.Web.Hosting.HostingEnvironment.MapPath("~/App_Data/tempSmsFile.txt");
+            var path = System.Web.Hosting.HostingEnvironment.MapPath(string.Format("~/App_Data/{0}.txt", filenamePrefix + filenameId));
             //check message max length
 
             //make file
@@ -55,7 +55,7 @@ namespace EqUiWebUi.Areas.Alert
             catch (Exception ex)
             {
                 log.Error("Failed to build SMS", ex);
-                return;
+                throw;
             }
 
             //debug mode
@@ -87,7 +87,7 @@ namespace EqUiWebUi.Areas.Alert
             catch (Exception ex)
             {
                 log.Error("Failed to send SMS to server", ex);
-                return;
+                throw;
             }
             log.Info("SMS send Type: " + Messagetype + " => " + Message);
         }

@@ -15,8 +15,8 @@
     columns.Add(c => c.username).Titled("Username").InitialSort(GridSortOrder.Asc);
     columns.Add(c => c.LocationRoot).Titled("LocationRoot");
     columns.Add(c => c.AssetRoot).Titled("AssetRoot");
-    columns.Add(c => c.Locked).Titled("Locked");
-    columns.Add(c => c.Blocked).Titled("Blocked");
+    columns.Add(c => c.Locked).Titled("Locked").Css("hidden-sm hidden-xs");
+    columns.Add(c => c.Blocked).Titled("Blocked").Css("hidden-sm hidden-xs");
     columns.Add(c => c.id)
                 .Titled("")
                 .Encoded(false)
@@ -25,4 +25,7 @@
                                  @Html.ActionLink("Delete", "Delete", new { id = c.id })
 
                 ).InitialSort(GridSortOrder.Asc).Filterable(false);
-}).Filterable(true).Sortable(true).Empty("Did not find anything").Css("table-hover")
+}).Filterable(true).Sortable(true).Pageable(pager =>
+{
+    pager.RowsPerPage = 15;
+}).Empty("Did not find anything").Css("table-hover")
