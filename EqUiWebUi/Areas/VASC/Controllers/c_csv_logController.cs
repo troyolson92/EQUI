@@ -110,6 +110,24 @@ namespace EqUiWebUi.Areas.VASC.Controllers
             }
         }
 
+        // DELETE all data for a CSV file. (clears the data from the data table AND clears the csvFile data
+        //DANGEROUS!!!!!
+        public void DeleteCsvData(int c_csv_log_id)
+        {
+            //get config
+            c_csv_log c_Csv_Log = db.c_csv_log.Where(c => c.id == c_csv_log_id).FirstOrDefault();
+
+            //must still change to DELETE
+
+            string DATADELETEqry = @"select * from GADATA.NGAC.c_csv_log as c 
+                                    left join GADATA.NGAC.rt_csv_file as csvFile on csvFile.c_csv_log_id = c.id
+                                    left join {0} as csvData on csvData.[rt_csv_file_id] = csvfile.id
+                                    where c.id = {1}";
+
+            string cmd = string.Format(DATADELETEqry, c_Csv_Log.rt_table, c_Csv_Log.id);
+
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

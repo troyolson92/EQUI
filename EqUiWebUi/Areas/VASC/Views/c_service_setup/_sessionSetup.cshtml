@@ -4,7 +4,7 @@
 {
     columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Asc);
     columns.Add(c => c._Enable_bit).Titled("enable_mask"); //this is like enable bit
-    columns.Add(c => c.name).Titled("name");
+columns.Add(c => c.name).Titled("name");
     columns.Add(c => c.value).Titled("value");
     columns.Add(c => c.description).Titled("description");
     columns.Add(c => c)
@@ -17,5 +17,5 @@
     pager.RowsPerPage = 10;
 }).Empty("Did not find anything").Css("table-hover")
 
-<div class="badge">Count: @Model.Count()</div> 
+<div class="badge">Count: @Model.Count()</div>
 

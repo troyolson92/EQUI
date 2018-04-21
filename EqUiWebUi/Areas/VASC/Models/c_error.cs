@@ -14,6 +14,12 @@ namespace EqUiWebUi.Areas.VASC.Models
     
     public partial class c_error
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public c_error()
+        {
+            this.Ignore = "";
+        }
+    
         public int id { get; set; }
         public int enable_bit { get; set; }
         public int error_number { get; set; }
@@ -24,5 +30,6 @@ namespace EqUiWebUi.Areas.VASC.Models
         public int flags { get; set; }
         public string Ignore { get; set; }
         public string UserComment { get; set; }
+        public Nullable<int> ordinal { get; set; }
     }
 }

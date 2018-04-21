@@ -57,6 +57,7 @@ namespace EqUiWebUi.Areas.VASC.Controllers
                 c_error = new c_error();
                 c_error.enable_bit = (int)Enable_bit.Disabled;
                 c_error.C_operator = (int)LogicOperator.AND;
+                c_error.ordinal = 100;
                 c_error.error_category_mask = 0;
                 c_error.error_number_mask = -1;
       
