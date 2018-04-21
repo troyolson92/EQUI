@@ -1,0 +1,9 @@
+﻿
+@{
+    ViewBag.Title = "rtJob";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>rtJob</h2>
+
+@Html.Action("_getJob", new { jobID = ViewBag.jobID })

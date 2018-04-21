@@ -33,3 +33,11 @@
     @Html.Action("_workordersOnLocation", "Workorder", new { area = "Maximo_ui", location = Model.location })
 
 </div>
+
+<div class="modal-footer">
+    @if (Model.logtype == "BREAKDOWN")
+    {
+
+    }
+    @Html.ActionLink("JobDetails", "rjJob", "Brekadown", new { area = "VASC", jobID = Model.refid })
+</div>

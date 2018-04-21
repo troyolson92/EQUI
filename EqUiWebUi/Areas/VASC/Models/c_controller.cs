@@ -25,6 +25,7 @@ namespace EqUiWebUi.Areas.VASC.Models
             this.rt_controller = new HashSet<rt_controller>();
             this.L_operation = new HashSet<L_operation>();
             this.rt_search_value = new HashSet<rt_search_value>();
+            this.rt_job = new HashSet<rt_job>();
         }
     
         public int id { get; set; }
@@ -58,5 +59,7 @@ namespace EqUiWebUi.Areas.VASC.Models
         public virtual ICollection<L_operation> L_operation { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<rt_search_value> rt_search_value { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<rt_job> rt_job { get; set; }
     }
 }

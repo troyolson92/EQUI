@@ -14,10 +14,19 @@ namespace EqUiWebUi.Areas.VASC.Models
     
     public partial class c_job
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public c_job()
+        {
+            this.rt_job = new HashSet<rt_job>();
+        }
+    
         public int id { get; set; }
         public int jobNumber { get; set; }
         public int enable_bit { get; set; }
         public int flags { get; set; }
         public string comment { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<rt_job> rt_job { get; set; }
     }
 }
