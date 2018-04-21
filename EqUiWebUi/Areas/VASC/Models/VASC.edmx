@@ -90,13 +90,14 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="enable_bit" Type="int" Nullable="false" />
+          <Property Name="ordinal" Type="int" />
           <Property Name="error_number" Type="int" Nullable="false" />
           <Property Name="error_category" Type="int" Nullable="false" />
           <Property Name="error_number_mask" Type="int" Nullable="false" />
           <Property Name="error_category_mask" Type="int" Nullable="false" />
           <Property Name="_operator" Type="int" Nullable="false" />
           <Property Name="flags" Type="int" Nullable="false" />
-          <Property Name="Ignore" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Ignore" Type="varchar" MaxLength="50" />
           <Property Name="UserComment" Type="varchar" MaxLength="256" />
         </EntityType>
         <EntityType Name="c_job">
@@ -889,7 +890,6 @@ warning 6002: The table/view 'GADATA.NGAC.ControllerEventLog' does not have a pr
           </AssociationSet>
           <EntitySet Name="rt_job" EntityType="GADATAModelVASC.rt_job" />
           <EntitySet Name="rt_job_breakdown" EntityType="GADATAModelVASC.rt_job_breakdown" />
-          <EntitySet Name="ControllerEventLog" EntityType="GADATAModelVASC.ControllerEventLog" />
           <AssociationSet Name="FK_rt_job_c_controller" Association="GADATAModelVASC.FK_rt_job_c_controller">
             <End Role="c_controller" EntitySet="c_controller" />
             <End Role="rt_job" EntitySet="rt_job" />
@@ -902,6 +902,7 @@ warning 6002: The table/view 'GADATA.NGAC.ControllerEventLog' does not have a pr
             <End Role="c_job" EntitySet="c_job" />
             <End Role="rt_job" EntitySet="rt_job" />
           </AssociationSet>
+          <EntitySet Name="ControllerEventLog" EntityType="GADATAModelVASC.ControllerEventLog" />
         </EntityContainer>
         <EntityType Name="c_error">
           <Key>
@@ -915,8 +916,9 @@ warning 6002: The table/view 'GADATA.NGAC.ControllerEventLog' does not have a pr
           <Property Name="error_category_mask" Type="Int32" Nullable="false" />
           <Property Name="C_operator" Type="Int32" Nullable="false" />
           <Property Name="flags" Type="Int32" Nullable="false" />
-          <Property Name="Ignore" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Ignore" Type="String" MaxLength="50" FixedLength="false" Unicode="false" DefaultValue="" />
           <Property Name="UserComment" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="ordinal" Type="Int32" />
         </EntityType>
         <EntityType Name="c_controller">
           <Key>
@@ -1325,31 +1327,6 @@ warning 6002: The table/view 'GADATA.NGAC.ControllerEventLog' does not have a pr
           <Property Name="rt_alarm_id" Type="Int32" />
           <NavigationProperty Name="rt_job" Relationship="GADATAModelVASC.FK_rt_job_breakdown_rt_job" FromRole="rt_job_breakdown" ToRole="rt_job" />
         </EntityType>
-        <EntityType Name="ControllerEventLog">
-          <Key>
-            <PropertyRef Name="refId" />
-          </Key>
-          <Property Name="Location" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="AssetID" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Logtype" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="timestamp" Type="DateTime" Precision="3" />
-          <Property Name="Logcode" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Severity" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Logtext" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="FullLogtext" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Response" Type="Int32" />
-          <Property Name="Downtime" Type="Int32" />
-          <Property Name="Classification" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Subgroup" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Category" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="refId" Type="Int32" Nullable="false" />
-          <Property Name="LocationTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="ClassTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="controller_name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="controller_type" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
-          <Property Name="rt_job_breakdown_id" Type="Int32" Nullable="false" />
-          <Property Name="rt_job_breakdown_id1" Type="Int32" Nullable="true" />
-        </EntityType>
         <Association Name="FK_rt_job_c_controller">
           <End Type="GADATAModelVASC.c_controller" Role="c_controller" Multiplicity="0..1" />
           <End Type="GADATAModelVASC.rt_job" Role="rt_job" Multiplicity="*" />
@@ -1386,6 +1363,29 @@ warning 6002: The table/view 'GADATA.NGAC.ControllerEventLog' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="ControllerEventLog">
+          <Key>
+            <PropertyRef Name="refId" />
+          </Key>
+          <Property Name="Location" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="AssetID" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Logtype" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="timestamp" Type="DateTime" Precision="3" />
+          <Property Name="Logcode" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Severity" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Logtext" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="FullLogtext" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Response" Type="Int32" />
+          <Property Name="Downtime" Type="Int32" />
+          <Property Name="Classification" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Subgroup" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Category" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="refId" Type="Int32" Nullable="false" />
+          <Property Name="LocationTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ClassTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="controller_name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="controller_type" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1471,6 +1471,7 @@ warning 6002: The table/view 'GADATA.NGAC.ControllerEventLog' does not have a pr
           <EntitySetMapping Name="c_error">
             <EntityTypeMapping TypeName="GADATAModelVASC.c_error">
               <MappingFragment StoreEntitySet="c_error">
+                <ScalarProperty Name="ordinal" ColumnName="ordinal" />
                 <ScalarProperty Name="UserComment" ColumnName="UserComment" />
                 <ScalarProperty Name="Ignore" ColumnName="Ignore" />
                 <ScalarProperty Name="flags" ColumnName="flags" />
