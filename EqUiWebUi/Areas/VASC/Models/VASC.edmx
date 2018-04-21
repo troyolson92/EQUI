@@ -101,14 +101,9 @@
           <Property Name="Ignore" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="UserComment" Type="varchar" MaxLength="256" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'GADATA.NGAC.c_job' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="c_job">
           <Key>
             <PropertyRef Name="id" />
-            
-            
-            
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="jobNumber" Type="int" Nullable="false" />
@@ -257,6 +252,53 @@ warning 6002: The table/view 'GADATA.NGAC.rt_event' does not have a primary key 
           <Property Name="isEvent" Type="bit" />
           <Property Name="event_value" Type="int" />
         </EntityType>
+        <EntityType Name="rt_job">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="c_controller_id" Type="int" />
+          <Property Name="c_job_id" Type="int" />
+          <Property Name="jobNo" Type="int" />
+          <Property Name="bodyNo" Type="int" />
+          <Property Name="ts_Start" Type="datetime" />
+          <Property Name="ts_End" Type="datetime" />
+          <Property Name="errorMask" Type="int" />
+          <Property Name="breakDownCount" Type="int" />
+          <Property Name="state" Type="int" />
+          <Property Name="ts_breakDownStart" Type="datetime" />
+          <Property Name="ts_breakDownEnd" Type="datetime" />
+          <Property Name="ts_breakDownAck" Type="datetime" />
+          <Property Name="_timestamp" Type="datetime" />
+          <Property Name="cycletime" Type="float" />
+        </EntityType>
+        <EntityType Name="rt_job_breakdown">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="rt_job_active_id" Type="int" />
+          <Property Name="h_alarm_id" Type="int" />
+          <Property Name="ts_breakdownStart" Type="datetime" />
+          <Property Name="ts_breakdownEnd" Type="datetime" />
+          <Property Name="ts_breakdownAck" Type="datetime" />
+          <Property Name="ev_breakdownStart" Type="int" />
+          <Property Name="val_breakdownStart" Type="int" />
+          <Property Name="programPointer" Type="int" />
+          <Property Name="motionPointer" Type="int" />
+          <Property Name="ev_breakdownAck" Type="int" />
+          <Property Name="val_breakdownAck" Type="int" />
+          <Property Name="index" Type="varchar" MaxLength="50" />
+          <Property Name="phase1" Type="varchar" MaxLength="50" />
+          <Property Name="phase2" Type="varchar" MaxLength="50" />
+          <Property Name="phase3" Type="varchar" MaxLength="50" />
+          <Property Name="phase4" Type="varchar" MaxLength="50" />
+          <Property Name="phase5" Type="varchar" MaxLength="50" />
+          <Property Name="phase6" Type="varchar" MaxLength="50" />
+          <Property Name="phase7" Type="varchar" MaxLength="50" />
+          <Property Name="phase8" Type="varchar" MaxLength="50" />
+          <Property Name="rt_alarm_id" Type="int" />
+        </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'GADATA.NGAC.rt_search_value' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="rt_search_value">
@@ -285,6 +327,31 @@ warning 6002: The table/view 'GADATA.NGAC.rt_value' does not have a primary key 
           <Property Name="value" Type="varchar(max)" />
           <Property Name="isEvent" Type="bit" />
           <Property Name="abbDateTime" Type="datetime" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.NGAC.ControllerEventLog' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ControllerEventLog">
+          <Key>
+            <PropertyRef Name="refId" />
+          </Key>
+          <Property Name="Location" Type="varchar" MaxLength="30" />
+          <Property Name="AssetID" Type="varchar(max)" />
+          <Property Name="Logtype" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="timestamp" Type="datetime" />
+          <Property Name="Logcode" Type="varchar(max)" />
+          <Property Name="Severity" Type="varchar(max)" />
+          <Property Name="Logtext" Type="varchar(max)" Nullable="false" />
+          <Property Name="FullLogtext" Type="varchar(max)" />
+          <Property Name="Response" Type="int" />
+          <Property Name="Downtime" Type="int" />
+          <Property Name="Classification" Type="varchar" MaxLength="50" />
+          <Property Name="Subgroup" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Category" Type="varchar(max)" Nullable="false" />
+          <Property Name="refId" Type="int" Nullable="false" />
+          <Property Name="LocationTree" Type="varchar(max)" />
+          <Property Name="ClassTree" Type="varchar(max)" />
+          <Property Name="controller_name" Type="varchar" MaxLength="30" />
+          <Property Name="controller_type" Type="varchar" MaxLength="4" Nullable="false" />
         </EntityType>
         <Association Name="FK_c_controller_c_controller_class">
           <End Role="c_controller_class" Type="Self.c_controller_class" Multiplicity="1" />
@@ -394,6 +461,42 @@ warning 6002: The table/view 'GADATA.NGAC.rt_value' does not have a primary key 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_rt_job_breakdown_rt_job">
+          <End Role="rt_job" Type="Self.rt_job" Multiplicity="0..1" />
+          <End Role="rt_job_breakdown" Type="Self.rt_job_breakdown" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="rt_job">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="rt_job_breakdown">
+              <PropertyRef Name="rt_job_active_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rt_job_c_controller">
+          <End Role="c_controller" Type="Self.c_controller" Multiplicity="0..1" />
+          <End Role="rt_job" Type="Self.rt_job" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_controller">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="rt_job">
+              <PropertyRef Name="c_controller_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rt_job_c_job">
+          <End Role="c_job" Type="Self.c_job" Multiplicity="0..1" />
+          <End Role="rt_job" Type="Self.rt_job" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_job">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="rt_job">
+              <PropertyRef Name="c_job_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_rt_Search_value_c_controller">
           <End Role="c_controller" Type="Self.c_controller" Multiplicity="0..1" />
           <End Role="rt_search_value" Type="Self.rt_search_value" Multiplicity="*" />
@@ -448,20 +551,14 @@ warning 6002: The table/view 'GADATA.NGAC.rt_value' does not have a primary key 
           <EntitySet Name="c_csv_log" EntityType="Self.c_csv_log" Schema="NGAC" store:Type="Tables" />
           <EntitySet Name="c_device_info" EntityType="Self.c_device_info" Schema="NGAC" store:Type="Tables" />
           <EntitySet Name="c_error" EntityType="Self.c_error" Schema="NGAC" store:Type="Tables" />
+          <EntitySet Name="c_job" EntityType="Self.c_job" Schema="NGAC" store:Type="Tables" />
           <EntitySet Name="c_service_setup" EntityType="Self.c_service_setup" Schema="NGAC" store:Type="Tables" />
           <EntitySet Name="c_variable" EntityType="Self.c_variable" Schema="NGAC" store:Type="Tables" />
           <EntitySet Name="c_variable_search" EntityType="Self.c_variable_search" Schema="NGAC" store:Type="Tables" />
           <EntitySet Name="L_operation" EntityType="Self.L_operation" Schema="NGAC" store:Type="Tables" />
           <EntitySet Name="rt_csv_file" EntityType="Self.rt_csv_file" Schema="NGAC" store:Type="Tables" />
-          <EntitySet Name="c_job" EntityType="Self.c_job" store:Type="Tables" store:Schema="NGAC">
-            <DefiningQuery>SELECT 
-    [c_job].[id] AS [id], 
-    [c_job].[jobNumber] AS [jobNumber], 
-    [c_job].[enable_bit] AS [enable_bit], 
-    [c_job].[flags] AS [flags], 
-    [c_job].[comment] AS [comment]
-    FROM [NGAC].[c_job] AS [c_job]</DefiningQuery>
-          </EntitySet>
+          <EntitySet Name="rt_job" EntityType="Self.rt_job" Schema="NGAC" store:Type="Tables" />
+          <EntitySet Name="rt_job_breakdown" EntityType="Self.rt_job_breakdown" Schema="NGAC" store:Type="Tables" />
           <EntitySet Name="rt_active_info" EntityType="Self.rt_active_info" store:Type="Tables" store:Schema="NGAC">
             <DefiningQuery>SELECT 
     [rt_active_info].[id] AS [id], 
@@ -551,6 +648,28 @@ warning 6002: The table/view 'GADATA.NGAC.rt_value' does not have a primary key 
     [rt_value].[abbDateTime] AS [abbDateTime]
     FROM [NGAC].[rt_value] AS [rt_value]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="ControllerEventLog" EntityType="Self.ControllerEventLog" store:Type="Views" store:Schema="NGAC">
+            <DefiningQuery>SELECT 
+    [ControllerEventLog].[Location] AS [Location], 
+    [ControllerEventLog].[AssetID] AS [AssetID], 
+    [ControllerEventLog].[Logtype] AS [Logtype], 
+    [ControllerEventLog].[timestamp] AS [timestamp], 
+    [ControllerEventLog].[Logcode] AS [Logcode], 
+    [ControllerEventLog].[Severity] AS [Severity], 
+    [ControllerEventLog].[Logtext] AS [Logtext], 
+    [ControllerEventLog].[FullLogtext] AS [FullLogtext], 
+    [ControllerEventLog].[Response] AS [Response], 
+    [ControllerEventLog].[Downtime] AS [Downtime], 
+    [ControllerEventLog].[Classification] AS [Classification], 
+    [ControllerEventLog].[Subgroup] AS [Subgroup], 
+    [ControllerEventLog].[Category] AS [Category], 
+    [ControllerEventLog].[refId] AS [refId], 
+    [ControllerEventLog].[LocationTree] AS [LocationTree], 
+    [ControllerEventLog].[ClassTree] AS [ClassTree], 
+    [ControllerEventLog].[controller_name] AS [controller_name], 
+    [ControllerEventLog].[controller_type] AS [controller_type]
+    FROM [NGAC].[ControllerEventLog] AS [ControllerEventLog]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_c_controller_c_controller_class" Association="Self.FK_c_controller_c_controller_class">
             <End Role="c_controller_class" EntitySet="c_controller_class" />
             <End Role="c_controller" EntitySet="c_controller" />
@@ -586,6 +705,18 @@ warning 6002: The table/view 'GADATA.NGAC.rt_value' does not have a primary key 
           <AssociationSet Name="FK_rt_event_c_controller" Association="Self.FK_rt_event_c_controller">
             <End Role="c_controller" EntitySet="c_controller" />
             <End Role="rt_event" EntitySet="rt_event" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rt_job_breakdown_rt_job" Association="Self.FK_rt_job_breakdown_rt_job">
+            <End Role="rt_job" EntitySet="rt_job" />
+            <End Role="rt_job_breakdown" EntitySet="rt_job_breakdown" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rt_job_c_controller" Association="Self.FK_rt_job_c_controller">
+            <End Role="c_controller" EntitySet="c_controller" />
+            <End Role="rt_job" EntitySet="rt_job" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rt_job_c_job" Association="Self.FK_rt_job_c_job">
+            <End Role="c_job" EntitySet="c_job" />
+            <End Role="rt_job" EntitySet="rt_job" />
           </AssociationSet>
           <AssociationSet Name="FK_rt_Search_value_c_controller" Association="Self.FK_rt_Search_value_c_controller">
             <End Role="c_controller" EntitySet="c_controller" />
@@ -654,6 +785,7 @@ warning 6002: The table/view 'GADATA.NGAC.rt_value' does not have a primary key 
           <Property Name="enable_bit" Type="Int32" Nullable="false" />
           <Property Name="flags" Type="Int32" Nullable="false" />
           <Property Name="comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="rt_job" Relationship="GADATAModelVASC.FK_rt_job_c_job" FromRole="c_job" ToRole="rt_job" />
         </EntityType>
         <EntityType Name="c_variable">
           <Key>
@@ -752,6 +884,25 @@ warning 6002: The table/view 'GADATA.NGAC.rt_value' does not have a primary key 
             <End Role="c_variable_search" EntitySet="c_variable_search" />
             <End Role="rt_search_value" EntitySet="rt_search_value" />
           </AssociationSet>
+          <EntitySet Name="rt_job" EntityType="GADATAModelVASC.rt_job" />
+          <EntitySet Name="rt_job_breakdown" EntityType="GADATAModelVASC.rt_job_breakdown" />
+          <EntitySet Name="ControllerEventLog" EntityType="GADATAModelVASC.ControllerEventLog" />
+          <AssociationSet Name="FK_rt_job_c_controller" Association="GADATAModelVASC.FK_rt_job_c_controller">
+            <End Role="c_controller" EntitySet="c_controller" />
+            <End Role="rt_job" EntitySet="rt_job" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rt_job_breakdown_rt_job" Association="GADATAModelVASC.FK_rt_job_breakdown_rt_job">
+            <End Role="rt_job" EntitySet="rt_job" />
+            <End Role="rt_job_breakdown" EntitySet="rt_job_breakdown" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rt_job_c_job" Association="GADATAModelVASC.FK_rt_job_c_job">
+            <End Role="c_job" EntitySet="c_job" />
+            <End Role="rt_job" EntitySet="rt_job" />
+          </AssociationSet>
+          <AssociationSet Name="rt_job_breakdownControllerEventLog" Association="GADATAModelVASC.rt_job_breakdownControllerEventLog">
+            <End Role="rt_job_breakdown" EntitySet="rt_job_breakdown" />
+            <End Role="ControllerEventLog" EntitySet="ControllerEventLog" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="c_error">
           <Key>
@@ -794,6 +945,7 @@ warning 6002: The table/view 'GADATA.NGAC.rt_value' does not have a primary key 
           <NavigationProperty Name="rt_controller" Relationship="GADATAModelVASC.FK_rt_controller_c_controller" FromRole="c_controller" ToRole="rt_controller" />
           <NavigationProperty Name="L_operation" Relationship="GADATAModelVASC.FK_L_operation_c_controller" FromRole="c_controller" ToRole="L_operation" />
           <NavigationProperty Name="rt_search_value" Relationship="GADATAModelVASC.FK_rt_Search_value_c_controller" FromRole="c_controller" ToRole="rt_search_value" />
+          <NavigationProperty Name="rt_job" Relationship="GADATAModelVASC.FK_rt_job_c_controller" FromRole="c_controller" ToRole="rt_job" />
         </EntityType>
         <EntityType Name="c_controller_class">
           <Key>
@@ -1125,6 +1277,129 @@ warning 6002: The table/view 'GADATA.NGAC.rt_value' does not have a primary key 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="rt_job">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="c_controller_id" Type="Int32" />
+          <Property Name="c_job_id" Type="Int32" />
+          <Property Name="jobNo" Type="Int32" />
+          <Property Name="bodyNo" Type="Int32" />
+          <Property Name="ts_Start" Type="DateTime" Precision="3" />
+          <Property Name="ts_End" Type="DateTime" Precision="3" />
+          <Property Name="errorMask" Type="Int32" />
+          <Property Name="breakDownCount" Type="Int32" />
+          <Property Name="state" Type="Int32" />
+          <Property Name="ts_breakDownStart" Type="DateTime" Precision="3" />
+          <Property Name="ts_breakDownEnd" Type="DateTime" Precision="3" />
+          <Property Name="ts_breakDownAck" Type="DateTime" Precision="3" />
+          <Property Name="C_timestamp" Type="DateTime" Precision="3" />
+          <Property Name="cycletime" Type="Double" />
+          <NavigationProperty Name="c_controller" Relationship="GADATAModelVASC.FK_rt_job_c_controller" FromRole="rt_job" ToRole="c_controller" />
+          <NavigationProperty Name="rt_job_breakdown" Relationship="GADATAModelVASC.FK_rt_job_breakdown_rt_job" FromRole="rt_job" ToRole="rt_job_breakdown" />
+          <NavigationProperty Name="c_job" Relationship="GADATAModelVASC.FK_rt_job_c_job" FromRole="rt_job" ToRole="c_job" />
+        </EntityType>
+        <EntityType Name="rt_job_breakdown">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="rt_job_active_id" Type="Int32" />
+          <Property Name="h_alarm_id" Type="Int32" Nullable="false" />
+          <Property Name="ts_breakdownStart" Type="DateTime" Precision="3" />
+          <Property Name="ts_breakdownEnd" Type="DateTime" Precision="3" />
+          <Property Name="ts_breakdownAck" Type="DateTime" Precision="3" />
+          <Property Name="ev_breakdownStart" Type="Int32" />
+          <Property Name="val_breakdownStart" Type="Int32" />
+          <Property Name="programPointer" Type="Int32" />
+          <Property Name="motionPointer" Type="Int32" />
+          <Property Name="ev_breakdownAck" Type="Int32" />
+          <Property Name="val_breakdownAck" Type="Int32" />
+          <Property Name="index" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="phase1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="phase2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="phase3" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="phase4" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="phase5" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="phase6" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="phase7" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="phase8" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="rt_alarm_id" Type="Int32" />
+          <NavigationProperty Name="rt_job" Relationship="GADATAModelVASC.FK_rt_job_breakdown_rt_job" FromRole="rt_job_breakdown" ToRole="rt_job" />
+          <NavigationProperty Name="ControllerEventLog" Relationship="GADATAModelVASC.rt_job_breakdownControllerEventLog" FromRole="rt_job_breakdown" ToRole="ControllerEventLog" />
+        </EntityType>
+        <EntityType Name="ControllerEventLog">
+          <Key>
+            <PropertyRef Name="refId" />
+          </Key>
+          <Property Name="Location" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="AssetID" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Logtype" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="timestamp" Type="DateTime" Precision="3" />
+          <Property Name="Logcode" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Severity" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Logtext" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="FullLogtext" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Response" Type="Int32" />
+          <Property Name="Downtime" Type="Int32" />
+          <Property Name="Classification" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Subgroup" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Category" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="refId" Type="Int32" Nullable="false" />
+          <Property Name="LocationTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ClassTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="controller_name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="controller_type" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_rt_job_c_controller">
+          <End Type="GADATAModelVASC.c_controller" Role="c_controller" Multiplicity="0..1" />
+          <End Type="GADATAModelVASC.rt_job" Role="rt_job" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_controller">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="rt_job">
+              <PropertyRef Name="c_controller_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rt_job_breakdown_rt_job">
+          <End Type="GADATAModelVASC.rt_job" Role="rt_job" Multiplicity="0..1" />
+          <End Type="GADATAModelVASC.rt_job_breakdown" Role="rt_job_breakdown" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="rt_job">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="rt_job_breakdown">
+              <PropertyRef Name="rt_job_active_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rt_job_c_job">
+          <End Type="GADATAModelVASC.c_job" Role="c_job" Multiplicity="0..1" />
+          <End Type="GADATAModelVASC.rt_job" Role="rt_job" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_job">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="rt_job">
+              <PropertyRef Name="c_job_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="rt_job_breakdownControllerEventLog">
+          <End Type="GADATAModelVASC.rt_job_breakdown" Role="rt_job_breakdown" Multiplicity="*" />
+          <End Type="GADATAModelVASC.ControllerEventLog" Role="ControllerEventLog" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="ControllerEventLog">
+              <PropertyRef Name="refId" />
+            </Principal>
+            <Dependent Role="rt_job_breakdown">
+              <PropertyRef Name="h_alarm_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1408,6 +1683,79 @@ warning 6002: The table/view 'GADATA.NGAC.rt_value' does not have a primary key 
                 <ScalarProperty Name="c_controller_id" ColumnName="c_controller_id" />
                 <ScalarProperty Name="c_variable_search_id" ColumnName="c_variable_search_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="rt_job">
+            <EntityTypeMapping TypeName="GADATAModelVASC.rt_job">
+              <MappingFragment StoreEntitySet="rt_job">
+                <ScalarProperty Name="cycletime" ColumnName="cycletime" />
+                <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
+                <ScalarProperty Name="ts_breakDownAck" ColumnName="ts_breakDownAck" />
+                <ScalarProperty Name="ts_breakDownEnd" ColumnName="ts_breakDownEnd" />
+                <ScalarProperty Name="ts_breakDownStart" ColumnName="ts_breakDownStart" />
+                <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="breakDownCount" ColumnName="breakDownCount" />
+                <ScalarProperty Name="errorMask" ColumnName="errorMask" />
+                <ScalarProperty Name="ts_End" ColumnName="ts_End" />
+                <ScalarProperty Name="ts_Start" ColumnName="ts_Start" />
+                <ScalarProperty Name="bodyNo" ColumnName="bodyNo" />
+                <ScalarProperty Name="jobNo" ColumnName="jobNo" />
+                <ScalarProperty Name="c_job_id" ColumnName="c_job_id" />
+                <ScalarProperty Name="c_controller_id" ColumnName="c_controller_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="rt_job_breakdown">
+            <EntityTypeMapping TypeName="GADATAModelVASC.rt_job_breakdown">
+              <MappingFragment StoreEntitySet="rt_job_breakdown">
+                <ScalarProperty Name="rt_alarm_id" ColumnName="rt_alarm_id" />
+                <ScalarProperty Name="phase8" ColumnName="phase8" />
+                <ScalarProperty Name="phase7" ColumnName="phase7" />
+                <ScalarProperty Name="phase6" ColumnName="phase6" />
+                <ScalarProperty Name="phase5" ColumnName="phase5" />
+                <ScalarProperty Name="phase4" ColumnName="phase4" />
+                <ScalarProperty Name="phase3" ColumnName="phase3" />
+                <ScalarProperty Name="phase2" ColumnName="phase2" />
+                <ScalarProperty Name="phase1" ColumnName="phase1" />
+                <ScalarProperty Name="index" ColumnName="index" />
+                <ScalarProperty Name="val_breakdownAck" ColumnName="val_breakdownAck" />
+                <ScalarProperty Name="ev_breakdownAck" ColumnName="ev_breakdownAck" />
+                <ScalarProperty Name="motionPointer" ColumnName="motionPointer" />
+                <ScalarProperty Name="programPointer" ColumnName="programPointer" />
+                <ScalarProperty Name="val_breakdownStart" ColumnName="val_breakdownStart" />
+                <ScalarProperty Name="ev_breakdownStart" ColumnName="ev_breakdownStart" />
+                <ScalarProperty Name="ts_breakdownAck" ColumnName="ts_breakdownAck" />
+                <ScalarProperty Name="ts_breakdownEnd" ColumnName="ts_breakdownEnd" />
+                <ScalarProperty Name="ts_breakdownStart" ColumnName="ts_breakdownStart" />
+                <ScalarProperty Name="h_alarm_id" ColumnName="h_alarm_id" />
+                <ScalarProperty Name="rt_job_active_id" ColumnName="rt_job_active_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ControllerEventLog">
+            <EntityTypeMapping TypeName="GADATAModelVASC.ControllerEventLog">
+              <MappingFragment StoreEntitySet="ControllerEventLog">
+                <ScalarProperty Name="controller_type" ColumnName="controller_type" />
+                <ScalarProperty Name="controller_name" ColumnName="controller_name" />
+                <ScalarProperty Name="ClassTree" ColumnName="ClassTree" />
+                <ScalarProperty Name="LocationTree" ColumnName="LocationTree" />
+                <ScalarProperty Name="refId" ColumnName="refId" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="Subgroup" ColumnName="Subgroup" />
+                <ScalarProperty Name="Classification" ColumnName="Classification" />
+                <ScalarProperty Name="Downtime" ColumnName="Downtime" />
+                <ScalarProperty Name="Response" ColumnName="Response" />
+                <ScalarProperty Name="FullLogtext" ColumnName="FullLogtext" />
+                <ScalarProperty Name="Logtext" ColumnName="Logtext" />
+                <ScalarProperty Name="Severity" ColumnName="Severity" />
+                <ScalarProperty Name="Logcode" ColumnName="Logcode" />
+                <ScalarProperty Name="timestamp" ColumnName="timestamp" />
+                <ScalarProperty Name="Logtype" ColumnName="Logtype" />
+                <ScalarProperty Name="AssetID" ColumnName="AssetID" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -1,0 +1,18 @@
+﻿
+@{
+    ViewBag.Title = "rtjob";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index rtjob</h2>
+
+@Html.Action("_getJob", new { jobID = 7742668 })
+@*8062590 99resest*@
+
+@section scripts{
+    <script>
+        //full with screen
+        $("#allcontent").removeClass("body-content");
+        $("#allcontent").removeClass("container");
+    </script>
+}
