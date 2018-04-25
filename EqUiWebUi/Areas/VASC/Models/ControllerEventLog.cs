@@ -32,5 +32,7 @@ namespace EqUiWebUi.Areas.VASC.Models
         public string ClassTree { get; set; }
         public string controller_name { get; set; }
         public string controller_type { get; set; }
+        public int rt_job_breakdown_id { get; set; }
+        public Nullable<int> rt_job_breakdown_id1 { get; set; }
     }
 }

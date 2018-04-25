@@ -463,32 +463,13 @@
     <Compile Include="Controllers\ChartController.cs" />
     <Compile Include="Controllers\DynamicController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
-    <Compile Include="Controllers\SpcController.cs" />
     <Compile Include="Controllers\TableauController.cs" />
     <Compile Include="Models\gadataModel.cs" />
-    <Compile Include="Models\ia_Alert.cs">
-      <DependentUpon>GadataDatamodel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Areas\user_management\roleProvider.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="Models\GadataDatamodel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>GadataDatamodel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\GadataDatamodel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>GadataDatamodel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\GadataDatamodel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>GadataDatamodel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MyExtenstions.cs" />
@@ -575,23 +556,6 @@
     <Content Include="Content\Site.css" />
     <Content Include="Content\summernote.css" />
     <Content Include="Global.asax" />
-    <Content Include="Models\GadataDatamodel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>GadataDatamodel.Context.cs</LastGenOutput>
-      <DependentUpon>GadataDatamodel.edmx</DependentUpon>
-    </Content>
-    <Content Include="Models\GadataDatamodel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>GadataDatamodel.edmx</DependentUpon>
-      <LastGenOutput>GadataDatamodel.cs</LastGenOutput>
-    </Content>
-    <EntityDeploy Include="Models\GadataDatamodel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>GadataDatamodel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\GadataDatamodel.edmx.diagram">
-      <DependentUpon>GadataDatamodel.edmx</DependentUpon>
-    </Content>
     <Content Include="PDFjs\build\pdf.js.map" />
     <Content Include="PDFjs\build\pdf.worker.js.map" />
     <Content Include="PDFjs\web\cmaps\78-EUC-H.bcmap" />
@@ -985,7 +949,8 @@
     <Content Include="Areas\VASC\Views\Breakdown\_getJob.cshtml" />
     <Content Include="Areas\VASC\Views\Breakdown\Index.cshtml" />
     <Content Include="Areas\VASC\Views\Breakdown\rtJob.cshtml" />
-    <Content Include="Areas\VASC\Views\Breakdown\_rtj_job_breakdownGridPartial.cshtml" />
+    <Content Include="Areas\VASC\Views\Breakdown\_BreakDownGridLayout.cshtml" />
+    <Content Include="Areas\VASC\Views\Breakdown\getBreakdowns.cshtml" />
     <None Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.svg" />
@@ -1156,10 +1121,6 @@
     <Content Include="Scripts\jquery-3.2.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.2.1.min.map" />
     <Content Include="Views\Home\Rendersite.cshtml" />
-    <Content Include="Views\Spc\Index.cshtml" />
-    <Content Include="Views\Spc\_setState.cshtml" />
-    <Content Include="Views\Spc\_details.cshtml" />
-    <Content Include="Views\Spc\GetAlerts.cshtml" />
     <Content Include="Views\Chart\Index.cshtml" />
     <Content Include="Views\Chart\_getErrorTrend.cshtml" />
     <Content Include="Views\Home\Settings.cshtml" />

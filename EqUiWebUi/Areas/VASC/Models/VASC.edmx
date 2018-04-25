@@ -57,8 +57,6 @@
           <Property Name="evLogMessageAction" Type="int" Nullable="false" />
           <Property Name="cPJVEventMask" Type="int" Nullable="false" />
           <Property Name="cPJVActionMask" Type="int" Nullable="false" />
-          <Property Name="xxcErrorNoLogMask" Type="int" Nullable="false" />
-          <Property Name="xxcAlarmIgnoreMask" Type="int" Nullable="false" />
           <Property Name="cErrorMask" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="c_csv_log">
@@ -332,7 +330,12 @@ warning 6002: The table/view 'GADATA.NGAC.rt_value' does not have a primary key 
 warning 6002: The table/view 'GADATA.NGAC.ControllerEventLog' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="ControllerEventLog">
           <Key>
+            
+            
+            
+            
             <PropertyRef Name="refId" />
+            
           </Key>
           <Property Name="Location" Type="varchar" MaxLength="30" />
           <Property Name="AssetID" Type="varchar(max)" />
@@ -899,10 +902,6 @@ warning 6002: The table/view 'GADATA.NGAC.ControllerEventLog' does not have a pr
             <End Role="c_job" EntitySet="c_job" />
             <End Role="rt_job" EntitySet="rt_job" />
           </AssociationSet>
-          <AssociationSet Name="rt_job_breakdownControllerEventLog" Association="GADATAModelVASC.rt_job_breakdownControllerEventLog">
-            <End Role="rt_job_breakdown" EntitySet="rt_job_breakdown" />
-            <End Role="ControllerEventLog" EntitySet="ControllerEventLog" />
-          </AssociationSet>
         </EntityContainer>
         <EntityType Name="c_error">
           <Key>
@@ -981,8 +980,6 @@ warning 6002: The table/view 'GADATA.NGAC.ControllerEventLog' does not have a pr
           <Property Name="evLogMessageAction" Type="Int32" Nullable="false" />
           <Property Name="cPJVEventMask" Type="Int32" Nullable="false" />
           <Property Name="cPJVActionMask" Type="Int32" Nullable="false" />
-          <Property Name="xxcErrorNoLogMask" Type="Int32" Nullable="false" />
-          <Property Name="xxcAlarmIgnoreMask" Type="Int32" Nullable="false" />
           <Property Name="cErrorMask" Type="Int32" Nullable="false" />
           <NavigationProperty Name="c_controller" Relationship="GADATAModelVASC.FK_c_controller_c_controller_class" FromRole="c_controller_class" ToRole="c_controller" />
         </EntityType>
@@ -1306,7 +1303,7 @@ warning 6002: The table/view 'GADATA.NGAC.ControllerEventLog' does not have a pr
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="rt_job_active_id" Type="Int32" />
-          <Property Name="h_alarm_id" Type="Int32" Nullable="false" />
+          <Property Name="h_alarm_id" Type="Int32" />
           <Property Name="ts_breakdownStart" Type="DateTime" Precision="3" />
           <Property Name="ts_breakdownEnd" Type="DateTime" Precision="3" />
           <Property Name="ts_breakdownAck" Type="DateTime" Precision="3" />
@@ -1327,7 +1324,6 @@ warning 6002: The table/view 'GADATA.NGAC.ControllerEventLog' does not have a pr
           <Property Name="phase8" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="rt_alarm_id" Type="Int32" />
           <NavigationProperty Name="rt_job" Relationship="GADATAModelVASC.FK_rt_job_breakdown_rt_job" FromRole="rt_job_breakdown" ToRole="rt_job" />
-          <NavigationProperty Name="ControllerEventLog" Relationship="GADATAModelVASC.rt_job_breakdownControllerEventLog" FromRole="rt_job_breakdown" ToRole="ControllerEventLog" />
         </EntityType>
         <EntityType Name="ControllerEventLog">
           <Key>
@@ -1351,6 +1347,8 @@ warning 6002: The table/view 'GADATA.NGAC.ControllerEventLog' does not have a pr
           <Property Name="ClassTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="controller_name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="controller_type" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="rt_job_breakdown_id" Type="Int32" Nullable="false" />
+          <Property Name="rt_job_breakdown_id1" Type="Int32" Nullable="true" />
         </EntityType>
         <Association Name="FK_rt_job_c_controller">
           <End Type="GADATAModelVASC.c_controller" Role="c_controller" Multiplicity="0..1" />
@@ -1385,18 +1383,6 @@ warning 6002: The table/view 'GADATA.NGAC.ControllerEventLog' does not have a pr
             </Principal>
             <Dependent Role="rt_job">
               <PropertyRef Name="c_job_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="rt_job_breakdownControllerEventLog">
-          <End Type="GADATAModelVASC.rt_job_breakdown" Role="rt_job_breakdown" Multiplicity="*" />
-          <End Type="GADATAModelVASC.ControllerEventLog" Role="ControllerEventLog" Multiplicity="1" />
-          <ReferentialConstraint>
-            <Principal Role="ControllerEventLog">
-              <PropertyRef Name="refId" />
-            </Principal>
-            <Dependent Role="rt_job_breakdown">
-              <PropertyRef Name="h_alarm_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1521,8 +1507,6 @@ warning 6002: The table/view 'GADATA.NGAC.ControllerEventLog' does not have a pr
             <EntityTypeMapping TypeName="GADATAModelVASC.c_controller_class">
               <MappingFragment StoreEntitySet="c_controller_class">
                 <ScalarProperty Name="cErrorMask" ColumnName="cErrorMask" />
-                <ScalarProperty Name="xxcAlarmIgnoreMask" ColumnName="xxcAlarmIgnoreMask" />
-                <ScalarProperty Name="xxcErrorNoLogMask" ColumnName="xxcErrorNoLogMask" />
                 <ScalarProperty Name="cPJVActionMask" ColumnName="cPJVActionMask" />
                 <ScalarProperty Name="cPJVEventMask" ColumnName="cPJVEventMask" />
                 <ScalarProperty Name="evLogMessageAction" ColumnName="evLogMessageAction" />

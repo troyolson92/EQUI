@@ -16,7 +16,7 @@ namespace EqUiWebUi.Areas.VASC.Models
     {
         public int id { get; set; }
         public Nullable<int> rt_job_active_id { get; set; }
-        public int h_alarm_id { get; set; }
+        public Nullable<int> h_alarm_id { get; set; }
         public Nullable<System.DateTime> ts_breakdownStart { get; set; }
         public Nullable<System.DateTime> ts_breakdownEnd { get; set; }
         public Nullable<System.DateTime> ts_breakdownAck { get; set; }
@@ -38,6 +38,5 @@ namespace EqUiWebUi.Areas.VASC.Models
         public Nullable<int> rt_alarm_id { get; set; }
     
         public virtual rt_job rt_job { get; set; }
-        public virtual ControllerEventLog ControllerEventLog { get; set; }
     }
 }

@@ -18,7 +18,10 @@ namespace EQUICommunictionLib
           "Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=gotsvl2149.got.volvocars.net)(PORT=1521)) (CONNECT_DATA=(SID=dpmxarct)));User Id=ARCTVCG;Password=vcg$tokfeb2017;");
 
         OracleConnection MaximoRealtimeConn = new OracleConnection(
-          "Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=gotora1mxa.got.volvocars.net)(PORT=1521)) (CONNECT_DATA=(SID=DPMXADGP)));User Id=FDENAYER;Password=volvo456;");
+          "Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=gotora1mxa.got.volvocars.net)(PORT=1521)) (CONNECT_DATA=(SID=DPMXADGP)));User Id=FDENAYER;Password=volvo789;");
+
+        //how to reset password. alter user <username> identified by <newpassword> replace <oldpassword> 
+        //ALTER USER FDENAYER IDENTIFIED BY volvo789 replace volvo456;
 
         //debugger
         myDebugger Debugger = new myDebugger();

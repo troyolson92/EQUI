@@ -37,7 +37,6 @@
 <div class="modal-footer">
     @if (Model.logtype == "BREAKDOWN")
     {
-
+        @Html.ActionLink("JobDetails", "rtJob", "Breakdown", new { area = "VASC", jobID = Model.refid }, new { @class = "btn btn-primary btn-sm" })
     }
-    @Html.ActionLink("JobDetails", "rjJob", "Brekadown", new { area = "VASC", jobID = Model.refid })
 </div>
