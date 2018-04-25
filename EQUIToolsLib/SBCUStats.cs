@@ -69,6 +69,12 @@ namespace EQUIToolsLib
             //
             string cmd = string.Format("select top 1 *  from GADATA.volvo.RobotWeldGunRelation where Robot = '{0}' and ElectrodeNbr = {1}", Controller.Trim(), Toolid);
             DataTable dt = lGdataComm.RunQueryGadata(cmd);
+            if (dt.Rows.Count == 0)
+            {
+                Debugger.Message(String.Format("No RobotWeldGunRelation for Robot:{0} ElectrodeNbr:{1}",Controller.Trim(),Toolid));
+            }
+
+
             string Weldgun = dt.Rows[0].Field<string>("WeldgunName");
             activeLocation = Weldgun;
             //

@@ -17,6 +17,20 @@ namespace EqUiWebUi.Areas.VASC.Controllers
             return View();
         }
 
+        public ActionResult getBreakdowns()
+        {
+            if (Session["LocationRoot"].ToString() != "")
+            {
+                string locationRoot = Session["LocationRoot"].ToString();
+                return View(db.rt_job.Where(c => c.ts_breakDownStart != null && (c.c_controller.LocationTree ?? "").Contains(locationRoot)));
+            }
+            else
+            {
+                return View(db.rt_job.Where(c => c.ts_breakDownStart != null));
+            }
+
+        }
+
         public ActionResult rtJob(int jobId)
         {
             ViewBag.jobID = jobId;

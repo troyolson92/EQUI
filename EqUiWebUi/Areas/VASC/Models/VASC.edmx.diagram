@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="13109bf0c8b04f4e9dba006e3bff02de" Name="Diagram1" ZoomLevel="88">
+      <Diagram DiagramId="13109bf0c8b04f4e9dba006e3bff02de" Name="Diagram1" ZoomLevel="59">
         <EntityTypeShape EntityType="GADATAModelVASC.c_csv_log" Width="1.5" PointX="15.5" PointY="3" IsExpanded="true" FillColor="Red" />
         <EntityTypeShape EntityType="GADATAModelVASC.c_service_setup" Width="1.5" PointX="0.5" PointY="1.125" IsExpanded="true" />
         <EntityTypeShape EntityType="GADATAModelVASC.c_device_info" Width="1.5" PointX="22.25" PointY="2.875" IsExpanded="true" FillColor="Red" />
@@ -41,7 +41,6 @@
         <AssociationConnector Association="GADATAModelVASC.FK_rt_job_c_controller" />
         <AssociationConnector Association="GADATAModelVASC.FK_rt_job_breakdown_rt_job" />
         <AssociationConnector Association="GADATAModelVASC.FK_rt_job_c_job" />
-        <AssociationConnector Association="GADATAModelVASC.rt_job_breakdownControllerEventLog" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

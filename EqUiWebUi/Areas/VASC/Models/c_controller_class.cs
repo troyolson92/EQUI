@@ -50,8 +50,6 @@ namespace EqUiWebUi.Areas.VASC.Models
         public int evLogMessageAction { get; set; }
         public int cPJVEventMask { get; set; }
         public int cPJVActionMask { get; set; }
-        public int xxcErrorNoLogMask { get; set; }
-        public int xxcAlarmIgnoreMask { get; set; }
         public int cErrorMask { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

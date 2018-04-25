@@ -113,8 +113,8 @@ namespace EqUiWebUi.Areas.VASC.Models
     public enum SQL_Action
     {
         noAction = 0,
-        Insert_a_new_record_into_the_rt_event_table = 0x01,
-        Update_the_last_record_for_this_controller_event = 0x02,
+        Insert_a_new_record = 0x01,
+        Update_record = 0x02,
         Use_the_event_for_breakdown_analysis = 0x04,
         Update_the_rt_active_info = 0x08,
         When_used_in_breakdown_analysis_obtain_the_program_counter = 0x10,
@@ -213,7 +213,7 @@ namespace EqUiWebUi.Areas.VASC.Models
         STATE_NO_PING = -3, /* No ping */
         STATE_NO_NAME = -4, /* No Name */
         STATE_NO_IP_SYSID = -5, /* No IP/SYSID */
-        STATE_VASC_SHUTDOWN = -15
+        STATE_VASC_SHUTDOWN = -15 /*Vasc Shutdown*/
     }
 
     public enum ErrorCategory
