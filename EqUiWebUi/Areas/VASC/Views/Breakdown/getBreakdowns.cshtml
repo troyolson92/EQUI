@@ -15,7 +15,7 @@
     columns.Add(c => (c.ts_breakDownAck - c.ts_breakDownStart)).Titled("AckTime");
     columns.Add(c => (c.ts_breakDownEnd - c.ts_breakDownStart)).Titled("StopTime");
     columns.Add(c => c.breakDownCount).Titled("Count");
-    columns.Add(c => c.rt_job_breakdown.FirstOrDefault().h_alarm.L_error.Title).Titled("Logtext");
+    columns.Add(c => c.rt_job_breakdown.FirstOrDefault().h_alarm.L_error._Logtext).Titled("Logtext");
     columns.Add(c => c.rt_job_breakdown.FirstOrDefault().phase1).Titled("phase1");
     columns.Add(c => c)
     .Titled("")
