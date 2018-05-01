@@ -111,7 +111,7 @@
             this.btn_expose.TabIndex = 11;
             this.btn_expose.Text = "exposeDatagridToNet";
             this.btn_expose.UseVisualStyleBackColor = true;
-            this.btn_expose.Click += new System.EventHandler(this.btn_expose_Click);
+            this.btn_expose.Click += new System.EventHandler(this.Btn_expose_Click);
             // 
             // btnDoWork
             // 
@@ -123,7 +123,7 @@
             this.btnDoWork.TabIndex = 13;
             this.btnDoWork.Text = "DO SELECTED WORK";
             this.btnDoWork.UseVisualStyleBackColor = true;
-            this.btnDoWork.Click += new System.EventHandler(this.btnDoWork_Click);
+            this.btnDoWork.Click += new System.EventHandler(this.BtnDoWork_Click);
             // 
             // tbGridWhereClause
             // 
@@ -145,7 +145,7 @@
             this.btn_loadGrid.TabIndex = 15;
             this.btn_loadGrid.Text = "LoadGridFromDB";
             this.btn_loadGrid.UseVisualStyleBackColor = true;
-            this.btn_loadGrid.Click += new System.EventHandler(this.btn_loadGrid_Click);
+            this.btn_loadGrid.Click += new System.EventHandler(this.Btn_loadGrid_Click);
             // 
             // groupBox1
             // 
@@ -267,7 +267,7 @@
             this.button1.TabIndex = 18;
             this.button1.Text = "dosometing";
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.button1.Click += new System.EventHandler(this.Button1_Click);
             // 
             // Form1
             // 

@@ -57,7 +57,7 @@ namespace ABBCommTest
         }
 
         //expose a robot by IP to the networkscanner
-        private void addRobotByIp(string Ip)
+        private void AddRobotByIp(string Ip)
         {
             try
             {
@@ -489,29 +489,28 @@ namespace ABBCommTest
         private void btn_addCtrl_Click(object sender, EventArgs e)
         {
             //adding for specifc ip 
-            addRobotByIp(tbox_ip.Text);
+            AddRobotByIp(tbox_ip.Text);
         }
-        private void btn_expose_Click(object sender, EventArgs e)
+        private void Btn_expose_Click(object sender, EventArgs e)
         {
             foreach (DataRow row in dt_robots.Rows)
             {
-                addRobotByIp(row.Field<string>("IP"));
+                AddRobotByIp(row.Field<string>("IP"));
 
             }
             debugger.Message("done with expose");
         }
 
-        private void btnDoWork_Click(object sender, EventArgs e)
+        private void BtnDoWork_Click(object sender, EventArgs e)
         {
                 foreach (DataGridViewRow row in dataGridView1.SelectedRows)
                 {
                     try
                     {
-                        ControllerInfo ci;
-                        if (scanner.TryFind(new Guid(row.Cells[dataGridView1.Columns["SystemId"].Index].Value.ToString()), out ci))
-                        {
-                            this.controller = ControllerFactory.CreateFrom(ci);
-                            this.controller.Logon(UserInfo.DefaultUser);
+                    if (scanner.TryFind(new Guid(row.Cells[dataGridView1.Columns["SystemId"].Index].Value.ToString()), out ControllerInfo ci))
+                    {
+                        this.controller = ControllerFactory.CreateFrom(ci);
+                        this.controller.Logon(UserInfo.DefaultUser);
 
                         // SocketConfigureRobot(ci, row);
                         //DoRobbieFupCheck(ci, row);
@@ -520,12 +519,12 @@ namespace ABBCommTest
                         LoadNewLrobotRobot(ci, row, tb_workfolder.Text.Trim(), tb_module.Text.Trim(), tbVerVarName.Text.Trim(), tb_verfileValue.Text.Trim());
 
 
-                        }
-                        else
-                        {
-                            debugger.Message("can not find controller: " + row.Cells[0].Value.ToString());
-                        }
                     }
+                    else
+                    {
+                        debugger.Message("can not find controller: " + row.Cells[0].Value.ToString());
+                    }
+                }
                     catch (Exception ex)
                     {
                         debugger.Exeption(ex);
@@ -535,7 +534,7 @@ namespace ABBCommTest
             debugger.Message("done with controllers");
         }
 
-        private void btn_bckShortcuts_Click(object sender, EventArgs e)
+        private void Btn_bckShortcuts_Click(object sender, EventArgs e)
         {
             RobotBckShortcuts bckShort = new RobotBckShortcuts();
             bckShort.searchForRobots();
@@ -543,7 +542,7 @@ namespace ABBCommTest
             debugger.Message("done with dirbuild");
         }
 
-        private void btn_loadGrid_Click(object sender, EventArgs e)
+        private void Btn_loadGrid_Click(object sender, EventArgs e)
         {
             //get greenfield list from GADATA
             string qry = string.Format(@"select controller_name, IP from gadata.ngac.c_controller where assetnum like 'URA%' AND CONTROLLER_NAME LIKE '{0}'",tbGridWhereClause.Text.Trim());
@@ -570,14 +569,13 @@ namespace ABBCommTest
             //
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void Button1_Click(object sender, EventArgs e)
         {
             foreach (DataGridViewRow row in dataGridView1.SelectedRows)
             {
                 try
                 {
-                    ControllerInfo ci;
-                    if (scanner.TryFind(new Guid(row.Cells[dataGridView1.Columns["SystemId"].Index].Value.ToString()), out ci))
+                    if (scanner.TryFind(new Guid(row.Cells[dataGridView1.Columns["SystemId"].Index].Value.ToString()), out ControllerInfo ci))
                     {
                         this.controller = ControllerFactory.CreateFrom(ci);
                         this.controller.Logon(UserInfo.DefaultUser);

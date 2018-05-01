@@ -11,11 +11,11 @@ using System.Windows.Forms;
 
 namespace EQUICommunictionLib
 {
-    public class stw040Sync
+    public class Stw040Sync
     {
         myDebugger Debugger = new myDebugger();
 
-       public void get_swt040data()
+       public void Get_swt040data()
         {
             //download
             WebClient Client = new WebClient();
@@ -66,7 +66,7 @@ namespace EQUICommunictionLib
         DataTable LoadWorksheetInDataTable(string fileName, string sheetName)
         {
             DataTable sheetData = new DataTable();
-            using (OleDbConnection conn = this.returnConnection(fileName))
+            using (OleDbConnection conn = this.ReturnConnection(fileName))
             {
                 conn.Open();
                 // retrieve the data using data adapter
@@ -76,7 +76,7 @@ namespace EQUICommunictionLib
             return sheetData;
         }
 
-        private OleDbConnection returnConnection(string fileName)
+        private OleDbConnection ReturnConnection(string fileName)
         {
             return new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + fileName + "; Jet OLEDB:Engine Type=5;Extended Properties=\"Excel 12.0;\"");
         }

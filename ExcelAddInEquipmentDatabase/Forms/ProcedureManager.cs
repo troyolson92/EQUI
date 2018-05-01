@@ -211,9 +211,11 @@ namespace ExcelAddInEquipmentDatabase.Forms
                             }
                             else
                             { //in case of an other timestamp create a datetimepicker for it
-                                Forms.uc_Datebox nDateb = new Forms.uc_Datebox();
-                                nDateb.Name = p.ParameterName;
-                                nDateb.label = p.ParameterName;
+                                Forms.uc_Datebox nDateb = new Forms.uc_Datebox
+                                {
+                                    Name = p.ParameterName,
+                                    label = p.ParameterName
+                                };
                                 if (Query.Contains(p.ParameterName))
                                 {
                                     nDateb.active = true;
@@ -228,11 +230,13 @@ namespace ExcelAddInEquipmentDatabase.Forms
                             break;
 
                         case SqlDbType.Bit: //create checkboxes for bits
-                            Forms.uc_Checkbox nCheckb = new Forms.uc_Checkbox();
-                            nCheckb.Name = p.ParameterName;
-                            nCheckb.label = p.ParameterName;
-                            nCheckb.active = false;
-                            nCheckb.input = false;
+                            Forms.uc_Checkbox nCheckb = new Forms.uc_Checkbox
+                            {
+                                Name = p.ParameterName,
+                                label = p.ParameterName,
+                                active = false,
+                                input = false
+                            };
                             if (Query.Contains(p.ParameterName))
                             {
                                 nCheckb.active = true;
@@ -270,12 +274,14 @@ namespace ExcelAddInEquipmentDatabase.Forms
                             }
                             else
                             {
-                                Forms.uc_Inputbox nInputbInt = new Forms.uc_Inputbox();
-                                nInputbInt.Name = p.ParameterName;
-                                nInputbInt.label = p.ParameterName;
-                                nInputbInt.intOnly = true;
-                                nInputbInt.active = false;
-                                nInputbInt.input = "0";
+                                Forms.uc_Inputbox nInputbInt = new Forms.uc_Inputbox
+                                {
+                                    Name = p.ParameterName,
+                                    label = p.ParameterName,
+                                    intOnly = true,
+                                    active = false,
+                                    input = "0"
+                                };
                                 if (Query.Contains(p.ParameterName))
                                 {
                                     nInputbInt.active = true;
@@ -345,10 +351,12 @@ namespace ExcelAddInEquipmentDatabase.Forms
                             }
                             else  // in case of other create control for it
                             {
-                                Forms.uc_Inputbox nInputbChar = new Forms.uc_Inputbox();
-                                nInputbChar.Name = p.ParameterName;
-                                nInputbChar.label = p.ParameterName;
-                                nInputbChar.intOnly = false;
+                                Forms.uc_Inputbox nInputbChar = new Forms.uc_Inputbox
+                                {
+                                    Name = p.ParameterName,
+                                    label = p.ParameterName,
+                                    intOnly = false
+                                };
                                 if (Query.Contains(p.ParameterName))
                                 {
                                     nInputbChar.active = true;
@@ -475,23 +483,27 @@ namespace ExcelAddInEquipmentDatabase.Forms
                             }
                             else
                             { //in case of an other timestamp create a datetimepicker for it
-                                Forms.uc_Datebox nDateb = new Forms.uc_Datebox();
-                                nDateb.Name = p.ParameterName;
-                                nDateb.label = p.ParameterName;
-                                nDateb.active = true;
-                                nDateb.hide_active = true;
-                                nDateb.input = dtSelectedTimestamp;
+                                Forms.uc_Datebox nDateb = new Forms.uc_Datebox
+                                {
+                                    Name = p.ParameterName,
+                                    label = p.ParameterName,
+                                    active = true,
+                                    hide_active = true,
+                                    input = dtSelectedTimestamp
+                                };
                                 flowLayoutPanel1.Controls.Add(nDateb);
                             }
                             break;
 
                         case TypeCode.Boolean: //create checkboxes for bits
-                            Forms.uc_Checkbox nCheckb = new Forms.uc_Checkbox();
-                            nCheckb.Name = p.ParameterName;
-                            nCheckb.label = p.ParameterName;
-                            nCheckb.active = true;
-                            nCheckb.hide_active = true;
-                            nCheckb.input = false;
+                            Forms.uc_Checkbox nCheckb = new Forms.uc_Checkbox
+                            {
+                                Name = p.ParameterName,
+                                label = p.ParameterName,
+                                active = true,
+                                hide_active = true,
+                                input = false
+                            };
                             sValuefirst = Query.Substring(Query.IndexOf(p.ParameterName) + p.ParameterName.Length).Split('=')[1].Trim();
                             if (sValuefirst.StartsWith("true", StringComparison.InvariantCultureIgnoreCase) || sValuefirst.StartsWith("1", StringComparison.InvariantCultureIgnoreCase))
                             {
@@ -505,13 +517,15 @@ namespace ExcelAddInEquipmentDatabase.Forms
                             break;
 
                         case TypeCode.Int32: // in case of bit create a editbox for it
-                            Forms.uc_Inputbox nInputbInt = new Forms.uc_Inputbox();
-                            nInputbInt.Name = p.ParameterName;
-                            nInputbInt.label = p.ParameterName;
-                            nInputbInt.intOnly = true;
-                            nInputbInt.active = true;
-                            nInputbInt.hide_active = true;
-                            nInputbInt.input = "0";
+                            Forms.uc_Inputbox nInputbInt = new Forms.uc_Inputbox
+                            {
+                                Name = p.ParameterName,
+                                label = p.ParameterName,
+                                intOnly = true,
+                                active = true,
+                                hide_active = true,
+                                input = "0"
+                            };
                             sValuefirst = Query.Substring(Query.IndexOf(p.ParameterName) + p.ParameterName.Length).Split('=')[1].Trim();
                             nInputbInt.input = sValuefirst.Split(' ')[0].Trim();
                             flowLayoutPanel1.Controls.Add(nInputbInt);
@@ -564,13 +578,15 @@ namespace ExcelAddInEquipmentDatabase.Forms
                             }
                             else  // in case of other create control for it
                             {
-                                Forms.uc_Inputbox nInputbChar = new Forms.uc_Inputbox();
-                                nInputbChar.Name = p.ParameterName;
-                                nInputbChar.label = p.ParameterName;
-                                nInputbChar.intOnly = false;
-                                nInputbChar.active = true;
-                                nInputbChar.hide_active = true;
-                                nInputbChar.input = sInput;
+                                Forms.uc_Inputbox nInputbChar = new Forms.uc_Inputbox
+                                {
+                                    Name = p.ParameterName,
+                                    label = p.ParameterName,
+                                    intOnly = false,
+                                    active = true,
+                                    hide_active = true,
+                                    input = sInput
+                                };
                                 flowLayoutPanel1.Controls.Add(nInputbChar);
                             }
                             break;
@@ -989,7 +1005,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
         {
             using (ConnectionManger connMngr = new ConnectionManger())
             {
-                Excel.WorkbookConnection connection = connMngr.get_Connection(lname);
+                Excel.WorkbookConnection connection = connMngr.Get_Connection(lname);
                 connMngr.Dispose();
                 return connection.ODBCConnection.Connection;
             }
@@ -1000,7 +1016,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
             {
                 using (ConnectionManger connMngr = new ConnectionManger())
                 {
-                    Excel.WorkbookConnection connection = connMngr.get_Connection(lname);
+                    Excel.WorkbookConnection connection = connMngr.Get_Connection(lname);
                     connMngr.Dispose();
                     return connection.ODBCConnection.CommandText;
                 }
@@ -1009,7 +1025,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
             {
                 using (ConnectionManger connMngr = new ConnectionManger())
                 {
-                    Excel.WorkbookConnection connection = connMngr.get_Connection(lname);
+                    Excel.WorkbookConnection connection = connMngr.Get_Connection(lname);
                     if (connection.ODBCConnection.Refreshing) { connection.ODBCConnection.CancelRefresh(); }
                     connection.ODBCConnection.CommandText = value;
                     connMngr.Dispose();
