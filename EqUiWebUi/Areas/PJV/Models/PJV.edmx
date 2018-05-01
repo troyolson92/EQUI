@@ -1,0 +1,1351 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="GADATAModel2.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="JoiningFile">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="_timestamp" Type="datetime" />
+          <Property Name="_lasttimestamp" Type="datetime" />
+          <Property Name="fullFileName" Type="varchar(max)" />
+          <Property Name="filename" Type="varchar(max)" />
+          <Property Name="fileDateTime" Type="datetime" />
+          <Property Name="createDateTime" Type="datetime" />
+          <Property Name="modifiedDateTime" Type="datetime" />
+          <Property Name="propertyInfo" Type="varchar(max)" />
+          <Property Name="isDead" Type="int" />
+          <Property Name="rev_created" Type="int" />
+          <Property Name="rev_modified" Type="int" />
+        </EntityType>
+        <EntityType Name="JoiningModelVariant">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="joiningFileId" Type="int" />
+          <Property Name="_timestamp" Type="datetime" />
+          <Property Name="_lasttimestamp" Type="datetime" />
+          <Property Name="name" Type="varchar(max)" />
+          <Property Name="itemId" Type="varchar(max)" />
+          <Property Name="specification" Type="varchar(max)" />
+          <Property Name="spotWeldId" Type="varchar(max)" />
+          <Property Name="process" Type="varchar" MaxLength="20" />
+          <Property Name="isDead" Type="int" />
+          <Property Name="rev_created" Type="int" />
+          <Property Name="rev_modified" Type="int" />
+        </EntityType>
+        <EntityType Name="JoiningModelVariantDistinct">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="joiningModelVariantId" Type="int" />
+          <Property Name="_timestamp" Type="datetime" />
+          <Property Name="_lasttimestamp" Type="datetime" />
+          <Property Name="name" Type="varchar(max)" />
+          <Property Name="isDead" Type="int" />
+          <Property Name="rev_created" Type="int" />
+          <Property Name="rev_modified" Type="int" />
+        </EntityType>
+        <EntityType Name="JoiningPointData">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="joiningModelVariantDistinctId" Type="int" />
+          <Property Name="isDead" Type="int" />
+          <Property Name="_timestamp" Type="datetime" />
+          <Property Name="_lasttimestamp" Type="datetime" />
+          <Property Name="POINT_ID" Type="varchar" MaxLength="50" />
+          <Property Name="JOINT_PART_1" Type="varchar" MaxLength="250" />
+          <Property Name="JOINT_PART_2" Type="varchar" MaxLength="250" />
+          <Property Name="JOINT_PART_3" Type="varchar" MaxLength="250" />
+          <Property Name="JOINT_PART_4" Type="varchar" MaxLength="250" />
+          <Property Name="JM_X" Type="float" />
+          <Property Name="JM_Y" Type="float" />
+          <Property Name="JM_Z" Type="float" />
+          <Property Name="SPOT_PROCESS_NUMBER" Type="int" />
+          <Property Name="SPOT_GEOMETRY_TYPE" Type="varchar" MaxLength="50" />
+          <Property Name="PROCESS_LOCATION" Type="varchar" MaxLength="250" />
+          <Property Name="CAR_SIDE" Type="varchar" MaxLength="50" />
+          <Property Name="VARIANT" Type="varchar" MaxLength="50" />
+          <Property Name="SPOT_WELD_DIAMETER" Type="float" />
+          <Property Name="ELECTRODE_INTENDATION" Type="varchar" MaxLength="50" />
+          <Property Name="INSUFFICIENT_WELD_SPOT" Type="varchar" MaxLength="50" />
+          <Property Name="FUNCT_JOINT_No" Type="int" />
+          <Property Name="CONCEQUENCE_CLASS" Type="varchar" MaxLength="50" />
+          <Property Name="Color" Type="int" />
+          <Property Name="Color_r" Type="int" />
+          <Property Name="Color_g" Type="int" />
+          <Property Name="Color_b" Type="int" />
+          <Property Name="LAYER_TYPE" Type="varchar" MaxLength="50" />
+          <Property Name="LAYER_NUMBER" Type="int" />
+          <Property Name="POINT_SYMBOL_NUMBER" Type="int" />
+          <Property Name="POSITION_TOLERANCE" Type="varchar" MaxLength="50" />
+          <Property Name="CO" Type="varchar" MaxLength="50" />
+          <Property Name="CO_INFO" Type="varchar" MaxLength="50" />
+          <Property Name="CO_ID" Type="varchar" MaxLength="50" />
+          <Property Name="CDSID_Last_Modified_By" Type="varchar" MaxLength="50" />
+          <Property Name="Joining_Model_Reference" Type="varchar" MaxLength="50" />
+          <Property Name="Local_ID" Type="varchar" MaxLength="50" />
+          <Property Name="USED_IN_VEHICLE" Type="varchar" MaxLength="50" />
+          <Property Name="WELD_CURVE_ID" Type="int" />
+          <Property Name="WELD_LENGTH_mm" Type="float" />
+          <Property Name="WELD_PROCESS_NUMBER" Type="varchar" MaxLength="50" />
+          <Property Name="WELD_SIZE_A" Type="float" />
+          <Property Name="WELD_SIZE_S" Type="float" />
+          <Property Name="WELD_CLASS" Type="varchar" MaxLength="50" />
+          <Property Name="ADDITIONAL_DEMANDS" Type="varchar" MaxLength="50" />
+          <Property Name="WELD_WIDTH" Type="float" />
+          <Property Name="GLUE_TRAP" Type="varchar" MaxLength="50" />
+          <Property Name="WELD_MATERIAL" Type="varchar" MaxLength="50" />
+          <Property Name="DEMANDS" Type="varchar" MaxLength="50" />
+          <Property Name="rev_created" Type="int" />
+          <Property Name="rev_modified" Type="int" />
+          <Property Name="PART_NAME" Type="varchar" MaxLength="50" />
+          <Property Name="FASTENER_ITEM" Type="varchar" MaxLength="50" />
+          <Property Name="FASTENER_TYPE" Type="varchar" MaxLength="50" />
+          <Property Name="AUX_DEMANDS" Type="varchar" MaxLength="50" />
+          <Property Name="VECTOR_VX_1" Type="float" />
+          <Property Name="VECTOR_VX_2" Type="float" />
+          <Property Name="VECTOR_VX_3" Type="float" />
+          <Property Name="VECTOR_VY_1" Type="float" />
+          <Property Name="VECTOR_VY_2" Type="float" />
+          <Property Name="VECTOR_VY_3" Type="float" />
+          <Property Name="VECTOR_VZ_1" Type="float" />
+          <Property Name="VECTOR_VZ_2" Type="float" />
+          <Property Name="VECTOR_VZ_3" Type="float" />
+          <Property Name="jp_comment" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="L_operation">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="_timestamp" Type="datetime" />
+          <Property Name="code" Type="int" />
+          <Property Name="rev_created" Type="int" />
+          <Property Name="tableName" Type="varchar" MaxLength="40" />
+          <Property Name="tableRowId" Type="int" />
+          <Property Name="description" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="ProcessResult">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="isDead" Type="int" />
+          <Property Name="_timestamp" Type="datetime" />
+          <Property Name="_lasttimestamp" Type="datetime" />
+          <Property Name="joiningPointDataId" Type="int" />
+          <Property Name="robotPointId" Type="int" />
+          <Property Name="signature" Type="varchar(max)" />
+          <Property Name="isMissingOnRobot" Type="int" />
+          <Property Name="isOnTwoRobots" Type="int" />
+          <Property Name="isDuplicated" Type="int" />
+          <Property Name="rev_created" Type="int" />
+          <Property Name="rev_modified" Type="int" />
+          <Property Name="isMissingJointPointData" Type="int" />
+          <Property Name="isWrongProcessDataId" Type="int" />
+          <Property Name="isMatched" Type="int" />
+          <Property Name="isJpdMultipleDefined" Type="int" />
+          <Property Name="isTwiceInSequence" Type="int" />
+          <Property Name="isPathReversed" Type="int" />
+          <Property Name="isMismatchInGeometry" Type="int" />
+          <Property Name="areBothPaths" Type="int" />
+          <Property Name="deltaWX" Type="float" />
+          <Property Name="deltaWY" Type="float" />
+          <Property Name="deltaWZ" Type="float" />
+          <Property Name="deltaWRX" Type="float" />
+          <Property Name="deltaWRY" Type="float" />
+          <Property Name="deltaWRZ" Type="float" />
+          <Property Name="deltaWSum" Type="float" />
+          <Property Name="dirWX" Type="varchar" MaxLength="50" />
+          <Property Name="dirWY" Type="varchar" MaxLength="50" />
+          <Property Name="dirWZ" Type="varchar" MaxLength="50" />
+          <Property Name="deltaTX" Type="float" />
+          <Property Name="deltaTY" Type="float" />
+          <Property Name="deltaTZ" Type="float" />
+          <Property Name="deltaTRX" Type="float" />
+          <Property Name="deltaTRY" Type="float" />
+          <Property Name="deltaTRZ" Type="float" />
+          <Property Name="deltaTSum" Type="float" />
+          <Property Name="deltaPathLen" Type="float" />
+        </EntityType>
+        <EntityType Name="RobotDetail">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" />
+          <Property Name="robotSupplier" Type="varchar" MaxLength="10" />
+          <Property Name="isDead" Type="int" />
+          <Property Name="_timestamp" Type="datetime" />
+          <Property Name="_lasttimestamp" Type="datetime" />
+          <Property Name="rev_created" Type="int" />
+          <Property Name="rev_modified" Type="int" />
+        </EntityType>
+        <EntityType Name="RobotPoint">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="isDead" Type="int" />
+          <Property Name="_timestamp" Type="datetime" />
+          <Property Name="_lasttimestamp" Type="datetime" />
+          <Property Name="v_name" Type="varchar(max)" />
+          <Property Name="robotRoutineId" Type="int" />
+          <Property Name="datatype" Type="int" />
+          <Property Name="X" Type="float" />
+          <Property Name="Y" Type="float" />
+          <Property Name="Z" Type="float" />
+          <Property Name="switchon" Type="int" />
+          <Property Name="processValue1" Type="varchar" MaxLength="50" />
+          <Property Name="processValue2" Type="varchar" MaxLength="50" />
+          <Property Name="frame" Type="varchar" MaxLength="50" />
+          <Property Name="tool" Type="varchar" MaxLength="50" />
+          <Property Name="vel" Type="varchar" MaxLength="50" />
+          <Property Name="remote_tool" Type="int" />
+          <Property Name="spd" Type="varchar" MaxLength="50" />
+          <Property Name="traj" Type="varchar" MaxLength="50" />
+          <Property Name="zone" Type="varchar" MaxLength="50" />
+          <Property Name="programLine" Type="int" />
+          <Property Name="process_s" Type="varchar" MaxLength="50" />
+          <Property Name="rev_created" Type="int" />
+          <Property Name="rev_modified" Type="int" />
+          <Property Name="pp_comment" Type="varchar" MaxLength="200" />
+          <Property Name="R_VX_1" Type="float" />
+          <Property Name="R_VX_2" Type="float" />
+          <Property Name="R_VX_3" Type="float" />
+          <Property Name="R_VY_1" Type="float" />
+          <Property Name="R_VY_2" Type="float" />
+          <Property Name="R_VY_3" Type="float" />
+          <Property Name="R_VZ_1" Type="float" />
+          <Property Name="R_VZ_2" Type="float" />
+          <Property Name="R_VZ_3" Type="float" />
+        </EntityType>
+        <EntityType Name="RobotProgram">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="p_name" Type="varchar" MaxLength="50" />
+          <Property Name="isDead" Type="int" />
+          <Property Name="_timestamp" Type="datetime" />
+          <Property Name="_lasttimestamp" Type="datetime" />
+          <Property Name="filename" Type="varchar" MaxLength="50" />
+          <Property Name="robotDetailId" Type="int" />
+          <Property Name="size" Type="int" />
+          <Property Name="fileDateTime" Type="datetime" />
+          <Property Name="fullFilename" Type="varchar(max)" />
+          <Property Name="MD5" Type="varchar" MaxLength="32" />
+          <Property Name="rev_created" Type="int" />
+          <Property Name="rev_modified" Type="int" />
+        </EntityType>
+        <EntityType Name="RobotRoutine">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="s_name" Type="varchar(max)" />
+          <Property Name="programLine" Type="int" />
+          <Property Name="_timestamp" Type="datetime" />
+          <Property Name="_lasttimestamp" Type="datetime" />
+          <Property Name="isDead" Type="int" />
+          <Property Name="RobotProgramId" Type="int" />
+          <Property Name="rev_created" Type="int" />
+          <Property Name="rev_modified" Type="int" />
+        </EntityType>
+        <EntityType Name="SummaryResult">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="isDead" Type="int" />
+          <Property Name="_timestamp" Type="datetime" />
+          <Property Name="_lasttimestamp" Type="datetime" />
+          <Property Name="numberPrograms" Type="int" />
+          <Property Name="numberRoutines" Type="int" />
+          <Property Name="numberPointInstructions" Type="int" Nullable="false" />
+          <Property Name="AvgDX" Type="float" />
+          <Property Name="AvgDY" Type="float" />
+          <Property Name="AvgDZ" Type="float" />
+          <Property Name="AvgDelta" Type="float" />
+          <Property Name="StdDelta" Type="float" />
+          <Property Name="numberOfWarnings" Type="int" />
+          <Property Name="numberOfProcessDataWarnings" Type="int" />
+          <Property Name="robotDetailId" Type="int" />
+          <Property Name="comment" Type="varchar(max)" />
+          <Property Name="rev_created" Type="int" />
+          <Property Name="rev_modified" Type="int" />
+          <Property Name="numberMatchingJPDPP" Type="int" />
+          <Property Name="maxDX" Type="float" />
+          <Property Name="maxDY" Type="float" />
+          <Property Name="maxDZ" Type="float" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.PJV.ProcessPoints' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ProcessPoints">
+          <Key>
+            <PropertyRef Name="refID" />
+          </Key>
+          <Property Name="robotname" Type="varchar" MaxLength="50" />
+          <Property Name="process_s" Type="varchar" MaxLength="50" />
+          <Property Name="p_name" Type="varchar" MaxLength="50" />
+          <Property Name="s_name" Type="varchar(max)" />
+          <Property Name="v_name" Type="varchar(max)" />
+          <Property Name="programLine" Type="int" />
+          <Property Name="DetectTimestamp" Type="datetime" />
+          <Property Name="FileTimestamp" Type="datetime" />
+          <Property Name="x" Type="float" />
+          <Property Name="y" Type="float" />
+          <Property Name="z" Type="float" />
+          <Property Name="isDead" Type="int" />
+          <Property Name="rev_modified" Type="int" />
+          <Property Name="previousRev" Type="int" />
+          <Property Name="RevisionCount" Type="bigint" />
+          <Property Name="_previoustimestamp" Type="datetime" />
+          <Property Name="previousX" Type="float" />
+          <Property Name="previousY" Type="float" />
+          <Property Name="previousZ" Type="float" />
+          <Property Name="refID" Type="int" Nullable="false" />
+          <Property Name="Delta" Type="float" />
+          <Property Name="locationtree" Type="varchar(max)" />
+        </EntityType>
+        <Association Name="FK_JoiningModelVariant_JoiningFile">
+          <End Role="JoiningFile" Type="Self.JoiningFile" Multiplicity="0..1" />
+          <End Role="JoiningModelVariant" Type="Self.JoiningModelVariant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JoiningFile">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="JoiningModelVariant">
+              <PropertyRef Name="joiningFileId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JoiningModelVariantDistinct_JoiningModelVariant">
+          <End Role="JoiningModelVariant" Type="Self.JoiningModelVariant" Multiplicity="0..1" />
+          <End Role="JoiningModelVariantDistinct" Type="Self.JoiningModelVariantDistinct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JoiningModelVariant">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="JoiningModelVariantDistinct">
+              <PropertyRef Name="joiningModelVariantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JoiningPointData_JoiningModelVariantDistinct">
+          <End Role="JoiningModelVariantDistinct" Type="Self.JoiningModelVariantDistinct" Multiplicity="0..1" />
+          <End Role="JoiningPointData" Type="Self.JoiningPointData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JoiningModelVariantDistinct">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="JoiningPointData">
+              <PropertyRef Name="joiningModelVariantDistinctId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProcessResult_JoiningPointData">
+          <End Role="JoiningPointData" Type="Self.JoiningPointData" Multiplicity="0..1" />
+          <End Role="ProcessResult" Type="Self.ProcessResult" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JoiningPointData">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ProcessResult">
+              <PropertyRef Name="joiningPointDataId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProcessResult_RobotPoint">
+          <End Role="RobotPoint" Type="Self.RobotPoint" Multiplicity="0..1" />
+          <End Role="ProcessResult" Type="Self.ProcessResult" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RobotPoint">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ProcessResult">
+              <PropertyRef Name="robotPointId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RobotPoint_RobotRoutine">
+          <End Role="RobotRoutine" Type="Self.RobotRoutine" Multiplicity="0..1" />
+          <End Role="RobotPoint" Type="Self.RobotPoint" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RobotRoutine">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="RobotPoint">
+              <PropertyRef Name="robotRoutineId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RobotProgram_RobotDetail">
+          <End Role="RobotDetail" Type="Self.RobotDetail" Multiplicity="0..1" />
+          <End Role="RobotProgram" Type="Self.RobotProgram" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RobotDetail">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="RobotProgram">
+              <PropertyRef Name="robotDetailId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RobotRoutine_RobotProgram">
+          <End Role="RobotProgram" Type="Self.RobotProgram" Multiplicity="0..1" />
+          <End Role="RobotRoutine" Type="Self.RobotRoutine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RobotProgram">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="RobotRoutine">
+              <PropertyRef Name="RobotProgramId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SummaryResult_RobotDetail">
+          <End Role="RobotDetail" Type="Self.RobotDetail" Multiplicity="0..1" />
+          <End Role="SummaryResult" Type="Self.SummaryResult" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RobotDetail">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="SummaryResult">
+              <PropertyRef Name="robotDetailId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="GADATAModel2StoreContainer">
+          <EntitySet Name="JoiningFile" EntityType="Self.JoiningFile" Schema="PJV" store:Type="Tables" />
+          <EntitySet Name="JoiningModelVariant" EntityType="Self.JoiningModelVariant" Schema="PJV" store:Type="Tables" />
+          <EntitySet Name="JoiningModelVariantDistinct" EntityType="Self.JoiningModelVariantDistinct" Schema="PJV" store:Type="Tables" />
+          <EntitySet Name="JoiningPointData" EntityType="Self.JoiningPointData" Schema="PJV" store:Type="Tables" />
+          <EntitySet Name="L_operation" EntityType="Self.L_operation" Schema="PJV" store:Type="Tables" />
+          <EntitySet Name="ProcessResult" EntityType="Self.ProcessResult" Schema="PJV" store:Type="Tables" />
+          <EntitySet Name="RobotDetail" EntityType="Self.RobotDetail" Schema="PJV" store:Type="Tables" />
+          <EntitySet Name="RobotPoint" EntityType="Self.RobotPoint" Schema="PJV" store:Type="Tables" />
+          <EntitySet Name="RobotProgram" EntityType="Self.RobotProgram" Schema="PJV" store:Type="Tables" />
+          <EntitySet Name="RobotRoutine" EntityType="Self.RobotRoutine" Schema="PJV" store:Type="Tables" />
+          <EntitySet Name="SummaryResult" EntityType="Self.SummaryResult" Schema="PJV" store:Type="Tables" />
+          <EntitySet Name="ProcessPoints" EntityType="Self.ProcessPoints" store:Type="Views" store:Schema="PJV">
+            <DefiningQuery>SELECT 
+    [ProcessPoints].[robotname] AS [robotname], 
+    [ProcessPoints].[process_s] AS [process_s], 
+    [ProcessPoints].[p_name] AS [p_name], 
+    [ProcessPoints].[s_name] AS [s_name], 
+    [ProcessPoints].[v_name] AS [v_name], 
+    [ProcessPoints].[programLine] AS [programLine], 
+    [ProcessPoints].[DetectTimestamp] AS [DetectTimestamp], 
+    [ProcessPoints].[FileTimestamp] AS [FileTimestamp], 
+    [ProcessPoints].[x] AS [x], 
+    [ProcessPoints].[y] AS [y], 
+    [ProcessPoints].[z] AS [z], 
+    [ProcessPoints].[isDead] AS [isDead], 
+    [ProcessPoints].[rev_modified] AS [rev_modified], 
+    [ProcessPoints].[previousRev] AS [previousRev], 
+    [ProcessPoints].[RevisionCount] AS [RevisionCount], 
+    [ProcessPoints].[_previoustimestamp] AS [_previoustimestamp], 
+    [ProcessPoints].[previousX] AS [previousX], 
+    [ProcessPoints].[previousY] AS [previousY], 
+    [ProcessPoints].[previousZ] AS [previousZ], 
+    [ProcessPoints].[refID] AS [refID], 
+    [ProcessPoints].[Delta] AS [Delta], 
+    [ProcessPoints].[locationtree] AS [locationtree]
+    FROM [PJV].[ProcessPoints] AS [ProcessPoints]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_JoiningModelVariant_JoiningFile" Association="Self.FK_JoiningModelVariant_JoiningFile">
+            <End Role="JoiningFile" EntitySet="JoiningFile" />
+            <End Role="JoiningModelVariant" EntitySet="JoiningModelVariant" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JoiningModelVariantDistinct_JoiningModelVariant" Association="Self.FK_JoiningModelVariantDistinct_JoiningModelVariant">
+            <End Role="JoiningModelVariant" EntitySet="JoiningModelVariant" />
+            <End Role="JoiningModelVariantDistinct" EntitySet="JoiningModelVariantDistinct" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JoiningPointData_JoiningModelVariantDistinct" Association="Self.FK_JoiningPointData_JoiningModelVariantDistinct">
+            <End Role="JoiningModelVariantDistinct" EntitySet="JoiningModelVariantDistinct" />
+            <End Role="JoiningPointData" EntitySet="JoiningPointData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProcessResult_JoiningPointData" Association="Self.FK_ProcessResult_JoiningPointData">
+            <End Role="JoiningPointData" EntitySet="JoiningPointData" />
+            <End Role="ProcessResult" EntitySet="ProcessResult" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProcessResult_RobotPoint" Association="Self.FK_ProcessResult_RobotPoint">
+            <End Role="RobotPoint" EntitySet="RobotPoint" />
+            <End Role="ProcessResult" EntitySet="ProcessResult" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RobotPoint_RobotRoutine" Association="Self.FK_RobotPoint_RobotRoutine">
+            <End Role="RobotRoutine" EntitySet="RobotRoutine" />
+            <End Role="RobotPoint" EntitySet="RobotPoint" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RobotProgram_RobotDetail" Association="Self.FK_RobotProgram_RobotDetail">
+            <End Role="RobotDetail" EntitySet="RobotDetail" />
+            <End Role="RobotProgram" EntitySet="RobotProgram" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RobotRoutine_RobotProgram" Association="Self.FK_RobotRoutine_RobotProgram">
+            <End Role="RobotProgram" EntitySet="RobotProgram" />
+            <End Role="RobotRoutine" EntitySet="RobotRoutine" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SummaryResult_RobotDetail" Association="Self.FK_SummaryResult_RobotDetail">
+            <End Role="RobotDetail" EntitySet="RobotDetail" />
+            <End Role="SummaryResult" EntitySet="SummaryResult" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="GADATAModel2" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="JoiningFile">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="C_timestamp" Type="DateTime" Precision="3" />
+          <Property Name="C_lasttimestamp" Type="DateTime" Precision="3" />
+          <Property Name="fullFileName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="filename" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="fileDateTime" Type="DateTime" Precision="3" />
+          <Property Name="createDateTime" Type="DateTime" Precision="3" />
+          <Property Name="modifiedDateTime" Type="DateTime" Precision="3" />
+          <Property Name="propertyInfo" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="isDead" Type="Int32" />
+          <Property Name="rev_created" Type="Int32" />
+          <Property Name="rev_modified" Type="Int32" />
+          <NavigationProperty Name="JoiningModelVariant" Relationship="Self.FK_JoiningModelVariant_JoiningFile" FromRole="JoiningFile" ToRole="JoiningModelVariant" />
+        </EntityType>
+        <EntityType Name="JoiningModelVariant">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="joiningFileId" Type="Int32" />
+          <Property Name="C_timestamp" Type="DateTime" Precision="3" />
+          <Property Name="C_lasttimestamp" Type="DateTime" Precision="3" />
+          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="itemId" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="specification" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="spotWeldId" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="process" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="isDead" Type="Int32" />
+          <Property Name="rev_created" Type="Int32" />
+          <Property Name="rev_modified" Type="Int32" />
+          <NavigationProperty Name="JoiningFile" Relationship="Self.FK_JoiningModelVariant_JoiningFile" FromRole="JoiningModelVariant" ToRole="JoiningFile" />
+          <NavigationProperty Name="JoiningModelVariantDistinct" Relationship="Self.FK_JoiningModelVariantDistinct_JoiningModelVariant" FromRole="JoiningModelVariant" ToRole="JoiningModelVariantDistinct" />
+        </EntityType>
+        <EntityType Name="JoiningModelVariantDistinct">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="joiningModelVariantId" Type="Int32" />
+          <Property Name="C_timestamp" Type="DateTime" Precision="3" />
+          <Property Name="C_lasttimestamp" Type="DateTime" Precision="3" />
+          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="isDead" Type="Int32" />
+          <Property Name="rev_created" Type="Int32" />
+          <Property Name="rev_modified" Type="Int32" />
+          <NavigationProperty Name="JoiningModelVariant" Relationship="Self.FK_JoiningModelVariantDistinct_JoiningModelVariant" FromRole="JoiningModelVariantDistinct" ToRole="JoiningModelVariant" />
+          <NavigationProperty Name="JoiningPointData" Relationship="Self.FK_JoiningPointData_JoiningModelVariantDistinct" FromRole="JoiningModelVariantDistinct" ToRole="JoiningPointData" />
+        </EntityType>
+        <EntityType Name="JoiningPointData">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="joiningModelVariantDistinctId" Type="Int32" />
+          <Property Name="isDead" Type="Int32" >
+            <Documentation>
+              <Summary>dead or alive
+</Summary>
+              <LongDescription>Isdead= 0 mean current version
+1 means it is an old revision</LongDescription>
+            </Documentation>
+          </Property>
+          <Property Name="C_timestamp" Type="DateTime" Precision="3" />
+          <Property Name="C_lasttimestamp" Type="DateTime" Precision="3" />
+          <Property Name="POINT_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="JOINT_PART_1" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="JOINT_PART_2" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="JOINT_PART_3" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="JOINT_PART_4" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="JM_X" Type="Double" />
+          <Property Name="JM_Y" Type="Double" />
+          <Property Name="JM_Z" Type="Double" />
+          <Property Name="SPOT_PROCESS_NUMBER" Type="Int32" />
+          <Property Name="SPOT_GEOMETRY_TYPE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PROCESS_LOCATION" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="CAR_SIDE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="VARIANT" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SPOT_WELD_DIAMETER" Type="Double" />
+          <Property Name="ELECTRODE_INTENDATION" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="INSUFFICIENT_WELD_SPOT" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FUNCT_JOINT_No" Type="Int32" />
+          <Property Name="CONCEQUENCE_CLASS" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Color" Type="Int32" />
+          <Property Name="Color_r" Type="Int32" />
+          <Property Name="Color_g" Type="Int32" />
+          <Property Name="Color_b" Type="Int32" />
+          <Property Name="LAYER_TYPE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LAYER_NUMBER" Type="Int32" />
+          <Property Name="POINT_SYMBOL_NUMBER" Type="Int32" />
+          <Property Name="POSITION_TOLERANCE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CO_INFO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CO_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CDSID_Last_Modified_By" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Joining_Model_Reference" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Local_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="USED_IN_VEHICLE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="WELD_CURVE_ID" Type="Int32" />
+          <Property Name="WELD_LENGTH_mm" Type="Double" />
+          <Property Name="WELD_PROCESS_NUMBER" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="WELD_SIZE_A" Type="Double" />
+          <Property Name="WELD_SIZE_S" Type="Double" />
+          <Property Name="WELD_CLASS" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ADDITIONAL_DEMANDS" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="WELD_WIDTH" Type="Double" />
+          <Property Name="GLUE_TRAP" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="WELD_MATERIAL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DEMANDS" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="rev_created" Type="Int32" />
+          <Property Name="rev_modified" Type="Int32" />
+          <Property Name="PART_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FASTENER_ITEM" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FASTENER_TYPE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AUX_DEMANDS" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="VECTOR_VX_1" Type="Double" />
+          <Property Name="VECTOR_VX_2" Type="Double" />
+          <Property Name="VECTOR_VX_3" Type="Double" />
+          <Property Name="VECTOR_VY_1" Type="Double" />
+          <Property Name="VECTOR_VY_2" Type="Double" />
+          <Property Name="VECTOR_VY_3" Type="Double" />
+          <Property Name="VECTOR_VZ_1" Type="Double" />
+          <Property Name="VECTOR_VZ_2" Type="Double" />
+          <Property Name="VECTOR_VZ_3" Type="Double" />
+          <Property Name="jp_comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="JoiningModelVariantDistinct" Relationship="Self.FK_JoiningPointData_JoiningModelVariantDistinct" FromRole="JoiningPointData" ToRole="JoiningModelVariantDistinct" />
+          <NavigationProperty Name="ProcessResult" Relationship="Self.FK_ProcessResult_JoiningPointData" FromRole="JoiningPointData" ToRole="ProcessResult" />
+        </EntityType>
+        <EntityType Name="L_operation">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="C_timestamp" Type="DateTime" Precision="3" />
+          <Property Name="code" Type="Int32" />
+          <Property Name="rev_created" Type="Int32" />
+          <Property Name="tableName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="tableRowId" Type="Int32" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="ProcessResult">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="isDead" Type="Int32" />
+          <Property Name="C_timestamp" Type="DateTime" Precision="3" />
+          <Property Name="C_lasttimestamp" Type="DateTime" Precision="3" />
+          <Property Name="joiningPointDataId" Type="Int32" />
+          <Property Name="robotPointId" Type="Int32" />
+          <Property Name="signature" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="isMissingOnRobot" Type="Int32" />
+          <Property Name="isOnTwoRobots" Type="Int32" />
+          <Property Name="isDuplicated" Type="Int32" />
+          <Property Name="rev_created" Type="Int32" />
+          <Property Name="rev_modified" Type="Int32" />
+          <Property Name="isMissingJointPointData" Type="Int32" />
+          <Property Name="isWrongProcessDataId" Type="Int32" />
+          <Property Name="isMatched" Type="Int32" />
+          <Property Name="isJpdMultipleDefined" Type="Int32" />
+          <Property Name="isTwiceInSequence" Type="Int32" />
+          <Property Name="isPathReversed" Type="Int32" />
+          <Property Name="isMismatchInGeometry" Type="Int32" />
+          <Property Name="areBothPaths" Type="Int32" />
+          <Property Name="deltaWX" Type="Double" />
+          <Property Name="deltaWY" Type="Double" />
+          <Property Name="deltaWZ" Type="Double" />
+          <Property Name="deltaWRX" Type="Double" />
+          <Property Name="deltaWRY" Type="Double" />
+          <Property Name="deltaWRZ" Type="Double" />
+          <Property Name="deltaWSum" Type="Double" />
+          <Property Name="dirWX" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="dirWY" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="dirWZ" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="deltaTX" Type="Double" />
+          <Property Name="deltaTY" Type="Double" />
+          <Property Name="deltaTZ" Type="Double" />
+          <Property Name="deltaTRX" Type="Double" />
+          <Property Name="deltaTRY" Type="Double" />
+          <Property Name="deltaTRZ" Type="Double" />
+          <Property Name="deltaTSum" Type="Double" />
+          <Property Name="deltaPathLen" Type="Double" />
+          <NavigationProperty Name="JoiningPointData" Relationship="Self.FK_ProcessResult_JoiningPointData" FromRole="ProcessResult" ToRole="JoiningPointData" />
+          <NavigationProperty Name="RobotPoint" Relationship="Self.FK_ProcessResult_RobotPoint" FromRole="ProcessResult" ToRole="RobotPoint" />
+        </EntityType>
+        <EntityType Name="RobotDetail">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="robotSupplier" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="isDead" Type="Int32" />
+          <Property Name="C_timestamp" Type="DateTime" Precision="3" />
+          <Property Name="C_lasttimestamp" Type="DateTime" Precision="3" />
+          <Property Name="rev_created" Type="Int32" />
+          <Property Name="rev_modified" Type="Int32" />
+          <NavigationProperty Name="RobotProgram" Relationship="Self.FK_RobotProgram_RobotDetail" FromRole="RobotDetail" ToRole="RobotProgram" />
+          <NavigationProperty Name="SummaryResult" Relationship="Self.FK_SummaryResult_RobotDetail" FromRole="RobotDetail" ToRole="SummaryResult" />
+        </EntityType>
+        <EntityType Name="RobotPoint">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="isDead" Type="Int32" />
+          <Property Name="C_timestamp" Type="DateTime" Precision="3" />
+          <Property Name="C_lasttimestamp" Type="DateTime" Precision="3" />
+          <Property Name="v_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="robotRoutineId" Type="Int32" />
+          <Property Name="datatype" Type="Int32" />
+          <Property Name="X" Type="Double" />
+          <Property Name="Y" Type="Double" />
+          <Property Name="Z" Type="Double" />
+          <Property Name="switchon" Type="Int32" />
+          <Property Name="processValue1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="processValue2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="frame" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="tool" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="vel" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="remote_tool" Type="Int32" />
+          <Property Name="spd" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="traj" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="zone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="programLine" Type="Int32" />
+          <Property Name="process_s" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="rev_created" Type="Int32" />
+          <Property Name="rev_modified" Type="Int32" />
+          <Property Name="pp_comment" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="R_VX_1" Type="Double" />
+          <Property Name="R_VX_2" Type="Double" />
+          <Property Name="R_VX_3" Type="Double" />
+          <Property Name="R_VY_1" Type="Double" />
+          <Property Name="R_VY_2" Type="Double" />
+          <Property Name="R_VY_3" Type="Double" />
+          <Property Name="R_VZ_1" Type="Double" />
+          <Property Name="R_VZ_2" Type="Double" />
+          <Property Name="R_VZ_3" Type="Double" />
+          <NavigationProperty Name="ProcessResult" Relationship="Self.FK_ProcessResult_RobotPoint" FromRole="RobotPoint" ToRole="ProcessResult" />
+          <NavigationProperty Name="RobotRoutine" Relationship="Self.FK_RobotPoint_RobotRoutine" FromRole="RobotPoint" ToRole="RobotRoutine" />
+        </EntityType>
+        <EntityType Name="RobotProgram">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="p_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="isDead" Type="Int32" />
+          <Property Name="C_timestamp" Type="DateTime" Precision="3" />
+          <Property Name="C_lasttimestamp" Type="DateTime" Precision="3" />
+          <Property Name="filename" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="robotDetailId" Type="Int32" />
+          <Property Name="size" Type="Int32" />
+          <Property Name="fileDateTime" Type="DateTime" Precision="3" />
+          <Property Name="fullFilename" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="MD5" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="rev_created" Type="Int32" />
+          <Property Name="rev_modified" Type="Int32" />
+          <NavigationProperty Name="RobotDetail" Relationship="Self.FK_RobotProgram_RobotDetail" FromRole="RobotProgram" ToRole="RobotDetail" />
+          <NavigationProperty Name="RobotRoutine" Relationship="Self.FK_RobotRoutine_RobotProgram" FromRole="RobotProgram" ToRole="RobotRoutine" />
+        </EntityType>
+        <EntityType Name="RobotRoutine">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="s_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="programLine" Type="Int32" />
+          <Property Name="C_timestamp" Type="DateTime" Precision="3" />
+          <Property Name="C_lasttimestamp" Type="DateTime" Precision="3" />
+          <Property Name="isDead" Type="Int32" />
+          <Property Name="RobotProgramId" Type="Int32" />
+          <Property Name="rev_created" Type="Int32" />
+          <Property Name="rev_modified" Type="Int32" />
+          <NavigationProperty Name="RobotPoint" Relationship="Self.FK_RobotPoint_RobotRoutine" FromRole="RobotRoutine" ToRole="RobotPoint" />
+          <NavigationProperty Name="RobotProgram" Relationship="Self.FK_RobotRoutine_RobotProgram" FromRole="RobotRoutine" ToRole="RobotProgram" />
+        </EntityType>
+        <EntityType Name="SummaryResult">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="isDead" Type="Int32" />
+          <Property Name="C_timestamp" Type="DateTime" Precision="3" />
+          <Property Name="C_lasttimestamp" Type="DateTime" Precision="3" />
+          <Property Name="numberPrograms" Type="Int32" />
+          <Property Name="numberRoutines" Type="Int32" />
+          <Property Name="numberPointInstructions" Type="Int32" Nullable="false" />
+          <Property Name="AvgDX" Type="Double" />
+          <Property Name="AvgDY" Type="Double" />
+          <Property Name="AvgDZ" Type="Double" />
+          <Property Name="AvgDelta" Type="Double" />
+          <Property Name="StdDelta" Type="Double" />
+          <Property Name="numberOfWarnings" Type="Int32" />
+          <Property Name="numberOfProcessDataWarnings" Type="Int32" />
+          <Property Name="robotDetailId" Type="Int32" />
+          <Property Name="comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="rev_created" Type="Int32" />
+          <Property Name="rev_modified" Type="Int32" />
+          <Property Name="numberMatchingJPDPP" Type="Int32" />
+          <Property Name="maxDX" Type="Double" />
+          <Property Name="maxDY" Type="Double" />
+          <Property Name="maxDZ" Type="Double" />
+          <NavigationProperty Name="RobotDetail" Relationship="Self.FK_SummaryResult_RobotDetail" FromRole="SummaryResult" ToRole="RobotDetail" />
+        </EntityType>
+        <Association Name="FK_JoiningModelVariant_JoiningFile">
+          <End Role="JoiningFile" Type="Self.JoiningFile" Multiplicity="0..1" />
+          <End Role="JoiningModelVariant" Type="Self.JoiningModelVariant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JoiningFile">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="JoiningModelVariant">
+              <PropertyRef Name="joiningFileId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JoiningModelVariantDistinct_JoiningModelVariant">
+          <End Role="JoiningModelVariant" Type="Self.JoiningModelVariant" Multiplicity="0..1" />
+          <End Role="JoiningModelVariantDistinct" Type="Self.JoiningModelVariantDistinct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JoiningModelVariant">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="JoiningModelVariantDistinct">
+              <PropertyRef Name="joiningModelVariantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JoiningPointData_JoiningModelVariantDistinct">
+          <End Role="JoiningModelVariantDistinct" Type="Self.JoiningModelVariantDistinct" Multiplicity="0..1" />
+          <End Role="JoiningPointData" Type="Self.JoiningPointData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JoiningModelVariantDistinct">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="JoiningPointData">
+              <PropertyRef Name="joiningModelVariantDistinctId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProcessResult_JoiningPointData">
+          <End Role="JoiningPointData" Type="Self.JoiningPointData" Multiplicity="0..1" />
+          <End Role="ProcessResult" Type="Self.ProcessResult" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JoiningPointData">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ProcessResult">
+              <PropertyRef Name="joiningPointDataId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProcessResult_RobotPoint">
+          <End Role="RobotPoint" Type="Self.RobotPoint" Multiplicity="0..1" />
+          <End Role="ProcessResult" Type="Self.ProcessResult" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RobotPoint">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ProcessResult">
+              <PropertyRef Name="robotPointId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RobotProgram_RobotDetail">
+          <End Role="RobotDetail" Type="Self.RobotDetail" Multiplicity="0..1" />
+          <End Role="RobotProgram" Type="Self.RobotProgram" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RobotDetail">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="RobotProgram">
+              <PropertyRef Name="robotDetailId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SummaryResult_RobotDetail">
+          <End Role="RobotDetail" Type="Self.RobotDetail" Multiplicity="0..1" />
+          <End Role="SummaryResult" Type="Self.SummaryResult" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RobotDetail">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="SummaryResult">
+              <PropertyRef Name="robotDetailId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RobotPoint_RobotRoutine">
+          <End Role="RobotRoutine" Type="Self.RobotRoutine" Multiplicity="0..1" />
+          <End Role="RobotPoint" Type="Self.RobotPoint" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RobotRoutine">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="RobotPoint">
+              <PropertyRef Name="robotRoutineId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RobotRoutine_RobotProgram">
+          <End Role="RobotProgram" Type="Self.RobotProgram" Multiplicity="0..1" />
+          <End Role="RobotRoutine" Type="Self.RobotRoutine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RobotProgram">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="RobotRoutine">
+              <PropertyRef Name="RobotProgramId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="GADATAEntitiesPJV" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="JoiningFile" EntityType="Self.JoiningFile" />
+          <EntitySet Name="JoiningModelVariant" EntityType="Self.JoiningModelVariant" />
+          <EntitySet Name="JoiningModelVariantDistinct" EntityType="Self.JoiningModelVariantDistinct" />
+          <EntitySet Name="JoiningPointData" EntityType="Self.JoiningPointData" />
+          <EntitySet Name="L_operation" EntityType="Self.L_operation" />
+          <EntitySet Name="ProcessResult" EntityType="Self.ProcessResult" />
+          <EntitySet Name="RobotDetail" EntityType="Self.RobotDetail" />
+          <EntitySet Name="RobotPoint" EntityType="Self.RobotPoint" />
+          <EntitySet Name="RobotProgram" EntityType="Self.RobotProgram" />
+          <EntitySet Name="RobotRoutine" EntityType="Self.RobotRoutine" />
+          <EntitySet Name="SummaryResult" EntityType="Self.SummaryResult" />
+          <AssociationSet Name="FK_JoiningModelVariant_JoiningFile" Association="Self.FK_JoiningModelVariant_JoiningFile">
+            <End Role="JoiningFile" EntitySet="JoiningFile" />
+            <End Role="JoiningModelVariant" EntitySet="JoiningModelVariant" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JoiningModelVariantDistinct_JoiningModelVariant" Association="Self.FK_JoiningModelVariantDistinct_JoiningModelVariant">
+            <End Role="JoiningModelVariant" EntitySet="JoiningModelVariant" />
+            <End Role="JoiningModelVariantDistinct" EntitySet="JoiningModelVariantDistinct" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JoiningPointData_JoiningModelVariantDistinct" Association="Self.FK_JoiningPointData_JoiningModelVariantDistinct">
+            <End Role="JoiningModelVariantDistinct" EntitySet="JoiningModelVariantDistinct" />
+            <End Role="JoiningPointData" EntitySet="JoiningPointData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProcessResult_JoiningPointData" Association="Self.FK_ProcessResult_JoiningPointData">
+            <End Role="JoiningPointData" EntitySet="JoiningPointData" />
+            <End Role="ProcessResult" EntitySet="ProcessResult" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProcessResult_RobotPoint" Association="Self.FK_ProcessResult_RobotPoint">
+            <End Role="RobotPoint" EntitySet="RobotPoint" />
+            <End Role="ProcessResult" EntitySet="ProcessResult" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RobotProgram_RobotDetail" Association="Self.FK_RobotProgram_RobotDetail">
+            <End Role="RobotDetail" EntitySet="RobotDetail" />
+            <End Role="RobotProgram" EntitySet="RobotProgram" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SummaryResult_RobotDetail" Association="Self.FK_SummaryResult_RobotDetail">
+            <End Role="RobotDetail" EntitySet="RobotDetail" />
+            <End Role="SummaryResult" EntitySet="SummaryResult" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RobotPoint_RobotRoutine" Association="Self.FK_RobotPoint_RobotRoutine">
+            <End Role="RobotRoutine" EntitySet="RobotRoutine" />
+            <End Role="RobotPoint" EntitySet="RobotPoint" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RobotRoutine_RobotProgram" Association="Self.FK_RobotRoutine_RobotProgram">
+            <End Role="RobotProgram" EntitySet="RobotProgram" />
+            <End Role="RobotRoutine" EntitySet="RobotRoutine" />
+          </AssociationSet>
+          <EntitySet Name="ProcessPoints" EntityType="GADATAModel2.ProcessPoints" />
+        </EntityContainer>
+        <EntityType Name="ProcessPoints">
+          <Key>
+            <PropertyRef Name="refID" />
+          </Key>
+          <Property Name="robotname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="process_s" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="p_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="s_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="v_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="programLine" Type="Int32" />
+          <Property Name="DetectTimestamp" Type="DateTime" Precision="3" />
+          <Property Name="x" Type="Double" />
+          <Property Name="y" Type="Double" />
+          <Property Name="z" Type="Double" />
+          <Property Name="isDead" Type="Int32" />
+          <Property Name="rev_modified" Type="Int32" />
+          <Property Name="previousRev" Type="Int32" />
+          <Property Name="RevisionCount" Type="Int64" />
+          <Property Name="C_previoustimestamp" Type="DateTime" Precision="3" />
+          <Property Name="previousX" Type="Double" />
+          <Property Name="previousY" Type="Double" />
+          <Property Name="previousZ" Type="Double" />
+          <Property Name="refID" Type="Int32" Nullable="false" />
+          <Property Name="Delta" Type="Double" />
+          <Property Name="FileTimestamp" Type="DateTime" Precision="3" />
+          <Property Name="locationtree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="GADATAModel2StoreContainer" CdmEntityContainer="GADATAEntitiesPJV">
+          <EntitySetMapping Name="JoiningFile">
+            <EntityTypeMapping TypeName="GADATAModel2.JoiningFile">
+              <MappingFragment StoreEntitySet="JoiningFile">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
+                <ScalarProperty Name="C_lasttimestamp" ColumnName="_lasttimestamp" />
+                <ScalarProperty Name="fullFileName" ColumnName="fullFileName" />
+                <ScalarProperty Name="filename" ColumnName="filename" />
+                <ScalarProperty Name="fileDateTime" ColumnName="fileDateTime" />
+                <ScalarProperty Name="createDateTime" ColumnName="createDateTime" />
+                <ScalarProperty Name="modifiedDateTime" ColumnName="modifiedDateTime" />
+                <ScalarProperty Name="propertyInfo" ColumnName="propertyInfo" />
+                <ScalarProperty Name="isDead" ColumnName="isDead" />
+                <ScalarProperty Name="rev_created" ColumnName="rev_created" />
+                <ScalarProperty Name="rev_modified" ColumnName="rev_modified" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JoiningModelVariant">
+            <EntityTypeMapping TypeName="GADATAModel2.JoiningModelVariant">
+              <MappingFragment StoreEntitySet="JoiningModelVariant">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="joiningFileId" ColumnName="joiningFileId" />
+                <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
+                <ScalarProperty Name="C_lasttimestamp" ColumnName="_lasttimestamp" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="itemId" ColumnName="itemId" />
+                <ScalarProperty Name="specification" ColumnName="specification" />
+                <ScalarProperty Name="spotWeldId" ColumnName="spotWeldId" />
+                <ScalarProperty Name="process" ColumnName="process" />
+                <ScalarProperty Name="isDead" ColumnName="isDead" />
+                <ScalarProperty Name="rev_created" ColumnName="rev_created" />
+                <ScalarProperty Name="rev_modified" ColumnName="rev_modified" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JoiningModelVariantDistinct">
+            <EntityTypeMapping TypeName="GADATAModel2.JoiningModelVariantDistinct">
+              <MappingFragment StoreEntitySet="JoiningModelVariantDistinct">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="joiningModelVariantId" ColumnName="joiningModelVariantId" />
+                <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
+                <ScalarProperty Name="C_lasttimestamp" ColumnName="_lasttimestamp" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="isDead" ColumnName="isDead" />
+                <ScalarProperty Name="rev_created" ColumnName="rev_created" />
+                <ScalarProperty Name="rev_modified" ColumnName="rev_modified" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JoiningPointData">
+            <EntityTypeMapping TypeName="GADATAModel2.JoiningPointData">
+              <MappingFragment StoreEntitySet="JoiningPointData">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="joiningModelVariantDistinctId" ColumnName="joiningModelVariantDistinctId" />
+                <ScalarProperty Name="isDead" ColumnName="isDead" />
+                <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
+                <ScalarProperty Name="C_lasttimestamp" ColumnName="_lasttimestamp" />
+                <ScalarProperty Name="POINT_ID" ColumnName="POINT_ID" />
+                <ScalarProperty Name="JOINT_PART_1" ColumnName="JOINT_PART_1" />
+                <ScalarProperty Name="JOINT_PART_2" ColumnName="JOINT_PART_2" />
+                <ScalarProperty Name="JOINT_PART_3" ColumnName="JOINT_PART_3" />
+                <ScalarProperty Name="JOINT_PART_4" ColumnName="JOINT_PART_4" />
+                <ScalarProperty Name="JM_X" ColumnName="JM_X" />
+                <ScalarProperty Name="JM_Y" ColumnName="JM_Y" />
+                <ScalarProperty Name="JM_Z" ColumnName="JM_Z" />
+                <ScalarProperty Name="SPOT_PROCESS_NUMBER" ColumnName="SPOT_PROCESS_NUMBER" />
+                <ScalarProperty Name="SPOT_GEOMETRY_TYPE" ColumnName="SPOT_GEOMETRY_TYPE" />
+                <ScalarProperty Name="PROCESS_LOCATION" ColumnName="PROCESS_LOCATION" />
+                <ScalarProperty Name="CAR_SIDE" ColumnName="CAR_SIDE" />
+                <ScalarProperty Name="VARIANT" ColumnName="VARIANT" />
+                <ScalarProperty Name="SPOT_WELD_DIAMETER" ColumnName="SPOT_WELD_DIAMETER" />
+                <ScalarProperty Name="ELECTRODE_INTENDATION" ColumnName="ELECTRODE_INTENDATION" />
+                <ScalarProperty Name="INSUFFICIENT_WELD_SPOT" ColumnName="INSUFFICIENT_WELD_SPOT" />
+                <ScalarProperty Name="FUNCT_JOINT_No" ColumnName="FUNCT_JOINT_No" />
+                <ScalarProperty Name="CONCEQUENCE_CLASS" ColumnName="CONCEQUENCE_CLASS" />
+                <ScalarProperty Name="Color" ColumnName="Color" />
+                <ScalarProperty Name="Color_r" ColumnName="Color_r" />
+                <ScalarProperty Name="Color_g" ColumnName="Color_g" />
+                <ScalarProperty Name="Color_b" ColumnName="Color_b" />
+                <ScalarProperty Name="LAYER_TYPE" ColumnName="LAYER_TYPE" />
+                <ScalarProperty Name="LAYER_NUMBER" ColumnName="LAYER_NUMBER" />
+                <ScalarProperty Name="POINT_SYMBOL_NUMBER" ColumnName="POINT_SYMBOL_NUMBER" />
+                <ScalarProperty Name="POSITION_TOLERANCE" ColumnName="POSITION_TOLERANCE" />
+                <ScalarProperty Name="CO" ColumnName="CO" />
+                <ScalarProperty Name="CO_INFO" ColumnName="CO_INFO" />
+                <ScalarProperty Name="CO_ID" ColumnName="CO_ID" />
+                <ScalarProperty Name="CDSID_Last_Modified_By" ColumnName="CDSID_Last_Modified_By" />
+                <ScalarProperty Name="Joining_Model_Reference" ColumnName="Joining_Model_Reference" />
+                <ScalarProperty Name="Local_ID" ColumnName="Local_ID" />
+                <ScalarProperty Name="USED_IN_VEHICLE" ColumnName="USED_IN_VEHICLE" />
+                <ScalarProperty Name="WELD_CURVE_ID" ColumnName="WELD_CURVE_ID" />
+                <ScalarProperty Name="WELD_LENGTH_mm" ColumnName="WELD_LENGTH_mm" />
+                <ScalarProperty Name="WELD_PROCESS_NUMBER" ColumnName="WELD_PROCESS_NUMBER" />
+                <ScalarProperty Name="WELD_SIZE_A" ColumnName="WELD_SIZE_A" />
+                <ScalarProperty Name="WELD_SIZE_S" ColumnName="WELD_SIZE_S" />
+                <ScalarProperty Name="WELD_CLASS" ColumnName="WELD_CLASS" />
+                <ScalarProperty Name="ADDITIONAL_DEMANDS" ColumnName="ADDITIONAL_DEMANDS" />
+                <ScalarProperty Name="WELD_WIDTH" ColumnName="WELD_WIDTH" />
+                <ScalarProperty Name="GLUE_TRAP" ColumnName="GLUE_TRAP" />
+                <ScalarProperty Name="WELD_MATERIAL" ColumnName="WELD_MATERIAL" />
+                <ScalarProperty Name="DEMANDS" ColumnName="DEMANDS" />
+                <ScalarProperty Name="rev_created" ColumnName="rev_created" />
+                <ScalarProperty Name="rev_modified" ColumnName="rev_modified" />
+                <ScalarProperty Name="PART_NAME" ColumnName="PART_NAME" />
+                <ScalarProperty Name="FASTENER_ITEM" ColumnName="FASTENER_ITEM" />
+                <ScalarProperty Name="FASTENER_TYPE" ColumnName="FASTENER_TYPE" />
+                <ScalarProperty Name="AUX_DEMANDS" ColumnName="AUX_DEMANDS" />
+                <ScalarProperty Name="VECTOR_VX_1" ColumnName="VECTOR_VX_1" />
+                <ScalarProperty Name="VECTOR_VX_2" ColumnName="VECTOR_VX_2" />
+                <ScalarProperty Name="VECTOR_VX_3" ColumnName="VECTOR_VX_3" />
+                <ScalarProperty Name="VECTOR_VY_1" ColumnName="VECTOR_VY_1" />
+                <ScalarProperty Name="VECTOR_VY_2" ColumnName="VECTOR_VY_2" />
+                <ScalarProperty Name="VECTOR_VY_3" ColumnName="VECTOR_VY_3" />
+                <ScalarProperty Name="VECTOR_VZ_1" ColumnName="VECTOR_VZ_1" />
+                <ScalarProperty Name="VECTOR_VZ_2" ColumnName="VECTOR_VZ_2" />
+                <ScalarProperty Name="VECTOR_VZ_3" ColumnName="VECTOR_VZ_3" />
+                <ScalarProperty Name="jp_comment" ColumnName="jp_comment" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="L_operation">
+            <EntityTypeMapping TypeName="GADATAModel2.L_operation">
+              <MappingFragment StoreEntitySet="L_operation">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="rev_created" ColumnName="rev_created" />
+                <ScalarProperty Name="tableName" ColumnName="tableName" />
+                <ScalarProperty Name="tableRowId" ColumnName="tableRowId" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProcessResult">
+            <EntityTypeMapping TypeName="GADATAModel2.ProcessResult">
+              <MappingFragment StoreEntitySet="ProcessResult">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="isDead" ColumnName="isDead" />
+                <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
+                <ScalarProperty Name="C_lasttimestamp" ColumnName="_lasttimestamp" />
+                <ScalarProperty Name="joiningPointDataId" ColumnName="joiningPointDataId" />
+                <ScalarProperty Name="robotPointId" ColumnName="robotPointId" />
+                <ScalarProperty Name="signature" ColumnName="signature" />
+                <ScalarProperty Name="isMissingOnRobot" ColumnName="isMissingOnRobot" />
+                <ScalarProperty Name="isOnTwoRobots" ColumnName="isOnTwoRobots" />
+                <ScalarProperty Name="isDuplicated" ColumnName="isDuplicated" />
+                <ScalarProperty Name="rev_created" ColumnName="rev_created" />
+                <ScalarProperty Name="rev_modified" ColumnName="rev_modified" />
+                <ScalarProperty Name="isMissingJointPointData" ColumnName="isMissingJointPointData" />
+                <ScalarProperty Name="isWrongProcessDataId" ColumnName="isWrongProcessDataId" />
+                <ScalarProperty Name="isMatched" ColumnName="isMatched" />
+                <ScalarProperty Name="isJpdMultipleDefined" ColumnName="isJpdMultipleDefined" />
+                <ScalarProperty Name="isTwiceInSequence" ColumnName="isTwiceInSequence" />
+                <ScalarProperty Name="isPathReversed" ColumnName="isPathReversed" />
+                <ScalarProperty Name="isMismatchInGeometry" ColumnName="isMismatchInGeometry" />
+                <ScalarProperty Name="areBothPaths" ColumnName="areBothPaths" />
+                <ScalarProperty Name="deltaWX" ColumnName="deltaWX" />
+                <ScalarProperty Name="deltaWY" ColumnName="deltaWY" />
+                <ScalarProperty Name="deltaWZ" ColumnName="deltaWZ" />
+                <ScalarProperty Name="deltaWRX" ColumnName="deltaWRX" />
+                <ScalarProperty Name="deltaWRY" ColumnName="deltaWRY" />
+                <ScalarProperty Name="deltaWRZ" ColumnName="deltaWRZ" />
+                <ScalarProperty Name="deltaWSum" ColumnName="deltaWSum" />
+                <ScalarProperty Name="dirWX" ColumnName="dirWX" />
+                <ScalarProperty Name="dirWY" ColumnName="dirWY" />
+                <ScalarProperty Name="dirWZ" ColumnName="dirWZ" />
+                <ScalarProperty Name="deltaTX" ColumnName="deltaTX" />
+                <ScalarProperty Name="deltaTY" ColumnName="deltaTY" />
+                <ScalarProperty Name="deltaTZ" ColumnName="deltaTZ" />
+                <ScalarProperty Name="deltaTRX" ColumnName="deltaTRX" />
+                <ScalarProperty Name="deltaTRY" ColumnName="deltaTRY" />
+                <ScalarProperty Name="deltaTRZ" ColumnName="deltaTRZ" />
+                <ScalarProperty Name="deltaTSum" ColumnName="deltaTSum" />
+                <ScalarProperty Name="deltaPathLen" ColumnName="deltaPathLen" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RobotDetail">
+            <EntityTypeMapping TypeName="GADATAModel2.RobotDetail">
+              <MappingFragment StoreEntitySet="RobotDetail">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="robotSupplier" ColumnName="robotSupplier" />
+                <ScalarProperty Name="isDead" ColumnName="isDead" />
+                <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
+                <ScalarProperty Name="C_lasttimestamp" ColumnName="_lasttimestamp" />
+                <ScalarProperty Name="rev_created" ColumnName="rev_created" />
+                <ScalarProperty Name="rev_modified" ColumnName="rev_modified" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RobotPoint">
+            <EntityTypeMapping TypeName="GADATAModel2.RobotPoint">
+              <MappingFragment StoreEntitySet="RobotPoint">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="isDead" ColumnName="isDead" />
+                <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
+                <ScalarProperty Name="C_lasttimestamp" ColumnName="_lasttimestamp" />
+                <ScalarProperty Name="v_name" ColumnName="v_name" />
+                <ScalarProperty Name="robotRoutineId" ColumnName="robotRoutineId" />
+                <ScalarProperty Name="datatype" ColumnName="datatype" />
+                <ScalarProperty Name="X" ColumnName="X" />
+                <ScalarProperty Name="Y" ColumnName="Y" />
+                <ScalarProperty Name="Z" ColumnName="Z" />
+                <ScalarProperty Name="switchon" ColumnName="switchon" />
+                <ScalarProperty Name="processValue1" ColumnName="processValue1" />
+                <ScalarProperty Name="processValue2" ColumnName="processValue2" />
+                <ScalarProperty Name="frame" ColumnName="frame" />
+                <ScalarProperty Name="tool" ColumnName="tool" />
+                <ScalarProperty Name="vel" ColumnName="vel" />
+                <ScalarProperty Name="remote_tool" ColumnName="remote_tool" />
+                <ScalarProperty Name="spd" ColumnName="spd" />
+                <ScalarProperty Name="traj" ColumnName="traj" />
+                <ScalarProperty Name="zone" ColumnName="zone" />
+                <ScalarProperty Name="programLine" ColumnName="programLine" />
+                <ScalarProperty Name="process_s" ColumnName="process_s" />
+                <ScalarProperty Name="rev_created" ColumnName="rev_created" />
+                <ScalarProperty Name="rev_modified" ColumnName="rev_modified" />
+                <ScalarProperty Name="pp_comment" ColumnName="pp_comment" />
+                <ScalarProperty Name="R_VX_1" ColumnName="R_VX_1" />
+                <ScalarProperty Name="R_VX_2" ColumnName="R_VX_2" />
+                <ScalarProperty Name="R_VX_3" ColumnName="R_VX_3" />
+                <ScalarProperty Name="R_VY_1" ColumnName="R_VY_1" />
+                <ScalarProperty Name="R_VY_2" ColumnName="R_VY_2" />
+                <ScalarProperty Name="R_VY_3" ColumnName="R_VY_3" />
+                <ScalarProperty Name="R_VZ_1" ColumnName="R_VZ_1" />
+                <ScalarProperty Name="R_VZ_2" ColumnName="R_VZ_2" />
+                <ScalarProperty Name="R_VZ_3" ColumnName="R_VZ_3" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RobotProgram">
+            <EntityTypeMapping TypeName="GADATAModel2.RobotProgram">
+              <MappingFragment StoreEntitySet="RobotProgram">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="p_name" ColumnName="p_name" />
+                <ScalarProperty Name="isDead" ColumnName="isDead" />
+                <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
+                <ScalarProperty Name="C_lasttimestamp" ColumnName="_lasttimestamp" />
+                <ScalarProperty Name="filename" ColumnName="filename" />
+                <ScalarProperty Name="robotDetailId" ColumnName="robotDetailId" />
+                <ScalarProperty Name="size" ColumnName="size" />
+                <ScalarProperty Name="fileDateTime" ColumnName="fileDateTime" />
+                <ScalarProperty Name="fullFilename" ColumnName="fullFilename" />
+                <ScalarProperty Name="MD5" ColumnName="MD5" />
+                <ScalarProperty Name="rev_created" ColumnName="rev_created" />
+                <ScalarProperty Name="rev_modified" ColumnName="rev_modified" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RobotRoutine">
+            <EntityTypeMapping TypeName="GADATAModel2.RobotRoutine">
+              <MappingFragment StoreEntitySet="RobotRoutine">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="s_name" ColumnName="s_name" />
+                <ScalarProperty Name="programLine" ColumnName="programLine" />
+                <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
+                <ScalarProperty Name="C_lasttimestamp" ColumnName="_lasttimestamp" />
+                <ScalarProperty Name="isDead" ColumnName="isDead" />
+                <ScalarProperty Name="RobotProgramId" ColumnName="RobotProgramId" />
+                <ScalarProperty Name="rev_created" ColumnName="rev_created" />
+                <ScalarProperty Name="rev_modified" ColumnName="rev_modified" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SummaryResult">
+            <EntityTypeMapping TypeName="GADATAModel2.SummaryResult">
+              <MappingFragment StoreEntitySet="SummaryResult">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="isDead" ColumnName="isDead" />
+                <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
+                <ScalarProperty Name="C_lasttimestamp" ColumnName="_lasttimestamp" />
+                <ScalarProperty Name="numberPrograms" ColumnName="numberPrograms" />
+                <ScalarProperty Name="numberRoutines" ColumnName="numberRoutines" />
+                <ScalarProperty Name="numberPointInstructions" ColumnName="numberPointInstructions" />
+                <ScalarProperty Name="AvgDX" ColumnName="AvgDX" />
+                <ScalarProperty Name="AvgDY" ColumnName="AvgDY" />
+                <ScalarProperty Name="AvgDZ" ColumnName="AvgDZ" />
+                <ScalarProperty Name="AvgDelta" ColumnName="AvgDelta" />
+                <ScalarProperty Name="StdDelta" ColumnName="StdDelta" />
+                <ScalarProperty Name="numberOfWarnings" ColumnName="numberOfWarnings" />
+                <ScalarProperty Name="numberOfProcessDataWarnings" ColumnName="numberOfProcessDataWarnings" />
+                <ScalarProperty Name="robotDetailId" ColumnName="robotDetailId" />
+                <ScalarProperty Name="comment" ColumnName="comment" />
+                <ScalarProperty Name="rev_created" ColumnName="rev_created" />
+                <ScalarProperty Name="rev_modified" ColumnName="rev_modified" />
+                <ScalarProperty Name="numberMatchingJPDPP" ColumnName="numberMatchingJPDPP" />
+                <ScalarProperty Name="maxDX" ColumnName="maxDX" />
+                <ScalarProperty Name="maxDY" ColumnName="maxDY" />
+                <ScalarProperty Name="maxDZ" ColumnName="maxDZ" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProcessPoints">
+            <EntityTypeMapping TypeName="GADATAModel2.ProcessPoints">
+              <MappingFragment StoreEntitySet="ProcessPoints">
+                <ScalarProperty Name="locationtree" ColumnName="locationtree" />
+                <ScalarProperty Name="FileTimestamp" ColumnName="FileTimestamp" />
+                <ScalarProperty Name="Delta" ColumnName="Delta" />
+                <ScalarProperty Name="refID" ColumnName="refID" />
+                <ScalarProperty Name="previousZ" ColumnName="previousZ" />
+                <ScalarProperty Name="previousY" ColumnName="previousY" />
+                <ScalarProperty Name="previousX" ColumnName="previousX" />
+                <ScalarProperty Name="C_previoustimestamp" ColumnName="_previoustimestamp" />
+                <ScalarProperty Name="RevisionCount" ColumnName="RevisionCount" />
+                <ScalarProperty Name="previousRev" ColumnName="previousRev" />
+                <ScalarProperty Name="rev_modified" ColumnName="rev_modified" />
+                <ScalarProperty Name="isDead" ColumnName="isDead" />
+                <ScalarProperty Name="z" ColumnName="z" />
+                <ScalarProperty Name="y" ColumnName="y" />
+                <ScalarProperty Name="x" ColumnName="x" />
+                <ScalarProperty Name="DetectTimestamp" ColumnName="DetectTimestamp" />
+                <ScalarProperty Name="programLine" ColumnName="programLine" />
+                <ScalarProperty Name="v_name" ColumnName="v_name" />
+                <ScalarProperty Name="s_name" ColumnName="s_name" />
+                <ScalarProperty Name="p_name" ColumnName="p_name" />
+                <ScalarProperty Name="process_s" ColumnName="process_s" />
+                <ScalarProperty Name="robotname" ColumnName="robotname" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

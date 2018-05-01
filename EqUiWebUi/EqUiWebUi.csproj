@@ -161,6 +161,7 @@
     <Folder Include="Areas\HanfireArea\Models\" />
     <Folder Include="Areas\HanfireArea\Views\Shared\" />
     <Folder Include="Areas\Maximo_ui\Views\Shared\" />
+    <Folder Include="Areas\PJV\Views\Shared\" />
     <Folder Include="Areas\VASC\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
@@ -271,6 +272,59 @@
     <Compile Include="Areas\Maximo_ui\Interface\MaximoInterface.cs" />
     <Compile Include="Areas\Maximo_ui\Maximo_uiAreaRegistration.cs" />
     <Compile Include="Areas\Maximo_ui\Models\Maximo.cs" />
+    <Compile Include="Areas\PJV\Controllers\PJVController.cs" />
+    <Compile Include="Areas\PJV\Models\JoiningFile.cs">
+      <DependentUpon>PJV.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\PJV\Models\JoiningModelVariant.cs">
+      <DependentUpon>PJV.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\PJV\Models\JoiningModelVariantDistinct.cs">
+      <DependentUpon>PJV.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\PJV\Models\JoiningPointData.cs">
+      <DependentUpon>PJV.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\PJV\Models\L_operation.cs">
+      <DependentUpon>PJV.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\PJV\Models\PJV.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PJV.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\PJV\Models\PJV.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PJV.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\PJV\Models\PJV.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PJV.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\PJV\Models\ProcessPoints.cs">
+      <DependentUpon>PJV.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\PJV\Models\ProcessResult.cs">
+      <DependentUpon>PJV.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\PJV\Models\RobotDetail.cs">
+      <DependentUpon>PJV.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\PJV\Models\RobotPoint.cs">
+      <DependentUpon>PJV.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\PJV\Models\RobotProgram.cs">
+      <DependentUpon>PJV.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\PJV\Models\RobotRoutine.cs">
+      <DependentUpon>PJV.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\PJV\Models\SummaryResult.cs">
+      <DependentUpon>PJV.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\PJV\PJVAreaRegistration.cs" />
     <Compile Include="Areas\PlcSupervisie\Controllers\ScreenshotController.cs" />
     <Compile Include="Areas\PlcSupervisie\Models\EQpluginNewformat1_Result.cs">
       <DependentUpon>Gadata.tt</DependentUpon>
@@ -369,6 +423,7 @@
     <Compile Include="Areas\VASC\Controllers\rt_active_infoController.cs" />
     <Compile Include="Areas\VASC\Controllers\serviceController.cs" />
     <Compile Include="Areas\VASC\Controllers\vascController.cs" />
+    <Compile Include="Areas\VASC\Models\breakdownMetadata.cs" />
     <Compile Include="Areas\VASC\Models\c_controller.cs">
       <DependentUpon>VASC.tt</DependentUpon>
     </Compile>
@@ -520,6 +575,16 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Gadata.edmx</DependentUpon>
       <LastGenOutput>Gadata.cs</LastGenOutput>
+    </Content>
+    <Content Include="Areas\PJV\Models\PJV.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>PJV.edmx</DependentUpon>
+      <LastGenOutput>PJV.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Areas\PJV\Models\PJV.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>PJV.edmx</DependentUpon>
+      <LastGenOutput>PJV.cs</LastGenOutput>
     </Content>
     <Content Include="Areas\PlcSupervisie\Models\Gadata.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -975,6 +1040,19 @@
     <Content Include="Areas\VASC\Views\Breakdown\rtJob.cshtml" />
     <Content Include="Areas\VASC\Views\Breakdown\_BreakDownGridLayout.cshtml" />
     <Content Include="Areas\VASC\Views\Breakdown\getBreakdowns.cshtml" />
+    <Content Include="Areas\PJV\Views\web.config" />
+    <Content Include="Areas\Alert\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\PJV\Views\_ViewStart.cshtml" />
+    <EntityDeploy Include="Areas\PJV\Models\PJV.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>PJV.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Areas\PJV\Models\PJV.edmx.diagram">
+      <DependentUpon>PJV.edmx</DependentUpon>
+    </Content>
+    <Content Include="Areas\PJV\Views\PJV\Index.cshtml" />
+    <Content Include="Areas\PJV\Views\PJV\GetChanges.cshtml" />
+    <Content Include="Areas\PJV\Views\PJV\GetL_operation.cshtml" />
     <None Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.svg" />

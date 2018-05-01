@@ -65,10 +65,26 @@
                                 @*Partial stuff here*@
                                 <div class="modal-content">
                                     <div class="modal-body">
-                                        <p>h_alarm_id:@row.Model.h_alarm_id</p>
-                                        <p>Phase1:@row.Model.phase1</p>
-                                        <p>Title: @row.Model.h_alarm.L_error.Title</p>
-                                        <p>Description: @row.Model.h_alarm.L_error.L_description.Description</p>
+                                        <div>
+                                            <p>_ev_breakdownStart: @row.Model._ev_breakdownStart</p>
+                                            <p>_ev_breakdownAck: @row.Model._ev_breakdownAck</p>
+                                        </div>
+                                        <hr />
+                                        <div>
+                                            <p>h_alarm_id:@row.Model.h_alarm_id</p>
+                                            <p>Title: @row.Model.h_alarm.L_error.Title</p>
+                                            <p>Description: @row.Model.h_alarm.L_error.L_description.Description</p>
+                                        </div>
+                                        <hr />
+                                        <p>_Logtext: @row.Model.h_alarm.L_error._Logtext</p>
+                                        <p>_FullLogtext: @row.Model.h_alarm.L_error._FullLogtext</p>
+                                        <hr />
+                                        <div>
+                                            @if (row.Model.phase1 != null)
+                                            {
+                                                <p>Phase1:@row.Model.phase1</p>
+                                            }
+                                        </div>
                                     </div>
                                 </div>
                             </td>
@@ -81,10 +97,23 @@
                                 @*Partial stuff here*@
                                 <div class="modal-content">
                                     <div class="modal-body">
-                                        <p>rt_alarm_id:@row.Model.rt_alarm_id</p>
-                                        <p>Phase1:@row.Model.phase1</p>
-                                        <p>Title: @row.Model.rt_alarm.title</p>
-                                        <p>Description: @row.Model.rt_alarm.description</p>
+                                        <div>
+                                            <p>_ev_breakdownStart: @row.Model._ev_breakdownStart</p>
+                                            <p>_ev_breakdownAck: @row.Model._ev_breakdownAck</p>
+                                        </div>
+                                        <hr />
+                                        <div>
+                                            <p>rt_alarm_id:@row.Model.rt_alarm_id</p>
+                                            <p>Title: @row.Model.rt_alarm.title</p>
+                                            <p>Description: @row.Model.rt_alarm.description</p>
+                                        </div>
+                                        <hr />
+                                        <div>
+                                            @if (row.Model.phase1 != null)
+                                            {
+                                                <p>Phase1:@row.Model.phase1</p>
+                                            }
+                                        </div>
                                     </div>
                                 </div>
                             </td>
@@ -94,7 +123,16 @@
                     {
                         <tr>
                             <td colspan="@Model.Columns.Count()">
-                                <div>no linked alarm</div>
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                        <div>
+                                            <p>_ev_breakdownStart: @row.Model._ev_breakdownStart</p>
+                                            <p>_ev_breakdownAck: @row.Model._ev_breakdownAck</p>
+                                        </div>
+                                        <hr />
+                                        <p>no linked alarms</p>
+                                    </div>
+                                </div>
                             </td>
                         </tr>
 

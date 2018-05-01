@@ -1,0 +1,35 @@
+﻿@model IQueryable<EqUiWebUi.Areas.PJV.Models.ProcessPoints>
+@{
+    ViewBag.Title = "GetChanges";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>GetChanges (processpoints with delta from last known robotpos)</h2>
+
+@Html.Grid(Model).Named("ProcessPoints").Build(columns =>
+{
+    columns.Add(c => c.refID).Titled("refID").InitialSort(GridSortOrder.Desc);
+    columns.Add(c => c.robotname).Titled("robotname");
+    columns.Add(c => c.process_s).Titled("process_s");
+    columns.Add(c => c.p_name).Titled("p_name");
+    columns.Add(c => c.s_name).Titled("s_name");
+    columns.Add(c => c.v_name).Titled("v_name");
+    columns.Add(c => c.programLine).Titled("programLine");
+    columns.Add(c => c.DetectTimestamp).Titled("DetectTimestamp");
+    columns.Add(c => c.FileTimestamp).Titled("FileTimestamp");
+    columns.Add(c => c.RevisionCount).Titled("RevisionCount");
+    columns.Add(c => c.Delta).Titled("Delta");
+
+}).Filterable(true).Sortable(true).Pageable(pager =>
+{
+    pager.RowsPerPage = 20;
+}).Empty("Did not find anything").Css("table-hover")
+
+
+@section scripts{
+    <script>
+        //full with screen
+        $("#allcontent").removeClass("body-content");
+        $("#allcontent").removeClass("container");
+    </script>
+}

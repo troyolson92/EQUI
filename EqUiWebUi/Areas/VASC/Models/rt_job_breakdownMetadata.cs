@@ -10,7 +10,7 @@ namespace EqUiWebUi.Areas.VASC.Models
     {
     }
 
-    //c_service_setup metadata
+    //rt_job_breakdown metadata
     [MetadataType(typeof(rt_job_breakdown))]
     public partial class rt_job_breakdown
     {

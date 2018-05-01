@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="e897275dabb849ff821d16bb1269a2ac" Name="Diagram1" ZoomLevel="59">
+        <EntityTypeShape EntityType="GADATAModel2.JoiningFile" Width="1.5" PointX="1" PointY="7.375" IsExpanded="true" FillColor="Yellow" />
+        <EntityTypeShape EntityType="GADATAModel2.JoiningModelVariant" Width="1.5" PointX="3.25" PointY="7.25" IsExpanded="true" FillColor="Yellow" />
+        <EntityTypeShape EntityType="GADATAModel2.JoiningModelVariantDistinct" Width="1.5" PointX="5.5" PointY="7.625" IsExpanded="true" FillColor="Yellow" />
+        <EntityTypeShape EntityType="GADATAModel2.JoiningPointData" Width="1.5" PointX="7.75" PointY="2.25" IsExpanded="true" FillColor="Yellow" />
+        <EntityTypeShape EntityType="GADATAModel2.L_operation" Width="1.5" PointX="15.125" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="GADATAModel2.ProcessResult" Width="1.5" PointX="11.375" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GADATAModel2.RobotDetail" Width="1.5" PointX="22.5" PointY="11.625" IsExpanded="true" FillColor="Fuchsia" />
+        <EntityTypeShape EntityType="GADATAModel2.RobotPoint" Width="1.5" PointX="18.75" PointY="2.75" IsExpanded="true" FillColor="Fuchsia" />
+        <EntityTypeShape EntityType="GADATAModel2.RobotProgram" Width="1.5" PointX="22.5" PointY="7" IsExpanded="true" FillColor="Fuchsia" />
+        <EntityTypeShape EntityType="GADATAModel2.RobotRoutine" Width="1.5" PointX="21" PointY="3.125" IsExpanded="true" FillColor="Fuchsia" />
+        <EntityTypeShape EntityType="GADATAModel2.SummaryResult" Width="1.5" PointX="13.875" PointY="8.375" IsExpanded="true" />
+        <AssociationConnector Association="GADATAModel2.FK_JoiningModelVariant_JoiningFile" ManuallyRouted="false" />
+        <AssociationConnector Association="GADATAModel2.FK_JoiningModelVariantDistinct_JoiningModelVariant" ManuallyRouted="false" />
+        <AssociationConnector Association="GADATAModel2.FK_JoiningPointData_JoiningModelVariantDistinct" ManuallyRouted="false" />
+        <AssociationConnector Association="GADATAModel2.FK_ProcessResult_JoiningPointData" ManuallyRouted="false" />
+        <AssociationConnector Association="GADATAModel2.FK_ProcessResult_RobotPoint" ManuallyRouted="false" />
+        <AssociationConnector Association="GADATAModel2.FK_RobotProgram_RobotDetail" ManuallyRouted="false" />
+        <AssociationConnector Association="GADATAModel2.FK_SummaryResult_RobotDetail" ManuallyRouted="false" />
+        <AssociationConnector Association="GADATAModel2.FK_RobotPoint_RobotRoutine" ManuallyRouted="false" />
+        <AssociationConnector Association="GADATAModel2.FK_RobotRoutine_RobotProgram" ManuallyRouted="false" >
+        </AssociationConnector>
+        <EntityTypeShape EntityType="GADATAModel2.ProcessPoints" Width="1.5" PointX="16.125" PointY="7.125" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
