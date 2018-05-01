@@ -38,5 +38,7 @@ namespace EqUiWebUi.Areas.VASC.Models
         public Nullable<int> rt_alarm_id { get; set; }
     
         public virtual rt_job rt_job { get; set; }
+        public virtual h_alarm h_alarm { get; set; }
+        public virtual rt_alarm rt_alarm { get; set; }
     }
 }

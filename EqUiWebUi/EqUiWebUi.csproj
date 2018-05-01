@@ -404,14 +404,41 @@
       <DependentUpon>VASC.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\VASC\Models\c_variable_searchMetadata.cs" />
+    <Compile Include="Areas\VASC\Models\h_alarm.cs">
+      <DependentUpon>VASC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VASC\Models\L_actions.cs">
+      <DependentUpon>VASC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VASC\Models\L_category.cs">
+      <DependentUpon>VASC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VASC\Models\L_causes.cs">
+      <DependentUpon>VASC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VASC\Models\L_consequences.cs">
+      <DependentUpon>VASC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VASC\Models\L_description.cs">
+      <DependentUpon>VASC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VASC\Models\L_error.cs">
+      <DependentUpon>VASC.tt</DependentUpon>
+    </Compile>
     <Compile Include="Areas\VASC\Models\L_operation.cs">
       <DependentUpon>VASC.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\VASC\Models\l_operationMetadata.cs" />
+    <Compile Include="Areas\VASC\Models\L_type.cs">
+      <DependentUpon>VASC.tt</DependentUpon>
+    </Compile>
     <Compile Include="Areas\VASC\Models\rt_active_info.cs">
       <DependentUpon>VASC.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\VASC\Models\rt_active_infoMetadata.cs" />
+    <Compile Include="Areas\VASC\Models\rt_alarm.cs">
+      <DependentUpon>VASC.tt</DependentUpon>
+    </Compile>
     <Compile Include="Areas\VASC\Models\rt_controller.cs">
       <DependentUpon>VASC.tt</DependentUpon>
     </Compile>
