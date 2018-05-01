@@ -145,6 +145,83 @@
           <Property Name="insert_update" Type="int" Nullable="false" />
           <Property Name="rt_table" Type="varchar(max)" />
         </EntityType>
+        <EntityType Name="h_alarm">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="controller_id" Type="int" />
+          <Property Name="_timestamp" Type="datetime" />
+          <Property Name="error_timestamp" Type="datetime" />
+          <Property Name="SequenceNumber" Type="int" />
+          <Property Name="L_error_id" Type="int" />
+          <Property Name="CategoryId" Type="int" />
+        </EntityType>
+        <EntityType Name="L_actions">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Actions" Type="varchar(max)" />
+          <Property Name="_timestamp" Type="datetime" />
+          <Property Name="_session" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="L_category">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="Category" Type="varchar(max)" />
+          <Property Name="_timestamp" Type="datetime" />
+          <Property Name="_session" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="L_causes">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Causes" Type="varchar(max)" />
+          <Property Name="_timestamp" Type="datetime" />
+          <Property Name="_session" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="L_consequences">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Consequences" Type="varchar(max)" />
+          <Property Name="_timestamp" Type="datetime" />
+          <Property Name="_session" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="L_description">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="varchar(max)" />
+          <Property Name="CleanDescription" Type="varchar(max)" />
+          <Property Name="_timestamp" Type="datetime" />
+          <Property Name="_session" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="L_error">
+          <Key>
+            <PropertyRef Name="_id" />
+          </Key>
+          <Property Name="_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Number" Type="int" />
+          <Property Name="Title" Type="varchar(max)" />
+          <Property Name="CategoryId" Type="int" />
+          <Property Name="l_description_id" Type="int" />
+          <Property Name="l_consequences_id" Type="int" />
+          <Property Name="l_causes_id" Type="int" />
+          <Property Name="l_actions_id" Type="int" />
+          <Property Name="l_type_id" Type="int" />
+          <Property Name="c_ClassificationId" Type="int" />
+          <Property Name="c_SubgroupId" Type="int" />
+          <Property Name="c_RuleId" Type="int" />
+          <Property Name="CleanTitle" Type="varchar(max)" />
+          <Property Name="ClassCalculated" Type="bit" />
+        </EntityType>
         <EntityType Name="L_operation">
           <Key>
             <PropertyRef Name="ID" />
@@ -155,6 +232,15 @@
           <Property Name="Vasc_name" Type="varchar" MaxLength="50" />
           <Property Name="controller_id" Type="int" />
           <Property Name="Description" Type="varchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="L_type">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Type" Type="varchar(max)" />
+          <Property Name="_timestamp" Type="datetime" />
+          <Property Name="_session" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="rt_active_info">
           <Key>
@@ -179,6 +265,24 @@
           <Property Name="task_execution_status" Type="int" />
           <Property Name="ts_breakDownAck" Type="datetime" />
           <Property Name="ts_breakDownStart" Type="datetime" />
+        </EntityType>
+        <EntityType Name="rt_alarm">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="controller_id" Type="int" />
+          <Property Name="_timestamp" Type="datetime" />
+          <Property Name="error_timestamp" Type="datetime" />
+          <Property Name="sequenceNumber" Type="int" />
+          <Property Name="number" Type="int" />
+          <Property Name="categoryId" Type="int" />
+          <Property Name="title" Type="varchar(max)" />
+          <Property Name="description" Type="varchar(max)" />
+          <Property Name="consequences" Type="varchar(max)" />
+          <Property Name="causes" Type="varchar(max)" />
+          <Property Name="actions" Type="varchar(max)" />
+          <Property Name="type" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="rt_controller">
           <Key>
@@ -326,6 +430,90 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_h_alarm_c_controller">
+          <End Role="c_controller" Type="Self.c_controller" Multiplicity="0..1" />
+          <End Role="h_alarm" Type="Self.h_alarm" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_controller">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="h_alarm">
+              <PropertyRef Name="controller_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_h_alarm_L_error">
+          <End Role="L_error" Type="Self.L_error" Multiplicity="0..1" />
+          <End Role="h_alarm" Type="Self.h_alarm" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="L_error">
+              <PropertyRef Name="_id" />
+            </Principal>
+            <Dependent Role="h_alarm">
+              <PropertyRef Name="L_error_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_L_error_L_actions">
+          <End Role="L_actions" Type="Self.L_actions" Multiplicity="0..1" />
+          <End Role="L_error" Type="Self.L_error" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="L_actions">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="L_error">
+              <PropertyRef Name="l_actions_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_L_error_L_causes">
+          <End Role="L_causes" Type="Self.L_causes" Multiplicity="0..1" />
+          <End Role="L_error" Type="Self.L_error" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="L_causes">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="L_error">
+              <PropertyRef Name="l_causes_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_L_error_L_consequences">
+          <End Role="L_consequences" Type="Self.L_consequences" Multiplicity="0..1" />
+          <End Role="L_error" Type="Self.L_error" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="L_consequences">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="L_error">
+              <PropertyRef Name="l_consequences_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_L_error_L_description">
+          <End Role="L_description" Type="Self.L_description" Multiplicity="0..1" />
+          <End Role="L_error" Type="Self.L_error" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="L_description">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="L_error">
+              <PropertyRef Name="l_description_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_L_error_L_type">
+          <End Role="L_type" Type="Self.L_type" Multiplicity="0..1" />
+          <End Role="L_error" Type="Self.L_error" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="L_type">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="L_error">
+              <PropertyRef Name="l_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_L_operation_c_controller">
           <End Role="c_controller" Type="Self.c_controller" Multiplicity="0..1" />
           <End Role="L_operation" Type="Self.L_operation" Multiplicity="*" />
@@ -347,6 +535,18 @@
             </Principal>
             <Dependent Role="rt_active_info">
               <PropertyRef Name="c_controller_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rt_alarm_c_controller">
+          <End Role="c_controller" Type="Self.c_controller" Multiplicity="0..1" />
+          <End Role="rt_alarm" Type="Self.rt_alarm" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_controller">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="rt_alarm">
+              <PropertyRef Name="controller_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -419,6 +619,30 @@
             </Principal>
             <Dependent Role="rt_event">
               <PropertyRef Name="c_controller_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rt_job_breakdown_h_alarm">
+          <End Role="h_alarm" Type="Self.h_alarm" Multiplicity="0..1" />
+          <End Role="rt_job_breakdown" Type="Self.rt_job_breakdown" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="h_alarm">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="rt_job_breakdown">
+              <PropertyRef Name="h_alarm_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rt_job_breakdown_rt_alarm">
+          <End Role="rt_alarm" Type="Self.rt_alarm" Multiplicity="0..1" />
+          <End Role="rt_job_breakdown" Type="Self.rt_job_breakdown" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="rt_alarm">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="rt_job_breakdown">
+              <PropertyRef Name="rt_alarm_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -516,8 +740,17 @@
           <EntitySet Name="c_service_setup" EntityType="Self.c_service_setup" Schema="NGAC" store:Type="Tables" />
           <EntitySet Name="c_variable" EntityType="Self.c_variable" Schema="NGAC" store:Type="Tables" />
           <EntitySet Name="c_variable_search" EntityType="Self.c_variable_search" Schema="NGAC" store:Type="Tables" />
+          <EntitySet Name="h_alarm" EntityType="Self.h_alarm" Schema="NGAC" store:Type="Tables" />
+          <EntitySet Name="L_actions" EntityType="Self.L_actions" Schema="NGAC" store:Type="Tables" />
+          <EntitySet Name="L_category" EntityType="Self.L_category" Schema="NGAC" store:Type="Tables" />
+          <EntitySet Name="L_causes" EntityType="Self.L_causes" Schema="NGAC" store:Type="Tables" />
+          <EntitySet Name="L_consequences" EntityType="Self.L_consequences" Schema="NGAC" store:Type="Tables" />
+          <EntitySet Name="L_description" EntityType="Self.L_description" Schema="NGAC" store:Type="Tables" />
+          <EntitySet Name="L_error" EntityType="Self.L_error" Schema="NGAC" store:Type="Tables" />
           <EntitySet Name="L_operation" EntityType="Self.L_operation" Schema="NGAC" store:Type="Tables" />
+          <EntitySet Name="L_type" EntityType="Self.L_type" Schema="NGAC" store:Type="Tables" />
           <EntitySet Name="rt_active_info" EntityType="Self.rt_active_info" Schema="NGAC" store:Type="Tables" />
+          <EntitySet Name="rt_alarm" EntityType="Self.rt_alarm" Schema="NGAC" store:Type="Tables" />
           <EntitySet Name="rt_controller" EntityType="Self.rt_controller" Schema="NGAC" store:Type="Tables" />
           <EntitySet Name="rt_csv_file" EntityType="Self.rt_csv_file" Schema="NGAC" store:Type="Tables" />
           <EntitySet Name="rt_device_info" EntityType="Self.rt_device_info" Schema="NGAC" store:Type="Tables" />
@@ -530,6 +763,34 @@
             <End Role="c_controller_class" EntitySet="c_controller_class" />
             <End Role="c_controller" EntitySet="c_controller" />
           </AssociationSet>
+          <AssociationSet Name="FK_h_alarm_c_controller" Association="Self.FK_h_alarm_c_controller">
+            <End Role="c_controller" EntitySet="c_controller" />
+            <End Role="h_alarm" EntitySet="h_alarm" />
+          </AssociationSet>
+          <AssociationSet Name="FK_h_alarm_L_error" Association="Self.FK_h_alarm_L_error">
+            <End Role="L_error" EntitySet="L_error" />
+            <End Role="h_alarm" EntitySet="h_alarm" />
+          </AssociationSet>
+          <AssociationSet Name="FK_L_error_L_actions" Association="Self.FK_L_error_L_actions">
+            <End Role="L_actions" EntitySet="L_actions" />
+            <End Role="L_error" EntitySet="L_error" />
+          </AssociationSet>
+          <AssociationSet Name="FK_L_error_L_causes" Association="Self.FK_L_error_L_causes">
+            <End Role="L_causes" EntitySet="L_causes" />
+            <End Role="L_error" EntitySet="L_error" />
+          </AssociationSet>
+          <AssociationSet Name="FK_L_error_L_consequences" Association="Self.FK_L_error_L_consequences">
+            <End Role="L_consequences" EntitySet="L_consequences" />
+            <End Role="L_error" EntitySet="L_error" />
+          </AssociationSet>
+          <AssociationSet Name="FK_L_error_L_description" Association="Self.FK_L_error_L_description">
+            <End Role="L_description" EntitySet="L_description" />
+            <End Role="L_error" EntitySet="L_error" />
+          </AssociationSet>
+          <AssociationSet Name="FK_L_error_L_type" Association="Self.FK_L_error_L_type">
+            <End Role="L_type" EntitySet="L_type" />
+            <End Role="L_error" EntitySet="L_error" />
+          </AssociationSet>
           <AssociationSet Name="FK_L_operation_c_controller" Association="Self.FK_L_operation_c_controller">
             <End Role="c_controller" EntitySet="c_controller" />
             <End Role="L_operation" EntitySet="L_operation" />
@@ -537,6 +798,10 @@
           <AssociationSet Name="FK_rt_active_info_c_controller" Association="Self.FK_rt_active_info_c_controller">
             <End Role="c_controller" EntitySet="c_controller" />
             <End Role="rt_active_info" EntitySet="rt_active_info" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rt_alarm_c_controller" Association="Self.FK_rt_alarm_c_controller">
+            <End Role="c_controller" EntitySet="c_controller" />
+            <End Role="rt_alarm" EntitySet="rt_alarm" />
           </AssociationSet>
           <AssociationSet Name="FK_rt_controller_c_controller" Association="Self.FK_rt_controller_c_controller">
             <End Role="c_controller" EntitySet="c_controller" />
@@ -561,6 +826,14 @@
           <AssociationSet Name="FK_rt_event_c_controller" Association="Self.FK_rt_event_c_controller">
             <End Role="c_controller" EntitySet="c_controller" />
             <End Role="rt_event" EntitySet="rt_event" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rt_job_breakdown_h_alarm" Association="Self.FK_rt_job_breakdown_h_alarm">
+            <End Role="h_alarm" EntitySet="h_alarm" />
+            <End Role="rt_job_breakdown" EntitySet="rt_job_breakdown" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rt_job_breakdown_rt_alarm" Association="Self.FK_rt_job_breakdown_rt_alarm">
+            <End Role="rt_alarm" EntitySet="rt_alarm" />
+            <End Role="rt_job_breakdown" EntitySet="rt_job_breakdown" />
           </AssociationSet>
           <AssociationSet Name="FK_rt_job_breakdown_rt_job" Association="Self.FK_rt_job_breakdown_rt_job">
             <End Role="rt_job" EntitySet="rt_job" />
@@ -595,21 +868,6 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="GADATAModelVASC" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="c_csv_log">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="enable_bit" Type="Int32" Nullable="false" />
-          <Property Name="csv_filename" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="logcount_variable" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="rt_table" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="poll_rate" Type="Int32" Nullable="false" />
-          <Property Name="comment" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="Tempnote" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="flags" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="rt_csv_file" Relationship="GADATAModelVASC.FK_rt_csv_file_c_csv_log" FromRole="c_csv_log" ToRole="rt_csv_file" />
-        </EntityType>
         <EntityType Name="c_service_setup">
           <Key>
             <PropertyRef Name="id" />
@@ -671,7 +929,6 @@
           <NavigationProperty Name="rt_search_value" Relationship="GADATAModelVASC.FK_rt_Search_value_c_variable_search" FromRole="c_variable_search" ToRole="rt_search_value" />
         </EntityType>
         <EntityContainer Name="GADATAEntitiesVASC" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="c_csv_log" EntityType="Self.c_csv_log" />
           <EntitySet Name="c_service_setup" EntityType="Self.c_service_setup" />
           <EntitySet Name="c_device_info" EntityType="Self.c_device_info" />
           <EntitySet Name="c_job" EntityType="Self.c_job" />
@@ -689,16 +946,7 @@
             <End Role="c_controller" EntitySet="c_controller" />
             <End Role="rt_active_info" EntitySet="rt_active_info" />
           </AssociationSet>
-          <EntitySet Name="rt_csv_file" EntityType="GADATAModelVASC.rt_csv_file" />
           <EntitySet Name="rt_device_info" EntityType="GADATAModelVASC.rt_device_info" />
-          <AssociationSet Name="FK_rt_csv_file_c_controller" Association="GADATAModelVASC.FK_rt_csv_file_c_controller">
-            <End Role="c_controller" EntitySet="c_controller" />
-            <End Role="rt_csv_file" EntitySet="rt_csv_file" />
-          </AssociationSet>
-          <AssociationSet Name="FK_rt_csv_file_c_csv_log" Association="GADATAModelVASC.FK_rt_csv_file_c_csv_log">
-            <End Role="c_csv_log" EntitySet="c_csv_log" />
-            <End Role="rt_csv_file" EntitySet="rt_csv_file" />
-          </AssociationSet>
           <AssociationSet Name="FK_rt_device_info_c_controller" Association="GADATAModelVASC.FK_rt_device_info_c_controller">
             <End Role="c_controller" EntitySet="c_controller" />
             <End Role="rt_device_info" EntitySet="rt_device_info" />
@@ -754,6 +1002,65 @@
             <End Role="c_job" EntitySet="c_job" />
             <End Role="rt_job" EntitySet="rt_job" />
           </AssociationSet>
+          <EntitySet Name="c_csv_log" EntityType="GADATAModelVASC.c_csv_log" />
+          <EntitySet Name="rt_csv_file" EntityType="GADATAModelVASC.rt_csv_file" />
+          <AssociationSet Name="FK_rt_csv_file_c_controller" Association="GADATAModelVASC.FK_rt_csv_file_c_controller">
+            <End Role="c_controller" EntitySet="c_controller" />
+            <End Role="rt_csv_file" EntitySet="rt_csv_file" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rt_csv_file_c_csv_log" Association="GADATAModelVASC.FK_rt_csv_file_c_csv_log">
+            <End Role="c_csv_log" EntitySet="c_csv_log" />
+            <End Role="rt_csv_file" EntitySet="rt_csv_file" />
+          </AssociationSet>
+          <EntitySet Name="rt_alarm" EntityType="GADATAModelVASC.rt_alarm" />
+          <AssociationSet Name="FK_rt_alarm_c_controller" Association="GADATAModelVASC.FK_rt_alarm_c_controller">
+            <End Role="c_controller" EntitySet="c_controller" />
+            <End Role="rt_alarm" EntitySet="rt_alarm" />
+          </AssociationSet>
+          <EntitySet Name="h_alarm" EntityType="GADATAModelVASC.h_alarm" />
+          <EntitySet Name="L_actions" EntityType="GADATAModelVASC.L_actions" />
+          <EntitySet Name="L_causes" EntityType="GADATAModelVASC.L_causes" />
+          <EntitySet Name="L_consequences" EntityType="GADATAModelVASC.L_consequences" />
+          <EntitySet Name="L_description" EntityType="GADATAModelVASC.L_description" />
+          <EntitySet Name="L_error" EntityType="GADATAModelVASC.L_error" />
+          <EntitySet Name="L_type" EntityType="GADATAModelVASC.L_type" />
+          <EntitySet Name="L_category" EntityType="GADATAModelVASC.L_category" />
+          <AssociationSet Name="FK_h_alarm_c_controller" Association="GADATAModelVASC.FK_h_alarm_c_controller">
+            <End Role="c_controller" EntitySet="c_controller" />
+            <End Role="h_alarm" EntitySet="h_alarm" />
+          </AssociationSet>
+          <AssociationSet Name="FK_h_alarm_L_error" Association="GADATAModelVASC.FK_h_alarm_L_error">
+            <End Role="L_error" EntitySet="L_error" />
+            <End Role="h_alarm" EntitySet="h_alarm" />
+          </AssociationSet>
+          <AssociationSet Name="FK_L_error_L_actions" Association="GADATAModelVASC.FK_L_error_L_actions">
+            <End Role="L_actions" EntitySet="L_actions" />
+            <End Role="L_error" EntitySet="L_error" />
+          </AssociationSet>
+          <AssociationSet Name="FK_L_error_L_causes" Association="GADATAModelVASC.FK_L_error_L_causes">
+            <End Role="L_causes" EntitySet="L_causes" />
+            <End Role="L_error" EntitySet="L_error" />
+          </AssociationSet>
+          <AssociationSet Name="FK_L_error_L_consequences" Association="GADATAModelVASC.FK_L_error_L_consequences">
+            <End Role="L_consequences" EntitySet="L_consequences" />
+            <End Role="L_error" EntitySet="L_error" />
+          </AssociationSet>
+          <AssociationSet Name="FK_L_error_L_description" Association="GADATAModelVASC.FK_L_error_L_description">
+            <End Role="L_description" EntitySet="L_description" />
+            <End Role="L_error" EntitySet="L_error" />
+          </AssociationSet>
+          <AssociationSet Name="FK_L_error_L_type" Association="GADATAModelVASC.FK_L_error_L_type">
+            <End Role="L_type" EntitySet="L_type" />
+            <End Role="L_error" EntitySet="L_error" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rt_job_breakdown_h_alarm" Association="GADATAModelVASC.FK_rt_job_breakdown_h_alarm">
+            <End Role="h_alarm" EntitySet="h_alarm" />
+            <End Role="rt_job_breakdown" EntitySet="rt_job_breakdown" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rt_job_breakdown_rt_alarm" Association="GADATAModelVASC.FK_rt_job_breakdown_rt_alarm">
+            <End Role="rt_alarm" EntitySet="rt_alarm" />
+            <End Role="rt_job_breakdown" EntitySet="rt_job_breakdown" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="c_error">
           <Key>
@@ -790,7 +1097,6 @@
           <Property Name="CLassificationId" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="c_controller_class" Relationship="GADATAModelVASC.FK_c_controller_c_controller_class" FromRole="c_controller" ToRole="c_controller_class" />
           <NavigationProperty Name="rt_active_info" Relationship="GADATAModelVASC.FK_rt_active_info_c_controller" FromRole="c_controller" ToRole="rt_active_info" />
-          <NavigationProperty Name="rt_csv_file" Relationship="GADATAModelVASC.FK_rt_csv_file_c_controller" FromRole="c_controller" ToRole="rt_csv_file" />
           <NavigationProperty Name="rt_device_info" Relationship="GADATAModelVASC.FK_rt_device_info_c_controller" FromRole="c_controller" ToRole="rt_device_info" />
           <NavigationProperty Name="rt_value" Relationship="GADATAModelVASC.FK_rt_value_c_controller" FromRole="c_controller" ToRole="rt_value" />
           <NavigationProperty Name="rt_event" Relationship="GADATAModelVASC.FK_rt_event_c_controller" FromRole="c_controller" ToRole="rt_event" />
@@ -798,6 +1104,9 @@
           <NavigationProperty Name="L_operation" Relationship="GADATAModelVASC.FK_L_operation_c_controller" FromRole="c_controller" ToRole="L_operation" />
           <NavigationProperty Name="rt_search_value" Relationship="GADATAModelVASC.FK_rt_Search_value_c_controller" FromRole="c_controller" ToRole="rt_search_value" />
           <NavigationProperty Name="rt_job" Relationship="GADATAModelVASC.FK_rt_job_c_controller" FromRole="c_controller" ToRole="rt_job" />
+          <NavigationProperty Name="rt_csv_file" Relationship="GADATAModelVASC.FK_rt_csv_file_c_controller" FromRole="c_controller" ToRole="rt_csv_file" />
+          <NavigationProperty Name="rt_alarm" Relationship="GADATAModelVASC.FK_rt_alarm_c_controller" FromRole="c_controller" ToRole="rt_alarm" />
+          <NavigationProperty Name="h_alarm" Relationship="GADATAModelVASC.FK_h_alarm_c_controller" FromRole="c_controller" ToRole="h_alarm" />
         </EntityType>
         <EntityType Name="c_controller_class">
           <Key>
@@ -885,24 +1194,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="rt_csv_file">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="C_timestamp" Type="DateTime" Precision="3" />
-          <Property Name="c_controller_id" Type="Int32" />
-          <Property Name="c_csv_log_id" Type="Int32" />
-          <Property Name="lastDateRecord" Type="DateTime" Precision="3" />
-          <Property Name="lastLineRead" Type="Int32" />
-          <Property Name="lastFileSize" Type="Int32" />
-          <Property Name="lastStreamPos" Type="Int32" />
-          <Property Name="lastLineRead_2" Type="Int32" />
-          <Property Name="lastFileSize_2" Type="Int32" />
-          <Property Name="lastStreamPos_2" Type="Int32" />
-          <NavigationProperty Name="c_controller" Relationship="GADATAModelVASC.FK_rt_csv_file_c_controller" FromRole="rt_csv_file" ToRole="c_controller" />
-          <NavigationProperty Name="c_csv_log" Relationship="GADATAModelVASC.FK_rt_csv_file_c_csv_log" FromRole="rt_csv_file" ToRole="c_csv_log" />
-        </EntityType>
         <EntityType Name="rt_device_info">
           <Key>
             <PropertyRef Name="id" />
@@ -915,30 +1206,6 @@
           <NavigationProperty Name="c_controller" Relationship="GADATAModelVASC.FK_rt_device_info_c_controller" FromRole="rt_device_info" ToRole="c_controller" />
           <NavigationProperty Name="c_device_info" Relationship="GADATAModelVASC.FK_rt_device_info_c_device_info" FromRole="rt_device_info" ToRole="c_device_info" />
         </EntityType>
-        <Association Name="FK_rt_csv_file_c_controller">
-          <End Type="GADATAModelVASC.c_controller" Role="c_controller" Multiplicity="0..1" />
-          <End Type="GADATAModelVASC.rt_csv_file" Role="rt_csv_file" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="c_controller">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="rt_csv_file">
-              <PropertyRef Name="c_controller_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_rt_csv_file_c_csv_log">
-          <End Type="GADATAModelVASC.c_csv_log" Role="c_csv_log" Multiplicity="0..1" />
-          <End Type="GADATAModelVASC.rt_csv_file" Role="rt_csv_file" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="c_csv_log">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="rt_csv_file">
-              <PropertyRef Name="c_csv_log_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_rt_device_info_c_controller">
           <End Type="GADATAModelVASC.c_controller" Role="c_controller" Multiplicity="0..1" />
           <End Type="GADATAModelVASC.rt_device_info" Role="rt_device_info" Multiplicity="*" />
@@ -1176,6 +1443,8 @@
           <Property Name="phase8" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="rt_alarm_id" Type="Int32" />
           <NavigationProperty Name="rt_job" Relationship="GADATAModelVASC.FK_rt_job_breakdown_rt_job" FromRole="rt_job_breakdown" ToRole="rt_job" />
+          <NavigationProperty Name="h_alarm" Relationship="GADATAModelVASC.FK_rt_job_breakdown_h_alarm" FromRole="rt_job_breakdown" ToRole="h_alarm" />
+          <NavigationProperty Name="rt_alarm" Relationship="GADATAModelVASC.FK_rt_job_breakdown_rt_alarm" FromRole="rt_job_breakdown" ToRole="rt_alarm" />
         </EntityType>
         <Association Name="FK_rt_job_c_controller">
           <End Type="GADATAModelVASC.c_controller" Role="c_controller" Multiplicity="0..1" />
@@ -1213,27 +1482,309 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="c_csv_log">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="enable_bit" Type="Int32" Nullable="false" />
+          <Property Name="csv_filename" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="logcount_variable" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="rt_table" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="poll_rate" Type="Int32" Nullable="false" />
+          <Property Name="comment" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Tempnote" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="flags" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="rt_csv_file" Relationship="GADATAModelVASC.FK_rt_csv_file_c_csv_log" FromRole="c_csv_log" ToRole="rt_csv_file" />
+        </EntityType>
+        <EntityType Name="rt_csv_file">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="C_timestamp" Type="DateTime" Precision="3" />
+          <Property Name="c_controller_id" Type="Int32" />
+          <Property Name="c_csv_log_id" Type="Int32" />
+          <Property Name="lastDateRecord" Type="DateTime" Precision="3" />
+          <Property Name="lastLineRead" Type="Int32" />
+          <Property Name="lastFileSize" Type="Int32" />
+          <Property Name="lastStreamPos" Type="Int32" />
+          <Property Name="lastLineRead_2" Type="Int32" />
+          <Property Name="lastFileSize_2" Type="Int32" />
+          <Property Name="lastStreamPos_2" Type="Int32" />
+          <NavigationProperty Name="c_controller" Relationship="GADATAModelVASC.FK_rt_csv_file_c_controller" FromRole="rt_csv_file" ToRole="c_controller" />
+          <NavigationProperty Name="c_csv_log" Relationship="GADATAModelVASC.FK_rt_csv_file_c_csv_log" FromRole="rt_csv_file" ToRole="c_csv_log" />
+        </EntityType>
+        <Association Name="FK_rt_csv_file_c_controller">
+          <End Type="GADATAModelVASC.c_controller" Role="c_controller" Multiplicity="0..1" />
+          <End Type="GADATAModelVASC.rt_csv_file" Role="rt_csv_file" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_controller">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="rt_csv_file">
+              <PropertyRef Name="c_controller_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rt_csv_file_c_csv_log">
+          <End Type="GADATAModelVASC.c_csv_log" Role="c_csv_log" Multiplicity="0..1" />
+          <End Type="GADATAModelVASC.rt_csv_file" Role="rt_csv_file" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_csv_log">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="rt_csv_file">
+              <PropertyRef Name="c_csv_log_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="rt_alarm">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="controller_id" Type="Int32" />
+          <Property Name="C_timestamp" Type="DateTime" Precision="3" />
+          <Property Name="error_timestamp" Type="DateTime" Precision="3" />
+          <Property Name="sequenceNumber" Type="Int32" />
+          <Property Name="number" Type="Int32" />
+          <Property Name="categoryId" Type="Int32" />
+          <Property Name="title" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="consequences" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="causes" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="actions" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="type" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="c_controller" Relationship="GADATAModelVASC.FK_rt_alarm_c_controller" FromRole="rt_alarm" ToRole="c_controller" />
+          <NavigationProperty Name="rt_job_breakdown" Relationship="GADATAModelVASC.FK_rt_job_breakdown_rt_alarm" FromRole="rt_alarm" ToRole="rt_job_breakdown" />
+        </EntityType>
+        <Association Name="FK_rt_alarm_c_controller">
+          <End Type="GADATAModelVASC.c_controller" Role="c_controller" Multiplicity="0..1" />
+          <End Type="GADATAModelVASC.rt_alarm" Role="rt_alarm" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_controller">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="rt_alarm">
+              <PropertyRef Name="controller_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="h_alarm">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="controller_id" Type="Int32" />
+          <Property Name="C_timestamp" Type="DateTime" Precision="3" />
+          <Property Name="error_timestamp" Type="DateTime" Precision="3" />
+          <Property Name="SequenceNumber" Type="Int32" />
+          <Property Name="L_error_id" Type="Int32" />
+          <Property Name="CategoryId" Type="Int32" />
+          <NavigationProperty Name="c_controller" Relationship="GADATAModelVASC.FK_h_alarm_c_controller" FromRole="h_alarm" ToRole="c_controller" />
+          <NavigationProperty Name="L_error" Relationship="GADATAModelVASC.FK_h_alarm_L_error" FromRole="h_alarm" ToRole="L_error" />
+          <NavigationProperty Name="rt_job_breakdown" Relationship="GADATAModelVASC.FK_rt_job_breakdown_h_alarm" FromRole="h_alarm" ToRole="rt_job_breakdown" />
+        </EntityType>
+        <EntityType Name="L_actions">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Actions" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="C_timestamp" Type="DateTime" Precision="3" />
+          <Property Name="C_session" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="L_error" Relationship="GADATAModelVASC.FK_L_error_L_actions" FromRole="L_actions" ToRole="L_error" />
+        </EntityType>
+        <EntityType Name="L_causes">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Causes" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="C_timestamp" Type="DateTime" Precision="3" />
+          <Property Name="C_session" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="L_error" Relationship="GADATAModelVASC.FK_L_error_L_causes" FromRole="L_causes" ToRole="L_error" />
+        </EntityType>
+        <EntityType Name="L_consequences">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Consequences" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="C_timestamp" Type="DateTime" Precision="3" />
+          <Property Name="C_session" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="L_error" Relationship="GADATAModelVASC.FK_L_error_L_consequences" FromRole="L_consequences" ToRole="L_error" />
+        </EntityType>
+        <EntityType Name="L_description">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CleanDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="C_timestamp" Type="DateTime" Precision="3" />
+          <Property Name="C_session" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="L_error" Relationship="GADATAModelVASC.FK_L_error_L_description" FromRole="L_description" ToRole="L_error" />
+        </EntityType>
+        <EntityType Name="L_error">
+          <Key>
+            <PropertyRef Name="C_id" />
+          </Key>
+          <Property Name="C_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Number" Type="Int32" />
+          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CategoryId" Type="Int32" />
+          <Property Name="l_description_id" Type="Int32" />
+          <Property Name="l_consequences_id" Type="Int32" />
+          <Property Name="l_causes_id" Type="Int32" />
+          <Property Name="l_actions_id" Type="Int32" />
+          <Property Name="l_type_id" Type="Int32" />
+          <Property Name="c_ClassificationId" Type="Int32" />
+          <Property Name="c_SubgroupId" Type="Int32" />
+          <Property Name="c_RuleId" Type="Int32" />
+          <Property Name="CleanTitle" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ClassCalculated" Type="Boolean" />
+          <NavigationProperty Name="h_alarm" Relationship="GADATAModelVASC.FK_h_alarm_L_error" FromRole="L_error" ToRole="h_alarm" />
+          <NavigationProperty Name="L_actions" Relationship="GADATAModelVASC.FK_L_error_L_actions" FromRole="L_error" ToRole="L_actions" />
+          <NavigationProperty Name="L_causes" Relationship="GADATAModelVASC.FK_L_error_L_causes" FromRole="L_error" ToRole="L_causes" />
+          <NavigationProperty Name="L_consequences" Relationship="GADATAModelVASC.FK_L_error_L_consequences" FromRole="L_error" ToRole="L_consequences" />
+          <NavigationProperty Name="L_description" Relationship="GADATAModelVASC.FK_L_error_L_description" FromRole="L_error" ToRole="L_description" />
+          <NavigationProperty Name="L_type" Relationship="GADATAModelVASC.FK_L_error_L_type" FromRole="L_error" ToRole="L_type" />
+        </EntityType>
+        <EntityType Name="L_type">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Type" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="C_timestamp" Type="DateTime" Precision="3" />
+          <Property Name="C_session" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="L_error" Relationship="GADATAModelVASC.FK_L_error_L_type" FromRole="L_type" ToRole="L_error" />
+        </EntityType>
+        <EntityType Name="L_category">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="Category" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="C_timestamp" Type="DateTime" Precision="3" />
+          <Property Name="C_session" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_h_alarm_c_controller">
+          <End Type="GADATAModelVASC.c_controller" Role="c_controller" Multiplicity="0..1" />
+          <End Type="GADATAModelVASC.h_alarm" Role="h_alarm" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_controller">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="h_alarm">
+              <PropertyRef Name="controller_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_h_alarm_L_error">
+          <End Type="GADATAModelVASC.L_error" Role="L_error" Multiplicity="0..1" />
+          <End Type="GADATAModelVASC.h_alarm" Role="h_alarm" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="L_error">
+              <PropertyRef Name="C_id" />
+            </Principal>
+            <Dependent Role="h_alarm">
+              <PropertyRef Name="L_error_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_L_error_L_actions">
+          <End Type="GADATAModelVASC.L_actions" Role="L_actions" Multiplicity="0..1" />
+          <End Type="GADATAModelVASC.L_error" Role="L_error" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="L_actions">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="L_error">
+              <PropertyRef Name="l_actions_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_L_error_L_causes">
+          <End Type="GADATAModelVASC.L_causes" Role="L_causes" Multiplicity="0..1" />
+          <End Type="GADATAModelVASC.L_error" Role="L_error" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="L_causes">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="L_error">
+              <PropertyRef Name="l_causes_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_L_error_L_consequences">
+          <End Type="GADATAModelVASC.L_consequences" Role="L_consequences" Multiplicity="0..1" />
+          <End Type="GADATAModelVASC.L_error" Role="L_error" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="L_consequences">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="L_error">
+              <PropertyRef Name="l_consequences_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_L_error_L_description">
+          <End Type="GADATAModelVASC.L_description" Role="L_description" Multiplicity="0..1" />
+          <End Type="GADATAModelVASC.L_error" Role="L_error" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="L_description">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="L_error">
+              <PropertyRef Name="l_description_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_L_error_L_type">
+          <End Type="GADATAModelVASC.L_type" Role="L_type" Multiplicity="0..1" />
+          <End Type="GADATAModelVASC.L_error" Role="L_error" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="L_type">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="L_error">
+              <PropertyRef Name="l_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rt_job_breakdown_h_alarm">
+          <End Type="GADATAModelVASC.h_alarm" Role="h_alarm" Multiplicity="0..1" />
+          <End Type="GADATAModelVASC.rt_job_breakdown" Role="rt_job_breakdown" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="h_alarm">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="rt_job_breakdown">
+              <PropertyRef Name="h_alarm_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rt_job_breakdown_rt_alarm">
+          <End Type="GADATAModelVASC.rt_alarm" Role="rt_alarm" Multiplicity="0..1" />
+          <End Type="GADATAModelVASC.rt_job_breakdown" Role="rt_job_breakdown" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="rt_alarm">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="rt_job_breakdown">
+              <PropertyRef Name="rt_alarm_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="GADATAModelVASCStoreContainer" CdmEntityContainer="GADATAEntitiesVASC">
-          <EntitySetMapping Name="c_csv_log">
-            <EntityTypeMapping TypeName="GADATAModelVASC.c_csv_log">
-              <MappingFragment StoreEntitySet="c_csv_log">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="enable_bit" ColumnName="enable_bit" />
-                <ScalarProperty Name="csv_filename" ColumnName="csv_filename" />
-                <ScalarProperty Name="logcount_variable" ColumnName="logcount_variable" />
-                <ScalarProperty Name="rt_table" ColumnName="rt_table" />
-                <ScalarProperty Name="poll_rate" ColumnName="poll_rate" />
-                <ScalarProperty Name="comment" ColumnName="comment" />
-                <ScalarProperty Name="Tempnote" ColumnName="Tempnote" />
-                <ScalarProperty Name="flags" ColumnName="flags" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="c_service_setup">
             <EntityTypeMapping TypeName="GADATAModelVASC.c_service_setup">
               <MappingFragment StoreEntitySet="c_service_setup">
@@ -1393,23 +1944,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="rt_csv_file">
-            <EntityTypeMapping TypeName="GADATAModelVASC.rt_csv_file">
-              <MappingFragment StoreEntitySet="rt_csv_file">
-                <ScalarProperty Name="lastStreamPos_2" ColumnName="lastStreamPos_2" />
-                <ScalarProperty Name="lastFileSize_2" ColumnName="lastFileSize_2" />
-                <ScalarProperty Name="lastLineRead_2" ColumnName="lastLineRead_2" />
-                <ScalarProperty Name="lastStreamPos" ColumnName="lastStreamPos" />
-                <ScalarProperty Name="lastFileSize" ColumnName="lastFileSize" />
-                <ScalarProperty Name="lastLineRead" ColumnName="lastLineRead" />
-                <ScalarProperty Name="lastDateRecord" ColumnName="lastDateRecord" />
-                <ScalarProperty Name="c_csv_log_id" ColumnName="c_csv_log_id" />
-                <ScalarProperty Name="c_controller_id" ColumnName="c_controller_id" />
-                <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="rt_device_info">
             <EntityTypeMapping TypeName="GADATAModelVASC.rt_device_info">
               <MappingFragment StoreEntitySet="rt_device_info">
@@ -1543,6 +2077,151 @@
                 <ScalarProperty Name="ts_breakdownStart" ColumnName="ts_breakdownStart" />
                 <ScalarProperty Name="h_alarm_id" ColumnName="h_alarm_id" />
                 <ScalarProperty Name="rt_job_active_id" ColumnName="rt_job_active_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="c_csv_log">
+            <EntityTypeMapping TypeName="GADATAModelVASC.c_csv_log">
+              <MappingFragment StoreEntitySet="c_csv_log">
+                <ScalarProperty Name="flags" ColumnName="flags" />
+                <ScalarProperty Name="Tempnote" ColumnName="Tempnote" />
+                <ScalarProperty Name="comment" ColumnName="comment" />
+                <ScalarProperty Name="poll_rate" ColumnName="poll_rate" />
+                <ScalarProperty Name="rt_table" ColumnName="rt_table" />
+                <ScalarProperty Name="logcount_variable" ColumnName="logcount_variable" />
+                <ScalarProperty Name="csv_filename" ColumnName="csv_filename" />
+                <ScalarProperty Name="enable_bit" ColumnName="enable_bit" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="rt_csv_file">
+            <EntityTypeMapping TypeName="GADATAModelVASC.rt_csv_file">
+              <MappingFragment StoreEntitySet="rt_csv_file">
+                <ScalarProperty Name="lastStreamPos_2" ColumnName="lastStreamPos_2" />
+                <ScalarProperty Name="lastFileSize_2" ColumnName="lastFileSize_2" />
+                <ScalarProperty Name="lastLineRead_2" ColumnName="lastLineRead_2" />
+                <ScalarProperty Name="lastStreamPos" ColumnName="lastStreamPos" />
+                <ScalarProperty Name="lastFileSize" ColumnName="lastFileSize" />
+                <ScalarProperty Name="lastLineRead" ColumnName="lastLineRead" />
+                <ScalarProperty Name="lastDateRecord" ColumnName="lastDateRecord" />
+                <ScalarProperty Name="c_csv_log_id" ColumnName="c_csv_log_id" />
+                <ScalarProperty Name="c_controller_id" ColumnName="c_controller_id" />
+                <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="rt_alarm">
+            <EntityTypeMapping TypeName="GADATAModelVASC.rt_alarm">
+              <MappingFragment StoreEntitySet="rt_alarm">
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="actions" ColumnName="actions" />
+                <ScalarProperty Name="causes" ColumnName="causes" />
+                <ScalarProperty Name="consequences" ColumnName="consequences" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="categoryId" ColumnName="categoryId" />
+                <ScalarProperty Name="number" ColumnName="number" />
+                <ScalarProperty Name="sequenceNumber" ColumnName="sequenceNumber" />
+                <ScalarProperty Name="error_timestamp" ColumnName="error_timestamp" />
+                <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
+                <ScalarProperty Name="controller_id" ColumnName="controller_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="h_alarm">
+            <EntityTypeMapping TypeName="GADATAModelVASC.h_alarm">
+              <MappingFragment StoreEntitySet="h_alarm">
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="L_error_id" ColumnName="L_error_id" />
+                <ScalarProperty Name="SequenceNumber" ColumnName="SequenceNumber" />
+                <ScalarProperty Name="error_timestamp" ColumnName="error_timestamp" />
+                <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
+                <ScalarProperty Name="controller_id" ColumnName="controller_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="L_actions">
+            <EntityTypeMapping TypeName="GADATAModelVASC.L_actions">
+              <MappingFragment StoreEntitySet="L_actions">
+                <ScalarProperty Name="C_session" ColumnName="_session" />
+                <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
+                <ScalarProperty Name="Actions" ColumnName="Actions" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="L_causes">
+            <EntityTypeMapping TypeName="GADATAModelVASC.L_causes">
+              <MappingFragment StoreEntitySet="L_causes">
+                <ScalarProperty Name="C_session" ColumnName="_session" />
+                <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
+                <ScalarProperty Name="Causes" ColumnName="Causes" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="L_consequences">
+            <EntityTypeMapping TypeName="GADATAModelVASC.L_consequences">
+              <MappingFragment StoreEntitySet="L_consequences">
+                <ScalarProperty Name="C_session" ColumnName="_session" />
+                <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
+                <ScalarProperty Name="Consequences" ColumnName="Consequences" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="L_description">
+            <EntityTypeMapping TypeName="GADATAModelVASC.L_description">
+              <MappingFragment StoreEntitySet="L_description">
+                <ScalarProperty Name="C_session" ColumnName="_session" />
+                <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
+                <ScalarProperty Name="CleanDescription" ColumnName="CleanDescription" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="L_error">
+            <EntityTypeMapping TypeName="GADATAModelVASC.L_error">
+              <MappingFragment StoreEntitySet="L_error">
+                <ScalarProperty Name="ClassCalculated" ColumnName="ClassCalculated" />
+                <ScalarProperty Name="CleanTitle" ColumnName="CleanTitle" />
+                <ScalarProperty Name="c_RuleId" ColumnName="c_RuleId" />
+                <ScalarProperty Name="c_SubgroupId" ColumnName="c_SubgroupId" />
+                <ScalarProperty Name="c_ClassificationId" ColumnName="c_ClassificationId" />
+                <ScalarProperty Name="l_type_id" ColumnName="l_type_id" />
+                <ScalarProperty Name="l_actions_id" ColumnName="l_actions_id" />
+                <ScalarProperty Name="l_causes_id" ColumnName="l_causes_id" />
+                <ScalarProperty Name="l_consequences_id" ColumnName="l_consequences_id" />
+                <ScalarProperty Name="l_description_id" ColumnName="l_description_id" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="C_id" ColumnName="_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="L_type">
+            <EntityTypeMapping TypeName="GADATAModelVASC.L_type">
+              <MappingFragment StoreEntitySet="L_type">
+                <ScalarProperty Name="C_session" ColumnName="_session" />
+                <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="L_category">
+            <EntityTypeMapping TypeName="GADATAModelVASC.L_category">
+              <MappingFragment StoreEntitySet="L_category">
+                <ScalarProperty Name="C_session" ColumnName="_session" />
+                <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

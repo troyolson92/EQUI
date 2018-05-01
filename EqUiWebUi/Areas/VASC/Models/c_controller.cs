@@ -18,7 +18,6 @@ namespace EqUiWebUi.Areas.VASC.Models
         public c_controller()
         {
             this.rt_active_info = new HashSet<rt_active_info>();
-            this.rt_csv_file = new HashSet<rt_csv_file>();
             this.rt_device_info = new HashSet<rt_device_info>();
             this.rt_value = new HashSet<rt_value>();
             this.rt_event = new HashSet<rt_event>();
@@ -26,6 +25,9 @@ namespace EqUiWebUi.Areas.VASC.Models
             this.L_operation = new HashSet<L_operation>();
             this.rt_search_value = new HashSet<rt_search_value>();
             this.rt_job = new HashSet<rt_job>();
+            this.rt_csv_file = new HashSet<rt_csv_file>();
+            this.rt_alarm = new HashSet<rt_alarm>();
+            this.h_alarm = new HashSet<h_alarm>();
         }
     
         public int id { get; set; }
@@ -46,8 +48,6 @@ namespace EqUiWebUi.Areas.VASC.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<rt_active_info> rt_active_info { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<rt_csv_file> rt_csv_file { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<rt_device_info> rt_device_info { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<rt_value> rt_value { get; set; }
@@ -61,5 +61,11 @@ namespace EqUiWebUi.Areas.VASC.Models
         public virtual ICollection<rt_search_value> rt_search_value { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<rt_job> rt_job { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<rt_csv_file> rt_csv_file { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<rt_alarm> rt_alarm { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<h_alarm> h_alarm { get; set; }
     }
 }

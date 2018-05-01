@@ -17,7 +17,7 @@ namespace EqUiWebUi.Areas.VASC.Controllers
             return View();
         }
 
-        public ActionResult getBreakdowns()
+        public ActionResult GetBreakdowns()
         {
             if (Session["LocationRoot"].ToString() != "")
             {
@@ -31,7 +31,7 @@ namespace EqUiWebUi.Areas.VASC.Controllers
 
         }
 
-        public ActionResult rtJob(int jobId)
+        public ActionResult RtJob(int jobId)
         {
             ViewBag.jobID = jobId;
             return View();

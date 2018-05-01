@@ -4,42 +4,61 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="13109bf0c8b04f4e9dba006e3bff02de" Name="Diagram1" ZoomLevel="72">
-        <EntityTypeShape EntityType="GADATAModelVASC.c_csv_log" Width="1.5" PointX="15.5" PointY="3" IsExpanded="true" FillColor="Red" />
+      <Diagram DiagramId="13109bf0c8b04f4e9dba006e3bff02de" Name="Diagram1" ZoomLevel="33" ShowGrid="true" DisplayType="false">
         <EntityTypeShape EntityType="GADATAModelVASC.c_service_setup" Width="1.5" PointX="0.5" PointY="1.125" IsExpanded="true" />
         <EntityTypeShape EntityType="GADATAModelVASC.c_device_info" Width="1.5" PointX="22.25" PointY="2.875" IsExpanded="true" FillColor="Red" />
-        <EntityTypeShape EntityType="GADATAModelVASC.c_job" Width="1.5" PointX="21.75" PointY="10.125" IsExpanded="true" FillColor="192, 0, 192" />
+        <EntityTypeShape EntityType="GADATAModelVASC.c_job" Width="1.5" PointX="22.125" PointY="14.125" IsExpanded="true" FillColor="192, 0, 192" />
         <EntityTypeShape EntityType="GADATAModelVASC.c_variable" Width="1.5" PointX="12.625" PointY="3" IsExpanded="true" FillColor="Red" />
         <EntityTypeShape EntityType="GADATAModelVASC.c_variable_search" Width="1.5" PointX="12.625" PointY="6.375" IsExpanded="true" FillColor="Red" />
         <EntityTypeShape EntityType="GADATAModelVASC.c_error" Width="1.5" PointX="0.5" PointY="3.625" />
         <EntityTypeShape EntityType="GADATAModelVASC.c_controller" Width="1.5" PointX="5.5" PointY="1.125" />
         <EntityTypeShape EntityType="GADATAModelVASC.c_controller_class" Width="1.5" PointX="3.25" PointY="0.5" />
-        <EntityTypeShape EntityType="GADATAModelVASC.rt_active_info" Width="1.5" PointX="9" PointY="12.375" FillColor="Aqua" />
+        <EntityTypeShape EntityType="GADATAModelVASC.rt_active_info" Width="1.5" PointX="9" PointY="13.875" FillColor="Aqua" />
         <AssociationConnector Association="GADATAModelVASC.FK_c_controller_c_controller_class" />
         <AssociationConnector Association="GADATAModelVASC.FK_rt_active_info_c_controller" />
-        <EntityTypeShape EntityType="GADATAModelVASC.rt_csv_file" Width="1.5" PointX="17.5" PointY="2.875" FillColor="Red" />
         <EntityTypeShape EntityType="GADATAModelVASC.rt_device_info" Width="1.5" PointX="20.25" PointY="2.875" FillColor="Red" />
-        <AssociationConnector Association="GADATAModelVASC.FK_rt_csv_file_c_controller" />
-        <AssociationConnector Association="GADATAModelVASC.FK_rt_csv_file_c_csv_log" />
         <AssociationConnector Association="GADATAModelVASC.FK_rt_device_info_c_controller" />
         <AssociationConnector Association="GADATAModelVASC.FK_rt_device_info_c_device_info" />
-        <EntityTypeShape EntityType="GADATAModelVASC.rt_event" Width="1.5" PointX="7.25" PointY="12.375" FillColor="Aqua" />
+        <EntityTypeShape EntityType="GADATAModelVASC.rt_event" Width="1.5" PointX="7.25" PointY="13.875" FillColor="Aqua" />
         <EntityTypeShape EntityType="GADATAModelVASC.rt_value" Width="1.5" PointX="10.625" PointY="3" FillColor="Red" />
         <AssociationConnector Association="GADATAModelVASC.FK_rt_value_c_controller" />
         <AssociationConnector Association="GADATAModelVASC.FK_rt_value_c_variable" />
         <AssociationConnector Association="GADATAModelVASC.FK_rt_event_c_controller" />
-        <EntityTypeShape EntityType="GADATAModelVASC.L_operation" Width="1.5" PointX="3.75" PointY="12.375" FillColor="Aqua" />
-        <EntityTypeShape EntityType="GADATAModelVASC.rt_controller" Width="1.5" PointX="5.5" PointY="12.375" FillColor="Aqua" />
+        <EntityTypeShape EntityType="GADATAModelVASC.L_operation" Width="1.5" PointX="3.75" PointY="13.875" FillColor="Aqua" />
+        <EntityTypeShape EntityType="GADATAModelVASC.rt_controller" Width="1.5" PointX="5.5" PointY="13.875" FillColor="Aqua" />
         <AssociationConnector Association="GADATAModelVASC.FK_rt_controller_c_controller" />
         <AssociationConnector Association="GADATAModelVASC.FK_L_operation_c_controller" />
         <EntityTypeShape EntityType="GADATAModelVASC.rt_search_value" Width="1.5" PointX="10.625" PointY="6.375" FillColor="Red" />
         <AssociationConnector Association="GADATAModelVASC.FK_rt_Search_value_c_controller" />
         <AssociationConnector Association="GADATAModelVASC.FK_rt_Search_value_c_variable_search" />
-        <EntityTypeShape EntityType="GADATAModelVASC.rt_job" Width="1.5" PointX="24" PointY="10.125" FillColor="192, 0, 192" />
-        <EntityTypeShape EntityType="GADATAModelVASC.rt_job_breakdown" Width="1.5" PointX="26.25" PointY="10.125" FillColor="192, 0, 192" />
+        <EntityTypeShape EntityType="GADATAModelVASC.rt_job" Width="1.5" PointX="24.375" PointY="14.125" FillColor="192, 0, 192" />
+        <EntityTypeShape EntityType="GADATAModelVASC.rt_job_breakdown" Width="1.5" PointX="26.625" PointY="14.125" FillColor="192, 0, 192" />
         <AssociationConnector Association="GADATAModelVASC.FK_rt_job_c_controller" />
         <AssociationConnector Association="GADATAModelVASC.FK_rt_job_breakdown_rt_job" />
         <AssociationConnector Association="GADATAModelVASC.FK_rt_job_c_job" />
+        <EntityTypeShape EntityType="GADATAModelVASC.c_csv_log" Width="1.5" PointX="15.25" PointY="3.125" FillColor="Red" />
+        <EntityTypeShape EntityType="GADATAModelVASC.rt_csv_file" Width="1.5" PointX="17.375" PointY="3.125" FillColor="Red" />
+        <AssociationConnector Association="GADATAModelVASC.FK_rt_csv_file_c_controller" />
+        <AssociationConnector Association="GADATAModelVASC.FK_rt_csv_file_c_csv_log" />
+        <EntityTypeShape EntityType="GADATAModelVASC.rt_alarm" Width="1.5" PointX="31.5" PointY="10.5" FillColor="Purple" />
+        <AssociationConnector Association="GADATAModelVASC.FK_rt_alarm_c_controller" />
+        <EntityTypeShape EntityType="GADATAModelVASC.h_alarm" Width="1.5" PointX="34.875" PointY="7.875" FillColor="Indigo" />
+        <EntityTypeShape EntityType="GADATAModelVASC.L_actions" Width="1.5" PointX="34.875" PointY="12.375" FillColor="Indigo" />
+        <EntityTypeShape EntityType="GADATAModelVASC.L_causes" Width="1.5" PointX="34.875" PointY="18.125" FillColor="Indigo" />
+        <EntityTypeShape EntityType="GADATAModelVASC.L_consequences" Width="1.5" PointX="34.875" PointY="23.625" FillColor="Indigo" />
+        <EntityTypeShape EntityType="GADATAModelVASC.L_description" Width="1.5" PointX="34.875" PointY="15.25" FillColor="Indigo" />
+        <EntityTypeShape EntityType="GADATAModelVASC.L_error" Width="1.5" PointX="37.125" PointY="11" FillColor="Indigo" />
+        <EntityTypeShape EntityType="GADATAModelVASC.L_type" Width="1.5" PointX="34.875" PointY="20.875" FillColor="Indigo" />
+        <EntityTypeShape EntityType="GADATAModelVASC.L_category" Width="1.5" PointX="0.75" PointY="7.75" />
+        <AssociationConnector Association="GADATAModelVASC.FK_h_alarm_c_controller" />
+        <AssociationConnector Association="GADATAModelVASC.FK_h_alarm_L_error" />
+        <AssociationConnector Association="GADATAModelVASC.FK_L_error_L_actions" />
+        <AssociationConnector Association="GADATAModelVASC.FK_L_error_L_causes" />
+        <AssociationConnector Association="GADATAModelVASC.FK_L_error_L_consequences" />
+        <AssociationConnector Association="GADATAModelVASC.FK_L_error_L_description" />
+        <AssociationConnector Association="GADATAModelVASC.FK_L_error_L_type" />
+        <AssociationConnector Association="GADATAModelVASC.FK_rt_job_breakdown_h_alarm" />
+        <AssociationConnector Association="GADATAModelVASC.FK_rt_job_breakdown_rt_alarm" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
