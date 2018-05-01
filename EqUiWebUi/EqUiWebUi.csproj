@@ -369,9 +369,6 @@
     <Compile Include="Areas\VASC\Controllers\rt_active_infoController.cs" />
     <Compile Include="Areas\VASC\Controllers\serviceController.cs" />
     <Compile Include="Areas\VASC\Controllers\vascController.cs" />
-    <Compile Include="Areas\VASC\Models\ControllerEventLog.cs">
-      <DependentUpon>VASC.tt</DependentUpon>
-    </Compile>
     <Compile Include="Areas\VASC\Models\c_controller.cs">
       <DependentUpon>VASC.tt</DependentUpon>
     </Compile>

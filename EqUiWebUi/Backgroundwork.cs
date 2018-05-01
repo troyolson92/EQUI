@@ -120,8 +120,8 @@ ORDER BY WORKORDER.STATUSDATE DESC
 		[AutomaticRetry(Attempts = 0)]
 		public void PushDatafromSTW040toGADATA()
 		{
-			stw040Sync lstw040Sync = new stw040Sync();
-			lstw040Sync.get_swt040data();
+			Stw040Sync lstw040Sync = new Stw040Sync();
+			lstw040Sync.Get_swt040data();
 		}
 	}
 }

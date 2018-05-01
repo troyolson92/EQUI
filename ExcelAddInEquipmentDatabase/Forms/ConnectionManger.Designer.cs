@@ -102,7 +102,7 @@
             this.btn_Delete.TabIndex = 12;
             this.btn_Delete.Text = "Delete";
             this.btn_Delete.UseVisualStyleBackColor = true;
-            this.btn_Delete.Click += new System.EventHandler(this.btn_Delete_Click);
+            this.btn_Delete.Click += new System.EventHandler(this.Btn_Delete_Click);
             // 
             // lb_connections
             // 
@@ -132,7 +132,7 @@
             this.tp_GADATA.TabIndex = 1;
             this.tp_GADATA.Text = "New Gadata";
             this.tp_GADATA.UseVisualStyleBackColor = true;
-            this.tp_GADATA.Enter += new System.EventHandler(this.tp_GADATA_Enter);
+            this.tp_GADATA.Enter += new System.EventHandler(this.Tp_GADATA_Enter);
             // 
             // lv_GADATA_procParms
             // 
@@ -166,7 +166,7 @@
             this.btn_GADATA_Create.TabIndex = 2;
             this.btn_GADATA_Create.Text = "Create";
             this.btn_GADATA_Create.UseVisualStyleBackColor = true;
-            this.btn_GADATA_Create.Click += new System.EventHandler(this.btn_GADATA_Create_Click);
+            this.btn_GADATA_Create.Click += new System.EventHandler(this.Btn_GADATA_Create_Click);
             // 
             // label1
             // 
@@ -187,7 +187,7 @@
             this.cb_GADTA_procedures.Name = "cb_GADTA_procedures";
             this.cb_GADTA_procedures.Size = new System.Drawing.Size(369, 24);
             this.cb_GADTA_procedures.TabIndex = 0;
-            this.cb_GADTA_procedures.SelectedIndexChanged += new System.EventHandler(this.cb_GADATA_procedures_SelectedIndexChanged);
+            this.cb_GADTA_procedures.SelectedIndexChanged += new System.EventHandler(this.Cb_GADATA_procedures_SelectedIndexChanged);
             // 
             // tp_MX7
             // 
@@ -207,7 +207,7 @@
             this.tp_MX7.TabIndex = 2;
             this.tp_MX7.Text = "New_Maximo7";
             this.tp_MX7.UseVisualStyleBackColor = true;
-            this.tp_MX7.Enter += new System.EventHandler(this.tp_MX7_Enter);
+            this.tp_MX7.Enter += new System.EventHandler(this.Tp_MX7_Enter);
             // 
             // lbl_MX7_procDiscription
             // 
@@ -228,7 +228,7 @@
             this.btn_MX7_new.TabIndex = 10;
             this.btn_MX7_new.Text = "Upload new Query";
             this.btn_MX7_new.UseVisualStyleBackColor = true;
-            this.btn_MX7_new.Click += new System.EventHandler(this.btn_MX7_new_Click);
+            this.btn_MX7_new.Click += new System.EventHandler(this.Btn_MX7_new_Click);
             // 
             // btn_MX7_edit
             // 
@@ -240,7 +240,7 @@
             this.btn_MX7_edit.TabIndex = 9;
             this.btn_MX7_edit.Text = "Edit";
             this.btn_MX7_edit.UseVisualStyleBackColor = true;
-            this.btn_MX7_edit.Click += new System.EventHandler(this.btn_MX7_edit_Click);
+            this.btn_MX7_edit.Click += new System.EventHandler(this.Btn_MX7_edit_Click);
             // 
             // lv_MX7_procParms
             // 
@@ -283,8 +283,8 @@
             this.cb_MX7_QueryNames.Name = "cb_MX7_QueryNames";
             this.cb_MX7_QueryNames.Size = new System.Drawing.Size(369, 24);
             this.cb_MX7_QueryNames.TabIndex = 5;
-            this.cb_MX7_QueryNames.DropDown += new System.EventHandler(this.tp_MX7_Enter);
-            this.cb_MX7_QueryNames.SelectedIndexChanged += new System.EventHandler(this.cb_MX7_QueryNames_SelectedIndexChanged);
+            this.cb_MX7_QueryNames.DropDown += new System.EventHandler(this.Tp_MX7_Enter);
+            this.cb_MX7_QueryNames.SelectedIndexChanged += new System.EventHandler(this.Cb_MX7_QueryNames_SelectedIndexChanged);
             // 
             // btn_MX7_create
             // 
@@ -296,7 +296,7 @@
             this.btn_MX7_create.TabIndex = 3;
             this.btn_MX7_create.Text = "Create";
             this.btn_MX7_create.UseVisualStyleBackColor = true;
-            this.btn_MX7_create.Click += new System.EventHandler(this.btn_MX7_create_Click);
+            this.btn_MX7_create.Click += new System.EventHandler(this.Btn_MX7_create_Click);
             // 
             // tp_MX3
             // 
@@ -316,7 +316,7 @@
             this.tp_MX3.TabIndex = 3;
             this.tp_MX3.Text = "New_Maximo3";
             this.tp_MX3.UseVisualStyleBackColor = true;
-            this.tp_MX3.Enter += new System.EventHandler(this.tp_MX3_Enter);
+            this.tp_MX3.Enter += new System.EventHandler(this.Tp_MX3_Enter);
             // 
             // lbl_MX3_procDiscription
             // 
@@ -337,7 +337,7 @@
             this.btn_MX3_new.TabIndex = 14;
             this.btn_MX3_new.Text = "Upload new Query";
             this.btn_MX3_new.UseVisualStyleBackColor = true;
-            this.btn_MX3_new.Click += new System.EventHandler(this.btn_MX3_new_Click);
+            this.btn_MX3_new.Click += new System.EventHandler(this.Btn_MX3_new_Click);
             // 
             // btn_MX3_edit
             // 
@@ -349,7 +349,7 @@
             this.btn_MX3_edit.TabIndex = 13;
             this.btn_MX3_edit.Text = "Edit";
             this.btn_MX3_edit.UseVisualStyleBackColor = true;
-            this.btn_MX3_edit.Click += new System.EventHandler(this.btn_MX3_edit_Click);
+            this.btn_MX3_edit.Click += new System.EventHandler(this.Btn_MX3_edit_Click);
             // 
             // lv_MX3_procParms
             // 
@@ -392,8 +392,8 @@
             this.cb_MX3_QueryNames.Name = "cb_MX3_QueryNames";
             this.cb_MX3_QueryNames.Size = new System.Drawing.Size(369, 24);
             this.cb_MX3_QueryNames.TabIndex = 9;
-            this.cb_MX3_QueryNames.DropDown += new System.EventHandler(this.tp_MX3_Enter);
-            this.cb_MX3_QueryNames.SelectedIndexChanged += new System.EventHandler(this.cb_MX3_QueryNames_SelectedIndexChanged);
+            this.cb_MX3_QueryNames.DropDown += new System.EventHandler(this.Tp_MX3_Enter);
+            this.cb_MX3_QueryNames.SelectedIndexChanged += new System.EventHandler(this.Cb_MX3_QueryNames_SelectedIndexChanged);
             // 
             // btn_MX3_create
             // 
@@ -405,7 +405,7 @@
             this.btn_MX3_create.TabIndex = 4;
             this.btn_MX3_create.Text = "Create";
             this.btn_MX3_create.UseVisualStyleBackColor = true;
-            this.btn_MX3_create.Click += new System.EventHandler(this.btn_MX3_create_Click);
+            this.btn_MX3_create.Click += new System.EventHandler(this.Btn_MX3_create_Click);
             // 
             // ConnectionManger
             // 

@@ -30,8 +30,10 @@ namespace ExcelAddInEquipmentDatabase
         {
             InitializeComponent();
             //build running clock to see when shit craps out
-            Timer timer = new Timer();
-            timer.Interval = (1 * 1000); // 1 secs
+            Timer timer = new Timer
+            {
+                Interval = (1 * 1000) // 1 secs
+            };
             timer.Tick += new EventHandler(timer_Tick);
             timer.Start();
         }

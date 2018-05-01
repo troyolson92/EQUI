@@ -156,8 +156,6 @@
           <Property Name="controller_id" Type="int" />
           <Property Name="Description" Type="varchar" MaxLength="250" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'GADATA.NGAC.rt_active_info' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="rt_active_info">
           <Key>
             <PropertyRef Name="id" />
@@ -182,12 +180,9 @@ warning 6002: The table/view 'GADATA.NGAC.rt_active_info' does not have a primar
           <Property Name="ts_breakDownAck" Type="datetime" />
           <Property Name="ts_breakDownStart" Type="datetime" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'GADATA.NGAC.rt_controller' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="rt_controller">
           <Key>
             <PropertyRef Name="id" />
-            <PropertyRef Name="c_controller_id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="c_controller_id" Type="int" Nullable="false" />
@@ -224,8 +219,6 @@ warning 6002: The table/view 'GADATA.NGAC.rt_controller' does not have a primary
           <Property Name="lastFileSize_2" Type="int" />
           <Property Name="lastStreamPos_2" Type="int" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'GADATA.NGAC.rt_device_info' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="rt_device_info">
           <Key>
             <PropertyRef Name="id" />
@@ -236,8 +229,6 @@ warning 6002: The table/view 'GADATA.NGAC.rt_device_info' does not have a primar
           <Property Name="_timestamp" Type="datetime" />
           <Property Name="value" Type="varchar(max)" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'GADATA.NGAC.rt_event' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="rt_event">
           <Key>
             <PropertyRef Name="id" />
@@ -298,8 +289,6 @@ warning 6002: The table/view 'GADATA.NGAC.rt_event' does not have a primary key 
           <Property Name="phase8" Type="varchar" MaxLength="50" />
           <Property Name="rt_alarm_id" Type="int" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'GADATA.NGAC.rt_search_value' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="rt_search_value">
           <Key>
             <PropertyRef Name="id" />
@@ -313,8 +302,6 @@ warning 6002: The table/view 'GADATA.NGAC.rt_search_value' does not have a prima
           <Property Name="variable" Type="varchar(max)" />
           <Property Name="value" Type="varchar(max)" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'GADATA.NGAC.rt_value' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="rt_value">
           <Key>
             <PropertyRef Name="id" />
@@ -326,36 +313,6 @@ warning 6002: The table/view 'GADATA.NGAC.rt_value' does not have a primary key 
           <Property Name="value" Type="varchar(max)" />
           <Property Name="isEvent" Type="bit" />
           <Property Name="abbDateTime" Type="datetime" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'GADATA.NGAC.ControllerEventLog' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="ControllerEventLog">
-          <Key>
-            
-            
-            
-            
-            <PropertyRef Name="refId" />
-            
-          </Key>
-          <Property Name="Location" Type="varchar" MaxLength="30" />
-          <Property Name="AssetID" Type="varchar(max)" />
-          <Property Name="Logtype" Type="varchar" MaxLength="15" Nullable="false" />
-          <Property Name="timestamp" Type="datetime" />
-          <Property Name="Logcode" Type="varchar(max)" />
-          <Property Name="Severity" Type="varchar(max)" />
-          <Property Name="Logtext" Type="varchar(max)" Nullable="false" />
-          <Property Name="FullLogtext" Type="varchar(max)" />
-          <Property Name="Response" Type="int" />
-          <Property Name="Downtime" Type="int" />
-          <Property Name="Classification" Type="varchar" MaxLength="50" />
-          <Property Name="Subgroup" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Category" Type="varchar(max)" Nullable="false" />
-          <Property Name="refId" Type="int" Nullable="false" />
-          <Property Name="LocationTree" Type="varchar(max)" />
-          <Property Name="ClassTree" Type="varchar(max)" />
-          <Property Name="controller_name" Type="varchar" MaxLength="30" />
-          <Property Name="controller_type" Type="varchar" MaxLength="4" Nullable="false" />
         </EntityType>
         <Association Name="FK_c_controller_c_controller_class">
           <End Role="c_controller_class" Type="Self.c_controller_class" Multiplicity="1" />
@@ -560,120 +517,15 @@ warning 6002: The table/view 'GADATA.NGAC.ControllerEventLog' does not have a pr
           <EntitySet Name="c_variable" EntityType="Self.c_variable" Schema="NGAC" store:Type="Tables" />
           <EntitySet Name="c_variable_search" EntityType="Self.c_variable_search" Schema="NGAC" store:Type="Tables" />
           <EntitySet Name="L_operation" EntityType="Self.L_operation" Schema="NGAC" store:Type="Tables" />
+          <EntitySet Name="rt_active_info" EntityType="Self.rt_active_info" Schema="NGAC" store:Type="Tables" />
+          <EntitySet Name="rt_controller" EntityType="Self.rt_controller" Schema="NGAC" store:Type="Tables" />
           <EntitySet Name="rt_csv_file" EntityType="Self.rt_csv_file" Schema="NGAC" store:Type="Tables" />
+          <EntitySet Name="rt_device_info" EntityType="Self.rt_device_info" Schema="NGAC" store:Type="Tables" />
+          <EntitySet Name="rt_event" EntityType="Self.rt_event" Schema="NGAC" store:Type="Tables" />
           <EntitySet Name="rt_job" EntityType="Self.rt_job" Schema="NGAC" store:Type="Tables" />
           <EntitySet Name="rt_job_breakdown" EntityType="Self.rt_job_breakdown" Schema="NGAC" store:Type="Tables" />
-          <EntitySet Name="rt_active_info" EntityType="Self.rt_active_info" store:Type="Tables" store:Schema="NGAC">
-            <DefiningQuery>SELECT 
-    [rt_active_info].[id] AS [id], 
-    [rt_active_info].[c_controller_id] AS [c_controller_id], 
-    [rt_active_info].[h_alarm_id] AS [h_alarm_id], 
-    [rt_active_info].[rt_alarm_id] AS [rt_alarm_id], 
-    [rt_active_info].[rt_job_id] AS [rt_job_id], 
-    [rt_active_info].[_timestamp] AS [_timestamp], 
-    [rt_active_info].[program_number] AS [program_number], 
-    [rt_active_info].[body_number] AS [body_number], 
-    [rt_active_info].[application_error] AS [application_error], 
-    [rt_active_info].[operating_mode] AS [operating_mode], 
-    [rt_active_info].[execution_status] AS [execution_status], 
-    [rt_active_info].[controller_state] AS [controller_state], 
-    [rt_active_info].[master_state] AS [master_state], 
-    [rt_active_info].[at_home] AS [at_home], 
-    [rt_active_info].[vasc_state] AS [vasc_state], 
-    [rt_active_info].[vasc_session] AS [vasc_session], 
-    [rt_active_info].[task_execution_status] AS [task_execution_status], 
-    [rt_active_info].[ts_breakDownAck] AS [ts_breakDownAck], 
-    [rt_active_info].[ts_breakDownStart] AS [ts_breakDownStart]
-    FROM [NGAC].[rt_active_info] AS [rt_active_info]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="rt_controller" EntityType="Self.rt_controller" store:Type="Tables" store:Schema="NGAC">
-            <DefiningQuery>SELECT 
-    [rt_controller].[id] AS [id], 
-    [rt_controller].[c_controller_id] AS [c_controller_id], 
-    [rt_controller].[Availability] AS [Availability], 
-    [rt_controller].[BaseDirectory] AS [BaseDirectory], 
-    [rt_controller].[ControllerName] AS [ControllerName], 
-    [rt_controller].[HostName] AS [HostName], 
-    [rt_controller].[Controller_Id] AS [Controller_Id], 
-    [rt_controller].[IPaddress] AS [IPaddress], 
-    [rt_controller].[IsVirtual] AS [IsVirtual], 
-    [rt_controller].[MacAddress] AS [MacAddress], 
-    [rt_controller].[Name] AS [Name], 
-    [rt_controller].[RunLevel] AS [RunLevel], 
-    [rt_controller].[SystemId] AS [SystemId], 
-    [rt_controller].[SystemName] AS [SystemName], 
-    [rt_controller].[Version] AS [Version], 
-    [rt_controller].[VersionName] AS [VersionName], 
-    [rt_controller].[WebServicesPort] AS [WebServicesPort], 
-    [rt_controller].[_timestamp] AS [_timestamp]
-    FROM [NGAC].[rt_controller] AS [rt_controller]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="rt_device_info" EntityType="Self.rt_device_info" store:Type="Tables" store:Schema="NGAC">
-            <DefiningQuery>SELECT 
-    [rt_device_info].[id] AS [id], 
-    [rt_device_info].[c_controller_id] AS [c_controller_id], 
-    [rt_device_info].[c_device_info_id] AS [c_device_info_id], 
-    [rt_device_info].[_timestamp] AS [_timestamp], 
-    [rt_device_info].[value] AS [value]
-    FROM [NGAC].[rt_device_info] AS [rt_device_info]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="rt_event" EntityType="Self.rt_event" store:Type="Tables" store:Schema="NGAC">
-            <DefiningQuery>SELECT 
-    [rt_event].[id] AS [id], 
-    [rt_event].[event_enum] AS [event_enum], 
-    [rt_event].[c_controller_id] AS [c_controller_id], 
-    [rt_event].[_timestamp] AS [_timestamp], 
-    [rt_event].[abbDateTime] AS [abbDateTime], 
-    [rt_event].[description] AS [description], 
-    [rt_event].[isEvent] AS [isEvent], 
-    [rt_event].[event_value] AS [event_value]
-    FROM [NGAC].[rt_event] AS [rt_event]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="rt_search_value" EntityType="Self.rt_search_value" store:Type="Tables" store:Schema="NGAC">
-            <DefiningQuery>SELECT 
-    [rt_search_value].[id] AS [id], 
-    [rt_search_value].[c_variable_search_id] AS [c_variable_search_id], 
-    [rt_search_value].[c_controller_id] AS [c_controller_id], 
-    [rt_search_value].[_timestamp] AS [_timestamp], 
-    [rt_search_value].[task] AS [task], 
-    [rt_search_value].[module] AS [module], 
-    [rt_search_value].[variable] AS [variable], 
-    [rt_search_value].[value] AS [value]
-    FROM [NGAC].[rt_search_value] AS [rt_search_value]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="rt_value" EntityType="Self.rt_value" store:Type="Tables" store:Schema="NGAC">
-            <DefiningQuery>SELECT 
-    [rt_value].[id] AS [id], 
-    [rt_value].[c_variable_id] AS [c_variable_id], 
-    [rt_value].[c_controller_id] AS [c_controller_id], 
-    [rt_value].[_timestamp] AS [_timestamp], 
-    [rt_value].[value] AS [value], 
-    [rt_value].[isEvent] AS [isEvent], 
-    [rt_value].[abbDateTime] AS [abbDateTime]
-    FROM [NGAC].[rt_value] AS [rt_value]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="ControllerEventLog" EntityType="Self.ControllerEventLog" store:Type="Views" store:Schema="NGAC">
-            <DefiningQuery>SELECT 
-    [ControllerEventLog].[Location] AS [Location], 
-    [ControllerEventLog].[AssetID] AS [AssetID], 
-    [ControllerEventLog].[Logtype] AS [Logtype], 
-    [ControllerEventLog].[timestamp] AS [timestamp], 
-    [ControllerEventLog].[Logcode] AS [Logcode], 
-    [ControllerEventLog].[Severity] AS [Severity], 
-    [ControllerEventLog].[Logtext] AS [Logtext], 
-    [ControllerEventLog].[FullLogtext] AS [FullLogtext], 
-    [ControllerEventLog].[Response] AS [Response], 
-    [ControllerEventLog].[Downtime] AS [Downtime], 
-    [ControllerEventLog].[Classification] AS [Classification], 
-    [ControllerEventLog].[Subgroup] AS [Subgroup], 
-    [ControllerEventLog].[Category] AS [Category], 
-    [ControllerEventLog].[refId] AS [refId], 
-    [ControllerEventLog].[LocationTree] AS [LocationTree], 
-    [ControllerEventLog].[ClassTree] AS [ClassTree], 
-    [ControllerEventLog].[controller_name] AS [controller_name], 
-    [ControllerEventLog].[controller_type] AS [controller_type]
-    FROM [NGAC].[ControllerEventLog] AS [ControllerEventLog]</DefiningQuery>
-          </EntitySet>
+          <EntitySet Name="rt_search_value" EntityType="Self.rt_search_value" Schema="NGAC" store:Type="Tables" />
+          <EntitySet Name="rt_value" EntityType="Self.rt_value" Schema="NGAC" store:Type="Tables" />
           <AssociationSet Name="FK_c_controller_c_controller_class" Association="Self.FK_c_controller_c_controller_class">
             <End Role="c_controller_class" EntitySet="c_controller_class" />
             <End Role="c_controller" EntitySet="c_controller" />
@@ -902,7 +754,6 @@ warning 6002: The table/view 'GADATA.NGAC.ControllerEventLog' does not have a pr
             <End Role="c_job" EntitySet="c_job" />
             <End Role="rt_job" EntitySet="rt_job" />
           </AssociationSet>
-          <EntitySet Name="ControllerEventLog" EntityType="GADATAModelVASC.ControllerEventLog" />
         </EntityContainer>
         <EntityType Name="c_error">
           <Key>
@@ -1191,7 +1042,6 @@ warning 6002: The table/view 'GADATA.NGAC.ControllerEventLog' does not have a pr
         <EntityType Name="rt_controller">
           <Key>
             <PropertyRef Name="id" />
-            <PropertyRef Name="c_controller_id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="c_controller_id" Type="Int32" Nullable="false" />
@@ -1363,29 +1213,6 @@ warning 6002: The table/view 'GADATA.NGAC.ControllerEventLog' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="ControllerEventLog">
-          <Key>
-            <PropertyRef Name="refId" />
-          </Key>
-          <Property Name="Location" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="AssetID" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Logtype" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="timestamp" Type="DateTime" Precision="3" />
-          <Property Name="Logcode" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Severity" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Logtext" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="FullLogtext" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Response" Type="Int32" />
-          <Property Name="Downtime" Type="Int32" />
-          <Property Name="Classification" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Subgroup" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Category" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="refId" Type="Int32" Nullable="false" />
-          <Property Name="LocationTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="ClassTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="controller_name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="controller_type" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1717,30 +1544,6 @@ warning 6002: The table/view 'GADATA.NGAC.ControllerEventLog' does not have a pr
                 <ScalarProperty Name="h_alarm_id" ColumnName="h_alarm_id" />
                 <ScalarProperty Name="rt_job_active_id" ColumnName="rt_job_active_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ControllerEventLog">
-            <EntityTypeMapping TypeName="GADATAModelVASC.ControllerEventLog">
-              <MappingFragment StoreEntitySet="ControllerEventLog">
-                <ScalarProperty Name="controller_type" ColumnName="controller_type" />
-                <ScalarProperty Name="controller_name" ColumnName="controller_name" />
-                <ScalarProperty Name="ClassTree" ColumnName="ClassTree" />
-                <ScalarProperty Name="LocationTree" ColumnName="LocationTree" />
-                <ScalarProperty Name="refId" ColumnName="refId" />
-                <ScalarProperty Name="Category" ColumnName="Category" />
-                <ScalarProperty Name="Subgroup" ColumnName="Subgroup" />
-                <ScalarProperty Name="Classification" ColumnName="Classification" />
-                <ScalarProperty Name="Downtime" ColumnName="Downtime" />
-                <ScalarProperty Name="Response" ColumnName="Response" />
-                <ScalarProperty Name="FullLogtext" ColumnName="FullLogtext" />
-                <ScalarProperty Name="Logtext" ColumnName="Logtext" />
-                <ScalarProperty Name="Severity" ColumnName="Severity" />
-                <ScalarProperty Name="Logcode" ColumnName="Logcode" />
-                <ScalarProperty Name="timestamp" ColumnName="timestamp" />
-                <ScalarProperty Name="Logtype" ColumnName="Logtype" />
-                <ScalarProperty Name="AssetID" ColumnName="AssetID" />
-                <ScalarProperty Name="Location" ColumnName="Location" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
