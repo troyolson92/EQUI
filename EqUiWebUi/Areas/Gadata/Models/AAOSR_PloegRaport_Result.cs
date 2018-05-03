@@ -24,6 +24,7 @@ namespace EqUiWebUi.Areas.Gadata.Models
         public string timestamp { get; set; }
         public string time { get; set; }
         public string Subgroup { get; set; }
+        public string Classification { get; set; }
         public Nullable<int> refId { get; set; }
         public string LocationTree { get; set; }
     }

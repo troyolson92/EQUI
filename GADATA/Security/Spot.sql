@@ -1,3 +1,0 @@
-﻿CREATE SCHEMA [Spot]
-    AUTHORIZATION [GADATA];
-

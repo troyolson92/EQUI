@@ -42,8 +42,18 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
             if (Session["LocationRoot"].ToString() != "")
             {
                 data = (from d in data
-                        where (d.LocationTree ?? "").Contains(Session["LocationRoot"].ToString())
-                        || d.Logtype == "TIMELINE"
+                        where (d.LocationTree ?? "").Contains(Session["LocationRoot"].ToString()) //apply user locationroot
+                        || d.Logtype == "TIMELINE" //always allowtimeline
+                        select d).ToList();
+            }
+
+            if (Session["AssetRoot"].ToString() != "")
+            {
+                data = (from d in data
+                        where (d.Classification ?? "").Contains(Session["AssetRoot"].ToString()) //apply user assetroot
+                            || (d.Classification ?? "") == "Undefined*" //or allow assets thet are undedind
+                            || (d.Classification ?? "") == "" //or allow assets that are null
+                            || d.Logtype == "TIMELINE" //always allowtimeline
                         select d).ToList();
             }
             //
@@ -80,8 +90,10 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
             if (Session["AssetRoot"].ToString() != "")
             {
                 data = (from d in data
-                        where (d.Classification ?? "").Contains(Session["AssetRoot"].ToString()) //must match asset root 
-                        || d.Logtype == "LIVE" //or item is active 
+                        where (d.Classification ?? "").Contains(Session["AssetRoot"].ToString()) //apply user assetroot
+                            || (d.Classification ?? "") == "Undefined*" //or allow assets thet are undedind
+                            || (d.Classification ?? "") == "" //or allow assets that are null
+                            || d.Logtype == "TIMELINE" //always allowtimeline
                         select d).ToList();
             }
             //
