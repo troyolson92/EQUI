@@ -1,3 +1,0 @@
-﻿CREATE SCHEMA [NGAC2]
-    AUTHORIZATION [dbo];
-

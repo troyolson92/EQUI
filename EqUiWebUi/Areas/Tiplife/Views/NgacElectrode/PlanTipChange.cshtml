@@ -75,7 +75,7 @@
                     <div class="row">
                         <h4 class="col-sm-6">Deze robots moeten gewisseld worden.</h4>
                         <div class="col-sm-3" style="float:right">
-                            <input class="form-control input-sm" type="datetime-local" id="changeStartlistDatepicker" />
+                            <input class="form-control input-sm"  id="changeStartlistDatepicker" />    
                         </div>
                     </div>
                 </div>
@@ -99,7 +99,7 @@
                     <div class="row">
                         <h4 class="col-sm-6">Deze wissels NIET zijn gedetecteerd.</h4>
                         <div class="col-sm-3" style="float:right">
-                            <input class="form-control input-sm" type="datetime-local" id="changeDonelistDatepicker" />
+                            <input class="form-control input-sm" id="changeDonelistDatepicker" />
                         </div>
                     </div>
                 </div>
@@ -131,10 +131,22 @@
         $('#loadLocations').attr("disabled", true);
         //clear table if its there
         $("#tipsToChange").empty();
-        //set timestamp
-        $("#changeStartlistDatepicker").val(new Date().toJSON().slice(0, 19));
-        //start a wait spinner
-        spinner1.spin(document.getElementById('tipsToChangecontainer'));
+        //setting up datetimePicker
+        var startDate = moment();
+        $('#changeStartlistDatepicker').daterangepicker({
+            "showWeekNumbers": true,
+            "showISOWeekNumbers": true,
+            "startDate": startDate,
+            "timePicker" : true,
+            "timePicker24Hour": true,
+            "singleDatePicker": true,
+            locale: {
+                format: 'DD/MM/YYYY HH:mm'
+            }
+
+        }, function (end, start, label) {
+            startDate = start;
+        });
 
         //first fade in the container (will only fade in on first run)
         $("#tipsToChangeContainer").fadeIn();
@@ -172,7 +184,22 @@
         //clear table if its there
         $("#tipsChanged").empty();
         //set timestamp
-        $("#changeDonelistDatepicker").val(new Date().toJSON().slice(0, 19));
+        //setting up datetimePicker
+        var EndDate = moment();
+        $('#changeDonelistDatepicker').daterangepicker({
+            "showWeekNumbers": true,
+            "showISOWeekNumbers": true,
+            "startDate": EndDate,
+            "timePicker": true,
+            "timePicker24Hour": true,
+            "singleDatePicker": true,
+            locale: {
+                format: 'DD/MM/YYYY HH:mm'
+            }
+
+        }, function (end, start, label) {
+            EndDate = start;
+        });
         //start a wait spinner
         spinner2.spin(document.getElementById('tipsChangedcontainer'));
         //first fade in the container (will only fade in on first run)

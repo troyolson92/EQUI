@@ -1,6 +1,0 @@
-﻿CREATE TABLE [QUISS].[Stuk] (
-    [ID]   INT          IDENTITY (1, 1) NOT NULL,
-    [Name] VARCHAR (50) NOT NULL,
-    CONSTRAINT [PK_Stuk] PRIMARY KEY CLUSTERED ([ID] ASC)
-);
-

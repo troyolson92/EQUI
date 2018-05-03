@@ -158,10 +158,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Alert\Views\Shared\" />
-    <Folder Include="Areas\HanfireArea\Models\" />
-    <Folder Include="Areas\HanfireArea\Views\Shared\" />
+    <Folder Include="Areas\HangfireArea\Models\" />
+    <Folder Include="Areas\HangfireArea\Views\Shared\" />
     <Folder Include="Areas\Maximo_ui\Views\Shared\" />
     <Folder Include="Areas\PJV\Views\Shared\" />
+    <Folder Include="Areas\STW040\Models\" />
+    <Folder Include="Areas\STW040\Views\Shared\" />
     <Folder Include="Areas\VASC\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
@@ -263,9 +265,9 @@
     <Compile Include="Areas\Gadata\Models\Supervisie.cs">
       <DependentUpon>Gadata.tt</DependentUpon>
     </Compile>
-    <Compile Include="Areas\HanfireArea\Controllers\JobController.cs" />
-    <Compile Include="Areas\HanfireArea\HanfireAreaAreaRegistration.cs" />
-    <Compile Include="Areas\HanfireArea\Jobengine.cs" />
+    <Compile Include="Areas\HangfireArea\Controllers\JobController.cs" />
+    <Compile Include="Areas\HangfireArea\HangfireAreaAreaRegistration.cs" />
+    <Compile Include="Areas\HangfireArea\Jobengine.cs" />
     <Compile Include="Areas\Maximo_ui\Controllers\MaximoController.cs" />
     <Compile Include="Areas\Maximo_ui\Controllers\WorkorderController.cs" />
     <Compile Include="Areas\Maximo_ui\Controllers\WorkorderDetailsController.cs" />
@@ -345,6 +347,9 @@
       <DependentUpon>Gadata.edmx</DependentUpon>
     </Compile>
     <Compile Include="Areas\PlcSupervisie\PlcSupervisieAreaRegistration.cs" />
+    <Compile Include="Areas\STW040\BackgroundWork.cs" />
+    <Compile Include="Areas\STW040\Controllers\STW040Controller.cs" />
+    <Compile Include="Areas\STW040\STW040AreaRegistration.cs" />
     <Compile Include="Areas\Tiplife\Backgroundwork.cs" />
     <Compile Include="Areas\Tiplife\Controllers\NgacElectrodeController.cs" />
     <Compile Include="Areas\Tiplife\Models\TipDressLogFile.cs">
@@ -954,12 +959,12 @@
     <Content Include="Areas\Alert\Views\SBCUrefernces\Index.cshtml" />
     <Content Include="Areas\Alert\Views\Alert\AASPOTIndex.cshtml" />
     <Content Include="Areas\Alert\Views\Alert\Index.cshtml" />
-    <Content Include="Areas\HanfireArea\Views\web.config" />
-    <Content Include="Areas\HanfireArea\Views\Job\MakeJob.cshtml" />
-    <Content Include="Areas\HanfireArea\Views\Job\Index.cshtml" />
+    <Content Include="Areas\HangfireArea\Views\web.config" />
+    <Content Include="Areas\HangfireArea\Views\Job\MakeJob.cshtml" />
+    <Content Include="Areas\HangfireArea\Views\Job\Index.cshtml" />
     <Content Include="Areas\Alert\Views\Alert\_settings.cshtml" />
     <Content Include="Areas\user_management\Views\UserScreens\_settings.cshtml" />
-    <Content Include="Areas\HanfireArea\Views\Job\_settings.cshtml" />
+    <Content Include="Areas\HangfireArea\Views\Job\_settings.cshtml" />
     <Content Include="Areas\user_management\Views\users\ListSessions.cshtml" />
     <Content Include="Areas\user_management\Views\users\_settings.cshtml" />
     <Content Include="Areas\Maximo_ui\Views\WorkorderDetails\_woParentDetails.cshtml" />
@@ -1053,6 +1058,9 @@
     <Content Include="Areas\PJV\Views\PJV\Index.cshtml" />
     <Content Include="Areas\PJV\Views\PJV\GetChanges.cshtml" />
     <Content Include="Areas\PJV\Views\PJV\GetL_operation.cshtml" />
+    <Content Include="Areas\STW040\Views\web.config" />
+    <Content Include="Areas\STW040\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\STW040\Views\STW040\Index.cshtml" />
     <None Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.svg" />

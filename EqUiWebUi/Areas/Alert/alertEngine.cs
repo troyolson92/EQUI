@@ -198,6 +198,9 @@ namespace EqUiWebUi.Areas.Alert
                     }
 
                     newAlert.alarmobject = ActiveAlert.Field<string>("alarmobject");
+                    //take classification direct from QRY 
+                    newAlert.Classification = ActiveAlert.Field<string>("ClassTree");
+                    //18w18d4 SDEBEUL 
                     newAlert.C_timestamp = ActiveAlert.Field<DateTime>("timestamp");
                     newAlert.state = trigger.initial_state;
                     newAlert.info = ActiveAlert.Field<string>("info");

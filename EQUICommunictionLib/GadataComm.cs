@@ -30,7 +30,7 @@ namespace EQUICommunictionLib
             log.Debug("Created DSN in regEx for GADATA");
         }
 
-        public void BulkCopyToGadata(string as_schema, DataTable adt_table, string as_destination)
+        public void BulkCopyToGadata(string as_schema, DataTable adt_table, string as_destination, bool enblExeptions = false)
         {
             {
                 using (GadataconnAdmin)
@@ -48,6 +48,10 @@ namespace EQUICommunictionLib
                         catch (Exception ex)
                         {
                             log.Error("Command failed", ex);
+                            if (enblExeptions)
+                            {
+                                throw ex;
+                            }
                         }
                     }
                     GadataconnAdmin.Close();

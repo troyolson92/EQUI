@@ -15,16 +15,15 @@ namespace EQUICommunictionLib
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         OracleConnection MaximoReportingConn = new OracleConnection(
-          "Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=gotsvl2149.got.volvocars.net)(PORT=1521)) (CONNECT_DATA=(SID=dpmxarct)));User Id=ARCTVCG;Password=vcg$tokfeb2017;");
-
+          @"Data Source=(description=	
+            (address=	(community=tcpcomm)	(protocol=tcp)	(host=gotsvl2149.got.volvocars.net)	(port=1521))	
+            (connect_data=	(server=dedicated)	(sid=dpmxarct)))
+            ;User Id=ARCTVCG;Password=vcg$tokfeb2017;");
         OracleConnection MaximoRealtimeConn = new OracleConnection(
           "Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=gotora1mxa.got.volvocars.net)(PORT=1521)) (CONNECT_DATA=(SID=DPMXADGP)));User Id=FDENAYER;Password=volvo789;");
 
         //how to reset password. alter user <username> identified by <newpassword> replace <oldpassword> 
         //ALTER USER FDENAYER IDENTIFIED BY volvo789 replace volvo456;
-
-        //debugger
-        myDebugger Debugger = new myDebugger();
 
         public string MX7connectionString
         {
@@ -56,6 +55,9 @@ namespace EQUICommunictionLib
         {
             OracleConnection activeConn = MaximoReportingConn;
             if (RealtimeConn) { activeConn = MaximoRealtimeConn; }
+
+
+             
 
             try
             {
@@ -122,72 +124,6 @@ namespace EQUICommunictionLib
                 return null;
             }
         }
-
-
-        //dePRECIATED ? 
-        /*
-        public string GetMaximoDetails(string wonum,bool RealtimeConn = false)
-        {
-            string cmdFAILUREREMARK = (@"
-                select  NVL2(LD.LDTEXT, LD.LDTEXT, '') LDTEXT
-                from MAXIMO.FAILUREREMARK FM 
-                left join MAXIMO.LONGDESCRIPTION LD on LD.LDKEY = FM.FAILUREREMARKID AND LD.LDOWNERTABLE = 'FAILUREREMARK'
-                where fm.wonum = '{0}'
-            ");
-            cmdFAILUREREMARK = string.Format(cmdFAILUREREMARK, wonum);
-            //
-            string cmdLONGDESCRIPTION = (@"
-                select NVL2(LD.LDTEXT, LD.LDTEXT, '') LDTEXT
-                from MAXIMO.WORKORDER WO 
-                left join MAXIMO.LONGDESCRIPTION LD on LD.LDKEY = WO.WORKORDERID AND LD.LDOWNERTABLE = 'WORKORDER'
-                where WO.wonum = '{0}'
-            ");
-            cmdLONGDESCRIPTION = string.Format(cmdLONGDESCRIPTION, wonum);
-            //
-            string cmdLabor = (@"
-            select 
-             LABORCODE
-            ,PERSON.DISPLAYNAME
-            ,CRAFT
-            ,PAYRATE
-            ,PERSON.SUPERVISOR
-            ,LABTRANS.ENTERDATE
-            ,REGULARHRS
-            ,to_timestamp('12/30/1899 00:00:00', 'MM/DD/YYYY  hh24:mi:ss') + REGULARHRS / 24 Converted
-            from MAXIMO.LABTRANS  LABTRANS 
-            left join MAXIMO.PERSON ON PERSON.PERSONID = LABTRANS.LABORCODE
-            where LABTRANS.REFWO  = '{0}'
-            ");
-            cmdLabor = string.Format(cmdLabor, wonum);
-            //
-            string cmdWorkLog = (@"
-            select 
-            wl.logtype
-            ,wl.CREATEBY
-            ,wl.CREATEDATE
-            ,wl.CLIENTVIEWABLE
-            ,wl.DESCRIPTION
-            ,ld.LDTEXT 
-            from maximo.worklog wl
-            left join maximo.longdescription ld  on 
-            ld.ldownertable = 'WORKLOG'  
-            AND  ld.ldownercol = 'DESCRIPTION'
-            AND  ld.LDKEY = wl.WORKLOGID
-            where
-            wl.RECORDKEY = '{0}'
-            ");
-            cmdWorkLog = string.Format(cmdWorkLog, wonum);
-            //
-            StringBuilder sb = new StringBuilder();
-            string newline = "<p></p>";
-            sb.AppendLine(StringToHTML_Table("LONGDESCRIPTION", GetClobMaximo7(cmdLONGDESCRIPTION,RealtimeConn:RealtimeConn))).AppendLine(newline);
-            sb.AppendLine(StringToHTML_Table("FAILUREREMARK", GetClobMaximo7(cmdFAILUREREMARK, RealtimeConn: RealtimeConn))).AppendLine(newline);
-            sb.AppendLine(StringToHTML_Table("LABOR", DtToHTML_Table(Oracle_runQuery(cmdLabor, RealtimeConn: RealtimeConn)))).AppendLine(newline);
-            sb.AppendLine(StringToHTML_Table("WORKLOG", DtToHTML_Table(Oracle_runQuery(cmdWorkLog, RealtimeConn: RealtimeConn)))).AppendLine(newline);
-            //
-            return sb.ToString();
-        }
-        */
         
         public  string DtToHTML_Table(DataTable dt)
         {

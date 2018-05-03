@@ -2,20 +2,22 @@
 @helper AssetDropdownGlobal(string id, string value = "")
     {
         /**/
-        <select class="form-control input-sm" id="@id" name="Selecteer locatie">
-            <option style="display:none"> -- select a asset root -- </option>
-            <option value="U">all assets</option>
-            <optgroup label="Robots">
-                <option value="UR">all robots</option>
-                <option value="URC">comau</option>
-                <option value="URA">abb</option>
-            </optgroup>
-            <optgroup label="Process">
-                <option value="UAW">UAW</option>
-                <option value="UAWS">Spot</option>
-                <option value="UAWT">Tucker</option>
-            </optgroup>
-        </select>
+<select class="form-control input-sm" id="@id" name="Selecteer locatie">
+    <option style="display:none"> -- select a asset root -- </option>
+    <option value="">no Filter</option>
+    <option value="U">all assets</option>
+    <optgroup label="Robots">
+        <option value="UR">all robots</option>
+        <option value="URC">comau</option>
+        <option value="URA">abb</option>
+    </optgroup>
+    <optgroup label="Process">
+        <option value="UAW">UAW</option>
+        <option value="UAWS">Spot</option>
+        <option value="UAWT">Tucker</option>
+        <option value="UG">Gripper</option>
+    </optgroup>
+</select>
 }
 
 @*drop down control for filtering on 'locationtree' *@
