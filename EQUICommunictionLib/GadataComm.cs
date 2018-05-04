@@ -30,31 +30,60 @@ namespace EQUICommunictionLib
             log.Debug("Created DSN in regEx for GADATA");
         }
 
-        public void BulkCopyToGadata(string as_schema, DataTable adt_table, string as_destination, bool enblExeptions = false)
+        public void BulkCopyToGadata(string as_schema, DataTable adt_table, string as_destination, bool runAsAdmin = true, bool enblExeptions = false, int maxEXECtime = 300)
         {
+            SqlConnection lconn;
+            if (runAsAdmin)
             {
-                using (GadataconnAdmin)
+                lconn = GadataconnAdmin;
+            }
+            else
+            {
+                lconn = Gadataconn;
+            }
+
+            try
+            {
+                lconn.Open();
+            }
+            catch (Exception ex)
+            {
+                log.Error("Connection Failed", ex);
+                if (enblExeptions)
                 {
-                    GadataconnAdmin.Open();
-                    // there is no need to map columns.  
-                    using (SqlBulkCopy bulkCopy = new SqlBulkCopy(GadataconnAdmin))
-                    {
-                        bulkCopy.DestinationTableName = "[" + as_schema + "].[" + as_destination + "]";
+                    throw ex;
+                }
+            }
+
+            try
+            {
+                // there is no need to map columns.  
+                using (SqlBulkCopy bulkCopy = new SqlBulkCopy(lconn))
+                {
+                    bulkCopy.BulkCopyTimeout = maxEXECtime;
+                    bulkCopy.DestinationTableName = "[" + as_schema + "].[" + as_destination + "]";
+                        // Write from the source to the destination.
+                        bulkCopy.WriteToServer(adt_table);
                         try
                         {
-                            // Write from the source to the destination.
-                            bulkCopy.WriteToServer(adt_table);
+                            lconn.Close();
                         }
                         catch (Exception ex)
                         {
-                            log.Error("Command failed", ex);
+                            log.Error("Failed to close", ex);
                             if (enblExeptions)
                             {
                                 throw ex;
                             }
                         }
                     }
-                    GadataconnAdmin.Close();
+            }
+            catch (Exception ex)
+            {
+                log.Error("Bulkcopy failed", ex);
+                if (enblExeptions)
+                {
+                    throw ex;
                 }
             }
         }

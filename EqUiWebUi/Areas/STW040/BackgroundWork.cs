@@ -28,15 +28,18 @@ namespace EqUiWebUi.Areas.STW040
         {
             string STW040qry = @"
 select 
- EMPLOYEE.OPERSFN LastName
+ null id
+,EMPLOYEE.OPERSFN LastName
 ,EMPLOYEE.OPERSVN SurName 
 ,STW040.IMACHINE
 ,STW040.KPLOEG
-,CAST (STW040.DBSTASTO AS TIMESTAMP) DBSTASTO
-,CAST (STW040.DBSTOSTO AS TIMESTAMP) DBSTOSTO
-,CAST (STW040.DBSTOSTIL AS TIMESTAMP) DBSTOSTIL
---,CAST (STW040.OAKTIE AS VARCHAR(2000)) OAKTIE
-,'GVD' OAKTIE
+,STW040.DBSTASTO 
+,STW040.DBSTOSTO 
+,STW040.DBSTOSTIL
+--,CAST (STW040.DBSTASTO AS TIMESTAMP) DBSTASTO
+--,CAST (STW040.DBSTOSTO AS TIMESTAMP) DBSTOSTO
+--,CAST (STW040.DBSTOSTIL AS TIMESTAMP) DBSTOSTIL
+,STW040.OAKTIE 
 ,STW040.KSHIFT
 ,STW040.HAMSTOR
 ,STW040.HOSVLT
@@ -44,7 +47,8 @@ select
 ,STW040.KMTBF
 ,STW040.IMZONE
 ,STW040.NPLC
-,CAST (STW040.DBCYCLE AS TIMESTAMP) DBCYCLE
+,STW040.DBCYCLE
+--,CAST (STW040.DBCYCLE AS TIMESTAMP) DBCYCLE
 ,STW040.KFAB
 ,STW040.KEIG
 ,STW040.OPREVAKTIE
@@ -63,7 +67,7 @@ LEFT JOIN APPLICATION.TBI270 FOUT on STW040.KFOUT5 = FOUT.KFOUT5 and STW040.KEIG
 LEFT JOIN APPLICATION.TBI280 OORZAAK on STW040.KOORZAAK = OORZAAK.KOORZAAK and STW040.KEIG = OORZAAK.KOORZGRP
 WHERE 
 STW040.KFAB = 'GA'
-AND STW040.DBSTASTO > sysdate-((2*24*60)/1440) --work with last 2 days of data.
+AND STW040.DBSTASTO > sysdate-((1*24*60)/1440) --work with last 1 days of data.
 --AND STW040.KMANUEEL <> 'N'
 --AND STW040.IMACHINE like '336060%'
 ";
@@ -72,11 +76,35 @@ AND STW040.DBSTASTO > sysdate-((2*24*60)/1440) --work with last 2 days of data.
             //This should be realtime but is not! Still a copy that runs every end of shift. 
             STW040Comm sTW040Comm = new STW040Comm();
             DataTable dt = new DataTable();
-            dt = sTW040Comm.Oracle_runQuery(STW040qry, enblExeptions: true, maxEXECtime: 300);
+            dt = sTW040Comm.Oracle_runQuery(STW040qry, enblExeptions: true, maxEXECtime: 600);
 
-            //push data to server
             GadataComm gadataComm = new GadataComm();
-            gadataComm.BulkCopyToGadata("STW040", dt, "STW040",enblExeptions: true);
+            //delete data from server
+            //string STW040deleteQry = "delete GADATA.STW040.STW040 from GADATA.STW040.STW040";
+            //gadataComm.RunCommandGadata(STW040deleteQry, runAsAdmin: true, enblExeptions: true, maxEXECtime: 30);
+            //push data to server
+            gadataComm.BulkCopyToGadata("STW040", dt, "STW040",runAsAdmin: true, enblExeptions: true, maxEXECtime: 300);
+            //remove duplicates
+            string STW040RemoveDups = @"
+DELETE GADATA.STW040.STW040 
+--select lx.*
+FROM GADATA.STW040.STW040 as lx 
+LEFT OUTER JOIN (
+   SELECT 
+   MIN(l.id) as 'id' 
+   ,L.DBSTASTO
+   ,L.IMACHINE
+   ,L.DBCYCLE
+   FROM  GADATA.STW040.STW040 as l  
+   GROUP BY    
+    L.DBSTASTO
+   ,L.IMACHINE
+   ,L.DBCYCLE
+) as KeepRows ON
+   lx.Id = KeepRows.Id
+WHERE
+   KeepRows.Id IS NULL";
+            gadataComm.RunCommandGadata(STW040RemoveDups, runAsAdmin: true, enblExeptions: true, maxEXECtime: 30);
             return;
         }
 
