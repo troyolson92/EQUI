@@ -25,8 +25,6 @@ namespace EqUiWebUi
             Backgroundwork backgroundwork = new Backgroundwork();
             //check every minute for new data (hystorian)
             //RecurringJob.AddOrUpdate(() => backgroundwork.PushDatafromSTOtoGADATA(), Cron.MinuteInterval(5));
-            //**********************************STW040 BI rapoort****************************************************
-            RecurringJob.AddOrUpdate("BI_STW=>GADATA",() => backgroundwork.PushDatafromSTW040toGADATA(), Cron.HourInterval(1));
             //**********************************MX7 *****************************************************************
             //reporting DB 
             RecurringJob.AddOrUpdate("RT_MX=>GADATA",() => backgroundwork.PushDatafromMAXIMOtoGADATA(), Cron.HourInterval(1));
@@ -116,12 +114,5 @@ ORDER BY WORKORDER.STATUSDATE DESC
 			lGadataComm.BulkCopyToGadata("MAXIMO", newMaximoDt, "WORKORDERS");
 		}
 
-		//update new data from STW040 (BI RAPPORT) to gadata. called every minute #hangfire
-		[AutomaticRetry(Attempts = 0)]
-		public void PushDatafromSTW040toGADATA()
-		{
-			Stw040Sync lstw040Sync = new Stw040Sync();
-			lstw040Sync.Get_swt040data();
-		}
 	}
 }
