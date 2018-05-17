@@ -53,7 +53,7 @@ namespace EqUiWebUi.Areas.user_management.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Plant,Optgroup,Area,LocationTreeFilter1,LocationTreeFilter2,LocationTreeFilter3,LocationTreeFilter4,UserComment")] AreaFilters areaFilters)
+        public ActionResult Create( AreaFilters areaFilters)
         {
             if (ModelState.IsValid)
             {
@@ -85,7 +85,7 @@ namespace EqUiWebUi.Areas.user_management.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Plant,Optgroup,Area,LocationTreeFilter1,LocationTreeFilter2,LocationTreeFilter3,LocationTreeFilter4,UserComment")] AreaFilters areaFilters)
+        public ActionResult Edit(AreaFilters areaFilters)
         {
             if (ModelState.IsValid)
             {
@@ -132,13 +132,13 @@ namespace EqUiWebUi.Areas.user_management.Controllers
         }
 
         //returns the area (locationtreefilter) select list from the database
-        public SelectList getAreaSelectList()
+        public SelectList getAreaSelectList(string UserLocationRoot= "")
         {
-            List<SelectListItem> SelectList = new List<SelectListItem>();
+            List<SelectListItem> selectList = new List<SelectListItem>();
             List<AreaFilters> areaFilters = db.AreaFilters.ToList();
 
-            List<string> plats = areaFilters.GroupBy(list => list.Plant).Select(grp => grp.First().Plant).ToList();
-            foreach(string plant in plats)
+            List<string> plants = areaFilters.GroupBy(list => list.Plant).Select(grp => grp.First().Plant).ToList();
+            foreach(string plant in plants)
             {
                 //do we need an option to group by plant?
 
@@ -146,7 +146,8 @@ namespace EqUiWebUi.Areas.user_management.Controllers
                 foreach(string optgroup in optgroups)
                 {
                     SelectListGroup selectListGroup =  new SelectListGroup() { Name = optgroup, Disabled = false };
-                    List<SelectListItem> optgroupItems = areaFilters.Where(list => list.Plant == plant && list.Optgroup == optgroup
+                    List<SelectListItem> optgroupItems = areaFilters.Where(list => list.Plant == plant && list.Optgroup == optgroup 
+                            && (list.LocationTreeFilter1.Contains(UserLocationRoot) || UserLocationRoot == "")
                                             ).Select(list => new SelectListItem
                                             {
                                                 Value = list.LocationTreeFilter1,
@@ -154,11 +155,11 @@ namespace EqUiWebUi.Areas.user_management.Controllers
                                                 Group = selectListGroup,
                                                 Disabled = false
                                             }).ToList();
-                    SelectList.AddRange(optgroupItems);
+                    selectList.AddRange(optgroupItems);
                 }
 
             }
-            return new SelectList(SelectList, "Value","Text","Group.Name",0); 
+            return new SelectList(selectList, "Value","Text","Group.Name",0); 
         }
     }
 }

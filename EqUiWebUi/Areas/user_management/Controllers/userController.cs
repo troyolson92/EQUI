@@ -20,6 +20,10 @@ namespace EqUiWebUi.Areas.user_management.Controllers
             {
                 return HttpNotFound();
             }
+
+            AreaFiltersController areaFiltersController = new EqUiWebUi.Areas.user_management.Controllers.AreaFiltersController();
+            ViewBag.selectlist = areaFiltersController.getAreaSelectList();
+
             return PartialView(user);
         }
 
@@ -32,6 +36,10 @@ namespace EqUiWebUi.Areas.user_management.Controllers
             {
                 return HttpNotFound();
             }
+
+            AreaFiltersController areaFiltersController = new EqUiWebUi.Areas.user_management.Controllers.AreaFiltersController();
+            ViewBag.selectlist = areaFiltersController.getAreaSelectList();
+
             return View(user);
         }
 

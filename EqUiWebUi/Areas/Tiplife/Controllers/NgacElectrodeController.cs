@@ -74,6 +74,9 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
         [HttpGet]
         public ActionResult PlanTipChange()
         {
+            user_management.Controllers.AreaFiltersController areaFiltersController = new user_management.Controllers.AreaFiltersController();
+            string locationroot = Session["LocationRoot"].ToString();
+            ViewBag.selectlist = areaFiltersController.getAreaSelectList(locationroot);
             return View();
         }
 
