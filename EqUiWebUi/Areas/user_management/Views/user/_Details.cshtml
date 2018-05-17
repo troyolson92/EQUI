@@ -73,7 +73,7 @@
         </dt>
 
         <dd>
-            @MyFilters.LocationDropdownGlobal("LocationRoot")
+            @Html.DropDownList("LocationRoot", (SelectList)ViewBag.selectlist, htmlAttributes: new { @class = "form-control" }, optionLabel: "--Select a location--")
         </dd>
 
         <p></p>
