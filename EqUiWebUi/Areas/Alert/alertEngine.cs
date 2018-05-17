@@ -300,6 +300,8 @@ namespace EqUiWebUi.Areas.Alert
                         log.Debug("Alert no longer active closing it <" + OpenAlert.location + ">id:" + OpenAlert.id.ToString());
                         //set state
                         OpenAlert.state = (int)alertState.TECHCOMP; //techcomp
+                        //set last triggerd timestamp when close so we can calc downtime
+                        OpenAlert.lastTriggerd = System.DateTime.Now;
                         //adde badge to comment when closses
                         StringBuilder sb = new StringBuilder();
                         //add existing 

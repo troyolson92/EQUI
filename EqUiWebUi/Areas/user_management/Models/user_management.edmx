@@ -5,6 +5,20 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="GADATAModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AreaFilters">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Plant" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Optgroup" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Area" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LocationTreeFilter1" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="LocationTreeFilter2" Type="varchar" MaxLength="100" />
+          <Property Name="LocationTreeFilter3" Type="varchar" MaxLength="100" />
+          <Property Name="LocationTreeFilter4" Type="varchar" MaxLength="100" />
+          <Property Name="UserComment" Type="varchar(max)" />
+        </EntityType>
         <EntityType Name="c_userRoles">
           <Key>
             <PropertyRef Name="Role" />
@@ -95,6 +109,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="GADATAModelStoreContainer">
+          <EntitySet Name="AreaFilters" EntityType="Self.AreaFilters" Schema="EqUi" store:Type="Tables" />
           <EntitySet Name="c_userRoles" EntityType="Self.c_userRoles" Schema="Volvo" store:Type="Tables" />
           <EntitySet Name="h_usersPermisions" EntityType="Self.h_usersPermisions" Schema="Volvo" store:Type="Tables" />
           <EntitySet Name="L_Screens" EntityType="Self.L_Screens" Schema="Volvo" store:Type="Tables" />
@@ -212,6 +227,7 @@
             <End Role="users" EntitySet="L_users" />
             <End Role="L_Screens" EntitySet="L_Screens" />
           </AssociationSet>
+          <EntitySet Name="AreaFilters" EntityType="GADATAModel.AreaFilters" />
         </EntityContainer>
         <EntityType Name="L_Screens">
           <Key>
@@ -239,6 +255,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="AreaFilters">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="Plant" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Optgroup" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Area" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LocationTreeFilter1" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="LocationTreeFilter2" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="LocationTreeFilter3" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="LocationTreeFilter4" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="UserComment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -286,6 +316,21 @@
                 <ScalarProperty Name="User_id" ColumnName="User_id" />
                 <ScalarProperty Name="Discription" ColumnName="Discription" />
                 <ScalarProperty Name="Screen_num" ColumnName="Screen_num" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AreaFilters">
+            <EntityTypeMapping TypeName="GADATAModel.AreaFilters">
+              <MappingFragment StoreEntitySet="AreaFilters">
+                <ScalarProperty Name="UserComment" ColumnName="UserComment" />
+                <ScalarProperty Name="LocationTreeFilter4" ColumnName="LocationTreeFilter4" />
+                <ScalarProperty Name="LocationTreeFilter3" ColumnName="LocationTreeFilter3" />
+                <ScalarProperty Name="LocationTreeFilter2" ColumnName="LocationTreeFilter2" />
+                <ScalarProperty Name="LocationTreeFilter1" ColumnName="LocationTreeFilter1" />
+                <ScalarProperty Name="Area" ColumnName="Area" />
+                <ScalarProperty Name="Optgroup" ColumnName="Optgroup" />
+                <ScalarProperty Name="Plant" ColumnName="Plant" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

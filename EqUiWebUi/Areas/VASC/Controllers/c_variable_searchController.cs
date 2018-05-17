@@ -62,7 +62,7 @@ namespace EqUiWebUi.Areas.VASC.Controllers
                 c_variable_search._Enable_bit = Enable_bit.Disabled;
                 c_variable_search._Insert_update = Insert_update.Insert;
                 c_variable_search._SymbolTypes = SymbolTypes.None;
-                c_variable_search.rt_table = "[NGAC].[Rt_value_Search]";
+                c_variable_search.rt_table = "[Rt_value_Search]";
 
             }
             else //find the existing alert 
@@ -154,7 +154,7 @@ namespace EqUiWebUi.Areas.VASC.Controllers
                     [rt_search_value].[module] AS [module], 
                     [rt_search_value].[variable] AS [variable], 
                     [rt_search_value].[value] AS [value]
-                    FROM {0} AS [rt_search_value]", c_variable_search.rt_table);
+                    FROM [NGAC].{0} AS [rt_search_value]", c_variable_search.rt_table);
 
             ViewBag.SourceTable = c_variable_search.rt_table;
 

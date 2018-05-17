@@ -44,10 +44,10 @@ namespace EqUiWebUi
                 case "TIMELINE":
                     return "TableLogtypeTIMELINE";
 
-                case "SLOWSpeed":
+                case "SlowSpeed":
                     return "TableLogtypeSLOWSpeed";
 
-                case "BarrelLOW":
+                case "BarrelLow":
                     return "TableLogtypeBarrelLOW";
 
                 case "ALERT":

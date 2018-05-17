@@ -22,8 +22,10 @@ namespace ExcelAddInEquipmentDatabase
         GadataComm lGadataComm = new GadataComm();
         //connection to maximo 
         MaximoComm lMaximoComm = new MaximoComm();
+        //connection to STO
+        StoComm lstoComm = new StoComm();
         //connection to GADATA for maximo querys
-        MaximoQuery lMaximoQuery = new MaximoQuery();
+        OracleQuery lOracleQuery = new OracleQuery();
         //Query edit box instance
         Forms.MXxQueryEdit QEdit;
 
@@ -35,8 +37,8 @@ namespace ExcelAddInEquipmentDatabase
             lv_GADATA_procParms.Columns.Add("DefaultValue", -2, HorizontalAlignment.Left);
             lv_MX7_procParms.Columns.Add("ParmName", -2, HorizontalAlignment.Left);
             lv_MX7_procParms.Columns.Add("DefaultValue", -2, HorizontalAlignment.Left);
-            lv_MX3_procParms.Columns.Add("ParmName", -2, HorizontalAlignment.Left);
-            lv_MX3_procParms.Columns.Add("DefaultValue", -2, HorizontalAlignment.Left);
+            lv_STO_procParms.Columns.Add("ParmName", -2, HorizontalAlignment.Left);
+            lv_STO_procParms.Columns.Add("DefaultValue", -2, HorizontalAlignment.Left);
             //
             Lb_get_connections();
         }
@@ -226,8 +228,8 @@ namespace ExcelAddInEquipmentDatabase
             string Query;
             using (Forms.ProcedureManager  ProcMngr = new Forms.ProcedureManager(lMaximoComm.SystemMX7))
           {
-              ProcMngr.MX7_ActiveConnectionToProcMngr(lMaximoQuery.oracle_get_QueryParms_from_GADATA(cb_MX7_QueryNames.Text, lMaximoComm.SystemMX7), "It does not exist");
-              Query = ProcMngr.MX7_BuildQuery_ProcMngrToActiveConnection(lMaximoQuery.oracle_get_QueryTemplate_from_GADATA(cb_MX7_QueryNames.Text, lMaximoComm.SystemMX7));
+              ProcMngr.MX7_ActiveConnectionToProcMngr(lOracleQuery.oracle_get_QueryParms_from_GADATA(cb_MX7_QueryNames.Text, lMaximoComm.SystemMX7), "It does not exist");
+              Query = ProcMngr.MX7_BuildQuery_ProcMngrToActiveConnection(lOracleQuery.oracle_get_QueryTemplate_from_GADATA(cb_MX7_QueryNames.Text, lMaximoComm.SystemMX7));
           }
             lMaximoComm.Make_DSN(lMaximoComm.SystemMX7);
             string ODBCconn = lMaximoComm.MX7connectionString;
@@ -250,7 +252,7 @@ namespace ExcelAddInEquipmentDatabase
                                                 select a.DISCRIPTION).First().ToString();
             }
             lv_MX7_procParms.Items.Clear();
-            foreach (OracleQueryParm Parm in lMaximoQuery.oracle_get_QueryParms_from_GADATA(cb_MX7_QueryNames.Text, lMaximoComm.SystemMX7))
+            foreach (OracleQueryParm Parm in lOracleQuery.oracle_get_QueryParms_from_GADATA(cb_MX7_QueryNames.Text, lMaximoComm.SystemMX7))
             {
                 ListViewItem item = new ListViewItem(Parm.ParameterName);
                 item.SubItems.Add(Parm.Defaultvalue);
@@ -276,15 +278,15 @@ namespace ExcelAddInEquipmentDatabase
                 TargetSystem = lMaximoComm.SystemMX7,
                 QueryName = cb_MX7_QueryNames.Text,
                 QueryDiscription = lbl_MX7_procDiscription.Text,
-                Query = lMaximoQuery.oracle_get_QueryTemplate_from_GADATA(cb_MX7_QueryNames.Text, lMaximoComm.SystemMX7)
+                Query = lOracleQuery.oracle_get_QueryTemplate_from_GADATA(cb_MX7_QueryNames.Text, lMaximoComm.SystemMX7)
             };
             QEdit.Show();
         }
         #endregion
 
-        #region MAXIMO3
+        #region STO
         //Maximo3 link
-        private void Tp_MX3_Enter(object sender, EventArgs e)
+        private void Tp_STO_Enter(object sender, EventArgs e)
         {
             applData.QUERYSDataTable lQUERYS = new applData.QUERYSDataTable();
             using (applDataTableAdapters.QUERYSTableAdapter adapter = new applDataTableAdapters.QUERYSTableAdapter())
@@ -292,32 +294,29 @@ namespace ExcelAddInEquipmentDatabase
                 adapter.Fill(lQUERYS);
             }
             var data = from a in lQUERYS
-                       where a.SYSTEM == lMaximoComm.SystemMX3
+                       where a.SYSTEM == lstoComm.SystemSTO
                        orderby a.NAME descending
                        select a.NAME;
-            cb_MX3_QueryNames.DataSource = data.Distinct().ToList();
+            cb_STO_QueryNames.DataSource = data.Distinct().ToList();
         }
 
-        private void Btn_MX3_create_Click(object sender, EventArgs e)
+        private void Btn_STO_create_Click(object sender, EventArgs e)
         {
             // NOT WORKING YET 
             string Query = @"
-                Select LDKEY, STATUS, WORKTYPE, DESCRIPTION, LOCATION, WONUM, WOPM1, REPORTDATE 
-                from MAXIMO.WORKORDER WORKORDER 
-                where 
-                (WORKORDER.location LIKE '%99070R01%') 
-                order by REPORTDATE
+select * from STO_SYS.ALARM_DATA_UB12
+where GEOLOCATION = '339090'
                     ";
-            lMaximoComm.Make_DSN(lMaximoComm.SystemMX3);
-            string ODBCconn = @"ODBC;DSN=MVCGP2;Description= MVCGP2;UID=maximo_ro;PWD=maximo_ro;";
-            string ConnectionName = "MX3Test";
+            lstoComm.Make_DSN(lstoComm.SystemSTO);
+            string ODBCconn = lstoComm.STOconnectionString;
+            string ConnectionName = cb_STO_QueryNames.Text;
             Create_ODBC_connection(Query, ODBCconn, ConnectionName);
 
             this.Hide();
             this.Dispose();
         }
 
-        private void Cb_MX3_QueryNames_SelectedIndexChanged(object sender, EventArgs e)
+        private void Cb_STO_QueryNames_SelectedIndexChanged(object sender, EventArgs e)
         {
          using (applData.QUERYSDataTable lQUERYS = new applData.QUERYSDataTable())
             {
@@ -325,42 +324,42 @@ namespace ExcelAddInEquipmentDatabase
                 {
                     adapter.Fill(lQUERYS);
                 }
-                lbl_MX3_procDiscription.Text = (from a in lQUERYS
-                           where a.SYSTEM == lMaximoComm.SystemMX3 && a.NAME == cb_MX3_QueryNames.Text
+                lbl_STO_procDiscription.Text = (from a in lQUERYS
+                           where a.SYSTEM == lstoComm.SystemSTO && a.NAME == cb_STO_QueryNames.Text
                            select a.DISCRIPTION).First().ToString();
            }
-            lv_MX3_procParms.Items.Clear();
-            foreach (OracleQueryParm Parm in lMaximoQuery.oracle_get_QueryParms_from_GADATA(cb_MX3_QueryNames.Text, lMaximoComm.SystemMX3))
+            lv_STO_procParms.Items.Clear();
+            foreach (OracleQueryParm Parm in lOracleQuery.oracle_get_QueryParms_from_GADATA(cb_STO_QueryNames.Text, lstoComm.SystemSTO))
             {
                 ListViewItem item = new ListViewItem(Parm.ParameterName);
                 item.SubItems.Add(Parm.Defaultvalue);
-                lv_MX3_procParms.Items.Add(item);
+                lv_STO_procParms.Items.Add(item);
             }
         }
 
-        private void Btn_MX3_edit_Click(object sender, EventArgs e)
+        private void Btn_STO_edit_Click(object sender, EventArgs e)
         {
             if (QEdit != null) QEdit.Dispose();
             QEdit = new Forms.MXxQueryEdit
             {
-                TargetSystem = lMaximoComm.SystemMX3
+                TargetSystem = lstoComm.SystemSTO,
+                QueryName = cb_STO_QueryNames.Text,
+                QueryDiscription = lbl_STO_procDiscription.Text,
+                Query = lOracleQuery.oracle_get_QueryTemplate_from_GADATA(cb_STO_QueryNames.Text, lstoComm.SystemSTO)
             };
             QEdit.Show();
+
         }
 
-        private void Btn_MX3_new_Click(object sender, EventArgs e)
+        private void Btn_STO_new_Click(object sender, EventArgs e)
         {
             if (QEdit != null) QEdit.Dispose();
             QEdit = new Forms.MXxQueryEdit
             {
-                TargetSystem = lMaximoComm.SystemMX3,
-                QueryName = cb_MX7_QueryNames.Text,
-                QueryDiscription = lbl_MX3_procDiscription.Text,
-                Query = lMaximoQuery.oracle_get_QueryTemplate_from_GADATA(cb_MX3_QueryNames.Text, lMaximoComm.SystemMX3)
+                TargetSystem = lstoComm.SystemSTO
             };
             QEdit.Show();
         }
         #endregion
-
     }
 }

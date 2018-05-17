@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ExcelAddInEquipmentDatabase
 {
-    class MaximoQuery
+    class OracleQuery
     {
         //maximo comm TO GADATA
 

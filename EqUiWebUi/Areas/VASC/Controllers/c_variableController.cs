@@ -62,7 +62,7 @@ namespace EqUiWebUi.Areas.VASC.Controllers
                 c_variable._Poll_Rate = Poll_rate.ReadOnConnect;
                 c_variable._Enable_bit = Enable_bit.Disabled;
                 c_variable._Event_code = Event_code.noEvent;
-                c_variable.rt_table = "[NGAC].[rt_value]";
+                c_variable.rt_table = "[rt_value]";
 
             }
             else //find the existing alert 
@@ -153,7 +153,7 @@ namespace EqUiWebUi.Areas.VASC.Controllers
                             [rt_value].[value] AS [value], 
                             [rt_value].[isEvent] AS [isEvent], 
                             [rt_value].[abbDateTime] AS [abbDateTime]
-                            FROM {0} AS [rt_value]",c_Variable.rt_table);
+                            FROM [NGAC].{0} AS [rt_value]",c_Variable.rt_table);
 
             ViewBag.SourceTable = c_Variable.rt_table;
 

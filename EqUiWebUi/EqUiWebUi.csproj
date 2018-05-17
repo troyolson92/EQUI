@@ -380,10 +380,14 @@
       <DependentUpon>TiplifeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Tiplife\TiplifeAreaRegistration.cs" />
+    <Compile Include="Areas\user_management\Controllers\AreaFiltersController.cs" />
     <Compile Include="Areas\user_management\Controllers\userController.cs" />
     <Compile Include="Areas\user_management\Controllers\usersController.cs" />
     <Compile Include="Areas\user_management\Controllers\UserScreensController.cs" />
     <Compile Include="Areas\user_management\Controllers\usersPermisionsController.cs" />
+    <Compile Include="Areas\user_management\Models\AreaFilters.cs">
+      <DependentUpon>user_management.tt</DependentUpon>
+    </Compile>
     <Compile Include="Areas\user_management\Models\L_Screens.cs">
       <DependentUpon>user_management.tt</DependentUpon>
     </Compile>
@@ -1061,6 +1065,12 @@
     <Content Include="Areas\STW040\Views\web.config" />
     <Content Include="Areas\STW040\Views\_ViewStart.cshtml" />
     <Content Include="Areas\STW040\Views\STW040\Index.cshtml" />
+    <Content Include="Areas\user_management\Views\AreaFilters\Create.cshtml" />
+    <Content Include="Areas\user_management\Views\AreaFilters\Delete.cshtml" />
+    <Content Include="Areas\user_management\Views\AreaFilters\Details.cshtml" />
+    <Content Include="Areas\user_management\Views\AreaFilters\Edit.cshtml" />
+    <Content Include="Areas\user_management\Views\AreaFilters\Index.cshtml" />
+    <Content Include="Areas\user_management\Views\AreaFilters\_settings.cshtml" />
     <None Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.svg" />

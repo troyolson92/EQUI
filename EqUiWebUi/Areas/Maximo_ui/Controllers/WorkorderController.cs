@@ -186,6 +186,7 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
             sbqry.Append("ORDER BY WORKORDER.STATUSDATE DESC");
             //****************************************************************************************************************
             string TEST = sbqry.ToString();
+            ViewBag.Qry = sbqry.ToString();
             //
             //get data from maximo
             EQUICommunictionLib.MaximoComm maximoComm = new MaximoComm();

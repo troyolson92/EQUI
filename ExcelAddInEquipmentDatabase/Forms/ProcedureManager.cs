@@ -24,7 +24,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
         //connection to maximo 
         MaximoComm lMaximoComm = new MaximoComm();
         //connection to GADATA maximo querys 
-        MaximoQuery lMaximoQuery = new MaximoQuery();
+        OracleQuery lMaximoQuery = new OracleQuery();
         //active connection in active workbook
         ActiveConnection lActConn = new ActiveConnection();
 

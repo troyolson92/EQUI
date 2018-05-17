@@ -1,0 +1,83 @@
+﻿@model EqUiWebUi.Areas.user_management.Models.AreaFilters
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>AreaFilters</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Plant)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Plant)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Optgroup)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Optgroup)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Area)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Area)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LocationTreeFilter1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LocationTreeFilter1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LocationTreeFilter2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LocationTreeFilter2)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LocationTreeFilter3)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LocationTreeFilter3)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LocationTreeFilter4)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LocationTreeFilter4)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserComment)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserComment)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

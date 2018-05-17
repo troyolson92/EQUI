@@ -30,7 +30,7 @@ namespace ExcelAddInEquipmentDatabase
         //connection to maximo
         MaximoComm lMaximoComm = new MaximoComm();
         //connection to GADATA for maximo querys
-        MaximoQuery lMaximoQuery = new MaximoQuery();
+        OracleQuery lMaximoQuery = new OracleQuery();
         //local Users data instance 
         RoleProvider roleProvider = new RoleProvider();
         public string[] userRoles;
@@ -204,7 +204,7 @@ namespace ExcelAddInEquipmentDatabase
                 ProcMngr = new Forms.ProcedureManager(dd_activeConnection.SelectedItem.Label);
                 //
                 if (ProcedureMangerTaskPane != null) ProcedureMangerTaskPane.Dispose();
-                ProcedureMangerTaskPane = Globals.ThisAddIn.CustomTaskPanes.Add(ProcMngr, "ProcedureManeger");
+                ProcedureMangerTaskPane = Globals.ThisAddIn.CustomTaskPanes.Add(ProcMngr, "ProcedureManager");
                 ProcedureMangerTaskPane.Width = ProcMngr.MaxWith() + 50;
                 ProcedureMangerTaskPane.DockPosition = Microsoft.Office.Core.MsoCTPDockPosition.msoCTPDockPositionLeft;
                 ProcedureMangerTaskPane.Visible = btn_EditProcedure.Checked;
@@ -657,7 +657,7 @@ namespace ExcelAddInEquipmentDatabase
 
         private void btn_ErrorMngr_Click(object sender, RibbonControlEventArgs e)
         {
-            Forms.ErrorManger lErrorManager = new Forms.ErrorManger();
+            Forms.ErrorManager lErrorManager = new Forms.ErrorManager();
             lErrorManager.Show();
         }
 
