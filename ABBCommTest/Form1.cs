@@ -545,7 +545,7 @@ namespace ABBCommTest
         private void Btn_loadGrid_Click(object sender, EventArgs e)
         {
             //get greenfield list from GADATA
-            string qry = string.Format(@"select controller_name, IP from gadata.ngac.c_controller where assetnum like 'URA%' AND CONTROLLER_NAME LIKE '{0}'",tbGridWhereClause.Text.Trim());
+            string qry = string.Format(@"select controller_name, IP from gadata.ngac.c_controller where assetnum like 'URA%' AND CONTROLLER_NAME LIKE '{0}' and enable_bit <> 0",tbGridWhereClause.Text.Trim());
             dt_robots = lgadatacomm.RunQueryGadata(qry); 
             //add colums for extra data
             dt_robots.Columns.Add("SystemId", System.Type.GetType("System.String"));

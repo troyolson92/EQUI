@@ -226,7 +226,7 @@
             this.tb_module.Name = "tb_module";
             this.tb_module.Size = new System.Drawing.Size(160, 20);
             this.tb_module.TabIndex = 20;
-            this.tb_module.Text = "DTipChange.sys";
+            this.tb_module.Text = "DDressing.sys";
             // 
             // label1
             // 
@@ -245,7 +245,7 @@
             this.tb_verfileValue.Name = "tb_verfileValue";
             this.tb_verfileValue.Size = new System.Drawing.Size(177, 20);
             this.tb_verfileValue.TabIndex = 17;
-            this.tb_verfileValue.Text = "ABB 6.0.5 - 2018-01-03 ";
+            this.tb_verfileValue.Text = "ABB 6V05 - 2016-12-13";
             // 
             // tbVerVarName
             // 
@@ -255,7 +255,7 @@
             this.tbVerVarName.Name = "tbVerVarName";
             this.tbVerVarName.Size = new System.Drawing.Size(177, 20);
             this.tbVerVarName.TabIndex = 16;
-            this.tbVerVarName.Text = "Version_DTipChange_EDAG";
+            this.tbVerVarName.Text = "Version_DDressing";
             // 
             // button1
             // 

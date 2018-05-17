@@ -53,7 +53,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
         {
             try
             {
-                MaximoQuery lMaximoQuery = new MaximoQuery();
+                OracleQuery lMaximoQuery = new OracleQuery();
                 lMaximoQuery.oracle_delete_Query_GADATA(lTargetSystem, QueryName);
                 Close();
                 Dispose();
@@ -82,7 +82,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
 
             try
             {
-                MaximoQuery lMaximoQuery = new MaximoQuery();
+                OracleQuery lMaximoQuery = new OracleQuery();
                 try
                 { // I know this is stupid but to use UPDATE command i need the build a dataset and AARG 
                     lMaximoQuery.oracle_delete_Query_GADATA(lTargetSystem, QueryName);

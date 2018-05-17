@@ -30,9 +30,7 @@ namespace EQUICommunictionLib
             get { return @"ODBC;DSN=" + DsnMX7 + ";Description= MAXIMO7;UID=ARCTVCG;PWD=vcg$tokfeb2017;"; }
         }
         public string SystemMX7 { get { return "MX7"; } }
-        public string SystemMX3 { get { return "MX3"; } }
         public string DsnMX7 { get { return "MAXIMO7"; } }
-        public string DsnMX3 { get { return "MAXIMO3"; } }
 
         public void Make_DSN(string System)
         {
@@ -41,14 +39,6 @@ namespace EQUICommunictionLib
                 ODBCManager.CreateDSN(DsnMX7, "odbc link MAXIMO7", "dpmxarct"
                     , "MAXIMO7 ODBC for oracle", @"C:\windows\system32\msorcl32.dll", true, "MAXIMO");
             }
-            else if (System == SystemMX3)
-            {
-                throw new Exception("Not implemented");
-              //  ODBCManager.CreateDSN(DsnMX3, "odbc link MAXIMO7", "dpmxarct"
-              //   , "MAXIMO7 ODBC for oracle", @"C:\windows\system32\msorcl32.dll", true, "MAXIMO");
-
-            }
-
         }
 
         public DataTable Oracle_runQuery(string Query, bool RealtimeConn = false, bool enblExeptions = false, int maxEXECtime = 300)

@@ -9,12 +9,12 @@
     columns.Add(c => c.STATUSDATE).Titled("STATUSDATE").Formatted("{0:dd-MM-yyyy hh:mm}").Css("hidden-md hidden-sm hidden-xs");
     columns.Add(c => c.DESCRIPTION).Titled("DESCRIPTION").Sortable(false).Filterable(true);
 
-    //add edit button
-    columns.Add(c => c)
-                .Titled("")
-                .Encoded(false)
-                .RenderedAs(c => MyFilters.IconActionLink("http://maximoui.volvocars.biz/maximo/ui/maximo.jsp?event=loadapp&value=wotrack&additionalevent=useqbe&additionaleventvalue=wonum="+c.WONUM, "glyphicon glyphicon-pencil", "", "Edit this workorder in maximo", "OpenNewWindow")
-                ).Filterable(false);
+//add edit button
+columns.Add(c => c)
+        .Titled("")
+        .Encoded(false)
+        .RenderedAs(c => MyFilters.IconActionLink("http://maximoui.volvocars.biz/maximo/ui/maximo.jsp?event=loadapp&value=wotrack&additionalevent=useqbe&additionaleventvalue=wonum=" + c.WONUM, "glyphicon glyphicon-pencil", "", "Edit this workorder in maximo", "OpenNewWindow")
+        ).Filterable(false);
 
 
 }).Sortable().Pageable(pager =>
@@ -32,3 +32,10 @@
         </div>
     </div>
 }
+
+@*
+     <h6>Sql Statement</h6>
+    <div>
+        @ViewBag.Qry
+    </div>
+*@

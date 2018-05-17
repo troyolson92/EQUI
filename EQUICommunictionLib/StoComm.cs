@@ -38,17 +38,22 @@ namespace EQUICommunictionLib
         ;User Id=STO_SYS_READONLY;Password=sto_sys_readonly1;");
 
 
-        /*
-                @"Data Source=(DESCRIPTION=
-            (ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)
-            (HOST=nvr.gent.vcc.ford.com)
-            (PORT=49970)))
-            (CONNECT_DATA=(SERVER=DEDICATED)
-            (SERVICE_NAME=DST)));
-            User Id=STO_SYS_READONLY;
-            Password=sto_sys_readonly1;");
+        public string STOconnectionString
+        {
+            get { return @"ODBC;DSN=" + DsnSTO + ";Description= STO;UID=STO_SYS_READONLY;PWD=sto_sys_readonly1;"; }
+        }
+        public string SystemSTO { get { return "STO"; } }
+        public string DsnSTO { get { return "STO"; } }
 
-    */
+        public void Make_DSN(string System)
+        {
+            if (System == SystemSTO)
+            {
+                ODBCManager.CreateDSN(DsnSTO, "odbc link STO", "nvr.gent.vcc.ford.com"
+                    , "STO ODBC for oracle", @"C:\windows\system32\msorcl32.dll", true, "STO_SYS");
+            }
+
+        }
 
         public DataTable oracle_runQuery(string Query)
         {
