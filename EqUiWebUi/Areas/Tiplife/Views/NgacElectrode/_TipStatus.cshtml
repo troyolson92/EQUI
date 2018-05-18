@@ -11,6 +11,7 @@
     columns.Add(c => c.nRcars).Titled("Resterende Stukken").Css("hidden"); //hide until trusted
     columns.Add(c => c.TipAge_h_).Titled("Electrode leeftijd (h)");
     columns.Add(c => c.MagicFiXedWear).Titled("MFW").Css("hidden-sm hidden-xs");
+    columns.Add(c => c.NoChangeDetected).Titled("NCD").Css("hidden-sm hidden-xs");
     columns.Add(c => c.Time_DressCycleTime).Titled("Dress ct (s)").Css("hidden-sm hidden-xs");
     columns.Add(c => c.LocationTree).Filterable(true).Css("hidden"); //used for filtering
                                                                      //launch sbcu tool
@@ -22,5 +23,5 @@
 }).Sortable().Pageable(pager =>
 {
     pager.RowsPerPage = 20;
-}).Empty("No data found").Css("table-hover").RowCss(row => MyRowStyling.getRowStyleByWearValue(row.pWear,row.nDress))
+}).Empty("No data found").Css("table-hover").RowCss(row => MyRowStyling.getRowStyleByWearValue(row.pWear,row.nDress,row.NoChangeDetected))
 
