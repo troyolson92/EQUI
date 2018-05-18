@@ -28,5 +28,6 @@ namespace EqUiWebUi.Areas.Tiplife.Models
         public int id { get; set; }
         public string LocationTree { get; set; }
         public Nullable<double> MagicFiXedWear { get; set; }
+        public string NoChangeDetected { get; set; }
     }
 }

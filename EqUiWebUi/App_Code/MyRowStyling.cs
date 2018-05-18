@@ -60,9 +60,9 @@ namespace EqUiWebUi
         }
 
         //returns a Css style based on value
-        public static string getRowStyleByWearValue(double? pWear, int? nDress)
+        public static string getRowStyleByWearValue(double? pWear, int? nDress, string NoChangeDetected)
         {
-            if (pWear.GetValueOrDefault(0) > 98 || nDress.GetValueOrDefault(0) > 210)
+            if (pWear.GetValueOrDefault(0) > 98 || nDress.GetValueOrDefault(0) > 210 || NoChangeDetected == "X")
             {
                 return "TableTipwearValueDanger";
             } else if(pWear.GetValueOrDefault(0) > 80 || nDress.GetValueOrDefault(0) > 200)

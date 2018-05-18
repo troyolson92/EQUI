@@ -84,11 +84,12 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
         public ActionResult _TipsToChange(string locationFilter, int minWear = 0, int minParts = 0, int maxDress = 1000)
         {
             GADATAEntitiesTiplife gADATAEntities = new GADATAEntitiesTiplife();
-            IQueryable<TipMonitor> data = from tipMonitor in gADATAEntities.TipMonitor
+            IEnumerable<TipMonitor> data = from tipMonitor in DataBuffer.Tipstatus
                                           where
                                           (tipMonitor.pWear > minWear
                                            //  || tipMonitor.nRcars < minParts
                                            || tipMonitor.nDress > maxDress
+                                           || tipMonitor.NoChangeDetected == "X"
                                           )
                                           && tipMonitor.LocationTree.Contains(locationFilter)
                                           select tipMonitor;
@@ -98,7 +99,7 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
         public ActionResult _TipsChanged(string locationFilter, int minWear = 0, int minParts = 0)
         {
             GADATAEntitiesTiplife gADATAEntities = new GADATAEntitiesTiplife();
-            IQueryable<TipMonitor> data = from tipMonitor in gADATAEntities.TipMonitor
+            IEnumerable<TipMonitor> data = from tipMonitor in DataBuffer.Tipstatus
                                           where tipMonitor.pWear > minWear
                                           && tipMonitor.nRcars > minParts
                                           && tipMonitor.LocationTree.Contains(locationFilter)

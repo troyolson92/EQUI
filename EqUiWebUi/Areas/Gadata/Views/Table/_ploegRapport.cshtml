@@ -3,7 +3,7 @@
 @Html.Grid(Model).Named("PloegRapport").Build(columns =>
 {
     columns.Add(c => c.Location).Titled("Location").Filterable(true);
-    columns.Add(c => c.logtext).Titled("Logtext").Filterable(true);
+    columns.Add(c => c.logtext).Titled("Logtext").Filterable(true).MultiFilterable(true);
     columns.Add(c => c.Response_min_).Titled("RT").Filterable(true);
     columns.Add(c => c.Downtime_min_).Titled("DT").Filterable(true);
     columns.Add(c => c.Count).Titled("Count").Filterable(true);
