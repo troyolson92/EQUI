@@ -99,13 +99,13 @@ namespace EqUiWebUi.Areas.Alert.Controllers
         }
 
         // GET: Alert/Details partial to get basic info about alert 
-        public async Task<ActionResult> _Details (int? id)
+        public ActionResult _Details (int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            h_alert h_alert = await db.h_alert.FindAsync(id);
+            h_alert h_alert = db.h_alert.Find(id);
             if (h_alert == null)
             {
                 return HttpNotFound();

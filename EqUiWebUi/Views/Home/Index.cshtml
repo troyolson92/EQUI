@@ -2,7 +2,7 @@
     ViewBag.Title = "VCG GA UB12 Homepage";
 }
 <div class="jumbotron">
-    <h1>WELCOME IN VCG A-SHOP</h1>
+    <h1>WELCOME IN GA</h1>
 </div>
 
 <p></p>
@@ -19,7 +19,7 @@
         </p>
         <p>
             <a href="~/Gadata/Table/SupervisieWebgrid" class="btn btn-primary btn-sm">Supervisie Robots &raquo;</a>
-            Bevat alles dat nu in storing staat, storingen die langer dan 1 minut hebben geduurd en hardwarefouten van robots
+            Bevat alles nu in storing en storingen die langer dan 1 minut hebben geduurd.
         </p>
 
         @{
@@ -29,6 +29,11 @@
             Supervisie (intranet)
         </p>
         }
+
+        <p>
+            <a href="~/Alert/Alert/Index" class="btn btn-primary btn-sm">Alerts &raquo;</a>
+            Waarschuwingen gebaseerd op triggers
+        </p>
     </div>
 </div>
 
@@ -43,10 +48,6 @@
         <p>
             <a href="~/Tiplife/NgacElectrode/index" class="btn btn-primary btn-sm">Electrode &raquo;</a>
             Alles in verband met de Electrodes van de nieuwe robots
-        </p>
-
-        <p>
-            <a href="~/Gadata/Table/EQpluginDefaultNGACWebgrid" class="btn btn-primary btn-sm">SupervisieHighDetail &raquo;</a>
         </p>
 
         <p>
@@ -80,21 +81,6 @@
         <p>
             <a href="~/Tableau/index" class="btn btn-primary btn-sm">Tableau &raquo;</a>
             Een interactive manier om naar data te kijken.
-        </p>
-    </div>
-</div>
-
-<p></p>
-
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h4 class="panel-title">Alerts</h4>
-        <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
-    </div>
-    <div class="panel-body">
-        <p>
-            <a href="~/Alert/Alert/Index" class="btn btn-primary btn-sm">Index &raquo;</a>
-            Waarschuwingen gebaseerd op triggers
         </p>
     </div>
 </div>
@@ -152,7 +138,7 @@
         </p>
 
         <p>
-            <a href="~/STW040/STW040/index" class="btn btn-primary btn-sm">PJV&raquo;</a>(test)
+            <a href="~/STW040/STW040/index" class="btn btn-primary btn-sm">STW040&raquo;</a>(test)
             Test met db toegang naar stw040
         </p>
     </div>

@@ -29,20 +29,12 @@
 
 }).Filterable(true).Sortable(true).Pageable(pager =>
 {
-    pager.RowsPerPage = 7;
+    pager.RowsPerPage = 17;
 }).Empty("Did not find anything").Css("table-hover").RowCss(row => MyRowStyling.getRowStyleStatus(row.c_state.state))
 
-<p></p>
-@*info model in page for alert details *@
-<div class="container">
-    <div class="panel panel-default">
-        <div class="panel-body">
-            <div id="alertDetailsPartial">Click on a row for more details about the alert</div>
-        </div>
-    </div>
-</div>
+
 @section scripts{
-    <script>
+<script>
         //full with screen
         $("#allcontent").removeClass("body-content");
         $("#allcontent").removeClass("container");
@@ -50,13 +42,25 @@
         //subscribe to row clicked events
         $('.mvc-grid').mvcgrid({
             rowClicked: function (row, data, e) {
-                console.log(data);
-                $(row).addClass('active').siblings().removeClass('active');
-                $("#alertDetailsPartial").html("Loading.....");
+                //if row already has this clase close the modal
+                if ($(row).hasClass("info")) {
+                    $("#placeholder").remove();
+                    $(row).removeClass("info");
+                    return;
+                }
+                //clear selected rows for this table
+                $('tr').removeClass('info'); //THIS IS WRONG
+                $(row).addClass("info");
+                $("#placeholder").remove(); //clear placeholder is exists
+                //add new placeholder afhter selected row
+                $(row).after('<tr id="placeholder"><td colspan="10000"><div class="modal-content"><div class="modal-body" id ="placeholderPartial"></div></div></td></tr>');
+                //animation
+                $("#placeholderPartial").html("Loading.....");
+                //load url in placeholder
                 var url = "@Url.Action("_Details")?id=" + data.id;
-                $("#alertDetailsPartial").load(url);
+                $("#placeholderPartial").load(url);
             }
         });
-    </script>
+</script>
 }
 
