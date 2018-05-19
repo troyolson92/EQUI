@@ -187,7 +187,7 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
         [HttpGet]
         public ActionResult _loginfo(LogInfo logInfo)
         {
-            //query all instances of the error 
+            //query all instances of the logtype via equi.getErrorInfoData 
             GadataComm gadataComm = new GadataComm();
             string qry = string.Format(
             @"EXEC [EqUi].[GetErrorInfoData] @Location  = '{0}' ,@ERRORNUM = {1} ,@Refid = {2} ,@logtype ='{3}'"
@@ -219,7 +219,10 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
             }
             else
             {
-                sb.AppendLine("<h4>No valid result from query!</h4>");
+                sb.AppendLine("<div class='alert alert-danger'>");
+                sb.AppendLine("<strong>Triggerd: No valid result from query! </strong>");
+                sb.AppendLine("<div> Ran:" + qry + "</div>");
+                sb.AppendLine("</div>");
             }
             logInfo.logDetails = sb.ToString();
             return PartialView(logInfo);

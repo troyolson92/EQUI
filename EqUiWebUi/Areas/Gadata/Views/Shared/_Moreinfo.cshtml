@@ -28,7 +28,27 @@
 <div class="modal-body">
     @Html.Partial("../Chart/_getErrorTrend", Model)
 
-    @Html.Action("_loginfo", Model)
+    @*if the logtype is an alert it is redirected to the alert area.
+        all other logtypes are run via equi.GetErrorInfoData*@
+    @if (Model.logtype == "ALERT")
+    {
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    Details for Alert: <strong>@Model.refid</strong> Info: <strong>@Model.logtext.Trim()</strong>
+                    @MyFilters.IconActionLink(Url.Action("Edit", "Alert", new { area = "Alert", id = Model.refid }), "glyphicon glyphicon-pencil", "", "Edit this alert")
+                </h4>
+                <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+            </div>
+            <div class="panel-body">
+                @Html.Action("_Details", "Alert", new { area = "Alert", id = Model.refid })
+            </div>
+        </div>
+    }
+    else
+    {
+        @Html.Action("_loginfo", Model)
+    }
 
     @Html.Action("_workordersOnLocation", "Workorder", new { area = "Maximo_ui", location = Model.location })
 
