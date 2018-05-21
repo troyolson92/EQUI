@@ -548,6 +548,7 @@
     <Compile Include="Areas\VASC\Models\winService.cs" />
     <Compile Include="Areas\VASC\VASCAreaRegistration.cs" />
     <Compile Include="Backgroundwork.cs" />
+    <Compile Include="Controllers\Chart2Controller.cs" />
     <Compile Include="Controllers\ChartController.cs" />
     <Compile Include="Controllers\DynamicController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
@@ -1248,6 +1249,7 @@
     <Content Include="Views\Chart\GetErrorTrend.cshtml" />
     <Content Include="Views\Tableau\Test.cshtml" />
     <Content Include="Views\Dynamic\_dynamicWebgridRunQueryAgainstDB.cshtml" />
+    <Content Include="Views\Chart2\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EQUICommunictionLib\EQUICommunictionLib.csproj">
