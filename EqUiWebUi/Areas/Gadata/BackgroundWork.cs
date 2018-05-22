@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using EqUiWebUi.Areas.Gadata.Models;
 using Hangfire;
+using EQUICommunictionLib;
 
 namespace EqUiWebUi.Areas.Gadata
 {
@@ -38,7 +40,10 @@ namespace EqUiWebUi.Areas.Gadata
                 //**********************************Supervisie table***************************************************
                 //set job to refresh every minute
                 RecurringJob.AddOrUpdate("BT_Supervis",() => backgroundwork.UpdateSupervisie(), Cron.Minutely);
-            }
+                //**********************************Copy maximi Assets to GADATA***************************************************
+                //set job to run sunday at 12
+                RecurringJob.AddOrUpdate("AssetsMx-gadata", () => backgroundwork.UpdateMaximoAssetsToGadata(), "0 12 * * 0");
+        }
 
             //update the local datatable with ploeg rapport called every minute #hangfire
             [Queue("gadata")]
@@ -167,5 +172,95 @@ namespace EqUiWebUi.Areas.Gadata
                 }
             }
 
+             //update asset table on GADATA from maximo called every sunday #hangfire
+            [Queue("gadata")]
+            [AutomaticRetry(Attempts = 5)]
+            [DisableConcurrentExecution(300)] //timeout 3minutes
+            //This is for sync Mx7 with the database. 
+            public void UpdateMaximoAssetsToGadata()
+            {
+                //get asset list from maximo M7 daily copy
+                string strSqlGetFromMaximo = @"
+    SELECT * FROM   
+    (
+    --PRESELECT IN MEMORY USING COMMON TABLE EXPRESSION CTE
+    --TREE WALK QUERY SEE
+    --HTTPS://ORACLE-BASE.COM/ARTICLES/11G/RECURSIVE-SUBQUERY-FACTORING-11GR2
+    WITH LOCATIONCTE (LOCATION, PARENT, SYSTEMID, ORGID, CHILDREN, H_LEVEL, H_PATH) AS  
+    (    
+    --SELECT ROOT ITEM 'ANCHOR MEMBER'
+    SELECT 
+      ROOT.LOCATION
+    , ROOT.PARENT
+    , ROOT.SYSTEMID
+    , ROOT.ORGID
+    , ROOT.CHILDREN
+    , 1 H_LEVEL
+    , LOCATION H_PATH
+    FROM MAXIMO.LOCHIERARCHY ROOT 
+    WHERE ROOT.LOCATION= 'VCG' --SELECT ITEM NUM TO START BOM FROM
+    --SELECT CHILD NODES 'RECURSIVE MEMBER.'
+    UNION ALL       
+    SELECT 
+      LOCCHILD.LOCATION
+    , LOCCHILD.PARENT
+    , LOCCHILD.SYSTEMID
+    , LOCCHILD.ORGID
+    , LOCCHILD.CHILDREN
+    , LOCATIONCTE.H_LEVEL+1
+    , (LOCATIONCTE.H_PATH ||' -> '|| LOCCHILD.LOCATION) H_PATH
+    FROM MAXIMO.LOCHIERARCHY LOCCHILD     
+    JOIN LOCATIONCTE  ON (LOCATIONCTE.LOCATION = LOCCHILD.PARENT AND LOCATIONCTE.ORGID = LOCCHILD.ORGID AND LOCATIONCTE.SYSTEMID = LOCCHILD.SYSTEMID )     
+    )  
+    SEARCH DEPTH FIRST BY LOCATION SET VOLGNR          
+    --***************************************************************************************--
+    --SELECT OUTPUT
+    SELECT 
+         LOCATIONCTE.SYSTEMID
+        ,LOCATIONCTE.LOCATION
+        ,null LocationDescription
+        ,ASSET.ASSETNUM
+        ,ASSET.DESCRIPTION AssetDescription
+        ,LOCATIONCTE.H_PATH LocationTree
+        ,null CLASSDESCRIPTION
+        ,ASSET.CLASSSTRUCTUREID
+        ,CLASSSTRUCTURE.CLASSIFICATIONID
+        ,null ClassificationTree
+        ,AREA.LOCATION STATION
+        ,AREA.PARENT AREA
+        ,TEAM.PARENT TEAM
+    FROM LOCATIONCTE  
+
+    LEFT JOIN MAXIMO.ASSET ASSET on ASSET.LOCATION = LOCATIONCTE.LOCATION --to get asset number 
+    LEFT JOIN MAXIMO.CLASSSTRUCTURE CLASSSTRUCTURE on CLASSSTRUCTURE.CLASSSTRUCTUREID = ASSET.CLASSSTRUCTUREID
+    --get AREA (one level up from station)
+    LEFT JOIN MAXIMO.LOCHIERARCHY AREA ON (LOCATIONCTE.PARENT = AREA.LOCATION AND LOCATIONCTE.ORGID = AREA.ORGID AND LOCATIONCTE.SYSTEMID = AREA.SYSTEMID AND LOCATIONCTE.CHILDREN = 0)   
+    --get the team form the ORG Hierarchy
+    LEFT JOIN MAXIMO.LOCHIERARCHY TEAM ON (AREA.PARENT = TEAM.LOCATION AND TEAM.SYSTEMID = 'ORG' ) --ORG might be VCG specific
+    --WHERE LOCATIONCTE.CHILDREN = 0 
+    )
+                ";
+                DataTable tableFromMx7 = new DataTable();
+                MaximoComm maximoComm = new MaximoComm();       
+                log.Info("DataFromMaximo start");
+                tableFromMx7 = maximoComm.Oracle_runQuery(strSqlGetFromMaximo, enblExeptions: true, maxEXECtime: 300);
+                log.Info("DataFromMaximo Rowcount: " + tableFromMx7.Rows.Count);
+                //clear destination table  in GADATA
+                string CmdDeleteTableData = @"DELETE FROM [Equi].[ASSETS_fromMX7] FROM [Equi].[ASSETS_fromMX7]";
+                GadataComm gadataComm = new GadataComm();
+                log.Info("GadataDelete Start");
+                gadataComm.RunCommandGadata(CmdDeleteTableData,runAsAdmin:true, enblExeptions:true, maxEXECtime:300);
+                log.Info("GadataDelete Done");
+                //send the data to the SQL GADATA SERVER 
+                log.Info("BulkCopyToGadata Start");
+                gadataComm.BulkCopyToGadata("Equi", tableFromMx7, "ASSETS_fromMX7", runAsAdmin: true, enblExeptions: true, maxEXECtime: 300);
+                log.Info("BulkCopyToGadata End");
+                //Run command to link the assets and update c_controllerTables
+                log.Info("sp_linkassets Start");
+                string CmdLinkAssets = "EXEC GADATA.[EqUi].[sp_LinkAssets]";
+                gadataComm.RunCommandGadata(CmdLinkAssets, runAsAdmin: true, enblExeptions: true, maxEXECtime: 300);
+                log.Info("sp_linkassets Done");
         }
+
+    }
 }

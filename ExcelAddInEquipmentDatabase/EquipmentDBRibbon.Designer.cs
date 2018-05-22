@@ -61,7 +61,6 @@
             this.tbtn_StopRightClick = this.Factory.CreateRibbonToggleButton();
             this.separator4 = this.Factory.CreateRibbonSeparator();
             this.btn_ConnectionManager = this.Factory.CreateRibbonButton();
-            this.btn_AssetManager = this.Factory.CreateRibbonButton();
             this.btn_ErrorMngr = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
             this.rib2.SuspendLayout();
@@ -230,7 +229,6 @@
             this.g_config.Items.Add(this.tbtn_StopRightClick);
             this.g_config.Items.Add(this.separator4);
             this.g_config.Items.Add(this.btn_ConnectionManager);
-            this.g_config.Items.Add(this.btn_AssetManager);
             this.g_config.Items.Add(this.btn_ErrorMngr);
             this.g_config.Label = "Configuration";
             this.g_config.Name = "g_config";
@@ -305,15 +303,6 @@
             this.btn_ConnectionManager.SuperTip = "And change and manager connections";
             this.btn_ConnectionManager.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_ConnectionManager_Click);
             // 
-            // btn_AssetManager
-            // 
-            this.btn_AssetManager.Label = "MngAssets";
-            this.btn_AssetManager.Name = "btn_AssetManager";
-            this.btn_AssetManager.OfficeImageId = "FormulaMoreFunctionsMenu";
-            this.btn_AssetManager.ShowImage = true;
-            this.btn_AssetManager.SuperTip = "Tools for manageing Asset structure. !Amdins only!";
-            this.btn_AssetManager.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_AssetManager_Click);
-            // 
             // btn_ErrorMngr
             // 
             this.btn_ErrorMngr.Label = "MngErrors";
@@ -349,7 +338,6 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonTab tab1;
         internal Microsoft.Office.Tools.Ribbon.RibbonTab rib2;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup group2;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_AssetManager;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup AssetManager;
         internal Microsoft.Office.Tools.Ribbon.RibbonComboBox cb_assets;
         internal Microsoft.Office.Tools.Ribbon.RibbonComboBox cb_Lochierarchy;

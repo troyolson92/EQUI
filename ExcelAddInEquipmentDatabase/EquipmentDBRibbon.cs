@@ -44,8 +44,6 @@ namespace ExcelAddInEquipmentDatabase
         //StoredProcedureManger ProcMngr;
         Forms.ProcedureManager ProcMngr;
         Microsoft.Office.Tools.CustomTaskPane ProcedureMangerTaskPane;
-        //asset manager instance
-        AssetManager AssetMngr;
         //connection manager instance
         ConnectionManger ConnMng;
         //intance of datetimepickers;
@@ -111,13 +109,11 @@ namespace ExcelAddInEquipmentDatabase
             if (userRoles.Contains("Administrator"))
            {
               dd_User.Enabled = true; //inpersonator 
-              btn_AssetManager.Enabled = true;
               btn_ErrorMngr.Enabled = true;
            }
            else
            {
               dd_User.Enabled = false;
-              btn_AssetManager.Enabled = false;
               btn_ErrorMngr.Enabled = false;
            }
 
@@ -607,13 +603,6 @@ namespace ExcelAddInEquipmentDatabase
                 }
             }
 
-        }
-        //create tools instance when needed. (multible instances are allowed for now) 
-        private void btn_AssetManager_Click(object sender, RibbonControlEventArgs e)
-        {
-            if (AssetManager != null) AssetManager.Dispose();
-            AssetMngr = new AssetManager();
-            AssetMngr.Show();
         }
         private void btn_ConnectionManager_Click(object sender, RibbonControlEventArgs e)
         {
