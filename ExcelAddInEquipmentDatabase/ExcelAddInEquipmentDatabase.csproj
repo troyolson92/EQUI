@@ -235,12 +235,6 @@
     <Compile Include="c_userRoles.cs">
       <DependentUpon>UserManagment.tt</DependentUpon>
     </Compile>
-    <Compile Include="Forms\AssetManager.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\AssetManager.Designer.cs">
-      <DependentUpon>AssetManager.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\ConnectionManger.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -363,9 +357,6 @@
       <DependentUpon>applData.xsd</DependentUpon>
     </None>
     <None Include="ClassDiagram1.cd" />
-    <EmbeddedResource Include="Forms\AssetManager.resx">
-      <DependentUpon>AssetManager.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\ConnectionManger.resx">
       <DependentUpon>ConnectionManger.cs</DependentUpon>
     </EmbeddedResource>

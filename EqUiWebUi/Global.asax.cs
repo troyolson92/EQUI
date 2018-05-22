@@ -133,6 +133,7 @@ namespace EqUiWebUi
                         Session["LocationRoot"] = user.LocationRoot;
                         Session["AssetRoot"] = user.AssetRoot;
                         Session["Impersonating"] = "";
+                        Session["culture"] = "en-GB"; //set session uI culture. (in future for multi langue)
                         // set init done
                         Session["InitDone"] = true;
                     }
