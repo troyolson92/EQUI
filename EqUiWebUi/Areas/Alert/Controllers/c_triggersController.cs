@@ -8,6 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using EqUiWebUi.Areas.Alert.Models;
+using EQUICommunictionLib;
 
 namespace EqUiWebUi.Areas.Alert.Controllers
 {
@@ -98,6 +99,12 @@ namespace EqUiWebUi.Areas.Alert.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
+            //before we delete the trigger we need to delete the alerts.
+            GadataComm gadataComm = new GadataComm();
+            string deleteQry = "delete GADATA.Alerts.h_alert from GADATA.Alerts.h_alert where c_tirgger_id = {0}";
+            gadataComm.RunCommandGadata(string.Format(deleteQry, id.ToString()),runAsAdmin:true,enblExeptions:true);
+
+            //delete the trigger 
             c_triggers c_triggers = await db.c_triggers.FindAsync(id);
             db.c_triggers.Remove(c_triggers);
             await db.SaveChangesAsync();

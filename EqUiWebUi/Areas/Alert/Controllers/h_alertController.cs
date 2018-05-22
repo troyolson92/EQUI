@@ -17,10 +17,18 @@ namespace EqUiWebUi.Areas.Alert.Controllers
         private GADATA_AlertModel db = new GADATA_AlertModel();
 
         // GET: Alert/h_alert
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(int? c_trigger_id)
         {
-            var h_alert = db.h_alert.Include(h => h.c_state).Include(h => h.c_triggers).Include(h => h.ChangedUser).Include(h => h.CloseUser).Include(h => h.AcceptUser);
-            return View(await h_alert.ToListAsync());
+            if (c_trigger_id.HasValue)
+            {
+                var h_alert = db.h_alert.Include(h => h.c_state).Include(h => h.c_triggers).Include(h => h.ChangedUser).Include(h => h.CloseUser).Include(h => h.AcceptUser).Where(h => h .c_tirgger_id  == c_trigger_id);
+                return View(await h_alert.ToListAsync());
+            }
+            else
+            {
+                var h_alert = db.h_alert.Include(h => h.c_state).Include(h => h.c_triggers).Include(h => h.ChangedUser).Include(h => h.CloseUser).Include(h => h.AcceptUser);
+                return View(await h_alert.ToListAsync());
+            }
         }
 
         // GET: Alert/h_alert/Edit/5
