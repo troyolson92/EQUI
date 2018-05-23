@@ -3,16 +3,16 @@
 @Html.Grid(Model).Named("NgacTipStatus").Build(columns =>
 {
     columns.Add(c => c.Robot).Titled("Robot").Filterable(true);
-    columns.Add(c => c.Date_Time).Titled("Laaste keer gefreest").Formatted("{0:dd-MM-yyyy HH:mm}");
-    columns.Add(c => c.nDress).Titled("Aantal keer gefreest");
+    columns.Add(c => c.Date_Time).Titled("Laatst gefreest").Formatted("{0:dd-MM-yyyy HH:mm}");
+    columns.Add(c => c.nDress).Titled("#gefreest");
     columns.Add(c => c.WearRatio).Titled("%WearRatio").Css("hidden-sm hidden-xs");
     columns.Add(c => c.pWear).Titled("%wear").Filterable(true).Css("bolded");
-    columns.Add(c => c.nRspots).Titled("Resterende Spots").Css("hidden");  //hide until trusted
-    columns.Add(c => c.nRcars).Titled("Resterende Stukken").Css("hidden"); //hide until trusted
-    columns.Add(c => c.TipAge_h_).Titled("Electrode leeftijd (h)");
-    columns.Add(c => c.MagicFiXedWear).Titled("MFW").Css("hidden-sm hidden-xs");
-    columns.Add(c => c.NoChangeDetected).Titled("NCD").Css("hidden-sm hidden-xs");
-    columns.Add(c => c.Time_DressCycleTime).Titled("Dress ct (s)").Css("hidden-sm hidden-xs");
+    columns.Add(c => c.nRspots).Titled("#R Spots").Css("hidden-sm hidden-xs");  
+    columns.Add(c => c.nRcars).Titled("#R Stukken").Css("hidden-sm hidden-xs"); 
+    columns.Add(c => c.TipAge_h_).Titled("leeftijd (h)");
+   // columns.Add(c => c.MagicFiXedWear).Titled("MFW").Css("hidden-sm hidden-xs");
+   // columns.Add(c => c.NoChangeDetected).Titled("NCD").Css("hidden-sm hidden-xs");
+    columns.Add(c => c.Time_DressCycleTime).Titled("ct (s)").Css("hidden-sm hidden-xs");
     columns.Add(c => c.LocationTree).Filterable(true).Css("hidden"); //used for filtering
                                                                      //launch sbcu tool
     columns.Add()

@@ -87,7 +87,7 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
             IEnumerable<TipMonitor> data = from tipMonitor in DataBuffer.Tipstatus
                                           where
                                           (tipMonitor.pWear > minWear
-                                           //  || tipMonitor.nRcars < minParts
+                                           || tipMonitor.nRcars.GetValueOrDefault(1000) < minParts //if no Rcars value available ignore! 
                                            || tipMonitor.nDress > maxDress
                                            || tipMonitor.NoChangeDetected == "X"
                                           )
@@ -96,14 +96,18 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
             return PartialView(data);
         }
         //get filterd list of wich need to be change
-        public ActionResult _TipsChanged(string locationFilter, int minWear = 0, int minParts = 0)
+        public ActionResult _TipsChanged(string locationFilter, int minWear = 0, int minParts = 0, int maxDress = 1000)
         {
             GADATAEntitiesTiplife gADATAEntities = new GADATAEntitiesTiplife();
             IEnumerable<TipMonitor> data = from tipMonitor in DataBuffer.Tipstatus
-                                          where tipMonitor.pWear > minWear
-                                          && tipMonitor.nRcars > minParts
-                                          && tipMonitor.LocationTree.Contains(locationFilter)
-                                          select tipMonitor;
+                                           where
+                                           (tipMonitor.pWear > minWear
+                                            || tipMonitor.nRcars.GetValueOrDefault(1000) < minParts //if no Rcars value available ignore! 
+                                            || tipMonitor.nDress > maxDress
+                                            || tipMonitor.NoChangeDetected == "X"
+                                           )
+                                           && tipMonitor.LocationTree.Contains(locationFilter)
+                                           select tipMonitor;
             return PartialView(data);
         }
     }

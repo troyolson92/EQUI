@@ -10,6 +10,14 @@
         <div class="panel-body">
             @*plan false
                 gebruiker geeft in het formulier waar en met welke voorwaardes hij elektrodes wil wisselen*@
+
+            <div class="alert alert-danger">
+                <h3>OPGEPAST!</h3>
+                <diV>Deze tool mag enkel gebruikt worden in het BEGIN! van de ploeg.</diV>
+                <div>We kijken vanaf nu niet langer enkel naar de wear. Maar naar het aantal stukken dat nog kunnen gebouwd worden.</div> 
+
+            </div>
+
             <div class="panel panel-default">
 
                 <div class="panel-heading">
@@ -34,14 +42,14 @@
                         <div class="col-sm-5">
                             <label class="control-label col-sm-8" for="minwear">waar de wear groter is dan</label>
                             <div class="col-sm-4">
-                                <input class="form-control input-sm" type="number" min="0" max="100" step="5" value="60" id="minwear" />
+                                <input class="form-control input-sm" type="number" min="0" max="100" step="5" value="80" id="minwear" />
                             </div>
                         </div>
                         
                         <div class="col-sm-7">
                             <label class="control-label col-sm-8" for="minparts">minimum resterende stukken kleiner dan</label>
                             <div class="col-sm-4">
-                                <input class="form-control input-sm" type="number" min="0"  step="10" value="200" id="minparts" disabled />
+                                <input class="form-control input-sm" type="number" min="0"  step="10" value="200" id="minparts"  />
                             </div>
                         </div>
 

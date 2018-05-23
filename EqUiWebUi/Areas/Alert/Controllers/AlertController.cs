@@ -35,7 +35,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             //do cleanup in hangfire for triggers that are not active
             alertEngine.ClearHanfireAlertwork();
             //write confirareation to hangefire.
-            alertEngine.ConfigureHangfireAlertWork();
+            //alertEngine.ConfigureHangfireAlertWork();
         }
 
         //stop al alert processing in hangefire
