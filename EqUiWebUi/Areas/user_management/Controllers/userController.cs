@@ -48,13 +48,17 @@ namespace EqUiWebUi.Areas.user_management.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "id,username,LocationRoot,AssetRoot,Locked,Blocked")] users user)
+        public async Task<ActionResult> Edit(users user)
         {
             if (ModelState.IsValid && !user.Locked )
             {
                 db.Entry(user).State = EntityState.Modified;
                 await db.SaveChangesAsync();
             }
+
+            AreaFiltersController areaFiltersController = new EqUiWebUi.Areas.user_management.Controllers.AreaFiltersController();
+            ViewBag.selectlist = areaFiltersController.getAreaSelectList();
+
             return View(user);
         }
 
