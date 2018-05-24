@@ -6,11 +6,12 @@
 
 <h2>GetCsvFileData</h2>
 
-@Html.Grid(Model).Named("rt_device_info").Build(columns =>
+@Html.Grid(Model).Named("rt_csv_file").Build(columns =>
 {
     columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Desc);
     columns.Add(c => c.c_controller.controller_name).Titled("controller_name");
     columns.Add(c => c.c_csv_log.csv_filename).Titled("csv_filename");
+    columns.Add(c => c.C_timestamp).Titled("_timestamp");
     columns.Add(c => c.lastDateRecord).Titled("lastDateRecord");
     columns.Add(c => c.lastLineRead).Titled("lastLineRead");
     columns.Add(c => c.lastFileSize).Titled("lastFileSize");

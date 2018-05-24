@@ -22,6 +22,7 @@
           <Property Name="ResponsiblePloeg" Type="varchar(max)" />
           <Property Name="ClassificationTree" Type="varchar(max)" />
           <Property Name="CLassificationId" Type="varchar(max)" />
+          <Property Name="hasRackidAsBodynum" Type="bit" />
         </EntityType>
         <EntityType Name="c_controller_class">
           <Key>
@@ -1107,6 +1108,7 @@
           <NavigationProperty Name="rt_csv_file" Relationship="GADATAModelVASC.FK_rt_csv_file_c_controller" FromRole="c_controller" ToRole="rt_csv_file" />
           <NavigationProperty Name="rt_alarm" Relationship="GADATAModelVASC.FK_rt_alarm_c_controller" FromRole="c_controller" ToRole="rt_alarm" />
           <NavigationProperty Name="h_alarm" Relationship="GADATAModelVASC.FK_h_alarm_c_controller" FromRole="c_controller" ToRole="h_alarm" />
+          <Property Name="hasRackidAsBodynum" Type="Boolean" />
         </EntityType>
         <EntityType Name="c_controller_class">
           <Key>
@@ -1866,6 +1868,7 @@
           <EntitySetMapping Name="c_controller">
             <EntityTypeMapping TypeName="GADATAModelVASC.c_controller">
               <MappingFragment StoreEntitySet="c_controller">
+                <ScalarProperty Name="hasRackidAsBodynum" ColumnName="hasRackidAsBodynum" />
                 <ScalarProperty Name="CLassificationId" ColumnName="CLassificationId" />
                 <ScalarProperty Name="ClassificationTree" ColumnName="ClassificationTree" />
                 <ScalarProperty Name="ResponsiblePloeg" ColumnName="ResponsiblePloeg" />
