@@ -83,6 +83,9 @@ namespace EqUiWebUi.Areas.user_management.Controllers
                 return RedirectToAction("Index");
             }
 
+            AreaFiltersController areaFiltersController = new EqUiWebUi.Areas.user_management.Controllers.AreaFiltersController();
+            ViewBag.selectlist = areaFiltersController.getAreaSelectList();
+
             return View(users);
         }
 
@@ -98,6 +101,10 @@ namespace EqUiWebUi.Areas.user_management.Controllers
             {
                 return HttpNotFound();
             }
+
+            AreaFiltersController areaFiltersController = new EqUiWebUi.Areas.user_management.Controllers.AreaFiltersController();
+            ViewBag.selectlist = areaFiltersController.getAreaSelectList();
+
             return View(users);
         }
 
@@ -114,6 +121,10 @@ namespace EqUiWebUi.Areas.user_management.Controllers
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
+
+            AreaFiltersController areaFiltersController = new EqUiWebUi.Areas.user_management.Controllers.AreaFiltersController();
+            ViewBag.selectlist = areaFiltersController.getAreaSelectList();
+
             return View(users);
         }
 
