@@ -60,12 +60,16 @@ namespace EqUiWebUi
         }
 
         //returns a Css style based on value
-        public static string getRowStyleByWearValue(double? pWear, int? nDress, string NoChangeDetected)
+        public static string getRowStyleByWearValue(double? pWear, int? nDress, double? nRparts)
         {
-            if (pWear.GetValueOrDefault(0) > 98 || nDress.GetValueOrDefault(0) > 210 || NoChangeDetected == "X")
+            if (pWear.GetValueOrDefault(0) == 666 || nRparts.GetValueOrDefault(0) < 0) //data error
+            {
+                return "PulseBlueRepeat";
+            }
+            else if (pWear.GetValueOrDefault(0) > 98 || nDress.GetValueOrDefault(0) > 210 || nRparts.GetValueOrDefault(0) < 2) //severe tiplife
             {
                 return "TableTipwearValueDanger";
-            } else if(pWear.GetValueOrDefault(0) > 80 || nDress.GetValueOrDefault(0) > 200)
+            } else if(pWear.GetValueOrDefault(0) > 90 || nDress.GetValueOrDefault(0) > 200 || nRparts.GetValueOrDefault(0) < 10) //mild tiplife
             {
                 return "TableTipwearValueHigh";
             }

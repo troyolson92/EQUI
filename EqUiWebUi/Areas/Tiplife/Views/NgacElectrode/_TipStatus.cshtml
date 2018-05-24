@@ -6,7 +6,7 @@
     columns.Add(c => c.Date_Time).Titled("Laatst gefreest").Formatted("{0:dd-MM-yyyy HH:mm}");
     columns.Add(c => c.nDress).Titled("#gefreest");
     columns.Add(c => c.WearRatio).Titled("%WearRatio").Css("hidden-sm hidden-xs");
-    columns.Add(c => c.pWear).Titled("%wear").Filterable(true).Css("bolded");
+    columns.Add(c => c.pWear).Titled("%wear").Filterable(true);
     columns.Add(c => c.nRspots).Titled("#R Spots").Css("hidden-sm hidden-xs");  
     columns.Add(c => c.nRcars).Titled("#R Stukken").Css("hidden-sm hidden-xs"); 
     columns.Add(c => c.TipAge_h_).Titled("leeftijd (h)");
@@ -23,5 +23,5 @@
 }).Sortable().Pageable(pager =>
 {
     pager.RowsPerPage = 20;
-}).Empty("No data found").Css("table-hover").RowCss(row => MyRowStyling.getRowStyleByWearValue(row.pWear,row.nDress,row.NoChangeDetected))
+}).Empty("No data found").Css("table-hover").RowCss(row => MyRowStyling.getRowStyleByWearValue(row.pWear,row.nDress,row.nRcars))
 

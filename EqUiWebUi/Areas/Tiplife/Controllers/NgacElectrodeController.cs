@@ -9,6 +9,8 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
 {
     public class NgacElectrodeController : Controller
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         // GET: Tiplife/NgacElectrode
         public ActionResult Index()
         {
@@ -93,6 +95,8 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
                                           )
                                           && tipMonitor.LocationTree.Contains(locationFilter)
                                           select tipMonitor;
+            log.Info("Plantipchange for: " + locationFilter + " resultCount: " + data.Count());
+
             return PartialView(data);
         }
         //get filterd list of wich need to be change
