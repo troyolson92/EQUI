@@ -60,9 +60,9 @@ namespace EqUiWebUi
         }
 
         //returns a Css style based on value
-        public static string getRowStyleByWearValue(double? pWear, int? nDress, double? nRparts)
+        public static string getRowStyleByWearValue(double? pWear, int? nDress, double? nRparts, string NoChangeDetected)
         {
-            if (pWear.GetValueOrDefault(0) == 666 || nRparts.GetValueOrDefault(0) < 0) //data error
+            if (NoChangeDetected == "X" || nRparts.GetValueOrDefault(-1) < 0) //data error
             {
                 return "PulseBlueRepeat";
             }

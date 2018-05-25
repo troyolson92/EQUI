@@ -1,0 +1,48 @@
+﻿@model IQueryable<EqUiWebUi.Areas.Tiplife.Models.TipLifeExpectations>
+
+@*set title*@
+@{
+    ViewBag.Title = "TipLifeExpectations";
+}
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4>TipLifeExpectations</h4>
+    </div>
+
+    <div class="panel-body">
+        @Html.Grid(Model).Named("TipLifeExpectations").Build(columns =>
+        {
+            columns.Add(c => c.controller_name).Titled("Robot").Filterable(true);
+            columns.Add(c => c.Tool_Nr).Titled("Nr");
+            columns.Add(c => c.LastTipchange).Titled("LastTipchange").Formatted("{0:dd-MM-yyyy HH:mm}").InitialSort(GridSortOrder.Desc);
+            columns.Add(c => c.maxWearInCalc).Titled("maxWear").Css("hidden-sm hidden-xs");
+            columns.Add(c => c.minWearInCalc).Titled("minWear").Css("hidden-sm hidden-xs");
+            columns.Add(c => c.countWearInCalc).Titled("count").Css("hidden-sm hidden-xs");
+
+            columns.Add(c => c.avgESTnSpotsFixedWearBefore100).Titled("SpotsFixedBefore100").Css("hidden-sm hidden-xs");
+            columns.Add(c => c.avgESTnSpotsMoveWearBefore100).Titled("SpotsMoveBefore100").Css("hidden-sm hidden-xs");
+
+            columns.Add(c => c.avgPartsFixedBefore100).Titled("PartsFixedBefore100");
+            columns.Add(c => c.avgPartsMoveBefore100).Titled("PartsMoveBefore100");
+            columns.Add()
+              .Encoded(false)
+              .Filterable(false)
+              .Sortable(false)
+              .RenderedAs(c => MyEquiToolkit.SbcuTool(c.controller_name, "1")).Css("hidden-sm hidden-xs"); //need to add the toolnumber in die model
+}).Sortable().Filterable(true).Pageable(pager =>
+{
+   pager.RowsPerPage = 20;
+}).Empty("No data found").Css("table-hover")
+    </div>
+
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        //full with screen
+        $("#allcontent").removeClass("body-content");
+        $("#allcontent").removeClass("container");
+
+    </script>
+}

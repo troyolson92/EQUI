@@ -72,6 +72,18 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
             return View(data);
         }
 
+        //------------------------------------tabel met TipLifeExpectations-------------------------------------------------
+        [HttpGet]
+        public ActionResult TipLifeExpectations()
+        {
+            GADATAEntitiesTiplife gADATAEntities = new GADATAEntitiesTiplife();
+            string locationroot = Session["LocationRoot"].ToString();
+            IQueryable<TipLifeExpectations> data = from t in gADATAEntities.TipLifeExpectations
+                                               where (t.LocationTree ?? "").Contains(locationroot)
+                                               select t;
+            return View(data);
+        }
+
         //----------------------------------onderhouds plannings tools------------------------------------------------------
         [HttpGet]
         public ActionResult PlanTipChange()
@@ -94,6 +106,7 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
                                            || tipMonitor.NoChangeDetected == "X"
                                           )
                                           && tipMonitor.LocationTree.Contains(locationFilter)
+                                          orderby tipMonitor.nRcars ascending
                                           select tipMonitor;
             log.Info("Plantipchange for: " + locationFilter + " resultCount: " + data.Count());
 
@@ -111,6 +124,7 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
                                             || tipMonitor.NoChangeDetected == "X"
                                            )
                                            && tipMonitor.LocationTree.Contains(locationFilter)
+                                           orderby tipMonitor.nRcars ascending
                                            select tipMonitor;
             return PartialView(data);
         }

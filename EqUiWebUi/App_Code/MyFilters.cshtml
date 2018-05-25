@@ -20,52 +20,6 @@
         </select>
 }
 
-
-@*drop down control for filtering on 'locationtree'
-    DEPCECIATED 
-    @helper LocationDropdownGlobal(string id, string value = "")
-        {
-            EqUiWebUi.Areas.user_management.Controllers.AreaFiltersController areaFiltersController = new EqUiWebUi.Areas.user_management.Controllers.AreaFiltersController();
-            @Html.DropDownList("testdropdownlist", (dynamic)areaFiltersController.getAreaSelectList(), htmlAttributes: new { @class = "form-control" })
-
-            /**/
-            <select class="form-control input-sm" id="@id" name="Select location">
-                <option style="display:none"> -- select a location -- </option>
-                <option value="">no Filter</option>
-                <option value="VCG -> A">GA (all)</option>
-                <optgroup label="CMA UB12 floorline">
-                    <option value="VCG -> A -> A GA1.0 -> A LIJN 33">Floor (all)</option>
-                    <option value="VCG -> A -> A GA1.0 -> A LIJN 331">Frontstructure</option>
-                    <option value="VCG -> A -> A GA1.0 -> A LIJN 334">Frontfloor</option>
-                    <option value="VCG -> A -> A GA1.0 -> A LIJN 336">Rearfloor</option>
-                    <option value="VCG -> A -> A GA1.0 -> A LIJN 338">Marriage</option>
-                    <option value="VCG -> A -> A GA1.0 -> A LIJN 339">Weldbolt</option>
-                </optgroup>
-                <optgroup label="CMA Sides">
-                    <option value="VCG -> A -> A GA1.0 -> A LIJN 35">Sides (all)</option>
-                </optgroup>
-                <optgroup label="CMA Preassembly">
-                    <option value="VCG -> A -> A GA4.0">GA4.0</option>
-                </optgroup>
-                <optgroup label="AAL">
-                    <option value="VCG -> A -> AAL">AAL (all)</option>
-                    <option value="VCG -> A -> AAL -> A FLOOR L">A FLOOR L</option>
-                    <option value="VCG -> A -> AAL -> A SIBO L">A SIBO L</option>
-                </optgroup>
-                <optgroup label="AAS">
-                    <option value="VCG -> A -> AAS">AAS (all)</option>
-                    <option value="VCG -> A -> AAS -> A FLOOR S">A FLOOR S</option>
-                    <option value="VCG -> A -> AAS -> A SIBO S">A SIBO S</option>
-                </optgroup>
-                <optgroup label="Assembly Lines">
-                    <option value="VCG -> A -> A ASSEMBLY LINES">Assembly Lines (all)</option>
-                    <option value="VCG -> A -> A ASSEMBLY LINES -> A HOP">HOP</option>
-                </optgroup>
-            </select>
-    }
-
-*@
-
 @*drop down control for filtering on 'locationtree' Greenfield only USED in PLAN TIPCHANGE! *@
 @helper LocationDropdownGreenfield(string id)
     {
@@ -130,6 +84,43 @@
     {
         /**/
         <a href="@url" class="@classes" data-toggle="tooltip" title="@helperText">
+            <i class="@icon"></i>
+            <span>
+                <strong>@linkText</strong>
+            </span>
+        </a>
+}
+
+@*helper to create info icon for tipmonitor*@
+@helper TipMonitorIcon(string NoChangeDetected, double? RobotWear)
+    {
+string icon = "";
+string linkText = "";
+string tooltip = "";
+
+//alert but wait to change until more than 1 mm wear 
+if (NoChangeDetected == "X" && RobotWear < 1)
+{
+    icon = "glyphicon glyphicon-exclamation-sign";
+    linkText = "Wait";
+    tooltip = "No change deteced but wait to rechange electrode!";
+}
+//alert and can be changed
+else if (NoChangeDetected == "X")
+{
+    icon = "glyphicon glyphicon-retweet";
+    linkText = "Rechange";
+    tooltip = "No change deteced you can now try to change the electrode again";
+}
+//all is good.
+else
+{
+    icon = "glyphicon glyphicon-heart-empty";
+    linkText = "";
+    tooltip = "Everything is OK";
+}
+
+        <a href="" class="" data-toggle="tooltip" title="@tooltip">
             <i class="@icon"></i>
             <span>
                 <strong>@linkText</strong>
