@@ -81,8 +81,10 @@ namespace EqUiWebUi.Areas.Tiplife.Models
         public Nullable<double> ESTremainingspotsMove { get; set; }
         public Nullable<double> ESTremainingCarsFixed { get; set; }
         public Nullable<double> ESTremainingsCarsMove { get; set; }
-        public Nullable<int> nSpots44 { get; set; }
         public Nullable<System.DateTime> LastTipchange { get; set; }
         public Nullable<double> avgDeltaNomAfterchange { get; set; }
+        public Nullable<int> TotWearComponent { get; set; }
+        public Nullable<double> Last_FixedWearBeforeChange { get; set; }
+        public Nullable<double> Last_MovWearBeforeChange { get; set; }
     }
 }

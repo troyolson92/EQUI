@@ -9,6 +9,7 @@
         <EntityTypeShape EntityType="GADATAModelTiplife.TipMonitor" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="GADATAModelTiplife.TipwearBeforeChange" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="GADATAModelTiplife.TipwearLast" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GADATAModelTiplife.TipLifeExpectations" Width="1.5" PointX="8.875" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

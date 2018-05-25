@@ -71,6 +71,31 @@ warning 6002: The table/view 'GADATA.NGAC.TipDressLogFile' does not have a prima
           <Property Name="_timestamp" Type="datetime" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.NGAC.TipLifeExpectations' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="TipLifeExpectations">
+          
+          <Key>
+            <PropertyRef Name="refid" />
+          </Key>
+          <Property Name="controller_name" Type="varchar" MaxLength="30" />
+          <Property Name="LocationTree" Type="varchar(max)" />
+          <Property Name="Tool_Nr" Type="smallint" Nullable="false" />
+          <Property Name="avgESTnSpotsFixedWearBefore100" Type="float" />
+          <Property Name="avgESTnSpotsMoveWearBefore100" Type="float" />
+          <Property Name="avgWeldPerDress" Type="int" />
+          <Property Name="TotWearComponent" Type="int" />
+          <Property Name="maxWearInCalc" Type="float" />
+          <Property Name="minWearInCalc" Type="float" />
+          <Property Name="countWearInCalc" Type="int" />
+          <Property Name="LastTipchange" Type="datetime" />
+          <Property Name="Last%FixedWearBeforeChange" Type="float" />
+          <Property Name="Last%MovWearBeforeChange" Type="float" />
+          <Property Name="avgDeltaNomAfterchange" Type="float" />
+          <Property Name="avgPartsFixedBefore100" Type="float" />
+          <Property Name="avgPartsMoveBefore100" Type="float" />
+          <Property Name="refid" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'GADATA.NGAC.TipMonitor' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="TipMonitor">
           <Key>
@@ -92,6 +117,7 @@ warning 6002: The table/view 'GADATA.NGAC.TipMonitor' does not have a primary ke
           <Property Name="LocationTree" Type="varchar(max)" />
           <Property Name="MagicFiXedWear" Type="float" />
           <Property Name="NoChangeDetected" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="RobotWear" Type="float" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'GADATA.NGAC.TipwearBeforeChange' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -118,6 +144,8 @@ warning 6002: The table/view 'GADATA.NGAC.TipwearBeforeChange' does not have a p
           <Property Name="TipAge(h)" Type="int" />
           <Property Name="DeltaNom" Type="float" />
           <Property Name="DeltaNomBeforeChange" Type="float" />
+          <Property Name="refid" Type="int" />
+          <Property Name="tipchangeindex" Type="bigint" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'GADATA.NGAC.TipwearLast' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -193,9 +221,11 @@ warning 6002: The table/view 'GADATA.NGAC.TipwearLast' does not have a primary k
           <Property Name="ESTremainingspotsMove" Type="float" />
           <Property Name="ESTremainingCarsFixed" Type="float" />
           <Property Name="ESTremainingsCarsMove" Type="float" />
-          <Property Name="nSpots44" Type="int" />
+          <Property Name="TotWearComponent" Type="int" />
           <Property Name="LastTipchange" Type="datetime" />
           <Property Name="avgDeltaNomAfterchange" Type="float" />
+          <Property Name="Last%FixedWearBeforeChange" Type="float" />
+          <Property Name="Last%MovWearBeforeChange" Type="float" />
         </EntityType>
         <EntityContainer Name="GADATAModelTiplifeStoreContainer">
           <EntitySet Name="TipDressLogFile" EntityType="Self.TipDressLogFile" store:Type="Views" store:Schema="NGAC">
@@ -259,6 +289,27 @@ warning 6002: The table/view 'GADATA.NGAC.TipwearLast' does not have a primary k
     [TipDressLogFile].[_timestamp] AS [_timestamp]
     FROM [NGAC].[TipDressLogFile] AS [TipDressLogFile]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="TipLifeExpectations" EntityType="Self.TipLifeExpectations" store:Type="Views" store:Schema="NGAC">
+            <DefiningQuery>SELECT 
+    [TipLifeExpectations].[controller_name] AS [controller_name], 
+    [TipLifeExpectations].[LocationTree] AS [LocationTree], 
+    [TipLifeExpectations].[Tool_Nr] AS [Tool_Nr], 
+    [TipLifeExpectations].[avgESTnSpotsFixedWearBefore100] AS [avgESTnSpotsFixedWearBefore100], 
+    [TipLifeExpectations].[avgESTnSpotsMoveWearBefore100] AS [avgESTnSpotsMoveWearBefore100], 
+    [TipLifeExpectations].[avgWeldPerDress] AS [avgWeldPerDress], 
+    [TipLifeExpectations].[TotWearComponent] AS [TotWearComponent], 
+    [TipLifeExpectations].[maxWearInCalc] AS [maxWearInCalc], 
+    [TipLifeExpectations].[minWearInCalc] AS [minWearInCalc], 
+    [TipLifeExpectations].[countWearInCalc] AS [countWearInCalc], 
+    [TipLifeExpectations].[LastTipchange] AS [LastTipchange], 
+    [TipLifeExpectations].[Last%FixedWearBeforeChange] AS [Last%FixedWearBeforeChange], 
+    [TipLifeExpectations].[Last%MovWearBeforeChange] AS [Last%MovWearBeforeChange], 
+    [TipLifeExpectations].[avgDeltaNomAfterchange] AS [avgDeltaNomAfterchange], 
+    [TipLifeExpectations].[avgPartsFixedBefore100] AS [avgPartsFixedBefore100], 
+    [TipLifeExpectations].[avgPartsMoveBefore100] AS [avgPartsMoveBefore100], 
+    [TipLifeExpectations].[refid] AS [refid]
+    FROM [NGAC].[TipLifeExpectations] AS [TipLifeExpectations]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="TipMonitor" EntityType="Self.TipMonitor" store:Type="Views" store:Schema="NGAC">
             <DefiningQuery>SELECT 
     [TipMonitor].[Robot] AS [Robot], 
@@ -275,7 +326,8 @@ warning 6002: The table/view 'GADATA.NGAC.TipwearLast' does not have a primary k
     [TipMonitor].[id] AS [id], 
     [TipMonitor].[LocationTree] AS [LocationTree], 
     [TipMonitor].[MagicFiXedWear] AS [MagicFiXedWear], 
-    [TipMonitor].[NoChangeDetected] AS [NoChangeDetected]
+    [TipMonitor].[NoChangeDetected] AS [NoChangeDetected], 
+    [TipMonitor].[RobotWear] AS [RobotWear]
     FROM [NGAC].[TipMonitor] AS [TipMonitor]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="TipwearBeforeChange" EntityType="Self.TipwearBeforeChange" store:Type="Views" store:Schema="NGAC">
@@ -297,7 +349,9 @@ warning 6002: The table/view 'GADATA.NGAC.TipwearLast' does not have a primary k
     [TipwearBeforeChange].[ESTnSpotsMoveWearBefore100] AS [ESTnSpotsMoveWearBefore100], 
     [TipwearBeforeChange].[TipAge(h)] AS [TipAge(h)], 
     [TipwearBeforeChange].[DeltaNom] AS [DeltaNom], 
-    [TipwearBeforeChange].[DeltaNomBeforeChange] AS [DeltaNomBeforeChange]
+    [TipwearBeforeChange].[DeltaNomBeforeChange] AS [DeltaNomBeforeChange], 
+    [TipwearBeforeChange].[refid] AS [refid], 
+    [TipwearBeforeChange].[tipchangeindex] AS [tipchangeindex]
     FROM [NGAC].[TipwearBeforeChange] AS [TipwearBeforeChange]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="TipwearLast" EntityType="Self.TipwearLast" store:Type="Views" store:Schema="NGAC">
@@ -369,9 +423,11 @@ warning 6002: The table/view 'GADATA.NGAC.TipwearLast' does not have a primary k
     [TipwearLast].[ESTremainingspotsMove] AS [ESTremainingspotsMove], 
     [TipwearLast].[ESTremainingCarsFixed] AS [ESTremainingCarsFixed], 
     [TipwearLast].[ESTremainingsCarsMove] AS [ESTremainingsCarsMove], 
-    [TipwearLast].[nSpots44] AS [nSpots44], 
+    [TipwearLast].[TotWearComponent] AS [TotWearComponent], 
     [TipwearLast].[LastTipchange] AS [LastTipchange], 
-    [TipwearLast].[avgDeltaNomAfterchange] AS [avgDeltaNomAfterchange]
+    [TipwearLast].[avgDeltaNomAfterchange] AS [avgDeltaNomAfterchange], 
+    [TipwearLast].[Last%FixedWearBeforeChange] AS [Last%FixedWearBeforeChange], 
+    [TipwearLast].[Last%MovWearBeforeChange] AS [Last%MovWearBeforeChange]
     FROM [NGAC].[TipwearLast] AS [TipwearLast]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
@@ -462,6 +518,7 @@ warning 6002: The table/view 'GADATA.NGAC.TipwearLast' does not have a primary k
           <Property Name="LocationTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="MagicFiXedWear" Type="Double" />
           <Property Name="NoChangeDetected" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="RobotWear" Type="Double" />
         </EntityType>
         <EntityType Name="TipwearBeforeChange">
           <Key>
@@ -486,6 +543,8 @@ warning 6002: The table/view 'GADATA.NGAC.TipwearLast' does not have a primary k
           <Property Name="DeltaNom" Type="Double" />
           <Property Name="DeltaNomBeforeChange" Type="Double" />
           <Property Name="LocationTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="tipchangeindex" Type="Int64" />
+          <Property Name="refid" Type="Int32" />
         </EntityType>
         <EntityType Name="TipwearLast">
           <Key>
@@ -559,16 +618,41 @@ warning 6002: The table/view 'GADATA.NGAC.TipwearLast' does not have a primary k
           <Property Name="ESTremainingspotsMove" Type="Double" />
           <Property Name="ESTremainingCarsFixed" Type="Double" />
           <Property Name="ESTremainingsCarsMove" Type="Double" />
-          <Property Name="nSpots44" Type="Int32" />
           <Property Name="LastTipchange" Type="DateTime" Precision="3" />
           <Property Name="avgDeltaNomAfterchange" Type="Double" />
+          <Property Name="TotWearComponent" Type="Int32" />
+          <Property Name="Last_FixedWearBeforeChange" Type="Double" />
+          <Property Name="Last_MovWearBeforeChange" Type="Double" />
         </EntityType>
         <EntityContainer Name="GADATAEntitiesTiplife" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="TipDressLogFile" EntityType="Self.TipDressLogFile" />
           <EntitySet Name="TipMonitor" EntityType="Self.TipMonitor" />
           <EntitySet Name="TipwearBeforeChange" EntityType="Self.TipwearBeforeChange" />
           <EntitySet Name="TipwearLast" EntityType="Self.TipwearLast" />
+          <EntitySet Name="TipLifeExpectations" EntityType="GADATAModelTiplife.TipLifeExpectations" />
         </EntityContainer>
+        <EntityType Name="TipLifeExpectations">
+          <Key>
+            <PropertyRef Name="refid" />
+          </Key>
+          <Property Name="controller_name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="LocationTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Tool_Nr" Type="Int16" Nullable="false" />
+          <Property Name="avgESTnSpotsFixedWearBefore100" Type="Double" />
+          <Property Name="avgESTnSpotsMoveWearBefore100" Type="Double" />
+          <Property Name="avgWeldPerDress" Type="Int32" />
+          <Property Name="TotWearComponent" Type="Int32" />
+          <Property Name="maxWearInCalc" Type="Double" />
+          <Property Name="minWearInCalc" Type="Double" />
+          <Property Name="countWearInCalc" Type="Int32" />
+          <Property Name="LastTipchange" Type="DateTime" Precision="3" />
+          <Property Name="Last_FixedWearBeforeChange" Type="Double" />
+          <Property Name="Last_MovWearBeforeChange" Type="Double" />
+          <Property Name="avgDeltaNomAfterchange" Type="Double" />
+          <Property Name="avgPartsFixedBefore100" Type="Double" />
+          <Property Name="avgPartsMoveBefore100" Type="Double" />
+          <Property Name="refid" Type="Int32" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -641,6 +725,7 @@ warning 6002: The table/view 'GADATA.NGAC.TipwearLast' does not have a primary k
           <EntitySetMapping Name="TipMonitor">
             <EntityTypeMapping TypeName="GADATAModelTiplife.TipMonitor">
               <MappingFragment StoreEntitySet="TipMonitor">
+                <ScalarProperty Name="RobotWear" ColumnName="RobotWear" />
                 <ScalarProperty Name="NoChangeDetected" ColumnName="NoChangeDetected" />
                 <ScalarProperty Name="Robot" ColumnName="Robot" />
                 <ScalarProperty Name="Date_Time" ColumnName="Date Time" />
@@ -662,6 +747,8 @@ warning 6002: The table/view 'GADATA.NGAC.TipwearLast' does not have a primary k
           <EntitySetMapping Name="TipwearBeforeChange">
             <EntityTypeMapping TypeName="GADATAModelTiplife.TipwearBeforeChange">
               <MappingFragment StoreEntitySet="TipwearBeforeChange">
+                <ScalarProperty Name="refid" ColumnName="refid" />
+                <ScalarProperty Name="tipchangeindex" ColumnName="tipchangeindex" />
                 <ScalarProperty Name="LocationTree" ColumnName="LocationTree" />
                 <ScalarProperty Name="controller_name" ColumnName="controller_name" />
                 <ScalarProperty Name="controller_id" ColumnName="controller_id" />
@@ -686,6 +773,9 @@ warning 6002: The table/view 'GADATA.NGAC.TipwearLast' does not have a primary k
           <EntitySetMapping Name="TipwearLast">
             <EntityTypeMapping TypeName="GADATAModelTiplife.TipwearLast">
               <MappingFragment StoreEntitySet="TipwearLast">
+                <ScalarProperty Name="Last_MovWearBeforeChange" ColumnName="Last%MovWearBeforeChange" />
+                <ScalarProperty Name="Last_FixedWearBeforeChange" ColumnName="Last%FixedWearBeforeChange" />
+                <ScalarProperty Name="TotWearComponent" ColumnName="TotWearComponent" />
                 <ScalarProperty Name="controller_name" ColumnName="controller_name" />
                 <ScalarProperty Name="LocationTree" ColumnName="LocationTree" />
                 <ScalarProperty Name="id" ColumnName="id" />
@@ -753,9 +843,31 @@ warning 6002: The table/view 'GADATA.NGAC.TipwearLast' does not have a primary k
                 <ScalarProperty Name="ESTremainingspotsMove" ColumnName="ESTremainingspotsMove" />
                 <ScalarProperty Name="ESTremainingCarsFixed" ColumnName="ESTremainingCarsFixed" />
                 <ScalarProperty Name="ESTremainingsCarsMove" ColumnName="ESTremainingsCarsMove" />
-                <ScalarProperty Name="nSpots44" ColumnName="nSpots44" />
                 <ScalarProperty Name="LastTipchange" ColumnName="LastTipchange" />
                 <ScalarProperty Name="avgDeltaNomAfterchange" ColumnName="avgDeltaNomAfterchange" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipLifeExpectations">
+            <EntityTypeMapping TypeName="GADATAModelTiplife.TipLifeExpectations">
+              <MappingFragment StoreEntitySet="TipLifeExpectations">
+                <ScalarProperty Name="refid" ColumnName="refid" />
+                <ScalarProperty Name="avgPartsMoveBefore100" ColumnName="avgPartsMoveBefore100" />
+                <ScalarProperty Name="avgPartsFixedBefore100" ColumnName="avgPartsFixedBefore100" />
+                <ScalarProperty Name="avgDeltaNomAfterchange" ColumnName="avgDeltaNomAfterchange" />
+                <ScalarProperty Name="Last_MovWearBeforeChange" ColumnName="Last%MovWearBeforeChange" />
+                <ScalarProperty Name="Last_FixedWearBeforeChange" ColumnName="Last%FixedWearBeforeChange" />
+                <ScalarProperty Name="LastTipchange" ColumnName="LastTipchange" />
+                <ScalarProperty Name="countWearInCalc" ColumnName="countWearInCalc" />
+                <ScalarProperty Name="minWearInCalc" ColumnName="minWearInCalc" />
+                <ScalarProperty Name="maxWearInCalc" ColumnName="maxWearInCalc" />
+                <ScalarProperty Name="TotWearComponent" ColumnName="TotWearComponent" />
+                <ScalarProperty Name="avgWeldPerDress" ColumnName="avgWeldPerDress" />
+                <ScalarProperty Name="avgESTnSpotsMoveWearBefore100" ColumnName="avgESTnSpotsMoveWearBefore100" />
+                <ScalarProperty Name="avgESTnSpotsFixedWearBefore100" ColumnName="avgESTnSpotsFixedWearBefore100" />
+                <ScalarProperty Name="Tool_Nr" ColumnName="Tool_Nr" />
+                <ScalarProperty Name="LocationTree" ColumnName="LocationTree" />
+                <ScalarProperty Name="controller_name" ColumnName="controller_name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
