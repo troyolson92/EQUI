@@ -73,6 +73,12 @@
       <HintPath>..\packages\Microsoft.AspNet.SignalR.SystemWeb.2.2.2\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Data.Edm, Version=5.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.Edm.5.6.0\lib\net40\Microsoft.Data.Edm.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.OData, Version=5.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.OData.5.6.0\lib\net40\Microsoft.Data.OData.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Owin, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.3.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
     </Reference>
@@ -103,6 +109,9 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Spatial, Version=5.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Spatial.5.6.0\lib\net40\System.Spatial.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -113,6 +122,9 @@
     </Reference>
     <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.OData, Version=5.3.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.OData.5.3.1\lib\net45\System.Web.Http.OData.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
@@ -181,6 +193,7 @@
     <Compile Include="Areas\Alert\Controllers\c_triggersController.cs" />
     <Compile Include="Areas\Alert\Controllers\GunCylindereferncesController.cs" />
     <Compile Include="Areas\Alert\Controllers\h_alertController.cs" />
+    <Compile Include="Areas\Alert\Controllers\L_controlLimitsController.cs" />
     <Compile Include="Areas\Alert\Controllers\SBCUreferncesController.cs" />
     <Compile Include="Areas\Alert\Models\AlertMetadata.cs" />
     <Compile Include="Areas\Alert\Models\AlertModel.Context.cs">
@@ -225,6 +238,9 @@
       <DependentUpon>AlertModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Alert\Models\h_alert.cs">
+      <DependentUpon>AlertModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Alert\Models\l_controlLimits.cs">
       <DependentUpon>AlertModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Alert\Models\L_users.cs">
@@ -1076,6 +1092,10 @@
     <Content Include="Areas\user_management\Views\AreaFilters\Index.cshtml" />
     <Content Include="Areas\user_management\Views\AreaFilters\_settings.cshtml" />
     <Content Include="Areas\Tiplife\Views\NgacElectrode\TipLifeExpectations.cshtml" />
+    <Content Include="Areas\Alert\Views\L_controlLimits\Create.cshtml" />
+    <Content Include="Areas\Alert\Views\L_controlLimits\Details.cshtml" />
+    <Content Include="Areas\Alert\Views\L_controlLimits\Edit.cshtml" />
+    <Content Include="Areas\Alert\Views\L_controlLimits\Index.cshtml" />
     <None Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.svg" />
