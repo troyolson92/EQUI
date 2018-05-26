@@ -18,6 +18,7 @@ namespace EqUiWebUi.Areas.Alert.Models
         public c_triggers()
         {
             this.h_alert = new HashSet<h_alert>();
+            this.l_controlLimits = new HashSet<l_controlLimits>();
         }
     
         public int id { get; set; }
@@ -39,5 +40,7 @@ namespace EqUiWebUi.Areas.Alert.Models
         public virtual c_state c_state { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<h_alert> h_alert { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<l_controlLimits> l_controlLimits { get; set; }
     }
 }

@@ -20,6 +20,8 @@ namespace EqUiWebUi.Areas.Alert.Models
             this.Changed = new HashSet<h_alert>();
             this.Close = new HashSet<h_alert>();
             this.AcceptUser = new HashSet<h_alert>();
+            this.l_controlLimits = new HashSet<l_controlLimits>();
+            this.l_controlLimits1 = new HashSet<l_controlLimits>();
         }
     
         public int id { get; set; }
@@ -35,5 +37,9 @@ namespace EqUiWebUi.Areas.Alert.Models
         public virtual ICollection<h_alert> Close { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<h_alert> AcceptUser { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<l_controlLimits> l_controlLimits { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<l_controlLimits> l_controlLimits1 { get; set; }
     }
 }

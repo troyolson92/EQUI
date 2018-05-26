@@ -4,28 +4,32 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="a443bbb879724830a09275f259874e85" Name="Diagram1" ZoomLevel="69">
-        <EntityTypeShape EntityType="AlertModel.c_smsSystem" Width="1.5" PointX="3.375" PointY="7.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="AlertModel.c_state" Width="1.5" PointX="6" PointY="3.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="AlertModel.h_alert" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="AlertModel.L_users" Width="1.5" PointX="0.5" PointY="1.25" IsExpanded="true" />
+      <Diagram DiagramId="a443bbb879724830a09275f259874e85" Name="Diagram1" ZoomLevel="58">
+        <EntityTypeShape EntityType="AlertModel.c_smsSystem" Width="1.5" PointX="15.375" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AlertModel.c_state" Width="1.5" PointX="8.625" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="AlertModel.h_alert" Width="1.5" PointX="5.625" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="AlertModel.L_users" Width="1.5" PointX="3.125" PointY="1.5" IsExpanded="true" />
         <AssociationConnector Association="AlertModel.FK_h_alert_c_state" ManuallyRouted="false" />
         <AssociationConnector Association="AlertModel.FK_h_alert_L_users" ManuallyRouted="false" />
         <AssociationConnector Association="AlertModel.FK_h_alert_L_users1" ManuallyRouted="false" />
         <AssociationConnector Association="AlertModel.FK_h_alert_L_users2" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="AlertModel.c_triggers" Width="1.5" PointX="8.5" PointY="5" />
+        <EntityTypeShape EntityType="AlertModel.c_triggers" Width="1.5" PointX="11.125" PointY="5.25" />
         <AssociationConnector Association="AlertModel.FK_c_triggers_c_smsSystem" />
         <AssociationConnector Association="AlertModel.FK_c_triggers_c_state" />
         <AssociationConnector Association="AlertModel.FK_h_alert_c_triggers" />
-        <EntityTypeShape EntityType="AlertModel.c_CPT600" Width="1.5" PointX="2.875" PointY="10.125" />
-        <EntityTypeShape EntityType="AlertModel.c_SMSconfig" Width="1.5" PointX="5.5" PointY="8" />
+        <EntityTypeShape EntityType="AlertModel.c_CPT600" Width="1.5" PointX="14.875" PointY="9.25" />
+        <EntityTypeShape EntityType="AlertModel.c_SMSconfig" Width="1.5" PointX="17.5" PointY="7.125" />
         <AssociationConnector Association="AlertModel.FK_c_SMSconfig_c_CPT600" />
         <AssociationConnector Association="AlertModel.FK_c_SMSconfig_c_smsSystem" />
-        <EntityTypeShape EntityType="AlertModel.GunCylinderefernce" Width="1.5" PointX="14.125" PointY="1.625" />
-        <EntityTypeShape EntityType="AlertModel.SBCUrefernce" Width="1.5" PointX="14.125" PointY="6.125" />
-        <EntityTypeShape EntityType="AlertModel.c_controller" Width="1.5" PointX="11.75" PointY="0.875" />
+        <EntityTypeShape EntityType="AlertModel.GunCylinderefernce" Width="1.5" PointX="25.375" PointY="6.75" />
+        <EntityTypeShape EntityType="AlertModel.SBCUrefernce" Width="1.5" PointX="25.375" PointY="11.25" />
+        <EntityTypeShape EntityType="AlertModel.c_controller" Width="1.5" PointX="23" PointY="6" />
         <AssociationConnector Association="AlertModel.FK_GunCylinderefernce_c_controller" />
         <AssociationConnector Association="AlertModel.FK_SBCUrefernce_c_controller" />
+        <EntityTypeShape EntityType="AlertModel.l_controlLimits" Width="1.5" PointX="5.625" PointY="8" />
+        <AssociationConnector Association="AlertModel.FK_l_controlLimits_c_triggers" />
+        <AssociationConnector Association="AlertModel.FK_l_controlLimits_L_users" />
+        <AssociationConnector Association="AlertModel.FK_l_controlLimits_L_users1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
