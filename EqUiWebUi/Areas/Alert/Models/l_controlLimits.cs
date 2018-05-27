@@ -25,10 +25,11 @@ namespace EqUiWebUi.Areas.Alert.Models
         public Nullable<double> LowerLimit { get; set; }
         public string Comment { get; set; }
         public string alarmobject { get; set; }
-        public string variantGroup { get; set; }
+        public Nullable<int> l_variants_id { get; set; }
     
         public virtual c_triggers c_triggers { get; set; }
-        public virtual L_users L_users { get; set; }
-        public virtual L_users L_users1 { get; set; }
+        public virtual L_users L_CreateUser { get; set; }
+        public virtual L_users L_ChangeUser { get; set; }
+        public virtual l_variants l_variants { get; set; }
     }
 }

@@ -6,16 +6,19 @@
 }
 
 <h2>Index of all control limits</h2>
-
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
 @Html.Grid(Model).Named("l_controlLimits").Build(columns =>
 {
     columns.Add(c => c.id).Titled("ID").InitialSort(GridSortOrder.Desc).Css("hidden-sm hidden-xs");
     columns.Add(c => c.c_triggers.alertType).Titled("alertType");
-    columns.Add(c => c.CreateDate).Titled("CreateDate").Formatted("{0:dd-MM-yyyy HH:mm}").Css("hidden-sm hidden-xs");
-    columns.Add(c => c.Createuser).Titled("ChangedUser").Css("hidden-sm hidden-xs");
+    columns.Add(c => c.CreateDate).Titled("CreateDate").Formatted("{0:dd-MM-yyyy HH:mm:ss}").Css("hidden-sm hidden-xs");
+    columns.Add(c => c.L_CreateUser.username).Titled("ChangedUser").Css("hidden-sm hidden-xs");
     columns.Add(c => c.alarmobject).Titled("alarmobject");
     columns.Add(c => c.UpperLimit).Titled("UCL");
     columns.Add(c => c.LowerLimit).Titled("LCL");
+    columns.Add(c => c.l_variants.variantGroup).Titled("variantGroup");
     columns.Add(c => c.isdead).Titled("isdead");
     //add edit button
     columns.Add(c => c)

@@ -56,7 +56,9 @@
                     foreach (EqUiWebUi.Areas.Alert.Models.alertState state in System.Enum.GetValues(typeof(EqUiWebUi.Areas.Alert.Models.alertState)))
                     {
                         int intState = (int)state;
-                        <li><a class="JQresultTriggerBtn" href="/alert/alert/SetState?id=@alertId&newstate=@intState">@System.Enum.GetName(typeof(EqUiWebUi.Areas.Alert.Models.alertState), state)</a></li>
+                        <li>
+                            <a class="JQresultTriggerBtn" href="/alert/alert/SetState?id=@alertId&newstate=@intState">@System.Enum.GetName(typeof(EqUiWebUi.Areas.Alert.Models.alertState), state)</a>
+                        </li>
                     }
                 }
             </ul>
@@ -71,54 +73,68 @@
                 @currentState <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
-                <li><a class="JQresultTriggerBtn" href="/VASC/service/SetServiceState?ServiceName=@ServiceName&State=1">Start</a></li>
-                <li><a class="JQresultTriggerBtn" href="/VASC/service/SetServiceState?ServiceName=@ServiceName&State=2">Stop</a></li>
-                <li><a class="JQresultTriggerBtn" href="/VASC/service/SetServiceState?ServiceName=@ServiceName&State=3">Restart</a></li>
+                <li>
+                    <a class="JQresultTriggerBtn" href="/VASC/service/SetServiceState?ServiceName=@ServiceName&State=1">Start</a>
+                </li>
+                <li>
+                    <a class="JQresultTriggerBtn" href="/VASC/service/SetServiceState?ServiceName=@ServiceName&State=2">Stop</a>
+                </li>
+                <li>
+                    <a class="JQresultTriggerBtn" href="/VASC/service/SetServiceState?ServiceName=@ServiceName&State=3">Restart</a>
+                </li>
             </ul>
         </div>
 }
 
 
 @*helper to create ation link with an icon*@
-@helper IconActionLink(string url, string icon, string linkText, string helperText, string classes = "")
+@helper IconActionLink(string url, string icon, string linkText, string helperText, string classes = "", bool enabeld = true)
     {
+        if (enabeld)
+        {
+            <a href="@url" class="@classes" data-toggle="tooltip" title="@helperText">
+                <i class="@icon"></i>
+                <span>
+                    <strong>@linkText</strong>
+                </span>
+            </a>
+        }
+        else
+        {
+            <div>off</div>
+        }
         /**/
-        <a href="@url" class="@classes" data-toggle="tooltip" title="@helperText">
-            <i class="@icon"></i>
-            <span>
-                <strong>@linkText</strong>
-            </span>
-        </a>
+
 }
 
 @*helper to create info icon for tipmonitor*@
 @helper TipMonitorIcon(string NoChangeDetected, double? RobotWear)
     {
-string icon = "";
-string linkText = "";
-string tooltip = "";
+        string icon = "";
+        string linkText = "";
+        string tooltip = "";
 
-//alert but wait to change until more than 1 mm wear 
-if (NoChangeDetected == "X" && RobotWear < 1)
-{
-    icon = "glyphicon glyphicon-exclamation-sign";
-    linkText = "Wait";
-    tooltip = "No change deteced but wait to rechange electrode!";
-}
-//alert and can be changed
-else if (NoChangeDetected == "X")
-{
-    icon = "glyphicon glyphicon-retweet";
-    linkText = "Rechange";
-    tooltip = "No change deteced you can now try to change the electrode again";
-}
-//all is good.
-else
-{
-    icon = "glyphicon glyphicon-heart-empty";
-    linkText = "";
-    tooltip = "Everything is OK";
-}
+        //alert but wait to change until more than 1 mm wear
+        if (NoChangeDetected == "X" && RobotWear < 1)
+        {
+            icon = "glyphicon glyphicon-exclamation-sign";
+            linkText = "Wait";
+            tooltip = "No change deteced but wait to rechange electrode!";
+        }
+        //alert and can be changed
+        else if (NoChangeDetected == "X")
+        {
+            icon = "glyphicon glyphicon-retweet";
+            linkText = "Rechange";
+            tooltip = "No change deteced you can now try to change the electrode again";
+        }
+        //all is good.
+        else
+        {
+            icon = "glyphicon glyphicon-heart-empty";
+            linkText = "";
+            tooltip = "Everything is OK";
+        }
 
         <a href="" class="" data-toggle="tooltip" title="@tooltip">
             <i class="@icon"></i>

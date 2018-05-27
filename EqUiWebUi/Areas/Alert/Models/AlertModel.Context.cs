@@ -36,5 +36,6 @@ namespace EqUiWebUi.Areas.Alert.Models
         public virtual DbSet<SBCUrefernce> SBCUrefernce { get; set; }
         public virtual DbSet<c_controller> c_controller { get; set; }
         public virtual DbSet<l_controlLimits> l_controlLimits { get; set; }
+        public virtual DbSet<l_variants> l_variants { get; set; }
     }
 }

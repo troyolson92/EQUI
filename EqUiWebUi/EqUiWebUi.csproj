@@ -194,6 +194,7 @@
     <Compile Include="Areas\Alert\Controllers\GunCylindereferncesController.cs" />
     <Compile Include="Areas\Alert\Controllers\h_alertController.cs" />
     <Compile Include="Areas\Alert\Controllers\L_controlLimitsController.cs" />
+    <Compile Include="Areas\Alert\Controllers\l_variantsController.cs" />
     <Compile Include="Areas\Alert\Controllers\SBCUreferncesController.cs" />
     <Compile Include="Areas\Alert\Models\AlertMetadata.cs" />
     <Compile Include="Areas\Alert\Models\AlertModel.Context.cs">
@@ -244,6 +245,9 @@
       <DependentUpon>AlertModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Alert\Models\L_users.cs">
+      <DependentUpon>AlertModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Alert\Models\l_variants.cs">
       <DependentUpon>AlertModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Alert\Models\SBCUrefernce.cs">
@@ -1096,6 +1100,11 @@
     <Content Include="Areas\Alert\Views\L_controlLimits\Details.cshtml" />
     <Content Include="Areas\Alert\Views\L_controlLimits\Edit.cshtml" />
     <Content Include="Areas\Alert\Views\L_controlLimits\Index.cshtml" />
+    <Content Include="Areas\Alert\Views\l_variants\Create.cshtml" />
+    <Content Include="Areas\Alert\Views\l_variants\Delete.cshtml" />
+    <Content Include="Areas\Alert\Views\l_variants\Details.cshtml" />
+    <Content Include="Areas\Alert\Views\l_variants\Edit.cshtml" />
+    <Content Include="Areas\Alert\Views\l_variants\Index.cshtml" />
     <None Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.svg" />

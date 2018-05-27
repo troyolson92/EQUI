@@ -48,7 +48,7 @@ namespace EqUiWebUi.Areas.Alert.Models
         [HelpText("Gets used in sms and shown as alert subgroup")]
         public string alertType { get; set; }
         [HelpText("This statement is run against db")]
-        public string sqlStqStatement { get; set; }
+        public string sqlStatement { get; set; }
         [HelpText("CPT600 sms system to be used. MUST be defined in CPT600!!!")]
         public Nullable<int> smsSystem { get; set; }
         [HelpText("Inital state of alert created by this trigger")]

@@ -1,0 +1,42 @@
+﻿@model IEnumerable<EqUiWebUi.Areas.Alert.Models.l_variants>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index of all variants</h2>
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+@Html.Grid(Model).Named("l_variants").Build(columns =>
+{
+    columns.Add(c => c.id).Titled("ID").InitialSort(GridSortOrder.Desc).Css("hidden-sm hidden-xs");
+    columns.Add(c => c.c_triggers.alertType).Titled("alertType");
+    columns.Add(c => c.CreateDate).Titled("CreateDate").Formatted("{0:dd-MM-yyyy HH:mm:ss}").Css("hidden-sm hidden-xs");
+    columns.Add(c => c.L_users.username).Titled("ChangedUser").Css("hidden-sm hidden-xs");
+    columns.Add(c => c.variantGroup).Titled("variantGroup");
+    columns.Add(c => c.Comment).Titled("Comment");
+    //add edit button for controlLimits
+    columns.Add(c => c)
+                        .Titled("ControlLimit")
+                        .Encoded(false)
+                        .RenderedAs(c => MyFilters.IconActionLink(Url.Action("Edit","L_controlLimits", new { l_variants_id = c.id, }), "glyphicon glyphicon-pencil", "", "Edit this controllimit group")
+                        ).Filterable(false);
+    //add edit button for variantgroup
+    columns.Add(c => c)
+                        .Titled("Variant")
+                        .Encoded(false)
+                        .RenderedAs(c => Html.ActionLink("Edit", "Edit", new { id = c.id }) + " | " +
+                                         Html.ActionLink("Details", "Details", new { id = c.id }) + " | " +
+                                         Html.ActionLink("Delete", "Delete", new { id = c.id }) + " | "
+
+                        ).Filterable(false);
+    //
+
+}).Filterable(true).Sortable(true).Pageable(pager =>
+{
+    pager.RowsPerPage = 17;
+}).Empty("Did not find anything").Css("table-hover")
+
+

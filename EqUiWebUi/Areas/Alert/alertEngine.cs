@@ -91,19 +91,19 @@ namespace EqUiWebUi.Areas.Alert
             switch (trigger.RunAgainst)
             {
                 case (int)SmsDatabases.GADATA:
-                    ActiveAlerts = gadataComm.RunQueryGadata(trigger.sqlStqStatement,enblExeptions:true);
+                    ActiveAlerts = gadataComm.RunQueryGadata(trigger.sqlStatement,enblExeptions:true);
                     break;
 
                 case (int)SmsDatabases.STO:
-                    ActiveAlerts = stoComm.oracle_runQuery(trigger.sqlStqStatement); //exeptions enabled by default
+                    ActiveAlerts = stoComm.oracle_runQuery(trigger.sqlStatement); //exeptions enabled by default
                     break;
 
                 case (int)SmsDatabases.MAXIMOrt:
-                    ActiveAlerts = maximoComm.Oracle_runQuery(trigger.sqlStqStatement, RealtimeConn: true, enblExeptions: true);
+                    ActiveAlerts = maximoComm.Oracle_runQuery(trigger.sqlStatement, RealtimeConn: true, enblExeptions: true);
                     break;
 
                 case (int)SmsDatabases.MAXIMOrep:
-                    ActiveAlerts = maximoComm.Oracle_runQuery(trigger.sqlStqStatement, RealtimeConn: false, enblExeptions: true);
+                    ActiveAlerts = maximoComm.Oracle_runQuery(trigger.sqlStatement, RealtimeConn: false, enblExeptions: true);
                     break;
 
                 default:

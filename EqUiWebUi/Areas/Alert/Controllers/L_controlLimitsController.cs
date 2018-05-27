@@ -15,9 +15,10 @@ namespace EqUiWebUi.Areas.Alert.Controllers
         private GADATA_AlertModel db = new GADATA_AlertModel();
 
         // GET: Alert/L_controlLimits
+        //is showisdead = true all is show else only active control limits
         public ActionResult Index(bool showIsDead = false)
         {
-            var l_controlLimits = db.l_controlLimits.Include(l => l.c_triggers).Include(l => l.L_users).Include(l => l.L_users1).Where(l => l.isdead == showIsDead);
+            var l_controlLimits = db.l_controlLimits.Include(l => l.c_triggers).Include(l => l.L_ChangeUser).Include(l => l.L_CreateUser).Where(l => l.isdead == false || l.isdead == showIsDead);
             return View(l_controlLimits.ToList());
         }
 
@@ -61,23 +62,40 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.c_trigger_id = new SelectList(db.c_triggers, "id", "discription", l_controlLimits.c_trigger_id);
+            ViewBag.c_trigger_id = new SelectList(db.c_triggers, "id", "alertType", l_controlLimits.c_trigger_id);
             return View(l_controlLimits);
         }
 
         // GET: Alert/L_controlLimits/Edit/5
-        public ActionResult Edit(int? id)
+        // It is also possible to edit multible records at the same time. by setting the l_variants_id        
+        public ActionResult Edit(int? id, int? l_variants_id)
         {
-            if (id == null)
+            if ((id.HasValue && l_variants_id.HasValue) || (id == null && l_variants_id == null))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            l_controlLimits l_controlLimits = db.l_controlLimits.Find(id);
+
+            l_controlLimits l_controlLimits = null;
+            if (id.HasValue)
+            {
+                l_controlLimits = db.l_controlLimits.Find(id);
+            }
+            if (l_variants_id.HasValue)
+            {
+                l_controlLimits = db.l_controlLimits.Where(l => l.l_variants_id == l_variants_id && l.isdead == false).FirstOrDefault();
+                ViewBag.variantCount = db.l_controlLimits.Where(l => l.l_variants_id == l_variants_id && l.isdead == false).Count();
+            }
+
             if (l_controlLimits == null)
             {
                 return HttpNotFound();
+            }else if(l_controlLimits.isdead == true)
+            {
+                return new HttpStatusCodeResult(404, "not possible to edit a dead control limit id:" + id.ToString());
             }
-            ViewBag.c_trigger_id = new SelectList(db.c_triggers, "id", "discription", l_controlLimits.c_trigger_id);
+
+            ViewBag.c_trigger_id = new SelectList(db.c_triggers, "id", "alertType", l_controlLimits.c_trigger_id);
+            ViewBag.l_variants_id = new SelectList(db.l_variants.Where(l => l.c_trigger_id == l_controlLimits.c_trigger_id), "id", "variantGroup", l_controlLimits.l_variants_id);
             return View(l_controlLimits);
         }
 
@@ -85,31 +103,63 @@ namespace EqUiWebUi.Areas.Alert.Controllers
         //This edit is special. we never delete a edit a control limit. a new instance get created and the current one is marked as dead.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(l_controlLimits l_controlLimits)
+        public ActionResult Edit(l_controlLimits l_controlLimits, int? l_variants_group_id)
         {
-            //only a record wat isdead false can be edited
-            if (ModelState.IsValid && l_controlLimits.isdead == false)
+  
+            if (ModelState.IsValid)
             {
-                //copy the object, set the create user data and add it to the db
-                l_controlLimits newControlimit = l_controlLimits;
-                newControlimit.CreateDate = System.DateTime.Now;
-                newControlimit.Createuser = (int)Session["UserId"];
-                newControlimit.ChangeDate = System.DateTime.Now;
-                newControlimit.ChangeUser = (int)Session["UserId"];
-                newControlimit.isdead = false;
-                db.l_controlLimits.Add(newControlimit);
-                //get the old control limit set the change user and mark it dead 
-                l_controlLimits oldControlimit = db.l_controlLimits.Where(c => c.id == l_controlLimits.id).First();
-                oldControlimit.ChangeDate = System.DateTime.Now;
-                oldControlimit.ChangeUser = (int)Session["UserId"];
-                oldControlimit.isdead = true;
-                db.Entry(oldControlimit).State = EntityState.Modified;
+                //in case the l_variants_id is set get all the records that should be changed.
+                if (l_variants_group_id.HasValue)
+                {
+                    List<l_controlLimits> list = db.l_controlLimits.Where(l => l.l_variants_id == l_variants_group_id && l.isdead == false).ToList();
+                    foreach(l_controlLimits controllimit in list)
+                    {
+                        //copy the object, set the create user data and add it to the db
+                        l_controlLimits newControlimit = controllimit;
+                        newControlimit.CreateDate = System.DateTime.Now;
+                        newControlimit.Createuser = (int)Session["UserId"];
+                        newControlimit.ChangeDate = System.DateTime.Now;
+                        newControlimit.ChangeUser = (int)Session["UserId"];
+                        newControlimit.isdead = false;
+                        //copy values
+                        newControlimit.UpperLimit = l_controlLimits.UpperLimit;
+                        newControlimit.LowerLimit = l_controlLimits.LowerLimit;
+                        newControlimit.Comment = l_controlLimits.Comment;
+                        //add
+                        db.l_controlLimits.Add(newControlimit);
+                        //get the old control limit set the change user and mark it dead 
+                        l_controlLimits oldControlimit = db.l_controlLimits.Where(c => c.id == controllimit.id).First();
+                        oldControlimit.ChangeDate = System.DateTime.Now;
+                        oldControlimit.ChangeUser = (int)Session["UserId"];
+                        oldControlimit.isdead = true;
+                        db.Entry(oldControlimit).State = EntityState.Modified;
+                    }
+                }
+                else //just add the one new record
+                {
+                    //copy the object, set the create user data and add it to the db
+                    l_controlLimits newControlimit = l_controlLimits;
+                    newControlimit.CreateDate = System.DateTime.Now;
+                    newControlimit.Createuser = (int)Session["UserId"];
+                    newControlimit.ChangeDate = System.DateTime.Now;
+                    newControlimit.ChangeUser = (int)Session["UserId"];
+                    newControlimit.isdead = false;
+                    //add
+                    db.l_controlLimits.Add(newControlimit);
+                    //get the old control limit set the change user and mark it dead 
+                    l_controlLimits oldControlimit = db.l_controlLimits.Where(c => c.id == l_controlLimits.id).First();
+                    oldControlimit.ChangeDate = System.DateTime.Now;
+                    oldControlimit.ChangeUser = (int)Session["UserId"];
+                    oldControlimit.isdead = true;
+                    db.Entry(oldControlimit).State = EntityState.Modified;
+                }
                 //save 
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.c_trigger_id = new SelectList(db.c_triggers, "id", "discription", l_controlLimits.c_trigger_id);
+            ViewBag.c_trigger_id = new SelectList(db.c_triggers, "id", "alertType", l_controlLimits.c_trigger_id);
+            ViewBag.l_variants_id = new SelectList(db.l_variants.Where(l => l.c_trigger_id == l_controlLimits.c_trigger_id), "id", "variantGroup", l_controlLimits.l_variants_id);
             return View(l_controlLimits);
         }
 
