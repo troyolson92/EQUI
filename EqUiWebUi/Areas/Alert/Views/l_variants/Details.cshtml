@@ -1,0 +1,59 @@
+﻿@model EqUiWebUi.Areas.Alert.Models.l_variants
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>l_variants</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.variantGroup)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.variantGroup)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Comment)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Comment)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreateDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreateDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.c_triggers.discription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.c_triggers.discription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.L_users.username)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.L_users.username)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -65,13 +65,13 @@ else
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.sqlStqStatement, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.sqlStatement, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
                         <div class="panel" style="border:ridge">
-                            <textarea id="sqlStqStatement" name="sqlStqStatement">@Model.sqlStqStatement</textarea>
+                            <textarea id="sqlStqStatement" name="sqlStqStatement">@Model.sqlStatement</textarea>
                         </div>
-                        @Html.ValidationMessageFor(model => model.sqlStqStatement, "", new { @class = "text-danger" })
-                        @Html.HelpTextFor(model => model.sqlStqStatement)
+                        @Html.ValidationMessageFor(model => model.sqlStatement, "", new { @class = "text-danger" })
+                        @Html.HelpTextFor(model => model.sqlStatement)
                         <div class="col-md-10">
                             <button id="checkstatement" type="button" class="btn-sm btn-primary">Check statement</button>
                         </div>

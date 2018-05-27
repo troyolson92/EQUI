@@ -19,13 +19,13 @@ namespace EqUiWebUi.Areas.Alert.Models
         {
             this.h_alert = new HashSet<h_alert>();
             this.l_controlLimits = new HashSet<l_controlLimits>();
+            this.l_variants = new HashSet<l_variants>();
         }
     
         public int id { get; set; }
         public bool enabled { get; set; }
         public string discription { get; set; }
         public int RunAgainst { get; set; }
-        public string sqlStqStatement { get; set; }
         public Nullable<int> smsSystem { get; set; }
         public int initial_state { get; set; }
         public string alertType { get; set; }
@@ -35,6 +35,9 @@ namespace EqUiWebUi.Areas.Alert.Models
         public string Cron { get; set; }
         public bool isDowntime { get; set; }
         public bool isInReport { get; set; }
+        public string sqlStatement { get; set; }
+        public bool hasControlLimits { get; set; }
+        public string controllimitSqlStatement { get; set; }
     
         public virtual c_smsSystem c_smsSystem { get; set; }
         public virtual c_state c_state { get; set; }
@@ -42,5 +45,7 @@ namespace EqUiWebUi.Areas.Alert.Models
         public virtual ICollection<h_alert> h_alert { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<l_controlLimits> l_controlLimits { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<l_variants> l_variants { get; set; }
     }
 }

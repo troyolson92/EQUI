@@ -52,7 +52,7 @@
           <Property Name="enabled" Type="bit" Nullable="false" />
           <Property Name="discription" Type="varchar(max)" Nullable="false" />
           <Property Name="RunAgainst" Type="int" Nullable="false" />
-          <Property Name="sqlStqStatement" Type="varchar(max)" />
+          <Property Name="sqlStatement" Type="varchar(max)" />
           <Property Name="smsSystem" Type="int" />
           <Property Name="initial_state" Type="int" Nullable="false" />
           <Property Name="Cron" Type="varchar" MaxLength="50" Nullable="false" />
@@ -62,6 +62,8 @@
           <Property Name="enableSMS" Type="bit" Nullable="false" />
           <Property Name="isDowntime" Type="bit" Nullable="false" />
           <Property Name="isInReport" Type="bit" Nullable="false" />
+          <Property Name="hasControlLimits" Type="bit" Nullable="false" />
+          <Property Name="controllimitSqlStatement" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="h_alert">
           <Key>
@@ -101,7 +103,18 @@
           <Property Name="LowerLimit" Type="float" />
           <Property Name="Comment" Type="varchar(max)" />
           <Property Name="alarmobject" Type="varchar(max)" Nullable="false" />
-          <Property Name="variantGroup" Type="varchar" MaxLength="50" />
+          <Property Name="l_variants_id" Type="int" />
+        </EntityType>
+        <EntityType Name="l_variants">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="variantGroup" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="c_trigger_id" Type="int" Nullable="false" />
+          <Property Name="Comment" Type="varchar(max)" />
+          <Property Name="CreateUser" Type="int" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="c_controller">
           <Key>
@@ -361,6 +374,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_l_controlLimits_l_variants">
+          <End Role="l_variants" Type="Self.l_variants" Multiplicity="0..1" />
+          <End Role="l_controlLimits" Type="Self.l_controlLimits" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="l_variants">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="l_controlLimits">
+              <PropertyRef Name="l_variants_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_l_variants_c_triggers">
+          <End Role="c_triggers" Type="Self.c_triggers" Multiplicity="1" />
+          <End Role="l_variants" Type="Self.l_variants" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_triggers">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="l_variants">
+              <PropertyRef Name="c_trigger_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_l_variants_L_users">
+          <End Role="L_users" Type="Self.L_users" Multiplicity="1" />
+          <End Role="l_variants" Type="Self.l_variants" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="L_users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="l_variants">
+              <PropertyRef Name="CreateUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_SBCUrefernce_c_controller">
           <End Role="c_controller" Type="Self.c_controller" Multiplicity="0..1" />
           <End Role="SBCUrefernce" Type="Self.SBCUrefernce" Multiplicity="*" />
@@ -381,6 +430,7 @@
           <EntitySet Name="c_triggers" EntityType="Self.c_triggers" Schema="Alerts" store:Type="Tables" />
           <EntitySet Name="h_alert" EntityType="Self.h_alert" Schema="Alerts" store:Type="Tables" />
           <EntitySet Name="l_controlLimits" EntityType="Self.l_controlLimits" Schema="Alerts" store:Type="Tables" />
+          <EntitySet Name="l_variants" EntityType="Self.l_variants" Schema="Alerts" store:Type="Tables" />
           <EntitySet Name="c_controller" EntityType="Self.c_controller" Schema="C3G" store:Type="Tables" />
           <EntitySet Name="GunCylinderefernce" EntityType="Self.GunCylinderefernce" Schema="C3G" store:Type="Tables" />
           <EntitySet Name="SBCUrefernce" EntityType="Self.SBCUrefernce" Schema="C3G" store:Type="Tables" />
@@ -436,6 +486,18 @@
           <AssociationSet Name="FK_l_controlLimits_L_users1" Association="Self.FK_l_controlLimits_L_users1">
             <End Role="L_users" EntitySet="L_users" />
             <End Role="l_controlLimits" EntitySet="l_controlLimits" />
+          </AssociationSet>
+          <AssociationSet Name="FK_l_controlLimits_l_variants" Association="Self.FK_l_controlLimits_l_variants">
+            <End Role="l_variants" EntitySet="l_variants" />
+            <End Role="l_controlLimits" EntitySet="l_controlLimits" />
+          </AssociationSet>
+          <AssociationSet Name="FK_l_variants_c_triggers" Association="Self.FK_l_variants_c_triggers">
+            <End Role="c_triggers" EntitySet="c_triggers" />
+            <End Role="l_variants" EntitySet="l_variants" />
+          </AssociationSet>
+          <AssociationSet Name="FK_l_variants_L_users" Association="Self.FK_l_variants_L_users">
+            <End Role="L_users" EntitySet="L_users" />
+            <End Role="l_variants" EntitySet="l_variants" />
           </AssociationSet>
           <AssociationSet Name="FK_SBCUrefernce_c_controller" Association="Self.FK_SBCUrefernce_c_controller">
             <End Role="c_controller" EntitySet="c_controller" />
@@ -507,8 +569,7 @@
           <NavigationProperty Name="Changed" Relationship="Self.FK_h_alert_L_users" FromRole="L_users" ToRole="h_alert" />
           <NavigationProperty Name="Close" Relationship="Self.FK_h_alert_L_users1" FromRole="L_users" ToRole="h_alert" />
           <NavigationProperty Name="AcceptUser" Relationship="Self.FK_h_alert_L_users2" FromRole="L_users" ToRole="h_alert" />
-          <NavigationProperty Name="l_controlLimits" Relationship="AlertModel.FK_l_controlLimits_L_users" FromRole="L_users" ToRole="l_controlLimits" />
-          <NavigationProperty Name="l_controlLimits1" Relationship="AlertModel.FK_l_controlLimits_L_users1" FromRole="L_users" ToRole="l_controlLimits" />
+          <NavigationProperty Name="l_variants" Relationship="AlertModel.FK_l_variants_L_users" FromRole="L_users" ToRole="l_variants" />
         </EntityType>
         <Association Name="FK_h_alert_c_state">
           <End Role="c_state" Type="Self.c_state" Multiplicity="1" />
@@ -626,7 +687,20 @@
             <End Role="L_users" EntitySet="L_users" />
             <End Role="l_controlLimits" EntitySet="l_controlLimits" />
           </AssociationSet>
-        </EntityContainer>
+          <EntitySet Name="l_variants" EntityType="AlertModel.l_variants" />
+          <AssociationSet Name="FK_l_variants_c_triggers" Association="AlertModel.FK_l_variants_c_triggers">
+            <End Role="c_triggers" EntitySet="c_triggers" />
+            <End Role="l_variants" EntitySet="l_variants" />
+          </AssociationSet>
+          <AssociationSet Name="FK_l_controlLimits_l_variants" Association="AlertModel.FK_l_controlLimits_l_variants">
+            <End Role="l_variants" EntitySet="l_variants" />
+            <End Role="l_controlLimits" EntitySet="l_controlLimits" />
+          </AssociationSet>
+          <AssociationSet Name="FK_l_variants_L_users" Association="AlertModel.FK_l_variants_L_users">
+            <End Role="L_users" EntitySet="L_users" />
+            <End Role="l_variants" EntitySet="l_variants" />
+          </AssociationSet>
+          </EntityContainer>
         <EntityType Name="c_triggers">
           <Key>
             <PropertyRef Name="id" />
@@ -635,7 +709,6 @@
           <Property Name="enabled" Type="Boolean" Nullable="false" />
           <Property Name="discription" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="RunAgainst" Type="Int32" Nullable="false" />
-          <Property Name="sqlStqStatement" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="smsSystem" Type="Int32" />
           <Property Name="initial_state" Type="Int32" Nullable="false" />
           <Property Name="alertType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -649,6 +722,10 @@
           <Property Name="isDowntime" Type="Boolean" Nullable="false" />
           <Property Name="isInReport" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="l_controlLimits" Relationship="AlertModel.FK_l_controlLimits_c_triggers" FromRole="c_triggers" ToRole="l_controlLimits" />
+          <Property Name="sqlStatement" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="hasControlLimits" Type="Boolean" Nullable="false" />
+          <Property Name="controllimitSqlStatement" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="l_variants" Relationship="AlertModel.FK_l_variants_c_triggers" FromRole="c_triggers" ToRole="l_variants" />
         </EntityType>
         <Association Name="FK_c_triggers_c_smsSystem">
           <End Type="AlertModel.c_smsSystem" Role="c_smsSystem" Multiplicity="0..1" />
@@ -870,10 +947,11 @@
           <Property Name="LowerLimit" Type="Double" />
           <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="alarmobject" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="variantGroup" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="c_triggers" Relationship="AlertModel.FK_l_controlLimits_c_triggers" FromRole="l_controlLimits" ToRole="c_triggers" />
-          <NavigationProperty Name="L_users" Relationship="AlertModel.FK_l_controlLimits_L_users" FromRole="l_controlLimits" ToRole="L_users" />
-          <NavigationProperty Name="L_users1" Relationship="AlertModel.FK_l_controlLimits_L_users1" FromRole="l_controlLimits" ToRole="L_users" />
+          <NavigationProperty Name="L_CreateUser" Relationship="AlertModel.FK_l_controlLimits_L_users" FromRole="l_controlLimits" ToRole="L_users" />
+          <NavigationProperty Name="L_ChangeUser" Relationship="AlertModel.FK_l_controlLimits_L_users1" FromRole="l_controlLimits" ToRole="L_users" />
+          <Property Name="l_variants_id" Type="Int32" />
+          <NavigationProperty Name="l_variants" Relationship="AlertModel.FK_l_controlLimits_l_variants" FromRole="l_controlLimits" ToRole="l_variants" />
         </EntityType>
         <Association Name="FK_l_controlLimits_c_triggers">
           <End Type="AlertModel.c_triggers" Role="c_triggers" Multiplicity="1" />
@@ -911,7 +989,57 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        <EntityType Name="l_variants">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="variantGroup" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="c_trigger_id" Type="Int32" Nullable="false" />
+          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CreateUser" Type="Int32" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="c_triggers" Relationship="AlertModel.FK_l_variants_c_triggers" FromRole="l_variants" ToRole="c_triggers" />
+          <NavigationProperty Name="l_controlLimits" Relationship="AlertModel.FK_l_controlLimits_l_variants" FromRole="l_variants" ToRole="l_controlLimits" />
+          <NavigationProperty Name="L_users" Relationship="AlertModel.FK_l_variants_L_users" FromRole="l_variants" ToRole="L_users" />
+        </EntityType>
+        <Association Name="FK_l_variants_c_triggers">
+          <End Type="AlertModel.c_triggers" Role="c_triggers" Multiplicity="1" />
+          <End Type="AlertModel.l_variants" Role="l_variants" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_triggers">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="l_variants">
+              <PropertyRef Name="c_trigger_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_l_controlLimits_l_variants">
+          <End Type="AlertModel.l_variants" Role="l_variants" Multiplicity="0..1" />
+          <End Type="AlertModel.l_controlLimits" Role="l_controlLimits" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="l_variants">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="l_controlLimits">
+              <PropertyRef Name="l_variants_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_l_variants_L_users">
+          <End Type="AlertModel.L_users" Role="L_users" Multiplicity="1" />
+          <End Type="AlertModel.l_variants" Role="l_variants" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="L_users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="l_variants">
+              <PropertyRef Name="CreateUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -974,6 +1102,9 @@
           <EntitySetMapping Name="c_triggers">
             <EntityTypeMapping TypeName="AlertModel.c_triggers">
               <MappingFragment StoreEntitySet="c_triggers">
+                <ScalarProperty Name="controllimitSqlStatement" ColumnName="controllimitSqlStatement" />
+                <ScalarProperty Name="hasControlLimits" ColumnName="hasControlLimits" />
+                <ScalarProperty Name="sqlStatement" ColumnName="sqlStatement" />
                 <ScalarProperty Name="isInReport" ColumnName="isInReport" />
                 <ScalarProperty Name="isDowntime" ColumnName="isDowntime" />
                 <ScalarProperty Name="Cron" ColumnName="Cron" />
@@ -983,7 +1114,6 @@
                 <ScalarProperty Name="alertType" ColumnName="alertType" />
                 <ScalarProperty Name="initial_state" ColumnName="initial_state" />
                 <ScalarProperty Name="smsSystem" ColumnName="smsSystem" />
-                <ScalarProperty Name="sqlStqStatement" ColumnName="sqlStqStatement" />
                 <ScalarProperty Name="RunAgainst" ColumnName="RunAgainst" />
                 <ScalarProperty Name="discription" ColumnName="discription" />
                 <ScalarProperty Name="enabled" ColumnName="enabled" />
@@ -1113,7 +1243,7 @@
           <EntitySetMapping Name="l_controlLimits">
             <EntityTypeMapping TypeName="AlertModel.l_controlLimits">
               <MappingFragment StoreEntitySet="l_controlLimits">
-                <ScalarProperty Name="variantGroup" ColumnName="variantGroup" />
+                <ScalarProperty Name="l_variants_id" ColumnName="l_variants_id" />
                 <ScalarProperty Name="alarmobject" ColumnName="alarmobject" />
                 <ScalarProperty Name="Comment" ColumnName="Comment" />
                 <ScalarProperty Name="LowerLimit" ColumnName="LowerLimit" />
@@ -1124,6 +1254,18 @@
                 <ScalarProperty Name="Createuser" ColumnName="Createuser" />
                 <ScalarProperty Name="isdead" ColumnName="isdead" />
                 <ScalarProperty Name="c_trigger_id" ColumnName="c_trigger_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="l_variants">
+            <EntityTypeMapping TypeName="AlertModel.l_variants">
+              <MappingFragment StoreEntitySet="l_variants">
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="c_trigger_id" ColumnName="c_trigger_id" />
+                <ScalarProperty Name="variantGroup" ColumnName="variantGroup" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
