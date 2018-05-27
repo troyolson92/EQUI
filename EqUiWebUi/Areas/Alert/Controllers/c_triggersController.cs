@@ -59,7 +59,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateInput(false)] //to alow posting of raw html data
-        public async Task<ActionResult> Edit([Bind(Include = "id,enabled,discription,sqlStqStatement,smsSystem,smsActivePloeg,initial_state,Cron,alertType,AutoSetStateTechComp,smsOnRetrigger,RunAgainstDatabase,enableSMS,isDowntime,isInReport")] c_triggers c_triggers)
+        public async Task<ActionResult> Edit(c_triggers c_triggers)
         {
             if (ModelState.IsValid)
             {

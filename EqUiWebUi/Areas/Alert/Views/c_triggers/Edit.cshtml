@@ -68,7 +68,7 @@ else
                     @Html.LabelFor(model => model.sqlStatement, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
                         <div class="panel" style="border:ridge">
-                            <textarea id="sqlStqStatement" name="sqlStqStatement">@Model.sqlStatement</textarea>
+                            <textarea id="sqlStatement" name="sqlStatement">@Model.sqlStatement</textarea>
                         </div>
                         @Html.ValidationMessageFor(model => model.sqlStatement, "", new { @class = "text-danger" })
                         @Html.HelpTextFor(model => model.sqlStatement)
@@ -177,7 +177,37 @@ else
             </div>
         </div>
 
+        <div class="panel panel-primary">
+            <div class="panel-heading">ControlLimits</div>
+            <div class="panel-body">
 
+                <div class="form-group">
+                    @Html.LabelFor(model => model.hasControlLimits, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <div class="checkbox">
+                            @Html.EditorFor(model => model.hasControlLimits)
+                            @Html.ValidationMessageFor(model => model.hasControlLimits, "", new { @class = "text-danger" })
+                            @Html.HelpTextFor(model => model.hasControlLimits)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.controllimitSqlStatement, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <div class="panel" style="border:ridge">
+                            <textarea id="controllimitSqlStatement" name="controllimitSqlStatement">@Model.controllimitSqlStatement</textarea>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.controllimitSqlStatement, "", new { @class = "text-danger" })
+                        @Html.HelpTextFor(model => model.controllimitSqlStatement)
+                        <div class="col-md-10">
+                            <button id="checkcontrollimitSqlStatement" type="button" class="btn-sm btn-primary">Check for missing control limits</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
         <div class="form-group">
             <div class="col-md-10">
                 <input type="submit" value="Save" class="btn btn-warning" />
@@ -211,7 +241,14 @@ else
 
     <script>
         //for code mirror editor
-        var sqlCodeMirror = CodeMirror.fromTextArea(document.getElementById("sqlStqStatement"), {
+        //sqlstatement
+        var sqlStatementCodeMirror = CodeMirror.fromTextArea(document.getElementById("sqlStatement"), {
+            lineNumbers: true,
+            mode: "sql",
+            theme: "neat"
+        });
+        //controllimitSqlStatement
+        var controllimitSqlStatementCodeMirror = CodeMirror.fromTextArea(document.getElementById("controllimitSqlStatement"), {
             lineNumbers: true,
             mode: "sql",
             theme: "neat"
@@ -225,16 +262,23 @@ else
         });
         //for check statement
             //on check statementClick
-            $('#checkstatement').click(function () {
-                var urlDynamicWebgrid = '@Url.Action("_dynamicWebgridRunQueryAgainstDB", "Dynamic", new { area = "" })?qry=' + encodeURIComponent(sqlCodeMirror.getValue()) +
+        $('#checkstatement').click(function () {
+                var urlDynamicWebgrid = '@Url.Action("_dynamicWebgridRunQueryAgainstDB", "Dynamic", new { area = "" })?qry=' + encodeURIComponent(sqlStatementCodeMirror.getValue()) +
                     '&db=' + $('#RunAgainstDatabase').val();
                     $('#checkstatementModal').removeData('bs.modal');
                     $('#checkstatementModal').html('<div class="modal-content">Loading....</div>');
                     $('#checkstatementModal').modal({ remote: urlDynamicWebgrid });
-            });
-            //clear on close
-            $('#checkstatementModal').on('hidden.bs.modal', function (e) {
-                $('#checkstatementModal').html('<div class="modal-content">No content</div>');
-            });
+        });
+        $('#checkcontrollimitSqlStatement').click(function () {
+                var urlDynamicWebgrid = '@Url.Action("_dynamicWebgridRunQueryAgainstDB", "Dynamic", new { area = "" })?qry=' + encodeURIComponent(controllimitSqlStatementCodeMirror.getValue()) +
+                    '&db=' + $('#RunAgainstDatabase').val();
+                    $('#checkstatementModal').removeData('bs.modal');
+                    $('#checkstatementModal').html('<div class="modal-content">Loading....</div>');
+                    $('#checkstatementModal').modal({ remote: urlDynamicWebgrid });
+        });
+       //clear on close
+        $('#checkstatementModal').on('hidden.bs.modal', function (e) {
+            $('#checkstatementModal').html('<div class="modal-content">No content</div>');
+        });
     </script>
 }
