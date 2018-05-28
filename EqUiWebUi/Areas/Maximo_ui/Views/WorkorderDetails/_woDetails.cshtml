@@ -29,11 +29,20 @@
     </div>
 </div>
 
+
+<div class="panel panel-default shown">
+    <div class="panel-heading">
+        <h6>
+            ReportedBy:
+            <strong> @ViewBag.REPORTEDBY</strong>
+        </h6>
+    </div>
+</div>
+
 <div class="panel panel-default @(Model.Data.Count() != 0 ? "shown":"hidden")">
     <div class="panel-heading">
         <h6>Labor</h6>
     </div>
-
     <div class="panel-body">
         @{
             WebGrid grid = new WebGrid(null, rowsPerPage: @Model.PageSize);

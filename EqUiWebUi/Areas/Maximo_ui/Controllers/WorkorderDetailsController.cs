@@ -107,6 +107,7 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
             //   DataTable WORKLOG = maximoComm.oracle_runQuery(cmdWorkLog, RealtimeConn:RealtimeConn);
 
             ViewBag.DESCRIPTION = WORKORDER.Rows[0].Field<string>("DESCRIPTION");
+            ViewBag.REPORTEDBY = WORKORDER.Rows[0].Field<string>("REPORTEDBY");
             if (FAILUREREMARKdesc.Rows.Count != 0)
             {
                 ViewBag.REMARKDESC = FAILUREREMARKdesc.Rows[0].Field<string>("DESCRIPTION");

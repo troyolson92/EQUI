@@ -59,19 +59,22 @@ namespace EqUiWebUi
             }
         }
 
+
+        //tiplife tool
         //returns a Css style based on value
-        public static string getRowStyleByWearValue(double? pWear, int? nDress, double? nRparts, string NoChangeDetected)
+        public static string getRowStyleByWearValue(double? pWear, int? nDress, double? nRparts, string Status)
         {
-            if (NoChangeDetected == "X" || nRparts.GetValueOrDefault(-1) < 0) //data error
-            {
-                return "PulseBlueRepeat";
-            }
-            else if (pWear.GetValueOrDefault(0) > 98 || nDress.GetValueOrDefault(0) > 210 || nRparts.GetValueOrDefault(0) < 2) //severe tiplife
+
+            if (pWear.GetValueOrDefault(0) > 98 || nDress.GetValueOrDefault(0) > 210 || nRparts.GetValueOrDefault(0) < 5) //severe tiplife
             {
                 return "TableTipwearValueDanger";
-            } else if(pWear.GetValueOrDefault(0) > 90 || nDress.GetValueOrDefault(0) > 200 || nRparts.GetValueOrDefault(0) < 10) //mild tiplife
+            } else if(pWear.GetValueOrDefault(0) > 90 || nDress.GetValueOrDefault(0) > 200 || nRparts.GetValueOrDefault(0) < 20) //mild tiplife
             {
                 return "TableTipwearValueHigh";
+            }
+            else if (Status != "") //data error
+            {
+                return "PulseBlueRepeat";
             }
             else
             {

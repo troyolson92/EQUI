@@ -100,7 +100,6 @@ warning 6002: The table/view 'GADATA.NGAC.TipMonitor' does not have a primary ke
         <EntityType Name="TipMonitor">
           <Key>
             <PropertyRef Name="id" />
-            <PropertyRef Name="NoChangeDetected" />
           </Key>
           <Property Name="Robot" Type="varchar" MaxLength="30" />
           <Property Name="Date Time" Type="datetime" />
@@ -116,7 +115,7 @@ warning 6002: The table/view 'GADATA.NGAC.TipMonitor' does not have a primary ke
           <Property Name="id" Type="int" Nullable="false" />
           <Property Name="LocationTree" Type="varchar(max)" />
           <Property Name="MagicFiXedWear" Type="float" />
-          <Property Name="NoChangeDetected" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="Status" Type="varchar" MaxLength="4" Nullable="false" />
           <Property Name="RobotWear" Type="float" />
         </EntityType>
         <!--Errors Found During Generation:
@@ -326,7 +325,7 @@ warning 6002: The table/view 'GADATA.NGAC.TipwearLast' does not have a primary k
     [TipMonitor].[id] AS [id], 
     [TipMonitor].[LocationTree] AS [LocationTree], 
     [TipMonitor].[MagicFiXedWear] AS [MagicFiXedWear], 
-    [TipMonitor].[NoChangeDetected] AS [NoChangeDetected], 
+    [TipMonitor].[Status] AS [Status], 
     [TipMonitor].[RobotWear] AS [RobotWear]
     FROM [NGAC].[TipMonitor] AS [TipMonitor]</DefiningQuery>
           </EntitySet>
@@ -501,7 +500,6 @@ warning 6002: The table/view 'GADATA.NGAC.TipwearLast' does not have a primary k
         <EntityType Name="TipMonitor">
           <Key>
             <PropertyRef Name="id" />
-            <PropertyRef Name="NoChangeDetected" />
           </Key>
           <Property Name="Robot" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="Date_Time" Type="DateTime" Precision="3" />
@@ -517,8 +515,8 @@ warning 6002: The table/view 'GADATA.NGAC.TipwearLast' does not have a primary k
           <Property Name="id" Type="Int32" Nullable="false" />
           <Property Name="LocationTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="MagicFiXedWear" Type="Double" />
-          <Property Name="NoChangeDetected" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="RobotWear" Type="Double" />
+          <Property Name="Status" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="TipwearBeforeChange">
           <Key>
@@ -725,8 +723,8 @@ warning 6002: The table/view 'GADATA.NGAC.TipwearLast' does not have a primary k
           <EntitySetMapping Name="TipMonitor">
             <EntityTypeMapping TypeName="GADATAModelTiplife.TipMonitor">
               <MappingFragment StoreEntitySet="TipMonitor">
+                <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="RobotWear" ColumnName="RobotWear" />
-                <ScalarProperty Name="NoChangeDetected" ColumnName="NoChangeDetected" />
                 <ScalarProperty Name="Robot" ColumnName="Robot" />
                 <ScalarProperty Name="Date_Time" ColumnName="Date Time" />
                 <ScalarProperty Name="nDress" ColumnName="nDress" />

@@ -10,17 +10,16 @@
     columns.Add(c => c.nRspots).Titled("#R Spots").Css("hidden-sm hidden-xs");
     columns.Add(c => c.nRcars).Titled("#R Stukken").Css("hidden-sm hidden-xs");
     columns.Add(c => c.TipAge_h_).Titled("leeftijd (h)");
-//columns.Add(c => c.NoChangeDetected).Titled("NCD").Css("hidden-sm hidden-xs");
     columns.Add(c => c.RobotWear).Titled("Wear(mm)").Css("hidden-sm hidden-xs");
     columns.Add(c => c.Time_DressCycleTime).Titled("Ct (s)").Css("hidden-sm hidden-xs");
     columns.Add(c => c.LocationTree).Filterable(true).Css("hidden"); //used for filtering
                                                                      //RenderStatusIcon
 columns.Add()
-                         .Titled("Tip")
+                         .Titled("Status")
                          .Encoded(false)
                          .Filterable(false)
                          .Sortable(false)
-                         .RenderedAs(c => MyFilters.TipMonitorIcon(c.NoChangeDetected, c.RobotWear));
+                         .RenderedAs(c => MyFilters.TipMonitorIcon(c.Status, c.RobotWear));
 //launch sbcu tool
 columns.Add()
                          .Encoded(false)
@@ -30,5 +29,5 @@ columns.Add()
 }).Sortable().Pageable(pager =>
 {
 pager.RowsPerPage = 20;
-}).Empty("No data found").Css("table-hover").RowCss(row => MyRowStyling.getRowStyleByWearValue(row.pWear, row.nDress, row.nRcars, row.NoChangeDetected))
+}).Empty("No data found").Css("table-hover").RowCss(row => MyRowStyling.getRowStyleByWearValue(row.pWear, row.nDress, row.nRcars, row.Status))
 

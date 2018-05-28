@@ -6,6 +6,12 @@
     columns.Add(c => c.nRcars).Titled("#R Stukken");
     columns.Add(c => c.pWear).Titled("%wear");
     columns.Add(c => c.nDress).Titled("#gefreest");
+    columns.Add()
+                         .Titled("Status")
+                         .Encoded(false)
+                         .Filterable(false)
+                         .Sortable(false)
+                         .RenderedAs(c => MyFilters.TipMonitorIcon(c.Status, c.RobotWear));
 }).Empty("Did not find anything").Css("table-hover")
 
 @*subscrible this table to events*@
