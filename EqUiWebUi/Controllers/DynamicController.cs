@@ -64,11 +64,6 @@ namespace EqUiWebUi.Controllers
             ViewBag.Columns = webGridHelper.getDatatabelCollumns(dt);
             //
             List<dynamic> data = webGridHelper.datatableToDynamic(dt);
-
-
-
-
-
             //
             DefaultModel model = new WebGridHelpers.DefaultModel();
             model.PageSize = 30;
@@ -83,7 +78,7 @@ namespace EqUiWebUi.Controllers
             return View(model);
         }
 
-        //return partion based on a query run against a database.
+        //return partial based on a query run against a database.
         [HttpGet]
         public ActionResult _dynamicWebgridRunQueryAgainstDB(string qry, int db = 0)
         {

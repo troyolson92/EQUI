@@ -33,7 +33,8 @@ columns.Add(c => c)
                   .Filterable(false)
                   .Sortable(false)
                   //gefoefel om de tool id er uit te halen! Dit kan falen als er geen 'gun:' in de omschrijving zit dus is ROMMEL code
-                  .RenderedAs(c => MyEquiToolkit.SbcuTool(c.location, c.info.Substring(c.info.IndexOf("gun:"), 5).Replace("gun:", "")));
+                  //in de laatste versie is het niet meer gun:x maar gunx (het alarmobject) vandaar de replace
+                  .RenderedAs(c => MyEquiToolkit.SbcuTool(c.location, c.info.Replace(":","").Substring(c.info.IndexOf("gun"), 5).Replace("gun", "")));
 
 //add filterbutton
 columns.Add(c => c)

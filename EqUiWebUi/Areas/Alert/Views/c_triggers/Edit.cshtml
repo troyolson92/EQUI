@@ -206,6 +206,20 @@ else
                     </div>
                 </div>
 
+                <div class="form-group">
+                    @Html.LabelFor(model => model.controlChartSqlStatement, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <div class="panel" style="border:ridge">
+                            <textarea id="controlChartSqlStatement" name="controlChartSqlStatement">@Model.controlChartSqlStatement</textarea>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.controlChartSqlStatement, "", new { @class = "text-danger" })
+                        @Html.HelpTextFor(model => model.controlChartSqlStatement)
+                        <div class="col-md-10">
+                            <button id="checkcontrolChartSqlStatement" type="button" class="btn-sm btn-primary">Check controlChart Statement</button>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
         <div class="form-group">
@@ -253,6 +267,12 @@ else
             mode: "sql",
             theme: "neat"
         });
+        //controlChartSqlStatement
+        var controlChartSqlStatementCodeMirror = CodeMirror.fromTextArea(document.getElementById("controlChartSqlStatement"), {
+            lineNumbers: true,
+            mode: "sql",
+            theme: "neat"
+        });
         //for jcron editor
         $('#jCron').cron({
             initial: "@(Model.Cron == null ? "0 * * * *" : Model.Cron)",
@@ -261,7 +281,7 @@ else
             }
         });
         //for check statement
-            //on check statementClick
+        //on check statementClick
         $('#checkstatement').click(function () {
                 var urlDynamicWebgrid = '@Url.Action("_dynamicWebgridRunQueryAgainstDB", "Dynamic", new { area = "" })?qry=' + encodeURIComponent(sqlStatementCodeMirror.getValue()) +
                     '&db=' + $('#RunAgainstDatabase').val();

@@ -38,6 +38,8 @@ namespace EqUiWebUi.Areas.Alert.Models
         public string sqlStatement { get; set; }
         public bool hasControlLimits { get; set; }
         public string controllimitSqlStatement { get; set; }
+        public string controlChartSqlStatement { get; set; }
+        public Nullable<int> Animation { get; set; }
     
         public virtual c_smsSystem c_smsSystem { get; set; }
         public virtual c_state c_state { get; set; }

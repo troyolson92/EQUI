@@ -108,25 +108,32 @@
 }
 
 @*helper to create info icon for tipmonitor*@
-@helper TipMonitorIcon(string NoChangeDetected, double? RobotWear)
+@helper TipMonitorIcon(string Status, double? RobotWear)
     {
         string icon = "";
         string linkText = "";
         string tooltip = "";
 
-        //alert but wait to change until more than 1 mm wear
-        if (NoChangeDetected == "X" && RobotWear < 1)
+        //no tip change deteced alert but wait to change until more than 1 mm wear
+        if (Status == "NTCD" && RobotWear < 1)
         {
             icon = "glyphicon glyphicon-exclamation-sign";
-            linkText = "Wait";
+            linkText = "Wait for rechange";
             tooltip = "No change deteced but wait to rechange electrode!";
         }
-        //alert and can be changed
-        else if (NoChangeDetected == "X")
+        //no tip change deteced alert and can be changed
+        else if (Status == "NTCD")
         {
             icon = "glyphicon glyphicon-retweet";
             linkText = "Rechange";
             tooltip = "No change deteced you can now try to change the electrode again";
+        }
+        //
+        else if (Status == "NWIC")
+        {
+            icon = "glyphicon glyphicon-thumbs-down";
+            linkText = "No wear in calc";
+            tooltip = "Tips are changed to fast I can not calculate the remaining parts";
         }
         //all is good.
         else

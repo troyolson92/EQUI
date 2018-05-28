@@ -98,14 +98,16 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
         public ActionResult _TipsToChange(string locationFilter, int minWear = 0, int minParts = 0, int maxDress = 1000)
         {
             GADATAEntitiesTiplife gADATAEntities = new GADATAEntitiesTiplife();
+            string locationroot = Session["LocationRoot"].ToString();
             IEnumerable<TipMonitor> data = from tipMonitor in DataBuffer.Tipstatus
                                           where
                                           (tipMonitor.pWear > minWear
                                            || tipMonitor.nRcars.GetValueOrDefault(1000) < minParts //if no Rcars value available ignore! 
                                            || tipMonitor.nDress > maxDress
-                                           || tipMonitor.NoChangeDetected == "X"
+                                           || tipMonitor.Status == "NTCD"
                                           )
-                                          && tipMonitor.LocationTree.Contains(locationFilter)
+                                          && tipMonitor.LocationTree.Contains(locationFilter) //apply dropdown filter
+                                          && tipMonitor.LocationTree.Contains(locationroot) //apply user filter
                                           orderby tipMonitor.nRcars ascending
                                           select tipMonitor;
             log.Info("Plantipchange for: " + locationFilter + " resultCount: " + data.Count());
@@ -116,14 +118,16 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
         public ActionResult _TipsChanged(string locationFilter, int minWear = 0, int minParts = 0, int maxDress = 1000)
         {
             GADATAEntitiesTiplife gADATAEntities = new GADATAEntitiesTiplife();
+            string locationroot = Session["LocationRoot"].ToString();
             IEnumerable<TipMonitor> data = from tipMonitor in DataBuffer.Tipstatus
                                            where
                                            (tipMonitor.pWear > minWear
                                             || tipMonitor.nRcars.GetValueOrDefault(1000) < minParts //if no Rcars value available ignore! 
                                             || tipMonitor.nDress > maxDress
-                                            || tipMonitor.NoChangeDetected == "X"
+                                            || tipMonitor.Status == "NTCD"
                                            )
-                                           && tipMonitor.LocationTree.Contains(locationFilter)
+                                          && tipMonitor.LocationTree.Contains(locationFilter) //apply dropdown filter
+                                          && tipMonitor.LocationTree.Contains(locationroot) //apply user filter
                                            orderby tipMonitor.nRcars ascending
                                            select tipMonitor;
             return PartialView(data);
