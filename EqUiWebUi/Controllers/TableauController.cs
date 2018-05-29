@@ -5,11 +5,13 @@ using System.Data;
 using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
+using EqUiWebUi.Areas.user_management.Models;
 
 namespace EqUiWebUi.Controllers
 {
     public class TableauController : Controller
     {
+        private GADATAEntitiesUserManagement db = new GADATAEntitiesUserManagement();
         // GET: Tableau
         public ActionResult Index()
         {
@@ -22,9 +24,9 @@ namespace EqUiWebUi.Controllers
         {
             ViewBag.workbook = workbook;
             ViewBag.sheet = sheet;
-            ViewBag.AssetPNG = GetUserAssetPNG();
             ViewBag.Weeknum = CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(System.DateTime.Now, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
             ViewBag.Weekday = (int)System.DateTime.Now.DayOfWeek;
+            ViewBag.LocationTreeFilter = GetUsersAreaname();
             return View();
         }
 
@@ -44,35 +46,20 @@ namespace EqUiWebUi.Controllers
             return View();
         }
 
-        //handles getting the user filter settings for tableu bassed on client session
-        //This should be reassest... you should be able to just pass the session location root to tableau. 
-        //This is an unneeded configuration part.
-        private string GetUserAssetPNG()
+
+        //get the users Areaname based on the location root
+        private string GetUsersAreaname()
         {
-            if (Session["LocationRoot"].ToString() != "")
+            string LocationRoot = Session["LocationRoot"].ToString();
+            if (LocationRoot != "")
             {
-                if (Session["LocationRoot"].ToString().Contains("VCG -> A -> A GA1.0 -> A LIJN 33"))
-                {
-                    return "GF_FloorAssetLevel";
-                }
-                else if (Session["LocationRoot"].ToString().Contains("VCG -> A -> A GA1.0 -> A LIJN 35"))
-                {
-                    return "GF_SidesAssetLevel";
-                }
-                else if (Session["LocationRoot"].ToString().Contains("VCG -> A -> A GA4.0"))
-                {
-                    return "GF_PreAssAssetLevel";
-                }
-                else
-                {
-                    return "";
-                }
+                AreaFilters areaFilters = db.AreaFilters.Where(l => l.LocationTreeFilter1.StartsWith(LocationRoot)).First();
+                return areaFilters.Area;
             }
             else
             {
                 return "";
             }
         }
-
     }
 }

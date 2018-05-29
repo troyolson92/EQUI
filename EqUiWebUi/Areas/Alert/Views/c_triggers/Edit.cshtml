@@ -73,7 +73,8 @@ else
                         @Html.ValidationMessageFor(model => model.sqlStatement, "", new { @class = "text-danger" })
                         @Html.HelpTextFor(model => model.sqlStatement)
                         <div class="col-md-10">
-                            <button id="checkstatement" type="button" class="btn-sm btn-primary">Check statement</button>
+                            <button id="checkstatement" type="button" class="btn-sm btn-primary">Checkstatement</button>
+                            <button id="Runstatement" type="button" class="btn-sm btn-primary">Runstatement</button>
                         </div>
                     </div>
                 </div>
@@ -280,15 +281,31 @@ else
                 $('#Cron').val($(this).cron("value"));
             }
         });
+
         //for check statement
-        //on check statementClick
-        $('#checkstatement').click(function () {
+        //on Runstatement show the user the result from the alert sql statement
+        $('#Runstatement').click(function () {
                 var urlDynamicWebgrid = '@Url.Action("_dynamicWebgridRunQueryAgainstDB", "Dynamic", new { area = "" })?qry=' + encodeURIComponent(sqlStatementCodeMirror.getValue()) +
                     '&db=' + $('#RunAgainstDatabase').val();
                     $('#checkstatementModal').removeData('bs.modal');
                     $('#checkstatementModal').html('<div class="modal-content">Loading....</div>');
                     $('#checkstatementModal').modal({ remote: urlDynamicWebgrid });
         });
+        //on checkstatement show the user if all mandatory columns are there
+        var mandatorytriggerColumns = new Array();
+        mandatorytriggerColumns[0] = "timestamp";
+        mandatorytriggerColumns[1] = "item2";
+        mandatorytriggerColumns[2] = "item3";
+        $('#checkstatement').click(function () {
+            var urlDynamicWebgrid = '@Url.Action("_CheckStatement", "Dynamic", new { area = "" })?qry=' + encodeURIComponent(sqlStatementCodeMirror.getValue()) +
+                '&db=' + $('#RunAgainstDatabase').val() + '&mandatoryColumns=' + mandatorytriggerColumns; //this is not working !!!!!!
+                    $('#checkstatementModal').removeData('bs.modal');
+                    $('#checkstatementModal').html('<div class="modal-content">Loading....</div>');
+                    $('#checkstatementModal').modal({ remote: urlDynamicWebgrid });
+        });
+
+
+         //on Runstatement show the user the result from the alert sql statement
         $('#checkcontrollimitSqlStatement').click(function () {
                 var urlDynamicWebgrid = '@Url.Action("_dynamicWebgridRunQueryAgainstDB", "Dynamic", new { area = "" })?qry=' + encodeURIComponent(controllimitSqlStatementCodeMirror.getValue()) +
                     '&db=' + $('#RunAgainstDatabase').val();
@@ -296,6 +313,9 @@ else
                     $('#checkstatementModal').html('<div class="modal-content">Loading....</div>');
                     $('#checkstatementModal').modal({ remote: urlDynamicWebgrid });
         });
+
+
+
        //clear on close
         $('#checkstatementModal').on('hidden.bs.modal', function (e) {
             $('#checkstatementModal').html('<div class="modal-content">No content</div>');

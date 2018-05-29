@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using EQUICommunictionLib;
 using EqUiWebUi.Areas.Alert.Models;
+using System.Text;
 
 namespace EqUiWebUi.Controllers
 {
@@ -149,6 +150,66 @@ namespace EqUiWebUi.Controllers
             model.Data = data;
             //
             return View(model);
+        }
+
+        //runs an sql statement and check if it returns a certain collection of colums. (for alert trigger statement checks)
+        [HttpGet]
+        public ActionResult _CheckStatement(string qry, List<string> mandatoryColumns, int db = 0)
+        {
+            DataTable dt = new DataTable();
+
+            //run against database.
+            StoComm stoComm = new StoComm();
+            MaximoComm maximoComm = new MaximoComm();
+            GadataComm gadataComm = new GadataComm();
+            //run command against selected database.
+
+            switch (db)
+            {
+                case (int)SmsDatabases.GADATA:
+                    dt = gadataComm.RunQueryGadata(qry, enblExeptions: true);
+                    break;
+
+                case (int)SmsDatabases.STO:
+                    dt = stoComm.oracle_runQuery(qry); //exeptions enabled by default
+                    break;
+
+                case (int)SmsDatabases.MAXIMOrt:
+                    dt = maximoComm.Oracle_runQuery(qry, RealtimeConn: true, enblExeptions: true);
+                    break;
+
+                case (int)SmsDatabases.MAXIMOrep:
+                    dt = maximoComm.Oracle_runQuery(qry, RealtimeConn: false, enblExeptions: true);
+                    break;
+
+                default:
+                    throw new System.ArgumentException("Database not defined", "Alertengine");
+            }
+
+            StringBuilder sb = new StringBuilder();
+            foreach (string mandatoryColumn in mandatoryColumns)
+            {
+                if(dt.Columns.Contains(mandatoryColumn)) //OK
+                {
+                    sb.AppendLine("<hr />");
+                    sb.AppendLine("<div class='alert alert-success'>");
+                    sb.AppendLine("<strong>mandatoryColumn: " + mandatoryColumn + " OK</strong>");
+                    sb.AppendLine("<div>datatype" + dt.Columns[mandatoryColumn].DataType.Name.ToString() + "</div>");
+                    sb.AppendLine("</div>");
+                }
+                else //NOK
+                {
+                    sb.AppendLine("<hr />");
+                    sb.AppendLine("<div class='alert alert-danger'>");
+                    sb.AppendLine("<strong>mandatoryColumn: " + mandatoryColumn + " NOK</strong>");
+                    sb.AppendLine("<div>This column is missing!</div>");
+                    sb.AppendLine("</div>");
+                }
+            }
+
+            ViewBag.mandatoryColumnsResult = sb.ToString();
+
+            return PartialView();
         }
     }
 }

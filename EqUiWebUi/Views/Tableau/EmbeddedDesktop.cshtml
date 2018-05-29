@@ -27,12 +27,12 @@
                     $('.viz iframe').attr("scrolling", "no");
                     $('.viz iframe').css('overflow', 'hidden');
                 }
-                //set user filters parameter must not exist 
-               // , 'Asset_png': '@ViewBag.AssetPNG'
-                , 'Week': '@ViewBag.Weeknum'
-                , 'Dag': '@ViewBag.Weekday'
-                , 'Vweek': '@ViewBag.Weeknum'
-                , 'Vday' : '@ViewBag.Weekday'
+                ,'LocationTreeFilter' : '@ViewBag.LocationTreeFilter'
+            //don't set time filter do this relative in tableau 
+            //    , 'Week': '@ViewBag.Weeknum'
+            //    , 'Dag': '@ViewBag.Weekday'
+            //    , 'Vweek': '@ViewBag.Weeknum'
+            //    , 'Vday' : '@ViewBag.Weekday'
             };
 
             new tableauSoftware.Viz(document.getElementById('viz'), url, vizOptions)

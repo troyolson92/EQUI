@@ -1284,6 +1284,7 @@
     <Content Include="Views\Tableau\Test.cshtml" />
     <Content Include="Views\Dynamic\_dynamicWebgridRunQueryAgainstDB.cshtml" />
     <Content Include="Views\Chart2\Index.cshtml" />
+    <Content Include="Views\Dynamic\_CheckStatement.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EQUICommunictionLib\EQUICommunictionLib.csproj">
