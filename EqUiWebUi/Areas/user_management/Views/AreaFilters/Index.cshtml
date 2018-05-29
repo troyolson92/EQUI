@@ -9,68 +9,37 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Plant)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Optgroup)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Area)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LocationTreeFilter1)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UserComment)
-        </th>
-        <th></th>
-    </tr>
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Plant)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Optgroup)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Area)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LocationTreeFilter1)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserComment)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.id })
-            </td>
-        </tr>
-    }
-</table>
+@Html.Grid(Model).Named("AreaFilters").Build(columns =>
+{
+    columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Asc).Css("hidden-sm hidden-xs");
+    columns.Add(c => c.Plant).Titled("Plant").Css("hidden-sm hidden-xs");
+    columns.Add(c => c.Optgroup).Titled("Optgroup").Css("hidden-sm hidden-xs");
+    columns.Add(c => c.LocationTreeFilter1).Titled("LocationTreeFilter1");
+    columns.Add(c => c.Area).Titled("Area");
+    columns.Add(c => c.UserComment).Titled("UserComment").Css("hidden-sm hidden-xs");
+    columns.Add(c => c.id)
+                .Titled("")
+                .Encoded(false)
+                .RenderedAs(c => @Html.ActionLink("Edit", "Edit", new { id = c.id }) + " | " +
+                                 @Html.ActionLink("Details", "Details", new { id = c.id }) + " | " +
+                                 @Html.ActionLink("Delete", "Delete", new { id = c.id })
 
-
+                ).InitialSort(GridSortOrder.Asc).Filterable(false).Css("hidden-sm hidden-xs");
+}).Filterable(true).Sortable(true).Pageable(pager =>
+{
+    pager.RowsPerPage = 15;
+}).Empty("Did not find anything").Css("table-hover")
 <hr />
 <div class="alert alert-info">
+    <h4>Tip</h4>
+    To be able to copy the "locationtreefilter list" for tableau collaps the screen to SM XS select and copy
+</div>
+<hr />
+<div class="alert alert-success">
     <div>
         <h5>LocationDropdownList</h5>
-        @Html.DropDownList("testdropdownlist", (SelectList)ViewBag.selectlist, htmlAttributes: new { @class = "form-control" }, optionLabel:"--Select a location--")
+        @Html.DropDownList("testdropdownlist", (SelectList)ViewBag.selectlist, htmlAttributes: new { @class = "form-control" }, optionLabel: "--Select a location--")
     </div>
 </div>
-
-
-@section scripts{
-    <script>
-        //full with screen
-        $("#allcontent").removeClass("body-content");
-        $("#allcontent").removeClass("container");
-    </script>
-}
 

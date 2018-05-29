@@ -43,6 +43,7 @@ namespace EqUiWebUi.Areas.user_management.Controllers
         }
 
         // GET: user_management/AreaFilters/Create
+        [Authorize(Roles = "Administrator")]
         public ActionResult Create()
         {
             return View();
@@ -53,6 +54,7 @@ namespace EqUiWebUi.Areas.user_management.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]
         public ActionResult Create( AreaFilters areaFilters)
         {
             if (ModelState.IsValid)
@@ -66,6 +68,7 @@ namespace EqUiWebUi.Areas.user_management.Controllers
         }
 
         // GET: user_management/AreaFilters/Edit/5
+        [Authorize(Roles = "Administrator")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -85,6 +88,7 @@ namespace EqUiWebUi.Areas.user_management.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]
         public ActionResult Edit(AreaFilters areaFilters)
         {
             if (ModelState.IsValid)
@@ -97,6 +101,7 @@ namespace EqUiWebUi.Areas.user_management.Controllers
         }
 
         // GET: user_management/AreaFilters/Delete/5
+        [Authorize(Roles = "Administrator")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -114,6 +119,7 @@ namespace EqUiWebUi.Areas.user_management.Controllers
         // POST: user_management/AreaFilters/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]
         public ActionResult DeleteConfirmed(int id)
         {
             AreaFilters areaFilters = db.AreaFilters.Find(id);

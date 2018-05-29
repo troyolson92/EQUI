@@ -1,6 +1,5 @@
-﻿
-@model IEnumerable<EqUiWebUi.Areas.Tiplife.Models.TipMonitor>
-
+﻿@model IEnumerable<EqUiWebUi.Areas.Tiplife.Models.TipMonitor>
+<div class="badge">Aantal:@Model.Count()</div>
 @Html.Grid(Model).Named("TipsChangedTable").Build(columns =>
 {
     columns.Add(c => c.Robot).Titled("Robot");

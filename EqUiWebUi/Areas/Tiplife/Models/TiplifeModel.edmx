@@ -100,6 +100,7 @@ warning 6002: The table/view 'GADATA.NGAC.TipMonitor' does not have a primary ke
         <EntityType Name="TipMonitor">
           <Key>
             <PropertyRef Name="id" />
+            
           </Key>
           <Property Name="Robot" Type="varchar" MaxLength="30" />
           <Property Name="Date Time" Type="datetime" />
