@@ -94,11 +94,20 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.ResponsiblePloeg, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.ResponsibleProductionTeam, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.HiddenFor(model => model.ResponsiblePloeg)
-            @Html.DisplayFor(model => model.ResponsiblePloeg, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.ResponsiblePloeg, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.ResponsibleProductionTeam)
+            @Html.DisplayFor(model => model.ResponsibleProductionTeam, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ResponsibleProductionTeam, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ResponsibleTechnicianTeam, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.HiddenFor(model => model.ResponsibleTechnicianTeam)
+            @Html.DisplayFor(model => model.ResponsibleTechnicianTeam, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ResponsibleTechnicianTeam, "", new { @class = "text-danger" })
         </div>
     </div>
 
@@ -125,6 +134,14 @@
         <div class="col-md-10">
             @Html.CheckBoxFor(model => model.hasRackidAsBodynum, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.hasRackidAsBodynum, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.hasSpotweld, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.CheckBoxFor(model => model.hasSpotweld, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.hasSpotweld, "", new { @class = "text-danger" })
         </div>
     </div>
 

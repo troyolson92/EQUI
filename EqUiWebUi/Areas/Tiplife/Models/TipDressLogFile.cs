@@ -71,5 +71,6 @@ namespace EqUiWebUi.Areas.Tiplife.Models
         public Nullable<double> DeltaRef { get; set; }
         public Nullable<double> DeltaNom { get; set; }
         public Nullable<System.DateTime> C_timestamp { get; set; }
+        public Nullable<int> c_controller_id { get; set; }
     }
 }
