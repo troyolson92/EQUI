@@ -128,12 +128,9 @@ namespace EqUiWebUi
                     //set user variables
                     lock (padlock)
                     {
-                        Session["UserId"] = user.id;
-                        Session["Username"] = user.username;
-                        Session["LocationRoot"] = user.LocationRoot;
-                        Session["AssetRoot"] = user.AssetRoot;
                         Session["Impersonating"] = "";
-                        Session["culture"] = "en-GB"; //set session uI culture. (in future for multi langue)
+                        //parse user object into session
+                        Session["user"] = user;
                         // set init done
                         Session["InitDone"] = true;
                     }
@@ -151,6 +148,25 @@ namespace EqUiWebUi
         public static List<string> Sessions()
         {
             return _sessions;
+        }
+    }
+
+    public static class CurrentUser
+    {
+        //
+        public static EqUiWebUi.Areas.user_management.Models.users Getuser
+        {
+            get
+            {
+                var user = HttpContext.Current.Session["user"] as users;
+                if (null == user)
+                {
+                    user = new users();
+                    HttpContext.Current.Session["user"] = user;
+                }
+                return user;
+            }
+
         }
     }
 }

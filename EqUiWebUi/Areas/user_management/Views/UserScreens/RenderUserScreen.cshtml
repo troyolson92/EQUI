@@ -10,7 +10,7 @@
             <div style="z-index: 2; position: absolute; top: 0px; left: 0px;">
                 <div class="label label-danger">
                     You are impersonating!
-                    @HttpContext.Current.Session["Impersonating"]
+                    @CurrentUser.Getuser.username
                 </div>
             </div>
     </div>

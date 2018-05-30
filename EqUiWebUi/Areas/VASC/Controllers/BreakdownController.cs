@@ -19,10 +19,10 @@ namespace EqUiWebUi.Areas.VASC.Controllers
 
         public ActionResult GetBreakdowns()
         {
-            if (Session["LocationRoot"].ToString() != "")
+            string LocationRoot = CurrentUser.Getuser.LocationRoot;
+            if (LocationRoot != "")
             {
-                string locationRoot = Session["LocationRoot"].ToString();
-                return View(db.rt_job.Where(c => c.ts_breakDownStart != null && (c.c_controller.LocationTree ?? "").Contains(locationRoot)));
+                return View(db.rt_job.Where(c => c.ts_breakDownStart != null && (c.c_controller.LocationTree ?? "").Contains(LocationRoot)));
             }
             else
             {

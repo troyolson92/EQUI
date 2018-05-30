@@ -53,9 +53,9 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             if (ModelState.IsValid)
             {
                 l_controlLimits.CreateDate = System.DateTime.Now;
-                l_controlLimits.Createuser = (int)Session["UserId"];
+                l_controlLimits.Createuser = CurrentUser.Getuser.id;
                 l_controlLimits.ChangeDate = System.DateTime.Now;
-                l_controlLimits.ChangeUser = (int)Session["UserId"];
+                l_controlLimits.ChangeUser = CurrentUser.Getuser.id;
                 l_controlLimits.isdead = false;
                 db.l_controlLimits.Add(l_controlLimits);
                 db.SaveChanges();
@@ -117,9 +117,9 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                         //copy the object, set the create user data and add it to the db
                         l_controlLimits newControlimit = controllimit;
                         newControlimit.CreateDate = System.DateTime.Now;
-                        newControlimit.Createuser = (int)Session["UserId"];
+                        newControlimit.Createuser = CurrentUser.Getuser.id;
                         newControlimit.ChangeDate = System.DateTime.Now;
-                        newControlimit.ChangeUser = (int)Session["UserId"];
+                        newControlimit.ChangeUser = CurrentUser.Getuser.id;
                         newControlimit.isdead = false;
                         //copy values
                         newControlimit.UpperLimit = l_controlLimits.UpperLimit;
@@ -130,7 +130,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                         //get the old control limit set the change user and mark it dead 
                         l_controlLimits oldControlimit = db.l_controlLimits.Where(c => c.id == controllimit.id).First();
                         oldControlimit.ChangeDate = System.DateTime.Now;
-                        oldControlimit.ChangeUser = (int)Session["UserId"];
+                        oldControlimit.ChangeUser = CurrentUser.Getuser.id;
                         oldControlimit.isdead = true;
                         db.Entry(oldControlimit).State = EntityState.Modified;
                     }
@@ -140,16 +140,16 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                     //copy the object, set the create user data and add it to the db
                     l_controlLimits newControlimit = l_controlLimits;
                     newControlimit.CreateDate = System.DateTime.Now;
-                    newControlimit.Createuser = (int)Session["UserId"];
+                    newControlimit.Createuser = CurrentUser.Getuser.id;
                     newControlimit.ChangeDate = System.DateTime.Now;
-                    newControlimit.ChangeUser = (int)Session["UserId"];
+                    newControlimit.ChangeUser = CurrentUser.Getuser.id;
                     newControlimit.isdead = false;
                     //add
                     db.l_controlLimits.Add(newControlimit);
                     //get the old control limit set the change user and mark it dead 
                     l_controlLimits oldControlimit = db.l_controlLimits.Where(c => c.id == l_controlLimits.id).First();
                     oldControlimit.ChangeDate = System.DateTime.Now;
-                    oldControlimit.ChangeUser = (int)Session["UserId"];
+                    oldControlimit.ChangeUser = CurrentUser.Getuser.id;
                     oldControlimit.isdead = true;
                     db.Entry(oldControlimit).State = EntityState.Modified;
                 }

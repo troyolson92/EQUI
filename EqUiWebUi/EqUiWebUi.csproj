@@ -408,7 +408,10 @@
     <Compile Include="Areas\user_management\Controllers\usersController.cs" />
     <Compile Include="Areas\user_management\Controllers\UserScreensController.cs" />
     <Compile Include="Areas\user_management\Controllers\usersPermisionsController.cs" />
-    <Compile Include="Areas\user_management\Models\AreaFilters.cs">
+    <Compile Include="Areas\user_management\Models\c_areas.cs">
+      <DependentUpon>user_management.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\user_management\Models\c_ownership.cs">
       <DependentUpon>user_management.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\user_management\Models\L_Screens.cs">

@@ -18,7 +18,7 @@ namespace EqUiWebUi.Areas.user_management.Controllers
         public ActionResult Index()
         {
             ViewBag.selectlist = getAreaSelectList();
-            return View(db.AreaFilters.ToList());
+            return View(db.c_areas.ToList());
         }
 
         //GET: user_management/AreaFilters/_settings
@@ -34,7 +34,7 @@ namespace EqUiWebUi.Areas.user_management.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            AreaFilters areaFilters = db.AreaFilters.Find(id);
+            c_areas areaFilters = db.c_areas.Find(id);
             if (areaFilters == null)
             {
                 return HttpNotFound();
@@ -55,11 +55,11 @@ namespace EqUiWebUi.Areas.user_management.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrator")]
-        public ActionResult Create( AreaFilters areaFilters)
+        public ActionResult Create( c_areas areaFilters)
         {
             if (ModelState.IsValid)
             {
-                db.AreaFilters.Add(areaFilters);
+                db.c_areas.Add(areaFilters);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -75,7 +75,7 @@ namespace EqUiWebUi.Areas.user_management.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            AreaFilters areaFilters = db.AreaFilters.Find(id);
+            c_areas areaFilters = db.c_areas.Find(id);
             if (areaFilters == null)
             {
                 return HttpNotFound();
@@ -89,7 +89,7 @@ namespace EqUiWebUi.Areas.user_management.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrator")]
-        public ActionResult Edit(AreaFilters areaFilters)
+        public ActionResult Edit(c_areas areaFilters)
         {
             if (ModelState.IsValid)
             {
@@ -108,7 +108,7 @@ namespace EqUiWebUi.Areas.user_management.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            AreaFilters areaFilters = db.AreaFilters.Find(id);
+            c_areas areaFilters = db.c_areas.Find(id);
             if (areaFilters == null)
             {
                 return HttpNotFound();
@@ -122,8 +122,8 @@ namespace EqUiWebUi.Areas.user_management.Controllers
         [Authorize(Roles = "Administrator")]
         public ActionResult DeleteConfirmed(int id)
         {
-            AreaFilters areaFilters = db.AreaFilters.Find(id);
-            db.AreaFilters.Remove(areaFilters);
+            c_areas areaFilters = db.c_areas.Find(id);
+            db.c_areas.Remove(areaFilters);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -141,7 +141,7 @@ namespace EqUiWebUi.Areas.user_management.Controllers
         public SelectList getAreaSelectList(string UserLocationRoot= "")
         {
             List<SelectListItem> selectList = new List<SelectListItem>();
-            List<AreaFilters> areaFilters = db.AreaFilters.ToList();
+            List<c_areas> areaFilters = db.c_areas.ToList();
 
             List<string> plants = areaFilters.GroupBy(list => list.Plant).Select(grp => grp.First().Plant).ToList();
             foreach(string plant in plants)

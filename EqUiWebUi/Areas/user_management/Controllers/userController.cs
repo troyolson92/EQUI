@@ -68,10 +68,7 @@ namespace EqUiWebUi.Areas.user_management.Controllers
         {
             users user = GetUser(System.Web.HttpContext.Current.User.Identity.Name);
             //set user variables
-            Session["Username"] = user.id;
-            Session["Username"] = user.username;
-            Session["LocationRoot"] = user.LocationRoot;
-            Session["AssetRoot"] = user.AssetRoot;
+            Session["user"] = user;
             Session["Impersonating"] = "";
             //redirect to home page
             return new RedirectToRouteResult(
@@ -89,7 +86,22 @@ namespace EqUiWebUi.Areas.user_management.Controllers
         // Get: user_management/user/SetCookie/key/value
         public ActionResult SetCookie(string key, string value)
         {
-            Session[key] = value;
+            if (key == "LocationRoot")
+            {
+                users user = CurrentUser.Getuser;
+                user.LocationRoot = value;
+                Session["user"] = user;
+            }
+            else if (key == "AssetRoot")
+            {
+                users user = CurrentUser.Getuser;
+                user.AssetRoot = value;
+                Session["user"] = user;
+            }
+            else
+            {
+                //error
+            }
             return null;
         }
 
@@ -111,6 +123,7 @@ namespace EqUiWebUi.Areas.user_management.Controllers
                     newUser.AssetRoot = "U";
                     newUser.Blocked = false;
                     newUser.Locked = false;
+                    newUser.Culture = "En-GB";
                     db.L_users.Add(newUser);
                     db.SaveChanges();
                     //get it back to be sure

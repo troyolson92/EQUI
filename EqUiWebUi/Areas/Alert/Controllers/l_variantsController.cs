@@ -54,7 +54,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             if (ModelState.IsValid)
             {
                 l_variants.CreateDate = System.DateTime.Now;
-                l_variants.CreateUser = (int)Session["UserId"];
+                l_variants.CreateUser = CurrentUser.Getuser.id;
                 db.l_variants.Add(l_variants);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -92,7 +92,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             if (ModelState.IsValid)
             {
                 l_variants.CreateDate = System.DateTime.Now;
-                l_variants.CreateUser = (int)Session["UserId"];
+                l_variants.CreateUser = CurrentUser.Getuser.id;
                 db.Entry(l_variants).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

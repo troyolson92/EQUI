@@ -149,12 +149,11 @@ namespace EqUiWebUi.Areas.user_management.Controllers
             //get render user session
             //Must render screen using the provided user session credentials.
             Areas.user_management.Controllers.userController userController = new Areas.user_management.Controllers.userController();
-            users user = userController.GetUser(Screen.L_users.username);
+            users Impresonatinguser = userController.GetUser(Screen.L_users.username);
             //change session data to view an url as a specifc user
-            Session["Username"] = user.id;
-            Session["LocationRoot"] = user.LocationRoot;
-            Session["AssetRoot"] = user.AssetRoot;
-            Session["Impersonating"] = user.username;
+            string realUserName = CurrentUser.Getuser.username;
+            Session["user"] = Impresonatinguser;
+            Session["Impersonating"] = realUserName;
 
             //Pass screen lifecycle
 
@@ -232,12 +231,11 @@ namespace EqUiWebUi.Areas.user_management.Controllers
         public ActionResult ViewAsUser(string username, string url)
         {
             Areas.user_management.Controllers.userController userController = new Areas.user_management.Controllers.userController();
-            users user = userController.GetUser(username);
-
+            users Impresonatinguser = userController.GetUser(username);
             //change session data to view an url as a specifc user
-                Session["LocationRoot"] = user.LocationRoot;
-                Session["AssetRoot"] = user.AssetRoot;
-                Session["Impersonating"] = user.username;
+            string realUserName = CurrentUser.Getuser.username;
+            Session["user"] = Impresonatinguser;
+            Session["Impersonating"] = realUserName;
 
             //Pass correct layout (empty layout)
             return View("ViewAsUser", "~/Views/Shared/_MinimalLayout.cshtml", url);

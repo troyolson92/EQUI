@@ -40,10 +40,11 @@ namespace EqUiWebUi.Areas.VASC.Models
         public string LocationTree { get; set; }
         public string Assetnum { get; set; }
         public string ProductionTeam { get; set; }
-        public string ResponsiblePloeg { get; set; }
         public string ClassificationTree { get; set; }
         public string CLassificationId { get; set; }
         public bool hasRackidAsBodynum { get; set; }
+        public string ResponsibleTechnicianTeam { get; set; }
+        public string ResponsibleProductionTeam { get; set; }
     
         public virtual c_controller_class c_controller_class { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
