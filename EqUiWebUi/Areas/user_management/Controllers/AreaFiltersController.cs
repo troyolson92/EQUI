@@ -21,12 +21,6 @@ namespace EqUiWebUi.Areas.user_management.Controllers
             return View(db.c_areas.ToList());
         }
 
-        //GET: user_management/AreaFilters/_settings
-        public ActionResult _settings()
-        {
-            return PartialView();
-        }
-
         // GET: user_management/AreaFilters/Details/5
         public ActionResult Details(int? id)
         {

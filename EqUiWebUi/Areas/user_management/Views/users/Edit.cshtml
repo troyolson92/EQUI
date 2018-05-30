@@ -28,7 +28,7 @@
             @Html.LabelFor(model => model.LocationRoot, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <p>
-                    @Html.DropDownList("LocationRootPreselect", (SelectList)ViewBag.selectlist, htmlAttributes: new { @class = "form-control" }, optionLabel: "--Select a location--")
+                    @Html.DropDownList("LocationRootPreselect", (SelectList)ViewBag.AreaSelectlist, htmlAttributes: new { @class = "form-control" }, optionLabel: "--Select a location--")
                 </p>
                 @Html.EditorFor(model => model.LocationRoot, Model.Locked ? (object)new { htmlAttributes = new { @readonly = "readonly", @class = "form-control" } } : new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.LocationRoot, "", new { @class = "text-danger" })
@@ -43,6 +43,27 @@
                 </p>
                 @Html.EditorFor(model => model.AssetRoot, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.AssetRoot, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ResponsibleArea, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <p>
+                    @Html.DropDownList("ResponsibleAreaPreselect", (SelectList)ViewBag.OwnershipSelectlist, htmlAttributes: new { @class = "form-control" }, optionLabel: "--Select--")
+                </p>
+                @Html.EditorFor(model => model.ResponsibleArea, Model.Locked ? (object)new { htmlAttributes = new { @readonly = "readonly", @class = "form-control" } } : new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ResponsibleArea, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Culture, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.Culture, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Culture, "", new { @class = "text-danger" })
+                </div>
             </div>
         </div>
 
@@ -67,6 +88,16 @@
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.Comment, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.Comment, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Comment, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Save" class="btn btn-default" />
             </div>
@@ -80,10 +111,14 @@
 
 <script>
     $('#LocationRootPreselect').on('change', function () {
-            $('#LocationRoot')[0].value = this.value;
+        $('#LocationRoot')[0].value = this.value;
     });
 
     $('#AssetRootPreselect').on('change', function () {
         $('#AssetRoot')[0].value = this.value;
+    });
+
+    $('#ResponsibleAreaPreselect').on('change', function () {
+        $('#ResponsibleArea')[0].value = this.value;
     });
 </script>
