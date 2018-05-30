@@ -21,10 +21,10 @@ namespace EqUiWebUi.Areas.PJV.Controllers
         // GET: PJV/Modifications
         public ActionResult GetChanges()
         {
-            if (Session["LocationRoot"].ToString() != "")
+            string LocationRoot = CurrentUser.Getuser.LocationRoot;
+            if (LocationRoot != "")
             {
-                string locationRoot = Session["LocationRoot"].ToString();
-                return View(db.ProcessPoints.Where(p => p.Delta > 0 && (p.locationtree ?? "").Contains(locationRoot)));
+                return View(db.ProcessPoints.Where(p => p.Delta > 0 && (p.locationtree ?? "").Contains(LocationRoot)));
             }
             else
             {

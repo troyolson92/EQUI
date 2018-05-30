@@ -11,10 +11,11 @@
         <AssociationConnector Association="GADATAModel.FK_h_usersPermisions_c_userRoles" ManuallyRouted="false" />
         <AssociationConnector Association="GADATAModel.FK_h_usersPermisions_L_users" ManuallyRouted="false" />
         <AssociationConnector Association="GADATAModel.FK_h_usersPermisions_L_users1" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="GADATAModel.L_Screens" Width="1.5" PointX="0.625" PointY="4.75" />
+        <EntityTypeShape EntityType="GADATAModel.L_Screens" Width="1.5" PointX="0.75" PointY="5" />
         <AssociationConnector Association="GADATAModel.FK_L_Screens_L_users" ManuallyRouted="false" >
         </AssociationConnector>
-        <EntityTypeShape EntityType="GADATAModel.AreaFilters" Width="1.5" PointX="8.5" PointY="5.875" FillColor="255, 128, 0" />
+        <EntityTypeShape EntityType="GADATAModel.c_areas" Width="1.5" PointX="6.375" PointY="5.375" FillColor="255, 128, 0" />
+        <EntityTypeShape EntityType="GADATAModel.c_ownership" Width="1.5" PointX="8.25" PointY="5.375" FillColor="255, 128, 0" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

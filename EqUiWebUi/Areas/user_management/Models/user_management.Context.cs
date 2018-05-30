@@ -29,6 +29,7 @@ namespace EqUiWebUi.Areas.user_management.Models
         public virtual DbSet<usersPermisions> h_usersPermisions { get; set; }
         public virtual DbSet<users> L_users { get; set; }
         public virtual DbSet<L_Screens> L_Screens { get; set; }
-        public virtual DbSet<AreaFilters> AreaFilters { get; set; }
+        public virtual DbSet<c_areas> c_areas { get; set; }
+        public virtual DbSet<c_ownership> c_ownership { get; set; }
     }
 }

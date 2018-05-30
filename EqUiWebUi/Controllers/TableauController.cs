@@ -22,6 +22,7 @@ namespace EqUiWebUi.Controllers
         [HttpGet]
         public ActionResult EmbeddedDesktop(string workbook, string sheet)
         {
+            //
             ViewBag.workbook = workbook;
             ViewBag.sheet = sheet;
             ViewBag.Weeknum = CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(System.DateTime.Now, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
@@ -50,10 +51,10 @@ namespace EqUiWebUi.Controllers
         //get the users Areaname based on the location root
         private string GetUsersAreaname()
         {
-            string LocationRoot = Session["LocationRoot"].ToString();
+            string LocationRoot = CurrentUser.Getuser.LocationRoot;
             if (LocationRoot != "")
             {
-                AreaFilters areaFilters = db.AreaFilters.Where(l => l.LocationTreeFilter1.StartsWith(LocationRoot)).First();
+                c_areas areaFilters = db.c_areas.Where(l => l.LocationTreeFilter1.StartsWith(LocationRoot)).First();
                 return areaFilters.Area;
             }
             else

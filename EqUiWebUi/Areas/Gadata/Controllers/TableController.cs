@@ -39,18 +39,20 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
                 data = new List<AAOSR_PloegRaport_Result>();
             }
 
-            if (Session["LocationRoot"].ToString() != "")
+            string LocationRoot = CurrentUser.Getuser.LocationRoot;
+            if (LocationRoot != "")
             {
                 data = (from d in data
-                        where (d.LocationTree ?? "").Contains(Session["LocationRoot"].ToString()) //apply user locationroot
+                        where (d.LocationTree ?? "").Contains(LocationRoot) //apply user locationroot
                         || d.Logtype == "TIMELINE" //always allowtimeline
                         select d).ToList();
             }
 
-            if (Session["AssetRoot"].ToString() != "")
+            string AssetRoot = CurrentUser.Getuser.AssetRoot;
+            if (AssetRoot != "")
             {
                 data = (from d in data
-                        where (d.Classification ?? "").Contains(Session["AssetRoot"].ToString()) //apply user assetroot
+                        where (d.Classification ?? "").Contains(AssetRoot) //apply user assetroot
                             || (d.Classification ?? "") == "Undefined*" //or allow assets thet are undedind
                             || (d.Classification ?? "") == "" //or allow assets that are null
                             || d.Logtype == "TIMELINE" //always allowtimeline
@@ -79,18 +81,20 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
                 data = new List<Supervisie>();
             }
 
-            if (Session["LocationRoot"].ToString() != "")
+            string LocationRoot = CurrentUser.Getuser.LocationRoot;
+            if (LocationRoot != "")
             {
                 data = (from d in data
-                        where (d.LocationTree ?? "").Contains(Session["LocationRoot"].ToString())
+                        where (d.LocationTree ?? "").Contains(LocationRoot)
                         || d.Logtype == "TIMELINE"
                         select d).ToList();
             }
 
-            if (Session["AssetRoot"].ToString() != "")
+            string AssetRoot = CurrentUser.Getuser.AssetRoot;
+            if (AssetRoot != "")
             {
                 data = (from d in data
-                        where (d.Classification ?? "").Contains(Session["AssetRoot"].ToString()) //apply user assetroot
+                        where (d.Classification ?? "").Contains(AssetRoot) //apply user assetroot
                             || (d.Classification ?? "") == "Undefined*" //or allow assets thet are undedind
                             || (d.Classification ?? "") == "" //or allow assets that are null
                             || d.Logtype == "TIMELINE" //always allowtimeline
@@ -119,10 +123,11 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
                 data = new List<EQpluginDefaultNGAC_Result>();
             }
 
-            if (Session["LocationRoot"].ToString() != "")
+            string LocationRoot = CurrentUser.Getuser.LocationRoot;
+            if (LocationRoot != "")
             {
                 data = (from d in data
-                        where (d.LocationTree ?? "").Contains(Session["LocationRoot"].ToString())
+                        where (d.LocationTree ?? "").Contains(LocationRoot)
                         || d.Logtype == "TIMELINE"
                         select d).ToList();
             }

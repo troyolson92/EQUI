@@ -9,7 +9,7 @@
 @if(@HttpContext.Current.Session["Impersonating"] != "")
 {
 <div class="label label-danger">
-    You are impersonating!
+    You are impersonating! user are:
     @HttpContext.Current.Session["Impersonating"]
 </div>
 }

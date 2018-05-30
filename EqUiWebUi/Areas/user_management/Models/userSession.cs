@@ -7,8 +7,6 @@ namespace EqUiWebUi.Areas.user_management.Models
 {
     public class userSession
     {
-        public string sessionId { get; set; }
-        public string username { get; set; }
-
+        public  string sessionId { get; set; }
     }
 }

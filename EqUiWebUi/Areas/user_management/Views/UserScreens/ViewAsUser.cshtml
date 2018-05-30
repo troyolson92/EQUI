@@ -6,7 +6,7 @@
 
 <div class="label">
     <div style="z-index: 2; position: absolute; top: 0px; left: 0px;">
-        <h6>Viewing As @HttpContext.Current.Session["Impersonating"]</h6>
+        <h6>Viewing As @CurrentUser.Getuser.username</h6>
         @Html.ActionLink("End impresonating", "ResetCookie","User")
     </div>
 </div>

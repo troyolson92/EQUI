@@ -54,7 +54,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
         public async Task<ActionResult> Listalerts()
         {
             //filter alerts basted on user profile!
-            string UserLocationroot = Session["LocationRoot"].ToString();
+            string UserLocationroot = CurrentUser.Getuser.LocationRoot;
             var h_alert = db.h_alert.Include(h => h.c_state).Include(h => h.c_triggers).Include(h => h.ChangedUser).Include(h => h.CloseUser).Include(h => h.AcceptUser);
             return View(await h_alert.Where(a => a.locationTree.Contains(UserLocationroot)).ToListAsync());
         }
@@ -75,7 +75,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
         public async Task<ActionResult> AASPOTAlertList(string LocationFilter, bool ActiveAlertOnly = false)
         {
             //filter alerts basted on user profile!
-            string UserLocationroot = Session["LocationRoot"].ToString();
+            string UserLocationroot = CurrentUser.Getuser.LocationRoot;
             var h_alert = db.h_alert.Include(h => h.c_state).Include(h => h.c_triggers).Include(h => h.ChangedUser).Include(h => h.CloseUser).Include(h => h.AcceptUser);
             List<h_alert>  result =  await (h_alert.Where(a => a.locationTree.Contains(UserLocationroot)
                                                && (
@@ -154,7 +154,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                 }
                 //update last changed user 
                 org_alert.lastChangedTimestamp = System.DateTime.Now;
-                org_alert.lastChangedUserID = (int)Session["UserId"];
+                org_alert.lastChangedUserID = CurrentUser.Getuser.id;
 
                 //append the users new comments (we do this because we don't whant the user to be able to edit previous comments)
                 StringBuilder sb = new StringBuilder();
@@ -165,7 +165,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                 //add new pannel
                 sb.AppendLine("<div class='card card-info'>");
                 sb.AppendLine("<div class='card-block'>");
-                sb.AppendLine("<h4 class='card-title'>" + Session["Username"].ToString() + "</h4>");
+                sb.AppendLine("<h4 class='card-title'>" + CurrentUser.Getuser.username + "</h4>");
                 sb.AppendLine("<h6 class='card-subtitle mb-2 text-muted'>" + org_alert.lastChangedTimestamp + "</h6>");
                 sb.AppendLine("<p class='card-text'>");
                 sb.Append(_alert.comments);
@@ -201,7 +201,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                     if (!alert.acceptUserID.HasValue)
                     {
                         alert.acceptTimestamp = System.DateTime.Now;
-                        alert.acceptUserID = (int)Session["UserId"];
+                        alert.acceptUserID = CurrentUser.Getuser.id;
                     }
                     break;
 
@@ -210,7 +210,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                     if (!alert.closeUserID.HasValue)
                     {
                         alert.closeTimestamp = System.DateTime.Now;
-                        alert.closeUserID = (int)Session["UserId"]; ;
+                        alert.closeUserID = CurrentUser.Getuser.id;
                     }
                     break;
                 default:
@@ -228,7 +228,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             sb.AppendLine("<div class='card card-warning'>");
             sb.AppendLine("<div class='card-block'>");
             sb.AppendLine("<h4 class='card-title'>State changed</h4>");
-            sb.AppendLine("<h6 class='card-subtitle mb-2 text-muted'>" + Session["Username"].ToString() + " " + System.DateTime.Now + "</h6>");
+            sb.AppendLine("<h6 class='card-subtitle mb-2 text-muted'>" + CurrentUser.Getuser.username + " " + System.DateTime.Now + "</h6>");
             sb.AppendLine("<p class='card-text'>");
             sb.Append("Previous state " + Oldstate);
             sb.AppendLine("</p>");
@@ -252,7 +252,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             alert = ChangeState(alert, newstate);
             //update last changed user 
             alert.lastChangedTimestamp = System.DateTime.Now;
-            alert.lastChangedUserID = (int)Session["UserId"];
+            alert.lastChangedUserID = CurrentUser.Getuser.id;
             //
             db.SaveChanges();
         }

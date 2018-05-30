@@ -5,7 +5,7 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="GADATAModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="AreaFilters">
+        <EntityType Name="c_areas">
           <Key>
             <PropertyRef Name="id" />
           </Key>
@@ -17,6 +17,17 @@
           <Property Name="LocationTreeFilter2" Type="varchar" MaxLength="100" />
           <Property Name="LocationTreeFilter3" Type="varchar" MaxLength="100" />
           <Property Name="LocationTreeFilter4" Type="varchar" MaxLength="100" />
+          <Property Name="UserComment" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="c_ownership">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Plant" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Optgroup" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Ownership" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LocationTree" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="UserComment" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="c_userRoles">
@@ -59,6 +70,11 @@
           <Property Name="AssetRoot" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Locked" Type="bit" Nullable="false" />
           <Property Name="Blocked" Type="bit" Nullable="false" />
+          <Property Name="SessionId" Type="varchar" MaxLength="200" />
+          <Property Name="Comment" Type="varchar(max)" />
+          <Property Name="ResponsibleArea" Type="varchar" MaxLength="50" />
+          <Property Name="Team" Type="varchar" MaxLength="50" />
+          <Property Name="Culture" Type="varchar" MaxLength="50" />
         </EntityType>
         <Association Name="FK_h_usersPermisions_c_userRoles">
           <End Role="c_userRoles" Type="Self.c_userRoles" Multiplicity="1" />
@@ -109,7 +125,8 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="GADATAModelStoreContainer">
-          <EntitySet Name="AreaFilters" EntityType="Self.AreaFilters" Schema="EqUi" store:Type="Tables" />
+          <EntitySet Name="c_areas" EntityType="Self.c_areas" Schema="EqUi" store:Type="Tables" />
+          <EntitySet Name="c_ownership" EntityType="Self.c_ownership" Schema="EqUi" store:Type="Tables" />
           <EntitySet Name="c_userRoles" EntityType="Self.c_userRoles" Schema="Volvo" store:Type="Tables" />
           <EntitySet Name="h_usersPermisions" EntityType="Self.h_usersPermisions" Schema="Volvo" store:Type="Tables" />
           <EntitySet Name="L_Screens" EntityType="Self.L_Screens" Schema="Volvo" store:Type="Tables" />
@@ -169,6 +186,11 @@
           <NavigationProperty Name="h_usersPermisions" Relationship="Self.FK_h_usersPermisions_L_users" FromRole="L_users" ToRole="h_usersPermisions" />
           <NavigationProperty Name="h_usersPermisions1" Relationship="Self.FK_h_usersPermisions_L_users1" FromRole="L_users" ToRole="h_usersPermisions" />
           <NavigationProperty Name="L_Screens" Relationship="GADATAModel.FK_L_Screens_L_users" FromRole="users" ToRole="L_Screens" />
+          <Property Name="SessionId" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ResponsibleArea" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Team" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Culture" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_h_usersPermisions_c_userRoles">
           <End Role="c_userRoles" Type="GADATAModel.userRoles" Multiplicity="1" />
@@ -227,7 +249,8 @@
             <End Role="users" EntitySet="L_users" />
             <End Role="L_Screens" EntitySet="L_Screens" />
           </AssociationSet>
-          <EntitySet Name="AreaFilters" EntityType="GADATAModel.AreaFilters" />
+          <EntitySet Name="c_areas" EntityType="GADATAModel.c_areas" />
+          <EntitySet Name="c_ownership" EntityType="GADATAModel.c_ownership" />
         </EntityContainer>
         <EntityType Name="L_Screens">
           <Key>
@@ -255,11 +278,11 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="AreaFilters">
+        <EntityType Name="c_areas">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Plant" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Optgroup" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Area" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -267,6 +290,17 @@
           <Property Name="LocationTreeFilter2" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="LocationTreeFilter3" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="LocationTreeFilter4" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="UserComment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="c_ownership">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Plant" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Optgroup" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Ownership" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LocationTree" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="UserComment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
@@ -297,6 +331,11 @@
           <EntitySetMapping Name="L_users">
             <EntityTypeMapping TypeName="GADATAModel.users">
               <MappingFragment StoreEntitySet="L_users">
+                <ScalarProperty Name="Culture" ColumnName="Culture" />
+                <ScalarProperty Name="Team" ColumnName="Team" />
+                <ScalarProperty Name="ResponsibleArea" ColumnName="ResponsibleArea" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="SessionId" ColumnName="SessionId" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="username" ColumnName="username" />
                 <ScalarProperty Name="LocationRoot" ColumnName="LocationRoot" />
@@ -320,15 +359,27 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="AreaFilters">
-            <EntityTypeMapping TypeName="GADATAModel.AreaFilters">
-              <MappingFragment StoreEntitySet="AreaFilters">
+          <EntitySetMapping Name="c_areas">
+            <EntityTypeMapping TypeName="GADATAModel.c_areas">
+              <MappingFragment StoreEntitySet="c_areas">
                 <ScalarProperty Name="UserComment" ColumnName="UserComment" />
                 <ScalarProperty Name="LocationTreeFilter4" ColumnName="LocationTreeFilter4" />
                 <ScalarProperty Name="LocationTreeFilter3" ColumnName="LocationTreeFilter3" />
                 <ScalarProperty Name="LocationTreeFilter2" ColumnName="LocationTreeFilter2" />
                 <ScalarProperty Name="LocationTreeFilter1" ColumnName="LocationTreeFilter1" />
                 <ScalarProperty Name="Area" ColumnName="Area" />
+                <ScalarProperty Name="Optgroup" ColumnName="Optgroup" />
+                <ScalarProperty Name="Plant" ColumnName="Plant" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="c_ownership">
+            <EntityTypeMapping TypeName="GADATAModel.c_ownership">
+              <MappingFragment StoreEntitySet="c_ownership">
+                <ScalarProperty Name="UserComment" ColumnName="UserComment" />
+                <ScalarProperty Name="LocationTree" ColumnName="LocationTree" />
+                <ScalarProperty Name="Ownership" ColumnName="Ownership" />
                 <ScalarProperty Name="Optgroup" ColumnName="Optgroup" />
                 <ScalarProperty Name="Plant" ColumnName="Plant" />
                 <ScalarProperty Name="id" ColumnName="id" />

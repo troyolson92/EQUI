@@ -34,10 +34,12 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
             {
                 data = new List<TipMonitor>();
             }
-            if (Session["LocationRoot"].ToString() != "")
+
+            string LocationRoot = CurrentUser.Getuser.LocationRoot;
+            if (LocationRoot != "")
             {
                 data = (from d in data
-                        where (d.LocationTree ?? "").Contains(Session["LocationRoot"].ToString())
+                        where (d.LocationTree ?? "").Contains(LocationRoot)
                         select d).ToList();
             }
             //
@@ -50,10 +52,10 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
         {
             var startdate = DateTime.Now.Date.AddDays(daysback * -1);
             GADATAEntitiesTiplife gADATAEntities = new GADATAEntitiesTiplife();
-            string locationroot = Session["LocationRoot"].ToString();
+            string LocationRoot = CurrentUser.Getuser.LocationRoot;
             IQueryable<TipwearBeforeChange> data = from t in gADATAEntities.TipwearBeforeChange
                                                    where t.TipchangeTimestamp > startdate
-                                                   && (t.LocationTree ?? "").Contains(locationroot)
+                                                   && (t.LocationTree ?? "").Contains(LocationRoot)
                                                    select t;
             return View(data);
         }
@@ -64,10 +66,10 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
         {
             var startdate = DateTime.Now.Date.AddDays(daysback * -1);
             GADATAEntitiesTiplife gADATAEntities = new GADATAEntitiesTiplife();
-            string locationroot = Session["LocationRoot"].ToString();
+            string LocationRoot = CurrentUser.Getuser.LocationRoot;
             IQueryable<TipDressLogFile> data = from t in gADATAEntities.TipDressLogFile
                                                where t.Date_Time > startdate
-                                               && (t.LocationTree ?? "").Contains(locationroot)
+                                               && (t.LocationTree ?? "").Contains(LocationRoot)
                                                select t;
             return View(data);
         }
@@ -77,9 +79,9 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
         public ActionResult TipLifeExpectations()
         {
             GADATAEntitiesTiplife gADATAEntities = new GADATAEntitiesTiplife();
-            string locationroot = Session["LocationRoot"].ToString();
+            string LocationRoot = CurrentUser.Getuser.LocationRoot;
             IQueryable<TipLifeExpectations> data = from t in gADATAEntities.TipLifeExpectations
-                                               where (t.LocationTree ?? "").Contains(locationroot)
+                                               where (t.LocationTree ?? "").Contains(LocationRoot)
                                                select t;
             return View(data);
         }
@@ -89,8 +91,8 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
         public ActionResult PlanTipChange()
         {
             user_management.Controllers.AreaFiltersController areaFiltersController = new user_management.Controllers.AreaFiltersController();
-            string locationroot = Session["LocationRoot"].ToString();
-            ViewBag.selectlist = areaFiltersController.getAreaSelectList(locationroot);
+            string LocationRoot = CurrentUser.Getuser.LocationRoot;
+            ViewBag.selectlist = areaFiltersController.getAreaSelectList(LocationRoot);
             return View();
         }
 
@@ -98,7 +100,7 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
         public ActionResult _TipsToChange(string locationFilter, int minWear = 0, int minParts = 0, int maxDress = 1000)
         {
             GADATAEntitiesTiplife gADATAEntities = new GADATAEntitiesTiplife();
-            string locationroot = Session["LocationRoot"].ToString();
+            string LocationRoot = CurrentUser.Getuser.LocationRoot;
             IEnumerable<TipMonitor> data = from tipMonitor in DataBuffer.Tipstatus
                                           where
                                           (tipMonitor.pWear > minWear
@@ -107,7 +109,7 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
                                            || tipMonitor.Status == "NTCD"
                                           )
                                           && tipMonitor.LocationTree.Contains(locationFilter) //apply dropdown filter
-                                          && tipMonitor.LocationTree.Contains(locationroot) //apply user filter
+                                          && tipMonitor.LocationTree.Contains(LocationRoot) //apply user filter
                                           orderby tipMonitor.nRcars ascending
                                           select tipMonitor;
             log.Info("Plantipchange for: " + locationFilter + " resultCount: " + data.Count());
@@ -118,7 +120,7 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
         public ActionResult _TipsChanged(string locationFilter, int minWear = 0, int minParts = 0, int maxDress = 1000)
         {
             GADATAEntitiesTiplife gADATAEntities = new GADATAEntitiesTiplife();
-            string locationroot = Session["LocationRoot"].ToString();
+            string LocationRoot = CurrentUser.Getuser.LocationRoot;
             IEnumerable<TipMonitor> data = from tipMonitor in DataBuffer.Tipstatus
                                            where
                                            (tipMonitor.pWear > minWear
@@ -127,7 +129,7 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
                                             || tipMonitor.Status == "NTCD"
                                            )
                                           && tipMonitor.LocationTree.Contains(locationFilter) //apply dropdown filter
-                                          && tipMonitor.LocationTree.Contains(locationroot) //apply user filter
+                                          && tipMonitor.LocationTree.Contains(LocationRoot) //apply user filter
                                            orderby tipMonitor.nRcars ascending
                                            select tipMonitor;
             return PartialView(data);
