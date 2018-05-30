@@ -74,7 +74,7 @@ namespace EqUiWebUi.Areas.user_management.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "id,username,LocationRoot,AssetRoot,Locked,Blocked")] users users)
+        public async Task<ActionResult> Create(users users)
         {
             if (ModelState.IsValid)
             {
@@ -84,7 +84,9 @@ namespace EqUiWebUi.Areas.user_management.Controllers
             }
 
             AreaFiltersController areaFiltersController = new EqUiWebUi.Areas.user_management.Controllers.AreaFiltersController();
-            ViewBag.selectlist = areaFiltersController.getAreaSelectList();
+            ViewBag.AreaSelectlist = areaFiltersController.getAreaSelectList();
+            c_ownershipController ownership = new EqUiWebUi.Areas.user_management.Controllers.c_ownershipController();
+            ViewBag.OwnershipSelectlist = ownership.getOwnershipSelectList();
 
             return View(users);
         }
@@ -103,7 +105,9 @@ namespace EqUiWebUi.Areas.user_management.Controllers
             }
 
             AreaFiltersController areaFiltersController = new EqUiWebUi.Areas.user_management.Controllers.AreaFiltersController();
-            ViewBag.selectlist = areaFiltersController.getAreaSelectList();
+            ViewBag.AreaSelectlist = areaFiltersController.getAreaSelectList();
+            c_ownershipController ownership = new EqUiWebUi.Areas.user_management.Controllers.c_ownershipController();
+            ViewBag.OwnershipSelectlist = ownership.getOwnershipSelectList();
 
             return View(users);
         }
@@ -113,7 +117,7 @@ namespace EqUiWebUi.Areas.user_management.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "id,username,LocationRoot,AssetRoot,Locked,Blocked")] users users)
+        public async Task<ActionResult> Edit(users users)
         {
             if (ModelState.IsValid)
             {
@@ -123,7 +127,9 @@ namespace EqUiWebUi.Areas.user_management.Controllers
             }
 
             AreaFiltersController areaFiltersController = new EqUiWebUi.Areas.user_management.Controllers.AreaFiltersController();
-            ViewBag.selectlist = areaFiltersController.getAreaSelectList();
+            ViewBag.AreaSelectlist = areaFiltersController.getAreaSelectList();
+            c_ownershipController ownership = new EqUiWebUi.Areas.user_management.Controllers.c_ownershipController();
+            ViewBag.OwnershipSelectlist = ownership.getOwnershipSelectList();
 
             return View(users);
         }

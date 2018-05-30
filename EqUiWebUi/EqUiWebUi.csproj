@@ -404,6 +404,7 @@
     </Compile>
     <Compile Include="Areas\Tiplife\TiplifeAreaRegistration.cs" />
     <Compile Include="Areas\user_management\Controllers\AreaFiltersController.cs" />
+    <Compile Include="Areas\user_management\Controllers\c_ownershipController.cs" />
     <Compile Include="Areas\user_management\Controllers\userController.cs" />
     <Compile Include="Areas\user_management\Controllers\usersController.cs" />
     <Compile Include="Areas\user_management\Controllers\UserScreensController.cs" />
@@ -1096,7 +1097,6 @@
     <Content Include="Areas\user_management\Views\AreaFilters\Details.cshtml" />
     <Content Include="Areas\user_management\Views\AreaFilters\Edit.cshtml" />
     <Content Include="Areas\user_management\Views\AreaFilters\Index.cshtml" />
-    <Content Include="Areas\user_management\Views\AreaFilters\_settings.cshtml" />
     <Content Include="Areas\Tiplife\Views\NgacElectrode\TipLifeExpectations.cshtml" />
     <Content Include="Areas\Alert\Views\L_controlLimits\Create.cshtml" />
     <Content Include="Areas\Alert\Views\L_controlLimits\Details.cshtml" />
@@ -1107,6 +1107,11 @@
     <Content Include="Areas\Alert\Views\l_variants\Details.cshtml" />
     <Content Include="Areas\Alert\Views\l_variants\Edit.cshtml" />
     <Content Include="Areas\Alert\Views\l_variants\Index.cshtml" />
+    <Content Include="Areas\user_management\Views\c_ownership\Create.cshtml" />
+    <Content Include="Areas\user_management\Views\c_ownership\Delete.cshtml" />
+    <Content Include="Areas\user_management\Views\c_ownership\Details.cshtml" />
+    <Content Include="Areas\user_management\Views\c_ownership\Edit.cshtml" />
+    <Content Include="Areas\user_management\Views\c_ownership\Index.cshtml" />
     <None Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.svg" />

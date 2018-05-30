@@ -22,7 +22,9 @@ namespace EqUiWebUi.Areas.user_management.Controllers
             }
 
             AreaFiltersController areaFiltersController = new EqUiWebUi.Areas.user_management.Controllers.AreaFiltersController();
-            ViewBag.selectlist = areaFiltersController.getAreaSelectList();
+            ViewBag.AreaSelectlist = areaFiltersController.getAreaSelectList();
+            c_ownershipController ownership = new EqUiWebUi.Areas.user_management.Controllers.c_ownershipController();
+            ViewBag.OwnershipSelectlist = ownership.getOwnershipSelectList();
 
             return PartialView(user);
         }
@@ -38,7 +40,9 @@ namespace EqUiWebUi.Areas.user_management.Controllers
             }
 
             AreaFiltersController areaFiltersController = new EqUiWebUi.Areas.user_management.Controllers.AreaFiltersController();
-            ViewBag.selectlist = areaFiltersController.getAreaSelectList();
+            ViewBag.AreaSelectlist = areaFiltersController.getAreaSelectList();
+            c_ownershipController ownership = new EqUiWebUi.Areas.user_management.Controllers.c_ownershipController();
+            ViewBag.OwnershipSelectlist = ownership.getOwnershipSelectList();
 
             return View(user);
         }
@@ -57,7 +61,9 @@ namespace EqUiWebUi.Areas.user_management.Controllers
             }
 
             AreaFiltersController areaFiltersController = new EqUiWebUi.Areas.user_management.Controllers.AreaFiltersController();
-            ViewBag.selectlist = areaFiltersController.getAreaSelectList();
+            ViewBag.AreaSelectlist = areaFiltersController.getAreaSelectList();
+            c_ownershipController ownership = new EqUiWebUi.Areas.user_management.Controllers.c_ownershipController();
+            ViewBag.OwnershipSelectlist = ownership.getOwnershipSelectList();
 
             return View(user);
         }
