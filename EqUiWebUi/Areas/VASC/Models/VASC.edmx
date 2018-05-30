@@ -24,6 +24,7 @@
           <Property Name="ClassificationTree" Type="varchar(max)" />
           <Property Name="CLassificationId" Type="varchar(max)" />
           <Property Name="hasRackidAsBodynum" Type="bit" Nullable="false" />
+          <Property Name="hasSpotweld" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="c_controller_class">
           <Key>
@@ -1111,6 +1112,7 @@
           <Property Name="hasRackidAsBodynum" Type="Boolean" Nullable="false" />
           <Property Name="ResponsibleTechnicianTeam" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ResponsibleProductionTeam" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="hasSpotweld" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="c_controller_class">
           <Key>
@@ -1870,6 +1872,7 @@
           <EntitySetMapping Name="c_controller">
             <EntityTypeMapping TypeName="GADATAModelVASC.c_controller">
               <MappingFragment StoreEntitySet="c_controller">
+                <ScalarProperty Name="hasSpotweld" ColumnName="hasSpotweld" />
                 <ScalarProperty Name="ResponsibleProductionTeam" ColumnName="ResponsibleProductionTeam" />
                 <ScalarProperty Name="ResponsibleTechnicianTeam" ColumnName="ResponsibleTechnicianTeam" />
                 <ScalarProperty Name="hasRackidAsBodynum" ColumnName="hasRackidAsBodynum" />

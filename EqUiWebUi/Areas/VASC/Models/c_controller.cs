@@ -45,6 +45,7 @@ namespace EqUiWebUi.Areas.VASC.Models
         public bool hasRackidAsBodynum { get; set; }
         public string ResponsibleTechnicianTeam { get; set; }
         public string ResponsibleProductionTeam { get; set; }
+        public bool hasSpotweld { get; set; }
     
         public virtual c_controller_class c_controller_class { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

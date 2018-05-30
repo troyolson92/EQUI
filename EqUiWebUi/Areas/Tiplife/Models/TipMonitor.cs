@@ -15,7 +15,8 @@ namespace EqUiWebUi.Areas.Tiplife.Models
     public partial class TipMonitor
     {
         public string Robot { get; set; }
-        public Nullable<System.DateTime> Date_Time { get; set; }
+        public Nullable<short> Tool_Nr { get; set; }
+        public System.DateTime Date_time { get; set; }
         public Nullable<short> nDress { get; set; }
         public Nullable<short> nWelds { get; set; }
         public Nullable<double> WearRatio { get; set; }
@@ -28,7 +29,7 @@ namespace EqUiWebUi.Areas.Tiplife.Models
         public int id { get; set; }
         public string LocationTree { get; set; }
         public Nullable<double> MagicFiXedWear { get; set; }
-        public Nullable<double> RobotWear { get; set; }
         public string Status { get; set; }
+        public Nullable<double> RobotWear { get; set; }
     }
 }

@@ -46,7 +46,7 @@ namespace EqUiWebUi.Areas.Tiplife
 
                 DateTime maxDate = data
                             .Where(r => r != null)
-                            .Select(r => r.Date_Time.Value)
+                            .Select(r => r.Date_time)
                             .Max();
 
                 DataBuffer.TipstatusLastDt = maxDate;
