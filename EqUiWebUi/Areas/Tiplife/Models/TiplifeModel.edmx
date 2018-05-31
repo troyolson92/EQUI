@@ -6,6 +6,19 @@
     <edmx:StorageModels>
     <Schema Namespace="GADATAModelTiplife.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.NGAC.TipDressCycleTimeREMO' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="TipDressCycleTimeREMO">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="controller_name" Type="varchar" MaxLength="30" />
+          <Property Name="LocationTree" Type="varchar(max)" />
+          <Property Name="Date Time" Type="datetime" />
+          <Property Name="_timestamp" Type="datetime" />
+          <Property Name="CT" Type="float" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'GADATA.NGAC.TipDressLogFile' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="TipDressLogFile">
           <Key>
@@ -233,6 +246,16 @@ warning 6002: The table/view 'GADATA.NGAC.TipwearLast' does not have a primary k
           <Property Name="Last%MovWearBeforeChange" Type="float" />
         </EntityType>
         <EntityContainer Name="GADATAModelTiplifeStoreContainer">
+          <EntitySet Name="TipDressCycleTimeREMO" EntityType="Self.TipDressCycleTimeREMO" store:Type="Views" store:Schema="NGAC">
+            <DefiningQuery>SELECT 
+    [TipDressCycleTimeREMO].[id] AS [id], 
+    [TipDressCycleTimeREMO].[controller_name] AS [controller_name], 
+    [TipDressCycleTimeREMO].[LocationTree] AS [LocationTree], 
+    [TipDressCycleTimeREMO].[Date Time] AS [Date Time], 
+    [TipDressCycleTimeREMO].[_timestamp] AS [_timestamp], 
+    [TipDressCycleTimeREMO].[CT] AS [CT]
+    FROM [NGAC].[TipDressCycleTimeREMO] AS [TipDressCycleTimeREMO]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="TipDressLogFile" EntityType="Self.TipDressLogFile" store:Type="Views" store:Schema="NGAC">
             <DefiningQuery>SELECT 
     [TipDressLogFile].[controller_name] AS [controller_name], 
@@ -617,6 +640,7 @@ warning 6002: The table/view 'GADATA.NGAC.TipwearLast' does not have a primary k
           <EntitySet Name="TipwearLast" EntityType="Self.TipwearLast" />
           <EntitySet Name="TipLifeExpectations" EntityType="GADATAModelTiplife.TipLifeExpectations" />
           <EntitySet Name="TipMonitor" EntityType="GADATAModelTiplife.TipMonitor" />
+          <EntitySet Name="TipDressCycleTimeREMO" EntityType="GADATAModelTiplife.TipDressCycleTimeREMO" />
         </EntityContainer>
         <EntityType Name="TipLifeExpectations">
           <Key>
@@ -661,6 +685,17 @@ warning 6002: The table/view 'GADATA.NGAC.TipwearLast' does not have a primary k
           <Property Name="MagicFiXedWear" Type="Double" />
           <Property Name="Status" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
           <Property Name="RobotWear" Type="Double" />
+        </EntityType>
+        <EntityType Name="TipDressCycleTimeREMO">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="controller_name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="LocationTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Date_Time" Type="DateTime" Precision="3" />
+          <Property Name="C_timestamp" Type="DateTime" Precision="3" />
+          <Property Name="CT" Type="Double" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -880,6 +915,18 @@ warning 6002: The table/view 'GADATA.NGAC.TipwearLast' does not have a primary k
                 <ScalarProperty Name="Date_time" ColumnName="Date time" />
                 <ScalarProperty Name="Tool_Nr" ColumnName="Tool_Nr" />
                 <ScalarProperty Name="Robot" ColumnName="Robot" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipDressCycleTimeREMO">
+            <EntityTypeMapping TypeName="GADATAModelTiplife.TipDressCycleTimeREMO">
+              <MappingFragment StoreEntitySet="TipDressCycleTimeREMO">
+                <ScalarProperty Name="CT" ColumnName="CT" />
+                <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
+                <ScalarProperty Name="Date_Time" ColumnName="Date Time" />
+                <ScalarProperty Name="LocationTree" ColumnName="LocationTree" />
+                <ScalarProperty Name="controller_name" ColumnName="controller_name" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
