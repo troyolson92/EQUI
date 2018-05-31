@@ -177,6 +177,9 @@
     <Folder Include="Areas\STW040\Models\" />
     <Folder Include="Areas\STW040\Views\Shared\" />
     <Folder Include="Areas\VASC\Views\Shared\" />
+    <Folder Include="Areas\Welding\Controllers\" />
+    <Folder Include="Areas\Welding\Models\" />
+    <Folder Include="Areas\Welding\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Code\MyRowStyling.cs" />
@@ -577,6 +580,7 @@
     <Compile Include="Areas\VASC\Models\VASCenums.cs" />
     <Compile Include="Areas\VASC\Models\winService.cs" />
     <Compile Include="Areas\VASC\VASCAreaRegistration.cs" />
+    <Compile Include="Areas\Welding\WeldingAreaRegistration.cs" />
     <Compile Include="Backgroundwork.cs" />
     <Compile Include="Controllers\Chart2Controller.cs" />
     <Compile Include="Controllers\ChartController.cs" />
@@ -1116,6 +1120,7 @@
     <Content Include="Areas\user_management\Views\c_ownership\Edit.cshtml" />
     <Content Include="Areas\user_management\Views\c_ownership\Index.cshtml" />
     <Content Include="Areas\Tiplife\Views\NgacElectrode\TipDressCycleTimeREMO.cshtml" />
+    <Content Include="Areas\Welding\Views\web.config" />
     <None Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.svg" />
