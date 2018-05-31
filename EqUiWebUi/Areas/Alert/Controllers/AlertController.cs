@@ -51,12 +51,12 @@ namespace EqUiWebUi.Areas.Alert.Controllers
 
         //Global Alert interface
         // GET: Listalerts AND filter the alerts based on the users profile
-        public async Task<ActionResult> Listalerts()
+        public ActionResult Listalerts()
         {
             //filter alerts basted on user profile!
             string UserLocationroot = CurrentUser.Getuser.LocationRoot;
             var h_alert = db.h_alert.Include(h => h.c_state).Include(h => h.c_triggers).Include(h => h.ChangedUser).Include(h => h.CloseUser).Include(h => h.AcceptUser);
-            return View(await h_alert.Where(a => a.locationTree.Contains(UserLocationroot)).ToListAsync());
+            return View(h_alert.Where(a => a.locationTree.Contains(UserLocationroot)));
         }
 
 
