@@ -33,8 +33,14 @@
 <hr />
 <div class="alert alert-success">
     <div>
-        <h5>OwnershipDropdownlist</h5>
+        <h4>OwnershipDropdownlist</h4>
         @Html.DropDownList("testdropdownlist", (SelectList)ViewBag.selectlist, htmlAttributes: new { @class = "form-control" }, optionLabel: "--Select--")
     </div>
+</div>
+<hr />
+<div class="alert alert-info">
+    <h4>This config is apply once every week by hangfire.</h4>
+    <p>Job: AssetsMx-gadata moves the data from maximo to gadata </p>
+    <p>Then [EqUi].[sp_LinkAssets] is invoked. The join for ownership happens here.</p>
 </div>
 

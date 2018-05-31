@@ -1259,6 +1259,7 @@
     <Content Include="Scripts\tableau-2.0.0.min.js" />
     <Content Include="Scripts\viewer.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="Notauthorized.html" />
     <Content Include="ServerErrorPage.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
