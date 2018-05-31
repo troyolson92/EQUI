@@ -372,6 +372,9 @@
     <Compile Include="Areas\STW040\STW040AreaRegistration.cs" />
     <Compile Include="Areas\Tiplife\Backgroundwork.cs" />
     <Compile Include="Areas\Tiplife\Controllers\NgacElectrodeController.cs" />
+    <Compile Include="Areas\Tiplife\Models\TipDressCycleTimeREMO.cs">
+      <DependentUpon>TiplifeModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Areas\Tiplife\Models\TipDressLogFile.cs">
       <DependentUpon>TiplifeModel.tt</DependentUpon>
     </Compile>
@@ -1112,6 +1115,7 @@
     <Content Include="Areas\user_management\Views\c_ownership\Details.cshtml" />
     <Content Include="Areas\user_management\Views\c_ownership\Edit.cshtml" />
     <Content Include="Areas\user_management\Views\c_ownership\Index.cshtml" />
+    <Content Include="Areas\Tiplife\Views\NgacElectrode\TipDressCycleTimeREMO.cshtml" />
     <None Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.svg" />

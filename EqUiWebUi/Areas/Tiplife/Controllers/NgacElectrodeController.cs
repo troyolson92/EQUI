@@ -134,5 +134,20 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
                                            select tipMonitor;
             return PartialView(data);
         }
+
+
+        //------------------------------------tabel ct van dressen (voor remo.)-------------------------------------------------
+        [HttpGet]
+        public ActionResult TipDressCycleTimeREMO(int daysback = 360)
+        {
+            var startdate = DateTime.Now.Date.AddDays(daysback * -1);
+            GADATAEntitiesTiplife gADATAEntities = new GADATAEntitiesTiplife();
+            string LocationRoot = CurrentUser.Getuser.LocationRoot;
+            IQueryable<TipDressCycleTimeREMO> data = from t in gADATAEntities.TipDressCycleTimeREMO
+                                                     where t.C_timestamp > startdate
+                                                   && (t.LocationTree ?? "").Contains(LocationRoot)
+                                                   select t;
+            return View(data);
+        }
     }
 }
