@@ -143,14 +143,34 @@ namespace EqUiWebUi
             }
         }
 
+        //handle UNauthorised
+        void Application_EndRequest(object sender, System.EventArgs e)
+        {
+            // If the user is not authorised to see this page or access this function, send them to the error page.
+            if (Response.StatusCode == 401 && Request.RawUrl != "/")
+            {
+                log.Error(string.Format("Unauthorised: {0} For page: {1}", Request.LogonUserIdentity.Name, Request.RawUrl));
+              //running this to see what hits.
+
+
+              //  Response.ClearContent();
+              //  Response.RedirectToRoute("ErrorHandler", (RouteTable.Routes["ErrorHandler"] as Route).Defaults);
+            }
+        }
 
         //returns a list of all active sessions.
         public static List<string> Sessions()
         {
             return _sessions;
         }
+
+
     }
 
+
+    //****************************************************************
+    //class to acces the session vars for the current user
+    //***************************************************************
     public static class CurrentUser
     {
         //
