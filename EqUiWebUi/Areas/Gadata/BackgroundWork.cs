@@ -256,11 +256,20 @@ namespace EqUiWebUi.Areas.Gadata
                 gadataComm.BulkCopyToGadata("Equi", tableFromMx7, "ASSETS_fromMX7", runAsAdmin: true, enblExeptions: true, maxEXECtime: 300);
                 log.Info("BulkCopyToGadata End");
                 //Run command to link the assets and update c_controllerTables
-                log.Info("sp_linkassets Start");
-                string CmdLinkAssets = "EXEC GADATA.[EqUi].[sp_LinkAssets]";
-                gadataComm.RunCommandGadata(CmdLinkAssets, runAsAdmin: true, enblExeptions: true, maxEXECtime: 300);
-                log.Info("sp_linkassets Done");
+                var jobId = BackgroundJob.Enqueue(() => LinkMaximoAssetsToGadata());
         }
 
+        [Queue("gadata")]
+        [AutomaticRetry(Attempts = 5)]
+        [DisableConcurrentExecution(300)] //timeout 3minutes
+        //This relinks the assets from maximo in gadata 
+        public void LinkMaximoAssetsToGadata()
+        {
+            log.Info("sp_linkassets Start");
+            string CmdLinkAssets = "EXEC GADATA.[EqUi].[sp_LinkAssets]";
+            GadataComm gadataComm = new GadataComm();
+            gadataComm.RunCommandGadata(CmdLinkAssets, runAsAdmin: true, enblExeptions: true, maxEXECtime: 300);
+            log.Info("sp_linkassets Done");
+        }
     }
 }

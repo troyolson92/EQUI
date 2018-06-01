@@ -148,10 +148,10 @@ namespace EqUiWebUi.Areas.user_management.Controllers
                     SelectListGroup selectListGroup = new SelectListGroup() { Name = optgroup, Disabled = false };
                     List<SelectListItem> optgroupItems = ownershipFilters.Where(list => list.Plant == plant && list.Optgroup == optgroup
                             && (list.LocationTree.Contains(UserLocationRoot) || UserLocationRoot == "")
-                                            ).Select(list => new SelectListItem
+                                            ).GroupBy(items => items.Ownership).Select(item => new SelectListItem
                                             {
-                                                Value = list.Ownership,
-                                                Text = list.Ownership,
+                                                Value = item.First().Ownership,
+                                                Text = item.First().Ownership,
                                                 Group = selectListGroup,
                                                 Disabled = false
                                             }).ToList();
@@ -160,6 +160,14 @@ namespace EqUiWebUi.Areas.user_management.Controllers
 
             }
             return new SelectList(selectList, "Value", "Text", "Group.Name", 0);
+        }
+
+        //fire a hangfire job to relink assers 
+        [Authorize(Roles = "Administrator")]
+        public void LinkMaximoAssetsToGadata()
+        {
+            EqUiWebUi.Areas.Gadata.BackgroundWork backgroundWork = new Gadata.BackgroundWork();
+            backgroundWork.LinkMaximoAssetsToGadata();
         }
     }
 }
