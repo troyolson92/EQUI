@@ -162,7 +162,8 @@
           <Property Name="LocationTree" Type="varchar(max)" />
           <Property Name="Assetnum" Type="varchar(max)" />
           <Property Name="ProductionTeam" Type="varchar(max)" />
-          <Property Name="ResponsiblePloeg" Type="varchar(max)" />
+          <Property Name="ResponsibleTechnicianTeam" Type="varchar" MaxLength="50" />
+          <Property Name="ResponsibleProductionTeam" Type="varchar" MaxLength="50" />
           <Property Name="ClassificationTree" Type="varchar(max)" />
           <Property Name="CLassificationId" Type="varchar(max)" />
           <Property Name="pjv_action_mask" Type="int" />
@@ -219,6 +220,11 @@
           <Property Name="AssetRoot" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Locked" Type="bit" Nullable="false" />
           <Property Name="Blocked" Type="bit" Nullable="false" />
+          <Property Name="SessionId" Type="varchar" MaxLength="200" />
+          <Property Name="Comment" Type="varchar(max)" />
+          <Property Name="ResponsibleArea" Type="varchar" MaxLength="50" />
+          <Property Name="Team" Type="varchar" MaxLength="50" />
+          <Property Name="Culture" Type="varchar" MaxLength="50" />
         </EntityType>
         <Association Name="FK_c_SMSconfig_c_CPT600">
           <End Role="c_CPT600" Type="Self.c_CPT600" Multiplicity="1" />
@@ -572,6 +578,11 @@
           <NavigationProperty Name="Close" Relationship="Self.FK_h_alert_L_users1" FromRole="L_users" ToRole="h_alert" />
           <NavigationProperty Name="AcceptUser" Relationship="Self.FK_h_alert_L_users2" FromRole="L_users" ToRole="h_alert" />
           <NavigationProperty Name="l_variants" Relationship="AlertModel.FK_l_variants_L_users" FromRole="L_users" ToRole="l_variants" />
+          <Property Name="SessionId" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ResponsibleArea" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Team" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Culture" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_h_alert_c_state">
           <End Role="c_state" Type="Self.c_state" Multiplicity="1" />
@@ -904,13 +915,14 @@
           <Property Name="LocationTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Assetnum" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="ProductionTeam" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="ResponsiblePloeg" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="ClassificationTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="CLassificationId" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="GunCylinderefernce" Relationship="AlertModel.FK_GunCylinderefernce_c_controller" FromRole="c_controller" ToRole="GunCylinderefernce" />
           <NavigationProperty Name="SBCUrefernce" Relationship="AlertModel.FK_SBCUrefernce_c_controller" FromRole="c_controller" ToRole="SBCUrefernce" />
           <Property Name="pjv_action_mask" Type="Int32" />
           <Property Name="pjv_event_mask" Type="Int32" />
+          <Property Name="ResponsibleTechnicianTeam" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ResponsibleProductionTeam" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_GunCylinderefernce_c_controller">
           <End Type="AlertModel.c_controller" Role="c_controller" Multiplicity="0..1" />
@@ -1094,6 +1106,11 @@
           <EntitySetMapping Name="L_users">
             <EntityTypeMapping TypeName="AlertModel.L_users">
               <MappingFragment StoreEntitySet="L_users">
+                <ScalarProperty Name="Culture" ColumnName="Culture" />
+                <ScalarProperty Name="Team" ColumnName="Team" />
+                <ScalarProperty Name="ResponsibleArea" ColumnName="ResponsibleArea" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="SessionId" ColumnName="SessionId" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="username" ColumnName="username" />
                 <ScalarProperty Name="LocationRoot" ColumnName="LocationRoot" />
@@ -1198,11 +1215,12 @@
           <EntitySetMapping Name="c_controller">
             <EntityTypeMapping TypeName="AlertModel.c_controller">
               <MappingFragment StoreEntitySet="c_controller">
+                <ScalarProperty Name="ResponsibleProductionTeam" ColumnName="ResponsibleProductionTeam" />
+                <ScalarProperty Name="ResponsibleTechnicianTeam" ColumnName="ResponsibleTechnicianTeam" />
                 <ScalarProperty Name="pjv_event_mask" ColumnName="pjv_event_mask" />
                 <ScalarProperty Name="pjv_action_mask" ColumnName="pjv_action_mask" />
                 <ScalarProperty Name="CLassificationId" ColumnName="CLassificationId" />
                 <ScalarProperty Name="ClassificationTree" ColumnName="ClassificationTree" />
-                <ScalarProperty Name="ResponsiblePloeg" ColumnName="ResponsiblePloeg" />
                 <ScalarProperty Name="ProductionTeam" ColumnName="ProductionTeam" />
                 <ScalarProperty Name="Assetnum" ColumnName="Assetnum" />
                 <ScalarProperty Name="LocationTree" ColumnName="LocationTree" />
