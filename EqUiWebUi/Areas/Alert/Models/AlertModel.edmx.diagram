@@ -21,9 +21,9 @@
         <EntityTypeShape EntityType="AlertModel.c_SMSconfig" Width="1.5" PointX="17.5" PointY="7.125" />
         <AssociationConnector Association="AlertModel.FK_c_SMSconfig_c_CPT600" />
         <AssociationConnector Association="AlertModel.FK_c_SMSconfig_c_smsSystem" />
-        <EntityTypeShape EntityType="AlertModel.GunCylinderefernce" Width="1.5" PointX="25.375" PointY="6.75" />
-        <EntityTypeShape EntityType="AlertModel.SBCUrefernce" Width="1.5" PointX="25.375" PointY="11.25" />
-        <EntityTypeShape EntityType="AlertModel.c_controller" Width="1.5" PointX="23" PointY="6" />
+        <EntityTypeShape EntityType="AlertModel.GunCylinderefernce" Width="1.5" PointX="25.375" PointY="6.75" FillColor="255, 192, 255" />
+        <EntityTypeShape EntityType="AlertModel.SBCUrefernce" Width="1.5" PointX="25.375" PointY="11.25" FillColor="255, 192, 255" />
+        <EntityTypeShape EntityType="AlertModel.c_controller" Width="1.5" PointX="23" PointY="6" FillColor="255, 192, 255" />
         <AssociationConnector Association="AlertModel.FK_GunCylinderefernce_c_controller" />
         <AssociationConnector Association="AlertModel.FK_SBCUrefernce_c_controller" />
         <EntityTypeShape EntityType="AlertModel.l_controlLimits" Width="1.5" PointX="5.625" PointY="8" />

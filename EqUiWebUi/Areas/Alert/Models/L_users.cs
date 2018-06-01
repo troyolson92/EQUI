@@ -29,6 +29,11 @@ namespace EqUiWebUi.Areas.Alert.Models
         public string AssetRoot { get; set; }
         public bool Locked { get; set; }
         public bool Blocked { get; set; }
+        public string SessionId { get; set; }
+        public string Comment { get; set; }
+        public string ResponsibleArea { get; set; }
+        public string Team { get; set; }
+        public string Culture { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<h_alert> Changed { get; set; }

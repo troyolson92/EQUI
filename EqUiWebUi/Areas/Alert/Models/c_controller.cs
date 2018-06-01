@@ -61,11 +61,12 @@ namespace EqUiWebUi.Areas.Alert.Models
         public string LocationTree { get; set; }
         public string Assetnum { get; set; }
         public string ProductionTeam { get; set; }
-        public string ResponsiblePloeg { get; set; }
         public string ClassificationTree { get; set; }
         public string CLassificationId { get; set; }
         public Nullable<int> pjv_action_mask { get; set; }
         public Nullable<int> pjv_event_mask { get; set; }
+        public string ResponsibleTechnicianTeam { get; set; }
+        public string ResponsibleProductionTeam { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GunCylinderefernce> GunCylinderefernce { get; set; }
