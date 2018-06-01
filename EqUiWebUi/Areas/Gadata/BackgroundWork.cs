@@ -256,12 +256,9 @@ namespace EqUiWebUi.Areas.Gadata
                 gadataComm.BulkCopyToGadata("Equi", tableFromMx7, "ASSETS_fromMX7", runAsAdmin: true, enblExeptions: true, maxEXECtime: 300);
                 log.Info("BulkCopyToGadata End");
                 //Run command to link the assets and update c_controllerTables
-                var jobId = BackgroundJob.Enqueue(() => LinkMaximoAssetsToGadata());
+                LinkMaximoAssetsToGadata();
         }
 
-        [Queue("gadata")]
-        [AutomaticRetry(Attempts = 5)]
-        [DisableConcurrentExecution(300)] //timeout 3minutes
         //This relinks the assets from maximo in gadata 
         public void LinkMaximoAssetsToGadata()
         {
