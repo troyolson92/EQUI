@@ -8,11 +8,10 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <nav class="navbar navbar-expand-md bg-dark navbar-dark fixed-top" id="navbar">
-
+    <nav class="navbar navbar-expand-md py-0 bg-dark navbar-dark fixed-top" id="navbar">
         <!-- Brand -->
-        <a class="navbar-brand" href='@Url.Action("Index", "Home", new { area = "" }, null)'>
-            <img src="~/Content/images/volvo-50.png" />
+        <a class="navbar-brand py-0" href='@Url.Action("Index", "Home", new { area = "" }, null)'>
+            <img src="~/Content/images/volvo-50.png"/>
         </a>
 
         <!-- Toggler/collapsibe Button -->
@@ -24,7 +23,7 @@
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
             <ul class="navbar-nav">
                 <!-- Navbar links -->
-                <li class="nav-item dropdown">
+                <li class="nav-item  dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
                         Shortcuts
                     </a>
@@ -72,16 +71,12 @@
 
             <!-- pull right part -->
             <div class="navbar-nav ml-auto">
-                <div class="cb_inline_block">
-                    <a href='@Url.Action("Settings", "Home", new { area = "" }, null)' class="nav navbar-text">
-                        <i class="fas fa-cog"></i>
-                    </a>
+                <div class=" nav-item">
+                    <a class="fas fa-cog fa-1x" href='@Url.Action("Settings", "Home", new { area = "" }, null)' style="color:tomato" data-toggle="tooltip" title="Settings"></a>
 
-                    <a class="nav navbar-text userhelp" data-container="body" data-toggle="popover" data-original-title="@User.Identity.Name">
-                        <i class="fas fa-user"></i>
-                    </a>
+                    <a class="fas fa-user fa-2x userhelp" data-container="body" data-toggle="popover" data-original-title="@User.Identity.Name" style="color:aliceblue"></a>
 
-                    <a id="fullscreenNav" class="glyphicon glyphicon-fullscreen" data-toggle="tooltip" data-placement="left" title="Go fullscreen"></a>
+                    <a class="fas fa-arrows-alt" id="fullscreenNav"  data-toggle="tooltip" data-placement="left" title="Go fullscreen" style="color:aliceblue"></a>
 
                 </div>
             </div>
@@ -91,7 +86,8 @@
     </nav>
 
     @*load this bundle before body because of scripts in views*@
-    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/mainjavabundel")
+
     <!--Body content -->
     <div class="container body-content" id="allcontent">
         @RenderBody()
@@ -99,7 +95,6 @@
 
 
     @Scripts.Render("~/bundles/MyScripts")
-    @Scripts.Render("~/bundles/bootstrap")
     <script>
         //subscrible renderd grids to events
         $('.mvc-grid').mvcgrid();
@@ -109,6 +104,7 @@
         $("#allcontent").animate({ "margin-top": "60px" }, "fast");
         $("#navbar").autoHidingNavbar();
         //for user popover
+
         $(".userhelp").popover({
             placement: "left",
             html: true,
@@ -125,6 +121,7 @@
                 return output;
                 },
         })
+
         //for fullscreen mode
         $("#fullscreenNav").click(function () {
             $("#allcontent").removeClass("body-content");
@@ -162,23 +159,25 @@
             //this works for Chrome, Safari, IE ref:http://jsfiddle.net/q6kebgbh/4/
             $("#allcontent").css('zoom', qs("Zoomlevel"));
         }
-
         //enable tooltips everywhere
         $(function () {
             $('[data-toggle="tooltip"]').tooltip()
         })
     </script>
+
+    @*start render script sections in vieuws*@
     @RenderSection("scripts", required: false)
     @RenderSection("partials", required: false)
 
-    <hr />
+
     <!--footer-->
+    <hr />
     <footer id="footer">
         <p>&copy; @DateTime.Now.Year - VCG GA SDEBEUL Application</p>
     </footer>
     @*when navbar is hidden this is visble*@
     <div class="pull-right">
-        <a id="fullscreenBody" class="glyphicon glyphicon-fullscreen hidden" data-toggle="tooltip" data-placement="left" title="Exit fullscreen"></a>
+        <a id="fullscreenBody" class="fas fa-arrows-alt hidden" data-toggle="tooltip" data-placement="left" title="Exit fullscreen" style="color:aliceblue"></a>
     </div>
 
 

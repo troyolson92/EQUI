@@ -5,12 +5,12 @@
     ViewBag.Title = "TipLifeExpectations";
 }
 
-<div class="panel panel-default">
-    <div class="panel-heading">
+<div class="card">
+    <div class="card-header bg-primary">
         <h4>TipLifeExpectations</h4>
     </div>
 
-    <div class="panel-body">
+    <div class="card-body">
         @Html.Grid(Model).Named("TipLifeExpectations").Build(columns =>
         {
             columns.Add(c => c.controller_name).Titled("Robot").Filterable(true);

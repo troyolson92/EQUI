@@ -1,32 +1,32 @@
 ﻿@model List<EqUiWebUi.Areas.Maximo_ui.Models.Workorder>
 
-<div class="panel panel-primary">
-    <div class="panel-heading">
+<div class="card-header bg-primary">
+    <div class="card-header bg-primary">
         <h4>WoDetails <strong>@ViewBag.parentwonum</strong> (parent)</h4>
         <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
     </div>
 
-    <div class="panel-body">
+    <div class="card-body">
         @{Html.RenderAction("_woDetails", new { wonum = ViewBag.parentwonum, RealtimeConn = ViewBag.RealtimeConn });}
     </div>
 
 </div>
 
 <div class="panel panel-warning">
-    <div class="panel-heading">
+    <div class="card-header bg-primary">
         <h4>WoDetails <strong>@ViewBag.parentwonum</strong> (childeren)</h4>
         <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
     </div>
 
-    <div class="panel-body">
+    <div class="card-body">
         @foreach (EqUiWebUi.Areas.Maximo_ui.Models.Workorder subWo in Model)
         {
-            <div class="panel panel-default">
-                <div class="panel-heading">
+            <div class="card">
+                <div class="card-header bg-primary">
                     <h6>WoDetails wo:<strong>@subWo.WONUM</strong>  location:<strong>@subWo.LOCATION</strong>  Ownergroup:<strong>@subWo.OWNERGROUP</strong> status:<strong>@subWo.STATUS</strong> (child)</h6>
                 </div>
 
-                <div class="panel-body">
+                <div class="card-body">
                     @{Html.RenderAction("_woDetails", new { wonum = subWo.WONUM, RealtimeConn = ViewBag.RealtimeConn });}
                 </div>
 

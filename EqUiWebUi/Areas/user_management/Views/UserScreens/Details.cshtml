@@ -82,12 +82,12 @@
 </p>
 <hr />
 
-<div class="panel panel-primary">
-    <div class="panel-heading">
-        <h4 class="panel-title">ScreenMaster Toolbox</h4>
+<div class="card-header bg-primary">
+    <div class="card-header bg-primary">
+        <h4 class="card-title">ScreenMaster Toolbox</h4>
         <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
     </div>
-    <div class="panel-body">
+    <div class="card-body">
         <input id="ScreenMasterBtnFullRefresh" class="btn btn-warning JQresultTriggerBtn" type="button" value="FullRefresh" href="@Url.Action("FullRefresh", new {area = "user_management", screenId = Model.id})" />
         Send Refresh command to this screen. (full page reload)
         <p></p>
@@ -96,12 +96,12 @@
     </div>
 </div>
 
-<div class="panel panel-primary">
-    <div class="panel-heading">
-        <h4 class="panel-title">ScreenMaster messenger</h4>
+<div class="card-header bg-primary">
+    <div class="card-header bg-primary">
+        <h4 class="card-title">ScreenMaster messenger</h4>
         <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
     </div>
-    <div class="panel-body">
+    <div class="card-body">
         <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
         @using (Ajax.BeginForm("DisplayMessage", "UserScreens", new { screenId = Model.id }, new AjaxOptions { HttpMethod = "POST" }))
         {
@@ -114,12 +114,12 @@
     </div>
 </div>
 
-<div class="panel panel-primary">
-    <div class="panel-heading">
-        <h4 class="panel-title">ScreenMaster Iframe</h4>
+<div class="card-header bg-primary">
+    <div class="card-header bg-primary">
+        <h4 class="card-title">ScreenMaster Iframe</h4>
         <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
     </div>
-    <div class="panel-body">
+    <div class="card-body">
         <input id="ScreenMasterBtnSendUrl" class="btn btn-warning JQresultTriggerBtn" type="button" value="SendUrl" href="@Url.Action("DisplayPage", new {area = "user_management", screenId = Model.id, url = "http://equi", showtime = 10 })" />
         Send url to all screens
     </div>

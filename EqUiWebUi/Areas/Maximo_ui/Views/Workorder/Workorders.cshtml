@@ -6,12 +6,12 @@
 <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
 @using (Ajax.BeginForm("_workordersOnLocation", "Workorder", new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "formContent", LoadingElementId = "loader" }))
 {
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-            <h4 class="panel-title">Maximo WorkorderSelectOptions</h4>
+    <div class="card-header bg-primary">
+        <div class="card-header bg-primary">
+            <h4 class="card-title">Maximo WorkorderSelectOptions</h4>
             <span id="WorkorderSelectOptions" class ="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
         </div>
-        <div class="panel-body">
+        <div class="card-body">
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <form class="form-horizontal">
                 <fieldset>

@@ -1,8 +1,8 @@
 ﻿@model EqUiWebUi.Areas.VASC.Models.c_controller_class
 
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h4 class="panel-title">
+<div class="card">
+    <div class="card-header bg-primary">
+        <h4 class="card-title">
             c controllers in this class
             @if (ViewBag.controller_id != null){<strong>Filtered on controllerID: @ViewBag.controller_id</strong>}
         </h4>
@@ -10,14 +10,14 @@
     </div>
     <div class="alert-info">
     </div>
-    <div class="panel-body">
+    <div class="card-body">
         <div id="c_controllerGrid" class="mvc-grid"></div>
     </div>
 </div>
 
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h4 class="panel-title">c variable </h4>
+<div class="card">
+    <div class="card-header bg-primary">
+        <h4 class="card-title">c variable </h4>
         <div class="text-muted">
             (Rapid variables or IO signals handeld *logged to a table or used as event)
             @Html.ActionLink("c_variable index", "Index", "c_variable")
@@ -26,14 +26,14 @@
     </div>
     <div class="alert-info">
     </div>
-    <div class="panel-body">
+    <div class="card-body">
         <div id="c_variableGrid" class="mvc-grid"></div>
     </div>
 </div>
 
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h4 class="panel-title">c variable search </h4>
+<div class="card">
+    <div class="card-header bg-primary">
+        <h4 class="card-title">c variable search </h4>
         <div class="text-muted">
             (Rapid variabels to be search for at startup and logged to a table)
             @Html.ActionLink("c_variable search_index", "Index", "c_variable_search")
@@ -42,14 +42,14 @@
         </div>
         <div class="alert-info">
         </div>
-        <div class="panel-body">
+        <div class="card-body">
             <div id="c_variable_searchGrid" class="mvc-grid"></div>
         </div>
     </div>
 
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h4 class="panel-title">c error</h4>
+<div class="card">
+    <div class="card-header bg-primary">
+        <h4 class="card-title">c error</h4>
         <div class="text-muted">
             (alarms from controllereventlog can be setup to be ignored or redirected to junk table)
             @Html.ActionLink("c_error_index", "Index", "c_error")
@@ -58,14 +58,14 @@
     </div>
     <div class="alert-info">
     </div>
-    <div class="panel-body">
+    <div class="card-body">
         <div id="c_errorGrid" class="mvc-grid"></div>
     </div>
 </div>
 
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h4 class="panel-title">c csv log</h4>
+<div class="card">
+    <div class="card-header bg-primary">
+        <h4 class="card-title">c csv log</h4>
         <div class="text-muted">
             (csv file type file to be monitored and logged to a table)
             @Html.ActionLink("c_csv_log_index", "Index", "c_csv_log")
@@ -74,14 +74,14 @@
     </div>
     <div class="alert-info">
     </div>
-    <div class="panel-body">
+    <div class="card-body">
         <div id="c_csv_logGrid" class="mvc-grid"></div>
     </div>
 </div>
 
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h4 class="panel-title">c device info</h4>
+<div class="card">
+    <div class="card-header bg-primary">
+        <h4 class="card-title">c device info</h4>
         <div class="text-muted">
             (setup how device info is monitored)
             @Html.ActionLink("c_device_info_log_index", "Index", "c_device_info")
@@ -90,7 +90,7 @@
     </div>
     <div class="alert-info">
     </div>
-    <div class="panel-body">
+    <div class="card-body">
         <div id="c_device_infoGrid" class="mvc-grid"></div>
     </div>
 </div>
