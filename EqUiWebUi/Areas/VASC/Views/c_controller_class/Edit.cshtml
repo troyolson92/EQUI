@@ -18,12 +18,12 @@
     @Html.HiddenFor(model => model.id)
 
 
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-            <h4 class="panel-title">Main settings</h4>
+    <div class="card-header bg-primary">
+        <div class="card-header bg-primary">
+            <h4 class="card-title">Main settings</h4>
             <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
         </div>
-        <div class="panel-body">
+        <div class="card-body">
 
             <div class="form-group">
                 @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-4" })
@@ -80,12 +80,12 @@
     </div>
 
 
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h4 class="panel-title">controller events</h4>
+    <div class="card">
+        <div class="card-header bg-primary">
+            <h4 class="card-title">controller events</h4>
             <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
         </div>
-        <div class="panel-body">
+        <div class="card-body">
             <div class="alert alert-info">
                 If insert or update is active this data is send to:
             </div>
@@ -204,14 +204,14 @@
         </div>
     </div>
 
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h4 class="panel-title">Sub system masks </h4>
+    <div class="card">
+        <div class="card-header bg-primary">
+            <h4 class="card-title">Sub system masks </h4>
             <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
         </div>
         <div class="alert-info">
         </div>
-        <div class="panel-body">
+        <div class="card-body">
 
             <div class="form-group">
                 @Html.LabelFor(model => model.cVariableMask, htmlAttributes: new { @class = "control-label col-md-4" })
@@ -264,14 +264,14 @@
         </div>
     </div>
 
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h4 class="panel-title">other stuff </h4>
+    <div class="card">
+        <div class="card-header bg-primary">
+            <h4 class="card-title">other stuff </h4>
             <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
         </div>
         <div class="alert-info">
         </div>
-        <div class="panel-body">
+        <div class="card-body">
             <div class="form-group">
                 @Html.LabelFor(model => model.logCategoryMask, htmlAttributes: new { @class = "control-label col-md-4" })
                 <div class="col-md-8">

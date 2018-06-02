@@ -1,7 +1,7 @@
 ﻿@model EqUiWebUi.Models.LogInfo
-<div class="panel panel-primary">
-    <div class="panel-heading">
-        <h4 class="panel-title">
+<div class="card-header bg-primary">
+    <div class="card-header bg-primary">
+        <h4 class="card-title">
             Trend for location: <strong>@Model.location.Trim()</strong> logcode: <strong>@Model.errornum</strong> logtext: <strong>@Model.logtext.Trim()</strong>
             <a class="glyphicon glyphicon-cog" href="#" data-toggle="popover" data-placement="bottom" id="ErrorTrentCharOptionsPopover"></a>
             <a class="glyphicon glyphicon-calendar" id="ErrorTrentCharDatepicker" href="#"></a>
@@ -9,7 +9,7 @@
         <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
     </div>
 
-    <div class="panel-body" id="graphSpinner" style="position:relative">
+    <div class="card-body" id="graphSpinner" style="position:relative">
         <div id="gaphContainer">
             <canvas id='graphCanvas'></canvas>
         </div>

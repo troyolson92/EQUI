@@ -2,12 +2,12 @@
 @{
     ViewBag.Title = "PlanTipChange";
 }
-    <div class="panel panel-default">
-        <div class="panel-heading">
+    <div class="card">
+        <div class="card-header bg-primary">
             <h4>Tipchange toolbox</h4>
         </div>
 
-        <div class="panel-body">
+        <div class="card-body">
             @*plan false
                 gebruiker geeft in het formulier waar en met welke voorwaardes hij elektrodes wil wisselen*@
 
@@ -18,13 +18,13 @@
 
             </div>
 
-            <div class="panel panel-default">
+            <div class="card">
 
-                <div class="panel-heading">
+                <div class="card-header bg-primary">
                     <h4>Plan het onderhoud</h4>
                 </div>
 
-                <div class="panel-body">
+                <div class="card-body">
 
                     <div class="row">
                         <div class="col-sm-5">
@@ -77,9 +77,9 @@
             @****************************************************************************************************************************@
 
             @*DO Hier word de lijst getoond met waar er moet gewisselde worden*@
-            <div class="panel panel-default" id="tipsToChangeContainer" style="display:none">
+            <div class="card" id="tipsToChangeContainer" style="display:none">
 
-                <div class="panel-heading">
+                <div class="card-header bg-primary">
                     <div class="row">
                         <h4 class="col-sm-6">Deze robots moeten gewisseld worden.</h4>
                         <div class="col-sm-3" style="float:right">
@@ -88,7 +88,7 @@
                     </div>
                 </div>
 
-                <div class="panel-body" id="tipsToChangecontainer" style="position:relative">
+                <div class="card-body" id="tipsToChangecontainer" style="position:relative">
                     <div id="tipsToChange" style="display:none">result wil be here</div>
                 </div>
 
@@ -101,9 +101,9 @@
 
             @*CHECK Hier moet een soort van bevestiging komen. user moet elke keer op refresh duwen en crossmatch met lijst van hierboven
                 gebruik refernetie timestime van hierboven.*@
-            <div class="panel panel-default" id="tipsChangedContainer" style="display:none">
+            <div class="card" id="tipsChangedContainer" style="display:none">
 
-                <div class="panel-heading">
+                <div class="card-header bg-primary">
                     <div class="row">
                         <h4 class="col-sm-6">Deze wissels NIET zijn gedetecteerd.</h4>
                         <div class="col-sm-3" style="float:right">
@@ -112,7 +112,7 @@
                     </div>
                 </div>
 
-                <div class="panel-body" id="tipsChangedcontainer" style="position:relative">
+                <div class="card-body" id="tipsChangedcontainer" style="position:relative">
                     <div id="tipsChanged" style="display:none">result wil be here</div>
                 </div>
 

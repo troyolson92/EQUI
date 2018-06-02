@@ -8,16 +8,17 @@ function initInterface() {
 
 //script for subscribing to pannel colaps
 function EnablePannelCollaps() {
-    $(document).on('click', '.panel-heading span.clickable', function (e) {
+    $(document).on('click', '.card-header span.clickable', function (e) {
+        console.log('hit');
         var $this = $(this);
-        if (!$this.hasClass('panel-collapsed')) {
-            $this.parents('.panel').find('.panel-body').slideUp();
-            $this.addClass('panel-collapsed');
-            $this.find('i').removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down');
+        if (!$this.hasClass('collapse')) {
+            $this.parents('.card').find('.card-body').slideUp();
+            $this.addClass('collapse');
+            $this.find('i').removeClass('fa-chevron-circle-up').addClass('fa-chevron-circle-down');
         } else {
-            $this.parents('.panel').find('.panel-body').slideDown();
-            $this.removeClass('panel-collapsed');
-            $this.find('i').removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up');
+            $this.parents('.card').find('.card-body').slideDown();
+            $this.removeClass('collapse');
+            $this.find('i').removeClass('fa-chevron-circle-down').addClass('fa-chevron-circle-up');
         }
     })
 }

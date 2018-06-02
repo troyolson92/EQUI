@@ -9,8 +9,11 @@ namespace EqUiWebUi
         public static void RegisterBundles(BundleCollection bundles)
         {
             //loads before content
-            bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js",
+            bundles.Add(new ScriptBundle("~/bundles/mainjavabundel").Include(
+                         "~/Scripts/jquery-{version}.js",
+                         "~/Scripts/umd/popper.min.js", //popper BEFORE bootstrap 
+                         "~/Scripts/bootstrap.min.js", //bootstrap
+                         "~/Scripts/respond.js",
                          "~/Scripts/jquery.bootstrap-autohidingnavbar.js", //https://github.com/istvan-ujjmeszaros/bootstrap-autohidingnavbar 
                          "~/Scripts/moment.js", //https://github.com/moment/moment/
                          "~/Scripts/spin.js", //https://github.com/fgnass/spin.js/
@@ -34,16 +37,11 @@ namespace EqUiWebUi
                         "~/Scripts/modernizr-*"));
 
              
-            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js",
-                      "~/Scripts/respond.js"
-                      ));
-
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/Bootstrap.css",
                       "~/Content/mvc-grid.css", //style for mvc grids
                       "~/Content/daterangepicker.css", //style for datarange pickers
-                      "~/Content/fontawesome/font-awesome.css",  //for or icons https://fontawesome.com
+                      "~/Content/fontawesome-all.css",  //for or icons https://fontawesome.com
                       "~/Content/CustomStyleTweeks.css" //custom style tweeks
                       ));
         }

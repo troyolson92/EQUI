@@ -32,6 +32,7 @@
                     //launch modal
                 $('#MyModal').removeData('bs.modal');
                 $('#MyModal').html('<div class="modal-content">Loading....</div>');
+                console.log(urlMoreInfo);
                 $('#MyModal').modal({ remote: urlMoreInfo });
         },
         reloadStarted: function () {

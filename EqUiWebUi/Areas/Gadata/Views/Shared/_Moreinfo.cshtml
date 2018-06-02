@@ -32,15 +32,15 @@
         all other logtypes are run via equi.GetErrorInfoData*@
     @if (Model.logtype == "ALERT")
     {
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <h4 class="panel-title">
+        <div class="card-header bg-primary">
+            <div class="card-header bg-primary">
+                <h4 class="card-title">
                     Details for Alert: <strong>@Model.refid</strong> Info: <strong>@Model.logtext.Trim()</strong>
                     @MyFilters.IconActionLink(Url.Action("Edit", "Alert", new { area = "Alert", id = Model.refid }), "glyphicon glyphicon-pencil", "", "Edit this alert")
                 </h4>
                 <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
             </div>
-            <div class="panel-body">
+            <div class="card-body">
                 @Html.Action("_Details", "Alert", new { area = "Alert", id = Model.refid })
             </div>
         </div>

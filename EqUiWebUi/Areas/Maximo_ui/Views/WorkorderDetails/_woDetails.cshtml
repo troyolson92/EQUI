@@ -4,7 +4,7 @@
 }
 
 <div class="panel panel-default @((!string.IsNullOrWhiteSpace(ViewBag.DESCRIPTION) || !string.IsNullOrWhiteSpace(ViewBag.LongDescription)) ? "shown":"hidden")">
-    <div class="panel-heading">
+    <div class="card-header bg-primary">
         <h6>
             Description:
             <strong>@ViewBag.DESCRIPTION</strong>
@@ -17,7 +17,7 @@
 </div>
 
 <div class="panel panel-default  @((!string.IsNullOrWhiteSpace(ViewBag.REMARKDESC) || !string.IsNullOrWhiteSpace(ViewBag.FailureRemark)) ? "shown":"hidden")">
-    <div class="panel-heading">
+    <div class="card-header bg-primary">
         <h6>
             FailureRemark:
             <strong> @ViewBag.REMARKDESC</strong>
@@ -31,7 +31,7 @@
 
 
 <div class="panel panel-default shown">
-    <div class="panel-heading">
+    <div class="card-header bg-primary">
         <h6>
             ReportedBy:
             <strong> @ViewBag.REPORTEDBY</strong>
@@ -40,10 +40,10 @@
 </div>
 
 <div class="panel panel-default @(Model.Data.Count() != 0 ? "shown":"hidden")">
-    <div class="panel-heading">
+    <div class="card-header bg-primary">
         <h6>Labor</h6>
     </div>
-    <div class="panel-body">
+    <div class="card-body">
         @{
             WebGrid grid = new WebGrid(null, rowsPerPage: @Model.PageSize);
             grid.Bind(Model.Data, autoSortAndPage: true, rowCount: @Model.PageSize);
