@@ -684,7 +684,6 @@
     <Content Include="Content\Cyborg.css" />
     <Content Include="Content\daterangepicker.css" />
     <Content Include="Content\fontawesome-all.css" />
-    <Content Include="Content\images\award-winning.png" />
     <Content Include="Content\images\volvo-50.png" />
     <Content Include="Content\jquery-cron.css" />
     <Content Include="Content\jquery-ui.css" />

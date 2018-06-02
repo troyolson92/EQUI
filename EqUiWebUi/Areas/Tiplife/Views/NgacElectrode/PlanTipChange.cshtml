@@ -27,46 +27,44 @@
                 <div class="card-body">
 
                     <div class="row">
-                        <div class="col-sm-5">
-                            <label class="control-label col-sm-4" for="location">Op locatie</label>
-                            <div class="col-sm-8">
+                        <div class="col-md-5">
+                            <label class="control-label col-md-4" for="location">Op locatie</label>
+                            <div class="col-md-8">
                                 @Html.DropDownList("location", (SelectList)ViewBag.selectlist, htmlAttributes: new { @class = "form-control" }, optionLabel: "--Select a location--")
                             </div>
                         </div>
                     </div>
 
-                    @*sam snapt het niet....*@
-                    <div class="row"><a>.</a></div>
+                    <hr />
 
                     <div class="row">
-                        <div class="col-sm-5">
-                            <label class="control-label col-sm-8" for="minwear">waar de wear groter is dan</label>
-                            <div class="col-sm-4">
+                        <div class="col-md-5">
+                            <label class="control-label col-md-8" for="minwear">waar de wear groter is dan</label>
+                            <div class="col-md-4">
                                 <input class="form-control input-sm" type="number" min="0" max="100" step="5" value="80" id="minwear" />
                             </div>
                         </div>
                         
-                        <div class="col-sm-7">
-                            <label class="control-label col-sm-8" for="minparts">minimum resterende stukken kleiner dan</label>
-                            <div class="col-sm-4">
+                        <div class="col-md-7">
+                            <label class="control-label col-md-8" for="minparts">minimum resterende stukken kleiner dan</label>
+                            <div class="col-md-4">
                                 <input class="form-control input-sm" type="number" min="0"  step="10" value="200" id="minparts"  />
                             </div>
                         </div>
 
                     </div>
 
-                    @*sam snapt het niet....*@
-                    <div class="row"><a>.</a></div>
+                    <hr />
 
                     <div class="row">
-                        <div class="col-sm-5">
-                            <label class="control-label col-sm-8" for="maxdress">aantal keer gefreesd groter dan</label>
-                            <div class="col-sm-4">
+                        <div class="col-md-5">
+                            <label class="control-label col-md-8" for="maxdress">aantal keer gefreesd groter dan</label>
+                            <div class="col-md-4">
                                 <input class="form-control input-sm" type="number" min="0" max="200" step="10" value="180" id="maxdress" />
                             </div>
                         </div>
 
-                        <div class="col-sm-7"></div>
+                        <div class="col-md-7"></div>
                     </div>
                 </div>
 
@@ -81,8 +79,8 @@
 
                 <div class="card-header bg-primary">
                     <div class="row">
-                        <h4 class="col-sm-6">Deze robots moeten gewisseld worden.</h4>
-                        <div class="col-sm-3" style="float:right">
+                        <h4 class="col-md-6">Deze robots moeten gewisseld worden.</h4>
+                        <div class="col-md-3" style="float:right">
                             <input class="form-control input-sm"  id="changeStartlistDatepicker" />    
                         </div>
                     </div>
@@ -105,8 +103,8 @@
 
                 <div class="card-header bg-primary">
                     <div class="row">
-                        <h4 class="col-sm-6">Deze wissels NIET zijn gedetecteerd.</h4>
-                        <div class="col-sm-3" style="float:right">
+                        <h4 class="col-md-6">Deze wissels NIET zijn gedetecteerd.</h4>
+                        <div class="col-md-3" style="float:right">
                             <input class="form-control input-sm" id="changeDonelistDatepicker" />
                         </div>
                     </div>
@@ -123,9 +121,6 @@
             @****************************************************************************************************************************@
         </div>
 
-        <div class="panel-footer">
-            <a href="~/Tiplife/NgacElectrode/Index" class="btn-xs btn-primary">Electrode home &raquo;</a>
-        </div>
     </div>
 
 
@@ -133,7 +128,6 @@
 <script type="text/javascript">
 //loading of first container and table "tips to change"
     var urlTipsToChange = '@Url.Action("_TipsToChange")';
-    var spinner1 = new Spinner();
     $('#loadLocations').click(function () {
         //disable button
         $('#loadLocations').attr("disabled", true);
@@ -174,8 +168,6 @@
                 function () {
                     //fade in the result table
                     $('#tipsToChange').fadeIn(1000,function () {
-                        //hide spinner when fade completes
-                        spinner1.stop();
                     });
                     //enable button
                     $('#loadLocations').removeAttr("disabled");
@@ -185,7 +177,6 @@
 
 //loading of second container and table "change check"
     var urlTipsChanged = '@Url.Action("_TipsChanged")';
-    var spinner2 = new Spinner();
     $('#loadverification, #RefreshVerification').click(function () {
         //disable buttons
         $('#loadverification').attr("disabled", true);
@@ -208,8 +199,6 @@
         }, function (end, start, label) {
             EndDate = start;
         });
-        //start a wait spinner
-        spinner2.spin(document.getElementById('tipsChangedcontainer'));
         //first fade in the container (will only fade in on first run)
         $("#tipsChangedContainer").fadeIn();
         //load partial
@@ -229,8 +218,6 @@
                 function () {
                     //fade in the result table
                     $('#tipsChanged').fadeIn(1000,function () {
-                        //hide spinner when fade completes
-                        spinner2.stop();
                     });
                     //enable button
                     $('#loadverification').removeAttr("disabled");

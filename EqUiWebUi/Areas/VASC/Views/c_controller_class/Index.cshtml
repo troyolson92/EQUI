@@ -34,11 +34,11 @@
 {
     columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Asc);
     columns.Add(c => c.name).Titled("name");
-    columns.Add(c => c.cVariableMask).Titled("cVariableMask").Css("hidden-sm hidden-xs");
-    columns.Add(c => c.cVariableSearchMask).Titled("cVariableSearchMask").Css("hidden-sm hidden-xs");
-    columns.Add(c => c.cErrorMask).Titled("cErrorMask").Css("hidden-sm hidden-xs");
-    columns.Add(c => c.cCSVLogMask).Titled("cCSVLogMask").Css("hidden-sm hidden-xs");
-    columns.Add(c => c.cDeviceInfoMask).Titled("cDeviceInfoMask").Css("hidden-sm hidden-xs");
+    columns.Add(c => c.cVariableMask).Titled("cVariableMask").Css("d-none d-sm-block");
+    columns.Add(c => c.cVariableSearchMask).Titled("cVariableSearchMask").Css("d-none d-sm-block");
+    columns.Add(c => c.cErrorMask).Titled("cErrorMask").Css("d-none d-sm-block");
+    columns.Add(c => c.cCSVLogMask).Titled("cCSVLogMask").Css("d-none d-sm-block");
+    columns.Add(c => c.cDeviceInfoMask).Titled("cDeviceInfoMask").Css("d-none d-sm-block");
     columns.Add(c => c)
                     .Titled("")
                     .Encoded(false)

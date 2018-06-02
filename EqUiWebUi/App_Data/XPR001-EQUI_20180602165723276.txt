@@ -1,0 +1,4 @@
+CMA_UB12_MO_WBL;Alert from: 339910ZS01
+BufferDown
+Buffer: 339900ZM01Mode.AC_AutoNotStarted
+
