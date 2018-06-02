@@ -25,7 +25,7 @@
 @Html.Grid(Model).Named("c_SMSconfig").Build(columns =>
 {
     columns.Add(c => c.id).Titled("ID").InitialSort(GridSortOrder.Asc);
-    columns.Add(c => c.c_smsSystem.id).Titled("c_smsSystemID").Css("hidden");
+    columns.Add(c => c.c_smsSystem.id).Titled("c_smsSystemID").Css("d-none");
     columns.Add(c => c.c_smsSystem.system).Titled("c_smsSystem");
     columns.Add(c => c.c_CPT600.Discription).Titled("c_CPT600");
     columns.Add(c => c.c_CPT600.LocationTree).Titled("LocationTree");

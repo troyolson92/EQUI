@@ -11,7 +11,7 @@
     {
         columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Asc);
         columns.Add(c => c._Enable_bit).Titled("enable_mask"); 
-        columns.Add(c => c.bit_id).Titled("bit_id").Css("hidden");
+        columns.Add(c => c.bit_id).Titled("bit_id").Css("d-none");
         columns.Add(c => c.value).Titled("SessionName");
         columns.Add(c => c.description).Titled("description");
     }).Filterable(true).Sortable(true).Empty("Did not find anything").Css("table-hover")

@@ -14,11 +14,11 @@ function EnablePannelCollaps() {
         if (!$this.hasClass('collapse')) {
             $this.parents('.card').find('.card-body').slideUp();
             $this.addClass('collapse');
-            $this.find('i').removeClass('fa-chevron-circle-up').addClass('fa-chevron-circle-down');
+          //  $this.find('i').removeClass('fa-chevron-circle-up').addClass('fa-chevron-circle-down');
         } else {
             $this.parents('.card').find('.card-body').slideDown();
             $this.removeClass('collapse');
-            $this.find('i').removeClass('fa-chevron-circle-down').addClass('fa-chevron-circle-up');
+          //  $this.find('i').removeClass('fa-chevron-circle-down').addClass('fa-chevron-circle-up');
         }
     })
 }

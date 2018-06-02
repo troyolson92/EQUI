@@ -14,12 +14,12 @@
 
 @Html.Grid(Model).Named("h_alert").Build(columns =>
 {
-    columns.Add(c => c.id).Titled("id").Filterable(true).InitialSort(GridSortOrder.Desc).Css("hidden-sm hidden-xs");
+    columns.Add(c => c.id).Titled("id").Filterable(true).InitialSort(GridSortOrder.Desc).Css("d-none d-sm-block");
     columns.Add(c => c.location).Titled("location").Filterable(true).MultiFilterable(true);
-    columns.Add(c => c.C_timestamp).Titled("C_timestamp").Formatted("{0:dd-MM-yyyy HH:mm}").Css("hidden-sm hidden-xs");
+    columns.Add(c => c.C_timestamp).Titled("C_timestamp").Formatted("{0:dd-MM-yyyy HH:mm}").Css("d-none d-sm-block");
     columns.Add(c => c.info).Titled("info");
-    columns.Add(c => c.ChangedUser.username.Replace(@"VCCNET\", "")).Titled("ChangedUser").Css("hidden-sm hidden-xs");
-    columns.Add(c => c.triggerCount).Titled("TC").Filterable(true).Css("hidden-sm hidden-xs");
+    columns.Add(c => c.ChangedUser.username.Replace(@"VCCNET\", "")).Titled("ChangedUser").Css("d-none d-sm-block");
+    columns.Add(c => c.triggerCount).Titled("TC").Filterable(true).Css("d-none d-sm-block");
 //render dropdown to set alert status
 columns.Add(c => c.c_state.state)
            .Titled("State")

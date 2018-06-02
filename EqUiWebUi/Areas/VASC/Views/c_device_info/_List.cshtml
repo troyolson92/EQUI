@@ -4,8 +4,8 @@
 {
     columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Asc);
     columns.Add(c => c._Enable_bit).Titled("enable_bit");
-    columns.Add(c => c._Poll_Rate).Titled("Poll_Rate").Css("hidden-sm hidden-xs");
-    columns.Add(c => c._Insert_update).Titled("Insert_update").Css("hidden-sm hidden-xs");
+    columns.Add(c => c._Poll_Rate).Titled("Poll_Rate").Css("d-none d-sm-block");
+    columns.Add(c => c._Insert_update).Titled("Insert_update").Css("d-none d-sm-block");
     columns.Add(c => c.name).Titled("name");
     columns.Add(c => c)
                         .Titled("")

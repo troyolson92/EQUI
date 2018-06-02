@@ -9,15 +9,15 @@
 
 @Html.Grid(Model).Named("h_alert").Build(columns =>
 {
-    columns.Add(c => c.id).Titled("ID").InitialSort(GridSortOrder.Desc).Css("hidden-sm hidden-xs");
+    columns.Add(c => c.id).Titled("ID").InitialSort(GridSortOrder.Desc).Css("d-none d-sm-block");
     columns.Add(c => c.c_triggers.alertType).Titled("alertType");
-    columns.Add(c => c.C_timestamp).Titled("C_timestamp").Formatted("{0:dd-MM-yyyy HH:mm}").Css("hidden-sm hidden-xs");
+    columns.Add(c => c.C_timestamp).Titled("C_timestamp").Formatted("{0:dd-MM-yyyy HH:mm}").Css("d-none d-sm-block");
     columns.Add(c => c.location).Titled("location");
-    columns.Add(c => c.alarmobject).Titled("alarmobject").Css("hidden-sm hidden-xs");
-    columns.Add(c => c.Classification).Titled("Class").Css("hidden-sm hidden-xs");
+    columns.Add(c => c.alarmobject).Titled("alarmobject").Css("d-none d-sm-block");
+    columns.Add(c => c.Classification).Titled("Class").Css("d-none d-sm-block");
     columns.Add(c => c.info).Titled("info");
-    columns.Add(c => c.ChangedUser.username.Replace(@"VCCNET\", "")).Titled("ChangedUser").Css("hidden-sm hidden-xs");
-    columns.Add(c => c.triggerCount).Titled("TC").Css("hidden-sm hidden-xs");
+    columns.Add(c => c.ChangedUser.username.Replace(@"VCCNET\", "")).Titled("ChangedUser").Css("d-none d-sm-block");
+    columns.Add(c => c.triggerCount).Titled("TC").Css("d-none d-sm-block");
     columns.Add(c => c.c_state.state).Titled("state");
 
     //add edit button

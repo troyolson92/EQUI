@@ -12,18 +12,14 @@
 
     <div class="card-body">
         @Html.Grid(Model).Named("TipDressCycleTimeREMO").Build(columns =>
-        {
-            columns.Add(c => c.controller_name).Titled("Robot").Filterable(true);
-            columns.Add(c => c.Date_Time).Titled("Time_Robot").Formatted("{0:dd-MM-yyyy HH:mm}").InitialSort(GridSortOrder.Desc);
-            columns.Add(c => c.C_timestamp).Titled("Time_db").Formatted("{0:dd-MM-yyyy HH:mm}").Css("hidden-sm hidden-xs");
-            columns.Add(c => c.CT).Titled("CT(s)");
-}).Sortable().Filterable(true).Pageable(pager =>
-{
-   pager.RowsPerPage = 20;
-}).Empty("No data found").Css("table-hover")
-    </div>
-
-    <div class="panel-footer">
-        <a href="~/Tiplife/NgacElectrode/Index" class="btn-xs btn-primary">Electrode home &raquo;</a>
+             {
+                 columns.Add(c => c.controller_name).Titled("Robot").Filterable(true);
+                 columns.Add(c => c.Date_Time).Titled("Time_Robot").Formatted("{0:dd-MM-yyyy HH:mm}").InitialSort(GridSortOrder.Desc);
+                 columns.Add(c => c.C_timestamp).Titled("Time_db").Formatted("{0:dd-MM-yyyy HH:mm}").Css("d-none d-sm-block");
+                 columns.Add(c => c.CT).Titled("CT(s)");
+             }).Sortable().Filterable(true).Pageable(pager =>
+    {
+         pager.RowsPerPage = 20;
+     }).Empty("No data found").Css("table-hover")
     </div>
 </div>
