@@ -3,77 +3,92 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - VCG GA UB12 ASP.NET Application</title>
+    <title>@ViewBag.Title - VCG GA UB12</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top" id="navbar">
+    <nav class="navbar navbar-expand-md bg-dark navbar-dark fixed-top" id="navbar">
 
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
+        <!-- Brand -->
+        <a class="navbar-brand" href='@Url.Action("Index", "Home", new { area = "" }, null)'>
+            <img src="~/Content/images/volvo-50.png" />
+        </a>
 
-                <a href='@Url.Action("Index", "Home",new { area = "" }, null)'>
-                    <img src="~/Content/images/volvo-50.png" />
-                </a>
+        <!-- Toggler/collapsibe Button -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-            </div>
+        <!-- collapse part -->
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class="navbar-nav">
+                <!-- Navbar links -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                        Shortcuts
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="dropdown-item">
+                            <a href="https://sharepoint.volvocars.net/sites/maintenance_a_shop/Lists/Whiteboard%20Issues/AllItems.aspx">Sharepoint</a>
+                        </li>
+                        <li class="dropdown-divider"></li>
+                        <li class="dropdown-item">
+                            <a href="https://mysite.volvocars.net/:o:/r/personal/ldebuck2_volvocars_com/Documents/Notebooks/9h%20meeting?d=w586803fbf1694a8da233cc3ea65a12c8&amp;e=5%3A23ae5acd21854d77941a15f2e5d04225">Onenote</a>
+                        </li>
+                    </ul>
+                </li>
 
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
+                <li class="nav-item">@Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                <li class="nav-item">@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
 
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Shortcuts <span class="caret"></span></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="https://sharepoint.volvocars.net/sites/maintenance_a_shop/Lists/Whiteboard%20Issues/AllItems.aspx">Sharepoint</a></li>
-                            <li class="divider"></li>
-                            <li><a href="https://mysite.volvocars.net/:o:/r/personal/ldebuck2_volvocars_com/Documents/Notebooks/9h%20meeting?d=w586803fbf1694a8da233cc3ea65a12c8&amp;e=5%3A23ae5acd21854d77941a15f2e5d04225">Onenote</a></li>
-                        </ul>
-                    </li>
-                   
-                    <li>@Html.ActionLink("About", "About", "Home", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, null)</li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                        VSTO toolkit
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="dropdown-item">
+                            <a href="http://equi/EqUi_UtilManager/EqUi_UtilManger.application?Tool=SBCUstats">WeldgunData</a>
+                        </li>
+                        <li class="dropdown-divider"></li>
+                        <li class="dropdown-item">
+                            <a href="http://equi/EqUi_UtilManager/EqUi_UtilManger.application?Tool=sleepBlock">Block autologoff</a>
+                        </li>
+                        <li class="dropdown-divider"></li>
+                        <li class="dropdown-item">
+                            <a href="https://sway.com/csCS9cdjEpcpPhw0?ref=Link">VSTO Excel Manual</a>
+                        </li>
+                        <li class="dropdown-item">
+                            <a href="https://sharepoint.volvocars.net/sites/vcg_ga_aaosr/SitePages/EQDB.aspx">VSTO Excel plugin</a>
+                        </li>
+                        <li class="dropdown-divider"></li>
+                        <li class="dropdown-item">
+                            <a href="https://sway.com/5uelU8Pra3GK1N9i">Tableau Manual</a>
+                        </li>
+                    </ul>
+                </li>
 
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">VSTO toolkit <span class="caret"></span></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="http://equi/EqUi_UtilManager/EqUi_UtilManger.application?Tool=SBCUstats">WeldgunData</a></li>
-                            <li class="divider"></li>
-                            <li><a href="http://equi/EqUi_UtilManager/EqUi_UtilManger.application?Tool=sleepBlock">Block autologoff</a></li>
-                            <li class="divider"></li>
-                            <li><a href="https://sway.com/csCS9cdjEpcpPhw0?ref=Link">VSTO Excel Manual</a></li>
-                            <li><a href="https://sharepoint.volvocars.net/sites/vcg_ga_aaosr/SitePages/EQDB.aspx">VSTO Excel plugin</a></li>
-                            <li class="divider"></li>
-                            <li><a href="https://sway.com/5uelU8Pra3GK1N9i">Tableau Manual</a></li>
-                        </ul>
-                    </li>
+            </ul>
 
-                </ul>
+            <!-- pull right part -->
+            <div class="navbar-nav ml-auto">
+                <div class="cb_inline_block">
+                    <a href='@Url.Action("Settings", "Home", new { area = "" }, null)' class="nav navbar-text">
+                        <i class="fas fa-cog"></i>
+                    </a>
 
-                <div class="nav pull-right">
-                    <div class="cb_inline_block">
-                        <a href='@Url.Action("Settings", "Home", new { area = "" }, null)' class="nav navbar-text">
-                            <img src="~/Content/images/icons8-settings-25.png" />
-                        </a>
+                    <a class="nav navbar-text userhelp" data-container="body" data-toggle="popover" data-original-title="@User.Identity.Name">
+                        <i class="fas fa-user"></i>
+                    </a>
 
-                        <a class="nav navbar-text userhelp" data-container="body" data-toggle="popover" data-original-title="@User.Identity.Name">
-                            <img src="~/Content/images/icons8-customer-25.png" />
-                        </a>
+                    <a id="fullscreenNav" class="glyphicon glyphicon-fullscreen" data-toggle="tooltip" data-placement="left" title="Go fullscreen"></a>
 
-                        <a id="fullscreenNav" class="glyphicon glyphicon-fullscreen" data-toggle="tooltip" data-placement="left" title="Go fullscreen"></a>
-
-                    </div>
                 </div>
-
             </div>
+
         </div>
 
-    </div>
+    </nav>
 
     @*load this bundle before body because of scripts in views*@
     @Scripts.Render("~/bundles/jquery")
@@ -92,7 +107,7 @@
         initInterface();
         //navbar
         $("#allcontent").animate({ "margin-top": "60px" }, "fast");
-        $(".navbar-fixed-top").autoHidingNavbar();
+        $("#navbar").autoHidingNavbar();
         //for user popover
         $(".userhelp").popover({
             placement: "left",
@@ -159,7 +174,7 @@
     <hr />
     <!--footer-->
     <footer id="footer">
-        <p>&copy; @DateTime.Now.Year - VCG GA SDEBEUL ASP.NET Application</p>
+        <p>&copy; @DateTime.Now.Year - VCG GA SDEBEUL Application</p>
     </footer>
     @*when navbar is hidden this is visble*@
     <div class="pull-right">
