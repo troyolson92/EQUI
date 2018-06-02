@@ -6,132 +6,137 @@
 <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
 @using (Ajax.BeginForm("_workordersOnLocation", "Workorder", new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "formContent", LoadingElementId = "loader" }))
 {
-    <div class="card-header bg-primary">
-        <div class="card-header bg-primary">
-            <h4 class="card-title">Maximo WorkorderSelectOptions</h4>
-            <span id="WorkorderSelectOptions" class ="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
-        </div>
-        <div class="card-body">
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <form class="form-horizontal">
-                <fieldset>
-                    <div class="form-group">
-                        <label class="control-label col-md-3" for="startdate">Daterange</label>
-                        <div class="col-md-9">
-                            <input class="form-control input-md" id="daterange" name="daterange" type="text">
-                        </div>
-                    </div>
-
-                    <div class="form-group hidden">
-                        @Html.LabelFor(m => m.enddate, new { @class = "control-label col-md-3" })
-                        <div class="col-md-9">
-                            @Html.TextBoxFor(m => m.enddate, new { @class = "form-control input-md" })
-                            @Html.ValidationMessageFor(m => m.enddate, "", new { @class = "text-danger" })
-                            <span class="help-block">changedate < than </span>
-                        </div>
-                    </div>
-
-                    <div class="form-group hidden">
-                        @Html.LabelFor(m => m.startdate, new { @class = "control-label col-md-3" })
-                        <div class="col-md-9">
-                            @Html.TextBoxFor(m => m.startdate, new { @class = "form-control input-md" })
-                            @Html.ValidationMessageFor(m => m.startdate, "", new { @class = "text-danger" })
-                            <span class="help-block">changedate > than</span>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.location, new { @class = "control-label col-md-3" })
-                        <div class="col-md-9">
-                            @Html.TextBoxFor(m => m.location, new { @class = "form-control input-md" })
-                            @Html.ValidationMessageFor(m => m.location, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.locancestor, new { @class = "control-label col-md-3" })
-                        <div class="col-md-9">
-                            @Html.TextBoxFor(m => m.locancestor, new { @class = "form-control input-md" })
-                            @Html.ValidationMessageFor(m => m.locancestor, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.jpnum, new { @class = "control-label col-md-3" })
-                        <div class="col-md-9">
-                            @Html.TextBoxFor(m => m.jpnum, new { @class = "form-control input-md" })
-                            @Html.ValidationMessageFor(m => m.jpnum, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.worktype, new { @class = "control-label col-md-3" })
-                        <div class="col-md-9">
-                            @Html.TextBoxFor(m => m.worktype, new { @class = "form-control input-md" })
-                            @Html.ValidationMessageFor(m => m.worktype, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.wonum, new { @class = "control-label col-md-3" })
-                        <div class="col-md-9">
-                            @Html.TextBoxFor(m => m.wonum, new { @class = "form-control input-md" })
-                            @Html.ValidationMessageFor(m => m.wonum, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.status, new { @class = "control-label col-md-3" })
-                        <div class="col-md-9">
-                            @Html.TextBoxFor(m => m.status, new { @class = "form-control input-md" })
-                            @Html.ValidationMessageFor(m => m.status, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.ownergroup, new { @class = "control-label col-md-3" })
-                        <div class="col-md-9">
-                            @Html.TextBoxFor(m => m.ownergroup, new { @class = "form-control input-md" })
-                            @Html.ValidationMessageFor(m => m.ownergroup, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.b_ciblings, new { @class = "control-label col-md-6" })
-                        <div class="col-md-6">
-                            @Html.CheckBoxFor(m => m.b_ciblings, new { @class = "form-control input-ld" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.b_preventive, new { @class = "control-label col-md-6" })
-                        <div class="col-md-6">
-                            @Html.CheckBoxFor(m => m.b_preventive, new { @class = "form-control input-md" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.realtimeConn, new { @class = "control-label col-md-6" })
-                        <div class="col-md-6">
-                            @Html.CheckBoxFor(m => m.realtimeConn, new { @class = "form-control input-md" })
-                        </div>
-                    </div>
-
-                    <hr />
-                    <input type="submit" value="Load workorders" id="WorkorderSelectOptionsSubmit" class="btn btn-success">
-                </fieldset>
-            </form>
-
-
-        </div>
+<div class="card">
+    <div class="card-header bg-dark">
+        <h5 class="card-title text-white">
+            Maximo WorkorderSelectOptions
+            <span class="clickable float-right"  id="WorkorderSelectOptions"><i class="fas fa-chevron-circle-up fa-1"></i></span>
+        </h5>
     </div>
+
+    <div class="card-body">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <form class="form-horizontal">
+            <fieldset>
+                <div class="form-group">
+                    <label class="control-label col-md-3" for="startdate">Daterange</label>
+                    <div class="col-md-9">
+                        <input class="form-control input-md" id="daterange" name="daterange" type="text">
+                    </div>
+                </div>
+
+                <div class="form-group d-none">
+                    @Html.LabelFor(m => m.enddate, new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.TextBoxFor(m => m.enddate, new { @class = "form-control input-md" })
+                        @Html.ValidationMessageFor(m => m.enddate, "", new { @class = "text-danger" })
+                        <span class="help-block">changedate < than </span>
+                    </div>
+                </div>
+
+                <div class="form-group d-none">
+                    @Html.LabelFor(m => m.startdate, new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.TextBoxFor(m => m.startdate, new { @class = "form-control input-md" })
+                        @Html.ValidationMessageFor(m => m.startdate, "", new { @class = "text-danger" })
+                        <span class="help-block">changedate > than</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.location, new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.TextBoxFor(m => m.location, new { @class = "form-control input-md" })
+                        @Html.ValidationMessageFor(m => m.location, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.locancestor, new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.TextBoxFor(m => m.locancestor, new { @class = "form-control input-md" })
+                        @Html.ValidationMessageFor(m => m.locancestor, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.jpnum, new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.TextBoxFor(m => m.jpnum, new { @class = "form-control input-md" })
+                        @Html.ValidationMessageFor(m => m.jpnum, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.worktype, new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.TextBoxFor(m => m.worktype, new { @class = "form-control input-md" })
+                        @Html.ValidationMessageFor(m => m.worktype, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.wonum, new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.TextBoxFor(m => m.wonum, new { @class = "form-control input-md" })
+                        @Html.ValidationMessageFor(m => m.wonum, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.status, new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.TextBoxFor(m => m.status, new { @class = "form-control input-md" })
+                        @Html.ValidationMessageFor(m => m.status, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ownergroup, new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.TextBoxFor(m => m.ownergroup, new { @class = "form-control input-md" })
+                        @Html.ValidationMessageFor(m => m.ownergroup, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.b_ciblings, new { @class = "control-label col-md-6" })
+                    <div class="col-md-6">
+                        @Html.CheckBoxFor(m => m.b_ciblings, new { @class = "form-control input-ld" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.b_preventive, new { @class = "control-label col-md-6" })
+                    <div class="col-md-6">
+                        @Html.CheckBoxFor(m => m.b_preventive, new { @class = "form-control input-md" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.realtimeConn, new { @class = "control-label col-md-6" })
+                    <div class="col-md-6">
+                        @Html.CheckBoxFor(m => m.realtimeConn, new { @class = "form-control input-md" })
+                    </div>
+                </div>
+
+                <hr />
+                <input type="submit" value="Load workorders" id="WorkorderSelectOptionsSubmit" class="btn btn-success">
+            </fieldset>
+        </form>
+
+
+    </div>
+</div>
 }
 
+<hr />
 @*only shown while loading*@
 <div id="loader" style="display:none;font-size:20px;font-weight:bold;color:#D3ACCC;">
     loading workorders....
 </div>
 @*table will be loaded in this*@
+
 <div id="formContent"></div>
 
 <!--Script for workorders form-->
