@@ -212,9 +212,9 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
                         {
                             if (!string.IsNullOrEmpty(row.Field<string>(col.ColumnName).ToString()))
                             {
-                                sb.AppendLine("<div class=\"panel panel-default\">").AppendLine("<div class=\"panel-heading\">");
+                                sb.AppendLine("<div class=\"card\">").AppendLine("<div class=\"card-header\">");
                                 sb.AppendLine(col.ColumnName);
-                                sb.AppendLine("</div>").AppendLine("<div class=\"panel-body\">");
+                                sb.AppendLine("</div>").AppendLine("<div class=\"card-body\">");
                                 sb.AppendLine(row.Field<string>(col.ColumnName).ToString());
                                 sb.AppendLine("</div>").AppendLine("</div>");
                             }
@@ -224,7 +224,7 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
             }
             else
             {
-                sb.AppendLine("<div class='alert alert-danger'>");
+                sb.AppendLine("<div class='card bg-danger card-header'>");
                 sb.AppendLine("<strong>Triggerd: No valid result from query! </strong>");
                 sb.AppendLine("<div> Ran:" + qry + "</div>");
                 sb.AppendLine("</div>");

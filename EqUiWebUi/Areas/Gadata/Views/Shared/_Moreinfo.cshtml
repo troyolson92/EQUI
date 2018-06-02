@@ -1,9 +1,9 @@
 ﻿@model EqUiWebUi.Models.LogInfo
 
-<div class="">
+<div class="modal-header">
 
     <div class="alert">
-        <h4>Information about <a class="glyphicon glyphicon-new-window pull-left" href='@Url.Action("MoreInfo","Table",Model)'></a></h4>
+        <h4>Information about <a class="far fa-window-restore text-black-50" href='@Url.Action("MoreInfo","Table",Model)'></a></h4>
         <div class="row">
            
             <div class="col-sm-11">
@@ -32,13 +32,13 @@
         all other logtypes are run via equi.GetErrorInfoData*@
     @if (Model.logtype == "ALERT")
     {
-        <div class="card-header bg-primary">
-            <div class="card-header bg-primary">
-                <h4 class="card-title">
+        <div class="card">
+            <div class="card-header bg-warning">
+                <h6 class="card-title">
                     Details for Alert: <strong>@Model.refid</strong> Info: <strong>@Model.logtext.Trim()</strong>
-                    @MyFilters.IconActionLink(Url.Action("Edit", "Alert", new { area = "Alert", id = Model.refid }), "glyphicon glyphicon-pencil", "", "Edit this alert")
-                </h4>
-                <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+                    @MyFilters.IconActionLink(Url.Action("Edit", "Alert", new { area = "Alert", id = Model.refid }), "far fa-edit text-black-50", "", "Edit this alert")
+                    <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1 text-black-50"></i></span>
+                </h6>
             </div>
             <div class="card-body">
                 @Html.Action("_Details", "Alert", new { area = "Alert", id = Model.refid })

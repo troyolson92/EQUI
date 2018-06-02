@@ -3,8 +3,8 @@
     ViewBag.Title = "PlanTipChange";
 }
     <div class="card">
-        <div class="card-header bg-primary">
-            <h4>Tipchange toolbox</h4>
+        <div class="card-header bg-dark">
+            <h4 class="text-white">Tipchange toolbox</h4>
         </div>
 
         <div class="card-body">
@@ -20,8 +20,8 @@
 
             <div class="card">
 
-                <div class="card-header bg-primary">
-                    <h4>Plan het onderhoud</h4>
+                <div class="card-header bg-dark">
+                    <h4 class="text-white">Plan het onderhoud</h4>
                 </div>
 
                 <div class="card-body">
@@ -77,10 +77,10 @@
             @*DO Hier word de lijst getoond met waar er moet gewisselde worden*@
             <div class="card" id="tipsToChangeContainer" style="display:none">
 
-                <div class="card-header bg-primary">
+                <div class="card-header bg-dark">
                     <div class="row">
-                        <h4 class="col-md-6">Deze robots moeten gewisseld worden.</h4>
-                        <div class="col-md-3" style="float:right">
+                        <h4 class="col-md-6 text-white">Deze robots moeten gewisseld worden.</h4>
+                        <div class="col-md-3 pull-right">
                             <input class="form-control input-sm"  id="changeStartlistDatepicker" />    
                         </div>
                     </div>
@@ -101,9 +101,9 @@
                 gebruik refernetie timestime van hierboven.*@
             <div class="card" id="tipsChangedContainer" style="display:none">
 
-                <div class="card-header bg-primary">
+                <div class="card-header bg-dark">
                     <div class="row">
-                        <h4 class="col-md-6">Deze wissels NIET zijn gedetecteerd.</h4>
+                        <h4 class="col-md-6 text-white">Deze wissels NIET zijn gedetecteerd.</h4>
                         <div class="col-md-3" style="float:right">
                             <input class="form-control input-sm" id="changeDonelistDatepicker" />
                         </div>

@@ -31,9 +31,9 @@
                             + '&logtext=' + encodeURIComponent(data.logtext)
                     //launch modal
                 $('#MyModal').removeData('bs.modal');
-                $('#MyModal').html('<div class="modal-content">Loading....</div>');
-                console.log(urlMoreInfo);
-                $('#MyModal').modal({ remote: urlMoreInfo });
+                $('#MyModal').load(urlMoreInfo, function (result) {
+                    $('#MyModal').modal({ show: true });
+                });
         },
         reloadStarted: function () {
             SupervisieGridspinner.spin(document.getElementById('SupervisieGridSpincontainer'));

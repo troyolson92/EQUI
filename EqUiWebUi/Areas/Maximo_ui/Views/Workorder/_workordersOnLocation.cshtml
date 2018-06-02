@@ -1,14 +1,14 @@
 ﻿@model EqUiWebUi.Areas.Maximo_ui.Models.WorkorderSelectOptions
 
 
-<div class="card-header bg-primary">
-    <div class="card-header bg-primary">
-        <h4 class="card-title">
+<div class="card">
+    <div class="card-header bg-info">
+        <h6 class="card-title text-white">
             Workorders
-            <a class="glyphicon glyphicon-cog" href="#" data-toggle="popover" data-placement="bottom" id="workorderOnLocationPopover"></a>
-            <a class="glyphicon glyphicon-new-window" id="goToWorkordersHyperlink" href="#"></a>
-        </h4>
-        <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+            <a class="fas fa-wrench text-black-50"  href="#" data-toggle="popover" data-placement="bottom" id="workorderOnLocationPopover"></a>
+            <a class="far fa-window-restore text-black-50" id="goToWorkordersHyperlink" href="#"></a>
+            <span class="clickable float-right text-black-50"><i class="fas fa-chevron-circle-up fa-1" ></i></span>
+        </h6>
     </div>
     <div class="card-body">
         <div id="workorderOnLocationGridSpincontainer" style="position:relative">
@@ -19,20 +19,22 @@
 
 
 @*popover content*@
-<div class="hidden" id="workorderOnLocationPopoverContent">
-    <div class="panel panel-body">
-        <div class="form-group">
+<div class="d-none" id="workorderOnLocationPopoverContent">
+    <div class="card">
+        <div class="card-body">
             <div class="form-group">
-                @Html.LabelFor(m => m.b_ciblings, new { @class = "control-label col-6", style = "color:#000000" })
-                <div class="col-6">
-                    @Html.CheckBoxFor(m => m.b_ciblings, new { @class = "form-control input-md" })
+                <div class="form-group">
+                    @Html.LabelFor(m => m.b_ciblings, new { @class = "control-label col-6"})
+                    <div class="col-6">
+                        @Html.CheckBoxFor(m => m.b_ciblings, new { @class = "form-control input-md" })
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                @Html.LabelFor(m => m.b_preventive, new { @class = "control-label col-6", style = "color:#000000" })
-                <div class="col-6">
-                    @Html.CheckBoxFor(m => m.b_preventive, new { @class = "form-control input-md" })
+                <div class="form-group">
+                    @Html.LabelFor(m => m.b_preventive, new { @class = "control-label col-6"})
+                    <div class="col-6">
+                        @Html.CheckBoxFor(m => m.b_preventive, new { @class = "form-control input-md" })
+                    </div>
                 </div>
             </div>
         </div>
@@ -124,11 +126,9 @@
     //subscrible to option checkbox click event
     $('#b_ciblings').click(function () {
         loadWorkorderOnLocationGrid();
-        console.log("hit");
     });
 
     $('#b_preventive').click(function () {
         loadWorkorderOnLocationGrid();
-        console.log("hit");
     });
 </script>

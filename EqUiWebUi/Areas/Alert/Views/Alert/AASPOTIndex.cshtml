@@ -1,25 +1,40 @@
 ﻿
 @{
-    ViewBag.Title = "AASPOTIndex";
+    ViewBag.Title = "AASPOT Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>AASPOTIndex</h2>
+<h2>AASPOT Index</h2>
 
 <div class="card">
-    <div class="card-header bg-primary">
-        <h4 class="card-title">Alerts AASPOT (guncylinder en SBCU bewaking)</h4>
-        <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+    <div class="card-header bg-dark">
+        <h5 class="card-title text-white">
+            Alerts AASPOT (guncylinder en SBCU bewaking)
+            <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
+        </h5>
     </div>
     <div class="card-body">
-        <p><a href="~/Alert/Alert/AASPOTAlertList" class="btn btn-primary btn-sm">AASPOTalerts &raquo;</a>AASPOT alerts</p>
-        <p><a href="~/Alert/Alert/AASPOTAlertList?ActiveAlertOnly=true&h_alert-triggerCount-GreaterThan=1&h_alert-Rows=15" class="btn btn-warning btn-sm">AASPOTalerts Openalerts&raquo;</a>AASPOT Alerts OPEN state  EN meer dan 1 keer getriggerd </p>
-        <hr />
-        <p><a href="~/Alert/GunCylinderefernces/Index" class="btn btn-primary btn-sm">GunCylinderefernces (control limits) &raquo;</a></p>
-        <p><a href="~/Alert/GunCylinderefernces/Index?maxdelta=1000" class="btn btn-warning btn-sm">GunCylinderefernces &raquo;</a>Detla > 1000ms (control limits that might be wrong)</p>
-        <hr />
-        <p><a href="~/Alert/SBCUrefernces/Index" class="btn btn-primary btn-sm">SBCUrefernces (control limits) &raquo;</a></p>
-        <p><a href="~/Alert/SBCUrefernces/Index?maxdelta=10" class="btn btn-warning btn-sm">SBCUrefernces &raquo;</a>Detla > 10mm (control limits that might be wrong)</p>
+        <p>
+            <a href="~/Alert/Alert/AASPOTAlertList" class="btn btn-primary btn-sm">AASPOTalerts &raquo;</a>AASPOT alerts
+        </p>
+        <p>
+            <a href="~/Alert/Alert/AASPOTAlertList?ActiveAlertOnly=true&h_alert-triggerCount-GreaterThan=1&h_alert-Rows=15" class="btn btn-warning btn-sm">AASPOTalerts Openalerts&raquo;</a>AASPOT Alerts OPEN state  EN meer dan 1 keer getriggerd
+        </p>
+
+        <h5>Control limits</h5>
+
+        <p>
+            <a href="~/Alert/GunCylinderefernces/Index" class="btn btn-primary btn-sm">GunCylinderefernces (control limits) &raquo;</a>
+        </p>
+        <p>
+            <a href="~/Alert/GunCylinderefernces/Index?maxdelta=1000" class="btn btn-warning btn-sm">GunCylinderefernces &raquo;</a>Detla > 1000ms (control limits that might be wrong)
+        </p>
+        <p>
+            <a href="~/Alert/SBCUrefernces/Index" class="btn btn-primary btn-sm">SBCUrefernces (control limits) &raquo;</a>
+        </p>
+        <p>
+            <a href="~/Alert/SBCUrefernces/Index?maxdelta=10" class="btn btn-warning btn-sm">SBCUrefernces &raquo;</a>Detla > 10mm (control limits that might be wrong)
+        </p>
 
     </div>
 </div>
