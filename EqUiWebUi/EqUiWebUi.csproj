@@ -164,6 +164,9 @@
     <Reference Include="System.Net.Http.WebRequest">
     </Reference>
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="WebActivatorEx">
+      <HintPath>..\packages\WebActivatorEx.2.0\lib\net40\WebActivatorEx.dll</HintPath>
+    </Reference>
     <Reference Include="WebGrease, Version=1.6.5135.21930, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
     </Reference>
@@ -671,17 +674,16 @@
       <LastGenOutput>VASC.cs</LastGenOutput>
     </Content>
     <Content Include="Content\bootstrap-multiselect.css" />
+    <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\codemirror\codemirror.css" />
     <Content Include="Content\codemirror\neat.css" />
     <Content Include="Content\CustomStyleTweeks.css" />
     <Content Include="Content\Cyborg.css" />
     <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\daterangepicker.css" />
+    <Content Include="Content\fontawesome\font-awesome.css" />
+    <Content Include="Content\fontawesome\font-awesome.min.css" />
     <Content Include="Content\images\award-winning.png" />
-    <Content Include="Content\images\icons8-customer-25.png" />
-    <Content Include="Content\images\icons8-home-button-25.png" />
-    <Content Include="Content\images\icons8-settings-25.png" />
     <Content Include="Content\images\volvo-50.png" />
     <Content Include="Content\jquery-cron.css" />
     <Content Include="Content\jquery-ui.css" />
@@ -876,11 +878,6 @@
     <Content Include="PDFjs\web\viewer.js.map" />
     <Content Include="PDFjs\LICENSE" />
     <Content Include="Content\MvcGrid\Fonts\GridGlyphs.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\bootstrap.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="App_Code\MyFilters.cshtml" />
     <Content Include="App_Code\MyModals.cshtml" />
@@ -1122,7 +1119,8 @@
     <Content Include="Areas\user_management\Views\c_ownership\Index.cshtml" />
     <Content Include="Areas\Tiplife\Views\NgacElectrode\TipDressCycleTimeREMO.cshtml" />
     <Content Include="Areas\Welding\Views\web.config" />
-    <None Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="MvcGrid\fonts\glyphicons-halflings-regular.ttf" />
@@ -1131,6 +1129,11 @@
     <Content Include="MvcGrid\fonts\GridGlyphs.woff" />
     <Content Include="package.json" />
     <Content Include="PDFjs\web\Q-Mapping Dashboard greenfield.pdf" />
+    <Content Include="Content\fonts\FontAwesome.otf" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\fonts\fontawesome-webfont.eot" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION.pubxml" />
     <None Include="Properties\PublishProfiles\VCC22700-Testing.pubxml" />
     <Content Include="PDFjs\build\pdf.js" />
@@ -1217,11 +1220,11 @@
     <Content Include="PDFjs\web\viewer.html" />
     <Content Include="PDFjs\web\viewer.js" />
     <Content Include="Scripts\bootstrap-multiselect.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\Codemirror\codemirror.js" />
     <Content Include="Scripts\Codemirror\mode\sql.js" />
     <Content Include="Scripts\d3\Chart.bundle.js" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\d3\d3.js" />
     <Content Include="Scripts\d3\d3.min.js" />
     <Content Include="Scripts\daterangepicker.js" />
@@ -1257,8 +1260,8 @@
     <Content Include="Scripts\tableau-2.0.0.min.js" />
     <Content Include="Scripts\viewer.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Notauthorized.html" />
-    <Content Include="ServerErrorPage.html" />
+    <Content Include="Views\Shared\Notauthorized.html" />
+    <Content Include="Views\Shared\ServerErrorPage.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
