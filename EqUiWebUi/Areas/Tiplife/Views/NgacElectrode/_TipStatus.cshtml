@@ -7,8 +7,8 @@
     columns.Add(c => c.nDress).Titled("#gefreest");
     columns.Add(c => c.WearRatio).Titled("%WearRatio").Css("hidden-sm hidden-xs");
     columns.Add(c => c.pWear).Titled("%wear").Filterable(true);
-    columns.Add(c => c.nRspots).Titled("#R Spots").InitialSort(GridSortOrder.Asc).Css("hidden-sm hidden-xs");
-    columns.Add(c => c.nRcars).Titled("#R Stukken").Css("hidden-sm hidden-xs");
+    columns.Add(c => c.nRspots).Titled("#R Spots").Css("hidden-sm hidden-xs");
+    columns.Add(c => c.nRcars).Titled("#R Stukken").InitialSort(GridSortOrder.Asc).Css("hidden-sm hidden-xs");
     columns.Add(c => c.TipAge_h_).Titled("leeftijd (h)");
     columns.Add(c => c.RobotWear).Titled("Wear(mm)").Css("hidden-sm hidden-xs");
     columns.Add(c => c.Time_DressCycleTime).Titled("Ct (s)").Css("hidden-sm hidden-xs");
