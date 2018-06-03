@@ -29,10 +29,10 @@
                             + '&refid=' + encodeURIComponent(data.refId)
                             + '&logtype=' + encodeURIComponent(data.Logtype)
                             + '&logtext=' + encodeURIComponent(data.logtext)
-                    //launch modal
+                //launch modal
                 $('#MyModal').removeData('bs.modal');
+                $('#MyModal').modal({ show: true });
                 $('#MyModal').load(urlMoreInfo, function (result) {
-                    $('#MyModal').modal({ show: true });
                 });
         },
         reloadStarted: function () {

@@ -8,13 +8,13 @@
 {
 <div class="card">
     <div class="card-header bg-dark">
-        <h5 class="card-title text-white">
+        <h6 class="card-title text-white">
             Maximo WorkorderSelectOptions
-            <span class="clickable float-right"  id="WorkorderSelectOptions"><i class="fas fa-chevron-circle-up fa-1"></i></span>
-        </h5>
+            <span class="clickable float-right"  id="WorkorderSelectOptions"><i class="fas fa-chevron-circle-up fa-rotate-180 fa-1"></i></span>
+        </h6>
     </div>
 
-    <div class="card-body">
+    <div class="card-body" style="display: none">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <form class="form-horizontal">
             <fieldset>
@@ -177,7 +177,9 @@
         if (loadOnInit == true) {
             //trigger submit
             $("#WorkorderSelectOptionsSubmit").trigger("click");
-            //fold up options pannel
+        }
+        else {
+            //fold OPEN options pannel
             $("#WorkorderSelectOptions").trigger("click");
         }
 
