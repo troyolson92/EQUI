@@ -33,7 +33,7 @@ namespace EqUiWebUi.Areas.Tiplife
 
         //update the local datatable with tipstatus called every minute #hangfire
         [AutomaticRetry(Attempts = 0)]
-        [DisableConcurrentExecution(50)] //locks the job from starting multible times if other one stil running.
+        [Queue("gadata")]
         public void UpdateTipstatus()
         {
             GADATAEntitiesTiplife gADATAEntities = new GADATAEntitiesTiplife();

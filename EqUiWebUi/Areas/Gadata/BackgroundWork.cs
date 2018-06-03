@@ -48,7 +48,6 @@ namespace EqUiWebUi.Areas.Gadata
             //update the local datatable with ploeg rapport called every minute #hangfire
             [Queue("gadata")]
             [AutomaticRetry(Attempts = 0)]
-            [DisableConcurrentExecution(50)] //timeout
             public void UpdatePloegreport()
             {
                 GADATAEntities2 gADATAEntities = new GADATAEntities2();
@@ -92,7 +91,6 @@ namespace EqUiWebUi.Areas.Gadata
             //update the local datatable with supervisie called every minute #hangfire
             [Queue("gadata")]
             [AutomaticRetry(Attempts = 0)]
-            [DisableConcurrentExecution(50)] //timeout 3minutes
             public void UpdateSupervisie()
             {
                 GADATAEntities2 gADATAEntities = new GADATAEntities2();
@@ -123,7 +121,6 @@ namespace EqUiWebUi.Areas.Gadata
             //update the local datatable with detail robot data called every minute #hangfire
             [Queue("gadata")]
             [AutomaticRetry(Attempts = 0)]
-            [DisableConcurrentExecution(50)] //timeout
             public void UpdateEQpluginDefaultNGAC()
             {
                 GADATAEntities2 gADATAEntities = new GADATAEntities2();
@@ -175,7 +172,6 @@ namespace EqUiWebUi.Areas.Gadata
              //update asset table on GADATA from maximo called every sunday #hangfire
             [Queue("gadata")]
             [AutomaticRetry(Attempts = 5)]
-            [DisableConcurrentExecution(300)] //timeout 3minutes
             //This is for sync Mx7 with the database. 
             public void UpdateMaximoAssetsToGadata()
             {
