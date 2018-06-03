@@ -23,8 +23,13 @@ else
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.id)
 
-        <div class="card-header bg-primary">
-            <div class="card-header bg-primary">Basics</div>
+        <div class="card">
+            <div class="card-header bg-danger">
+                <h5 class="card-title text-white">
+                    Basics
+                    <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
+                </h5>
+            </div>
             <div class="card-body">
                 <div class="form-group">
                     @Html.LabelFor(model => model.enabled, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -72,6 +77,9 @@ else
                         </div>
                         @Html.ValidationMessageFor(model => model.sqlStatement, "", new { @class = "text-danger" })
                         @Html.HelpTextFor(model => model.sqlStatement)
+
+                        <p></p>
+
                         <div class="col-md-10">
                             <button id="checkstatement" type="button" class="btn-sm btn-primary">Checkstatement</button>
                             <button id="Runstatement" type="button" class="btn-sm btn-primary">Runstatement</button>
@@ -138,8 +146,15 @@ else
             </div>
         </div>
 
-        <div class="card-header bg-primary">
-            <div class="card-header bg-primary">Sms</div>
+        <hr />
+
+        <div class="card">
+            <div class="card-header bg-warning">
+                <h5 class="card-title text-white">
+                    SMS
+                    <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
+                </h5>
+            </div>
             <div class="card-body">
 
                 <div class="form-group">
@@ -178,8 +193,16 @@ else
             </div>
         </div>
 
-        <div class="card-header bg-primary">
-            <div class="card-header bg-primary">ControlLimits</div>
+
+        <hr />
+
+        <div class="card">
+            <div class="card-header bg-warning">
+                <h5 class="card-title text-white">
+                    Control limits
+                    <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
+                </h5>
+            </div>
             <div class="card-body">
 
                 <div class="form-group">
@@ -201,6 +224,9 @@ else
                         </div>
                         @Html.ValidationMessageFor(model => model.controllimitSqlStatement, "", new { @class = "text-danger" })
                         @Html.HelpTextFor(model => model.controllimitSqlStatement)
+
+                        <p></p>
+
                         <div class="col-md-10">
                             <button id="checkcontrollimitSqlStatement" type="button" class="btn-sm btn-primary">Check for missing control limits</button>
                         </div>
@@ -215,6 +241,9 @@ else
                         </div>
                         @Html.ValidationMessageFor(model => model.controlChartSqlStatement, "", new { @class = "text-danger" })
                         @Html.HelpTextFor(model => model.controlChartSqlStatement)
+
+                        <p></p>
+
                         <div class="col-md-10">
                             <button id="checkcontrolChartSqlStatement" type="button" class="btn-sm btn-primary">Check controlChart Statement</button>
                         </div>
@@ -223,9 +252,12 @@ else
 
             </div>
         </div>
+
+        <p></p>
+
         <div class="form-group">
             <div class="col-md-10">
-                <input type="submit" value="Save" class="btn btn-warning" />
+                <input type="submit" value="Save" class="btn btn-danger" />
             </div>
         </div>
     </div>

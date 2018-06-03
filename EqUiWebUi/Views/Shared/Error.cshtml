@@ -2,44 +2,54 @@
     ViewBag.Title = @TempData["error"];
 }
 <div class="jumbotron">
-    <h1>How did we get here?</h1>
-    <h1>@TempData["error"]</h1>
-</div>
-
-<p></p>
-
-<div class="card">
-    <h4>ERROR</h4>
-    <div class="card-body">
-        <p>
-            <h4> Error Description:</h4>
-
-            <div class="alert alert-warning">
-                @Model.Exception.Message.ToString() @Html.Raw(" ") @Model.ControllerName @Html.Raw(" ") @Model.ActionName
-            </div>
-
-            <div class="card">
-                <div class="card-header bg-danger">
-                    <h5 class="card-title text-white">
-                        Exeption
-                        <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-rotate-180 fa-1"></i></span>
-                    </h5>
-                </div>
-                <div class="card-body" style="display:none">
-                    @Model.Exception
-                </div>
-            </div>
-
-        </p>
-
-        <p>
-            <button class="btn btn-primary btn-danger" onclick="goback()" type="button"><<< Back</button>
-        </p>
+    <h1>I'm so sorry</h1>
+    <h3>I looks like Sam broke something.</h3>
+    <i class="fas fa-ambulance fa-4x"></i>
+    <div>
+        Let him know he is a
+        <i class="fab fa-sticker-mule fa-2x"></i>
+        grab a
+        <i class="fas fa-coffee fa-2x"></i>
+        and tel him to fix it
     </div>
 </div>
 
 <p></p>
 
+<div class="card">
+    <div class="card-header bg-warning">
+        <h5 class="card-title text-white">
+            ERROR
+            <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
+        </h5>
+    </div>
+    <div class="card-body">
+            <h4> Error Description:</h4>
+            <div class="alert alert-warning">
+                @Model.Exception.Message.ToString() @Html.Raw(" ") @Model.ControllerName @Html.Raw(" ") @Model.ActionName
+            </div>
+    </div>
+</div>
+
+<hr />
+
+<div class="card">
+    <div class="card-header bg-danger">
+        <h5 class="card-title text-white">
+            Exeption
+            <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-rotate-180 fa-1"></i></span>
+        </h5>
+    </div>
+    <div class="card-body" style="display:none">
+        @Model.Exception
+    </div>
+</div>
+
+<p></p>
+
+<p>
+    <button class="btn btn-primary btn-danger" onclick="goback()" type="button"><<< Back</button>
+</p>
 
 <script>
     function goback() {

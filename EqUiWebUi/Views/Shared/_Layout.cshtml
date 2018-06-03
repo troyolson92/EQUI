@@ -11,7 +11,7 @@
     <nav class="navbar navbar-expand-md py-0 bg-dark navbar-dark fixed-top" id="navbar">
         <!-- Brand -->
         <a class="navbar-brand py-0" href='@Url.Action("Index", "Home", new { area = "" }, null)'>
-            <img src="~/Content/images/volvo-50.png"/>
+            <img src="~/Content/images/volvo-50.png" />
         </a>
 
         <!-- Toggler/collapsibe Button -->
@@ -72,11 +72,13 @@
             <!-- pull right part -->
             <div class="navbar-nav ml-auto">
                 <div class=" nav-item">
-                    <a class="fas fa-cog fa-1x text-danger" href='@Url.Action("Settings", "Home", new { area = "" }, null)' data-toggle="tooltip" title="Settings"></a>
+                    <a class="far fa-id-badge fa-2x text-white fa-2x userhelp" data-container="body" data-toggle="popover" data-original-title="@User.Identity.Name"></a>
 
-                    <a class="far fa-id-badge fa-2x text-white-50 userhelp" data-container="body" data-toggle="popover" data-original-title="@User.Identity.Name" ></a>
+                    <a href="#"><span style="padding-left:20px" class=""></span></a>
 
-                    <a class="fas fa-arrows-alt text-white-50" id="fullscreenNav"  data-toggle="tooltip" data-placement="left" title="Go fullscreen"></a>
+                    <a class="fas fa-cog fa-1x text-danger" href='@Url.Action("Settings", "Home", new { area = "" }, null)' data-toggle="tooltip" title="admin area"></a>
+
+                    <a class="fas fa-arrows-alt text-white" id="fullscreenNav" data-toggle="tooltip" data-placement="left" title="Go fullscreen"></a>
 
                 </div>
             </div>
@@ -91,6 +93,15 @@
     <!--Body content -->
     <div class="container body-content" id="allcontent">
         @RenderBody()
+    </div>
+    <!--footer-->
+    <hr />
+    <footer id="footer">
+        <p>&copy; @DateTime.Now.Year - VCG GA SDEBEUL Application</p>
+    </footer>
+    @*when navbar is hidden this is visble*@
+    <div class="pull-right">
+        <a class="fas fa-arrows-alt text-black-50 d-none" id="fullscreenBody" data-toggle="tooltip" data-placement="left" title="Exit fullscreen"></a>
     </div>
 
 
@@ -127,24 +138,25 @@
             $("#allcontent").removeClass("body-content");
             $("#allcontent").removeClass("container");
 
-            $(".navbar-fixed-top").autoHidingNavbar('setDisableAutohide',true); //disable autohide
-            $(".navbar-fixed-top").autoHidingNavbar('hide'); //hide navbar
+            $("#navbar").autoHidingNavbar('setDisableAutohide',true); //disable autohide
+            $("#navbar").autoHidingNavbar('hide'); //hide navbar
 
             $("#allcontent").animate({ "margin-top": "0px" }, "fast");
-            $("#fullscreenBody").removeClass("hidden");
-            $("#footer").addClass("hidden");
+            $("#fullscreenBody").removeClass("d-none");
+            $("#footer").addClass("d-none");
         });
         //out of full screen mode
         $("#fullscreenBody").click(function () {
+
             $("#allcontent").addClass("body-content");
             $("#allcontent").addClass("container");
 
-            $(".navbar-fixed-top").autoHidingNavbar('setDisableAutohide', false); //enable autohide
-            $(".navbar-fixed-top").autoHidingNavbar('show'); //show navbar
+            $("#navbar").autoHidingNavbar('setDisableAutohide', false); //enable autohide
+            $("#navbar").autoHidingNavbar('show'); //show navbar
 
             $("#allcontent").animate({ "margin-top": "60px" }, "fast");
-            $("#fullscreenBody").addClass("hidden");
-            $("#footer").removeClass("hidden");
+            $("#fullscreenBody").addClass("d-none");
+            $("#footer").removeClass("d-none");
         });
 
         //if fullscreen request in url do it.
@@ -168,17 +180,6 @@
     @*start render script sections in vieuws*@
     @RenderSection("scripts", required: false)
     @RenderSection("partials", required: false)
-
-
-    <!--footer-->
-    <hr />
-    <footer id="footer">
-        <p>&copy; @DateTime.Now.Year - VCG GA SDEBEUL Application</p>
-    </footer>
-    @*when navbar is hidden this is visble*@
-    <div class="pull-right">
-        <a id="fullscreenBody" class="fas fa-arrows-alt hidden" data-toggle="tooltip" data-placement="left" title="Exit fullscreen" style="color:aliceblue"></a>
-    </div>
 
 
 </body>
