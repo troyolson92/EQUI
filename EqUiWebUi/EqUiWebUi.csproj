@@ -182,9 +182,7 @@
     <Folder Include="Areas\STW040\Models\" />
     <Folder Include="Areas\STW040\Views\Shared\" />
     <Folder Include="Areas\VASC\Views\Shared\" />
-    <Folder Include="Areas\Welding\Controllers\" />
     <Folder Include="Areas\Welding\Models\" />
-    <Folder Include="Areas\Welding\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Code\MyRowStyling.cs" />
@@ -586,6 +584,7 @@
     <Compile Include="Areas\VASC\Models\winService.cs" />
     <Compile Include="Areas\VASC\VASCAreaRegistration.cs" />
     <Compile Include="Areas\Welding\WeldingAreaRegistration.cs" />
+    <Compile Include="Areas\Welding\Controllers\WeldingController.cs" />
     <Compile Include="Backgroundwork.cs" />
     <Compile Include="Controllers\Chart2Controller.cs" />
     <Compile Include="Controllers\ChartController.cs" />
@@ -1159,6 +1158,10 @@
     <Content Include="webfonts\fa-solid-900.woff" />
     <Content Include="webfonts\fa-solid-900.woff2" />
     <Content Include="Content\MvcGrid\Fonts\GridGlyphs.woff" />
+    <Content Include="Areas\Welding\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Welding\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Welding\Views\Welding\Index.cshtml" />
+    <Content Include="Areas\Welding\Views\Welding\Pagina1.cshtml" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION.pubxml" />
     <None Include="Properties\PublishProfiles\VCC22700-Testing.pubxml" />
     <Content Include="PDFjs\build\pdf.js" />
