@@ -3,7 +3,7 @@
 @Html.Grid(Model).Named("EQpluginDefaultNGAC").Build(columns =>
 {
     columns.Add(c => c.Location).Titled("Location").Filterable(true);
-    columns.Add(c => c.logtext).Titled("Logtext").Css("d-none d-sm-block");
+    columns.Add(c => c.logtext).Titled("Logtext").Css("xxd-none xxd-sm-block");
     columns.Add(c => c.Downtime_min_).Titled("DT");
     columns.Add(c => c.time).Titled("time");
     columns.Add(c => c.Classification).Titled("Class");

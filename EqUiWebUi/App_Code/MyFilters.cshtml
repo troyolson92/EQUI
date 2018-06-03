@@ -94,41 +94,40 @@
         //no data from robot for last 2 days
         if (Status == "ND")
         {
-            icon = "glyphicon glyphicon-eye-open";
+            icon = "far fa-eye";
             linkText = "No data";
             tooltip = "No data from robot for 48hours check electrode by hand!";
         }
         //no tip change deteced alert but wait to change until more than 1 mm wear
         else if (Status == "NTCD" && RobotWear < 1)
         {
-            icon = "glyphicon glyphicon-exclamation-sign";
+            icon = "fas fa-exclamation-triangle";
             linkText = "Wait for rechange";
             tooltip = "No change deteced but wait to rechange electrode!";
         }
         //no tip change deteced alert and can be changed
         else if (Status == "NTCD")
         {
-            icon = "glyphicon glyphicon-retweet";
+            icon = "fas fa-retweet";
             linkText = "Rechange";
             tooltip = "No change deteced you can now try to change the electrode again";
         }
         //
         else if (Status == "NWIC")
         {
-            icon = "glyphicon glyphicon-thumbs-down";
+            icon = "fas fa-thumbs-down";
             linkText = "No wear in calc";
             tooltip = "Tips are changed to fast I can not calculate the remaining parts";
         }
         //all is good.
         else
         {
-            icon = "glyphicon glyphicon-heart-empty";
+            icon = "far fa-heart";
             linkText = "";
             tooltip = "Everything is OK";
         }
 
-        <a href="" class="" data-toggle="tooltip" title="@tooltip">
-            <i class="@icon"></i>
+        <a href="" class="@icon" data-toggle="tooltip" title="@tooltip">
             <span>
                 <strong>@linkText</strong>
             </span>

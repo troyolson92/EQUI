@@ -14,13 +14,13 @@
 
 @Html.Grid(Model).Named("c_triggers").Build(columns =>
 {
-    columns.Add(c => c.id).Titled("ID").InitialSort(GridSortOrder.Asc).Css("d-none d-sm-block");
+    columns.Add(c => c.id).Titled("ID").InitialSort(GridSortOrder.Asc).Css("xxd-none xxd-sm-block");
     columns.Add(c => c.alertType).Titled("alertType");
     columns.Add(c => c.enabled).Titled("enabled");
     columns.Add(c => c.discription).Titled("discription");
     columns.Add(c => c.enableSMS).Titled("enableSMS");
     columns.Add(c => c.c_smsSystem.system).Titled("SMSsystem");
-    columns.Add(c => c.smsOnRetrigger).Titled("smsOnRetrigger").Css("d-none d-sm-block");
+    columns.Add(c => c.smsOnRetrigger).Titled("smsOnRetrigger").Css("xxd-none xxd-sm-block");
     columns.Add(c => c.id)
                 .Titled("")
                 .Encoded(false)
