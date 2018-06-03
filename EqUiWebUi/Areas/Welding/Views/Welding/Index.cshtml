@@ -1,0 +1,59 @@
+﻿@{
+    ViewBag.Title = "VCG GA ARO Homepage";
+}
+<div class="jumbotron">
+    <h1>WELCOME bij ARO</h1>
+</div>
+
+<p></p>
+
+<div class="card">
+    <div class="card-header bg-dark">
+        <h5 class="card-title text-white">
+            Test
+            <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
+        </h5>
+    </div>
+    <div class="card-body">
+        @*voorbeeld externe link*@
+        @{
+        string urlIntranetSupervis = @Uri.EscapeDataString("http://webapps.gen.volvocars.net/applications/eng/equipment/supervisiep1/intranet");
+        <p>
+            <a href="~/Home/Rendersite?url=@urlIntranetSupervis" class="btn btn-primary btn-sm">Supervisie Intranet P1 &raquo;</a>
+            Supervisie (intranet)
+        </p>
+        }
+        @*voorbeeld interne link*@
+        <p>
+            <a href="~/Alert/Alert/AASPOTIndex" class="btn btn-primary btn-sm">Alerts &raquo;</a>
+            Waarschuwingen gebaseerd op triggers
+        </p>
+
+        <p>
+            <a href="~/Welding/Welding/Pagina1" class="btn btn-primary btn-sm">Pagina1 &raquo;</a>
+        </p>
+    </div>
+</div>
+
+<p></p>
+
+
+@*This card is default collapsed see fa-rotate-180 and display:none*@
+<div class="card">
+    <div class="card-header bg-danger">
+        <h5 class="card-title text-white">
+            Beta
+            <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-rotate-180 fa-1"></i></span>
+        </h5>
+    </div>
+    <div class="card-body" style="display:none">
+
+        <p>
+            <a href="~/PJV/pjv/index" class="btn btn-primary btn-sm">PJV&raquo;</a>(test)
+            Test met pjv UI
+        </p>
+
+    </div>
+</div>
+
+<p></p>
