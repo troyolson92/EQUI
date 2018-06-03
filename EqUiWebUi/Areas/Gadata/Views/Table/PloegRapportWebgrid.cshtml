@@ -9,7 +9,7 @@
 
 @*render popuover modal*@
 <div id="MyModal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-content">Loading....</div>
+    <div class='card-body'><i class='fa fa-spinner fa-pulse fa-4x fa-fw text-white'></i><span class='sr-only'>Loading...</span></div>
 </div>
 
 @section scripts{
@@ -30,8 +30,7 @@
                 //launch modal
                 $('#MyModal').removeData('bs.modal');
                 $('#MyModal').modal({ show: true });
-                $('#MyModal').load(urlMoreInfo, function (result) {
-                });
+                $('#MyModal').load(urlMoreInfo, function (result) {});
             },
             reloadStarted: function () {
                 PloegRapportGridspinner.spin(document.getElementById('PloegRapportGridSpincontainer'));
@@ -40,6 +39,7 @@
                 PloegRapportGridspinner.stop();
             },
             reloadFailed: function (result) {
+                console.log(result);
                 PloegRapportGridspinner.stop();
                 $("#PloegRapportGrid").html("<div class='alert alert-danger'>Error while loading!! </div>");
             }
@@ -47,7 +47,7 @@
 
         //on modal close
         $('#MyModal').on('hidden.bs.modal', function (e) {
-            $('#MyModal').html('<div class="modal-content">No content</div>');
+            $('#MyModal').html("<div class='card-body'><i class='fa fa-spinner fa-pulse fa-4x fa-fw text-white' ></i ><span class='sr-only'>Loading...</span></div >");
         });
 
         //full with screen
