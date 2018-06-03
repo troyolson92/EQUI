@@ -11,10 +11,10 @@
 </p>
 @Html.Grid(Model).Named("l_controlLimits").Build(columns =>
 {
-    columns.Add(c => c.id).Titled("ID").InitialSort(GridSortOrder.Desc).Css("xxd-none xxd-sm-block");
+    columns.Add(c => c.id).Titled("ID").InitialSort(GridSortOrder.Desc).Css("XXd-none XXd-md-block");;
     columns.Add(c => c.c_triggers.alertType).Titled("alertType");
-    columns.Add(c => c.CreateDate).Titled("CreateDate").Formatted("{0:dd-MM-yyyy HH:mm:ss}").Css("xxd-none xxd-sm-block");
-    columns.Add(c => c.L_CreateUser.username).Titled("ChangedUser").Css("xxd-none xxd-sm-block");
+    columns.Add(c => c.CreateDate).Titled("CreateDate").Formatted("{0:dd-MM-yyyy HH:mm:ss}").Css("XXd-none XXd-md-block");;
+    columns.Add(c => c.L_CreateUser.username).Titled("ChangedUser").Css("XXd-none XXd-md-block");;
     columns.Add(c => c.alarmobject).Titled("alarmobject");
     columns.Add(c => c.UpperLimit).Titled("UCL");
     columns.Add(c => c.LowerLimit).Titled("LCL");

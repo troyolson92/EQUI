@@ -41,7 +41,7 @@
             },
             reloadFailed: function (result) {
                 PloegRapportGridspinner.stop();
-                $("#PloegRapportGrid").html("Error while loading!!!");
+                $("#PloegRapportGrid").html("<div class='alert alert-danger'>Error while loading!! </div>");
             }
         });
 
