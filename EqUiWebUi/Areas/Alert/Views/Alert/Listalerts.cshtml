@@ -9,22 +9,22 @@
 
 @Html.Grid(Model).Named("h_alert").Build(columns =>
 {
-    columns.Add(c => c.id).Titled("ID").InitialSort(GridSortOrder.Desc).Css("d-none d-sm-block");
+    columns.Add(c => c.id).Titled("ID").InitialSort(GridSortOrder.Desc);
     columns.Add(c => c.c_triggers.alertType).Titled("alertType");
-    columns.Add(c => c.C_timestamp).Titled("C_timestamp").Formatted("{0:dd-MM-yyyy HH:mm}").Css("d-none d-sm-block");
+    columns.Add(c => c.C_timestamp).Titled("C_timestamp").Formatted("{0:dd-MM-yyyy HH:mm}");
     columns.Add(c => c.location).Titled("location");
-    columns.Add(c => c.alarmobject).Titled("alarmobject").Css("d-none d-sm-block");
-    columns.Add(c => c.Classification).Titled("Class").Css("d-none d-sm-block");
+    columns.Add(c => c.alarmobject).Titled("alarmobject");
+    columns.Add(c => c.Classification).Titled("Class");
     columns.Add(c => c.info).Titled("info");
-    columns.Add(c => c.ChangedUser.username.Replace(@"VCCNET\", "")).Titled("ChangedUser").Css("d-none d-sm-block");
-    columns.Add(c => c.triggerCount).Titled("TC").Css("d-none d-sm-block");
+    columns.Add(c => c.ChangedUser.username.Replace(@"VCCNET\", "")).Titled("ChangedUser");
+    columns.Add(c => c.triggerCount).Titled("TC");
     columns.Add(c => c.c_state.state).Titled("state");
 
     //add edit button
     columns.Add(c => c)
                 .Titled("")
                 .Encoded(false)
-                .RenderedAs(c => MyFilters.IconActionLink(Url.Action("Edit", new { id = c.id }), "glyphicon glyphicon-pencil", "", "Edit this alert")
+                .RenderedAs(c => MyFilters.IconActionLink(Url.Action("Edit", new { id = c.id }), "fas fa-pencil-alt", "", "Edit this alert")
                 ).Filterable(false);
 
 }).Filterable(true).Sortable(true).Pageable(pager =>
@@ -43,14 +43,14 @@
         $('.mvc-grid').mvcgrid({
             rowClicked: function (row, data, e) {
                 //if row already has this clase close the modal
-                if ($(row).hasClass("info")) {
+                if ($(row).hasClass("bg-info")) {
                     $("#placeholder").remove();
-                    $(row).removeClass("info");
+                    $(row).removeClass("bg-info");
                     return;
                 }
                 //clear selected rows for this table
-                $('tr').removeClass('info'); //THIS IS WRONG
-                $(row).addClass("info");
+                $('tr').removeClass('bg-info'); //THIS IS WRONG
+                $(row).addClass("bg-info");
                 $("#placeholder").remove(); //clear placeholder is exists
                 //add new placeholder afhter selected row
                 $(row).after('<tr id="placeholder"><td colspan="10000"><div class="modal-content"><div class="modal-body" id ="placeholderPartial"></div></div></td></tr>');

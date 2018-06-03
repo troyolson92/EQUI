@@ -11,10 +11,10 @@
 </p>
 @Html.Grid(Model).Named("l_variants").Build(columns =>
 {
-    columns.Add(c => c.id).Titled("ID").InitialSort(GridSortOrder.Desc).Css("d-none d-sm-block");
+    columns.Add(c => c.id).Titled("ID").InitialSort(GridSortOrder.Desc).Css("xxd-none xxd-sm-block");
     columns.Add(c => c.c_triggers.alertType).Titled("alertType");
-    columns.Add(c => c.CreateDate).Titled("CreateDate").Formatted("{0:dd-MM-yyyy HH:mm:ss}").Css("d-none d-sm-block");
-    columns.Add(c => c.L_users.username).Titled("ChangedUser").Css("d-none d-sm-block");
+    columns.Add(c => c.CreateDate).Titled("CreateDate").Formatted("{0:dd-MM-yyyy HH:mm:ss}").Css("xxd-none xxd-sm-block");
+    columns.Add(c => c.L_users.username).Titled("ChangedUser").Css("xxd-none xxd-sm-block");
     columns.Add(c => c.variantGroup).Titled("variantGroup");
     columns.Add(c => c.Comment).Titled("Comment");
     //add edit button for controlLimits

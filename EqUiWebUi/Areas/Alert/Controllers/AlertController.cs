@@ -72,12 +72,12 @@ namespace EqUiWebUi.Areas.Alert.Controllers
         //allow to filter on single location
         //allow to filter on open items
         //
-        public async Task<ActionResult> AASPOTAlertList(string LocationFilter, bool ActiveAlertOnly = false)
+        public ActionResult AASPOTAlertList(string LocationFilter, bool ActiveAlertOnly = false)
         {
             //filter alerts basted on user profile!
             string UserLocationroot = CurrentUser.Getuser.LocationRoot;
             var h_alert = db.h_alert.Include(h => h.c_state).Include(h => h.c_triggers).Include(h => h.ChangedUser).Include(h => h.CloseUser).Include(h => h.AcceptUser);
-            List<h_alert>  result =  await (h_alert.Where(a => a.locationTree.Contains(UserLocationroot)
+            var  result =   h_alert.Where(a => a.locationTree.Contains(UserLocationroot)
                                                && (
                                                   a.c_triggers.alertType == "SBCUalert" //only allow this trigger type
                                                   || a.c_triggers.alertType == "GUNalert"
@@ -89,8 +89,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                                                && (
                                                  LocationFilter == null //Allow filtering on a location
                                                  || a.location.Contains(LocationFilter) //filter out specific location
-                                               )
-                                                ).ToListAsync());
+                                               ));
 
             //count the total number of record to display as 'total triggers'
             ViewBag.LocationFilter = LocationFilter;

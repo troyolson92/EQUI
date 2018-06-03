@@ -2,12 +2,12 @@
 
     @Html.Grid(Model).Named("L_operationGrid").Build(columns =>
 {
-    columns.Add(c => c.ID).Titled("id").InitialSort(GridSortOrder.Desc).Css("d-none d-sm-block");
+    columns.Add(c => c.ID).Titled("id").InitialSort(GridSortOrder.Desc).Css("xxd-none xxd-sm-block");
     columns.Add(c => c.C_timestamp).Titled("_timestamp");
     columns.Add(c => c.code).Titled("code");
-    columns.Add(c => c._L_operationCode).Titled("Operation").Css("d-none d-sm-block");
-    columns.Add(c => c.Vasc_name).Titled("Vasc_name").Css("d-none d-sm-block");
-    columns.Add(c => c.controller_id).Titled("controller_id").Css("d-none d-sm-block");
+    columns.Add(c => c._L_operationCode).Titled("Operation").Css("xxd-none xxd-sm-block");
+    columns.Add(c => c.Vasc_name).Titled("Vasc_name").Css("xxd-none xxd-sm-block");
+    columns.Add(c => c.controller_id).Titled("controller_id").Css("xxd-none xxd-sm-block");
     columns.Add(c => c.c_controller.controller_name).Titled("controller_name");
     columns.Add(c => c.Description).Titled("Desciption");
 }).Filterable(true).Sortable(true).Pageable(pager =>

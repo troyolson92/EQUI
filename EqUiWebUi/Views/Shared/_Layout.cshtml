@@ -72,11 +72,11 @@
             <!-- pull right part -->
             <div class="navbar-nav ml-auto">
                 <div class=" nav-item">
-                    <a class="fas fa-cog fa-1x" href='@Url.Action("Settings", "Home", new { area = "" }, null)' style="color:tomato" data-toggle="tooltip" title="Settings"></a>
+                    <a class="fas fa-cog fa-1x text-danger" href='@Url.Action("Settings", "Home", new { area = "" }, null)' data-toggle="tooltip" title="Settings"></a>
 
-                    <a class="fas fa-user fa-2x userhelp" data-container="body" data-toggle="popover" data-original-title="@User.Identity.Name" style="color:aliceblue"></a>
+                    <a class="far fa-id-badge fa-2x text-white-50 userhelp" data-container="body" data-toggle="popover" data-original-title="@User.Identity.Name" ></a>
 
-                    <a class="fas fa-arrows-alt" id="fullscreenNav"  data-toggle="tooltip" data-placement="left" title="Go fullscreen" style="color:aliceblue"></a>
+                    <a class="fas fa-arrows-alt text-white-50" id="fullscreenNav"  data-toggle="tooltip" data-placement="left" title="Go fullscreen"></a>
 
                 </div>
             </div>

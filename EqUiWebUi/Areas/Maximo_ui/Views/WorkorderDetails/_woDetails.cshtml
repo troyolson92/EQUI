@@ -3,35 +3,35 @@
     ViewBag.Title = "_woDetails";
 }
 
-<div class="card @((!string.IsNullOrWhiteSpace(ViewBag.DESCRIPTION) || !string.IsNullOrWhiteSpace(ViewBag.LongDescription)) ? "shown":"hidden")">
-    <div class="card-header bg-info">
+<div class="card @((!string.IsNullOrWhiteSpace(ViewBag.DESCRIPTION) || !string.IsNullOrWhiteSpace(ViewBag.LongDescription)) ? "d-block":"d-none")">
+    <div class="card-header bg-light">
         <h6 class="card-title">
             Description:
             <strong>@ViewBag.DESCRIPTION</strong>
         </h6>
     </div>
 
-    <div class="card-body @(!string.IsNullOrWhiteSpace(ViewBag.LongDescription) ? "shown":"hidden")">
+    <div class="card-body @(!string.IsNullOrWhiteSpace(ViewBag.LongDescription) ? "d-block":"d-none")">
         @Html.Raw(ViewBag.LongDescription)
     </div>
 </div>
 
-<div class="card @((!string.IsNullOrWhiteSpace(ViewBag.REMARKDESC) || !string.IsNullOrWhiteSpace(ViewBag.FailureRemark)) ? "shown":"hidden")">
-    <div class="card-header bg-info">
+<div class="card @((!string.IsNullOrWhiteSpace(ViewBag.REMARKDESC) || !string.IsNullOrWhiteSpace(ViewBag.FailureRemark)) ? "d-block":"d-none")">
+    <div class="card-header bg-light">
         <h6 class="card-title">
             FailureRemark:
             <strong> @ViewBag.REMARKDESC</strong>
         </h6>
     </div>
 
-    <div class="card-body  @(!string.IsNullOrWhiteSpace(ViewBag.FailureRemark) ? "shown":"hidden")">
+    <div class="card-body  @(!string.IsNullOrWhiteSpace(ViewBag.FailureRemark) ? "d-block":"d-none")">
         @Html.Raw(ViewBag.FailureRemark)
     </div>
 </div>
 
 
-<div class="card shown">
-    <div class="card-header bg-info">
+<div class="card d-block">
+    <div class="card-header bg-light">
         <h6 class="card-title">
             ReportedBy:
             <strong> @ViewBag.REPORTEDBY</strong>
@@ -39,8 +39,8 @@
     </div>
 </div>
 
-<div class="card @(Model.Data.Count() != 0 ? "shown":"hidden")">
-    <div class="card-header bg-info">
+<div class="card @(Model.Data.Count() != 0 ? "d-block":"d-none")">
+    <div class="card-header bg-light">
         <h6 class="card-title">
             Labor
         </h6>
@@ -52,27 +52,27 @@
         }
 
         @grid.GetHtml(
-                                                  htmlAttributes: new { id = "gridMapping", style = "font-size: 12px" },
-                                                  tableStyle: "table table-striped grid-table",
-                                                  headerStyle: "grid-header-title",
-                                                  footerStyle: "grid-footer",
-                                                  alternatingRowStyle: "webgrid-alternating-row",
-                                                  selectedRowStyle: "grid-row grid-row-selected",
-                                                  rowStyle: "grid-row",
-                                                  mode: WebGridPagerModes.All,
-                                                  firstText: "<< First",
-                                                  previousText: "< Prev",
-                                                  nextText: "Next >",
-                                                  lastText: "Last >>",
-                                                  columns: ViewBag.LABORColumns
-                                      )
+                                                            htmlAttributes: new { id = "gridMapping", style = "font-size: 12px" },
+                                                            tableStyle: "table table-striped grid-table",
+                                                            headerStyle: "grid-header-title",
+                                                            footerStyle: "grid-footer",
+                                                            alternatingRowStyle: "webgrid-alternating-row",
+                                                            selectedRowStyle: "grid-row grid-row-selected",
+                                                            rowStyle: "grid-row",
+                                                            mode: WebGridPagerModes.All,
+                                                            firstText: "<< First",
+                                                            previousText: "< Prev",
+                                                            nextText: "Next >",
+                                                            lastText: "Last >>",
+                                                            columns: ViewBag.LABORColumns
+                                                )
     </div>
 </div>
 
 @*inform user that this is a realtime connection*@
 @if (ViewBag.RealtimeConn)
 {
-    <div class="badge badge-danger">
+    <div class="badge badge-pill badge-warning">
         RT
     </div>
 }

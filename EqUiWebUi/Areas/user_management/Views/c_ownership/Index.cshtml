@@ -12,12 +12,12 @@
 
 @Html.Grid(Model).Named("c_ownership").Build(columns =>
     {
-        columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Asc).Css("d-none d-sm-block");
-        columns.Add(c => c.Plant).Titled("Plant").Css("d-none d-sm-block");
-        columns.Add(c => c.Optgroup).Titled("Optgroup").Css("d-none d-sm-block");
+        columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Asc).Css("xxd-none xxd-sm-block");
+        columns.Add(c => c.Plant).Titled("Plant").Css("xxd-none xxd-sm-block");
+        columns.Add(c => c.Optgroup).Titled("Optgroup").Css("xxd-none xxd-sm-block");
         columns.Add(c => c.Ownership).Titled("Ownership");
         columns.Add(c => c.LocationTree).Titled("LocationTree");
-        columns.Add(c => c.UserComment).Titled("UserComment").Css("d-none d-sm-block");
+        columns.Add(c => c.UserComment).Titled("UserComment").Css("xxd-none xxd-sm-block");
         columns.Add(c => c.id)
                     .Titled("")
                     .Encoded(false)
@@ -25,7 +25,7 @@
                                      @Html.ActionLink("Details", "Details", new { id = c.id }) + " | " +
                                      @Html.ActionLink("Delete", "Delete", new { id = c.id })
 
-                    ).InitialSort(GridSortOrder.Asc).Filterable(false).Css("d-none d-sm-block");
+                    ).InitialSort(GridSortOrder.Asc).Filterable(false).Css("xxd-none xxd-sm-block");
     }).Filterable(true).Sortable(true).Pageable(pager =>
     {
         pager.RowsPerPage = 15;

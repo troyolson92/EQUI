@@ -1,4 +1,4 @@
-﻿@model IEnumerable<EqUiWebUi.Areas.Alert.Models.h_alert>
+﻿@model IQueryable<EqUiWebUi.Areas.Alert.Models.h_alert>
 
 @{
     ViewBag.Title = "Index";
@@ -14,12 +14,12 @@
 
 @Html.Grid(Model).Named("h_alert").Build(columns =>
 {
-    columns.Add(c => c.id).Titled("id").Filterable(true).InitialSort(GridSortOrder.Desc).Css("d-none d-sm-block");
+    columns.Add(c => c.id).Titled("id").Filterable(true).InitialSort(GridSortOrder.Desc);
     columns.Add(c => c.location).Titled("location").Filterable(true).MultiFilterable(true);
-    columns.Add(c => c.C_timestamp).Titled("C_timestamp").Formatted("{0:dd-MM-yyyy HH:mm}").Css("d-none d-sm-block");
+    columns.Add(c => c.C_timestamp).Titled("C_timestamp").Formatted("{0:dd-MM-yyyy HH:mm}");
     columns.Add(c => c.info).Titled("info");
-    columns.Add(c => c.ChangedUser.username.Replace(@"VCCNET\", "")).Titled("ChangedUser").Css("d-none d-sm-block");
-    columns.Add(c => c.triggerCount).Titled("TC").Filterable(true).Css("d-none d-sm-block");
+    columns.Add(c => c.ChangedUser.username.Replace(@"VCCNET\", "")).Titled("ChangedUser");
+    columns.Add(c => c.triggerCount).Titled("TC").Filterable(true);
 //render dropdown to set alert status
 columns.Add(c => c.c_state.state)
            .Titled("State")
@@ -40,14 +40,14 @@ columns.Add(c => c)
 columns.Add(c => c)
                 .Titled("")
                 .Encoded(false)
-                .RenderedAs(c => MyFilters.IconActionLink(Url.Action("AASPOTAlertList", new { LocationFilter = c.location }), "glyphicon glyphicon-filter", "", "Filter alerts for this location")
+                .RenderedAs(c => MyFilters.IconActionLink(Url.Action("AASPOTAlertList", new { LocationFilter = c.location }), "fas fa-filter", "", "Filter alerts for this location")
                 ).Filterable(false);
 
 //add edit button
 columns.Add(c => c)
                 .Titled("")
                 .Encoded(false)
-                .RenderedAs(c => MyFilters.IconActionLink(Url.Action("Edit", new { id = c.id }), "glyphicon glyphicon-pencil", "", "Edit this alert")
+                .RenderedAs(c => MyFilters.IconActionLink(Url.Action("Edit", new { id = c.id }), "fas fa-pencil-alt", "", "Edit this alert")
                 ).Filterable(false);
 
 }).Filterable(true).Sortable(true).Pageable(pager =>
@@ -66,14 +66,14 @@ columns.Add(c => c)
         $('.mvc-grid').mvcgrid({
             rowClicked: function (row, data, e) {
                 //if row already has this clase close the modal
-                if ($(row).hasClass("info")) {
+                if ($(row).hasClass("bg-info")) {
                     $("#placeholder").remove();
-                    $(row).removeClass("info");
+                    $(row).removeClass("bg-info");
                     return;
                 }
                 //clear selected rows for this table
-                $('tr').removeClass('info'); //THIS IS WRONG
-                $(row).addClass("info");
+                $('tr').removeClass('bg-info'); //THIS IS WRONG
+                $(row).addClass("bg-info");
                 $("#placeholder").remove(); //clear placeholder is exists
                 //add new placeholder afhter selected row
                 $(row).after('<tr id="placeholder"><td colspan="10000"><div class="modal-content"><div class="modal-body" id ="placeholderPartial"></div></div></td></tr>');
