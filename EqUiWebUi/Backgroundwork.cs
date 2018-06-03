@@ -32,7 +32,6 @@ namespace EqUiWebUi
 
 		//update new data from STO to gadata. called every minute #hangfire
 		[AutomaticRetry(Attempts = 0)]
-		[DisableConcurrentExecution(60*5)] //locks the job from starting multible times if other one stil running.
 		public void PushDatafromSTOtoGADATA()
 		{
 			GadataComm lGadataComm = new GadataComm();

@@ -23,7 +23,6 @@ namespace EqUiWebUi.Areas.STW040
 
         [Queue("gadata")]
         [AutomaticRetry(Attempts = 0)]
-        [DisableConcurrentExecution(50)] //timeout
         public void STW040ToGadataSync()
         {
             string STW040qry = @"

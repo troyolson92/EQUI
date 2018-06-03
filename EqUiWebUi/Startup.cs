@@ -49,7 +49,7 @@ namespace EqUiWebUi
                 var HFoptions = new BackgroundJobServerOptions
                 {
                     //MUST BE LOWERCASE ONLY !!!!!!
-                    Queues = new[] {"debug"},
+                    Queues = new[] {"debug","gadata"},
                     //How many jobs run at the same time
                     WorkerCount = Environment.ProcessorCount * 1
                 };
