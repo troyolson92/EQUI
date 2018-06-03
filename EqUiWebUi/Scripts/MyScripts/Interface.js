@@ -14,7 +14,7 @@ function initInterface() {
             var output = '';
             $.ajax(
                 {
-                    url: '@Url.Action("_Details", "user", new { area = "user_management" },null)',
+                    url: '/user_management/user/_Details',
                     async: false,
                     success: function (response) {
                         output = response;
