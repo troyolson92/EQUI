@@ -10,6 +10,8 @@ namespace EqUiWebUi
 {
     public class Startup
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         public void Configuration(Owin.IAppBuilder app)
         {
             //setup signal r
@@ -26,15 +28,35 @@ namespace EqUiWebUi
             {
                 Authorization = new[] { new MyAuthorizationFilter() }
             });
-            //setup hangfire options
-            var HFoptions = new BackgroundJobServerOptions
+
+            //RUN TE FULL QUERY LIST ONLY ON THE PRODUCTION MACHINE! 
+            if (Environment.MachineName.Contains("SVW"))
             {
-                //MUST BE LOWERCASE ONLY !!!!!!
-                Queues = new[] { "critical", "default", "alertengine", "gadata","jobengine" },
-                //How many jobs run at the same time
-                WorkerCount = Environment.ProcessorCount * 5
-            };
-            app.UseHangfireServer(HFoptions);
+                //setup hangfire options
+                var HFoptions = new BackgroundJobServerOptions
+                {
+                    //MUST BE LOWERCASE ONLY !!!!!!
+                    Queues = new[] { "critical", "default", "alertengine", "gadata", "jobengine" },
+                    //How many jobs run at the same time
+                    WorkerCount = Environment.ProcessorCount * 5
+                };
+                app.UseHangfireServer(HFoptions);
+                log.Info("Hangfire startup in production mode (" + Environment.MachineName + ")");
+            }
+            else
+            {
+                //setup hangfire options
+                var HFoptions = new BackgroundJobServerOptions
+                {
+                    //MUST BE LOWERCASE ONLY !!!!!!
+                    Queues = new[] {"debug"},
+                    //How many jobs run at the same time
+                    WorkerCount = Environment.ProcessorCount * 1
+                };
+                app.UseHangfireServer(HFoptions);
+                log.Info("Hangfire startup in DEBUG mode (" + Environment.MachineName + ")");
+
+            }
         //
         }
 

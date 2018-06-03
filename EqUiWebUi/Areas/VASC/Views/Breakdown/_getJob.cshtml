@@ -15,16 +15,16 @@
 {
     columns.Add(c => c.index).Titled("substop").InitialSort(GridSortOrder.Asc);
     columns.Add(c => c.ts_breakdownStart).Titled("ts_breakdownStart");
-    columns.Add(c => c.ts_breakdownAck).Titled("ts_breakdownAck").Css("xxd-none xxd-sm-block");
+    columns.Add(c => c.ts_breakdownAck).Titled("ts_breakdownAck").Css("XXd-none XXd-md-block");;
     columns.Add(c =>  (c.ts_breakdownAck-c.ts_breakdownStart) ).Titled("AckTime");
-    columns.Add(c => c.ts_breakdownEnd).Titled("ts_breakdownEnd").Css("xxd-none xxd-sm-block");
+    columns.Add(c => c.ts_breakdownEnd).Titled("ts_breakdownEnd").Css("XXd-none XXd-md-block");;
     columns.Add(c => (c.ts_breakdownEnd - c.ts_breakdownStart)).Titled("StopTime");
     columns.Add(c => c._ev_breakdownStart).Titled("ev_breakdownStart").Filterable(false).Sortable(false);
-    columns.Add(c => c.val_breakdownStart).Titled("val").Css("xxd-none xxd-sm-block");
+    columns.Add(c => c.val_breakdownStart).Titled("val").Css("XXd-none XXd-md-block");;
     columns.Add(c => c._ev_breakdownAck).Titled("ev_breakdownAck").Filterable(false).Sortable(false);
-    columns.Add(c => c.val_breakdownAck).Titled("val").Css("xxd-none xxd-sm-block");
-    //columns.Add(c => c.h_alarm_id).Titled("h_alarm_id").Css("xxd-none xxd-sm-block");
-    //columns.Add(c => c.rt_alarm_id).Titled("rt_alarm_id").Css("xxd-none xxd-sm-block");
+    columns.Add(c => c.val_breakdownAck).Titled("val").Css("XXd-none XXd-md-block");;
+    //columns.Add(c => c.h_alarm_id).Titled("h_alarm_id").Css("XXd-none XXd-md-block");;
+    //columns.Add(c => c.rt_alarm_id).Titled("rt_alarm_id").Css("XXd-none XXd-md-block");;
 }).Filterable(true).Sortable(true).Pageable(pager =>
 {
     pager.RowsPerPage = 10;

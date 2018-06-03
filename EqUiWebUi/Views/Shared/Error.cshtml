@@ -18,9 +18,18 @@
                 @Model.Exception.Message.ToString() @Html.Raw(" ") @Model.ControllerName @Html.Raw(" ") @Model.ActionName
             </div>
 
-            <div class="alert alert-info">
-                @Model.Exception
+            <div class="card">
+                <div class="card-header bg-danger">
+                    <h5 class="card-title text-white">
+                        Exeption
+                        <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-rotate-180 fa-1"></i></span>
+                    </h5>
+                </div>
+                <div class="card-body" style="display:none">
+                    @Model.Exception
+                </div>
             </div>
+
         </p>
 
         <p>

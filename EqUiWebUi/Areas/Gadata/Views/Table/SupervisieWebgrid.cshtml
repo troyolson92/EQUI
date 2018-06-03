@@ -14,6 +14,7 @@
     <div class="modal-content">Loading....</div>
 </div>
 
+
 @section scripts{
     <!--script for supervisiegrid-->
     <script type="text/javascript">
@@ -43,7 +44,7 @@
         },
         reloadFailed: function (result) {
             SupervisieGridspinner.stop();
-            $("#SupervisieGrid").html("Error while loading!!!");
+            $("#SupervisieGrid").html("<div class='alert alert-danger'>Error while loading!! </div>");
         }
     });
 
