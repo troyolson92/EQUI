@@ -14,7 +14,7 @@
         columns.Add(c => c.bit_id).Titled("bit_id").Css("d-none");
         columns.Add(c => c.value).Titled("SessionName");
         columns.Add(c => c.description).Titled("description");
-    }).Filterable(true).Sortable(true).Empty("Did not find anything").Css("table-hover")
+    }).Filterable().Sortable().Empty("Did not find anything").Css("table-hover")
 
 <hr />
 

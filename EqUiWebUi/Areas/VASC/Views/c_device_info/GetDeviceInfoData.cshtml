@@ -13,7 +13,7 @@
     columns.Add(c => c.C_timestamp).Titled("_timestamp");
     columns.Add(c => c.c_device_info.URL).Titled("URL");
     columns.Add(c => c.value).Titled("value");
-}).Filterable(true).Sortable(true).Pageable(pager =>
+}).Filterable().Sortable().Pageable(pager =>
 {
     pager.RowsPerPage = 30;
 }).Empty("Did not find anything").Css("table-hover")

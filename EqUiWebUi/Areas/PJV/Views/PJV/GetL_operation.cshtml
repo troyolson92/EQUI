@@ -16,7 +16,7 @@
     columns.Add(c => c.tableRowId).Titled("tableRowId");
     columns.Add(c => c.description).Titled("description");
 
-}).Filterable(true).Sortable(true).Pageable(pager =>
+}).Filterable().Sortable().Pageable(pager =>
 {
     pager.RowsPerPage = 20;
 }).Empty("Did not find anything").Css("table-hover")

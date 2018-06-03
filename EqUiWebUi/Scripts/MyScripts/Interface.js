@@ -1,5 +1,72 @@
 ﻿//enable general interface
 function initInterface() {
+    //subscrible renderd grids to events
+    $('.mvc-grid').mvcgrid();
+    //navbar
+    $("#allcontent").animate({ "margin-top": "60px" }, "fast");
+    $("#navbar").autoHidingNavbar();
+    //for user popover
+
+    $(".userhelp").popover({
+        placement: "left",
+        html: true,
+        content: function () {
+            var output = '';
+            $.ajax(
+                {
+                    url: '@Url.Action("_Details", "user", new { area = "user_management" },null)',
+                    async: false,
+                    success: function (response) {
+                        output = response;
+                    }
+                });
+            return output;
+        },
+    })
+
+    //for fullscreen mode
+    $("#fullscreenNav").click(function () {
+        $("#allcontent").removeClass("body-content");
+        $("#allcontent").removeClass("container");
+
+        $("#navbar").autoHidingNavbar('setDisableAutohide', true); //disable autohide
+        $("#navbar").autoHidingNavbar('hide'); //hide navbar
+
+        $("#allcontent").animate({ "margin-top": "0px" }, "fast");
+        $("#fullscreenBody").removeClass("d-none");
+        $("#footer").addClass("d-none");
+    });
+    //out of full screen mode
+    $("#fullscreenBody").click(function () {
+
+        $("#allcontent").addClass("body-content");
+        $("#allcontent").addClass("container");
+
+        $("#navbar").autoHidingNavbar('setDisableAutohide', false); //enable autohide
+        $("#navbar").autoHidingNavbar('show'); //show navbar
+
+        $("#allcontent").animate({ "margin-top": "60px" }, "fast");
+        $("#fullscreenBody").addClass("d-none");
+        $("#footer").removeClass("d-none");
+    });
+
+    //if fullscreen request in url do it.
+    if (qs("GoFullScreen")) {
+        console.log("auto Full screen");
+        $("#fullscreenNav").trigger("click");
+    }
+
+    //if zoomlevel request in url do it.
+    if (qs("Zoomlevel")) {
+        console.log("Set zoom level");
+        //this works for Chrome, Safari, IE ref:http://jsfiddle.net/q6kebgbh/4/
+        $("#allcontent").css('zoom', qs("Zoomlevel"));
+    }
+    //enable tooltips everywhere
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+
     EnablePannelCollaps();
     EnableJQresultTriggerBtn();
     initToaster();

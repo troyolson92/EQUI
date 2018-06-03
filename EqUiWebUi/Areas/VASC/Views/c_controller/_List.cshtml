@@ -19,7 +19,7 @@
         .Encoded(false)
         .RenderedAs(c => @Html.ActionLink("Show", "Index", "c_controller_class", new { controller_id = c.id }, null)
         ).Filterable(false);
-}).Filterable(true).Sortable(true).Pageable(pager =>
+}).Filterable().Sortable().Pageable(pager =>
 {
     pager.RowsPerPage = 10;
 }).Empty("Did not find anything").Css("table-hover")

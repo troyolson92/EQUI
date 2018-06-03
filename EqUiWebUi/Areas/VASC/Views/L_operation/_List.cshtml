@@ -10,7 +10,7 @@
     columns.Add(c => c.controller_id).Titled("controller_id").Css("XXd-none XXd-md-block");;
     columns.Add(c => c.c_controller.controller_name).Titled("controller_name");
     columns.Add(c => c.Description).Titled("Desciption");
-}).Filterable(true).Sortable(true).Pageable(pager =>
+}).Filterable().Sortable().Pageable(pager =>
 {
     pager.RowsPerPage = 15;
 }).Empty("Did not find anything").Css("table-hover")

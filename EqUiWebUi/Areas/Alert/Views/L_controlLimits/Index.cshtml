@@ -27,7 +27,7 @@
                     .RenderedAs(c => MyFilters.IconActionLink(Url.Action("Edit", new { id = c.id }), "glyphicon glyphicon-pencil", "", "Edit this controllimit")
                     ).Filterable(false);
 
-}).Filterable(true).Sortable(true).Pageable(pager =>
+}).Filterable().Sortable().Pageable(pager =>
 {
     pager.RowsPerPage = 17;
 }).Empty("Did not find anything").Css("table-hover")

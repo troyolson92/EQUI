@@ -37,7 +37,7 @@
                 .RenderedAs(c => @Html.ActionLink("Edit", "Edit", new { id = c.id })
                 ).Filterable(false);
 
-}).Filterable(true).Sortable(true).Pageable(pager =>
+}).Filterable().Sortable().Pageable(pager =>
 {
     pager.RowsPerPage = 20;
 }).Empty("Did not find anything").Css("table-hover")
