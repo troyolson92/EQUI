@@ -18,7 +18,7 @@
        .Filterable(true)
        .RenderedAs(c => MyFilters.SetServiceState(c.ServiceName, c.Status));
 
-}).Filterable(true).Sortable(true).Pageable(pager =>
+}).Filterable().Sortable().Pageable(pager =>
 {
     pager.RowsPerPage = 10;
 }).Empty("Did not find anything").Css("table-hover")

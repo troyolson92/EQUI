@@ -26,4 +26,4 @@ COUNT: @Model.Count()
         .Encoded(false)
         .RenderedAs(c => @Html.ActionLink("l_operation", "Index", "l_operation", new { controller_id = c.c_controller_id, sessionName = c.vasc_session }, null)
         ).Filterable(false);
-}).Filterable(true).Sortable(true).Empty("Did not find anything").Css("table-hover")
+}).Filterable().Sortable().Empty("Did not find anything").Css("table-hover")

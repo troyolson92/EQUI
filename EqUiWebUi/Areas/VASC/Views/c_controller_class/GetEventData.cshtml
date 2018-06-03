@@ -18,7 +18,7 @@ COUNT:@Model.Count()
     columns.Add(c => c.description).Titled("description");
     columns.Add(c => c.event_value).Titled("event_value");
     columns.Add(c => c.isEvent).Titled("isEvent");
-}).Filterable(true).Sortable(true).Pageable(pager =>
+}).Filterable().Sortable().Pageable(pager =>
 {
     pager.RowsPerPage = 30;
 }).Empty("Did not find anything").Css("table-hover")

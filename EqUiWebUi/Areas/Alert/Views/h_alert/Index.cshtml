@@ -23,7 +23,7 @@
                                  @Html.ActionLink("EditAdmin", "Edit", new { id = c.id }) + " | " +
                                  @Html.ActionLink("Delete", "Delete", new { id = c.id })
                 ).Filterable(false);
-}).Filterable(true).Sortable(true).Pageable(pager =>
+}).Filterable().Sortable().Pageable(pager =>
 {
     pager.RowsPerPage = 20;
 }).Empty("Did not find anything").Css("table-hover").RowCss(row => MyRowStyling.getRowStyleStatus(row.c_state.state))

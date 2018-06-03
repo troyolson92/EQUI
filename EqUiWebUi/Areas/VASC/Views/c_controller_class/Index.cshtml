@@ -49,7 +49,7 @@
                 .Encoded(false)
                 .RenderedAs(c => @Html.ActionLink("Controller_events", "GetEventData", new { controller_id = ViewBag.controller_id })
                 ).Filterable(false);
-}).Filterable(true).Sortable(true).Empty("Did not find anything").Css("table-hover")
+}).Filterable().Sortable().Empty("Did not find anything").Css("table-hover")
 
 
 <hr />

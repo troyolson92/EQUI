@@ -36,7 +36,7 @@
                 .RenderedAs(c => @Html.ActionLink("Edit", "Edit", new { id = c.id }) + " | " +
                                  @Html.ActionLink("Delete", "Delete", new { id = c.id })
                 ).InitialSort(GridSortOrder.Asc).Filterable(false);
-}).Filterable(true).Sortable(true).Empty("Did not find anything").Css("table-hover")
+}).Filterable().Sortable().Empty("Did not find anything").Css("table-hover")
 
 @section scripts{
     <script>

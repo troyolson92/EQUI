@@ -25,7 +25,7 @@
     columns.Add(c => c.val_breakdownAck).Titled("val").Css("XXd-none XXd-md-block");;
     //columns.Add(c => c.h_alarm_id).Titled("h_alarm_id").Css("XXd-none XXd-md-block");;
     //columns.Add(c => c.rt_alarm_id).Titled("rt_alarm_id").Css("XXd-none XXd-md-block");;
-}).Filterable(true).Sortable(true).Pageable(pager =>
+}).Filterable().Sortable().Pageable(pager =>
 {
     pager.RowsPerPage = 10;
 }).Empty("Did not find anything").Css("table-hover")

@@ -18,7 +18,7 @@
     columns.Add(c => c.c_variable.variable).Titled("variable");
     columns.Add(c => c.value).Titled("value");
     columns.Add(c => c.isEvent).Titled("isEvent");
-}).Filterable(true).Sortable(true).Pageable(pager =>
+}).Filterable().Sortable().Pageable(pager =>
 {
     pager.RowsPerPage = 30;
 }).Empty("Did not find anything").Css("table-hover")

@@ -28,7 +28,7 @@
                                  @Html.ActionLink("Delete", "Delete", new { id = c.id }) + "  | " +
                                  @Html.ActionLink("Show", "RenderUserScreen", new { screenID = c.id })
                 ).InitialSort(GridSortOrder.Asc).Filterable(false);
-}).Filterable(true).Sortable(true).Pageable(pager =>
+}).Filterable().Sortable().Pageable(pager =>
 {
     pager.RowsPerPage = 15;
 }).Empty("Did not find anything").Css("table-hover")

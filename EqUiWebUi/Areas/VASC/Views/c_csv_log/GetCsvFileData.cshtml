@@ -15,7 +15,7 @@
     columns.Add(c => c.lastDateRecord).Titled("lastDateRecord");
     columns.Add(c => c.lastLineRead).Titled("lastLineRead");
     columns.Add(c => c.lastFileSize).Titled("lastFileSize");
-}).Filterable(true).Sortable(true).Pageable(pager =>
+}).Filterable().Sortable().Pageable(pager =>
 {
     pager.RowsPerPage = 30;
 }).Empty("Did not find anything").Css("table-hover")

@@ -34,7 +34,7 @@
                         ).Filterable(false);
     //
 
-}).Filterable(true).Sortable(true).Pageable(pager =>
+}).Filterable().Sortable().Pageable(pager =>
 {
     pager.RowsPerPage = 17;
 }).Empty("Did not find anything").Css("table-hover")

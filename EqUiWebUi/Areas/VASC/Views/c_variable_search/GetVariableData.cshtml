@@ -19,7 +19,7 @@
     columns.Add(c => c.module).Titled("module");
     columns.Add(c => c.variable).Titled("variable");
     columns.Add(c => c.value).Titled("value");
-}).Filterable(true).Sortable(true).Pageable(pager =>
+}).Filterable().Sortable().Pageable(pager =>
 {
     pager.RowsPerPage = 30;
 }).Empty("Did not find anything").Css("table-hover")
