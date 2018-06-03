@@ -9,16 +9,13 @@ function initInterface() {
 //script for subscribing to pannel colaps
 function EnablePannelCollaps() {
     $(document).on('click', '.card-header span.clickable', function (e) {
-        console.log('hit');
         var $this = $(this);
-        if (!$this.hasClass('collapse')) {
-            $this.parents('.card').find('.card-body').slideUp();
-            $this.addClass('collapse');
-          //  $this.find('i').removeClass('fa-chevron-circle-up').addClass('fa-chevron-circle-down');
+        if ($this.parents('.card').find('.card-body').css('display') == 'block') {
+            $this.addClass('fa-rotate-180')
+            $this.parents('.card').find('.card-body').slideUp()
         } else {
-            $this.parents('.card').find('.card-body').slideDown();
-            $this.removeClass('collapse');
-          //  $this.find('i').removeClass('fa-chevron-circle-down').addClass('fa-chevron-circle-up');
+            $this.removeClass('fa-rotate-180')
+            $this.parents('.card').find('.card-body').slideDown()
         }
     })
 }
