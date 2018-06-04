@@ -17,7 +17,7 @@ namespace EqUiWebUi.Areas.Alert
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         //write alert trigger configureation to hangfire
-        public void ConfigureHangfireAlertWork(int? id)
+        public void ConfigureHangfireAlertWork(int? id = null)
         {
             //get alert pol config from database and configure hangfire.
             Models.GADATA_AlertModel gADATA_AlertModel = new GADATA_AlertModel();
