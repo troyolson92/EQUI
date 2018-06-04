@@ -98,11 +98,11 @@ locancestor.LOCATION = WORKORDER.LOCATION
 and 
 locancestor.ORGID = 'VCCBE'
 and
-workorder.changedate >= sysdate - 200
+workorder.changedate >= sysdate - 100
 and
-workorder.worktype = 'CI'
-and 
-locancestor.ANCESTOR LIKE 'A LIJN%'
+--workorder.worktype = 'CI'
+--and 
+locancestor.ANCESTOR LIKE 'A'
 
 ORDER BY WORKORDER.STATUSDATE DESC
 "
