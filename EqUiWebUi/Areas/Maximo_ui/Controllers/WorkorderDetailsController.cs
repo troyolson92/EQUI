@@ -105,9 +105,11 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
             string FAILUREREMARK = maximoComm.GetClobMaximo7(cmdFAILUREREMARK, RealtimeConn: RealtimeConn);
             DataTable LABOR = maximoComm.Oracle_runQuery(cmdLabor, RealtimeConn: RealtimeConn);
             //   DataTable WORKLOG = maximoComm.oracle_runQuery(cmdWorkLog, RealtimeConn:RealtimeConn);
-
-            ViewBag.DESCRIPTION = WORKORDER.Rows[0].Field<string>("DESCRIPTION");
-            ViewBag.REPORTEDBY = WORKORDER.Rows[0].Field<string>("REPORTEDBY");
+            if (WORKORDER.Rows.Count != 0)
+            {
+                ViewBag.DESCRIPTION = WORKORDER.Rows[0].Field<string>("DESCRIPTION");
+                ViewBag.REPORTEDBY = WORKORDER.Rows[0].Field<string>("REPORTEDBY");
+            }
             if (FAILUREREMARKdesc.Rows.Count != 0)
             {
                 ViewBag.REMARKDESC = FAILUREREMARKdesc.Rows[0].Field<string>("DESCRIPTION");
