@@ -108,8 +108,11 @@
             },
             reloadEnded: function () {
                 workorderOnLocationGridspinner.stop();
-                //simulate click on first row so that the details load automatic
-                $("#Workorders>table>tbody>tr:first").trigger('click');
+                //simulate click on first row so that the details load automatic IF ROWCOUNT == 1
+                console.log($('#Workorders>table>tbody>tr').length);
+                if ($('#Workorders>table>tbody>tr').length == 1) {
+                    $("#Workorders>table>tbody>tr:first").trigger('click');
+                }
                 //subscribe to click event (launch external window)
                 initUrlNewWindow();
             },
