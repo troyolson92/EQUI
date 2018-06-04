@@ -156,5 +156,19 @@ namespace EqUiWebUi.Areas.user_management.Controllers
             }
         }
 
+        // to test not auth request
+        [Authorize(Roles = "RoleDoesNotExist")]
+        public ActionResult ForbiddenMethod()
+        {
+            return View();
+        }
+
+        //force login prompt
+        [Authorize(Roles = "RoleDoesNotExist")]
+        public ActionResult LoginPrompt()
+        {
+            return View();
+        }
+
     }
 }
