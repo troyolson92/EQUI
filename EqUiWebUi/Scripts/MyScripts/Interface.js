@@ -21,8 +21,8 @@ function initInterface() {
                     }
                 });
             return output;
-        },
-    })
+        }
+    });
 
     //for fullscreen mode
     $("#fullscreenNav").click(function () {
@@ -51,9 +51,13 @@ function initInterface() {
     });
 
     //if fullscreen request in url do it.
+    //else show the navbar. (hidden by default)
     if (qs("GoFullScreen")) {
         console.log("auto Full screen");
         $("#fullscreenNav").trigger("click");
+    }
+    else {
+        //$("#navbar").removeClass("d-none")
     }
 
     //if zoomlevel request in url do it.
@@ -64,8 +68,8 @@ function initInterface() {
     }
     //enable tooltips everywhere
     $(function () {
-        $('[data-toggle="tooltip"]').tooltip()
-    })
+        $('[data-toggle="tooltip"]').tooltip();
+    });
 
     EnablePannelCollaps();
     EnableJQresultTriggerBtn();
@@ -77,14 +81,14 @@ function initInterface() {
 function EnablePannelCollaps() {
     $(document).on('click', '.card-header span.clickable', function (e) {
         var $this = $(this);
-        if ($this.parents('.card').find('.card-body').css('display') == 'block') {
-            $this.addClass('fa-rotate-180')
-            $this.parents('.card').find('.card-body').slideUp()
+        if ($this.parents('.card').find('.card-body').css('display') === 'block') {
+            $this.addClass('fa-rotate-180');
+            $this.parents('.card').find('.card-body').slideUp();
         } else {
-            $this.removeClass('fa-rotate-180')
-            $this.parents('.card').find('.card-body').slideDown()
+            $this.removeClass('fa-rotate-180');
+            $this.parents('.card').find('.card-body').slideDown();
         }
-    })
+    });
 }
 
 //for blind fired buttons with feedback.

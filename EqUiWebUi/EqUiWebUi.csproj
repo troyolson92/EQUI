@@ -182,7 +182,6 @@
     <Folder Include="Areas\STW040\Models\" />
     <Folder Include="Areas\STW040\Views\Shared\" />
     <Folder Include="Areas\VASC\Views\Shared\" />
-    <Folder Include="Areas\Welding\Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Code\MyRowStyling.cs" />
@@ -583,6 +582,24 @@
     <Compile Include="Areas\VASC\Models\VASCenums.cs" />
     <Compile Include="Areas\VASC\Models\winService.cs" />
     <Compile Include="Areas\VASC\VASCAreaRegistration.cs" />
+    <Compile Include="Areas\Welding\Models\AutomaticWorkFlowULPlans.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Welding\Models\WeldingModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WeldingModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Welding\Models\WeldingModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Welding\Models\WeldingModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WeldingModel.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Areas\Welding\WeldingAreaRegistration.cs" />
     <Compile Include="Areas\Welding\Controllers\WeldingController.cs" />
     <Compile Include="Backgroundwork.cs" />
@@ -673,6 +690,16 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>VASC.edmx</DependentUpon>
       <LastGenOutput>VASC.cs</LastGenOutput>
+    </Content>
+    <Content Include="Areas\Welding\Models\WeldingModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>WeldingModel.edmx</DependentUpon>
+      <LastGenOutput>WeldingModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Areas\Welding\Models\WeldingModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>WeldingModel.edmx</DependentUpon>
+      <LastGenOutput>WeldingModel.cs</LastGenOutput>
     </Content>
     <Content Include="Content\bootstrap-multiselect.css" />
     <Content Include="Content\bootstrap.css" />
@@ -1162,6 +1189,15 @@
     <Content Include="Areas\Welding\Views\Welding\Index.cshtml" />
     <Content Include="Areas\Welding\Views\Welding\Pagina1.cshtml" />
     <Content Include="Content\MvcGrid\Fonts\GridGlyphs.woff" />
+    <EntityDeploy Include="Areas\Welding\Models\WeldingModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>WeldingModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Areas\Welding\Models\WeldingModel.edmx.diagram">
+      <DependentUpon>WeldingModel.edmx</DependentUpon>
+    </Content>
+    <Content Include="Areas\Welding\Views\Welding\AutomaticWorkFlowULPlans.cshtml" />
+    <Content Include="Areas\Welding\Views\Welding\AutomaticWorkFlowULPlansFilter.cshtml" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION.pubxml" />
     <None Include="Properties\PublishProfiles\VCC22700-Testing.pubxml" />
     <Content Include="PDFjs\build\pdf.js" />

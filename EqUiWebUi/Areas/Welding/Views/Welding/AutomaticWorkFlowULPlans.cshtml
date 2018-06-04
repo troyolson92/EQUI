@@ -1,0 +1,24 @@
+﻿@model IQueryable<EqUiWebUi.Areas.Welding.Models.AutomaticWorkFlowULPlans>
+@{
+    ViewBag.Title = "AutomaticWorkFlowULPlans";
+}
+
+<h2>AutomaticWorkFlowULPlans</h2>
+@Html.Grid(Model).Named("AutomaticWorkFlowULPlans").Build(columns =>
+{
+    columns.Add(c => c.ID).Titled("ID").InitialSort(GridSortOrder.Desc);
+    columns.Add(c => c.BuildBody_s).Titled("BuildBody_s");
+    columns.Add(c => c.LastInspectionTime).Titled("LastInspectionTime").Formatted("{0:dd-MM-yyyy HH:mm:ss}");
+    columns.Add(c => c.SpotIdent).Titled("SpotIdent");
+    columns.Add(c => c.UL_plan).Titled("UL_plan");
+    //een berekening
+    columns.Add(c => c)
+                        .Titled("test")
+                        .Encoded(false)
+                        .RenderedAs(c => c.ID *100)
+                        .Filterable(false);
+
+}).Filterable().Sortable().Pageable(pager =>
+{
+    pager.RowsPerPage = 17;
+}).Empty("Did not find anything").Css("table-hover")
