@@ -89,6 +89,7 @@ namespace EqUiWebUi.Controllers
             StoComm stoComm = new StoComm();
             MaximoComm maximoComm = new MaximoComm();
             GadataComm gadataComm = new GadataComm();
+            STW040Comm sTW040Comm = new STW040Comm();
             //run command against selected database.
 
             switch (db)
@@ -107,6 +108,10 @@ namespace EqUiWebUi.Controllers
 
                 case (int)SmsDatabases.MAXIMOrep:
                     dt = maximoComm.Oracle_runQuery(qry, RealtimeConn: false, enblExeptions: true);
+                    break;
+
+                case (int)SmsDatabases.DBI:
+                    dt = sTW040Comm.Oracle_runQuery(qry, enblExeptions: true);
                     break;
 
                 default:
@@ -162,6 +167,7 @@ namespace EqUiWebUi.Controllers
             StoComm stoComm = new StoComm();
             MaximoComm maximoComm = new MaximoComm();
             GadataComm gadataComm = new GadataComm();
+            STW040Comm sTW040Comm = new STW040Comm();
             //run command against selected database.
 
             switch (db)
@@ -180,6 +186,10 @@ namespace EqUiWebUi.Controllers
 
                 case (int)SmsDatabases.MAXIMOrep:
                     dt = maximoComm.Oracle_runQuery(qry, RealtimeConn: false, enblExeptions: true);
+                    break;
+
+                case (int)SmsDatabases.DBI:
+                    dt = sTW040Comm.Oracle_runQuery(qry, enblExeptions: true);
                     break;
 
                 default:

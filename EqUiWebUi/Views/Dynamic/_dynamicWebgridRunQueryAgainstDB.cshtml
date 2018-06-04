@@ -8,23 +8,31 @@
     grid.Bind(Model.Data, autoSortAndPage: true, rowCount: @Model.PageSize);
 }
 
-    <div class="modal-header">
-        <h2>CheckStatement Result</h2>
+<div class="card">
+    <div class="card-header bg-warning">
+        <h6 class="card-title">
+            Result
+            <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1 text-black-50"></i></span>
+        </h6>
     </div>
-    <div class="modal-body">
+    <div class="card-body">
         @grid.GetHtml(
-                     htmlAttributes: new { id = "gridMapping" },
-                     tableStyle: "table table-bordered",
-                     headerStyle: "info",
-                     footerStyle: "webgrid-footer",
-                     alternatingRowStyle: "webgrid-alternating-row",
-                     selectedRowStyle: "webgrid-selected-row",
-                     rowStyle: "gridrow",
-                     mode: WebGridPagerModes.All,
-                     firstText: "<< First",
-                     previousText: "< Prev",
-                     nextText: "Next >",
-                     lastText: "Last >>",
-                     columns: ViewBag.Columns
-         )
+                          htmlAttributes: new { id = "gridMapping" },
+                          tableStyle: "table table-bordered",
+                          headerStyle: "info",
+                          footerStyle: "webgrid-footer",
+                          alternatingRowStyle: "webgrid-alternating-row",
+                          selectedRowStyle: "webgrid-selected-row",
+                          rowStyle: "gridrow",
+                          mode: WebGridPagerModes.All,
+                          firstText: "<< First",
+                          previousText: "< Prev",
+                          nextText: "Next >",
+                          lastText: "Last >>",
+                          columns: ViewBag.Columns
+              )
     </div>
+</div>
+
+
+

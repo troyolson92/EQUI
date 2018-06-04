@@ -76,7 +76,8 @@ namespace EqUiWebUi.Areas.Alert.Models
         GADATA = 1,
         STO = 2,
         MAXIMOrt = 3,
-        MAXIMOrep = 4
+        MAXIMOrep = 4,
+        DBI = 5
     }
 
     //enum for alert states

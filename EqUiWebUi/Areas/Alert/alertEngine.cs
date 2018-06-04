@@ -86,6 +86,7 @@ namespace EqUiWebUi.Areas.Alert
             StoComm stoComm = new StoComm();
             MaximoComm maximoComm = new MaximoComm();
             GadataComm gadataComm = new GadataComm();
+            STW040Comm sTW040Comm = new STW040Comm();
             //run command against selected database.
 
             switch (trigger.RunAgainst)
@@ -104,6 +105,10 @@ namespace EqUiWebUi.Areas.Alert
 
                 case (int)SmsDatabases.MAXIMOrep:
                     ActiveAlerts = maximoComm.Oracle_runQuery(trigger.sqlStatement, RealtimeConn: false, enblExeptions: true);
+                    break;
+
+                case (int)SmsDatabases.DBI:
+                    ActiveAlerts = sTW040Comm.Oracle_runQuery(trigger.sqlStatement, enblExeptions: true);
                     break;
 
                 default:
@@ -152,13 +157,19 @@ namespace EqUiWebUi.Areas.Alert
                     {
                         c_tirgger_id = c_triggerID
                     };
-                    if (trigger.RunAgainstDatabase == SmsDatabases.GADATA)
+                    if (trigger.RunAgainstDatabase == SmsDatabases.GADATA) //for gata the locationtree an location MUSt be in the query result
                     {
                         //we already have the location tree and location
                         newAlert.locationTree = ActiveAlert.Field<string>("LocationTree");
                         newAlert.location = ActiveAlert.Field<string>("Location");
                     }
-                    else if (trigger.RunAgainstDatabase == SmsDatabases.STO)
+                    else if (trigger.RunAgainstDatabase == SmsDatabases.DBI) //for DBI the locationtree and location MUST be in the query result 
+                    {
+                        //we already have the location tree and location
+                        newAlert.locationTree = ActiveAlert.Field<string>("LocationTree");
+                        newAlert.location = ActiveAlert.Field<string>("Location");
+                    }
+                    else if (trigger.RunAgainstDatabase == SmsDatabases.STO) //for STO qet the location tree from GADATA (manipulate object from ZM to ZS (Zone mode does not exist in asset list)
                     {
                         //ask gadata for location tree and location
                         string qry =
@@ -177,7 +188,7 @@ namespace EqUiWebUi.Areas.Alert
                             newAlert.location = ActiveAlert.Field<string>("alarmobject");
                         }
                     }
-                    else if(trigger.RunAgainstDatabase == SmsDatabases.MAXIMOrep && trigger.RunAgainstDatabase == SmsDatabases.MAXIMOrt)
+                    else if(trigger.RunAgainstDatabase == SmsDatabases.MAXIMOrep && trigger.RunAgainstDatabase == SmsDatabases.MAXIMOrt) //for macimo get the location tree from GADATA (direct match on location)
                     {
                         //ask gadata for location tree and location
                         string qry =
@@ -389,9 +400,9 @@ namespace EqUiWebUi.Areas.Alert
 
                 //build SMS message 
                 StringBuilder sbSMS = new StringBuilder();
-                sbSMS.Append("Alert from: ").AppendLine(alert.location);
-                sbSMS.AppendLine(trigger.alertType);
-                sbSMS.AppendLine(alert.info);
+                sbSMS.Append("Alert: ").AppendLine(alert.location + " ");
+                sbSMS.AppendLine(trigger.alertType + " " );
+                sbSMS.AppendLine(alert.info + " " );
                 //USE HANGFIRE to send it!
                 
                 Hangfire.BackgroundJob.Enqueue(() => smsComm.SendSMS(SMSconfig.c_CPT600.System, sbSMS.ToString()));

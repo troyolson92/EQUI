@@ -200,10 +200,10 @@ else
             <div class="card-header bg-warning">
                 <h5 class="card-title text-white">
                     Control limits
-                    <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
+                    <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-rotate-180 fa-1"></i></span>
                 </h5>
             </div>
-            <div class="card-body">
+            <div class="card-body" style="display:none">
 
                 <div class="form-group">
                     @Html.LabelFor(model => model.hasControlLimits, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -263,13 +263,20 @@ else
     </div>
 }
 
+
+    <div class="float-right">
+        <p><a href="~/Alert/c_triggers/RunAlertTrigger?triggerID=@Model.id" class="btn btn-danger btn-sm JQresultTriggerBtn">Testfire &raquo;</a>(must be saved)</p>
+
+    </div>
+
+
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
 
 @*render popuover modal*@
-<div id="checkstatementModal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-content">Loading....</div>
+<div id="MyModal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class='card-body'><i class='fa fa-spinner fa-pulse fa-4x fa-fw text-white'></i><span class='sr-only'>Loading...</span></div>
 </div>
 
 
@@ -318,10 +325,11 @@ else
         //on Runstatement show the user the result from the alert sql statement
         $('#Runstatement').click(function () {
                 var urlDynamicWebgrid = '@Url.Action("_dynamicWebgridRunQueryAgainstDB", "Dynamic", new { area = "" })?qry=' + encodeURIComponent(sqlStatementCodeMirror.getValue()) +
-                    '&db=' + $('#RunAgainstDatabase').val();
-                    $('#checkstatementModal').removeData('bs.modal');
-                    $('#checkstatementModal').html('<div class="modal-content">Loading....</div>');
-                    $('#checkstatementModal').modal({ remote: urlDynamicWebgrid });
+                '&db=' + $('#RunAgainstDatabase').val();
+                //launch modal
+                $('#MyModal').removeData('bs.modal');
+                $('#MyModal').modal({ show: true });
+                $('#MyModal').load(urlDynamicWebgrid, function (result) { });
         });
         //on checkstatement show the user if all mandatory columns are there
         var mandatorytriggerColumns = new Array();
@@ -331,9 +339,10 @@ else
         $('#checkstatement').click(function () {
             var urlDynamicWebgrid = '@Url.Action("_CheckStatement", "Dynamic", new { area = "" })?qry=' + encodeURIComponent(sqlStatementCodeMirror.getValue()) +
                 '&db=' + $('#RunAgainstDatabase').val() + '&mandatoryColumns=' + mandatorytriggerColumns; //this is not working !!!!!!
-                    $('#checkstatementModal').removeData('bs.modal');
-                    $('#checkstatementModal').html('<div class="modal-content">Loading....</div>');
-                    $('#checkstatementModal').modal({ remote: urlDynamicWebgrid });
+            //launch modal
+            $('#MyModal').removeData('bs.modal');
+            $('#MyModal').modal({ show: true });
+            $('#MyModal').load(urlDynamicWebgrid, function (result) { });
         });
 
 
@@ -341,16 +350,18 @@ else
         $('#checkcontrollimitSqlStatement').click(function () {
                 var urlDynamicWebgrid = '@Url.Action("_dynamicWebgridRunQueryAgainstDB", "Dynamic", new { area = "" })?qry=' + encodeURIComponent(controllimitSqlStatementCodeMirror.getValue()) +
                     '&db=' + $('#RunAgainstDatabase').val();
-                    $('#checkstatementModal').removeData('bs.modal');
-                    $('#checkstatementModal').html('<div class="modal-content">Loading....</div>');
-                    $('#checkstatementModal').modal({ remote: urlDynamicWebgrid });
+                //launch modal
+                $('#MyModal').removeData('bs.modal');
+                $('#MyModal').modal({ show: true });
+                $('#MyModal').load(urlDynamicWebgrid, function (result) { });
         });
 
 
 
        //clear on close
-        $('#checkstatementModal').on('hidden.bs.modal', function (e) {
-            $('#checkstatementModal').html('<div class="modal-content">No content</div>');
+        //on modal close
+        $('#MyModal').on('hidden.bs.modal', function (e) {
+            $('#MyModal').html("<div class='card-body'><i class='fa fa-spinner fa-pulse fa-4x fa-fw text-white' ></i ><span class='sr-only'>Loading...</span></div >");
         });
     </script>
 }
