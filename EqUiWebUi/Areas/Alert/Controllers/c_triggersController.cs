@@ -24,6 +24,13 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             return View(await c_triggers.ToListAsync());
         }
 
+        //run the alert trigger in debug mode (manual triggerd no hangfire
+        public void RunAlertTrigger(int triggerID)
+        {
+            AlertEngine alertEngine = new AlertEngine();
+            alertEngine.CheckForalerts(triggerID, "debugRun");
+        }
+
         // GET: Alert/c_triggers/Edit/5
         // We will handle the creation of a new trigger also in EDIT. (to make code simplere) to create a new trigger pass ID = -1
         public async Task<ActionResult> Edit(int? id)
