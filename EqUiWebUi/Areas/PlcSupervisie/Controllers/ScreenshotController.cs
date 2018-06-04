@@ -27,6 +27,16 @@ namespace EqUiWebUi.Areas.PlcSupervisie.Controllers
             return View();
         }
 
+        public ActionResult CarouselBF(int? ReloadInterval, int AutoCarousel = -1)
+        {
+            if (ReloadInterval.HasValue)
+            {
+                Response.AddHeader("Refresh", ReloadInterval.ToString());
+            }
+            ViewBag.AutoCarousel = AutoCarousel;
+            return View();
+        }
+
         //display a single JPG
         public ActionResult ShowJpg(int? ReloadInterval, string url)
         {

@@ -1198,6 +1198,7 @@
     </Content>
     <Content Include="Areas\Welding\Views\Welding\AutomaticWorkFlowULPlans.cshtml" />
     <Content Include="Areas\Welding\Views\Welding\AutomaticWorkFlowULPlansFilter.cshtml" />
+    <Content Include="Areas\PlcSupervisie\Views\Screenshot\CarouselBF.cshtml" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION.pubxml" />
     <None Include="Properties\PublishProfiles\VCC22700-Testing.pubxml" />
     <Content Include="PDFjs\build\pdf.js" />
