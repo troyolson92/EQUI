@@ -58,6 +58,17 @@ namespace EqUiWebUi.Areas.user_management.Controllers
             {
                 db.Entry(user).State = EntityState.Modified;
                 await db.SaveChangesAsync();
+                //if all is oke wit the save reset user and go to homepage
+                return new RedirectToRouteResult(
+              new RouteValueDictionary(
+                  new
+                  {
+                      area = "user_management",
+                      controller = "user",
+                      action = "ResetCookie"
+                  }
+              )
+              );
             }
 
             AreaFiltersController areaFiltersController = new EqUiWebUi.Areas.user_management.Controllers.AreaFiltersController();
