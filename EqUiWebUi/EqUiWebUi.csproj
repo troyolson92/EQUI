@@ -1199,6 +1199,8 @@
     <Content Include="Areas\Welding\Views\Welding\AutomaticWorkFlowULPlans.cshtml" />
     <Content Include="Areas\Welding\Views\Welding\AutomaticWorkFlowULPlansFilter.cshtml" />
     <Content Include="Areas\PlcSupervisie\Views\Screenshot\CarouselBF.cshtml" />
+    <Content Include="Areas\user_management\Views\user\ForbiddenMethod.cshtml" />
+    <Content Include="Areas\user_management\Views\user\LoginPrompt.cshtml" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION.pubxml" />
     <None Include="Properties\PublishProfiles\VCC22700-Testing.pubxml" />
     <Content Include="PDFjs\build\pdf.js" />
@@ -1389,6 +1391,7 @@
     <Content Include="Views\Shared\MvcGrid\_Pager.cshtml" />
     <Content Include="Views\Shared\MvcGrid\_Grid.cshtml" />
     <Content Include="Views\Shared\MvcGrid\_AjaxGrid.cshtml" />
+    <Content Include="Views\Error\AccessDenied.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EQUICommunictionLib\EQUICommunictionLib.csproj">

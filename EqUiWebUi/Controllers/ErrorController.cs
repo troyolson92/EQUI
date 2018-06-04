@@ -32,7 +32,7 @@ namespace EqUiWebUi.Controllers
         public ActionResult AccessDenied()
         {
             TempData["error"] = "Access Denied";
-            return View("Index");
+            return View();
         }
 
         /// <summary>    /// Track Internal Server Error

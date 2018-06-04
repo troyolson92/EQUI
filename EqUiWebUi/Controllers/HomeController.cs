@@ -31,7 +31,6 @@ namespace EqUiWebUi.Controllers
         }
 
         //show settings page
-      //  [Authorize(Roles = "BULLSHIT")]
         public ActionResult Settings()
         {
             return View();

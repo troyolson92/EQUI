@@ -150,11 +150,22 @@ namespace EqUiWebUi
             if (Response.StatusCode == 401 && Request.RawUrl != "/")
             {
                 log.Error(string.Format("Unauthorised: {0} For page: {1}", Request.LogonUserIdentity.Name, Request.RawUrl));
-              //running this to see what hits.
+                //work around to promt credentials when I whant it to promt.
+                if (Request.RawUrl == "/user_management/user/LoginPrompt")
+                {
+                    //do nothing and continue windows will prompt us
+                    
+                //but how do I allow the user to continue afther...
+                   
 
-
-              //  Response.ClearContent();
-              //  Response.RedirectToRoute("ErrorHandler", (RouteTable.Routes["ErrorHandler"] as Route).Defaults);
+                }
+                else //normal user unauth
+                {
+                    //running this to see what hits.
+                    Response.ClearContent();
+                    //redirect to  page
+                    Response.Redirect("~/Error/AccessDenied");
+                }
             }
         }
 
