@@ -224,6 +224,10 @@ namespace EqUiWebUi.Areas.Alert
                     sb.AppendLine("<div class='alert alert-danger'>");
                     sb.AppendLine("<strong>Triggerd: " + ActiveAlert.Field<DateTime>("timestamp").ToString("yyyy-MM-dd HH:mm:ss") + " Detected by server: " + System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "</strong>");
                     sb.AppendLine("<div>" + ActiveAlert.Field<string>("info") + "</div>");
+                    if (trigger.isDebugmode)
+                    {
+                        sb.AppendLine("<div>" + ConvertDataTableToHTML(ActiveAlerts, h_alert[0].alarmobject) + "</div>");
+                    }
                     sb.AppendLine("</div>");
                     newAlert.comments = sb.ToString();
 
@@ -255,6 +259,10 @@ namespace EqUiWebUi.Areas.Alert
                         sb.AppendLine("<strong>Retriggerd: "+ ActiveAlert.Field<DateTime>("timestamp").ToString("yyyy-MM-dd HH:mm:ss") + " Detected by server: " + System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "</strong>");
                         sb.AppendLine("<div>" + h_alert[0].lastTriggerd.ToString("yyyy-MM-dd HH:mm:ss") + " => " + ActiveAlert.Field<DateTime>("timestamp").ToString("yyyy-MM-dd HH:mm:ss") + "</div>");
                         sb.AppendLine("<div>" + ActiveAlert.Field<string>("info") + "</div>");
+                        if (trigger.isDebugmode)
+                        {
+                            sb.AppendLine("<div>" + ConvertDataTableToHTML(ActiveAlerts, h_alert[0].alarmobject) + "</div>");
+                        }
                         sb.AppendLine("</div>");
                         h_alert[0].comments = sb.ToString();
 
@@ -292,19 +300,21 @@ namespace EqUiWebUi.Areas.Alert
                     if (ActiveAlerts.AsEnumerable().Any(row => OpenAlert.alarmobject == row.Field<String>("alarmobject")))
                     {
                         log.Debug("Alert is still active must not close it <" + OpenAlert.location + ">id:" + OpenAlert.id.ToString());
-                        /*
-                        //adde badge to comment when closses
-                        StringBuilder sb = new StringBuilder();
-                        //add existing 
-                        sb.AppendLine(OpenAlert.comments);
-                        //add break 
-                        sb.AppendLine("<hr />");
-                        //add new pannel
-                        sb.AppendLine("<div class='alert alert-info'>");
-                        sb.AppendLine("<strong>Leave open " + System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "</strong>");
-                        sb.AppendLine("</div>");
-                        OpenAlert.comments = sb.ToString();
-                        */
+                        if (trigger.isDebugmode)
+                        {
+                            //adde badge to comment when closses
+                            StringBuilder sb = new StringBuilder();
+                            //add existing 
+                            sb.AppendLine(OpenAlert.comments);
+                            //add break 
+                            sb.AppendLine("<hr />");
+                            //add new pannel
+                            sb.AppendLine("<div class='alert alert-info'>");
+                            sb.AppendLine("<strong>Leave open " + System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "</strong>");
+                            sb.AppendLine("</div>");
+                            OpenAlert.comments = sb.ToString();
+                        }
+                        
                     }
                     else
                     {
@@ -416,6 +426,32 @@ namespace EqUiWebUi.Areas.Alert
             return alert;
         }
 
+
+        //to convert DT to html table for debugging)
+        public static string ConvertDataTableToHTML(DataTable dt, string alarmobject)
+        {
+            //first filter the active alters based on the alarm object 
+            DataTable tblFiltered = dt.AsEnumerable()
+          .Where(row => row.Field<String>("alarmobject") == alarmobject)
+          .CopyToDataTable();
+
+            string html = "<table>";
+            //add header row
+            html += "<tr>";
+            for (int i = 0; i < tblFiltered.Columns.Count; i++)
+                html += "<td>" + tblFiltered.Columns[i].ColumnName + "</td>";
+            html += "</tr>";
+            //add rows
+            for (int i = 0; i < tblFiltered.Rows.Count; i++)
+            {
+                html += "<tr>";
+                for (int j = 0; j < tblFiltered.Columns.Count; j++)
+                    html += "<td>" + tblFiltered.Rows[i][j].ToString() + "</td>";
+                html += "</tr>";
+            }
+            html += "</table>";
+            return html;
+        }
     }
 }
 

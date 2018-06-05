@@ -97,6 +97,17 @@ else
                 </div>
 
                 <div class="form-group">
+                    @Html.LabelFor(model => model.Animation, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <div class="checkbox">
+                            @Html.EditorFor(model => model.Animation)
+                            @Html.ValidationMessageFor(model => model.Animation, "", new { @class = "text-danger" })
+                            @Html.HelpTextFor(model => model.Animation)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
                     @Html.LabelFor(model => model.Cron, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
                         <div id="jCron"></div>
@@ -143,6 +154,17 @@ else
                     </div>
                 </div>
 
+                <div class="form-group">
+                    @Html.LabelFor(model => model.isDebugmode, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <div class="checkbox">
+                            @Html.EditorFor(model => model.isDebugmode)
+                            @Html.ValidationMessageFor(model => model.isDebugmode, "", new { @class = "text-danger" })
+                            @Html.HelpTextFor(model => model.isDebugmode)
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
 
@@ -152,10 +174,10 @@ else
             <div class="card-header bg-warning">
                 <h5 class="card-title text-white">
                     SMS
-                    <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
+                    <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-rotate-180 fa-1"></i></span>
                 </h5>
             </div>
-            <div class="card-body">
+            <div class="card-body" style="display:none">
 
                 <div class="form-group">
                     @Html.LabelFor(model => model.enableSMS, htmlAttributes: new { @class = "control-label col-md-2" })

@@ -66,6 +66,7 @@
           <Property Name="controllimitSqlStatement" Type="varchar(max)" />
           <Property Name="controlChartSqlStatement" Type="varchar(max)" />
           <Property Name="Animation" Type="int" />
+          <Property Name="isDebugmode" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="h_alert">
           <Key>
@@ -741,6 +742,7 @@
           <NavigationProperty Name="l_variants" Relationship="AlertModel.FK_l_variants_c_triggers" FromRole="c_triggers" ToRole="l_variants" />
           <Property Name="controlChartSqlStatement" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Animation" Type="Int32" />
+          <Property Name="isDebugmode" Type="Boolean" Nullable="false" />
         </EntityType>
         <Association Name="FK_c_triggers_c_smsSystem">
           <End Type="AlertModel.c_smsSystem" Role="c_smsSystem" Multiplicity="0..1" />
@@ -1123,6 +1125,7 @@
           <EntitySetMapping Name="c_triggers">
             <EntityTypeMapping TypeName="AlertModel.c_triggers">
               <MappingFragment StoreEntitySet="c_triggers">
+                <ScalarProperty Name="isDebugmode" ColumnName="isDebugmode" />
                 <ScalarProperty Name="Animation" ColumnName="Animation" />
                 <ScalarProperty Name="controlChartSqlStatement" ColumnName="controlChartSqlStatement" />
                 <ScalarProperty Name="controllimitSqlStatement" ColumnName="controllimitSqlStatement" />
