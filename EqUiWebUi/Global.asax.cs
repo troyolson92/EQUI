@@ -161,10 +161,11 @@ namespace EqUiWebUi
                 }
                 else //normal user unauth
                 {
+                   //problem on the screenmaster
                     //running this to see what hits.
-                    Response.ClearContent();
+                  //  Response.ClearContent();
                     //redirect to  page
-                    Response.Redirect("~/Error/AccessDenied");
+                  //  Response.Redirect("~/Error/AccessDenied");
                 }
             }
         }
