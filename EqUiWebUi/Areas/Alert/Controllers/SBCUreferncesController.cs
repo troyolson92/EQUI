@@ -19,7 +19,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
         //has the option to filter on max delta
         public async Task<ActionResult> Index(int maxdelta = 0)
         {
-            var sBCUrefernce = db.SBCUrefernce.Include(s => s.c_controller).Where(s => (s.UCL-s.LCL) > maxdelta);
+            var sBCUrefernce = db.SBCUrefernce.Include(s => s.c_controller).Where(s => (s.UCL-s.LCL) >= maxdelta);
             return View(await sBCUrefernce.ToListAsync());
         }
 
@@ -59,7 +59,15 @@ namespace EqUiWebUi.Areas.Alert.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(sBCUrefernce).State = EntityState.Modified;
+                if (sBCUrefernce.id == -1)//add new trigger
+                {
+                    db.SBCUrefernce.Add(sBCUrefernce);
+                }
+                else //update existing
+                {
+                    db.Entry(sBCUrefernce).State = EntityState.Modified;
+                }
+
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
