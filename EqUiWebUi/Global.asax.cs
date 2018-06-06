@@ -147,25 +147,21 @@ namespace EqUiWebUi
         void Application_EndRequest(object sender, System.EventArgs e)
         {
             // If the user is not authorised to see this page or access this function, send them to the error page.
-            if (Response.StatusCode == 401 && Request.RawUrl != "/")
+            if (Response.StatusCode == 401 && Request.RawUrl != "/" && Request.LogonUserIdentity.IsAuthenticated == true)
             {
                 log.Error(string.Format("Unauthorised: {0} For page: {1}", Request.LogonUserIdentity.Name, Request.RawUrl));
+
                 //work around to promt credentials when I whant it to promt.
                 if (Request.RawUrl == "/user_management/user/LoginPrompt")
                 {
-                    //do nothing and continue windows will prompt us
-                    
+                 //do nothing and continue windows will prompt us    
                 //but how do I allow the user to continue afther...
-                   
-
                 }
                 else //normal user unauth
                 {
-                   //problem on the screenmaster
-                    //running this to see what hits.
-                  //  Response.ClearContent();
+                    Response.ClearContent();
                     //redirect to  page
-                  //  Response.Redirect("~/Error/AccessDenied");
+                    Response.Redirect("~/Error/AccessDenied");
                 }
             }
         }
