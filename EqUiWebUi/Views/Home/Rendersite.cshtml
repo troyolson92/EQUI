@@ -1,67 +1,15 @@
 ﻿
-    <div class="card-body" id="placecontainer" style="position:relative">
-        <div class="row">
-            <div class="intrinsic-container intrinsic-container-16x9">
-                <iframe src="@ViewBag.redirectURL" allowfullscreen></iframe>
-            </div>
-        </div>
-    </div>
 
 
+<div class="embed-responsive embed-responsive-16by9">
+    <iframe class="embed-responsive-item" src="@ViewBag.redirectURL" allowfullscreen></iframe>
+</div>
 
-<style>
-    .intrinsic-container {
-        position: relative;
-        height: 0;
-        overflow: hidden;
-    }
-
-    /* 16x9 Aspect Ratio */
-    .intrinsic-container-16x9 {
-        padding-bottom: 56.25%;
-    }
-
-    /* 4x3 Aspect Ratio */
-    .intrinsic-container-4x3 {
-        padding-bottom: 75%;
-    }
-
-    .intrinsic-container iframe {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-    }
-</style>
 
 <script type="text/javascript">
     $(document).ready(function () {
         //full with screen
         $("#allcontent").removeClass("body-content");
         $("#allcontent").removeClass("container");
-
-        // Find all iframes
-        var $iframes = $("iframe");
-
-        // Find &#x26; save the aspect ratio for all iframes
-        $iframes.each(function () {
-            $(this).data("ratio", this.height / this.width)
-                // Remove the hardcoded width &#x26; height attributes
-                .removeAttr("width")
-                .removeAttr("height");
-        });
-
-        // Resize the iframes when the window is resized
-        $(window).resize(function () {
-            $iframes.each(function () {
-                // Get the parent container&#x27;s width
-                var width = $(this).parent().width();
-                $(this).width(width)
-                    .height(width * $(this).data("ratio"));
-            });
-            // Resize to fix all iframes on page load.
-        }).resize()
     });
-    //https://benmarshall.me/responsive-iframes/
 </script>
