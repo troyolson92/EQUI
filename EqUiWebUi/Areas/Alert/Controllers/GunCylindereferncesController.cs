@@ -18,7 +18,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
         // GET: Alert/GunCylinderefernces
         public async Task<ActionResult> Index(int maxdelta = 0)
         {
-            var GunCylinderefernce = db.GunCylinderefernce.Include(s => s.c_controller).Where(s => (s.UCL - s.LCL) > maxdelta);
+            var GunCylinderefernce = db.GunCylinderefernce.Include(s => s.c_controller).Where(s => (s.UCL - s.LCL) >= maxdelta);
             return View(await GunCylinderefernce.ToListAsync());
         }
 
@@ -63,8 +63,15 @@ namespace EqUiWebUi.Areas.Alert.Controllers
 
                 }
 
+                if (gunCylinderefernce.id == -1)//add new trigger
+                {
+                    db.GunCylinderefernce.Add(gunCylinderefernce);
+                }
+                else //update existing
+                {
+                    db.Entry(gunCylinderefernce).State = EntityState.Modified;
+                }
 
-                db.Entry(gunCylinderefernce).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
