@@ -38,7 +38,6 @@
         //subscribe to row clicked events
         $('.mvc-grid').mvcgrid({
             rowClicked: function (row, data, e) {
-                console.log(data);
                 //if row already has this clase close the modal
                 if ($(row).hasClass("bg-info")) {
                     $("#placeholder").remove();
