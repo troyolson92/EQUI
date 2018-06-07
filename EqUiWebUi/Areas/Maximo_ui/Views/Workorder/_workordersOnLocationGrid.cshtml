@@ -13,7 +13,7 @@
 columns.Add(c => c)
 .Titled("")
 .Encoded(false)
-.RenderedAs(c => MyFilters.IconActionLink("http://maximoui.volvocars.biz/maximo/ui/maximo.jsp?event=loadapp&value=wotrack&additionalevent=useqbe&additionaleventvalue=wonum=" + c.WONUM, "glyphicon glyphicon-pencil", "", "Edit this workorder in maximo", "OpenNewWindow")
+.RenderedAs(c => MyFilters.IconActionLink("http://maximoui.volvocars.biz/maximo/ui/maximo.jsp?event=loadapp&value=wotrack&additionalevent=useqbe&additionaleventvalue=wonum=" + c.WONUM, "fas fa-pencil-alt", "", "Edit this workorder in maximo", "OpenNewWindow")
 ).Filterable(false);
 
 

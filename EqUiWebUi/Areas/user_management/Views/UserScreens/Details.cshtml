@@ -82,10 +82,9 @@
 </p>
 <hr />
 
-<div class="card-header bg-primary">
+<div class="card">
     <div class="card-header bg-primary">
         <h4 class="card-title">ScreenMaster Toolbox</h4>
-        <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
     </div>
     <div class="card-body">
         <input id="ScreenMasterBtnFullRefresh" class="btn btn-warning JQresultTriggerBtn" type="button" value="FullRefresh" href="@Url.Action("FullRefresh", new {area = "user_management", screenId = Model.id})" />
@@ -96,28 +95,30 @@
     </div>
 </div>
 
-<div class="card-header bg-primary">
+<hr />
+
+<div class="card">
     <div class="card-header bg-primary">
         <h4 class="card-title">ScreenMaster messenger</h4>
-        <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
     </div>
     <div class="card-body">
         <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
         @using (Ajax.BeginForm("DisplayMessage", "UserScreens", new { screenId = Model.id }, new AjaxOptions { HttpMethod = "POST" }))
         {
-        <form class="form-horizontal">
-            <textarea id="ScreenMasterMessage" name="ScreenMasterMessagedata">Type a message to send to this screen</textarea>
-            <p></p>
-            <input type="submit" value="Send message" class="btn btn-success">
-        </form>
+            <form class="form-horizontal">
+                <textarea id="ScreenMasterMessage" name="ScreenMasterMessagedata">Type a message to send to this screen</textarea>
+                <p></p>
+                <input type="submit" value="Send message" class="btn btn-success">
+            </form>
         }
     </div>
 </div>
 
-<div class="card-header bg-primary">
+<hr />
+
+<div class="card">
     <div class="card-header bg-primary">
         <h4 class="card-title">ScreenMaster Iframe</h4>
-        <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
     </div>
     <div class="card-body">
         <input id="ScreenMasterBtnSendUrl" class="btn btn-warning JQresultTriggerBtn" type="button" value="SendUrl" href="@Url.Action("DisplayPage", new {area = "user_management", screenId = Model.id, url = "http://equi", showtime = 10 })" />
@@ -129,8 +130,8 @@
 
 @section scripts{
     @*https://summernote.org/getting-started/*@
-    <link href="~/Content/summernote.css" rel="stylesheet" />
-    <script src="~/Scripts/summernote.js"></script>
+    <link href="~/Content/summernote-bs4.css" rel="stylesheet" />
+    <script src="~/Scripts/summernote-bs4.js"></script>
     <script>
         $('#ScreenMasterMessage').summernote({
             height: 300,                 // set editor height
