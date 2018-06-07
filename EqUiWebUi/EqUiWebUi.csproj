@@ -293,6 +293,7 @@
     <Compile Include="Areas\HangfireArea\Controllers\JobController.cs" />
     <Compile Include="Areas\HangfireArea\HangfireAreaAreaRegistration.cs" />
     <Compile Include="Areas\HangfireArea\Jobengine.cs" />
+    <Compile Include="Areas\Maximo_ui\Backgroundwork.cs" />
     <Compile Include="Areas\Maximo_ui\Controllers\MaximoController.cs" />
     <Compile Include="Areas\Maximo_ui\Controllers\WorkorderController.cs" />
     <Compile Include="Areas\Maximo_ui\Controllers\WorkorderDetailsController.cs" />
@@ -352,6 +353,7 @@
       <DependentUpon>PJV.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\PJV\PJVAreaRegistration.cs" />
+    <Compile Include="Areas\PlcSupervisie\Backgroundwork.cs" />
     <Compile Include="Areas\PlcSupervisie\Controllers\ScreenshotController.cs" />
     <Compile Include="Areas\PlcSupervisie\Models\EQpluginNewformat1_Result.cs">
       <DependentUpon>Gadata.tt</DependentUpon>
@@ -602,7 +604,6 @@
     </Compile>
     <Compile Include="Areas\Welding\WeldingAreaRegistration.cs" />
     <Compile Include="Areas\Welding\Controllers\WeldingController.cs" />
-    <Compile Include="Backgroundwork.cs" />
     <Compile Include="Controllers\Chart2Controller.cs" />
     <Compile Include="Controllers\ChartController.cs" />
     <Compile Include="Controllers\DynamicController.cs" />

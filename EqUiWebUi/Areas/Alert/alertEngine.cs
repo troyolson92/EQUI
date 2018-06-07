@@ -98,7 +98,7 @@ namespace EqUiWebUi.Areas.Alert
                     break;
 
                 case (int)SmsDatabases.STO:
-                    ActiveAlerts = stoComm.oracle_runQuery(trigger.sqlStatement); //exeptions enabled by default
+                    ActiveAlerts = stoComm.Oracle_runQuery(trigger.sqlStatement, enblExeptions: true);
                     break;
 
                 case (int)SmsDatabases.MAXIMOrt:

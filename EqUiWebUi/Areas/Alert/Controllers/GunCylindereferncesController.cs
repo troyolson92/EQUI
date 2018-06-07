@@ -45,7 +45,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                 }
             }
 
-            ViewBag.Controller_id = new SelectList(db.c_controller, "id", "controller_name", gunCylinderefernce.Controller_id);
+            ViewBag.Controller_id = new SelectList(db.c_controller.OrderBy(c => c.controller_name), "id", "controller_name", gunCylinderefernce.Controller_id);
             return View(gunCylinderefernce);
         }
 
@@ -75,7 +75,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            ViewBag.Controller_id = new SelectList(db.c_controller, "id", "controller_name", gunCylinderefernce.Controller_id);
+            ViewBag.Controller_id = new SelectList(db.c_controller.OrderBy(c => c.controller_name), "id", "controller_name", gunCylinderefernce.Controller_id);
             return View(gunCylinderefernce);
         }
 

@@ -67,7 +67,8 @@ namespace ExcelAddInEquipmentDatabase
                     switch (oListColum.Name.ToLower())
                       {
                         case "wonum":
-                              wonum = (string)Convert.ToString(lClickedSheet.Cells[Target.Row, oListColum.Range.Column].Value);
+                        case "werkorder":
+                            wonum = (string)Convert.ToString(lClickedSheet.Cells[Target.Row, oListColum.Range.Column].Value);
                               break;
                         case "logcode":
                               errornum = (string)Convert.ToString(lClickedSheet.Cells[Target.Row, oListColum.Range.Column].Value);

@@ -9,6 +9,8 @@ namespace EQUICommunictionLib
 {
     public class StoComm
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         OracleConnection StoconnQI = new OracleConnection(
             @"Data Source= (DESCRIPTION=
     (ADDRESS=
@@ -55,25 +57,34 @@ namespace EQUICommunictionLib
 
         }
 
-        public DataTable oracle_runQuery(string Query)
+        public DataTable Oracle_runQuery(string Query, bool enblExeptions = false, int maxEXECtime = 300)
         {
-          try
+            OracleConnection activeConn = StoconnPROD;
+
+
+            try
             {
-                using (OracleDataAdapter dadapter = new OracleDataAdapter(Query, StoconnPROD))
+                //SDB like this we alway close the connection ? should we try to keep it open like in GADATACOM???
+
+                using (OracleDataAdapter adapter = new OracleDataAdapter(Query, activeConn))
                 {
-                    //get location and asset data from maximo
+                    adapter.SelectCommand.CommandTimeout = maxEXECtime;
                     DataTable table = new DataTable();
-                    dadapter.Fill(table);
+                    adapter.Fill(table);
                     return table;
                 }
             }
             catch (Exception ex)
             {
-                throw new NotSupportedException("Failed to run sto query " + Query, ex);
-            } 
+                log.Error("Command Failed", ex);
+                if (enblExeptions)
+                {
+                    throw ex;
+                }
+                DataTable table = new DataTable();
+                return table;
+            }
 
         }
-        
-
     }
 }

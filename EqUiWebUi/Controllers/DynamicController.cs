@@ -99,7 +99,7 @@ namespace EqUiWebUi.Controllers
                     break;
 
                 case (int)SmsDatabases.STO:
-                    dt = stoComm.oracle_runQuery(qry); //exeptions enabled by default
+                    dt = stoComm.Oracle_runQuery(qry, enblExeptions: true);
                     break;
 
                 case (int)SmsDatabases.MAXIMOrt:
@@ -177,7 +177,7 @@ namespace EqUiWebUi.Controllers
                     break;
 
                 case (int)SmsDatabases.STO:
-                    dt = stoComm.oracle_runQuery(qry); //exeptions enabled by default
+                    dt = stoComm.Oracle_runQuery(qry, enblExeptions: true);
                     break;
 
                 case (int)SmsDatabases.MAXIMOrt:
