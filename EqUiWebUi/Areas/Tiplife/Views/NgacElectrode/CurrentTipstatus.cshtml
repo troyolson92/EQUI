@@ -2,11 +2,26 @@
 @{
     ViewBag.Title = "CurrentTipstatus";
 }
-<div id="TipstatusGridSpincontainer" style="position:relative">
-    <div id="TipstatusGrid" class="mvc-grid"></div>
+<div class="card">
+    <div class="card-header bg-primary">
+        <h4>CurrentTipstatus</h4>
+    </div>
+
+    <div class="card-body">
+        <div id="TipstatusGridSpincontainer" style="position:relative">
+            <div id="TipstatusGrid" class="mvc-grid"></div>
+        </div>
+    </div>
 </div>
 
+
 @section scripts{
+    <script type="text/javascript">
+        //full with screen
+        $("#allcontent").removeClass("body-content");
+        $("#allcontent").removeClass("container");
+    </script>
+
     <!--ploegrapport script-->
     <script type="text/javascript">
     var TipstatusGridspinner = new Spinner();
@@ -15,7 +30,7 @@
             sourceUrl: '@Url.Action("_TipStatus")', // Grid source url string
             requestType: 'get', // Ajax grid request type
             reload: true, // Grid reload indicator
-        
+
             reloadStarted: function () {
                 TipstatusGridspinner.spin(document.getElementById('TipstatusGridSpincontainer'));
             },
