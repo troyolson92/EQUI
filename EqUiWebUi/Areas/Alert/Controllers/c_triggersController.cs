@@ -81,7 +81,15 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                 await db.SaveChangesAsync();
                 //if safe if Oke commit the alert to hangfire
                 AlertEngine alertEngine = new AlertEngine();
-                alertEngine.ConfigureHangfireAlertWork(c_triggers.id);
+                if (c_triggers.enabled)
+                {
+                    alertEngine.ConfigureHangfireAlertWork(c_triggers.id);
+                }
+                else
+                {
+                    alertEngine.ClearHanfireAlertwork();
+                }
+
                 //
                 return RedirectToAction("Index");
             }
