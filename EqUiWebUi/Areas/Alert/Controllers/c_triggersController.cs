@@ -79,6 +79,10 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                     db.Entry(c_triggers).State = EntityState.Modified;
                 }
                 await db.SaveChangesAsync();
+                //if safe if Oke commit the alert to hangfire
+                AlertEngine alertEngine = new AlertEngine();
+                alertEngine.ConfigureHangfireAlertWork(c_triggers.id);
+                //
                 return RedirectToAction("Index");
             }
             ViewBag.smsSystem = new SelectList(db.c_smsSystem, "id", "discription", c_triggers.smsSystem);

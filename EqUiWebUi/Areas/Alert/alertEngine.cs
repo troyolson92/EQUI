@@ -9,6 +9,8 @@ using EQUICommunictionLib;
 using Hangfire;
 using System.Text;
 using System.Web.Mvc;
+using System.Web.Mvc.Html;
+using System.IO;
 
 namespace EqUiWebUi.Areas.Alert
 {
@@ -207,11 +209,9 @@ namespace EqUiWebUi.Areas.Alert
                             newAlert.location = ActiveAlert.Field<string>("alarmobject");
                         }
                     }
-
+                    //
                     newAlert.alarmobject = ActiveAlert.Field<string>("alarmobject");
-                    //take classification direct from QRY 
                     newAlert.Classification = ActiveAlert.Field<string>("ClassTree");
-                    //18w18d4 SDEBEUL 
                     newAlert.C_timestamp = ActiveAlert.Field<DateTime>("timestamp");
                     newAlert.state = trigger.initial_state;
                     newAlert.info = ActiveAlert.Field<string>("info");
@@ -432,25 +432,9 @@ namespace EqUiWebUi.Areas.Alert
         {
             //first filter the active alters based on the alarm object 
             DataTable tblFiltered = dt.AsEnumerable()
-          .Where(row => row.Field<String>("alarmobject") == alarmobject)
-          .CopyToDataTable();
-
-            string html = "<table>";
-            //add header row
-            html += "<tr>";
-            for (int i = 0; i < tblFiltered.Columns.Count; i++)
-                html += "<td>" + tblFiltered.Columns[i].ColumnName + "</td>";
-            html += "</tr>";
-            //add rows
-            for (int i = 0; i < tblFiltered.Rows.Count; i++)
-            {
-                html += "<tr>";
-                for (int j = 0; j < tblFiltered.Columns.Count; j++)
-                    html += "<td>" + tblFiltered.Rows[i][j].ToString() + "</td>";
-                html += "</tr>";
-            }
-            html += "</table>";
-            return html;
+           .Where(row => row.Field<String>("alarmobject") == alarmobject)
+           .CopyToDataTable();
+          return  string.Join(Environment.NewLine, tblFiltered.Rows.OfType<DataRow>().Select(x => string.Join(" ; ", x.ItemArray)));
         }
     }
 }
