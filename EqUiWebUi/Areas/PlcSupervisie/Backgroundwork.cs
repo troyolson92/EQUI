@@ -33,17 +33,19 @@ namespace EqUiWebUi.Areas.PlcSupervisie
         {
             GadataComm lGadataComm = new GadataComm();
             //get last record in GADATA 
-            string gadataGetMaxTimestampQry = string.Format("select TOP 1 CHANGETS FROM GADATA.STO.rt_error where StoTable = '{0}' order by CHANGETS desc",TargetTable);
+            string gadataGetMaxTimestampQry = string.Format(@"select max(_timestamp) as 'ts' FROM GADATA.STO.h_breakdown
+                                                            left join GADATA.STO.c_StoTable on c_StoTable.id = h_breakdown.c_stotable_id
+                                                            where c_StoTable.StoTable = '{0}'", TargetTable);
             DataTable dtGadataMaxTS = lGadataComm.RunQueryGadata(gadataGetMaxTimestampQry);
             //handel empty table copy last 30 days
             DateTime GadataMAxTs = System.DateTime.Now.AddDays(-30);
             if (dtGadataMaxTS.Rows.Count != 0)
             {
-                GadataMAxTs = dtGadataMaxTS.Rows[0].Field<DateTime>("CHANGETS");
+                GadataMAxTs = dtGadataMaxTS.Rows[0].Field<DateTime>("ts");
             }
             else
             {
-                log.Error(String.Format("TargetTable: {0} had no RT data full refresh", TargetTable));
+                log.Error(String.Format("TargetTable: {0} had no data so full refresh", TargetTable));
             }
             //get new records from STO
             StoComm lStoComm = new StoComm();
@@ -60,12 +62,20 @@ WHERE CHANGETS > TO_TIMESTAMP('{0}', 'YYYY/MM/DD HH24:MI:SS')
             log.Debug(String.Format("TargetTable: {0}  Records: {1}", TargetTable, newStoDt.Rows.Count));
             //push to gadata
             lGadataComm.BulkCopyToGadata("STO", newStoDt, "rt_error");
-            
-            
-            
+
+
+
             //trigger normalisation make new gadatacom and use Admin powers 
-            //GadataComm gadataComm = new GadataComm();
-            //gadataComm.RunCommandGadata("EXEC GADATA.STO.[sp_update_L]", true);
+            //only normalisze on 1 run else might deadlock 
+            
+            //should i run one job after antother ? might be faster
+
+            if (TargetTable == "ALARM_DATA_UB12")
+            {
+                log.Debug("Normalisation started");
+                GadataComm gadataComm = new GadataComm();
+                gadataComm.RunCommandGadata("EXEC GADATA.STO.[sp_update_L]",runAsAdmin:true,enblExeptions:true);
+            }
             //trigger classification
             //   lGadataComm.RunCommandGadata("EXEC GADATA.STO.[sp_update_Lerror_classifcation]", true);
             //fire and forget to init
