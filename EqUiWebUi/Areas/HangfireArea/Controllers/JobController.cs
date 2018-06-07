@@ -59,9 +59,9 @@ namespace EqUiWebUi.Areas.HangfireArea.Controllers
         //init background work jobs.
         public void ConfiureBackgroundJobs()
         {
-            //old class (maximo stuff)
-            Backgroundwork backgroundwork = new Backgroundwork();
-            backgroundwork.configHangfireJobs();
+            //maximo jobs
+            Areas.Maximo_ui.Backgroundwork backgroundworkMaximo = new Areas.Maximo_ui.Backgroundwork();
+            backgroundworkMaximo.configHangfireJobs();
             //gadata jobs 
             Areas.Gadata.BackgroundWork backgroundWorkGADATA = new Areas.Gadata.BackgroundWork();
             backgroundWorkGADATA.configHangfireJobs();
@@ -71,6 +71,9 @@ namespace EqUiWebUi.Areas.HangfireArea.Controllers
             //Stw040 jobs
             Areas.STW040.BackgroundWork backgroundWorkSTW040 = new STW040.BackgroundWork();
             backgroundWorkSTW040.configHangfireJobs();
+            //STO jobs
+            Areas.PlcSupervisie.Backgroundwork backgroundWorkSTO = new PlcSupervisie.Backgroundwork();
+            backgroundWorkSTO.configHangfireJobs();
 
         }
 

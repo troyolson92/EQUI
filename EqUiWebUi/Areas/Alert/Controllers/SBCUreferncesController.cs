@@ -46,7 +46,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                 }
             }
 
-            ViewBag.Controller_id = new SelectList(db.c_controller, "id", "controller_name", sBCUrefernce.Controller_id);
+            ViewBag.Controller_id = new SelectList(db.c_controller.OrderBy(c => c.controller_name), "id", "controller_name", sBCUrefernce.Controller_id);
             return View(sBCUrefernce);
         }
 
@@ -71,7 +71,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            ViewBag.Controller_id = new SelectList(db.c_controller, "id", "controller_name", sBCUrefernce.Controller_id);
+            ViewBag.Controller_id = new SelectList(db.c_controller.OrderBy(c => c.controller_name), "id", "controller_name", sBCUrefernce.Controller_id);
             return View(sBCUrefernce);
         }
 
