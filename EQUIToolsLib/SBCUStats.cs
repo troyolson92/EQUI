@@ -8,8 +8,6 @@ using System.Text;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using System.Globalization;
-using WPFChart3D;
-using EQUIToolsLib;
 using EQUICommunictionLib;
 
 namespace EQUIToolsLib
@@ -806,8 +804,8 @@ ORDER BY x.Toolname ASC";
 
             if (ldt.Rows.Count < 1) { Debugger.Message("ldt has no data"); return; }
 
-            WPFChart3D.Window1 lChar = new Window1(ldt);
-            lChar.Show();
+          //  WPFChart3D.Window1 lChar = new Window1(ldt);
+          //  lChar.Show();
         }
 
 //show hide charts 
