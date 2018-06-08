@@ -20,16 +20,25 @@ namespace EqUiWebUi.Areas.PlcSupervisie
             //background work
             Backgroundwork backgroundwork = new Backgroundwork();
             //check every minute for new data (hystorian)
-            Hangfire.RecurringJob.AddOrUpdate("STO=>GADATA_ALARM_DATA_UB12", () => backgroundwork.PushDatafromSTOtoGADATA("ALARM_DATA_UB12"), Cron.MinuteInterval(5));
-            Hangfire.RecurringJob.AddOrUpdate("STO=>GADATA_ALARM_DATA_SUBASSY", () => backgroundwork.PushDatafromSTOtoGADATA("ALARM_DATA_SUBASSY"), Cron.MinuteInterval(5));
-            Hangfire.RecurringJob.AddOrUpdate("STO=>GADATA_ALARM_DATA_BODY_SIDES", () => backgroundwork.PushDatafromSTOtoGADATA("ALARM_DATA_BODY_SIDES"), Cron.MinuteInterval(5));
-            Hangfire.RecurringJob.AddOrUpdate("STO=>GADATA_ALARM_DATA_PREASSY", () => backgroundwork.PushDatafromSTOtoGADATA("ALARM_DATA_PREASSY"), Cron.MinuteInterval(5));
+            Hangfire.RecurringJob.AddOrUpdate("STO=>GADATA", () => backgroundwork.PushDatafromSTOtoGADATA(), Cron.MinuteInterval(5));
         }
 
-        //update new data from STO to gadata. called every minute #hangfire
+        //main (does the jobs 1 by one
         [AutomaticRetry(Attempts = 0)]
         [Queue("sto")]
-        public void PushDatafromSTOtoGADATA(string TargetTable) 
+        public void PushDatafromSTOtoGADATA()
+        {
+            var jobId1 = BackgroundJob.Enqueue(() => HandleStoTable("ALARM_DATA_UB12"));
+            var jobId2 = BackgroundJob.ContinueWith(jobId1,() => HandleStoTable("ALARM_DATA_SUBASSY"));
+            var jobId3 = BackgroundJob.ContinueWith(jobId2, () => HandleStoTable("ALARM_DATA_BODY_SIDES"));
+            var jobId4 = BackgroundJob.ContinueWith(jobId3, () => HandleStoTable("ALARM_DATA_PREASSY"));
+            var jobId5 = BackgroundJob.ContinueWith(jobId4, () => NormalizeSTOdata());
+        }
+
+        //update new data from STO to gadata for a specifc table . 
+        [AutomaticRetry(Attempts = 2)]
+        [Queue("sto")]
+        public void HandleStoTable(string TargetTable) 
         {
             GadataComm lGadataComm = new GadataComm();
             //get last record in GADATA 
@@ -50,11 +59,11 @@ namespace EqUiWebUi.Areas.PlcSupervisie
             //get new records from STO
             StoComm lStoComm = new StoComm();
             string stoQry = string.Format(@"
-SELECT 
-   {1}.*
-, '{1}' StoTable 
-FROM STO_SYS.{1}
-WHERE CHANGETS > TO_TIMESTAMP('{0}', 'YYYY/MM/DD HH24:MI:SS')
+                                        SELECT 
+                                           {1}.*
+                                        , '{1}' StoTable 
+                                        FROM STO_SYS.{1}
+                                        WHERE CHANGETS > TO_TIMESTAMP('{0}', 'YYYY/MM/DD HH24:MI:SS')
 "
                 , GadataMAxTs.ToString("yyyy-MM-dd HH:mm:ss"),TargetTable); //USE BIG HH for 24 hour format !!!!
 
@@ -62,23 +71,20 @@ WHERE CHANGETS > TO_TIMESTAMP('{0}', 'YYYY/MM/DD HH24:MI:SS')
             log.Debug(String.Format("TargetTable: {0}  Records: {1}", TargetTable, newStoDt.Rows.Count));
             //push to gadata
             lGadataComm.BulkCopyToGadata("STO", newStoDt, "rt_error");
+        }
 
-
-
-            //trigger normalisation make new gadatacom and use Admin powers 
-            //only normalisze on 1 run else might deadlock 
-            
-            //should i run one job after antother ? might be faster
-
-            if (TargetTable == "ALARM_DATA_UB12")
-            {
-                log.Debug("Normalisation started");
-                GadataComm gadataComm = new GadataComm();
-                gadataComm.RunCommandGadata("EXEC GADATA.STO.[sp_update_L]",runAsAdmin:true,enblExeptions:true);
-            }
+        [AutomaticRetry(Attempts = 2)]
+        [Queue("sto")]
+        public void NormalizeSTOdata()
+        {
+           log.Debug("Normalisation started");
+           GadataComm gadataComm = new GadataComm();
+           gadataComm.RunCommandGadata("EXEC GADATA.STO.[sp_update_L]", runAsAdmin: true, enblExeptions: true);
+    
             //trigger classification
             //   lGadataComm.RunCommandGadata("EXEC GADATA.STO.[sp_update_Lerror_classifcation]", true);
             //fire and forget to init
+
         }
     }
 }
