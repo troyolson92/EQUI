@@ -20,11 +20,11 @@ namespace EqUiWebUi.Controllers
 
         //standalone view to get error trrend 
         [HttpGet]
-        public ActionResult GetErrorTrend(string location, int? errornum, int? refid, string logtype, string logtext)
+        public ActionResult GetErrorTrend(string location, string errornum, int? refid, string logtype, string logtext)
         {
             LogInfo logInfo = new LogInfo();
             logInfo.location = location;
-            logInfo.errornum = errornum.GetValueOrDefault(0);
+            logInfo.errornum = errornum;
             logInfo.refid = refid.GetValueOrDefault(0);
             logInfo.logtype = logtype;
             logInfo.logtext = logtext;
@@ -40,7 +40,7 @@ namespace EqUiWebUi.Controllers
 
         //get data for the chart => returns json result
         [HttpGet]
-        public JsonResult _getData(string location ,int  errornum ,string logtekst ,string logtype, int refid, DateTime startDate, DateTime endDate, grouptType grouptType = grouptType.Hour)
+        public JsonResult _getData(string location ,string  errornum ,string logtekst ,string logtype, int refid, DateTime startDate, DateTime endDate, grouptType grouptType = grouptType.Hour)
         {
             GadataComm gadataComm = new GadataComm();
 
@@ -55,7 +55,7 @@ namespace EqUiWebUi.Controllers
             }
 
             //get the data
-            string qry = string.Format(@"EXEC [EqUi].[GetErrorTrentData] @Location = '{0}' ,@ERRORNUM = {1} ,@Logtext = '{2}' ,@logType = '{3}' ,@refID={4}"
+            string qry = string.Format(@"EXEC [EqUi].[GetErrorTrentData] @Location = '{0}' ,@ERRORNUM = '{1}' ,@Logtext = '{2}' ,@logType = '{3}' ,@refID={4}"
             , location, errornum, logtekst, logtype, refid);
             DataTable dt = gadataComm.RunQueryGadata(qry);
 

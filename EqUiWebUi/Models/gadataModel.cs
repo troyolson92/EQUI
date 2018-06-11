@@ -12,7 +12,7 @@ namespace EqUiWebUi.Models
     public partial class LogInfo
     {
         public string location { get; set; }
-        public int errornum { get; set; }
+        public string errornum { get; set; }
         public int refid { get; set; }
         public string logtype { get; set; }
         public string logtext { get; set; }

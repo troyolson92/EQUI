@@ -80,6 +80,20 @@ namespace EqUiWebUi.Areas.VASC.Controllers
 
         public void SetServiceState(string ServiceName, int State)
         {
+            try
+            {
+        
+
+
+            }
+            catch (Exception ex )
+            {
+                log.Error("ImpresonateError", ex);
+            }
+
+
+
+
             ServiceController controller = new ServiceController(ServiceName);
             try
             {

@@ -160,11 +160,11 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
         //contains _getErrorTrend _loginfo 
         //called by vsto plugin
         [HttpGet]
-        public ActionResult MoreInfo(string location, int? errornum, int? refid, string logtype, string logtext)
+        public ActionResult MoreInfo(string location, string errornum, int? refid, string logtype, string logtext)
         {
             LogInfo logInfo = new LogInfo();
             logInfo.location = location;
-            logInfo.errornum = errornum.GetValueOrDefault(0);
+            logInfo.errornum = errornum;
             logInfo.refid = refid.GetValueOrDefault(0);
             logInfo.logtype = logtype;
             logInfo.logtext = logtext;
@@ -195,7 +195,7 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
             //query all instances of the logtype via equi.getErrorInfoData 
             GadataComm gadataComm = new GadataComm();
             string qry = string.Format(
-            @"EXEC [EqUi].[GetErrorInfoData] @Location  = '{0}' ,@ERRORNUM = {1} ,@Refid = {2} ,@logtype ='{3}'"
+            @"EXEC [EqUi].[GetErrorInfoData] @Location  = '{0}' ,@ERRORNUM = '{1}' ,@Refid = {2} ,@logtype ='{3}'"
             , logInfo.location, logInfo.errornum, logInfo.refid, logInfo.logtype);
             DataTable dt = gadataComm.RunQueryGadata(qry);
             //build an html respone with the log info.

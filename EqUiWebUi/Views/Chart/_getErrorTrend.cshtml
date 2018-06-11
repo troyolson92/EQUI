@@ -173,7 +173,7 @@
 
     //refresh the chart
     function refreshChart() {
-        getChartData("@Model.location", @Model.errornum, "@Model.logtext.Replace("\n"," ").Replace("\r", " ").Replace("\t", " ")", "@Model.logtype",@Model.refid, moment(startDate).toISOString(), moment(endDate).toISOString(), groupmode);
+        getChartData("@Model.location", "@Model.errornum", "@Model.logtext.Replace("\n"," ").Replace("\r", " ").Replace("\t", " ")", "@Model.logtype",@Model.refid, moment(startDate).toISOString(), moment(endDate).toISOString(), groupmode);
     };
 
     //setting up datetimePicker
