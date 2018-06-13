@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="GADATAModelEQUI.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="c_datasource">
+          <Key>
+            <PropertyRef Name="int" />
+          </Key>
+          <Property Name="int" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DataSourceName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="varchar(max)" />
+          <Property Name="Type" Type="int" Nullable="false" />
+          <Property Name="ConnectionString" Type="varchar(max)" />
+          <Property Name="isAlertSource" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="c_LogClassRules">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="c_datasource_id" Type="int" Nullable="false" />
+          <Property Name="Err_start" Type="int" />
+          <Property Name="Err_end" Type="int" />
+          <Property Name="Err_text" Type="varchar" MaxLength="255" />
+          <Property Name="I_comment" Type="varchar" MaxLength="255" />
+          <Property Name="c_ClassificationId" Type="int" />
+          <Property Name="c_SubgroupId" Type="int" />
+        </EntityType>
+        <Association Name="FK_c_LogClassRules_c_datasource">
+          <End Role="c_datasource" Type="Self.c_datasource" Multiplicity="1" />
+          <End Role="c_LogClassRules" Type="Self.c_LogClassRules" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_datasource">
+              <PropertyRef Name="int" />
+            </Principal>
+            <Dependent Role="c_LogClassRules">
+              <PropertyRef Name="c_datasource_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="GADATAModelEQUIStoreContainer">
+          <EntitySet Name="c_datasource" EntityType="Self.c_datasource" Schema="EqUi" store:Type="Tables" />
+          <EntitySet Name="c_LogClassRules" EntityType="Self.c_LogClassRules" Schema="EqUi" store:Type="Tables" />
+          <AssociationSet Name="FK_c_LogClassRules_c_datasource" Association="Self.FK_c_LogClassRules_c_datasource">
+            <End Role="c_datasource" EntitySet="c_datasource" />
+            <End Role="c_LogClassRules" EntitySet="c_LogClassRules" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="GADATAModelEQUI" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="c_datasource">
+          <Key>
+            <PropertyRef Name="int" />
+          </Key>
+          <Property Name="int" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DataSourceName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Type" Type="Int32" Nullable="false" />
+          <Property Name="ConnectionString" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="isAlertSource" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="c_LogClassRules" Relationship="GADATAModelEQUI.FK_c_LogClassRules_c_datasource" FromRole="c_datasource" ToRole="c_LogClassRules" />
+        </EntityType>
+        <EntityType Name="c_LogClassRules">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="c_datasource_id" Type="Int32" Nullable="false" />
+          <Property Name="Err_start" Type="Int32" />
+          <Property Name="Err_end" Type="Int32" />
+          <Property Name="Err_text" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="I_comment" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="c_ClassificationId" Type="Int32" />
+          <Property Name="c_SubgroupId" Type="Int32" />
+          <NavigationProperty Name="c_datasource" Relationship="GADATAModelEQUI.FK_c_LogClassRules_c_datasource" FromRole="c_LogClassRules" ToRole="c_datasource" />
+        </EntityType>
+        <EntityContainer Name="GADATAEntitiesEQUI" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="c_datasource" EntityType="Self.c_datasource" />
+          <EntitySet Name="c_LogClassRules" EntityType="Self.c_LogClassRules" />
+          <AssociationSet Name="FK_c_LogClassRules_c_datasource" Association="GADATAModelEQUI.FK_c_LogClassRules_c_datasource">
+            <End Role="c_datasource" EntitySet="c_datasource" />
+            <End Role="c_LogClassRules" EntitySet="c_LogClassRules" />
+          </AssociationSet>
+        </EntityContainer>
+        <Association Name="FK_c_LogClassRules_c_datasource">
+          <End Type="GADATAModelEQUI.c_datasource" Role="c_datasource" Multiplicity="1" />
+          <End Type="GADATAModelEQUI.c_LogClassRules" Role="c_LogClassRules" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_datasource">
+              <PropertyRef Name="int" />
+            </Principal>
+            <Dependent Role="c_LogClassRules">
+              <PropertyRef Name="c_datasource_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="GADATAModelEQUIStoreContainer" CdmEntityContainer="GADATAEntitiesEQUI">
+          <EntitySetMapping Name="c_datasource">
+            <EntityTypeMapping TypeName="GADATAModelEQUI.c_datasource">
+              <MappingFragment StoreEntitySet="c_datasource">
+                <ScalarProperty Name="int" ColumnName="int" />
+                <ScalarProperty Name="DataSourceName" ColumnName="DataSourceName" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="ConnectionString" ColumnName="ConnectionString" />
+                <ScalarProperty Name="isAlertSource" ColumnName="isAlertSource" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="c_LogClassRules">
+            <EntityTypeMapping TypeName="GADATAModelEQUI.c_LogClassRules">
+              <MappingFragment StoreEntitySet="c_LogClassRules">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="c_datasource_id" ColumnName="c_datasource_id" />
+                <ScalarProperty Name="Err_start" ColumnName="Err_start" />
+                <ScalarProperty Name="Err_end" ColumnName="Err_end" />
+                <ScalarProperty Name="Err_text" ColumnName="Err_text" />
+                <ScalarProperty Name="I_comment" ColumnName="I_comment" />
+                <ScalarProperty Name="c_ClassificationId" ColumnName="c_ClassificationId" />
+                <ScalarProperty Name="c_SubgroupId" ColumnName="c_SubgroupId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
