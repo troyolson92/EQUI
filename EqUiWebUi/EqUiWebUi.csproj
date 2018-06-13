@@ -609,6 +609,27 @@
     <Compile Include="Controllers\DynamicController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\TableauController.cs" />
+    <Compile Include="Models\c_datasource.cs">
+      <DependentUpon>EQUIModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\c_LogClassRules.cs">
+      <DependentUpon>EQUIModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EQUIModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EQUIModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EQUIModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EQUIModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EQUIModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EQUIModel.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Models\gadataModel.cs" />
     <Compile Include="Areas\user_management\roleProvider.cs" />
     <Compile Include="Startup.cs" />
@@ -719,6 +740,16 @@
     <Content Include="Content\Site.css" />
     <Content Include="Content\summernote-bs4.css" />
     <Content Include="Global.asax" />
+    <Content Include="Models\EQUIModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>EQUIModel.edmx</DependentUpon>
+      <LastGenOutput>EQUIModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\EQUIModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>EQUIModel.edmx</DependentUpon>
+      <LastGenOutput>EQUIModel.cs</LastGenOutput>
+    </Content>
     <Content Include="PDFjs\build\pdf.js.map" />
     <Content Include="PDFjs\build\pdf.worker.js.map" />
     <Content Include="PDFjs\web\cmaps\78-EUC-H.bcmap" />
@@ -1202,6 +1233,13 @@
     <Content Include="Areas\PlcSupervisie\Views\Screenshot\CarouselBF.cshtml" />
     <Content Include="Areas\user_management\Views\user\ForbiddenMethod.cshtml" />
     <Content Include="Areas\user_management\Views\user\LoginPrompt.cshtml" />
+    <EntityDeploy Include="Models\EQUIModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>EQUIModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\EQUIModel.edmx.diagram">
+      <DependentUpon>EQUIModel.edmx</DependentUpon>
+    </Content>
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION.pubxml" />
     <None Include="Properties\PublishProfiles\VCC22700-Testing.pubxml" />
     <Content Include="PDFjs\build\pdf.js" />

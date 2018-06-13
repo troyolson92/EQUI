@@ -15707,7 +15707,9 @@ from gadata.STO.l_error as l
 left join gadata.volvo.c_Classification as c on c.id = l.c_classificationId
 left join gadata.volvo.c_subgroup as s on s.id = l.c_subgroupId
 Where
-l.ALARMCOMMENT like @error_text";
+SUBOBJECT like @error_text 
+
+l.SUBOBJECTlike @error_text";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@error_text", global::System.Data.SqlDbType.VarChar, 2147483647, global::System.Data.ParameterDirection.Input, 0, 0, "ALARMCOMMENT", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
