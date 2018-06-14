@@ -98,12 +98,58 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
             cmdWorkLog = string.Format(cmdWorkLog, wonum);
             #endregion
             //
-            EQUICommunictionLib.MaximoComm maximoComm = new MaximoComm();
-            DataTable WORKORDER = maximoComm.Oracle_runQuery(cmdWORKORDER, RealtimeConn: RealtimeConn);
-            DataTable FAILUREREMARKdesc = maximoComm.Oracle_runQuery(cmdFAILUREREMARKdescription, RealtimeConn: RealtimeConn);
-            string LONGDESCRIPTION = maximoComm.GetClobMaximo7(cmdLONGDESCRIPTION,RealtimeConn:RealtimeConn);
-            string FAILUREREMARK = maximoComm.GetClobMaximo7(cmdFAILUREREMARK, RealtimeConn: RealtimeConn);
-            DataTable LABOR = maximoComm.Oracle_runQuery(cmdLabor, RealtimeConn: RealtimeConn);
+            EQUICommunictionLib.ConnectionManager connectionManager = new ConnectionManager();
+            DataTable WORKORDER;
+            DataTable FAILUREREMARKdesc;
+            string LONGDESCRIPTION;
+            string FAILUREREMARK;
+            DataTable LABOR;
+
+            if (RealtimeConn)
+            {
+                WORKORDER = connectionManager.RunQuery(cmdWORKORDER, dbName: "MAXIMOrt", maxEXECtime: 15, enblExeptions: true);
+            }
+            else
+            {
+                WORKORDER = connectionManager.RunQuery(cmdWORKORDER, dbName: "MAXIMO7rep", maxEXECtime: 15, enblExeptions: true);
+            }
+
+            if (RealtimeConn)
+            {
+                FAILUREREMARKdesc = connectionManager.RunQuery(cmdFAILUREREMARKdescription, dbName: "MAXIMOrt", maxEXECtime: 15, enblExeptions: true);
+            }
+            else
+            {
+                FAILUREREMARKdesc = connectionManager.RunQuery(cmdFAILUREREMARKdescription, dbName: "MAXIMO7rep", maxEXECtime: 15, enblExeptions: true);
+            }
+
+            if (RealtimeConn)
+            {
+                LONGDESCRIPTION = connectionManager.GetCLOB(cmdLONGDESCRIPTION, dbName: "MAXIMOrt", enblExeptions: true);
+            }
+            else
+            {
+                LONGDESCRIPTION = connectionManager.GetCLOB(cmdLONGDESCRIPTION, dbName: "MAXIMO7rep", enblExeptions: true);
+            }
+
+            if (RealtimeConn)
+            {
+                FAILUREREMARK = connectionManager.GetCLOB(cmdFAILUREREMARK, dbName: "MAXIMOrt", enblExeptions: true);
+            }
+            else
+            {
+                FAILUREREMARK = connectionManager.GetCLOB(cmdFAILUREREMARK, dbName: "MAXIMO7rep", enblExeptions: true);
+            }
+
+            if (RealtimeConn)
+            {
+                LABOR = connectionManager.RunQuery(cmdLabor, dbName: "MAXIMOrt", maxEXECtime: 15, enblExeptions: true);
+            }
+            else
+            {
+                LABOR = connectionManager.RunQuery(cmdLabor, dbName: "MAXIMO7rep", maxEXECtime: 15, enblExeptions: true);
+            }
+
             //   DataTable WORKLOG = maximoComm.oracle_runQuery(cmdWorkLog, RealtimeConn:RealtimeConn);
             if (WORKORDER.Rows.Count != 0)
             {
@@ -158,8 +204,17 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
             if (parentwonum == "") parentwonum = "NoWonum";
             string qrySubWO = "SELECT * FROM MAXIMO.WORKORDER WORKORDER WHERE WORKORDER.PARENT = '{0}' ORDER BY WORKORDER.LOCATION";
             qrySubWO = string.Format(qrySubWO, parentwonum);
-            EQUICommunictionLib.MaximoComm maximoComm = new MaximoComm();
-            DataTable SubWo = maximoComm.Oracle_runQuery(qrySubWO, RealtimeConn: RealtimeConn);
+
+            EQUICommunictionLib.ConnectionManager connectionManager = new ConnectionManager();
+            DataTable SubWo;
+            if (RealtimeConn)
+            {
+                SubWo = connectionManager.RunQuery(qrySubWO, dbName: "MAXIMOrt", maxEXECtime: 15, enblExeptions: true);
+            }
+            else
+            {
+                SubWo = connectionManager.RunQuery(qrySubWO, dbName: "MAXIMO7rep", maxEXECtime: 15, enblExeptions: true);
+            }
             //make this into a list object
             List<Models.Workorder> SubWoList = new List<Models.Workorder>();
             foreach (DataRow row in SubWo.Rows)

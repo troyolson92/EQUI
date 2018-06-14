@@ -189,9 +189,17 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
             ViewBag.Qry = sbqry.ToString();
             //
             //get data from maximo
-            EQUICommunictionLib.MaximoComm maximoComm = new MaximoComm();
+            EQUICommunictionLib.ConnectionManager ConnectionManager = new ConnectionManager();
             DataTable dataTable = new DataTable();
-            dataTable = maximoComm.Oracle_runQuery(sbqry.ToString(),RealtimeConn:RealtimeConn,maxEXECtime:15,enblExeptions:true); 
+            if (RealtimeConn)
+            {
+                dataTable = ConnectionManager.RunQuery(sbqry.ToString(), dbName: "MAXIMOrt", maxEXECtime: 15, enblExeptions: true);
+            }
+            else
+            {
+                dataTable = ConnectionManager.RunQuery(sbqry.ToString(), dbName: "MAXIMO7rep", maxEXECtime: 15, enblExeptions: true);
+            }
+
             //parse datatable to listobject
             List<Models.Workorder> workorders = new List<Models.Workorder>();
             foreach (DataRow row in dataTable.Rows)

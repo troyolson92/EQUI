@@ -133,8 +133,8 @@ namespace EqUiWebUi.Areas.VASC.Controllers
                         from GADATA.NGAC.Rt_value_Search
                         left join GADATA.NGAC.c_variable_search on c_variable_search.id = Rt_value_Search.c_variable_search_id
                         where c_variable_search.id is null";
-            EQUICommunictionLib.GadataComm gadataComm = new EQUICommunictionLib.GadataComm();
-            gadataComm.RunCommandGadata(qry, runAsAdmin: true, enblExeptions: true);
+            EQUICommunictionLib.ConnectionManager connectionManager = new EQUICommunictionLib.ConnectionManager();
+            connectionManager.RunCommand(qry, enblExeptions: true);
         }
 
         // GET: VASC/c_variable/GetVariableData
