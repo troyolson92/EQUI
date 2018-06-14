@@ -162,7 +162,7 @@ namespace EQUICommunictionLib
 
         }
 
-        public SqlCommand Get_sp_parameters(string sp_name)
+        public SqlCommand GetSpParms(string sp_name, bool enblExeptions = false)
         {
             SqlCommand cmd = new SqlCommand(sp_name, Conn);
             cmd.CommandType = CommandType.StoredProcedure;
@@ -173,6 +173,10 @@ namespace EQUICommunictionLib
             catch (Exception ex)
             {
                 log.Error("Connection Failed", ex);
+                if (enblExeptions)
+                {
+                    throw ex;
+                }
             }
             try
             {
@@ -183,6 +187,10 @@ namespace EQUICommunictionLib
             catch (Exception ex)
             {
                 log.Error("Command failed", ex);
+                if (enblExeptions)
+                {
+                    throw ex;
+                }
                 return cmd;
             }
 

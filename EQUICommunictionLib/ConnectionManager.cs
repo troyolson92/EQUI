@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
 
 namespace EQUICommunictionLib
 {
@@ -260,6 +261,40 @@ namespace EQUICommunictionLib
             }
 
         }
+
+        //get storced proc parameters (only for msSQL)
+        //option to run get database by name or by ID
+        //if dbName and ID is left blank run against main datbase
+        public SqlCommand GetSpParms(string sp_name, string dbName = "", int dbID = 0, bool enblExeptions = false)
+        {
+            Database db = new Database();
+            if (dbName != "" || dbID != 0)
+            {
+                db = GetDB(dbName, dbID).First();
+            }
+            else
+            {
+                db = DefaultDatabase();
+            }
+
+
+            switch (db.Type)
+            {
+                case db_type.msSqlServer:
+                    SqlComm sqlComm = new SqlComm(db.ConnectionString);
+                    return sqlComm.GetSpParms(sp_name, enblExeptions: enblExeptions);
+
+                case db_type.Orcacle:
+                    throw new NotImplementedException();
+
+                default:
+                    log.Error("db type not supported");
+                    throw new NotSupportedException();
+            }
+
+        }
+
+
 
         //test command to test al DB's
         //I just do a getdate() sysdata on all systems. (if logon error like that will crap out)

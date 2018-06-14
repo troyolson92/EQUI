@@ -25,10 +25,8 @@ namespace ExcelAddInEquipmentDatabase
         //
         //debugger
         myDebugger Debugger = new myDebugger();
-        //connection to gadata
-        GadataComm lGadataComm = new GadataComm();
-        //connection to maximo
-        MaximoComm lMaximoComm = new MaximoComm();
+        //connection to databases
+        ConnectionManager ConnectionManager = new ConnectionManager();
         //connection to GADATA for maximo querys
         OracleQuery lMaximoQuery = new OracleQuery();
         //local Users data instance 
@@ -52,6 +50,15 @@ namespace ExcelAddInEquipmentDatabase
         //if user trigger a refresh (because i'm an idiot and did not find a refresh finished event)
         bool TriggerRefresh = false;
 
+
+
+
+
+        public string DsnMX7 { get { return "MX7"; } }
+        public string DsnGADATA { get { return "GADATA"; } }
+
+
+
         private void EquipmentDBRibbon_Load(object sender, RibbonUIEventArgs e)
         {
             // temp change update location
@@ -71,8 +78,9 @@ namespace ExcelAddInEquipmentDatabase
             //check here for offline mode. (disabels Querys)
 
             //force the DSN connection to the host system
-            lGadataComm.Make_DSN();
-            lMaximoComm.Make_DSN(lMaximoComm.SystemMX7);
+            ODBCManager.CreateDSN(DsnGADATA, "odbc link to sql001.gen.volvocars.net", "sqla001.gen.volvocars.net", "SQL Server", @"C:\windows\system32\SQLSRV32.dll", false, DsnGADATA);
+            ODBCManager.CreateDSN(DsnMX7, "odbc link MAXIMO7", "dpmxarct", "MAXIMO7 ODBC for oracle", @"C:\windows\system32\msorcl32.dll", true, "MAXIMO");
+
             //find connections in wb
             dd_connections_update();
             //fill with templates
@@ -585,12 +593,12 @@ namespace ExcelAddInEquipmentDatabase
                         SetWrapText(false);
                         TriggerRefresh = true;
                         //connects the ribbon filter controls with the procMngr
-                        if (ProcMngr.activeSystem == lMaximoComm.DsnMX7) //MX7connections
+                        if (ProcMngr.activeSystem == DsnMX7) //MX7connections
                         {
-                            ProcMngr.MX7_ProcMngrToActiveConnection(lMaximoQuery.oracle_get_QueryTemplate_from_GADATA(connection.Name, lMaximoComm.SystemMX7));
+                            ProcMngr.MX7_ProcMngrToActiveConnection(lMaximoQuery.oracle_get_QueryTemplate_from_GADATA(connection.Name, DsnMX7));
                             connection.Refresh();
                         }
-                        else if (ProcMngr.activeSystem == lGadataComm.DsnGADATA) //GADATAconnections
+                        else if (ProcMngr.activeSystem == DsnGADATA) //GADATAconnections
                         {
                             ProcMngr.GADATA_ProcMngrToActiveConnection();
                             connection.Refresh();
@@ -646,8 +654,8 @@ namespace ExcelAddInEquipmentDatabase
 
         private void btn_ErrorMngr_Click(object sender, RibbonControlEventArgs e)
         {
-            Forms.ErrorManager lErrorManager = new Forms.ErrorManager();
-            lErrorManager.Show();
+            //removed wil make new web versions
+            throw new NotImplementedException();
         }
 
         private void Refresh_Tick(object sender, EventArgs e)
