@@ -4,6 +4,7 @@ using Hangfire.SqlServer;
 using Microsoft.Owin;
 using Owin;
 using System;
+using System.Configuration;
 using System.Web;
 
 namespace EqUiWebUi
@@ -21,7 +22,7 @@ namespace EqUiWebUi
             //setup hangfire database config
             GlobalConfiguration.Configuration
                 .UseSqlServerStorage(
-                    "GADATAConnectionString",
+                    ConfigurationManager.ConnectionStrings["EQUIConnectionString"].ConnectionString, //we take this from web.config
                     new SqlServerStorageOptions { QueuePollInterval = TimeSpan.FromSeconds(1) });
             //set up hangefire dashboard
             app.UseHangfireDashboard("/hangfire", new DashboardOptions
@@ -66,12 +67,7 @@ namespace EqUiWebUi
         {
             public bool Authorize(DashboardContext context)
             {
-                // In case you need an OWIN context, use the next line, `OwinContext` class
-                // is the part of the `Microsoft.Owin` package.
                 var owinContext = new OwinContext(context.GetOwinEnvironment());
-
-                // Allow all authenticated users to see the Dashboard (potentially dangerous).
-                //return owinContext.Authentication.User.Identity.IsAuthenticated;  
                 roleProvider equiRoleProvider = new roleProvider();
                 if (equiRoleProvider.IsUserInRole(HttpContext.Current.User.Identity.Name , "Administrator") || equiRoleProvider.IsUserInRole(HttpContext.Current.User.Identity.Name, "HangFire"))
                 {
