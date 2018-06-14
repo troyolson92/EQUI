@@ -12,22 +12,22 @@ namespace EqUiWebUi.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class c_datasource
+    public partial class c_logClassSystem
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public c_datasource()
+        public c_logClassSystem()
         {
-            this.c_logClassSystem = new HashSet<c_logClassSystem>();
+            this.c_LogClassRules = new HashSet<c_LogClassRules>();
         }
     
-        public int @int { get; set; }
-        public string Description { get; set; }
-        public int Type { get; set; }
-        public string ConnectionString { get; set; }
-        public bool isAlertSource { get; set; }
+        public int id { get; set; }
+        public int c_datasource_id { get; set; }
         public string Name { get; set; }
+        public string Description { get; set; }
+        public string SelectStatement { get; set; }
     
+        public virtual c_datasource c_datasource { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<c_logClassSystem> c_logClassSystem { get; set; }
+        public virtual ICollection<c_LogClassRules> c_LogClassRules { get; set; }
     }
 }

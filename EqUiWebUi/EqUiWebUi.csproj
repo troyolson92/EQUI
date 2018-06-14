@@ -615,6 +615,9 @@
     <Compile Include="Models\c_LogClassRules.cs">
       <DependentUpon>EQUIModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\c_logClassSystem.cs">
+      <DependentUpon>EQUIModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\EQUIModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

@@ -15,14 +15,14 @@ namespace EqUiWebUi.Models
     public partial class c_LogClassRules
     {
         public int id { get; set; }
-        public int c_datasource_id { get; set; }
         public Nullable<int> Err_start { get; set; }
         public Nullable<int> Err_end { get; set; }
         public string Err_text { get; set; }
         public string I_comment { get; set; }
         public Nullable<int> c_ClassificationId { get; set; }
         public Nullable<int> c_SubgroupId { get; set; }
+        public int c_logClassSystem_id { get; set; }
     
-        public virtual c_datasource c_datasource { get; set; }
+        public virtual c_logClassSystem c_logClassSystem { get; set; }
     }
 }
