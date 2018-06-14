@@ -3,25 +3,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace EqUiWebUi.Areas.Alert.Models
 {
- //Trigger metadata
-    [MetadataType(typeof(c_triggersMetaData))]
-    public partial class c_triggers
-    {
-        //this links our enum to the entitymodel
-        public SmsDatabases RunAgainstDatabase
-        {
-            get
-            {
-                return (SmsDatabases)Enum.ToObject(typeof(SmsDatabases), this.RunAgainst);
-            }
-            set
-            {
-                this.RunAgainst = (int)value;
-            }
-        }
-
-    }
-
     public class c_triggersMetaData
     {
         //************************************************************************************************
@@ -68,16 +49,6 @@ namespace EqUiWebUi.Areas.Alert.Models
         [HelpText("if on is show in reports")]
         public bool isInReport { get; set; }
 
-    }
-
-    //enum for RunAgainst database type
-    public enum SmsDatabases
-    {
-        GADATA = 1,
-        STO = 2,
-        MAXIMOrt = 3,
-        MAXIMOrep = 4,
-        DBI = 5
     }
 
     //enum for alert states

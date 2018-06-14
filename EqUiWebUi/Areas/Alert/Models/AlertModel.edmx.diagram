@@ -34,6 +34,8 @@
         <AssociationConnector Association="AlertModel.FK_l_variants_c_triggers" />
         <AssociationConnector Association="AlertModel.FK_l_controlLimits_l_variants" />
         <AssociationConnector Association="AlertModel.FK_l_variants_L_users" />
+        <EntityTypeShape EntityType="AlertModel.c_datasource" Width="1.5" PointX="13.75" PointY="3.5" FillColor="Red" />
+        <AssociationConnector Association="AlertModel.FK_c_triggers_c_datasource" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
