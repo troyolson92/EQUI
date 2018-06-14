@@ -23,8 +23,8 @@ namespace ExcelAddInEquipmentDatabase
         //connection to maximo 
         MaximoComm lMaximoComm = new MaximoComm();
         //connection to STO
-        StoComm lstoComm = new StoComm();
-        //connection to GADATA for maximo querys
+        MaximoComm lstoComm = new MaximoComm(); //bs but sto was already gone 
+        // to GADATA for maximo querys
         OracleQuery lOracleQuery = new OracleQuery();
         //Query edit box instance
         Forms.MXxQueryEdit QEdit;
@@ -294,7 +294,7 @@ namespace ExcelAddInEquipmentDatabase
                 adapter.Fill(lQUERYS);
             }
             var data = from a in lQUERYS
-                       where a.SYSTEM == lstoComm.SystemSTO
+                       where a.SYSTEM == lstoComm.SystemMX7
                        orderby a.NAME descending
                        select a.NAME;
             cb_STO_QueryNames.DataSource = data.Distinct().ToList();
@@ -307,8 +307,8 @@ namespace ExcelAddInEquipmentDatabase
 select * from STO_SYS.ALARM_DATA_UB12
 where GEOLOCATION = '339090'
                     ";
-            lstoComm.Make_DSN(lstoComm.SystemSTO);
-            string ODBCconn = lstoComm.STOconnectionString;
+            lstoComm.Make_DSN(lstoComm.SystemMX7);
+            string ODBCconn = lstoComm.MX7connectionString;
             string ConnectionName = cb_STO_QueryNames.Text;
             Create_ODBC_connection(Query, ODBCconn, ConnectionName);
 
@@ -325,11 +325,11 @@ where GEOLOCATION = '339090'
                     adapter.Fill(lQUERYS);
                 }
                 lbl_STO_procDiscription.Text = (from a in lQUERYS
-                           where a.SYSTEM == lstoComm.SystemSTO && a.NAME == cb_STO_QueryNames.Text
+                           where a.SYSTEM == lstoComm.SystemMX7 && a.NAME == cb_STO_QueryNames.Text
                            select a.DISCRIPTION).First().ToString();
            }
             lv_STO_procParms.Items.Clear();
-            foreach (OracleQueryParm Parm in lOracleQuery.oracle_get_QueryParms_from_GADATA(cb_STO_QueryNames.Text, lstoComm.SystemSTO))
+            foreach (OracleQueryParm Parm in lOracleQuery.oracle_get_QueryParms_from_GADATA(cb_STO_QueryNames.Text, lstoComm.SystemMX7))
             {
                 ListViewItem item = new ListViewItem(Parm.ParameterName);
                 item.SubItems.Add(Parm.Defaultvalue);
@@ -342,10 +342,10 @@ where GEOLOCATION = '339090'
             if (QEdit != null) QEdit.Dispose();
             QEdit = new Forms.MXxQueryEdit
             {
-                TargetSystem = lstoComm.SystemSTO,
+                TargetSystem = lstoComm.SystemMX7,
                 QueryName = cb_STO_QueryNames.Text,
                 QueryDiscription = lbl_STO_procDiscription.Text,
-                Query = lOracleQuery.oracle_get_QueryTemplate_from_GADATA(cb_STO_QueryNames.Text, lstoComm.SystemSTO)
+                Query = lOracleQuery.oracle_get_QueryTemplate_from_GADATA(cb_STO_QueryNames.Text, lstoComm.SystemMX7)
             };
             QEdit.Show();
 
@@ -356,7 +356,7 @@ where GEOLOCATION = '339090'
             if (QEdit != null) QEdit.Dispose();
             QEdit = new Forms.MXxQueryEdit
             {
-                TargetSystem = lstoComm.SystemSTO
+                TargetSystem = lstoComm.SystemMX7
             };
             QEdit.Show();
         }

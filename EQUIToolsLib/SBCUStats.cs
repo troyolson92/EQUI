@@ -17,7 +17,7 @@ namespace EQUIToolsLib
         //debugger
         myDebugger Debugger = new myDebugger();
         //communication module
-        GadataComm lGdataComm = new GadataComm();
+        ConnectionManager connectionManager = new ConnectionManager();
         //ds
         DataSet DataSet = new DataSet();
         //tabels
@@ -66,7 +66,7 @@ namespace EQUIToolsLib
         {
             //
             string cmd = string.Format("select top 1 *  from GADATA.volvo.RobotWeldGunRelation where Robot = '{0}' and ElectrodeNbr = {1}", Controller.Trim(), Toolid);
-            DataTable dt = lGdataComm.RunQueryGadata(cmd);
+            DataTable dt = connectionManager.RunQuery(cmd);
             if (dt.Rows.Count == 0)
             {
                 Debugger.Message(String.Format("No RobotWeldGunRelation for Robot:{0} ElectrodeNbr:{1}",Controller.Trim(),Toolid));
@@ -103,6 +103,7 @@ namespace EQUIToolsLib
             cb_Tools.Enabled = true;
             initchart();
             toolStripComboBoxSortMode.SelectedIndexChanged  += new System.EventHandler(cb_sortmode_SelectedValueChanged);
+            this.Show();
         }
 
         private void initchart()
@@ -322,13 +323,13 @@ namespace EQUIToolsLib
 
         private void BwDressData_DoWork(object sender, DoWorkEventArgs e)
         {
-            GadataComm lGdataComm = new GadataComm();
+            ConnectionManager connectionManager = new ConnectionManager();
             string qryDressData = @"exec [EqUi].[GetTipDressData] @StartDate = '{0}',@EndDate = '{1}',@Weldgunname = '{2}'";
 
             DateTime StartDate = System.DateTime.Now.AddDays(Daysback);
             DateTime EndDate = System.DateTime.Now;
 
-            dt_DressData = lGdataComm.RunQueryGadata(string.Format(qryDressData, StartDate.ToString("yyyy-MM-dd HH:mm:ss"), EndDate.ToString("yyyy-MM-dd HH:mm:ss"), activeLocation.Trim()));
+            dt_DressData = connectionManager.RunQuery(string.Format(qryDressData, StartDate.ToString("yyyy-MM-dd HH:mm:ss"), EndDate.ToString("yyyy-MM-dd HH:mm:ss"), activeLocation.Trim()));
             dt_DressData = add_dummyTimestampRow(dt_DressData, StartDate);
             dt_DressData = add_dummyTimestampRow(dt_DressData, EndDate);
             dt_DressData.TableName = "dt_DressData";
@@ -336,13 +337,13 @@ namespace EQUIToolsLib
 
         private void BwMidair_DoWork(object sender, DoWorkEventArgs e)
         {
-            GadataComm lGdataComm = new GadataComm();
+            ConnectionManager connectionManager = new ConnectionManager();
             string qryMidair = @"exec [EqUi].[GetMidairData] @StartDate = '{0}',@EndDate = '{1}',@Weldgunname = '{2}'";
 
             DateTime StartDate = System.DateTime.Now.AddDays(Daysback);
             DateTime EndDate = System.DateTime.Now;
 
-            dt_MidAir = lGdataComm.RunQueryGadata(string.Format(qryMidair, StartDate.ToString("yyyy-MM-dd HH:mm:ss"), EndDate.ToString("yyyy-MM-dd HH:mm:ss"), activeLocation.Trim()));
+            dt_MidAir = connectionManager.RunQuery(string.Format(qryMidair, StartDate.ToString("yyyy-MM-dd HH:mm:ss"), EndDate.ToString("yyyy-MM-dd HH:mm:ss"), activeLocation.Trim()));
             dt_MidAir = add_dummyTimestampRow(dt_MidAir, StartDate);
             dt_MidAir = add_dummyTimestampRow(dt_MidAir, EndDate);
             dt_MidAir.TableName = "dt_MidAir";
@@ -350,13 +351,13 @@ namespace EQUIToolsLib
 
         private void BwCylinder_DoWork(object sender, DoWorkEventArgs e)
         {
-            GadataComm lGdataComm = new GadataComm();
+            ConnectionManager connectionManager = new ConnectionManager();
             string qryCylinder = @"exec [EqUi].[GetCilinderData] @StartDate = '{0}',@EndDate = '{1}',@Weldgunname = '{2}'";
 
             DateTime StartDate = System.DateTime.Now.AddDays(Daysback);
             DateTime EndDate = System.DateTime.Now;
 
-            dt_Cylinder = lGdataComm.RunQueryGadata(string.Format(qryCylinder, StartDate.ToString("yyyy-MM-dd HH:mm:ss"), EndDate.ToString("yyyy-MM-dd HH:mm:ss"), activeLocation.Trim()));
+            dt_Cylinder = connectionManager.RunQuery(string.Format(qryCylinder, StartDate.ToString("yyyy-MM-dd HH:mm:ss"), EndDate.ToString("yyyy-MM-dd HH:mm:ss"), activeLocation.Trim()));
             dt_Cylinder = add_dummyTimestampRow(dt_Cylinder, StartDate);
             dt_Cylinder = add_dummyTimestampRow(dt_Cylinder, EndDate);
             dt_Cylinder.TableName = "dt_Cylinder";
@@ -364,13 +365,13 @@ namespace EQUIToolsLib
 
         private void BwSbcu_DoWork(object sender, DoWorkEventArgs e)
         {
-            GadataComm lGdataComm = new GadataComm();
+            ConnectionManager connectionManager = new ConnectionManager();
             string qrySBCUShortLong = @"exec [EqUi].[GetSbcuData] @StartDate = '{0}',@EndDate = '{1}',@toolname = '{2}'";
 
             DateTime StartDate = System.DateTime.Now.AddDays(Daysback);
             DateTime EndDate = System.DateTime.Now;
 
-            dt_SBCU = lGdataComm.RunQueryGadata(string.Format(qrySBCUShortLong, StartDate.ToString("yyyy-MM-dd HH:mm:ss"), EndDate.ToString("yyyy-MM-dd HH:mm:ss"), activeLocation.Trim()));
+            dt_SBCU = connectionManager.RunQuery(string.Format(qrySBCUShortLong, StartDate.ToString("yyyy-MM-dd HH:mm:ss"), EndDate.ToString("yyyy-MM-dd HH:mm:ss"), activeLocation.Trim()));
             dt_SBCU = add_dummyTimestampRow(dt_SBCU, StartDate);
             dt_SBCU = add_dummyTimestampRow(dt_SBCU, EndDate);
             dt_SBCU.TableName = "dt_SBCU";
@@ -745,7 +746,7 @@ SELECT DISTINCT
   WHERE [Tool Name] not like '%Gun%'
 ) as x 
 ORDER BY x.Toolname ASC";
-                    cb_Tools.DataSource = lGdataComm.RunQueryGadata(QryGetTools);
+                    cb_Tools.DataSource = connectionManager.RunQuery(QryGetTools);
                     cb_Tools.ValueMember = "Toolname";
                     cb_Tools.DisplayMember = "Toolname";
                     cb_Tools.Text = orgSelection;
