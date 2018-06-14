@@ -38,7 +38,7 @@ namespace EqUiWebUi
                     //MUST BE LOWERCASE ONLY !!!!!!
                     Queues = new[] { "critical", "default", "alertengine", "gadata", "jobengine","sto" },
                     //How many jobs run at the same time
-                    WorkerCount = Environment.ProcessorCount * 5
+                    WorkerCount = Environment.ProcessorCount * 6
                 };
                 app.UseHangfireServer(HFoptions);
                 log.Info("Hangfire startup in production mode (" + Environment.MachineName + ")");

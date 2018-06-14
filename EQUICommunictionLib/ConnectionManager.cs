@@ -140,6 +140,7 @@ namespace EQUICommunictionLib
             //temp debug
             if (dbID == 1)
             {
+                log.Error("BUG BUG BUG");
                 db = DefaultDatabase();
             }
 
