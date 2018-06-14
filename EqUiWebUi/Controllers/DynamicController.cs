@@ -26,9 +26,9 @@ namespace EqUiWebUi.Controllers
             DataTable dt = new DataTable();
 
             //get data
-            GadataComm gadataComm = new GadataComm();
+            ConnectionManager connectionManager = new ConnectionManager();
             string qry = @"select top 100 id, controller_name from gadata.c3g.c_controller";
-            dt = gadataComm.RunQueryGadata(qry);
+            dt = connectionManager.RunQuery(qry, enblExeptions: true);
 
             //
             WebGridHelpers.WebGridHelper webGridHelper = new WebGridHelper();
@@ -56,10 +56,9 @@ namespace EqUiWebUi.Controllers
             DataTable dt = new DataTable();
 
             //get data
-            GadataComm gadataComm = new GadataComm();
+            ConnectionManager connectionManager = new ConnectionManager();
             string qry = @"select top 100 id, controller_name from gadata.c3g.c_controller";
-            dt = gadataComm.RunQueryGadata(qry);
-
+            dt = connectionManager.RunQuery(qry, enblExeptions: true);
             //
             WebGridHelpers.WebGridHelper webGridHelper = new WebGridHelper();
             ViewBag.Columns = webGridHelper.getDatatabelCollumns(dt);
@@ -86,38 +85,9 @@ namespace EqUiWebUi.Controllers
             DataTable dt = new DataTable();
 
             //run against database.
-            StoComm stoComm = new StoComm();
-            MaximoComm maximoComm = new MaximoComm();
-            GadataComm gadataComm = new GadataComm();
-            STW040Comm sTW040Comm = new STW040Comm();
+            ConnectionManager connectionManager = new ConnectionManager();
             //run command against selected database.
-
-            switch (db)
-            {
-                case (int)SmsDatabases.GADATA:
-                    dt = gadataComm.RunQueryGadata(qry, enblExeptions: true);
-                    break;
-
-                case (int)SmsDatabases.STO:
-                    dt = stoComm.Oracle_runQuery(qry, enblExeptions: true);
-                    break;
-
-                case (int)SmsDatabases.MAXIMOrt:
-                    dt = maximoComm.Oracle_runQuery(qry, RealtimeConn: true, enblExeptions: true);
-                    break;
-
-                case (int)SmsDatabases.MAXIMOrep:
-                    dt = maximoComm.Oracle_runQuery(qry, RealtimeConn: false, enblExeptions: true);
-                    break;
-
-                case (int)SmsDatabases.DBI:
-                    dt = sTW040Comm.Oracle_runQuery(qry, enblExeptions: true);
-                    break;
-
-                default:
-                    throw new System.ArgumentException("Database not defined", "Alertengine");
-            }
-
+            dt = connectionManager.RunQuery(qry, dbID: db, enblExeptions: true);
             //
             WebGridHelpers.WebGridHelper webGridHelper = new WebGridHelper();
             ViewBag.Columns = webGridHelper.getDatatabelCollumns(dt);
@@ -162,39 +132,10 @@ namespace EqUiWebUi.Controllers
         public ActionResult _CheckStatement(string qry, List<string> mandatoryColumns, int db = 0)
         {
             DataTable dt = new DataTable();
-
             //run against database.
-            StoComm stoComm = new StoComm();
-            MaximoComm maximoComm = new MaximoComm();
-            GadataComm gadataComm = new GadataComm();
-            STW040Comm sTW040Comm = new STW040Comm();
+            ConnectionManager connectionManager = new ConnectionManager();
             //run command against selected database.
-
-            switch (db)
-            {
-                case (int)SmsDatabases.GADATA:
-                    dt = gadataComm.RunQueryGadata(qry, enblExeptions: true);
-                    break;
-
-                case (int)SmsDatabases.STO:
-                    dt = stoComm.Oracle_runQuery(qry, enblExeptions: true);
-                    break;
-
-                case (int)SmsDatabases.MAXIMOrt:
-                    dt = maximoComm.Oracle_runQuery(qry, RealtimeConn: true, enblExeptions: true);
-                    break;
-
-                case (int)SmsDatabases.MAXIMOrep:
-                    dt = maximoComm.Oracle_runQuery(qry, RealtimeConn: false, enblExeptions: true);
-                    break;
-
-                case (int)SmsDatabases.DBI:
-                    dt = sTW040Comm.Oracle_runQuery(qry, enblExeptions: true);
-                    break;
-
-                default:
-                    throw new System.ArgumentException("Database not defined", "Alertengine");
-            }
+            dt = connectionManager.RunQuery(qry, dbID: db, enblExeptions: true);
 
             StringBuilder sb = new StringBuilder();
             foreach (string mandatoryColumn in mandatoryColumns)
