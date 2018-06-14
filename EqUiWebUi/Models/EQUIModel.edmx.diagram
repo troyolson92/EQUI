@@ -6,8 +6,10 @@
     <edmx:Diagrams>
       <Diagram DiagramId="d5dc149468964a6aa4c17e0f7b3d2d84" Name="Diagram1">
         <EntityTypeShape EntityType="GADATAModelEQUI.c_datasource" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="GADATAModelEQUI.c_LogClassRules" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
-        <AssociationConnector Association="GADATAModelEQUI.FK_c_LogClassRules_c_datasource" />
+        <EntityTypeShape EntityType="GADATAModelEQUI.c_LogClassRules" Width="1.5" PointX="6.375" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="GADATAModelEQUI.c_logClassSystem" Width="1.5" PointX="3.625" PointY="1.625" />
+        <AssociationConnector Association="GADATAModelEQUI.FK_c_logClassSystem_c_datasource" />
+        <AssociationConnector Association="GADATAModelEQUI.FK_c_LogClassRules_c_logClassSystem" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

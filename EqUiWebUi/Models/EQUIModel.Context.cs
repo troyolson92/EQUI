@@ -27,5 +27,6 @@ namespace EqUiWebUi.Models
     
         public virtual DbSet<c_datasource> c_datasource { get; set; }
         public virtual DbSet<c_LogClassRules> c_LogClassRules { get; set; }
+        public virtual DbSet<c_logClassSystem> c_logClassSystem { get; set; }
     }
 }

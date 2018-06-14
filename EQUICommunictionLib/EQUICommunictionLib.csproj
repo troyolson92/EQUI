@@ -46,6 +46,7 @@
       <HintPath>..\packages\Oracle.ManagedDataAccess.12.2.1100\lib\net40\Oracle.ManagedDataAccess.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web" />
@@ -57,14 +58,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConnectionManager.cs" />
     <Compile Include="Debugger.cs" />
     <Compile Include="DSNmngr.cs" />
     <Compile Include="GadataComm.cs" />
+    <Compile Include="OracleComm.cs" />
+    <Compile Include="SqlComm.cs" />
     <Compile Include="STW040Comm.cs" />
     <Compile Include="MaximoComm.cs" />
     <Compile Include="NetworkCredentials.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Sharepoint.cs" />
     <Compile Include="StoComm.cs" />
   </ItemGroup>
   <ItemGroup>
