@@ -136,6 +136,14 @@ namespace EQUICommunictionLib
                 db = DefaultDatabase();
             }
 
+
+            //temp debug
+            if (dbID == 1)
+            {
+                db = DefaultDatabase();
+            }
+
+
             switch (db.Type)
             {
                 case db_type.msSqlServer:

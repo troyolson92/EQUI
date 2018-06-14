@@ -10,7 +10,7 @@ namespace EQUICommunictionLib
     {
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         //connection to GADATA
-        SqlConnection Gadataconn = new SqlConnection("user id=EqUi; password=EqUi; server=SQLA001.gen.volvocars.net Trusted_Connection=no; database=gadata; connection timeout=15");
+        SqlConnection Gadataconn = new SqlConnection("user id=EqUiAdmin; password=EqUiAdmin; server=SQLA001.gen.volvocars.net Trusted_Connection=no; database=gadata; connection timeout=15");
 
         //conntion to GADATA admin
         SqlConnection GadataconnAdmin = new SqlConnection("user id=EqUiAdmin; password=EqUiAdmin; server=SQLA001.gen.volvocars.net;" +
