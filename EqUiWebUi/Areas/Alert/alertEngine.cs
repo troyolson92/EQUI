@@ -137,7 +137,7 @@ namespace EqUiWebUi.Areas.Alert
                         newAlert.locationTree = ActiveAlert.Field<string>("LocationTree");
                         newAlert.location = ActiveAlert.Field<string>("Location");
                     }
-                    else if (trigger.c_datasource.Name == "STO") //for STO qet the location tree from GADATA (manipulate object from ZM to ZS (Zone mode does not exist in asset list)
+                    else if (trigger.c_datasource.Name == "DST") //for STO qet the location tree from GADATA (manipulate object from ZM to ZS (Zone mode does not exist in asset list)
                     {
                         //ask gadata for location tree and location
                         string qry =
@@ -174,6 +174,11 @@ namespace EqUiWebUi.Areas.Alert
                             newAlert.locationTree = ActiveAlert.Field<string>("alarmobject");
                             newAlert.location = ActiveAlert.Field<string>("alarmobject");
                         }
+                    }
+                    else
+                    {
+                        //if we hit this tis means there is no match for getting the location data... QUIT
+                        throw new NotSupportedException();
                     }
                     //
                     newAlert.alarmobject = ActiveAlert.Field<string>("alarmobject");
