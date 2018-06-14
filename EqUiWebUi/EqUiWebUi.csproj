@@ -607,6 +607,7 @@
     <Compile Include="Controllers\Chart2Controller.cs" />
     <Compile Include="Controllers\ChartController.cs" />
     <Compile Include="Controllers\DynamicController.cs" />
+    <Compile Include="Controllers\EQUISetupController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\TableauController.cs" />
     <Compile Include="Models\c_datasource.cs">
@@ -1434,6 +1435,7 @@
     <Content Include="Views\Shared\MvcGrid\_Grid.cshtml" />
     <Content Include="Views\Shared\MvcGrid\_AjaxGrid.cshtml" />
     <Content Include="Views\Error\AccessDenied.cshtml" />
+    <Content Include="Views\EQUISetup\_settings.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EQUICommunictionLib\EQUICommunictionLib.csproj">

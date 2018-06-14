@@ -15,7 +15,7 @@ namespace EQUICommunictionLib
             Conn.ConnectionString = ConnectionString;
         }
 
-        public void BulkCopy(string as_schema, DataTable adt_table, string as_destination, bool enblExeptions = false, int maxEXECtime = 300)
+        public void BulkCopy(DataTable adt_table, string destination, bool enblExeptions = false, int maxEXECtime = 300)
         {
             try
             {
@@ -36,7 +36,7 @@ namespace EQUICommunictionLib
                 using (SqlBulkCopy bulkCopy = new SqlBulkCopy(Conn))
                 {
                     bulkCopy.BulkCopyTimeout = maxEXECtime;
-                    bulkCopy.DestinationTableName = "[" + as_schema + "].[" + as_destination + "]";
+                    bulkCopy.DestinationTableName = destination;
                     // Write from the source to the destination.
                     bulkCopy.WriteToServer(adt_table);
                     try

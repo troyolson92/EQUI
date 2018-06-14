@@ -7,7 +7,7 @@ using System.Diagnostics;
 using Oracle.ManagedDataAccess.Client;
 namespace EQUICommunictionLib
 {
-    public class StoComm
+    public class StoCommXXX
     {
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 

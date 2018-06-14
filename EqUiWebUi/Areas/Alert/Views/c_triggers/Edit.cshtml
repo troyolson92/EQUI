@@ -60,6 +60,8 @@ else
                     </div>
                 </div>
 
+                @*this wil repleace run against*@
+                @Html.HiddenFor(model => model.c_datasource_id)
                 <div class="form-group">
                     @Html.LabelFor(model => model.RunAgainstDatabase, "RunAgainstDatabase", htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">

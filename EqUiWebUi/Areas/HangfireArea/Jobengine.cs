@@ -26,8 +26,8 @@ namespace EqUiWebUi.Areas.HangfireArea
         public void Runjob(string command, int maxExectime = 300)
         {
             log.Debug("runjob: " + command);
-            GadataComm gadataComm = new GadataComm();
-            gadataComm.RunCommandGadata(command,enblExeptions:true,runAsAdmin:true,maxEXECtime: maxExectime);
+            ConnectionManager connectionManager = new ConnectionManager();
+            connectionManager.RunCommand(command, enblExeptions: true, maxEXECtime: maxExectime);
         }
     }
 }

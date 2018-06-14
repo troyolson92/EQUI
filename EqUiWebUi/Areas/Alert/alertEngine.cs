@@ -85,38 +85,9 @@ namespace EqUiWebUi.Areas.Alert
             
             //check database for active alerts
             DataTable ActiveAlerts = new DataTable();
-            StoComm stoComm = new StoComm();
-            MaximoComm maximoComm = new MaximoComm();
-            GadataComm gadataComm = new GadataComm();
-            STW040Comm sTW040Comm = new STW040Comm();
+            ConnectionManager connectionManager = new ConnectionManager();
             //run command against selected database.
-
-            switch (trigger.RunAgainst)
-            {
-                case (int)SmsDatabases.GADATA:
-                    ActiveAlerts = gadataComm.RunQueryGadata(trigger.sqlStatement,enblExeptions:true);
-                    break;
-
-                case (int)SmsDatabases.STO:
-                    ActiveAlerts = stoComm.Oracle_runQuery(trigger.sqlStatement, enblExeptions: true);
-                    break;
-
-                case (int)SmsDatabases.MAXIMOrt:
-                    ActiveAlerts = maximoComm.Oracle_runQuery(trigger.sqlStatement, RealtimeConn: true, enblExeptions: true);
-                    break;
-
-                case (int)SmsDatabases.MAXIMOrep:
-                    ActiveAlerts = maximoComm.Oracle_runQuery(trigger.sqlStatement, RealtimeConn: false, enblExeptions: true);
-                    break;
-
-                case (int)SmsDatabases.DBI:
-                    ActiveAlerts = sTW040Comm.Oracle_runQuery(trigger.sqlStatement, enblExeptions: true);
-                    break;
-
-                default:
-                    log.Error("Database not defined");
-                    throw new System.ArgumentException("Database not defined", "Alertengine");
-            }
+            ActiveAlerts = connectionManager.RunQuery(trigger.sqlStatement,dbID:trigger.c_datasource_id, enblExeptions: true);
 
             //check for errors in query (no result)
             if (ActiveAlerts == null)

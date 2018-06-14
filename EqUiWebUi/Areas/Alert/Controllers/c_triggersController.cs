@@ -119,9 +119,10 @@ namespace EqUiWebUi.Areas.Alert.Controllers
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
             //before we delete the trigger we need to delete the alerts.
-            GadataComm gadataComm = new GadataComm();
+            ConnectionManager connectionManager = new ConnectionManager();
+            //run command against selected database.
             string deleteQry = "delete GADATA.Alerts.h_alert from GADATA.Alerts.h_alert where c_tirgger_id = {0}";
-            gadataComm.RunCommandGadata(string.Format(deleteQry, id.ToString()),runAsAdmin:true,enblExeptions:true);
+            connectionManager.RunCommand(string.Format(deleteQry, id.ToString()), enblExeptions: true);
 
             //delete the trigger 
             c_triggers c_triggers = await db.c_triggers.FindAsync(id);

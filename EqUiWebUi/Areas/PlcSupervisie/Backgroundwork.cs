@@ -40,12 +40,12 @@ namespace EqUiWebUi.Areas.PlcSupervisie
         [Queue("sto")]
         public void HandleStoTable(string TargetTable) 
         {
-            GadataComm lGadataComm = new GadataComm();
+            ConnectionManager connectionManager = new ConnectionManager();
             //get last record in GADATA 
             string gadataGetMaxTimestampQry = string.Format(@"select max(_timestamp) as 'ts' FROM GADATA.STO.h_breakdown
                                                             left join GADATA.STO.c_StoTable on c_StoTable.id = h_breakdown.c_stotable_id
                                                             where c_StoTable.StoTable = '{0}'", TargetTable);
-            DataTable dtGadataMaxTS = lGadataComm.RunQueryGadata(gadataGetMaxTimestampQry);
+            DataTable dtGadataMaxTS = connectionManager.RunQuery(gadataGetMaxTimestampQry);
             //handel empty table copy last 30 days
             DateTime GadataMAxTs = System.DateTime.Now.AddDays(-30);
             if (dtGadataMaxTS.Rows.Count != 0)
@@ -57,7 +57,6 @@ namespace EqUiWebUi.Areas.PlcSupervisie
                 log.Error(String.Format("TargetTable: {0} had no data so full refresh", TargetTable));
             }
             //get new records from STO
-            StoComm lStoComm = new StoComm();
             string stoQry = string.Format(@"
                                         SELECT 
                                            {1}.*
@@ -67,10 +66,10 @@ namespace EqUiWebUi.Areas.PlcSupervisie
 "
                 , GadataMAxTs.ToString("yyyy-MM-dd HH:mm:ss"),TargetTable); //USE BIG HH for 24 hour format !!!!
 
-            DataTable newStoDt = lStoComm.Oracle_runQuery(stoQry, enblExeptions: true);
+            DataTable newStoDt = connectionManager.RunQuery(stoQry,dbName:"DST", enblExeptions: true);
             log.Debug(String.Format("TargetTable: {0}  Records: {1}", TargetTable, newStoDt.Rows.Count));
             //push to gadata
-            lGadataComm.BulkCopyToGadata("STO", newStoDt, "rt_error");
+            connectionManager.BulkCopy(newStoDt, "[STO].[rt_error]");
         }
 
         [AutomaticRetry(Attempts = 2)]
@@ -78,8 +77,8 @@ namespace EqUiWebUi.Areas.PlcSupervisie
         public void NormalizeSTOdata()
         {
            log.Debug("Normalisation started");
-           GadataComm gadataComm = new GadataComm();
-           gadataComm.RunCommandGadata("EXEC GADATA.STO.[sp_update_L]", runAsAdmin: true, enblExeptions: true);
+            ConnectionManager connectionManager = new ConnectionManager();
+           connectionManager.RunCommand("EXEC GADATA.STO.[sp_update_L]", enblExeptions: true);
     
             //trigger classification
             //   lGadataComm.RunCommandGadata("EXEC GADATA.STO.[sp_update_Lerror_classifcation]", true);
