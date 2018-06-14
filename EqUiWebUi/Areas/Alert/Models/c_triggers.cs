@@ -51,5 +51,6 @@ namespace EqUiWebUi.Areas.Alert.Models
         public virtual ICollection<l_controlLimits> l_controlLimits { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<l_variants> l_variants { get; set; }
+        public virtual c_datasource c_datasource { get; set; }
     }
 }

@@ -212,6 +212,17 @@
           <Property Name="_timestamp" Type="timestamp" StoreGeneratedPattern="Computed" />
           <Property Name="Comment" Type="varchar(max)" />
         </EntityType>
+        <EntityType Name="c_datasource">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="varchar(max)" />
+          <Property Name="Type" Type="int" Nullable="false" />
+          <Property Name="ConnectionString" Type="varchar(max)" />
+          <Property Name="isAlertSource" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="L_users">
           <Key>
             <PropertyRef Name="id" />
@@ -249,6 +260,18 @@
             </Principal>
             <Dependent Role="c_SMSconfig">
               <PropertyRef Name="c_smsSystem_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_c_triggers_c_datasource">
+          <End Role="c_datasource" Type="Self.c_datasource" Multiplicity="1" />
+          <End Role="c_triggers" Type="Self.c_triggers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_datasource">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="c_triggers">
+              <PropertyRef Name="c_datasource_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -444,6 +467,7 @@
           <EntitySet Name="c_controller" EntityType="Self.c_controller" Schema="C3G" store:Type="Tables" />
           <EntitySet Name="GunCylinderefernce" EntityType="Self.GunCylinderefernce" Schema="C3G" store:Type="Tables" />
           <EntitySet Name="SBCUrefernce" EntityType="Self.SBCUrefernce" Schema="C3G" store:Type="Tables" />
+          <EntitySet Name="c_datasource" EntityType="Self.c_datasource" Schema="EqUi" store:Type="Tables" />
           <EntitySet Name="L_users" EntityType="Self.L_users" Schema="Volvo" store:Type="Tables" />
           <AssociationSet Name="FK_c_SMSconfig_c_CPT600" Association="Self.FK_c_SMSconfig_c_CPT600">
             <End Role="c_CPT600" EntitySet="c_CPT600" />
@@ -452,6 +476,10 @@
           <AssociationSet Name="FK_c_SMSconfig_c_smsSystem" Association="Self.FK_c_SMSconfig_c_smsSystem">
             <End Role="c_smsSystem" EntitySet="c_smsSystem" />
             <End Role="c_SMSconfig" EntitySet="c_SMSconfig" />
+          </AssociationSet>
+          <AssociationSet Name="FK_c_triggers_c_datasource" Association="Self.FK_c_triggers_c_datasource">
+            <End Role="c_datasource" EntitySet="c_datasource" />
+            <End Role="c_triggers" EntitySet="c_triggers" />
           </AssociationSet>
           <AssociationSet Name="FK_c_triggers_c_smsSystem" Association="Self.FK_c_triggers_c_smsSystem">
             <End Role="c_smsSystem" EntitySet="c_smsSystem" />
@@ -715,6 +743,11 @@
             <End Role="L_users" EntitySet="L_users" />
             <End Role="l_variants" EntitySet="l_variants" />
           </AssociationSet>
+          <EntitySet Name="c_datasource" EntityType="AlertModel.c_datasource" />
+          <AssociationSet Name="FK_c_triggers_c_datasource" Association="AlertModel.FK_c_triggers_c_datasource">
+            <End Role="c_datasource" EntitySet="c_datasource" />
+            <End Role="c_triggers" EntitySet="c_triggers" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="c_triggers">
           <Key>
@@ -745,6 +778,7 @@
           <Property Name="Animation" Type="Int32" />
           <Property Name="isDebugmode" Type="Boolean" Nullable="false" />
           <Property Name="c_datasource_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="c_datasource" Relationship="AlertModel.FK_c_triggers_c_datasource" FromRole="c_triggers" ToRole="c_datasource" />
         </EntityType>
         <Association Name="FK_c_triggers_c_smsSystem">
           <End Type="AlertModel.c_smsSystem" Role="c_smsSystem" Multiplicity="0..1" />
@@ -1059,6 +1093,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="c_datasource">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Type" Type="Int32" Nullable="false" />
+          <Property Name="ConnectionString" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="isAlertSource" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="c_triggers" Relationship="AlertModel.FK_c_triggers_c_datasource" FromRole="c_datasource" ToRole="c_triggers" />
+        </EntityType>
+        <Association Name="FK_c_triggers_c_datasource">
+          <End Type="AlertModel.c_datasource" Role="c_datasource" Multiplicity="1" />
+          <End Type="AlertModel.c_triggers" Role="c_triggers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_datasource">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="c_triggers">
+              <PropertyRef Name="c_datasource_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1297,6 +1355,18 @@
                 <ScalarProperty Name="c_trigger_id" ColumnName="c_trigger_id" />
                 <ScalarProperty Name="variantGroup" ColumnName="variantGroup" />
                 <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="c_datasource">
+            <EntityTypeMapping TypeName="AlertModel.c_datasource">
+              <MappingFragment StoreEntitySet="c_datasource">
+                <ScalarProperty Name="isAlertSource" ColumnName="isAlertSource" />
+                <ScalarProperty Name="ConnectionString" ColumnName="ConnectionString" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

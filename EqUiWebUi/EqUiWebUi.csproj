@@ -228,6 +228,9 @@
     <Compile Include="Areas\Alert\Models\c_CPT600.cs">
       <DependentUpon>AlertModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Areas\Alert\Models\c_datasource.cs">
+      <DependentUpon>AlertModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Areas\Alert\Models\c_SMSconfig.cs">
       <DependentUpon>AlertModel.tt</DependentUpon>
     </Compile>

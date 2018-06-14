@@ -130,19 +130,19 @@ namespace EqUiWebUi.Areas.Alert
                     {
                         c_tirgger_id = c_triggerID
                     };
-                    if (trigger.RunAgainstDatabase == SmsDatabases.GADATA) //for gata the locationtree an location MUSt be in the query result
+                    if (trigger.c_datasource.Name == "GADATA") //for gata the locationtree an location MUSt be in the query result
                     {
                         //we already have the location tree and location
                         newAlert.locationTree = ActiveAlert.Field<string>("LocationTree");
                         newAlert.location = ActiveAlert.Field<string>("Location");
                     }
-                    else if (trigger.RunAgainstDatabase == SmsDatabases.DBI) //for DBI the locationtree and location MUST be in the query result 
+                    else if (trigger.c_datasource.Name == "DBI") //for DBI the locationtree and location MUST be in the query result 
                     {
                         //we already have the location tree and location
                         newAlert.locationTree = ActiveAlert.Field<string>("LocationTree");
                         newAlert.location = ActiveAlert.Field<string>("Location");
                     }
-                    else if (trigger.RunAgainstDatabase == SmsDatabases.STO) //for STO qet the location tree from GADATA (manipulate object from ZM to ZS (Zone mode does not exist in asset list)
+                    else if (trigger.c_datasource.Name == "STO") //for STO qet the location tree from GADATA (manipulate object from ZM to ZS (Zone mode does not exist in asset list)
                     {
                         //ask gadata for location tree and location
                         string qry =
@@ -161,7 +161,7 @@ namespace EqUiWebUi.Areas.Alert
                             newAlert.location = ActiveAlert.Field<string>("alarmobject");
                         }
                     }
-                    else if(trigger.RunAgainstDatabase == SmsDatabases.MAXIMOrep && trigger.RunAgainstDatabase == SmsDatabases.MAXIMOrt) //for macimo get the location tree from GADATA (direct match on location)
+                    else if(trigger.c_datasource.Name == "MAXIMO7rep" || trigger.c_datasource.Name == "MAXIMOrt") //for macimo get the location tree from GADATA (direct match on location)
                     {
                         //ask gadata for location tree and location
                         string qry =

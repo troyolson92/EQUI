@@ -57,6 +57,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
 
             ViewBag.smsSystem = new SelectList(db.c_smsSystem, "id", "discription", c_triggers.smsSystem);
             ViewBag.initial_state = new SelectList(db.c_state, "id", "discription", c_triggers.initial_state);
+            ViewBag.c_datasource_id = new SelectList(db.c_datasource, "Id", "Name", c_triggers.c_datasource_id);
             return View(c_triggers);
         }
 
@@ -95,6 +96,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             }
             ViewBag.smsSystem = new SelectList(db.c_smsSystem, "id", "discription", c_triggers.smsSystem);
             ViewBag.initial_state = new SelectList(db.c_state, "id", "discription", c_triggers.initial_state);
+            ViewBag.c_datasource_id = new SelectList(db.c_datasource, "Id", "Name", c_triggers.c_datasource_id);
             return View(c_triggers);
         }
 
