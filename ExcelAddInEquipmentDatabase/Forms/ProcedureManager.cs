@@ -19,14 +19,17 @@ namespace ExcelAddInEquipmentDatabase.Forms
     {
         //debugger
         myDebugger Debugger = new myDebugger();
-        //connection to gadata
-        GadataComm lGadataComm = new GadataComm();
-        //connection to maximo 
-        MaximoComm lMaximoComm = new MaximoComm();
+        //connection to database
+        ConnectionManager connectionManager = new ConnectionManager();
         //connection to GADATA maximo querys 
         OracleQuery lMaximoQuery = new OracleQuery();
         //active connection in active workbook
         ActiveConnection lActConn = new ActiveConnection();
+
+        public string DsnMX7 { get { return "MX7"; } }
+        public string DsnGADATA { get { return "GADATA"; } }
+
+
 
         #region parameters to the ribbon
         Forms.uc_Datebox _startDate = new Forms.uc_Datebox();
@@ -93,7 +96,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
             else 
             { Btn_saveSet.Visible = false; }
             //
-            if (activeconnection == lMaximoComm.SystemMX7) //CREATE NEW MX7connections
+            if (activeconnection == DsnMX7) //CREATE NEW MX7connections
             {
                 assets.Name = "_assets".ToUpper();
                 lochierarchy.Name = "_lochierarchy".ToUpper();
@@ -107,7 +110,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
             lActConn.Name = activeconnection;
             lActConn.ODBCconnString = lActConn.get_ODBCconnString_from_activeconnection();
             //
-            if (lActConn.ODBCconnString.Contains(lMaximoComm.DsnMX7)) //existing MAXIMO7 connection
+            if (lActConn.ODBCconnString.Contains(DsnMX7)) //existing MAXIMO7 connection
             {
                 assets.Name = "_assets".ToUpper();
                 lochierarchy.Name = "_lochierarchy".ToUpper();
@@ -116,12 +119,12 @@ namespace ExcelAddInEquipmentDatabase.Forms
                 endDate.Name = "_EndDate".ToUpper();
                 daysBack.Name = "_nDays".ToUpper();
                 //
-                lActConn.System = lMaximoComm.DsnMX7;
+                lActConn.System = DsnMX7;
                 lActConn.ProcedureName = lActConn.Name; //maximo system dont have a stored proc name so we take the name of the Query template
-                MX7_ActiveConnectionToProcMngr(lMaximoQuery.oracle_get_QueryParms_from_GADATA(activeconnection, lMaximoComm.SystemMX7)
-                    , lMaximoQuery.oracle_get_QueryTemplate_from_GADATA(activeconnection, lMaximoComm.SystemMX7));
+                MX7_ActiveConnectionToProcMngr(lMaximoQuery.oracle_get_QueryParms_from_GADATA(activeconnection, DsnMX7)
+                    , lMaximoQuery.oracle_get_QueryTemplate_from_GADATA(activeconnection, DsnMX7));
             }
-            else if (lActConn.ODBCconnString.Contains(lGadataComm.DsnGADATA)) //existing GADATAconnections
+            else if (lActConn.ODBCconnString.Contains(DsnGADATA)) //existing GADATAconnections
             {
                 assets.Name = "@assets";
                 lochierarchy.Name = "@lochierarchy";
@@ -130,9 +133,9 @@ namespace ExcelAddInEquipmentDatabase.Forms
                 endDate.Name = "@EndDate";
                 daysBack.Name = "@daysBack";
                 //
-                lActConn.System = lGadataComm.DsnGADATA;
+                lActConn.System = DsnGADATA;
                 lActConn.ProcedureName = lActConn.get_storedProcedureFromQuery(lActConn.Query);
-                GADATA_ActiveConnectionToProcMngr(lGadataComm.Get_GADATA_sp_parameters(lActConn.ProcedureName), lActConn.Query);
+                GADATA_ActiveConnectionToProcMngr(connectionManager.GetSpParms(lActConn.ProcedureName), lActConn.Query);
             }
             else
             {

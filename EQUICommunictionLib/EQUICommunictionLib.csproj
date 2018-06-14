@@ -61,10 +61,8 @@
     <Compile Include="ConnectionManager.cs" />
     <Compile Include="Debugger.cs" />
     <Compile Include="DSNmngr.cs" />
-    <Compile Include="GadataComm.cs" />
     <Compile Include="OracleComm.cs" />
     <Compile Include="SqlComm.cs" />
-    <Compile Include="MaximoComm.cs" />
     <Compile Include="NetworkCredentials.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

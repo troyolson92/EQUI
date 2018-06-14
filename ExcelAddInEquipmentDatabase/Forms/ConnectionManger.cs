@@ -18,16 +18,26 @@ namespace ExcelAddInEquipmentDatabase
     {
         //debugger
         myDebugger Debugger = new myDebugger();
-        //connection to gadata
-        GadataComm lGadataComm = new GadataComm();
-        //connection to maximo 
-        MaximoComm lMaximoComm = new MaximoComm();
-        //connection to STO
-        MaximoComm lstoComm = new MaximoComm(); //bs but sto was already gone 
+        //connection to database
+        ConnectionManager connectionManager = new ConnectionManager();
         // to GADATA for maximo querys
         OracleQuery lOracleQuery = new OracleQuery();
         //Query edit box instance
         Forms.MXxQueryEdit QEdit;
+
+
+
+        public string DsnMX7 { get { return "MX7"; } }
+        public string DsnGADATA { get { return "GADATA"; } }
+        public string GADATAconnectionString
+        {
+            get { return @"ODBC;DSN=" + DsnGADATA + ";Description= GADATA;UID=EqUi;PWD=EqUi;APP=SQLFront;WSID=GNL1004ZCBQC2\\EQUI;DATABASE=GADATA"; }
+        }
+        public string MX7connectionString
+        {
+            get { return @"ODBC;DSN=" + DsnMX7 + ";Description= MAXIMO7;UID=ARCTVCG;PWD=vcg$tokfeb2017;"; }
+        }
+
 
         public ConnectionManger()
         {
@@ -37,8 +47,6 @@ namespace ExcelAddInEquipmentDatabase
             lv_GADATA_procParms.Columns.Add("DefaultValue", -2, HorizontalAlignment.Left);
             lv_MX7_procParms.Columns.Add("ParmName", -2, HorizontalAlignment.Left);
             lv_MX7_procParms.Columns.Add("DefaultValue", -2, HorizontalAlignment.Left);
-            lv_STO_procParms.Columns.Add("ParmName", -2, HorizontalAlignment.Left);
-            lv_STO_procParms.Columns.Add("DefaultValue", -2, HorizontalAlignment.Left);
             //
             Lb_get_connections();
         }
@@ -179,9 +187,9 @@ namespace ExcelAddInEquipmentDatabase
         {
             if (cb_GADTA_procedures.Text != "")
             {
-                lGadataComm.Make_DSN();
+               // lGadataComm.Make_DSN();
                 string Query = "use gadata EXEC " + cb_GADTA_procedures.Text.Trim();
-                string ODBCconn = lGadataComm.GADATAconnectionString; 
+                string ODBCconn = GADATAconnectionString; 
                 string ConnectionName = cb_GADTA_procedures.Text.Split('.')[2].Trim();
                 Create_ODBC_connection(Query, ODBCconn, ConnectionName);
             }
@@ -201,7 +209,7 @@ namespace ExcelAddInEquipmentDatabase
         }
         private void Cb_GADATA_procedures_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Lb_GADATA_get_SpParams(lGadataComm.Get_GADATA_sp_parameters(cb_GADTA_procedures.Text));
+            Lb_GADATA_get_SpParams(connectionManager.GetSpParms(cb_GADTA_procedures.Text));
         }
         #endregion
 
@@ -216,7 +224,7 @@ namespace ExcelAddInEquipmentDatabase
                     adapter.Fill(lQUERYS);
                 }
                 var data = from a in lQUERYS
-                           where a.SYSTEM == lMaximoComm.SystemMX7
+                           where a.SYSTEM == DsnMX7
                            orderby a.NAME descending
                            select a.NAME;
                 cb_MX7_QueryNames.DataSource = data.Distinct().ToList();
@@ -226,13 +234,13 @@ namespace ExcelAddInEquipmentDatabase
         private void Btn_MX7_create_Click(object sender, EventArgs e)
         {
             string Query;
-            using (Forms.ProcedureManager  ProcMngr = new Forms.ProcedureManager(lMaximoComm.SystemMX7))
+            using (Forms.ProcedureManager  ProcMngr = new Forms.ProcedureManager(DsnMX7))
           {
-              ProcMngr.MX7_ActiveConnectionToProcMngr(lOracleQuery.oracle_get_QueryParms_from_GADATA(cb_MX7_QueryNames.Text, lMaximoComm.SystemMX7), "It does not exist");
-              Query = ProcMngr.MX7_BuildQuery_ProcMngrToActiveConnection(lOracleQuery.oracle_get_QueryTemplate_from_GADATA(cb_MX7_QueryNames.Text, lMaximoComm.SystemMX7));
+              ProcMngr.MX7_ActiveConnectionToProcMngr(lOracleQuery.oracle_get_QueryParms_from_GADATA(cb_MX7_QueryNames.Text, DsnMX7), "It does not exist");
+              Query = ProcMngr.MX7_BuildQuery_ProcMngrToActiveConnection(lOracleQuery.oracle_get_QueryTemplate_from_GADATA(cb_MX7_QueryNames.Text, DsnMX7));
           }
-            lMaximoComm.Make_DSN(lMaximoComm.SystemMX7);
-            string ODBCconn = lMaximoComm.MX7connectionString;
+           // lMaximoComm.Make_DSN(lMaximoComm.SystemMX7);
+            string ODBCconn = MX7connectionString;
             string ConnectionName = cb_MX7_QueryNames.Text;
             Create_ODBC_connection(Query, ODBCconn, ConnectionName);
             this.Hide();
@@ -248,11 +256,11 @@ namespace ExcelAddInEquipmentDatabase
                     adapter.Fill(lQUERYS);
                 }
                 lbl_MX7_procDiscription.Text = (from a in lQUERYS
-                                                where a.SYSTEM == lMaximoComm.SystemMX7 && a.NAME == cb_MX7_QueryNames.Text
+                                                where a.SYSTEM == DsnMX7 && a.NAME == cb_MX7_QueryNames.Text
                                                 select a.DISCRIPTION).First().ToString();
             }
             lv_MX7_procParms.Items.Clear();
-            foreach (OracleQueryParm Parm in lOracleQuery.oracle_get_QueryParms_from_GADATA(cb_MX7_QueryNames.Text, lMaximoComm.SystemMX7))
+            foreach (OracleQueryParm Parm in lOracleQuery.oracle_get_QueryParms_from_GADATA(cb_MX7_QueryNames.Text, DsnMX7))
             {
                 ListViewItem item = new ListViewItem(Parm.ParameterName);
                 item.SubItems.Add(Parm.Defaultvalue);
@@ -265,7 +273,7 @@ namespace ExcelAddInEquipmentDatabase
             if (QEdit != null) QEdit.Dispose();
             QEdit = new Forms.MXxQueryEdit
             {
-                TargetSystem = lMaximoComm.SystemMX7
+                TargetSystem = DsnMX7
             };
             QEdit.Show();
         }
@@ -275,91 +283,14 @@ namespace ExcelAddInEquipmentDatabase
             if (QEdit != null) QEdit.Dispose();
             QEdit = new Forms.MXxQueryEdit
             {
-                TargetSystem = lMaximoComm.SystemMX7,
+                TargetSystem = DsnMX7,
                 QueryName = cb_MX7_QueryNames.Text,
                 QueryDiscription = lbl_MX7_procDiscription.Text,
-                Query = lOracleQuery.oracle_get_QueryTemplate_from_GADATA(cb_MX7_QueryNames.Text, lMaximoComm.SystemMX7)
+                Query = lOracleQuery.oracle_get_QueryTemplate_from_GADATA(cb_MX7_QueryNames.Text, DsnMX7)
             };
             QEdit.Show();
         }
         #endregion
 
-        #region STO
-        //Maximo3 link
-        private void Tp_STO_Enter(object sender, EventArgs e)
-        {
-            applData.QUERYSDataTable lQUERYS = new applData.QUERYSDataTable();
-            using (applDataTableAdapters.QUERYSTableAdapter adapter = new applDataTableAdapters.QUERYSTableAdapter())
-            {
-                adapter.Fill(lQUERYS);
-            }
-            var data = from a in lQUERYS
-                       where a.SYSTEM == lstoComm.SystemMX7
-                       orderby a.NAME descending
-                       select a.NAME;
-            cb_STO_QueryNames.DataSource = data.Distinct().ToList();
-        }
-
-        private void Btn_STO_create_Click(object sender, EventArgs e)
-        {
-            // NOT WORKING YET 
-            string Query = @"
-select * from STO_SYS.ALARM_DATA_UB12
-where GEOLOCATION = '339090'
-                    ";
-            lstoComm.Make_DSN(lstoComm.SystemMX7);
-            string ODBCconn = lstoComm.MX7connectionString;
-            string ConnectionName = cb_STO_QueryNames.Text;
-            Create_ODBC_connection(Query, ODBCconn, ConnectionName);
-
-            this.Hide();
-            this.Dispose();
-        }
-
-        private void Cb_STO_QueryNames_SelectedIndexChanged(object sender, EventArgs e)
-        {
-         using (applData.QUERYSDataTable lQUERYS = new applData.QUERYSDataTable())
-            {
-                using (applDataTableAdapters.QUERYSTableAdapter adapter = new applDataTableAdapters.QUERYSTableAdapter())
-                {
-                    adapter.Fill(lQUERYS);
-                }
-                lbl_STO_procDiscription.Text = (from a in lQUERYS
-                           where a.SYSTEM == lstoComm.SystemMX7 && a.NAME == cb_STO_QueryNames.Text
-                           select a.DISCRIPTION).First().ToString();
-           }
-            lv_STO_procParms.Items.Clear();
-            foreach (OracleQueryParm Parm in lOracleQuery.oracle_get_QueryParms_from_GADATA(cb_STO_QueryNames.Text, lstoComm.SystemMX7))
-            {
-                ListViewItem item = new ListViewItem(Parm.ParameterName);
-                item.SubItems.Add(Parm.Defaultvalue);
-                lv_STO_procParms.Items.Add(item);
-            }
-        }
-
-        private void Btn_STO_edit_Click(object sender, EventArgs e)
-        {
-            if (QEdit != null) QEdit.Dispose();
-            QEdit = new Forms.MXxQueryEdit
-            {
-                TargetSystem = lstoComm.SystemMX7,
-                QueryName = cb_STO_QueryNames.Text,
-                QueryDiscription = lbl_STO_procDiscription.Text,
-                Query = lOracleQuery.oracle_get_QueryTemplate_from_GADATA(cb_STO_QueryNames.Text, lstoComm.SystemMX7)
-            };
-            QEdit.Show();
-
-        }
-
-        private void Btn_STO_new_Click(object sender, EventArgs e)
-        {
-            if (QEdit != null) QEdit.Dispose();
-            QEdit = new Forms.MXxQueryEdit
-            {
-                TargetSystem = lstoComm.SystemMX7
-            };
-            QEdit.Show();
-        }
-        #endregion
     }
 }

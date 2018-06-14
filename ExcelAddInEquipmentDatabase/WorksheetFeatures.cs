@@ -367,23 +367,8 @@ namespace ExcelAddInEquipmentDatabase
         //**********************************No Production*********************************************
         void SetNoProductionItemClick(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)
         {
-            DialogResult result = MessageBox.Show(@"
-Are you sure? 
-this shift will be out of all OEE calculations!", "Confirmation", MessageBoxButtons.YesNo);
-            if (result == DialogResult.No) { return; } //abort
-
-            try
-            {
-            
-                string qry = @"update gadata.volvo.l_timeline  set l_timeline.[shift] = 4 ,l_timeline.Noproduction = 1, l_timeline.Ploeg = 'WE' from gadata.volvo.l_timeline where l_timeline.id = {0}";
-                GadataComm lgadatacomm = new GadataComm();
-                lgadatacomm.RunCommandGadata(string.Format(qry, refid),true);
-            }
-            catch (Exception ex)
-            {
-                Debugger.Exeption(ex);
-                Debugger.Message(ex.Message);
-            }
+            //removed make it in the web 
+            throw new NotSupportedException();
         }
 
         //**********************************MAXIMO*********************************************

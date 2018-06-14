@@ -250,12 +250,6 @@
     <Compile Include="Forms\EquiBrowser.Designer.cs">
       <DependentUpon>EquiBrowser.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\ErrorManager.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\ErrorManager.Designer.cs">
-      <DependentUpon>ErrorManager.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\MXxQueryEdit.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -331,9 +325,6 @@
     <Compile Include="WorksheetFeatures.cs" />
     <EmbeddedResource Include="Forms\EquiBrowser.resx">
       <DependentUpon>EquiBrowser.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\ErrorManager.resx">
-      <DependentUpon>ErrorManager.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MXxQueryEdit.resx">
       <DependentUpon>MXxQueryEdit.cs</DependentUpon>
