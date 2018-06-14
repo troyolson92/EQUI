@@ -58,6 +58,8 @@ namespace EQUICommunictionLib
 
             SqlComm sqlComm = new SqlComm(EQUIConnectionString);
             DataTable dt = new DataTable();
+            List<Database> list = new List<Database>();
+
             if (dbName != "") // get by name
             {
                 string getCommand = "select * from GADATA.EqUi.c_datasource where [Name] = '{0}'";
@@ -101,20 +103,18 @@ namespace EQUICommunictionLib
                     log.Error("No valid result for: " + dbName);
                     throw new NotSupportedException();
                 }
+                //add the default database to the list if full list
+                list.Add(DefaultDatabase());
             }
-
-            List<Database> list = new List<Database>();
-            //add the default database to the list.
-            list.Add(DefaultDatabase());
 
             foreach (DataRow row in dt.Rows)
             {
                 Database DB = new Database();
-                DB.Id = dt.Rows[1].Field<int>("Id");
-                DB.Name = dt.Rows[1].Field<string>("Name");
-                DB.Type = (db_type)Enum.ToObject(typeof(db_type), dt.Rows[1].Field<int>("Type"));
-                DB.ConnectionString = dt.Rows[1].Field<string>("ConnectionString");
-                DB.Description = dt.Rows[1].Field<string>("Description");
+                DB.Id = dt.Rows[0].Field<int>("Id");
+                DB.Name = dt.Rows[0].Field<string>("Name");
+                DB.Type = (db_type)Enum.ToObject(typeof(db_type), dt.Rows[0].Field<int>("Type"));
+                DB.ConnectionString = dt.Rows[0].Field<string>("ConnectionString");
+                DB.Description = dt.Rows[0].Field<string>("Description");
                 list.Add(DB);
             }
             return list;
@@ -129,7 +129,7 @@ namespace EQUICommunictionLib
             Database db = new Database();
             if (dbName != "" || dbID != 0)
             {
-                    db = GetDB(dbName,dbID).First();
+                db = GetDB(dbName,dbID).First();
             }
             else
             {
@@ -187,7 +187,7 @@ namespace EQUICommunictionLib
 
         }
 
-        //run bulkCopy command
+        //run bulkCopy command (only for msSQL)
         //option to run get database by name or by ID
         //if dbName and ID is left blank run against main datbase
         public void BulkCopy(DataTable data,string destination, string dbName = "", int dbID = 0, bool enblExeptions = false, int maxEXECtime = 300)
@@ -212,6 +212,38 @@ namespace EQUICommunictionLib
 
                 case db_type.Orcacle:
                     throw new NotImplementedException();
+
+                default:
+                    log.Error("db type not supported");
+                    throw new NotSupportedException();
+            }
+
+        }
+
+        //run CLOB command (only for oracle)
+        //option to run get database by name or by ID
+        //if dbName and ID is left blank run against main datbase
+        public string GetCLOB(string qry, string dbName = "", int dbID = 0, bool enblExeptions = false)
+        {
+            Database db = new Database();
+            if (dbName != "" || dbID != 0)
+            {
+                db = GetDB(dbName, dbID).First();
+            }
+            else
+            {
+                db = DefaultDatabase();
+            }
+
+
+            switch (db.Type)
+            {
+                case db_type.msSqlServer:
+                    throw new NotImplementedException();
+
+                case db_type.Orcacle:
+                    OracleComm oracleComm = new OracleComm(db.ConnectionString);
+                    return oracleComm.GetCLOB(qry,enblExeptions:enblExeptions);
 
                 default:
                     log.Error("db type not supported");

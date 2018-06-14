@@ -47,7 +47,7 @@ namespace EQUICommunictionLib
             throw new NotImplementedException();
         }
 
-        public string GetClobMaximo7(string as_query, bool RealtimeConn = false)
+        public string GetCLOB(string as_query, bool enblExeptions = false)
         {
             try
             {
@@ -56,6 +56,11 @@ namespace EQUICommunictionLib
             catch (Exception ex)
             {
                 log.Error("Open Failed", ex);
+                if (enblExeptions)
+                {
+                    throw ex;
+                }
+
             }
             try
             {
@@ -74,6 +79,10 @@ namespace EQUICommunictionLib
                     catch (Exception ex)
                     {
                         log.Error("Close Failed", ex);
+                        if (enblExeptions)
+                        {
+                            throw ex;
+                        }
                     }
                     return result;
                 }
@@ -81,6 +90,13 @@ namespace EQUICommunictionLib
             catch (Exception ex)
             {
                 log.Error("Command Failed", ex);
+                //disbale this how to I handle an empty clob ? 
+                /*
+                if (enblExeptions)
+                {
+                    throw ex;
+                }
+                */
                 return null;
             }
         }

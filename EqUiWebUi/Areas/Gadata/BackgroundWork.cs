@@ -237,19 +237,18 @@ namespace EqUiWebUi.Areas.Gadata
     )
                 ";
                 DataTable tableFromMx7 = new DataTable();
-                MaximoComm maximoComm = new MaximoComm();       
+                ConnectionManager connectionManager = new ConnectionManager();    
                 log.Info("DataFromMaximo start");
-                tableFromMx7 = maximoComm.Oracle_runQuery(strSqlGetFromMaximo, enblExeptions: true, maxEXECtime: 300);
+                tableFromMx7 = connectionManager.RunQuery(strSqlGetFromMaximo,dbName: "MAXIMO7rep", enblExeptions: true, maxEXECtime: 300);
                 log.Info("DataFromMaximo Rowcount: " + tableFromMx7.Rows.Count);
                 //clear destination table  in GADATA
                 string CmdDeleteTableData = @"DELETE FROM [Equi].[ASSETS_fromMX7] FROM [Equi].[ASSETS_fromMX7]";
-                GadataComm gadataComm = new GadataComm();
                 log.Info("GadataDelete Start");
-                gadataComm.RunCommandGadata(CmdDeleteTableData,runAsAdmin:true, enblExeptions:true, maxEXECtime:300);
+                connectionManager.RunCommand(CmdDeleteTableData, enblExeptions:true, maxEXECtime:300);
                 log.Info("GadataDelete Done");
                 //send the data to the SQL GADATA SERVER 
                 log.Info("BulkCopyToGadata Start");
-                gadataComm.BulkCopyToGadata("Equi", tableFromMx7, "ASSETS_fromMX7", runAsAdmin: true, enblExeptions: true, maxEXECtime: 300);
+                connectionManager.BulkCopy(tableFromMx7, "[EQUI].[ASSETS_fromMX7]", enblExeptions: true, maxEXECtime: 300);
                 log.Info("BulkCopyToGadata End");
                 //Run command to link the assets and update c_controllerTables
                 LinkMaximoAssetsToGadata();
@@ -260,8 +259,8 @@ namespace EqUiWebUi.Areas.Gadata
         {
             log.Info("sp_linkassets Start");
             string CmdLinkAssets = "EXEC GADATA.[EqUi].[sp_LinkAssets]";
-            GadataComm gadataComm = new GadataComm();
-            gadataComm.RunCommandGadata(CmdLinkAssets, runAsAdmin: true, enblExeptions: true, maxEXECtime: 300);
+            ConnectionManager connectionManager = new ConnectionManager();
+            connectionManager.RunCommand(CmdLinkAssets, enblExeptions: true, maxEXECtime: 300);
             log.Info("sp_linkassets Done");
         }
     }

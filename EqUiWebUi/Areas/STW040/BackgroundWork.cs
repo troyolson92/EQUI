@@ -73,16 +73,15 @@ AND STW040.KMANUEEL <> 'N'
 
             //get data from stw040 database.
             //This should be realtime but is not! Still a copy that runs every end of shift. 
-            STW040Comm sTW040Comm = new STW040Comm();
+            ConnectionManager connectionManager = new ConnectionManager();
             DataTable dt = new DataTable();
-            dt = sTW040Comm.Oracle_runQuery(STW040qry, enblExeptions: true, maxEXECtime: 600);
+            dt = connectionManager.RunQuery(STW040qry,dbName: "DBI", enblExeptions: true, maxEXECtime: 600);
 
-            GadataComm gadataComm = new GadataComm();
             //delete data from server
             //string STW040deleteQry = "delete GADATA.STW040.STW040 from GADATA.STW040.STW040";
             //gadataComm.RunCommandGadata(STW040deleteQry, runAsAdmin: true, enblExeptions: true, maxEXECtime: 30);
             //push data to server
-            gadataComm.BulkCopyToGadata("STW040", dt, "STW040",runAsAdmin: true, enblExeptions: true, maxEXECtime: 300);
+            connectionManager.BulkCopy(dt, "[STW040].[STW040]", enblExeptions: true, maxEXECtime: 300);
             //remove duplicates
             string STW040RemoveDups = @"
 DELETE GADATA.STW040.STW040 
@@ -103,7 +102,7 @@ LEFT OUTER JOIN (
    lx.Id = KeepRows.Id
 WHERE
    KeepRows.Id IS NULL";
-            gadataComm.RunCommandGadata(STW040RemoveDups, runAsAdmin: true, enblExeptions: true, maxEXECtime: 30);
+            connectionManager.RunCommand(STW040RemoveDups, enblExeptions: true, maxEXECtime: 30);
             return;
         }
 

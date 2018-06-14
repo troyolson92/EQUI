@@ -32,11 +32,10 @@ namespace EqUiWebUi.Areas.Maximo_ui
         public void PushDatafromMAXIMOtoGADATA()
         {
             //delete data in now in maximo.
-            GadataComm lGadataComm = new GadataComm();
-            lGadataComm.RunCommandGadata("DELETE GADATA.MAXIMO.WORKORDERS FROM GADATA.MAXIMO.WORKORDERS", true);
+            ConnectionManager connectionManager = new ConnectionManager();
+            connectionManager.RunCommand("DELETE GADATA.MAXIMO.WORKORDERS FROM GADATA.MAXIMO.WORKORDERS");
 
             //get new records from STO
-            MaximoComm maximoComm = new MaximoComm();
             string MaximoQry = string.Format(@"
 select 
  WORKORDER.WONUM WONUM
@@ -64,9 +63,9 @@ ORDER BY WORKORDER.STATUSDATE DESC
 "
 );
 
-            DataTable newMaximoDt = maximoComm.Oracle_runQuery(MaximoQry, RealtimeConn: true, maxEXECtime: 120, enblExeptions: true);
+            DataTable newMaximoDt = connectionManager.RunQuery(MaximoQry,dbName: "MAXIMOrt", maxEXECtime: 120, enblExeptions: true);
             //push to gadata
-            lGadataComm.BulkCopyToGadata("MAXIMO", newMaximoDt, "WORKORDERS");
+            connectionManager.BulkCopy(newMaximoDt, "[MAXIMO].[WORKORDERS]");
         }
 
     }

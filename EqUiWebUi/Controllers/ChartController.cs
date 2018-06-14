@@ -42,7 +42,7 @@ namespace EqUiWebUi.Controllers
         [HttpGet]
         public JsonResult _getData(string location ,string  errornum ,string logtekst ,string logtype, int refid, DateTime startDate, DateTime endDate, grouptType grouptType = grouptType.Hour)
         {
-            GadataComm gadataComm = new GadataComm();
+            ConnectionManager connectionManager = new ConnectionManager();
 
             //
             // need to handle how many days we fetch! use the grouptype 
@@ -57,7 +57,7 @@ namespace EqUiWebUi.Controllers
             //get the data
             string qry = string.Format(@"EXEC [EqUi].[GetErrorTrentData] @Location = '{0}' ,@ERRORNUM = '{1}' ,@Logtext = '{2}' ,@logType = '{3}' ,@refID={4}"
             , location, errornum, logtekst, logtype, refid);
-            DataTable dt = gadataComm.RunQueryGadata(qry);
+            DataTable dt = connectionManager.RunQuery(qry);
 
             //if groupmode auto (0) find out best grouping mode based on set timespan.
             if (grouptType == grouptType.auto)

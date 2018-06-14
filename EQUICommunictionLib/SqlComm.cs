@@ -8,11 +8,11 @@ namespace EQUICommunictionLib
     {
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        SqlConnection Conn = new SqlConnection();
+        SqlConnection Conn;
 
         public SqlComm(string ConnectionString)
         {
-            Conn.ConnectionString = ConnectionString;
+            Conn = new SqlConnection(ConnectionString);
         }
 
         public void BulkCopy(DataTable adt_table, string destination, bool enblExeptions = false, int maxEXECtime = 300)

@@ -148,7 +148,7 @@ namespace EqUiWebUi.Areas.Alert
                         string qry =
                             @"select top 1 LocationTree, Location from GADATA.EqUi.ASSETS as a 
                             where REPLACE('{0}','ZM','ZS') LIKE a.[LOCATION] + '%'";
-                        DataTable result = gadataComm.RunQueryGadata(string.Format(qry, ActiveAlert.Field<string>("alarmobject")));
+                        DataTable result = connectionManager.RunQuery(string.Format(qry, ActiveAlert.Field<string>("alarmobject")));
                         if (result.Rows.Count == 1)
                         {
                             newAlert.locationTree = result.Rows[0].Field<string>("LocationTree");
@@ -167,7 +167,7 @@ namespace EqUiWebUi.Areas.Alert
                         string qry =
                             @"select top 1 LocationTree, Location from GADATA.EqUi.ASSETS as a 
                             where '{0}' LIKE a.[LOCATION] + '%'";
-                        DataTable result = gadataComm.RunQueryGadata(string.Format(qry, ActiveAlert.Field<string>("alarmobject")));
+                        DataTable result = connectionManager.RunQuery(string.Format(qry, ActiveAlert.Field<string>("alarmobject")));
                         if (result.Rows.Count == 1)
                         {
                             newAlert.locationTree = result.Rows[0].Field<string>("LocationTree");

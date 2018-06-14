@@ -193,11 +193,11 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
         public ActionResult _loginfo(LogInfo logInfo)
         {
             //query all instances of the logtype via equi.getErrorInfoData 
-            GadataComm gadataComm = new GadataComm();
+            ConnectionManager connectionManager = new ConnectionManager();
             string qry = string.Format(
             @"EXEC [EqUi].[GetErrorInfoData] @Location  = '{0}' ,@ERRORNUM = '{1}' ,@Refid = {2} ,@logtype ='{3}'"
             , logInfo.location, logInfo.errornum, logInfo.refid, logInfo.logtype);
-            DataTable dt = gadataComm.RunQueryGadata(qry);
+            DataTable dt = connectionManager.RunQuery(qry);
             //build an html respone with the log info.
             StringBuilder sb = new StringBuilder();
             //check if the result was valid 

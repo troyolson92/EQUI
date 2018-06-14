@@ -33,9 +33,9 @@ controller_name
 ,Wear_Move
  from GADATA.NGAC.TipDressLogFile where controller_name like '338030r01' and [Date Time] between GETDATE()-10 and GETDATE()";
 
-            GadataComm gadataComm = new GadataComm();
+            ConnectionManager connectionManager = new ConnectionManager();
 
-            DataTable dt = gadataComm.RunQueryGadata(query1);
+            DataTable dt = connectionManager.RunQuery(query1);
             foreach (DataRow drow in dt.Rows)
             {
                 labels.Add(drow[timestampCol].ToString());
