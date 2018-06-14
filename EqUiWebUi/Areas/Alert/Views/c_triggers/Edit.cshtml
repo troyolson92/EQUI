@@ -348,7 +348,7 @@ else
         //on Runstatement show the user the result from the alert sql statement
         $('#Runstatement').click(function () {
                 var urlDynamicWebgrid = '@Url.Action("_dynamicWebgridRunQueryAgainstDB", "Dynamic", new { area = "" })?qry=' + encodeURIComponent(sqlStatementCodeMirror.getValue()) +
-                '&db=' + $('#RunAgainstDatabase').val();
+                    '&db=' + $('#c_datasource_id').val();
                 //launch modal
                 $('#MyModal').removeData('bs.modal');
                 $('#MyModal').modal({ show: true });
@@ -361,7 +361,7 @@ else
         mandatorytriggerColumns[2] = "item3";
         $('#checkstatement').click(function () {
             var urlDynamicWebgrid = '@Url.Action("_CheckStatement", "Dynamic", new { area = "" })?qry=' + encodeURIComponent(sqlStatementCodeMirror.getValue()) +
-                '&db=' + $('#RunAgainstDatabase').val() + '&mandatoryColumns=' + mandatorytriggerColumns; //this is not working !!!!!!
+                '&db=' + $('#c_datasource_id').val() + '&mandatoryColumns=' + mandatorytriggerColumns; //this is not working !!!!!!
             //launch modal
             $('#MyModal').removeData('bs.modal');
             $('#MyModal').modal({ show: true });
@@ -372,7 +372,7 @@ else
          //on Runstatement show the user the result from the alert sql statement
         $('#checkcontrollimitSqlStatement').click(function () {
                 var urlDynamicWebgrid = '@Url.Action("_dynamicWebgridRunQueryAgainstDB", "Dynamic", new { area = "" })?qry=' + encodeURIComponent(controllimitSqlStatementCodeMirror.getValue()) +
-                    '&db=' + $('#RunAgainstDatabase').val();
+                    '&db=' + $('#c_datasource_id').val();
                 //launch modal
                 $('#MyModal').removeData('bs.modal');
                 $('#MyModal').modal({ show: true });
