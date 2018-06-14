@@ -61,10 +61,10 @@ namespace EQUIToolsLib
                 Debugger.Message("system not valid");
                 return;
             }
-            EQUICommunictionLib.GadataComm gadataComm = new GadataComm();
+            EQUICommunictionLib.ConnectionManager connectionManager = new ConnectionManager();
                 string cmd = string.Format(qry, tb_location.Text, 1, 0, 0, 0);
 
-                DataTable dt = gadataComm.RunQueryGadata(cmd);
+                DataTable dt = connectionManager.RunQuery(cmd);
                 if (dt.Rows.Count == 0)
                 {
                     Debugger.Message("server did not reply");
@@ -105,10 +105,10 @@ namespace EQUIToolsLib
                     return;
                 }
 
-                EQUICommunictionLib.GadataComm gadataComm = new GadataComm();
-                string cmd = string.Format(qry, tb_location.Text, 0, 1, ucl.ToString().Replace(',', '.'), lcl.ToString().Replace(',', '.'));
-                DataTable dt = gadataComm.RunQueryGadata(cmd);
-                if (dt.Rows.Count == 0)
+            EQUICommunictionLib.ConnectionManager connectionManager = new ConnectionManager();
+            string cmd = string.Format(qry, tb_location.Text, 0, 1, ucl.ToString().Replace(',', '.'), lcl.ToString().Replace(',', '.'));
+            DataTable dt = connectionManager.RunQuery(cmd);
+            if (dt.Rows.Count == 0)
                 {
                     Debugger.Message("server did not reply");
                     return;

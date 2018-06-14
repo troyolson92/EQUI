@@ -1,16 +1,11 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Data;
 using EqUiWebUi.Areas.Alert.Models;
 using EQUICommunictionLib;
 using Hangfire;
 using System.Text;
-using System.Web.Mvc;
-using System.Web.Mvc.Html;
-using System.IO;
 
 namespace EqUiWebUi.Areas.Alert
 {

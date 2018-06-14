@@ -25,14 +25,14 @@ namespace EqUiDigibordLauncher
             //
             Console.WriteLine("Getting configuration for: "+ Environment.UserDomainName+"\\"+Environment.UserName);
             //
-            EQUICommunictionLib.GadataComm gadataComm = new GadataComm();
+            EQUICommunictionLib.ConnectionManager connectionManager = new ConnectionManager();
             string QRY = @"
 SELECT L_Screens.Screen_num, L_Screens.id FROM GADATA.Volvo.L_Screens
 LEFT JOIN GADATA.Volvo.L_users on L_users.id = L_Screens.[User_id]
 WHERE L_users.username = '{0}' AND Screen_num > 1
 ";
 
-            DataTable dt = gadataComm.RunQueryGadata(string.Format(QRY, Environment.UserDomainName + "\\" + Environment.UserName));
+            DataTable dt = connectionManager.RunQuery(string.Format(QRY, Environment.UserDomainName + "\\" + Environment.UserName));
 
             if (dt.Rows.Count != 0 )
             {

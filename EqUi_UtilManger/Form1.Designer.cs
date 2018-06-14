@@ -31,14 +31,13 @@
             this.btn_sbcuStat = new System.Windows.Forms.Button();
             this.btn_blockSleep = new System.Windows.Forms.Button();
             this.SuspendLayout();
-
             // 
             // btn_sbcuStat
             // 
             this.btn_sbcuStat.Location = new System.Drawing.Point(19, 10);
             this.btn_sbcuStat.Margin = new System.Windows.Forms.Padding(2);
             this.btn_sbcuStat.Name = "btn_sbcuStat";
-            this.btn_sbcuStat.Size = new System.Drawing.Size(78, 19);
+            this.btn_sbcuStat.Size = new System.Drawing.Size(101, 19);
             this.btn_sbcuStat.TabIndex = 1;
             this.btn_sbcuStat.Text = "SbcuStats";
             this.btn_sbcuStat.UseVisualStyleBackColor = true;
@@ -47,7 +46,7 @@
             // btn_blockSleep
             // 
             this.btn_blockSleep.AutoSize = true;
-            this.btn_blockSleep.Location = new System.Drawing.Point(19, 198);
+            this.btn_blockSleep.Location = new System.Drawing.Point(20, 47);
             this.btn_blockSleep.Margin = new System.Windows.Forms.Padding(2);
             this.btn_blockSleep.Name = "btn_blockSleep";
             this.btn_blockSleep.Size = new System.Drawing.Size(100, 23);
@@ -60,7 +59,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(131, 325);
+            this.ClientSize = new System.Drawing.Size(131, 85);
             this.Controls.Add(this.btn_blockSleep);
             this.Controls.Add(this.btn_sbcuStat);
             this.Margin = new System.Windows.Forms.Padding(2);
