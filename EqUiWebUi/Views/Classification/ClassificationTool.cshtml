@@ -1,17 +1,173 @@
-﻿
-@{
-    Layout = null;
-}
+﻿@model EqUiWebUi.Models.c_LogClassRules
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>ClassificationTool</title>
-</head>
-<body>
-    <div> 
+<div class="">
+    <div class="card-header bg-warning">
+        <h5 class="card-title text-black-50">
+            ClassificationTool
+        </h5>
     </div>
-</body>
-</html>
+    <div class="card-body">
+        <div class="form-horizontal">
+            <div class="card">
+                <div class="card-header bg-primary">
+                    <h5 class="card-title text-white">
+                        Search for
+                        <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
+                    </h5>
+                </div>
+                <div class="card-body">
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.c_logClassSystem_id, "c_logClassSystem_id", htmlAttributes: new { @class = "control-label col-md-4" })
+                            <div class="col-md-8">
+                                @Html.DropDownList("c_logClassSystem_id", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.c_logClassSystem_id, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.coderangeStart, htmlAttributes: new { @class = "control-label col-md-4" })
+                            <div class="col-md-8">
+                                @Html.EditorFor(model => model.coderangeStart, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.coderangeStart, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.coderangeEnd, htmlAttributes: new { @class = "control-label col-md-4" })
+                            <div class="col-md-8">
+                                @Html.EditorFor(model => model.coderangeEnd, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.coderangeEnd, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.textSearch, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.textSearch, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.textSearch, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <button class="btn btn-info" id="btnSearch">Search</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr />
+
+            <div class="card">
+                <div class="card-header bg-primary">
+                    <h5 class="card-title text-white">
+                        Set Class and Subgroup
+                        <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.c_ClassificationId, "c_ClassificationId", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-10">
+                            @Html.DropDownList("c_ClassificationId", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.c_ClassificationId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.c_SubgroupId, "c_SubgroupId", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-10">
+                            @Html.DropDownList("c_SubgroupId", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.c_SubgroupId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <button class="btn btn-info" id="btnFindAllinGroup">Find all in group</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <button class="btn btn-info" id="btnGetRules">Get all rules</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr />
+
+
+
+        <hr />
+
+        <div class="card">
+            <div class="card-header bg-primary">
+                <h5 class="card-title text-white">
+                    Rules
+                    <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <button class="btn btn-info" id="btnAddRule">Add rule</button>
+                    </div>
+                </div>
+
+                <div>grid</div>
+
+                <div>Grid row dropdown option. Clear rule / delete rule / Remove rule. / Run rule / run rule with override manual set</div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+        <div class="card">
+            <div class="card-body">
+                    <div id="l_dummyLogClassResultGrid" class="mvc-grid"></div>
+            </div>
+
+        </div>
+
+@section scripts{
+    <!--ClassificationTool script-->
+    <script>
+    //full with screen
+        $("#allcontent").removeClass("body-content");
+        $("#allcontent").removeClass("container");
+
+
+        
+    //handle search. (by range and logtext)
+        $('#btnSearch').click(function () {
+            console.log('hit');
+
+            $('#l_dummyLogClassResultGrid').mvcgrid({
+                sourceUrl: '@Url.Action("_logSearchResult")', 
+                data: {
+                },
+                requestType: 'get',
+                reloadStarted: function () {
+
+                },
+                reloadEnded: function () {
+
+                },
+                reloadFailed: function (result) {
+                    $('#l_dummyLogClassResultGrid').html("Error while loading!!!");
+                }
+            });
+
+            console.log('end');
+        });
+    //hanlde sreach (all in selecte subgroup and class)
+        $('#btnFindAllinGroup').click(function () {
+            console.log('hit2');
+        });
+
+
+    </script>
+}

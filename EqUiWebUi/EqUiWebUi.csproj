@@ -647,6 +647,9 @@
     </Compile>
     <Compile Include="Models\gadataModel.cs" />
     <Compile Include="Areas\user_management\roleProvider.cs" />
+    <Compile Include="Models\l_dummyLogClassResult.cs">
+      <DependentUpon>EQUIModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -1454,6 +1457,7 @@
     <Content Include="Views\c_LogClassRules\Edit.cshtml" />
     <Content Include="Views\c_LogClassRules\Index.cshtml" />
     <Content Include="Views\c_LogClassRules\_GetLogClassRulesGrid.cshtml" />
+    <Content Include="Views\Classification\_logSearchResult.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EQUICommunictionLib\EQUICommunictionLib.csproj">

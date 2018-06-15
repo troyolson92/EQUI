@@ -18,6 +18,7 @@ namespace EqUiWebUi.Models
         public c_Subgroup()
         {
             this.c_LogClassRules = new HashSet<c_LogClassRules>();
+            this.l_dummyLogClassResult = new HashSet<l_dummyLogClassResult>();
         }
     
         public int id { get; set; }
@@ -26,5 +27,7 @@ namespace EqUiWebUi.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<c_LogClassRules> c_LogClassRules { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<l_dummyLogClassResult> l_dummyLogClassResult { get; set; }
     }
 }

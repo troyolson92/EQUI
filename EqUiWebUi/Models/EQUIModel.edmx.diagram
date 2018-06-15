@@ -5,15 +5,18 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="d5dc149468964a6aa4c17e0f7b3d2d84" Name="Diagram1" ZoomLevel="74">
-        <EntityTypeShape EntityType="GADATAModelEQUI.c_datasource" Width="1.5" PointX="0.75" PointY="1.375" />
+        <EntityTypeShape EntityType="GADATAModelEQUI.c_datasource" Width="1.5" PointX="0.75" PointY="1" />
         <EntityTypeShape EntityType="GADATAModelEQUI.c_LogClassRules" Width="1.5" PointX="5.25" PointY="1" />
-        <EntityTypeShape EntityType="GADATAModelEQUI.c_logClassSystem" Width="1.5" PointX="3" PointY="1.375" />
-        <EntityTypeShape EntityType="GADATAModelEQUI.c_Classification" Width="1.5" PointX="3" PointY="5.125" FillColor="Red" />
-        <EntityTypeShape EntityType="GADATAModelEQUI.c_Subgroup" Width="1.5" PointX="3" PointY="7.625" FillColor="Red" />
+        <EntityTypeShape EntityType="GADATAModelEQUI.c_logClassSystem" Width="1.5" PointX="3" PointY="1" />
+        <EntityTypeShape EntityType="GADATAModelEQUI.c_Classification" Width="1.5" PointX="4.875" PointY="6" FillColor="Red" />
+        <EntityTypeShape EntityType="GADATAModelEQUI.c_Subgroup" Width="1.5" PointX="7.875" PointY="6" FillColor="Red" IsExpanded="true" />
         <AssociationConnector Association="GADATAModelEQUI.FK_c_logClassSystem_c_datasource" />
         <AssociationConnector Association="GADATAModelEQUI.FK_c_LogClassRules_c_Classification" />
         <AssociationConnector Association="GADATAModelEQUI.FK_c_LogClassRules_c_logClassSystem" />
         <AssociationConnector Association="GADATAModelEQUI.FK_c_LogClassRules_c_Subgroup" />
+        <EntityTypeShape EntityType="GADATAModelEQUI.l_dummyLogClassResult" Width="1.5" PointX="7.75" PointY="1" />
+        <AssociationConnector Association="GADATAModelEQUI.FK_l_dummyLogClassResult_c_Classification" />
+        <AssociationConnector Association="GADATAModelEQUI.FK_l_dummyLogClassResult_c_Subgroup" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

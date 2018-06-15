@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - VCG GA UB12</title>
+    <!--Styles (pre body)--> 
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
@@ -87,7 +88,7 @@
 
     </nav>
 
-    @*load this bundle before body because of scripts in views*@
+    <!--Script (prebody)-->
     @Scripts.Render("~/bundles/mainjavabundel")
 
     <!--Body content -->
@@ -104,10 +105,10 @@
         <a class="fas fa-arrows-alt text-black-50 d-none" id="fullscreenBody" data-toggle="tooltip" data-placement="left" title="Exit fullscreen"></a>
     </div>
 
-
+    <!--Scripts (postbody)-->
     @Scripts.Render("~/bundles/MyScripts")
+    <!--Main layout init-->
     <script>
-        //enable general interface stuff
         initInterface();
     </script>
 
