@@ -1,0 +1,15 @@
+﻿@model IQueryable<EqUiWebUi.Models.l_dummyLogClassResult>
+
+@Html.Grid(Model).Named("l_dummyLogClassResult").Build(columns =>
+{
+    columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Asc);
+    columns.Add(c => c.code).Titled("Code");
+    columns.Add(c => c.text).Titled("Text");
+    columns.Add(c => c.c_Classification.Classification).Titled("Class");
+    columns.Add(c => c.c_Subgroup.Subgroup).Titled("Subgroup");
+
+}).Filterable().Sortable().Pageable(pager =>
+{
+    pager.RowsPerPage = 10;
+}).Empty("Did not find anything").Css("table-hover")
+
