@@ -7,9 +7,9 @@
     <Schema Namespace="GADATAModelEQUI.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="c_datasource">
           <Key>
-            <PropertyRef Name="int" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="int" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Description" Type="varchar(max)" />
           <Property Name="Type" Type="int" Nullable="false" />
@@ -22,12 +22,12 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="c_logClassSystem_id" Type="int" Nullable="false" />
-          <Property Name="Err_start" Type="int" />
-          <Property Name="Err_end" Type="int" />
-          <Property Name="Err_text" Type="varchar" MaxLength="255" />
+          <Property Name="coderangeStart" Type="int" />
+          <Property Name="coderangeEnd" Type="int" />
+          <Property Name="textSearch" Type="varchar" MaxLength="255" />
           <Property Name="I_comment" Type="varchar" MaxLength="255" />
-          <Property Name="c_ClassificationId" Type="int" />
-          <Property Name="c_SubgroupId" Type="int" />
+          <Property Name="c_ClassificationId" Type="int" Nullable="false" />
+          <Property Name="c_SubgroupId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="c_logClassSystem">
           <Key>
@@ -39,6 +39,34 @@
           <Property Name="Description" Type="varchar(max)" />
           <Property Name="SelectStatement" Type="varchar(max)" />
         </EntityType>
+        <EntityType Name="c_Classification">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Classification" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Discription" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="c_Subgroup">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Subgroup" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Discription" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_c_LogClassRules_c_Classification">
+          <End Role="c_Classification" Type="Self.c_Classification" Multiplicity="1" />
+          <End Role="c_LogClassRules" Type="Self.c_LogClassRules" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_Classification">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="c_LogClassRules">
+              <PropertyRef Name="c_ClassificationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_c_LogClassRules_c_logClassSystem">
           <End Role="c_logClassSystem" Type="Self.c_logClassSystem" Multiplicity="1" />
           <End Role="c_LogClassRules" Type="Self.c_LogClassRules" Multiplicity="*" />
@@ -51,12 +79,24 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_c_LogClassRules_c_Subgroup">
+          <End Role="c_Subgroup" Type="Self.c_Subgroup" Multiplicity="1" />
+          <End Role="c_LogClassRules" Type="Self.c_LogClassRules" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_Subgroup">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="c_LogClassRules">
+              <PropertyRef Name="c_SubgroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_c_logClassSystem_c_datasource">
           <End Role="c_datasource" Type="Self.c_datasource" Multiplicity="1" />
           <End Role="c_logClassSystem" Type="Self.c_logClassSystem" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="c_datasource">
-              <PropertyRef Name="int" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="c_logClassSystem">
               <PropertyRef Name="c_datasource_id" />
@@ -67,8 +107,18 @@
           <EntitySet Name="c_datasource" EntityType="Self.c_datasource" Schema="EqUi" store:Type="Tables" />
           <EntitySet Name="c_LogClassRules" EntityType="Self.c_LogClassRules" Schema="EqUi" store:Type="Tables" />
           <EntitySet Name="c_logClassSystem" EntityType="Self.c_logClassSystem" Schema="EqUi" store:Type="Tables" />
+          <EntitySet Name="c_Classification" EntityType="Self.c_Classification" Schema="Volvo" store:Type="Tables" />
+          <EntitySet Name="c_Subgroup" EntityType="Self.c_Subgroup" Schema="Volvo" store:Type="Tables" />
+          <AssociationSet Name="FK_c_LogClassRules_c_Classification" Association="Self.FK_c_LogClassRules_c_Classification">
+            <End Role="c_Classification" EntitySet="c_Classification" />
+            <End Role="c_LogClassRules" EntitySet="c_LogClassRules" />
+          </AssociationSet>
           <AssociationSet Name="FK_c_LogClassRules_c_logClassSystem" Association="Self.FK_c_LogClassRules_c_logClassSystem">
             <End Role="c_logClassSystem" EntitySet="c_logClassSystem" />
+            <End Role="c_LogClassRules" EntitySet="c_LogClassRules" />
+          </AssociationSet>
+          <AssociationSet Name="FK_c_LogClassRules_c_Subgroup" Association="Self.FK_c_LogClassRules_c_Subgroup">
+            <End Role="c_Subgroup" EntitySet="c_Subgroup" />
             <End Role="c_LogClassRules" EntitySet="c_LogClassRules" />
           </AssociationSet>
           <AssociationSet Name="FK_c_logClassSystem_c_datasource" Association="Self.FK_c_logClassSystem_c_datasource">
@@ -80,16 +130,39 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="GADATAModelEQUI" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="GADATAEntitiesEQUI" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="c_datasource" EntityType="GADATAModelEQUI.c_datasource" />
+          <EntitySet Name="c_LogClassRules" EntityType="GADATAModelEQUI.c_LogClassRules" />
+          <EntitySet Name="c_logClassSystem" EntityType="GADATAModelEQUI.c_logClassSystem" />
+          <EntitySet Name="c_Classification" EntityType="GADATAModelEQUI.c_Classification" />
+          <EntitySet Name="c_Subgroup" EntityType="GADATAModelEQUI.c_Subgroup" />
+          <AssociationSet Name="FK_c_logClassSystem_c_datasource" Association="GADATAModelEQUI.FK_c_logClassSystem_c_datasource">
+            <End Role="c_datasource" EntitySet="c_datasource" />
+            <End Role="c_logClassSystem" EntitySet="c_logClassSystem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_c_LogClassRules_c_Classification" Association="GADATAModelEQUI.FK_c_LogClassRules_c_Classification">
+            <End Role="c_Classification" EntitySet="c_Classification" />
+            <End Role="c_LogClassRules" EntitySet="c_LogClassRules" />
+          </AssociationSet>
+          <AssociationSet Name="FK_c_LogClassRules_c_logClassSystem" Association="GADATAModelEQUI.FK_c_LogClassRules_c_logClassSystem">
+            <End Role="c_logClassSystem" EntitySet="c_logClassSystem" />
+            <End Role="c_LogClassRules" EntitySet="c_LogClassRules" />
+          </AssociationSet>
+          <AssociationSet Name="FK_c_LogClassRules_c_Subgroup" Association="GADATAModelEQUI.FK_c_LogClassRules_c_Subgroup">
+            <End Role="c_Subgroup" EntitySet="c_Subgroup" />
+            <End Role="c_LogClassRules" EntitySet="c_LogClassRules" />
+          </AssociationSet>
+        </EntityContainer>
         <EntityType Name="c_datasource">
           <Key>
-            <PropertyRef Name="int" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="int" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Type" Type="Int32" Nullable="false" />
           <Property Name="ConnectionString" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="isAlertSource" Type="Boolean" Nullable="false" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="c_logClassSystem" Relationship="GADATAModelEQUI.FK_c_logClassSystem_c_datasource" FromRole="c_datasource" ToRole="c_logClassSystem" />
         </EntityType>
         <EntityType Name="c_LogClassRules">
@@ -97,28 +170,17 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Err_start" Type="Int32" />
-          <Property Name="Err_end" Type="Int32" />
-          <Property Name="Err_text" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="I_comment" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="c_ClassificationId" Type="Int32" />
-          <Property Name="c_SubgroupId" Type="Int32" />
           <Property Name="c_logClassSystem_id" Type="Int32" Nullable="false" />
+          <Property Name="coderangeStart" Type="Int32" />
+          <Property Name="coderangeEnd" Type="Int32" />
+          <Property Name="textSearch" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="I_comment" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="c_ClassificationId" Type="Int32" Nullable="false" />
+          <Property Name="c_SubgroupId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="c_Classification" Relationship="GADATAModelEQUI.FK_c_LogClassRules_c_Classification" FromRole="c_LogClassRules" ToRole="c_Classification" />
           <NavigationProperty Name="c_logClassSystem" Relationship="GADATAModelEQUI.FK_c_LogClassRules_c_logClassSystem" FromRole="c_LogClassRules" ToRole="c_logClassSystem" />
+          <NavigationProperty Name="c_Subgroup" Relationship="GADATAModelEQUI.FK_c_LogClassRules_c_Subgroup" FromRole="c_LogClassRules" ToRole="c_Subgroup" />
         </EntityType>
-        <EntityContainer Name="GADATAEntitiesEQUI" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="c_datasource" EntityType="Self.c_datasource" />
-          <EntitySet Name="c_LogClassRules" EntityType="Self.c_LogClassRules" />
-          <EntitySet Name="c_logClassSystem" EntityType="GADATAModelEQUI.c_logClassSystem" />
-          <AssociationSet Name="FK_c_logClassSystem_c_datasource" Association="GADATAModelEQUI.FK_c_logClassSystem_c_datasource">
-            <End Role="c_datasource" EntitySet="c_datasource" />
-            <End Role="c_logClassSystem" EntitySet="c_logClassSystem" />
-          </AssociationSet>
-          <AssociationSet Name="FK_c_LogClassRules_c_logClassSystem" Association="GADATAModelEQUI.FK_c_LogClassRules_c_logClassSystem">
-            <End Role="c_logClassSystem" EntitySet="c_logClassSystem" />
-            <End Role="c_LogClassRules" EntitySet="c_LogClassRules" />
-          </AssociationSet>
-        </EntityContainer>
         <EntityType Name="c_logClassSystem">
           <Key>
             <PropertyRef Name="id" />
@@ -131,15 +193,45 @@
           <NavigationProperty Name="c_datasource" Relationship="GADATAModelEQUI.FK_c_logClassSystem_c_datasource" FromRole="c_logClassSystem" ToRole="c_datasource" />
           <NavigationProperty Name="c_LogClassRules" Relationship="GADATAModelEQUI.FK_c_LogClassRules_c_logClassSystem" FromRole="c_logClassSystem" ToRole="c_LogClassRules" />
         </EntityType>
+        <EntityType Name="c_Classification">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Classification" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Discription" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="c_LogClassRules" Relationship="GADATAModelEQUI.FK_c_LogClassRules_c_Classification" FromRole="c_Classification" ToRole="c_LogClassRules" />
+        </EntityType>
+        <EntityType Name="c_Subgroup">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Subgroup" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Discription" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="c_LogClassRules" Relationship="GADATAModelEQUI.FK_c_LogClassRules_c_Subgroup" FromRole="c_Subgroup" ToRole="c_LogClassRules" />
+        </EntityType>
         <Association Name="FK_c_logClassSystem_c_datasource">
           <End Type="GADATAModelEQUI.c_datasource" Role="c_datasource" Multiplicity="1" />
           <End Type="GADATAModelEQUI.c_logClassSystem" Role="c_logClassSystem" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="c_datasource">
-              <PropertyRef Name="int" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="c_logClassSystem">
               <PropertyRef Name="c_datasource_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_c_LogClassRules_c_Classification">
+          <End Type="GADATAModelEQUI.c_Classification" Role="c_Classification" Multiplicity="1" />
+          <End Type="GADATAModelEQUI.c_LogClassRules" Role="c_LogClassRules" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_Classification">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="c_LogClassRules">
+              <PropertyRef Name="c_ClassificationId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -155,6 +247,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_c_LogClassRules_c_Subgroup">
+          <End Type="GADATAModelEQUI.c_Subgroup" Role="c_Subgroup" Multiplicity="1" />
+          <End Type="GADATAModelEQUI.c_LogClassRules" Role="c_LogClassRules" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_Subgroup">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="c_LogClassRules">
+              <PropertyRef Name="c_SubgroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -164,26 +268,26 @@
           <EntitySetMapping Name="c_datasource">
             <EntityTypeMapping TypeName="GADATAModelEQUI.c_datasource">
               <MappingFragment StoreEntitySet="c_datasource">
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="int" ColumnName="int" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="ConnectionString" ColumnName="ConnectionString" />
                 <ScalarProperty Name="isAlertSource" ColumnName="isAlertSource" />
+                <ScalarProperty Name="ConnectionString" ColumnName="ConnectionString" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="c_LogClassRules">
             <EntityTypeMapping TypeName="GADATAModelEQUI.c_LogClassRules">
               <MappingFragment StoreEntitySet="c_LogClassRules">
+                <ScalarProperty Name="c_SubgroupId" ColumnName="c_SubgroupId" />
+                <ScalarProperty Name="c_ClassificationId" ColumnName="c_ClassificationId" />
+                <ScalarProperty Name="I_comment" ColumnName="I_comment" />
+                <ScalarProperty Name="textSearch" ColumnName="textSearch" />
+                <ScalarProperty Name="coderangeEnd" ColumnName="coderangeEnd" />
+                <ScalarProperty Name="coderangeStart" ColumnName="coderangeStart" />
                 <ScalarProperty Name="c_logClassSystem_id" ColumnName="c_logClassSystem_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="Err_start" ColumnName="Err_start" />
-                <ScalarProperty Name="Err_end" ColumnName="Err_end" />
-                <ScalarProperty Name="Err_text" ColumnName="Err_text" />
-                <ScalarProperty Name="I_comment" ColumnName="I_comment" />
-                <ScalarProperty Name="c_ClassificationId" ColumnName="c_ClassificationId" />
-                <ScalarProperty Name="c_SubgroupId" ColumnName="c_SubgroupId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -194,6 +298,24 @@
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="c_datasource_id" ColumnName="c_datasource_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="c_Classification">
+            <EntityTypeMapping TypeName="GADATAModelEQUI.c_Classification">
+              <MappingFragment StoreEntitySet="c_Classification">
+                <ScalarProperty Name="Discription" ColumnName="Discription" />
+                <ScalarProperty Name="Classification" ColumnName="Classification" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="c_Subgroup">
+            <EntityTypeMapping TypeName="GADATAModelEQUI.c_Subgroup">
+              <MappingFragment StoreEntitySet="c_Subgroup">
+                <ScalarProperty Name="Discription" ColumnName="Discription" />
+                <ScalarProperty Name="Subgroup" ColumnName="Subgroup" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

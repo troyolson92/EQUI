@@ -350,7 +350,6 @@
     <None Include="applData.xss">
       <DependentUpon>applData.xsd</DependentUpon>
     </None>
-    <None Include="ClassDiagram1.cd" />
     <EmbeddedResource Include="Forms\ConnectionManger.resx">
       <DependentUpon>ConnectionManger.cs</DependentUpon>
     </EmbeddedResource>

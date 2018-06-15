@@ -1,0 +1,21 @@
+﻿@model IQueryable<EqUiWebUi.Models.c_LogClassRules>
+
+@Html.Grid(Model).Named("c_LogClassRules").Build(columns =>
+{
+    columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Asc);
+    columns.Add(c => c.c_Classification.Classification).Titled("Class");
+    columns.Add(c => c.c_Subgroup.Subgroup).Titled("Subgroup");
+    columns.Add(c => c.I_comment).Titled("Comment");
+    columns.Add(c => c.coderangeStart).Titled("coderangeStart");
+    columns.Add(c => c.coderangeEnd).Titled("coderangeEnd");
+    columns.Add(c => c.textSearch).Titled("textSearch");
+    columns.Add(c => c)
+                    .Titled("")
+                    .Encoded(false)
+                .RenderedAs(c => @Html.ActionLink("Edit", "Edit", new { id = c.id }) + " | " +
+                                 @Html.ActionLink("Delete", "Delete", new { id = c.id })
+                    ).Filterable(false);
+}).Filterable().Sortable().Pageable(pager =>
+{
+    pager.RowsPerPage = 10;
+}).Empty("Did not find anything").Css("table-hover")
