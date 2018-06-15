@@ -1,0 +1,88 @@
+﻿@model EqUiWebUi.Models.c_LogClassRules
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Delete</title>
+</head>
+<body>
+    <h3>Are you sure you want to delete this?</h3>
+    <div>
+        <h4>c_LogClassRules</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Err_start)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Err_start)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Err_end)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Err_end)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Err_text)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Err_text)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.I_comment)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.I_comment)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.c_ClassificationId)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.c_ClassificationId)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.c_SubgroupId)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.c_SubgroupId)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.c_logClassSystem.Name)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.c_logClassSystem.Name)
+            </dd>
+    
+        </dl>
+    
+        @using (Html.BeginForm()) {
+            @Html.AntiForgeryToken()
+    
+            <div class="form-actions no-color">
+                <input type="submit" value="Delete" class="btn btn-default" /> |
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+        }
+    </div>
+</body>
+</html>

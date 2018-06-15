@@ -1,0 +1,33 @@
+﻿@model IEnumerable<EqUiWebUi.Models.c_LogClassRules>
+
+<div class="card">
+    <div class="card-header bg-light">
+        <h5 class="card-title text-black-50">
+            c_LogClassRules
+        </h5>
+        <div class="text-muted">
+            (Create new rule)
+            @Html.ActionLink("Create New", "Create")
+        </div>
+        <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
+
+    </div>
+
+    <div class="card-body">
+        <div id="c_LogClassRulesGrid" class="mvc-grid"></div>
+    </div>
+</div>
+
+
+@section scripts{
+    <!--c_LogClassRules script-->
+    <script>
+    $('#c_LogClassRulesGrid').mvcgrid({
+      sourceUrl: '@Html.Raw(@Url.Action("_GetLogClassRulesGrid", "c_LogClassRules", new {}))',
+      requestType: 'get', // Ajax grid request type
+      reloadFailed: function (result) {
+          $("#c_LogClassRulesGrid").html("Error while loading!!!");
+      }
+    });
+    </script>
+}

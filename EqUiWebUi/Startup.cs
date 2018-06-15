@@ -50,8 +50,8 @@ namespace EqUiWebUi
                 var HFoptions = new BackgroundJobServerOptions
                 {
                     //MUST BE LOWERCASE ONLY !!!!!!
-                  //    Queues = new[] {"debug","gadata"},
-                    Queues = new[] { "critical", "default", "alertengine", "gadata", "jobengine", "sto" },
+                     Queues = new[] {"debug","gadata"},
+                  // Queues = new[] { "critical", "default", "alertengine", "gadata", "jobengine", "sto" },
                     //How many jobs run at the same time
                     WorkerCount = Environment.ProcessorCount * 1
                 };

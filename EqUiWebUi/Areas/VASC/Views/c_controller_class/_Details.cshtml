@@ -6,7 +6,7 @@
             c controllers in this class
             @if (ViewBag.controller_id != null)
             {
-            <strong>Filtered on controllerID: @ViewBag.controller_id</strong>}
+                <strong>Filtered on controllerID: @ViewBag.controller_id</strong>}
             <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
         </h5>
     </div>
@@ -22,12 +22,12 @@
         <h5 class="card-title text-black-50">
             c variable
         </h5>
-            <div class="text-muted">
-                (Rapid variables or IO signals handeld *logged to a table or used as event)
-                @Html.ActionLink("c_variable index", "Index", "c_variable")
-            </div>
-            <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
-        
+        <div class="text-muted">
+            (Rapid variables or IO signals handeld *logged to a table or used as event)
+            @Html.ActionLink("c_variable index", "Index", "c_variable")
+        </div>
+        <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
+
     </div>
     <div class="card-body">
         <div id="c_variableGrid" class="mvc-grid"></div>
@@ -87,7 +87,7 @@
         <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
 
     </div>
-  
+
     <div class="card-body">
         <div id="c_csv_logGrid" class="mvc-grid"></div>
     </div>
@@ -98,7 +98,7 @@
 <div class="card">
     <div class="card-header bg-light">
         <h5 class="card-title text-black-50">
-            c device inf
+            c device info
         </h5>
         <div class="text-muted">
             (setup how device info is monitored)

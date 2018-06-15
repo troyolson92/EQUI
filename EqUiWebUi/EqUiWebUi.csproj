@@ -609,10 +609,15 @@
     <Compile Include="Areas\Welding\Controllers\WeldingController.cs" />
     <Compile Include="Controllers\Chart2Controller.cs" />
     <Compile Include="Controllers\ChartController.cs" />
+    <Compile Include="Controllers\ClassificationController.cs" />
+    <Compile Include="Controllers\c_LogClassRulesController.cs" />
     <Compile Include="Controllers\DynamicController.cs" />
     <Compile Include="Controllers\EQUISetupController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\TableauController.cs" />
+    <Compile Include="Models\c_Classification.cs">
+      <DependentUpon>EQUIModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\c_datasource.cs">
       <DependentUpon>EQUIModel.tt</DependentUpon>
     </Compile>
@@ -620,6 +625,9 @@
       <DependentUpon>EQUIModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\c_logClassSystem.cs">
+      <DependentUpon>EQUIModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\c_Subgroup.cs">
       <DependentUpon>EQUIModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EQUIModel.Context.cs">
@@ -1439,6 +1447,13 @@
     <Content Include="Views\Shared\MvcGrid\_AjaxGrid.cshtml" />
     <Content Include="Views\Error\AccessDenied.cshtml" />
     <Content Include="Views\EQUISetup\_settings.cshtml" />
+    <Content Include="Views\Classification\ClassificationTool.cshtml" />
+    <Content Include="Views\c_LogClassRules\Create.cshtml" />
+    <Content Include="Views\c_LogClassRules\Delete.cshtml" />
+    <Content Include="Views\c_LogClassRules\Details.cshtml" />
+    <Content Include="Views\c_LogClassRules\Edit.cshtml" />
+    <Content Include="Views\c_LogClassRules\Index.cshtml" />
+    <Content Include="Views\c_LogClassRules\_GetLogClassRulesGrid.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EQUICommunictionLib\EQUICommunictionLib.csproj">
