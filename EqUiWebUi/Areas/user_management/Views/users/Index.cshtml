@@ -15,8 +15,8 @@
     columns.Add(c => c.username).Titled("Username").InitialSort(GridSortOrder.Asc);
     columns.Add(c => c.LocationRoot).Titled("LocationRoot");
     columns.Add(c => c.AssetRoot).Titled("AssetRoot");
-    columns.Add(c => c.Locked).Titled("Locked").Css("XXd-none XXd-md-block");;
-    columns.Add(c => c.Blocked).Titled("Blocked").Css("XXd-none XXd-md-block");;
+    columns.Add(c => c.Locked).Titled("Locked").Css("d-none d-md-table-cell");
+    columns.Add(c => c.Blocked).Titled("Blocked").Css("d-none d-md-table-cell");
     columns.Add(c => c.id)
                 .Titled("")
                 .Encoded(false)

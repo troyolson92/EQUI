@@ -8,8 +8,8 @@
     columns.Add(c => c.Downtime_min_).Titled("DT").Filterable(true);
     columns.Add(c => c.Count).Titled("Count").Filterable(true);
     columns.Add(c => c.time).Titled("Time");
-    columns.Add(c => c.Subgroup).Titled("Subgroup").Filterable(true).Css("XXd-none XXd-md-block");;
-    columns.Add(c => c.Logtype).Titled("Logtype").Filterable(true).Css("XXd-none XXd-md-block");;
+    columns.Add(c => c.Subgroup).Titled("Subgroup").Filterable(true).Css("d-none d-md-table-cell");
+    columns.Add(c => c.Logtype).Titled("Logtype").Filterable(true).Css("d-none d-md-table-cell");
     columns.Add(c => c.LocationTree).Filterable(true).Css("d-none");
     columns.Add(c => c.Logcode).Css("d-none");
     columns.Add(c => c.refId).Css("d-none");

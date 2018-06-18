@@ -14,12 +14,12 @@
 
 @Html.Grid(Model).Named("Screens").Build(columns =>
 {
-    columns.Add(c => c.id).Titled("ID").Css("XXd-none XXd-md-block");;
-    columns.Add(c => c.Screen_num).Titled("scrNum").Css("XXd-none XXd-md-block");;
+    columns.Add(c => c.id).Titled("ID").Css("d-none d-md-table-cell");
+    columns.Add(c => c.Screen_num).Titled("scrNum").Css("d-none d-md-table-cell");
     columns.Add(c => c.L_users.username).Titled("Render as").InitialSort(GridSortOrder.Asc);
     columns.Add(c => c.Discription).Titled("Discription");
     columns.Add(c => c.ScreenUrl).Titled("ScreenUrl").Css("d-none");
-    columns.Add(c => c.ResetRate).Titled("ResetRate").Css("XXd-none XXd-md-block");;
+    columns.Add(c => c.ResetRate).Titled("ResetRate").Css("d-none d-md-table-cell");
     columns.Add(c => c.id)
                 .Titled("")
                 .Encoded(false)
