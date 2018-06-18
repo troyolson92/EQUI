@@ -1453,7 +1453,6 @@
     <Content Include="Views\Classification\ClassificationTool.cshtml" />
     <Content Include="Views\c_LogClassRules\Create.cshtml" />
     <Content Include="Views\c_LogClassRules\Delete.cshtml" />
-    <Content Include="Views\c_LogClassRules\Details.cshtml" />
     <Content Include="Views\c_LogClassRules\Edit.cshtml" />
     <Content Include="Views\c_LogClassRules\Index.cshtml" />
     <Content Include="Views\c_LogClassRules\_GetLogClassRulesGrid.cshtml" />

@@ -11,7 +11,7 @@
             <div class="card">
                 <div class="card-header bg-primary">
                     <h5 class="card-title text-white">
-                        Search for
+                        Search in logs
                         <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
                     </h5>
                 </div>
@@ -51,7 +51,7 @@
 
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
-                            <button class="btn btn-info" id="btnSearch">Search</button>
+                            <button class="btn btn-info" id="btnSearch">Search for logs</button>
                         </div>
                     </div>
                 </div>
@@ -60,23 +60,9 @@
             <hr />
 
             <div class="card">
-                <div class="card-header bg-warning">
-                    <h5 class="card-title text-white">
-                        Result
-                        <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
-                    </h5>
-                </div>
-                <div class="card-body">
-                    <div id="dummyLogClassResultGrid" class="mvc-grid">results load here</div>
-                </div>
-            </div>
-
-            <hr />
-
-            <div class="card">
                 <div class="card-header bg-primary">
                     <h5 class="card-title text-white">
-                        Set Class and Subgroup
+                        Search by Class and Subgroup
                         <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
                     </h5>
                 </div>
@@ -97,12 +83,12 @@
                     </div>
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
-                            <button class="btn btn-info" id="btnFindAllinGroup">Find all logs in group</button>
+                            <button class="btn btn-info" id="btnFindAllinGroup">Search for all logs in group</button>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
-                            <button class="btn btn-info" id="btnGetRules">Find all rules in group</button>
+                            <button class="btn btn-info" id="btnGetRules">Search for all rules in group</button>
                         </div>
                     </div>
                 </div>
@@ -112,9 +98,25 @@
         <hr />
 
         <div class="card">
+            <div class="card-header bg-warning">
+                <h5 class="card-title text-white">
+                    Result
+                    <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
+                </h5>
+            </div>
+            <div class="card-body">
+                <div id="dummyLogClassResultGrid" class="mvc-grid"></div>
+            </div>
+        </div>
+
+
+
+        <hr />
+
+        <div class="card">
             <div class="card-header bg-primary">
                 <h5 class="card-title text-white">
-                    Rules
+                    Classifcation rules
                     <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
                 </h5>
             </div>
@@ -125,7 +127,7 @@
                     </div>
                 </div>
 
-                <div id="c_LogClassRulesGrid" class="mvc-grid">results load here</div>
+                <div id="c_LogClassRulesGrid" class="mvc-grid"></div>
 
                 <div>Grid row dropdown option. Clear rule / delete rule / Remove rule. / Run rule / run rule with override manual set</div>
 
@@ -204,11 +206,13 @@
         }
 
      //hanlde get rules
-     $('#btnGetRules').click(function () {
+        $('#btnGetRules').click(function () {
          GetRules();
      });
 
 
-
+        //at end of script run the grids (init)
+        GetGridSearch(false);
+        GetRules();
     </script>
 }

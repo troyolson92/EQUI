@@ -1,8 +1,9 @@
 ﻿@model IQueryable<EqUiWebUi.Models.c_LogClassRules>
 
-@Html.Grid(Model).Named("c_LogClassRules").Build(columns =>
+@Html.Grid(Model).Named("c_LogClassRulesGrid").Build(columns =>
 {
-    columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Asc);
+    columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Asc).Css("d-none");
+    columns.Add(c => c.c_logClassSystem.Name).Titled("System");
     columns.Add(c => c.c_Classification.Classification).Titled("Class");
     columns.Add(c => c.c_Subgroup.Subgroup).Titled("Subgroup");
     columns.Add(c => c.I_comment).Titled("Comment");

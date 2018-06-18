@@ -33,7 +33,7 @@ namespace EqUiWebUi.Controllers
 
             ViewBag.c_logClassSystem_id = new SelectList(db.c_logClassSystem, "id", "Name");
             ViewBag.c_SubgroupId = new SelectList(db.c_Subgroup, "id", "Subgroup");
-            ViewBag.c_ClassificationId = new SelectList(db.c_Classification, "id", "Discription"); 
+            ViewBag.c_ClassificationId = new SelectList(db.c_Classification.OrderBy(c => c.Classification) , "id", "Classification"); 
 
             return View(Rule);
         }
