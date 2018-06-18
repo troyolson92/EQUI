@@ -36,27 +36,12 @@ namespace EqUiWebUi.Controllers
             return PartialView(c_LogClassRules);
         }
 
-        // GET: c_LogClassRules/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            c_LogClassRules c_LogClassRules = db.c_LogClassRules.Find(id);
-            if (c_LogClassRules == null)
-            {
-                return HttpNotFound();
-            }
-            return View(c_LogClassRules);
-        }
-
         // GET: c_LogClassRules/Create
         public ActionResult Create()
         {
             ViewBag.c_logClassSystem_id = new SelectList(db.c_logClassSystem, "id", "Name");
             ViewBag.c_SubgroupId = new SelectList(db.c_Subgroup, "id", "Subgroup");
-            ViewBag.c_ClassificationId = new SelectList(db.c_Classification, "id", "Discription");
+            ViewBag.c_ClassificationId = new SelectList(db.c_Classification.OrderBy(c => c.Classification), "id", "Classification");
             return View();
         }
 
@@ -76,7 +61,7 @@ namespace EqUiWebUi.Controllers
 
             ViewBag.c_logClassSystem_id = new SelectList(db.c_logClassSystem, "id", "Name");
             ViewBag.c_SubgroupId = new SelectList(db.c_Subgroup, "id", "Subgroup");
-            ViewBag.c_ClassificationId = new SelectList(db.c_Classification, "id", "Discription");
+            ViewBag.c_ClassificationId = new SelectList(db.c_Classification.OrderBy(c => c.Classification), "id", "Classification");
             return View(c_LogClassRules);
         }
 
@@ -94,7 +79,7 @@ namespace EqUiWebUi.Controllers
             }
             ViewBag.c_logClassSystem_id = new SelectList(db.c_logClassSystem, "id", "Name");
             ViewBag.c_SubgroupId = new SelectList(db.c_Subgroup, "id", "Subgroup");
-            ViewBag.c_ClassificationId = new SelectList(db.c_Classification, "id", "Discription");
+            ViewBag.c_ClassificationId = new SelectList(db.c_Classification.OrderBy(c => c.Classification), "id", "Classification");
             return View(c_LogClassRules);
         }
 
@@ -113,7 +98,7 @@ namespace EqUiWebUi.Controllers
             }
             ViewBag.c_logClassSystem_id = new SelectList(db.c_logClassSystem, "id", "Name");
             ViewBag.c_SubgroupId = new SelectList(db.c_Subgroup, "id", "Subgroup");
-            ViewBag.c_ClassificationId = new SelectList(db.c_Classification, "id", "Discription");
+            ViewBag.c_ClassificationId = new SelectList(db.c_Classification.OrderBy(c => c.Classification), "id", "Classification");
             return View(c_LogClassRules);
         }
 
