@@ -7,9 +7,9 @@
     columns.Add(c => c.RT).Titled("RT");
     columns.Add(c => c.DT).Titled("DT");
     columns.Add(c => c.time).Titled("time");
-    columns.Add(c => c.Classification).Titled("Class").Css("XXd-none XXd-md-block");
-    columns.Add(c => c.Subgroup).Titled("Subgroup").Css("XXd-none XXd-md-block");
-    columns.Add(c => c.Logtype).Titled("LogType").Css("XXd-none XXd-md-block").Filterable(true);
+    columns.Add(c => c.Classification).Titled("Class").Css("d-none d-md-table-cell");
+    columns.Add(c => c.Subgroup).Titled("Subgroup").Css("d-none d-md-table-cell");
+    columns.Add(c => c.Logtype).Titled("LogType").Css("d-none d-md-table-cell").Filterable(true);
     columns.Add(c => c.LocationTree).Filterable(true).Css("d-none");
     columns.Add(c => c.Logcode).Css("d-none");
     columns.Add(c => c.refId).Css("d-none");

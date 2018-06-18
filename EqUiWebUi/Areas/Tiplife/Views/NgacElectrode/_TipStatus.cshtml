@@ -5,13 +5,13 @@
     columns.Add(c => c.Robot).Titled("Robot").Filterable(true);
     columns.Add(c => c.Date_time).Titled("Laatst gefreest").Formatted("{0:dd-MM-yyyy HH:mm}");
     columns.Add(c => c.nDress).Titled("#gefreest");
-    columns.Add(c => c.WearRatio).Titled("%WearRatio").Css("XXd-none XXd-md-block");;
+    columns.Add(c => c.WearRatio).Titled("%WearRatio").Css("d-none d-md-table-cell");
     columns.Add(c => c.pWear).Titled("%wear").Filterable(true);
-    columns.Add(c => c.nRspots).Titled("#R Spots").Css("XXd-none XXd-md-block");;
-    columns.Add(c => c.nRcars).Titled("#R Stukken").InitialSort(GridSortOrder.Asc).Css("XXd-none XXd-md-block");;
+    columns.Add(c => c.nRspots).Titled("#R Spots").Css("d-none d-md-table-cell");
+    columns.Add(c => c.nRcars).Titled("#R Stukken").InitialSort(GridSortOrder.Asc).Css("d-none d-md-table-cell");
     columns.Add(c => c.TipAge_h_).Titled("leeftijd (h)");
-    columns.Add(c => c.RobotWear).Titled("Wear(mm)").Css("XXd-none XXd-md-block");;
-    columns.Add(c => c.Time_DressCycleTime).Titled("Ct (s)").Css("XXd-none XXd-md-block");;
+    columns.Add(c => c.RobotWear).Titled("Wear(mm)").Css("d-none d-md-table-cell");
+    columns.Add(c => c.Time_DressCycleTime).Titled("Ct (s)").Css("d-none d-md-table-cell");
     columns.Add(c => c.LocationTree).Filterable(true).Css("d-none"); //used for filtering
 //RenderStatusIcon
 columns.Add()
