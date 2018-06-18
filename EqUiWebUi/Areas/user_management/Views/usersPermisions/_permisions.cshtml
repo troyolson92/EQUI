@@ -5,8 +5,8 @@
     columns.Add(c => c.L_users.username).Titled("username");
     columns.Add(c => c.c_userRoles.Role).Titled("role");
     columns.Add(c => c.c_userRoles.Description).Titled("role description");
-    columns.Add(c => c.L_users1.username).Titled("GrantedBy").Css("d-none d-md-table-cell");
-    columns.Add(c => c.GrantedAt).Titled("GrantedAt").InitialSort(GridSortOrder.Desc).Css("d-none d-md-table-cell");
+    columns.Add(c => c.L_users1.username).Titled("GrantedBy").Css("d-none d-lg-table-cell");
+    columns.Add(c => c.GrantedAt).Titled("GrantedAt").InitialSort(GridSortOrder.Desc).Css("d-none d-lg-table-cell");
     columns.Add(c => c.id)
                 .Titled("")
                 .Encoded(false)

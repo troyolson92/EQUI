@@ -4,14 +4,14 @@
 {
     columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Asc);
     columns.Add(c => c._Enable_bit).Titled("enable_bit");
-    columns.Add(c => c.flags).Titled("flags").Css("d-none d-md-table-cell");
-    columns.Add(c => c.ordinal).Titled("ordinal").Css("d-none d-md-table-cell");
-    columns.Add(c => c.error_category).Titled("catId").Css("d-none d-md-table-cell");
-    columns.Add(c => c._ErrorCategory).Titled("ErrorCategory").Css("d-none d-md-table-cell");
+    columns.Add(c => c.flags).Titled("flags").Css("d-none d-lg-table-cell");
+    columns.Add(c => c.ordinal).Titled("ordinal").Css("d-none d-lg-table-cell");
+    columns.Add(c => c.error_category).Titled("catId").Css("d-none d-lg-table-cell");
+    columns.Add(c => c._ErrorCategory).Titled("ErrorCategory").Css("d-none d-lg-table-cell");
     columns.Add(c => c.error_number).Titled("error_number");
     columns.Add(c => c._Operator).Titled("Operator");
     columns.Add(c => c.Ignore).Titled("Logtext");
-    columns.Add(c => c.UserComment).Titled("UserComment").Css("d-none d-md-table-cell");
+    columns.Add(c => c.UserComment).Titled("UserComment").Css("d-none d-lg-table-cell");
     columns.Add(c => c)
                     .Titled("")
                     .Encoded(false)
