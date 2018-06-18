@@ -26,8 +26,9 @@ namespace EqUiWebUi.Controllers
         public ActionResult ClassificationTool()
         {
             c_LogClassRules Rule = new c_LogClassRules();
+            //init values to everything
             Rule.coderangeStart = 0;
-            Rule.coderangeEnd = 9999;
+            Rule.coderangeEnd = 1000000;
             Rule.textSearch = "%";
 
             ViewBag.c_logClassSystem_id = new SelectList(db.c_logClassSystem, "id", "Name");
@@ -47,33 +48,34 @@ namespace EqUiWebUi.Controllers
         public ActionResult _logSearchResult(c_LogClassRules c_LogClassRule, bool SearchByClassification = false)
         {
             //get c_logclassRule
-            c_logClassSystem c_LogClassSystem = db.c_logClassSystem.Where(c => c.id == 1).FirstOrDefault();
-
-            IQueryable<l_dummyLogClassResult> result = db.l_dummyLogClassResult.SqlQuery(c_LogClassSystem.SelectStatement).AsQueryable();
-            return PartialView(result);
-
-            /*
-            //we need to make a dummy object to query. look at how we did the variable data in vasc 
-            if (SearchByClassification)
+            c_logClassSystem c_LogClassSystem = db.c_logClassSystem.Where(c => c.id == c_LogClassRule.c_logClassSystem_id).First();
+            if (c_LogClassSystem == null)
             {
-   
-                var result = db.l_dummyLogClassResult.SqlQuery(c_LogClassSystem.SelectStatement).Where(c => 
+                //in case we doent get a result back
+                throw new NotSupportedException();
+            }
+
+            //we need to make a dummy object to query. look at how we did the variable data in vasc 
+            if (!SearchByClassification)
+            {
+
+                IQueryable<l_dummyLogClassResult> result = db.l_dummyLogClassResult.SqlQuery(c_LogClassSystem.SelectStatement).Where(c =>
                                     c.text.Like(c_LogClassRule.textSearch) //hanlde text like statement
-                                    && (c.code < c_LogClassRule.coderangeStart && c.code > c_LogClassRule.coderangeEnd) //handle range search
-                                    );
+                                    && (c.code >= c_LogClassRule.coderangeStart && c.code <= c_LogClassRule.coderangeEnd) //handle range search
+                                    ).AsQueryable();
                 return PartialView(result);
             }
             else
             {
-                var result = db.l_dummyLogClassResult.SqlQuery(c_LogClassSystem.SelectStatement).Where(c => 
-                                     c.c_Classification_id == c_LogClassRule.c_ClassificationId //handle search by class and subgroup
-                                     && c.c_Subgroup_id == c_LogClassRule.c_SubgroupId
-                                    );
-
-
-
+                IQueryable<l_dummyLogClassResult> result = db.l_dummyLogClassResult.SqlQuery(c_LogClassSystem.SelectStatement).Where(c =>
+                //handle search by class and subgroup 
+                //Classid and subgroupid van be 0 of not set. (then allow all)
+                                     ((c.c_Classification_id == c_LogClassRule.c_ClassificationId) || c_LogClassRule.c_ClassificationId == 0 )
+                                     &&
+                                     ((c.c_Subgroup_id == c_LogClassRule.c_SubgroupId) || (c_LogClassRule.c_SubgroupId == 0))
+                                    ).AsQueryable();
                 return PartialView(result);
-            }*/
+            }
         }
 
 

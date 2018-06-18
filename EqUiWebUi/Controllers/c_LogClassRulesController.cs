@@ -26,7 +26,13 @@ namespace EqUiWebUi.Controllers
         //allow to filter by Classifcation / Subgroup or LogClassSystem or combination off
         public ActionResult _GetLogClassRulesGrid(int? c_ClassificationId, int? c_SubgroupId, int? c_logClassSystem_id)
         {
-            var c_LogClassRules = db.c_LogClassRules.Include(c => c.c_logClassSystem);
+            IQueryable<c_LogClassRules> c_LogClassRules = db.c_LogClassRules.Include(c => c.c_logClassSystem).Where(c => 
+            ((c.c_logClassSystem_id == c_logClassSystem_id) || (c_logClassSystem_id == null))
+            &&
+            ((c.c_ClassificationId == c_ClassificationId) || (c_ClassificationId == null))
+            &&
+            ((c.c_SubgroupId == c_SubgroupId) || (c_SubgroupId == null))
+            );
             return PartialView(c_LogClassRules);
         }
 
@@ -49,6 +55,8 @@ namespace EqUiWebUi.Controllers
         public ActionResult Create()
         {
             ViewBag.c_logClassSystem_id = new SelectList(db.c_logClassSystem, "id", "Name");
+            ViewBag.c_SubgroupId = new SelectList(db.c_Subgroup, "id", "Subgroup");
+            ViewBag.c_ClassificationId = new SelectList(db.c_Classification, "id", "Discription");
             return View();
         }
 
@@ -57,7 +65,7 @@ namespace EqUiWebUi.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,Err_start,Err_end,Err_text,I_comment,c_ClassificationId,c_SubgroupId,c_logClassSystem_id")] c_LogClassRules c_LogClassRules)
+        public ActionResult Create(c_LogClassRules c_LogClassRules)
         {
             if (ModelState.IsValid)
             {
@@ -66,7 +74,9 @@ namespace EqUiWebUi.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.c_logClassSystem_id = new SelectList(db.c_logClassSystem, "id", "Name", c_LogClassRules.c_logClassSystem_id);
+            ViewBag.c_logClassSystem_id = new SelectList(db.c_logClassSystem, "id", "Name");
+            ViewBag.c_SubgroupId = new SelectList(db.c_Subgroup, "id", "Subgroup");
+            ViewBag.c_ClassificationId = new SelectList(db.c_Classification, "id", "Discription");
             return View(c_LogClassRules);
         }
 
@@ -82,7 +92,9 @@ namespace EqUiWebUi.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.c_logClassSystem_id = new SelectList(db.c_logClassSystem, "id", "Name", c_LogClassRules.c_logClassSystem_id);
+            ViewBag.c_logClassSystem_id = new SelectList(db.c_logClassSystem, "id", "Name");
+            ViewBag.c_SubgroupId = new SelectList(db.c_Subgroup, "id", "Subgroup");
+            ViewBag.c_ClassificationId = new SelectList(db.c_Classification, "id", "Discription");
             return View(c_LogClassRules);
         }
 
@@ -91,7 +103,7 @@ namespace EqUiWebUi.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,Err_start,Err_end,Err_text,I_comment,c_ClassificationId,c_SubgroupId,c_logClassSystem_id")] c_LogClassRules c_LogClassRules)
+        public ActionResult Edit( c_LogClassRules c_LogClassRules)
         {
             if (ModelState.IsValid)
             {
@@ -99,7 +111,9 @@ namespace EqUiWebUi.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.c_logClassSystem_id = new SelectList(db.c_logClassSystem, "id", "Name", c_LogClassRules.c_logClassSystem_id);
+            ViewBag.c_logClassSystem_id = new SelectList(db.c_logClassSystem, "id", "Name");
+            ViewBag.c_SubgroupId = new SelectList(db.c_Subgroup, "id", "Subgroup");
+            ViewBag.c_ClassificationId = new SelectList(db.c_Classification, "id", "Discription");
             return View(c_LogClassRules);
         }
 

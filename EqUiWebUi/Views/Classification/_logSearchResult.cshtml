@@ -1,6 +1,6 @@
 ﻿@model IQueryable<EqUiWebUi.Models.l_dummyLogClassResult>
 
-@Html.Grid(Model).Named("l_dummyLogClassResult").Build(columns =>
+@Html.Grid(Model).Named("dummyLogClassResultGrid").Build(columns =>
 {
     columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Asc);
     columns.Add(c => c.code).Titled("Code");
