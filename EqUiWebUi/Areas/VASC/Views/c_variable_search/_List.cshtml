@@ -5,11 +5,11 @@
     columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Asc);
     columns.Add(c => c._Enable_bit).Titled("enable_bit");
     columns.Add(c => c.variable).Titled("variable");
-    columns.Add(c => c._Poll_Rate).Titled("_Poll_Rate").Css("d-none d-md-table-cell");
-    columns.Add(c => c._Insert_update).Titled("_Insert_update").Css("d-none d-md-table-cell");
+    columns.Add(c => c._Poll_Rate).Titled("_Poll_Rate").Css("d-none d-lg-table-cell");
+    columns.Add(c => c._Insert_update).Titled("_Insert_update").Css("d-none d-lg-table-cell");
     columns.Add(c => c.rt_table).Titled("rt_table");
-    columns.Add(c => c._SymbolTypes).Titled("_SymbolTypes").Css("d-none d-md-table-cell"); //must check doc to make this enum
-    columns.Add(c => c.datatype).Titled("datatype").Css("d-none d-md-table-cell"); //idem
+    columns.Add(c => c._SymbolTypes).Titled("_SymbolTypes").Css("d-none d-lg-table-cell"); //must check doc to make this enum
+    columns.Add(c => c.datatype).Titled("datatype").Css("d-none d-lg-table-cell"); //idem
     columns.Add(c => c)
                     .Titled("")
                     .Encoded(false)
