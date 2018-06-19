@@ -7,7 +7,6 @@
     columns.Add(c => c.text).Titled("Text");
     columns.Add(c => c.c_Classification.Classification).Titled("Class");
     columns.Add(c => c.c_Subgroup.Subgroup).Titled("Subgroup");
-
 }).Filterable().Sortable().Pageable(pager =>
 {
     pager.RowsPerPage = 10;
