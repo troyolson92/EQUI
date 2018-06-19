@@ -101,9 +101,11 @@ function EnableJQresultTriggerBtn() {
             type: "GET",
             url: $(this).attr('href'),
             success: function (result) {
+                console.log(result);
                 $.toaster({ title: 'JQresultTriggerBtn', priority: 'success', message: 'Whatever you did worked!' });
             },
             error: function (result) {
+                console.log(result);
                 $.toaster({ title: 'JQresultTriggerBtn', priority: 'danger', message: 'Whatever you did failed!' });
             }
         });

@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Data.SqlTypes;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using EqUiWebUi.Models;
@@ -90,5 +93,81 @@ namespace EqUiWebUi.Controllers
         {
             return View();
         }
+
+        //to manualy set a classification.
+        //this has modes 
+        //1 if no RowID is given we run it against the current filterParms (clear = false)
+        //2 if a RowID is given only that row is set. (clear = false)
+        //3 if no Row is is given we run it against the current filterParms and CLEAR the set classification (clear = true)
+        //4 if a Rowid is given only CLEAR thar row. (clear = true)
+        public JsonResult SetClass(c_LogClassRules c_LogClassRule, int? RowID, bool Clear = false)
+        {
+            //get c_logclassRule
+            c_logClassSystem c_LogClassSystem = db.c_logClassSystem.Where(c => c.id == c_LogClassRule.c_logClassSystem_id).First();
+            string UpdateSkelation = c_LogClassSystem.UpdateStatement;
+
+            //update stament example.. Parameters are MANDATORY!
+            /*these pars must be passed
+             *  DECLARE @textSearch as varchar(max)
+                DECLARE @coderangeStart as int
+                DECLARE @coderangeEnd as int
+                DECLARE @rowID as int
+                DECLARE @Clear as bit
+                */
+
+            /*
+SELECT L_error.id as 'id'
+      ,L_error.[error_number] as 'code'
+      ,L_error.error_text as 'text'
+      ,L_error.c_RuleId as  'c_logcClassRules_id'
+      ,L_error.c_ClassificationId as 'c_Classification_id'
+      ,L_error.c_SubgroupId as 'c_Subgroup_id'
+  FROM [GADATA].C3G.L_error 
+  WHERE  
+  --Group update
+  (
+  L_error.error_text like @textSearch
+  AND 
+  L_error.[error_number] between @coderangeStart and @coderangeEnd
+  AND
+  @rowID is null
+  )
+  --single set 
+  OR
+  (
+  L_error.id = @rowID
+  AND
+  @rowID is not null 
+  )
+             * */
+
+            db.Database.ExecuteSqlCommand(UpdateSkelation,
+                    new SqlParameter("@textSearch", c_LogClassRule.textSearch),
+                    new SqlParameter("@coderangeStart", c_LogClassRule.coderangeStart),
+                    new SqlParameter("@coderangeEnd", c_LogClassRule.coderangeEnd),
+                    new SqlParameter("@rowID", RowID ?? SqlInt32.Null),
+                    new SqlParameter("@Clear", Clear));
+
+            return Json(new { Msg = "job OK" },JsonRequestBehavior.AllowGet);
+
+        }
+    }
+}
+
+//need to find a good place to pust this
+public class JsonHttpStatusResult : JsonResult
+{
+    private readonly HttpStatusCode _httpStatus;
+
+    public JsonHttpStatusResult(object data, HttpStatusCode httpStatus)
+    {
+        Data = data;
+        _httpStatus = httpStatus;
+    }
+
+    public override void ExecuteResult(ControllerContext context)
+    {
+        context.RequestContext.HttpContext.Response.StatusCode = (int)_httpStatus;
+        base.ExecuteResult(context);
     }
 }

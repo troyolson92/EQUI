@@ -38,6 +38,7 @@
           <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Description" Type="varchar(max)" />
           <Property Name="SelectStatement" Type="varchar(max)" Nullable="false" />
+          <Property Name="UpdateStatement" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="l_dummyLogClassResult">
           <Key>
@@ -245,6 +246,7 @@
           <Property Name="SelectStatement" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="c_datasource" Relationship="GADATAModelEQUI.FK_c_logClassSystem_c_datasource" FromRole="c_logClassSystem" ToRole="c_datasource" />
           <NavigationProperty Name="c_LogClassRules" Relationship="GADATAModelEQUI.FK_c_LogClassRules_c_logClassSystem" FromRole="c_logClassSystem" ToRole="c_LogClassRules" />
+          <Property Name="UpdateStatement" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="c_Classification">
           <Key>
@@ -386,6 +388,7 @@
           <EntitySetMapping Name="c_logClassSystem">
             <EntityTypeMapping TypeName="GADATAModelEQUI.c_logClassSystem">
               <MappingFragment StoreEntitySet="c_logClassSystem">
+                <ScalarProperty Name="UpdateStatement" ColumnName="UpdateStatement" />
                 <ScalarProperty Name="SelectStatement" ColumnName="SelectStatement" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Name" ColumnName="Name" />

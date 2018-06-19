@@ -60,6 +60,33 @@
             <hr />
 
             <div class="card">
+                <div class="card-header bg-danger">
+                    <h5 class="card-title text-white">
+                        Power functions
+                        <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-rotate-180 fa-1"></i></span>
+                    </h5>
+                </div>
+                <div class="card-body" style="display:none">
+                    <div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <button class="btn btn-success" id="btnSetALLClassSubgroup">Set</button>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <button class="btn btn-danger" id="btnClearALLClassSubgroup">Clear</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <hr />
+
+            <div class="card">
                 <div class="card-header bg-primary">
                     <h5 class="card-title text-white">
                         Search by Class and Subgroup
@@ -109,8 +136,6 @@
             </div>
         </div>
 
-
-
         <hr />
 
         <div class="card">
@@ -137,10 +162,28 @@
 </div>
 
 
+@*Hidden html for loading into Result grid*@
+<div id="ResultGridOptions" class="d-none">
+    <div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button class="btn btn-success" id="btnSetSingleClassSubgroup">Set</button>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button class="btn btn-danger" id="btnClearSingleClassSubgroup">Clear</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
 
 @section scripts{
     <!--ClassificationTool script-->
-    <script>
+<script>
     //full with screen
         $("#allcontent").removeClass("body-content");
         $("#allcontent").removeClass("container");
@@ -161,6 +204,33 @@
                 },
                 requestType: 'get',
                 reload: true,
+                rowClicked: function (row, data, e) {
+                //if row already has this clase close the modal
+                if ($(row).hasClass("bg-info")) {
+                    $("#placeholder").remove();
+                    $(row).removeClass("bg-info");
+                    return;
+                }
+                //clear selected rows for this table
+                $('tr').removeClass('bg-info'); //THIS IS WRONG
+                $(row).addClass("bg-info");
+                $("#placeholder").remove(); //clear placeholder is exists
+                //add new placeholder afhter selected row
+                $(row).after('<tr id="placeholder"><td colspan="10000"><div class=""><div class="" id ="placeholderPartial"></div></div></td></tr>');
+                //load partial into div
+                $("#placeholderPartial").html($("#ResultGridOptions").html());
+                //listen toclick events
+                    //set a single Row
+                    $('#btnSetSingleClassSubgroup').click(function () {
+                        SetClass(row.id, false);
+                    });
+
+                    //Clear a single Row
+                    $('#btnClearSingleClassSubgroup').click(function () {
+                        SetClass(row.id, true);
+                    });
+                //
+                },
                 reloadStarted: function () {
 
                 },
@@ -177,7 +247,7 @@
         $("#btnSearch").click(function () {
             GetGridSearch(false);
         });
-    //hanlde sreach (all in selecte subgroup and class)
+    //handle search (all in selecte subgroup and class)
         $('#btnFindAllinGroup').click(function () {
             GetGridSearch(true);
         });
@@ -204,15 +274,62 @@
                 }
             });
         }
-
      //hanlde get rules
         $('#btnGetRules').click(function () {
          GetRules();
-     });
+       });
 
 
-        //at end of script run the grids (init)
+    //Section for setting and clearing of classifcation
+        function SetClass(rowID, Clear) {
+            $.toaster({ title: 'SetClass', priority: 'info', message: 'Fired: SetClass' });
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("SetClass")',
+                data: {
+                    c_logClassSystem_id: $('#c_logClassSystem_id').val(),
+                    coderangeStart: $('#coderangeStart').val(),
+                    coderangeEnd: $('#coderangeEnd').val(),
+                    textSearch: $('#textSearch').val(),
+                    c_ClassificationId: $('#c_ClassificationId').val(),
+                    c_SubgroupId: $('#c_SubgroupId').val(),
+                    RowID: rowID,
+                    Clear: Clear
+                },
+                success: function (result) {
+                    $.toaster({ title: 'SetClass', priority: 'success', message: result.Msg });
+                    //reload the grid
+                    GetGridSearch(false);
+                },
+                error: function (result) {
+                    console.log(result);
+                    $.toaster({ title: 'SetClass', priority: 'danger', message: result.error });
+                    //reload the grid
+                    GetGridSearch(false);
+                }
+            });
+        }
+
+    //listen toclick events
+    //set a single Row
+    $('#btnSetALLClassSubgroup').click(function () {
+        SetClass(null, false);
+    });
+
+    //Clear a single Row
+    $('#btnClearALLClassSubgroup').click(function () {
+        SetClass(null, true);
+    });
+
+    //refresh grids system changes
+    $('#c_logClassSystem_id').on('change', function () {
+        //reload the grids
         GetGridSearch(false);
         GetRules();
-    </script>
+    });
+
+    //at end of script run the grids (init)
+    GetGridSearch(false);
+    GetRules();
+</script>
 }
