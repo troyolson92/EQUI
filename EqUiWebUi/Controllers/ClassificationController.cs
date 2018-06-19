@@ -81,7 +81,6 @@ namespace EqUiWebUi.Controllers
             }
         }
 
-
         //need to find a way to sync c_classification without breaking the key. (data from maximp)
         public ActionResult UpdateC_Classiciation()
         {
@@ -100,17 +99,14 @@ namespace EqUiWebUi.Controllers
         //2 if a RowID is given only that row is set. (clear = false)
         //3 if no Row is is given we run it against the current filterParms and CLEAR the set classification (clear = true)
         //4 if a Rowid is given only CLEAR thar row. (clear = true)
-
-
         //update stament example.. Parameters are MANDATORY!
-        /*these pars must be passed
-         *  DECLARE @textSearch as varchar(max)
+        /*
+            DECLARE @textSearch as varchar(max)
             DECLARE @coderangeStart as int
             DECLARE @coderangeEnd as int
             DECLARE @rowID as int
             DECLARE @Clear as bit
             */
-
         /*
             UPDATE GADATA.C3G.l_error
             SET  c_ClassificationID =  CASE  
@@ -159,23 +155,14 @@ namespace EqUiWebUi.Controllers
             return Json(new { Msg = "job OK" },JsonRequestBehavior.AllowGet);
 
         }
+
+
+        public JsonResult RunRule(int ruleID, bool overrideManualSet = false, bool Clear = false)
+        {
+
+            return Json(new { Msg = string.Format("Ruleid: {0}, override: {1}, clear: {2}", ruleID, overrideManualSet,Clear) }, JsonRequestBehavior.AllowGet);
+
+        }
     }
 }
 
-//need to find a good place to pust this
-public class JsonHttpStatusResult : JsonResult
-{
-    private readonly HttpStatusCode _httpStatus;
-
-    public JsonHttpStatusResult(object data, HttpStatusCode httpStatus)
-    {
-        Data = data;
-        _httpStatus = httpStatus;
-    }
-
-    public override void ExecuteResult(ControllerContext context)
-    {
-        context.RequestContext.HttpContext.Response.StatusCode = (int)_httpStatus;
-        base.ExecuteResult(context);
-    }
-}

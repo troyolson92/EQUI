@@ -11,7 +11,7 @@
             <div class="card">
                 <div class="card-header bg-primary">
                     <h5 class="card-title text-white">
-                        Search in logs
+                        Search in log lib
                         <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
                     </h5>
                 </div>
@@ -19,148 +19,145 @@
 
                     <div class="form-group">
                         @Html.LabelFor(model => model.c_logClassSystem_id, "c_logClassSystem_id", htmlAttributes: new { @class = "control-label col-md-4" })
-                        <div class="col-md-8">
+                        <div class="col-md-4">
                             @Html.DropDownList("c_logClassSystem_id", null, htmlAttributes: new { @class = "form-control" })
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.coderangeStart, htmlAttributes: new { @class = "control-label col-md-4" })
-                        <div class="col-md-8">
-                            @Html.EditorFor(model => model.coderangeStart, new { htmlAttributes = new { @class = "form-control" } })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.coderangeEnd, htmlAttributes: new { @class = "control-label col-md-4" })
-                        <div class="col-md-8">
-                            @Html.EditorFor(model => model.coderangeEnd, new { htmlAttributes = new { @class = "form-control" } })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.textSearch, htmlAttributes: new { @class = "control-label col-md-4" })
-                        <div class="col-md-8">
-                            @Html.EditorFor(model => model.textSearch, new { htmlAttributes = new { @class = "form-control" } })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <button class="btn btn-info" id="btnSearch">Search for logs</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <hr />
-
-            <div class="card">
-                <div class="card-header bg-danger">
-                    <h5 class="card-title text-white">
-                        Power functions(DANGEROUS)
-                        <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-rotate-180 fa-1"></i></span>
-                    </h5>
-                </div>
-                <div class="card-body" style="display:none">
-                    <div>
-                        <div class="form-group">
-                            <div class="col-md-offset-2 col-md-10">
-                                <button class="btn btn-success" id="btnSetALLClassSubgroup">Set</button>
-                                Set al that match current Query result
+                    <div class="row">
+                        <div class="col-xl-3">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.coderangeStart, htmlAttributes: new { @class = "control-label col-md-4" })
+                                <div class="col-md-8">
+                                    @Html.EditorFor(model => model.coderangeStart, new { htmlAttributes = new { @class = "form-control" } })
+                                </div>
                             </div>
                         </div>
-
-                        <div class="form-group">
-                            <div class="col-md-offset-2 col-md-10">
-                                <button class="btn btn-danger" id="btnClearALLClassSubgroup">Clear</button>
-                                CELAR al that match current Query result
+                        <div class="col-xl-3">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.coderangeEnd, htmlAttributes: new { @class = "control-label col-md-4" })
+                                <div class="col-md-8">
+                                    @Html.EditorFor(model => model.coderangeEnd, new { htmlAttributes = new { @class = "form-control" } })
+                                </div>
                             </div>
                         </div>
+                        <div class="col-xl-6">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.textSearch, htmlAttributes: new { @class = "control-label col-md-4" })
+                                <div class="col-md-8">
+                                    @Html.EditorFor(model => model.textSearch, new { htmlAttributes = new { @class = "form-control" } })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
+                    <div class="form-group">
+                        <div class="col-md-8 pull-right">
+                            <button class="btn btn-info" id="btnSearch">Search</button>
+                        </div>
                     </div>
-                </div>
-            </div>
 
-            <hr />
+                </div>
 
-            <div class="card">
-                <div class="card-header bg-primary">
-                    <h5 class="card-title text-white">
-                        Search by Class and Subgroup
-                        <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
-                    </h5>
-                </div>
-                <div class="card-body">
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.c_ClassificationId, "c_ClassificationId", htmlAttributes: new { @class = "control-label col-md-4" })
-                        <div class="col-md-10">
-                            @Html.DropDownList("c_ClassificationId", null, htmlAttributes: new { @class = "form-control" }, optionLabel: "--Select class--")
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.c_SubgroupId, "c_SubgroupId", htmlAttributes: new { @class = "control-label col-md-4" })
-                        <div class="col-md-10">
-                            @Html.DropDownList("c_SubgroupId", null, htmlAttributes: new { @class = "form-control" }, optionLabel: "--Select subgroup--")
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <button class="btn btn-info" id="btnFindAllinGroup">Search for all logs in group</button>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <button class="btn btn-info" id="btnGetRules">Search for all rules in group</button>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
 
         <hr />
 
         <div class="card">
-            <div class="card-header bg-warning">
+            <div class="card-header bg-danger">
                 <h5 class="card-title text-white">
-                    Result
-                    <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
+                    Power functions (Search by Class and Subgroup and set in bulk) DANGEROUS
+                    <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-rotate-180 fa-1"></i></span>
                 </h5>
             </div>
-            <div class="card-body">
-                <div id="dummyLogClassResultGrid" class="mvc-grid"></div>
-            </div>
-        </div>
-
-        <hr />
-
-        <div class="card">
-            <div class="card-header bg-primary">
-                <h5 class="card-title text-white">
-                    Classifcation rules
-                    <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
-                </h5>
-            </div>
-            <div class="card-body">
+            <div class="card-body" style="display:none">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.c_ClassificationId, "c_ClassificationId", htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.DropDownList("c_ClassificationId", null, htmlAttributes: new { @class = "form-control" }, optionLabel: "--Select class--")
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.c_SubgroupId, "c_SubgroupId", htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.DropDownList("c_SubgroupId", null, htmlAttributes: new { @class = "form-control" }, optionLabel: "--Select subgroup--")
+                    </div>
+                </div>
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        <button class="btn btn-info" id="btnAddRule">Add rule</button>
+                        <button class="btn btn-info" id="btnFindAllinGroup">Search for all logs in group</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <button class="btn btn-info" id="btnGetRules">Search for all rules in group</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <button class="btn btn-success" id="btnSetALLClassSubgroup">Set</button>
+                        Set all that matches current search result
                     </div>
                 </div>
 
-                <div id="c_LogClassRulesGrid" class="mvc-grid"></div>
-
-                <div>Grid row dropdown option. Clear rule / delete rule / Remove rule. / Run rule / run rule with override manual set</div>
-
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <button class="btn btn-danger" id="btnClearALLClassSubgroup">Clear</button>
+                        CLEAR all that matches current search result
+                    </div>
+                </div>
             </div>
+        </div>
+    </div>
+
+    <hr />
+
+    <div class="card">
+        <div class="card-header bg-warning">
+            <h5 class="card-title text-white">
+                Result
+                <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
+            </h5>
+        </div>
+        <div class="card-body">
+            <div id="dummyLogClassResultGrid" class="mvc-grid"></div>
+        </div>
+    </div>
+
+    <hr />
+
+    <div class="card">
+        <div class="card-header bg-primary">
+            <h5 class="card-title text-white">
+                Classifcation rules
+                <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
+            </h5>
+        </div>
+        <div class="card-body">
+            <div id="c_LogClassRulesGrid" class="mvc-grid"></div>
         </div>
     </div>
 </div>
 
 
+
 @*Hidden html for loading into Result grid*@
 <div id="ResultGridOptions" class="d-none">
     <div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.c_ClassificationId, "c_ClassificationId", htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-8">
+                @Html.DropDownList("c_ClassificationId", null, htmlAttributes: new { @class = "form-control" }, optionLabel: "--Select class--")
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.c_SubgroupId, "c_SubgroupId", htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-8">
+                @Html.DropDownList("c_SubgroupId", null, htmlAttributes: new { @class = "form-control" }, optionLabel: "--Select subgroup--")
+            </div>
+        </div>
+
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <button class="btn btn-success" id="btnSetSingleClassSubgroup">Set</button>
@@ -172,6 +169,34 @@
             <div class="col-md-offset-2 col-md-10">
                 <button class="btn btn-danger" id="btnClearSingleClassSubgroup">Clear</button>
                 Clear single row
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+@*Hidden html for loading into Rules grid*@
+<div id="RuleGridOptions" class="d-none">
+    <div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button class="btn btn-warning" id="btnRunRule">RunRule</button>
+                Run rule (leave manual set)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button class="btn btn-danger" id="btnRuleRuleOverride">RuleRule</button>
+                Run rule (override manual set)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button class="btn btn-danger" id="btnRuleClear">ClearRule</button>
+                Clear records with this rule
             </div>
         </div>
 
@@ -205,18 +230,18 @@
                 rowClicked: function (row, data, e) {
                 //if row already has this clase close the modal
                 if ($(row).hasClass("bg-info")) {
-                    $("#placeholder").remove();
+                    $("#placeholder1").remove();
                     $(row).removeClass("bg-info");
                     return;
                 }
                 //clear selected rows for this table
                 $('tr').removeClass('bg-info'); //THIS IS WRONG
                 $(row).addClass("bg-info");
-                $("#placeholder").remove(); //clear placeholder is exists
+                $("#placeholder1").remove(); //clear placeholder is exists
                 //add new placeholder afhter selected row
-                $(row).after('<tr id="placeholder"><td colspan="10000"><div class=""><div class="" id ="placeholderPartial"></div></div></td></tr>');
+                $(row).after('<tr id="placeholder1"><td colspan="10000"><div class=""><div class="" id ="placeholderPartial1"></div></div></td></tr>');
                 //load partial into div
-                $("#placeholderPartial").html($("#ResultGridOptions").html());
+                $("#placeholderPartial1").html($("#ResultGridOptions").html());
                 //listen toclick events
                     //set a single Row
                     $('#btnSetSingleClassSubgroup').click(function () {
@@ -241,15 +266,6 @@
             });
         }
 
-    //handle search. (by range and logtext)
-        $("#btnSearch").click(function () {
-            GetGridSearch(false);
-        });
-    //handle search (all in selecte subgroup and class)
-        $('#btnFindAllinGroup').click(function () {
-            GetGridSearch(true);
-        });
-
     //get logclassRulesGrid
         function GetRules() {
             $("#c_LogClassRulesGrid").mvcgrid({
@@ -261,6 +277,36 @@
                 },
                 requestType: 'get',
                 reload: true,
+                rowClicked: function (row, data, e) {
+                    //if row already has this clase close the modal
+                    if ($(row).hasClass("bg-info")) {
+                        $("#placeholder2").remove();
+                        $(row).removeClass("bg-info");
+                        return;
+                    }
+                    //clear selected rows for this table
+                    $('tr').removeClass('bg-info'); //THIS IS WRONG
+                    $(row).addClass("bg-info");
+                    $("#placeholder2").remove(); //clear placeholder is exists
+                    //add new placeholder afhter selected row
+                    $(row).after('<tr id="placeholder2"><td colspan="10000"><div class=""><div class="" id ="placeholderPartial2"></div></div></td></tr>');
+                    //load partial into div
+                    $("#placeholderPartial2").html($("#RuleGridOptions").html());
+                    //
+                    //listen toclick events
+                        //run rule
+                        $('#btnRunRule').click(function () {
+                            RunRule(data.id, false, false);
+                        });
+                        //run rule with override
+                        $('#btnRuleRuleOverride').click(function () {
+                            RunRule(data.id, true, false);
+                        });
+                        //clear rule
+                        $('#btnRuleClear').click(function () {
+                            RunRule(data.id, false, true);
+                        });
+                },
                 reloadStarted: function () {
 
                 },
@@ -272,13 +318,8 @@
                 }
             });
         }
-     //hanlde get rules
-        $('#btnGetRules').click(function () {
-         GetRules();
-       });
 
-
-    //Section for setting and clearing of classifcation
+    //function for setting and clearing of classifcation (manual)
         function SetClass(rowID, Clear) {
             $.toaster({ title: 'SetClass', priority: 'info', message: 'Fired: SetClass' });
             $.ajax({
@@ -308,17 +349,52 @@
             });
         }
 
-    //listen toclick events
+     //function for running rules
+        function RunRule(ruleID, overrideManualSet, Clear) {
+            $.toaster({ title: 'RunRule', priority: 'info', message: 'Fired: RunRule' });
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("RunRule")',
+                data: {
+                    ruleID: ruleID,
+                    overrideManualSet: overrideManualSet,
+                    Clear: Clear
+                },
+                success: function (result) {
+                    $.toaster({ title: 'RunRule', priority: 'success', message: result.Msg });
+                    //reload the grid
+                    GetGridSearch(false);
+                },
+                error: function (result) {
+                    console.log(result);
+                    $.toaster({ title: 'RunRule', priority: 'danger', message: result.statusCode });
+                    //reload the grid
+                    GetGridSearch(false);
+                }
+            });
+        }
+
+//listen toclick events
+    //handle search. (by range and logtext)
+    $("#btnSearch").click(function () {
+        GetGridSearch(false);
+    });
+    //handle search (all in selecte subgroup and class)
+    $('#btnFindAllinGroup').click(function () {
+        GetGridSearch(true);
+    });
+    //hanlde get rules
+    $('#btnGetRules').click(function () {
+        GetRules();
+    });
     //set a single Row
     $('#btnSetALLClassSubgroup').click(function () {
         SetClass(0, false);
     });
-
     //Clear a single Row
     $('#btnClearALLClassSubgroup').click(function () {
         SetClass(0, true);
     });
-
     //refresh grids system changes
     $('#c_logClassSystem_id').on('change', function () {
         //reload the grids
@@ -326,7 +402,7 @@
         GetRules();
     });
 
-    //at end of script run the grids (init)
+//at end of script run the grids (init)
     GetGridSearch(false);
     GetRules();
 </script>
