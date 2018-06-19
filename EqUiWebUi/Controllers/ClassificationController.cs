@@ -100,7 +100,7 @@ namespace EqUiWebUi.Controllers
         //2 if a RowID is given only that row is set. (clear = false)
         //3 if no Row is is given we run it against the current filterParms and CLEAR the set classification (clear = true)
         //4 if a Rowid is given only CLEAR thar row. (clear = true)
-        public JsonResult SetClass(c_LogClassRules c_LogClassRule, int? RowID, bool Clear = false)
+        public JsonResult SetClass(c_LogClassRules c_LogClassRule, int RowID, bool Clear = false)
         {
             //get c_logclassRule
             c_logClassSystem c_LogClassSystem = db.c_logClassSystem.Where(c => c.id == c_LogClassRule.c_logClassSystem_id).First();
@@ -145,8 +145,11 @@ SELECT L_error.id as 'id'
                     new SqlParameter("@textSearch", c_LogClassRule.textSearch),
                     new SqlParameter("@coderangeStart", c_LogClassRule.coderangeStart),
                     new SqlParameter("@coderangeEnd", c_LogClassRule.coderangeEnd),
-                    new SqlParameter("@rowID", RowID ?? SqlInt32.Null),
-                    new SqlParameter("@Clear", Clear));
+                    new SqlParameter("@rowID", RowID),
+                    new SqlParameter("@Clear", Clear),
+                    new SqlParameter("@c_ClassificationId", c_LogClassRule.c_ClassificationId),
+                    new SqlParameter("@c_SubgroupId", c_LogClassRule.c_SubgroupId)
+                    );
 
             return Json(new { Msg = "job OK" },JsonRequestBehavior.AllowGet);
 
