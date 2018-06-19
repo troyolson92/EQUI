@@ -100,46 +100,51 @@ namespace EqUiWebUi.Controllers
         //2 if a RowID is given only that row is set. (clear = false)
         //3 if no Row is is given we run it against the current filterParms and CLEAR the set classification (clear = true)
         //4 if a Rowid is given only CLEAR thar row. (clear = true)
+
+
+        //update stament example.. Parameters are MANDATORY!
+        /*these pars must be passed
+         *  DECLARE @textSearch as varchar(max)
+            DECLARE @coderangeStart as int
+            DECLARE @coderangeEnd as int
+            DECLARE @rowID as int
+            DECLARE @Clear as bit
+            */
+
+        /*
+            UPDATE GADATA.C3G.l_error
+            SET  c_ClassificationID =  CASE  
+                                     WHEN @Clear = 0 THEN @c_ClassificationId 
+                                     ELSE NULL
+                                     END ,
+              c_SubgroupId =  CASE  
+                                     WHEN @Clear = 0 THEN @c_SubgroupId 
+                                     ELSE NULL
+                                     END 
+            FROM GADATA.C3G.L_error
+            WHERE  
+            --Group update
+            (
+            L_error.error_text like @textSearch
+            AND 
+            L_error.[error_number] between @coderangeStart and @coderangeEnd
+            AND
+            @rowID is null
+            )
+            --single set 
+            OR
+            (
+            L_error.id = @rowID
+            AND
+            @rowID is not null 
+            )
+         * */
         public JsonResult SetClass(c_LogClassRules c_LogClassRule, int RowID, bool Clear = false)
         {
             //get c_logclassRule
             c_logClassSystem c_LogClassSystem = db.c_logClassSystem.Where(c => c.id == c_LogClassRule.c_logClassSystem_id).First();
             string UpdateSkelation = c_LogClassSystem.UpdateStatement;
 
-            //update stament example.. Parameters are MANDATORY!
-            /*these pars must be passed
-             *  DECLARE @textSearch as varchar(max)
-                DECLARE @coderangeStart as int
-                DECLARE @coderangeEnd as int
-                DECLARE @rowID as int
-                DECLARE @Clear as bit
-                */
-
-            /*
-SELECT L_error.id as 'id'
-      ,L_error.[error_number] as 'code'
-      ,L_error.error_text as 'text'
-      ,L_error.c_RuleId as  'c_logcClassRules_id'
-      ,L_error.c_ClassificationId as 'c_Classification_id'
-      ,L_error.c_SubgroupId as 'c_Subgroup_id'
-  FROM [GADATA].C3G.L_error 
-  WHERE  
-  --Group update
-  (
-  L_error.error_text like @textSearch
-  AND 
-  L_error.[error_number] between @coderangeStart and @coderangeEnd
-  AND
-  @rowID is null
-  )
-  --single set 
-  OR
-  (
-  L_error.id = @rowID
-  AND
-  @rowID is not null 
-  )
-             * */
 
             db.Database.ExecuteSqlCommand(UpdateSkelation,
                     new SqlParameter("@textSearch", c_LogClassRule.textSearch),
