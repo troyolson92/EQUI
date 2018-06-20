@@ -1,8 +1,8 @@
 ﻿@model EqUiWebUi.Models.c_LogClassRules
 
 <div class="">
-    <div class="card-header bg-warning">
-        <h5 class="card-title text-black-50">
+    <div class="card-header bg-dark">
+        <h5 class="card-title text-white">
             ClassificationTool
         </h5>
     </div>
@@ -58,7 +58,6 @@
                     </div>
 
                 </div>
-
             </div>
         </div>
 
@@ -72,71 +71,86 @@
                 </h5>
             </div>
             <div class="card-body" style="display:none">
-                <div class="form-group">
-                    @Html.LabelFor(model => model.c_ClassificationId, "c_ClassificationId", htmlAttributes: new { @class = "control-label col-md-4" })
-                    <div class="col-md-8">
-                        @Html.DropDownList("c_ClassificationId", null, htmlAttributes: new { @class = "form-control" }, optionLabel: "--Select class--")
+                <div class="row">
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.c_ClassificationId, "c_ClassificationId", htmlAttributes: new { @class = "control-label col-md-4" })
+                            <div class="col-md-8">
+                                @Html.DropDownList("c_ClassificationId", null, htmlAttributes: new { @class = "form-control c_ClassificationId" }, optionLabel: "--Select class--")
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.c_SubgroupId, "c_SubgroupId", htmlAttributes: new { @class = "control-label col-md-4" })
+                            <div class="col-md-8">
+                                @Html.DropDownList("c_SubgroupId", null, htmlAttributes: new { @class = "form-control c_SubgroupId" }, optionLabel: "--Select subgroup--")
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.c_SubgroupId, "c_SubgroupId", htmlAttributes: new { @class = "control-label col-md-4" })
-                    <div class="col-md-8">
-                        @Html.DropDownList("c_SubgroupId", null, htmlAttributes: new { @class = "form-control" }, optionLabel: "--Select subgroup--")
+                <div class="row">
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <button class="btn btn-info" id="btnFindAllinGroup">Search for all logs in group</button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <button class="btn btn-info" id="btnGetRules">Search for all rules in group</button>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <button class="btn btn-info" id="btnFindAllinGroup">Search for all logs in group</button>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <button class="btn btn-info" id="btnGetRules">Search for all rules in group</button>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <button class="btn btn-success" id="btnSetALLClassSubgroup">Set</button>
-                        Set all that matches current search result
-                    </div>
-                </div>
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <button class="btn btn-success" id="btnSetALLClassSubgroup">Set</button>
+                                Set all that matches current search result
+                            </div>
+                        </div>
 
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <button class="btn btn-danger" id="btnClearALLClassSubgroup">Clear</button>
-                        CLEAR all that matches current search result
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <button class="btn btn-danger" id="btnClearALLClassSubgroup">Clear</button>
+                                CLEAR all that matches current search result
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <hr />
+        <hr />
 
-    <div class="card">
-        <div class="card-header bg-primary">
-            <h5 class="card-title text-white">
-                Result
-                <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
-            </h5>
+        <div class="card">
+            <div class="card-header bg-primary">
+                <h5 class="card-title text-white">
+                    Result
+                    <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
+                </h5>
+            </div>
+            <div class="card-body">
+                <div id="dummyLogClassResultGrid" class="mvc-grid"></div>
+            </div>
         </div>
-        <div class="card-body">
-            <div id="dummyLogClassResultGrid" class="mvc-grid"></div>
-        </div>
-    </div>
 
-    <hr />
+        <hr />
 
-    <div class="card">
-        <div class="card-header bg-primary">
-            <h5 class="card-title text-white">
-                Classifcation rules
-                <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
-            </h5>
+        <div class="card">
+            <div class="card-header bg-primary">
+                <h5 class="card-title text-white">
+                    Classifcation rules
+                    <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
+                </h5>
+            </div>
+            <div class="card-body">
+                <div id="c_LogClassRulesGrid" class="mvc-grid"></div>
+            </div>
         </div>
-        <div class="card-body">
-            <div id="c_LogClassRulesGrid" class="mvc-grid"></div>
-        </div>
+
+        <hr />
+
     </div>
 </div>
 
@@ -145,34 +159,42 @@
 @*Hidden html for loading into Result grid*@
 <div id="ResultGridOptions" class="d-none">
     <div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.c_ClassificationId, "c_ClassificationId", htmlAttributes: new { @class = "control-label col-md-4" })
-            <div class="col-md-8">
-                @Html.DropDownList("c_ClassificationId", null, htmlAttributes: new { @class = "form-control" }, optionLabel: "--Select class--")
+        <div class="row">
+            <div class="col-xl-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.c_ClassificationId, "c_ClassificationId", htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.DropDownList("c_ClassificationId", null, htmlAttributes: new { @class = "form-control c_ClassificationId" }, optionLabel: "--Select class--")
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.c_SubgroupId, "c_SubgroupId", htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.DropDownList("c_SubgroupId", null, htmlAttributes: new { @class = "form-control c_SubgroupId" }, optionLabel: "--Select subgroup--")
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.c_SubgroupId, "c_SubgroupId", htmlAttributes: new { @class = "control-label col-md-4" })
-            <div class="col-md-8">
-                @Html.DropDownList("c_SubgroupId", null, htmlAttributes: new { @class = "form-control" }, optionLabel: "--Select subgroup--")
-            </div>
-        </div>
+        <div class="row">
+            <div class="col-xl-6">
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <button class="btn btn-success" id="btnSetSingleClassSubgroup">Set</button>
+                        Set single row
+                    </div>
+                </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <button class="btn btn-success" id="btnSetSingleClassSubgroup">Set</button>
-                Set single row
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <button class="btn btn-danger" id="btnClearSingleClassSubgroup">Clear</button>
+                        Clear single row
+                    </div>
+                </div>
             </div>
+             </div>
         </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <button class="btn btn-danger" id="btnClearSingleClassSubgroup">Clear</button>
-                Clear single row
-            </div>
-        </div>
-
-    </div>
 </div>
 
 
@@ -247,10 +269,16 @@
                     $('#btnSetSingleClassSubgroup').click(function () {
                         SetClass(data.id, false);
                     });
-
                     //Clear a single Row
                     $('#btnClearSingleClassSubgroup').click(function () {
                         SetClass(data.id, true);
+                    });
+                    //these dropdrown have multible instances on the same page. this keeps em allinged
+                    $('.c_ClassificationId').on('change', function () {
+                        $(".c_ClassificationId").val($(this).val());
+                    });
+                    $('.c_SubgroupId').on('change', function () {
+                        $(".c_SubgroupId").val($(this).val());
                     });
                 //
                 },
@@ -402,7 +430,6 @@
         GetGridSearch(false);
         GetRules();
     });
-
 //at end of script run the grids (init)
     GetGridSearch(false);
     GetRules();
