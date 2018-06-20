@@ -114,7 +114,7 @@
     <hr />
 
     <div class="card">
-        <div class="card-header bg-warning">
+        <div class="card-header bg-primary">
             <h5 class="card-title text-white">
                 Result
                 <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
@@ -356,7 +356,8 @@
                 type: "GET",
                 url: '@Url.Action("RunRule")',
                 data: {
-                    ruleID: ruleID,
+                    c_logClassSystem_id: $('#c_logClassSystem_id').val(),
+                    id: ruleID,
                     overrideManualSet: overrideManualSet,
                     Clear: Clear
                 },
@@ -395,7 +396,7 @@
     $('#btnClearALLClassSubgroup').click(function () {
         SetClass(0, true);
     });
-    //refresh grids system changes
+    //refresh grids when system changes
     $('#c_logClassSystem_id').on('change', function () {
         //reload the grids
         GetGridSearch(false);
