@@ -99,7 +99,7 @@ namespace EqUiWebUi.Controllers
         //2 if a RowID is given only that row is set. (clear = false)
         //3 if no Row is is given we run it against the current filterParms and CLEAR the set classification (clear = true)
         //4 if a Rowid is given only CLEAR thar row. (clear = true)
-        //update stament example.. Parameters are MANDATORY!
+        //update statement example.. Parameters are MANDATORY!
         /*
             DECLARE @textSearch as varchar(max)
             DECLARE @coderangeStart as int
@@ -139,10 +139,8 @@ namespace EqUiWebUi.Controllers
         {
             //get c_logclassRule
             c_logClassSystem c_LogClassSystem = db.c_logClassSystem.Where(c => c.id == c_LogClassRule.c_logClassSystem_id).First();
-            string UpdateSkelation = c_LogClassSystem.UpdateStatement;
 
-
-            db.Database.ExecuteSqlCommand(UpdateSkelation,
+            db.Database.ExecuteSqlCommand(c_LogClassSystem.UpdateStatement,
                     new SqlParameter("@textSearch", c_LogClassRule.textSearch),
                     new SqlParameter("@coderangeStart", c_LogClassRule.coderangeStart),
                     new SqlParameter("@coderangeEnd", c_LogClassRule.coderangeEnd),
@@ -153,15 +151,84 @@ namespace EqUiWebUi.Controllers
                     );
 
             return Json(new { Msg = "job OK" },JsonRequestBehavior.AllowGet);
-
         }
 
+        //to apply clasication rules.
+        //this has modes.
 
-        public JsonResult RunRule(int ruleID, bool overrideManualSet = false, bool Clear = false)
+            //RunRule statement exaple.. parameter are MANDATORY!
+            /*
+            DECLARE @overrideManualSet as bit --OverRide with rule if manual set
+            DECLARE @Clear as bit  --Clear if it
+            DECLARE @UPDATE as bit --reApply if rule already set
+
+             the c_rule ID can have multible meanings.
+            --c_RuleID -1 = manual set
+            --c_RuleID 0 = processed by auto rule engine
+            --c_RuleID NULL = rule engine has not run
+            --c_ruleID > 0 = rule was applied
+             */
+
+            /*
+             * UPDATE GADATA.c3g.l_error
+            SET  c_ClassificationID =  CASE  
+                            WHEN @Clear = 0 THEN r.c_ClassificationId 
+                            ELSE NULL
+                            END ,
+            c_SubgroupId =  CASE  
+                            WHEN @Clear = 0 THEN r.c_SubgroupId 
+                            ELSE NULL
+                            END,
+               c_RuleId =   CASE  
+                            WHEN @Clear = 0 THEN r.id
+                            ELSE NULL
+                            END
+
+            FROM [GADATA].c3g.L_error as L
+            left join GADATA.EQUI.c_LogClassRules as r on
+            (
+            r.c_logClassSystem_id = @logClassSystem_id
+            AND
+            l.error_text like ISNULL(r.textSearch,'%')
+            AND 
+            l.[error_number] between ISNULL(r.coderangeStart,0) and ISNULL(r.coderangeEnd,1000000)
+            )
+            WHERE
+            --handle single rule run 
+            (
+            r.id = @ruleID --single rule
+            OR
+            @ruleID is null --run all
+            )
+            AND --handle overrideManualSet
+            (
+            L.c_RuleId <> -1
+            OR 
+            L.c_RuleId is null 
+            OR
+            @overrideManualSet = 1
+            )
+            AND --handle update (reapply rule)
+            (
+            L.c_RuleId is null
+            OR 
+            @UPDATE = 1
+            )
+            */
+        public JsonResult RunRule(c_LogClassRules c_LogClassRule, bool overrideManualSet = false, bool Clear = false, bool UPDATE = true)
         {
+        //get c_logclassRule
+        c_logClassSystem c_LogClassSystem = db.c_logClassSystem.Where(c => c.id == c_LogClassRule.c_logClassSystem_id).First();
 
-            return Json(new { Msg = string.Format("Ruleid: {0}, override: {1}, clear: {2}", ruleID, overrideManualSet,Clear) }, JsonRequestBehavior.AllowGet);
+        db.Database.ExecuteSqlCommand(c_LogClassSystem.RunRuleStatement,
+                new SqlParameter("@logClassSystem_id", c_LogClassRule.c_logClassSystem_id),
+                new SqlParameter("@ruleID", c_LogClassRule.id),
+                new SqlParameter("@overrideManualSet", overrideManualSet),
+                new SqlParameter("@Clear", Clear),
+                new SqlParameter("@UPDATE", UPDATE)
+            );
 
+            return Json(new { Msg = string.Format("Ruleid: {0}, override: {1}, clear: {2} Update: {3}", c_LogClassRule.id, overrideManualSet,Clear,UPDATE) }, JsonRequestBehavior.AllowGet);
         }
     }
 }
