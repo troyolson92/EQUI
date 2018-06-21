@@ -159,10 +159,17 @@ namespace EqUiWebUi.Controllers
 
         //RunRule statement exaple.. parameter are MANDATORY!
         /*
-        DECLARE @RuleId as int --if 0 run all rules if <> 0 run that rule Id only
-        DECLARE @overrideManualSet as bit --OverRide with rule if manual set
-        DECLARE @Clear as bit  --Clear if it
-        DECLARE @UPDATE as bit --reApply if rule already set
+DECLARE @logClassSystem_id as int --logclassSystemID
+DECLARE @RuleId as int --if 0 run all rules if <> 0 run that rule Id only
+DECLARE @overrideManualSet as bit --OverRide with rule if manual set
+DECLARE @Clear as bit  --Clear if it
+DECLARE @UPDATE as bit --reApply if rule already set
+
+set @logClassSystem_id = 0
+set @RuleId = 0
+set @overrideManualSet = 0
+set @Clear = 0
+set @UPDATE = 0
 
          the c_rule ID can have multible meanings.
         --c_RuleID -1 = manual set
@@ -227,7 +234,7 @@ namespace EqUiWebUi.Controllers
                 new SqlParameter("@Clear", Clear),
                 new SqlParameter("@UPDATE", UPDATE)
             );
-            string debugmsg = string.Format("System: {4} Ruleid: {0}, override: {1}, clear: {2} Update: {3}", c_LogClassRule.id, overrideManualSet, Clear, UPDATE, c_LogClassSystem.Name);
+            string debugmsg = string.Format("System: {4}(id{5}) Ruleid: {0}, override: {1}, clear: {2} Update: {3}", c_LogClassRule.id, overrideManualSet, Clear, UPDATE, c_LogClassSystem.Name, c_LogClassSystem.id);
             log.Debug(debugmsg);
             return Json(new { Msg = debugmsg }, JsonRequestBehavior.AllowGet);
         }
