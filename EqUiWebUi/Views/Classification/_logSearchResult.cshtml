@@ -7,6 +7,7 @@
     columns.Add(c => c.text).Titled("Text");
     columns.Add(c => c.c_Classification.Classification).Titled("Class");
     columns.Add(c => c.c_Subgroup.Subgroup).Titled("Subgroup");
+    columns.Add(c => c.c_logcClassRules_id).Titled("RuleID");
 }).Sortable().Pageable(pager =>
 {
     pager.RowsPerPage = 10;
