@@ -13,6 +13,7 @@ namespace EqUiWebUi.Controllers
     [Authorize(Roles = "Administrator")]
     public class ClassificationController : Controller
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         private GADATAEntitiesEQUI db = new GADATAEntitiesEQUI();
 
@@ -156,33 +157,33 @@ namespace EqUiWebUi.Controllers
         //to apply clasication rules.
         //this has modes.
 
-            //RunRule statement exaple.. parameter are MANDATORY!
-            /*
-            DECLARE @overrideManualSet as bit --OverRide with rule if manual set
-            DECLARE @Clear as bit  --Clear if it
-            DECLARE @UPDATE as bit --reApply if rule already set
+        //RunRule statement exaple.. parameter are MANDATORY!
+        /*
+        DECLARE @RuleId as int --if 0 run all rules if <> 0 run that rule Id only
+        DECLARE @overrideManualSet as bit --OverRide with rule if manual set
+        DECLARE @Clear as bit  --Clear if it
+        DECLARE @UPDATE as bit --reApply if rule already set
 
-             the c_rule ID can have multible meanings.
-            --c_RuleID -1 = manual set
-            --c_RuleID 0 = processed by auto rule engine
-            --c_RuleID NULL = rule engine has not run
-            --c_ruleID > 0 = rule was applied
-             */
+         the c_rule ID can have multible meanings.
+        --c_RuleID -1 = manual set
+        --c_RuleID 0 = processed by auto rule engine
+        --c_RuleID NULL = rule engine has not run
+        --c_ruleID > 0 = rule was applied
+         */
 
-            /*
-             * UPDATE GADATA.c3g.l_error
+        /*  UPDATE GADATA.c3g.l_error
             SET  c_ClassificationID =  CASE  
-                            WHEN @Clear = 0 THEN r.c_ClassificationId 
-                            ELSE NULL
-                            END ,
-            c_SubgroupId =  CASE  
-                            WHEN @Clear = 0 THEN r.c_SubgroupId 
-                            ELSE NULL
-                            END,
-               c_RuleId =   CASE  
-                            WHEN @Clear = 0 THEN r.id
-                            ELSE NULL
-                            END
+                                    WHEN @Clear = 0 THEN r.c_ClassificationId 
+                                    ELSE NULL
+                                    END ,
+                   c_SubgroupId =  CASE  
+                                    WHEN @Clear = 0 THEN r.c_SubgroupId 
+                                    ELSE NULL
+                                    END,
+                       c_RuleId =   CASE  
+                                    WHEN @Clear = 0 THEN r.id
+                                    ELSE NULL
+                                    END
 
             FROM [GADATA].c3g.L_error as L
             left join GADATA.EQUI.c_LogClassRules as r on
@@ -198,7 +199,7 @@ namespace EqUiWebUi.Controllers
             (
             r.id = @ruleID --single rule
             OR
-            @ruleID is null --run all
+            @ruleID = 0 --run all
             )
             AND --handle overrideManualSet
             (
@@ -214,10 +215,9 @@ namespace EqUiWebUi.Controllers
             OR 
             @UPDATE = 1
             )
-            */
+*/
         public JsonResult RunRule(c_LogClassRules c_LogClassRule, bool overrideManualSet = false, bool Clear = false, bool UPDATE = true)
         {
-        //get c_logclassRule
         c_logClassSystem c_LogClassSystem = db.c_logClassSystem.Where(c => c.id == c_LogClassRule.c_logClassSystem_id).First();
 
         db.Database.ExecuteSqlCommand(c_LogClassSystem.RunRuleStatement,
@@ -227,8 +227,9 @@ namespace EqUiWebUi.Controllers
                 new SqlParameter("@Clear", Clear),
                 new SqlParameter("@UPDATE", UPDATE)
             );
-
-            return Json(new { Msg = string.Format("Ruleid: {0}, override: {1}, clear: {2} Update: {3}", c_LogClassRule.id, overrideManualSet,Clear,UPDATE) }, JsonRequestBehavior.AllowGet);
+            string debugmsg = string.Format("System: {4} Ruleid: {0}, override: {1}, clear: {2} Update: {3}", c_LogClassRule.id, overrideManualSet, Clear, UPDATE, c_LogClassSystem.Name);
+            log.Debug(debugmsg);
+            return Json(new { Msg = debugmsg }, JsonRequestBehavior.AllowGet);
         }
     }
 }

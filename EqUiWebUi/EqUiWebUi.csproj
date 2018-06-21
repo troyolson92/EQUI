@@ -607,10 +607,10 @@
     </Compile>
     <Compile Include="Areas\Welding\WeldingAreaRegistration.cs" />
     <Compile Include="Areas\Welding\Controllers\WeldingController.cs" />
-    <Compile Include="Controllers\Chart2Controller.cs" />
     <Compile Include="Controllers\ChartController.cs" />
     <Compile Include="Controllers\ClassificationController.cs" />
     <Compile Include="Controllers\c_LogClassRulesController.cs" />
+    <Compile Include="Controllers\c_logClassSystemController.cs" />
     <Compile Include="Controllers\DynamicController.cs" />
     <Compile Include="Controllers\EQUISetupController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
@@ -1428,7 +1428,6 @@
     <Content Include="Views\Chart\GetErrorTrend.cshtml" />
     <Content Include="Views\Tableau\Test.cshtml" />
     <Content Include="Views\Dynamic\_dynamicWebgridRunQueryAgainstDB.cshtml" />
-    <Content Include="Views\Chart2\Index.cshtml" />
     <Content Include="Views\Dynamic\_CheckStatement.cshtml" />
     <Content Include="Scripts\d3\README.md" />
     <Content Include="Scripts\d3\LICENSE" />
@@ -1457,6 +1456,9 @@
     <Content Include="Views\c_LogClassRules\Index.cshtml" />
     <Content Include="Views\c_LogClassRules\_GetLogClassRulesGrid.cshtml" />
     <Content Include="Views\Classification\_logSearchResult.cshtml" />
+    <Content Include="Views\c_logClassSystem\Delete.cshtml" />
+    <Content Include="Views\c_logClassSystem\Edit.cshtml" />
+    <Content Include="Views\c_logClassSystem\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EQUICommunictionLib\EQUICommunictionLib.csproj">

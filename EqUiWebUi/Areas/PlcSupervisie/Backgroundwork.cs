@@ -33,6 +33,7 @@ namespace EqUiWebUi.Areas.PlcSupervisie
             var jobId3 = BackgroundJob.ContinueWith(jobId2, () => HandleStoTable("ALARM_DATA_BODY_SIDES"));
             var jobId4 = BackgroundJob.ContinueWith(jobId3, () => HandleStoTable("ALARM_DATA_PREASSY"));
             var jobId5 = BackgroundJob.ContinueWith(jobId4, () => NormalizeSTOdata());
+            var jobId6 = BackgroundJob.ContinueWith(jobId5, () => ClassificationOfSTOdata());
         }
 
         //update new data from STO to gadata for a specifc table . 
@@ -84,6 +85,21 @@ namespace EqUiWebUi.Areas.PlcSupervisie
             //   lGadataComm.RunCommandGadata("EXEC GADATA.STO.[sp_update_Lerror_classifcation]", true);
             //fire and forget to init
 
+        }
+
+        [AutomaticRetry(Attempts = 2)]
+        [Queue("sto")]
+        public void ClassificationOfSTOdata()
+        {
+            log.Debug("Classifcation started");
+
+            //stupid that I need to spin up all these classes to get it to run... (temp solution)
+            EqUiWebUi.Controllers.ClassificationController classificationController = new EqUiWebUi.Controllers.ClassificationController();
+            EqUiWebUi.Models.c_LogClassRules c_LogClassRule = new EqUiWebUi.Models.c_LogClassRules();
+            EqUiWebUi.Models.GADATAEntitiesEQUI db = new EqUiWebUi.Models.GADATAEntitiesEQUI();
+            c_LogClassRule.c_logClassSystem_id = db.c_logClassSystem.Where(c => c.Name == "DBI_STO").First().id;
+            c_LogClassRule.id = 0; //this causes us to run all rules
+            classificationController.RunRule(c_LogClassRule,overrideManualSet: false, Clear: false, UPDATE: false);
         }
     }
 }
