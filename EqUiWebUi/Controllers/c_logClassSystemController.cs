@@ -41,6 +41,7 @@ namespace EqUiWebUi.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ValidateInput(false)] //to alow posting of raw html data
         public ActionResult Edit( c_logClassSystem c_logClassSystem)
         {
             if (ModelState.IsValid)

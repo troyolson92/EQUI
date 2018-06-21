@@ -39,7 +39,7 @@
                 @Html.LabelFor(model => model.SelectStatement, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     <div class="panel" style="border:ridge">
-                        <textarea id="SelectStatement" name="controllimitSqlStatement">@Model.SelectStatement</textarea>
+                        <textarea id="SelectStatement" name="SelectStatement">@Model.SelectStatement</textarea>
                     </div>
                     @Html.ValidationMessageFor(model => model.SelectStatement, "", new { @class = "text-danger" })
                 </div>
@@ -49,7 +49,7 @@
                 @Html.LabelFor(model => model.UpdateStatement, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     <div class="panel" style="border:ridge">
-                        <textarea id="UpdateStatement" name="controllimitSqlStatement">@Model.UpdateStatement</textarea>
+                        <textarea id="UpdateStatement" name="UpdateStatement">@Model.UpdateStatement</textarea>
                     </div>
                     @Html.ValidationMessageFor(model => model.UpdateStatement, "", new { @class = "text-danger" })
                 </div>
@@ -59,7 +59,7 @@
                 @Html.LabelFor(model => model.RunRuleStatement, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     <div class="panel" style="border:ridge">
-                        <textarea id="RunRuleStatement" name="controllimitSqlStatement">@Model.RunRuleStatement</textarea>
+                        <textarea id="RunRuleStatement" name="RunRuleStatement">@Model.RunRuleStatement</textarea>
                     </div>
                     @Html.ValidationMessageFor(model => model.RunRuleStatement, "", new { @class = "text-danger" })
                 </div>
