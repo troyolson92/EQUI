@@ -1,0 +1,115 @@
+﻿@model EqUiWebUi.Models.LogInfo
+<div class="card">
+    <div class="card-body" id="graphSpinner" style="position:relative">
+        <div id="gaphContainer">
+            <canvas id='graphCanvas'></canvas>
+        </div>
+    </div>
+</div>
+
+
+@*https://dima117.github.io/Chart.Scatter/*@
+<script src="~/Scripts/Chart.Core.js"></script>
+<script src="~/Scripts/Chart.Scatter.js"></script>
+
+<script>
+    //global vars
+    var ErrorTrendChart;
+
+    //get chart data
+    function getChartData() {
+        //make ajax request
+        $.ajax({
+            type: 'GET',
+            url: "/chart/_getData2",
+            success: function (returnPayload) {
+                console && console.log("request chart data succeeded");
+                buildchart(returnPayload, "chartName");
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console && console.log("request chart data failed!!");
+                $("#gaphContainer").html('<div>Request failed!!</div>');
+            },
+            dataType: "json",
+            contentType: "application/json",
+            processData: false,
+            async: true
+        });
+    };
+
+    //build the chart Calls when ajax request ends
+    function buildchart(dataPayload, chartName) {
+        console.log(dataPayload);
+
+        var testdata = [
+            {
+                x: new Date('2011-04-11T11:45:00'),
+                y: 25
+            },
+            {
+                x: new Date('2011-04-11T12:51:00'),
+                y: 28
+            },
+            {
+                x: new Date('2011-04-11T14:10:00'),
+                y: 22
+            },
+            {
+                x: new Date('2011-04-11T15:15:00'),
+                y: 18
+            },
+            {
+                x: new Date('2011-04-11T17:00:00'),
+                y: 25
+            },
+            {
+                x: new Date('2011-04-11T21:00:00'),
+                y: 24
+            },
+            {
+                x: new Date('2011-04-12T13:00:00'),
+                y: 24
+            }
+        ];
+
+        //destroy chart if exists
+        if (ErrorTrendChart) {
+            ErrorTrendChart.destroy();
+        }
+        //clear the cancas just to be shure
+        $("#graphCanvas").remove();
+        //add the new canvas
+        $("#gaphContainer").append('<canvas id="graphCanvas" height="200" width="600" ></canvas>');
+        //build the chart
+        var ctx = document.getElementById("graphCanvas").getContext("2d");
+        //chart options
+        var options = 
+            {
+                bezierCurve: true,
+                showTooltips: true,
+                scaleShowHorizontalLines: true,
+                scaleShowLabels: true,
+                scaleType: "date",
+                scaleLabel: "<%=value%>°C"
+            };
+        //dataset
+        var data = [
+            {
+                label: 'My First dataset',
+                strokeColor: '#F16220',
+                pointColor: '#F16220',
+                pointStrokeColor: '#fff',
+                data: dataPayload
+            }
+        ];
+        //build
+        ErrorTrendChart = new Chart(ctx).Scatter(data, options);
+    }
+
+
+    //init on doc loaded done
+    $(document).ready(function () {
+        getChartData();
+    });
+</script>
+

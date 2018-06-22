@@ -1204,6 +1204,8 @@
     <Content Include="Content\bootstrap.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Scripts\bootstrap-multiselect.js" />
+    <Content Include="Scripts\Chart.Core.js" />
+    <Content Include="Scripts\Chart.Scatter.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />
     <Content Include="Scripts\esm\popper.js" />
@@ -1459,6 +1461,7 @@
     <Content Include="Views\c_logClassSystem\Delete.cshtml" />
     <Content Include="Views\c_logClassSystem\Edit.cshtml" />
     <Content Include="Views\c_logClassSystem\Index.cshtml" />
+    <Content Include="Views\Chart\TEST.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EQUICommunictionLib\EQUICommunictionLib.csproj">
