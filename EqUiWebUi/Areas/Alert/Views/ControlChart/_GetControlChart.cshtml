@@ -1,4 +1,4 @@
-﻿@model EqUiWebUi.Models.LogInfo
+﻿
 <div class="card">
     <div class="card-body" id="graphSpinner" style="position:relative">
         <div id="gaphContainer">
@@ -14,14 +14,14 @@
 
 <script>
     //global vars
-    var ErrorTrendChart;
+    var ControlChart;
 
     //get chart data
     function getChartData() {
         //make ajax request
         $.ajax({
             type: 'GET',
-            url: "/chart/_getData2",
+            url: "/ControlChart/_getData",
             success: function (returnPayload) {
                 console && console.log("request chart data succeeded");
                 buildchart(returnPayload, "chartName");
@@ -39,71 +39,73 @@
 
     //build the chart Calls when ajax request ends
     function buildchart(dataPayload, chartName) {
-        console.log(dataPayload);
-
-        var testdata = [
-            {
-                x: new Date('2011-04-11T11:45:00'),
-                y: 25
-            },
-            {
-                x: new Date('2011-04-11T12:51:00'),
-                y: 28
-            },
-            {
-                x: new Date('2011-04-11T14:10:00'),
-                y: 22
-            },
-            {
-                x: new Date('2011-04-11T15:15:00'),
-                y: 18
-            },
-            {
-                x: new Date('2011-04-11T17:00:00'),
-                y: 25
-            },
-            {
-                x: new Date('2011-04-11T21:00:00'),
-                y: 24
-            },
-            {
-                x: new Date('2011-04-12T13:00:00'),
-                y: 24
-            }
-        ];
-
         //destroy chart if exists
-        if (ErrorTrendChart) {
-            ErrorTrendChart.destroy();
+        if (ControlChart) {
+            ControlChart.destroy();
         }
         //clear the cancas just to be shure
         $("#graphCanvas").remove();
         //add the new canvas
-        $("#gaphContainer").append('<canvas id="graphCanvas" height="200" width="600" ></canvas>');
+        $("#gaphContainer").append('<canvas id="graphCanvas" height="400" width="1000" ></canvas>');
         //build the chart
         var ctx = document.getElementById("graphCanvas").getContext("2d");
         //chart options
-        var options = 
+        var options =
             {
+
+                // Boolean - Whether the line is curved between points
                 bezierCurve: true,
+                // Number - Tension of the bezier curve between points
+                bezierCurveTension: 0.2,
                 showTooltips: true,
                 scaleShowHorizontalLines: true,
                 scaleShowLabels: true,
+                scaleLabel: "<%=value%> mm",
+                // String - scale type: "number" or "date"
                 scaleType: "date",
-                scaleLabel: "<%=value%>°C"
+                // Boolean - Whether to use UTC dates instead local
+                useUtc: true,
+                // String - short date format (used for scale labels)
+                scaleDateFormat: "mm-dd",
+                // String - short time format (used for scale labels)
+                scaleTimeFormat: "HH:MM",
+                // String - full date format (used for point labels)
+                scaleDateTimeFormat: "yy-mm-dd HH:MM:ss",
             };
         //dataset
         var data = [
             {
-                label: 'My First dataset',
+                label: 'UCL',
                 strokeColor: '#F16220',
                 pointColor: '#F16220',
                 pointStrokeColor: '#fff',
+                data: [
+                    {
+                        x: new Date('2018-01-01T00:00:00'),
+                        y: 3
+                    },
+                    {
+                        x: new Date('2018-04-01T00:00:00'),
+                        y: 2
+                    },
+                    {
+                        x: new Date('2018-05-01T00:00:00'),
+                        y: 2
+                    },
+                    {
+                        x: new Date('2018-06-01T00:00:00'),
+                        y: 3
+                    }
+                ]
+
+            },
+            {
+                label: '2',
                 data: dataPayload
             }
         ];
         //build
-        ErrorTrendChart = new Chart(ctx).Scatter(data, options);
+        ControlChart = new Chart(ctx).Scatter(data, options);
     }
 
 
@@ -112,4 +114,5 @@
         getChartData();
     });
 </script>
+
 

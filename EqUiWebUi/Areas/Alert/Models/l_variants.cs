@@ -28,8 +28,8 @@ namespace EqUiWebUi.Areas.Alert.Models
         public System.DateTime CreateDate { get; set; }
     
         public virtual c_triggers c_triggers { get; set; }
+        public virtual L_users L_users { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<l_controlLimits> l_controlLimits { get; set; }
-        public virtual L_users L_users { get; set; }
     }
 }
