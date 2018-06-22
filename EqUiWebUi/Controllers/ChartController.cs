@@ -366,5 +366,36 @@ namespace EqUiWebUi.Controllers
             //sort it and return 
             return finalQuery.OrderByDescending(x => x.Datetime);
         }
+
+
+
+
+        //testing 
+        //partial viaw to get error trend.
+        [HttpGet]
+        public ActionResult TEST(LogInfo logInfo)
+        {
+            return View();
+        }
+        //get data for the chart => returns json result
+        [HttpGet]
+        public JsonResult _getData2()
+        {
+            ConnectionManager connectionManager = new ConnectionManager();
+            //get the data
+            string qry = string.Format(@"EXEC [EqUi].[GetSbcuData] @Toolname = '34020WS05D'");
+            DataTable dt = connectionManager.RunQuery(qry);
+
+            object data =
+                from e in dt.AsEnumerable().Where(c => c.Field<Double?>("LongDsetup") != null && c.Field<DateTime>("timestamp") > System.DateTime.Now.AddDays(-20))
+                select new
+                {
+                    x = e.Field<DateTime>("timestamp").ToLocalTime(),
+                    y = e.Field<Double?>("LongDsetup")
+                };
+            //
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }
