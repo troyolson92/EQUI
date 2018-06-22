@@ -102,12 +102,26 @@
           <Property Name="Createuser" Type="int" Nullable="false" />
           <Property Name="CreateDate" Type="datetime" Nullable="false" />
           <Property Name="ChangeUser" Type="int" Nullable="false" />
-          <Property Name="ChangeDate" Type="datetime" Nullable="false" />
+          <Property Name="ChangeDate" Type="datetime" />
           <Property Name="UpperLimit" Type="float" />
           <Property Name="LowerLimit" Type="float" />
           <Property Name="Comment" Type="varchar(max)" />
           <Property Name="alarmobject" Type="varchar(max)" Nullable="false" />
           <Property Name="l_variants_id" Type="int" />
+        </EntityType>
+        <EntityType Name="l_dummyControlchartResult">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="alarmobject" Type="varchar(max)" Nullable="false" />
+          <Property Name="timestamp" Type="datetime" Nullable="false" />
+          <Property Name="value" Type="float" Nullable="false" />
+          <Property Name="UpperLimit" Type="float" />
+          <Property Name="LowerLimit" Type="float" />
+          <Property Name="l_controlLimits_id" Type="int" />
+          <Property Name="Comment" Type="varchar(max)" />
+          <Property Name="CreateDate" Type="datetime" />
         </EntityType>
         <EntityType Name="l_variants">
           <Key>
@@ -220,7 +234,7 @@
           <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Description" Type="varchar(max)" />
           <Property Name="Type" Type="int" Nullable="false" />
-          <Property Name="ConnectionString" Type="varchar(max)" />
+          <Property Name="ConnectionString" Type="varchar(max)" Nullable="false" />
           <Property Name="isAlertSource" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="L_users">
@@ -419,6 +433,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_l_dummyControlchartResult_l_controlLimits">
+          <End Role="l_controlLimits" Type="Self.l_controlLimits" Multiplicity="0..1" />
+          <End Role="l_dummyControlchartResult" Type="Self.l_dummyControlchartResult" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="l_controlLimits">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="l_dummyControlchartResult">
+              <PropertyRef Name="l_controlLimits_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_l_variants_c_triggers">
           <End Role="c_triggers" Type="Self.c_triggers" Multiplicity="1" />
           <End Role="l_variants" Type="Self.l_variants" Multiplicity="*" />
@@ -463,6 +489,7 @@
           <EntitySet Name="c_triggers" EntityType="Self.c_triggers" Schema="Alerts" store:Type="Tables" />
           <EntitySet Name="h_alert" EntityType="Self.h_alert" Schema="Alerts" store:Type="Tables" />
           <EntitySet Name="l_controlLimits" EntityType="Self.l_controlLimits" Schema="Alerts" store:Type="Tables" />
+          <EntitySet Name="l_dummyControlchartResult" EntityType="Self.l_dummyControlchartResult" Schema="Alerts" store:Type="Tables" />
           <EntitySet Name="l_variants" EntityType="Self.l_variants" Schema="Alerts" store:Type="Tables" />
           <EntitySet Name="c_controller" EntityType="Self.c_controller" Schema="C3G" store:Type="Tables" />
           <EntitySet Name="GunCylinderefernce" EntityType="Self.GunCylinderefernce" Schema="C3G" store:Type="Tables" />
@@ -528,6 +555,10 @@
           <AssociationSet Name="FK_l_controlLimits_l_variants" Association="Self.FK_l_controlLimits_l_variants">
             <End Role="l_variants" EntitySet="l_variants" />
             <End Role="l_controlLimits" EntitySet="l_controlLimits" />
+          </AssociationSet>
+          <AssociationSet Name="FK_l_dummyControlchartResult_l_controlLimits" Association="Self.FK_l_dummyControlchartResult_l_controlLimits">
+            <End Role="l_controlLimits" EntitySet="l_controlLimits" />
+            <End Role="l_dummyControlchartResult" EntitySet="l_dummyControlchartResult" />
           </AssociationSet>
           <AssociationSet Name="FK_l_variants_c_triggers" Association="Self.FK_l_variants_c_triggers">
             <End Role="c_triggers" EntitySet="c_triggers" />
@@ -613,6 +644,8 @@
           <Property Name="ResponsibleArea" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Team" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Culture" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="l_controlLimits" Relationship="AlertModel.FK_l_controlLimits_L_users" FromRole="L_users" ToRole="l_controlLimits" />
+          <NavigationProperty Name="l_controlLimits1" Relationship="AlertModel.FK_l_controlLimits_L_users1" FromRole="L_users" ToRole="l_controlLimits" />
         </EntityType>
         <Association Name="FK_h_alert_c_state">
           <End Role="c_state" Type="Self.c_state" Multiplicity="1" />
@@ -717,6 +750,20 @@
             <End Role="c_controller" EntitySet="c_controller" />
             <End Role="SBCUrefernce" EntitySet="SBCUrefernce" />
           </AssociationSet>
+          <EntitySet Name="l_variants" EntityType="AlertModel.l_variants" />
+          <AssociationSet Name="FK_l_variants_c_triggers" Association="AlertModel.FK_l_variants_c_triggers">
+            <End Role="c_triggers" EntitySet="c_triggers" />
+            <End Role="l_variants" EntitySet="l_variants" />
+          </AssociationSet>
+          <AssociationSet Name="FK_l_variants_L_users" Association="AlertModel.FK_l_variants_L_users">
+            <End Role="L_users" EntitySet="L_users" />
+            <End Role="l_variants" EntitySet="l_variants" />
+          </AssociationSet>
+          <EntitySet Name="c_datasource" EntityType="AlertModel.c_datasource" />
+          <AssociationSet Name="FK_c_triggers_c_datasource" Association="AlertModel.FK_c_triggers_c_datasource">
+            <End Role="c_datasource" EntitySet="c_datasource" />
+            <End Role="c_triggers" EntitySet="c_triggers" />
+          </AssociationSet>
           <EntitySet Name="l_controlLimits" EntityType="AlertModel.l_controlLimits" />
           <AssociationSet Name="FK_l_controlLimits_c_triggers" Association="AlertModel.FK_l_controlLimits_c_triggers">
             <End Role="c_triggers" EntitySet="c_triggers" />
@@ -730,23 +777,14 @@
             <End Role="L_users" EntitySet="L_users" />
             <End Role="l_controlLimits" EntitySet="l_controlLimits" />
           </AssociationSet>
-          <EntitySet Name="l_variants" EntityType="AlertModel.l_variants" />
-          <AssociationSet Name="FK_l_variants_c_triggers" Association="AlertModel.FK_l_variants_c_triggers">
-            <End Role="c_triggers" EntitySet="c_triggers" />
-            <End Role="l_variants" EntitySet="l_variants" />
-          </AssociationSet>
           <AssociationSet Name="FK_l_controlLimits_l_variants" Association="AlertModel.FK_l_controlLimits_l_variants">
             <End Role="l_variants" EntitySet="l_variants" />
             <End Role="l_controlLimits" EntitySet="l_controlLimits" />
           </AssociationSet>
-          <AssociationSet Name="FK_l_variants_L_users" Association="AlertModel.FK_l_variants_L_users">
-            <End Role="L_users" EntitySet="L_users" />
-            <End Role="l_variants" EntitySet="l_variants" />
-          </AssociationSet>
-          <EntitySet Name="c_datasource" EntityType="AlertModel.c_datasource" />
-          <AssociationSet Name="FK_c_triggers_c_datasource" Association="AlertModel.FK_c_triggers_c_datasource">
-            <End Role="c_datasource" EntitySet="c_datasource" />
-            <End Role="c_triggers" EntitySet="c_triggers" />
+          <EntitySet Name="l_dummyControlchartResult" EntityType="AlertModel.l_dummyControlchartResult" />
+          <AssociationSet Name="FK_l_dummyControlchartResult_l_controlLimits" Association="AlertModel.FK_l_dummyControlchartResult_l_controlLimits">
+            <End Role="l_controlLimits" EntitySet="l_controlLimits" />
+            <End Role="l_dummyControlchartResult" EntitySet="l_dummyControlchartResult" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="c_triggers">
@@ -769,7 +807,6 @@
           <Property Name="Cron" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="isDowntime" Type="Boolean" Nullable="false" />
           <Property Name="isInReport" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="l_controlLimits" Relationship="AlertModel.FK_l_controlLimits_c_triggers" FromRole="c_triggers" ToRole="l_controlLimits" />
           <Property Name="sqlStatement" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="hasControlLimits" Type="Boolean" Nullable="false" />
           <Property Name="controllimitSqlStatement" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
@@ -779,6 +816,7 @@
           <Property Name="isDebugmode" Type="Boolean" Nullable="false" />
           <Property Name="c_datasource_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="c_datasource" Relationship="AlertModel.FK_c_triggers_c_datasource" FromRole="c_triggers" ToRole="c_datasource" />
+          <NavigationProperty Name="l_controlLimits" Relationship="AlertModel.FK_l_controlLimits_c_triggers" FromRole="c_triggers" ToRole="l_controlLimits" />
         </EntityType>
         <Association Name="FK_c_triggers_c_smsSystem">
           <End Type="AlertModel.c_smsSystem" Role="c_smsSystem" Multiplicity="0..1" />
@@ -986,6 +1024,68 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="l_variants">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="variantGroup" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="c_trigger_id" Type="Int32" Nullable="false" />
+          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CreateUser" Type="Int32" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="c_triggers" Relationship="AlertModel.FK_l_variants_c_triggers" FromRole="l_variants" ToRole="c_triggers" />
+          <NavigationProperty Name="L_users" Relationship="AlertModel.FK_l_variants_L_users" FromRole="l_variants" ToRole="L_users" />
+          <NavigationProperty Name="l_controlLimits" Relationship="AlertModel.FK_l_controlLimits_l_variants" FromRole="l_variants" ToRole="l_controlLimits" />
+        </EntityType>
+        <Association Name="FK_l_variants_c_triggers">
+          <End Type="AlertModel.c_triggers" Role="c_triggers" Multiplicity="1" />
+          <End Type="AlertModel.l_variants" Role="l_variants" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_triggers">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="l_variants">
+              <PropertyRef Name="c_trigger_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_l_variants_L_users">
+          <End Type="AlertModel.L_users" Role="L_users" Multiplicity="1" />
+          <End Type="AlertModel.l_variants" Role="l_variants" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="L_users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="l_variants">
+              <PropertyRef Name="CreateUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="c_datasource">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Type" Type="Int32" Nullable="false" />
+          <Property Name="ConnectionString" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="isAlertSource" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="c_triggers" Relationship="AlertModel.FK_c_triggers_c_datasource" FromRole="c_datasource" ToRole="c_triggers" />
+        </EntityType>
+        <Association Name="FK_c_triggers_c_datasource">
+          <End Type="AlertModel.c_datasource" Role="c_datasource" Multiplicity="1" />
+          <End Type="AlertModel.c_triggers" Role="c_triggers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_datasource">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="c_triggers">
+              <PropertyRef Name="c_datasource_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityType Name="l_controlLimits">
           <Key>
             <PropertyRef Name="id" />
@@ -996,16 +1096,17 @@
           <Property Name="Createuser" Type="Int32" Nullable="false" />
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ChangeUser" Type="Int32" Nullable="false" />
-          <Property Name="ChangeDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ChangeDate" Type="DateTime" Precision="3" />
           <Property Name="UpperLimit" Type="Double" />
           <Property Name="LowerLimit" Type="Double" />
           <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="alarmobject" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="l_variants_id" Type="Int32" />
           <NavigationProperty Name="c_triggers" Relationship="AlertModel.FK_l_controlLimits_c_triggers" FromRole="l_controlLimits" ToRole="c_triggers" />
           <NavigationProperty Name="L_CreateUser" Relationship="AlertModel.FK_l_controlLimits_L_users" FromRole="l_controlLimits" ToRole="L_users" />
           <NavigationProperty Name="L_ChangeUser" Relationship="AlertModel.FK_l_controlLimits_L_users1" FromRole="l_controlLimits" ToRole="L_users" />
-          <Property Name="l_variants_id" Type="Int32" />
           <NavigationProperty Name="l_variants" Relationship="AlertModel.FK_l_controlLimits_l_variants" FromRole="l_controlLimits" ToRole="l_variants" />
+          <NavigationProperty Name="l_dummyControlchartResult" Relationship="AlertModel.FK_l_dummyControlchartResult_l_controlLimits" FromRole="l_controlLimits" ToRole="l_dummyControlchartResult" />
         </EntityType>
         <Association Name="FK_l_controlLimits_c_triggers">
           <End Type="AlertModel.c_triggers" Role="c_triggers" Multiplicity="1" />
@@ -1043,32 +1144,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="l_variants">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="variantGroup" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="c_trigger_id" Type="Int32" Nullable="false" />
-          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="CreateUser" Type="Int32" Nullable="false" />
-          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="c_triggers" Relationship="AlertModel.FK_l_variants_c_triggers" FromRole="l_variants" ToRole="c_triggers" />
-          <NavigationProperty Name="l_controlLimits" Relationship="AlertModel.FK_l_controlLimits_l_variants" FromRole="l_variants" ToRole="l_controlLimits" />
-          <NavigationProperty Name="L_users" Relationship="AlertModel.FK_l_variants_L_users" FromRole="l_variants" ToRole="L_users" />
-        </EntityType>
-        <Association Name="FK_l_variants_c_triggers">
-          <End Type="AlertModel.c_triggers" Role="c_triggers" Multiplicity="1" />
-          <End Type="AlertModel.l_variants" Role="l_variants" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="c_triggers">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="l_variants">
-              <PropertyRef Name="c_trigger_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_l_controlLimits_l_variants">
           <End Type="AlertModel.l_variants" Role="l_variants" Multiplicity="0..1" />
           <End Type="AlertModel.l_controlLimits" Role="l_controlLimits" Multiplicity="*" />
@@ -1081,39 +1156,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_l_variants_L_users">
-          <End Type="AlertModel.L_users" Role="L_users" Multiplicity="1" />
-          <End Type="AlertModel.l_variants" Role="l_variants" Multiplicity="*" />
+        <EntityType Name="l_dummyControlchartResult">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="alarmobject" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="timestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="value" Type="Double" Nullable="false" />
+          <Property Name="UpperLimit" Type="Double" />
+          <Property Name="LowerLimit" Type="Double" />
+          <Property Name="l_controlLimits_id" Type="Int32" />
+          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="l_controlLimits" Relationship="AlertModel.FK_l_dummyControlchartResult_l_controlLimits" FromRole="l_dummyControlchartResult" ToRole="l_controlLimits" />
+        </EntityType>
+        <Association Name="FK_l_dummyControlchartResult_l_controlLimits">
+          <End Type="AlertModel.l_controlLimits" Role="l_controlLimits" Multiplicity="0..1" />
+          <End Type="AlertModel.l_dummyControlchartResult" Role="l_dummyControlchartResult" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="L_users">
+            <Principal Role="l_controlLimits">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="l_variants">
-              <PropertyRef Name="CreateUser" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="c_datasource">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Type" Type="Int32" Nullable="false" />
-          <Property Name="ConnectionString" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="isAlertSource" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="c_triggers" Relationship="AlertModel.FK_c_triggers_c_datasource" FromRole="c_datasource" ToRole="c_triggers" />
-        </EntityType>
-        <Association Name="FK_c_triggers_c_datasource">
-          <End Type="AlertModel.c_datasource" Role="c_datasource" Multiplicity="1" />
-          <End Type="AlertModel.c_triggers" Role="c_triggers" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="c_datasource">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="c_triggers">
-              <PropertyRef Name="c_datasource_id" />
+            <Dependent Role="l_dummyControlchartResult">
+              <PropertyRef Name="l_controlLimits_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1328,24 +1394,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="l_controlLimits">
-            <EntityTypeMapping TypeName="AlertModel.l_controlLimits">
-              <MappingFragment StoreEntitySet="l_controlLimits">
-                <ScalarProperty Name="l_variants_id" ColumnName="l_variants_id" />
-                <ScalarProperty Name="alarmobject" ColumnName="alarmobject" />
-                <ScalarProperty Name="Comment" ColumnName="Comment" />
-                <ScalarProperty Name="LowerLimit" ColumnName="LowerLimit" />
-                <ScalarProperty Name="UpperLimit" ColumnName="UpperLimit" />
-                <ScalarProperty Name="ChangeDate" ColumnName="ChangeDate" />
-                <ScalarProperty Name="ChangeUser" ColumnName="ChangeUser" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="Createuser" ColumnName="Createuser" />
-                <ScalarProperty Name="isdead" ColumnName="isdead" />
-                <ScalarProperty Name="c_trigger_id" ColumnName="c_trigger_id" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="l_variants">
             <EntityTypeMapping TypeName="AlertModel.l_variants">
               <MappingFragment StoreEntitySet="l_variants">
@@ -1367,6 +1415,39 @@
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="l_controlLimits">
+            <EntityTypeMapping TypeName="AlertModel.l_controlLimits">
+              <MappingFragment StoreEntitySet="l_controlLimits">
+                <ScalarProperty Name="l_variants_id" ColumnName="l_variants_id" />
+                <ScalarProperty Name="alarmobject" ColumnName="alarmobject" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="LowerLimit" ColumnName="LowerLimit" />
+                <ScalarProperty Name="UpperLimit" ColumnName="UpperLimit" />
+                <ScalarProperty Name="ChangeDate" ColumnName="ChangeDate" />
+                <ScalarProperty Name="ChangeUser" ColumnName="ChangeUser" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Createuser" ColumnName="Createuser" />
+                <ScalarProperty Name="isdead" ColumnName="isdead" />
+                <ScalarProperty Name="c_trigger_id" ColumnName="c_trigger_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="l_dummyControlchartResult">
+            <EntityTypeMapping TypeName="AlertModel.l_dummyControlchartResult">
+              <MappingFragment StoreEntitySet="l_dummyControlchartResult">
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="l_controlLimits_id" ColumnName="l_controlLimits_id" />
+                <ScalarProperty Name="LowerLimit" ColumnName="LowerLimit" />
+                <ScalarProperty Name="UpperLimit" ColumnName="UpperLimit" />
+                <ScalarProperty Name="value" ColumnName="value" />
+                <ScalarProperty Name="timestamp" ColumnName="timestamp" />
+                <ScalarProperty Name="alarmobject" ColumnName="alarmobject" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

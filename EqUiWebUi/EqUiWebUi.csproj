@@ -192,6 +192,7 @@
     <Compile Include="Areas\Alert\AlertAreaRegistration.cs" />
     <Compile Include="Areas\Alert\AlertEngine.cs" />
     <Compile Include="Areas\Alert\Controllers\AlertController.cs" />
+    <Compile Include="Areas\Alert\Controllers\ControlChartController.cs" />
     <Compile Include="Areas\Alert\Controllers\c_CPT600Controller.cs" />
     <Compile Include="Areas\Alert\Controllers\c_SMSconfigController.cs" />
     <Compile Include="Areas\Alert\Controllers\c_smsSystemController.cs" />
@@ -250,6 +251,9 @@
       <DependentUpon>AlertModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Alert\Models\l_controlLimits.cs">
+      <DependentUpon>AlertModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Alert\Models\l_dummyControlchartResult.cs">
       <DependentUpon>AlertModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Alert\Models\L_users.cs">
@@ -1260,6 +1264,8 @@
     <Content Include="Models\EQUIModel.edmx.diagram">
       <DependentUpon>EQUIModel.edmx</DependentUpon>
     </Content>
+    <Content Include="Areas\Alert\Views\ControlChart\_GetControlChart.cshtml" />
+    <Content Include="Areas\Alert\Views\ControlChart\GetControlChart.cshtml" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION.pubxml" />
     <None Include="Properties\PublishProfiles\VCC22700-Testing.pubxml" />
     <Content Include="PDFjs\build\pdf.js" />
@@ -1461,7 +1467,6 @@
     <Content Include="Views\c_logClassSystem\Delete.cshtml" />
     <Content Include="Views\c_logClassSystem\Edit.cshtml" />
     <Content Include="Views\c_logClassSystem\Index.cshtml" />
-    <Content Include="Views\Chart\TEST.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EQUICommunictionLib\EQUICommunictionLib.csproj">

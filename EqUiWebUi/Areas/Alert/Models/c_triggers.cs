@@ -18,8 +18,8 @@ namespace EqUiWebUi.Areas.Alert.Models
         public c_triggers()
         {
             this.h_alert = new HashSet<h_alert>();
-            this.l_controlLimits = new HashSet<l_controlLimits>();
             this.l_variants = new HashSet<l_variants>();
+            this.l_controlLimits = new HashSet<l_controlLimits>();
         }
     
         public int id { get; set; }
@@ -48,9 +48,9 @@ namespace EqUiWebUi.Areas.Alert.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<h_alert> h_alert { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<l_controlLimits> l_controlLimits { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<l_variants> l_variants { get; set; }
         public virtual c_datasource c_datasource { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<l_controlLimits> l_controlLimits { get; set; }
     }
 }

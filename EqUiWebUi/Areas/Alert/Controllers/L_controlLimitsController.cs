@@ -54,7 +54,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             {
                 l_controlLimits.CreateDate = System.DateTime.Now;
                 l_controlLimits.Createuser = CurrentUser.Getuser.id;
-                l_controlLimits.ChangeDate = System.DateTime.Now;
+                l_controlLimits.ChangeDate = null; //a changedate of null means it stil active. only DEAD limits have a changedate
                 l_controlLimits.ChangeUser = CurrentUser.Getuser.id;
                 l_controlLimits.isdead = false;
                 db.l_controlLimits.Add(l_controlLimits);
@@ -118,7 +118,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                         l_controlLimits newControlimit = controllimit;
                         newControlimit.CreateDate = System.DateTime.Now;
                         newControlimit.Createuser = CurrentUser.Getuser.id;
-                        newControlimit.ChangeDate = System.DateTime.Now;
+                        newControlimit.ChangeDate = null; //a changedate of null means it stil active. only DEAD limits have a changedate
                         newControlimit.ChangeUser = CurrentUser.Getuser.id;
                         newControlimit.isdead = false;
                         //copy values
@@ -141,7 +141,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                     l_controlLimits newControlimit = l_controlLimits;
                     newControlimit.CreateDate = System.DateTime.Now;
                     newControlimit.Createuser = CurrentUser.Getuser.id;
-                    newControlimit.ChangeDate = System.DateTime.Now;
+                    newControlimit.ChangeDate = null; //a changedate of null means it stil active. only DEAD limits have a changedate
                     newControlimit.ChangeUser = CurrentUser.Getuser.id;
                     newControlimit.isdead = false;
                     //add
