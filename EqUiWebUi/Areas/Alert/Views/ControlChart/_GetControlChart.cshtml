@@ -3,19 +3,19 @@
     <div class="card-header bg-light">
         <h6 class="card-title">
             Controlchart for alarmobject:
-            <strong>@Model.alarmobject.Trim()</strong> c_trigger_id: <strong>@Model.c_trigger_id</strong>
+            <strong>@Model.alarmobject.Trim()</strong> c_trigger_id:
+            <strong>@Model.c_trigger_id</strong>
             <a class="fas fa-wrench text-black-50" href="#" data-toggle="popover" data-placement="bottom" id="ControlChartOptionsPopover"></a>
             <a class="far fa-calendar-alt text-black-50" id="ControlChartDatepicker" href="#"></a>
             <span class="clickable float-right text-black-50"><i class="fas fa-chevron-circle-up fa-1"></i></span>
         </h6>
     </div>
 
-    <div class="card-body" id="graphSpinner" style="position:relative">
+    <div class="card-body" style="position:relative">
         <div id="gaphContainer">
             <canvas id='graphCanvas'></canvas>
         </div>
     </div>
-
 </div>
 
 
@@ -78,6 +78,8 @@
 
     //get chart data
     function getChartData() {
+        //spinner
+        $("#gaphContainer").html("<div class='card-body'><i class='fa fa-spinner fa-pulse fa-2x fa-fw'></i><span class='sr-only'></span>Loading....</div>");
         //make ajax request
         $.ajax({
             type: 'GET',
@@ -92,6 +94,7 @@
             },
             success: function (result) {
                 console && console.log("request chart data succeeded");
+                $("#gaphContainer").html(""); //hide spinner
                 buildchart(result);
             },
             error: function (result) {
@@ -112,7 +115,7 @@
         //clear the cancas just to be shure
         $("#graphCanvas").remove();
         //add the new canvas
-        $("#gaphContainer").append('<canvas id="graphCanvas" height="400" width="1000" ></canvas>');
+        $("#gaphContainer").append('<canvas id="graphCanvas" height="400" width="1800" ></canvas>');
         //build the chart
         var ctx = document.getElementById("graphCanvas").getContext("2d");
         //chart options
