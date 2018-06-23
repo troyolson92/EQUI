@@ -27,15 +27,12 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             return View();
         }
 
-
-        // 
         //partial viaw to get control chart.
         [HttpGet]
         public ActionResult _GetControlChart(ChartSettings chartSettings)
         {
             return PartialView(chartSettings);
         }
-
 
         //helper to convert date
         private static readonly DateTime UnixEpoch = new DateTime(1970, 1, 1);
@@ -68,11 +65,12 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             c_triggers c_Trigger = db.c_triggers.Where(c => c.id == chartSettings.c_trigger_id).First();
 
 
-            List<l_dummyControlchartResult> result = db.l_dummyControlchartResult.SqlQuery(c_Trigger.controlChartSqlStatement,
-                              new SqlParameter("@c_trigger_id", 4),
+            IQueryable<l_dummyControlchartResult> Qresult = db.l_dummyControlchartResult.SqlQuery(c_Trigger.controlChartSqlStatement,
+                              new SqlParameter("@c_trigger_id", chartSettings.c_trigger_id),
                               new SqlParameter("@alarmobject", chartSettings.alarmobject)
-             ).Where(l => l.timestamp > chartSettings.startdate && l.timestamp < chartSettings.enddate).ToList();
+             ).Where(l => l.timestamp > chartSettings.startdate && l.timestamp < chartSettings.enddate).AsQueryable();
 
+            List <l_dummyControlchartResult> result = Qresult.ToList();
 
             object ValueData = from e in result
                               select new

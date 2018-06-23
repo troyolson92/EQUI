@@ -1266,6 +1266,7 @@
     </Content>
     <Content Include="Areas\Alert\Views\ControlChart\_GetControlChart.cshtml" />
     <Content Include="Areas\Alert\Views\ControlChart\GetControlChart.cshtml" />
+    <Content Include="Areas\Alert\Views\L_controlLimits\_List.cshtml" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION.pubxml" />
     <None Include="Properties\PublishProfiles\VCC22700-Testing.pubxml" />
     <Content Include="PDFjs\build\pdf.js" />
