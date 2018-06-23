@@ -95,6 +95,17 @@ namespace EqUiWebUi.Areas.Alert.Models
 
     }
 
+    //helper class to pass chart settings
+    public class ChartSettings
+    {
+        public string chartname { get; set; }
+        public string scaleLabel { get; set; }
+        public DateTime startdate { get; set; }
+        public DateTime enddate { get; set; }
+        public string alarmobject { get; set; }
+        public int c_trigger_id { get; set; }
+    }
+
 
 }
 

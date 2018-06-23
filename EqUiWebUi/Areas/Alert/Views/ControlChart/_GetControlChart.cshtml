@@ -1,44 +1,110 @@
-﻿
+﻿@model EqUiWebUi.Areas.Alert.Models.ChartSettings
 <div class="card">
+    <div class="card-header bg-light">
+        <h6 class="card-title">
+            Controlchart for alarmobject:
+            <strong>@Model.alarmobject.Trim()</strong> c_trigger_id: <strong>@Model.c_trigger_id</strong>
+            <a class="fas fa-wrench text-black-50" href="#" data-toggle="popover" data-placement="bottom" id="ControlChartOptionsPopover"></a>
+            <a class="far fa-calendar-alt text-black-50" id="ControlChartDatepicker" href="#"></a>
+            <span class="clickable float-right text-black-50"><i class="fas fa-chevron-circle-up fa-1"></i></span>
+        </h6>
+    </div>
+
     <div class="card-body" id="graphSpinner" style="position:relative">
         <div id="gaphContainer">
             <canvas id='graphCanvas'></canvas>
         </div>
     </div>
+
 </div>
 
 
+@*popover content*@
+<div class="d-none" id="ControlChartOptionsPopoverContent">
+    <div class="panel panel-body">
+        <div class="row">
+            <div class=" col-3">
+                <div>no options yet</div>
+            </div>
+
+            <div class="col-9">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--ControlChartScripts-->
 @*https://dima117.github.io/Chart.Scatter/*@
 <script src="~/Scripts/Chart.Core.js"></script>
 <script src="~/Scripts/Chart.Scatter.js"></script>
-
 <script>
     //global vars
     var ControlChart;
+    var endDate = moment().subtract(29, 'days'); //setup default range to last 30 days
+    var startDate = moment().add(1, 'days'); //add one day in the future
+
+    //setting up datetimePicker
+    $('#ControlChartDatepicker').daterangepicker({
+        "showWeekNumbers": true,
+        "showISOWeekNumbers": true,
+        "ranges": {
+            'Last 48 Hours': [moment().subtract(2, 'days'), moment()],
+            'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+            'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+            'Last 100 Days': [moment().subtract(100, 'days'), moment()],
+            'Last Year': [moment().subtract(365, 'days'), moment()],
+            'Last 5Year': [moment().subtract(365 * 5, 'days'), moment()]
+        },
+        "startDate": startDate,
+        "endDate": endDate,
+
+    }, function (end, start, label) {
+        console.log("New date range selected: " + start.format('YYYY-MM-DD') + " to " + end.format('YYYY-MM-DD') + " (predefined range: " + label + ")");
+        startDate = start;
+        endDate = end;
+        //update
+        getChartData();
+    });
+
+    //enable popover for settings.
+    $("#ControlChartOptionsPopover").popover({
+        html: true,
+        content: function () {
+            return $('#ControlChartOptionsPopoverContent').html();
+        },
+    });
 
     //get chart data
     function getChartData() {
         //make ajax request
         $.ajax({
             type: 'GET',
-            url: "/ControlChart/_getData",
-            success: function (returnPayload) {
+            url: '/ControlChart/_getData',
+            data: {
+                chartname: '@Model.chartname',
+                scaleLabel: '@Html.Raw(Model.scaleLabel)',
+                startdate: moment(endDate).toISOString(),
+                enddate: moment(startDate).toISOString(),
+                alarmobject: '@Model.alarmobject',
+                c_trigger_id : @Model.c_trigger_id
+            },
+            success: function (result) {
                 console && console.log("request chart data succeeded");
-                buildchart(returnPayload, "chartName");
+                buildchart(result);
             },
-            error: function (xhr, ajaxOptions, thrownError) {
-                console && console.log("request chart data failed!!");
+            error: function (result) {
+                console.log(result);
+                $.toaster({ title: 'getChartdata', priority: 'danger', message: result.statusCode });
                 $("#gaphContainer").html('<div>Request failed!!</div>');
-            },
-            dataType: "json",
-            contentType: "application/json",
-            processData: false,
-            async: true
+            }
         });
     };
 
     //build the chart Calls when ajax request ends
-    function buildchart(dataPayload, chartName) {
+    function buildchart(dataPayload) {
+        console.log(dataPayload);
         //destroy chart if exists
         if (ControlChart) {
             ControlChart.destroy();
@@ -60,7 +126,7 @@
                 showTooltips: true,
                 scaleShowHorizontalLines: true,
                 scaleShowLabels: true,
-                scaleLabel: "<%=value%> mm",
+                scaleLabel: dataPayload[0].scaleLabel,
                 // String - scale type: "number" or "date"
                 scaleType: "date",
                 // Boolean - Whether to use UTC dates instead local
@@ -75,34 +141,23 @@
         //dataset
         var data = [
             {
-                label: 'UCL',
-                strokeColor: '#F16220',
-                pointColor: '#F16220',
+                label: 'value',
+                strokeColor: '#007ACC',
+                pointColor: '#007ACC',
                 pointStrokeColor: '#fff',
-                data: [
-                    {
-                        x: new Date('2018-01-01T00:00:00'),
-                        y: 3
-                    },
-                    {
-                        x: new Date('2018-04-01T00:00:00'),
-                        y: 2
-                    },
-                    {
-                        x: new Date('2018-05-01T00:00:00'),
-                        y: 2
-                    },
-                    {
-                        x: new Date('2018-06-01T00:00:00'),
-                        y: 3
-                    }
-                ]
-
+                data: dataPayload[1]
             },
             {
-                label: '2',
-                data: dataPayload
+                label: 'UCL',
+                strokeColor: '#F16220',
+                data: dataPayload[2]
+            },
+            {
+                label: 'LCL',
+                strokeColor: '#F16220',
+                data: dataPayload[3]
             }
+
         ];
         //build
         ControlChart = new Chart(ctx).Scatter(data, options);
