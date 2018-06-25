@@ -112,6 +112,12 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             return PartialView(h_alert);
         }
 
+        // GET: Alert/_ControlChart partial. (control charts and hystory of limis
+        public ActionResult _ControlChart (h_alert h_Alert)
+        {
+            return PartialView(h_Alert);
+        }
+
         // GET: Alert/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {

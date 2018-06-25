@@ -41,6 +41,9 @@ namespace EqUiWebUi
                 case "BREAKDOWN":
                     return "TableLogtypeBREAKDOWN";
 
+                case "STOerror":
+                    return "TableLogtypeSTO";
+
                 case "TIMELINE":
                     return "TableLogtypeTIMELINE";
 

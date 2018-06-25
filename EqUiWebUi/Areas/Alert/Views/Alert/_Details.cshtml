@@ -54,53 +54,7 @@
 
     @if (Model.c_triggers.hasControlLimits)
     {
-        <hr />
-        //calc a logical start and enddate based on the alert. 
-        System.DateTime _startdate = Model.C_timestamp.AddDays(-30);
-        System.DateTime _enddate;
-        //if alert stil open take data until now 
-        if (Model.state == (int)EqUiWebUi.Areas.Alert.Models.alertState.WGK || Model.state == (int)EqUiWebUi.Areas.Alert.Models.alertState.OKREQ)
-        {
-            _enddate = System.DateTime.Now;
-        }
-        else //if closed take data until 2 days after last triggerd.
-        {
-            _enddate = Model.lastTriggerd.AddDays(2);
-        }
-
-
-        @Html.Action("_GetControlChart", "Controlchart", new
-        {
-            chartname = Model.c_triggers.alertType,
-            alarmobject = Model.alarmobject,
-            c_trigger_id = Model.c_triggers.id,
-            startdate = _startdate,
-            enddate= _enddate
-        })
-
-        <hr />
-
-        <div class="card">
-            <div class="card-header bg-light">
-                <h6 class="card-title">
-                    Controllimits for alarmobject:
-                    <strong>@Model.alarmobject.Trim()</strong> c_trigger_id:
-                    <strong>@Model.c_tirgger_id</strong>
-                    <span class="clickable float-right text-black-50"><i class="fas fa-chevron-circle-up fa-1"></i></span>
-                </h6>
-            </div>
-
-            <div class="card-body">
-                @Html.Action("_list", "L_controlLimits", new
-                {
-                    alarmobject = Model.alarmobject,
-                    c_trigger_id = Model.c_tirgger_id,
-                    showIsDead = true //show history for control limit
-                })
-            </div>
-        </div>
-
-        <hr />
+        @Html.Action("_ControlChart", "Alert", Model)
     }
 
     <div class="form-group">
