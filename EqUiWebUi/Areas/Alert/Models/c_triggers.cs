@@ -42,6 +42,7 @@ namespace EqUiWebUi.Areas.Alert.Models
         public Nullable<int> Animation { get; set; }
         public bool isDebugmode { get; set; }
         public int c_datasource_id { get; set; }
+        public string controlChartYlabel { get; set; }
     
         public virtual c_smsSystem c_smsSystem { get; set; }
         public virtual c_state c_state { get; set; }

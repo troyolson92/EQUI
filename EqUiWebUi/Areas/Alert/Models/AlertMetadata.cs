@@ -1,8 +1,26 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Data.Entity;
+using TrackerEnabledDbContext;
 
 namespace EqUiWebUi.Areas.Alert.Models
 {
+    //tracker (not testet)
+    //https://github.com/bilal-fazlani/tracker-enabled-dbcontext/wiki/1.-Types-of-TEDB
+    public class ApplicationDbContext : TrackerContext
+    {
+        public ApplicationDbContext()
+            : base("DefaultConnection")
+        {
+        }
+    }
+
+    //trigger metadata
+    [TrackChanges]
+    [MetadataType(typeof(c_triggersMetaData))]
+    public partial class c_triggers
+    {
+    }
     public class c_triggersMetaData
     {
         //************************************************************************************************
@@ -19,7 +37,7 @@ namespace EqUiWebUi.Areas.Alert.Models
 
 
         public int id { get; set; }
-        [HelpText("turn the trigger on or off")]
+        [HelpText("Turn the trigger on or off")]
         public bool enabled { get; set; }
         [Display(Name = "Omschrijving")]
         [HelpText("Describe the porpuse of this alert trigger")]
@@ -51,22 +69,12 @@ namespace EqUiWebUi.Areas.Alert.Models
 
     }
 
-    //enum for alert states
-    public enum alertState
-    {
-        WGK = 1,
-        OKREQ = 2,
-        COMP = 3,
-        VOID = 4,
-        TECHCOMP = 5
-    }
 
     //Alert metadata
     [MetadataType(typeof(h_alertMetaData))]
     public partial class h_alert
     {
     }
-
     public class h_alertMetaData
     {
         public int id { get; set; }
@@ -95,6 +103,19 @@ namespace EqUiWebUi.Areas.Alert.Models
 
     }
 
+//************************************
+//Helpers and enums.......
+//************************************
+    //enum for alert states
+    public enum alertState
+    {
+        WGK = 1,
+        OKREQ = 2,
+        COMP = 3,
+        VOID = 4,
+        TECHCOMP = 5
+    }
+
     //helper class to pass chart settings
     public class ChartSettings
     {
@@ -105,7 +126,6 @@ namespace EqUiWebUi.Areas.Alert.Models
         public string alarmobject { get; set; }
         public int c_trigger_id { get; set; }
     }
-
 
 }
 
