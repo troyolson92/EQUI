@@ -42,8 +42,8 @@
 <script>
     //global vars
     var ControlChart;
-    var endDate = moment().subtract(29, 'days'); //setup default range to last 30 days
-    var startDate = moment().add(1, 'days'); //add one day in the future
+    var endDate = moment('@Model.startdate.ToString("o")');
+    var startDate = moment('@Model.enddate.ToString("o")'); 
 
     //setting up datetimePicker
     $('#ControlChartDatepicker').daterangepicker({
