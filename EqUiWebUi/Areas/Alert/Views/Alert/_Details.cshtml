@@ -55,16 +55,27 @@
     @if (Model.c_triggers.hasControlLimits)
     {
         <hr />
+        //calc a logical start and enddate based on the alert. 
+        System.DateTime _startdate = Model.C_timestamp.AddDays(-30);
+        System.DateTime _enddate;
+        //if alert stil open take data until now 
+        if (Model.state == (int)EqUiWebUi.Areas.Alert.Models.alertState.WGK || Model.state == (int)EqUiWebUi.Areas.Alert.Models.alertState.OKREQ)
+        {
+            _enddate = System.DateTime.Now;
+        }
+        else //if closed take data until 2 days after last triggerd.
+        {
+            _enddate = Model.lastTriggerd.AddDays(2);
+        }
+
 
         @Html.Action("_GetControlChart", "Controlchart", new
         {
-            chartname = "testchart", //need to get this from c_trigger
+            chartname = Model.c_triggers.alertType,
             alarmobject = Model.alarmobject,
-            c_trigger_id = Model.c_triggers.id
-            //need to set daterange to something logical for the alert.
-            //a closed alert -30 days before and 3 days after close.
-            //an active one 30 days before until now
-
+            c_trigger_id = Model.c_triggers.id,
+            startdate = _startdate,
+            enddate= _enddate
         })
 
         <hr />
