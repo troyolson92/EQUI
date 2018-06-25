@@ -99,6 +99,9 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                 ViewBag.variantCount = db.l_controlLimits.Where(l => l.l_variants_id == l_variants_id && l.isdead == false).Count();
             }
 
+            //pass the previous url in the viewbag so we can return on save action
+            ViewBag.returnURL = System.Web.HttpContext.Current.Request.UrlReferrer;
+
             if (l_controlLimits == null)
             {
                 return HttpNotFound();
@@ -116,7 +119,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
         //This edit is special. we never delete a edit a control limit. a new instance get created and the current one is marked as dead.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(l_controlLimits l_controlLimits, int? l_variants_group_id)
+        public ActionResult Edit(l_controlLimits l_controlLimits, int? l_variants_group_id, string returnURL = "Index")
         {
   
             if (ModelState.IsValid)
@@ -168,7 +171,8 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                 }
                 //save 
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                //because this edit form gets called from both ListAlerts and AASPOTalert list we must redirect to the right page.
+                return Redirect(returnURL);
             }
 
             ViewBag.c_trigger_id = new SelectList(db.c_triggers, "id", "alertType", l_controlLimits.c_trigger_id);

@@ -4,14 +4,15 @@
     columns.Add(c => c.id).Titled("ID").InitialSort(GridSortOrder.Desc).Css("d-none d-lg-table-cell");
     columns.Add(c => c.c_triggers.alertType).Titled("alertType");
     columns.Add(c => c.CreateDate).Titled("CreateDate").Formatted("{0:dd-MM-yyyy HH:mm:ss}").Css("d-none d-lg-table-cell");
-    columns.Add(c => c.L_CreateUser.username).Titled("ChangedUser").Css("d-none d-lg-table-cell");
+    columns.Add(c => c.L_CreateUser.username).Titled("L_CreateUser").Css("d-none d-lg-table-cell");
     columns.Add(c => c.alarmobject).Titled("alarmobject");
     columns.Add(c => c.UpperLimit).Titled("UCL");
     columns.Add(c => c.LowerLimit).Titled("LCL");
     columns.Add(c => c.l_variants.variantGroup).Titled("variantGroup");
+    columns.Add(c => c.Comment).Titled("Comment");
     columns.Add(c => c.isdead).Titled("isdead");
-//add edit button
-columns.Add(c => c)
+    //add edit button
+    columns.Add(c => c)
             .Titled("")
             .Encoded(false)
             .RenderedAs(c => MyFilters.IconActionLink(Url.Action("Edit", new { id = c.id }), "fas fa-pencil-alt", "", "Edit this controllimit",enabeld: !c.isdead)

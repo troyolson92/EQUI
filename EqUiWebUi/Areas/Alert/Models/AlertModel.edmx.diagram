@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="a443bbb879724830a09275f259874e85" Name="Diagram1" ZoomLevel="64">
+      <Diagram DiagramId="a443bbb879724830a09275f259874e85" Name="Diagram1" ZoomLevel="46">
         <EntityTypeShape EntityType="AlertModel.c_smsSystem" Width="1.5" PointX="15.375" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="AlertModel.c_state" Width="1.5" PointX="8.625" PointY="4.125" IsExpanded="true" />
         <EntityTypeShape EntityType="AlertModel.h_alert" Width="1.5" PointX="5.625" PointY="1.375" IsExpanded="true" />
@@ -21,11 +21,6 @@
         <EntityTypeShape EntityType="AlertModel.c_SMSconfig" Width="1.5" PointX="17.5" PointY="7.125" />
         <AssociationConnector Association="AlertModel.FK_c_SMSconfig_c_CPT600" />
         <AssociationConnector Association="AlertModel.FK_c_SMSconfig_c_smsSystem" />
-        <EntityTypeShape EntityType="AlertModel.GunCylinderefernce" Width="1.5" PointX="25.375" PointY="6.75" FillColor="255, 192, 255" />
-        <EntityTypeShape EntityType="AlertModel.SBCUrefernce" Width="1.5" PointX="25.375" PointY="11.25" FillColor="255, 192, 255" />
-        <EntityTypeShape EntityType="AlertModel.c_controller" Width="1.5" PointX="23" PointY="6" FillColor="255, 192, 255" />
-        <AssociationConnector Association="AlertModel.FK_GunCylinderefernce_c_controller" />
-        <AssociationConnector Association="AlertModel.FK_SBCUrefernce_c_controller" />
         <EntityTypeShape EntityType="AlertModel.l_variants" Width="1.5" PointX="8.375" PointY="11.625" />
         <AssociationConnector Association="AlertModel.FK_l_variants_c_triggers" />
         <AssociationConnector Association="AlertModel.FK_l_variants_L_users" />
