@@ -101,13 +101,14 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                     (
                     (l.CreateDate > chartSettings.startdate && l.CreateDate < chartSettings.enddate) //must add the daterange here ! else we can not view an old chart!!!
                     || l.isdead == false//allows the active control limit to always in 
+                    //this cause a big bug that we always have to complete lifecycle of the active alert. (we can not get an old chart)
                     )
                     ).ToList();
 
             object UCLData = (from e in limits
                                     select new //startpoints
                                     {
-                                        x = ((e.CreateDate.AddSeconds(300) - UnixEpoch).Ticks / TimeSpan.TicksPerMillisecond),
+                                        x =  ((e.CreateDate.AddSeconds(300) - UnixEpoch).Ticks / TimeSpan.TicksPerMillisecond),
                                         y = Math.Round(e.UpperLimit.GetValueOrDefault(), 2),
                                         LCL = Math.Round(e.LowerLimit.GetValueOrDefault(), 2),
                                         r = controllimitPointSize
