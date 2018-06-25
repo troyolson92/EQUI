@@ -113,8 +113,18 @@ namespace EqUiWebUi.Areas.Alert.Controllers
         }
 
         // GET: Alert/_ControlChart partial. (control charts and hystory of limis
-        public ActionResult _ControlChart (h_alert h_Alert)
+        //mode 1 h_alert get passed. (from alert controller)
+        //mode 2 you get a controlLimi_id (from controllLimit controller)
+        public ActionResult _ControlChart (h_alert h_Alert, int? c_controlLimit_id)
         {
+            if (c_controlLimit_id.HasValue)
+            {
+                l_controlLimits l_ControlLimit = db.l_controlLimits.Find(c_controlLimit_id);
+                h_Alert.C_timestamp = System.DateTime.Now;
+                h_Alert.lastTriggerd = System.DateTime.Now;
+                h_Alert.alarmobject = l_ControlLimit.alarmobject;
+                h_Alert.c_tirgger_id = l_ControlLimit.c_trigger_id;
+            }
             return PartialView(h_Alert);
         }
 

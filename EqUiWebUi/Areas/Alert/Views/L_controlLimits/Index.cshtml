@@ -12,13 +12,13 @@
 
 <div id="l_controlLimits" class="mvc-grid"></div>
 
-
+<!--ControlLimit script-->
 @section scripts{
 <script>
         //full with screen
         $("#allcontent").removeClass("body-content");
         $("#allcontent").removeClass("container");
-
+        //get grid 
         $("#l_controlLimits").mvcgrid({
                 sourceUrl: '@Url.Action("_List")',
                 requestType: 'get',
@@ -36,11 +36,10 @@
                 $("#placeholder1").remove(); //clear placeholder is exists
                 //add new placeholder afhter selected row
                 $(row).after('<tr id="placeholder1"><td colspan="10000"><div class=""><div class="" id ="placeholderPartial1"></div></div></td></tr>');
+                //animation
+                $("#placeholderPartial1").html("Loading.....");
                 //load partial into div
-                $("#placeholderPartial1").load('@Url.Action("_ControlChart","Alert")', {
-                    //need to build a dummy hAlert
-
-                });
+                $("#placeholderPartial1").load('@Url.Action("_ControlChart","Alert")?c_controlLimit_id=' + data.id);
                 //listen toclick events
                 //
                 },
@@ -51,7 +50,7 @@
 
                 },
                 reloadFailed: function (result) {
-                    $('#dummyLogClassResultGrid').html("Error while loading!!!");
+                    $('#l_controlLimits').html("Error while loading!!!");
                 }
             });
 </script>

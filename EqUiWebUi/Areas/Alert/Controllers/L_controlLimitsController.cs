@@ -81,7 +81,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
 
         // GET: Alert/L_controlLimits/Edit/5
         // It is also possible to edit multible records at the same time. by setting the l_variants_id        
-        public ActionResult Edit(int? id, int? l_variants_id)
+        public ActionResult Edit(int? id, int? l_variants_id, bool CloseOnSuccess = false)
         {
             if ((id.HasValue && l_variants_id.HasValue) || (id == null && l_variants_id == null))
             {
@@ -98,7 +98,8 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                 l_controlLimits = db.l_controlLimits.Where(l => l.l_variants_id == l_variants_id && l.isdead == false).FirstOrDefault();
                 ViewBag.variantCount = db.l_controlLimits.Where(l => l.l_variants_id == l_variants_id && l.isdead == false).Count();
             }
-
+            //pass the close on succes option
+            ViewBag.CloseOnSuccess = CloseOnSuccess;
             //pass the previous url in the viewbag so we can return on save action
             ViewBag.returnURL = System.Web.HttpContext.Current.Request.UrlReferrer;
 
@@ -119,7 +120,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
         //This edit is special. we never delete a edit a control limit. a new instance get created and the current one is marked as dead.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(l_controlLimits l_controlLimits, int? l_variants_group_id, string returnURL = "Index")
+        public ActionResult Edit(l_controlLimits l_controlLimits, int? l_variants_group_id, string returnURL = "Index", bool CloseOnSuccess = false)
         {
   
             if (ModelState.IsValid)
@@ -171,8 +172,16 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                 }
                 //save 
                 db.SaveChanges();
-                //because this edit form gets called from both ListAlerts and AASPOTalert list we must redirect to the right page.
-                return Redirect(returnURL);
+                //option to close window on succesful save
+                if (CloseOnSuccess)
+                {
+                    return Redirect("/Home/Close");
+                }
+                else
+                {
+                    //because this edit form gets called from both ListAlerts and AASPOTalert list we must redirect to the right page.
+                    return Redirect(returnURL);
+                }
             }
 
             ViewBag.c_trigger_id = new SelectList(db.c_triggers, "id", "alertType", l_controlLimits.c_trigger_id);
