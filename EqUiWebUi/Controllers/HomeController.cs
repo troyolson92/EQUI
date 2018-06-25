@@ -36,5 +36,10 @@ namespace EqUiWebUi.Controllers
             return View();
         }
 
+        //to close a user window when redirected
+        public ActionResult Close()
+        {
+            return View();
+        }
     }
 }

@@ -11,15 +11,21 @@
     columns.Add(c => c.l_variants.variantGroup).Titled("variantGroup");
     columns.Add(c => c.Comment).Titled("Comment");
     columns.Add(c => c.isdead).Titled("isdead");
-//add edit button
-columns.Add(c => c)
-            .Titled("")
-            .Encoded(false)
-            .RenderedAs(c => MyFilters.IconActionLink(Url.Action("Edit", new { id = c.id }), "fas fa-pencil-alt", "", "Edit this controllimit", enabeld: !c.isdead)
-            ).Filterable(false);
+    //add edit button
+    columns.Add(c => c)
+                .Titled("")
+                .Encoded(false)
+                .RenderedAs(c => MyFilters.IconActionLink(Url.Action("Edit", new { id = c.id, CloseOnSuccess = true }), "fas fa-pencil-alt", "", "Edit this controllimit", enabeld: !c.isdead, classes: "OpenNewWindow")
+                ).Filterable(false);
 
 }).Filterable().Sortable().Pageable(pager =>
 {
     pager.RowsPerPage = 17;
 }).Empty("Did not find anything").Css("table-hover")
+
+
+<script>
+    //subscribe to click event (launch external window)
+    initUrlNewWindow();
+</script>
 

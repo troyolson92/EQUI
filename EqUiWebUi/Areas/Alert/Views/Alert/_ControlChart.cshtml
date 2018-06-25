@@ -17,9 +17,8 @@
 
     @Html.Action("_GetControlChart", "Controlchart", new
     {
-        chartname = Model.c_triggers.alertType,
         alarmobject = Model.alarmobject,
-        c_trigger_id = Model.c_triggers.id,
+        c_trigger_id = Model.c_tirgger_id,
         startdate = _startdate,
         enddate = _enddate
     })
