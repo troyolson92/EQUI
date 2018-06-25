@@ -81,12 +81,12 @@ function initInterface() {
 function EnablePannelCollaps() {
     $(document).on('click', '.card-header span.clickable', function (e) {
         var $this = $(this);
-        if ($this.parents('.card').find('.card-body').css('display') === 'block') {
+        if ($this.closest('.card').find('.card-body').css('display') === 'block') {
             $this.addClass('fa-rotate-180');
-            $this.parents('.card').find('.card-body').slideUp();
+            $this.closest('.card').find('.card-body').slideUp();
         } else {
             $this.removeClass('fa-rotate-180');
-            $this.parents('.card').find('.card-body').slideDown();
+            $this.closest('.card').find('.card-body').slideDown();
         }
     });
 }
