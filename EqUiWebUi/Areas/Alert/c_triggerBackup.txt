@@ -1,0 +1,398 @@
+﻿id	enabled	discription	RunAgainst	sqlStatement	smsSystem	initial_state	Cron	alertType	AutoSetStateTechComp	smsOnRetrigger	enableSMS	isDowntime	isInReport	hasControlLimits	controllimitSqlStatement	controlChartSqlStatement	Animation	isDebugmode	c_datasource_id	controlChartYlabel
+1	1	NGAC SlowSpeed  robots not at 100% speed (>60min)	0	SELECT  
+  x._timestamp      AS 'timestamp'
+, 'ROBOT SPEED LOW value: ' +  CAST(x.[value] as varchar(3)) + ' since @'+CONVERT(char(19),x._timestamp, 120)   AS 'info'
+, x.id				 AS 'refId'
+, c.LocationTree     As 'LocationTree'
+, c.ClassificationTree as 'ClassTree'
+, c.controller_name		AS 'Location'
+, c.controller_name     AS  'alarmobject'
+from (--nested to optimize return result for next join
+select 
+ rt.*
+,ROW_NUMBER() OVER (PARTITION BY rt.c_controller_id, rt.c_variable_id ORDER BY rt._timestamp DESC) AS 'rnDesc'
+from GADATA.NGAC.[rtu_SpeedOvr] as rt 
+) as x
+left join GADATA.NGAC.c_controller as c on c.id = x.c_controller_id
+where x.[value] <> 100 AND x.rnDesc = 1
+and x._timestamp < GETDATE()-'1900-01-01 01:00:00'	2	1	*/5 * * * *	SlowSpeed	1	1	1	0	1	0	select getdate() as 'test2'	test 	NULL	0	1	NULL
+3	1	NGAC BarrelLow Checks warning level for dispense system barrel	0	SELECT  
+  x._timestamp      AS 'timestamp'
+, 'Dispense Barrel LOW since @'+CONVERT(char(19),x._timestamp, 120)   AS 'info'
+, x.id				 AS 'refId'
+, c.LocationTree     As 'LocationTree'
+, c.ClassificationTree as 'ClassTree'
+, c.controller_name		AS 'Location'
+, c.controller_name     AS  'alarmobject'
+from (--nested to optimize return result for next join
+select 
+ rt.*
+,ROW_NUMBER() OVER (PARTITION BY rt.c_controller_id, rt.c_variable_id ORDER BY rt._timestamp DESC) AS 'rnDesc'
+from GADATA.NGAC.rt_Disp_BarrelLow as rt 
+) as x
+left join GADATA.NGAC.c_controller as c on c.id = x.c_controller_id
+where x.[value] = 1 AND x.rnDesc = 1	4	1	0 * * * *	BarrelLow	1	0	1	0	1	0	NULL	NULL	NULL	0	1	NULL
+4	1	C3G SBCUalert checks Sbcu measurements (control limits +1 mm)	0	SELECT 
+  max(x.[Timestamp])      AS 'timestamp'
+, max(x.info)  AS 'info'
+, max(x.refID)				 AS 'refId'
+, x.LocationTree     As 'LocationTree'
+, x.ClassificationTree as 'ClassTree'
+, x.controller_name		AS 'Location'
+, x.alarmobject AS  'alarmobject'
+FROM
+(
+SELECT  
+  v.tool_timestamp AS 'Timestamp'
+,'SBCU  | '  + c.controller_name +'_gun' + CAST(v.tool_id as varchar(2)) + ' Dsetup:' + CAST(ROUND(v.Dsetup,1) as varchar(6)) + '  [ UCL:' + CAST(ROUND(limits.UpperLimit,1)  as varchar(16)) + '| LCL:'  + CAST(ROUND(limits.LowerLimit,1)  as varchar(16)) + ' ]'  AS 'info'
+, v.ID as 'refID'
+, ROW_NUMBER() OVER (PARTITION BY v.controller_id, v.tool_id ORDER BY v.tool_timestamp desc) AS 'rnDESC'
+,V.Dsetup
+,limits.UpperLimit
+,limits.LowerLimit
+,c.LocationTree
+,c.ClassificationTree
+,c.controller_name
+,c.controller_name +'_gun' + CAST(v.tool_id as varchar(2))  AS  'alarmobject'
+FROM GADATA.C3G.[rt_toollog] as V 
+--join controller
+left join GADATA.C3G.c_controller as c on c.id = V.controller_id
+--join controlLimits
+left join GADATA.Alerts.l_controlLimits as limits on 
+limits.c_trigger_id = 4 --Get correct set.
+AND
+limits.alarmobject = (c.controller_name +'_gun' + CAST(v.tool_id as varchar(2))) --correct object
+AND 
+V.tool_timestamp BETWEEN limits.CreateDate and ISNULL(limits.ChangeDate,getdate())
+WHERE
+v.tool_timestamp BETWEEN GETDATE()-30 and GETDATE() --limit view window
+AND V.Longcheck = 1 --only long sbcu
+) as x 
+where x.rnDESC in(1)--last measurement
+AND
+(
+x.Dsetup > UpperLimit+1
+or 
+x.Dsetup < LowerLimit-1
+)
+GROUP BY
+ x.controller_name
+,x.LocationTree
+,x.ClassificationTree
+,x.alarmobject
+	2	1	*/5 * * * *	SBCUalert	1	0	0	0	1	1	SELECT distinct
+ c.LocationTree
+,c.ClassificationTree
+,c.controller_name
+,V.tool_id
+,c.controller_name +'_gun' + CAST(v.gunnum as varchar(2))  AS  'alarmobject'
+FROM GADATA.C3G.SBCUData as V 
+left join GADATA.C3G.c_controller as c on c.controller_name = V.RobotName
+WHERE
+v.tool_timestamp BETWEEN GETDATE()-30 and GETDATE() --limit view window
+AND V.Longcheck = 1 --only long sbcu
+AND (V.UCL is null or V.LCL is null)	SELECT  
+ c.controller_name +'_gun' + CAST(v.tool_id as varchar(2))  AS  'alarmobject'
+,v.tool_timestamp AS 'Timestamp'
+,v.Dsetup as 'Value'
+,v.id as 'id'
+,limits.UpperLimit
+,limits.LowerLimit
+,limits.id as 'l_controlLimits_id'
+,limits.Comment
+,limits.CreateDate
+
+FROM GADATA.C3G.[rt_toollog] as V 
+--join controller
+left join GADATA.C3G.c_controller as c on c.id = V.controller_id
+--join controlLimits
+left join GADATA.Alerts.l_controlLimits as limits on 
+limits.c_trigger_id = @c_trigger_id
+AND
+limits.alarmobject = (c.controller_name +'_gun' + CAST(v.tool_id as varchar(2))) --correct object
+AND 
+V.tool_timestamp BETWEEN limits.CreateDate and ISNULL(limits.ChangeDate,getdate())
+WHERE
+V.Longcheck = 1 --only long sbcu
+and (c.controller_name +'_gun' + CAST(v.tool_id as varchar(2))) = @alarmobject
+order by tool_timestamp desc 	NULL	0	1	<%=value%> mm
+5	1	C3G GUNalert Checks the pneumatic welding gun cilinder	0	SELECT 
+  max(x.[Timestamp])      AS 'timestamp'
+, max(x.info)  AS 'info'
+, max(x.refID)				 AS 'refId'
+, x.LocationTree     As 'LocationTree'
+, x.ClassificationTree as 'ClassTree'
+, x.controller_name		AS 'Location'
+, x.alarmobject AS  'alarmobject'
+FROM
+(
+SELECT  
+  v._timestamp AS 'Timestamp'
+,'Cylinder  |gun:' + CAST(v.tool_id as varchar(2)) + ' TotalTime:' + CAST(ROUND(v.CloseToSemi + V.SemiToOpen,1) as varchar(6)) + '  [ UCL:' + CAST(ROUND(limits.UpperLimit,1)  as varchar(16)) + '| LCL:'  + CAST(ROUND(limits.LowerLimit,1)  as varchar(16)) + ' ]'  AS 'info'
+, v.ID as 'refID'
+, ROW_NUMBER() OVER (PARTITION BY v.controller_id, v.tool_id ORDER BY v._timestamp desc) AS 'rnDESC'
+,CAST((v.CloseToSemi + V.SemiToOpen) as float)  as 'TotalTime'
+,limits.UpperLimit
+,limits.LowerLimit
+,c.LocationTree
+,c.ClassificationTree
+,c.controller_name
+,c.controller_name +'_gun' + CAST(v.tool_id as varchar(2))  AS  'alarmobject'
+FROM GADATA.C3G.rt_GunCylinder as V 
+--join controller
+left join GADATA.C3G.c_controller as c on c.id = V.controller_id
+--join controlLimits
+left join GADATA.Alerts.l_controlLimits as limits on 
+limits.c_trigger_id = 5 --Get correct set.
+AND
+limits.alarmobject = (c.controller_name +'_gun' + CAST(v.tool_id as varchar(2))) --correct object
+AND 
+V._timestamp BETWEEN limits.CreateDate and ISNULL(limits.ChangeDate,getdate())
+WHERE
+v._timestamp BETWEEN GETDATE()-30 and GETDATE() --limit view window
+) as x 
+where x.rnDESC in(1,2,3) --last 3 
+AND
+(
+x.TotalTime > x.UpperLimit+0
+or 
+x.TotalTime < x.LowerLimit-0
+)
+GROUP BY
+ x.controller_name
+,x.LocationTree
+,x.ClassificationTree
+,x.alarmobject
+	2	1	*/5 * * * *	GUNalert	1	0	0	0	0	1	SELECT distinct
+c.LocationTree
+,c.ClassificationTree
+,c.controller_name
+,V.Tool_id
+,c.controller_name +'_gun' + CAST(v.tool_id as varchar(2))  AS  'alarmobject'
+FROM GADATA.C3G.WeldGunCylinder as V 
+left join GADATA.C3G.c_controller as c on c.id = v.Controller_id
+WHERE
+v._timestamp BETWEEN GETDATE()-30 and GETDATE() --limit view window
+and (V.UCL is null or V.LCL is null)	SELECT  
+ c.controller_name +'_gun' + CAST(v.tool_id as varchar(2))  AS  'alarmobject'
+,v._timestamp AS 'Timestamp'
+,CAST((v.CloseToSemi + V.SemiToOpen) as float) as 'Value'
+,v.id as 'id'
+,limits.UpperLimit
+,limits.LowerLimit
+,limits.id as 'l_controlLimits_id'
+,limits.Comment
+,limits.CreateDate
+
+FROM GADATA.C3G.rt_GunCylinder as V 
+--join controller
+left join GADATA.C3G.c_controller as c on c.id = V.controller_id
+--join controlLimits
+left join GADATA.Alerts.l_controlLimits as limits on 
+limits.c_trigger_id = @c_trigger_id
+AND
+limits.alarmobject = (c.controller_name +'_gun' + CAST(v.tool_id as varchar(2))) --correct object
+AND 
+V._timestamp BETWEEN limits.CreateDate and ISNULL(limits.ChangeDate,getdate())
+WHERE
+(c.controller_name +'_gun' + CAST(v.tool_id as varchar(2))) = @alarmobject
+order by _timestamp desc 	NULL	0	1	<%=value%> ms
+6	1	STO QStopZeis Q stop op WBL Zeis	2	select 
+   TO_TIMESTAMP(ALARMDATEANDTIMESTAMP, 'YYYY-MM-DD HH24:MI:SS.FF') timestamp
+, 'Qstop op zeis station'  info
+, nid_alarm_data	 refId
+, 'U' ClassTree
+, alarmobject Location
+, alarmobject alarmobject
+ from STO_SYS.ALARM_DATA_UB12
+where alarmobject like '339120ZM01ZeissMeas.AC_QStop' 
+and FCOMPLETE = 'N'
+order by NID_ALARM_DATA desc	2	1	*/1 * * * *	QStopZeis	1	0	0	1	1	0	NULL	NULL	NULL	0	9	NULL
+9	1	C3G Looks if SBCU is in out of use	1	SELECT 
+  x.[Timestamp]      AS 'timestamp'
+, x.info  AS 'info'
+, x.refID				 AS 'refId'
+, x.LocationTree     As 'LocationTree'
+, x.ClassTree as 'ClassTree'
+, x.controller_name		AS 'Location'
+, x.controller_name     AS  'alarmobject'
+FROM
+(
+SELECT 
+  rt.[timestamp] AS 'Timestamp'
+, 'SBCU OUT OF USE: gun:0' + rt.logtext  AS 'info' --gun 0 moet blijven staan voor SBCU TOOL in view !
+, rt.refId as 'refID'
+, ROW_NUMBER() OVER (PARTITION BY rt.controller_name ORDER BY rt.[timestamp] desc) AS 'rnDESC'
+,rt.LocationTree
+,rt.ClassTree
+,rt.controller_name
+FROM GADATA.c3g.Error as rt 
+where rt.Logcode = 99907 --only for logcode SBCU out of use.
+and rt.[timestamp] between GETDATE()-3 and GETDATE() --limit viewwindow to 3 days (will autocomp afther 3 days
+) as x 
+where x.rnDESC = 1 --only check on last record
+
+
+	2	1	0 * * * *	SBCUalert	1	0	0	0	1	0	NULL	NULL	NULL	0	1	NULL
+10	1	Storing in slingbuffer 337% of 3398% of 3399%	2	SELECT 
+   TO_TIMESTAMP(ALARMDATEANDTIMESTAMP, 'YYYY-MM-DD HH24:MI:SS.FF') timestamp
+, 'Buffer: ' || alarmobject  info --bericht voor MO
+, nid_alarm_data	 refId
+, 'U' ClassTree
+, alarmobject Location
+,CASE 
+   WHEN alarmobject like'337%' THEN '337350ZM01'
+   WHEN alarmobject like'339%' THEN '339910ZM01'
+   ELSE 'no match'
+END alarmobject
+ --take the plc name as the object because we else wil get A LOT of alerts
+ from STO_SYS.ALARM_DATA_UB12
+where 
+(
+alarmobject like '337%' --lijn 337 slingbuffer
+OR 
+alarmobject like '3398%' --skid retour
+OR
+ALARMOBJECT like '3399%' --skid cross conevor 
+OR
+ALARMOBJECT like '3393%' --BISS
+OR
+ALARMOBJECT like '3395%' --P4Slings 
+)
+AND ALARMSEVERITY in ('A','B','C') --must be in ABC 
+AND FCOMPLETE = 'N' --must be active
+AND TO_TIMESTAMP(ALARMDATEANDTIMESTAMP, 'YYYY-MM-DD HH24:MI:SS.FF')  BETWEEN
+(sysdate - (8/1440)) AND (sysdate - (2/1440)) --LIMIT window to 10 minutes to drop bad results after 10 min we also look to faults that are 
+--at least 5 minutes old.
+
+--Filter some specifc events.
+AND ALARMOBJECT not LIKE '%AC_VIDSGetSpecData5004Alarm' --vol? doorsturen zonder order
+AND ALARMOBJECT not LIKE '%AC_VIDSGetSpecDataMasterAlarm'
+AND ALARMOBJECT not LIKE '%AC_JW1261BodyMasterAlarm'
+AND ALARMOBJECT not LIKE '%AC_PNDiagError'
+AND ALARMOBJECT not LIKE '%AC_AutoNotStarted'
+
+
+order by NID_ALARM_DATA desc	4	1	*/1 * * * *	BufferDown	1	0	1	1	1	0	NULL	NULL	NULL	0	9	NULL
+12	1	NGAC robot spot pack OK	1	SELECT * FROM
+(
+SELECT  
+  controllerRestarted.[timestamp]   AS 'timestamp'
+, 'OPGEPAST! robot spot pakket activatie niet bevestigd! Controller of robot last!!!' AS 'info'
+, controllerRestarted.refid	 AS 'refId'
+, controllerRestarted.LocationTree  As 'LocationTree' --global message
+, 'U' AS 'ClassTree'
+, controllerRestarted.[Location]    AS 'Location'
+, controllerRestarted.[Location]    AS  'alarmobject'
+--check if there is a job done after the failure
+,(select top 1 ts_End from GADATA.NGAC.rt_job
+left join GADATA.NGAC.c_controller on c_controller.id = rt_job.c_controller_id
+where c_controller.controller_name = controllerRestarted.[Location] and ts_End > controllerRestarted.[timestamp]
+) as 'tsLastjob'
+from GADATA.NGAC.junk_alarms as controllerRestarted 
+--join timer data (need to now this is a spot robot)
+left join GADATA.dbo.Timer as timer on timer.Robot = controllerRestarted.[Location]
+--join rt controller to see type
+left join GADATA.NGAC.rt_controller as controller on controller.ControllerName like controllerRestarted.controller_name+'%'
+--join the spot pack up event
+left join GADATA.NGAC.ControllerEventLog as SpotPackUP on SpotPackUP.Logcode = 600 --spot start OK
+AND SpotPackUP.[Location] = controllerRestarted.[Location]
+--spotpack started event must be there at the most 2 min afther system up 
+AND   SpotPackUP.[timestamp] between controllerRestarted.[timestamp] AND (controllerRestarted.[timestamp]  + '1900-01-01 00:02:00') 
+where controllerRestarted.Logcode = 45 --controller restarted
+and timer.Robot is not null --must be a welding location
+and controllerRestarted.[timestamp] between GETDATE()-'1900-01-01 08:00:00' and GETDATE() -- use last 2hours of data. 
+and SpotPackUP.Logtext is null --not response from spotpack
+) as x 
+where x.[timestamp] > x.tsLastjob	5	1	*/10 * * * *	CRITICAL	1	0	1	0	1	0	NULL	NULL	NULL	0	1	NULL
+13	1	NGAC looks for no tip change deteced warning	1	SELECT  
+  rt.[timestamp]      AS 'timestamp'
+, 'No tip change is detected tipNOTchanged@' + CONVERT(char(19),twbc.TipchangeTimestamp, 120)  AS 'info'
+, rt.refId				 AS 'refId'
+, rt.LocationTree     As 'LocationTree'
+, 'UAWS' AS 'ClassTree'
+, rt.controller_name		AS 'Location'
+, rt.controller_name    AS  'alarmobject'
+,twbc.TipchangeTimestamp
+,rt.Logcode
+,rt.FullLogtext
+from GADATA.NGAC.ErrDispLog as rt 
+--join last tipchange
+left join GADATA.NGAC.TipwearBeforeChange as twbc on twbc.controller_name = rt.controller_name and twbc.tipchangeindex = 1
+WHERE  rt.Logcode in (237,261) 
+--237 => statgun (with confirm) en robotmounted (no confirm)
+--261 => robmounted (confirm)
+and rt.FullLogtext like '%Confirm%' --trigger only on the confirm event 
+and rt.FullLogtext not like '%Response: NO%' --on statgun they can pick NO if no change is detected. Filter this out
+and rt.[timestamp] between GETDATE()-'1900-01-03 00:00:00' and GETDATE()--use last 3 days of data on the event side.
+and rt.[timestamp] + '1900-01-01 00:03:00' > twbc.TipchangeTimestamp --leave alert active until new tipchange is detected	2	1	*/5 * * * *	TIPLIFE	1	0	0	0	1	0	NULL	NULL	NULL	0	1	NULL
+14	1	NGAC checks the lube level input for trackmotion	1	SELECT  
+  x._timestamp      AS 'timestamp'
+, 'TRACK lube LOW since @'+CONVERT(char(19),x._timestamp, 120)   AS 'info'
+, x.id				 AS 'refId'
+, c.LocationTree     As 'LocationTree'
+, c.ClassificationTree as 'ClassTree'
+, c.controller_name		AS 'Location'
+, c.controller_name     AS  'alarmobject'
+from (--nested to optimize return result for next join
+select 
+ rt.*
+,ROW_NUMBER() OVER (PARTITION BY rt.c_controller_id, rt.c_variable_id ORDER BY rt._timestamp DESC) AS 'rnDesc'
+from GADATA.NGAC.rt_Track_LubeLow as rt 
+) as x
+left join GADATA.NGAC.c_controller as c on c.id = x.c_controller_id
+where x.[value] = 1 AND x.rnDesc = 1	2	1	0 * * * *	LUBELOW	1	0	0	0	1	0	NULL	NULL	NULL	0	1	NULL
+15	1	Production count SMS	0	SELECT * FROM(
+SELECT 
+--This ALERT will close on the next shift (alarm object changes) 
+ TO_TIMESTAMP(OKGA.DBDATST, 'DD/MM/YY') timestamp
+,(
+OKGA.DBDATST ||'-S'|| OKGA.KSHIFT
+|| ' |OL P4-P6= ' || OLP4.HWAGENS || '-' || OLXC40.HWAGENS 
+|| ' |FR= '  || FRAM.HWAGENS
+|| ' |OKGA= ' || OKGA.HWAGENS
+) info
+--set a static location and classification.
+, 'U' ClassTree
+, 'GA' Location
+, 'VCG -> GA' LocationTree
+--dynamic alarmobject for each shift
+, OKGA.DBDATST ||'-S'||OKGA.KSHIFT  alarmobject
+FROM APPLICATION.TBI260 OKGA
+join APPLICATION.TBI260 OLP4 on OLP4.DBDATST= OKGA.DBDATST AND OLP4.KSHIFT = OKGA.KSHIFT AND OLP4.OINCD = 'OP LIJN P4'
+join APPLICATION.TBI260 OLXC40 on OLXC40.DBDATST= OKGA.DBDATST AND OLXC40.KSHIFT = OKGA.KSHIFT AND OLXC40.OINCD = 'Front Str. buffer'
+join APPLICATION.TBI260 FRAM on FRAM.DBDATST= OKGA.DBDATST AND FRAM.KSHIFT = OKGA.KSHIFT AND FRAM.OINCD = 'P1-LYN34 (34020)'
+WHERE OKGA.OINCD = 'OK GA BUFFER' 
+AND OLP4.OINCD IS NOT NULL
+AND OLXC40.OINCD IS NOT NULL
+AND FRAM.OINCD IS NOT NULL
+order by OKGA.DBDATST DESC
+) 
+WHERE ROWNUM <7	7	1	*/5 * * * *	SHIFTPROD	1	0	1	0	1	0	NULL	NULL	NULL	0	7	NULL
+16	1	Om draaitafel 334040 in de gaten te houden	2	SELECT 
+   TO_TIMESTAMP(ALARMDATEANDTIMESTAMP, 'YYYY-MM-DD HH24:MI:SS.FF') timestamp
+, 'DRAAITAFEL: ' || alarmobject  info --bericht voor MO
+, nid_alarm_data	 refId
+, 'U' ClassTree
+, alarmobject Location
+, alarmobject alarmobject
+ --take the plc name as the object because we else wil get A LOT of alerts
+FROM STO_SYS.ALARM_DATA_SUBASSY
+WHERE 
+(
+ALARMOBJECT LIKE '%TR%OvtRes%'
+OR
+ALARMOBJECT LIKE '%TR%OvtSes%'
+OR
+ALARMOBJECT LIKE '%TR%OvtResWarn%'
+OR
+ALARMOBJECT LIKE '%TR%OvtSetWarn%'
+OR
+ALARMOBJECT LIKE '%LaserScannerAlarm%'
+)
+AND ALARMOBJECT LIKE '334040%'
+AND TO_TIMESTAMP(ALARMDATEANDTIMESTAMP, 'YYYY-MM-DD HH24:MI:SS.FF')  between sysdate-(10/1440) AND  sysdate
+AND ALARMSTATUS = 1
+--AND ALARMSEVERITY not in ('E')
+order by NID_ALARM_DATA desc 
+	3	1	*/5 * * * *	334040	1	0	1	0	1	0	NULL	NULL	NULL	0	9	NULL
