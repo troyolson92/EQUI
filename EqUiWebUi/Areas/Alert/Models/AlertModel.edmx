@@ -68,6 +68,7 @@
           <Property Name="Animation" Type="int" />
           <Property Name="isDebugmode" Type="bit" Nullable="false" />
           <Property Name="c_datasource_id" Type="int" Nullable="false" />
+          <Property Name="controlChartYlabel" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="h_alert">
           <Key>
@@ -817,6 +818,7 @@
           <Property Name="c_datasource_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="c_datasource" Relationship="AlertModel.FK_c_triggers_c_datasource" FromRole="c_triggers" ToRole="c_datasource" />
           <NavigationProperty Name="l_controlLimits" Relationship="AlertModel.FK_l_controlLimits_c_triggers" FromRole="c_triggers" ToRole="l_controlLimits" />
+          <Property Name="controlChartYlabel" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_c_triggers_c_smsSystem">
           <End Type="AlertModel.c_smsSystem" Role="c_smsSystem" Multiplicity="0..1" />
@@ -1251,6 +1253,7 @@
           <EntitySetMapping Name="c_triggers">
             <EntityTypeMapping TypeName="AlertModel.c_triggers">
               <MappingFragment StoreEntitySet="c_triggers">
+                <ScalarProperty Name="controlChartYlabel" ColumnName="controlChartYlabel" />
                 <ScalarProperty Name="c_datasource_id" ColumnName="c_datasource_id" />
                 <ScalarProperty Name="isDebugmode" ColumnName="isDebugmode" />
                 <ScalarProperty Name="Animation" ColumnName="Animation" />

@@ -59,7 +59,6 @@
         @Html.Action("_GetControlChart", "Controlchart", new
         {
             chartname = "testchart", //need to get this from c_trigger
-            scaleLabel = "<%=value%> mm", //need to get this from c_trigger
             alarmobject = Model.alarmobject,
             c_trigger_id = Model.c_triggers.id
             //need to set daterange to something logical for the alert.

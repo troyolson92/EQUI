@@ -64,7 +64,17 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             ConnectionManager connectionManager = new ConnectionManager();
             c_triggers c_Trigger = db.c_triggers.Where(c => c.id == chartSettings.c_trigger_id).First();
 
+            //update the scalelabel 
+            if (c_Trigger.controlChartYlabel != null)
+            {
+                chartSettings.scaleLabel = c_Trigger.controlChartYlabel;
+            }
+            else
+            {
+                chartSettings.scaleLabel = "<%=value%>";
+            }
 
+            //Query to get value data
             IQueryable<l_dummyControlchartResult> Qresult = db.l_dummyControlchartResult.SqlQuery(c_Trigger.controlChartSqlStatement,
                               new SqlParameter("@c_trigger_id", chartSettings.c_trigger_id),
                               new SqlParameter("@alarmobject", chartSettings.alarmobject)
@@ -80,21 +90,51 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                                 r = SetPointSize(e)
                               };
 
-            object UCLData = from e in result.Where(l => l.l_controlLimits_id.HasValue)
-                               select new
-                               {
-                                   x = ((e.timestamp - UnixEpoch).Ticks / TimeSpan.TicksPerMillisecond),
-                                   y = Math.Round(e.UpperLimit.GetValueOrDefault(), 2),
-                                   r = 0.6
-                               };
-           
-            object LCLData = from e in result.Where(l => l.l_controlLimits_id.HasValue)
-                             select new
-                               {
-                                   x = ((e.timestamp - UnixEpoch).Ticks / TimeSpan.TicksPerMillisecond),
-                                   y = Math.Round(e.LowerLimit.GetValueOrDefault(), 2),
-                                   r = 0.6
-                               };
+
+            //get the control limits seperate. (else a point is returned for each record and the rendering looks bad.
+            double controllimitPointSize = 0.6;
+
+            List<l_controlLimits> limits = db.l_controlLimits.Where(l => 
+                    l.c_trigger_id == chartSettings.c_trigger_id 
+                    && l.alarmobject == chartSettings.alarmobject
+                    &&
+                    (
+                    (l.CreateDate > chartSettings.startdate && l.CreateDate < chartSettings.enddate) //must add the daterange here ! else we can not view an old chart!!!
+                    || l.isdead == false//allows the active control limit to always in 
+                    )
+                    ).ToList();
+
+            object UCLData = (from e in limits
+                                    select new //startpoints
+                                    {
+                                        x = ((e.CreateDate.AddSeconds(300) - UnixEpoch).Ticks / TimeSpan.TicksPerMillisecond),
+                                        y = Math.Round(e.UpperLimit.GetValueOrDefault(), 2),
+                                        LCL = Math.Round(e.LowerLimit.GetValueOrDefault(), 2),
+                                        r = controllimitPointSize
+
+                                    }).Union((from e in limits
+                                    select new //endpoints
+                                    {
+                                        x = ((e.ChangeDate.GetValueOrDefault(chartSettings.enddate) - UnixEpoch).Ticks / TimeSpan.TicksPerMillisecond),
+                                        y = Math.Round(e.UpperLimit.GetValueOrDefault(), 2),
+                                        LCL = Math.Round(e.LowerLimit.GetValueOrDefault(), 2),
+                                        r = controllimitPointSize
+                                    })).OrderBy(e => e.x);
+
+            object LCLData = (from e in limits
+                                select new //startpoints
+                                {
+                                    x = ((e.CreateDate.AddSeconds(300) - UnixEpoch).Ticks / TimeSpan.TicksPerMillisecond),
+                                    y = Math.Round(e.LowerLimit.GetValueOrDefault(), 2),
+                                    r = controllimitPointSize
+
+                                }).Union((from e in limits
+                                select new //endpoints
+                                {
+                                    x = ((e.ChangeDate.GetValueOrDefault(chartSettings.enddate) - UnixEpoch).Ticks / TimeSpan.TicksPerMillisecond),
+                                    y = Math.Round(e.LowerLimit.GetValueOrDefault(), 2),
+                                    r = controllimitPointSize
+                                })).OrderBy(e => e.x);
 
             //combine all data in 1 list object
             List<object> data = new List<object>();
