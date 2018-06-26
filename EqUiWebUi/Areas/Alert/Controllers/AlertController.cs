@@ -112,9 +112,18 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             return PartialView(h_alert);
         }
 
-        // GET: Alert/_ControlChart partial. (control charts and hystory of limis
-        public ActionResult _ControlChart (h_alert h_Alert)
+        // GET: Alert/_ControlChart partial. (control charts and hystory of limis)
+        public ActionResult _ControlChart (h_alert h_Alert, int? l_controllimit_id)
         {
+            if (l_controllimit_id.HasValue)
+            {
+                l_controlLimits controlLimit = db.l_controlLimits.Find(l_controllimit_id);
+                h_Alert.c_tirgger_id = controlLimit.c_triggers.id;
+                h_Alert.C_timestamp = System.DateTime.Now;
+                h_Alert.lastTriggerd = System.DateTime.Now;
+                h_Alert.alarmobject = controlLimit.alarmobject;
+            }
+
             return PartialView(h_Alert);
         }
 

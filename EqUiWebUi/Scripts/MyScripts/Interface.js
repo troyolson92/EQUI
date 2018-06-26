@@ -133,8 +133,8 @@ function initToaster() {
 //if click link has this class open it in a new window
 function initUrlNewWindow() {
     $('.OpenNewWindow').click(function () {
-        console.log("hit");
-        window.open($(this).attr('href'), 'Maximo', 'window settings');
+        console.log("Opening new window");
+        window.open($(this).attr('href'), 'EQUI', 'window settings');
         return false;
     });
     

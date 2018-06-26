@@ -1464,6 +1464,7 @@
     <Content Include="Views\c_logClassSystem\Delete.cshtml" />
     <Content Include="Views\c_logClassSystem\Edit.cshtml" />
     <Content Include="Views\c_logClassSystem\Index.cshtml" />
+    <Content Include="Views\Home\Close.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EQUICommunictionLib\EQUICommunictionLib.csproj">
