@@ -46,27 +46,30 @@
     var startDate = moment('@Model.enddate.ToString("o")'); 
 
     //setting up datetimePicker
-    $('#ControlChartDatepicker').daterangepicker({
-        "showWeekNumbers": true,
-        "showISOWeekNumbers": true,
-        "ranges": {
-            'Last 48 Hours': [moment().subtract(2, 'days'), moment()],
-            'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-            'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-            'Last 100 Days': [moment().subtract(100, 'days'), moment()],
-            'Last Year': [moment().subtract(365, 'days'), moment()],
-            'Last 5Year': [moment().subtract(365 * 5, 'days'), moment()]
-        },
-        "startDate": startDate,
-        "endDate": endDate,
+    function setDaterangepicker() {
+        $('#ControlChartDatepicker').daterangepicker({
+            "showWeekNumbers": true,
+            "showISOWeekNumbers": true,
+            "ranges": {
+                'Last 48 Hours': [moment().subtract(2, 'days'), moment()],
+                'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                'Last 100 Days': [moment().subtract(100, 'days'), moment()],
+                'Last Year': [moment().subtract(365, 'days'), moment()],
+                'Last 5Year': [moment().subtract(365 * 5, 'days'), moment()]
+            },
+            "startDate": startDate,
+            "endDate": endDate,
 
-    }, function (end, start, label) {
-        console.log("New date range selected: " + start.format('YYYY-MM-DD') + " to " + end.format('YYYY-MM-DD') + " (predefined range: " + label + ")");
-        startDate = start;
-        endDate = end;
-        //update
-        getChartData();
-    });
+        }, function (end, start, label) {
+            console.log("New date range selected: " + start.format('YYYY-MM-DD') + " to " + end.format('YYYY-MM-DD') + " (predefined range: " + label + ")");
+            startDate = start;
+            endDate = end;
+            //update
+            getChartData();
+        });
+    };
+
 
     //enable popover for settings.
     $("#ControlChartOptionsPopover").popover({
@@ -164,6 +167,8 @@
         ];
         //build
         ControlChart = new Chart(ctx).Scatter(data, options);
+        //init daterangepicker
+        setDaterangepicker();
     }
 
 

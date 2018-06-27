@@ -79,7 +79,6 @@ namespace EqUiWebUi.Controllers
         }
 
         //return partial based on a query run against a database.
-        [HttpGet]
         public ActionResult _dynamicWebgridRunQueryAgainstDB(string qry, int db = 0)
         {
             DataTable dt = new DataTable();
