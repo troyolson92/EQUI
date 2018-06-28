@@ -176,7 +176,7 @@ namespace EqUiWebUi.Areas.Gadata
             public void UpdateMaximoAssetsToGadata()
             {
                 //get asset list from maximo M7 daily copy
-                string strSqlGetFromMaximo = @"
+                string strSqlGetFromMaximo = string.Format(@"
     SELECT * FROM   
     (
     --PRESELECT IN MEMORY USING COMMON TABLE EXPRESSION CTE
@@ -194,7 +194,7 @@ namespace EqUiWebUi.Areas.Gadata
     , 1 H_LEVEL
     , LOCATION H_PATH
     FROM MAXIMO.LOCHIERARCHY ROOT 
-    WHERE ROOT.LOCATION= 'VCG' --SELECT ITEM NUM TO START BOM FROM
+    WHERE ROOT.LOCATION= '{0}' --SELECT ITEM NUM TO START BOM FROM
     --SELECT CHILD NODES 'RECURSIVE MEMBER.'
     UNION ALL       
     SELECT 
@@ -232,11 +232,15 @@ namespace EqUiWebUi.Areas.Gadata
     --get AREA (one level up from station)
     LEFT JOIN MAXIMO.LOCHIERARCHY AREA ON (LOCATIONCTE.PARENT = AREA.LOCATION AND LOCATIONCTE.ORGID = AREA.ORGID AND LOCATIONCTE.SYSTEMID = AREA.SYSTEMID AND LOCATIONCTE.CHILDREN = 0)   
     --get the team form the ORG Hierarchy
-    LEFT JOIN MAXIMO.LOCHIERARCHY TEAM ON (AREA.PARENT = TEAM.LOCATION AND TEAM.SYSTEMID = 'ORG' ) --ORG might be VCG specific
+    LEFT JOIN MAXIMO.LOCHIERARCHY TEAM ON (AREA.PARENT = TEAM.LOCATION AND TEAM.SYSTEMID = '{1}' ) --ORG might be VCG specific
     --WHERE LOCATIONCTE.CHILDREN = 0 
-    )
-                ";
-                DataTable tableFromMx7 = new DataTable();
+    )"
+    , System.Configuration.ConfigurationManager.AppSettings["Maximo_SiteID"].ToString() //root location to start building three.
+    , System.Configuration.ConfigurationManager.AppSettings["Maximo_ORG_SYSTEMID"].ToString() //structure in maximo location that has the organisation dygram
+    ); 
+
+
+             DataTable tableFromMx7 = new DataTable();
                 ConnectionManager connectionManager = new ConnectionManager();    
                 log.Info("DataFromMaximo start");
                 tableFromMx7 = connectionManager.RunQuery(strSqlGetFromMaximo,dbName: "MAXIMO7rep", enblExeptions: true, maxEXECtime: 300);

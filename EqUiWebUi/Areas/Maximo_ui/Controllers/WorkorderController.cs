@@ -124,7 +124,7 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
 
             //build qyr
             StringBuilder sbqry = new StringBuilder();
-            sbqry.AppendLine(@"
+            sbqry.AppendLine(string.Format(@"
                SELECT 
                  WORKORDER.WONUM WONUM
                 ,WORKORDER.STATUS
@@ -138,8 +138,8 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
                 ,WORKORDER.OWNERGROUP
                 ,LOCANCESTOR.ANCESTOR
                 FROM MAXIMO.WORKORDER WORKORDER
-                left join MAXIMO.LOCANCESTOR LOCANCESTOR on WORKORDER.LOCATION = LOCANCESTOR.LOCATION AND LOCANCESTOR.SYSTEMID = 'PRODMID'");
-
+                left join MAXIMO.LOCANCESTOR LOCANCESTOR on WORKORDER.LOCATION = LOCANCESTOR.LOCATION AND LOCANCESTOR.SYSTEMID = '{0}'"
+                ,System.Configuration.ConfigurationManager.AppSettings["Maximo_LOCATION_SYSTEMID"].ToString()));
 
             //start where clause
             sbqry.AppendLine("WHERE ((WORKORDER.woclass = 'WORKORDER' or WORKORDER.woclass = 'ACTIVITY') and WORKORDER.historyflag = 0 and WORKORDER.istask = 0)");
