@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -25,7 +26,6 @@ namespace EqUiWebUi.Areas.user_management.Controllers
             ViewBag.AreaSelectlist = areaFiltersController.getAreaSelectList();
             c_ownershipController ownership = new EqUiWebUi.Areas.user_management.Controllers.c_ownershipController();
             ViewBag.OwnershipSelectlist = ownership.getOwnershipSelectList();
-
             return PartialView(user);
         }
 
@@ -43,6 +43,7 @@ namespace EqUiWebUi.Areas.user_management.Controllers
             ViewBag.AreaSelectlist = areaFiltersController.getAreaSelectList();
             c_ownershipController ownership = new EqUiWebUi.Areas.user_management.Controllers.c_ownershipController();
             ViewBag.OwnershipSelectlist = ownership.getOwnershipSelectList();
+            ViewBag.cultrueSelectlist = cultures.CultureList();
 
             return View(user);
         }
@@ -75,6 +76,7 @@ namespace EqUiWebUi.Areas.user_management.Controllers
             ViewBag.AreaSelectlist = areaFiltersController.getAreaSelectList();
             c_ownershipController ownership = new EqUiWebUi.Areas.user_management.Controllers.c_ownershipController();
             ViewBag.OwnershipSelectlist = ownership.getOwnershipSelectList();
+            ViewBag.cultrueSelectlist = cultures.CultureList();
 
             return View(user);
         }

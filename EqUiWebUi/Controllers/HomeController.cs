@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Web.Mvc;
-using EqUiWebUi.Areas.user_management;
+﻿using System.Web.Mvc;
 
 namespace EqUiWebUi.Controllers
 {

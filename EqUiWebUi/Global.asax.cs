@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using EqUiWebUi.Areas.user_management.Models;
+using System.Threading;
+using System.Globalization;
 
 [assembly: log4net.Config.XmlConfigurator(Watch = true)]
 
@@ -135,11 +137,21 @@ namespace EqUiWebUi
                     }
                     log.Info(string.Format("Session init done for: {0}  id: {1}", user.username, Session.SessionID.ToString()));
                 }
+
+                //set user culture for this request
+                string cultrue = CurrentUser.Getuser.Culture;
+                if (cultrue == null)
+                {
+                    cultrue = "en-GB";
+                }
+                Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(cultrue);
+                Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(cultrue);
             }
             catch (Exception ex)
             {
                 log.Error("TEMP session state not available", ex);
             }
+
         }
 
         //handle UNauthorised

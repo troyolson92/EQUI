@@ -9,4 +9,5 @@ namespace EqUiWebUi.Areas.user_management.Models
     {
         public  string sessionId { get; set; }
     }
+
 }

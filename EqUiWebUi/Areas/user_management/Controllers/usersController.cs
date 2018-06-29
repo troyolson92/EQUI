@@ -87,6 +87,7 @@ namespace EqUiWebUi.Areas.user_management.Controllers
             ViewBag.AreaSelectlist = areaFiltersController.getAreaSelectList();
             c_ownershipController ownership = new EqUiWebUi.Areas.user_management.Controllers.c_ownershipController();
             ViewBag.OwnershipSelectlist = ownership.getOwnershipSelectList();
+            ViewBag.cultrueSelectlist = cultures.CultureList();
 
             return View(users);
         }
@@ -108,6 +109,7 @@ namespace EqUiWebUi.Areas.user_management.Controllers
             ViewBag.AreaSelectlist = areaFiltersController.getAreaSelectList();
             c_ownershipController ownership = new EqUiWebUi.Areas.user_management.Controllers.c_ownershipController();
             ViewBag.OwnershipSelectlist = ownership.getOwnershipSelectList();
+            ViewBag.cultrueSelectlist = cultures.CultureList();
 
             return View(users);
         }
@@ -130,6 +132,7 @@ namespace EqUiWebUi.Areas.user_management.Controllers
             ViewBag.AreaSelectlist = areaFiltersController.getAreaSelectList();
             c_ownershipController ownership = new EqUiWebUi.Areas.user_management.Controllers.c_ownershipController();
             ViewBag.OwnershipSelectlist = ownership.getOwnershipSelectList();
+            ViewBag.cultrueSelectlist = cultures.CultureList();
 
             return View(users);
         }
