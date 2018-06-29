@@ -99,10 +99,21 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                     && l.alarmobject == chartSettings.alarmobject
                     &&
                     (
-                    (l.CreateDate > chartSettings.startdate && l.CreateDate < chartSettings.enddate)
+                    (l.CreateDate > chartSettings.startdate && l.CreateDate < chartSettings.enddate) //allows control limits CREATEd in the daterange to be in.
+                    || (l.ChangeDate > chartSettings.startdate && l.ChangeDate < chartSettings.enddate) //allows control limts CLOSED in the daterange to be in.
                     || l.isdead == false//allows the active control limit to always in 
                     )
                     ).ToList();
+
+            //adjest the dead control limits to fit in the 'view' windowd.
+            List<l_controlLimits> oldLimits = limits.Where(l => l.isdead == true).ToList();
+            foreach (l_controlLimits oldlimit in oldLimits)
+            {
+                if (oldlimit.CreateDate < chartSettings.startdate) //if created before viewwindows set startdate to start of window.
+                {
+                    oldlimit.CreateDate = chartSettings.startdate;
+                }
+            }
 
             //adjust the active control limit to fit in the 'View' window
             l_controlLimits activeLimit = limits.Where(l => l.isdead == false).First();
