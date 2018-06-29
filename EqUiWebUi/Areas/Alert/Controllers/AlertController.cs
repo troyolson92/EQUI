@@ -128,7 +128,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
         }
 
         // GET: Alert/Edit/5
-        public async Task<ActionResult> Edit(int? id)
+        public async Task<ActionResult> Edit(int? id, bool CloseOnSaveSuccess = false)
         {
             if (id == null)
             {
@@ -140,6 +140,8 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                 return HttpNotFound();
             }
             ViewBag.state = new SelectList(db.c_state, "id", "discription", h_alert.state);
+            //pass option to close after succesful save
+            ViewBag.CloseOnSaveSucces = CloseOnSaveSuccess;
             //pass the previous url in the viewbag so we can return on save action
             ViewBag.returnURL = System.Web.HttpContext.Current.Request.UrlReferrer;
             return View(h_alert);
