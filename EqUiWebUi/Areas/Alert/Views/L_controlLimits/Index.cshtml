@@ -1,0 +1,55 @@
+﻿
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index of all control limits</h2>
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<div id="l_controlLimits" class="mvc-grid"></div>
+
+
+@section scripts{
+<script>
+        //full with screen
+        $("#allcontent").removeClass("body-content");
+        $("#allcontent").removeClass("container");
+
+        $("#l_controlLimits").mvcgrid({
+                sourceUrl: '@Url.Action("_List")',
+                requestType: 'get',
+                reload: true,
+                rowClicked: function (row, data, e) {
+                //if row already has this clase close the modal
+                if ($(row).hasClass("bg-info")) {
+                    $("#placeholder1").remove();
+                    $(row).removeClass("bg-info");
+                    return;
+                }
+                //clear selected rows for this table
+                $('tr').removeClass('bg-info'); //THIS IS WRONG
+                $(row).addClass("bg-info");
+                $("#placeholder1").remove(); //clear placeholder is exists
+                //add new placeholder afhter selected row
+                $(row).after('<tr id="placeholder1"><td colspan="10000"><div class=""><div class="" id ="placeholderPartial1"></div></div></td></tr>');
+                //load partial into div
+                $("#placeholderPartial1").load('@Url.Action("_ControlChart","Alert")?l_controllimit_id=' + data.id );
+                //listen toclick events
+                //
+                },
+                reloadStarted: function () {
+
+                },
+                reloadEnded: function () {
+
+                },
+                reloadFailed: function (result) {
+                    $('#dummyLogClassResultGrid').html("Error while loading!!!");
+                }
+            });
+</script>
+}
