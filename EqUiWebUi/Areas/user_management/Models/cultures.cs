@@ -14,9 +14,9 @@ namespace EqUiWebUi.Areas.user_management.Models
            return new SelectList(
             new List<SelectListItem>
             {
-                                new SelectListItem { Selected = true, Text = "English (en-GB)", Value = "en-GB"}, //default
-                                new SelectListItem { Selected = false, Text = "Dutch (nl-be)", Value = "nl-be"},
-                                new SelectListItem { Selected = false, Text = "Swedish (??)", Value = "??"},
+                                new SelectListItem { Selected = true, Text = "English (EN-GB)", Value = "EN-GB"}, //default
+                                new SelectListItem { Selected = false, Text = "Dutch (NL-BE)", Value = "NL-BE"},
+                                new SelectListItem { Selected = false, Text = "Swedish (SV)", Value = "SV"},
             }, "Value", "Text", 1);
         }
     }
