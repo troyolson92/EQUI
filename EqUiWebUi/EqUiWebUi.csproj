@@ -1498,10 +1498,12 @@
     <EmbeddedResource Include="Resources\defaultArea.nl-be.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>defaultArea.nl-be.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>EqUiWebUi</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\defaultArea.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>defaultArea.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>EqUiWebUi</CustomToolNamespace>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -15,7 +15,7 @@ namespace EqUiWebUi.Areas.Gadata.Models
     {
         public string Location { get; set; }
         public string AssetID { get; set; }
-        public Nullable<int> Logcode { get; set; }
+        public string Logcode { get; set; }
         public string Logtype { get; set; }
         public string logtext { get; set; }
         public Nullable<int> Response_min_ { get; set; }

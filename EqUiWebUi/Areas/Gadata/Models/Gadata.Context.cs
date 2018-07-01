@@ -27,10 +27,10 @@ namespace EqUiWebUi.Areas.Gadata.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Supervisie> Supervisie { get; set; }
         public virtual DbSet<Bodytracking> Bodytracking { get; set; }
+        public virtual DbSet<Supervisie> Supervisie { get; set; }
     
-        public virtual ObjectResult<EQpluginDefaultNGAC_Result> EQpluginDefaultNGAC(Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate, Nullable<int> daysBack, string assets, string locations, string lochierarchy, Nullable<bool> timeline, Nullable<bool> controllerEventLog, Nullable<bool> errDispLog, Nullable<bool> errDispLogS4C, Nullable<bool> variableLog, Nullable<bool> deviceProperty, Nullable<bool> breakdown, Nullable<bool> breakdownStart, Nullable<bool> jobs, Nullable<int> displayLevel, Nullable<bool> displayFullLogtext, Nullable<bool> excludeOperational)
+        public virtual ObjectResult<EQpluginDefaultNGAC_Result> EQpluginDefaultNGAC(Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate, Nullable<int> daysBack, string assets, string locations, string lochierarchy, Nullable<bool> timeline, Nullable<bool> controllerEventLog, Nullable<bool> errDispLog, Nullable<bool> errDispLogS4C, Nullable<bool> variableLog, Nullable<bool> deviceProperty, Nullable<bool> breakdown, Nullable<bool> breakdownStart, Nullable<bool> jobs, Nullable<bool> events, Nullable<int> displayLevel, Nullable<bool> displayFullLogtext, Nullable<bool> excludeOperational)
         {
             var startDateParameter = startDate.HasValue ?
                 new ObjectParameter("StartDate", startDate) :
@@ -92,6 +92,10 @@ namespace EqUiWebUi.Areas.Gadata.Models
                 new ObjectParameter("Jobs", jobs) :
                 new ObjectParameter("Jobs", typeof(bool));
     
+            var eventsParameter = events.HasValue ?
+                new ObjectParameter("Events", events) :
+                new ObjectParameter("Events", typeof(bool));
+    
             var displayLevelParameter = displayLevel.HasValue ?
                 new ObjectParameter("DisplayLevel", displayLevel) :
                 new ObjectParameter("DisplayLevel", typeof(int));
@@ -104,7 +108,7 @@ namespace EqUiWebUi.Areas.Gadata.Models
                 new ObjectParameter("ExcludeOperational", excludeOperational) :
                 new ObjectParameter("ExcludeOperational", typeof(bool));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<EQpluginDefaultNGAC_Result>("EQpluginDefaultNGAC", startDateParameter, endDateParameter, daysBackParameter, assetsParameter, locationsParameter, lochierarchyParameter, timelineParameter, controllerEventLogParameter, errDispLogParameter, errDispLogS4CParameter, variableLogParameter, devicePropertyParameter, breakdownParameter, breakdownStartParameter, jobsParameter, displayLevelParameter, displayFullLogtextParameter, excludeOperationalParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<EQpluginDefaultNGAC_Result>("EQpluginDefaultNGAC", startDateParameter, endDateParameter, daysBackParameter, assetsParameter, locationsParameter, lochierarchyParameter, timelineParameter, controllerEventLogParameter, errDispLogParameter, errDispLogS4CParameter, variableLogParameter, devicePropertyParameter, breakdownParameter, breakdownStartParameter, jobsParameter, eventsParameter, displayLevelParameter, displayFullLogtextParameter, excludeOperationalParameter);
         }
     
         public virtual ObjectResult<AAOSR_PloegRaport_Result> AAOSR_PloegRaport(Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate, Nullable<int> daysBack, string assets, string locations, string lochierarchy, Nullable<int> minDowntime, Nullable<int> minCountOfDowtime, Nullable<int> minCountofWarning, Nullable<bool> getAlerts, Nullable<bool> getShifbook)
