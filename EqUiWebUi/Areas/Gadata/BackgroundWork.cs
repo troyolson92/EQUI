@@ -143,7 +143,8 @@ namespace EqUiWebUi.Areas.Gadata
                                    jobs: false,
                                    displayLevel: 0,
                                    displayFullLogtext: true,
-                                   excludeOperational: true
+                                   excludeOperational: true,
+                                   events:false
                                        )
                                                          select DefaultNgac).ToList();
 

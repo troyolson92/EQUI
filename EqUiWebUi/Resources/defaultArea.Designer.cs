@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace EqUiWebUi.Resources {
+namespace EqUiWebUi {
     using System;
     
     

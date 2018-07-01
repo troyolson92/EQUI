@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Data;
+using System.Globalization;
+using System.Threading;
 using Oracle.ManagedDataAccess.Client;
 using Oracle.ManagedDataAccess.Types;
 
@@ -18,6 +20,9 @@ namespace EQUICommunictionLib
 
         public DataTable RunQuery(string Query, bool enblExeptions = false, int maxEXECtime = 300)
         {
+            //THIS MUST RUN AS CULTRUE en-US or we get BULLSHIT for the maximo reporting connection.
+            Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo("en-US");
+            //
             try
             {
                 using (OracleDataAdapter adapter = new OracleDataAdapter(Query, Conn))
