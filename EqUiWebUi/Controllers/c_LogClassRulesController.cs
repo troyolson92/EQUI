@@ -65,6 +65,15 @@ namespace EqUiWebUi.Controllers
             return View(c_LogClassRules);
         }
 
+        //POST: RemoteCreate
+        //called from classifcation Tool.
+        //did not use normal create because of validateToken.
+        [HttpPost]
+        public void RemoteCreate(c_LogClassRules c_LogClassRules)
+        {
+            Create(c_LogClassRules);
+        }
+
         // GET: c_LogClassRules/Edit/5
         public ActionResult Edit(int? id)
         {
