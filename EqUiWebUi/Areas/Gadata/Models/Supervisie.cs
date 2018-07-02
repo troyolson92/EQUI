@@ -21,7 +21,7 @@ namespace EqUiWebUi.Areas.Gadata.Models
         public string time { get; set; }
         public string Classification { get; set; }
         public string Subgroup { get; set; }
-        public Nullable<int> Severity { get; set; }
+        public string Severity { get; set; }
         public string Logcode { get; set; }
         public string Logtype { get; set; }
         public int refId { get; set; }
