@@ -1,5 +1,6 @@
 ﻿@model EqUiWebUi.Models.c_LogClassRules
 
+
 <div class="">
     <div class="card-header bg-dark">
         <h5 class="card-title text-white">
@@ -90,7 +91,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xl-6">
+                    <div class="col-xl-4">
                         <div class="form-group">
                             <div class="col-md-offset-2 col-md-10">
                                 <button class="btn btn-info" id="btnFindAllinGroup">Search for all logs in group</button>
@@ -102,7 +103,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-6">
+                    <div class="col-xl-4">
                         <div class="form-group">
                             <div class="col-md-offset-2 col-md-10">
                                 <button class="btn btn-success" id="btnSetALLClassSubgroup">Set</button>
@@ -117,6 +118,14 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-xl-4">
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <button class="btn btn-danger" id="btnMakerule">MakeRule</button>
+                                Make a rule based on current settings
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -127,6 +136,7 @@
             <div class="card-header bg-primary">
                 <h5 class="card-title text-white">
                     Result
+                    <i class="fas fa-sync-alt clickable" id="BtnRefreshResult"></i>
                     <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
                 </h5>
             </div>
@@ -141,6 +151,7 @@
             <div class="card-header bg-primary">
                 <h5 class="card-title text-white">
                     Classifcation rules
+                    <i class="fas fa-sync-alt clickable" id="BtnRefreshRules"></i>
                     <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
                 </h5>
             </div>
@@ -153,8 +164,6 @@
 
     </div>
 </div>
-
-
 
 @*Hidden html for loading into Result grid*@
 <div id="ResultGridOptions" class="d-none">
@@ -193,8 +202,8 @@
                     </div>
                 </div>
             </div>
-             </div>
         </div>
+    </div>
 </div>
 
 
@@ -228,7 +237,7 @@
 
 @section scripts{
     <!--ClassificationTool script-->
-<script>
+    <script>
     //full with screen
         $("#allcontent").removeClass("body-content");
         $("#allcontent").removeClass("container");
@@ -283,10 +292,10 @@
                 //
                 },
                 reloadStarted: function () {
-
+                    $("#dummyLogClassResultGrid").parent().addClass("bg-secondary");
                 },
                 reloadEnded: function () {
-
+                    $("#dummyLogClassResultGrid").parent().removeClass("bg-secondary");
                 },
                 reloadFailed: function (result) {
                     $('#dummyLogClassResultGrid').html("Error while loading!!!");
@@ -336,10 +345,10 @@
                         });
                 },
                 reloadStarted: function () {
-
+                    $("#c_LogClassRulesGrid").parent().addClass("bg-secondary")
                 },
                 reloadEnded: function () {
-
+                    $("#c_LogClassRulesGrid").parent().removeClass("bg-secondary")
                 },
                 reloadFailed: function (result) {
                     $('#c_LogClassRulesGrid').html("Error while loading!!!");
@@ -403,6 +412,34 @@
             });
         }
 
+    //function for making rules
+    function MakeRule() {
+        $.toaster({ title: 'MakeRule', priority: 'info', message: 'Fired: MakeRule' });
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("RemoteCreate", "c_LogClassRules")',
+            data: {
+                c_logClassSystem_id: $('#c_logClassSystem_id').val(),
+                coderangeStart: $('#coderangeStart').val(),
+                coderangeEnd: $('#coderangeEnd').val(),
+                textSearch: $('#textSearch').val(),
+                c_ClassificationId: $('#c_ClassificationId').val(),
+                c_SubgroupId: $('#c_SubgroupId').val()
+            },
+            success: function (result) {
+                $.toaster({ title: 'MakeRule', priority: 'success', message: result.Msg });
+                //reload the grid
+                GetRules();
+            },
+            error: function (result) {
+                console.log(result);
+                $.toaster({ title: 'MakeRule', priority: 'danger', message: result.statusCode });
+                //reload the grid
+                GetRules();
+            }
+        });
+    }
+
 //listen toclick events
     //handle search. (by range and logtext)
     $("#btnSearch").click(function () {
@@ -430,8 +467,21 @@
         GetGridSearch(false);
         GetRules();
     });
+    //refresh logclassrules grids
+    $('#BtnRefreshRules').click(function () {
+        GetRules();
+    });
+    //refresh main grids
+    $('#BtnRefreshResult').click(function () {
+        GetGridSearch(false);
+    });
+    //make a new rule
+    $('#btnMakerule').click(function () {
+        console.log('hit');
+        MakeRule();
+    });
 //at end of script run the grids (init)
     GetGridSearch(false);
     GetRules();
-</script>
+    </script>
 }
