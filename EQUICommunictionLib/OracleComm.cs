@@ -21,6 +21,7 @@ namespace EQUICommunictionLib
         public DataTable RunQuery(string Query, bool enblExeptions = false, int maxEXECtime = 300)
         {
             //THIS MUST RUN AS CULTRUE en-US or we get BULLSHIT for the maximo reporting connection.
+            CultureInfo UserCulture = Thread.CurrentThread.CurrentCulture;
             Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo("en-US");
             //
             try
@@ -30,6 +31,9 @@ namespace EQUICommunictionLib
                     adapter.SelectCommand.CommandTimeout = maxEXECtime;
                     DataTable table = new DataTable();
                     adapter.Fill(table);
+                    //Set the culture back to orignial.
+                    Thread.CurrentThread.CurrentCulture = UserCulture;
+                    //
                     return table;
                 }
             }
@@ -43,7 +47,6 @@ namespace EQUICommunictionLib
                 DataTable table = new DataTable();
                 return table;
             }
-
         }
 
         public void RunCommand(string sqlCommand, bool enblExeptions = false, int maxEXECtime = 300)
