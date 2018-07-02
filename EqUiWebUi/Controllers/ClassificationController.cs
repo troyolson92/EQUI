@@ -31,8 +31,8 @@ namespace EqUiWebUi.Controllers
         {
             c_LogClassRules Rule = new c_LogClassRules();
             //init values to everything
-            Rule.coderangeStart = 0;
-            Rule.coderangeEnd = 1000000;
+            Rule.coderangeStart = null;
+            Rule.coderangeEnd = null;
             Rule.textSearch = "%";
 
             ViewBag.c_logClassSystem_id = new SelectList(db.c_logClassSystem, "id", "Name");
@@ -65,7 +65,7 @@ namespace EqUiWebUi.Controllers
 
                 IQueryable<l_dummyLogClassResult> result = db.l_dummyLogClassResult.SqlQuery(c_LogClassSystem.SelectStatement).Where(c =>
                                     c.text.Like(c_LogClassRule.textSearch) //hanlde text like statement
-                                    && (c.code >= c_LogClassRule.coderangeStart && c.code <= c_LogClassRule.coderangeEnd) //handle range search
+                                    && (c.code >= c_LogClassRule.coderangeStart.GetValueOrDefault(0) && c.code <= c_LogClassRule.coderangeEnd.GetValueOrDefault(1000000)) //handle range search
                                     ).AsQueryable();
                 return PartialView(result);
             }
