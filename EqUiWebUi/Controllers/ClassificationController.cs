@@ -65,7 +65,7 @@ namespace EqUiWebUi.Controllers
 
                 IQueryable<l_dummyLogClassResult> result = db.l_dummyLogClassResult.SqlQuery(c_LogClassSystem.SelectStatement).Where(c =>
                                     c.text.Like(c_LogClassRule.textSearch) //hanlde text like statement
-                                    && (c.code >= c_LogClassRule.coderangeStart.GetValueOrDefault(0) && c.code <= c_LogClassRule.coderangeEnd.GetValueOrDefault(1000000)) //handle range search
+                                    && (c.code >= c_LogClassRule.coderangeStart.GetValueOrDefault(0) && c.code <= c_LogClassRule.coderangeEnd.GetValueOrDefault(int.MaxValue)) //handle range search
                                     ).AsQueryable();
                 return PartialView(result);
             }
@@ -143,8 +143,8 @@ namespace EqUiWebUi.Controllers
 
             db.Database.ExecuteSqlCommand(c_LogClassSystem.UpdateStatement,
                     new SqlParameter("@textSearch", c_LogClassRule.textSearch),
-                    new SqlParameter("@coderangeStart", c_LogClassRule.coderangeStart),
-                    new SqlParameter("@coderangeEnd", c_LogClassRule.coderangeEnd),
+                    new SqlParameter("@coderangeStart", c_LogClassRule.coderangeStart.GetValueOrDefault(0)),
+                    new SqlParameter("@coderangeEnd", c_LogClassRule.coderangeEnd.GetValueOrDefault(int.MaxValue)),
                     new SqlParameter("@rowID", RowID),
                     new SqlParameter("@Clear", Clear),
                     new SqlParameter("@c_ClassificationId", c_LogClassRule.c_ClassificationId),

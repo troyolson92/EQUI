@@ -131,6 +131,13 @@ namespace EqUiWebUi.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            //clear all logs that where set by this rule.
+            ClassificationController classificationController = new ClassificationController();
+            //get the rule
+            c_LogClassRules c_LogClassRule = db.c_LogClassRules.Where(c => c.id == id).First();
+            //clear the rule
+            classificationController.RunRule(c_LogClassRule, Clear: true);
+            //remove the rule
             c_LogClassRules c_LogClassRules = db.c_LogClassRules.Find(id);
             db.c_LogClassRules.Remove(c_LogClassRules);
             db.SaveChanges();

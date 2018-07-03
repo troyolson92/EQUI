@@ -15,7 +15,6 @@
 </div>
 
 <p></p>
-
 <div class="card">
     <div class="card-header bg-warning">
         <h5 class="card-title text-white">
@@ -24,10 +23,10 @@
         </h5>
     </div>
     <div class="card-body">
-            <h4> Error Description:</h4>
-            <div class="alert alert-warning">
-                @Model.Exception.Message.ToString() @Html.Raw(" ") @Model.ControllerName @Html.Raw(" ") @Model.ActionName
-            </div>
+        <h4> Error Description:</h4>
+        <div class="alert alert-warning">
+            @Model.Exception.Message.ToString() @Html.Raw(" ") @Model.ControllerName @Html.Raw(" ") @Model.ActionName
+        </div>
     </div>
 </div>
 
@@ -44,6 +43,7 @@
         @Model.Exception
     </div>
 </div>
+
 
 <p></p>
 
