@@ -91,38 +91,35 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xl-4">
+                    <div class="col-xl-8">
                         <div class="form-group">
                             <div class="col-md-offset-2 col-md-10">
-                                <button class="btn btn-info" id="btnFindAllinGroup">Search for all logs in group</button>
+                                <button class="btn btn-info" id="btnFindAllinGroup" data-toggle="tooltip" data-placement="right" title="Search for all logs in group">Search logs in group</button>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-md-offset-2 col-md-10">
-                                <button class="btn btn-info" id="btnGetRules">Search for all rules in group</button>
+                                <button class="btn btn-info" id="btnGetRules" data-toggle="tooltip" data-placement="right" title="Search for all logs in group">Search rules in group</button>
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-4">
+                    <div class="col-xl-2">
                         <div class="form-group">
                             <div class="col-md-offset-2 col-md-10">
-                                <button class="btn btn-success" id="btnSetALLClassSubgroup">Set</button>
-                                Set all that matches current search result
+                                <button class="btn btn-success" id="btnSetALLClassSubgroup" data-toggle="tooltip" data-placement="right" title=" Set all that matches current search result">Set</button>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <div class="col-md-offset-2 col-md-10">
-                                <button class="btn btn-danger" id="btnClearALLClassSubgroup">Clear</button>
-                                CLEAR all that matches current search result
+                                <button class="btn btn-danger" id="btnClearALLClassSubgroup" data-toggle="tooltip" data-placement="right" title="CLEAR all that matches current search result">Clear</button>
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-4">
+                    <div class="col-xl-2">
                         <div class="form-group">
                             <div class="col-md-offset-2 col-md-10">
-                                <button class="btn btn-danger" id="btnMakerule">MakeRule</button>
-                                Make a rule based on current settings
+                                <button class="btn btn-danger" id="btnMakerule" data-toggle="tooltip" data-placement="right" title="Make a rule based on current settings">MakeRule</button>
                             </div>
                         </div>
                     </div>
@@ -299,6 +296,8 @@
                 },
                 reloadFailed: function (result) {
                     $('#dummyLogClassResultGrid').html("Error while loading!!!");
+                    console.log(result);
+                    $.toaster({ title: 'Grid', priority: 'danger', message: result.statusText });
                 }
             });
         }
@@ -352,6 +351,8 @@
                 },
                 reloadFailed: function (result) {
                     $('#c_LogClassRulesGrid').html("Error while loading!!!");
+                    console.log(result);
+                    $.toaster({ title: 'Grid', priority: 'danger', message: result.statusText });
                 }
             });
         }
@@ -379,7 +380,7 @@
                 },
                 error: function (result) {
                     console.log(result);
-                    $.toaster({ title: 'SetClass', priority: 'danger', message: result.statusCode });
+                    $.toaster({ title: 'SetClass', priority: 'danger', message: result.statusText});
                     //reload the grid
                     GetGridSearch(false);
                 }
@@ -405,7 +406,7 @@
                 },
                 error: function (result) {
                     console.log(result);
-                    $.toaster({ title: 'RunRule', priority: 'danger', message: result.statusCode });
+                    $.toaster({ title: 'SetClass', priority: 'danger', message: result.statusText });
                     //reload the grid
                     GetGridSearch(false);
                 }
@@ -433,7 +434,7 @@
             },
             error: function (result) {
                 console.log(result);
-                $.toaster({ title: 'MakeRule', priority: 'danger', message: result.statusCode });
+                $.toaster({ title: 'SetClass', priority: 'danger', message: result.statusText });
                 //reload the grid
                 GetRules();
             }
