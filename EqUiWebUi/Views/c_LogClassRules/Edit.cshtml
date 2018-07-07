@@ -19,6 +19,14 @@
         @Html.HiddenFor(model => model.id)
 
         <div class="form-group">
+            @Html.LabelFor(model => model.c_logClassSystem_id, "c_logClassSystem_id", htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-4">
+                @Html.DropDownList("c_logClassSystem_id", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.c_logClassSystem_id, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
             @Html.LabelFor(model => model.coderangeStart, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.coderangeStart, new { htmlAttributes = new { @class = "form-control" } })
@@ -65,13 +73,6 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.c_logClassSystem_id, "c_logClassSystem_id", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("c_logClassSystem_id", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.c_logClassSystem_id, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">

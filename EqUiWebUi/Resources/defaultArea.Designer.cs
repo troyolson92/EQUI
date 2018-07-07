@@ -61,11 +61,56 @@ namespace EqUiWebUi {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Alerts.
+        /// </summary>
+        public static string Alerts {
+            get {
+                return ResourceManager.GetString("Alerts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Custom alert system.
+        /// </summary>
+        public static string AlertsDescription {
+            get {
+                return ResourceManager.GetString("AlertsDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Shiftreport.
         /// </summary>
         public static string ShiftReport {
             get {
                 return ResourceManager.GetString("ShiftReport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Contains stop longer than 20minutes combined downtime or more than 3 ocurences.
+        /// </summary>
+        public static string ShiftReportDescription {
+            get {
+                return ResourceManager.GetString("ShiftReportDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Supervision.
+        /// </summary>
+        public static string Supervision {
+            get {
+                return ResourceManager.GetString("Supervision", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All items currently stopped and finised breakdowns.
+        /// </summary>
+        public static string SupervisionDescription {
+            get {
+                return ResourceManager.GetString("SupervisionDescription", resourceCulture);
             }
         }
         

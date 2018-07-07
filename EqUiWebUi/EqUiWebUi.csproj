@@ -760,6 +760,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\codemirror\codemirror.css" />
     <Content Include="Content\codemirror\neat.css" />
+    <Content Include="Content\CustomHyperlinkBoxes.css" />
     <Content Include="Content\CustomStyleTweeks.css" />
     <Content Include="Content\Cyborg.css" />
     <Content Include="Content\daterangepicker.css" />
@@ -1274,6 +1275,7 @@
     <Content Include="Areas\Alert\Views\ControlChart\GetControlChart.cshtml" />
     <Content Include="Areas\Alert\Views\L_controlLimits\_List.cshtml" />
     <Content Include="Areas\Alert\Views\Alert\_ControlChart.cshtml" />
+    <Content Include="App_Code\MyHtmlHelpers.cshtml" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION.pubxml" />
     <None Include="Properties\PublishProfiles\VCC22700-Testing.pubxml" />
     <Content Include="PDFjs\build\pdf.js" />
@@ -1476,6 +1478,7 @@
     <Content Include="Views\c_logClassSystem\Edit.cshtml" />
     <Content Include="Views\c_logClassSystem\Index.cshtml" />
     <Content Include="Views\Home\Close.cshtml" />
+    <Content Include="Views\Home\TestPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EQUICommunictionLib\EQUICommunictionLib.csproj">
