@@ -1,0 +1,43 @@
+﻿.update-nag {
+    display: inline-block;
+    font-size: 16px;
+    text-align: left;
+    background-color: #fff;
+    height: 60px;
+    -webkit-box-shadow: 0 1px 1px 0 rgba(0,0,0,.2);
+    box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
+    margin-bottom: 10px;
+}
+
+    .update-nag:hover {
+        cursor: pointer;
+        -webkit-box-shadow: 0 1px 1px 0 rgba(0,0,0,.4);
+        box-shadow: 0 1px 1px 0 rgba(0,0,0,.3);
+    }
+
+    .update-nag > .update-split {
+        background: #007bff;
+        width: 40px;
+        float: left;
+        color: #fff !important;
+        height: 100%;
+        text-align: center;
+    }
+
+
+        .update-nag > .update-split > .far {
+            position: relative;
+            top: calc(50% - 12px) !important; /* 50% - 3/4 of icon height */
+        }
+        .update-nag > .update-split > .fas {
+            position: relative;
+            top: calc(50% - 9px) !important; /* 50% - 3/4 of icon height */
+        }
+
+
+    .update-nag > .update-text {
+        line-height: 19px;
+        padding-top: 11px;
+        padding-left: 45px;
+        padding-right: 20px;
+    }

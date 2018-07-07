@@ -15,32 +15,13 @@
         </h5>
     </div>
     <div class="card-body">
-        <p>
-            <a href="~/Gadata/Table/PloegRapportWebgrid" class="btn btn-primary btn-sm">@EqUiWebUi.defaultArea.ShiftReport &raquo;</a>
-            Bevat storingen groter dan 20 minuten of die meer dan 3 keer zijn voorgevallen
-        </p>
-        <p>
-            <a href="~/Gadata/Table/SupervisieWebgrid" class="btn btn-primary btn-sm">Supervisie&raquo;</a>
-            Bevat alles nu in storing en storingen die langer dan 1 minut hebben geduurd.
-        </p>
-
-        <p>
-            <a href="~/PlcSupervisie/Screenshot/CarouselBF" class="btn btn-primary btn-sm">CarouselBF &raquo;</a>
-            Supervisie (intranet)*new
-        </p>
-
+        @MyHtmlHelpers.EquiLink("/Gadata/Table/PloegRapportWebgrid", "fa-list-alt", EqUiWebUi.defaultArea.ShiftReport, helperText: EqUiWebUi.defaultArea.ShiftReportDescription)
+        @MyHtmlHelpers.EquiLink("/Gadata/Table/SupervisieWebgrid", "fa-list-alt", EqUiWebUi.defaultArea.Supervision, helperText: EqUiWebUi.defaultArea.SupervisionDescription)
+        @MyHtmlHelpers.EquiLink("/Alert/Alert/Index", "fas fa-bell", EqUiWebUi.defaultArea.Alerts, helperText: EqUiWebUi.defaultArea.AlertsDescription, iconClasses: "bg-warning")
         @{
-        string urlIntranetSupervis = @Uri.EscapeDataString("http://webapps.gen.volvocars.net/applications/eng/equipment/supervisiep1/intranet");
-        <p>
-            <a href="~/Home/Rendersite?url=@urlIntranetSupervis" class="btn btn-primary btn-sm">Supervisie Intranet P1 &raquo;</a>
-            Supervisie (intranet)
-        </p>
+            string urlIntranetSupervis = @Uri.EscapeDataString("http://webapps.gen.volvocars.net/applications/eng/equipment/supervisiep1/intranet");
+            @MyHtmlHelpers.EquiLink("/Home/Rendersite?url=" + @urlIntranetSupervis, "far fa-object-group", "Supervisie (brownfield)", helperText: "Satline supervisie schermen");
         }
-
-        <p>
-            <a href="~/Alert/Alert/Index" class="btn btn-primary btn-sm">Alerts &raquo;</a>
-            Waarschuwingen gebaseerd op triggers
-        </p>
     </div>
 </div>
 
@@ -54,27 +35,13 @@
         </h5>
     </div>
     <div class="card-body">
-        <p>
-            <a href="~/Tiplife/NgacElectrode/index" class="btn btn-primary btn-sm">Electrode &raquo;</a>
-            Alles in verband met de Electrodes van de nieuwe robots
-        </p>
-
-        <p>
-            <a href="http://gensvw2107.gen.volvocars.net/Greenfield/#/ctgreenfield" class="btn btn-primary btn-sm">cmaCTapp &raquo;</a>
-            Tool van IE om Cycle times te bekijken.
-        </p>
-
-        <p>
-            <a href="~/PlcSupervisie/Screenshot/Carousel" class="btn btn-primary btn-sm">UB12 supervisie &raquo;</a>
-            Plc Supervisie voor UB12 (mobile friendly)
-        </p>
+        @MyHtmlHelpers.EquiLink("/Tiplife/NgacElectrode/index", "far fa-object-group", "Electrode", helperText: "Alles in verband met de Electrodes (greenfield)")
+        @MyHtmlHelpers.EquiLink("http://gensvw2107.gen.volvocars.net/Greenfield/#/ctgreenfield", "fas fa-stopwatch", "cmaCTapp", helperText: "Tool van IE om Cycle times te bekijken")
+        @MyHtmlHelpers.EquiLink("/PlcSupervisie/Screenshot/Carousel", "far fa-object-group", "Supervisie (UB12)", helperText: "Plc Supervisie voor UB12 (mobile friendly)")
 
         @{
-            string urlGreenfieldsuperVis = @Uri.EscapeDataString("http://webapps.gen.volvocars.net/applications/eng/equipment/SuperVisieCma/");
-            <p>
-                <a href="~/Home/Rendersite?url=@urlGreenfieldsuperVis" class="btn btn-primary btn-sm">Tia supervisie index &raquo;</a>
-                Elk beschikbaar scherm van CMA supervisie.
-            </p>
+        string urlGreenfieldsuperVis = @Uri.EscapeDataString("http://webapps.gen.volvocars.net/applications/eng/equipment/SuperVisieCma/");
+        @MyHtmlHelpers.EquiLink("/Home/Rendersite?url=" + @urlGreenfieldsuperVis, "far fa-object-group", "Supervisie (Greenfield)", helperText: "Tia supervisie schermen");
         }
     </div>
 </div>
@@ -164,6 +131,10 @@
         <p>
             <a href="~/Welding/Welding/index" class="btn btn-primary btn-sm">AASPOT&raquo;</a>(test)
             Jens zijn area
+        </p>
+
+        <p>
+            <a href="~/Home/TestPage" class="btn btn-primary btn-sm">TestPage&raquo;</a>
         </p>
     </div>
 </div>

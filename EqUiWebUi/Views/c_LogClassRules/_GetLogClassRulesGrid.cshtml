@@ -13,10 +13,16 @@
     columns.Add(c => c)
                     .Titled("")
                     .Encoded(false)
-                .RenderedAs(c => @Html.ActionLink("Edit", "Edit", new { id = c.id }) + " | " +
-                                 @Html.ActionLink("Delete", "Delete", new { id = c.id })
+                .RenderedAs(c => MyFilters.IconActionLink(Url.Action("Edit", new { id = c.id}), "fas fa-pencil-alt", "", "Edit this rule", classes: "OpenNewWindow") + " | " +
+                                 MyFilters.IconActionLink(Url.Action("Delete", new { id = c.id }), "fas fa-trash-alt", "", "Delete this rule", classes: "OpenNewWindow")
                     ).Filterable(false);
 }).Filterable().Sortable().Pageable(pager =>
 {
     pager.RowsPerPage = 10;
 }).Empty("Did not find anything").Css("table-hover")
+
+
+<script>
+    //subscribe to click event (launch external window)
+    initUrlNewWindow();
+</script>

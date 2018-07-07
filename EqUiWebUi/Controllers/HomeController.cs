@@ -9,7 +9,6 @@ namespace EqUiWebUi.Controllers
             return View();
         }
 
-
         public ActionResult About()
         {
             return View();
@@ -35,6 +34,12 @@ namespace EqUiWebUi.Controllers
 
         //this page is a redirect page for when i whant to close a windown
         public ActionResult Close()
+        {
+            return View();
+        }
+
+        //html test page
+        public ActionResult TestPage()
         {
             return View();
         }

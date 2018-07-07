@@ -42,7 +42,8 @@ namespace EqUiWebUi
                       "~/Content/mvc-grid.css", //style for mvc grids
                       "~/Content/daterangepicker.css", //style for datarange pickers
                       "~/Content/fontawesome-all.css",  //for or icons https://fontawesome.com
-                      "~/Content/CustomStyleTweeks.css" //custom style tweeks
+                      "~/Content/CustomStyleTweeks.css", //custom style tweeks
+                      "~/Content/CustomHyperlinkBoxes.css" //custom CustomHyperlinkBoxes
                       ));
         }
     }
