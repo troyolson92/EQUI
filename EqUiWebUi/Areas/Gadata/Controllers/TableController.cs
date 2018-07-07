@@ -36,7 +36,7 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
             //in case still null trow error return empty result 
             if (data == null)
             {
-                data = new List<AAOSR_PloegRaport_Result>();
+                data = new List<PloegRaport_Result>();
             }
 
             string LocationRoot = CurrentUser.Getuser.LocationRoot;

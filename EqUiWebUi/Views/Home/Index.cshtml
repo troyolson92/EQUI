@@ -18,10 +18,8 @@
         @MyHtmlHelpers.EquiLink("/Gadata/Table/PloegRapportWebgrid", "fa-list-alt", EqUiWebUi.defaultArea.ShiftReport, helperText: EqUiWebUi.defaultArea.ShiftReportDescription)
         @MyHtmlHelpers.EquiLink("/Gadata/Table/SupervisieWebgrid", "fa-list-alt", EqUiWebUi.defaultArea.Supervision, helperText: EqUiWebUi.defaultArea.SupervisionDescription)
         @MyHtmlHelpers.EquiLink("/Alert/Alert/Index", "fas fa-bell", EqUiWebUi.defaultArea.Alerts, helperText: EqUiWebUi.defaultArea.AlertsDescription, iconClasses: "bg-warning")
-        @{
-            string urlIntranetSupervis = @Uri.EscapeDataString("http://webapps.gen.volvocars.net/applications/eng/equipment/supervisiep1/intranet");
-            @MyHtmlHelpers.EquiLink("/Home/Rendersite?url=" + @urlIntranetSupervis, "far fa-object-group", "Supervisie (brownfield)", helperText: "Satline supervisie schermen");
-        }
+        @MyHtmlHelpers.EquiLink("/Home/Rendersite?url=" + @Uri.EscapeDataString("http://webapps.gen.volvocars.net/applications/eng/equipment/supervisiep1/intranet"), "far fa-object-group", "Supervisie (brownfield)", helperText: "Satline supervisie schermen")
+        @MyHtmlHelpers.EquiLink("https://volvocars.plantview.se/?v=ps&t=p:default,c:projectselector,m:t&ps=ps1&ps1=q:vcg", "fas fa-industry", "Plantview", helperText: "3d scans of all volvo plants")
     </div>
 </div>
 

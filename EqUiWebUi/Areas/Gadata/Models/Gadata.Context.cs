@@ -30,7 +30,7 @@ namespace EqUiWebUi.Areas.Gadata.Models
         public virtual DbSet<Bodytracking> Bodytracking { get; set; }
         public virtual DbSet<Supervisie> Supervisie { get; set; }
     
-        public virtual ObjectResult<AAOSR_PloegRaport_Result> AAOSR_PloegRaport(Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate, Nullable<int> daysBack, string assets, string locations, string lochierarchy, Nullable<int> minDowntime, Nullable<int> minCountOfDowtime, Nullable<int> minCountofWarning, Nullable<bool> getAlerts, Nullable<bool> getShifbook)
+        public virtual ObjectResult<PloegRaport_Result> PloegRaport(Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate, Nullable<int> daysBack, string assets, string locations, string lochierarchy, Nullable<int> minDowntime, Nullable<int> minCountOfDowtime, Nullable<int> minCountofWarning)
         {
             var startDateParameter = startDate.HasValue ?
                 new ObjectParameter("StartDate", startDate) :
@@ -68,15 +68,7 @@ namespace EqUiWebUi.Areas.Gadata.Models
                 new ObjectParameter("minCountofWarning", minCountofWarning) :
                 new ObjectParameter("minCountofWarning", typeof(int));
     
-            var getAlertsParameter = getAlerts.HasValue ?
-                new ObjectParameter("getAlerts", getAlerts) :
-                new ObjectParameter("getAlerts", typeof(bool));
-    
-            var getShifbookParameter = getShifbook.HasValue ?
-                new ObjectParameter("getShifbook", getShifbook) :
-                new ObjectParameter("getShifbook", typeof(bool));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<AAOSR_PloegRaport_Result>("AAOSR_PloegRaport", startDateParameter, endDateParameter, daysBackParameter, assetsParameter, locationsParameter, lochierarchyParameter, minDowntimeParameter, minCountOfDowtimeParameter, minCountofWarningParameter, getAlertsParameter, getShifbookParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PloegRaport_Result>("PloegRaport", startDateParameter, endDateParameter, daysBackParameter, assetsParameter, locationsParameter, lochierarchyParameter, minDowntimeParameter, minCountOfDowtimeParameter, minCountofWarningParameter);
         }
     }
 }

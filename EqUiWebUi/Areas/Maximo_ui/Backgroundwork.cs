@@ -37,7 +37,7 @@ namespace EqUiWebUi.Areas.Maximo_ui
             ConnectionManager connectionManager = new ConnectionManager();
             context.WriteLine(" Delete workorders in gadata started");
             connectionManager.RunCommand("DELETE GADATA.MAXIMO.WORKORDERS FROM GADATA.MAXIMO.WORKORDERS");
-            context.WriteLine(" Delete workorders in gadata done");
+            context.WriteLine(" Done");
 
             //get new records from STO
             string MaximoQry = string.Format(@"
@@ -57,23 +57,21 @@ locancestor.LOCATION = WORKORDER.LOCATION
 and 
 locancestor.ORGID = 'VCCBE'
 and
-workorder.changedate >= sysdate - 100
-and
---workorder.worktype = 'CI'
---and 
 locancestor.ANCESTOR LIKE 'A'
-
-ORDER BY WORKORDER.STATUSDATE DESC
+WHERE
+workorder.status not in ('CLOSE','CLOSEVOID') --they changes something where they set a shitload of workorders in this state. (the changedate was updated)
+and
+workorder.changedate >= sysdate - 100
 "
 );
 
             context.WriteLine(" Get workorders on MAXIMOrt started");
             DataTable newMaximoDt = connectionManager.RunQuery(MaximoQry,dbName: "MAXIMOrt", maxEXECtime: 120, enblExeptions: true);
-            context.WriteLine(" Get workorders on MAXIMOrt done");
+            context.WriteLine(" Done");
             //push to gadata
             context.WriteLine(" Push workorders to gadata started");
             connectionManager.BulkCopy(newMaximoDt, "[MAXIMO].[WORKORDERS]");
-            context.WriteLine(" Push workorders to gadata done");
+            context.WriteLine(" Done");
         }
 
     }

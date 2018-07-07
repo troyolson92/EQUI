@@ -11,7 +11,7 @@ namespace EqUiWebUi.Areas.Gadata.Models
 {
     using System;
     
-    public partial class AAOSR_PloegRaport_Result
+    public partial class PloegRaport_Result
     {
         public string Location { get; set; }
         public string AssetID { get; set; }
