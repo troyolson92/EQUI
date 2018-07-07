@@ -27,13 +27,8 @@
 
         .update-nag > .update-split > .far {
             position: relative;
-            top: calc(50% - 12px) !important; /* 50% - 3/4 of icon height */
+            top: calc(50% - 16px) !important; /* 50% - 3/4 of icon height */
         }
-        .update-nag > .update-split > .fas {
-            position: relative;
-            top: calc(50% - 9px) !important; /* 50% - 3/4 of icon height */
-        }
-
 
     .update-nag > .update-text {
         line-height: 19px;

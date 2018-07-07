@@ -5,6 +5,8 @@ using System.Web;
 using EQUICommunictionLib;
 using System.Data;
 using Hangfire;
+using Hangfire.Server;
+using Hangfire.Console;
 
 namespace EqUiWebUi.Areas.STW040
 {
@@ -18,12 +20,12 @@ namespace EqUiWebUi.Areas.STW040
             BackgroundWork backgroundwork = new BackgroundWork();
             //**********************************STW040 => GADATA sunc***************************************************
             //set job to refresh every 5 minutes
-            RecurringJob.AddOrUpdate("STW40=>GADATA", () => backgroundwork.STW040ToGadataSync(), Cron.HourInterval(1));
+            RecurringJob.AddOrUpdate("STW40=>GADATA", () => backgroundwork.STW040ToGadataSync(null), Cron.HourInterval(1));
         }
 
         [Queue("gadata")]
         [AutomaticRetry(Attempts = 0)]
-        public void STW040ToGadataSync()
+        public void STW040ToGadataSync(PerformContext context)
         {
             string STW040qry = @"
 select 
@@ -75,14 +77,16 @@ AND STW040.KMANUEEL <> 'N'
             //This should be realtime but is not! Still a copy that runs every end of shift. 
             ConnectionManager connectionManager = new ConnectionManager();
             DataTable dt = new DataTable();
-            dt = connectionManager.RunQuery(STW040qry,dbName: "DBI", enblExeptions: true, maxEXECtime: 600);
 
-            //delete data from server
-            //string STW040deleteQry = "delete GADATA.STW040.STW040 from GADATA.STW040.STW040";
-            //gadataComm.RunCommandGadata(STW040deleteQry, runAsAdmin: true, enblExeptions: true, maxEXECtime: 30);
+            context.WriteLine(" Get STW040 data From DBI started");
+            dt = connectionManager.RunQuery(STW040qry,dbName: "DBI", enblExeptions: true, maxEXECtime: 600);
+            context.WriteLine(string.Format(" Get STW040 data From DBI done (rowcount:{0})",dt.Rows.Count));
             //push data to server
+            context.WriteLine(" Push to gadata started");
             connectionManager.BulkCopy(dt, "[STW040].[STW040]", enblExeptions: true, maxEXECtime: 300);
+            context.WriteLine(" Push to gadata done");
             //remove duplicates
+            context.WriteLine(" Remove dups on gadata");
             string STW040RemoveDups = @"
 DELETE GADATA.STW040.STW040 
 --select lx.*
@@ -103,6 +107,7 @@ LEFT OUTER JOIN (
 WHERE
    KeepRows.Id IS NULL";
             connectionManager.RunCommand(STW040RemoveDups, enblExeptions: true, maxEXECtime: 30);
+            context.WriteLine(" Remove dups on gadata done");
             return;
         }
 

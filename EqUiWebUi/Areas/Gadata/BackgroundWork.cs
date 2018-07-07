@@ -17,9 +17,6 @@ namespace EqUiWebUi.Areas.Gadata
         //
         public static List<AAOSR_PloegRaport_Result> Ploegreport { get; set; }
         public static DateTime PloegreportLastDt { get; set; }
-        //
-        public static List<EQpluginDefaultNGAC_Result> EQpluginDefaultNGAC { get; set; }
-        public static DateTime EQpluginDefaultNGAC_DT { get; set; }
     }
 
 
@@ -34,9 +31,6 @@ namespace EqUiWebUi.Areas.Gadata
                 //**********************************Ploegreport table***************************************************
                 //set job to refresh every 5 minutes
                 RecurringJob.AddOrUpdate("BT_PloegReport",() => backgroundwork.UpdatePloegreport(), Cron.MinuteInterval(5));
-                //**********************************Ploegreport table***************************************************
-                //set job to refresh every 5 minutes
-                RecurringJob.AddOrUpdate("BT_SupervisHigh",() => backgroundwork.UpdateEQpluginDefaultNGAC(), Cron.MinuteInterval(5));
                 //**********************************Supervisie table***************************************************
                 //set job to refresh every minute
                 RecurringJob.AddOrUpdate("BT_Supervis",() => backgroundwork.UpdateSupervisie(), Cron.Minutely);
@@ -115,58 +109,6 @@ namespace EqUiWebUi.Areas.Gadata
                 else
                 {
                     log.Error("UpdateSupervisie did not return any data");
-                }
-            }
-
-            //update the local datatable with detail robot data called every minute #hangfire
-            [Queue("gadata")]
-            [AutomaticRetry(Attempts = 0)]
-            public void UpdateEQpluginDefaultNGAC()
-            {
-                GADATAEntities2 gADATAEntities = new GADATAEntities2();
-
-            List<EQpluginDefaultNGAC_Result> data = (from DefaultNgac in gADATAEntities.EQpluginDefaultNGAC      
-                                  (startDate: null,
-                                   endDate: null,
-                                   daysBack: 1,
-                                   assets: "%",
-                                   locations: "%",
-                                   lochierarchy: "%",
-                                   timeline: true,
-                                   controllerEventLog: false,
-                                   errDispLog: true,
-                                   errDispLogS4C: true,
-                                   variableLog: false,
-                                   deviceProperty: false,
-                                   breakdown: true,
-                                   breakdownStart: false,
-                                   jobs: false,
-                                   displayLevel: 0,
-                                   displayFullLogtext: true,
-                                   excludeOperational: true,
-                                   events:false
-                                       )
-                                                         select DefaultNgac).ToList();
-
-                if (data.Count != 0)
-                {
-                    DataBuffer.EQpluginDefaultNGAC = data;
-
-                    DateTime maxDate = data
-                        .Where(r => Convert.ToDateTime(r.timestamp) < System.DateTime.Now)
-                        // .Where(r => r.Logtype.Contains("Ruleinfo") == false)
-                        .Select(r => Convert.ToDateTime(r.timestamp))
-                        .Max();
-
-                    DataBuffer.EQpluginDefaultNGAC_DT = maxDate;
-
-                    //add singal R 
-                    var context = Microsoft.AspNet.SignalR.GlobalHost.ConnectionManager.GetHubContext<DataRefreshHub>();
-                    context.Clients.Group("EQpluginDefaultNGAC").newData();
-                }
-                else
-                {
-                    log.Error("UpdateEQpluginDefaultNGAC did not return any data");
                 }
             }
 

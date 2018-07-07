@@ -1,4 +1,5 @@
 ﻿using Hangfire;
+using Hangfire.Console;
 using Hangfire.Dashboard;
 using Hangfire.SqlServer;
 using Microsoft.Owin;
@@ -25,7 +26,9 @@ namespace EqUiWebUi
                 GlobalConfiguration.Configuration
                     .UseSqlServerStorage(
                         ConfigurationManager.ConnectionStrings["EQUIConnectionString"].ConnectionString, //we take this from web.config
-                        new SqlServerStorageOptions { QueuePollInterval = TimeSpan.FromSeconds(1) });
+                        new SqlServerStorageOptions { QueuePollInterval = TimeSpan.FromSeconds(1) }
+                        )
+                       .UseConsole(); //extension to hangefire for better logging https://github.com/pieceofsummer/Hangfire.Console
                 //set up hangefire dashboard
                 app.UseHangfireDashboard("/hangfire", new DashboardOptions
                 {
