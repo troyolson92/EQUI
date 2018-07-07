@@ -1,5 +1,7 @@
 ﻿using EQUICommunictionLib;
 using Hangfire;
+using Hangfire.Console;
+using Hangfire.Server;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -28,10 +30,10 @@ namespace EqUiWebUi.Areas.PlcSupervisie
         [Queue("sto")]
         public void PushDatafromSTOtoGADATA()
         {
-            var jobId1 = BackgroundJob.Enqueue(() => HandleStoTable("ALARM_DATA_UB12"));
-            var jobId2 = BackgroundJob.ContinueWith(jobId1,() => HandleStoTable("ALARM_DATA_SUBASSY"));
-            var jobId3 = BackgroundJob.ContinueWith(jobId2, () => HandleStoTable("ALARM_DATA_BODY_SIDES"));
-            var jobId4 = BackgroundJob.ContinueWith(jobId3, () => HandleStoTable("ALARM_DATA_PREASSY"));
+            var jobId1 = BackgroundJob.Enqueue(() => HandleStoTable("ALARM_DATA_UB12",null));
+            var jobId2 = BackgroundJob.ContinueWith(jobId1,() => HandleStoTable("ALARM_DATA_SUBASSY", null));
+            var jobId3 = BackgroundJob.ContinueWith(jobId2, () => HandleStoTable("ALARM_DATA_BODY_SIDES", null));
+            var jobId4 = BackgroundJob.ContinueWith(jobId3, () => HandleStoTable("ALARM_DATA_PREASSY", null));
             var jobId5 = BackgroundJob.ContinueWith(jobId4, () => NormalizeSTOdata());
             var jobId6 = BackgroundJob.ContinueWith(jobId5, () => ClassificationOfSTOdata());
         }
@@ -39,7 +41,7 @@ namespace EqUiWebUi.Areas.PlcSupervisie
         //update new data from STO to gadata for a specifc table . 
         [AutomaticRetry(Attempts = 2)]
         [Queue("sto")]
-        public void HandleStoTable(string TargetTable) 
+        public void HandleStoTable(string TargetTable, PerformContext context) 
         {
             ConnectionManager connectionManager = new ConnectionManager();
             //get last record in GADATA 
@@ -52,10 +54,13 @@ namespace EqUiWebUi.Areas.PlcSupervisie
             if (dtGadataMaxTS.Rows.Count != 0)
             {
                 GadataMAxTs = dtGadataMaxTS.Rows[0].Field<DateTime>("ts");
+                context.WriteLine(" GadataMAxTs: " + GadataMAxTs.ToString());
             }
             else
             {
-                log.Error(String.Format("TargetTable: {0} had no data so full refresh", TargetTable));
+                string msg = String.Format(" TargetTable: {0} had no data so full refresh", TargetTable);
+                context.WriteLine(msg);
+                log.Error(msg);
             }
             //get new records from STO
             string stoQry = string.Format(@"
@@ -67,32 +72,27 @@ namespace EqUiWebUi.Areas.PlcSupervisie
 "
                 , GadataMAxTs.ToString("yyyy-MM-dd HH:mm:ss"),TargetTable); //USE BIG HH for 24 hour format !!!!
 
+            context.WriteLine(" Get new data from DST started");
             DataTable newStoDt = connectionManager.RunQuery(stoQry,dbName:"DST", enblExeptions: true);
-            log.Debug(String.Format("TargetTable: {0}  Records: {1}", TargetTable, newStoDt.Rows.Count));
+            context.WriteLine(String.Format("Done New rows: {0}", newStoDt.Rows.Count));
             //push to gadata
+            context.WriteLine(" Push to gadata started");
             connectionManager.BulkCopy(newStoDt, "[STO].[rt_error]");
+            context.WriteLine(" Done");
         }
 
         [AutomaticRetry(Attempts = 2)]
         [Queue("sto")]
         public void NormalizeSTOdata()
         {
-           log.Debug("Normalisation started");
             ConnectionManager connectionManager = new ConnectionManager();
            connectionManager.RunCommand("EXEC GADATA.STO.[sp_update_L]", enblExeptions: true);
-    
-            //trigger classification
-            //   lGadataComm.RunCommandGadata("EXEC GADATA.STO.[sp_update_Lerror_classifcation]", true);
-            //fire and forget to init
-
         }
 
         [AutomaticRetry(Attempts = 2)]
         [Queue("sto")]
         public void ClassificationOfSTOdata()
         {
-            log.Debug("Classifcation started");
-
             //stupid that I need to spin up all these classes to get it to run... (temp solution)
             EqUiWebUi.Controllers.ClassificationController classificationController = new EqUiWebUi.Controllers.ClassificationController();
             EqUiWebUi.Models.c_LogClassRules c_LogClassRule = new EqUiWebUi.Models.c_LogClassRules();

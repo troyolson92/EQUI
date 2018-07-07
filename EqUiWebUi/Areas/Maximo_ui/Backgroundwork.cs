@@ -1,5 +1,7 @@
 ﻿using EQUICommunictionLib;
 using Hangfire;
+using Hangfire.Console;
+using Hangfire.Server;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -23,17 +25,19 @@ namespace EqUiWebUi.Areas.Maximo_ui
             //RecurringJob.AddOrUpdate(() => backgroundwork.PushDatafromSTOtoGADATA(), Cron.MinuteInterval(5));
             //**********************************MX7 *****************************************************************
             //reporting DB 
-            RecurringJob.AddOrUpdate("RT_MX=>GADATA", () => backgroundwork.PushDatafromMAXIMOtoGADATA(), Cron.HourInterval(1));
+            RecurringJob.AddOrUpdate("RT_MX=>GADATA", () => backgroundwork.PushDatafromMAXIMOtoGADATA(null), Cron.HourInterval(1));
         }
 
         //update new data from STO to gadata. called every minute #hangfire
         [AutomaticRetry(Attempts = 0)]
         [Queue("gadata")]
-        public void PushDatafromMAXIMOtoGADATA()
+        public void PushDatafromMAXIMOtoGADATA(PerformContext context)
         {
             //delete data in now in maximo.
             ConnectionManager connectionManager = new ConnectionManager();
+            context.WriteLine(" Delete workorders in gadata started");
             connectionManager.RunCommand("DELETE GADATA.MAXIMO.WORKORDERS FROM GADATA.MAXIMO.WORKORDERS");
+            context.WriteLine(" Delete workorders in gadata done");
 
             //get new records from STO
             string MaximoQry = string.Format(@"
@@ -63,9 +67,13 @@ ORDER BY WORKORDER.STATUSDATE DESC
 "
 );
 
+            context.WriteLine(" Get workorders on MAXIMOrt started");
             DataTable newMaximoDt = connectionManager.RunQuery(MaximoQry,dbName: "MAXIMOrt", maxEXECtime: 120, enblExeptions: true);
+            context.WriteLine(" Get workorders on MAXIMOrt done");
             //push to gadata
+            context.WriteLine(" Push workorders to gadata started");
             connectionManager.BulkCopy(newMaximoDt, "[MAXIMO].[WORKORDERS]");
+            context.WriteLine(" Push workorders to gadata done");
         }
 
     }

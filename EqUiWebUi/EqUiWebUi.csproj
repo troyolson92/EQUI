@@ -56,6 +56,9 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Hangfire.Console, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Hangfire.Console.1.4.0\lib\net45\Hangfire.Console.dll</HintPath>
+    </Reference>
     <Reference Include="Hangfire.Core, Version=1.6.19.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Hangfire.Core.1.6.19\lib\net45\Hangfire.Core.dll</HintPath>
     </Reference>
@@ -272,9 +275,6 @@
       <DependentUpon>Gadata.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Gadata\Models\Bodytracking.cs">
-      <DependentUpon>Gadata.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\Gadata\Models\EQpluginDefaultNGAC_Result.cs">
       <DependentUpon>Gadata.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Gadata\Models\Gadata.Context.cs">
@@ -1062,10 +1062,8 @@
     <Content Include="Areas\Gadata\Views\Table\_ploegRapport.cshtml" />
     <Content Include="Areas\Gadata\Views\Table\PloegRapportWebgrid.cshtml" />
     <Content Include="Areas\Gadata\Views\Shared\_Moreinfo.cshtml" />
-    <Content Include="Areas\Gadata\Views\Table\_EQpluginDefaultNGAC.cshtml" />
     <Content Include="Areas\Gadata\Views\Table\_supervisie.cshtml" />
     <Content Include="Areas\Gadata\Views\Table\BodyTrackWebgrid.cshtml" />
-    <Content Include="Areas\Gadata\Views\Table\EQpluginDefaultNGACWebgrid.cshtml" />
     <Content Include="Areas\Gadata\Views\Table\SupervisieWebgrid.cshtml" />
     <Content Include="Areas\Gadata\Views\Table\MoreInfo.cshtml" />
     <Content Include="Areas\Gadata\Views\Table\_loginfo.cshtml" />

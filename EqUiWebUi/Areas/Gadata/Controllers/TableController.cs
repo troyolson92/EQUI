@@ -105,36 +105,6 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
         }
         //-------------------------------------------------------------------------------------------------
 
-        //------------------------------------EQpluginDefaultNGAC-------------------------------------------------
-        [HttpGet]
-        public ActionResult EQpluginDefaultNGACWebgrid()
-        {
-            return View();
-        }
-
-        [HttpGet]
-        public ActionResult _EQpluginDefaultNGAC()
-        {
-            //
-            var data = DataBuffer.EQpluginDefaultNGAC;
-            //in case still null trow error return empty result 
-            if (data == null)
-            {
-                data = new List<EQpluginDefaultNGAC_Result>();
-            }
-
-            string LocationRoot = CurrentUser.Getuser.LocationRoot;
-            if (LocationRoot != "")
-            {
-                data = (from d in data
-                        where (d.LocationTree ?? "").Contains(LocationRoot)
-                        || d.Logtype == "TIMELINE"
-                        select d).ToList();
-            }
-            //
-            return PartialView(data);
-        }
-
         //------------------------------------Body track webgrid-------------------------------------------------
         [HttpGet]
         public ActionResult BodyTrackWebgrid()
