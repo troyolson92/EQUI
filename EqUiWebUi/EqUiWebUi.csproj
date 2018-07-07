@@ -271,9 +271,6 @@
     <Compile Include="Areas\Gadata\Controllers\TableController.cs" />
     <Compile Include="Areas\Gadata\GadataAreaRegistration.cs" />
     <Compile Include="Areas\Gadata\DataRefreshHub.cs" />
-    <Compile Include="Areas\Gadata\Models\AAOSR_PloegRaport_Result.cs">
-      <DependentUpon>Gadata.tt</DependentUpon>
-    </Compile>
     <Compile Include="Areas\Gadata\Models\Bodytracking.cs">
       <DependentUpon>Gadata.tt</DependentUpon>
     </Compile>
@@ -291,6 +288,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Gadata.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Gadata\Models\PloegRaport_Result.cs">
+      <DependentUpon>Gadata.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Gadata\Models\Supervisie.cs">
       <DependentUpon>Gadata.tt</DependentUpon>

@@ -15,7 +15,7 @@ namespace EqUiWebUi.Areas.Gadata
         public static List<Supervisie> Supervisie { get; set; }
         public static DateTime SupervisieLastDt { get; set; }
         //
-        public static List<AAOSR_PloegRaport_Result> Ploegreport { get; set; }
+        public static List<PloegRaport_Result> Ploegreport { get; set; }
         public static DateTime PloegreportLastDt { get; set; }
     }
 
@@ -45,8 +45,8 @@ namespace EqUiWebUi.Areas.Gadata
             public void UpdatePloegreport()
             {
                 GADATAEntities2 gADATAEntities = new GADATAEntities2();
-
-                List<AAOSR_PloegRaport_Result> data = (from ploegrapport in gADATAEntities.AAOSR_PloegRaport
+                gADATAEntities.Database.CommandTimeout = 40; // normally 30 but this one is heavy
+                List<PloegRaport_Result> data = (from ploegrapport in gADATAEntities.PloegRaport
                                     (startDate: null,
                                        endDate: null,
                                        daysBack: null,
@@ -55,10 +55,8 @@ namespace EqUiWebUi.Areas.Gadata
                                        lochierarchy: "%",
                                        minDowntime: 20,
                                        minCountOfDowtime: 3,
-                                       minCountofWarning: 4,
-                                       getAlerts: false,
-                                       getShifbook: true)
-                                                       select ploegrapport).ToList();
+                                       minCountofWarning: 4)
+                                       select ploegrapport).ToList();
 
                 if (data.Count != 0)
                 {
