@@ -1,0 +1,34 @@
+﻿@model EqUiWebUi.Models.Wiki
+
+<div class="card">
+    <div class="card-header bg-dark">
+        <h5 class="card-title text-white">
+            Wiki: @Model.Title
+
+            <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
+
+        </h5>
+        <div class="text-muted">@Model.Description</div>
+    </div>
+    <div class="card-body">
+        @if (Model.wiki1 == null)
+        {
+            <h6 class='card-subtitle mb-2 text-muted'>no text....</h6>
+        }
+        else
+        {
+            @Html.Raw(Model.wiki1)
+        }
+    </div>
+    <div class="card-footer">
+        @MyFilters.IconActionLink(Url.Action("Edit", new { id = Model.id }), "fas fa-pencil-alt", "", "Edit this wiki")
+    </div>
+</div>
+
+
+
+@section scripts{
+    <script>
+        $("#fullscreenNav").trigger("click");
+    </script>
+}

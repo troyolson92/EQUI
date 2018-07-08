@@ -106,7 +106,7 @@ LEFT OUTER JOIN (
    lx.Id = KeepRows.Id
 WHERE
    KeepRows.Id IS NULL";
-            connectionManager.RunCommand(STW040RemoveDups, enblExeptions: true, maxEXECtime: 30);
+            connectionManager.RunCommand(STW040RemoveDups, enblExeptions: true, maxEXECtime: 60);
             context.WriteLine(" Remove dups on gadata done");
             return;
         }

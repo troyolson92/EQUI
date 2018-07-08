@@ -31,5 +31,6 @@ namespace EqUiWebUi.Models
         public virtual DbSet<c_Classification> c_Classification { get; set; }
         public virtual DbSet<c_Subgroup> c_Subgroup { get; set; }
         public virtual DbSet<l_dummyLogClassResult> l_dummyLogClassResult { get; set; }
+        public virtual DbSet<Wiki> Wiki { get; set; }
     }
 }

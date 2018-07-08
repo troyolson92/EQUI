@@ -17,6 +17,7 @@
         <EntityTypeShape EntityType="GADATAModelEQUI.l_dummyLogClassResult" Width="1.5" PointX="7.75" PointY="1" />
         <AssociationConnector Association="GADATAModelEQUI.FK_l_dummyLogClassResult_c_Classification" />
         <AssociationConnector Association="GADATAModelEQUI.FK_l_dummyLogClassResult_c_Subgroup" />
+        <EntityTypeShape EntityType="GADATAModelEQUI.Wiki" Width="1.5" PointX="12.5" PointY="1" FillColor="255, 255, 128" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
