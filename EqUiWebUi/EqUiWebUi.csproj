@@ -618,6 +618,7 @@
     <Compile Include="Controllers\EQUISetupController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\TableauController.cs" />
+    <Compile Include="Controllers\WikisController.cs" />
     <Compile Include="Models\c_Classification.cs">
       <DependentUpon>EQUIModel.tt</DependentUpon>
     </Compile>
@@ -651,6 +652,9 @@
     <Compile Include="Models\gadataModel.cs" />
     <Compile Include="Areas\user_management\roleProvider.cs" />
     <Compile Include="Models\l_dummyLogClassResult.cs">
+      <DependentUpon>EQUIModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Wiki.cs">
       <DependentUpon>EQUIModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Resources\defaultArea.nl-be.Designer.cs">
@@ -1477,6 +1481,11 @@
     <Content Include="Views\c_logClassSystem\Index.cshtml" />
     <Content Include="Views\Home\Close.cshtml" />
     <Content Include="Views\Home\TestPage.cshtml" />
+    <Content Include="Views\Wikis\Delete.cshtml" />
+    <Content Include="Views\Wikis\Details.cshtml" />
+    <Content Include="Views\Wikis\Edit.cshtml" />
+    <Content Include="Views\Wikis\Index.cshtml" />
+    <Content Include="Views\Wikis\ShowWiki.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EQUICommunictionLib\EQUICommunictionLib.csproj">

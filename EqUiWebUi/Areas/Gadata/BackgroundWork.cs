@@ -45,7 +45,7 @@ namespace EqUiWebUi.Areas.Gadata
             public void UpdatePloegreport()
             {
                 GADATAEntities2 gADATAEntities = new GADATAEntities2();
-                gADATAEntities.Database.CommandTimeout = 40; // normally 30 but this one is heavy
+                gADATAEntities.Database.CommandTimeout = 60; // normally 30 but this one is heavy
                 List<PloegRaport_Result> data = (from ploegrapport in gADATAEntities.PloegRaport
                                     (startDate: null,
                                        endDate: null,

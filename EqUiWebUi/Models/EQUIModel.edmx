@@ -52,6 +52,17 @@
           <Property Name="c_Classification_id" Type="int" />
           <Property Name="c_Subgroup_id" Type="int" />
         </EntityType>
+        <EntityType Name="Wiki">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="50" />
+          <Property Name="Description" Type="varchar" MaxLength="50" />
+          <Property Name="Culture" Type="varchar" MaxLength="50" />
+          <Property Name="wiki" Type="varchar(max)" />
+          <Property Name="searchtags" Type="varchar(max)" />
+        </EntityType>
         <EntityType Name="c_Classification">
           <Key>
             <PropertyRef Name="id" />
@@ -145,6 +156,7 @@
           <EntitySet Name="c_LogClassRules" EntityType="Self.c_LogClassRules" Schema="EqUi" store:Type="Tables" />
           <EntitySet Name="c_logClassSystem" EntityType="Self.c_logClassSystem" Schema="EqUi" store:Type="Tables" />
           <EntitySet Name="l_dummyLogClassResult" EntityType="Self.l_dummyLogClassResult" Schema="EqUi" store:Type="Tables" />
+          <EntitySet Name="Wiki" EntityType="Self.Wiki" Schema="EqUi" store:Type="Tables" />
           <EntitySet Name="c_Classification" EntityType="Self.c_Classification" Schema="Volvo" store:Type="Tables" />
           <EntitySet Name="c_Subgroup" EntityType="Self.c_Subgroup" Schema="Volvo" store:Type="Tables" />
           <AssociationSet Name="FK_c_LogClassRules_c_Classification" Association="Self.FK_c_LogClassRules_c_Classification">
@@ -207,6 +219,7 @@
             <End Role="c_Subgroup" EntitySet="c_Subgroup" />
             <End Role="l_dummyLogClassResult" EntitySet="l_dummyLogClassResult" />
           </AssociationSet>
+          <EntitySet Name="Wiki" EntityType="GADATAModelEQUI.Wiki" />
         </EntityContainer>
         <EntityType Name="c_datasource">
           <Key>
@@ -355,6 +368,17 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Wiki">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Culture" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="wiki1" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="searchtags" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -426,6 +450,18 @@
                 <ScalarProperty Name="c_Classification_id" ColumnName="c_Classification_id" />
                 <ScalarProperty Name="c_logcClassRules_id" ColumnName="c_logcClassRules_id" />
                 <ScalarProperty Name="text" ColumnName="text" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Wiki">
+            <EntityTypeMapping TypeName="GADATAModelEQUI.Wiki">
+              <MappingFragment StoreEntitySet="Wiki">
+                <ScalarProperty Name="searchtags" ColumnName="searchtags" />
+                <ScalarProperty Name="wiki1" ColumnName="wiki" />
+                <ScalarProperty Name="Culture" ColumnName="Culture" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
