@@ -1,6 +1,7 @@
 ﻿using System;
 using EQUICommunictionLib;
 using System.Data;
+using System.Runtime.InteropServices;
 
 namespace EqUiDigibordLauncher
 {
@@ -50,6 +51,44 @@ order by screen_num
             }
             Console.WriteLine("Done");
             System.Threading.Thread.Sleep(5000);
+
+            //Screenblock
+            Console.WriteLine("Starting sleepblocker");
+            PreventSleep();
+            while (true){
+                    Console.WriteLine("Leave me open I'll block the pc from faling asleep.");
+                    Console.ReadLine();
+            }
+
+        }
+
+        //helpers for sleepblock
+        [FlagsAttribute]
+        public enum EXECUTION_STATE : uint
+        {
+            ES_SYSTEM_REQUIRED = 0x00000001,
+            ES_DISPLAY_REQUIRED = 0x00000002,
+            // Legacy flag, should not be used.
+            // ES_USER_PRESENT   = 0x00000004,
+            ES_AWAYMODE_REQUIRED = 0x00000040,
+            ES_CONTINUOUS = 0x80000000,
+        }
+
+        public static class SleepUtil
+        {
+            [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+            public static extern EXECUTION_STATE SetThreadExecutionState(EXECUTION_STATE esFlags);
+        }
+
+        static void PreventSleep()
+        {
+            if (SleepUtil.SetThreadExecutionState(EXECUTION_STATE.ES_CONTINUOUS
+                | EXECUTION_STATE.ES_DISPLAY_REQUIRED
+                | EXECUTION_STATE.ES_SYSTEM_REQUIRED
+                | EXECUTION_STATE.ES_AWAYMODE_REQUIRED) == 0) //Away mode for Windows >= Vista
+                SleepUtil.SetThreadExecutionState(EXECUTION_STATE.ES_CONTINUOUS
+                    | EXECUTION_STATE.ES_DISPLAY_REQUIRED
+                    | EXECUTION_STATE.ES_SYSTEM_REQUIRED); //Windows < Vista, forget away mode
         }
     }
 }
