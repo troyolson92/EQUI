@@ -3,17 +3,31 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - VCG GA UB12</title>
+    <title>@ViewBag.Title</title>
+    <!--Styles (pre body)-->
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
+    <!--Script (prebody)-->
     @Scripts.Render("~/bundles/mainjavabundel")
     <!--Body content -->
     <div>
         @RenderBody()
     </div>
+    <!--Scripts (postbody)-->
     @Scripts.Render("~/bundles/MyScripts")
+    <!--Main layout init-->
+    <script>
+        initInterface();
+    </script>
+
+    @*start render script sections in vieuws*@
     @RenderSection("scripts", required: false)
+    @RenderSection("partials", required: false)
+
+    <script>
+        console.log('MinimalLoutLoad done');
+    </script>
 </body>
 </html>
