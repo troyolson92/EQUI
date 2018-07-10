@@ -4,7 +4,6 @@ using System.Collections.Specialized;
 using System.Deployment.Application;
 using System.Web;
 using System.Windows.Forms;
-using EQUICommunictionLib;
 
 namespace EqUi_UtilManger
 {
@@ -78,10 +77,6 @@ namespace EqUi_UtilManger
                                 Application.Run(new SBCUStats());
                             }
                             break;
-
-                            case "sleepBlock":
-                                Application.Run(new SleepBlock());
-                                break;
 
                             default:
                                 MessageBox.Show(string.Format("Tool: '{0}' is not a valid tool", values[0]));
