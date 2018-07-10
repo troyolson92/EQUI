@@ -20,7 +20,7 @@ namespace EqUiWebUi.Areas.STW040
             BackgroundWork backgroundwork = new BackgroundWork();
             //**********************************STW040 => GADATA sunc***************************************************
             //set job to refresh every 5 minutes
-            RecurringJob.AddOrUpdate("STW40=>GADATA", () => backgroundwork.STW040ToGadataSync(null), Cron.HourInterval(1));
+            RecurringJob.AddOrUpdate("STW40=>GADATA", () => backgroundwork.STW040ToGadataSync(null), "5 * * * *"); //5 min past the hour
         }
 
         [Queue("gadata")]

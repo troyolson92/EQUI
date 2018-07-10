@@ -8,20 +8,9 @@ namespace EqUiDigibordLauncher
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hi I will start the kiosk for you");
+            Console.WriteLine("Hi I will start the screens for you");
             //
             ChromeTools chromeTools = new ChromeTools();
-            //start kiosk
-            try
-            {
-                chromeTools.LaunchKiosk();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Error while starting KIOSK");
-                Console.WriteLine(ex.Message);
-                System.Threading.Thread.Sleep(5000);
-            }
             //
             Console.WriteLine("Getting configuration for: "+ Environment.UserDomainName+"\\"+Environment.UserName);
             //
@@ -29,7 +18,8 @@ namespace EqUiDigibordLauncher
             string QRY = @"
 SELECT L_Screens.Screen_num, L_Screens.id FROM GADATA.Volvo.L_Screens
 LEFT JOIN GADATA.Volvo.L_users on L_users.id = L_Screens.[User_id]
-WHERE L_users.username = '{0}' AND Screen_num > 1
+WHERE L_users.username = '{0}' AND Screen_num > 0
+order by screen_num 
 ";
 
             DataTable dt = connectionManager.RunQuery(string.Format(QRY, Environment.UserDomainName + "\\" + Environment.UserName));
