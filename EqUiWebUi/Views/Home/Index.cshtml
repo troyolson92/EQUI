@@ -36,11 +36,7 @@
         @MyHtmlHelpers.EquiLink("/Tiplife/NgacElectrode/index", "fas fa-industry", "Electrode", helperText: "Alles in verband met de Electrodes (greenfield)")
         @MyHtmlHelpers.EquiLink("http://gensvw2107.gen.volvocars.net/Greenfield/#/ctgreenfield", "fas fa-stopwatch", "cmaCTapp", helperText: "Tool van IE om Cycle times te bekijken")
         @MyHtmlHelpers.EquiLink("/PlcSupervisie/Screenshot/Carousel", "far fa-object-group", "Supervisie (UB12)", helperText: "Plc Supervisie voor UB12 (mobile friendly)")
-
-        @{
-        string urlGreenfieldsuperVis = @Uri.EscapeDataString("http://webapps.gen.volvocars.net/applications/eng/equipment/SuperVisieCma/");
-        @MyHtmlHelpers.EquiLink("/Home/Rendersite?url=" + @urlGreenfieldsuperVis, "far fa-object-group", "Supervisie (Greenfield)", helperText: "Tia supervisie schermen");
-        }
+        @MyHtmlHelpers.EquiLink("/Home/Rendersite?url=" + @Uri.EscapeDataString("http://webapps.gen.volvocars.net/applications/eng/equipment/SuperVisieCma/"), "far fa-object-group", "Supervisie (Greenfield)", helperText: "Tia supervisie schermen")
     </div>
 </div>
 

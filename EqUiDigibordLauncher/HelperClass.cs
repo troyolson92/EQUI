@@ -80,11 +80,5 @@ namespace EqUiDigibordLauncher
             System.Threading.Thread.Sleep(ChromeStartDelay);
         }
 
-        public void LaunchKiosk()
-        {
-            //launch kiosk
-            Process.Start(chromePath, "--profile-directory=Default --app-id=afhcomalholahplbjhnmahkoekoijban");
-            System.Threading.Thread.Sleep(ChromeStartDelay);
-        }
     }
 }

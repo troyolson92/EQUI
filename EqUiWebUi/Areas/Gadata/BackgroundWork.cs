@@ -6,6 +6,8 @@ using System.Web;
 using EqUiWebUi.Areas.Gadata.Models;
 using Hangfire;
 using EQUICommunictionLib;
+using Hangfire.Server;
+using Hangfire.Console;
 
 namespace EqUiWebUi.Areas.Gadata
 {
@@ -37,6 +39,14 @@ namespace EqUiWebUi.Areas.Gadata
                 //**********************************Copy maximi Assets to GADATA***************************************************
                 //set job to run sunday at 12
                 RecurringJob.AddOrUpdate("AssetsMx-gadata", () => backgroundwork.UpdateMaximoAssetsToGadata(), "0 12 * * 0");
+
+            //**********************************normalize***************************************************
+            //set job to refresh every minute
+            RecurringJob.AddOrUpdate("norm_C3G", () => backgroundwork.norm_c3g(null), Cron.Minutely);
+            RecurringJob.AddOrUpdate("norm_C4G", () => backgroundwork.norm_c4g(null), Cron.Minutely);
+            RecurringJob.AddOrUpdate("norm_NGAC", () => backgroundwork.norm_NGAC(null), Cron.Minutely);
+            RecurringJob.AddOrUpdate("norm_5min", () => backgroundwork.norm_5min(null), Cron.MinuteInterval(5));
+            RecurringJob.AddOrUpdate("norm_1day", () => backgroundwork.norm_1day(null), Cron.Daily);
         }
 
             //update the local datatable with ploeg rapport called every minute #hangfire
@@ -207,6 +217,102 @@ namespace EqUiWebUi.Areas.Gadata
             ConnectionManager connectionManager = new ConnectionManager();
             connectionManager.RunCommand(CmdLinkAssets, enblExeptions: true, maxEXECtime: 300);
             log.Info("sp_linkassets Done");
+        }
+
+        //run C3G normalisation steps.
+        [Queue("gadata")]
+        [AutomaticRetry(Attempts = 0)]
+        public void norm_c3g(PerformContext context)
+        {
+            ConnectionManager connectionManager = new ConnectionManager();
+            string[] cmds = { "exec GADATA.C3G.sp_update_L"
+                    ,"exec GADATA.C3G.sp_update_Lerror_classifcation"
+                    ,"exec GADATA.C3G.sp_L_breakdown"
+            };
+
+            foreach(string cmd in cmds)
+            {
+                context.WriteLine(" "+cmd);
+                connectionManager.RunCommand(cmd, enblExeptions: true, maxEXECtime: 300);
+                context.WriteLine(" Done");
+            }
+        }
+
+        //run c4g normalisation steps.
+        [Queue("gadata")]
+        [AutomaticRetry(Attempts = 0)]
+        public void norm_c4g(PerformContext context)
+        {
+            ConnectionManager connectionManager = new ConnectionManager();
+            string[] cmds = { "exec GADATA.[C4G].[sp_update_L]"
+                    ,"exec GADATA.[C4G].sp_update_Lerror_classifcation"
+                    ,"exec GADATA.[C4G].sp_Update_L_breakdown"
+                    ,"exec GADATA.[C4G].sp_ReClass_L_breakdown"
+                    ,"EXEC GADATA.[Volvo].[LiveView]"
+            };
+
+            foreach (string cmd in cmds)
+            {
+                context.WriteLine(" " + cmd);
+                connectionManager.RunCommand(cmd, enblExeptions: true, maxEXECtime: 300);
+                context.WriteLine(" Done");
+            }
+        }
+
+        //run NGAC normalisation steps.
+        [Queue("gadata")]
+        [AutomaticRetry(Attempts = 0)]
+        public void norm_NGAC(PerformContext context)
+        {
+            ConnectionManager connectionManager = new ConnectionManager();
+            string[] cmds = { "EXEC GADATA.[NGAC].[sp_update_cleanLogteksts]"
+                    ,"exec GADATA.[NGAC].[sp_update_Lerror_classifcation] "
+            };
+
+            foreach (string cmd in cmds)
+            {
+                context.WriteLine(" " + cmd);
+                connectionManager.RunCommand(cmd, enblExeptions: true, maxEXECtime: 300);
+                context.WriteLine(" Done");
+            }
+        }
+
+        //run NGAC normalisation steps.
+        [Queue("gadata")]
+        [AutomaticRetry(Attempts = 0)]
+        public void norm_5min(PerformContext context)
+        {
+            ConnectionManager connectionManager = new ConnectionManager();
+            string[] cmds = { "exec GADATA.[C3G].[sp_normalize_GunCylinder]"
+                    ,"exec GADATA.[C3G].[sp_rt_toollog_REMOVE_DUP]"
+                    ,"exec GADATA.[NGAC].[sp_CalcTipWearBeforeChange]"
+            };
+
+            foreach (string cmd in cmds)
+            {
+                context.WriteLine(" " + cmd);
+                connectionManager.RunCommand(cmd, enblExeptions: true, maxEXECtime: 300);
+                context.WriteLine(" Done");
+            }
+        }
+
+        //run NGAC normalisation steps.
+        [Queue("gadata")]
+        [AutomaticRetry(Attempts = 0)]
+        public void norm_1day(PerformContext context)
+        {
+            ConnectionManager connectionManager = new ConnectionManager();
+            string[] cmds = { "exec GADATA.C3G.sp_Housekeeping"
+                    ,"exec GADATA.c4g.sp_Housekeeping"
+                    ,"exec GADATA.NGAC.sp_Housekeeping"
+            };
+
+            foreach (string cmd in cmds)
+            {
+                context.WriteLine(" " + cmd);
+                connectionManager.RunCommand(cmd, enblExeptions: true, maxEXECtime: 300);
+                context.WriteLine(" Done");
+            }
         }
     }
 }
