@@ -52,6 +52,11 @@
         </div>
     </div>
 
+    @if (ViewBag.AddTrendChart = true)
+    {
+       //load chart chart here?
+    }
+
     @if (Model.c_triggers.hasControlLimits)
     {
         @Html.Action("_ControlChart", "Alert", Model)

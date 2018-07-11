@@ -1486,6 +1486,7 @@
     <Content Include="Views\Wikis\Edit.cshtml" />
     <Content Include="Views\Wikis\Index.cshtml" />
     <Content Include="Views\Wikis\ShowWiki.cshtml" />
+    <Content Include="Views\Tableau\TestTicket.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EQUICommunictionLib\EQUICommunictionLib.csproj">

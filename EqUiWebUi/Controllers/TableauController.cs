@@ -62,5 +62,15 @@ namespace EqUiWebUi.Controllers
                 return "";
             }
         }
+
+        //https://onlinehelp.tableau.com/current/server/en-us/trusted_auth.htm
+
+        //test page for getting ticket from tableau server. 
+        //https://onlinehelp.tableau.com/current/server/en-us/trusted_auth_testing.htm
+       public ActionResult TestTicket()
+        {
+           // HttpContext.Response.AddHeader("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
+            return View();
+        }
     }
 }

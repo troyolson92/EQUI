@@ -28,6 +28,7 @@ namespace EqUiWebUi
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             //log 4 net 
             log4net.Config.XmlConfigurator.Configure();
+
         }
 
         //custom handelers for errors 
