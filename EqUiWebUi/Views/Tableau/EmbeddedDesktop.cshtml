@@ -11,8 +11,17 @@
          * Instantiate our vizualization.
          */
         $(function () {
-            var url = 'https://tableau-test.volvocars.biz/t/Ghent/views/'.concat('@ViewBag.workbook').concat('/').concat('@ViewBag.sheet');
-
+            bTrustedAuth = @ViewBag.TrustedAuth.ToString().ToLower();
+            if (bTrustedAuth)
+            {
+                //http://tabserver/trusted/<ticket>/t/Sales/views/<workbook>/<view>
+                var url = 'https://tableau-test.volvocars.biz/trusted/'.concat('@ViewBag.Ticket').concat('/t/Ghent/views/').concat('@ViewBag.workbook').concat('/').concat('@ViewBag.sheet');
+                console.log('ticket: ' + '@ViewBag.Ticket');
+            }
+            else
+            {
+                var url = 'https://tableau-test.volvocars.biz/t/Ghent/views/'.concat('@ViewBag.workbook').concat('/').concat('@ViewBag.sheet');
+            }
 
             var size = findDashboardSize();
             var vizOptions = {
@@ -28,7 +37,7 @@
                     $('.viz iframe').css('overflow', 'hidden');
                 }
                 ,'LocationTreeFilter' : '@ViewBag.LocationTreeFilter'
-            //don't set time filter do this relative in tableau 
+            //don't set time filter do this relative in tableau
             //    , 'Week': '@ViewBag.Weeknum'
             //    , 'Dag': '@ViewBag.Weekday'
             //    , 'Vweek': '@ViewBag.Weeknum'

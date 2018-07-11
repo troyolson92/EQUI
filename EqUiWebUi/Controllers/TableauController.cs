@@ -6,6 +6,9 @@ using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
 using EqUiWebUi.Areas.user_management.Models;
+using System.Net;
+using System.Text;
+using System.IO;
 
 namespace EqUiWebUi.Controllers
 {
@@ -20,7 +23,7 @@ namespace EqUiWebUi.Controllers
 
         //handels inbedded views from tableau for FullHD and smaller type monitors
         [HttpGet]
-        public ActionResult EmbeddedDesktop(string workbook, string sheet)
+        public ActionResult EmbeddedDesktop(string workbook, string sheet, bool TrustedAuth = false)
         {
             //
             ViewBag.workbook = workbook;
@@ -28,6 +31,17 @@ namespace EqUiWebUi.Controllers
             ViewBag.Weeknum = CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(System.DateTime.Now, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
             ViewBag.Weekday = (int)System.DateTime.Now.DayOfWeek;
             ViewBag.LocationTreeFilter = GetUsersAreaname();
+            //
+            ViewBag.TrustedAuth = TrustedAuth;
+            if (TrustedAuth)
+            {
+                ViewBag.Ticket = GetTableauAuthenticationTicket(tabServer: "https://tableau-test.volvocars.biz",user: "BPPEQDB1", site: "Ghent");
+                if(ViewBag.Ticket == "-1")
+                {
+                    //auth failure
+                    ViewBag.TrustedAuth = false;
+                }
+            }
             return View();
         }
 
@@ -63,14 +77,34 @@ namespace EqUiWebUi.Controllers
             }
         }
 
-        //https://onlinehelp.tableau.com/current/server/en-us/trusted_auth.htm
-
-        //test page for getting ticket from tableau server. 
+        //https://onlinehelp.tableau.com/current/server/en-us/trusted_auth.htm 
         //https://onlinehelp.tableau.com/current/server/en-us/trusted_auth_testing.htm
-       public ActionResult TestTicket()
+        public ActionResult GetTicket(string tabServer = "https://tableau-test.volvocars.biz", string user = "BPPEQDB1", string site = "Ghent")
         {
-           // HttpContext.Response.AddHeader("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
+            ViewBag.result = GetTableauAuthenticationTicket(tabServer, user, site);
             return View();
+        }
+
+        private static string GetTableauAuthenticationTicket(string tabServer, string user, string site)
+        {
+            var request = (HttpWebRequest)WebRequest.Create(tabServer + "/trusted");
+
+            var encoding = new UTF8Encoding();
+            var postData = "username=" + user;
+            postData += "&target_site=" + site;
+            byte[] data = encoding.GetBytes(postData);
+
+            request.Method = "POST";
+            request.ContentType = "application/x-www-form-urlencoded";
+            request.ContentLength = data.Length;
+
+            using (var stream = request.GetRequestStream())
+            {
+                stream.Write(data, 0, data.Length);
+            }
+
+            var response = (HttpWebResponse)request.GetResponse();
+            return new StreamReader(response.GetResponseStream()).ReadToEnd();
         }
     }
 }
