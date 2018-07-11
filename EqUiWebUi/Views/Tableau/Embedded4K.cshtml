@@ -9,7 +9,17 @@
          * Instantiate our vizualization.
          */
         $(function () {
-            var url = 'https://tableau-test.volvocars.biz/t/Ghent/views/'.concat('@ViewBag.workbook').concat('/').concat('@ViewBag.sheet');
+            bTrustedAuth = @ViewBag.TrustedAuth.ToString().ToLower();
+            if (bTrustedAuth)
+            {
+                //http://tabserver/trusted/<ticket>/t/Sales/views/<workbook>/<view>
+                var url = 'https://tableau-test.volvocars.biz/trusted/'.concat('@ViewBag.Ticket').concat('/t/Ghent/views/').concat('@ViewBag.workbook').concat('/').concat('@ViewBag.sheet');
+                console.log('ticket: ' + '@ViewBag.Ticket');
+            }
+            else
+            {
+                var url = 'https://tableau-test.volvocars.biz/t/Ghent/views/'.concat('@ViewBag.workbook').concat('/').concat('@ViewBag.sheet');
+            }
 
 
             var size = findDashboardSize();
@@ -36,7 +46,7 @@
          */
         function findDashboardSize() {
             var minHeight = 2160;
-            var maxHeight = 2160; 
+            var maxHeight = 2160;
             var minWidth = 2560;
 
             // The minus 100px leaves us room for the header/footer. Adjust as needed.
