@@ -98,7 +98,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
         }
 
         // GET: Alert/Details partial to get basic info about alert 
-        public ActionResult _Details (int? id)
+        public ActionResult _Details (int? id, bool AddTrendChart = false)
         {
             if (id == null)
             {
@@ -109,6 +109,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.AddTrendChart = AddTrendChart;
             return PartialView(h_alert);
         }
 

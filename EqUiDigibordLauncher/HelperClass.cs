@@ -49,12 +49,22 @@ namespace EqUiDigibordLauncher
     {
         int ChromeStartDelay = 3000;
         string chromePath = @"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe";
-        string chromeArguments = "--new-window --incognito";
-
+    
         public void LaunchChrome(string Url = "HTTP://EQUI", int MonitorNum = 1)
         {
-            //start chrome with arguments
-            Process.Start(chromePath, chromeArguments + " " + Url);
+            //there is this STUPID setting in chrome that limits us from having more than 6 connections per'browser session'
+            //in the 2 screen + 4 pannel setup we hit tis limit.
+            //To overcome this we launch screen 1 in normal mode the others incognito. (THIS REALLY REALLY SUCKS BALLS)
+            if (MonitorNum == 1)
+            {
+                //start chrome with arguments
+                Process.Start(chromePath, "--new-window  " + Url);
+            }
+            else
+            {
+                //start chrome with arguments
+                Process.Start(chromePath, "--new-window --incognito  " + Url);
+            }
             //sleep
             System.Threading.Thread.Sleep(ChromeStartDelay);
             //get window
