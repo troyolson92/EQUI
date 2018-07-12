@@ -127,5 +127,16 @@ namespace EqUiWebUi.Areas.Alert.Models
         public int c_trigger_id { get; set; }
     }
 
+    public class AlertResult
+    {
+        public DateTime timestamp { get; set; }
+        public string info { get; set;}
+        public string LocationTree { get; set; }
+        public string ClassTree { get; set; }
+        public string Location { get; set; }
+        public string alarmobject { get; set; }
+        public bool handeld { get; set; }
+    }
+
 }
 

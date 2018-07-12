@@ -88,21 +88,34 @@ namespace EqUiWebUi.Areas.Alert
             if (ActiveAlerts == null)
             {
                 log.Error("NO RESULT FORM QUERY!! for: " + trigger.alertType + " ABORTING");
-                throw new System.ArgumentException("NO RESULT FORM QUERY","Alertengine");
+                throw new System.ArgumentException("NO RESULT FORM QUERY", "Alertengine");
             }
-            //check for no row
-            log.Debug("trigger: " + trigger.alertType + " count:" + ActiveAlerts.Rows.Count);
+            else
+            {
+                log.Debug("trigger: " + trigger.alertType + " count:" + ActiveAlerts.Rows.Count);
+            }
+            //build an listobject from the datatable.
+            List<Models.AlertResult> alertResults = new List<AlertResult>(); 
+            foreach (DataRow row in ActiveAlerts.Rows)
+            {
+                Models.AlertResult alertResult = new AlertResult();
+                alertResult.timestamp = row.Field<DateTime>("timestamp");
+                alertResult.info = row.Field<string>("info");
+                if (row.Table.Columns.Contains("LocationTree")) alertResult.LocationTree = row.Field<string>("LocationTree"); //no mandatory
+                if (row.Table.Columns.Contains("ClassTree")) alertResult.ClassTree = row.Field<string>("ClassTree"); //not mandatory
+                alertResult.Location = row.Field<string>("Location");
+                alertResult.alarmobject = row.Field<string>("alarmobject");
+                alertResult.handeld = false;
+                alertResults.Add(alertResult);
+            }
 
            //handle active alert results
-           foreach (DataRow ActiveAlert in ActiveAlerts.Rows)
+           foreach (AlertResult ActiveAlert in alertResults)
            {
-
-                //can not use .Field in Linq query 
-                string Alertalarmobject = ActiveAlert.Field<string>("alarmobject");
-
+                //get alerts that are already active for this alarmobject
                 List<h_alert> h_alert = (from alerts in gADATA_AlertModel.h_alert
                                          where alerts.c_tirgger_id == c_triggerID //must be from same trigger
-                                         && alerts.alarmobject == Alertalarmobject //must be same object
+                                         && alerts.alarmobject == ActiveAlert.alarmobject //must be same object
                                          && alerts.state != (int)alertState.COMP //alert must be active so not in these states
                                          && alerts.state != (int)alertState.VOID 
                                          && alerts.state != (int)alertState.TECHCOMP
@@ -112,14 +125,29 @@ namespace EqUiWebUi.Areas.Alert
                 //if more than one active we have a config issue
                 if (h_alert.Count > 1)
                 {
-                    log.Error("More than one alert active for location");
+                    log.Error("More than one alert active for alarmobject: " + ActiveAlert.alarmobject);
                   //allow continue ? 
                 }
+
+                //in 1 AlertRun we can have multible results for the same alarmobject. 
+                //We only whant to handle the alert ONCE! 
+                //if already handeld jup to next item.
+                if (ActiveAlert.handeld)
+                {
+                    log.Debug("This alert was already handeld skipping");
+                    continue;
+                }
+                else
+                {
+                    //update all records for this alarmobject as handeld
+                    alertResults.Where(c => c.alarmobject == ActiveAlert.alarmobject).Select(c => { c.handeld = true; return c; }).ToList();
+                }
+
 
                //if alert not active make  one
                 if (h_alert.Count == 0)
                 {
-                    log.Info("New alert for: " + ActiveAlert.Field<string>("Location") + " => "+ ActiveAlert.Field<string>("info"));
+                    log.Info("New alert for: " + ActiveAlert.alarmobject + " => "+ ActiveAlert.info);
 
                     h_alert newAlert = new h_alert
                     {
@@ -128,14 +156,14 @@ namespace EqUiWebUi.Areas.Alert
                     if (trigger.c_datasource.Name == "GADATA") //for gata the locationtree an location MUSt be in the query result
                     {
                         //we already have the location tree and location
-                        newAlert.locationTree = ActiveAlert.Field<string>("LocationTree");
-                        newAlert.location = ActiveAlert.Field<string>("Location");
+                        newAlert.locationTree = ActiveAlert.LocationTree;
+                        newAlert.location = ActiveAlert.Location;
                     }
                     else if (trigger.c_datasource.Name == "DBI") //for DBI the locationtree and location MUST be in the query result 
                     {
                         //we already have the location tree and location
-                        newAlert.locationTree = ActiveAlert.Field<string>("LocationTree");
-                        newAlert.location = ActiveAlert.Field<string>("Location");
+                        newAlert.locationTree = ActiveAlert.LocationTree;
+                        newAlert.location = ActiveAlert.Location;
                     }
                     else if (trigger.c_datasource.Name == "DST") //for STO qet the location tree from GADATA (manipulate object from ZM to ZS (Zone mode does not exist in asset list)
                     {
@@ -143,7 +171,7 @@ namespace EqUiWebUi.Areas.Alert
                         string qry =
                             @"select top 1 LocationTree, Location from GADATA.EqUi.ASSETS as a 
                             where REPLACE('{0}','ZM','ZS') LIKE a.[LOCATION] + '%'";
-                        DataTable result = connectionManager.RunQuery(string.Format(qry, ActiveAlert.Field<string>("alarmobject")));
+                        DataTable result = connectionManager.RunQuery(string.Format(qry, ActiveAlert.alarmobject));
                         if (result.Rows.Count == 1)
                         {
                             newAlert.locationTree = result.Rows[0].Field<string>("LocationTree");
@@ -152,8 +180,8 @@ namespace EqUiWebUi.Areas.Alert
                         else //handle if we don't get a response from gadata
                         {
                             log.Debug("did not get a valid location tree from gadata");
-                            newAlert.locationTree = ActiveAlert.Field<string>("alarmobject");
-                            newAlert.location = ActiveAlert.Field<string>("alarmobject");
+                            newAlert.locationTree = ActiveAlert.alarmobject;
+                            newAlert.location = ActiveAlert.alarmobject;
                         }
                     }
                     else if(trigger.c_datasource.Name == "MAXIMO7rep" || trigger.c_datasource.Name == "MAXIMOrt") //for macimo get the location tree from GADATA (direct match on location)
@@ -162,7 +190,7 @@ namespace EqUiWebUi.Areas.Alert
                         string qry =
                             @"select top 1 LocationTree, Location from GADATA.EqUi.ASSETS as a 
                             where '{0}' LIKE a.[LOCATION] + '%'";
-                        DataTable result = connectionManager.RunQuery(string.Format(qry, ActiveAlert.Field<string>("alarmobject")));
+                        DataTable result = connectionManager.RunQuery(string.Format(qry, ActiveAlert.alarmobject));
                         if (result.Rows.Count == 1)
                         {
                             newAlert.locationTree = result.Rows[0].Field<string>("LocationTree");
@@ -171,8 +199,8 @@ namespace EqUiWebUi.Areas.Alert
                         else //handle if we don't get a response from gadata
                         {
                             log.Debug("did not get a valid location tree from gadata");
-                            newAlert.locationTree = ActiveAlert.Field<string>("alarmobject");
-                            newAlert.location = ActiveAlert.Field<string>("alarmobject");
+                            newAlert.locationTree = ActiveAlert.alarmobject;
+                            newAlert.location = ActiveAlert.alarmobject;
                         }
                     }
                     else
@@ -181,67 +209,63 @@ namespace EqUiWebUi.Areas.Alert
                         throw new NotSupportedException();
                     }
                     //
-                    newAlert.alarmobject = ActiveAlert.Field<string>("alarmobject");
-                    newAlert.Classification = ActiveAlert.Field<string>("ClassTree");
-                    newAlert.C_timestamp = ActiveAlert.Field<DateTime>("timestamp");
+                    newAlert.alarmobject = ActiveAlert.alarmobject;
+                    newAlert.Classification = ActiveAlert.ClassTree;
+                    newAlert.C_timestamp = ActiveAlert.timestamp;
                     newAlert.state = trigger.initial_state;
-                    newAlert.info = ActiveAlert.Field<string>("info");
+                    newAlert.info = ActiveAlert.info;
                     newAlert.triggerCount = 1;
-                    newAlert.lastTriggerd = ActiveAlert.Field<DateTime>("timestamp");
+                    newAlert.lastTriggerd = ActiveAlert.timestamp;
                     //adde badge to comment 
                     StringBuilder sb = new StringBuilder();
                     sb.AppendLine(newAlert.comments);
                     sb.AppendLine("<hr />");
                     sb.AppendLine("<div class='alert alert-danger'>");
-                    sb.AppendLine("<strong>Triggerd: " + ActiveAlert.Field<DateTime>("timestamp").ToString("yyyy-MM-dd HH:mm:ss") + " Detected by server: " + System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "</strong>");
-                    sb.AppendLine("<div>" + ActiveAlert.Field<string>("info") + "</div>");
-                    if (trigger.isDebugmode)
+                    sb.AppendLine("<strong>Triggerd: " + ActiveAlert.timestamp.ToString("yyyy-MM-dd HH:mm:ss") + " Detected by server: " + System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "</strong>");
+                    foreach (Models.AlertResult item in alertResults.Where(a => a.alarmobject == ActiveAlert.alarmobject).ToList())
                     {
-                        sb.AppendLine("<div>" + ConvertDataTableToHTML(ActiveAlerts, h_alert[0].alarmobject) + "</div>");
+                       sb.AppendLine("<div>Msg: " + item.timestamp.ToString("yyyy-MM-dd HH:mm:ss") + " info: " + item.info + "</div>");
                     }
                     sb.AppendLine("</div>");
                     newAlert.comments = sb.ToString();
-
                     //check if we need to send SMS
                     if (trigger.enableSMS)
                     {
                        newAlert =  HandleSms(trigger, newAlert);
                     }
-
-                        //dont forget to ADD and SAVE! 
-                        gADATA_AlertModel.h_alert.Add(newAlert);
-                        gADATA_AlertModel.SaveChanges();
+                    //dont forget to ADD and SAVE! 
+                    gADATA_AlertModel.h_alert.Add(newAlert);
+                    gADATA_AlertModel.SaveChanges();
 
                 }
                 //Alert is already active RETRIGGER
                 else
                 {
-                    log.Debug("Alert already active: " + ActiveAlert.Field<string>("Location"));
+                    log.Debug("Alert already active: " + ActiveAlert.Location);              
                     //if the active alert has a new timestamp tis should mean a new datapoint (retrigger event)
 
-                    if (h_alert[0].lastTriggerd.ToString("yyyy-MM-dd HH:mm:ss") != ActiveAlert.Field<DateTime>("timestamp").ToString("yyyy-MM-dd HH:mm:ss"))
+                    if (h_alert[0].lastTriggerd.ToString("yyyy-MM-dd HH:mm:ss") != ActiveAlert.timestamp.ToString("yyyy-MM-dd HH:mm:ss"))
                     {
-                        log.Debug("RETrigger: " + h_alert[0].lastTriggerd.ToString("yyyy-MM-dd HH:mm:ss") + " => " + ActiveAlert.Field<DateTime>("timestamp").ToString("yyyy-MM-dd HH:mm:ss"));
+                        log.Debug("Retriggerd: " + h_alert[0].lastTriggerd.ToString("yyyy-MM-dd HH:mm:ss") + " => " + ActiveAlert.timestamp.ToString("yyyy-MM-dd HH:mm:ss"));
                         //added badge to comment with retrigger event
                         StringBuilder sb = new StringBuilder(); 
                         sb.AppendLine(h_alert[0].comments);
                         sb.AppendLine("<hr />");
                         sb.AppendLine("<div class='alert alert-warning'>");
-                        sb.AppendLine("<strong>Retriggerd: "+ ActiveAlert.Field<DateTime>("timestamp").ToString("yyyy-MM-dd HH:mm:ss") + " Detected by server: " + System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "</strong>");
-                        sb.AppendLine("<div>" + h_alert[0].lastTriggerd.ToString("yyyy-MM-dd HH:mm:ss") + " => " + ActiveAlert.Field<DateTime>("timestamp").ToString("yyyy-MM-dd HH:mm:ss") + "</div>");
-                        sb.AppendLine("<div>" + ActiveAlert.Field<string>("info") + "</div>");
-                        if (trigger.isDebugmode)
+                        sb.AppendLine("<strong>Retriggerd: "+ ActiveAlert.timestamp.ToString("yyyy-MM-dd HH:mm:ss") + " Detected by server: " + System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "</strong>");
+                        sb.AppendLine("<div>" + h_alert[0].lastTriggerd.ToString("yyyy-MM-dd HH:mm:ss") + " => " + ActiveAlert.timestamp.ToString("yyyy-MM-dd HH:mm:ss") + "</div>");
+                        foreach (Models.AlertResult item in alertResults.Where(a => a.alarmobject == ActiveAlert.alarmobject).ToList())
                         {
-                            sb.AppendLine("<div>" + ConvertDataTableToHTML(ActiveAlerts, h_alert[0].alarmobject) + "</div>");
+                            sb.AppendLine("<div>Msg: " + item.timestamp.ToString("yyyy-MM-dd HH:mm:ss") + " info: " + item.info + "</div>");
                         }
                         sb.AppendLine("</div>");
                         h_alert[0].comments = sb.ToString();
 
                         //set alert info to latest message
-                        h_alert[0].info = ActiveAlert.Field<string>("info");
+                        h_alert[0].info = ActiveAlert.info;
                         //update active alert with timestamp and increment trigger counter
                         h_alert[0].triggerCount += 1; //increment count
-                        h_alert[0].lastTriggerd = ActiveAlert.Field<DateTime>("timestamp");
+                        h_alert[0].lastTriggerd = ActiveAlert.timestamp;
 
                         //check if we need to REsend SMS
                         if (trigger.enableSMS && trigger.smsOnRetrigger)
