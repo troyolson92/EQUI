@@ -13,6 +13,15 @@
     max-width: 100%; /* Max Width of the popover (depending on the container!) */
 }
 
+/*when moved to bootstrap 4 "Label" class is gone. This is used in the scafolded froms so adding it again*/
+.control-label {
+    display: inline-block;
+    margin-bottom: .5rem;
+    font-weight: bold;
+}
+
+
+/*MOVE ALL BELOW TO OWN FILE**************************************************************************************************************/
 /*used in grid row styleing*/
 
 /*Status styles*/
