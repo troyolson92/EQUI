@@ -143,7 +143,6 @@ namespace EqUiWebUi.Areas.Alert
                     alertResults.Where(c => c.alarmobject == ActiveAlert.alarmobject).Select(c => { c.handeld = true; return c; }).ToList();
                 }
 
-
                //if alert not active make  one
                 if (h_alert.Count == 0)
                 {
@@ -224,7 +223,7 @@ namespace EqUiWebUi.Areas.Alert
                     sb.AppendLine("<strong>Triggerd: " + ActiveAlert.timestamp.ToString("yyyy-MM-dd HH:mm:ss") + " Detected by server: " + System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "</strong>");
                     foreach (Models.AlertResult item in alertResults.Where(a => a.alarmobject == ActiveAlert.alarmobject).ToList())
                     {
-                       sb.AppendLine("<div>Msg: " + item.timestamp.ToString("yyyy-MM-dd HH:mm:ss") + " info: " + item.info + "</div>");
+                       sb.AppendLine("<div>DT: " + item.timestamp.ToString("yyyy-MM-dd HH:mm:ss") + " MSG: " + item.info + "</div>");
                     }
                     sb.AppendLine("</div>");
                     newAlert.comments = sb.ToString();
@@ -241,12 +240,12 @@ namespace EqUiWebUi.Areas.Alert
                 //Alert is already active RETRIGGER
                 else
                 {
-                    log.Debug("Alert already active: " + ActiveAlert.Location);              
+                    log.Debug("Alert already active: " + ActiveAlert.alarmobject);              
                     //if the active alert has a new timestamp tis should mean a new datapoint (retrigger event)
 
                     if (h_alert[0].lastTriggerd.ToString("yyyy-MM-dd HH:mm:ss") != ActiveAlert.timestamp.ToString("yyyy-MM-dd HH:mm:ss"))
                     {
-                        log.Debug("Retriggerd: " + h_alert[0].lastTriggerd.ToString("yyyy-MM-dd HH:mm:ss") + " => " + ActiveAlert.timestamp.ToString("yyyy-MM-dd HH:mm:ss"));
+                        log.Info("Retriggerd: " + h_alert[0].alarmobject + " "  + h_alert[0].lastTriggerd.ToString("yyyy-MM-dd HH:mm:ss") + " => " + ActiveAlert.timestamp.ToString("yyyy-MM-dd HH:mm:ss"));
                         //added badge to comment with retrigger event
                         StringBuilder sb = new StringBuilder(); 
                         sb.AppendLine(h_alert[0].comments);
@@ -256,7 +255,7 @@ namespace EqUiWebUi.Areas.Alert
                         sb.AppendLine("<div>" + h_alert[0].lastTriggerd.ToString("yyyy-MM-dd HH:mm:ss") + " => " + ActiveAlert.timestamp.ToString("yyyy-MM-dd HH:mm:ss") + "</div>");
                         foreach (Models.AlertResult item in alertResults.Where(a => a.alarmobject == ActiveAlert.alarmobject).ToList())
                         {
-                            sb.AppendLine("<div>Msg: " + item.timestamp.ToString("yyyy-MM-dd HH:mm:ss") + " info: " + item.info + "</div>");
+                            sb.AppendLine("<div>DT: " + item.timestamp.ToString("yyyy-MM-dd HH:mm:ss") + " MSG: " + item.info + "</div>");
                         }
                         sb.AppendLine("</div>");
                         h_alert[0].comments = sb.ToString();
@@ -266,7 +265,6 @@ namespace EqUiWebUi.Areas.Alert
                         //update active alert with timestamp and increment trigger counter
                         h_alert[0].triggerCount += 1; //increment count
                         h_alert[0].lastTriggerd = ActiveAlert.timestamp;
-
                         //check if we need to REsend SMS
                         if (trigger.enableSMS && trigger.smsOnRetrigger)
                         {        
@@ -313,7 +311,7 @@ namespace EqUiWebUi.Areas.Alert
                     }
                     else
                     {
-                        log.Debug("Alert no longer active closing it <" + OpenAlert.location + ">id:" + OpenAlert.id.ToString());
+                        log.Info("Alert no longer active closing it <" + OpenAlert.alarmobject + ">id:" + OpenAlert.id.ToString());
                         //set state
                         OpenAlert.state = (int)alertState.TECHCOMP; //techcomp
                         //set last triggerd timestamp when close so we can calc downtime
