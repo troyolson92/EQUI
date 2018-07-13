@@ -37,6 +37,7 @@ namespace EqUiWebUi.Areas.Tiplife
         public void UpdateTipstatus()
         {
             GADATAEntitiesTiplife gADATAEntities = new GADATAEntitiesTiplife();
+            gADATAEntities.Database.CommandTimeout = 60; //override default 30 seconds timeout. 
             List<TipMonitor> data = (from tipstatus in gADATAEntities.TipMonitor
                                      select tipstatus).ToList();
 
