@@ -16,15 +16,15 @@ namespace ABBCommTest
 	public class RobotBckShortcuts
 	{
 
-		EQUICommunictionLib.GadataComm lGadatacomm = new GadataComm();
-		DataTable dt_robots;
+        ConnectionManager connectionManager = new ConnectionManager();
+        DataTable dt_robots;
 		List<string> ResultList;
 		string backupBasePath = @"\\gnlsnm0101\6308-APP-NASROBOTBCK0001\robot_ga\Backup_Volgens_Maximo_Locaties";
 		
 		public void buildShortcutdirectory()
 		{
 			//get robots from GADATA
-			dt_robots = lGadatacomm.RunQueryGadata("select * from GADATA.equi.ASSETS where (CLassificationId like 'URA%' or CLassificationId like 'URC%') and LocationTree like 'VCG -> A%'");
+			dt_robots = connectionManager.RunQuery("select * from GADATA.equi.ASSETS where (CLassificationId like 'URA%' or CLassificationId like 'URC%') and LocationTree like 'VCG -> A%'");
 			//select location tree
 			List<string> robots = dt_robots.AsEnumerable()
 						   .Select(r => r.Field<string>("LocationTree"))

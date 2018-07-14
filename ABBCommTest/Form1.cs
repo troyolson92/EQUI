@@ -29,7 +29,7 @@ namespace ABBCommTest
         private NetworkScanner scanner = new NetworkScanner();
         private Controller controller = null;
         private myDebugger debugger = new myDebugger();
-        private GadataComm lgadatacomm = new GadataComm();
+        private ConnectionManager connectionManager = new ConnectionManager();
         private DataTable dt_robots;
 
         public Form1()
@@ -183,6 +183,144 @@ namespace ABBCommTest
                 }
                 row.Cells[dataGridView1.Columns["ConnectOK"].Index].Value = "OK";   
         }     
+            catch (Exception ex)
+            {
+                row.Cells[dataGridView1.Columns["ConnectOK"].Index].Value = "NOK";
+                debugger.Exeption(ex);
+                debugger.Message("Error connecting to controller");
+                return;
+            }
+        }
+
+
+
+        /*
+    PROC InitUser()
+    !=================================================
+    ! Description : Initiation of equipment
+    ! Info        : 
+    ! Called from : LMainEvent / Init
+    !=================================================
+    bUseSocket:=FALSE;  ! Switch on or off the use of Socket communication
+    bBodyIDActive:=FALSE; ! Switch on or off the use of Production BodyID
+    nMaxNoOffAutoReDress := 1; !Allow robot to redress once (from HDRESS) SDEBEUL WO10854044
+    InitTool ToolOnRobot();
+    SendAlarm A_ClearAlarms,""\Reset;
+  ENDPROC
+         * */
+
+        //add redress config in autorun. to robot (PFM) ONLY SE ! 
+        private void PFMConfigureRobot(ControllerInfo ci, DataGridViewRow row)
+        {
+            string tempdir = @"c:\temp\debug\";
+            string FilePathOnControler = @"/hd0a/TEMP/";
+
+            try
+            {
+                if (ci.Availability != Availability.Available) { debugger.Message("controller busy: " + ci.Id); return; } //stop if controller is not available
+                //
+                controller = ControllerFactory.CreateFrom(ci); //get controller from factory
+                if (controller.OperatingMode != ControllerOperatingMode.Auto) //controller must be on auto to take master 
+                {
+                    row.Cells[dataGridView1.Columns["AutoOK"].Index].Value = "NOK";
+                    return;
+                }
+                else
+                {
+                    row.Cells[dataGridView1.Columns["AutoOK"].Index].Value = "OK";
+
+                    //need to check if we have the Hdress var 
+                    RapidData rd;
+                    try {
+                        rd = controller.Rapid.GetRapidData("T_ROB1", "HDress", "nMaxNoOffAutoReDress");
+                        log.Debug("nMaxNoOffAutoReDress found continue");
+                        row.Cells[dataGridView1.Columns["HasRedress"].Index].Value = "OK";
+                    }
+                    catch (Exception ex)
+                    {
+                        //var not found exit
+                        log.Debug("nMaxNoOffAutoReDress not found EXIT");
+                        row.Cells[dataGridView1.Columns["HasRedress"].Index].Value = "NOK";
+                        return;
+                    }
+
+                    // get modules from controller task trob1
+                    ABB.Robotics.Controllers.RapidDomain.Task tRob1 = controller.Rapid.GetTask("T_ROB1");
+                    Module[] mx = tRob1.GetModules();
+                    //find the one we need 
+                    foreach (Module m in mx)
+                    {
+                        if (m.Name.StartsWith("LR", StringComparison.InvariantCulture))
+                        {
+                            Routine proc = m.GetRoutine("InitUser");
+                            if (proc != null) //check if we have the right module
+                            {
+                                //find the module on the controller and get it **************************************
+                                //save it on the controller
+                                m.SaveToFile(FilePathOnControler);
+                                System.Threading.Thread.Sleep(1000);
+                                //get file from controler to pc 
+                                FileSystem cntrlFileSystem;
+                                cntrlFileSystem = controller.FileSystem;
+                                controller.FileSystem.RemoteDirectory = FilePathOnControler;
+                                controller.FileSystem.LocalDirectory = tempdir;
+                                //move file to pc
+                                controller.FileSystem.GetFile(m.Name + ".mod", m.Name + ".mod", true);
+                                //process the file******************************************************************
+                                string lrModule = File.ReadAllText(tempdir + m.Name + ".mod");
+                                if (lrModule.Contains("nMaxNoOffAutoReDress"))
+                                {
+                                    log.Debug("File already changed do nothing");
+                                    return;
+                                }
+                  
+
+                                lrModule = lrModule.Replace(@"Switch on or off the use of Production BodyID", @"Switch on or off the use of Production BodyID
+    nMaxNoOffAutoReDress := 1; !Allow robot to redress once (from HDRESS) SDEBEUL WO10854044");
+                                File.WriteAllText(tempdir + m.Name + ".mod", lrModule);
+                                //put the file back*****************************************************************
+                                try
+                                {
+                                    //get controller mastership
+                                    using (Mastership master = Mastership.Request(controller))
+                                    {
+
+                                        //put the file back on the controller
+                                        controller.FileSystem.PutFile(m.Name + ".mod", m.Name + ".mod", true);
+
+
+                                        //check if controller if home for load.
+                                        Signal O_Homepos = controller.IOSystem.GetSignal("O_Homepos");
+                                        if (O_Homepos.Value == 1)
+                                        {
+                                            tRob1.Stop(StopMode.Immediate);
+                                            System.Threading.Thread.Sleep(1000);
+                                            tRob1.LoadModuleFromFile(FilePathOnControler + m.Name + ".mod", RapidLoadMode.Replace);
+                                            row.Cells[dataGridView1.Columns["LoadOK"].Index].Value = "OK";
+                                        }
+                                        else
+                                        {
+                                            row.Cells[dataGridView1.Columns["LoadOK"].Index].Value = "NOK";
+                                        }
+
+                                        //release master
+                                        master.Release();
+                                    }
+                                }
+                                catch (System.InvalidOperationException ex)
+                                {
+                                    debugger.Exeption(ex);
+                                    debugger.Message("error in write to controller");
+                                    return;
+                                }
+                            }
+
+                        }
+
+                    }
+                }
+                row.Cells[dataGridView1.Columns["ConnectOK"].Index].Value = "OK";
+            }
             catch (Exception ex)
             {
                 row.Cells[dataGridView1.Columns["ConnectOK"].Index].Value = "NOK";
@@ -546,15 +684,17 @@ namespace ABBCommTest
         {
             //get greenfield list from GADATA
             string qry = string.Format(@"select controller_name, IP from gadata.ngac.c_controller where assetnum like 'URA%' AND CONTROLLER_NAME LIKE '{0}' and enable_bit <> 0",tbGridWhereClause.Text.Trim());
-            dt_robots = lgadatacomm.RunQueryGadata(qry); 
+            dt_robots = connectionManager.RunQuery(qry); 
             //add colums for extra data
             dt_robots.Columns.Add("SystemId", System.Type.GetType("System.String"));
             dt_robots.Columns.Add("ControllerName", System.Type.GetType("System.String"));
             dt_robots.Columns.Add("autoOK", System.Type.GetType("System.String"));
-            dt_robots.Columns.Add("Version", System.Type.GetType("System.String"));
-            dt_robots.Columns.Add("VersionOK", System.Type.GetType("System.String"));
+          //  dt_robots.Columns.Add("Version", System.Type.GetType("System.String"));
+         //   dt_robots.Columns.Add("VersionOK", System.Type.GetType("System.String"));
             dt_robots.Columns.Add("RobotHome", System.Type.GetType("System.String"));
             dt_robots.Columns.Add("ConnectOK", System.Type.GetType("System.String"));
+            dt_robots.Columns.Add("HasRedress", System.Type.GetType("System.String"));
+            dt_robots.Columns.Add("LoadOK", System.Type.GetType("System.String"));
             //  dt_robots.Columns.Add("ConfigOK", System.Type.GetType("System.String"));
             // dt_robots.Columns.Add("restartOK", System.Type.GetType("System.String"));
             dt_robots.Columns.Add("WriteOk", System.Type.GetType("System.String"));
@@ -579,7 +719,7 @@ namespace ABBCommTest
                     {
                         this.controller = ControllerFactory.CreateFrom(ci);
                         this.controller.Logon(UserInfo.DefaultUser);
-                        ChangeTipwearRatio(ci, row);
+                        PFMConfigureRobot(ci, row);
                     }
                     else
                     {
