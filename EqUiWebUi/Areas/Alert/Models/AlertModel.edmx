@@ -65,7 +65,7 @@
           <Property Name="hasControlLimits" Type="bit" Nullable="false" />
           <Property Name="controllimitSqlStatement" Type="varchar(max)" />
           <Property Name="controlChartSqlStatement" Type="varchar(max)" />
-          <Property Name="Animation" Type="int" />
+          <Property Name="Animation" Type="varchar" MaxLength="50" />
           <Property Name="isDebugmode" Type="bit" Nullable="false" />
           <Property Name="c_datasource_id" Type="int" Nullable="false" />
           <Property Name="controlChartYlabel" Type="varchar(max)" />
@@ -675,7 +675,7 @@
           <Property Name="controllimitSqlStatement" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="l_variants" Relationship="AlertModel.FK_l_variants_c_triggers" FromRole="c_triggers" ToRole="l_variants" />
           <Property Name="controlChartSqlStatement" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Animation" Type="Int32" />
+          <Property Name="Animation" Type="String" />
           <Property Name="isDebugmode" Type="Boolean" Nullable="false" />
           <Property Name="c_datasource_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="c_datasource" Relationship="AlertModel.FK_c_triggers_c_datasource" FromRole="c_triggers" ToRole="c_datasource" />

@@ -39,7 +39,7 @@ namespace EqUiWebUi.Areas.Alert.Models
         public bool hasControlLimits { get; set; }
         public string controllimitSqlStatement { get; set; }
         public string controlChartSqlStatement { get; set; }
-        public Nullable<int> Animation { get; set; }
+        public string Animation { get; set; }
         public bool isDebugmode { get; set; }
         public int c_datasource_id { get; set; }
         public string controlChartYlabel { get; set; }

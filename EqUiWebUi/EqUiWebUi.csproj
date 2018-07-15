@@ -593,6 +593,12 @@
     <Compile Include="Areas\Welding\Models\AutomaticWorkFlowULPlans.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Areas\Welding\Models\ExtraControles.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Welding\Models\ExtraUltralogUitadaptief3.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Areas\Welding\Models\WeldingModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -776,6 +782,7 @@
     <Content Include="Content\MvcGrid\mvc-grid.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\summernote-bs4.css" />
+    <Content Include="Content\TableRowStyles.css" />
     <Content Include="Global.asax" />
     <Content Include="Models\EQUIModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -1278,6 +1285,7 @@
     <Content Include="Areas\Alert\Views\L_controlLimits\_List.cshtml" />
     <Content Include="Areas\Alert\Views\Alert\_ControlChart.cshtml" />
     <Content Include="App_Code\MyHtmlHelpers.cshtml" />
+    <Content Include="Areas\Welding\Views\Welding\ExtraControlers.cshtml" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION.pubxml" />
     <None Include="Properties\PublishProfiles\VCC22700-Testing.pubxml" />
     <Content Include="PDFjs\build\pdf.js" />
