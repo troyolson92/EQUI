@@ -1,29 +1,4 @@
-﻿/*for colapsable pannel*/
-.clickable {
-    cursor: pointer;
-}
-
-/*for grid filter popups to make them on top of modals.*/
-.mvc-grid-popup {
-    z-index: 2000;
-}
-
-/*max with for popovers*/
-.popover {
-    max-width: 100%; /* Max Width of the popover (depending on the container!) */
-}
-
-/*when moved to bootstrap 4 "Label" class is gone. This is used in the scafolded froms so adding it again*/
-.control-label {
-    display: inline-block;
-    margin-bottom: .5rem;
-    font-weight: bold;
-}
-
-
-/*MOVE ALL BELOW TO OWN FILE**************************************************************************************************************/
-/*used in grid row styleing*/
-
+﻿
 /*Status styles*/
 .TableStatusWGK {
     background-color: #d606ff;
@@ -53,7 +28,8 @@
 .TableLogtypeSTO {
     background-color: #f2af13
 }
- .TableLogtypeTIMELINE {
+
+.TableLogtypeTIMELINE {
     background-color: #16dd76;
 }
 

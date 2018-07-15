@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using EqUiWebUi.Areas.Alert.Models;
 using EQUICommunictionLib;
+using System.Text.RegularExpressions;
 
 namespace EqUiWebUi.Areas.Alert.Controllers
 {
@@ -58,6 +59,8 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             ViewBag.smsSystem = new SelectList(db.c_smsSystem, "id", "discription", c_triggers.smsSystem);
             ViewBag.initial_state = new SelectList(db.c_state, "id", "discription", c_triggers.initial_state);
             ViewBag.c_datasource_id = new SelectList(db.c_datasource, "Id", "Name", c_triggers.c_datasource_id);
+            ViewBag.Animation = new SelectList(getanimationList(), "Value", "Text", c_triggers.Animation);
+            //
             return View(c_triggers);
         }
 
@@ -97,6 +100,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             ViewBag.smsSystem = new SelectList(db.c_smsSystem, "id", "discription", c_triggers.smsSystem);
             ViewBag.initial_state = new SelectList(db.c_state, "id", "discription", c_triggers.initial_state);
             ViewBag.c_datasource_id = new SelectList(db.c_datasource, "Id", "Name", c_triggers.c_datasource_id);
+            ViewBag.Animation = new SelectList(getanimationList(), "Value", "Text", c_triggers.Animation);
             return View(c_triggers);
         }
 
@@ -140,6 +144,23 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        //helper to make selectlist from animation file
+        private List<SelectListItem> getanimationList()
+        {
+            //make dropdown from styles available in tableRowStyles.css
+            string StyleFile = System.IO.File.ReadAllText(Server.MapPath(Url.Content("~/Content/TableRowStyles.css")));
+            MatchCollection mt = Regex.Matches(StyleFile, @"\.(.*?)\{", RegexOptions.Multiline);
+            List<SelectListItem> list = new List<SelectListItem>();
+            list.Add(new SelectListItem { Text = "noAnimation", Value = null }); // dummy null item
+            for (int i = 0; i < mt.Count; i++)
+            {
+                string cls = mt[i].Captures[0].ToString().Trim();
+                var className = cls.Substring(1, cls.IndexOf("{") - 1).Trim().Replace(":before", "").Replace(":after", "");
+                list.Add(new SelectListItem { Text = className, Value = className });
+            }
+            return list;
         }
     }
 }

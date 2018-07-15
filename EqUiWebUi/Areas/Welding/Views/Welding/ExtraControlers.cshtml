@@ -1,0 +1,67 @@
+﻿@model IQueryable<EqUiWebUi.Areas.Welding.Models.ExtraControles>
+@{
+    ViewBag.Title = "ExtraControles";
+}
+
+<h2>ExtraControles</h2>
+
+@Html.Grid(Model).Named("ExtraControles").Build(columns =>
+{
+    columns.Add(c => c.statusAdaptive).Titled("statusAdaptive");
+    columns.Add(c => c.Model).Titled("Model");
+    columns.Add(c => c.Robot).Titled("Robot");
+    columns.Add(c => c.spot).Titled("spot");
+    columns.Add(c => c.plan).Titled("plan");
+    columns.Add(c => c.plannummer).Titled("plannummer");
+    columns.Add(c => c.typecontrole).Titled("typecontrole");
+//volgende colums zijn standaard verborgen en worden getoond als er op de rij geklikt wordt
+columns.Add(c => c.time_uit_adaptief).Titled("time_uit_adaptief").InitialSort(GridSortOrder.Asc).Css("d-none");
+    columns.Add(c => c.durationOFF).Titled("durationOFF").Css("d-none");
+    columns.Add(c => c.EndTime).Titled("EndTime").Css("d-none");
+    columns.Add(c => c.lastInspectiontime).Titled("lastInspectiontime").Css("d-none");
+
+}).Filterable().Sortable().Empty("Did not find anything").Css("table-hover").RowCss(row => (row.statusAdaptive == "Juist terug in adaptief") ? "TableRowStyleGreen" : "")
+
+
+
+<!--hieronder is het een voorbeeld hoe je door op een rij van een tabel te klikken die "openvouwt" en dan verborden data uit het grid toch toont.-->
+
+<div id="Extrainfo" class="d-none">
+    <div class="label">time_uit_adaptief</div>
+    <div id="time_uit_adaptief"></div>
+    <div class="label">durationOFF</div>
+    <div id="durationOFF"></div>
+    <div class="label">EndTime</div>
+    <div id="EndTime"></div>
+    <div class="label">lastInspectiontime</div>
+    <div id="lastInspectiontime"></div>
+</div>
+
+@section Scripts
+{
+    <script>
+        $("#ExtraControles").mvcgrid({
+            rowClicked: function (row, data, e) {
+                //if row already has this clase close the modal
+                if ($(row).hasClass("bg-info")) {
+                    $("#placeholder1").remove();
+                    $(row).removeClass("bg-info");
+                    return;
+                }
+                //clear selected rows for this table
+                $('tr').removeClass('bg-info'); //THIS IS WRONG
+                $(row).addClass("bg-info");
+                $("#placeholder1").remove(); //clear placeholder is exists
+                //add new placeholder afhter selected row
+                $(row).after('<tr id="placeholder1"><td colspan="10000"><div class=""><div class="" id ="placeholderPartial1"></div></div></td></tr>');
+                //set Extra info partial with row data
+                $('#time_uit_adaptief').html(data.time_uit_adaptief);
+                $('#durationOFF').html(data.durationOFF);
+                $('#EndTime').html(data.EndTime);
+                $('#lastInspectiontime').html(data.lastInspectiontime);
+                //load partial into div
+                $("#placeholderPartial1").html($("#Extrainfo").html());
+            }
+        });
+    </script>
+}

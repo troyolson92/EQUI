@@ -9,7 +9,9 @@
 warning 6002: The table/view 'GADATA.UL.AutomaticWorkFlowULPlans' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="AutomaticWorkFlowULPlans">
           <Key>
-            <PropertyRef Name="ID" />
+            <PropertyRef Name="BuildBody's" />
+            <PropertyRef Name="Last30min_productionStatus" />
+            <PropertyRef Name="onderhoudswerken" />
           </Key>
           <Property Name="LastInspectionTime" Type="datetime" />
           <Property Name="UL plan" Type="nchar" MaxLength="50" />
@@ -17,8 +19,43 @@ warning 6002: The table/view 'GADATA.UL.AutomaticWorkFlowULPlans' does not have 
           <Property Name="WorkTime" Type="time" Precision="7" />
           <Property Name="WorkGroup" Type="int" />
           <Property Name="WorkLocation" Type="nchar" MaxLength="50" />
-          <Property Name="SpotIdent" Type="int" />
-          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Body'slast_30Min_start" Type="int" />
+          <Property Name="Body'slast_30Min_end" Type="int" />
+          <Property Name="Last30min_productionStatus" Type="varchar" MaxLength="23" Nullable="false" />
+          <Property Name="onderhoudswerken" Type="varchar" MaxLength="16" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.UL.ExtraControles' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ExtraControles">
+          <Key>
+            <PropertyRef Name="spot" />
+            <PropertyRef Name="typecontrole" />
+            <PropertyRef Name="statusAdaptive" />
+          </Key>
+          <Property Name="statusAdaptive" Type="nvarchar" MaxLength="23" Nullable="false" />
+          <Property Name="Model" Type="nchar" MaxLength="10" />
+          <Property Name="Robot" Type="nvarchar(max)" />
+          <Property Name="spot" Type="int" Nullable="false" />
+          <Property Name="plan" Type="nchar" MaxLength="50" />
+          <Property Name="plannummer" Type="int" />
+          <Property Name="typecontrole" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="time_uit_adaptief" Type="datetime" />
+          <Property Name="durationOFF" Type="time" Precision="7" />
+          <Property Name="EndTime" Type="datetime" />
+          <Property Name="lastInspectiontime" Type="datetime" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.WELDING.ExtraUltralogUitadaptief3' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ExtraUltralogUitadaptief3">
+          <Key>
+            <PropertyRef Name="CDSID" />
+          </Key>
+          <Property Name="Timer" Type="nchar" MaxLength="15" />
+          <Property Name="spot" Type="int" />
+          <Property Name="uitAdaptief" Type="bit" />
+          <Property Name="NPT" Type="nchar" MaxLength="15" />
+          <Property Name="CDSID" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="Expr1" Type="datetime" />
         </EntityType>
         <EntityContainer Name="GADATAModelWeldingStoreContainer">
           <EntitySet Name="AutomaticWorkFlowULPlans" EntityType="Self.AutomaticWorkFlowULPlans" store:Type="Views" store:Schema="UL">
@@ -29,18 +66,81 @@ warning 6002: The table/view 'GADATA.UL.AutomaticWorkFlowULPlans' does not have 
     [AutomaticWorkFlowULPlans].[WorkTime] AS [WorkTime], 
     [AutomaticWorkFlowULPlans].[WorkGroup] AS [WorkGroup], 
     [AutomaticWorkFlowULPlans].[WorkLocation] AS [WorkLocation], 
-    [AutomaticWorkFlowULPlans].[SpotIdent] AS [SpotIdent], 
-    [AutomaticWorkFlowULPlans].[ID] AS [ID]
+    [AutomaticWorkFlowULPlans].[Body'slast_30Min_start] AS [Body'slast_30Min_start], 
+    [AutomaticWorkFlowULPlans].[Body'slast_30Min_end] AS [Body'slast_30Min_end], 
+    [AutomaticWorkFlowULPlans].[Last30min_productionStatus] AS [Last30min_productionStatus], 
+    [AutomaticWorkFlowULPlans].[onderhoudswerken] AS [onderhoudswerken]
     FROM [UL].[AutomaticWorkFlowULPlans] AS [AutomaticWorkFlowULPlans]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="ExtraControles" EntityType="Self.ExtraControles" store:Type="Views" store:Schema="UL">
+            <DefiningQuery>SELECT 
+    [ExtraControles].[statusAdaptive] AS [statusAdaptive], 
+    [ExtraControles].[Model] AS [Model], 
+    [ExtraControles].[Robot] AS [Robot], 
+    [ExtraControles].[spot] AS [spot], 
+    [ExtraControles].[plan] AS [plan], 
+    [ExtraControles].[plannummer] AS [plannummer], 
+    [ExtraControles].[typecontrole] AS [typecontrole], 
+    [ExtraControles].[time_uit_adaptief] AS [time_uit_adaptief], 
+    [ExtraControles].[durationOFF] AS [durationOFF], 
+    [ExtraControles].[EndTime] AS [EndTime], 
+    [ExtraControles].[lastInspectiontime] AS [lastInspectiontime]
+    FROM [UL].[ExtraControles] AS [ExtraControles]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="ExtraUltralogUitadaptief3" EntityType="Self.ExtraUltralogUitadaptief3" store:Type="Views" store:Schema="WELDING">
+            <DefiningQuery>SELECT 
+    [ExtraUltralogUitadaptief3].[Timer] AS [Timer], 
+    [ExtraUltralogUitadaptief3].[spot] AS [spot], 
+    [ExtraUltralogUitadaptief3].[uitAdaptief] AS [uitAdaptief], 
+    [ExtraUltralogUitadaptief3].[NPT] AS [NPT], 
+    [ExtraUltralogUitadaptief3].[CDSID] AS [CDSID], 
+    [ExtraUltralogUitadaptief3].[Expr1] AS [Expr1]
+    FROM [WELDING].[ExtraUltralogUitadaptief3] AS [ExtraUltralogUitadaptief3]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="GADATAModelWelding" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="GADATAEntitiesWelding" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ExtraControles" EntityType="GADATAModelWelding.ExtraControles" />
+          <EntitySet Name="ExtraUltralogUitadaptief3" EntityType="GADATAModelWelding.ExtraUltralogUitadaptief3" />
+          <EntitySet Name="AutomaticWorkFlowULPlans" EntityType="GADATAModelWelding.AutomaticWorkFlowULPlans" />
+        </EntityContainer>
+        <EntityType Name="ExtraControles">
+          <Key>
+            <PropertyRef Name="spot" />
+            <PropertyRef Name="typecontrole" />
+            <PropertyRef Name="statusAdaptive" />
+          </Key>
+          <Property Name="statusAdaptive" Type="String" Nullable="false" MaxLength="23" FixedLength="false" Unicode="true" />
+          <Property Name="Model" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Robot" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="spot" Type="Int32" Nullable="false" />
+          <Property Name="plan" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="plannummer" Type="Int32" />
+          <Property Name="typecontrole" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="time_uit_adaptief" Type="DateTime" Precision="3" />
+          <Property Name="durationOFF" Type="Time" Precision="7" />
+          <Property Name="EndTime" Type="DateTime" Precision="3" />
+          <Property Name="lastInspectiontime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="ExtraUltralogUitadaptief3">
+          <Key>
+            <PropertyRef Name="CDSID" />
+          </Key>
+          <Property Name="Timer" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="spot" Type="Int32" />
+          <Property Name="uitAdaptief" Type="Boolean" />
+          <Property Name="NPT" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="CDSID" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Expr1" Type="DateTime" Precision="3" />
+        </EntityType>
         <EntityType Name="AutomaticWorkFlowULPlans">
           <Key>
-            <PropertyRef Name="ID" />
+            <PropertyRef Name="BuildBody_s" />
+            <PropertyRef Name="Last30min_productionStatus" />
+            <PropertyRef Name="onderhoudswerken" />
           </Key>
           <Property Name="LastInspectionTime" Type="DateTime" Precision="3" />
           <Property Name="UL_plan" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
@@ -48,29 +148,59 @@ warning 6002: The table/view 'GADATA.UL.AutomaticWorkFlowULPlans' does not have 
           <Property Name="WorkTime" Type="Time" Precision="7" />
           <Property Name="WorkGroup" Type="Int32" />
           <Property Name="WorkLocation" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
-          <Property Name="SpotIdent" Type="Int32" />
-          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Body_slast_30Min_start" Type="Int32" />
+          <Property Name="Body_slast_30Min_end" Type="Int32" />
+          <Property Name="Last30min_productionStatus" Type="String" Nullable="false" MaxLength="23" FixedLength="false" Unicode="false" />
+          <Property Name="onderhoudswerken" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityContainer Name="GADATAEntitiesWelding" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="AutomaticWorkFlowULPlans" EntityType="Self.AutomaticWorkFlowULPlans" />
-        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="GADATAModelWeldingStoreContainer" CdmEntityContainer="GADATAEntitiesWelding">
+          <EntitySetMapping Name="ExtraControles">
+            <EntityTypeMapping TypeName="GADATAModelWelding.ExtraControles">
+              <MappingFragment StoreEntitySet="ExtraControles">
+                <ScalarProperty Name="lastInspectiontime" ColumnName="lastInspectiontime" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="durationOFF" ColumnName="durationOFF" />
+                <ScalarProperty Name="time_uit_adaptief" ColumnName="time_uit_adaptief" />
+                <ScalarProperty Name="typecontrole" ColumnName="typecontrole" />
+                <ScalarProperty Name="plannummer" ColumnName="plannummer" />
+                <ScalarProperty Name="plan" ColumnName="plan" />
+                <ScalarProperty Name="spot" ColumnName="spot" />
+                <ScalarProperty Name="Robot" ColumnName="Robot" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="statusAdaptive" ColumnName="statusAdaptive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ExtraUltralogUitadaptief3">
+            <EntityTypeMapping TypeName="GADATAModelWelding.ExtraUltralogUitadaptief3">
+              <MappingFragment StoreEntitySet="ExtraUltralogUitadaptief3">
+                <ScalarProperty Name="Expr1" ColumnName="Expr1" />
+                <ScalarProperty Name="CDSID" ColumnName="CDSID" />
+                <ScalarProperty Name="NPT" ColumnName="NPT" />
+                <ScalarProperty Name="uitAdaptief" ColumnName="uitAdaptief" />
+                <ScalarProperty Name="spot" ColumnName="spot" />
+                <ScalarProperty Name="Timer" ColumnName="Timer" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="AutomaticWorkFlowULPlans">
             <EntityTypeMapping TypeName="GADATAModelWelding.AutomaticWorkFlowULPlans">
               <MappingFragment StoreEntitySet="AutomaticWorkFlowULPlans">
-                <ScalarProperty Name="LastInspectionTime" ColumnName="LastInspectionTime" />
-                <ScalarProperty Name="UL_plan" ColumnName="UL plan" />
-                <ScalarProperty Name="BuildBody_s" ColumnName="BuildBody's" />
-                <ScalarProperty Name="WorkTime" ColumnName="WorkTime" />
-                <ScalarProperty Name="WorkGroup" ColumnName="WorkGroup" />
+                <ScalarProperty Name="onderhoudswerken" ColumnName="onderhoudswerken" />
+                <ScalarProperty Name="Last30min_productionStatus" ColumnName="Last30min_productionStatus" />
+                <ScalarProperty Name="Body_slast_30Min_end" ColumnName="Body'slast_30Min_end" />
+                <ScalarProperty Name="Body_slast_30Min_start" ColumnName="Body'slast_30Min_start" />
                 <ScalarProperty Name="WorkLocation" ColumnName="WorkLocation" />
-                <ScalarProperty Name="SpotIdent" ColumnName="SpotIdent" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="WorkGroup" ColumnName="WorkGroup" />
+                <ScalarProperty Name="WorkTime" ColumnName="WorkTime" />
+                <ScalarProperty Name="BuildBody_s" ColumnName="BuildBody's" />
+                <ScalarProperty Name="UL_plan" ColumnName="UL plan" />
+                <ScalarProperty Name="LastInspectionTime" ColumnName="LastInspectionTime" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -25,6 +25,8 @@ namespace EqUiWebUi.Areas.Welding.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<ExtraControles> ExtraControles { get; set; }
+        public virtual DbSet<ExtraUltralogUitadaptief3> ExtraUltralogUitadaptief3 { get; set; }
         public virtual DbSet<AutomaticWorkFlowULPlans> AutomaticWorkFlowULPlans { get; set; }
     }
 }

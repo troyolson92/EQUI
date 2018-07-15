@@ -20,7 +20,9 @@ namespace EqUiWebUi.Areas.Welding.Models
         public Nullable<System.TimeSpan> WorkTime { get; set; }
         public Nullable<int> WorkGroup { get; set; }
         public string WorkLocation { get; set; }
-        public Nullable<int> SpotIdent { get; set; }
-        public int ID { get; set; }
+        public Nullable<int> Body_slast_30Min_start { get; set; }
+        public Nullable<int> Body_slast_30Min_end { get; set; }
+        public string Last30min_productionStatus { get; set; }
+        public string onderhoudswerken { get; set; }
     }
 }

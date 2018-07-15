@@ -37,5 +37,13 @@ namespace EqUiWebUi.Areas.Welding
             var data = db.AutomaticWorkFlowULPlans.Where(c => c.UL_plan.Contains(Ul_plan));
             return View(data);
         }
+
+
+        //for file "Extra controles"
+        public ActionResult ExtraControlers()
+        {
+            IQueryable<ExtraControles> data = db.ExtraControles.AsQueryable();
+            return View(data);
+        }
     }
 }

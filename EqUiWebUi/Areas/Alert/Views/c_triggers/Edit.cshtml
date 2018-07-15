@@ -99,11 +99,12 @@ else
                 <div class="form-group">
                     @Html.LabelFor(model => model.Animation, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.Animation, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.DropDownList("Animation", null, htmlAttributes: new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.Animation, "", new { @class = "text-danger" })
                         @Html.HelpTextFor(model => model.Animation)
                     </div>
                 </div>
+
 
                 <div class="form-group">
                     @Html.LabelFor(model => model.Cron, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -388,10 +389,19 @@ else
                 );
         });
 
-       //clear on close
-        //on modal close
+       //clear modal on close
         $('#MyModal').on('hidden.bs.modal', function (e) {
             $('#MyModal').html("<div class='card-body'><i class='fa fa-spinner fa-pulse fa-4x fa-fw text-white' ></i ><span class='sr-only'>Loading...</span></div >");
         });
+
+        //animation dropdown
+        //subscribe to change event
+        $('#Animation').on('change', function () {
+            $('#Animation').removeClass(); //clear all classes
+            $('#Animation').addClass('form-control'); 
+            $('#Animation').addClass($('#Animation').val()); //add selected animation class
+        });
+        //set at startup
+        $('#Animation').addClass($('#Animation').val());
     </script>
 }
