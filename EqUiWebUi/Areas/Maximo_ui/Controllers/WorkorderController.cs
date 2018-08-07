@@ -13,6 +13,8 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
 
     public class WorkorderController : Controller
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         //default number of days we search back in hystory
         int MaximoWorkordersDaysback = -1000;
 
@@ -109,15 +111,19 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
             , DateTime? startdate, DateTime? enddate, bool RealtimeConn = false)
         {
             //check if user is allowed to user realtimeConn
+            string MaximoDbName = "MAXIMO7rep";
             if (RealtimeConn)
             {
                 roleProvider roleProvider = new roleProvider();
-                if (!roleProvider.IsUserInRole(System.Web.HttpContext.Current.User.Identity.Name, "MAXIMOrealtime"))
+                if (roleProvider.IsUserInRole(System.Web.HttpContext.Current.User.Identity.Name, "MAXIMOrealtime"))
+                {
+                    MaximoDbName = "MAXIMOrt";
+                }
+                else
                 {
                     RealtimeConn = false;
                 }
             }
-            ViewBag.RealtimeConn = RealtimeConn;
 
             //set controller timeout! (if somebody does a crazy query)
             System.Web.HttpContext.Current.Server.ScriptTimeout = 10; //seconds
@@ -191,14 +197,25 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
             //get data from maximo
             EQUICommunictionLib.ConnectionManager ConnectionManager = new ConnectionManager();
             DataTable dataTable = new DataTable();
-            if (RealtimeConn)
+            try
             {
-                dataTable = ConnectionManager.RunQuery(sbqry.ToString(), dbName: "MAXIMOrt", maxEXECtime: 15, enblExeptions: true);
+                dataTable = ConnectionManager.RunQuery(sbqry.ToString(), dbName: MaximoDbName, maxEXECtime: 15, enblExeptions: true);
             }
-            else
+            catch (Exception ex)
             {
-                dataTable = ConnectionManager.RunQuery(sbqry.ToString(), dbName: "MAXIMO7rep", maxEXECtime: 15, enblExeptions: true);
+                log.Error("Failed to run query using the realtimeConn", ex);
+                if (RealtimeConn) //if we where using the realtime connection retry useing reporting db
+                {
+                    RealtimeConn = false;
+                    dataTable = ConnectionManager.RunQuery(sbqry.ToString(), dbName: "MAXIMO7rep", maxEXECtime: 15, enblExeptions: true);
+                }
+                else
+                {
+                    //else just throw the exeption
+                    throw ex;
+                }
             }
+
 
             //parse datatable to listobject
             List<Models.Workorder> workorders = new List<Models.Workorder>();
@@ -218,6 +235,8 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
                 //
                 workorders.Add(workorder);
             }
+            //
+            ViewBag.RealtimeConn = RealtimeConn;
             return PartialView(workorders);
         }
 
