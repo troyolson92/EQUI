@@ -105,7 +105,8 @@ LEFT OUTER JOIN (
 ) as KeepRows ON
    lx.Id = KeepRows.Id
 WHERE
-   KeepRows.Id IS NULL";
+   KeepRows.Id IS NULL
+   and lx.DBSTOSTO > GETDATE()-2 --limit view window to 5 days";
             connectionManager.RunCommand(STW040RemoveDups, enblExeptions: true, maxEXECtime: 60);
             context.WriteLine(" Remove dups on gadata done");
             return;

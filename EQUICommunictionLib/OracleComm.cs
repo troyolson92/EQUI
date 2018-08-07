@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Data.SqlClient;
 using System.Globalization;
 using System.Threading;
 using Oracle.ManagedDataAccess.Client;
@@ -108,6 +109,65 @@ namespace EQUICommunictionLib
                 */
                 return null;
             }
+        }
+
+        public bool CheckPassWorkExpired(bool ChangeIfExpired = false, string newPW = "")
+        {
+            Boolean hasError = false;
+            Boolean hasAuthError = false;
+            OracleCommand cmd = new OracleCommand();
+            cmd.Connection = Conn;
+
+                try
+                {
+                    cmd.Connection.Open();
+                }
+                catch (OracleException ex)
+                {
+                    //allow to continue if the password is simply expired, otherwise just show the message
+                    if (ex.Number != 28001)
+                    {
+                        log.Error("Non Authenticaion error",ex);
+                        hasError = true;
+                    }
+                    else
+                    {
+                        hasAuthError = true;
+                        log.Info("Password is expired");
+                    }
+                }
+
+                if (!hasError && ChangeIfExpired && hasAuthError)
+                {
+                    //successful authentication, open as password change account
+                    cmd.Connection.Close();
+                    cmd.Connection.ConnectionString = Conn.ConnectionString;
+                    cmd.Connection.Open();
+                    cmd.CommandText = "SysChangePassword";
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    SqlConnectionStringBuilder Connbuilder = new SqlConnectionStringBuilder(Conn.ConnectionString);
+                    cmd.Parameters.Add("username", Connbuilder.UserID);
+                    cmd.Parameters.Add("newpassword", newPW);
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                        log.Info("Password has been changed");
+                    }
+                    catch (OracleException ex)
+                    {
+                        log.Error("Failed to change password", ex);
+                        hasError = true;
+                    }
+                }
+
+                if(!hasError && hasAuthError)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
         }
     }
 }
