@@ -618,6 +618,154 @@ namespace ABBCommTest
 
         }
 
+        //adding code to change XML file 
+        //get pino config file name
+        private string GetPino(Controller controller)
+        {
+
+            ConfigurationDatabase cfg = controller.Configuration;
+            Domain sioDomain = controller.Configuration.SerialIO;
+
+            // read parm to see if config was done
+            string[] path = { "SIO", "INDUSTRIAL_NETWORK_USER", "NetworkUserConfig", "FileCfgName" };
+            string data = null;
+            try { data = cfg.Read(path); }
+            catch (Exception) { }
+            return data;
+        }
+
+        //get controller gateway
+        private string GetGateway(Controller controller)
+        {
+            NetworkSettingsInfo nsi = controller.NetworkSettings;
+            return nsi.Gateway.ToString();
+        }
+
+        private void PINOUPDATE(ControllerInfo ci, DataGridViewRow row)
+        {
+            FileSystem cntrlFileSystem;
+
+            try
+            {
+                if (ci.Availability != Availability.Available) { debugger.Message("controller busy: " + ci.Id); return; } //stop if controller is not available
+                //
+                controller = ControllerFactory.CreateFrom(ci); //get controller from factory
+                if (controller.OperatingMode != ControllerOperatingMode.Auto) //controller must be on auto to take master 
+                {
+                    row.Cells[dataGridView1.Columns["AutoOK"].Index].Value = "NOK";
+                    return;
+                }
+                else
+                {
+                    row.Cells[dataGridView1.Columns["AutoOK"].Index].Value = "OK";
+                }
+                controller.Logon(UserInfo.DefaultUser); //logon to controller
+                row.Cells[dataGridView1.Columns["ConnectOK"].Index].Value = "OK";
+            }
+            catch (Exception ex)
+            {
+                row.Cells[dataGridView1.Columns["ConnectOK"].Index].Value = "NOK";
+                debugger.Exeption(ex);
+                debugger.Message("Error connecting to controller");
+                return;
+            }
+
+
+            try
+            {
+                //get controller mastership
+                using (Mastership m = Mastership.Request(controller))
+                {
+                    // get pino filename
+                    string pinofilename = GetPino(controller);
+                    //get controller gateway 
+                    string controllergateway = GetGateway(controller);
+
+                    //get file from controler to pc 
+                    cntrlFileSystem = controller.FileSystem;
+                    controller.FileSystem.RemoteDirectory = string.Format(@"/hd0a/{0}/HOME", controller.SystemName);
+                    controller.FileSystem.LocalDirectory = @"c:\temp\";
+                    //move file to pc
+                    controller.FileSystem.GetFile(pinofilename, pinofilename, true);
+                    //edit the pino file to the new gataway.
+                    editPino(controllergateway, @"c:\temp\" + pinofilename);
+                    //put the file back on the controller
+                    controller.FileSystem.PutFile(pinofilename, pinofilename, true);
+
+
+                    //check if controller if home for restart.
+                    Signal O_Homepos = controller.IOSystem.GetSignal("O_Homepos");
+                    if (O_Homepos.Value == 1)
+                    {
+                        //RESTART !!!!!!!!!!!!!!!!!
+                        if (controller.State == ControllerState.MotorsOn)
+                        {
+                            controller.State = ControllerState.MotorsOff;
+                        }
+                        controller.Restart(ControllerStartMode.Warm);
+                        //
+                        row.Cells[dataGridView1.Columns["restartOK"].Index].Value = "OK";
+                    }
+                    else
+                    {
+                        row.Cells[dataGridView1.Columns["restartOK"].Index].Value = "NOK";
+                    }
+
+                    //release master
+                    m.Release();
+                    row.Cells[dataGridView1.Columns["ConfigOK"].Index].Value = "OK";
+                }
+            }
+            catch (System.InvalidOperationException ex)
+            {
+                row.Cells[dataGridView1.Columns["ConfigOK"].Index].Value = "NOK";
+                debugger.Exeption(ex);
+                debugger.Message("error in write to controller");
+                return;
+            }
+
+
+
+        }
+
+        private void editPino(string newGateway, string file)
+        {
+            string[] gateway = newGateway.Split('.');
+
+            XDocument xmlDoc = XDocument.Load(file);
+
+            var items = from item in xmlDoc.Descendants("Gate")
+                        select item;
+
+            foreach (XElement itemElement in items)
+            {
+                if (itemElement.Attribute("d1").Value != gateway[0].ToString())
+                {
+                    debugger.Log(string.Format("File: {0} d1:{1} -> {2}", file, itemElement.Attribute("d1").Value, gateway[0].ToString()));
+                    itemElement.SetAttributeValue("d1", gateway[0].ToString());
+                }
+
+                if (itemElement.Attribute("d2").Value != gateway[1].ToString())
+                {
+                    debugger.Log(string.Format("File: {0} d2:{1} -> {2}", file, itemElement.Attribute("d2").Value, gateway[1].ToString()));
+                    itemElement.SetAttributeValue("d2", gateway[1].ToString());
+                }
+
+                if (itemElement.Attribute("d3").Value != gateway[2].ToString())
+                {
+                    debugger.Log(string.Format("File: {0} d3:{1} -> {2}", file, itemElement.Attribute("d3").Value, gateway[2].ToString()));
+                    itemElement.SetAttributeValue("d3", gateway[2].ToString());
+                }
+
+                if (itemElement.Attribute("d4").Value != gateway[3].ToString())
+                {
+                    debugger.Log(string.Format("File: {0} d4:{1} -> {2}", file, itemElement.Attribute("d4").Value, gateway[3].ToString()));
+                    itemElement.SetAttributeValue("d4", gateway[3].ToString());
+                }
+            }
+
+            xmlDoc.Save(file);
+        }
 
         //buttons
         private void Btn_scanNetwork_Click(object sender, EventArgs e)
@@ -695,8 +843,8 @@ namespace ABBCommTest
             dt_robots.Columns.Add("ConnectOK", System.Type.GetType("System.String"));
             dt_robots.Columns.Add("HasRedress", System.Type.GetType("System.String"));
             dt_robots.Columns.Add("LoadOK", System.Type.GetType("System.String"));
-            //  dt_robots.Columns.Add("ConfigOK", System.Type.GetType("System.String"));
-            // dt_robots.Columns.Add("restartOK", System.Type.GetType("System.String"));
+            dt_robots.Columns.Add("ConfigOK", System.Type.GetType("System.String"));
+            dt_robots.Columns.Add("restartOK", System.Type.GetType("System.String"));
             dt_robots.Columns.Add("WriteOk", System.Type.GetType("System.String"));
             //  dt_robots.Columns.Add("HasTipneed", System.Type.GetType("System.String"));
             // dt_robots.Columns.Add("HasTipneedComment", System.Type.GetType("System.String"));
@@ -719,7 +867,8 @@ namespace ABBCommTest
                     {
                         this.controller = ControllerFactory.CreateFrom(ci);
                         this.controller.Logon(UserInfo.DefaultUser);
-                        PFMConfigureRobot(ci, row);
+                       // PFMConfigureRobot(ci, row);
+                        PINOUPDATE(ci, row);
                     }
                     else
                     {

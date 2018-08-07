@@ -29,5 +29,12 @@ namespace EqUiWebUi.Controllers
             ConnectionManager connectionManager = new ConnectionManager();
             connectionManager.TestAllDb();
         }
+
+        //Test change password
+        public void ChangePWTest()
+        {
+            ConnectionManager connectionManager = new ConnectionManager();
+            connectionManager.PWCheck(dbName: "MAXIMOrt", ChangeIfExpired: true, newPW: "NEWPWTEST");
+        }
     }
 }

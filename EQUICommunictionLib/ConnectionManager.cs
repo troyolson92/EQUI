@@ -23,6 +23,13 @@ namespace EQUICommunictionLib
         public db_type Type { get; set; }
         public string ConnectionString { get; set; }
         public string Description { get; set; }
+        //method to update connectingstring from DB
+        public void UpdateConnectionString(string newConnString)
+        {
+            ConnectionManager connectionManager = new ConnectionManager();
+            string updateCommand = "UPDATE GADATA.EqUi.c_datasource set ConnectionString = '{1}' from GADATA.EqUi.c_datasource where [id] = {0}";
+            connectionManager.RunCommand(string.Format(updateCommand,Id,newConnString),enblExeptions:true);
+        }
     }
 
     //this class manages all database connection in the equi system
@@ -48,7 +55,7 @@ namespace EQUICommunictionLib
             return DB;
         }
 
-        //get connection for dabase X from EQUI
+        //get connection for database X from EQUI
         //if dbName empty all will be returend
         public List<Database> GetDB(string dbName = "", int dbID = 0)
         {
@@ -120,7 +127,6 @@ namespace EQUICommunictionLib
             }
             return list;
         }
-
 
         //run Query for a db
         //option to run get database by name or by ID
@@ -292,6 +298,44 @@ namespace EQUICommunictionLib
                     throw new NotSupportedException();
             }
 
+        }
+
+        //test to auto change passwords for DB
+        public void PWCheck(string dbName = "", bool ChangeIfExpired = false, string newPW = "")
+        {
+            Database db = GetDB(dbName).FirstOrDefault();
+            log.Debug("Starting db PWcheck for: " + db.Name);
+            switch (db.Type)
+            {
+                case db_type.msSqlServer:
+                    throw new NotImplementedException();
+
+                case db_type.Orcacle:
+                    OracleComm oracleComm = new OracleComm(db.ConnectionString);
+                    if (oracleComm.CheckPassWorkExpired())
+                    {
+                        log.Info("password Expired");
+                        if (ChangeIfExpired)
+                        {
+                            //change the pasword on the server
+                            oracleComm.CheckPassWorkExpired(ChangeIfExpired: true, newPW: newPW);
+                            //update the connectionstring in the connfiguration
+                            SqlConnectionStringBuilder Connbuilder = new SqlConnectionStringBuilder(db.ConnectionString);
+                            Connbuilder.Password = newPW;
+                            db.UpdateConnectionString(Connbuilder.ConnectionString);
+                        }
+                    }
+                    else
+                    {
+                        log.Info("password OKE");
+                    }
+                    break;
+
+                default:
+                    log.Error("db type not supported");
+                    throw new NotSupportedException();
+            }
+            log.Debug("Ended db PWcheck for: " + db.Name);
         }
 
 

@@ -66,8 +66,21 @@ workorder.changedate >= sysdate - 100
 );
 
             context.WriteLine(" Get workorders on MAXIMOrt started");
-            DataTable newMaximoDt = connectionManager.RunQuery(MaximoQry,dbName: "MAXIMOrt", maxEXECtime: 120, enblExeptions: true);
-            context.WriteLine(" Done");
+            DataTable newMaximoDt;
+            try
+            {
+                //try realtime connection
+                newMaximoDt = connectionManager.RunQuery(MaximoQry, dbName: "MAXIMOrt", maxEXECtime: 120, enblExeptions: true);
+                context.WriteLine(" Done");
+            }
+            catch (Exception ex)
+            {
+                context.WriteLine(" FAILURE for MAXIMOrt connection! " + ex.Message);
+                log.Error(" FAILURE for MAXIMOrt connection", ex);
+                //if fails try reporting db
+                newMaximoDt = connectionManager.RunQuery(MaximoQry, dbName: "MAXIMO7rep", maxEXECtime: 120, enblExeptions: true);
+                context.WriteLine(" Done (used MAXIMO7rep)");
+            }
             //push to gadata
             context.WriteLine(" Push workorders to gadata started");
             connectionManager.BulkCopy(newMaximoDt, "[MAXIMO].[WORKORDERS]");
