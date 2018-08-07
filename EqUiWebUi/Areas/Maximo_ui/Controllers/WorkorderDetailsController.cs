@@ -11,6 +11,8 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
 {
     public class WorkorderDetailsController : Controller
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         // GET: Maximo_ui/WorkorderDetails
         public ActionResult Index()
         {
@@ -31,15 +33,20 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
         public ActionResult _woDetails(string wonum, bool RealtimeConn = false)
         {
             //check if user is allowed to user realtimeConn
+            string MaximoDbName = "MAXIMO7rep";
             if (RealtimeConn)
             {
                 roleProvider roleProvider = new roleProvider();
-                if (!roleProvider.IsUserInRole(System.Web.HttpContext.Current.User.Identity.Name, "MAXIMOrealtime"))
+                if (roleProvider.IsUserInRole(System.Web.HttpContext.Current.User.Identity.Name, "MAXIMOrealtime"))
+                {
+                    MaximoDbName = "MAXIMOrt";
+                }
+                else
                 {
                     RealtimeConn = false;
                 }
             }
-            ViewBag.RealtimeConn = RealtimeConn;
+      
 
             if (wonum == null) wonum = "NoWonum";
             if (wonum == "") wonum = "NoWonum";
@@ -104,51 +111,34 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
             string LONGDESCRIPTION;
             string FAILUREREMARK;
             DataTable LABOR;
-
-            if (RealtimeConn)
+            try
             {
-                WORKORDER = connectionManager.RunQuery(cmdWORKORDER, dbName: "MAXIMOrt", maxEXECtime: 15, enblExeptions: true);
+                WORKORDER = connectionManager.RunQuery(cmdWORKORDER, dbName: MaximoDbName, maxEXECtime: 15, enblExeptions: true);
+                FAILUREREMARKdesc = connectionManager.RunQuery(cmdFAILUREREMARKdescription, dbName: MaximoDbName, maxEXECtime: 15, enblExeptions: true);
+                LONGDESCRIPTION = connectionManager.GetCLOB(cmdLONGDESCRIPTION, dbName: MaximoDbName, enblExeptions: true);
+                FAILUREREMARK = connectionManager.GetCLOB(cmdFAILUREREMARK, dbName: MaximoDbName, enblExeptions: true);
+                LABOR = connectionManager.RunQuery(cmdLabor, dbName: MaximoDbName, maxEXECtime: 15, enblExeptions: true);
             }
-            else
+            catch (Exception ex)
             {
-                WORKORDER = connectionManager.RunQuery(cmdWORKORDER, dbName: "MAXIMO7rep", maxEXECtime: 15, enblExeptions: true);
-            }
-
-            if (RealtimeConn)
-            {
-                FAILUREREMARKdesc = connectionManager.RunQuery(cmdFAILUREREMARKdescription, dbName: "MAXIMOrt", maxEXECtime: 15, enblExeptions: true);
-            }
-            else
-            {
-                FAILUREREMARKdesc = connectionManager.RunQuery(cmdFAILUREREMARKdescription, dbName: "MAXIMO7rep", maxEXECtime: 15, enblExeptions: true);
-            }
-
-            if (RealtimeConn)
-            {
-                LONGDESCRIPTION = connectionManager.GetCLOB(cmdLONGDESCRIPTION, dbName: "MAXIMOrt", enblExeptions: true);
-            }
-            else
-            {
-                LONGDESCRIPTION = connectionManager.GetCLOB(cmdLONGDESCRIPTION, dbName: "MAXIMO7rep", enblExeptions: true);
-            }
-
-            if (RealtimeConn)
-            {
-                FAILUREREMARK = connectionManager.GetCLOB(cmdFAILUREREMARK, dbName: "MAXIMOrt", enblExeptions: true);
-            }
-            else
-            {
-                FAILUREREMARK = connectionManager.GetCLOB(cmdFAILUREREMARK, dbName: "MAXIMO7rep", enblExeptions: true);
+                log.Error("Failed to run query using the realtimeConn", ex);
+                if (RealtimeConn) //if we where using the realtime connection retry useing reporting db
+                {
+                    RealtimeConn = false;
+                    MaximoDbName = "MAXIMO7rep";
+                    WORKORDER = connectionManager.RunQuery(cmdWORKORDER, dbName: MaximoDbName, maxEXECtime: 15, enblExeptions: true);
+                    FAILUREREMARKdesc = connectionManager.RunQuery(cmdFAILUREREMARKdescription, dbName: MaximoDbName, maxEXECtime: 15, enblExeptions: true);
+                    LONGDESCRIPTION = connectionManager.GetCLOB(cmdLONGDESCRIPTION, dbName: MaximoDbName, enblExeptions: true);
+                    FAILUREREMARK = connectionManager.GetCLOB(cmdFAILUREREMARK, dbName: MaximoDbName, enblExeptions: true);
+                    LABOR = connectionManager.RunQuery(cmdLabor, dbName: MaximoDbName, maxEXECtime: 15, enblExeptions: true);
+                }
+                else
+                {
+                    //else just throw the exeption
+                    throw ex;
+                }
             }
 
-            if (RealtimeConn)
-            {
-                LABOR = connectionManager.RunQuery(cmdLabor, dbName: "MAXIMOrt", maxEXECtime: 15, enblExeptions: true);
-            }
-            else
-            {
-                LABOR = connectionManager.RunQuery(cmdLabor, dbName: "MAXIMO7rep", maxEXECtime: 15, enblExeptions: true);
-            }
 
             //   DataTable WORKLOG = maximoComm.oracle_runQuery(cmdWorkLog, RealtimeConn:RealtimeConn);
             if (WORKORDER.Rows.Count != 0)
@@ -170,6 +160,7 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
             LABORmodel.PageSize = 5;
             LABORmodel.Data = LABORdata;
             //
+            ViewBag.RealtimeConn = RealtimeConn;
             return PartialView(LABORmodel);
         }
 
