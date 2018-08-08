@@ -45,7 +45,6 @@ namespace EqUiWebUi.Areas.Gadata
             RecurringJob.AddOrUpdate("norm_C3G", () => backgroundwork.norm_c3g(null), Cron.Minutely);
             RecurringJob.AddOrUpdate("norm_C4G", () => backgroundwork.norm_c4g(null), Cron.Minutely);
             RecurringJob.AddOrUpdate("norm_NGAC", () => backgroundwork.norm_NGAC(null), Cron.Minutely);
-            RecurringJob.AddOrUpdate("norm_5min", () => backgroundwork.norm_5min(null), Cron.MinuteInterval(5));
             RecurringJob.AddOrUpdate("norm_1day", () => backgroundwork.norm_1day(null), Cron.Daily);
         }
 
@@ -228,6 +227,8 @@ namespace EqUiWebUi.Areas.Gadata
             string[] cmds = { "exec GADATA.C3G.sp_update_L"
                     ,"exec GADATA.C3G.sp_update_Lerror_classifcation"
                     ,"exec GADATA.C3G.sp_L_breakdown"
+                    ,"exec GADATA.C3G.sp_normalize_GunCylinder"
+                    ,"exec GADATA.C3G.sp_rt_toollog_REMOVE_DUP"
             };
 
             foreach(string cmd in cmds)
@@ -266,25 +267,7 @@ namespace EqUiWebUi.Areas.Gadata
         {
             ConnectionManager connectionManager = new ConnectionManager();
             string[] cmds = { "EXEC GADATA.[NGAC].[sp_update_cleanLogteksts]"
-                    ,"exec GADATA.[NGAC].[sp_update_Lerror_classifcation] "
-            };
-
-            foreach (string cmd in cmds)
-            {
-                context.WriteLine(" " + cmd);
-                connectionManager.RunCommand(cmd, enblExeptions: true, maxEXECtime: 300);
-                context.WriteLine(" Done");
-            }
-        }
-
-        //run NGAC normalisation steps.
-        [Queue("gadata")]
-        [AutomaticRetry(Attempts = 0)]
-        public void norm_5min(PerformContext context)
-        {
-            ConnectionManager connectionManager = new ConnectionManager();
-            string[] cmds = { "exec GADATA.[C3G].[sp_normalize_GunCylinder]"
-                    ,"exec GADATA.[C3G].[sp_rt_toollog_REMOVE_DUP]"
+                    ,"exec GADATA.[NGAC].[sp_update_Lerror_classifcation]"
                     ,"exec GADATA.[NGAC].[sp_CalcTipWearBeforeChange]"
             };
 
@@ -296,9 +279,10 @@ namespace EqUiWebUi.Areas.Gadata
             }
         }
 
+
         //run NGAC normalisation steps.
         [Queue("gadata")]
-        [AutomaticRetry(Attempts = 0)]
+        [AutomaticRetry(Attempts = 5)]
         public void norm_1day(PerformContext context)
         {
             ConnectionManager connectionManager = new ConnectionManager();
