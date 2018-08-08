@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using EQUICommunictionLib;
 using EqUiWebUi.Areas.Tiplife.Models;
 using Hangfire;
+using Hangfire.Console;
+using Hangfire.Server;
 
 namespace EqUiWebUi.Areas.Tiplife
 {
@@ -27,15 +30,27 @@ namespace EqUiWebUi.Areas.Tiplife
             Backgroundwork backgroundwork = new Backgroundwork();
             //**********************************TipDresData table***************************************************
             //set job to refresh every minute
-            RecurringJob.AddOrUpdate("BT_NGAC_tipSTS", () => backgroundwork.UpdateTipstatus(), Cron.Minutely);
+            RecurringJob.AddOrUpdate("BT_NGAC_tipSTS", () => backgroundwork.UpdateTipstatus(null), Cron.Minutely);
         }
 
 
         //update the local datatable with tipstatus called every minute #hangfire
         [AutomaticRetry(Attempts = 0)]
         [Queue("gadata")]
-        public void UpdateTipstatus()
+        public void UpdateTipstatus(PerformContext context)
         {
+            ConnectionManager connectionManager = new ConnectionManager();
+            string[] cmds = { "exec GADATA.[NGAC].[sp_CalcTipWearBeforeChange]"
+            };
+
+            foreach (string cmd in cmds)
+            {
+                context.WriteLine(" " + cmd);
+                connectionManager.RunCommand(cmd, enblExeptions: true, maxEXECtime: 300);
+                context.WriteLine(" Done");
+            }
+
+            context.WriteLine(" Get gADATAEntities.TipMonitor");
             GADATAEntitiesTiplife gADATAEntities = new GADATAEntitiesTiplife();
             gADATAEntities.Database.CommandTimeout = 60; //override default 30 seconds timeout. 
             List<TipMonitor> data = (from tipstatus in gADATAEntities.TipMonitor
@@ -51,11 +66,11 @@ namespace EqUiWebUi.Areas.Tiplife
                             .Max();
 
                 DataBuffer.TipstatusLastDt = maxDate;
-                log.Info(string.Format("UpdateTipstatus {0} records", data.Count));
+                context.WriteLine(string.Format("UpdateTipstatus {0} records", data.Count));
 
                 //add singal R 
-                var context = Microsoft.AspNet.SignalR.GlobalHost.ConnectionManager.GetHubContext<Areas.Gadata.DataRefreshHub>();
-                context.Clients.Group("TipstatusGrid").newData();
+                var SignalRcontext = Microsoft.AspNet.SignalR.GlobalHost.ConnectionManager.GetHubContext<Areas.Gadata.DataRefreshHub>();
+                SignalRcontext.Clients.Group("TipstatusGrid").newData();
             }
             else
             {
