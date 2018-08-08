@@ -26,7 +26,7 @@
     <TargetFrameworkProfile />
     <TypeScriptToolsVersion>2.5</TypeScriptToolsVersion>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DebugGENT|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -35,7 +35,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ReleaseGENT|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\</OutputPath>
@@ -1286,7 +1286,8 @@
     <Content Include="Areas\Alert\Views\Alert\_ControlChart.cshtml" />
     <Content Include="App_Code\MyHtmlHelpers.cshtml" />
     <Content Include="Areas\Welding\Views\Welding\ExtraControlers.cshtml" />
-    <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION.pubxml" />
+    <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION-GHENT.pubxml" />
+    <None Include="Properties\PublishProfiles\gotsvw11292-PRODUCTION-ZWEDEN.pubxml" />
     <None Include="Properties\PublishProfiles\VCC22700-Testing.pubxml" />
     <Content Include="PDFjs\build\pdf.js" />
     <Content Include="PDFjs\build\pdf.worker.js" />
@@ -1496,6 +1497,15 @@
     <Content Include="Views\Wikis\ShowWiki.cshtml" />
     <Content Include="Views\Tableau\TestTicket.cshtml" />
     <Content Include="Views\Tableau\GetTicket.cshtml" />
+    <None Include="Web.DebugGENT.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.ReleaseGENT.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.ReleaseZWEDEN.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EQUICommunictionLib\EQUICommunictionLib.csproj">
@@ -1529,6 +1539,15 @@
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseZWEDEN|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
