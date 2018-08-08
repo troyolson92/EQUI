@@ -1,8 +1,8 @@
 ﻿@{
-    ViewBag.Title = "VCG GA Homepage";
+    ViewBag.Title = @System.Configuration.ConfigurationManager.AppSettings["SiteName"].ToString();
 }
 <div class="jumbotron">
-    <h1>WELCOME IN VCG GA</h1>
+    <h1>WELCOME IN @ViewBag.Title</h1>
 </div>
 
 <p></p>

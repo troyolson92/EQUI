@@ -18,18 +18,17 @@ namespace EqUiWebUi
         {
             //setup signal r
             app.MapSignalR();
-
-            try
+            //setting up hangfire if enabled
+            if (Convert.ToBoolean(System.Configuration.ConfigurationManager.AppSettings["EnableHangfire"]) == true)
             {
-                //setting up hangfire 
                 //setup hangfire database config
                 GlobalConfiguration.Configuration
                     .UseSqlServerStorage(
                         ConfigurationManager.ConnectionStrings["EQUIConnectionString"].ConnectionString, //we take this from web.config
                         new SqlServerStorageOptions { QueuePollInterval = TimeSpan.FromSeconds(1) }
                         )
-                       .UseConsole(); //extension to hangefire for better logging https://github.com/pieceofsummer/Hangfire.Console
-                //set up hangefire dashboard
+                        .UseConsole(); //extension to hangefire for better logging https://github.com/pieceofsummer/Hangfire.Console
+                                       //set up hangefire dashboard
                 app.UseHangfireDashboard("/hangfire", new DashboardOptions
                 {
                     Authorization = new[] { new MyAuthorizationFilter() }
@@ -55,7 +54,7 @@ namespace EqUiWebUi
                     var HFoptions = new BackgroundJobServerOptions
                     {
                         //MUST BE LOWERCASE ONLY !!!!!!
-                        Queues = new[] { "debug", "gadata"},
+                        Queues = new[] { "debug", "gadata" },
                         // Queues = new[] { "critical", "default", "alertengine", "gadata", "jobengine", "sto" },
                         //How many jobs run at the same time
                         WorkerCount = Environment.ProcessorCount * 1
@@ -65,9 +64,9 @@ namespace EqUiWebUi
 
                 }
             }
-            catch (Exception ex)
+            else
             {
-                log.Error("Failed to init hangfire",ex);
+                log.Info("Hangfire not enabled in web.config");
             }
         //
         }
