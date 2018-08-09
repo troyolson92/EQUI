@@ -14,11 +14,14 @@ namespace EqUiWebUi.Areas.PJV
 
         public override void RegisterArea(AreaRegistrationContext context) 
         {
-            context.MapRoute(
-                "PJV_default",
-                "PJV/{controller}/{action}/{id}",
-                new { action = "Index", id = UrlParameter.Optional }
-            );
+            if (EqUiWebUi.MyBooleanExtensions.IsAreaEnabled(AreaName))
+            {
+                context.MapRoute(
+                    "PJV_default",
+                    "PJV/{controller}/{action}/{id}",
+                    new { action = "Index", id = UrlParameter.Optional }
+                );
+            }
         }
     }
 }
