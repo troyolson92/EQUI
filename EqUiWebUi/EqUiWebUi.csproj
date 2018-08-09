@@ -174,6 +174,7 @@
     <Folder Include="Areas\HangfireArea\Views\Shared\" />
     <Folder Include="Areas\Maximo_ui\Views\Shared\" />
     <Folder Include="Areas\PJV\Views\Shared\" />
+    <Folder Include="Areas\PlcSupervisie\Models\" />
     <Folder Include="Areas\STW040\Models\" />
     <Folder Include="Areas\STW040\Views\Shared\" />
     <Folder Include="Areas\VASC\Views\Shared\" />
@@ -343,24 +344,6 @@
     <Compile Include="Areas\PJV\PJVAreaRegistration.cs" />
     <Compile Include="Areas\PlcSupervisie\Backgroundwork.cs" />
     <Compile Include="Areas\PlcSupervisie\Controllers\ScreenshotController.cs" />
-    <Compile Include="Areas\PlcSupervisie\Models\EQpluginNewformat1_Result.cs">
-      <DependentUpon>Gadata.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\PlcSupervisie\Models\Gadata.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Gadata.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\PlcSupervisie\Models\Gadata.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Gadata.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\PlcSupervisie\Models\Gadata.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Gadata.edmx</DependentUpon>
-    </Compile>
     <Compile Include="Areas\PlcSupervisie\PlcSupervisieAreaRegistration.cs" />
     <Compile Include="Areas\STW040\BackgroundWork.cs" />
     <Compile Include="Areas\STW040\Controllers\STW040Controller.cs" />
@@ -698,16 +681,6 @@
       <DependentUpon>PJV.edmx</DependentUpon>
       <LastGenOutput>PJV.cs</LastGenOutput>
     </Content>
-    <Content Include="Areas\PlcSupervisie\Models\Gadata.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Gadata.edmx</DependentUpon>
-      <LastGenOutput>Gadata.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Areas\PlcSupervisie\Models\Gadata.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Gadata.edmx</DependentUpon>
-      <LastGenOutput>Gadata.cs</LastGenOutput>
-    </Content>
     <Content Include="Areas\Tiplife\Models\TiplifeModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>TiplifeModel.edmx</DependentUpon>
@@ -772,6 +745,7 @@
       <DependentUpon>EQUIModel.edmx</DependentUpon>
       <LastGenOutput>EQUIModel.Context.cs</LastGenOutput>
     </Content>
+    <Content Include="Models\EQUIModel.edmx.sql" />
     <Content Include="Models\EQUIModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>EQUIModel.edmx</DependentUpon>
@@ -1007,13 +981,6 @@
     <Content Include="Areas\user_management\Views\UserScreens\RenderUserScreen.cshtml" />
     <Content Include="Areas\user_management\Views\UserScreens\RenderUserScreens.cshtml" />
     <Content Include="Areas\user_management\Views\UserScreens\ViewAsUser.cshtml" />
-    <EntityDeploy Include="Areas\PlcSupervisie\Models\Gadata.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Gadata.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Areas\PlcSupervisie\Models\Gadata.edmx.diagram">
-      <DependentUpon>Gadata.edmx</DependentUpon>
-    </Content>
     <Content Include="Areas\user_management\Views\UserScreens\Screenmaster.cshtml" />
     <Content Include="Content\font\summernote.eot" />
     <Content Include="Content\font\summernote.ttf" />
