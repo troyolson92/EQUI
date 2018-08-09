@@ -227,8 +227,6 @@ namespace EqUiWebUi.Areas.Gadata
             string[] cmds = { "exec GADATA.C3G.sp_update_L"
                     ,"exec GADATA.C3G.sp_update_Lerror_classifcation"
                     ,"exec GADATA.C3G.sp_L_breakdown"
-                    ,"exec GADATA.C3G.sp_normalize_GunCylinder"
-                    ,"exec GADATA.C3G.sp_rt_toollog_REMOVE_DUP"
             };
 
             foreach(string cmd in cmds)

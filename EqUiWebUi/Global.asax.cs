@@ -8,6 +8,10 @@ using System.Web.Routing;
 using EqUiWebUi.Areas.user_management.Models;
 using System.Threading;
 using System.Globalization;
+using System.Configuration;
+using System.Data.SqlClient;
+using System.Data.Entity.Core.EntityClient;
+using System.Web.Configuration;
 
 [assembly: log4net.Config.XmlConfigurator(Watch = true)]
 
@@ -20,6 +24,34 @@ namespace EqUiWebUi
         protected void Application_Start()
         {
             log.Warn("Site startup");
+            //change EF connection strings          
+            SqlConnectionStringBuilder EQUIConnectionString = new SqlConnectionStringBuilder(System.Configuration.ConfigurationManager.ConnectionStrings["EQUIConnectionString"].ConnectionString);
+            foreach (ConnectionStringSettings c in System.Configuration.ConfigurationManager.ConnectionStrings)
+            {
+                if (c.Name == "EQUIConnectionString") continue; //main string must not be updated
+                if (c.Name == "LocalSqlServer") continue; //local SQL instance mustn ot be updated
+                //
+                log.Info("update connectionstring: " + c.Name);
+                try
+                {
+                    EntityConnectionStringBuilder EFConnectionstring = new EntityConnectionStringBuilder(c.ConnectionString);
+                    SqlConnectionStringBuilder EFProviderConnectionString = new SqlConnectionStringBuilder(EFConnectionstring.ProviderConnectionString);
+                    EFProviderConnectionString.DataSource = EQUIConnectionString.DataSource;
+                    EFProviderConnectionString.InitialCatalog = EQUIConnectionString.InitialCatalog;
+                    EFProviderConnectionString.UserID = EQUIConnectionString.UserID;
+                    EFProviderConnectionString.Password = EQUIConnectionString.Password;
+                    EFConnectionstring.ProviderConnectionString = EFProviderConnectionString.ToString();
+                    //save the config
+                    var configuration = WebConfigurationManager.OpenWebConfiguration("~");
+                    var section = (ConnectionStringsSection)configuration.GetSection("connectionStrings");
+                    section.ConnectionStrings[c.Name].ConnectionString = EFConnectionstring.ToString();
+                    configuration.Save();
+                }
+                catch(Exception ex)
+                {
+                    log.Error("failed to update connectionstring: " + c.Name, ex);
+                }
+            }          
             //
             AreaRegistration.RegisterAllAreas();
             //

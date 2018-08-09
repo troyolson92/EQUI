@@ -39,17 +39,6 @@ namespace EqUiWebUi.Areas.Tiplife
         [Queue("gadata")]
         public void UpdateTipstatus(PerformContext context)
         {
-            ConnectionManager connectionManager = new ConnectionManager();
-            string[] cmds = { "exec GADATA.[NGAC].[sp_CalcTipWearBeforeChange]"
-            };
-
-            foreach (string cmd in cmds)
-            {
-                context.WriteLine(" " + cmd);
-                connectionManager.RunCommand(cmd, enblExeptions: true, maxEXECtime: 300);
-                context.WriteLine(" Done");
-            }
-
             context.WriteLine(" Get gADATAEntities.TipMonitor");
             GADATAEntitiesTiplife gADATAEntities = new GADATAEntitiesTiplife();
             gADATAEntities.Database.CommandTimeout = 60; //override default 30 seconds timeout. 

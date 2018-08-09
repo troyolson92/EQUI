@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\SDEBEUL\Desktop\ExcelAddInEquipmentDatabase\EqUiWebUi\Areas\Tiplife\Models\TiplifeModel.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\SDEBEUL\Source\Repos\ExcelPluginFrontEnd\EqUiWebUi\Areas\Tiplife\Models\TiplifeModel.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.
