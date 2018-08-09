@@ -212,7 +212,7 @@ namespace EqUiWebUi.Areas.Gadata
         public void LinkMaximoAssetsToGadata()
         {
             log.Info("sp_linkassets Start");
-            string CmdLinkAssets = "EXEC GADATA.[EqUi].[sp_LinkAssets]";
+            string CmdLinkAssets = "EXEC [EqUi].[sp_LinkAssets]";
             ConnectionManager connectionManager = new ConnectionManager();
             connectionManager.RunCommand(CmdLinkAssets, enblExeptions: true, maxEXECtime: 300);
             log.Info("sp_linkassets Done");
@@ -224,9 +224,9 @@ namespace EqUiWebUi.Areas.Gadata
         public void norm_c3g(PerformContext context)
         {
             ConnectionManager connectionManager = new ConnectionManager();
-            string[] cmds = { "exec GADATA.C3G.sp_update_L"
-                    ,"exec GADATA.C3G.sp_update_Lerror_classifcation"
-                    ,"exec GADATA.C3G.sp_L_breakdown"
+            string[] cmds = { "exec C3G.sp_update_L"
+                    ,"exec C3G.sp_update_Lerror_classifcation"
+                    ,"exec C3G.sp_L_breakdown"
             };
 
             foreach(string cmd in cmds)
@@ -243,11 +243,11 @@ namespace EqUiWebUi.Areas.Gadata
         public void norm_c4g(PerformContext context)
         {
             ConnectionManager connectionManager = new ConnectionManager();
-            string[] cmds = { "exec GADATA.[C4G].[sp_update_L]"
-                    ,"exec GADATA.[C4G].sp_update_Lerror_classifcation"
-                    ,"exec GADATA.[C4G].sp_Update_L_breakdown"
-                    ,"exec GADATA.[C4G].sp_ReClass_L_breakdown"
-                    ,"EXEC GADATA.[Volvo].[LiveView]"
+            string[] cmds = { "exec [C4G].[sp_update_L]"
+                    ,"exec [C4G].sp_update_Lerror_classifcation"
+                    ,"exec [C4G].sp_Update_L_breakdown"
+                    ,"exec [C4G].sp_ReClass_L_breakdown"
+                    ,"EXEC [Volvo].[LiveView]"
             };
 
             foreach (string cmd in cmds)
@@ -264,8 +264,8 @@ namespace EqUiWebUi.Areas.Gadata
         public void norm_NGAC(PerformContext context)
         {
             ConnectionManager connectionManager = new ConnectionManager();
-            string[] cmds = { "EXEC GADATA.[NGAC].[sp_update_cleanLogteksts]"
-                    ,"exec GADATA.[NGAC].[sp_update_Lerror_classifcation]"
+            string[] cmds = { "EXEC [NGAC].[sp_update_cleanLogteksts]"
+                    ,"EXEC [NGAC].[sp_update_Lerror_classifcation]"
             };
 
             foreach (string cmd in cmds)
@@ -283,9 +283,9 @@ namespace EqUiWebUi.Areas.Gadata
         public void norm_1day(PerformContext context)
         {
             ConnectionManager connectionManager = new ConnectionManager();
-            string[] cmds = { "exec GADATA.C3G.sp_Housekeeping"
-                    ,"exec GADATA.c4g.sp_Housekeeping"
-                    ,"exec GADATA.NGAC.sp_Housekeeping"
+            string[] cmds = { "exec C3G.sp_Housekeeping"
+                    ,"exec c4g.sp_Housekeeping"
+                    ,"exec NGAC.sp_Housekeeping"
             };
 
             foreach (string cmd in cmds)

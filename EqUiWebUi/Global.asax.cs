@@ -23,9 +23,14 @@ namespace EqUiWebUi
 
         protected void Application_Start()
         {
-            log.Warn("Site startup");
-            //change EF connection strings          
+            log.Warn("Application_Start");
+            //change EF connection strings    
+            //WARNING ! make sure that the IIS_IUSRS hare full control on the ISS root folder!! (else we can not save the web.config)
             SqlConnectionStringBuilder EQUIConnectionString = new SqlConnectionStringBuilder(System.Configuration.ConfigurationManager.ConnectionStrings["EQUIConnectionString"].ConnectionString);
+            //get the web.config
+            var configuration = WebConfigurationManager.OpenWebConfiguration("~");
+            var section = (ConnectionStringsSection)configuration.GetSection("connectionStrings");
+            //loop all connection strings
             foreach (ConnectionStringSettings c in System.Configuration.ConfigurationManager.ConnectionStrings)
             {
                 if (c.Name == "EQUIConnectionString") continue; //main string must not be updated
@@ -41,23 +46,21 @@ namespace EqUiWebUi
                     EFProviderConnectionString.UserID = EQUIConnectionString.UserID;
                     EFProviderConnectionString.Password = EQUIConnectionString.Password;
                     EFConnectionstring.ProviderConnectionString = EFProviderConnectionString.ToString();
-                    //save the config
-                    var configuration = WebConfigurationManager.OpenWebConfiguration("~");
-                    var section = (ConnectionStringsSection)configuration.GetSection("connectionStrings");
+                    //set the web.config
                     section.ConnectionStrings[c.Name].ConnectionString = EFConnectionstring.ToString();
-                    configuration.Save();
+                    configuration.Save(ConfigurationSaveMode.Modified);
                 }
                 catch(Exception ex)
                 {
                     log.Error("failed to update connectionstring: " + c.Name, ex);
                 }
-            }          
-            //
+            }
+            //default mvc web registration
             AreaRegistration.RegisterAllAreas();
-            //
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            
             //log 4 net 
             log4net.Config.XmlConfigurator.Configure();
 
