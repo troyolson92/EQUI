@@ -68,6 +68,10 @@
     <Folder Include="Volvo\" />
     <Folder Include="Volvo\Tables\" />
     <Folder Include="Security\" />
+    <Folder Include="PJV\" />
+    <Folder Include="PJV\Tables\" />
+    <Folder Include="NGAC\" />
+    <Folder Include="NGAC\Tables\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Alerts\Tables\c_CPT600.sql" />
@@ -117,5 +121,73 @@
     <Build Include="Security\EqUi_2.sql" />
     <Build Include="Security\HangFire_2.sql" />
     <Build Include="Security\Volvo.sql" />
+    <Build Include="Volvo\Tables\L_Screens.sql" />
+    <Build Include="PJV\Tables\SummaryResult.sql" />
+    <Build Include="PJV\Tables\RobotRoutine.sql" />
+    <Build Include="PJV\Tables\RobotProgram.sql" />
+    <Build Include="PJV\Tables\RobotPoint.sql" />
+    <Build Include="PJV\Tables\RobotDetail.sql" />
+    <Build Include="PJV\Tables\ProcessResult.sql" />
+    <Build Include="PJV\Tables\L_operation.sql" />
+    <Build Include="PJV\Tables\L_GIT.sql" />
+    <Build Include="PJV\Tables\JoiningPointData.sql" />
+    <Build Include="PJV\Tables\JoiningModelVariantDistinct.sql" />
+    <Build Include="PJV\Tables\JoiningModelVariant.sql" />
+    <Build Include="PJV\Tables\JoiningFile.sql" />
+    <Build Include="NGAC\Tables\x_reAlarms.sql" />
+    <Build Include="NGAC\Tables\rt_version_info.sql" />
+    <Build Include="NGAC\Tables\rt_value.sql" />
+    <Build Include="NGAC\Tables\rt_SpotErr.sql" />
+    <Build Include="NGAC\Tables\rt_search_value.sql" />
+    <Build Include="NGAC\Tables\rt_saSocketQ.sql" />
+    <Build Include="NGAC\Tables\rt_pjv_file.sql" />
+    <Build Include="NGAC\Tables\rt_job_breakdown.sql" />
+    <Build Include="NGAC\Tables\rt_job.sql" />
+    <Build Include="NGAC\Tables\rt_event.sql" />
+    <Build Include="NGAC\Tables\rt_device_info.sql" />
+    <Build Include="NGAC\Tables\rt_csv_file.sql" />
+    <Build Include="NGAC\Tables\rt_controller.sql" />
+    <Build Include="NGAC\Tables\rt_alarm.sql" />
+    <Build Include="NGAC\Tables\rt_active_info.sql" />
+    <Build Include="NGAC\Tables\L_type.sql" />
+    <Build Include="NGAC\Tables\L_operation.sql" />
+    <Build Include="NGAC\Tables\L_error.sql" />
+    <Build Include="NGAC\Tables\L_description.sql" />
+    <Build Include="NGAC\Tables\L_consequences.sql" />
+    <Build Include="NGAC\Tables\L_causes.sql" />
+    <Build Include="NGAC\Tables\L_category.sql" />
+    <Build Include="NGAC\Tables\L_actions.sql" />
+    <Build Include="NGAC\Tables\L_ABBErrors.sql" />
+    <Build Include="NGAC\Tables\ia_reply.sql" />
+    <Build Include="NGAC\Tables\ia_command.sql" />
+    <Build Include="NGAC\Tables\h_TipWearBeforeChange.sql" />
+    <Build Include="NGAC\Tables\h_alarm.sql" />
+    <Build Include="NGAC\Tables\c_variable_search.sql" />
+    <Build Include="NGAC\Tables\c_variable.sql" />
+    <Build Include="NGAC\Tables\c_service_setup.sql" />
+    <Build Include="NGAC\Tables\c_racktracking.sql" />
+    <Build Include="NGAC\Tables\c_pjv_ignore.sql" />
+    <Build Include="NGAC\Tables\c_pjv_event.sql" />
+    <Build Include="NGAC\Tables\c_pjv_action.sql" />
+    <Build Include="NGAC\Tables\c_job.sql" />
+    <Build Include="NGAC\Tables\c_error.sql" />
+    <Build Include="NGAC\Tables\c_device_info.sql" />
+    <Build Include="NGAC\Tables\c_csv_log.sql" />
+    <Build Include="NGAC\Tables\c_controller_class.sql" />
+    <Build Include="NGAC\Tables\c_controller.sql" />
+    <Build Include="NGAC\Tables\XY_rt_job_breakdown.sql" />
+    <Build Include="NGAC\Tables\XY_rt_alarm.sql" />
+    <Build Include="NGAC\Tables\XY_L_operation.sql" />
+    <Build Include="NGAC\Tables\XY_L_error.sql" />
+    <Build Include="NGAC\Tables\XY_L_description.sql" />
+    <Build Include="NGAC\Tables\XY_L_consequences.sql" />
+    <Build Include="NGAC\Tables\XY_L_causes.sql" />
+    <Build Include="NGAC\Tables\XY_L_actions.sql" />
+    <Build Include="NGAC\Tables\XY_h_alarm.sql" />
+    <Build Include="Security\PJV.sql" />
+    <Build Include="Security\NGAC.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="Volvo\Script.PostDeployment_InitalDataInsert.sql" />
   </ItemGroup>
 </Project>
