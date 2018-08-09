@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -29,6 +30,23 @@ namespace EqUiWebUi
             dateTime += TimeSpan.FromMinutes(30);
 
             return new DateTime(dateTime.Year, dateTime.Month, dateTime.Day, dateTime.Hour, 0, 0, dateTime.Kind);
+        }
+    }
+
+    //boolean extension
+    public static class MyBooleanExtensions
+    {
+        //check if an sitearea is enabled.
+        public static bool IsAreaEnabled(string area)
+        {
+            if (ConfigurationManager.AppSettings["DisabledAreas"].ToLower().Split(';').Contains(area.ToLower()) == false)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 
