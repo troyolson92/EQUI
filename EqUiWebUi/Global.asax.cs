@@ -63,7 +63,7 @@ namespace EqUiWebUi
             {
                 if (configChanged)
                 {
-                    log.Warn("web.config connection strings have changed");
+                    log.Warn("Web.config connection strings have changed");
                     configuration.Save(ConfigurationSaveMode.Modified);
                 }   
             }

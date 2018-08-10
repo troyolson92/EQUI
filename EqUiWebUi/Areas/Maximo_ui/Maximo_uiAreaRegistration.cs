@@ -12,13 +12,16 @@ namespace EqUiWebUi.Areas.Maximo_ui
             }
         }
 
-        public override void RegisterArea(AreaRegistrationContext context) 
+        public override void RegisterArea(AreaRegistrationContext context)
         {
-            context.MapRoute(
+            if (EqUiWebUi.MyBooleanExtensions.IsAreaEnabled(AreaName))
+            {
+                context.MapRoute(
                 "Maximo_ui_default",
                 "Maximo_ui/{controller}/{action}/{id}",
                 new { action = "Index", id = UrlParameter.Optional }
-            );
+                );
+            }
         }
     }
 }

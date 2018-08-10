@@ -16,11 +16,18 @@ namespace EqUiWebUi.Areas.STW040
 
         public void configHangfireJobs()
         {
-            //background work
-            BackgroundWork backgroundwork = new BackgroundWork();
-            //**********************************STW040 => GADATA sunc***************************************************
-            //set job to refresh every 5 minutes
-            RecurringJob.AddOrUpdate("STW40=>GADATA", () => backgroundwork.STW040ToGadataSync(null), "5 * * * *"); //5 min past the hour
+            if (EqUiWebUi.MyBooleanExtensions.IsAreaEnabled("STW040"))
+            {
+                BackgroundWork backgroundwork = new BackgroundWork();
+                //**********************************STW040 => GADATA sunc***************************************************
+                //set job to refresh every 5 minutes
+                RecurringJob.AddOrUpdate("STW40=>GADATA", () => backgroundwork.STW040ToGadataSync(null), "5 * * * *"); //5 min past the hour
+            }
+            else
+            {
+                log.Warn("STW040 area is disabled removing hangfire jobs");
+                RecurringJob.RemoveIfExists("STW40=>GADATA");
+            }
         }
 
         [Queue("gadata")]

@@ -14,11 +14,14 @@ namespace EqUiWebUi.Areas.PlcSupervisie
 
         public override void RegisterArea(AreaRegistrationContext context) 
         {
-            context.MapRoute(
+            if (EqUiWebUi.MyBooleanExtensions.IsAreaEnabled(AreaName))
+            {
+                context.MapRoute(
                 "PlcSupervisie_default",
                 "PlcSupervisie/{controller}/{action}/{id}",
                 new { action = "Index", id = UrlParameter.Optional }
-            );
+               );
+            }
         }
     }
 }

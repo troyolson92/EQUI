@@ -14,11 +14,14 @@ namespace EqUiWebUi.Areas.Welding
 
         public override void RegisterArea(AreaRegistrationContext context) 
         {
-            context.MapRoute(
+            if (EqUiWebUi.MyBooleanExtensions.IsAreaEnabled(AreaName))
+            {
+                context.MapRoute(
                 "Welding_default",
                 "Welding/{controller}/{action}/{id}",
                 new { action = "Index", id = UrlParameter.Optional }
-            );
+                );
+            }
         }
     }
 }
