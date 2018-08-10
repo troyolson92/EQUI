@@ -189,6 +189,7 @@
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Volvo\Script.PostDeployment_InitalDataInsert.sql" />
+    <None Include="NGAC\Script.PostDeployment_c_service_setup.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Database.publish.xml" />

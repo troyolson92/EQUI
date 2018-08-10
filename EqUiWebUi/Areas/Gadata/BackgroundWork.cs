@@ -293,7 +293,6 @@ namespace EqUiWebUi.Areas.Gadata
             //
             ConnectionManager connectionManager = new ConnectionManager();
             string[] cmds = { "EXEC [NGAC].[sp_update_cleanLogteksts]"
-                    ,"EXEC [NGAC].[sp_update_Lerror_classifcation]"
             };
 
             foreach (string cmd in cmds)

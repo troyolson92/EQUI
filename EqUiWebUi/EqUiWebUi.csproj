@@ -1236,6 +1236,7 @@
     <Content Include="Areas\Alert\Views\Alert\_ControlChart.cshtml" />
     <Content Include="App_Code\MyHtmlHelpers.cshtml" />
     <Content Include="Areas\Welding\Views\Welding\ExtraControlers.cshtml" />
+    <Content Include="Areas\VASC\Views\c_service_setup\_sessionSetupGrid.cshtml" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gotsvw11292-PRODUCTION-VCTA.pubxml" />
     <None Include="Properties\PublishProfiles\VCC22700-Testing.pubxml" />
