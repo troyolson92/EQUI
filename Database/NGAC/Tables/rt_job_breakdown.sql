@@ -27,3 +27,22 @@
     CONSTRAINT [FK_rt_job_breakdown_rt_job] FOREIGN KEY ([rt_job_active_id]) REFERENCES [NGAC].[rt_job] ([id])
 );
 
+go
+CREATE NONCLUSTERED INDEX [ngac_rtjb_activeJob] ON [NGAC].[rt_job_breakdown]
+(
+	[rt_job_active_id] ASC,
+	[index] ASC
+)
+INCLUDE ( 	[h_alarm_id]) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+
+CREATE NONCLUSTERED INDEX [ngac_rtjb_h_alarm] ON [NGAC].[rt_job_breakdown]
+(
+	[index] ASC
+)
+INCLUDE ( 	[rt_job_active_id],
+	[h_alarm_id]) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+
+
+

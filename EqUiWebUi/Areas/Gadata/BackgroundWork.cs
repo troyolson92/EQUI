@@ -223,9 +223,18 @@ namespace EqUiWebUi.Areas.Gadata
         [AutomaticRetry(Attempts = 0)]
         public void norm_c3g(PerformContext context)
         {
+            context.WriteLine(" runRule started");
+            //stupid that I need to spin up all these classes to get it to run... (temp solution)
+            EqUiWebUi.Controllers.ClassificationController classificationController = new EqUiWebUi.Controllers.ClassificationController();
+            EqUiWebUi.Models.c_LogClassRules c_LogClassRule = new EqUiWebUi.Models.c_LogClassRules();
+            EqUiWebUi.Models.GADATAEntitiesEQUI db = new EqUiWebUi.Models.GADATAEntitiesEQUI();
+            c_LogClassRule.c_logClassSystem_id = db.c_logClassSystem.Where(c => c.Name == "VCSC_C3G").First().id;
+            c_LogClassRule.id = 0; //this causes us to run all rules
+            classificationController.RunRule(c_LogClassRule, overrideManualSet: false, Clear: false, UPDATE: false);
+            context.WriteLine(" runRule done");
+            //
             ConnectionManager connectionManager = new ConnectionManager();
             string[] cmds = { "exec C3G.sp_update_L"
-                    ,"exec C3G.sp_update_Lerror_classifcation"
                     ,"exec C3G.sp_L_breakdown"
             };
 
@@ -242,9 +251,18 @@ namespace EqUiWebUi.Areas.Gadata
         [AutomaticRetry(Attempts = 0)]
         public void norm_c4g(PerformContext context)
         {
+            context.WriteLine(" runRule started");
+            //stupid that I need to spin up all these classes to get it to run... (temp solution)
+            EqUiWebUi.Controllers.ClassificationController classificationController = new EqUiWebUi.Controllers.ClassificationController();
+            EqUiWebUi.Models.c_LogClassRules c_LogClassRule = new EqUiWebUi.Models.c_LogClassRules();
+            EqUiWebUi.Models.GADATAEntitiesEQUI db = new EqUiWebUi.Models.GADATAEntitiesEQUI();
+            c_LogClassRule.c_logClassSystem_id = db.c_logClassSystem.Where(c => c.Name == "VCSC_C4G").First().id;
+            c_LogClassRule.id = 0; //this causes us to run all rules
+            classificationController.RunRule(c_LogClassRule, overrideManualSet: false, Clear: false, UPDATE: false);
+            context.WriteLine(" runRule done");
+            //
             ConnectionManager connectionManager = new ConnectionManager();
             string[] cmds = { "exec [C4G].[sp_update_L]"
-                    ,"exec [C4G].sp_update_Lerror_classifcation"
                     ,"exec [C4G].sp_Update_L_breakdown"
                     ,"exec [C4G].sp_ReClass_L_breakdown"
                     ,"EXEC [Volvo].[LiveView]"
@@ -263,6 +281,16 @@ namespace EqUiWebUi.Areas.Gadata
         [AutomaticRetry(Attempts = 0)]
         public void norm_NGAC(PerformContext context)
         {
+            context.WriteLine(" runRule started");
+            //stupid that I need to spin up all these classes to get it to run... (temp solution)
+            EqUiWebUi.Controllers.ClassificationController classificationController = new EqUiWebUi.Controllers.ClassificationController();
+            EqUiWebUi.Models.c_LogClassRules c_LogClassRule = new EqUiWebUi.Models.c_LogClassRules();
+            EqUiWebUi.Models.GADATAEntitiesEQUI db = new EqUiWebUi.Models.GADATAEntitiesEQUI();
+            c_LogClassRule.c_logClassSystem_id = db.c_logClassSystem.Where(c => c.Name == "VASC_NGAC").First().id;
+            c_LogClassRule.id = 0; //this causes us to run all rules
+            classificationController.RunRule(c_LogClassRule, overrideManualSet: false, Clear: false, UPDATE: false);
+            context.WriteLine(" runRule done");
+            //
             ConnectionManager connectionManager = new ConnectionManager();
             string[] cmds = { "EXEC [NGAC].[sp_update_cleanLogteksts]"
                     ,"EXEC [NGAC].[sp_update_Lerror_classifcation]"

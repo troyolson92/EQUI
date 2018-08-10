@@ -20,3 +20,14 @@
     CONSTRAINT [FK_rt_job_c_job] FOREIGN KEY ([c_job_id]) REFERENCES [NGAC].[c_job] ([id])
 );
 
+go
+CREATE NONCLUSTERED INDEX [NGAC_rtj_tsStart] ON [NGAC].[rt_job]
+(
+	[ts_breakDownStart] ASC,
+	[ts_breakDownEnd] ASC
+)
+INCLUDE ( 	[id],
+	[c_controller_id],
+	[ts_breakDownAck]) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+
