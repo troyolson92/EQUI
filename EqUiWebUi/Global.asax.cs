@@ -30,13 +30,13 @@ namespace EqUiWebUi
             //get the web.config
             var configuration = WebConfigurationManager.OpenWebConfiguration("~");
             var section = (ConnectionStringsSection)configuration.GetSection("connectionStrings");
+            bool configChanged = false;
             //loop all connection strings
             foreach (ConnectionStringSettings c in System.Configuration.ConfigurationManager.ConnectionStrings)
             {
                 if (c.Name == "EQUIConnectionString") continue; //main string must not be updated
                 if (c.Name == "LocalSqlServer") continue; //local SQL instance mustn ot be updated
-                //
-                log.Info("update connectionstring: " + c.Name);
+                //         
                 try
                 {
                     EntityConnectionStringBuilder EFConnectionstring = new EntityConnectionStringBuilder(c.ConnectionString);
@@ -46,14 +46,30 @@ namespace EqUiWebUi
                     EFProviderConnectionString.UserID = EQUIConnectionString.UserID;
                     EFProviderConnectionString.Password = EQUIConnectionString.Password;
                     EFConnectionstring.ProviderConnectionString = EFProviderConnectionString.ToString();
-                    //set the web.config
-                    section.ConnectionStrings[c.Name].ConnectionString = EFConnectionstring.ToString();
-                    configuration.Save(ConfigurationSaveMode.Modified);
+                    //set the web.config if connectionstring is different.
+                    if (section.ConnectionStrings[c.Name].ConnectionString != EFConnectionstring.ToString())
+                    {
+                        log.Info("update connectionstring: " + c.Name);
+                        section.ConnectionStrings[c.Name].ConnectionString = EFConnectionstring.ToString();
+                        configChanged = true;
+                    }
                 }
                 catch(Exception ex)
                 {
                     log.Error("failed to update connectionstring: " + c.Name, ex);
                 }
+            }
+            try
+            {
+                if (configChanged)
+                {
+                    log.Warn("web.config connection strings have changed");
+                    configuration.Save(ConfigurationSaveMode.Modified);
+                }   
+            }
+            catch(Exception ex)
+            {
+                log.Error("failed to update web.config", ex);
             }
             //default mvc web registration
             AreaRegistration.RegisterAllAreas();

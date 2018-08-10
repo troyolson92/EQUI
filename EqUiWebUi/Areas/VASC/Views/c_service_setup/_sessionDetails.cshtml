@@ -1,8 +1,6 @@
-﻿
-
-<div class="card">
+﻿<div class="card">
     <div class="card-header">
-        <h5 class="card-title text-white">l operation</h5>
+        <h5 class="card-title text">l operation</h5>
         <div class="text-muted">
             (log records in table l_operation for this session)
             @Html.ActionLink("l_operation_index", "Index", "l_operation")
@@ -18,8 +16,9 @@
 
 
 <script>
+    $("#l_operationGridContainer").html("Loading.....");
     $('#l_operationGridContainer').mvcgrid({
-        sourceUrl: '@Html.Raw(@Url.Action("_List", "l_operation"))',
+        sourceUrl: '@Html.Raw(@Url.Action("_List", "l_operation",new { sessionName = ViewBag.sessionName }))',
         requestType: 'get', // Ajax grid request type
         reloadFailed: function (result) {
             $("#l_operationGridContainer").html("Error while loading!!!");

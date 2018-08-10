@@ -28,8 +28,15 @@ namespace EqUiWebUi.Areas.VASC.Controllers
             return View(db.c_service_setup.Where(c => c.name == "SESSION_NAME").ToList());
         }
 
-        // GET: VASC/c_service_setup/_sessionSetup
+
         public ActionResult _sessionSetup(int? enable_mask)
+        {
+            ViewBag.enable_mask = enable_mask;
+            return PartialView();
+        }
+
+        // GET: VASC/c_service_setup/_sessionSetup
+        public ActionResult _sessionSetupGrid(int? enable_mask)
         {
             List<c_service_setup> list = new List<c_service_setup>();
             if (enable_mask is null)
@@ -52,8 +59,9 @@ namespace EqUiWebUi.Areas.VASC.Controllers
 
 
         // GET: VASC/c_service_setup/_sessionSetup
-        public ActionResult _sessionDetails(int? enable_mask)
+        public ActionResult _sessionDetails(string sessionName)
         {
+            ViewBag.sessionName = sessionName;
             return PartialView();
         }
 
