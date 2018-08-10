@@ -12,13 +12,16 @@ namespace EqUiWebUi.Areas.STW040
             }
         }
 
-        public override void RegisterArea(AreaRegistrationContext context) 
+        public override void RegisterArea(AreaRegistrationContext context)
         {
-            context.MapRoute(
+            if (EqUiWebUi.MyBooleanExtensions.IsAreaEnabled(AreaName))
+            { 
+                context.MapRoute(
                 "STW040_default",
                 "STW040/{controller}/{action}/{id}",
                 new { action = "Index", id = UrlParameter.Optional }
-            );
+              );
+            }
         }
     }
 }

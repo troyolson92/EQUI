@@ -166,7 +166,7 @@ namespace EqUiWebUi.Areas.user_management.Controllers
         [Authorize(Roles = "Administrator")]
         public void LinkMaximoAssetsToGadata()
         {
-            EqUiWebUi.Areas.Gadata.BackgroundWork backgroundWork = new Gadata.BackgroundWork();
+            EqUiWebUi.Areas.Maximo_ui.Backgroundwork backgroundWork = new Maximo_ui.Backgroundwork();
             backgroundWork.LinkMaximoAssetsToGadata();
         }
     }

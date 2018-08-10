@@ -239,7 +239,7 @@ namespace ABBCommTest
                     catch (Exception ex)
                     {
                         //var not found exit
-                        log.Debug("nMaxNoOffAutoReDress not found EXIT");
+                        log.Debug("nMaxNoOffAutoReDress not found EXIT",ex);
                         row.Cells[dataGridView1.Columns["HasRedress"].Index].Value = "NOK";
                         return;
                     }

@@ -19,10 +19,16 @@ namespace EqUiWebUi.Areas.PlcSupervisie
         /// </summary>
         public void configHangfireJobs()
         {
-            //background work
-            Backgroundwork backgroundwork = new Backgroundwork();
-            //check every minute for new data (hystorian)
-            Hangfire.RecurringJob.AddOrUpdate("STO=>GADATA", () => backgroundwork.PushDatafromSTOtoGADATA(), Cron.MinuteInterval(5));
+            if (EqUiWebUi.MyBooleanExtensions.IsAreaEnabled("PlcSupervisie"))
+            {
+                Backgroundwork backgroundwork = new Backgroundwork();
+                Hangfire.RecurringJob.AddOrUpdate("STO=>GADATA", () => backgroundwork.PushDatafromSTOtoGADATA(), Cron.MinuteInterval(5));
+            }
+            else
+            {
+                log.Warn("PlcSupervisie area is disabled removing hangfire jobs");
+                RecurringJob.RemoveIfExists("STO=>GADATA");
+            }
         }
 
         //main (does the jobs 1 by one
@@ -45,8 +51,8 @@ namespace EqUiWebUi.Areas.PlcSupervisie
         {
             ConnectionManager connectionManager = new ConnectionManager();
             //get last record in GADATA 
-            string gadataGetMaxTimestampQry = string.Format(@"select max(_timestamp) as 'ts' FROM GADATA.STO.h_breakdown
-                                                            left join GADATA.STO.c_StoTable on c_StoTable.id = h_breakdown.c_stotable_id
+            string gadataGetMaxTimestampQry = string.Format(@"select max(_timestamp) as 'ts' FROM STO.h_breakdown
+                                                            left join STO.c_StoTable on c_StoTable.id = h_breakdown.c_stotable_id
                                                             where c_StoTable.StoTable = '{0}'", TargetTable);
             DataTable dtGadataMaxTS = connectionManager.RunQuery(gadataGetMaxTimestampQry);
             //handel empty table copy last 30 days
@@ -86,7 +92,7 @@ namespace EqUiWebUi.Areas.PlcSupervisie
         public void NormalizeSTOdata()
         {
             ConnectionManager connectionManager = new ConnectionManager();
-           connectionManager.RunCommand("EXEC GADATA.STO.[sp_update_L]", enblExeptions: true);
+           connectionManager.RunCommand("EXEC STO.[sp_update_L]", enblExeptions: true);
         }
 
         [AutomaticRetry(Attempts = 2)]
