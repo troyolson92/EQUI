@@ -20,3 +20,21 @@
     CONSTRAINT [FK_rt_ErrDispLog_rt_csv_file] FOREIGN KEY ([rt_csv_file_id]) REFERENCES [NGAC].[rt_csv_file] ([id])
 );
 
+
+
+
+GO
+CREATE NONCLUSTERED INDEX [_dta_index_rt_ErrDispLog_23_467441385__K3_K2_K1_4_5_6_7_8_9_10_11_12_13_14_15_16]
+    ON [NGAC].[rt_ErrDispLog]([Date Time] ASC, [rt_csv_file_id] ASC, [id] ASC)
+    INCLUDE([AlarmNo], [Txt 1], [Txt 2], [Txt 3], [Txt 4], [Txt 5], [Txt 6], [Txt 7], [Txt 8], [Txt 9], [Txt 10], [Txt 11], [Action]);
+
+
+GO
+CREATE STATISTICS [_dta_stat_467441385_3_1]
+    ON [NGAC].[rt_ErrDispLog]([Date Time], [id]);
+
+
+GO
+CREATE STATISTICS [_dta_stat_467441385_2_3_1]
+    ON [NGAC].[rt_ErrDispLog]([rt_csv_file_id], [Date Time], [id]);
+

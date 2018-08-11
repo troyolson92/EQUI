@@ -72,6 +72,10 @@
     <Folder Include="PJV\Tables\" />
     <Folder Include="NGAC\" />
     <Folder Include="NGAC\Tables\" />
+    <Folder Include="NGAC\Views\" />
+    <Folder Include="NGAC\Functions\" />
+    <Folder Include="NGAC\Stored Procedures\" />
+    <Folder Include="Alerts\Views\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Alerts\Tables\c_CPT600.sql" />
@@ -190,6 +194,15 @@
     <Build Include="NGAC\Tables\rt_ErrDispLog.sql" />
     <Build Include="NGAC\Tables\rt_Disp_BarrelLow.sql" />
     <Build Include="NGAC\Tables\rt_BeamSetUpLog.sql" />
+    <Build Include="NGAC\Views\TipwearLast.sql" />
+    <Build Include="NGAC\Views\TipwearBeforeChange.sql" />
+    <Build Include="NGAC\Views\TipMonitor.sql" />
+    <Build Include="NGAC\Views\TipLifeExpectations.sql" />
+    <Build Include="NGAC\Functions\DistanceBetweenPoints.sql" />
+    <Build Include="NGAC\Stored Procedures\sp_CalcTipWearBeforeChange.sql" />
+    <Build Include="Alerts\Views\Alerts.sql" />
+    <Build Include="NGAC\Views\TipDressLogFile.sql" />
+    <Build Include="NGAC\Tables\ABBWearComponent.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Volvo\PostDeploy_InitalDataInsert.sql" />
