@@ -117,6 +117,7 @@
 <script>
     //load girds
     console.log("c_variableGrid");
+    $("#c_variableGrid").html("Loading.....");
     $('#c_variableGrid').mvcgrid({
                 sourceUrl: '@Html.Raw(@Url.Action("_List","c_variable", new {enable_mask = Model.cVariableMask, controller_id = ViewBag.controller_id }))',
       requestType: 'get', // Ajax grid request type
@@ -126,6 +127,7 @@
             });
 
     console.log("c_variable_searchGrid");
+    $("#c_variable_searchGrid").html("Loading.....");
     $('#c_variable_searchGrid').mvcgrid({
                 sourceUrl: '@Html.Raw(@Url.Action("_List", "c_variable_search", new {enable_mask = Model.cVariableSearchMask, controller_id = ViewBag.controller_id }))',
       requestType: 'get', // Ajax grid request type
@@ -135,6 +137,7 @@
             });
 
     console.log("c_errorGrid");
+    $("#c_errorGrid").html("Loading.....");
     $('#c_errorGrid').mvcgrid({
                 sourceUrl: '@Html.Raw(@Url.Action("_List", "c_error", new {enable_mask = Model.cErrorMask, controller_id = ViewBag.controller_id }))',
       requestType: 'get', // Ajax grid request type
@@ -144,6 +147,7 @@
             });
 
     console.log("c_csv_logGrid");
+    $("#c_csv_logGrid").html("Loading.....");
     $('#c_csv_logGrid').mvcgrid({
                 sourceUrl: '@Html.Raw(@Url.Action("_List", "c_csv_log", new {enable_mask = Model.cCSVLogMask, controller_id = ViewBag.controller_id }))',
         requestType: 'get', // Ajax grid request type
@@ -153,6 +157,7 @@
             });
 
     console.log("c_device_infoGrid");
+    $("#c_device_infoGrid").html("Loading.....");
     $('#c_device_infoGrid').mvcgrid({
                 sourceUrl: '@Html.Raw(@Url.Action("_List", "c_device_info", new {enable_mask = Model.cDeviceInfoMask, controller_id = ViewBag.controller_id }))',
         requestType: 'get', // Ajax grid request type
@@ -162,6 +167,7 @@
             });
 
     console.log("c_controllerGrid");
+    $("#c_controllerGrid").html("Loading.....");
     $('#c_controllerGrid').mvcgrid({
                 sourceUrl: '@Html.Raw(@Url.Action("_List", "c_controller", new { controllerclass = Model.id, controller_id = ViewBag.controller_id }))',
         requestType: 'get', // Ajax grid request type
