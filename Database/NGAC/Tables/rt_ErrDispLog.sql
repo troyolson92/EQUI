@@ -1,8 +1,8 @@
-﻿CREATE TABLE [NGAC].[rt_SpotErr] (
+﻿CREATE TABLE [NGAC].[rt_ErrDispLog] (
     [id]             INT           IDENTITY (1, 1) NOT NULL,
     [rt_csv_file_id] INT           NULL,
-    [Date Time]      VARCHAR (MAX) NULL,
-    [AlarmNo]        VARCHAR (MAX) NULL,
+    [Date Time]      DATETIME      NULL,
+    [AlarmNo]        INT           NULL,
     [Txt 1]          VARCHAR (MAX) NULL,
     [Txt 2]          VARCHAR (MAX) NULL,
     [Txt 3]          VARCHAR (MAX) NULL,
@@ -16,7 +16,7 @@
     [Txt 11]         VARCHAR (MAX) NULL,
     [Action]         VARCHAR (MAX) NULL,
     [_timestamp]     DATETIME      NULL,
-    CONSTRAINT [PK_rt_SpotErr] PRIMARY KEY CLUSTERED ([id] ASC),
-    CONSTRAINT [FK_rt_SpotErr_rt_csv_file] FOREIGN KEY ([rt_csv_file_id]) REFERENCES [NGAC].[rt_csv_file] ([id])
+    CONSTRAINT [PK_rt_ErrDispLog] PRIMARY KEY CLUSTERED ([id] ASC),
+    CONSTRAINT [FK_rt_ErrDispLog_rt_csv_file] FOREIGN KEY ([rt_csv_file_id]) REFERENCES [NGAC].[rt_csv_file] ([id])
 );
 

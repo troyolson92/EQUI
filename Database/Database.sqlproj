@@ -137,9 +137,7 @@
     <Build Include="NGAC\Tables\x_reAlarms.sql" />
     <Build Include="NGAC\Tables\rt_version_info.sql" />
     <Build Include="NGAC\Tables\rt_value.sql" />
-    <Build Include="NGAC\Tables\rt_SpotErr.sql" />
     <Build Include="NGAC\Tables\rt_search_value.sql" />
-    <Build Include="NGAC\Tables\rt_saSocketQ.sql" />
     <Build Include="NGAC\Tables\rt_pjv_file.sql" />
     <Build Include="NGAC\Tables\rt_job_breakdown.sql" />
     <Build Include="NGAC\Tables\rt_job.sql" />
@@ -165,7 +163,6 @@
     <Build Include="NGAC\Tables\c_variable_search.sql" />
     <Build Include="NGAC\Tables\c_variable.sql" />
     <Build Include="NGAC\Tables\c_service_setup.sql" />
-    <Build Include="NGAC\Tables\c_racktracking.sql" />
     <Build Include="NGAC\Tables\c_pjv_ignore.sql" />
     <Build Include="NGAC\Tables\c_pjv_event.sql" />
     <Build Include="NGAC\Tables\c_pjv_action.sql" />
@@ -186,14 +183,38 @@
     <Build Include="NGAC\Tables\XY_h_alarm.sql" />
     <Build Include="Security\PJV.sql" />
     <Build Include="Security\NGAC.sql" />
+    <None Include="NGAC\PostDeploy_c_service_setup.sql" />
+    <Build Include="NGAC\Tables\rtu_SpeedOvr.sql" />
+    <Build Include="NGAC\Tables\rt_TipDressLogFile.sql" />
+    <Build Include="NGAC\Tables\rt_TCP_LOG.sql" />
+    <Build Include="NGAC\Tables\rt_ErrDispLog.sql" />
+    <Build Include="NGAC\Tables\rt_Disp_BarrelLow.sql" />
+    <Build Include="NGAC\Tables\rt_BeamSetUpLog.sql" />
   </ItemGroup>
   <ItemGroup>
-    <PostDeploy Include="Volvo\Script.PostDeployment_InitalDataInsert.sql" />
-    <None Include="NGAC\Script.PostDeployment_c_service_setup.sql" />
+    <PostDeploy Include="Volvo\PostDeploy_InitalDataInsert.sql" />
+    <None Include="Script_1.PostDeployment.sql" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Database.publish.xml" />
     <None Include="GADATAprod.publish.xml" />
-    <None Include="Database_1.publish.xml" />
+    <None Include="GADATAdev.publish.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <SqlCmdVariable Include="DB_C_PASSWORD">
+      <DefaultValue>EqUiAdmin</DefaultValue>
+      <Value>$(SqlCmdVar__5)</Value>
+    </SqlCmdVariable>
+    <SqlCmdVariable Include="DB_C_SERVER">
+      <DefaultValue>SQLA001.gen.volvocars.net</DefaultValue>
+      <Value>$(SqlCmdVar__2)</Value>
+    </SqlCmdVariable>
+    <SqlCmdVariable Include="DB_C_USERNAME">
+      <DefaultValue>EqUiAdmin</DefaultValue>
+      <Value>$(SqlCmdVar__4)</Value>
+    </SqlCmdVariable>
+    <SqlCmdVariable Include="SESSION_NAME">
+      <DefaultValue>VASCdev</DefaultValue>
+      <Value>$(SqlCmdVar__1)</Value>
+    </SqlCmdVariable>
   </ItemGroup>
 </Project>

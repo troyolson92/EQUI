@@ -9,3 +9,8 @@ Post-Deployment Script Template
                SELECT * FROM [$(TableName)]					
 --------------------------------------------------------------------------------------
 */
+
+--key 632A64BA78FF63171857E26B49EBAA50DC425073CFF24ACBB58DADFD42788C34
+
+:r .\NGAC\PostDeploy_c_service_setup.sql
+:r .\Volvo\PostDeploy_InitalDataInsert.sql
