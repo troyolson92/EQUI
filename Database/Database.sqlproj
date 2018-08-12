@@ -76,6 +76,9 @@
     <Folder Include="NGAC\Functions\" />
     <Folder Include="NGAC\Stored Procedures\" />
     <Folder Include="Alerts\Views\" />
+    <Folder Include="MAXIMO\" />
+    <Folder Include="MAXIMO\Tables\" />
+    <Folder Include="EqUi\Stored Procedures\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Alerts\Tables\c_CPT600.sql" />
@@ -203,6 +206,9 @@
     <Build Include="Alerts\Views\Alerts.sql" />
     <Build Include="NGAC\Views\TipDressLogFile.sql" />
     <Build Include="NGAC\Tables\ABBWearComponent.sql" />
+    <Build Include="MAXIMO\Tables\WORKORDERS.sql" />
+    <Build Include="EqUi\Stored Procedures\sp_LinkAssets.sql" />
+    <Build Include="Security\MAXIMO.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Volvo\PostDeploy_InitalDataInsert.sql" />
