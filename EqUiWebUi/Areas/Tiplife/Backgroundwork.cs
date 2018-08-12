@@ -15,6 +15,7 @@ namespace EqUiWebUi.Areas.Tiplife
         //
         public static List<TipMonitor> Tipstatus { get; set; }
         public static DateTime TipstatusLastDt { get; set; }
+        public static int TipWearbeforechangeCounter { get; set; }
     }
 
     public class Backgroundwork
@@ -39,7 +40,7 @@ namespace EqUiWebUi.Areas.Tiplife
         [Queue("gadata")]
         public void UpdateTipstatus(PerformContext context)
         {
-            context.WriteLine(" Get gADATAEntities.TipMonitor");
+            context.WriteLine("Get gADATAEntities.TipMonitor");
             GADATAEntitiesTiplife gADATAEntities = new GADATAEntitiesTiplife();
             gADATAEntities.Database.CommandTimeout = 60; //override default 30 seconds timeout. 
             List<TipMonitor> data = (from tipstatus in gADATAEntities.TipMonitor
@@ -55,15 +56,30 @@ namespace EqUiWebUi.Areas.Tiplife
                             .Max();
 
                 DataBuffer.TipstatusLastDt = maxDate;
-                context.WriteLine(string.Format("UpdateTipstatus {0} records", data.Count));
-
-                //add singal R 
+                context.WriteLine(string.Format("Buffer table updated ({0} rows)", data.Count));
+                //notify clients
                 var SignalRcontext = Microsoft.AspNet.SignalR.GlobalHost.ConnectionManager.GetHubContext<Areas.Gadata.DataRefreshHub>();
                 SignalRcontext.Clients.Group("TipstatusGrid").newData();
             }
             else
             {
+                context.WriteLine("UpdateTipstatus did not return any data");
                 log.Error("UpdateTipstatus did not return any data");
+            }
+
+            //update tipwear before change every 5 minutes
+            int TipWearbeforechangeInterval = 5;
+            if (DataBuffer.TipWearbeforechangeCounter >= TipWearbeforechangeInterval)
+            {
+                context.WriteLine("TipWearbeforechange update START");
+                gADATAEntities.Database.ExecuteSqlCommand("exec [NGAC].[sp_CalcTipWearBeforeChange]");
+                DataBuffer.TipWearbeforechangeCounter = 0;
+                context.WriteLine("Done");
+            }
+            else
+            {
+                DataBuffer.TipWearbeforechangeCounter += 1;
+                context.WriteLine(string.Format("TipWearbeforechange update SKIPPED (interval:{0}/{1})",DataBuffer.TipWearbeforechangeCounter, TipWearbeforechangeInterval));
             }
         }
 

@@ -70,7 +70,7 @@ namespace EQUICommunictionLib
 
             if (dbName != "") // get by name
             {
-                string getCommand = "select * from GADATA.EqUi.c_datasource where [Name] = '{0}'";
+                string getCommand = "select * from EqUi.c_datasource where [Name] = '{0}'";
                 dt = sqlComm.RunQuery(string.Format(getCommand, dbName), enblExeptions: true);
                 if (dt.Rows.Count != 1)
                 {
@@ -87,7 +87,7 @@ namespace EQUICommunictionLib
             }
             else if (dbID != 0) //get by ID
             {
-                string getCommand = "select * from GADATA.EqUi.c_datasource where [ID] = {0}";
+                string getCommand = "select * from EqUi.c_datasource where [ID] = {0}";
                 dt = sqlComm.RunQuery(string.Format(getCommand, dbID), enblExeptions: true);
                 if (dt.Rows.Count != 1)
                 {
@@ -104,7 +104,7 @@ namespace EQUICommunictionLib
             }
             else //get all
             {
-                string getCommand = "select * from GADATA.EqUi.c_datasource";
+                string getCommand = "select * from EqUi.c_datasource";
                 dt = sqlComm.RunQuery(string.Format(getCommand, dbName), enblExeptions: true);
                 if (dt.Rows.Count == 0)
                 {
