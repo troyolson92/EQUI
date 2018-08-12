@@ -119,8 +119,6 @@
     <Build Include="Volvo\Tables\c_userRoles.sql" />
     <Build Include="Volvo\Tables\L_users.sql" />
     <Build Include="Volvo\Tables\h_usersPermisions.sql" />
-    <Build Include="Security\Hangfire.sql" />
-    <Build Include="Security\Hangfire_1.sql" />
     <Build Include="Security\EqUi.sql" />
     <Build Include="Security\EqUi_1.sql" />
     <Build Include="Security\RoleMemberships.sql" />
@@ -212,19 +210,7 @@
     <Build Include="NGAC\Stored Procedures\sp_update_cleanLogteksts.sql" />
     <Build Include="NGAC\Stored Procedures\sp_LinkAssets.sql" />
     <Build Include="Security\db_executor.sql" />
-    <Build Include="Security\VASC_a.sql" />
-    <Build Include="Security\VCSCTimesync.sql" />
-    <Build Include="Security\VCSCc4g_a.sql" />
-    <Build Include="Security\VCSCc3g_b.sql" />
-    <Build Include="Security\VCSCc3g_a.sql" />
-    <Build Include="Security\GMorris.sql" />
-    <Build Include="Security\GADATA.sql" />
-    <Build Include="Security\EqUiAdmin.sql" />
-    <Build Include="Security\BackupClient.sql" />
-    <Build Include="Security\AASPOT_DEV.sql" />
-    <Build Include="Security\AASPOT_c.sql" />
-    <Build Include="Security\AASPOT_b.sql" />
-    <Build Include="Security\AASPOT_a.sql" />
+    <Build Include="Security\db_accessEquiAdmin.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Volvo\PostDeploy_InitalDataInsert.sql" />
