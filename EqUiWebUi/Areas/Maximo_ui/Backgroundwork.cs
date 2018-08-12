@@ -184,9 +184,20 @@ workorder.changedate >= sysdate - 100
         public void LinkMaximoAssetsToGadata(PerformContext context = null)
         {
             context.WriteLine("sp_linkassets Start");
-            string CmdLinkAssets = "EXEC [EqUi].[sp_LinkAssets]";
             ConnectionManager connectionManager = new ConnectionManager();
-            connectionManager.RunCommand(CmdLinkAssets, enblExeptions: true, maxEXECtime: 300);
+            string[] cmds = { "exec C3G.[sp_LinkAssets]"
+                    ,"exec C4G.[sp_LinkAssets]"
+                    ,"exec STO.[sp_LinkAssets]"
+                    ,"exec NGAC.[sp_LinkAssets]"
+                    ,"exec EQUI.[sp_LinkAssets]"
+            };
+
+            foreach (string cmd in cmds)
+            {
+                context.WriteLine(cmd);
+                connectionManager.RunCommand(cmd, enblExeptions: true, maxEXECtime: 300);
+                context.WriteLine("Done");
+            }
             context.WriteLine("sp_linkassets Done");
         }
     }
