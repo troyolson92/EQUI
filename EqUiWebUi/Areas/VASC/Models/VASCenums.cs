@@ -268,6 +268,7 @@ namespace EqUiWebUi.Areas.VASC.Models
         Body_number = 101,
         Application_error  = 102, //(0 in alarm, 1 not in alarm)
         Cycle_end_code = 103,
+        Part_data_count = 104, 
         //Register code
         Register_1 = 200,
         Register_2 = 201,

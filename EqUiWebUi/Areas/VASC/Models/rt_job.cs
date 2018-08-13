@@ -35,6 +35,7 @@ namespace EqUiWebUi.Areas.VASC.Models
         public Nullable<System.DateTime> ts_breakDownAck { get; set; }
         public Nullable<System.DateTime> C_timestamp { get; set; }
         public Nullable<double> cycletime { get; set; }
+        public Nullable<int> partDataCount { get; set; }
     
         public virtual c_controller c_controller { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
