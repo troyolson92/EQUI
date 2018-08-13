@@ -1,5 +1,11 @@
-﻿CREATE SCHEMA [EqUi]
+﻿CREATE SCHEMA [HangFire]
     AUTHORIZATION [dbo];
+
+
+
+
+
+
 
 
 

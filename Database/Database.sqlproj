@@ -119,12 +119,9 @@
     <Build Include="Volvo\Tables\c_userRoles.sql" />
     <Build Include="Volvo\Tables\L_users.sql" />
     <Build Include="Volvo\Tables\h_usersPermisions.sql" />
-    <Build Include="Security\EqUi.sql" />
-    <Build Include="Security\EqUi_1.sql" />
-    <Build Include="Security\RoleMemberships.sql" />
     <Build Include="Security\Alerts.sql" />
-    <Build Include="Security\EqUi_2.sql" />
-    <Build Include="Security\HangFire_2.sql" />
+    <Build Include="Security\EqUi.sql" />
+    <Build Include="Security\HangFire.sql" />
     <Build Include="Security\Volvo.sql" />
     <Build Include="Volvo\Tables\L_Screens.sql" />
     <Build Include="PJV\Tables\SummaryResult.sql" />
@@ -209,8 +206,9 @@
     <Build Include="Security\MAXIMO.sql" />
     <Build Include="NGAC\Stored Procedures\sp_update_cleanLogteksts.sql" />
     <Build Include="NGAC\Stored Procedures\sp_LinkAssets.sql" />
-    <Build Include="Security\db_executor.sql" />
     <Build Include="Security\db_accessEquiAdmin.sql" />
+    <Build Include="Security\VASC_a.sql" />
+    <Build Include="Security\EqUiAdmin.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Volvo\PostDeploy_InitalDataInsert.sql" />
