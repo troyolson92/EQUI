@@ -185,12 +185,22 @@ workorder.changedate >= sysdate - 100
         {
             context.WriteLine("sp_linkassets Start");
             ConnectionManager connectionManager = new ConnectionManager();
-            string[] cmds = { "exec C3G.[sp_LinkAssets]"
-                    ,"exec C4G.[sp_LinkAssets]"
-                    ,"exec STO.[sp_LinkAssets]"
-                    ,"exec NGAC.[sp_LinkAssets]"
-                    ,"exec EQUI.[sp_LinkAssets]"
-            };
+
+            List<string> cmds = new List<string>(); 
+
+            if (EqUiWebUi.MyBooleanExtensions.IsAreaEnabled("VCSC"))
+            {
+                cmds.Add("exec C3G.[sp_LinkAssets]");
+                cmds.Add("exec C4G.[sp_LinkAssets]");
+            }
+
+            if (EqUiWebUi.MyBooleanExtensions.IsAreaEnabled("STO"))
+            {
+                cmds.Add("exec STO.[sp_LinkAssets]");
+            }
+
+            cmds.Add("exec NGAC.[sp_LinkAssets]");
+            cmds.Add("exec EQUI.[sp_LinkAssets]");
 
             foreach (string cmd in cmds)
             {
