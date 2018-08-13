@@ -1,3 +1,27 @@
-﻿CREATE USER [EqUi] FOR LOGIN [EqUi]
-    WITH DEFAULT_SCHEMA = [EqUi];
+﻿CREATE SCHEMA [EqUi]
+    AUTHORIZATION [dbo];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
