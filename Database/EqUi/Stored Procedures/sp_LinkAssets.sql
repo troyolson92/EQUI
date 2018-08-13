@@ -2,17 +2,105 @@
 
 
 
-
-
-
 CREATE PROCEDURE [EqUi].[sp_LinkAssets]
 
 AS
 BEGIN
---clear the table
+ print 'make temp table for robots'
+ if (OBJECT_ID('tempdb..#Robots') is not null) drop table #Robots
+
+ print 'adding NGAC robots'
+	select distinct
+	 'NGAC' as controller_type
+	,'NGAC.c_controller' as 'table'
+	,NGAC.id
+	,NGAC.controller_name
+	,null as 'location'
+	,null as'ownership'
+	,NULL as 'Plant'
+	,NULL as 'Area'
+	,NULL as 'SubArea'
+	,Null as 'server'
+	,NGAC.locationtree as 'locationtree'
+	into #robots
+	from NGAC.c_controller as NGAC
+	where class_id <> 8 -- exclude S4C class
+/*
+IF (EXISTS (SELECT * 
+                 FROM INFORMATION_SCHEMA.TABLES 
+                 WHERE TABLE_SCHEMA = 'NGAC' 
+                 AND  TABLE_NAME = 'c_controller'))
+BEGIN
+  print 'adding S4C robots'
+	insert INTO #Robots
+	select
+	 'S4C' as controller_type
+	,'NGAC.c_controller' as 'table'
+	,NGAC.id
+	,NGAC.controller_name
+	,null as 'location'
+	,null as'ownership'
+	,NULL as 'Plant'
+	,NULL as 'Area'
+	,NULL as 'SubArea'
+	,Null as 'server'
+	,NGAC.locationtree as 'locationtree'
+	from NGAC.c_controller as NGAC
+	where class_id = 8 -- s4C only
+END
+
+IF (EXISTS (SELECT * 
+                 FROM INFORMATION_SCHEMA.TABLES 
+                 WHERE TABLE_SCHEMA = 'c4g' 
+                 AND  TABLE_NAME = 'c_controller'))
+BEGIN
+ print 'adding c4g robots'
+	insert INTO #Robots
+	select distinct 
+	 'c4g' as controller_type
+	,'c4g.c_controller' as 'table'
+	,c4g.id
+	,c4g.controller_name
+	,c4g.location
+	,c4g.ownership
+	,c4g.Plant
+	,c4g.Area
+	,C4g.SubArea
+	,lop.Vcsc_name as 'server'
+	,c4g.locationtree as 'locationtree'
+	from c4g.c_controller as c4g
+	left join C4G.L_operation as lop on lop.controller_id = c4g.id and lop.code = 3
+	WHERE controller_name not like '%REC' --added this because elsde CBM controllers clones show in front end
+END
+
+ IF (EXISTS (SELECT * 
+                 FROM INFORMATION_SCHEMA.TABLES 
+                 WHERE TABLE_SCHEMA = 'c4g' 
+                 AND  TABLE_NAME = 'c_controller'))
+BEGIN
+  print 'adding c3g robots'
+	insert INTO #Robots
+	select distinct 
+	 'c3g' as controller_type
+	,'c3g.c_controller' as 'table'
+	,c3g.id
+	,c3g.controller_name
+	,c3g.location
+	,c3g.ownership as 'ownership' 
+	,c3g.Plant
+	,c3g.Area
+	,c3g.SubArea
+	,lop.Vcsc_name as 'server'
+	,c3g.locationtree as 'locationtree'
+	from c3g.c_controller as c3g
+	left join C3G.L_operation as lop on lop.controller_id = c3g.id and lop.code = 3
+END
+*/
+--************************************************************************************************--
+
+ print 'clear the table'
  DELETE EqUi.ASSETS FROM EqUi.ASSETS
- 
- --run new transfer
+ print 'run new transfer'
                 INSERT INTO EqUi.ASSETS
                 SELECT [SYSTEMID]
                       ,assets.[LOCATION]
@@ -38,13 +126,13 @@ BEGIN
                   FROM [Equi].[ASSETS_fromMX7] as assets
 --***********************************************ROBOT CONTROLLER JOIN BLOCK***********************************************--
                   --join robot assets with there controller
-                  left join volvo.Robots as r on 
+                  left join #Robots as r on 
                   r.controller_name = assets.LOCATION
                   AND
                   (assets.ASSETNUM like 'URC%' OR assets.ASSETNUM like 'URA%') --COMAU and ABB assets
 --***********************************************ROBOT CONTROLLED ASSET JOIN BLOCK*******************************************-- 
                   --join robot controller assets with there controller
-                  left join VOLVO.Robots as ra on 
+                  left join #Robots as ra on 
                   --Grippers
                   (
                   REPLACE(REPLACE(REPLACE(assets.LOCATION,'GH','R'),'GP','R'),'GD','R') LIKE ra.controller_name+'%'
@@ -83,13 +171,13 @@ BEGIN
 UPDATE  EqUi.ASSETS
 set ResponsibleTechnicianTeam = c_ownership.[Ownership]
 from  EQUI.ASSETS as c
-left join  EqUi.c_ownership on c_ownership.optgroup = 'TechnicianTeams'
+left join  EqUi.c_ownership on c_ownership.Optgroup = 'TechnicianTeams'
 and c.LocationTree like c_ownership.LocationTree 
 
 UPDATE  EqUi.ASSETS
 set  ResponsibleProductionTeam = c_ownership.[Ownership]
 from  EQUI.ASSETS as c
-left join  EqUi.c_ownership on c_ownership.optgroup = 'ProductionTeams'
+left join  EqUi.c_ownership on c_ownership.Optgroup = 'ProductionTeams'
 and c.LocationTree like c_ownership.LocationTree 
 
 

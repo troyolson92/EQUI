@@ -209,6 +209,10 @@
     <Build Include="Security\db_accessEquiAdmin.sql" />
     <Build Include="Security\VASC_a.sql" />
     <Build Include="Security\EqUiAdmin.sql" />
+    <Build Include="NGAC\Functions\TrimX.sql" />
+    <Build Include="NGAC\Functions\TrimEmptylines.sql" />
+    <Build Include="NGAC\Functions\RTrimX.sql" />
+    <Build Include="NGAC\Functions\LTrimX.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Volvo\PostDeploy_InitalDataInsert.sql" />

@@ -5,9 +5,9 @@ AS
 BEGIN
 
 --precalculate 'clean' discription text 
-UPDATE GADATA.NGAC.L_description
-SET CleanDescription = ngac.TrimX(ngac.TrimEmptylines(L_description.[Description]))  
-FROM GADATA.NGAC.L_description 
+UPDATE NGAC.L_description
+SET CleanDescription = NGAC.TrimX(NGAC.TrimEmptylines(L_description.[Description]))  
+FROM NGAC.L_description 
 WHERE 
 --only new ones
 (
@@ -22,9 +22,9 @@ AND @Update = 1
 )
 
 --precalculate 'clean' title text 
-UPDATE GADATA.NGAC.L_error
-SET CleanTitle = ngac.TrimX(ngac.TrimEmptylines(L_error.Title))  
-FROM GADATA.NGAC.L_error 
+UPDATE NGAC.L_error
+SET CleanTitle = NGAC.TrimX(NGAC.TrimEmptylines(L_error.Title))  
+FROM NGAC.L_error 
 WHERE 
 --only new ones
 (

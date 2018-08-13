@@ -22,7 +22,7 @@ from
 select x.*  from(--nested to optimize return result for next join
 select
  rt.*
-,ROW_NUMBER() OVER (PARTITION BY rt.controller_name, rt.Tool_nr ORDER BY rt.[Date Time] DESC) AS 'rnDesc'
+,ROW_NUMBER() OVER (PARTITION BY rt.controller_name, rt.Tool_Nr ORDER BY rt.[Date Time] DESC) AS 'rnDesc'
 from NGAC.TipDressLogFile as rt 
 where
 --SDB bug trap 'divide by 0' 18w4d1

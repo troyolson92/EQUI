@@ -43,7 +43,7 @@ and c.LocationTree like c_ownership.LocationTree
 --update hasspotweld bit for ngac
 --*******************************************************************************************************************--
 update  NGAC.c_controller
- set hasspotweld = case
+ set hasSpotweld = case
                   when x.controller_id is not null  then 1
                   else 0
                  end
