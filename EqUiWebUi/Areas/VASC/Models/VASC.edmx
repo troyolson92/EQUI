@@ -268,6 +268,7 @@
           <Property Name="task_execution_status" Type="int" />
           <Property Name="ts_breakDownAck" Type="datetime" />
           <Property Name="ts_breakDownStart" Type="datetime" />
+          <Property Name="part_data_count" Type="int" />
         </EntityType>
         <EntityType Name="rt_alarm">
           <Key>
@@ -368,6 +369,7 @@
           <Property Name="ts_breakDownAck" Type="datetime" />
           <Property Name="_timestamp" Type="datetime" />
           <Property Name="cycletime" Type="float" />
+          <Property Name="partDataCount" Type="int" />
         </EntityType>
         <EntityType Name="rt_job_breakdown">
           <Key>
@@ -1175,6 +1177,7 @@
           <Property Name="ts_breakDownStart" Type="DateTime" Precision="3" />
           <NavigationProperty Name="c_controller" Relationship="GADATAModelVASC.FK_rt_active_info_c_controller" FromRole="rt_active_info" ToRole="c_controller" />
           <Property Name="vasc_session" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="part_data_count" Type="Int32" />
         </EntityType>
         <Association Name="FK_c_controller_c_controller_class">
           <End Type="GADATAModelVASC.c_controller_class" Role="c_controller_class" Multiplicity="1" />
@@ -1421,6 +1424,7 @@
           <NavigationProperty Name="c_controller" Relationship="GADATAModelVASC.FK_rt_job_c_controller" FromRole="rt_job" ToRole="c_controller" />
           <NavigationProperty Name="rt_job_breakdown" Relationship="GADATAModelVASC.FK_rt_job_breakdown_rt_job" FromRole="rt_job" ToRole="rt_job_breakdown" />
           <NavigationProperty Name="c_job" Relationship="GADATAModelVASC.FK_rt_job_c_job" FromRole="rt_job" ToRole="c_job" />
+          <Property Name="partDataCount" Type="Int32" />
         </EntityType>
         <EntityType Name="rt_job_breakdown">
           <Key>
@@ -1931,6 +1935,7 @@
           <EntitySetMapping Name="rt_active_info">
             <EntityTypeMapping TypeName="GADATAModelVASC.rt_active_info">
               <MappingFragment StoreEntitySet="rt_active_info">
+                <ScalarProperty Name="part_data_count" ColumnName="part_data_count" />
                 <ScalarProperty Name="vasc_session" ColumnName="vasc_session" />
                 <ScalarProperty Name="ts_breakDownStart" ColumnName="ts_breakDownStart" />
                 <ScalarProperty Name="ts_breakDownAck" ColumnName="ts_breakDownAck" />
@@ -2044,6 +2049,7 @@
           <EntitySetMapping Name="rt_job">
             <EntityTypeMapping TypeName="GADATAModelVASC.rt_job">
               <MappingFragment StoreEntitySet="rt_job">
+                <ScalarProperty Name="partDataCount" ColumnName="partDataCount" />
                 <ScalarProperty Name="cycletime" ColumnName="cycletime" />
                 <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
                 <ScalarProperty Name="ts_breakDownAck" ColumnName="ts_breakDownAck" />
