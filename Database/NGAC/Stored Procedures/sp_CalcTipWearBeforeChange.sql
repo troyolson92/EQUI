@@ -17,7 +17,7 @@ SELECT
  x.controller_name
 ,x.controller_id
 ,x.tipDressID
-,x.Tool_nr
+,x.Tool_Nr
 ,x.TipchangeTimestamp
 ,x.FixedWearBeforeChange
 ,x.MoveWearBeforeChange
@@ -125,7 +125,7 @@ AND Y.DressBeforeChange is not null
 print'insert new data'
 ---------------------------------------------------------------------------------------
 --DROP TABLE ngac.h_TipWearBeforeChange
-INSERT INTO ngac.h_TipWearBeforeChange
+INSERT INTO NGAC.h_TipWearBeforeChange
 SELECT 
 	   temp.[controller_name]
       ,temp.[controller_id]
@@ -147,7 +147,7 @@ SELECT
 --INTO gadata.ngac.h_TipWearBeforeChange
 FROM #TipWearBeforeChange as temp
 
-Left join ngac.h_TipWearBeforeChange as h on
+Left join NGAC.h_TipWearBeforeChange as h on
 h.tipDressID = temp.tipDressID
 where 
 h.tipDressID IS NULL
