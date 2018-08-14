@@ -85,6 +85,7 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
                 data = (from d in data
                         where (d.LocationTree ?? "").Contains(LocationRoot)
                         || d.Logtype == "TIMELINE"
+                        orderby d.timestamp descending
                         select d).ToList();
             }
 
@@ -96,6 +97,7 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
                             || (d.Classification ?? "") == "Undefined*" //or allow assets thet are undedind
                             || (d.Classification ?? "") == "" //or allow assets that are null
                             || d.Logtype == "TIMELINE" //always allowtimeline
+                        orderby d.timestamp descending
                         select d).ToList();
             }
             //

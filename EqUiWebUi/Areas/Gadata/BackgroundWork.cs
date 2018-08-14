@@ -35,9 +35,9 @@ namespace EqUiWebUi.Areas.Gadata
         public string Logcode { get; set; }
         public string Logtype { get; set; }
         public int refId { get; set; }
-        public System.DateTime timestamp { get; set; }
+        public Nullable<System.DateTime> timestamp { get; set; }
         public string LocationTree { get; set; }
-        public Nullable<int> ClassTree { get; set; }
+        public string ClassTree { get; set; }
     }
 
 
@@ -75,110 +75,122 @@ namespace EqUiWebUi.Areas.Gadata
                 }
             }
 
-            //update the local datatable with ploeg rapport called every minute #hangfire
-            [Queue("gadata")]
-            [AutomaticRetry(Attempts = 0)]
-            public void UpdatePloegreport()
-            {
-                EqUiWebUi.Areas.Gadata.Models.GADATAEntities2 gADATAEntities = new EqUiWebUi.Areas.Gadata.Models.GADATAEntities2();
-                gADATAEntities.Database.CommandTimeout = 60; // normally 30 but this one is heavy
-                List<EqUiWebUi.Areas.Gadata.Models.PloegRaport_Result> data = (from ploegrapport in gADATAEntities.PloegRaport
-                                    (startDate: null,
-                                       endDate: null,
-                                       daysBack: null,
-                                       assets: "%",
-                                       locations: "%",
-                                       lochierarchy: "%",
-                                       minDowntime: 20,
-                                       minCountOfDowtime: 3,
-                                       minCountofWarning: 4)
-                                       select ploegrapport).ToList();
+    //update the local datatable with ploeg rapport called every minute #hangfire
+    [Queue("gadata")]
+    [AutomaticRetry(Attempts = 0)]
+    public void UpdatePloegreport()
+    {
+        EqUiWebUi.Areas.Gadata.Models.GADATAEntities2 gADATAEntities = new EqUiWebUi.Areas.Gadata.Models.GADATAEntities2();
+        gADATAEntities.Database.CommandTimeout = 60; // normally 30 but this one is heavy
+        List<EqUiWebUi.Areas.Gadata.Models.PloegRaport_Result> data = (from ploegrapport in gADATAEntities.PloegRaport
+                            (startDate: null,
+                                endDate: null,
+                                daysBack: null,
+                                assets: "%",
+                                locations: "%",
+                                lochierarchy: "%",
+                                minDowntime: 20,
+                                minCountOfDowtime: 3,
+                                minCountofWarning: 4)
+                                select ploegrapport).ToList();
 
-                if (data.Count != 0)
-                {
-                    DataBuffer.Ploegreport = data;
+        if (data.Count != 0)
+        {
+            DataBuffer.Ploegreport = data;
 
-                    DateTime maxDate = data
-                        .Where(r => Convert.ToDateTime(r.timestamp) < System.DateTime.Now)
-                        // .Where(r => r.Logtype.Contains("Ruleinfo") == false)
-                        .Select(r => Convert.ToDateTime(r.timestamp))
+            DateTime maxDate = data
+                .Where(r => Convert.ToDateTime(r.timestamp) < System.DateTime.Now)
+                // .Where(r => r.Logtype.Contains("Ruleinfo") == false)
+                .Select(r => Convert.ToDateTime(r.timestamp))
+                .Max();
+
+            DataBuffer.PloegreportLastDt = maxDate;
+
+            //add singal R 
+            var context = Microsoft.AspNet.SignalR.GlobalHost.ConnectionManager.GetHubContext<DataRefreshHub>();
+            context.Clients.Group("Ploegrapport").newData();
+        }
+        else
+        {
+            log.Error("UpdatePloegreport did not return any data");
+        }
+    }
+
+    //update the local datatable with supervisie called every minute #hangfire
+    [Queue("gadata")]
+    [AutomaticRetry(Attempts = 0)]
+    public void UpdateSupervisie(PerformContext context)
+    {
+        List<EqUiWebUi.Areas.Gadata.SupervisieDummy> data = new List<EqUiWebUi.Areas.Gadata.SupervisieDummy>();
+
+                
+        context.WriteLine("dataALERT");
+        //get data from alert schema 
+        Alert.Models.GADATA_AlertModel GADATA_AlertModel = new Alert.Models.GADATA_AlertModel();
+        List<EqUiWebUi.Areas.Gadata.SupervisieDummy> dataALERT = GADATA_AlertModel.Alerts_Supervisie.Select(
+            x => new EqUiWebUi.Areas.Gadata.SupervisieDummy() {
+             Location= x.Location
+            ,logtext = x.logtext
+            ,RT = x.RT
+            ,DT = x.DT
+            ,time = x.time
+            ,Classification = x.Classification
+            ,Subgroup = x.Subgroup
+            ,Severity = x.Severity
+            ,Logcode = x.Logcode
+            ,Logtype = x.Logtype
+            ,refId = x.refId
+            ,timestamp = x.timestamp
+            ,LocationTree = x.LocationTree
+            ,ClassTree = x.ClassTree.ToString()
+        }).ToList();
+        context.WriteLine(dataALERT.Count());
+        data.AddRange(dataALERT.Cast<EqUiWebUi.Areas.Gadata.SupervisieDummy>());
+               
+        context.WriteLine("dataVASC");
+        //get data from NGAC schema 
+        VASC.Models.GADATAEntitiesVASC gADATAEntitiesVASC = new VASC.Models.GADATAEntitiesVASC();
+        List<EqUiWebUi.Areas.Gadata.SupervisieDummy> dataVASC = gADATAEntitiesVASC.NGAC_Supervisie.Select(x => new EqUiWebUi.Areas.Gadata.SupervisieDummy() {
+             Location= x.Location
+            ,logtext = x.logtext
+            ,RT = x.RT
+            ,DT = x.DT
+            ,time = x.time
+            ,Classification = x.Classification
+            ,Subgroup = x.Subgroup
+            ,Severity = x.Severity
+            ,Logcode = x.Logcode
+            ,Logtype = x.Logtype
+            ,refId = x.refId
+            ,timestamp = x.timestamp
+            ,LocationTree = x.LocationTree
+            ,ClassTree = x.ClassTree
+        }).ToList();
+        context.WriteLine(dataVASC.Count());
+        data.AddRange(dataVASC);
+
+            //
+    context.WriteLine("datacount " + data.Count());
+    if (data.Count != 0)
+        {
+            DataBuffer.Supervisie = data;
+
+            DateTime maxDate = data
+                        .Where(r => r != null)
+                        .Select(r => r.timestamp.Value)
                         .Max();
 
-                    DataBuffer.PloegreportLastDt = maxDate;
+            DataBuffer.SupervisieLastDt = maxDate;
 
-                    //add singal R 
-                    var context = Microsoft.AspNet.SignalR.GlobalHost.ConnectionManager.GetHubContext<DataRefreshHub>();
-                    context.Clients.Group("Ploegrapport").newData();
-                }
-                else
-                {
-                    log.Error("UpdatePloegreport did not return any data");
-                }
-            }
-
-            //update the local datatable with supervisie called every minute #hangfire
-            [Queue("gadata")]
-            [AutomaticRetry(Attempts = 0)]
-            public void UpdateSupervisie(PerformContext context)
-            {
-                List<EqUiWebUi.Areas.Gadata.SupervisieDummy> data = new List<EqUiWebUi.Areas.Gadata.SupervisieDummy>();
-            /*
-                context.WriteLine("dataEQUI");
-                //get data from EQUI schema (this should only contain the timeline)
-                EqUiWebUi.Models.GADATAEntitiesEQUI GADATAEntitiesEQUI = new EqUiWebUi.Models.GADATAEntitiesEQUI();
-                List<EqUiWebUi.Models.Supervisie> dataEQUI = (from supervis in GADATAEntitiesEQUI.Supervisie select supervis).ToList();
-                context.WriteLine(dataEQUI.Count());
-                data.AddRange(dataEQUI.Cast<EqUiWebUi.Areas.Gadata.SupervisieDummy>());
-                */
-                
-                context.WriteLine("dataALERT");
-                //get data from alert schema 
-                Alert.Models.GADATA_AlertModel GADATA_AlertModel = new Alert.Models.GADATA_AlertModel();
-                List<Alert.Models.Alerts_Supervisie> dataALERT = (from supervis in GADATA_AlertModel.Alerts_Supervisie select supervis).ToList();
-                context.WriteLine(dataALERT.Count());
-                data.AddRange(dataALERT.Cast<EqUiWebUi.Areas.Gadata.SupervisieDummy>());
-               
-                context.WriteLine("dataVASC");
-                //get data from NGAC schema 
-                VASC.Models.GADATAEntitiesVASC gADATAEntitiesVASC = new VASC.Models.GADATAEntitiesVASC();
-                List<EqUiWebUi.Areas.VASC.Models.NGAC_Supervisie> dataVASC = (from supervis in gADATAEntitiesVASC.NGAC_Supervisie select supervis).ToList();
-                context.WriteLine(dataVASC.Count());
-                data.AddRange(dataVASC.Cast<EqUiWebUi.Areas.Gadata.SupervisieDummy>());
-
-            /*
-             *     
-     var query = GetQuery().Select(x => new VehicleDTO(){ ID = c.ID, Number = c.Number });
-
-    if (includeContractorVehicles)
-    {
-        WorkerRepository rep = new WorkerRepository();
-        var contractorsVehicles = rep.GetWirkers().
-            Select(x => new VehicleDTO(){ Number = x.ContractorVehicleNumber});
-        query = query.Union(contractorsVehicles);
-    }*/
-    
-
-
-            if (data.Count != 0)
-                {
-                    DataBuffer.Supervisie = data;
-
-                    DateTime maxDate = data
-                                .Where(r => r != null)
-                                .Select(r => r.timestamp)
-                                .Max();
-
-                    DataBuffer.SupervisieLastDt = maxDate;
-
-                    //add singal R 
-                    var SingnalRcontext = Microsoft.AspNet.SignalR.GlobalHost.ConnectionManager.GetHubContext<DataRefreshHub>();
-                    SingnalRcontext.Clients.Group("Supervisie").newData();
-                }
-                else
-                {
-                    log.Error("UpdateSupervisie did not return any data");
-                }
-            }
+            //add singal R 
+            var SingnalRcontext = Microsoft.AspNet.SignalR.GlobalHost.ConnectionManager.GetHubContext<DataRefreshHub>();
+            SingnalRcontext.Clients.Group("Supervisie").newData();
+        }
+        else
+        {
+            log.Error("UpdateSupervisie did not return any data");
+        }
+    }
 
         //run C3G normalisation steps.
         [Queue("gadata")]
