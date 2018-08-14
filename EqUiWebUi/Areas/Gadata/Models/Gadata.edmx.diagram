@@ -5,8 +5,6 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="e7fccbfe73e24204a8e6f6ddb5a5ebd5" Name="Diagram1">
-        <EntityTypeShape EntityType="GADATAModel1.Bodytracking" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="GADATAModel1.Supervisie" Width="1.5" PointX="0.625" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

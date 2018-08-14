@@ -220,6 +220,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AlertModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Areas\Alert\Models\Alerts.cs">
+      <DependentUpon>AlertModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Alert\Models\Alerts_Supervisie.cs">
+      <DependentUpon>AlertModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Areas\Alert\Models\c_CPT600.cs">
       <DependentUpon>AlertModel.tt</DependentUpon>
     </Compile>
@@ -258,9 +264,6 @@
     <Compile Include="Areas\Gadata\Controllers\TableController.cs" />
     <Compile Include="Areas\Gadata\GadataAreaRegistration.cs" />
     <Compile Include="Areas\Gadata\DataRefreshHub.cs" />
-    <Compile Include="Areas\Gadata\Models\Bodytracking.cs">
-      <DependentUpon>Gadata.tt</DependentUpon>
-    </Compile>
     <Compile Include="Areas\Gadata\Models\Gadata.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -277,9 +280,6 @@
       <DependentUpon>Gadata.edmx</DependentUpon>
     </Compile>
     <Compile Include="Areas\Gadata\Models\PloegRaport_Result.cs">
-      <DependentUpon>Gadata.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\Gadata\Models\Supervisie.cs">
       <DependentUpon>Gadata.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\HangfireArea\Controllers\JobController.cs" />
@@ -444,6 +444,9 @@
     <Compile Include="Areas\VASC\Controllers\rt_active_infoController.cs" />
     <Compile Include="Areas\VASC\Controllers\serviceController.cs" />
     <Compile Include="Areas\VASC\Controllers\vascController.cs" />
+    <Compile Include="Areas\VASC\Models\Bodytracking.cs">
+      <DependentUpon>VASC.tt</DependentUpon>
+    </Compile>
     <Compile Include="Areas\VASC\Models\breakdownMetadata.cs" />
     <Compile Include="Areas\VASC\Models\c_controller.cs">
       <DependentUpon>VASC.tt</DependentUpon>
@@ -506,6 +509,9 @@
     </Compile>
     <Compile Include="Areas\VASC\Models\l_operationMetadata.cs" />
     <Compile Include="Areas\VASC\Models\L_type.cs">
+      <DependentUpon>VASC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VASC\Models\NGAC_Supervisie.cs">
       <DependentUpon>VASC.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\VASC\Models\rt_active_info.cs">
@@ -1450,6 +1456,7 @@
     <Content Include="Views\Tableau\GetTicket.cshtml" />
     <None Include="Web.Rel_GA.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </None>
     <None Include="Web.Rel_TA.config">
       <DependentUpon>Web.config</DependentUpon>

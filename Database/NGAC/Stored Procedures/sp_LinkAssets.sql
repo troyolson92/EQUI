@@ -1,11 +1,4 @@
-﻿
-
-
-
-
-
-
-CREATE PROCEDURE [ngac].[sp_LinkAssets]
+﻿CREATE PROCEDURE [NGAC].[sp_LinkAssets]
 
 AS
 BEGIN
@@ -42,20 +35,20 @@ and c.LocationTree like c_ownership.LocationTree
 --*******************************************************************************************************************--
 --update hasspotweld bit for ngac
 --*******************************************************************************************************************--
-update  NGAC.c_controller
- set hasSpotweld = case
+/*update  NGAC.c_controller
+ set hasspotweld = case
                   when x.controller_id is not null  then 1
                   else 0
                  end
 from  NGAC.c_controller
-left join (select distinct controller_id from  NGAC.h_TipWearBeforeChange) as x on x.controller_id = c_controller.id 
+left join (select distinct controller_id from  NGAC.h_TipWearBeforeChange) as x on x.controller_id = c_controller.id*/
 --*******************************************************************************************************************--
 
 
 --*******************************************************************************************************************--
 --Shit area !! 
 --*******************************************************************************************************************--
---temp for AASPOT
+--temp for AASPOT guys
 update  NGAC.c_controller
 set CLassificationId = 'UAWN+UAWB'
   FROM [NGAC].[c_controller]
@@ -69,6 +62,4 @@ set CLassificationId = 'UAWN+UAWB'
 '326060R01',
 '321010R03'
   )
-
-
 end

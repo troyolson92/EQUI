@@ -27,8 +27,6 @@ namespace EqUiWebUi.Areas.Gadata.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Bodytracking> Bodytracking { get; set; }
-        public virtual DbSet<Supervisie> Supervisie { get; set; }
     
         public virtual ObjectResult<PloegRaport_Result> PloegRaport(Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate, Nullable<int> daysBack, string assets, string locations, string lochierarchy, Nullable<int> minDowntime, Nullable<int> minCountOfDowtime, Nullable<int> minCountofWarning)
         {

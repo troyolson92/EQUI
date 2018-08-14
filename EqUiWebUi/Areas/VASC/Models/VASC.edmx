@@ -423,6 +423,45 @@
           <Property Name="isEvent" Type="bit" />
           <Property Name="abbDateTime" Type="datetime" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.NGAC.Bodytracking' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Bodytracking">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="controller_name" Type="varchar" MaxLength="30" />
+          <Property Name="jobNo" Type="int" />
+          <Property Name="bodyNo" Type="int" />
+          <Property Name="CycleStart" Type="datetime" />
+          <Property Name="CycleEnd" Type="datetime" />
+          <Property Name="ts_breakDownStart" Type="datetime" />
+          <Property Name="ts_breakDownAck" Type="datetime" />
+          <Property Name="ts_breakDownEnd" Type="datetime" />
+          <Property Name="FullLogtext" Type="varchar(max)" />
+          <Property Name="refId" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.NGAC.NGAC_Supervisie' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="NGAC_Supervisie">
+          <Key>
+            <PropertyRef Name="refId" />
+          </Key>
+          <Property Name="Location" Type="varchar" MaxLength="30" />
+          <Property Name="logtext" Type="varchar(max)" />
+          <Property Name="RT" Type="int" />
+          <Property Name="DT" Type="int" />
+          <Property Name="time" Type="char" MaxLength="19" />
+          <Property Name="Classification" Type="varchar" MaxLength="50" />
+          <Property Name="Subgroup" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Severity" Type="varchar(max)" />
+          <Property Name="Logcode" Type="varchar(max)" />
+          <Property Name="Logtype" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="refId" Type="int" Nullable="false" />
+          <Property Name="timestamp" Type="datetime" />
+          <Property Name="LocationTree" Type="varchar(max)" />
+          <Property Name="ClassTree" Type="varchar(max)" />
+        </EntityType>
         <Association Name="FK_c_controller_c_controller_class">
           <End Role="c_controller_class" Type="Self.c_controller_class" Multiplicity="1" />
           <End Role="c_controller" Type="Self.c_controller" Multiplicity="*" />
@@ -764,6 +803,39 @@
           <EntitySet Name="rt_job_breakdown" EntityType="Self.rt_job_breakdown" Schema="NGAC" store:Type="Tables" />
           <EntitySet Name="rt_search_value" EntityType="Self.rt_search_value" Schema="NGAC" store:Type="Tables" />
           <EntitySet Name="rt_value" EntityType="Self.rt_value" Schema="NGAC" store:Type="Tables" />
+          <EntitySet Name="Bodytracking" EntityType="Self.Bodytracking" store:Type="Views" store:Schema="NGAC">
+            <DefiningQuery>SELECT 
+    [Bodytracking].[id] AS [id], 
+    [Bodytracking].[controller_name] AS [controller_name], 
+    [Bodytracking].[jobNo] AS [jobNo], 
+    [Bodytracking].[bodyNo] AS [bodyNo], 
+    [Bodytracking].[CycleStart] AS [CycleStart], 
+    [Bodytracking].[CycleEnd] AS [CycleEnd], 
+    [Bodytracking].[ts_breakDownStart] AS [ts_breakDownStart], 
+    [Bodytracking].[ts_breakDownAck] AS [ts_breakDownAck], 
+    [Bodytracking].[ts_breakDownEnd] AS [ts_breakDownEnd], 
+    [Bodytracking].[FullLogtext] AS [FullLogtext], 
+    [Bodytracking].[refId] AS [refId]
+    FROM [NGAC].[Bodytracking] AS [Bodytracking]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="NGAC_Supervisie" EntityType="Self.NGAC_Supervisie" store:Type="Views" store:Schema="NGAC">
+            <DefiningQuery>SELECT 
+    [NGAC_Supervisie].[Location] AS [Location], 
+    [NGAC_Supervisie].[logtext] AS [logtext], 
+    [NGAC_Supervisie].[RT] AS [RT], 
+    [NGAC_Supervisie].[DT] AS [DT], 
+    [NGAC_Supervisie].[time] AS [time], 
+    [NGAC_Supervisie].[Classification] AS [Classification], 
+    [NGAC_Supervisie].[Subgroup] AS [Subgroup], 
+    [NGAC_Supervisie].[Severity] AS [Severity], 
+    [NGAC_Supervisie].[Logcode] AS [Logcode], 
+    [NGAC_Supervisie].[Logtype] AS [Logtype], 
+    [NGAC_Supervisie].[refId] AS [refId], 
+    [NGAC_Supervisie].[timestamp] AS [timestamp], 
+    [NGAC_Supervisie].[LocationTree] AS [LocationTree], 
+    [NGAC_Supervisie].[ClassTree] AS [ClassTree]
+    FROM [NGAC].[NGAC_Supervisie] AS [NGAC_Supervisie]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_c_controller_c_controller_class" Association="Self.FK_c_controller_c_controller_class">
             <End Role="c_controller_class" EntitySet="c_controller_class" />
             <End Role="c_controller" EntitySet="c_controller" />
@@ -1066,6 +1138,8 @@
             <End Role="rt_alarm" EntitySet="rt_alarm" />
             <End Role="rt_job_breakdown" EntitySet="rt_job_breakdown" />
           </AssociationSet>
+          <EntitySet Name="Bodytracking" EntityType="GADATAModelVASC.Bodytracking" />
+          <EntitySet Name="NGAC_Supervisie" EntityType="GADATAModelVASC.NGAC_Supervisie" />
         </EntityContainer>
         <EntityType Name="c_error">
           <Key>
@@ -1789,6 +1863,41 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Bodytracking">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="controller_name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="jobNo" Type="Int32" />
+          <Property Name="bodyNo" Type="Int32" />
+          <Property Name="CycleStart" Type="DateTime" Precision="3" />
+          <Property Name="CycleEnd" Type="DateTime" Precision="3" />
+          <Property Name="ts_breakDownStart" Type="DateTime" Precision="3" />
+          <Property Name="ts_breakDownAck" Type="DateTime" Precision="3" />
+          <Property Name="ts_breakDownEnd" Type="DateTime" Precision="3" />
+          <Property Name="FullLogtext" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="refId" Type="Int32" />
+        </EntityType>
+        <EntityType Name="NGAC_Supervisie">
+          <Key>
+            <PropertyRef Name="refId" />
+          </Key>
+          <Property Name="Location" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="logtext" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="RT" Type="Int32" />
+          <Property Name="DT" Type="Int32" />
+          <Property Name="time" Type="String" MaxLength="19" FixedLength="true" Unicode="false" />
+          <Property Name="Classification" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Subgroup" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Severity" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Logcode" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Logtype" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="refId" Type="Int32" Nullable="false" />
+          <Property Name="timestamp" Type="DateTime" Precision="3" />
+          <Property Name="LocationTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ClassTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2238,6 +2347,43 @@
                 <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
                 <ScalarProperty Name="Category" ColumnName="Category" />
                 <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Bodytracking">
+            <EntityTypeMapping TypeName="GADATAModelVASC.Bodytracking">
+              <MappingFragment StoreEntitySet="Bodytracking">
+                <ScalarProperty Name="refId" ColumnName="refId" />
+                <ScalarProperty Name="FullLogtext" ColumnName="FullLogtext" />
+                <ScalarProperty Name="ts_breakDownEnd" ColumnName="ts_breakDownEnd" />
+                <ScalarProperty Name="ts_breakDownAck" ColumnName="ts_breakDownAck" />
+                <ScalarProperty Name="ts_breakDownStart" ColumnName="ts_breakDownStart" />
+                <ScalarProperty Name="CycleEnd" ColumnName="CycleEnd" />
+                <ScalarProperty Name="CycleStart" ColumnName="CycleStart" />
+                <ScalarProperty Name="bodyNo" ColumnName="bodyNo" />
+                <ScalarProperty Name="jobNo" ColumnName="jobNo" />
+                <ScalarProperty Name="controller_name" ColumnName="controller_name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NGAC_Supervisie">
+            <EntityTypeMapping TypeName="GADATAModelVASC.NGAC_Supervisie">
+              <MappingFragment StoreEntitySet="NGAC_Supervisie">
+                <ScalarProperty Name="ClassTree" ColumnName="ClassTree" />
+                <ScalarProperty Name="LocationTree" ColumnName="LocationTree" />
+                <ScalarProperty Name="timestamp" ColumnName="timestamp" />
+                <ScalarProperty Name="refId" ColumnName="refId" />
+                <ScalarProperty Name="Logtype" ColumnName="Logtype" />
+                <ScalarProperty Name="Logcode" ColumnName="Logcode" />
+                <ScalarProperty Name="Severity" ColumnName="Severity" />
+                <ScalarProperty Name="Subgroup" ColumnName="Subgroup" />
+                <ScalarProperty Name="Classification" ColumnName="Classification" />
+                <ScalarProperty Name="time" ColumnName="time" />
+                <ScalarProperty Name="DT" ColumnName="DT" />
+                <ScalarProperty Name="RT" ColumnName="RT" />
+                <ScalarProperty Name="logtext" ColumnName="logtext" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
