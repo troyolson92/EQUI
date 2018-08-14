@@ -162,6 +162,57 @@
           <Property Name="Team" Type="varchar" MaxLength="50" />
           <Property Name="Culture" Type="varchar" MaxLength="50" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.Alerts.Alerts' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Alerts">
+          <Key>
+            
+            
+            
+            <PropertyRef Name="refId" />
+            
+            
+          </Key>
+          <Property Name="Location" Type="varchar(max)" Nullable="false" />
+          <Property Name="AssetID" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="Logtype" Type="varchar" MaxLength="50" />
+          <Property Name="timestamp" Type="datetime" Nullable="false" />
+          <Property Name="Logcode" Type="varchar(max)" />
+          <Property Name="Severity" Type="varchar(max)" />
+          <Property Name="Logtext" Type="varchar(max)" />
+          <Property Name="FullLogtext" Type="varchar(max)" />
+          <Property Name="Response" Type="int" />
+          <Property Name="Downtime" Type="int" />
+          <Property Name="Classification" Type="varchar(max)" />
+          <Property Name="Subgroup" Type="varchar" MaxLength="50" />
+          <Property Name="Category" Type="varchar" MaxLength="50" />
+          <Property Name="refId" Type="int" Nullable="false" />
+          <Property Name="LocationTree" Type="varchar(max)" />
+          <Property Name="ClassTree" Type="int" />
+          <Property Name="controller_name" Type="varchar" MaxLength="11" Nullable="false" />
+          <Property Name="controller_type" Type="varchar" MaxLength="4" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.Alerts.Alerts_Supervisie' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Alerts_Supervisie">
+          <Key>
+            <PropertyRef Name="refId" />
+          </Key>
+          <Property Name="Location" Type="varchar(max)" Nullable="false" />
+          <Property Name="logtext" Type="varchar(max)" />
+          <Property Name="RT" Type="int" />
+          <Property Name="DT" Type="int" />
+          <Property Name="time" Type="char" MaxLength="19" />
+          <Property Name="Classification" Type="varchar(max)" />
+          <Property Name="Subgroup" Type="varchar" MaxLength="50" />
+          <Property Name="Severity" Type="varchar(max)" />
+          <Property Name="Logcode" Type="varchar(max)" />
+          <Property Name="Logtype" Type="varchar" MaxLength="50" />
+          <Property Name="refId" Type="int" Nullable="false" />
+          <Property Name="timestamp" Type="datetime" Nullable="false" />
+          <Property Name="LocationTree" Type="varchar(max)" />
+          <Property Name="ClassTree" Type="int" />
+        </EntityType>
         <Association Name="FK_c_SMSconfig_c_CPT600">
           <End Role="c_CPT600" Type="Self.c_CPT600" Multiplicity="1" />
           <End Role="c_SMSconfig" Type="Self.c_SMSconfig" Multiplicity="*" />
@@ -378,6 +429,46 @@
           <EntitySet Name="l_variants" EntityType="Self.l_variants" Schema="Alerts" store:Type="Tables" />
           <EntitySet Name="c_datasource" EntityType="Self.c_datasource" Schema="EqUi" store:Type="Tables" />
           <EntitySet Name="L_users" EntityType="Self.L_users" Schema="Volvo" store:Type="Tables" />
+          <EntitySet Name="Alerts" EntityType="Self.Alerts" store:Type="Views" store:Schema="Alerts">
+            <DefiningQuery>SELECT 
+    [Alerts].[Location] AS [Location], 
+    [Alerts].[AssetID] AS [AssetID], 
+    [Alerts].[Logtype] AS [Logtype], 
+    [Alerts].[timestamp] AS [timestamp], 
+    [Alerts].[Logcode] AS [Logcode], 
+    [Alerts].[Severity] AS [Severity], 
+    [Alerts].[Logtext] AS [Logtext], 
+    [Alerts].[FullLogtext] AS [FullLogtext], 
+    [Alerts].[Response] AS [Response], 
+    [Alerts].[Downtime] AS [Downtime], 
+    [Alerts].[Classification] AS [Classification], 
+    [Alerts].[Subgroup] AS [Subgroup], 
+    [Alerts].[Category] AS [Category], 
+    [Alerts].[refId] AS [refId], 
+    [Alerts].[LocationTree] AS [LocationTree], 
+    [Alerts].[ClassTree] AS [ClassTree], 
+    [Alerts].[controller_name] AS [controller_name], 
+    [Alerts].[controller_type] AS [controller_type]
+    FROM [Alerts].[Alerts] AS [Alerts]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Alerts_Supervisie" EntityType="Self.Alerts_Supervisie" store:Type="Views" store:Schema="Alerts">
+            <DefiningQuery>SELECT 
+    [Alerts_Supervisie].[Location] AS [Location], 
+    [Alerts_Supervisie].[logtext] AS [logtext], 
+    [Alerts_Supervisie].[RT] AS [RT], 
+    [Alerts_Supervisie].[DT] AS [DT], 
+    [Alerts_Supervisie].[time] AS [time], 
+    [Alerts_Supervisie].[Classification] AS [Classification], 
+    [Alerts_Supervisie].[Subgroup] AS [Subgroup], 
+    [Alerts_Supervisie].[Severity] AS [Severity], 
+    [Alerts_Supervisie].[Logcode] AS [Logcode], 
+    [Alerts_Supervisie].[Logtype] AS [Logtype], 
+    [Alerts_Supervisie].[refId] AS [refId], 
+    [Alerts_Supervisie].[timestamp] AS [timestamp], 
+    [Alerts_Supervisie].[LocationTree] AS [LocationTree], 
+    [Alerts_Supervisie].[ClassTree] AS [ClassTree]
+    FROM [Alerts].[Alerts_Supervisie] AS [Alerts_Supervisie]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_c_SMSconfig_c_CPT600" Association="Self.FK_c_SMSconfig_c_CPT600">
             <End Role="c_CPT600" EntitySet="c_CPT600" />
             <End Role="c_SMSconfig" EntitySet="c_SMSconfig" />
@@ -649,6 +740,8 @@
             <End Role="l_controlLimits" EntitySet="l_controlLimits" />
             <End Role="l_dummyControlchartResult" EntitySet="l_dummyControlchartResult" />
           </AssociationSet>
+          <EntitySet Name="Alerts" EntityType="AlertModel.Alerts" />
+          <EntitySet Name="Alerts_Supervisie" EntityType="AlertModel.Alerts_Supervisie" />
           </EntityContainer>
         <EntityType Name="c_triggers">
           <Key>
@@ -675,7 +768,7 @@
           <Property Name="controllimitSqlStatement" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="l_variants" Relationship="AlertModel.FK_l_variants_c_triggers" FromRole="c_triggers" ToRole="l_variants" />
           <Property Name="controlChartSqlStatement" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Animation" Type="String" />
+          <Property Name="Animation" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
           <Property Name="isDebugmode" Type="Boolean" Nullable="false" />
           <Property Name="c_datasource_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="c_datasource" Relationship="AlertModel.FK_c_triggers_c_datasource" FromRole="c_triggers" ToRole="c_datasource" />
@@ -927,6 +1020,48 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Alerts">
+          <Key>
+            <PropertyRef Name="refId" />
+          </Key>
+          <Property Name="Location" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="AssetID" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Logtype" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="timestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Logcode" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Severity" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Logtext" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="FullLogtext" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Response" Type="Int32" />
+          <Property Name="Downtime" Type="Int32" />
+          <Property Name="Classification" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Subgroup" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Category" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="refId" Type="Int32" Nullable="false" />
+          <Property Name="LocationTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ClassTree" Type="Int32" />
+          <Property Name="controller_name" Nullable="false" MaxLength="11" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="controller_type" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Alerts_Supervisie">
+          <Key>
+            <PropertyRef Name="refId" />
+          </Key>
+          <Property Name="Location" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="logtext" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="RT" Type="Int32" />
+          <Property Name="DT" Type="Int32" />
+          <Property Name="time" Type="String" MaxLength="19" FixedLength="true" Unicode="false" />
+          <Property Name="Classification" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Subgroup" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Severity" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Logcode" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Logtype" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="refId" Type="Int32" Nullable="false" />
+          <Property Name="timestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LocationTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ClassTree" Type="Int32" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1098,6 +1233,50 @@
                 <ScalarProperty Name="timestamp" ColumnName="timestamp" />
                 <ScalarProperty Name="alarmobject" ColumnName="alarmobject" />
                 <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Alerts">
+            <EntityTypeMapping TypeName="AlertModel.Alerts">
+              <MappingFragment StoreEntitySet="Alerts">
+                <ScalarProperty Name="controller_type" ColumnName="controller_type" />
+                <ScalarProperty Name="controller_name" ColumnName="controller_name" />
+                <ScalarProperty Name="ClassTree" ColumnName="ClassTree" />
+                <ScalarProperty Name="LocationTree" ColumnName="LocationTree" />
+                <ScalarProperty Name="refId" ColumnName="refId" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="Subgroup" ColumnName="Subgroup" />
+                <ScalarProperty Name="Classification" ColumnName="Classification" />
+                <ScalarProperty Name="Downtime" ColumnName="Downtime" />
+                <ScalarProperty Name="Response" ColumnName="Response" />
+                <ScalarProperty Name="FullLogtext" ColumnName="FullLogtext" />
+                <ScalarProperty Name="Logtext" ColumnName="Logtext" />
+                <ScalarProperty Name="Severity" ColumnName="Severity" />
+                <ScalarProperty Name="Logcode" ColumnName="Logcode" />
+                <ScalarProperty Name="timestamp" ColumnName="timestamp" />
+                <ScalarProperty Name="Logtype" ColumnName="Logtype" />
+                <ScalarProperty Name="AssetID" ColumnName="AssetID" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Alerts_Supervisie">
+            <EntityTypeMapping TypeName="AlertModel.Alerts_Supervisie">
+              <MappingFragment StoreEntitySet="Alerts_Supervisie">
+                <ScalarProperty Name="ClassTree" ColumnName="ClassTree" />
+                <ScalarProperty Name="LocationTree" ColumnName="LocationTree" />
+                <ScalarProperty Name="timestamp" ColumnName="timestamp" />
+                <ScalarProperty Name="refId" ColumnName="refId" />
+                <ScalarProperty Name="Logtype" ColumnName="Logtype" />
+                <ScalarProperty Name="Logcode" ColumnName="Logcode" />
+                <ScalarProperty Name="Severity" ColumnName="Severity" />
+                <ScalarProperty Name="Subgroup" ColumnName="Subgroup" />
+                <ScalarProperty Name="Classification" ColumnName="Classification" />
+                <ScalarProperty Name="time" ColumnName="time" />
+                <ScalarProperty Name="DT" ColumnName="DT" />
+                <ScalarProperty Name="RT" ColumnName="RT" />
+                <ScalarProperty Name="logtext" ColumnName="logtext" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

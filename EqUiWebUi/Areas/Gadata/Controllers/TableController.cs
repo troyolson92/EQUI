@@ -1,12 +1,10 @@
 ﻿using EQUICommunictionLib;
-using EqUiWebUi.Areas.Gadata.Models;
 using EqUiWebUi.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
-using System.Web;
 using System.Web.Mvc;
 
 namespace EqUiWebUi.Areas.Gadata.Controllers
@@ -36,7 +34,7 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
             //in case still null trow error return empty result 
             if (data == null)
             {
-                data = new List<PloegRaport_Result>();
+                data = new List<Gadata.Models.PloegRaport_Result>();
             }
 
             string LocationRoot = CurrentUser.Getuser.LocationRoot;
@@ -73,12 +71,12 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
         [HttpGet]
         public ActionResult _supervisie()
         {
-            //
+            // 
             var data = DataBuffer.Supervisie;
             //in case still null trow error return empty result 
             if (data == null)
             {
-                data = new List<Supervisie>();
+                data = new List<EqUiWebUi.Areas.Gadata.SupervisieDummy>();
             }
 
             string LocationRoot = CurrentUser.Getuser.LocationRoot;
@@ -101,7 +99,7 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
                         select d).ToList();
             }
             //
-            return PartialView(data);
+            return PartialView(data);;
         }
         //-------------------------------------------------------------------------------------------------
 
@@ -109,8 +107,8 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
         [HttpGet]
         public ActionResult BodyTrackWebgrid()
         {
-            GADATAEntities2 gADATAEntities = new GADATAEntities2();
-            IQueryable<Bodytracking> data = from bodytracking in gADATAEntities.Bodytracking
+            VASC.Models.GADATAEntitiesVASC GADATAEntitiesVASC = new VASC.Models.GADATAEntitiesVASC();
+            IQueryable<VASC.Models.Bodytracking> data = from bodytracking in GADATAEntitiesVASC.Bodytracking
                                             select bodytracking;
 
             return View(data);

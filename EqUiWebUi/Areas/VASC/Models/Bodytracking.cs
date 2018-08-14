@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace EqUiWebUi.Areas.Gadata.Models
+namespace EqUiWebUi.Areas.VASC.Models
 {
     using System;
     using System.Collections.Generic;

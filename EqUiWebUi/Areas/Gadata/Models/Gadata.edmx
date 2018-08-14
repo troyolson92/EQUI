@@ -7,43 +7,6 @@
     <Schema Namespace="GADATAModel1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <!--Errors Found During Generation:
 warning 6002: The table/view 'GADATA.EqUi.Supervisie' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="Supervisie">
-          <Key>
-            <PropertyRef Name="refId" />
-          </Key>
-          <Property Name="Location" Type="varchar(max)" />
-          <Property Name="logtext" Type="varchar(max)" />
-          <Property Name="RT" Type="int" />
-          <Property Name="DT" Type="int" />
-          <Property Name="time" Type="char" MaxLength="19" />
-          <Property Name="Classification" Type="varchar(max)" />
-          <Property Name="Subgroup" Type="varchar" MaxLength="50" />
-          <Property Name="Severity" Type="varchar(max)" />
-          <Property Name="Logcode" Type="varchar(max)" />
-          <Property Name="Logtype" Type="varchar" MaxLength="50" />
-          <Property Name="refId" Type="int" Nullable="false" />
-          <Property Name="timestamp" Type="datetime" />
-          <Property Name="LocationTree" Type="varchar(max)" />
-          <Property Name="ClassTree" Type="int" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'GADATA.NGAC.Bodytracking' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="Bodytracking">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" Nullable="false" />
-          <Property Name="controller_name" Type="varchar" MaxLength="30" />
-          <Property Name="jobNo" Type="int" />
-          <Property Name="bodyNo" Type="int" />
-          <Property Name="CycleStart" Type="datetime" />
-          <Property Name="CycleEnd" Type="datetime" />
-          <Property Name="ts_breakDownStart" Type="datetime" />
-          <Property Name="ts_breakDownAck" Type="datetime" />
-          <Property Name="ts_breakDownEnd" Type="datetime" />
-          <Property Name="FullLogtext" Type="varchar(max)" />
-          <Property Name="refId" Type="int" />
-        </EntityType>
         <Function Name="PloegRaport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="EqUi">
           <Parameter Name="StartDate" Type="datetime" Mode="In" />
           <Parameter Name="EndDate" Type="datetime" Mode="In" />
@@ -56,63 +19,12 @@ warning 6002: The table/view 'GADATA.NGAC.Bodytracking' does not have a primary 
           <Parameter Name="minCountofWarning" Type="int" Mode="In" />
         </Function>
         <EntityContainer Name="GADATAModel1StoreContainer">
-          <EntitySet Name="Supervisie" EntityType="Self.Supervisie" store:Type="Views" store:Schema="EqUi">
-            <DefiningQuery>SELECT 
-    [Supervisie].[Location] AS [Location], 
-    [Supervisie].[logtext] AS [logtext], 
-    [Supervisie].[RT] AS [RT], 
-    [Supervisie].[DT] AS [DT], 
-    [Supervisie].[time] AS [time], 
-    [Supervisie].[Classification] AS [Classification], 
-    [Supervisie].[Subgroup] AS [Subgroup], 
-    [Supervisie].[Severity] AS [Severity], 
-    [Supervisie].[Logcode] AS [Logcode], 
-    [Supervisie].[Logtype] AS [Logtype], 
-    [Supervisie].[refId] AS [refId], 
-    [Supervisie].[timestamp] AS [timestamp], 
-    [Supervisie].[LocationTree] AS [LocationTree], 
-    [Supervisie].[ClassTree] AS [ClassTree]
-    FROM [EqUi].[Supervisie] AS [Supervisie]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="Bodytracking" EntityType="Self.Bodytracking" store:Type="Views" store:Schema="NGAC">
-            <DefiningQuery>SELECT 
-    [Bodytracking].[id] AS [id], 
-    [Bodytracking].[controller_name] AS [controller_name], 
-    [Bodytracking].[jobNo] AS [jobNo], 
-    [Bodytracking].[bodyNo] AS [bodyNo], 
-    [Bodytracking].[CycleStart] AS [CycleStart], 
-    [Bodytracking].[CycleEnd] AS [CycleEnd], 
-    [Bodytracking].[ts_breakDownStart] AS [ts_breakDownStart], 
-    [Bodytracking].[ts_breakDownAck] AS [ts_breakDownAck], 
-    [Bodytracking].[ts_breakDownEnd] AS [ts_breakDownEnd], 
-    [Bodytracking].[FullLogtext] AS [FullLogtext], 
-    [Bodytracking].[refId] AS [refId]
-    FROM [NGAC].[Bodytracking] AS [Bodytracking]</DefiningQuery>
-          </EntitySet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="GADATAModel1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Bodytracking">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" />
-          <Property Name="controller_name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="jobNo" Type="Int32" />
-          <Property Name="bodyNo" Type="Int32" />
-          <Property Name="CycleStart" Type="DateTime" Precision="3" />
-          <Property Name="CycleEnd" Type="DateTime" Precision="3" />
-          <Property Name="ts_breakDownStart" Type="DateTime" Precision="3" />
-          <Property Name="ts_breakDownAck" Type="DateTime" Precision="3" />
-          <Property Name="ts_breakDownEnd" Type="DateTime" Precision="3" />
-          <Property Name="FullLogtext" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="refId" Type="Int32" />
-        </EntityType>
         <EntityContainer Name="GADATAEntities2" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Bodytracking" EntityType="Self.Bodytracking" />
-          <EntitySet Name="Supervisie" EntityType="GADATAModel1.Supervisie" />
           <FunctionImport Name="PloegRaport" ReturnType="Collection(GADATAModel1.PloegRaport_Result)">
             <Parameter Name="StartDate" Mode="In" Type="DateTime" />
             <Parameter Name="EndDate" Mode="In" Type="DateTime" />
@@ -125,25 +37,6 @@ warning 6002: The table/view 'GADATA.NGAC.Bodytracking' does not have a primary 
             <Parameter Name="minCountofWarning" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
-        <EntityType Name="Supervisie">
-          <Key>
-            <PropertyRef Name="refId" />
-          </Key>
-          <Property Name="Location" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="logtext" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="RT" Type="Int32" />
-          <Property Name="DT" Type="Int32" />
-          <Property Name="time" Type="String" MaxLength="19" FixedLength="true" Unicode="false" />
-          <Property Name="Classification" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Subgroup" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Severity" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Logcode" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Logtype" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="refId" Type="Int32" Nullable="false" />
-          <Property Name="timestamp" Type="DateTime" Precision="3" />
-          <Property Name="LocationTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="ClassTree" Type="Int32" />
-        </EntityType>
         <ComplexType Name="PloegRaport_Result">
           <Property Type="String" Name="Location" Nullable="true" />
           <Property Type="String" Name="AssetID" Nullable="true" />
@@ -166,43 +59,6 @@ warning 6002: The table/view 'GADATA.NGAC.Bodytracking' does not have a primary 
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="GADATAModel1StoreContainer" CdmEntityContainer="GADATAEntities2">
-          <EntitySetMapping Name="Bodytracking">
-            <EntityTypeMapping TypeName="GADATAModel1.Bodytracking">
-              <MappingFragment StoreEntitySet="Bodytracking">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="controller_name" ColumnName="controller_name" />
-                <ScalarProperty Name="jobNo" ColumnName="jobNo" />
-                <ScalarProperty Name="bodyNo" ColumnName="bodyNo" />
-                <ScalarProperty Name="CycleStart" ColumnName="CycleStart" />
-                <ScalarProperty Name="CycleEnd" ColumnName="CycleEnd" />
-                <ScalarProperty Name="ts_breakDownStart" ColumnName="ts_breakDownStart" />
-                <ScalarProperty Name="ts_breakDownAck" ColumnName="ts_breakDownAck" />
-                <ScalarProperty Name="ts_breakDownEnd" ColumnName="ts_breakDownEnd" />
-                <ScalarProperty Name="FullLogtext" ColumnName="FullLogtext" />
-                <ScalarProperty Name="refId" ColumnName="refId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Supervisie">
-            <EntityTypeMapping TypeName="GADATAModel1.Supervisie">
-              <MappingFragment StoreEntitySet="Supervisie">
-                <ScalarProperty Name="ClassTree" ColumnName="ClassTree" />
-                <ScalarProperty Name="LocationTree" ColumnName="LocationTree" />
-                <ScalarProperty Name="timestamp" ColumnName="timestamp" />
-                <ScalarProperty Name="refId" ColumnName="refId" />
-                <ScalarProperty Name="Logtype" ColumnName="Logtype" />
-                <ScalarProperty Name="Logcode" ColumnName="Logcode" />
-                <ScalarProperty Name="Severity" ColumnName="Severity" />
-                <ScalarProperty Name="Subgroup" ColumnName="Subgroup" />
-                <ScalarProperty Name="Classification" ColumnName="Classification" />
-                <ScalarProperty Name="time" ColumnName="time" />
-                <ScalarProperty Name="DT" ColumnName="DT" />
-                <ScalarProperty Name="RT" ColumnName="RT" />
-                <ScalarProperty Name="logtext" ColumnName="logtext" />
-                <ScalarProperty Name="Location" ColumnName="Location" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="PloegRaport" FunctionName="GADATAModel1.Store.PloegRaport">
             <ResultMapping>
               <ComplexTypeMapping TypeName="GADATAModel1.PloegRaport_Result">

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Web;
-using EqUiWebUi.Areas.Gadata.Models;
 using Hangfire;
 using EQUICommunictionLib;
 using Hangfire.Server;
@@ -11,14 +10,34 @@ using Hangfire.Console;
 
 namespace EqUiWebUi.Areas.Gadata
 {
+    //databuffer for supervisie system
     public static class DataBuffer
     {
         //
-        public static List<Supervisie> Supervisie { get; set; }
+        public static List<EqUiWebUi.Areas.Gadata.SupervisieDummy> Supervisie { get; set; }
         public static DateTime SupervisieLastDt { get; set; }
         //
-        public static List<PloegRaport_Result> Ploegreport { get; set; }
+        public static List<EqUiWebUi.Areas.Gadata.Models.PloegRaport_Result> Ploegreport { get; set; }
         public static DateTime PloegreportLastDt { get; set; }
+    }
+
+    //dummy object for supervision data
+    public partial class SupervisieDummy
+    {
+        public string Location { get; set; }
+        public string logtext { get; set; }
+        public Nullable<int> RT { get; set; }
+        public Nullable<int> DT { get; set; }
+        public string time { get; set; }
+        public string Classification { get; set; }
+        public string Subgroup { get; set; }
+        public string Severity { get; set; }
+        public string Logcode { get; set; }
+        public string Logtype { get; set; }
+        public int refId { get; set; }
+        public System.DateTime timestamp { get; set; }
+        public string LocationTree { get; set; }
+        public Nullable<int> ClassTree { get; set; }
     }
 
 
@@ -36,7 +55,7 @@ namespace EqUiWebUi.Areas.Gadata
                     RecurringJob.AddOrUpdate("BT_PloegReport", () => backgroundwork.UpdatePloegreport(), Cron.MinuteInterval(5));
                     //**********************************Supervisie table***************************************************
                     //set job to refresh every minute
-                    RecurringJob.AddOrUpdate("BT_Supervis", () => backgroundwork.UpdateSupervisie(), Cron.Minutely);
+                    RecurringJob.AddOrUpdate("BT_Supervis", () => backgroundwork.UpdateSupervisie(null), Cron.Minutely);
                     //**********************************normalize***************************************************
                     //set job to refresh every minute
                     RecurringJob.AddOrUpdate("norm_C3G", () => backgroundwork.norm_c3g(null), Cron.Minutely);
@@ -61,9 +80,9 @@ namespace EqUiWebUi.Areas.Gadata
             [AutomaticRetry(Attempts = 0)]
             public void UpdatePloegreport()
             {
-                GADATAEntities2 gADATAEntities = new GADATAEntities2();
+                EqUiWebUi.Areas.Gadata.Models.GADATAEntities2 gADATAEntities = new EqUiWebUi.Areas.Gadata.Models.GADATAEntities2();
                 gADATAEntities.Database.CommandTimeout = 60; // normally 30 but this one is heavy
-                List<PloegRaport_Result> data = (from ploegrapport in gADATAEntities.PloegRaport
+                List<EqUiWebUi.Areas.Gadata.Models.PloegRaport_Result> data = (from ploegrapport in gADATAEntities.PloegRaport
                                     (startDate: null,
                                        endDate: null,
                                        daysBack: null,
@@ -100,26 +119,60 @@ namespace EqUiWebUi.Areas.Gadata
             //update the local datatable with supervisie called every minute #hangfire
             [Queue("gadata")]
             [AutomaticRetry(Attempts = 0)]
-            public void UpdateSupervisie()
+            public void UpdateSupervisie(PerformContext context)
             {
-                GADATAEntities2 gADATAEntities = new GADATAEntities2();
-                List<Supervisie> data = (from supervis in gADATAEntities.Supervisie
-                                         select supervis).ToList();
+                List<EqUiWebUi.Areas.Gadata.SupervisieDummy> data = new List<EqUiWebUi.Areas.Gadata.SupervisieDummy>();
+            /*
+                context.WriteLine("dataEQUI");
+                //get data from EQUI schema (this should only contain the timeline)
+                EqUiWebUi.Models.GADATAEntitiesEQUI GADATAEntitiesEQUI = new EqUiWebUi.Models.GADATAEntitiesEQUI();
+                List<EqUiWebUi.Models.Supervisie> dataEQUI = (from supervis in GADATAEntitiesEQUI.Supervisie select supervis).ToList();
+                context.WriteLine(dataEQUI.Count());
+                data.AddRange(dataEQUI.Cast<EqUiWebUi.Areas.Gadata.SupervisieDummy>());
+                */
+                
+                context.WriteLine("dataALERT");
+                //get data from alert schema 
+                Alert.Models.GADATA_AlertModel GADATA_AlertModel = new Alert.Models.GADATA_AlertModel();
+                List<Alert.Models.Alerts_Supervisie> dataALERT = (from supervis in GADATA_AlertModel.Alerts_Supervisie select supervis).ToList();
+                context.WriteLine(dataALERT.Count());
+                data.AddRange(dataALERT.Cast<EqUiWebUi.Areas.Gadata.SupervisieDummy>());
+               
+                context.WriteLine("dataVASC");
+                //get data from NGAC schema 
+                VASC.Models.GADATAEntitiesVASC gADATAEntitiesVASC = new VASC.Models.GADATAEntitiesVASC();
+                List<EqUiWebUi.Areas.VASC.Models.NGAC_Supervisie> dataVASC = (from supervis in gADATAEntitiesVASC.NGAC_Supervisie select supervis).ToList();
+                context.WriteLine(dataVASC.Count());
+                data.AddRange(dataVASC.Cast<EqUiWebUi.Areas.Gadata.SupervisieDummy>());
 
-                if (data.Count != 0)
+            /*
+             *     
+     var query = GetQuery().Select(x => new VehicleDTO(){ ID = c.ID, Number = c.Number });
+
+    if (includeContractorVehicles)
+    {
+        WorkerRepository rep = new WorkerRepository();
+        var contractorsVehicles = rep.GetWirkers().
+            Select(x => new VehicleDTO(){ Number = x.ContractorVehicleNumber});
+        query = query.Union(contractorsVehicles);
+    }*/
+    
+
+
+            if (data.Count != 0)
                 {
                     DataBuffer.Supervisie = data;
 
                     DateTime maxDate = data
                                 .Where(r => r != null)
-                                .Select(r => r.timestamp.Value)
+                                .Select(r => r.timestamp)
                                 .Max();
 
                     DataBuffer.SupervisieLastDt = maxDate;
 
                     //add singal R 
-                    var context = Microsoft.AspNet.SignalR.GlobalHost.ConnectionManager.GetHubContext<DataRefreshHub>();
-                    context.Clients.Group("Supervisie").newData();
+                    var SingnalRcontext = Microsoft.AspNet.SignalR.GlobalHost.ConnectionManager.GetHubContext<DataRefreshHub>();
+                    SingnalRcontext.Clients.Group("Supervisie").newData();
                 }
                 else
                 {
@@ -233,3 +286,4 @@ namespace EqUiWebUi.Areas.Gadata
         }
     }
 }
+ 

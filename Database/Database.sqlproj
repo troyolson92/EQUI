@@ -79,6 +79,7 @@
     <Folder Include="MAXIMO\" />
     <Folder Include="MAXIMO\Tables\" />
     <Folder Include="EqUi\Stored Procedures\" />
+    <Folder Include="EqUi\Views\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Alerts\Tables\c_CPT600.sql" />
@@ -213,6 +214,14 @@
     <Build Include="NGAC\Functions\TrimEmptylines.sql" />
     <Build Include="NGAC\Functions\RTrimX.sql" />
     <Build Include="NGAC\Functions\LTrimX.sql" />
+    <Build Include="NGAC\Views\Supervisie.sql" />
+    <Build Include="NGAC\Views\ActiveState.sql" />
+    <Build Include="NGAC\Views\ControllerEventLog.sql" />
+    <Build Include="NGAC\Views\Breakdown.sql" />
+    <Build Include="NGAC\Views\junk_alarms.sql" />
+    <Build Include="Alerts\Views\Supervisie.sql" />
+    <Build Include="NGAC\Views\NGAC_Supervisie.sql" />
+    <Build Include="Alerts\Views\Alerts_Supervisie.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Volvo\PostDeploy_InitalDataInsert.sql" />
