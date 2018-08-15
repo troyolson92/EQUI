@@ -222,6 +222,7 @@
     <Build Include="Alerts\Views\Supervisie.sql" />
     <Build Include="NGAC\Views\NGAC_Supervisie.sql" />
     <Build Include="Alerts\Views\Alerts_Supervisie.sql" />
+    <Build Include="Volvo\Tables\L_timeline.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Volvo\PostDeploy_InitalDataInsert.sql" />
