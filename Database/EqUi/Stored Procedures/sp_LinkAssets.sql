@@ -21,7 +21,7 @@ BEGIN
 	,NULL as 'Area'
 	,NULL as 'SubArea'
 	,Null as 'server'
-	,NGAC.locationtree as 'locationtree'
+	,NGAC.locationtree as 'Locationtree'
 	into #robots
 	from NGAC.c_controller as NGAC
 	where class_id <> 8 -- exclude S4C class

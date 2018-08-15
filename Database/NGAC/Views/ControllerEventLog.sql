@@ -43,8 +43,8 @@ LEFT OUTER JOIN NGAC.L_description AS ld with (NOLOCK)  ON ld.id = le.l_descript
 LEFT OUTER JOIN NGAC.L_type AS lt with (NOLOCK)  ON lt.id  = le.l_type_id
 LEFT OUTER JOIN NGAC.L_category as lc with (NOLOCK)  on lc.id = h.CategoryId
 
-LEFT OUTER JOIN VOLVO.c_Classification as cc with (NOLOCK)  on cc.id = Le.c_ClassificationId
-LEFT OUTER JOIN VOLVO.c_Subgroup as cs with (NOLOCK)  on cs.id = Le.c_SubgroupId
+LEFT OUTER JOIN Volvo.c_Classification as cc with (NOLOCK)  on cc.id = Le.c_ClassificationId
+LEFT OUTER JOIN Volvo.c_Subgroup as cs with (NOLOCK)  on cs.id = Le.c_SubgroupId
 
 LEFT JOIN NGAC.c_controller as c with (NOLOCK) on c.id = h.controller_id
 GO

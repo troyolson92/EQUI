@@ -11,14 +11,14 @@ SELECT
 , CAST(0 as varchar(max))    AS 'Severity'
 
 --SDB 18w04D2 can not drop all titles with '%' because of GB ORG L
-,CASE when (rt.[Title] LIKE '%ErrDisplay 1 : %') OR (rt.[Title] LIKE '%External weld fault reported%')
+,CASE when (rt.[title] LIKE '%ErrDisplay 1 : %') OR (rt.[title] LIKE '%External weld fault reported%')
  THEN ISNULL(rt.[Description],'#No Description available')
  ELSE ISNULL(RTRIM(LTRIM(rt.[Title])),'#No Title available')
  END AS 'Logtext'
 
- ,CASE when (rt.[Title] LIKE '%ErrDisplay 1 : %') OR (rt.[Title] LIKE '%External weld fault reported%')
+ ,CASE when (rt.[title] LIKE '%ErrDisplay 1 : %') OR (rt.[title] LIKE '%External weld fault reported%')
  THEN ISNULL(rt.[Description],'#No Description available')
- ELSE isnull(RTRIM(LTRIM(rt.[Title])),'#No Title available') + CHAR(13)+CHAR(10) +  
+ ELSE isnull(RTRIM(LTRIM(rt.[title])),'#No Title available') + CHAR(13)+CHAR(10) +  
   isnull(rt.[Description] ,'#No Description available')
  END AS 'FullLogtext'
 , NULL     AS 'Response'
