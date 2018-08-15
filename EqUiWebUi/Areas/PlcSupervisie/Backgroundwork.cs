@@ -115,7 +115,6 @@ namespace EqUiWebUi.Areas.PlcSupervisie
                 ,logtext = x.logtext
                 ,RT = x.RT
                 ,DT = x.DT
-                ,time = x.time
                 ,Classification = x.Classification
                 ,Subgroup = x.Subgroup
                 ,Severity = x.Severity
@@ -129,7 +128,7 @@ namespace EqUiWebUi.Areas.PlcSupervisie
                 ,Vweek = x.Vweek
                 ,Vday = x.Vday
                 ,shift = x.shift
-            }).ToList();
+            }).Where(x => x.timestamp > EqUiWebUi.Areas.Gadata.DataBuffer.EndDate).ToList();
             //context.WriteLine(DataBuffer.dataC3G.Count());
         }
     }

@@ -52,7 +52,7 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
             {
                 data = (from d in data
                         where (d.Classification ?? "").Contains(AssetRoot) //apply user assetroot
-                            || (d.Classification ?? "") == "Undefined*" //or allow assets thet are undedind
+                          //  || (d.Classification ?? "") == "Undefined*" //or allow assets thet are undedind
                             || (d.Classification ?? "") == "" //or allow assets that are null
                             || d.Logtype == "TIMELINE" //always allowtimeline
                             select d).ToList();
@@ -80,7 +80,6 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
                     ,logtext = p.First().logtext
                     ,Response_min_ = p.Sum (x => x.RT)
                     ,Downtime_min_ = p.Sum (x => x.DT)
-                    ,time = p.First().time
                     ,Count = p.Count()
                     ,Classification = p.Key.Classification
                     ,Subgroup = p.Key.Subgroup
@@ -136,7 +135,7 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
             {
                 data = (from d in data
                         where (d.Classification ?? "").Contains(AssetRoot) //apply user assetroot
-                            || (d.Classification ?? "") == "Undefined*" //or allow assets thet are undedind
+                      //      || (d.Classification ?? "") == "Undefined*" //or allow assets thet are undedind
                             || (d.Classification ?? "") == "" //or allow assets that are null
                             || d.Logtype == "TIMELINE" //always allowtimeline
                         select d).ToList();

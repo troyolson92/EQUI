@@ -138,8 +138,8 @@ namespace EqUiWebUi.Areas.user_management.Controllers
                     //add new user to database
                     users newUser = new users();
                     newUser.username = username;
-                    newUser.LocationRoot = "VCG";
-                    newUser.AssetRoot = "U";
+                    newUser.LocationRoot = System.Configuration.ConfigurationManager.AppSettings["Maximo_SiteID"].ToString(); //take maximo site ID (top level of the location tree)
+                    newUser.AssetRoot = ""; //by default no filter on asset levels
                     newUser.Blocked = false;
                     newUser.Locked = false;
                     newUser.Culture = "En-GB";

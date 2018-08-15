@@ -23,7 +23,8 @@ namespace EqUiWebUi.Areas.Gadata
         public static List<EqUiWebUi.Areas.Gadata.SupervisieDummy> dataSTO { get; set; }
         public static DateTime SupervisieLastDt { get; set; }
         //
-        public static DateTime PloegreportLastDt { get; set; }
+        public static DateTime StartDate { get; set; }
+        public static DateTime EndDate { get; set; }
     }
 
     //dummy object for supervision data
@@ -33,7 +34,6 @@ namespace EqUiWebUi.Areas.Gadata
         public string logtext { get; set; }
         public Nullable<int> RT { get; set; }
         public Nullable<int> DT { get; set; }
-        public string time { get; set; }
         public string Classification { get; set; }
         public string Subgroup { get; set; }
         public string Severity { get; set; }
@@ -65,7 +65,6 @@ namespace EqUiWebUi.Areas.Gadata
         public Nullable<int> refId { get; set; }
         public string LocationTree { get; set; }
     }
-
 
     public class BackgroundWork
     {
@@ -118,7 +117,6 @@ namespace EqUiWebUi.Areas.Gadata
                 , logtext = x.Logtekst
                 , RT = null
                 , DT = null
-                , time = ""
                 , Classification = ""
                 , Subgroup = x.Subgroup
                 , Severity = null
@@ -133,9 +131,9 @@ namespace EqUiWebUi.Areas.Gadata
                 , Vday = x.day
                 , shift = x.Shift
                 }).Where(x => x.timestamp < now).OrderByDescending(x => x.timestamp).Take(NumShifts).ToList();
-            DateTime? startdate = data.Select(x => x.timestamp).First();
-            DateTime? endDate = data.Select(x => x.timestamp).Last();
-            context.WriteLine(string.Format("Timeline startdate:{0} enddate:{1} timespan: {2}",endDate, startdate, (startdate-endDate)));
+            DataBuffer.StartDate = data.Select(x => x.timestamp).First() ?? System.DateTime.Now.AddHours(-8);
+            DataBuffer.EndDate = data.Select(x => x.timestamp).Last() ?? System.DateTime.Now;
+            context.WriteLine(string.Format("Timeline startdate:{0} enddate:{1} timespan: {2}",DataBuffer.StartDate, DataBuffer.EndDate, (DataBuffer.StartDate-DataBuffer.EndDate)));
 
             //add check to limit data and handle nulls !!!!
 
@@ -148,7 +146,6 @@ namespace EqUiWebUi.Areas.Gadata
                 ,logtext = x.Logtext
                 ,RT = x.Response
                 ,DT = x.Downtime
-                ,time = "" //store expersion issue
                 ,Classification = x.Classification
                 ,Subgroup = x.Subgroup
                 ,Severity = x.Severity
@@ -162,8 +159,7 @@ namespace EqUiWebUi.Areas.Gadata
                 ,Vweek = x.Vweek
                 ,Vday = x.Vday
                 ,shift = x.shift
-            }).Where(x => x.timestamp > endDate)
-            .ToList();
+            }).Where(x => x.timestamp > DataBuffer.EndDate).ToList();
             context.WriteLine("dataALERT count:" + DataBuffer.dataALERT.Count());
             data.AddRange(DataBuffer.dataALERT);
 
@@ -192,7 +188,6 @@ namespace EqUiWebUi.Areas.Gadata
                     ,logtext = x.logtext
                     ,RT = x.RT
                     ,DT = x.DT
-                    ,time = x.time
                     ,Classification = x.Classification
                     ,Subgroup = x.Subgroup
                     ,Severity = x.Severity
@@ -206,7 +201,7 @@ namespace EqUiWebUi.Areas.Gadata
                     ,Vweek = x.Vweek
                     ,Vday = x.Vday
                     ,shift = x.shift
-                }).ToList();
+                    }).Where(x => x.timestamp > DataBuffer.EndDate).ToList();
                 context.WriteLine("dataS4C count:" + DataBuffer.dataS4C.Count());
                 data.AddRange(DataBuffer.dataS4C);
             }
@@ -265,7 +260,6 @@ namespace EqUiWebUi.Areas.Gadata
                 ,logtext = x.logtext
                 ,RT = x.RT
                 ,DT = x.DT
-                ,time = x.time
                 ,Classification = x.Classification
                 ,Subgroup = x.Subgroup
                 ,Severity = x.Severity
@@ -279,7 +273,7 @@ namespace EqUiWebUi.Areas.Gadata
                 ,Vweek = x.Vweek
                 ,Vday = x.Vday
                 ,shift = x.shift
-            }).ToList();
+            }).Where(x => x.timestamp > DataBuffer.EndDate).ToList();
             context.WriteLine(DataBuffer.dataC3G.Count());
         }
 
@@ -320,7 +314,6 @@ namespace EqUiWebUi.Areas.Gadata
                 ,logtext = x.logtext
                 ,RT = x.RT
                 ,DT = x.DT
-                ,time = x.time
                 ,Classification = x.Classification
                 ,Subgroup = x.Subgroup
                 ,Severity = x.Severity
@@ -334,7 +327,7 @@ namespace EqUiWebUi.Areas.Gadata
                 ,Vweek = x.Vweek
                 ,Vday = x.Vday
                 ,shift = x.shift
-            }).ToList();
+            }).Where(x => x.timestamp > DataBuffer.EndDate).ToList();
             context.WriteLine(DataBuffer.dataC4G.Count());
         }
 
@@ -366,7 +359,6 @@ namespace EqUiWebUi.Areas.Gadata
                 ,logtext = x.logtext
                 ,RT = x.RT
                 ,DT = x.DT
-                ,time = x.time
                 ,Classification = x.Classification
                 ,Subgroup = x.Subgroup
                 ,Severity = x.Severity
@@ -380,7 +372,7 @@ namespace EqUiWebUi.Areas.Gadata
                 ,Vweek = x.Vweek
                 ,Vday = x.Vday
                 ,shift = x.shift
-            }).ToList();
+            }).Where(x => x.timestamp > DataBuffer.EndDate).ToList();
             context.WriteLine(DataBuffer.dataVASC.Count());
         }
 
