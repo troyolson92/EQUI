@@ -27,6 +27,10 @@ warning 6002: The table/view 'GADATA.C3G.C3G_Supervisie' does not have a primary
           <Property Name="timestamp" Type="datetime" />
           <Property Name="LocationTree" Type="varchar(max)" />
           <Property Name="ClassTree" Type="varchar(max)" />
+          <Property Name="Vyear" Type="int" />
+          <Property Name="Vweek" Type="int" />
+          <Property Name="Vday" Type="int" />
+          <Property Name="shift" Type="varchar" MaxLength="2" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'GADATA.C4G.C4G_Supervisie' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -50,11 +54,16 @@ warning 6002: The table/view 'GADATA.C4G.C4G_Supervisie' does not have a primary
           <Property Name="timestamp" Type="datetime" />
           <Property Name="LocationTree" Type="varchar(max)" />
           <Property Name="ClassTree" Type="varchar(max)" />
+          <Property Name="Vyear" Type="int" />
+          <Property Name="Vweek" Type="int" />
+          <Property Name="Vday" Type="int" />
+          <Property Name="shift" Type="varchar" MaxLength="2" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'GADATA.S4C.S4C_Supervisie' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="S4C_Supervisie">
           <Key>
+            
             <PropertyRef Name="Logtype" />
             <PropertyRef Name="refId" />
           </Key>
@@ -72,6 +81,10 @@ warning 6002: The table/view 'GADATA.S4C.S4C_Supervisie' does not have a primary
           <Property Name="timestamp" Type="datetime" />
           <Property Name="LocationTree" Type="varchar(max)" />
           <Property Name="ClassTree" Type="varchar(max)" />
+          <Property Name="Vyear" Type="int" />
+          <Property Name="Vweek" Type="int" />
+          <Property Name="Vday" Type="int" />
+          <Property Name="shift" Type="varchar" MaxLength="2" />
         </EntityType>
         <Function Name="PloegRaport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="EqUi">
           <Parameter Name="StartDate" Type="datetime" Mode="In" />
@@ -100,7 +113,11 @@ warning 6002: The table/view 'GADATA.S4C.S4C_Supervisie' does not have a primary
     [C3G_Supervisie].[refId] AS [refId], 
     [C3G_Supervisie].[timestamp] AS [timestamp], 
     [C3G_Supervisie].[LocationTree] AS [LocationTree], 
-    [C3G_Supervisie].[ClassTree] AS [ClassTree]
+    [C3G_Supervisie].[ClassTree] AS [ClassTree], 
+    [C3G_Supervisie].[Vyear] AS [Vyear], 
+    [C3G_Supervisie].[Vweek] AS [Vweek], 
+    [C3G_Supervisie].[Vday] AS [Vday], 
+    [C3G_Supervisie].[shift] AS [shift]
     FROM [C3G].[C3G_Supervisie] AS [C3G_Supervisie]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="C4G_Supervisie" EntityType="Self.C4G_Supervisie" store:Type="Views" store:Schema="C4G">
@@ -118,7 +135,11 @@ warning 6002: The table/view 'GADATA.S4C.S4C_Supervisie' does not have a primary
     [C4G_Supervisie].[refId] AS [refId], 
     [C4G_Supervisie].[timestamp] AS [timestamp], 
     [C4G_Supervisie].[LocationTree] AS [LocationTree], 
-    [C4G_Supervisie].[ClassTree] AS [ClassTree]
+    [C4G_Supervisie].[ClassTree] AS [ClassTree], 
+    [C4G_Supervisie].[Vyear] AS [Vyear], 
+    [C4G_Supervisie].[Vweek] AS [Vweek], 
+    [C4G_Supervisie].[Vday] AS [Vday], 
+    [C4G_Supervisie].[shift] AS [shift]
     FROM [C4G].[C4G_Supervisie] AS [C4G_Supervisie]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="S4C_Supervisie" EntityType="Self.S4C_Supervisie" store:Type="Views" store:Schema="S4C">
@@ -136,7 +157,11 @@ warning 6002: The table/view 'GADATA.S4C.S4C_Supervisie' does not have a primary
     [S4C_Supervisie].[refId] AS [refId], 
     [S4C_Supervisie].[timestamp] AS [timestamp], 
     [S4C_Supervisie].[LocationTree] AS [LocationTree], 
-    [S4C_Supervisie].[ClassTree] AS [ClassTree]
+    [S4C_Supervisie].[ClassTree] AS [ClassTree], 
+    [S4C_Supervisie].[Vyear] AS [Vyear], 
+    [S4C_Supervisie].[Vweek] AS [Vweek], 
+    [S4C_Supervisie].[Vday] AS [Vday], 
+    [S4C_Supervisie].[shift] AS [shift]
     FROM [S4C].[S4C_Supervisie] AS [S4C_Supervisie]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
@@ -195,6 +220,10 @@ warning 6002: The table/view 'GADATA.S4C.S4C_Supervisie' does not have a primary
           <Property Name="timestamp" Type="DateTime" Precision="3" />
           <Property Name="LocationTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="ClassTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Vyear" Type="Int32" />
+          <Property Name="Vweek" Type="Int32" />
+          <Property Name="Vday" Type="Int32" />
+          <Property Name="shift" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="C4G_Supervisie">
           <Key>
@@ -215,6 +244,10 @@ warning 6002: The table/view 'GADATA.S4C.S4C_Supervisie' does not have a primary
           <Property Name="timestamp" Type="DateTime" Precision="3" />
           <Property Name="LocationTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="ClassTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Vyear" Type="Int32" />
+          <Property Name="Vweek" Type="Int32" />
+          <Property Name="Vday" Type="Int32" />
+          <Property Name="shift" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="S4C_Supervisie">
           <Key>
@@ -235,6 +268,10 @@ warning 6002: The table/view 'GADATA.S4C.S4C_Supervisie' does not have a primary
           <Property Name="timestamp" Type="DateTime" Precision="3" />
           <Property Name="LocationTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="ClassTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Vyear" Type="Int32" />
+          <Property Name="Vweek" Type="Int32" />
+          <Property Name="Vday" Type="Int32" />
+          <Property Name="shift" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -265,6 +302,10 @@ warning 6002: The table/view 'GADATA.S4C.S4C_Supervisie' does not have a primary
           <EntitySetMapping Name="C3G_Supervisie">
             <EntityTypeMapping TypeName="GADATAModel1.C3G_Supervisie">
               <MappingFragment StoreEntitySet="C3G_Supervisie">
+                <ScalarProperty Name="shift" ColumnName="shift" />
+                <ScalarProperty Name="Vday" ColumnName="Vday" />
+                <ScalarProperty Name="Vweek" ColumnName="Vweek" />
+                <ScalarProperty Name="Vyear" ColumnName="Vyear" />
                 <ScalarProperty Name="ClassTree" ColumnName="ClassTree" />
                 <ScalarProperty Name="LocationTree" ColumnName="LocationTree" />
                 <ScalarProperty Name="timestamp" ColumnName="timestamp" />
@@ -285,6 +326,10 @@ warning 6002: The table/view 'GADATA.S4C.S4C_Supervisie' does not have a primary
           <EntitySetMapping Name="C4G_Supervisie">
             <EntityTypeMapping TypeName="GADATAModel1.C4G_Supervisie">
               <MappingFragment StoreEntitySet="C4G_Supervisie">
+                <ScalarProperty Name="shift" ColumnName="shift" />
+                <ScalarProperty Name="Vday" ColumnName="Vday" />
+                <ScalarProperty Name="Vweek" ColumnName="Vweek" />
+                <ScalarProperty Name="Vyear" ColumnName="Vyear" />
                 <ScalarProperty Name="ClassTree" ColumnName="ClassTree" />
                 <ScalarProperty Name="LocationTree" ColumnName="LocationTree" />
                 <ScalarProperty Name="timestamp" ColumnName="timestamp" />
@@ -305,6 +350,10 @@ warning 6002: The table/view 'GADATA.S4C.S4C_Supervisie' does not have a primary
           <EntitySetMapping Name="S4C_Supervisie">
             <EntityTypeMapping TypeName="GADATAModel1.S4C_Supervisie">
               <MappingFragment StoreEntitySet="S4C_Supervisie">
+                <ScalarProperty Name="shift" ColumnName="shift" />
+                <ScalarProperty Name="Vday" ColumnName="Vday" />
+                <ScalarProperty Name="Vweek" ColumnName="Vweek" />
+                <ScalarProperty Name="Vyear" ColumnName="Vyear" />
                 <ScalarProperty Name="ClassTree" ColumnName="ClassTree" />
                 <ScalarProperty Name="LocationTree" ColumnName="LocationTree" />
                 <ScalarProperty Name="timestamp" ColumnName="timestamp" />

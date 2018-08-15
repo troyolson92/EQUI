@@ -445,7 +445,10 @@ warning 6002: The table/view 'GADATA.NGAC.Bodytracking' does not have a primary 
 warning 6002: The table/view 'GADATA.NGAC.NGAC_Supervisie' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="NGAC_Supervisie">
           <Key>
+            
+            
             <PropertyRef Name="refId" />
+            <PropertyRef Name="Logtype" />
           </Key>
           <Property Name="Location" Type="varchar" MaxLength="30" />
           <Property Name="logtext" Type="varchar(max)" />
@@ -461,6 +464,10 @@ warning 6002: The table/view 'GADATA.NGAC.NGAC_Supervisie' does not have a prima
           <Property Name="timestamp" Type="datetime" />
           <Property Name="LocationTree" Type="varchar(max)" />
           <Property Name="ClassTree" Type="varchar(max)" />
+          <Property Name="Vyear" Type="int" />
+          <Property Name="Vweek" Type="int" />
+          <Property Name="Vday" Type="int" />
+          <Property Name="shift" Type="varchar" MaxLength="2" />
         </EntityType>
         <Association Name="FK_c_controller_c_controller_class">
           <End Role="c_controller_class" Type="Self.c_controller_class" Multiplicity="1" />
@@ -833,7 +840,11 @@ warning 6002: The table/view 'GADATA.NGAC.NGAC_Supervisie' does not have a prima
     [NGAC_Supervisie].[refId] AS [refId], 
     [NGAC_Supervisie].[timestamp] AS [timestamp], 
     [NGAC_Supervisie].[LocationTree] AS [LocationTree], 
-    [NGAC_Supervisie].[ClassTree] AS [ClassTree]
+    [NGAC_Supervisie].[ClassTree] AS [ClassTree], 
+    [NGAC_Supervisie].[Vyear] AS [Vyear], 
+    [NGAC_Supervisie].[Vweek] AS [Vweek], 
+    [NGAC_Supervisie].[Vday] AS [Vday], 
+    [NGAC_Supervisie].[shift] AS [shift]
     FROM [NGAC].[NGAC_Supervisie] AS [NGAC_Supervisie]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_c_controller_c_controller_class" Association="Self.FK_c_controller_c_controller_class">
@@ -1882,6 +1893,7 @@ warning 6002: The table/view 'GADATA.NGAC.NGAC_Supervisie' does not have a prima
         <EntityType Name="NGAC_Supervisie">
           <Key>
             <PropertyRef Name="refId" />
+            <PropertyRef Name="Logtype" />
           </Key>
           <Property Name="Location" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="logtext" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
@@ -1897,6 +1909,10 @@ warning 6002: The table/view 'GADATA.NGAC.NGAC_Supervisie' does not have a prima
           <Property Name="timestamp" Type="DateTime" Precision="3" />
           <Property Name="LocationTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="ClassTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Vyear" Type="Int32" />
+          <Property Name="Vweek" Type="Int32" />
+          <Property Name="Vday" Type="Int32" />
+          <Property Name="shift" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -2370,6 +2386,10 @@ warning 6002: The table/view 'GADATA.NGAC.NGAC_Supervisie' does not have a prima
           <EntitySetMapping Name="NGAC_Supervisie">
             <EntityTypeMapping TypeName="GADATAModelVASC.NGAC_Supervisie">
               <MappingFragment StoreEntitySet="NGAC_Supervisie">
+                <ScalarProperty Name="shift" ColumnName="shift" />
+                <ScalarProperty Name="Vday" ColumnName="Vday" />
+                <ScalarProperty Name="Vweek" ColumnName="Vweek" />
+                <ScalarProperty Name="Vyear" ColumnName="Vyear" />
                 <ScalarProperty Name="ClassTree" ColumnName="ClassTree" />
                 <ScalarProperty Name="LocationTree" ColumnName="LocationTree" />
                 <ScalarProperty Name="timestamp" ColumnName="timestamp" />

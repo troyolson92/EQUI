@@ -28,5 +28,9 @@ namespace EqUiWebUi.Areas.VASC.Models
         public Nullable<System.DateTime> timestamp { get; set; }
         public string LocationTree { get; set; }
         public string ClassTree { get; set; }
+        public Nullable<int> Vyear { get; set; }
+        public Nullable<int> Vweek { get; set; }
+        public Nullable<int> Vday { get; set; }
+        public string shift { get; set; }
     }
 }

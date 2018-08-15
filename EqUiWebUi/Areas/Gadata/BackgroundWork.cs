@@ -38,6 +38,10 @@ namespace EqUiWebUi.Areas.Gadata
         public Nullable<System.DateTime> timestamp { get; set; }
         public string LocationTree { get; set; }
         public string ClassTree { get; set; }
+        public Nullable<int> Vyear { get; set; }
+        public Nullable<int> Vweek { get; set; }
+        public Nullable<int> Vday { get; set; }
+        public string shift { get; set; }
     }
 
 
@@ -144,6 +148,10 @@ namespace EqUiWebUi.Areas.Gadata
             ,timestamp = x.timestamp
             ,LocationTree = x.LocationTree
             ,ClassTree = x.ClassTree.ToString()
+            ,Vyear = x.Vyear
+            ,Vweek = x.Vweek
+            ,Vday = x.Vday
+            ,shift = x.shift
         }).Where(x => x.timestamp > dtTimeLimtAlert) //last 8 hours of data
         .ToList();
         context.WriteLine(dataALERT.Count());
@@ -167,6 +175,10 @@ namespace EqUiWebUi.Areas.Gadata
             ,timestamp = x.timestamp
             ,LocationTree = x.LocationTree
             ,ClassTree = x.ClassTree
+            ,Vyear = x.Vyear
+            ,Vweek = x.Vweek
+            ,Vday = x.Vday
+            ,shift = x.shift
         }).ToList();
         context.WriteLine(dataVASC.Count());
         data.AddRange(dataVASC);
@@ -191,6 +203,10 @@ namespace EqUiWebUi.Areas.Gadata
                 ,timestamp = x.timestamp
                 ,LocationTree = x.LocationTree
                 ,ClassTree = x.ClassTree
+                ,Vyear = x.Vyear
+                ,Vweek = x.Vweek
+                ,Vday = x.Vday
+                ,shift = x.shift
             }).ToList();
             context.WriteLine(dataC3G.Count());
             data.AddRange(dataC3G);
@@ -212,6 +228,10 @@ namespace EqUiWebUi.Areas.Gadata
                 ,timestamp = x.timestamp
                 ,LocationTree = x.LocationTree
                 ,ClassTree = x.ClassTree
+                ,Vyear = x.Vyear
+                ,Vweek = x.Vweek
+                ,Vday = x.Vday
+                ,shift = x.shift
             }).ToList();
             context.WriteLine(dataC4G.Count());
             data.AddRange(dataC4G);
@@ -233,6 +253,10 @@ namespace EqUiWebUi.Areas.Gadata
                 ,timestamp = x.timestamp
                 ,LocationTree = x.LocationTree
                 ,ClassTree = x.ClassTree
+                ,Vyear = x.Vyear
+                ,Vweek = x.Vweek
+                ,Vday = x.Vday
+                ,shift = x.shift
             }).ToList();
             context.WriteLine(dataS4C.Count());
                 data.AddRange(dataS4C);
