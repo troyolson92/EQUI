@@ -191,9 +191,11 @@ warning 6002: The table/view 'GADATA.Alerts.Alerts' does not have a primary key 
           <Property Name="ClassTree" Type="int" />
           <Property Name="controller_name" Type="varchar" MaxLength="11" Nullable="false" />
           <Property Name="controller_type" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="Vyear" Type="int" />
+          <Property Name="Vweek" Type="int" />
+          <Property Name="Vday" Type="int" />
+          <Property Name="shift" Type="varchar" MaxLength="2" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'GADATA.Alerts.Alerts_Supervisie' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <Association Name="FK_c_SMSconfig_c_CPT600">
           <End Role="c_CPT600" Type="Self.c_CPT600" Multiplicity="1" />
           <End Role="c_SMSconfig" Type="Self.c_SMSconfig" Multiplicity="*" />
@@ -429,7 +431,11 @@ warning 6002: The table/view 'GADATA.Alerts.Alerts_Supervisie' does not have a p
     [Alerts].[LocationTree] AS [LocationTree], 
     [Alerts].[ClassTree] AS [ClassTree], 
     [Alerts].[controller_name] AS [controller_name], 
-    [Alerts].[controller_type] AS [controller_type]
+    [Alerts].[controller_type] AS [controller_type], 
+    [Alerts].[Vyear] AS [Vyear], 
+    [Alerts].[Vweek] AS [Vweek], 
+    [Alerts].[Vday] AS [Vday], 
+    [Alerts].[shift] AS [shift]
     FROM [Alerts].[Alerts] AS [Alerts]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_c_SMSconfig_c_CPT600" Association="Self.FK_c_SMSconfig_c_CPT600">
@@ -1004,6 +1010,10 @@ warning 6002: The table/view 'GADATA.Alerts.Alerts_Supervisie' does not have a p
           <Property Name="ClassTree" Type="Int32" />
           <Property Name="controller_name" Nullable="false" MaxLength="11" FixedLength="false" Unicode="false" Type="String" />
           <Property Name="controller_type" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="Vyear" Type="Int32" />
+          <Property Name="Vweek" Type="Int32" />
+          <Property Name="Vday" Type="Int32" />
+          <Property Name="shift" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -1182,6 +1192,10 @@ warning 6002: The table/view 'GADATA.Alerts.Alerts_Supervisie' does not have a p
           <EntitySetMapping Name="Alerts">
             <EntityTypeMapping TypeName="AlertModel.Alerts">
               <MappingFragment StoreEntitySet="Alerts">
+                <ScalarProperty Name="shift" ColumnName="shift" />
+                <ScalarProperty Name="Vday" ColumnName="Vday" />
+                <ScalarProperty Name="Vweek" ColumnName="Vweek" />
+                <ScalarProperty Name="Vyear" ColumnName="Vyear" />
                 <ScalarProperty Name="controller_type" ColumnName="controller_type" />
                 <ScalarProperty Name="controller_name" ColumnName="controller_name" />
                 <ScalarProperty Name="ClassTree" ColumnName="ClassTree" />

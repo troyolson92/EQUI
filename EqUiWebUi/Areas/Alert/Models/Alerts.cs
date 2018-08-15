@@ -32,5 +32,9 @@ namespace EqUiWebUi.Areas.Alert.Models
         public Nullable<int> ClassTree { get; set; }
         public string controller_name { get; set; }
         public string controller_type { get; set; }
+        public Nullable<int> Vyear { get; set; }
+        public Nullable<int> Vweek { get; set; }
+        public Nullable<int> Vday { get; set; }
+        public string shift { get; set; }
     }
 }
