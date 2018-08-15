@@ -1,4 +1,5 @@
 ﻿
+
 CREATE VIEW [NGAC].[NGAC_Supervisie]
 AS
 SELECT DISTINCT 
@@ -72,8 +73,6 @@ where
 breakdown.[timestamp] BETWEEN getdate()-'1900-01-01 08:00:00' AND getdate()
 and 
 1*60 <= breakdown.Downtime
-and  
-breakdown.Category NOT LIKE '%Operational%' 
 
 --*******************************************************************************************************--
 --NGAC live (active breakdown)
