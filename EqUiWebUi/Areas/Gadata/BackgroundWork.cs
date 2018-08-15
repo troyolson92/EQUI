@@ -20,6 +20,7 @@ namespace EqUiWebUi.Areas.Gadata
         public static List<EqUiWebUi.Areas.Gadata.SupervisieDummy> dataC3G { get; set; }
         public static List<EqUiWebUi.Areas.Gadata.SupervisieDummy> dataC4G { get; set; }
         public static List<EqUiWebUi.Areas.Gadata.SupervisieDummy> dataS4C { get; set; }
+        public static List<EqUiWebUi.Areas.Gadata.SupervisieDummy> dataSTO { get; set; }
         public static DateTime SupervisieLastDt { get; set; }
         //
         public static List<EqUiWebUi.Areas.Gadata.Models.PloegRaport_Result> Ploegreport { get; set; }
@@ -135,8 +136,9 @@ namespace EqUiWebUi.Areas.Gadata
         if (DataBuffer.dataC3G == null) DataBuffer.dataC3G = new List<EqUiWebUi.Areas.Gadata.SupervisieDummy>();
         if (DataBuffer.dataC4G == null) DataBuffer.dataC4G = new List<EqUiWebUi.Areas.Gadata.SupervisieDummy>();
         if (DataBuffer.dataVASC == null) DataBuffer.dataVASC = new List<EqUiWebUi.Areas.Gadata.SupervisieDummy>();
-
-            //Get Alert data
+        if (DataBuffer.dataSTO == null) DataBuffer.dataSTO = new List<EqUiWebUi.Areas.Gadata.SupervisieDummy>();
+        
+         //Get Alert data
             DateTime dtTimeLimtAlert = System.DateTime.Now.AddHours(-8);
             Alert.Models.GADATA_AlertModel GADATA_AlertModel = new Alert.Models.GADATA_AlertModel();
             DataBuffer.dataALERT  = GADATA_AlertModel.Alerts.Select(
@@ -179,8 +181,11 @@ namespace EqUiWebUi.Areas.Gadata
                 //COMAU c4G
                 context.WriteLine("dataC4G count:" + DataBuffer.dataC4G.Count());
                 data.AddRange(DataBuffer.dataC4G);
+                //TIA STO
+                context.WriteLine("dataSTO count:" + DataBuffer.dataSTO.Count());
+                data.AddRange(DataBuffer.dataSTO);
                 //ABB s4c is here because it has no norm
-                    Gadata.Models.GADATAEntities2 GADATAEntities2 = new Gadata.Models.GADATAEntities2();
+                Gadata.Models.GADATAEntities2 GADATAEntities2 = new Gadata.Models.GADATAEntities2();
                     DataBuffer.dataS4C = GADATAEntities2.S4C_Supervisie.Select(x => new EqUiWebUi.Areas.Gadata.SupervisieDummy() {
                      Location= x.Location
                     ,logtext = x.logtext
@@ -205,6 +210,7 @@ namespace EqUiWebUi.Areas.Gadata
                 data.AddRange(DataBuffer.dataS4C);
             }
 
+  
             //Set the main dataset and update the max ts
             context.WriteLine("Total datacount " + data.Count());
             DataBuffer.Supervisie = data;
@@ -380,8 +386,7 @@ namespace EqUiWebUi.Areas.Gadata
             context.WriteLine(DataBuffer.dataVASC.Count());
         }
 
-
-        //run NGAC normalisation steps.
+        //run daily cleanup
         [Queue("gadata")]
         [AutomaticRetry(Attempts = 5)]
         public void norm_1day(PerformContext context)
