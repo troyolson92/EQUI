@@ -106,6 +106,31 @@ namespace EqUiWebUi.Areas.PlcSupervisie
             c_LogClassRule.c_logClassSystem_id = db.c_logClassSystem.Where(c => c.Name == "DBI_STO").First().id;
             c_LogClassRule.id = 0; //this causes us to run all rules
             classificationController.RunRule(c_LogClassRule,overrideManualSet: false, Clear: false, UPDATE: false);
+
+            //update supervisie databuffer
+            //context.WriteLine("Supervisie dataC3G"); 
+            Gadata.Models.GADATAEntities2 GADATAEntities2 = new Gadata.Models.GADATAEntities2();
+            EqUiWebUi.Areas.Gadata.DataBuffer.dataSTO = GADATAEntities2.STO_Supervisie.Select(x => new EqUiWebUi.Areas.Gadata.SupervisieDummy() {
+                 Location= x.Location
+                ,logtext = x.logtext
+                ,RT = x.RT
+                ,DT = x.DT
+                ,time = x.time
+                ,Classification = x.Classification
+                ,Subgroup = x.Subgroup
+                ,Severity = x.Severity
+                ,Logcode = x.Logcode
+                ,Logtype = x.Logtype
+                ,refId = x.refId
+                ,timestamp = x.timestamp
+                ,LocationTree = x.LocationTree
+                ,ClassTree = x.ClassTree
+                ,Vyear = x.Vyear
+                ,Vweek = x.Vweek
+                ,Vday = x.Vday
+                ,shift = x.shift
+            }).ToList();
+            //context.WriteLine(DataBuffer.dataC3G.Count());
         }
     }
 }

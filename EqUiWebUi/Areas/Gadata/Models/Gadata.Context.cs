@@ -30,6 +30,7 @@ namespace EqUiWebUi.Areas.Gadata.Models
         public virtual DbSet<C3G_Supervisie> C3G_Supervisie { get; set; }
         public virtual DbSet<C4G_Supervisie> C4G_Supervisie { get; set; }
         public virtual DbSet<S4C_Supervisie> S4C_Supervisie { get; set; }
+        public virtual DbSet<STO_Supervisie> STO_Supervisie { get; set; }
     
         public virtual ObjectResult<PloegRaport_Result> PloegRaport(Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate, Nullable<int> daysBack, string assets, string locations, string lochierarchy, Nullable<int> minDowntime, Nullable<int> minCountOfDowtime, Nullable<int> minCountofWarning)
         {

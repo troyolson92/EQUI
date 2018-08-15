@@ -86,6 +86,33 @@ warning 6002: The table/view 'GADATA.S4C.S4C_Supervisie' does not have a primary
           <Property Name="Vday" Type="int" />
           <Property Name="shift" Type="varchar" MaxLength="2" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.STO.STO_Supervisie' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="STO_Supervisie">
+          <Key>
+            <PropertyRef Name="logtext" />
+            <PropertyRef Name="Logtype" />
+            <PropertyRef Name="refId" />
+          </Key>
+          <Property Name="Location" Type="varchar(max)" />
+          <Property Name="logtext" Type="varchar(max)" Nullable="false" />
+          <Property Name="RT" Type="int" />
+          <Property Name="DT" Type="int" />
+          <Property Name="time" Type="char" MaxLength="19" />
+          <Property Name="Classification" Type="varchar(max)" />
+          <Property Name="Subgroup" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Severity" Type="char" MaxLength="1" />
+          <Property Name="Logcode" Type="varchar(max)" />
+          <Property Name="Logtype" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="refId" Type="int" Nullable="false" />
+          <Property Name="timestamp" Type="datetime" />
+          <Property Name="LocationTree" Type="varchar(max)" />
+          <Property Name="ClassTree" Type="varchar(max)" />
+          <Property Name="Vyear" Type="int" />
+          <Property Name="Vweek" Type="int" />
+          <Property Name="Vday" Type="int" />
+          <Property Name="shift" Type="varchar" MaxLength="2" />
+        </EntityType>
         <Function Name="PloegRaport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="EqUi">
           <Parameter Name="StartDate" Type="datetime" Mode="In" />
           <Parameter Name="EndDate" Type="datetime" Mode="In" />
@@ -164,6 +191,28 @@ warning 6002: The table/view 'GADATA.S4C.S4C_Supervisie' does not have a primary
     [S4C_Supervisie].[shift] AS [shift]
     FROM [S4C].[S4C_Supervisie] AS [S4C_Supervisie]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="STO_Supervisie" EntityType="Self.STO_Supervisie" store:Type="Views" store:Schema="STO">
+            <DefiningQuery>SELECT 
+    [STO_Supervisie].[Location] AS [Location], 
+    [STO_Supervisie].[logtext] AS [logtext], 
+    [STO_Supervisie].[RT] AS [RT], 
+    [STO_Supervisie].[DT] AS [DT], 
+    [STO_Supervisie].[time] AS [time], 
+    [STO_Supervisie].[Classification] AS [Classification], 
+    [STO_Supervisie].[Subgroup] AS [Subgroup], 
+    [STO_Supervisie].[Severity] AS [Severity], 
+    [STO_Supervisie].[Logcode] AS [Logcode], 
+    [STO_Supervisie].[Logtype] AS [Logtype], 
+    [STO_Supervisie].[refId] AS [refId], 
+    [STO_Supervisie].[timestamp] AS [timestamp], 
+    [STO_Supervisie].[LocationTree] AS [LocationTree], 
+    [STO_Supervisie].[ClassTree] AS [ClassTree], 
+    [STO_Supervisie].[Vyear] AS [Vyear], 
+    [STO_Supervisie].[Vweek] AS [Vweek], 
+    [STO_Supervisie].[Vday] AS [Vday], 
+    [STO_Supervisie].[shift] AS [shift]
+    FROM [STO].[STO_Supervisie] AS [STO_Supervisie]</DefiningQuery>
+          </EntitySet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -184,6 +233,7 @@ warning 6002: The table/view 'GADATA.S4C.S4C_Supervisie' does not have a primary
           <EntitySet Name="C3G_Supervisie" EntityType="GADATAModel1.C3G_Supervisie" />
           <EntitySet Name="C4G_Supervisie" EntityType="GADATAModel1.C4G_Supervisie" />
           <EntitySet Name="S4C_Supervisie" EntityType="GADATAModel1.S4C_Supervisie" />
+          <EntitySet Name="STO_Supervisie" EntityType="GADATAModel1.STO_Supervisie" />
         </EntityContainer>
         <ComplexType Name="PloegRaport_Result">
           <Property Type="String" Name="Location" Nullable="true" />
@@ -273,6 +323,31 @@ warning 6002: The table/view 'GADATA.S4C.S4C_Supervisie' does not have a primary
           <Property Name="Vday" Type="Int32" />
           <Property Name="shift" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="STO_Supervisie">
+          <Key>
+            <PropertyRef Name="logtext" />
+            <PropertyRef Name="Logtype" />
+            <PropertyRef Name="refId" />
+          </Key>
+          <Property Name="Location" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="logtext" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="RT" Type="Int32" />
+          <Property Name="DT" Type="Int32" />
+          <Property Name="time" Type="String" MaxLength="19" FixedLength="true" Unicode="false" />
+          <Property Name="Classification" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Subgroup" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Severity" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="Logcode" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Logtype" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="refId" Type="Int32" Nullable="false" />
+          <Property Name="timestamp" Type="DateTime" Precision="3" />
+          <Property Name="LocationTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ClassTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Vyear" Type="Int32" />
+          <Property Name="Vweek" Type="Int32" />
+          <Property Name="Vday" Type="Int32" />
+          <Property Name="shift" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -350,6 +425,30 @@ warning 6002: The table/view 'GADATA.S4C.S4C_Supervisie' does not have a primary
           <EntitySetMapping Name="S4C_Supervisie">
             <EntityTypeMapping TypeName="GADATAModel1.S4C_Supervisie">
               <MappingFragment StoreEntitySet="S4C_Supervisie">
+                <ScalarProperty Name="shift" ColumnName="shift" />
+                <ScalarProperty Name="Vday" ColumnName="Vday" />
+                <ScalarProperty Name="Vweek" ColumnName="Vweek" />
+                <ScalarProperty Name="Vyear" ColumnName="Vyear" />
+                <ScalarProperty Name="ClassTree" ColumnName="ClassTree" />
+                <ScalarProperty Name="LocationTree" ColumnName="LocationTree" />
+                <ScalarProperty Name="timestamp" ColumnName="timestamp" />
+                <ScalarProperty Name="refId" ColumnName="refId" />
+                <ScalarProperty Name="Logtype" ColumnName="Logtype" />
+                <ScalarProperty Name="Logcode" ColumnName="Logcode" />
+                <ScalarProperty Name="Severity" ColumnName="Severity" />
+                <ScalarProperty Name="Subgroup" ColumnName="Subgroup" />
+                <ScalarProperty Name="Classification" ColumnName="Classification" />
+                <ScalarProperty Name="time" ColumnName="time" />
+                <ScalarProperty Name="DT" ColumnName="DT" />
+                <ScalarProperty Name="RT" ColumnName="RT" />
+                <ScalarProperty Name="logtext" ColumnName="logtext" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="STO_Supervisie">
+            <EntityTypeMapping TypeName="GADATAModel1.STO_Supervisie">
+              <MappingFragment StoreEntitySet="STO_Supervisie">
                 <ScalarProperty Name="shift" ColumnName="shift" />
                 <ScalarProperty Name="Vday" ColumnName="Vday" />
                 <ScalarProperty Name="Vweek" ColumnName="Vweek" />
