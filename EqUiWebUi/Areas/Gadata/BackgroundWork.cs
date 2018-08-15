@@ -15,6 +15,11 @@ namespace EqUiWebUi.Areas.Gadata
     {
         //
         public static List<EqUiWebUi.Areas.Gadata.SupervisieDummy> Supervisie { get; set; }
+        public static List<EqUiWebUi.Areas.Gadata.SupervisieDummy> dataALERT { get; set; }
+        public static List<EqUiWebUi.Areas.Gadata.SupervisieDummy> dataVASC { get; set; }
+        public static List<EqUiWebUi.Areas.Gadata.SupervisieDummy> dataC3G { get; set; }
+        public static List<EqUiWebUi.Areas.Gadata.SupervisieDummy> dataC4G { get; set; }
+        public static List<EqUiWebUi.Areas.Gadata.SupervisieDummy> dataS4C { get; set; }
         public static DateTime SupervisieLastDt { get; set; }
         //
         public static List<EqUiWebUi.Areas.Gadata.Models.PloegRaport_Result> Ploegreport { get; set; }
@@ -125,75 +130,22 @@ namespace EqUiWebUi.Areas.Gadata
     [AutomaticRetry(Attempts = 0)]
     public void UpdateSupervisie(PerformContext context)
     {
-        List<EqUiWebUi.Areas.Gadata.SupervisieDummy> data = new List<EqUiWebUi.Areas.Gadata.SupervisieDummy>();
+        List<EqUiWebUi.Areas.Gadata.SupervisieDummy> data = new List<EqUiWebUi.Areas.Gadata.SupervisieDummy>();  
+        //init external buffers if null
+        if (DataBuffer.dataC3G == null) DataBuffer.dataC3G = new List<EqUiWebUi.Areas.Gadata.SupervisieDummy>();
+        if (DataBuffer.dataC4G == null) DataBuffer.dataC4G = new List<EqUiWebUi.Areas.Gadata.SupervisieDummy>();
+        if (DataBuffer.dataVASC == null) DataBuffer.dataVASC = new List<EqUiWebUi.Areas.Gadata.SupervisieDummy>();
 
-                
-        context.WriteLine("dataALERT");
-            //get data from alert schema 
+            //Get Alert data
             DateTime dtTimeLimtAlert = System.DateTime.Now.AddHours(-8);
-        Alert.Models.GADATA_AlertModel GADATA_AlertModel = new Alert.Models.GADATA_AlertModel();
-        List<EqUiWebUi.Areas.Gadata.SupervisieDummy> dataALERT = GADATA_AlertModel.Alerts.Select(
-            x => new EqUiWebUi.Areas.Gadata.SupervisieDummy() {
-             Location= x.Location
-            ,logtext = x.Logtext
-            ,RT = x.Response
-            ,DT = x.Downtime
-            ,time = "" //store expersion issue
-            ,Classification = x.Classification
-            ,Subgroup = x.Subgroup
-            ,Severity = x.Severity
-            ,Logcode = x.Logcode
-            ,Logtype = x.Logtype
-            ,refId = x.refId
-            ,timestamp = x.timestamp
-            ,LocationTree = x.LocationTree
-            ,ClassTree = x.ClassTree.ToString()
-            ,Vyear = x.Vyear
-            ,Vweek = x.Vweek
-            ,Vday = x.Vday
-            ,shift = x.shift
-        }).Where(x => x.timestamp > dtTimeLimtAlert) //last 8 hours of data
-        .ToList();
-        context.WriteLine(dataALERT.Count());
-        data.AddRange(dataALERT.Cast<EqUiWebUi.Areas.Gadata.SupervisieDummy>());
-               
-        context.WriteLine("dataVASC");
-        //get data from NGAC schema 
-        VASC.Models.GADATAEntitiesVASC gADATAEntitiesVASC = new VASC.Models.GADATAEntitiesVASC();
-        List<EqUiWebUi.Areas.Gadata.SupervisieDummy> dataVASC = gADATAEntitiesVASC.NGAC_Supervisie.Select(x => new EqUiWebUi.Areas.Gadata.SupervisieDummy() {
-             Location= x.Location
-            ,logtext = x.logtext
-            ,RT = x.RT
-            ,DT = x.DT
-            ,time = x.time
-            ,Classification = x.Classification
-            ,Subgroup = x.Subgroup
-            ,Severity = x.Severity
-            ,Logcode = x.Logcode
-            ,Logtype = x.Logtype
-            ,refId = x.refId
-            ,timestamp = x.timestamp
-            ,LocationTree = x.LocationTree
-            ,ClassTree = x.ClassTree
-            ,Vyear = x.Vyear
-            ,Vweek = x.Vweek
-            ,Vday = x.Vday
-            ,shift = x.shift
-        }).ToList();
-        context.WriteLine(dataVASC.Count());
-        data.AddRange(dataVASC);
-
-        if (EqUiWebUi.MyBooleanExtensions.IsAreaEnabled("VCSC"))
-        { 
-            context.WriteLine("dataC3G");
-            //get data from NGAC schema 
-            Gadata.Models.GADATAEntities2 GADATAEntities2 = new Gadata.Models.GADATAEntities2();
-            List<EqUiWebUi.Areas.Gadata.SupervisieDummy> dataC3G = GADATAEntities2.C3G_Supervisie.Select(x => new EqUiWebUi.Areas.Gadata.SupervisieDummy() {
+            Alert.Models.GADATA_AlertModel GADATA_AlertModel = new Alert.Models.GADATA_AlertModel();
+            DataBuffer.dataALERT  = GADATA_AlertModel.Alerts.Select(
+                x => new EqUiWebUi.Areas.Gadata.SupervisieDummy() {
                  Location= x.Location
-                ,logtext = x.logtext
-                ,RT = x.RT
-                ,DT = x.DT
-                ,time = x.time
+                ,logtext = x.Logtext
+                ,RT = x.Response
+                ,DT = x.Downtime
+                ,time = "" //store expersion issue
                 ,Classification = x.Classification
                 ,Subgroup = x.Subgroup
                 ,Severity = x.Severity
@@ -202,70 +154,59 @@ namespace EqUiWebUi.Areas.Gadata
                 ,refId = x.refId
                 ,timestamp = x.timestamp
                 ,LocationTree = x.LocationTree
-                ,ClassTree = x.ClassTree
+                ,ClassTree = x.ClassTree.ToString()
                 ,Vyear = x.Vyear
                 ,Vweek = x.Vweek
                 ,Vday = x.Vday
                 ,shift = x.shift
-            }).ToList();
-            context.WriteLine(dataC3G.Count());
-            data.AddRange(dataC3G);
+            }).Where(x => x.timestamp > dtTimeLimtAlert) //last 8 hours of data
+            .ToList();
+            context.WriteLine("dataALERT count:" + DataBuffer.dataALERT.Count());
+            data.AddRange(DataBuffer.dataALERT);
 
-            context.WriteLine("dataC4G");
-            //get data from NGAC schema 
-            List<EqUiWebUi.Areas.Gadata.SupervisieDummy> dataC4G = GADATAEntities2.C4G_Supervisie.Select(x => new EqUiWebUi.Areas.Gadata.SupervisieDummy() {
-                 Location= x.Location
-                ,logtext = x.logtext
-                ,RT = x.RT
-                ,DT = x.DT
-                ,time = x.time
-                ,Classification = x.Classification
-                ,Subgroup = x.Subgroup
-                ,Severity = x.Severity
-                ,Logcode = x.Logcode
-                ,Logtype = x.Logtype
-                ,refId = x.refId
-                ,timestamp = x.timestamp
-                ,LocationTree = x.LocationTree
-                ,ClassTree = x.ClassTree
-                ,Vyear = x.Vyear
-                ,Vweek = x.Vweek
-                ,Vday = x.Vday
-                ,shift = x.shift
-            }).ToList();
-            context.WriteLine(dataC4G.Count());
-            data.AddRange(dataC4G);
 
-             context.WriteLine("dataS4C");
-            //get data from NGAC schema 
-            List<EqUiWebUi.Areas.Gadata.SupervisieDummy> dataS4C = GADATAEntities2.S4C_Supervisie.Select(x => new EqUiWebUi.Areas.Gadata.SupervisieDummy() {
-                 Location= x.Location
-                ,logtext = x.logtext
-                ,RT = x.RT
-                ,DT = x.DT
-                ,time = x.time
-                ,Classification = x.Classification
-                ,Subgroup = x.Subgroup
-                ,Severity = x.Severity
-                ,Logcode = x.Logcode
-                ,Logtype = x.Logtype
-                ,refId = x.refId
-                ,timestamp = x.timestamp
-                ,LocationTree = x.LocationTree
-                ,ClassTree = x.ClassTree
-                ,Vyear = x.Vyear
-                ,Vweek = x.Vweek
-                ,Vday = x.Vday
-                ,shift = x.shift
-            }).ToList();
-            context.WriteLine(dataS4C.Count());
-                data.AddRange(dataS4C);
-        }
+            //VASC
+            context.WriteLine("dataVASC count:" + DataBuffer.dataVASC.Count());
+            data.AddRange(DataBuffer.dataVASC);
 
-    //Set the main dataset and update the max ts
-    context.WriteLine("datacount " + data.Count());
-    if (data.Count != 0)
-        {
+
+            //VCSC AREA (Ghent only)
+            if (EqUiWebUi.MyBooleanExtensions.IsAreaEnabled("VCSC"))
+            {
+                //COMAU C3G
+                context.WriteLine("dataC3G count:" + DataBuffer.dataC3G.Count());
+                data.AddRange(DataBuffer.dataC3G);
+                //COMAU c4G
+                context.WriteLine("dataC4G count:" + DataBuffer.dataC4G.Count());
+                data.AddRange(DataBuffer.dataC4G);
+                //ABB s4c is here because it has no norm
+                    Gadata.Models.GADATAEntities2 GADATAEntities2 = new Gadata.Models.GADATAEntities2();
+                    DataBuffer.dataS4C = GADATAEntities2.S4C_Supervisie.Select(x => new EqUiWebUi.Areas.Gadata.SupervisieDummy() {
+                     Location= x.Location
+                    ,logtext = x.logtext
+                    ,RT = x.RT
+                    ,DT = x.DT
+                    ,time = x.time
+                    ,Classification = x.Classification
+                    ,Subgroup = x.Subgroup
+                    ,Severity = x.Severity
+                    ,Logcode = x.Logcode
+                    ,Logtype = x.Logtype
+                    ,refId = x.refId
+                    ,timestamp = x.timestamp
+                    ,LocationTree = x.LocationTree
+                    ,ClassTree = x.ClassTree
+                    ,Vyear = x.Vyear
+                    ,Vweek = x.Vweek
+                    ,Vday = x.Vday
+                    ,shift = x.shift
+                }).ToList();
+                context.WriteLine("dataS4C count:" + DataBuffer.dataS4C.Count());
+                data.AddRange(DataBuffer.dataS4C);
+            }
+
+            //Set the main dataset and update the max ts
+            context.WriteLine("Total datacount " + data.Count());
             DataBuffer.Supervisie = data;
                 DateTime now = System.DateTime.Now;
             DateTime maxDate = data
@@ -279,11 +220,6 @@ namespace EqUiWebUi.Areas.Gadata
             var SingnalRcontext = Microsoft.AspNet.SignalR.GlobalHost.ConnectionManager.GetHubContext<DataRefreshHub>();
             SingnalRcontext.Clients.Group("Supervisie").newData();
         }
-        else
-        {
-            log.Error("UpdateSupervisie did not return any data");
-        }
-    }
 
         //run C3G normalisation steps.
         [Queue("gadata")]
@@ -298,11 +234,11 @@ namespace EqUiWebUi.Areas.Gadata
 
             foreach(string cmd in cmds)
             {
-                context.WriteLine(" "+cmd);
+                context.WriteLine(cmd);
                 connectionManager.RunCommand(cmd, enblExeptions: true, maxEXECtime: 300);
                 context.WriteLine(" Done");
             }
-            context.WriteLine(" runRule started");
+            context.WriteLine("runRule started");
             //stupid that I need to spin up all these classes to get it to run... (temp solution)
             EqUiWebUi.Controllers.ClassificationController classificationController = new EqUiWebUi.Controllers.ClassificationController();
             EqUiWebUi.Models.c_LogClassRules c_LogClassRule = new EqUiWebUi.Models.c_LogClassRules();
@@ -310,7 +246,31 @@ namespace EqUiWebUi.Areas.Gadata
             c_LogClassRule.c_logClassSystem_id = db.c_logClassSystem.Where(c => c.Name == "VCSC_C3G").First().id;
             c_LogClassRule.id = 0; //this causes us to run all rules
             classificationController.RunRule(c_LogClassRule, overrideManualSet: false, Clear: false, UPDATE: false);
-            context.WriteLine(" runRule done");
+            context.WriteLine("runRule done");
+            //update supervisie databuffer
+            context.WriteLine("Supervisie dataC3G"); 
+            Gadata.Models.GADATAEntities2 GADATAEntities2 = new Gadata.Models.GADATAEntities2();
+            DataBuffer.dataC3G = GADATAEntities2.C3G_Supervisie.Select(x => new EqUiWebUi.Areas.Gadata.SupervisieDummy() {
+                 Location= x.Location
+                ,logtext = x.logtext
+                ,RT = x.RT
+                ,DT = x.DT
+                ,time = x.time
+                ,Classification = x.Classification
+                ,Subgroup = x.Subgroup
+                ,Severity = x.Severity
+                ,Logcode = x.Logcode
+                ,Logtype = x.Logtype
+                ,refId = x.refId
+                ,timestamp = x.timestamp
+                ,LocationTree = x.LocationTree
+                ,ClassTree = x.ClassTree
+                ,Vyear = x.Vyear
+                ,Vweek = x.Vweek
+                ,Vday = x.Vday
+                ,shift = x.shift
+            }).ToList();
+            context.WriteLine(DataBuffer.dataC3G.Count());
         }
 
         //run c4g normalisation steps.
@@ -328,12 +288,12 @@ namespace EqUiWebUi.Areas.Gadata
 
             foreach (string cmd in cmds)
             {
-                context.WriteLine(" " + cmd);
+                context.WriteLine(cmd);
                 connectionManager.RunCommand(cmd, enblExeptions: true, maxEXECtime: 300);
                 context.WriteLine(" Done");
             }
 
-            context.WriteLine(" runRule started");
+            context.WriteLine("runRule started");
             //stupid that I need to spin up all these classes to get it to run... (temp solution)
             EqUiWebUi.Controllers.ClassificationController classificationController = new EqUiWebUi.Controllers.ClassificationController();
             EqUiWebUi.Models.c_LogClassRules c_LogClassRule = new EqUiWebUi.Models.c_LogClassRules();
@@ -341,7 +301,31 @@ namespace EqUiWebUi.Areas.Gadata
             c_LogClassRule.c_logClassSystem_id = db.c_logClassSystem.Where(c => c.Name == "VCSC_C4G").First().id;
             c_LogClassRule.id = 0; //this causes us to run all rules
             classificationController.RunRule(c_LogClassRule, overrideManualSet: false, Clear: false, UPDATE: false);
-            context.WriteLine(" runRule done");
+            context.WriteLine("runRule done");
+            //update supervisie databuffer
+            context.WriteLine("Supervisie dataC4G");
+            Gadata.Models.GADATAEntities2 GADATAEntities2 = new Gadata.Models.GADATAEntities2();
+            DataBuffer.dataC4G = GADATAEntities2.C4G_Supervisie.Select(x => new EqUiWebUi.Areas.Gadata.SupervisieDummy() {
+                 Location= x.Location
+                ,logtext = x.logtext
+                ,RT = x.RT
+                ,DT = x.DT
+                ,time = x.time
+                ,Classification = x.Classification
+                ,Subgroup = x.Subgroup
+                ,Severity = x.Severity
+                ,Logcode = x.Logcode
+                ,Logtype = x.Logtype
+                ,refId = x.refId
+                ,timestamp = x.timestamp
+                ,LocationTree = x.LocationTree
+                ,ClassTree = x.ClassTree
+                ,Vyear = x.Vyear
+                ,Vweek = x.Vweek
+                ,Vday = x.Vday
+                ,shift = x.shift
+            }).ToList();
+            context.WriteLine(DataBuffer.dataC4G.Count());
         }
 
         //run NGAC normalisation steps.
@@ -356,12 +340,12 @@ namespace EqUiWebUi.Areas.Gadata
 
             foreach (string cmd in cmds)
             {
-                context.WriteLine(" " + cmd);
+                context.WriteLine(cmd);
                 connectionManager.RunCommand(cmd, enblExeptions: true, maxEXECtime: 300);
-                context.WriteLine(" Done");
+                context.WriteLine("Done");
             }
 
-            context.WriteLine(" runRule started");
+            context.WriteLine("runRule started");
             //stupid that I need to spin up all these classes to get it to run... (temp solution)
             EqUiWebUi.Controllers.ClassificationController classificationController = new EqUiWebUi.Controllers.ClassificationController();
             EqUiWebUi.Models.c_LogClassRules c_LogClassRule = new EqUiWebUi.Models.c_LogClassRules();
@@ -369,7 +353,31 @@ namespace EqUiWebUi.Areas.Gadata
             c_LogClassRule.c_logClassSystem_id = db.c_logClassSystem.Where(c => c.Name == "VASC_NGAC").First().id;
             c_LogClassRule.id = 0; //this causes us to run all rules
             classificationController.RunRule(c_LogClassRule, overrideManualSet: false, Clear: false, UPDATE: false);
-            context.WriteLine(" runRule done");
+            context.WriteLine("runRule done");
+            //update supervisie databuffer
+            context.WriteLine("Supervisie dataVASC");
+            VASC.Models.GADATAEntitiesVASC gADATAEntitiesVASC = new VASC.Models.GADATAEntitiesVASC();
+            DataBuffer.dataVASC = gADATAEntitiesVASC.NGAC_Supervisie.Select(x => new EqUiWebUi.Areas.Gadata.SupervisieDummy() {
+                 Location= x.Location
+                ,logtext = x.logtext
+                ,RT = x.RT
+                ,DT = x.DT
+                ,time = x.time
+                ,Classification = x.Classification
+                ,Subgroup = x.Subgroup
+                ,Severity = x.Severity
+                ,Logcode = x.Logcode
+                ,Logtype = x.Logtype
+                ,refId = x.refId
+                ,timestamp = x.timestamp
+                ,LocationTree = x.LocationTree
+                ,ClassTree = x.ClassTree
+                ,Vyear = x.Vyear
+                ,Vweek = x.Vweek
+                ,Vday = x.Vday
+                ,shift = x.shift
+            }).ToList();
+            context.WriteLine(DataBuffer.dataVASC.Count());
         }
 
 
