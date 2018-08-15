@@ -288,6 +288,9 @@
     <Compile Include="Areas\Gadata\Models\STO_Supervisie.cs">
       <DependentUpon>Gadata.tt</DependentUpon>
     </Compile>
+    <Compile Include="Areas\Gadata\Models\Timeline.cs">
+      <DependentUpon>Gadata.tt</DependentUpon>
+    </Compile>
     <Compile Include="Areas\HangfireArea\Controllers\JobController.cs" />
     <Compile Include="Areas\HangfireArea\HangfireAreaAreaRegistration.cs" />
     <Compile Include="Areas\HangfireArea\Jobengine.cs" />

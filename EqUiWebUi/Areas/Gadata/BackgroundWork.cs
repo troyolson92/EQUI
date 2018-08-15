@@ -107,9 +107,40 @@ namespace EqUiWebUi.Areas.Gadata
         if (DataBuffer.dataC4G == null) DataBuffer.dataC4G = new List<EqUiWebUi.Areas.Gadata.SupervisieDummy>();
         if (DataBuffer.dataVASC == null) DataBuffer.dataVASC = new List<EqUiWebUi.Areas.Gadata.SupervisieDummy>();
         if (DataBuffer.dataSTO == null) DataBuffer.dataSTO = new List<EqUiWebUi.Areas.Gadata.SupervisieDummy>();
-        
+
+            int NumShifts = 3;
+            DateTime now = System.DateTime.Now;
+            //get timeline
+            Gadata.Models.GADATAEntities2 gADATAEntities2 = new Models.GADATAEntities2();
+            data = gADATAEntities2.Timeline.Select(
+                x => new EqUiWebUi.Areas.Gadata.SupervisieDummy() {
+                  Location = x.Location
+                , logtext = x.Logtekst
+                , RT = null
+                , DT = null
+                , time = ""
+                , Classification = ""
+                , Subgroup = x.Subgroup
+                , Severity = null
+                , Logcode = ""
+                , Logtype = "TIMELINE"
+                , refId = x.id
+                , timestamp = x.Timestamp
+                , LocationTree = ""
+                , ClassTree = ""
+                , Vyear = x.Year
+                , Vweek = x.Week
+                , Vday = x.day
+                , shift = x.Shift
+                }).Where(x => x.timestamp < now).OrderByDescending(x => x.timestamp).Take(NumShifts).ToList();
+            DateTime? startdate = data.Select(x => x.timestamp).First();
+            DateTime? endDate = data.Select(x => x.timestamp).Last();
+            context.WriteLine(string.Format("Timeline startdate:{0} enddate:{1} timespan: {2}",endDate, startdate, (startdate-endDate)));
+
+            //add check to limit data and handle nulls !!!!
+
+
          //Get Alert data
-            DateTime dtTimeLimtAlert = System.DateTime.Now.AddHours(-8);
             Alert.Models.GADATA_AlertModel GADATA_AlertModel = new Alert.Models.GADATA_AlertModel();
             DataBuffer.dataALERT  = GADATA_AlertModel.Alerts.Select(
                 x => new EqUiWebUi.Areas.Gadata.SupervisieDummy() {
@@ -131,7 +162,7 @@ namespace EqUiWebUi.Areas.Gadata
                 ,Vweek = x.Vweek
                 ,Vday = x.Vday
                 ,shift = x.shift
-            }).Where(x => x.timestamp > dtTimeLimtAlert) //last 8 hours of data
+            }).Where(x => x.timestamp > endDate)
             .ToList();
             context.WriteLine("dataALERT count:" + DataBuffer.dataALERT.Count());
             data.AddRange(DataBuffer.dataALERT);
@@ -186,7 +217,6 @@ namespace EqUiWebUi.Areas.Gadata
             if (data.Count() != 0)
             {
                 DataBuffer.Supervisie = data;
-                DateTime now = System.DateTime.Now;
                 DateTime maxDate = data
                             .Where(r => r != null && r.timestamp < now)
                             .Select(r => r.timestamp.Value)

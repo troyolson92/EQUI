@@ -37,7 +37,7 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
                 data = new List<EqUiWebUi.Areas.Gadata.SupervisieDummy>();
             }
 
-            //apply user filter
+            //apply user filters
             string LocationRoot = CurrentUser.Getuser.LocationRoot;
             if (LocationRoot != "")
             {
@@ -96,6 +96,7 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
                  && p.Logtype != "LIVE"  //EXCLUDE
                  )
                  || p.Logtype == "ALERT" //INCLUDE
+                 || p.Logtype == "TIMELINE" //INCLUDE
                 ).ToList();
 
             //

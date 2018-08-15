@@ -91,6 +91,7 @@ warning 6002: The table/view 'GADATA.STO.STO_Supervisie' does not have a primary
         <EntityType Name="STO_Supervisie">
           <Key>
             <PropertyRef Name="logtext" />
+            
             <PropertyRef Name="Logtype" />
             <PropertyRef Name="refId" />
           </Key>
@@ -112,6 +113,30 @@ warning 6002: The table/view 'GADATA.STO.STO_Supervisie' does not have a primary
           <Property Name="Vweek" Type="int" />
           <Property Name="Vday" Type="int" />
           <Property Name="shift" Type="varchar" MaxLength="2" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.Volvo.Timeline' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Timeline">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="Location" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="Robotname" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="Type" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="Errortype" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="Timestamp" Type="datetime" />
+          <Property Name="Logcode" Type="int" />
+          <Property Name="Severity" Type="int" />
+          <Property Name="Logtekst" Type="varchar" MaxLength="23" Nullable="false" />
+          <Property Name="DOWNTIME" Type="int" />
+          <Property Name="Year" Type="int" />
+          <Property Name="Week" Type="int" />
+          <Property Name="day" Type="int" />
+          <Property Name="Shift" Type="varchar" MaxLength="2" />
+          <Property Name="Ploeg" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="Object" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="Subgroup" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityContainer Name="GADATAModel1StoreContainer">
           <EntitySet Name="C3G_Supervisie" EntityType="Self.C3G_Supervisie" store:Type="Views" store:Schema="C3G">
@@ -202,6 +227,27 @@ warning 6002: The table/view 'GADATA.STO.STO_Supervisie' does not have a primary
     [STO_Supervisie].[shift] AS [shift]
     FROM [STO].[STO_Supervisie] AS [STO_Supervisie]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="Timeline" EntityType="Self.Timeline" store:Type="Views" store:Schema="Volvo">
+            <DefiningQuery>SELECT 
+    [Timeline].[Location] AS [Location], 
+    [Timeline].[Robotname] AS [Robotname], 
+    [Timeline].[Type] AS [Type], 
+    [Timeline].[Errortype] AS [Errortype], 
+    [Timeline].[Timestamp] AS [Timestamp], 
+    [Timeline].[Logcode] AS [Logcode], 
+    [Timeline].[Severity] AS [Severity], 
+    [Timeline].[Logtekst] AS [Logtekst], 
+    [Timeline].[DOWNTIME] AS [DOWNTIME], 
+    [Timeline].[Year] AS [Year], 
+    [Timeline].[Week] AS [Week], 
+    [Timeline].[day] AS [day], 
+    [Timeline].[Shift] AS [Shift], 
+    [Timeline].[Ploeg] AS [Ploeg], 
+    [Timeline].[Object] AS [Object], 
+    [Timeline].[Subgroup] AS [Subgroup], 
+    [Timeline].[id] AS [id]
+    FROM [Volvo].[Timeline] AS [Timeline]</DefiningQuery>
+          </EntitySet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -212,6 +258,7 @@ warning 6002: The table/view 'GADATA.STO.STO_Supervisie' does not have a primary
           <EntitySet Name="C4G_Supervisie" EntityType="GADATAModel1.C4G_Supervisie" />
           <EntitySet Name="S4C_Supervisie" EntityType="GADATAModel1.S4C_Supervisie" />
           <EntitySet Name="STO_Supervisie" EntityType="GADATAModel1.STO_Supervisie" />
+          <EntitySet Name="Timeline" EntityType="GADATAModel1.Timeline" />
         </EntityContainer>
         <EntityType Name="C3G_Supervisie">
           <Key>
@@ -309,6 +356,28 @@ warning 6002: The table/view 'GADATA.STO.STO_Supervisie' does not have a primary
           <Property Name="Vweek" Type="Int32" />
           <Property Name="Vday" Type="Int32" />
           <Property Name="shift" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Timeline">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="Location" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="Robotname" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="Errortype" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="Timestamp" Type="DateTime" Precision="3" />
+          <Property Name="Logcode" Type="Int32" />
+          <Property Name="Severity" Type="Int32" />
+          <Property Name="Logtekst" Type="String" Nullable="false" MaxLength="23" FixedLength="false" Unicode="false" />
+          <Property Name="DOWNTIME" Type="Int32" />
+          <Property Name="Year" Type="Int32" />
+          <Property Name="Week" Type="Int32" />
+          <Property Name="day" Type="Int32" />
+          <Property Name="Shift" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="Ploeg" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="Object" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="Subgroup" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -408,6 +477,29 @@ warning 6002: The table/view 'GADATA.STO.STO_Supervisie' does not have a primary
                 <ScalarProperty Name="DT" ColumnName="DT" />
                 <ScalarProperty Name="RT" ColumnName="RT" />
                 <ScalarProperty Name="logtext" ColumnName="logtext" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Timeline">
+            <EntityTypeMapping TypeName="GADATAModel1.Timeline">
+              <MappingFragment StoreEntitySet="Timeline">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Subgroup" ColumnName="Subgroup" />
+                <ScalarProperty Name="Object" ColumnName="Object" />
+                <ScalarProperty Name="Ploeg" ColumnName="Ploeg" />
+                <ScalarProperty Name="Shift" ColumnName="Shift" />
+                <ScalarProperty Name="day" ColumnName="day" />
+                <ScalarProperty Name="Week" ColumnName="Week" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="DOWNTIME" ColumnName="DOWNTIME" />
+                <ScalarProperty Name="Logtekst" ColumnName="Logtekst" />
+                <ScalarProperty Name="Severity" ColumnName="Severity" />
+                <ScalarProperty Name="Logcode" ColumnName="Logcode" />
+                <ScalarProperty Name="Timestamp" ColumnName="Timestamp" />
+                <ScalarProperty Name="Errortype" ColumnName="Errortype" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Robotname" ColumnName="Robotname" />
                 <ScalarProperty Name="Location" ColumnName="Location" />
               </MappingFragment>
             </EntityTypeMapping>
