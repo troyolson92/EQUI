@@ -223,9 +223,6 @@
     <Compile Include="Areas\Alert\Models\Alerts.cs">
       <DependentUpon>AlertModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Areas\Alert\Models\Alerts_Supervisie.cs">
-      <DependentUpon>AlertModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Areas\Alert\Models\c_CPT600.cs">
       <DependentUpon>AlertModel.tt</DependentUpon>
     </Compile>

@@ -125,15 +125,16 @@ namespace EqUiWebUi.Areas.Gadata
 
                 
         context.WriteLine("dataALERT");
-        //get data from alert schema 
+            //get data from alert schema 
+            DateTime dtTimeLimtAlert = System.DateTime.Now.AddHours(-8);
         Alert.Models.GADATA_AlertModel GADATA_AlertModel = new Alert.Models.GADATA_AlertModel();
-        List<EqUiWebUi.Areas.Gadata.SupervisieDummy> dataALERT = GADATA_AlertModel.Alerts_Supervisie.Select(
+        List<EqUiWebUi.Areas.Gadata.SupervisieDummy> dataALERT = GADATA_AlertModel.Alerts.Select(
             x => new EqUiWebUi.Areas.Gadata.SupervisieDummy() {
              Location= x.Location
-            ,logtext = x.logtext
-            ,RT = x.RT
-            ,DT = x.DT
-            ,time = x.time
+            ,logtext = x.Logtext
+            ,RT = x.Response
+            ,DT = x.Downtime
+            ,time = "" //store expersion issue
             ,Classification = x.Classification
             ,Subgroup = x.Subgroup
             ,Severity = x.Severity
@@ -143,7 +144,8 @@ namespace EqUiWebUi.Areas.Gadata
             ,timestamp = x.timestamp
             ,LocationTree = x.LocationTree
             ,ClassTree = x.ClassTree.ToString()
-        }).ToList();
+        }).Where(x => x.timestamp > dtTimeLimtAlert) //last 8 hours of data
+        .ToList();
         context.WriteLine(dataALERT.Count());
         data.AddRange(dataALERT.Cast<EqUiWebUi.Areas.Gadata.SupervisieDummy>());
                
@@ -220,14 +222,14 @@ namespace EqUiWebUi.Areas.Gadata
     if (data.Count != 0)
         {
             DataBuffer.Supervisie = data;
-
+                DateTime now = System.DateTime.Now;
             DateTime maxDate = data
-                        .Where(r => r != null)
+                        .Where(r => r != null && r.timestamp < now)
                         .Select(r => r.timestamp.Value)
                         .Max();
 
             DataBuffer.SupervisieLastDt = maxDate;
-
+            context.WriteLine("maxdate: " + maxDate);
             //add singal R to notify clients
             var SingnalRcontext = Microsoft.AspNet.SignalR.GlobalHost.ConnectionManager.GetHubContext<DataRefreshHub>();
             SingnalRcontext.Clients.Group("Supervisie").newData();

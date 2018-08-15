@@ -36,7 +36,6 @@
         </Diagram>
       <Diagram DiagramId="86cb9fcf978242e5b6ad17e224f86e6d" Name="AlertfrontEnd" >
         <EntityTypeShape EntityType="AlertModel.Alerts" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="AlertModel.Alerts_Supervisie" Width="1.5" PointX="3.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
