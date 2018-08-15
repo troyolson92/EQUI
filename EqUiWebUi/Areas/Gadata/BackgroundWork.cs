@@ -23,7 +23,6 @@ namespace EqUiWebUi.Areas.Gadata
         public static List<EqUiWebUi.Areas.Gadata.SupervisieDummy> dataSTO { get; set; }
         public static DateTime SupervisieLastDt { get; set; }
         //
-        public static List<EqUiWebUi.Areas.Gadata.Models.PloegRaport_Result> Ploegreport { get; set; }
         public static DateTime PloegreportLastDt { get; set; }
     }
 
@@ -50,6 +49,23 @@ namespace EqUiWebUi.Areas.Gadata
         public string shift { get; set; }
     }
 
+    public partial class PloegRaport_dummy
+    {
+        public string Location { get; set; }
+        public string Logcode { get; set; }
+        public string Logtype { get; set; }
+        public string logtext { get; set; }
+        public Nullable<int> Response_min_ { get; set; }
+        public Nullable<int> Downtime_min_ { get; set; }
+        public Nullable<int> Count { get; set; }
+        public Nullable<System.DateTime> timestamp { get; set; }
+        public string time { get; set; }
+        public string Subgroup { get; set; }
+        public string Classification { get; set; }
+        public Nullable<int> refId { get; set; }
+        public string LocationTree { get; set; }
+    }
+
 
     public class BackgroundWork
     {
@@ -60,10 +76,6 @@ namespace EqUiWebUi.Areas.Gadata
                 if (EqUiWebUi.MyBooleanExtensions.IsAreaEnabled("Gadata"))
                 {
                     BackgroundWork backgroundwork = new BackgroundWork();
-                    //**********************************Ploegreport table***************************************************
-                    //set job to refresh every 5 minutes
-                    RecurringJob.AddOrUpdate("BT_PloegReport", () => backgroundwork.UpdatePloegreport(), Cron.MinuteInterval(5));
-                    //**********************************Supervisie table***************************************************
                     //set job to refresh every minute
                     RecurringJob.AddOrUpdate("BT_Supervis", () => backgroundwork.UpdateSupervisie(null), Cron.Minutely);
                     //**********************************normalize***************************************************
@@ -76,7 +88,6 @@ namespace EqUiWebUi.Areas.Gadata
                 else
                 {
                     log.Warn("Gadata area is disabled removing hangfire jobs");
-                    RecurringJob.RemoveIfExists("BT_PloegReport");
                     RecurringJob.RemoveIfExists("BT_Supervis");
                     RecurringJob.RemoveIfExists("norm_C3G");
                     RecurringJob.RemoveIfExists("norm_C4G");
@@ -84,47 +95,6 @@ namespace EqUiWebUi.Areas.Gadata
                     RecurringJob.RemoveIfExists("norm_1day");
                 }
             }
-
-    //update the local datatable with ploeg rapport called every minute #hangfire
-    [Queue("gadata")]
-    [AutomaticRetry(Attempts = 0)]
-    public void UpdatePloegreport()
-    {
-        EqUiWebUi.Areas.Gadata.Models.GADATAEntities2 gADATAEntities = new EqUiWebUi.Areas.Gadata.Models.GADATAEntities2();
-        gADATAEntities.Database.CommandTimeout = 60; // normally 30 but this one is heavy
-        List<EqUiWebUi.Areas.Gadata.Models.PloegRaport_Result> data = (from ploegrapport in gADATAEntities.PloegRaport
-                            (startDate: null,
-                                endDate: null,
-                                daysBack: null,
-                                assets: "%",
-                                locations: "%",
-                                lochierarchy: "%",
-                                minDowntime: 20,
-                                minCountOfDowtime: 3,
-                                minCountofWarning: 4)
-                                select ploegrapport).ToList();
-
-        if (data.Count != 0)
-        {
-            DataBuffer.Ploegreport = data;
-
-            DateTime maxDate = data
-                .Where(r => Convert.ToDateTime(r.timestamp) < System.DateTime.Now)
-                // .Where(r => r.Logtype.Contains("Ruleinfo") == false)
-                .Select(r => Convert.ToDateTime(r.timestamp))
-                .Max();
-
-            DataBuffer.PloegreportLastDt = maxDate;
-
-            //add singal R 
-            var context = Microsoft.AspNet.SignalR.GlobalHost.ConnectionManager.GetHubContext<DataRefreshHub>();
-            context.Clients.Group("Ploegrapport").newData();
-        }
-        else
-        {
-            log.Error("UpdatePloegreport did not return any data");
-        }
-    }
 
     //update the local datatable with supervisie called every minute #hangfire
     [Queue("gadata")]
@@ -228,6 +198,7 @@ namespace EqUiWebUi.Areas.Gadata
             //add singal R to notify clients
             var SingnalRcontext = Microsoft.AspNet.SignalR.GlobalHost.ConnectionManager.GetHubContext<DataRefreshHub>();
             SingnalRcontext.Clients.Group("Supervisie").newData();
+            SingnalRcontext.Clients.Group("Ploegrapport").newData();
         }
 
         //run C3G normalisation steps.

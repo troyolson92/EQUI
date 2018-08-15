@@ -12,8 +12,6 @@ namespace EqUiWebUi.Areas.Gadata.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-    using System.Data.Entity.Core.Objects;
-    using System.Linq;
     
     public partial class GADATAEntities2 : DbContext
     {
@@ -31,46 +29,5 @@ namespace EqUiWebUi.Areas.Gadata.Models
         public virtual DbSet<C4G_Supervisie> C4G_Supervisie { get; set; }
         public virtual DbSet<S4C_Supervisie> S4C_Supervisie { get; set; }
         public virtual DbSet<STO_Supervisie> STO_Supervisie { get; set; }
-    
-        public virtual ObjectResult<PloegRaport_Result> PloegRaport(Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate, Nullable<int> daysBack, string assets, string locations, string lochierarchy, Nullable<int> minDowntime, Nullable<int> minCountOfDowtime, Nullable<int> minCountofWarning)
-        {
-            var startDateParameter = startDate.HasValue ?
-                new ObjectParameter("StartDate", startDate) :
-                new ObjectParameter("StartDate", typeof(System.DateTime));
-    
-            var endDateParameter = endDate.HasValue ?
-                new ObjectParameter("EndDate", endDate) :
-                new ObjectParameter("EndDate", typeof(System.DateTime));
-    
-            var daysBackParameter = daysBack.HasValue ?
-                new ObjectParameter("daysBack", daysBack) :
-                new ObjectParameter("daysBack", typeof(int));
-    
-            var assetsParameter = assets != null ?
-                new ObjectParameter("assets", assets) :
-                new ObjectParameter("assets", typeof(string));
-    
-            var locationsParameter = locations != null ?
-                new ObjectParameter("locations", locations) :
-                new ObjectParameter("locations", typeof(string));
-    
-            var lochierarchyParameter = lochierarchy != null ?
-                new ObjectParameter("lochierarchy", lochierarchy) :
-                new ObjectParameter("lochierarchy", typeof(string));
-    
-            var minDowntimeParameter = minDowntime.HasValue ?
-                new ObjectParameter("minDowntime", minDowntime) :
-                new ObjectParameter("minDowntime", typeof(int));
-    
-            var minCountOfDowtimeParameter = minCountOfDowtime.HasValue ?
-                new ObjectParameter("minCountOfDowtime", minCountOfDowtime) :
-                new ObjectParameter("minCountOfDowtime", typeof(int));
-    
-            var minCountofWarningParameter = minCountofWarning.HasValue ?
-                new ObjectParameter("minCountofWarning", minCountofWarning) :
-                new ObjectParameter("minCountofWarning", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PloegRaport_Result>("PloegRaport", startDateParameter, endDateParameter, daysBackParameter, assetsParameter, locationsParameter, lochierarchyParameter, minDowntimeParameter, minCountOfDowtimeParameter, minCountofWarningParameter);
-        }
     }
 }

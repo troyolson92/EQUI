@@ -282,9 +282,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Gadata.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Areas\Gadata\Models\PloegRaport_Result.cs">
-      <DependentUpon>Gadata.tt</DependentUpon>
-    </Compile>
     <Compile Include="Areas\Gadata\Models\S4C_Supervisie.cs">
       <DependentUpon>Gadata.tt</DependentUpon>
     </Compile>
