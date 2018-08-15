@@ -278,7 +278,7 @@ namespace EqUiWebUi.Areas.Gadata
             string[] cmds = { "exec [C4G].[sp_update_L]"
                     ,"exec [C4G].sp_Update_L_breakdown"
                     ,"exec [C4G].sp_ReClass_L_breakdown"
-                    ,"exec [Volvo].[LiveView]"
+                    ,"exec [c4G].[sp_calc_LiveView]"
             };
 
             foreach (string cmd in cmds)

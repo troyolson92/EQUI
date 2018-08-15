@@ -23,13 +23,13 @@ LEFT JOIN EqUi.ASSETS_fromMX7 as mx on mx.LOCATION = C.controller_name AND mx.SY
 UPDATE  NGAC.c_controller
 set ResponsibleTechnicianTeam = c_ownership.[Ownership]
 from  NGAC.c_controller as c
-left join  EqUi.c_ownership on c_ownership.optgroup = 'TechnicianTeams'
+left join  EqUi.c_ownership on c_ownership.Optgroup = 'TechnicianTeams'
 and c.LocationTree like c_ownership.LocationTree 
 
 UPDATE  NGAC.c_controller
 set  ResponsibleProductionTeam = c_ownership.[Ownership]
 from  NGAC.c_controller as c
-left join  EqUi.c_ownership on c_ownership.optgroup = 'ProductionTeams'
+left join  EqUi.c_ownership on c_ownership.Optgroup = 'ProductionTeams'
 and c.LocationTree like c_ownership.LocationTree 
 
 --*******************************************************************************************************************--

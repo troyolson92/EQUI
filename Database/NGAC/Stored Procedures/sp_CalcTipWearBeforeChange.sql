@@ -74,7 +74,7 @@ SELECT
 ,lead(rt.Wear_Fixed) OVER (PARTITION BY c.controller_name, rt.Tool_nr  ORDER BY rt.[Date Time] desc) as 'FixedWearBeforeChange'
 ,lead(rt.Wear_Move) OVER (PARTITION BY c.controller_name, rt.Tool_nr  ORDER BY rt.[Date Time] desc) as 'MoveWearBeforeChange'
 ,lead(rt.Current_TipWear) OVER (PARTITION BY c.controller_name, rt.Tool_nr  ORDER BY rt.[Date Time] desc) as 'WearBeforeChange'
-,lead(rt.Dress_num) OVER (PARTITION BY c.controller_name, rt.Tool_nr  ORDER BY rt.[Date Time] desc) as 'DressBeforeChange'
+,lead(rt.Dress_Num) OVER (PARTITION BY c.controller_name, rt.Tool_nr  ORDER BY rt.[Date Time] desc) as 'DressBeforeChange'
 from NGAC.rt_TipDressLogFile as rt 
 left join NGAC.rt_csv_file as rt_csv on rt.rt_csv_file_id = rt_csv.id
 left join NGAC.c_controller as c on c.id = rt_csv.c_controller_id

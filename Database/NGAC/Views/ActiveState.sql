@@ -36,7 +36,7 @@ SELECT
 
 , RTRIM(ISNULL(cc.Classification,'Undefined*'))  AS 'Classification'
 , ISNULL(cs.Subgroup,'Undefined*')		 AS 'Subgroup'
-, ISNULL(lc.category,'Undefined*') AS 'Category'
+, ISNULL(lc.Category,'Undefined*') AS 'Category'
 ,CASE 
  WHEN rtai.h_alarm_id <> 0 THEN rtai.h_alarm_id --used this ID because of _loginfo
  ELSE rtai.id * -1 --to make a random number that will not match any halarm record (entetyframework shit)
