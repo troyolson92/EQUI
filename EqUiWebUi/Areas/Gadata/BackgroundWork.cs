@@ -213,15 +213,18 @@ namespace EqUiWebUi.Areas.Gadata
   
             //Set the main dataset and update the max ts
             context.WriteLine("Total datacount " + data.Count());
-            DataBuffer.Supervisie = data;
+            if (data.Count() != 0)
+            {
+                DataBuffer.Supervisie = data;
                 DateTime now = System.DateTime.Now;
-            DateTime maxDate = data
-                        .Where(r => r != null && r.timestamp < now)
-                        .Select(r => r.timestamp.Value)
-                        .Max();
+                DateTime maxDate = data
+                            .Where(r => r != null && r.timestamp < now)
+                            .Select(r => r.timestamp.Value)
+                            .Max();
 
-            DataBuffer.SupervisieLastDt = maxDate;
-            context.WriteLine("maxdate: " + maxDate);
+                DataBuffer.SupervisieLastDt = maxDate;
+                context.WriteLine("maxdate: " + maxDate);
+            }
             //add singal R to notify clients
             var SingnalRcontext = Microsoft.AspNet.SignalR.GlobalHost.ConnectionManager.GetHubContext<DataRefreshHub>();
             SingnalRcontext.Clients.Group("Supervisie").newData();
@@ -242,7 +245,7 @@ namespace EqUiWebUi.Areas.Gadata
             {
                 context.WriteLine(cmd);
                 connectionManager.RunCommand(cmd, enblExeptions: true, maxEXECtime: 300);
-                context.WriteLine(" Done");
+                context.WriteLine("Done");
             }
             context.WriteLine("runRule started");
             //stupid that I need to spin up all these classes to get it to run... (temp solution)
@@ -341,15 +344,9 @@ namespace EqUiWebUi.Areas.Gadata
         {
             //
             ConnectionManager connectionManager = new ConnectionManager();
-            string[] cmds = { "EXEC [NGAC].[sp_update_cleanLogteksts]"
-            };
-
-            foreach (string cmd in cmds)
-            {
-                context.WriteLine(cmd);
-                connectionManager.RunCommand(cmd, enblExeptions: true, maxEXECtime: 300);
-                context.WriteLine("Done");
-            }
+            context.WriteLine("EXEC [NGAC].[sp_update_cleanLogteksts]");
+            connectionManager.RunCommand("EXEC [NGAC].[sp_update_cleanLogteksts]", enblExeptions: true, maxEXECtime: 300);
+            context.WriteLine("Done");
 
             context.WriteLine("runRule started");
             //stupid that I need to spin up all these classes to get it to run... (temp solution)
