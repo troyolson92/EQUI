@@ -37,6 +37,5 @@ namespace EqUiWebUi.Areas.Alert.Models
         public virtual DbSet<l_controlLimits> l_controlLimits { get; set; }
         public virtual DbSet<l_dummyControlchartResult> l_dummyControlchartResult { get; set; }
         public virtual DbSet<Alerts> Alerts { get; set; }
-        public virtual DbSet<Alerts_Supervisie> Alerts_Supervisie { get; set; }
     }
 }
