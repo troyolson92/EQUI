@@ -3,20 +3,24 @@
 
 
 
+
 /*only show alert when this is set*/
 CREATE VIEW [Alerts].[Alerts]
 AS
  SELECT 
   h_alert.[location] 	   AS 'Location' 
 , ''     AS 'AssetID' 
+
 ,CASE
 WHEN h_alert.[state] = 1 THEN c_triggers.alertType
 ELSE 'ALERT'
 END  AS 'Logtype' 
+
 ,CASE 
 WHEN h_alert.[state] = 1 THEN GETDATE()
 ELSE h_alert.lastTriggerd
 END   AS 'timestamp'
+
 , CAST(c_triggers.id as varchar(max))    AS 'Logcode'
 , CAST(h_alert.[state] as varchar(max)) AS 'Severity'
 , h_alert.info AS 'Logtext'
@@ -34,11 +38,15 @@ END   AS 'timestamp'
 , NULL as 'ClassTree'
 , 'Alertengine'	AS 'controller_name'
 , 'EQUI'		As 'controller_type'
-
+,timeline.Vyear
+,timeline.Vweek
+,timeline.Vday
+,timeline.shift
 
 from Alerts.h_alert
 left join Alerts.c_triggers on c_triggers.id = h_alert.c_tirgger_id
 left join Alerts.c_state  on h_alert.[state] = c_state.id
+left join volvo.L_timeline as timeline on h_alert.lastTriggerd between timeline.starttime and timeline.endtime
 
 where c_triggers.isInReport = 1 --only show alert when this is set
 and c_triggers.[enabled] = 1 --only show alert when enabled
