@@ -30,20 +30,21 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
         [HttpGet]
         public ActionResult _ploegRapport()
         {
-            var data = DataBuffer.Ploegreport;
+            var data = DataBuffer.Supervisie;
             //in case still null trow error return empty result 
             if (data == null)
             {
-                data = new List<Gadata.Models.PloegRaport_Result>();
+                data = new List<EqUiWebUi.Areas.Gadata.SupervisieDummy>();
             }
 
+            //apply user filter
             string LocationRoot = CurrentUser.Getuser.LocationRoot;
             if (LocationRoot != "")
             {
                 data = (from d in data
                         where (d.LocationTree ?? "").Contains(LocationRoot) //apply user locationroot
                         || d.Logtype == "TIMELINE" //always allowtimeline
-                        select d).ToList();
+                            select d).ToList();
             }
 
             string AssetRoot = CurrentUser.Getuser.AssetRoot;
@@ -54,10 +55,51 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
                             || (d.Classification ?? "") == "Undefined*" //or allow assets thet are undedind
                             || (d.Classification ?? "") == "" //or allow assets that are null
                             || d.Logtype == "TIMELINE" //always allowtimeline
-                        select d).ToList();
+                            select d).ToList();
             }
+
+            //order data to make sure First and Last works
+            data = (from d in data orderby d.timestamp descending select d).ToList();
+
+            //group data by logtype location into new object 
+            var Ploegrap = data.GroupBy( s => new
+                {
+                     s.Location
+                    ,s.LocationTree
+                    
+                    ,s.Logtype
+                    ,s.Subgroup
+                    ,s.Classification
+
+                    ,s.Vyear
+                    ,s.Vweek
+                    ,s.Vday
+                    ,s.shift
+                }).Select (p => new  EqUiWebUi.Areas.Gadata.PloegRaport_dummy() {
+                     Location= p.Key.Location
+                    ,logtext = p.First().logtext
+                    ,Response_min_ = p.Sum (x => x.RT)
+                    ,Downtime_min_ = p.Sum (x => x.DT)
+                    ,time = p.First().time
+                    ,Count = p.Count()
+                    ,Classification = p.Key.Classification
+                    ,Subgroup = p.Key.Subgroup
+                    ,Logcode = p.First().Logcode
+                    ,Logtype = p.Key.Logtype
+                    ,refId = p.First().refId
+                    ,timestamp = p.First().timestamp
+                    ,LocationTree = p.Key.LocationTree
+                }).Where(
+                 p => 
+                 (//EXCLUDE
+                 (p.Downtime_min_ > 20 || p.Count > 4)  //longer than 20 min or more than 4 times 
+                 && p.Logtype != "LIVE"  //EXCLUDE
+                 )
+                 || p.Logtype == "ALERT" //INCLUDE
+                ).ToList();
+
             //
-            return PartialView(data);
+            return PartialView(Ploegrap);
         }
         //
 
