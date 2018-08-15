@@ -172,50 +172,71 @@ namespace EqUiWebUi.Areas.Gadata
         data.AddRange(dataVASC);
 
         if (EqUiWebUi.MyBooleanExtensions.IsAreaEnabled("VCSC"))
-            { 
-        context.WriteLine("dataC3G");
-        //get data from NGAC schema 
-        Gadata.Models.GADATAEntities2 GADATAEntities2 = new Gadata.Models.GADATAEntities2();
-        List<EqUiWebUi.Areas.Gadata.SupervisieDummy> dataC3G = GADATAEntities2.C3G_Supervisie.Select(x => new EqUiWebUi.Areas.Gadata.SupervisieDummy() {
-             Location= x.Location
-            ,logtext = x.logtext
-            ,RT = x.RT
-            ,DT = x.DT
-            ,time = x.time
-            ,Classification = x.Classification
-            ,Subgroup = x.Subgroup
-            ,Severity = x.Severity
-            ,Logcode = x.Logcode
-            ,Logtype = x.Logtype
-            ,refId = x.refId
-            ,timestamp = x.timestamp
-            ,LocationTree = x.LocationTree
-            ,ClassTree = x.ClassTree
-        }).ToList();
-        context.WriteLine(dataC3G.Count());
-        data.AddRange(dataC3G);
+        { 
+            context.WriteLine("dataC3G");
+            //get data from NGAC schema 
+            Gadata.Models.GADATAEntities2 GADATAEntities2 = new Gadata.Models.GADATAEntities2();
+            List<EqUiWebUi.Areas.Gadata.SupervisieDummy> dataC3G = GADATAEntities2.C3G_Supervisie.Select(x => new EqUiWebUi.Areas.Gadata.SupervisieDummy() {
+                 Location= x.Location
+                ,logtext = x.logtext
+                ,RT = x.RT
+                ,DT = x.DT
+                ,time = x.time
+                ,Classification = x.Classification
+                ,Subgroup = x.Subgroup
+                ,Severity = x.Severity
+                ,Logcode = x.Logcode
+                ,Logtype = x.Logtype
+                ,refId = x.refId
+                ,timestamp = x.timestamp
+                ,LocationTree = x.LocationTree
+                ,ClassTree = x.ClassTree
+            }).ToList();
+            context.WriteLine(dataC3G.Count());
+            data.AddRange(dataC3G);
 
-        context.WriteLine("dataC4G");
-        //get data from NGAC schema 
-        List<EqUiWebUi.Areas.Gadata.SupervisieDummy> dataC4G = GADATAEntities2.C4G_Supervisie.Select(x => new EqUiWebUi.Areas.Gadata.SupervisieDummy() {
-             Location= x.Location
-            ,logtext = x.logtext
-            ,RT = x.RT
-            ,DT = x.DT
-            ,time = x.time
-            ,Classification = x.Classification
-            ,Subgroup = x.Subgroup
-            ,Severity = x.Severity
-            ,Logcode = x.Logcode
-            ,Logtype = x.Logtype
-            ,refId = x.refId
-            ,timestamp = x.timestamp
-            ,LocationTree = x.LocationTree
-            ,ClassTree = x.ClassTree
-        }).ToList();
-        context.WriteLine(dataC4G.Count());
-        data.AddRange(dataC4G);
-                }
+            context.WriteLine("dataC4G");
+            //get data from NGAC schema 
+            List<EqUiWebUi.Areas.Gadata.SupervisieDummy> dataC4G = GADATAEntities2.C4G_Supervisie.Select(x => new EqUiWebUi.Areas.Gadata.SupervisieDummy() {
+                 Location= x.Location
+                ,logtext = x.logtext
+                ,RT = x.RT
+                ,DT = x.DT
+                ,time = x.time
+                ,Classification = x.Classification
+                ,Subgroup = x.Subgroup
+                ,Severity = x.Severity
+                ,Logcode = x.Logcode
+                ,Logtype = x.Logtype
+                ,refId = x.refId
+                ,timestamp = x.timestamp
+                ,LocationTree = x.LocationTree
+                ,ClassTree = x.ClassTree
+            }).ToList();
+            context.WriteLine(dataC4G.Count());
+            data.AddRange(dataC4G);
+
+             context.WriteLine("dataS4C");
+            //get data from NGAC schema 
+            List<EqUiWebUi.Areas.Gadata.SupervisieDummy> dataS4C = GADATAEntities2.S4C_Supervisie.Select(x => new EqUiWebUi.Areas.Gadata.SupervisieDummy() {
+                 Location= x.Location
+                ,logtext = x.logtext
+                ,RT = x.RT
+                ,DT = x.DT
+                ,time = x.time
+                ,Classification = x.Classification
+                ,Subgroup = x.Subgroup
+                ,Severity = x.Severity
+                ,Logcode = x.Logcode
+                ,Logtype = x.Logtype
+                ,refId = x.refId
+                ,timestamp = x.timestamp
+                ,LocationTree = x.LocationTree
+                ,ClassTree = x.ClassTree
+            }).ToList();
+            context.WriteLine(dataS4C.Count());
+                data.AddRange(dataS4C);
+        }
 
     //Set the main dataset and update the max ts
     context.WriteLine("datacount " + data.Count());
