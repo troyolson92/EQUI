@@ -7,6 +7,7 @@
       <Diagram DiagramId="e7fccbfe73e24204a8e6f6ddb5a5ebd5" Name="Diagram1">
         <EntityTypeShape EntityType="GADATAModel1.C3G_Supervisie" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="GADATAModel1.C4G_Supervisie" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="GADATAModel1.S4C_Supervisie" Width="1.5" PointX="5.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
