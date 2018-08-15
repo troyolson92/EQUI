@@ -78,17 +78,16 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
             {
                 data = new List<EqUiWebUi.Areas.Gadata.SupervisieDummy>();
             }
-
+            //apply location root filter
             string LocationRoot = CurrentUser.Getuser.LocationRoot;
             if (LocationRoot != "")
             {
                 data = (from d in data
                         where (d.LocationTree ?? "").Contains(LocationRoot)
                         || d.Logtype == "TIMELINE"
-                        orderby d.timestamp descending
                         select d).ToList();
             }
-
+            //apply asset root filter
             string AssetRoot = CurrentUser.Getuser.AssetRoot;
             if (AssetRoot != "")
             {
@@ -97,9 +96,14 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
                             || (d.Classification ?? "") == "Undefined*" //or allow assets thet are undedind
                             || (d.Classification ?? "") == "" //or allow assets that are null
                             || d.Logtype == "TIMELINE" //always allowtimeline
-                        orderby d.timestamp descending
                         select d).ToList();
             }
+            //apply filter for "Operational"
+            data = (from d in data
+                    where (d.Subgroup ?? "").Contains("Operational") == false //not Operational
+                    orderby d.timestamp descending
+                    select d).ToList();
+
             //
             return PartialView(data);;
         }

@@ -6,7 +6,49 @@
     <edmx:StorageModels>
     <Schema Namespace="GADATAModel1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <!--Errors Found During Generation:
-warning 6002: The table/view 'GADATA.EqUi.Supervisie' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'GADATA.C3G.C3G_Supervisie' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="C3G_Supervisie">
+          <Key>
+            <PropertyRef Name="refId" />
+            <PropertyRef Name="Logtype" />
+          </Key>
+          <Property Name="Location" Type="varchar" MaxLength="255" />
+          <Property Name="logtext" Type="varchar" MaxLength="2106" />
+          <Property Name="RT" Type="int" />
+          <Property Name="DT" Type="int" />
+          <Property Name="time" Type="char" MaxLength="19" />
+          <Property Name="Classification" Type="varchar" MaxLength="50" />
+          <Property Name="Subgroup" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Severity" Type="varchar(max)" />
+          <Property Name="Logcode" Type="varchar(max)" />
+          <Property Name="Logtype" Type="varchar" MaxLength="9" Nullable="false" />
+          <Property Name="refId" Type="int" Nullable="false" />
+          <Property Name="timestamp" Type="datetime" />
+          <Property Name="LocationTree" Type="varchar(max)" />
+          <Property Name="ClassTree" Type="varchar(max)" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.C4G.C4G_Supervisie' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="C4G_Supervisie">
+          <Key>
+            <PropertyRef Name="Logtype" />
+            <PropertyRef Name="refId" />
+          </Key>
+          <Property Name="Location" Type="varchar" MaxLength="255" />
+          <Property Name="logtext" Type="varchar" MaxLength="2106" />
+          <Property Name="RT" Type="int" />
+          <Property Name="DT" Type="int" />
+          <Property Name="time" Type="char" MaxLength="19" />
+          <Property Name="Classification" Type="varchar" MaxLength="50" />
+          <Property Name="Subgroup" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Severity" Type="varchar(max)" />
+          <Property Name="Logcode" Type="varchar(max)" />
+          <Property Name="Logtype" Type="varchar" MaxLength="9" Nullable="false" />
+          <Property Name="refId" Type="int" Nullable="false" />
+          <Property Name="timestamp" Type="datetime" />
+          <Property Name="LocationTree" Type="varchar(max)" />
+          <Property Name="ClassTree" Type="varchar(max)" />
+        </EntityType>
         <Function Name="PloegRaport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="EqUi">
           <Parameter Name="StartDate" Type="datetime" Mode="In" />
           <Parameter Name="EndDate" Type="datetime" Mode="In" />
@@ -19,6 +61,42 @@ warning 6002: The table/view 'GADATA.EqUi.Supervisie' does not have a primary ke
           <Parameter Name="minCountofWarning" Type="int" Mode="In" />
         </Function>
         <EntityContainer Name="GADATAModel1StoreContainer">
+          <EntitySet Name="C3G_Supervisie" EntityType="Self.C3G_Supervisie" store:Type="Views" store:Schema="C3G">
+            <DefiningQuery>SELECT 
+    [C3G_Supervisie].[Location] AS [Location], 
+    [C3G_Supervisie].[logtext] AS [logtext], 
+    [C3G_Supervisie].[RT] AS [RT], 
+    [C3G_Supervisie].[DT] AS [DT], 
+    [C3G_Supervisie].[time] AS [time], 
+    [C3G_Supervisie].[Classification] AS [Classification], 
+    [C3G_Supervisie].[Subgroup] AS [Subgroup], 
+    [C3G_Supervisie].[Severity] AS [Severity], 
+    [C3G_Supervisie].[Logcode] AS [Logcode], 
+    [C3G_Supervisie].[Logtype] AS [Logtype], 
+    [C3G_Supervisie].[refId] AS [refId], 
+    [C3G_Supervisie].[timestamp] AS [timestamp], 
+    [C3G_Supervisie].[LocationTree] AS [LocationTree], 
+    [C3G_Supervisie].[ClassTree] AS [ClassTree]
+    FROM [C3G].[C3G_Supervisie] AS [C3G_Supervisie]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="C4G_Supervisie" EntityType="Self.C4G_Supervisie" store:Type="Views" store:Schema="C4G">
+            <DefiningQuery>SELECT 
+    [C4G_Supervisie].[Location] AS [Location], 
+    [C4G_Supervisie].[logtext] AS [logtext], 
+    [C4G_Supervisie].[RT] AS [RT], 
+    [C4G_Supervisie].[DT] AS [DT], 
+    [C4G_Supervisie].[time] AS [time], 
+    [C4G_Supervisie].[Classification] AS [Classification], 
+    [C4G_Supervisie].[Subgroup] AS [Subgroup], 
+    [C4G_Supervisie].[Severity] AS [Severity], 
+    [C4G_Supervisie].[Logcode] AS [Logcode], 
+    [C4G_Supervisie].[Logtype] AS [Logtype], 
+    [C4G_Supervisie].[refId] AS [refId], 
+    [C4G_Supervisie].[timestamp] AS [timestamp], 
+    [C4G_Supervisie].[LocationTree] AS [LocationTree], 
+    [C4G_Supervisie].[ClassTree] AS [ClassTree]
+    FROM [C4G].[C4G_Supervisie] AS [C4G_Supervisie]</DefiningQuery>
+          </EntitySet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -36,6 +114,8 @@ warning 6002: The table/view 'GADATA.EqUi.Supervisie' does not have a primary ke
             <Parameter Name="minCountOfDowtime" Mode="In" Type="Int32" />
             <Parameter Name="minCountofWarning" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="C3G_Supervisie" EntityType="GADATAModel1.C3G_Supervisie" />
+          <EntitySet Name="C4G_Supervisie" EntityType="GADATAModel1.C4G_Supervisie" />
         </EntityContainer>
         <ComplexType Name="PloegRaport_Result">
           <Property Type="String" Name="Location" Nullable="true" />
@@ -53,6 +133,46 @@ warning 6002: The table/view 'GADATA.EqUi.Supervisie' does not have a primary ke
           <Property Type="Int32" Name="refId" Nullable="true" />
           <Property Type="String" Name="LocationTree" Nullable="true" />
         </ComplexType>
+        <EntityType Name="C3G_Supervisie">
+          <Key>
+            <PropertyRef Name="refId" />
+            <PropertyRef Name="Logtype" />
+          </Key>
+          <Property Name="Location" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="logtext" Type="String" MaxLength="2106" FixedLength="false" Unicode="false" />
+          <Property Name="RT" Type="Int32" />
+          <Property Name="DT" Type="Int32" />
+          <Property Name="time" Type="String" MaxLength="19" FixedLength="true" Unicode="false" />
+          <Property Name="Classification" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Subgroup" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Severity" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Logcode" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Logtype" Type="String" Nullable="false" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="refId" Type="Int32" Nullable="false" />
+          <Property Name="timestamp" Type="DateTime" Precision="3" />
+          <Property Name="LocationTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ClassTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="C4G_Supervisie">
+          <Key>
+            <PropertyRef Name="Logtype" />
+            <PropertyRef Name="refId" />
+          </Key>
+          <Property Name="Location" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="logtext" Type="String" MaxLength="2106" FixedLength="false" Unicode="false" />
+          <Property Name="RT" Type="Int32" />
+          <Property Name="DT" Type="Int32" />
+          <Property Name="time" Type="String" MaxLength="19" FixedLength="true" Unicode="false" />
+          <Property Name="Classification" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Subgroup" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Severity" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Logcode" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Logtype" Type="String" Nullable="false" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="refId" Type="Int32" Nullable="false" />
+          <Property Name="timestamp" Type="DateTime" Precision="3" />
+          <Property Name="LocationTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ClassTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -79,6 +199,46 @@ warning 6002: The table/view 'GADATA.EqUi.Supervisie' does not have a primary ke
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="C3G_Supervisie">
+            <EntityTypeMapping TypeName="GADATAModel1.C3G_Supervisie">
+              <MappingFragment StoreEntitySet="C3G_Supervisie">
+                <ScalarProperty Name="ClassTree" ColumnName="ClassTree" />
+                <ScalarProperty Name="LocationTree" ColumnName="LocationTree" />
+                <ScalarProperty Name="timestamp" ColumnName="timestamp" />
+                <ScalarProperty Name="refId" ColumnName="refId" />
+                <ScalarProperty Name="Logtype" ColumnName="Logtype" />
+                <ScalarProperty Name="Logcode" ColumnName="Logcode" />
+                <ScalarProperty Name="Severity" ColumnName="Severity" />
+                <ScalarProperty Name="Subgroup" ColumnName="Subgroup" />
+                <ScalarProperty Name="Classification" ColumnName="Classification" />
+                <ScalarProperty Name="time" ColumnName="time" />
+                <ScalarProperty Name="DT" ColumnName="DT" />
+                <ScalarProperty Name="RT" ColumnName="RT" />
+                <ScalarProperty Name="logtext" ColumnName="logtext" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="C4G_Supervisie">
+            <EntityTypeMapping TypeName="GADATAModel1.C4G_Supervisie">
+              <MappingFragment StoreEntitySet="C4G_Supervisie">
+                <ScalarProperty Name="ClassTree" ColumnName="ClassTree" />
+                <ScalarProperty Name="LocationTree" ColumnName="LocationTree" />
+                <ScalarProperty Name="timestamp" ColumnName="timestamp" />
+                <ScalarProperty Name="refId" ColumnName="refId" />
+                <ScalarProperty Name="Logtype" ColumnName="Logtype" />
+                <ScalarProperty Name="Logcode" ColumnName="Logcode" />
+                <ScalarProperty Name="Severity" ColumnName="Severity" />
+                <ScalarProperty Name="Subgroup" ColumnName="Subgroup" />
+                <ScalarProperty Name="Classification" ColumnName="Classification" />
+                <ScalarProperty Name="time" ColumnName="time" />
+                <ScalarProperty Name="DT" ColumnName="DT" />
+                <ScalarProperty Name="RT" ColumnName="RT" />
+                <ScalarProperty Name="logtext" ColumnName="logtext" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

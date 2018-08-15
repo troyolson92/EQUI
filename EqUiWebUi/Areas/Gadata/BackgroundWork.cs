@@ -169,7 +169,53 @@ namespace EqUiWebUi.Areas.Gadata
         context.WriteLine(dataVASC.Count());
         data.AddRange(dataVASC);
 
-            //
+        if (EqUiWebUi.MyBooleanExtensions.IsAreaEnabled("VCSC"))
+            { 
+        context.WriteLine("dataC3G");
+        //get data from NGAC schema 
+        Gadata.Models.GADATAEntities2 GADATAEntities2 = new Gadata.Models.GADATAEntities2();
+        List<EqUiWebUi.Areas.Gadata.SupervisieDummy> dataC3G = GADATAEntities2.C3G_Supervisie.Select(x => new EqUiWebUi.Areas.Gadata.SupervisieDummy() {
+             Location= x.Location
+            ,logtext = x.logtext
+            ,RT = x.RT
+            ,DT = x.DT
+            ,time = x.time
+            ,Classification = x.Classification
+            ,Subgroup = x.Subgroup
+            ,Severity = x.Severity
+            ,Logcode = x.Logcode
+            ,Logtype = x.Logtype
+            ,refId = x.refId
+            ,timestamp = x.timestamp
+            ,LocationTree = x.LocationTree
+            ,ClassTree = x.ClassTree
+        }).ToList();
+        context.WriteLine(dataC3G.Count());
+        data.AddRange(dataC3G);
+
+        context.WriteLine("dataC4G");
+        //get data from NGAC schema 
+        List<EqUiWebUi.Areas.Gadata.SupervisieDummy> dataC4G = GADATAEntities2.C4G_Supervisie.Select(x => new EqUiWebUi.Areas.Gadata.SupervisieDummy() {
+             Location= x.Location
+            ,logtext = x.logtext
+            ,RT = x.RT
+            ,DT = x.DT
+            ,time = x.time
+            ,Classification = x.Classification
+            ,Subgroup = x.Subgroup
+            ,Severity = x.Severity
+            ,Logcode = x.Logcode
+            ,Logtype = x.Logtype
+            ,refId = x.refId
+            ,timestamp = x.timestamp
+            ,LocationTree = x.LocationTree
+            ,ClassTree = x.ClassTree
+        }).ToList();
+        context.WriteLine(dataC4G.Count());
+        data.AddRange(dataC4G);
+                }
+
+    //Set the main dataset and update the max ts
     context.WriteLine("datacount " + data.Count());
     if (data.Count != 0)
         {
@@ -182,7 +228,7 @@ namespace EqUiWebUi.Areas.Gadata
 
             DataBuffer.SupervisieLastDt = maxDate;
 
-            //add singal R 
+            //add singal R to notify clients
             var SingnalRcontext = Microsoft.AspNet.SignalR.GlobalHost.ConnectionManager.GetHubContext<DataRefreshHub>();
             SingnalRcontext.Clients.Group("Supervisie").newData();
         }
@@ -197,15 +243,6 @@ namespace EqUiWebUi.Areas.Gadata
         [AutomaticRetry(Attempts = 0)]
         public void norm_c3g(PerformContext context)
         {
-            context.WriteLine(" runRule started");
-            //stupid that I need to spin up all these classes to get it to run... (temp solution)
-            EqUiWebUi.Controllers.ClassificationController classificationController = new EqUiWebUi.Controllers.ClassificationController();
-            EqUiWebUi.Models.c_LogClassRules c_LogClassRule = new EqUiWebUi.Models.c_LogClassRules();
-            EqUiWebUi.Models.GADATAEntitiesEQUI db = new EqUiWebUi.Models.GADATAEntitiesEQUI();
-            c_LogClassRule.c_logClassSystem_id = db.c_logClassSystem.Where(c => c.Name == "VCSC_C3G").First().id;
-            c_LogClassRule.id = 0; //this causes us to run all rules
-            classificationController.RunRule(c_LogClassRule, overrideManualSet: false, Clear: false, UPDATE: false);
-            context.WriteLine(" runRule done");
             //
             ConnectionManager connectionManager = new ConnectionManager();
             string[] cmds = { "exec C3G.sp_update_L"
@@ -218,6 +255,15 @@ namespace EqUiWebUi.Areas.Gadata
                 connectionManager.RunCommand(cmd, enblExeptions: true, maxEXECtime: 300);
                 context.WriteLine(" Done");
             }
+            context.WriteLine(" runRule started");
+            //stupid that I need to spin up all these classes to get it to run... (temp solution)
+            EqUiWebUi.Controllers.ClassificationController classificationController = new EqUiWebUi.Controllers.ClassificationController();
+            EqUiWebUi.Models.c_LogClassRules c_LogClassRule = new EqUiWebUi.Models.c_LogClassRules();
+            EqUiWebUi.Models.GADATAEntitiesEQUI db = new EqUiWebUi.Models.GADATAEntitiesEQUI();
+            c_LogClassRule.c_logClassSystem_id = db.c_logClassSystem.Where(c => c.Name == "VCSC_C3G").First().id;
+            c_LogClassRule.id = 0; //this causes us to run all rules
+            classificationController.RunRule(c_LogClassRule, overrideManualSet: false, Clear: false, UPDATE: false);
+            context.WriteLine(" runRule done");
         }
 
         //run c4g normalisation steps.
@@ -225,15 +271,6 @@ namespace EqUiWebUi.Areas.Gadata
         [AutomaticRetry(Attempts = 0)]
         public void norm_c4g(PerformContext context)
         {
-            context.WriteLine(" runRule started");
-            //stupid that I need to spin up all these classes to get it to run... (temp solution)
-            EqUiWebUi.Controllers.ClassificationController classificationController = new EqUiWebUi.Controllers.ClassificationController();
-            EqUiWebUi.Models.c_LogClassRules c_LogClassRule = new EqUiWebUi.Models.c_LogClassRules();
-            EqUiWebUi.Models.GADATAEntitiesEQUI db = new EqUiWebUi.Models.GADATAEntitiesEQUI();
-            c_LogClassRule.c_logClassSystem_id = db.c_logClassSystem.Where(c => c.Name == "VCSC_C4G").First().id;
-            c_LogClassRule.id = 0; //this causes us to run all rules
-            classificationController.RunRule(c_LogClassRule, overrideManualSet: false, Clear: false, UPDATE: false);
-            context.WriteLine(" runRule done");
             //
             ConnectionManager connectionManager = new ConnectionManager();
             string[] cmds = { "exec [C4G].[sp_update_L]"
@@ -248,6 +285,16 @@ namespace EqUiWebUi.Areas.Gadata
                 connectionManager.RunCommand(cmd, enblExeptions: true, maxEXECtime: 300);
                 context.WriteLine(" Done");
             }
+
+            context.WriteLine(" runRule started");
+            //stupid that I need to spin up all these classes to get it to run... (temp solution)
+            EqUiWebUi.Controllers.ClassificationController classificationController = new EqUiWebUi.Controllers.ClassificationController();
+            EqUiWebUi.Models.c_LogClassRules c_LogClassRule = new EqUiWebUi.Models.c_LogClassRules();
+            EqUiWebUi.Models.GADATAEntitiesEQUI db = new EqUiWebUi.Models.GADATAEntitiesEQUI();
+            c_LogClassRule.c_logClassSystem_id = db.c_logClassSystem.Where(c => c.Name == "VCSC_C4G").First().id;
+            c_LogClassRule.id = 0; //this causes us to run all rules
+            classificationController.RunRule(c_LogClassRule, overrideManualSet: false, Clear: false, UPDATE: false);
+            context.WriteLine(" runRule done");
         }
 
         //run NGAC normalisation steps.
@@ -255,15 +302,6 @@ namespace EqUiWebUi.Areas.Gadata
         [AutomaticRetry(Attempts = 0)]
         public void norm_NGAC(PerformContext context)
         {
-            context.WriteLine(" runRule started");
-            //stupid that I need to spin up all these classes to get it to run... (temp solution)
-            EqUiWebUi.Controllers.ClassificationController classificationController = new EqUiWebUi.Controllers.ClassificationController();
-            EqUiWebUi.Models.c_LogClassRules c_LogClassRule = new EqUiWebUi.Models.c_LogClassRules();
-            EqUiWebUi.Models.GADATAEntitiesEQUI db = new EqUiWebUi.Models.GADATAEntitiesEQUI();
-            c_LogClassRule.c_logClassSystem_id = db.c_logClassSystem.Where(c => c.Name == "VASC_NGAC").First().id;
-            c_LogClassRule.id = 0; //this causes us to run all rules
-            classificationController.RunRule(c_LogClassRule, overrideManualSet: false, Clear: false, UPDATE: false);
-            context.WriteLine(" runRule done");
             //
             ConnectionManager connectionManager = new ConnectionManager();
             string[] cmds = { "EXEC [NGAC].[sp_update_cleanLogteksts]"
@@ -275,6 +313,16 @@ namespace EqUiWebUi.Areas.Gadata
                 connectionManager.RunCommand(cmd, enblExeptions: true, maxEXECtime: 300);
                 context.WriteLine(" Done");
             }
+
+            context.WriteLine(" runRule started");
+            //stupid that I need to spin up all these classes to get it to run... (temp solution)
+            EqUiWebUi.Controllers.ClassificationController classificationController = new EqUiWebUi.Controllers.ClassificationController();
+            EqUiWebUi.Models.c_LogClassRules c_LogClassRule = new EqUiWebUi.Models.c_LogClassRules();
+            EqUiWebUi.Models.GADATAEntitiesEQUI db = new EqUiWebUi.Models.GADATAEntitiesEQUI();
+            c_LogClassRule.c_logClassSystem_id = db.c_logClassSystem.Where(c => c.Name == "VASC_NGAC").First().id;
+            c_LogClassRule.id = 0; //this causes us to run all rules
+            classificationController.RunRule(c_LogClassRule, overrideManualSet: false, Clear: false, UPDATE: false);
+            context.WriteLine(" runRule done");
         }
 
 

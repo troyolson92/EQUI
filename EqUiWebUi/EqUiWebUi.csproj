@@ -264,6 +264,12 @@
     <Compile Include="Areas\Gadata\Controllers\TableController.cs" />
     <Compile Include="Areas\Gadata\GadataAreaRegistration.cs" />
     <Compile Include="Areas\Gadata\DataRefreshHub.cs" />
+    <Compile Include="Areas\Gadata\Models\C3G_Supervisie.cs">
+      <DependentUpon>Gadata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Gadata\Models\C4G_Supervisie.cs">
+      <DependentUpon>Gadata.tt</DependentUpon>
+    </Compile>
     <Compile Include="Areas\Gadata\Models\Gadata.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
