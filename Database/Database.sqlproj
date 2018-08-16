@@ -81,6 +81,8 @@
     <Folder Include="EqUi\Stored Procedures\" />
     <Folder Include="EqUi\Views\" />
     <Folder Include="Volvo\Views\" />
+    <Folder Include="Alerts\Data" />
+    <Folder Include="NGAC\Data" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Alerts\Tables\c_CPT600.sql" />
@@ -187,7 +189,6 @@
     <Build Include="NGAC\Tables\XY_h_alarm.sql" />
     <Build Include="Security\PJV.sql" />
     <Build Include="Security\NGAC.sql" />
-    <None Include="NGAC\PostDeploy_c_service_setup.sql" />
     <Build Include="NGAC\Tables\rtu_SpeedOvr.sql" />
     <Build Include="NGAC\Tables\rt_TipDressLogFile.sql" />
     <Build Include="NGAC\Tables\rt_TCP_LOG.sql" />
@@ -226,10 +227,9 @@
     <Build Include="Volvo\Tables\L_timeline.sql" />
     <Build Include="NGAC\Functions\VASCstate.sql" />
     <Build Include="Volvo\Views\Timeline.sql" />
-  </ItemGroup>
-  <ItemGroup>
-    <PostDeploy Include="Volvo\PostDeploy_InitalDataInsert.sql" />
-    <None Include="Script_1.PostDeployment.sql" />
+    <Build Include="Alerts\Data\c_triggers.sql" />
+    <Build Include="Alerts\Data\c_state.sql" />
+    <Build Include="NGAC\Data\c_service_setup.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="GADATAprod.publish.xml" />
