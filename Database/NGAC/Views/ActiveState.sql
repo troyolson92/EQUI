@@ -8,6 +8,8 @@
 
 
 
+
+
 CREATE VIEW [NGAC].[ActiveState]
 AS
 SELECT 
@@ -15,49 +17,74 @@ SELECT
 , c.CLassificationId     AS 'AssetID'
 , 'LIVE'	  AS 'Logtype'
 , GETDATE()        AS 'timestamp'
-, CAST(Le.Number as varchar(max))     AS 'Logcode'
-, CAST(Le.l_type_id as varchar(max))    AS 'Severity'
 
 ,CASE 
- WHEN (rtai.vasc_state <> 1) THEN 'VASC ERROR: ' + CAST(rtai.vasc_state as varchar(max)) + '  Session: '+ISNULL(rtai.vasc_session,'unknown')
- WHEN (Le.[Title] LIKE '%:%') OR (Le.[Title] LIKE '%External weld fault reported%')
- THEN ISNULL(ld.CleanDescription,'#No Description available')
- ELSE ISNULL(RTRIM(LTRIM(Le.[Title])),'#No Title available')
+ WHEN (rtai.vasc_state <> 1) THEN ''
+ WHEN rtai.h_alarm_id is not null and h.[timestamp] > rt.[timestamp]
+ THEN CAST(h.Logcode as varchar(max)) 
+ ELSE CAST(rt.Logcode as varchar(max)) 
+ END AS 'Logcode'
+
+,CASE 
+ WHEN (rtai.vasc_state <> 1) THEN ''
+ WHEN rtai.h_alarm_id is not null and h.[timestamp] > rt.[timestamp]
+ THEN CAST(h.Severity as varchar(max))
+ ELSE CAST(rt.Severity as varchar(max))
+ END AS 'Severity'
+
+,CASE 
+ WHEN (rtai.vasc_state <> 1) THEN 'VASC ERROR: ' + [NGAC].[VASCstate](rtai.vasc_state) + '  |Session: '+ISNULL(rtai.vasc_session,'unknown')
+ WHEN rtai.h_alarm_id is not null and h.[timestamp] > rt.[timestamp]
+ THEN h.logtext
+ ELSE rt.logtext
  END AS 'Logtext'
 
-,CASE when (Le.[Title] LIKE '%:%') OR (Le.[Title] LIKE '%External weld fault reported%')
- THEN ISNULL(ld.CleanDescription,'#No Description available')
- ELSE isnull(RTRIM(LTRIM(Le.[Title])),'#No Title available') + CHAR(13)+CHAR(10) +  
-  isnull(ld.CleanDescription ,'#No Description available')
+,CASE 
+ WHEN (rtai.vasc_state <> 1) THEN 'VASC ERROR: ' + [NGAC].[VASCstate](rtai.vasc_state) + '  |Session: '+ISNULL(rtai.vasc_session,'unknown')
+ WHEN rtai.h_alarm_id is not null and h.[timestamp] > rt.[timestamp]
+ THEN h.FullLogtext
+ ELSE rt.FullLogtext
  END AS 'FullLogtext'
 
 ,DATEDIFF(SECOND,rtai.ts_breakDownAck,GETDATE()) as 'Response' 
 ,DATEDIFF(SECOND,rtai.ts_breakDownStart,GETDATE() ) as 'Downtime'
 
-, RTRIM(ISNULL(cc.Classification,'Undefined*'))  AS 'Classification'
-, ISNULL(cs.Subgroup,'Undefined*')		 AS 'Subgroup'
-, ISNULL(lc.Category,'Undefined*') AS 'Category'
+,CASE 
+ WHEN (rtai.vasc_state <> 1) THEN 'URA'
+ WHEN rtai.h_alarm_id is not null and h.[timestamp] > rt.[timestamp]
+ THEN RTRIM(ISNULL(h.Classification,'Undefined*'))
+ ELSE 'Undefined*'
+ END as 'Classification'
+
+,CASE 
+ WHEN (rtai.vasc_state <> 1) THEN 'VASC'
+ WHEN rtai.h_alarm_id is not null and h.[timestamp] > rt.[timestamp]
+ THEN RTRIM(ISNULL(h.Subgroup,'Undefined*'))
+ ELSE 'Undefined*'
+ END as 'Subgroup'
+
+,CASE  
+ WHEN (rtai.vasc_state <> 1) THEN 'VASC'
+ WHEN rtai.h_alarm_id is not null and h.[timestamp] > rt.[timestamp]
+ THEN h.category
+ ELSE rt.category
+ END AS 'Category'
+
 ,CASE 
  WHEN rtai.h_alarm_id <> 0 THEN rtai.h_alarm_id --used this ID because of _loginfo
  ELSE rtai.id * -1 --to make a random number that will not match any halarm record (entetyframework shit)
  END AS 'refid'
+
 , c.LocationTree     As 'LocationTree'
 , c.ClassificationTree as 'ClassTree'
 , c.controller_name		AS 'controller_name'
 , 'NGAC'		As 'controller_type'
 
 
-FROM [NGAC].[rt_active_info] as rtai
-LEFT JOIN NGAC.c_controller as c on c.id = rtai.c_controller_id
-LEFT JOIN NGAC.h_alarm as h on h.id = rtai.h_alarm_id
-LEFT JOIN NGAC.L_error as Le on Le._id = h.L_error_id
-LEFT OUTER JOIN NGAC.L_description AS ld  ON ld.id = le.l_description_id
-
-LEFT OUTER JOIN NGAC.L_type AS lt with (NOLOCK)  ON lt.id  = le.l_type_id
-LEFT OUTER JOIN NGAC.L_category as lc with (NOLOCK)  on lc.id = h.CategoryId
-
-LEFT OUTER JOIN VOLVO.c_Classification as cc with (NOLOCK)  on cc.id = Le.c_ClassificationId
-LEFT OUTER JOIN VOLVO.c_Subgroup as cs with (NOLOCK)  on cs.id = Le.c_SubgroupId
+FROM [NGAC].[rt_active_info] as rtai with (NOLOCK)
+LEFT JOIN NGAC.c_controller as c with (NOLOCK) on c.id = rtai.c_controller_id
+LEFT JOIN NGAC.ControllerEventLog as h with (NOLOCK) on h.refid = rtai.h_alarm_id
+LEFT JOIN NGAC.junk_alarms as rt with (NOLOCK) on rt.refid = rtai.rt_alarm_id
 
 
 

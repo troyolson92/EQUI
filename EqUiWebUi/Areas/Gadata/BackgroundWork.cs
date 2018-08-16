@@ -109,6 +109,7 @@ namespace EqUiWebUi.Areas.Gadata
         if (DataBuffer.dataSTO == null) DataBuffer.dataSTO = new List<EqUiWebUi.Areas.Gadata.SupervisieDummy>();
 
             int NumShifts = 6;
+            int NumDefaultHours = -8;
             DateTime now = System.DateTime.Now;
             //get timeline
             Gadata.Models.GADATAEntities2 gADATAEntities2 = new Models.GADATAEntities2();
@@ -133,12 +134,20 @@ namespace EqUiWebUi.Areas.Gadata
                 , shift = x.Shift
                 , animation = "TIMELINE"
                 }).Where(x => x.timestamp < now).OrderByDescending(x => x.timestamp).Take(NumShifts).ToList();
-            DataBuffer.StartDate = data.Select(x => x.timestamp).First() ?? System.DateTime.Now.AddHours(-8);
-            DataBuffer.EndDate = data.Select(x => x.timestamp).Last() ?? System.DateTime.Now;
-            context.WriteLine(string.Format("Timeline startdate:{0} enddate:{1}",DataBuffer.StartDate, DataBuffer.EndDate));
-            context.WriteLine("Span: " + (DataBuffer.StartDate - DataBuffer.EndDate));
-            //add check to limit data and handle nulls !!!!
-
+            if (data.Count() != 0 )
+            {
+                DataBuffer.StartDate = data.Select(x => x.timestamp).First() ?? System.DateTime.Now;
+                DataBuffer.EndDate = data.Select(x => x.timestamp).Last() ?? System.DateTime.Now.AddHours(NumDefaultHours);
+                context.WriteLine(string.Format("Timeline startdate:{0} => enddate:{1}", DataBuffer.StartDate, DataBuffer.EndDate));
+                context.WriteLine("Span: " + (DataBuffer.StartDate - DataBuffer.EndDate));
+            }
+            else
+            {
+                DataBuffer.StartDate = System.DateTime.Now;
+                DataBuffer.EndDate =  System.DateTime.Now.AddHours(NumDefaultHours);
+                context.WriteLine(string.Format("NOTIMELINE DATA! startdate:{0} => enddate:{1}", DataBuffer.StartDate, DataBuffer.EndDate));
+                context.WriteLine("Span: " + (DataBuffer.StartDate - DataBuffer.EndDate));
+            }
 
          //Get Alert data
             Alert.Models.GADATA_AlertModel GADATA_AlertModel = new Alert.Models.GADATA_AlertModel();

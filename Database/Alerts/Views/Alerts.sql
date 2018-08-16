@@ -4,17 +4,14 @@
 
 
 
+
 /*only show alert when this is set*/
 CREATE VIEW [Alerts].[Alerts]
 AS
  SELECT 
   h_alert.[location] 	   AS 'Location' 
 , ''     AS 'AssetID' 
-
-,CASE
-WHEN h_alert.[state] = 1 THEN c_triggers.alertType
-ELSE 'ALERT'
-END  AS 'Logtype' 
+,'ALERT'  AS 'Logtype' 
 
 ,CASE 
 WHEN h_alert.[state] = 1 THEN GETDATE()
@@ -26,10 +23,12 @@ END   AS 'timestamp'
 , h_alert.info AS 'Logtext'
 , h_alert.info  AS 'FullLogtext'
 , NULL     AS 'Response'
+
 ,CASE 
  WHEN c_triggers.isDowntime = 1 THEN DATEDIFF(second,h_alert._timestamp,h_alert.lastTriggerd)
  ELSE NULL 
  END as 'Downtime'
+
 , h_alert.[Classification]  AS 'Classification'
 , c_triggers.alertType AS 'Subgroup'
 , c_state.[state] AS 'Category'
@@ -42,6 +41,11 @@ END   AS 'timestamp'
 ,timeline.Vweek
 ,timeline.Vday
 ,timeline.shift
+
+,CASE 
+WHEN h_alert.[state] = 1 THEN c_triggers.Animation 
+ELSE 'ALERT'
+END  as 'animation'
 
 from Alerts.h_alert
 left join Alerts.c_triggers on c_triggers.id = h_alert.c_tirgger_id
