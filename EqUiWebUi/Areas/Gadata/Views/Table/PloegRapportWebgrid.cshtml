@@ -9,38 +9,87 @@
 
 @*render popuover modal*@
 <div id="MyModal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class='card-body'><i class='fa fa-spinner fa-pulse fa-4x fa-fw text-white'></i><span class='sr-only'>Loading...</span></div>
+    <div class='card-body'>
+        <i class='fa fa-spinner fa-pulse fa-4x fa-fw text-white'></i>
+        <span class='sr-only'>Loading...</span>
+    </div>
 </div>
 
 @section scripts{
     <!--ploegrapport script-->
     <script type="text/javascript">
-    var PloegRapportGridspinner = new Spinner();
+        // var to singal supervisie is expanded. (reload gird will wait until closes)
+        var supervisieIsExpanded = false;
+        //helper function to load info modal
+        function LoadMoreInfo(data) {
+                    var urlMoreInfo = '@Url.Action("_Moreinfo","Table")?location=' + encodeURIComponent(data.Location)
+                        + '&errornum=' + encodeURIComponent(data.Logcode)
+                        + '&refid=' + encodeURIComponent(data.refId)
+                        + '&logtype=' + encodeURIComponent(data.Logtype)
+                        + '&logtext=' + encodeURIComponent(data.logtext)
+                    //launch modal
+                    $('#MyModal').removeData('bs.modal');
+                    $('#MyModal').modal({ show: true });
+                    $('#MyModal').load(urlMoreInfo, function (result) { });
+        }
+
     //render grid and subscrible to row clicked events
         $('#PloegRapportGrid').mvcgrid({
             sourceUrl: '@Url.Action("_ploegRapport")', // Grid source url string
             requestType: 'get', // Ajax grid request type
             reload: true, // Grid reload indicator
+            //if rowclicked and count is 1 show popup else expand the count and load a filterd supervision grid.
             rowClicked: function (row, data, e) {
-                var urlMoreInfo = '@Url.Action("_Moreinfo","Table")?location=' + encodeURIComponent(data.Location)
-                    + '&errornum=' + encodeURIComponent(data.Logcode)
-                    + '&refid=' + encodeURIComponent(data.refId)
-                    + '&logtype=' + encodeURIComponent(data.Logtype)
-                    + '&logtext=' + encodeURIComponent(data.logtext)
-                //launch modal
-                $('#MyModal').removeData('bs.modal');
-                $('#MyModal').modal({ show: true });
-                $('#MyModal').load(urlMoreInfo, function (result) {});
+                if (data.Count == "1") {
+                    LoadMoreInfo(data);
+                }
+                else {
+                    //if row already has this clase close the modal
+                    if ($(row).hasClass("bg-info")) {
+                        $("#placeholder").remove();
+                        $(row).removeClass("bg-info");
+                        supervisieIsExpanded = false;
+                        return;
+                    }
+                    supervisieIsExpanded = true;
+                    //clear selected rows for this table
+                    $('tr').removeClass('bg-info'); //THIS IS WRONG
+                    $(row).addClass("bg-info");
+                    $("#placeholder").remove(); //clear placeholder is exists
+                    //add new placeholder afhter selected row
+                    $(row).after('<tr id="placeholder"><td colspan="10000"><div class="card bg-info"><div id="SupervisieGrid" class="mvc-grid card-body"></div></div></td></tr>');
+                    //animation
+                    $("#SupervisieGrid").html("Loading.....");
+                    //load supervisiegird in placeholder
+                        $('#SupervisieGrid').mvcgrid({
+                            sourceUrl: '@Url.Action("_supervisie")', // Grid source url string
+                            requestType: 'get', // Ajax grid request type
+                            data: { locationRootFilter: data.LocationTree},
+                            reload: true, // Grid reload indicator
+                            rowClicked: function (row, data, e) {
+                                LoadMoreInfo(data);
+                            },
+                            reloadStarted: function () {
+                                console.log("reload start");
+                            },
+                            reloadEnded: function () {
+                                console.log("reload done");
+                            },
+                            reloadFailed: function (result) {
+                                console.log(result);
+                                $("#SupervisieGrid").html("<div class='alert alert-danger'>Error while loading!! </div>");
+                            }
+                        });
+                }
             },
             reloadStarted: function () {
-                PloegRapportGridspinner.spin(document.getElementById('PloegRapportGridSpincontainer'));
+                console.log("reload start");
             },
             reloadEnded: function () {
-                PloegRapportGridspinner.stop();
+                console.log("reload done");
             },
             reloadFailed: function (result) {
                 console.log(result);
-                PloegRapportGridspinner.stop();
                 $("#PloegRapportGrid").html("<div class='alert alert-danger'>Error while loading!! </div>");
             }
         });
@@ -68,10 +117,15 @@
 
         //trigger full window reload
         $.connection.dataRefreshHub.client.newData = function () {
-            console.log("PloegRapportGrid reload");
-            $('#PloegRapport').mvcgrid({
-                reload: true
-            });
+            if (supervisieIsExpanded != true) {
+                console.log("PloegRapportGrid reload");
+                $('#PloegRapport').mvcgrid({
+                    reload: true
+                });
+            }
+            else {
+                console.log("Reload request but supervisie is open. (skipped reload)");
+            }
         }
     </script>
 }
