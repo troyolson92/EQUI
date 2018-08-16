@@ -10,6 +10,7 @@
 
 
 
+
 CREATE VIEW [NGAC].[ActiveState]
 AS
 SELECT 
@@ -50,7 +51,7 @@ SELECT
 ,DATEDIFF(SECOND,rtai.ts_breakDownStart,GETDATE() ) as 'Downtime'
 
 ,CASE 
- WHEN (rtai.vasc_state <> 1) THEN 'URA'
+ WHEN (rtai.vasc_state <> 1) THEN 'VASC'
  WHEN rtai.h_alarm_id is not null and h.[timestamp] > rt.[timestamp]
  THEN RTRIM(ISNULL(h.Classification,'Undefined*'))
  ELSE 'Undefined*'
@@ -86,9 +87,6 @@ LEFT JOIN NGAC.c_controller as c with (NOLOCK) on c.id = rtai.c_controller_id
 LEFT JOIN NGAC.ControllerEventLog as h with (NOLOCK) on h.refid = rtai.h_alarm_id
 LEFT JOIN NGAC.junk_alarms as rt with (NOLOCK) on rt.refid = rtai.rt_alarm_id
 
-
-
---WHERE rtai.application_error = 0 AND rtai.program_number <> 0-- OR rtai.task_execution_status = 
 WHERE 
 (
 (rtai.application_error = 0 and rtai.ts_breakDownStart is not null) --in appl fault and ts_breakdown not null. 
@@ -97,10 +95,6 @@ or
 rtai.vasc_state <> 1 --1 vasc fully connected
 )
 and c.enable_bit > 0 --robot must be in use 
---and rtai.program_number <> 0 --must be running a job
-
---temp for mute testing 
-and rtai.vasc_session not like '%8%'
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 1, @level0type = N'SCHEMA', @level0name = N'NGAC', @level1type = N'VIEW', @level1name = N'ActiveState';
 

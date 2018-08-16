@@ -108,8 +108,10 @@ namespace EqUiWebUi.Areas.Gadata
         if (DataBuffer.dataVASC == null) DataBuffer.dataVASC = new List<EqUiWebUi.Areas.Gadata.SupervisieDummy>();
         if (DataBuffer.dataSTO == null) DataBuffer.dataSTO = new List<EqUiWebUi.Areas.Gadata.SupervisieDummy>();
 
-            int NumShifts = 6;
-            int NumDefaultHours = -8;
+            //number of shifts to load in memory
+            int NumShifts = 9;
+            //number of hours to load in memory (in case there is no timeline data)
+            int NumDefaultHours = -48;
             DateTime now = System.DateTime.Now;
             //get timeline
             Gadata.Models.GADATAEntities2 gADATAEntities2 = new Models.GADATAEntities2();
@@ -138,7 +140,7 @@ namespace EqUiWebUi.Areas.Gadata
             {
                 DataBuffer.StartDate = data.Select(x => x.timestamp).First() ?? System.DateTime.Now;
                 DataBuffer.EndDate = data.Select(x => x.timestamp).Last() ?? System.DateTime.Now.AddHours(NumDefaultHours);
-                context.WriteLine(string.Format("Timeline startdate:{0} => enddate:{1}", DataBuffer.StartDate, DataBuffer.EndDate));
+                context.WriteLine(string.Format("TIMELINE startdate:{0} => enddate:{1}", DataBuffer.StartDate, DataBuffer.EndDate));
                 context.WriteLine("Span: " + (DataBuffer.StartDate - DataBuffer.EndDate));
             }
             else
@@ -219,8 +221,9 @@ namespace EqUiWebUi.Areas.Gadata
                 data.AddRange(DataBuffer.dataS4C);
             }
 
-  
+
             //Set the main dataset and update the max ts
+            context.WriteLine("--------------------------------");
             context.WriteLine("Total datacount " + data.Count());
             if (data.Count() != 0)
             {
