@@ -107,7 +107,7 @@ namespace EqUiWebUi.Areas.Gadata
         if (DataBuffer.dataVASC == null) DataBuffer.dataVASC = new List<EqUiWebUi.Areas.Gadata.SupervisieDummy>();
         if (DataBuffer.dataSTO == null) DataBuffer.dataSTO = new List<EqUiWebUi.Areas.Gadata.SupervisieDummy>();
 
-            int NumShifts = 3;
+            int NumShifts = 6;
             DateTime now = System.DateTime.Now;
             //get timeline
             Gadata.Models.GADATAEntities2 gADATAEntities2 = new Models.GADATAEntities2();
@@ -133,8 +133,8 @@ namespace EqUiWebUi.Areas.Gadata
                 }).Where(x => x.timestamp < now).OrderByDescending(x => x.timestamp).Take(NumShifts).ToList();
             DataBuffer.StartDate = data.Select(x => x.timestamp).First() ?? System.DateTime.Now.AddHours(-8);
             DataBuffer.EndDate = data.Select(x => x.timestamp).Last() ?? System.DateTime.Now;
-            context.WriteLine(string.Format("Timeline startdate:{0} enddate:{1} timespan: {2}",DataBuffer.StartDate, DataBuffer.EndDate, (DataBuffer.StartDate-DataBuffer.EndDate)));
-
+            context.WriteLine(string.Format("Timeline startdate:{0} enddate:{1}",DataBuffer.StartDate, DataBuffer.EndDate));
+            context.WriteLine("Span: " + (DataBuffer.StartDate - DataBuffer.EndDate));
             //add check to limit data and handle nulls !!!!
 
 

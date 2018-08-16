@@ -60,11 +60,11 @@ namespace EqUiWebUi.Areas.PlcSupervisie
             if (dtGadataMaxTS.Rows.Count != 0)
             {
                 GadataMAxTs = dtGadataMaxTS.Rows[0].Field<DateTime>("ts");
-                context.WriteLine(" GadataMAxTs: " + GadataMAxTs.ToString());
+                context.WriteLine("GadataMAxTs: " + GadataMAxTs.ToString());
             }
             else
             {
-                string msg = String.Format(" TargetTable: {0} had no data so full refresh", TargetTable);
+                string msg = String.Format("TargetTable: {0} had no data so full refresh", TargetTable);
                 context.WriteLine(msg);
                 log.Error(msg);
             }
@@ -78,13 +78,13 @@ namespace EqUiWebUi.Areas.PlcSupervisie
 "
                 , GadataMAxTs.ToString("yyyy-MM-dd HH:mm:ss"),TargetTable); //USE BIG HH for 24 hour format !!!!
 
-            context.WriteLine(" Get new data from DST started");
+            context.WriteLine("Get new data from DST started");
             DataTable newStoDt = connectionManager.RunQuery(stoQry,dbName:"DST", enblExeptions: true);
             context.WriteLine(String.Format("Done New rows: {0}", newStoDt.Rows.Count));
             //push to gadata
-            context.WriteLine(" Push to gadata started");
+            context.WriteLine("Push to gadata started");
             connectionManager.BulkCopy(newStoDt, "[STO].[rt_error]");
-            context.WriteLine(" Done");
+            context.WriteLine("Done");
         }
 
         [AutomaticRetry(Attempts = 2)]

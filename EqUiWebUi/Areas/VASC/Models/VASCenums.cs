@@ -208,11 +208,21 @@ namespace EqUiWebUi.Areas.VASC.Models
         STATE_NOTHING = 0, /* Done nothing */
         STATE_CONNECTED = 1, /* Fully connected */
         STATE_CONNECTING = 2, /* Processing of connecting */
+
         STATE_NO_CONN = -1, /* ABB error no connection */
         STATE_LOST_CONN = -2, /* Lost connection */
         STATE_NO_PING = -3, /* No ping */
         STATE_NO_NAME = -4, /* No Name */
         STATE_NO_IP_SYSID = -5, /* No IP/SYSID */
+        STATE_NEW_CONTROLLER = -6,
+        STATE_BAD_FORMAT = -7, 
+        NO_CONTROLLER = -8, //not abb robot
+        STATE_NO_INFO = -9,
+        STATE_RUN_LEVEL = -10,
+        STATE_AVAIL = -11,
+        STATE_BAD_IP = -12,
+        STATE_SYS_FAIL = -13,
+        STATE_NO_PCSDK = -14,
         STATE_VASC_SHUTDOWN = -15 /*Vasc Shutdown*/
     }
 
