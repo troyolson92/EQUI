@@ -142,8 +142,9 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
             {
                 data = (from d in data
                         where (d.Classification ?? "").Contains(AssetRoot) //apply user assetroot
-                            || (d.Classification ?? "") == "" //or allow assets that are null
-                            || d.Logtype == "TIMELINE" //always allowtimeline
+                            || (d.Classification ?? "") == "" //always allow assets that are null
+                            || (d.Classification ?? "") == "VASC" //always allow VASC messages
+                            || d.Logtype == "TIMELINE" //always always allowtimeline
                         select d).ToList();
             }
 
