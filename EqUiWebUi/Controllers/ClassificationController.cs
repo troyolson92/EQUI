@@ -126,14 +126,14 @@ namespace EqUiWebUi.Controllers
             AND 
             L_error.[error_number] between @coderangeStart and @coderangeEnd
             AND
-            @rowID is null
+            @rowID = 0
             )
             --single set 
             OR
             (
             L_error.id = @rowID
             AND
-            @rowID is not null 
+            @rowID <> 0 
             )
          * */
         public JsonResult SetClass(c_LogClassRules c_LogClassRule, int RowID, bool Clear = false)
