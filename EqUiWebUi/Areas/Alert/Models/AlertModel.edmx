@@ -195,6 +195,7 @@ warning 6002: The table/view 'GADATA.Alerts.Alerts' does not have a primary key 
           <Property Name="Vweek" Type="int" />
           <Property Name="Vday" Type="int" />
           <Property Name="shift" Type="varchar" MaxLength="2" />
+          <Property Name="animation" Type="varchar" MaxLength="50" />
         </EntityType>
         <Association Name="FK_c_SMSconfig_c_CPT600">
           <End Role="c_CPT600" Type="Self.c_CPT600" Multiplicity="1" />
@@ -435,7 +436,8 @@ warning 6002: The table/view 'GADATA.Alerts.Alerts' does not have a primary key 
     [Alerts].[Vyear] AS [Vyear], 
     [Alerts].[Vweek] AS [Vweek], 
     [Alerts].[Vday] AS [Vday], 
-    [Alerts].[shift] AS [shift]
+    [Alerts].[shift] AS [shift], 
+    [Alerts].[animation] AS [animation]
     FROM [Alerts].[Alerts] AS [Alerts]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_c_SMSconfig_c_CPT600" Association="Self.FK_c_SMSconfig_c_CPT600">
@@ -1014,6 +1016,7 @@ warning 6002: The table/view 'GADATA.Alerts.Alerts' does not have a primary key 
           <Property Name="Vweek" Type="Int32" />
           <Property Name="Vday" Type="Int32" />
           <Property Name="shift" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="animation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -1192,6 +1195,7 @@ warning 6002: The table/view 'GADATA.Alerts.Alerts' does not have a primary key 
           <EntitySetMapping Name="Alerts">
             <EntityTypeMapping TypeName="AlertModel.Alerts">
               <MappingFragment StoreEntitySet="Alerts">
+                <ScalarProperty Name="animation" ColumnName="animation" />
                 <ScalarProperty Name="shift" ColumnName="shift" />
                 <ScalarProperty Name="Vday" ColumnName="Vday" />
                 <ScalarProperty Name="Vweek" ColumnName="Vweek" />

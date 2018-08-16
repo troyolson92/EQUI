@@ -47,17 +47,11 @@ namespace EqUiWebUi
                 case "TIMELINE":
                     return "TableLogtypeTIMELINE";
 
-                case "SlowSpeed":
-                    return "TableLogtypeSLOWSpeed";
-
-                case "BarrelLow":
-                    return "TableLogtypeBarrelLOW";
-
                 case "ALERT":
                     return "TableLogtypeAlert";
 
                 default:
-                    return "";
+                    return logtype; //this is used for alerts the pass the animation direcly (when alert is active else they just pass "ALERT"
 
             }
         }
@@ -70,14 +64,14 @@ namespace EqUiWebUi
 
             if (pWear.GetValueOrDefault(0) > 98 || nDress.GetValueOrDefault(0) > 210 ) //severe tiplife
             {
-                return "TableTipwearValueDanger";
+                return "ani_PulseRed";
             } else if(pWear.GetValueOrDefault(0) > 90 || nDress.GetValueOrDefault(0) > 200 ) //mild tiplife
             {
-                return "TableTipwearValueHigh";
+                return "ani_PulseRedFast";
             }
             else if (Status != "") //data error
             {
-                return "PulseBlueRepeat";
+                return "ani_PulseBlueRepeat";
             }
             else
             {

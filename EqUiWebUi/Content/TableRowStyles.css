@@ -8,7 +8,7 @@
     background-color: #49d112;
 }
 
-/*logtype*/
+/*logtype styles */
 .TableLogtypeSHIFTBOOK {
     background-color: #d6d613;
 }
@@ -37,19 +37,11 @@
     background-color: rgba(243, 124, 9, 0.87);
 }
 
-.TableLogtypeSLOWSpeed {
+/*animations (Alerts)*/
+.ani_BlinkPink {
     background-color: #d851ff; /*set the background color in here so if the browser does not support animation we still have style*/
     -webkit-animation: blinkPink 1s 0.5s infinite alternate linear; /*chrome*/
     animation: blinkPink 1s 0.5s infinite alternate linear; /*IE 10+ (not working for me)*/
-}
-
-.TableLogtypeBarrelLOW {
-    background-color: #49d112;
-    -webkit-animation: PulseGreen 5s infinite alternate linear;
-}
-
-.TableRowStyleGreen {
-    background-color: #16dd76;
 }
 
 @-webkit-keyframes blinkPink {
@@ -60,6 +52,12 @@
     100% {
         background-color: transparent;
     }
+}
+
+
+.ani_PulseGreen {
+    background-color: #49d112;
+    -webkit-animation: PulseGreen 5s infinite alternate linear;
 }
 
 @-webkit-keyframes PulseGreen {
@@ -80,8 +78,21 @@
     }
 }
 
-/*for tipwear*/
-.TableTipwearValueHigh {
+.ani_PulseGreenOnce {
+    -webkit-animation: PulseGreen 3s;
+}
+
+@-webkit-keyframes PulseGreen {
+    0% {
+        background-color: #49d112;
+    }
+
+    100% {
+        background-color: transparent;
+    }
+}
+
+.ani_PulseRed {
     background-color: #f21a1a;
     -webkit-animation: PulseRed 3s infinite;
 }
@@ -96,13 +107,14 @@
     }
 }
 
-.PulseBlueOnce {
-    -webkit-animation: PulseBlue 3s;
+.ani_PulseRedFast {
+    background-color: #f60c0c;
+    -webkit-animation: PulseRedFast 0.6s infinite;
 }
 
-@-webkit-keyframes PulseBlue {
+@-webkit-keyframes PulseRedFast {
     0% {
-        background-color: #127bf1;
+        background-color: #f60c0c;
     }
 
     100% {
@@ -110,35 +122,7 @@
     }
 }
 
-.PulseBlueRepeat {
-    -webkit-animation: PulseBlue 2s infinite;
-}
-
-@-webkit-keyframes PulseBlue {
-    0% {
-        background-color: #1f97f2;
-    }
-
-    100% {
-        background-color: transparent;
-    }
-}
-
-.PulseGreenOnce {
-    -webkit-animation: PulseGreen 3s;
-}
-
-@-webkit-keyframes PulseGreen {
-    0% {
-        background-color: #49d112;
-    }
-
-    100% {
-        background-color: transparent;
-    }
-}
-
-.PulseRedRepeat {
+.ani_ PulseRedRepeat {
     background-color: #f21a1a;
     -webkit-animation: PulseBlue 3s infinite;
 }
@@ -153,17 +137,32 @@
     }
 }
 
-.TableTipwearValueDanger {
-    background-color: #f60c0c;
-    -webkit-animation: PulseRedFast 0.6s infinite;
+
+.ani_PulseBlueOnce {
+    -webkit-animation: PulseBlue 3s;
 }
 
-@-webkit-keyframes PulseRedFast {
+@-webkit-keyframes PulseBlue {
     0% {
-        background-color: #f60c0c;
+        background-color: #127bf1;
     }
 
     100% {
         background-color: transparent;
     }
 }
+
+.ani_PulseBlueRepeat {
+    -webkit-animation: PulseBlue 2s infinite;
+}
+
+@-webkit-keyframes PulseBlue {
+    0% {
+        background-color: #1f97f2;
+    }
+
+    100% {
+        background-color: transparent;
+    }
+}
+

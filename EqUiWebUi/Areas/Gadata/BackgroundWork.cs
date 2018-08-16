@@ -47,6 +47,7 @@ namespace EqUiWebUi.Areas.Gadata
         public Nullable<int> Vweek { get; set; }
         public Nullable<int> Vday { get; set; }
         public string shift { get; set; }
+        public string animation { get; set; }
     }
 
     public partial class PloegRaport_dummy
@@ -59,11 +60,11 @@ namespace EqUiWebUi.Areas.Gadata
         public Nullable<int> Downtime_min_ { get; set; }
         public Nullable<int> Count { get; set; }
         public Nullable<System.DateTime> timestamp { get; set; }
-        public string time { get; set; }
         public string Subgroup { get; set; }
         public string Classification { get; set; }
         public Nullable<int> refId { get; set; }
         public string LocationTree { get; set; }
+        public string animation { get; set; }
     }
 
     public class BackgroundWork
@@ -130,6 +131,7 @@ namespace EqUiWebUi.Areas.Gadata
                 , Vweek = x.Week
                 , Vday = x.day
                 , shift = x.Shift
+                , animation = "TIMELINE"
                 }).Where(x => x.timestamp < now).OrderByDescending(x => x.timestamp).Take(NumShifts).ToList();
             DataBuffer.StartDate = data.Select(x => x.timestamp).First() ?? System.DateTime.Now.AddHours(-8);
             DataBuffer.EndDate = data.Select(x => x.timestamp).Last() ?? System.DateTime.Now;
@@ -159,6 +161,7 @@ namespace EqUiWebUi.Areas.Gadata
                 ,Vweek = x.Vweek
                 ,Vday = x.Vday
                 ,shift = x.shift
+                ,animation = x.animation
             }).Where(x => x.timestamp > DataBuffer.EndDate).ToList();
             context.WriteLine("dataALERT count:" + DataBuffer.dataALERT.Count());
             data.AddRange(DataBuffer.dataALERT);
@@ -201,6 +204,7 @@ namespace EqUiWebUi.Areas.Gadata
                     ,Vweek = x.Vweek
                     ,Vday = x.Vday
                     ,shift = x.shift
+                    ,animation = x.Logtype
                     }).Where(x => x.timestamp > DataBuffer.EndDate).ToList();
                 context.WriteLine("dataS4C count:" + DataBuffer.dataS4C.Count());
                 data.AddRange(DataBuffer.dataS4C);
@@ -273,6 +277,7 @@ namespace EqUiWebUi.Areas.Gadata
                 ,Vweek = x.Vweek
                 ,Vday = x.Vday
                 ,shift = x.shift
+                ,animation = x.Logtype
             }).Where(x => x.timestamp > DataBuffer.EndDate).ToList();
             context.WriteLine(DataBuffer.dataC3G.Count());
         }
@@ -327,6 +332,7 @@ namespace EqUiWebUi.Areas.Gadata
                 ,Vweek = x.Vweek
                 ,Vday = x.Vday
                 ,shift = x.shift
+                ,animation = x.Logtype
             }).Where(x => x.timestamp > DataBuffer.EndDate).ToList();
             context.WriteLine(DataBuffer.dataC4G.Count());
         }
@@ -372,6 +378,7 @@ namespace EqUiWebUi.Areas.Gadata
                 ,Vweek = x.Vweek
                 ,Vday = x.Vday
                 ,shift = x.shift
+                ,animation = x.Logtype
             }).Where(x => x.timestamp > DataBuffer.EndDate).ToList();
             context.WriteLine(DataBuffer.dataVASC.Count());
         }

@@ -128,6 +128,7 @@ namespace EqUiWebUi.Areas.PlcSupervisie
                 ,Vweek = x.Vweek
                 ,Vday = x.Vday
                 ,shift = x.shift
+                ,animation = x.Logtype
             }).Where(x => x.timestamp > EqUiWebUi.Areas.Gadata.DataBuffer.EndDate).ToList();
             //context.WriteLine(DataBuffer.dataC3G.Count());
         }
