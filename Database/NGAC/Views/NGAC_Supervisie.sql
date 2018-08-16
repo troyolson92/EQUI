@@ -3,13 +3,14 @@
 
 
 
+
 CREATE VIEW [NGAC].[NGAC_Supervisie]
 AS
 SELECT DISTINCT 
   output.Location       AS 'Location' 
 , output.logtext		AS 'logtext'
-, output.Response/60		AS 'RT'
-, output.Downtime/60		AS 'DT'
+, output.Response		AS 'RT'
+, output.Downtime		AS 'DT'
 , CONVERT(char(19),output.[timestamp], 108) AS 'time' 
 , output.Classification	AS 'Classification'
 , output.Subgroup		AS 'Subgroup'

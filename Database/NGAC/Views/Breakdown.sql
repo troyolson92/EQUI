@@ -16,6 +16,9 @@
 
 
 
+
+
+
 CREATE VIEW [NGAC].[Breakdown]
 AS
 SELECT 
@@ -28,6 +31,7 @@ SELECT
  THEN CAST(h.Logcode as varchar(max)) 
  ELSE CAST(rt.Logcode as varchar(max)) 
  END AS 'Logcode'
+
 ,CASE when rtjb.h_alarm_id is not null
  THEN CAST(h.Severity as varchar(max))
  ELSE CAST(rt.Severity as varchar(max))
@@ -37,6 +41,7 @@ SELECT
  THEN h.logtext
  ELSE rt.logtext
  END AS 'Logtext'
+
 ,CASE when rtjb.h_alarm_id is not null
  THEN h.FullLogtext
  ELSE rt.FullLogtext
@@ -52,16 +57,17 @@ SELECT
  THEN h.category
  ELSE rt.category
  END AS 'Category'
+
 , rtj.id				 AS 'refId'
 , c.LocationTree     As 'LocationTree'
 , c.ClassificationTree as 'ClassTree'
 , c.controller_name		AS 'controller_name'
 , 'NGAC'		As 'controller_type'
 
-FROM  NGAC.rt_job AS rtj 
-LEFT JOIN NGAC.rt_job_breakdown as rtjb on rtjb.rt_job_active_id = rtj.id AND rtjb.[index] = 1
-LEFT JOIN NGAC.ControllerEventLog as h on h.refid = rtjb.h_alarm_id
-LEFT JOIN NGAC.junk_alarms as rt on rt.refid = rtjb.rt_alarm_id
+FROM  NGAC.rt_job AS rtj  with (NOLOCK)
+LEFT JOIN NGAC.rt_job_breakdown as rtjb with (NOLOCK) on rtjb.rt_job_active_id = rtj.id AND rtjb.[index] = 1
+LEFT JOIN NGAC.ControllerEventLog as h  with (NOLOCK)on h.refid = rtjb.h_alarm_id
+LEFT JOIN NGAC.junk_alarms as rt with (NOLOCK) on rt.refid = rtjb.rt_alarm_id
 
 
 LEFT JOIN NGAC.c_controller as c with (NOLOCK) on c.id = rtj.c_controller_id

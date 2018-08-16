@@ -80,6 +80,7 @@
     <Folder Include="MAXIMO\Tables\" />
     <Folder Include="EqUi\Stored Procedures\" />
     <Folder Include="EqUi\Views\" />
+    <Folder Include="Volvo\Views\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Alerts\Tables\c_CPT600.sql" />
@@ -223,6 +224,8 @@
     <Build Include="NGAC\Views\NGAC_Supervisie.sql" />
     <Build Include="Alerts\Views\Alerts_Supervisie.sql" />
     <Build Include="Volvo\Tables\L_timeline.sql" />
+    <Build Include="NGAC\Functions\VASCstate.sql" />
+    <Build Include="Volvo\Views\Timeline.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Volvo\PostDeploy_InitalDataInsert.sql" />
