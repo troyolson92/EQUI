@@ -57,6 +57,13 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
                             select d).ToList();
             }
 
+            //THIS SHOULD NOT STAY!!!! CLEAN THIS OUT YOU LAZy F
+            //apply filter for "Operational"
+            data = (from d in data
+                    where (d.Subgroup ?? "").Contains("Operational") == false //not Operational
+                    orderby d.timestamp descending
+                    select d).ToList();
+
             //order data to make sure First and Last works
             data = (from d in data orderby d.timestamp descending select d).ToList();
 
@@ -64,12 +71,10 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
             var Ploegrap = data.GroupBy( s => new
                 {
                      s.Location
-                    ,s.LocationTree
-                    
+                    ,s.LocationTree               
                     ,s.Logtype
                     ,s.Subgroup
                     ,s.Classification
-
                     ,s.Vyear
                     ,s.Vweek
                     ,s.Vday
