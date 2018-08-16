@@ -4,8 +4,8 @@
 {
     columns.Add(c => c.Location).Titled("Location").Filterable(true);
     columns.Add(c => c.logtext).Titled("Logtext");
-    columns.Add(c => c.RT).Titled("RT");
-    columns.Add(c => c.DT).Titled("DT");
+    columns.Add(c => c.RT / 60).Titled("RT");
+    columns.Add(c => c.DT / 60).Titled("DT");
     columns.Add(c => c.timestamp).Formatted("{0:HH:mm:ss}").Titled("Time");
     columns.Add(c => c.Classification).Titled("Class").Css("d-none d-lg-table-cell");
     columns.Add(c => c.Subgroup).Titled("Subgroup").Css("d-none d-lg-table-cell");
