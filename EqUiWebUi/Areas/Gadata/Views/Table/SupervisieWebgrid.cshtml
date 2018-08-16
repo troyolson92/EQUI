@@ -18,7 +18,6 @@
 @section scripts{
     <!--script for supervisiegrid-->
     <script type="text/javascript">
-    var SupervisieGridspinner = new Spinner();
     //render grid and subscrible to row clicked events
     $('#SupervisieGrid').mvcgrid({
         sourceUrl: '@Url.Action("_supervisie")', // Grid source url string
@@ -36,14 +35,13 @@
                 $('#MyModal').load(urlMoreInfo, function (result) {});
         },
         reloadStarted: function () {
-            SupervisieGridspinner.spin(document.getElementById('SupervisieGridSpincontainer'));
+            console.log("reload start");
         },
         reloadEnded: function () {
-            SupervisieGridspinner.stop();
+            console.log("reload done");
         },
         reloadFailed: function (result) {
             console.log(result);
-            SupervisieGridspinner.stop();
             $("#SupervisieGrid").html("<div class='alert alert-danger'>Error while loading!! </div>");
         }
     });

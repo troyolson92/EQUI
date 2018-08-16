@@ -52,7 +52,6 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
             {
                 data = (from d in data
                         where (d.Classification ?? "").Contains(AssetRoot) //apply user assetroot
-                          //  || (d.Classification ?? "") == "Undefined*" //or allow assets thet are undedind
                             || (d.Classification ?? "") == "" //or allow assets that are null
                             || d.Logtype == "TIMELINE" //always allowtimeline
                             select d).ToList();
@@ -112,7 +111,7 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
         }
 
         [HttpGet]
-        public ActionResult _supervisie()
+        public ActionResult _supervisie(string locationRootFilter = "")
         {
             // 
             var data = DataBuffer.Supervisie;
@@ -123,6 +122,8 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
             }
             //apply location root filter
             string LocationRoot = CurrentUser.Getuser.LocationRoot;
+            //if the locationRootFilter is passed as arument allow this to override USER location filter. (is used in ploegrapport)
+            if (locationRootFilter != "") LocationRoot = locationRootFilter;
             if (LocationRoot != "")
             {
                 data = (from d in data
@@ -136,11 +137,15 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
             {
                 data = (from d in data
                         where (d.Classification ?? "").Contains(AssetRoot) //apply user assetroot
-                      //      || (d.Classification ?? "") == "Undefined*" //or allow assets thet are undedind
                             || (d.Classification ?? "") == "" //or allow assets that are null
                             || d.Logtype == "TIMELINE" //always allowtimeline
                         select d).ToList();
             }
+
+
+
+
+            //THIS SHOULD NOT STAY!!!! CLEAN THIS OUT YOU LAZy F
             //apply filter for "Operational"
             data = (from d in data
                     where (d.Subgroup ?? "").Contains("Operational") == false //not Operational
