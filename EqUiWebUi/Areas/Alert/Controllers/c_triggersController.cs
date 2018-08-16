@@ -129,7 +129,11 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             //run command against selected database.
             string deleteQry = "delete GADATA.Alerts.h_alert from GADATA.Alerts.h_alert where c_tirgger_id = {0}";
             connectionManager.RunCommand(string.Format(deleteQry, id.ToString()), enblExeptions: true);
-
+            //clear hangfire
+            db.c_triggers.Find(id).enabled = false;
+            db.SaveChanges();
+            AlertEngine alertEngine = new AlertEngine();
+            alertEngine.ClearHanfireAlertwork(); 
             //delete the trigger 
             c_triggers c_triggers = await db.c_triggers.FindAsync(id);
             db.c_triggers.Remove(c_triggers);
