@@ -88,13 +88,14 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
                     ,refId = p.First().refId
                     ,timestamp = p.First().timestamp
                     ,LocationTree = p.Key.LocationTree
+                    ,animation = p.First().animation
                 }).Where(
                  p => 
                  (//EXCLUDE
                  (p.Downtime_min_ > 20 || p.Count > 4)  //longer than 20 min or more than 4 times 
                  && p.Logtype != "LIVE"  //EXCLUDE
                  )
-                 || p.Logtype == "ALERT" //INCLUDE
+                 || p.animation == "ALERT" //INCLUDE (this is on the animation because when the animation of an alert is "Alert" this alert is not in WGK 
                  || p.Logtype == "TIMELINE" //INCLUDE
                 ).ToList();
 

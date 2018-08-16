@@ -36,5 +36,6 @@ namespace EqUiWebUi.Areas.Alert.Models
         public Nullable<int> Vweek { get; set; }
         public Nullable<int> Vday { get; set; }
         public string shift { get; set; }
+        public string animation { get; set; }
     }
 }

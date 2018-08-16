@@ -33,6 +33,34 @@ namespace EqUiWebUi
         }
     }
 
+    //int extenstions
+    public static class MyIntExtensions
+    {
+        public static int? If0ThenNull(int? input)
+        {
+            if (input == 0)
+            {
+                return null;
+            }
+            else
+            {
+                return input;
+            }
+        }
+
+        public static int? If1ThenNull(int? input)
+        {
+            if (input == 1)
+            {
+                return null;
+            }
+            else
+            {
+                return input;
+            }
+        }
+    }
+
     //boolean extension
     public static class MyBooleanExtensions
     {

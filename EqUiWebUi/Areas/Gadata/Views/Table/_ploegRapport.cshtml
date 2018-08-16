@@ -4,9 +4,9 @@
 {
     columns.Add(c => c.Location).Titled("Location").Filterable(true);
     columns.Add(c => c.logtext).Titled("Logtext").Filterable(true).MultiFilterable(true);
-    columns.Add(c => c.Response_min_ / 60 ).Titled("RT").Filterable(true);
-    columns.Add(c => c.Downtime_min_ / 60).Titled("DT").Filterable(true);
-    columns.Add(c => c.Count).Titled("Count").Filterable(true);
+    columns.Add(c => MyIntExtensions.If0ThenNull(c.Response_min_ / 60 )).Titled("RT").Filterable(true);
+    columns.Add(c => MyIntExtensions.If0ThenNull(c.Downtime_min_ / 60)).Titled("DT").Filterable(true);
+    columns.Add(c => MyIntExtensions.If1ThenNull(c.Count)).Titled("Count").Filterable(true);
     columns.Add(c => c.timestamp).Formatted("{0:HH:mm:ss}").Titled("Time");
     columns.Add(c => c.Subgroup).Titled("Subgroup").Filterable(true).Css("d-none d-lg-table-cell");
     columns.Add(c => c.Logtype).Titled("Logtype").Filterable(true).Css("d-none d-lg-table-cell");
@@ -16,4 +16,4 @@
 }).Sortable().Pageable(pager =>
 {
     pager.RowsPerPage = 20;
-}).Empty("No data found").Css("table-hover").RowCss(row => MyRowStyling.getRowStyleLogtype(row.Logtype))
+}).Empty("No data found").Css("table-hover").RowCss(row => MyRowStyling.getRowStyleLogtype(row.animation))

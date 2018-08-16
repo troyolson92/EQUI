@@ -118,6 +118,13 @@ warning 6002: The table/view 'GADATA.STO.STO_Supervisie' does not have a primary
 warning 6002: The table/view 'GADATA.Volvo.Timeline' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Timeline">
           <Key>
+            
+            
+            
+            
+            
+            
+            
             <PropertyRef Name="id" />
           </Key>
           <Property Name="Location" Type="varchar" MaxLength="8" Nullable="false" />
@@ -127,7 +134,7 @@ warning 6002: The table/view 'GADATA.Volvo.Timeline' does not have a primary key
           <Property Name="Timestamp" Type="datetime" />
           <Property Name="Logcode" Type="int" />
           <Property Name="Severity" Type="int" />
-          <Property Name="Logtekst" Type="varchar" MaxLength="23" Nullable="false" />
+          <Property Name="Logtekst" Type="varchar" MaxLength="59" />
           <Property Name="DOWNTIME" Type="int" />
           <Property Name="Year" Type="int" />
           <Property Name="Week" Type="int" />
@@ -368,7 +375,7 @@ warning 6002: The table/view 'GADATA.Volvo.Timeline' does not have a primary key
           <Property Name="Timestamp" Type="DateTime" Precision="3" />
           <Property Name="Logcode" Type="Int32" />
           <Property Name="Severity" Type="Int32" />
-          <Property Name="Logtekst" Type="String" Nullable="false" MaxLength="23" FixedLength="false" Unicode="false" />
+          <Property Name="Logtekst" Type="String" MaxLength="59" FixedLength="false" Unicode="false" />
           <Property Name="DOWNTIME" Type="Int32" />
           <Property Name="Year" Type="Int32" />
           <Property Name="Week" Type="Int32" />

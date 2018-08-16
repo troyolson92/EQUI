@@ -43,6 +43,7 @@ namespace EqUiWebUi
                       "~/Content/daterangepicker.css", //style for datarange pickers
                       "~/Content/fontawesome-all.css",  //for or icons https://fontawesome.com
                       "~/Content/CustomStyleTweeks.css", //custom style tweeks
+                      "~/Content/TableRowStyles.css", //custom table row sytles and animations
                       "~/Content/CustomHyperlinkBoxes.css" //custom CustomHyperlinkBoxes
                       ));
         }
