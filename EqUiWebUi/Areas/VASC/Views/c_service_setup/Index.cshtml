@@ -1,4 +1,4 @@
-﻿@model IEnumerable<EqUiWebUi.Areas.VASC.Models.c_service_setup>
+﻿@model IEnumerable<EqUiWebUi.Areas.VASC.Models.winService>
 
 @{
     ViewBag.Title = "Index";
@@ -8,13 +8,23 @@
 <h2>List of all VASC sessions</h2>
 
 @Html.Grid(Model).Named("c_service_setupSessionsGrid").Build(columns =>
-    {
-        columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Asc);
-        columns.Add(c => c._Enable_bit).Titled("enable_mask"); 
-        columns.Add(c => c.bit_id).Titled("bit_id").Css("d-none");
-        columns.Add(c => c.value).Titled("SessionName");
-        columns.Add(c => c.description).Titled("description");
-    }).Filterable().Sortable().Empty("Did not find anything").Css("table-hover")
+{
+    columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Asc);
+    columns.Add(c => c._Enable_bit).Titled("enable_mask");
+    columns.Add(c => c.bit_id).Titled("bit_id").Css("d-none");
+    columns.Add(c => c.SessionName).Titled("SessionName");
+    //columns.Add(c => c.description).Titled("description");
+    columns.Add(c => c.ServiceName).Titled("ServiceName");
+    columns.Add(c => c.ServiceDisplayName).Titled("DisplayName");
+    columns.Add(c => c)
+       .Titled("ServiceStatus")
+       .Encoded(false)
+       .Filterable(true)
+       .RenderedAs(c => MyFilters.SetServiceState(c.ServiceName, c.ServiceStatus));
+    columns.Add(c => c.ServiceStartName).Titled("StartName");
+    columns.Add(c => c.ServiceStatus).Titled("Status");
+    columns.Add(c => c.ServiceDescription).Titled("ServiceDescription");
+}).Filterable().Sortable().Empty("Did not find anything").Css("table-hover")
 
 <hr />
 

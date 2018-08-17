@@ -451,7 +451,6 @@
     <Compile Include="Areas\VASC\Controllers\c_variable_searchController.cs" />
     <Compile Include="Areas\VASC\Controllers\L_operationController.cs" />
     <Compile Include="Areas\VASC\Controllers\rt_active_infoController.cs" />
-    <Compile Include="Areas\VASC\Controllers\serviceController.cs" />
     <Compile Include="Areas\VASC\Controllers\vascController.cs" />
     <Compile Include="Areas\VASC\Models\Bodytracking.cs">
       <DependentUpon>VASC.tt</DependentUpon>
@@ -952,7 +951,6 @@
     <Content Include="Areas\VASC\Views\c_controller_class\GetEventData.cshtml" />
     <Content Include="Areas\VASC\Views\L_operation\_List.cshtml" />
     <Content Include="Areas\VASC\Views\L_operation\Index.cshtml" />
-    <Content Include="Areas\VASC\Views\service\GetServices.cshtml" />
     <Content Include="Areas\VASC\Views\Breakdown\_getJob.cshtml" />
     <Content Include="Areas\VASC\Views\Breakdown\Index.cshtml" />
     <Content Include="Areas\VASC\Views\Breakdown\rtJob.cshtml" />

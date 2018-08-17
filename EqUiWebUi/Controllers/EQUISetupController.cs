@@ -27,7 +27,7 @@ namespace EqUiWebUi.Controllers
         public void RunDbTest()
         {
             ConnectionManager connectionManager = new ConnectionManager();
-            connectionManager.TestAllDb();
+            List<string> messages =  connectionManager.TestAllDb();
         }
 
         //Test change password
