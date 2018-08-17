@@ -20,7 +20,7 @@
        .Titled("ServiceStatus")
        .Encoded(false)
        .Filterable(true)
-       .RenderedAs(c => MyFilters.SetServiceState(c.ServiceName, c.ServiceStatus));
+       .RenderedAs(c => VASChelpers.SetServiceState(c.ServiceName, c.ServiceStatus));
     //columns.Add(c => c.ServiceStartName).Titled("StartName");
     columns.Add(c => c.ServiceDescription).Titled("ServiceDescription");
 }).Filterable().Sortable().Empty("Did not find anything").Css("table-hover")
