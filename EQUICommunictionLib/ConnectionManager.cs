@@ -342,32 +342,41 @@ namespace EQUICommunictionLib
 
         //test command to test al DB's
         //I just do a getdate() sysdata on all systems. (if logon error like that will crap out)
-        public void TestAllDb()
+        public List<string> TestAllDb()
         {
+            List<string> messages = new List<string>();
             List<Database> list = GetDB();
             foreach (Database db in list)
             {
                 log.Debug("Starting db test for: " + db.Name);
-                switch (db.Type)
+                try
                 {
-                    case db_type.msSqlServer:
-                        SqlComm sqlComm = new SqlComm(db.ConnectionString);
-                        sqlComm.RunQuery("SELECT GETDATE()", enblExeptions: true);
-                        break;
+                    switch (db.Type)
+                    {
+                        case db_type.msSqlServer:
+                            SqlComm sqlComm = new SqlComm(db.ConnectionString);
+                            sqlComm.RunQuery("SELECT GETDATE()", enblExeptions: true);
+                            break;
 
-                    case db_type.Orcacle:
-                        OracleComm oracleComm = new OracleComm(db.ConnectionString);
-                        oracleComm.RunQuery("SELECT SYSDATE FROM DUAL", enblExeptions: true);
-                        break;
+                        case db_type.Orcacle:
+                            OracleComm oracleComm = new OracleComm(db.ConnectionString);
+                            oracleComm.RunQuery("SELECT SYSDATE FROM DUAL", enblExeptions: true);
+                            break;
 
-                    default:
-                        log.Error("db type not supported");
-                        throw new NotSupportedException();
+                        default:
+                            log.Error("db type not supported");
+                            throw new NotSupportedException();
+                    }
+                    log.Debug("Ended db test for: " + db.Name);
+                    messages.Add("db test for: " + db.Name + "succes");
                 }
-                log.Debug("Ended db test for: " + db.Name);
+                catch(Exception ex)
+                {
+                    log.Error("db test for: " + db.Name + " failed", ex);
+                    messages.Add("db test for: " + db.Name + "failed: " + ex.Message);
+                }
             }
-            log.Info("database test succes");
+            return messages;
         }
-
     }
 }

@@ -8,10 +8,27 @@ namespace EqUiWebUi.Areas.VASC.Models
 {
     public partial class winService
     {
+        //for c_service setup 
+        public int id { get; set; }
+        public Nullable<int> bit_id { get; set; }
+        public string SessionName { get; set; }
+        public string description { get; set; }
+        public Enable_bit _Enable_bit
+        {
+            get
+            {
+                return (Enable_bit)Enum.ToObject(typeof(Enable_bit), this.bit_id.GetValueOrDefault());
+            }
+            set
+            {
+                this.bit_id = (int)value;
+            }
+        }
+        //for win services
         public string ServiceName { get; set; }
-        public string DisplayName { get; set; }
-        public string Status { get; set; }
-        public string StartName { get; set; }
-        public string Description { get; set; }
+        public string ServiceDisplayName { get; set; }
+        public string ServiceStatus { get; set; }
+        public string ServiceStartName { get; set; }
+        public string ServiceDescription { get; set; }
     }
 }

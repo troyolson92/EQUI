@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
+using System.Management;
 using System.Net;
+using System.ServiceProcess;
 using System.Web;
 using System.Web.Mvc;
 using EqUiWebUi.Areas.VASC.Models;
@@ -13,22 +15,138 @@ namespace EqUiWebUi.Areas.VASC.Controllers
     [Authorize(Roles = "Administrator")]
     public class c_service_setupController : Controller
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         private GADATAEntitiesVASC db = new GADATAEntitiesVASC();
 
         // GET: VASC/c_service_setup
         //show a list of session configured join the controller enable mask.
         public ActionResult Index()
         {
+            List<c_service_setup> sessions = db.c_service_setup.Where(c => c.name == "SESSION_NAME").ToList();
+            List<Models.winService> servicesOnServer = GetServices();
+            List<Models.winService> result = new List<winService>();
+            foreach (c_service_setup session in sessions)
+            {
+                Models.winService service = servicesOnServer.Where(s => s.ServiceName == session.value).FirstOrDefault();
+                if (service == null)
+                {
+                    log.Warn("vasc session: " + session.name + " not found on server");
+                    service = new winService();
+                }
+                service.id = session.id;
+                service.bit_id = session.bit_id;
+                service.SessionName = session.value;
+                service.description = session.description;
+                result.Add(service);
+            }
 
-            var query = (from s in db.c_service_setup.AsEnumerable().Where(c => c.name == "SESSION_NAME")
-                        from sd in db.c_service_setup.AsEnumerable().Where(c => c.name == "CONTROLLER_ENABLE_MASK" && c.bit_id == s.bit_id)
-                        select new { sessionname = s.value, sessionEnableMask = s.bit_id, CONTROLLER_ENABLE_MASK = sd.value, controllerenablebitId= sd.bit_id }).ToList();
-
-            //CONTROLLER_ENABLE_MASK
-            return View(db.c_service_setup.Where(c => c.name == "SESSION_NAME").ToList());
+            return View(result);
         }
 
+        //get list of running services
+        public List<Models.winService> GetServices()
+        {
+            ServiceController[] scServices;
+            List<Models.winService> list = new List<Models.winService>();
+            try
+            {
+                scServices = ServiceController.GetServices();
 
+                try
+                {
+
+                    foreach (ServiceController scTemp in scServices)
+                    {
+                            try
+                            {
+                                Models.winService winService = new Models.winService();
+                                winService.ServiceName = scTemp.ServiceName;
+                                winService.ServiceDisplayName = scTemp.DisplayName;
+                                winService.ServiceStatus = scTemp.Status.ToString() ?? "null";
+
+                                // Query WMI for additional information about this service.
+                                ManagementObject wmiService;
+                                wmiService = new ManagementObject("Win32_Service.Name='" + scTemp.ServiceName + "'");
+                                wmiService.Get();
+                                winService.ServiceStartName = wmiService["StartName"].ToString() ?? "null";
+                                winService.ServiceDescription = wmiService["Description"].ToString() ?? "null";
+                                //
+                                list.Add(winService);
+                            }
+                            catch (Exception ex)
+                            {
+                                log.Error("Fail to process: " + scTemp.ServiceName, ex);
+                            }
+                        }
+
+                }
+                catch (Exception ex)
+                {
+                    log.Error("Failed to loop services", ex);
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error("Failed to get services", ex);
+            }
+            return list;
+        }
+
+        //change services state
+        public void SetServiceState(string ServiceName, int State)
+        {
+            try
+            {
+
+
+
+            }
+            catch (Exception ex)
+            {
+                log.Error("ImpresonateError", ex);
+            }
+
+
+
+
+            ServiceController controller = new ServiceController(ServiceName);
+            try
+            {
+                switch (State)
+                {
+                    case 1:
+                        controller.Start();
+                        controller.WaitForStatus(ServiceControllerStatus.Running);
+                        break;
+
+                    case 2:
+                        controller.Stop();
+                        controller.WaitForStatus(ServiceControllerStatus.Stopped);
+                        break;
+
+                    case 3:
+                        controller.Stop();
+                        controller.WaitForStatus(ServiceControllerStatus.Stopped);
+                        controller.Start();
+                        controller.WaitForStatus(ServiceControllerStatus.Running);
+                        break;
+
+                    default:
+                        //not valid state 
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error("Failed to set state for: " + ServiceName, ex);
+                throw;
+            }
+
+
+        }
+
+        //
         public ActionResult _sessionSetup(int? enable_mask)
         {
             ViewBag.enable_mask = enable_mask;
