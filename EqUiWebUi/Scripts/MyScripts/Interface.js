@@ -102,11 +102,21 @@ function EnableJQresultTriggerBtn() {
             url: $(this).attr('href'),
             success: function (result) {
                 console.log(result);
-                $.toaster({ title: 'JQresultTriggerBtn', priority: 'success', message: 'Whatever you did worked!' });
+                if (result.Msg !== null) {
+                    $.toaster({ title: 'JQresultTriggerBtn', priority: 'success', message: result.Msg });
+                }
+                else {
+                    $.toaster({ title: 'JQresultTriggerBtn', priority: 'success', message: 'Whatever you did worked!' });
+                }
             },
             error: function (result) {
                 console.log(result);
-                $.toaster({ title: 'JQresultTriggerBtn', priority: 'danger', message: 'Whatever you did failed!' });
+                if (result.statusText !== null) {
+                    $.toaster({ title: 'JQresultTriggerBtn', priority: 'danger', message: result.statusText });
+                }
+                else {
+                    $.toaster({ title: 'JQresultTriggerBtn', priority: 'danger', message: 'Whatever you did failed!' });
+                }
             }
         });
     });

@@ -1,0 +1,20 @@
+﻿@*helper to change alter status users in ALERT ALERT*@
+@helper SetServiceState(string ServiceName, string currentState)
+    {
+        <div class="dropdown">
+            <button class="btn btn-xs btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                @currentState <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li>
+                    <a class="JQresultTriggerBtn" href="/VASC/c_service_setup/SetServiceState?ServiceName=@ServiceName&State=1">Start</a>
+                </li>
+                <li>
+                    <a class="JQresultTriggerBtn" href="/VASC/c_service_setup/SetServiceState?ServiceName=@ServiceName&State=2">Stop</a>
+                </li>
+                <li>
+                    <a class="JQresultTriggerBtn" href="/VASC/c_service_setup/SetServiceState?ServiceName=@ServiceName&State=3">Restart</a>
+                </li>
+            </ul>
+        </div>
+}

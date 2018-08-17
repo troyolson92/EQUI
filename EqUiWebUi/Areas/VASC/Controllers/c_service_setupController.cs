@@ -96,22 +96,10 @@ namespace EqUiWebUi.Areas.VASC.Controllers
         }
 
         //change services state
-        public void SetServiceState(string ServiceName, int State)
+        public JsonResult SetServiceState(string ServiceName, int State)
         {
-            try
-            {
-
-
-
-            }
-            catch (Exception ex)
-            {
-                log.Error("ImpresonateError", ex);
-            }
-
-
-
-
+            //IIS user must have acces to start and stop services!
+            //https://social.technet.microsoft.com/wiki/contents/articles/5752.how-to-grant-users-rights-to-manage-services-start-stop-etc.aspx
             ServiceController controller = new ServiceController(ServiceName);
             try
             {
@@ -120,32 +108,32 @@ namespace EqUiWebUi.Areas.VASC.Controllers
                     case 1:
                         controller.Start();
                         controller.WaitForStatus(ServiceControllerStatus.Running);
-                        break;
+                        return Json(new { Msg = "service started: " + ServiceName }, JsonRequestBehavior.AllowGet);
 
                     case 2:
                         controller.Stop();
                         controller.WaitForStatus(ServiceControllerStatus.Stopped);
-                        break;
+                        return Json(new { Msg = "service stopped: " + ServiceName }, JsonRequestBehavior.AllowGet);
 
                     case 3:
                         controller.Stop();
                         controller.WaitForStatus(ServiceControllerStatus.Stopped);
                         controller.Start();
                         controller.WaitForStatus(ServiceControllerStatus.Running);
-                        break;
+                        return Json(new { Msg = "restart OK: " + ServiceName }, JsonRequestBehavior.AllowGet);
 
                     default:
-                        //not valid state 
-                        break;
+                        return Json(new { Msg = "state not valid: " + ServiceName }, JsonRequestBehavior.AllowGet);
                 }
             }
             catch (Exception ex)
             {
                 log.Error("Failed to set state for: " + ServiceName, ex);
-                throw;
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                Response.StatusDescription = ex.Message;
+                return Json(null, JsonRequestBehavior.AllowGet);
+
             }
-
-
         }
 
         //

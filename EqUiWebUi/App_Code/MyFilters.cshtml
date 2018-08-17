@@ -42,27 +42,6 @@
         </div>
 }
 
-@*helper to change alter status users in ALERT ALERT*@
-@helper SetServiceState(string ServiceName, string currentState)
-    {
-        <div class="dropdown">
-            <button class="btn btn-xs btn-danger dropdown-toggle" type="button" data-toggle="dropdown">
-                @currentState <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu">
-                <li>
-                    <a class="JQresultTriggerBtn" href="/VASC/service/SetServiceState?ServiceName=@ServiceName&State=1">Start</a>
-                </li>
-                <li>
-                    <a class="JQresultTriggerBtn" href="/VASC/service/SetServiceState?ServiceName=@ServiceName&State=2">Stop</a>
-                </li>
-                <li>
-                    <a class="JQresultTriggerBtn" href="/VASC/service/SetServiceState?ServiceName=@ServiceName&State=3">Restart</a>
-                </li>
-            </ul>
-        </div>
-}
-
 
 @*helper to create ation link with an icon*@
 @helper IconActionLink(string url, string icon, string linkText, string helperText, string classes = "", bool enabeld = true)
