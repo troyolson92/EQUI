@@ -83,6 +83,8 @@
     <Folder Include="Volvo\Views\" />
     <Folder Include="Alerts\Data" />
     <Folder Include="NGAC\Data" />
+    <Folder Include="EqUi\Data" />
+    <Folder Include="Volvo\Data" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Alerts\Tables\c_CPT600.sql" />
@@ -227,15 +229,23 @@
     <Build Include="Volvo\Tables\L_timeline.sql" />
     <Build Include="NGAC\Functions\VASCstate.sql" />
     <Build Include="Volvo\Views\Timeline.sql" />
-    <Build Include="Alerts\Data\c_triggers.sql" />
-    <Build Include="Alerts\Data\c_state.sql" />
-    <Build Include="NGAC\Data\c_service_setup.sql" />
+    <None Include="Alerts\Data\c_triggers.sql" />
+    <None Include="Alerts\Data\c_state.sql" />
+    <None Include="NGAC\Data\c_service_setup.sql" />
+    <None Include="EqUi\Data\c_datasource.sql" />
+    <None Include="EqUi\Data\c_logClassSystem.sql" />
+    <None Include="Volvo\Data\c_userRoles.sql" />
+    <None Include="EqUi\Data\c_areas.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="GADATAprod.publish.xml" />
     <None Include="GADATAdev.publish.xml" />
   </ItemGroup>
   <ItemGroup>
+    <SqlCmdVariable Include="DB_C_NAME">
+      <DefaultValue>EqUiAdmin</DefaultValue>
+      <Value>$(SqlCmdVar__6)</Value>
+    </SqlCmdVariable>
     <SqlCmdVariable Include="DB_C_PASSWORD">
       <DefaultValue>EqUiAdmin</DefaultValue>
       <Value>$(SqlCmdVar__5)</Value>
@@ -252,5 +262,8 @@
       <DefaultValue>VASCdev</DefaultValue>
       <Value>$(SqlCmdVar__1)</Value>
     </SqlCmdVariable>
+  </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="Script.PostDeployment.sql" />
   </ItemGroup>
 </Project>
