@@ -19,6 +19,6 @@ print 'Start post deployement script'
 :r .\EqUi\Data\c_logClassSystem.sql
 
 :r .\Alerts\Data\c_state.sql
-:r .\Alerts\Data\c_triggers.sql
+--:r .\Alerts\Data\c_triggers.sql --c_sms_system is not populated.
 
 print 'post deployement done' 

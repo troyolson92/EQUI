@@ -240,6 +240,7 @@
   <ItemGroup>
     <None Include="GADATAprod.publish.xml" />
     <None Include="GADATAdev.publish.xml" />
+    <None Include="GADATAqa.publish.xml" />
   </ItemGroup>
   <ItemGroup>
     <SqlCmdVariable Include="DB_C_NAME">
