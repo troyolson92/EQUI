@@ -1,0 +1,28 @@
+﻿@model IQueryable<EqUiWebUi.Models.ASSETS>
+@Html.Grid(Model).Named("ASSETSGrid").Build(columns =>
+{
+    columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Asc);
+    columns.Add(c => c.LOCATION).Titled("LOCATION");
+    columns.Add(c => c.ASSETNUM).Titled("ASSETNUM");
+    columns.Add(c => c.AssetDescription).Titled("AssetDescription");
+    columns.Add(c => c.LocationTree).Titled("LocationTree");
+    columns.Add(c => c.Area).Titled("Area");
+    columns.Add(c => c.Station).Titled("Station");
+    columns.Add(c => c.Team).Titled("Team");
+    columns.Add(c => c.controller_name).Titled("controller_name");
+    columns.Add(c => c.controller_type).Titled("controller_type");
+    columns.Add(c => c.controller_id).Titled("controller_id");
+    columns.Add(c => c.ResponsibleProductionTeam).Titled("ResponsibleProductionTeam");
+    columns.Add(c => c.ResponsibleTechnicianTeam).Titled("ResponsibleTechnicianTeam");
+}).Filterable().Sortable().Pageable(pager =>
+{
+    pager.RowsPerPage = 30;
+}).Empty("Did not find anything").Css("table-hover")
+
+@section scripts{
+    <script>
+        //full with screen
+    $("#allcontent").removeClass("body-content");
+    $("#allcontent").removeClass("container");
+    </script>
+    }

@@ -37,7 +37,7 @@ SELECT
  WHEN (rtai.vasc_state <> 1) THEN 'VASC ERROR: ' + [NGAC].[VASCstate](rtai.vasc_state) + '  |Session: '+ISNULL(rtai.vasc_session,'unknown')
  WHEN rtai.h_alarm_id is not null and h.[timestamp] > rt.[timestamp]
  THEN h.logtext
- ELSE rt.logtext
+ ELSE rt.Logtext
  END AS 'Logtext'
 
 ,CASE 

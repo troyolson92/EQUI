@@ -600,15 +600,21 @@
     </Compile>
     <Compile Include="Areas\Welding\WeldingAreaRegistration.cs" />
     <Compile Include="Areas\Welding\Controllers\WeldingController.cs" />
+    <Compile Include="Controllers\AssetsController.cs" />
     <Compile Include="Controllers\ChartController.cs" />
     <Compile Include="Controllers\ClassificationController.cs" />
+    <Compile Include="Controllers\c_ClassificationController.cs" />
     <Compile Include="Controllers\c_LogClassRulesController.cs" />
     <Compile Include="Controllers\c_logClassSystemController.cs" />
+    <Compile Include="Controllers\c_SubgroupController.cs" />
     <Compile Include="Controllers\DynamicController.cs" />
     <Compile Include="Controllers\EQUISetupController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\TableauController.cs" />
     <Compile Include="Controllers\WikisController.cs" />
+    <Compile Include="Models\ASSETS.cs">
+      <DependentUpon>EQUIModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\c_Classification.cs">
       <DependentUpon>EQUIModel.tt</DependentUpon>
     </Compile>
@@ -763,7 +769,6 @@
       <DependentUpon>EQUIModel.edmx</DependentUpon>
       <LastGenOutput>EQUIModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\EQUIModel.edmx.sql" />
     <Content Include="Models\EQUIModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>EQUIModel.edmx</DependentUpon>
@@ -1192,6 +1197,15 @@
     <Content Include="Views\Wikis\ShowWiki.cshtml" />
     <Content Include="Views\Tableau\TestTicket.cshtml" />
     <Content Include="Views\Tableau\GetTicket.cshtml" />
+    <Content Include="Views\c_Classification\Create.cshtml" />
+    <Content Include="Views\c_Classification\Delete.cshtml" />
+    <Content Include="Views\c_Classification\Edit.cshtml" />
+    <Content Include="Views\c_Classification\Index.cshtml" />
+    <Content Include="Views\c_Subgroup\Create.cshtml" />
+    <Content Include="Views\c_Subgroup\Delete.cshtml" />
+    <Content Include="Views\c_Subgroup\Edit.cshtml" />
+    <Content Include="Views\c_Subgroup\Index.cshtml" />
+    <Content Include="Views\Assets\Index.cshtml" />
     <None Include="Web.Rel_GA.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

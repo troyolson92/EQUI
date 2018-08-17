@@ -21,7 +21,7 @@ SELECT
 , 'Timeline' AS 'Object'
 , 'Timeline' as 'Subgroup'
 , T.id as 'id'
-FROM VOLVO.L_timeline AS T
+FROM Volvo.L_timeline AS T
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 1, @level0type = N'SCHEMA', @level0name = N'Volvo', @level1type = N'VIEW', @level1name = N'Timeline';
 

@@ -5,6 +5,47 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="GADATAModelEQUI.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ASSETS">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SYSTEMID" Type="varchar" MaxLength="255" />
+          <Property Name="LOCATION" Type="varchar" MaxLength="255" />
+          <Property Name="ASSETNUM" Type="varchar" MaxLength="255" />
+          <Property Name="AssetDescription" Type="varchar" MaxLength="255" />
+          <Property Name="LocationTree" Type="varchar(max)" />
+          <Property Name="ClassDescription" Type="varchar" MaxLength="255" />
+          <Property Name="ClassStructureId" Type="varchar" MaxLength="255" />
+          <Property Name="CLassificationId" Type="varchar" MaxLength="255" />
+          <Property Name="ClassificationTree" Type="varchar(max)" />
+          <Property Name="Station" Type="varchar" MaxLength="255" />
+          <Property Name="Area" Type="varchar" MaxLength="255" />
+          <Property Name="Team" Type="varchar" MaxLength="255" />
+          <Property Name="controller_name" Type="varchar" MaxLength="50" />
+          <Property Name="controller_type" Type="varchar" MaxLength="4" />
+          <Property Name="controller_id" Type="int" />
+          <Property Name="controller_ToolID" Type="bigint" />
+          <Property Name="ResponsibleTechnicianTeam" Type="varchar" MaxLength="50" />
+          <Property Name="ResponsibleProductionTeam" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'GADATA_qa.EqUi.ASSETS_fromMX7' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="ASSETS_fromMX7">
+          <Property Name="SYSTEMID" Type="varchar" MaxLength="255" />
+          <Property Name="LOCATION" Type="varchar" MaxLength="255" />
+          <Property Name="LocationDescription" Type="varchar" MaxLength="255" />
+          <Property Name="ASSETNUM" Type="varchar" MaxLength="255" />
+          <Property Name="AssetDescription" Type="varchar" MaxLength="255" />
+          <Property Name="LocationTree" Type="varchar(max)" />
+          <Property Name="ClassDescription" Type="varchar" MaxLength="255" />
+          <Property Name="ClassStructureId" Type="varchar" MaxLength="255" />
+          <Property Name="CLassificationId" Type="varchar" MaxLength="255" />
+          <Property Name="ClassificationTree" Type="varchar(max)" />
+          <Property Name="Station" Type="varchar" MaxLength="255" />
+          <Property Name="Area" Type="varchar" MaxLength="255" />
+          <Property Name="Team" Type="varchar" MaxLength="255" />
+        </EntityType>-->
         <EntityType Name="c_datasource">
           <Key>
             <PropertyRef Name="Id" />
@@ -152,6 +193,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="GADATAModelEQUIStoreContainer">
+          <EntitySet Name="ASSETS" EntityType="Self.ASSETS" Schema="EqUi" store:Type="Tables" />
           <EntitySet Name="c_datasource" EntityType="Self.c_datasource" Schema="EqUi" store:Type="Tables" />
           <EntitySet Name="c_LogClassRules" EntityType="Self.c_LogClassRules" Schema="EqUi" store:Type="Tables" />
           <EntitySet Name="c_logClassSystem" EntityType="Self.c_logClassSystem" Schema="EqUi" store:Type="Tables" />
@@ -220,6 +262,7 @@
             <End Role="l_dummyLogClassResult" EntitySet="l_dummyLogClassResult" />
           </AssociationSet>
           <EntitySet Name="Wiki" EntityType="GADATAModelEQUI.Wiki" />
+          <EntitySet Name="ASSETS" EntityType="GADATAModelEQUI.ASSETS" />
         </EntityContainer>
         <EntityType Name="c_datasource">
           <Key>
@@ -379,6 +422,30 @@
           <Property Name="wiki1" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="searchtags" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="ASSETS">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SYSTEMID" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="LOCATION" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="ASSETNUM" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="AssetDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="LocationTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ClassDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="ClassStructureId" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="CLassificationId" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="ClassificationTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Station" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Area" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Team" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="controller_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="controller_type" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="controller_id" Type="Int32" />
+          <Property Name="controller_ToolID" Type="Int64" />
+          <Property Name="ResponsibleTechnicianTeam" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ResponsibleProductionTeam" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -462,6 +529,31 @@
                 <ScalarProperty Name="Culture" ColumnName="Culture" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ASSETS">
+            <EntityTypeMapping TypeName="GADATAModelEQUI.ASSETS">
+              <MappingFragment StoreEntitySet="ASSETS">
+                <ScalarProperty Name="ResponsibleProductionTeam" ColumnName="ResponsibleProductionTeam" />
+                <ScalarProperty Name="ResponsibleTechnicianTeam" ColumnName="ResponsibleTechnicianTeam" />
+                <ScalarProperty Name="controller_ToolID" ColumnName="controller_ToolID" />
+                <ScalarProperty Name="controller_id" ColumnName="controller_id" />
+                <ScalarProperty Name="controller_type" ColumnName="controller_type" />
+                <ScalarProperty Name="controller_name" ColumnName="controller_name" />
+                <ScalarProperty Name="Team" ColumnName="Team" />
+                <ScalarProperty Name="Area" ColumnName="Area" />
+                <ScalarProperty Name="Station" ColumnName="Station" />
+                <ScalarProperty Name="ClassificationTree" ColumnName="ClassificationTree" />
+                <ScalarProperty Name="CLassificationId" ColumnName="CLassificationId" />
+                <ScalarProperty Name="ClassStructureId" ColumnName="ClassStructureId" />
+                <ScalarProperty Name="ClassDescription" ColumnName="ClassDescription" />
+                <ScalarProperty Name="LocationTree" ColumnName="LocationTree" />
+                <ScalarProperty Name="AssetDescription" ColumnName="AssetDescription" />
+                <ScalarProperty Name="ASSETNUM" ColumnName="ASSETNUM" />
+                <ScalarProperty Name="LOCATION" ColumnName="LOCATION" />
+                <ScalarProperty Name="SYSTEMID" ColumnName="SYSTEMID" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
