@@ -10,6 +10,8 @@ namespace EqUiWebUi.Areas.user_management.Controllers
 {
     public class userController : Controller
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         private Models.GADATAEntitiesUserManagement db = new Models.GADATAEntitiesUserManagement();
 
         // GET: user_management/user/Details
@@ -151,7 +153,23 @@ namespace EqUiWebUi.Areas.user_management.Controllers
                             select users).FirstOrDefault();
                     if (user == null)
                     {
-                        //error
+                        log.Error("Was not able to create new user for: " + username);
+                    }
+                    else
+                    {
+                        //check for first users EVER on site. give him admin power
+                        if (db.L_users.Count() == 1)
+                        {
+                            log.Info("First ever user => Grant admin");
+                            usersPermisions usersPermision = new usersPermisions();
+                            usersPermision.user_id = newUser.id;
+                            usersPermision.Role = "Administrator";
+                            usersPermision.GrantedBy = newUser.id;
+                            usersPermision.GrantedAt = System.DateTime.Now;
+                            db.h_usersPermisions.Add(usersPermision);
+                            newUser.Comment = "First ever user => Grant admin from code";
+                            db.SaveChanges();
+                        }
                     }
                 }
                 return user;
