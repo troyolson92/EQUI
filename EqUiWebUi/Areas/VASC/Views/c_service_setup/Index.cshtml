@@ -15,14 +15,13 @@
     columns.Add(c => c.SessionName).Titled("SessionName");
     //columns.Add(c => c.description).Titled("description");
     columns.Add(c => c.ServiceName).Titled("ServiceName");
-    columns.Add(c => c.ServiceDisplayName).Titled("DisplayName");
+    columns.Add(c => c.ServiceDisplayName).Titled("ServiceDisplayName");
     columns.Add(c => c)
        .Titled("ServiceStatus")
        .Encoded(false)
        .Filterable(true)
        .RenderedAs(c => MyFilters.SetServiceState(c.ServiceName, c.ServiceStatus));
-    columns.Add(c => c.ServiceStartName).Titled("StartName");
-    columns.Add(c => c.ServiceStatus).Titled("Status");
+    //columns.Add(c => c.ServiceStartName).Titled("StartName");
     columns.Add(c => c.ServiceDescription).Titled("ServiceDescription");
 }).Filterable().Sortable().Empty("Did not find anything").Css("table-hover")
 
