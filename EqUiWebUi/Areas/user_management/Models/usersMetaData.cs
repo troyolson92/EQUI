@@ -17,8 +17,8 @@ namespace EqUiWebUi.Areas.user_management.Models
         [Required]
         public string LocationRoot { get; set; }
 
-        //[StringLength(100, MinimumLength = 1, ErrorMessage ="Must at least be ' '")]
-        [Required]
+//        [StringLength(100, MinimumLength = 0, ErrorMessage ="Must at least be empty string")]
+//        [Required]
         public string AssetRoot { get; set; }
     }
 }
