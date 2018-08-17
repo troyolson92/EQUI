@@ -28,7 +28,7 @@ namespace EqUiWebUi
                         ConfigurationManager.ConnectionStrings["EQUIConnectionString"].ConnectionString, //we take this from web.config
                         new SqlServerStorageOptions {
                             QueuePollInterval = TimeSpan.FromSeconds(1),
-                            PrepareSchemaIfNecessary = true // auto build hangfire tabels
+                            PrepareSchemaIfNecessary = Convert.ToBoolean(ConfigurationManager.AppSettings["HangfirePrepareSchemas"]) // auto build hangfire tabels (if true it fails when we debloy empty tables)
                         }
                         )
                         .UseConsole(); //extension to hangefire for better logging https://github.com/pieceofsummer/Hangfire.Console
