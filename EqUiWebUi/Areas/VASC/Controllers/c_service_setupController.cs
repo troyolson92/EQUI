@@ -33,6 +33,8 @@ namespace EqUiWebUi.Areas.VASC.Controllers
                 {
                     log.Warn("vasc session: " + session.name + " not found on server");
                     service = new winService();
+                    service.ServiceName = "NOT FOUND";
+                    service.ServiceDescription = "no service found named " + session.value;
                 }
                 service.id = session.id;
                 service.bit_id = session.bit_id;
