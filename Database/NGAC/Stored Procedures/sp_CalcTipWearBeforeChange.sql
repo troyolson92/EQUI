@@ -52,7 +52,7 @@ FROM(
 --join previous tipchange to get that timestamp************************************************************************************--
 SELECT 
 *
-,lead(Y.TipchangeTimestamp) OVER (PARTITION BY y.controller_name, y.Tool_nr  ORDER BY y.TipchangeTimestamp desc) as 'PreviousTipchange' 
+,lead(Y.TipchangeTimestamp) OVER (PARTITION BY y.controller_name, y.[Tool_Nr]  ORDER BY y.TipchangeTimestamp desc) as 'PreviousTipchange' 
 --*********************************************************************************************************************************--
 FROM (
 --get date from a single tip interval**********************************************************************************************--

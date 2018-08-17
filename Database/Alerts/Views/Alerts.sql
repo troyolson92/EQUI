@@ -50,7 +50,7 @@ END  as 'animation'
 from Alerts.h_alert
 left join Alerts.c_triggers on c_triggers.id = h_alert.c_tirgger_id
 left join Alerts.c_state  on h_alert.[state] = c_state.id
-left join volvo.L_timeline as timeline on h_alert.lastTriggerd between timeline.starttime and timeline.endtime
+left join Volvo.L_timeline as timeline on h_alert.lastTriggerd between timeline.starttime and timeline.endtime
 
 where c_triggers.isInReport = 1 --only show alert when this is set
 and c_triggers.[enabled] = 1 --only show alert when enabled

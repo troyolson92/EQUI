@@ -30,7 +30,7 @@ SELECT
 , NULL     AS 'Downtime'
 , RTRIM(ISNULL(cc.Classification,'Undefined*'))  AS 'Classification'
 , ISNULL(cs.Subgroup,'Undefined*')		 AS 'Subgroup'
-, ISNULL(lc.category,'Undefined*') AS 'Category'
+, ISNULL(lc.Category,'Undefined*') AS 'Category'
 , H.id				 AS 'refId'
 , c.LocationTree     As 'LocationTree'
 , c.ClassificationTree as 'ClassTree'

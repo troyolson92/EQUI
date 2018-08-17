@@ -108,7 +108,7 @@ FROM NGAC.ActiveState as ActiveState
 --*******************************************************************************************************--
 
 ) as output
-left join volvo.L_timeline as timeline on output.[timestamp] between timeline.starttime and timeline.endtime
+left join Volvo.L_timeline as timeline on output.[timestamp] between timeline.starttime and timeline.endtime
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 1, @level0type = N'SCHEMA', @level0name = N'NGAC', @level1type = N'VIEW', @level1name = N'NGAC_Supervisie';
 
