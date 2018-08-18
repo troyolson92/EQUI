@@ -99,6 +99,7 @@ namespace EqUiWebUi.Areas.VASC.Controllers
         public JsonResult SetServiceState(string ServiceName, int State)
         {
             //IIS user must have acces to start and stop services!
+            //need to test if this works! 
             //https://social.technet.microsoft.com/wiki/contents/articles/5752.how-to-grant-users-rights-to-manage-services-start-stop-etc.aspx
             ServiceController controller = new ServiceController(ServiceName);
             try

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using EQUICommunictionLib;
 
 namespace EqUiWebUi.Controllers
 {
@@ -23,18 +22,5 @@ namespace EqUiWebUi.Controllers
             return PartialView();
         }
 
-        // Test all configured database.
-        public void RunDbTest()
-        {
-            ConnectionManager connectionManager = new ConnectionManager();
-            List<string> messages =  connectionManager.TestAllDb();
-        }
-
-        //Test change password
-        public void ChangePWTest()
-        {
-            ConnectionManager connectionManager = new ConnectionManager();
-            connectionManager.PWCheck(dbName: "MAXIMOrt", ChangeIfExpired: true, newPW: "NEWPWTEST");
-        }
     }
 }

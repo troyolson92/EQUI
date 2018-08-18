@@ -342,12 +342,9 @@ namespace EQUICommunictionLib
 
         //test command to test al DB's
         //I just do a getdate() sysdata on all systems. (if logon error like that will crap out)
-        public List<string> TestAllDb()
+        public void TestDb(int id )
         {
-            List<string> messages = new List<string>();
-            List<Database> list = GetDB();
-            foreach (Database db in list)
-            {
+                Database db = GetDB(dbID: id).First();
                 log.Debug("Starting db test for: " + db.Name);
                 try
                 {
@@ -368,15 +365,12 @@ namespace EQUICommunictionLib
                             throw new NotSupportedException();
                     }
                     log.Debug("Ended db test for: " + db.Name);
-                    messages.Add("db test for: " + db.Name + "succes");
                 }
                 catch(Exception ex)
                 {
                     log.Error("db test for: " + db.Name + " failed", ex);
-                    messages.Add("db test for: " + db.Name + "failed: " + ex.Message);
+                    throw ex;
                 }
-            }
-            return messages;
         }
     }
 }

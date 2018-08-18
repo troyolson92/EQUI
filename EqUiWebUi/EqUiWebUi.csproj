@@ -604,6 +604,7 @@
     <Compile Include="Controllers\ChartController.cs" />
     <Compile Include="Controllers\ClassificationController.cs" />
     <Compile Include="Controllers\c_ClassificationController.cs" />
+    <Compile Include="Controllers\c_datasourceController.cs" />
     <Compile Include="Controllers\c_LogClassRulesController.cs" />
     <Compile Include="Controllers\c_logClassSystemController.cs" />
     <Compile Include="Controllers\c_SubgroupController.cs" />
@@ -621,6 +622,7 @@
     <Compile Include="Models\c_datasource.cs">
       <DependentUpon>EQUIModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\c_datasourceMetadata.cs" />
     <Compile Include="Models\c_LogClassRules.cs">
       <DependentUpon>EQUIModel.tt</DependentUpon>
     </Compile>
@@ -1207,6 +1209,10 @@
     <Content Include="Views\c_Subgroup\Edit.cshtml" />
     <Content Include="Views\c_Subgroup\Index.cshtml" />
     <Content Include="Views\Assets\Index.cshtml" />
+    <Content Include="Views\c_datasource\Create.cshtml" />
+    <Content Include="Views\c_datasource\Delete.cshtml" />
+    <Content Include="Views\c_datasource\Edit.cshtml" />
+    <Content Include="Views\c_datasource\Index.cshtml" />
     <None Include="Web.Rel_GA.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

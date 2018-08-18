@@ -1,0 +1,34 @@
+﻿@model IEnumerable<EqUiWebUi.Models.c_datasource>
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+@Html.Grid(Model).Named("c_datasourceGrid").Build(columns =>
+{
+    columns.Add(c => c.Id).Titled("id").InitialSort(GridSortOrder.Asc);
+    columns.Add(c => c.Description).Titled("Description");
+    //columns.Add(c => c.Type).Titled("Type");
+    columns.Add(c => c._db_type).Titled("_db_type").Filterable(false);
+    columns.Add(c => c.ConnectionString).Titled("ConnectionString");
+    columns.Add(c => c.isAlertSource).Titled("isAlertSource");
+    columns.Add(c => c)
+                    .Titled("")
+                    .Encoded(false)
+                .RenderedAs(c => MyFilters.IconActionLink(Url.Action("Edit", new { id = c.Id }), "fas fa-pencil-alt", "", "Edit this") + " | " +
+                                 MyFilters.IconActionLink(Url.Action("Delete", new { id = c.Id }), "fas fa-trash-alt", "", "Delete this") + " | " +
+                                 MyFilters.IconActionLink(Url.Action("RunDbTest", new { id = c.Id }), "fas fa-stethoscope", "", "check connection", classes: "JQresultTriggerBtn")
+                    ).Filterable(false);
+}).Filterable().Sortable().Pageable(pager =>
+{
+    pager.RowsPerPage = 10;
+}).Empty("Did not find anything").Css("table-hover")
+
+<hr />
+<p><a href="~/c_datasource/RunDbTest" class="btn btn-primary btn-sm JQresultTriggerBtn">RunDbTests &raquo;</a>Test all databases in equi.c_datasources (login/select)</p>
+
+@section scripts{
+    <script>
+        //full with screen
+        $("#allcontent").removeClass("body-content");
+        $("#allcontent").removeClass("container");
+    </script>
+}
