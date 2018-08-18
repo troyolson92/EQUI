@@ -5,7 +5,7 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="d5dc149468964a6aa4c17e0f7b3d2d84" Name="Backend" ZoomLevel="72">
-        <EntityTypeShape EntityType="GADATAModelEQUI.c_datasource" Width="1.5" PointX="0.75" PointY="1" />
+        <EntityTypeShape EntityType="GADATAModelEQUI.c_datasource" Width="1.5" PointX="0.75" PointY="1" FillColor="255, 128, 0" />
         <EntityTypeShape EntityType="GADATAModelEQUI.c_LogClassRules" Width="1.5" PointX="5.25" PointY="1" />
         <EntityTypeShape EntityType="GADATAModelEQUI.c_logClassSystem" Width="1.5" PointX="3" PointY="1" />
         <EntityTypeShape EntityType="GADATAModelEQUI.c_Classification" Width="1.5" PointX="4.875" PointY="6" FillColor="Red" />

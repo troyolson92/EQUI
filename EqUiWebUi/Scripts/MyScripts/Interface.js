@@ -96,26 +96,26 @@ function EnableJQresultTriggerBtn() {
     $(".JQresultTriggerBtn").click(function (e) {
         e.preventDefault();
         var caller = this;
-        $.toaster({ title: 'JQresultTriggerBtn', priority: 'info', message: 'Fired: ' + $(this).attr('href')});
+        $.toaster({ title: 'JQTriggerBtn', priority: 'info', message: 'Fired: ' + $(this).attr('href')});
         $.ajax({
             type: "GET",
             url: $(this).attr('href'),
             success: function (result) {
                 console.log(result);
                 if (result.Msg !== null) {
-                    $.toaster({ title: 'JQresultTriggerBtn', priority: 'success', message: result.Msg });
+                    $.toaster({ title: 'JQTriggerBtn', priority: 'success', message: result.Msg });
                 }
                 else {
-                    $.toaster({ title: 'JQresultTriggerBtn', priority: 'success', message: 'Whatever you did worked!' });
+                    $.toaster({ title: 'JQTriggerBtn', priority: 'success', message: 'Whatever you did worked!' });
                 }
             },
             error: function (result) {
                 console.log(result);
                 if (result.statusText !== null) {
-                    $.toaster({ title: 'JQresultTriggerBtn', priority: 'danger', message: result.statusText });
+                    $.toaster({ title: 'JQTriggerBtn', priority: 'danger', message: result.statusText });
                 }
                 else {
-                    $.toaster({ title: 'JQresultTriggerBtn', priority: 'danger', message: 'Whatever you did failed!' });
+                    $.toaster({ title: 'JQTriggerBtn', priority: 'danger', message: 'Whatever you did failed!' });
                 }
             }
         });
