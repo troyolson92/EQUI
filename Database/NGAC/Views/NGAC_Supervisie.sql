@@ -5,6 +5,7 @@
 
 
 
+
 CREATE VIEW [NGAC].[NGAC_Supervisie]
 AS
 SELECT DISTINCT 
@@ -50,7 +51,7 @@ SELECT
       ,[controller_name]
       ,[controller_type]
 
-FROM NGAC.ControllerEventLog
+FROM NGAC.ControllerEventLog with (NOLOCK) 
 where 
 ControllerEventLog.[timestamp] BETWEEN getdate()-'1900-01-05 00:00:00' AND getdate() --limit to max 5 days of data
 and
@@ -77,7 +78,7 @@ select
       ,[ClassTree]
       ,[controller_name]
       ,[controller_type]
-FROM NGAC.breakdown as breakdown
+FROM NGAC.breakdown as breakdown with (NOLOCK) 
 where 
 breakdown.[timestamp]  BETWEEN getdate()-'1900-01-05 00:00:00' AND getdate() --limit to max 5 days of data
 and 
@@ -104,11 +105,11 @@ select
       ,[ClassTree]
       ,[controller_name]
       ,[controller_type]
-FROM NGAC.ActiveState as ActiveState
+FROM NGAC.ActiveState as ActiveState with (NOLOCK) 
 --*******************************************************************************************************--
 
 ) as output
-left join Volvo.L_timeline as timeline on output.[timestamp] between timeline.starttime and timeline.endtime
+left join volvo.L_timeline as timeline on output.[timestamp] between timeline.starttime and timeline.endtime
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 1, @level0type = N'SCHEMA', @level0name = N'NGAC', @level1type = N'VIEW', @level1name = N'NGAC_Supervisie';
 

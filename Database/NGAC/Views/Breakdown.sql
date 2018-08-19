@@ -19,6 +19,8 @@
 
 
 
+
+
 CREATE VIEW [NGAC].[Breakdown]
 AS
 SELECT 
@@ -27,35 +29,42 @@ SELECT
 , 'BREAKDOWN'	  AS 'Logtype'
 , rtj.ts_breakDownEnd        AS 'timestamp'
 
-,CASE when rtjb.h_alarm_id is not null
- THEN CAST(h.Logcode as varchar(max)) 
- ELSE CAST(rt.Logcode as varchar(max)) 
+,CASE when rtjb.h_alarm_id is not null THEN CAST(h.Logcode as varchar(max)) 
+ when rtjb.rt_alarm_id is not null THEN CAST(rt.Logcode as varchar(max)) 
+ ELSE ''
  END AS 'Logcode'
 
-,CASE when rtjb.h_alarm_id is not null
- THEN CAST(h.Severity as varchar(max))
- ELSE CAST(rt.Severity as varchar(max))
+,CASE when rtjb.h_alarm_id is not null THEN CAST(h.Severity as varchar(max))
+ when rtjb.rt_alarm_id is not null THEN CAST(rt.Severity as varchar(max))
+ ELSE ''
  END AS 'Severity'
 
-,CASE when rtjb.h_alarm_id is not null
- THEN h.logtext
- ELSE rt.logtext
+,CASE when rtjb.h_alarm_id is not null THEN h.logtext
+ when rtjb.rt_alarm_id is not null THEN rt.logtext
+ ELSE 'state change'
  END AS 'Logtext'
 
-,CASE when rtjb.h_alarm_id is not null
- THEN h.FullLogtext
- ELSE rt.FullLogtext
+,CASE when rtjb.h_alarm_id is not null THEN h.FullLogtext
+ when rtjb.rt_alarm_id is not null THEN rt.FullLogtext
+ ELSE 'state change'
  END AS 'FullLogtext'
 
 ,DATEDIFF(SECOND,rtj.ts_breakDownStart,rtj.ts_breakDownAck ) as 'Response'
 ,DATEDIFF(SECOND,rtj.ts_breakDownStart,rtj.ts_breakDownEnd ) as 'Downtime'
 
-, ISNULL(h.Classification,'Undefined*')  AS 'Classification'
-, ISNULL(h.Subgroup,'Undefined*')		 AS 'Subgroup'
+,CASE when rtjb.h_alarm_id is not null THEN ISNULL(h.Classification,'Undefined*') 
+ when rtjb.rt_alarm_id is not null THEN 'junk'
+ ELSE 'junk*'
+ END AS 'Classification'
 
-,CASE when rtjb.h_alarm_id is not null
- THEN h.category
- ELSE rt.category
+,CASE when rtjb.h_alarm_id is not null THEN ISNULL(h.Subgroup,'Undefined*')
+ when rtjb.rt_alarm_id is not null THEN 'junk'
+ ELSE 'junk*'
+ END AS 'Subgroup'
+
+,CASE when rtjb.h_alarm_id is not null THEN h.category
+ when rtjb.rt_alarm_id is not null THEN  rt.category
+ ELSE ''
  END AS 'Category'
 
 , rtj.id				 AS 'refId'
