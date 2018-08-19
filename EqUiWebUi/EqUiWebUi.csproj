@@ -620,6 +620,7 @@
     <Compile Include="Models\ASSETS.cs">
       <DependentUpon>EQUIModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ClassificationMetadata.cs" />
     <Compile Include="Models\c_Classification.cs">
       <DependentUpon>EQUIModel.tt</DependentUpon>
     </Compile>
@@ -636,6 +637,7 @@
     <Compile Include="Models\c_Subgroup.cs">
       <DependentUpon>EQUIModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\c_SubgroupMetadata.cs" />
     <Compile Include="Models\EQUIModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
