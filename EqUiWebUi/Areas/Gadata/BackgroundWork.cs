@@ -108,8 +108,8 @@ namespace EqUiWebUi.Areas.Gadata
         if (DataBuffer.dataVASC == null) DataBuffer.dataVASC = new List<EqUiWebUi.Areas.Gadata.SupervisieDummy>();
         if (DataBuffer.dataSTO == null) DataBuffer.dataSTO = new List<EqUiWebUi.Areas.Gadata.SupervisieDummy>();
 
-            //number of shifts to load in memory
-            int NumShifts = 9;
+            //number of shifts to load in memory (when set to 9 NGAc started timeing out)
+            int NumShifts = 6;
             //number of hours to load in memory (in case there is no timeline data)
             int NumDefaultHours = -48;
             DateTime now = System.DateTime.Now;
