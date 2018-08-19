@@ -61,6 +61,7 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
             //apply filter for "Operational"
             data = (from d in data
                     where (d.Subgroup ?? "").Contains("Operational") == false //not Operational
+                    && (d.Subgroup ?? "").Contains("junk") == false // no brekadowns from junk table. 
                     orderby d.timestamp descending
                     select d).ToList();
 
@@ -155,6 +156,7 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
             //apply filter for "Operational"
             data = (from d in data
                     where (d.Subgroup ?? "").Contains("Operational") == false //not Operational
+                    && (d.Subgroup ?? "").Contains("junk") == false // no brekadowns from junk table. 
                     orderby d.timestamp descending
                     select d).ToList();
 
