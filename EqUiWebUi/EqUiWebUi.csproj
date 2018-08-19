@@ -181,6 +181,7 @@
     <Folder Include="Areas\VCSC\Controllers\" />
     <Folder Include="Areas\VCSC\Models\" />
     <Folder Include="Areas\VCSC\Views\Shared\" />
+    <Folder Include="Areas\VWSC\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Code\MyRowStyling.cs" />
@@ -574,6 +575,53 @@
     <Compile Include="Areas\VASC\Models\winService.cs" />
     <Compile Include="Areas\VASC\VASCAreaRegistration.cs" />
     <Compile Include="Areas\VCSC\VCSCAreaRegistration.cs" />
+    <Compile Include="Areas\VWSC\Controllers\vwscController.cs" />
+    <Compile Include="Areas\VWSC\Models\c_bosch_view.cs">
+      <DependentUpon>vwscModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VWSC\Models\c_error.cs">
+      <DependentUpon>vwscModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VWSC\Models\c_service_setup.cs">
+      <DependentUpon>vwscModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VWSC\Models\c_severity.cs">
+      <DependentUpon>vwscModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VWSC\Models\c_timer_class.cs">
+      <DependentUpon>vwscModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VWSC\Models\L_operation.cs">
+      <DependentUpon>vwscModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VWSC\Models\NPT.cs">
+      <DependentUpon>vwscModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VWSC\Models\rt_active_info.cs">
+      <DependentUpon>vwscModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VWSC\Models\rt_communication_state.cs">
+      <DependentUpon>vwscModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VWSC\Models\Timer.cs">
+      <DependentUpon>vwscModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VWSC\Models\vwscModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>vwscModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VWSC\Models\vwscModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>vwscModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VWSC\Models\vwscModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>vwscModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VWSC\VWSCAreaRegistration.cs" />
     <Compile Include="Areas\Welding\Models\AutomaticWorkFlowULPlans.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
@@ -736,6 +784,16 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>VASC.edmx</DependentUpon>
       <LastGenOutput>VASC.cs</LastGenOutput>
+    </Content>
+    <Content Include="Areas\VWSC\Models\vwscModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>vwscModel.edmx</DependentUpon>
+      <LastGenOutput>vwscModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Areas\VWSC\Models\vwscModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>vwscModel.edmx</DependentUpon>
+      <LastGenOutput>vwscModel.cs</LastGenOutput>
     </Content>
     <Content Include="Areas\Welding\Models\WeldingModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -1085,6 +1143,16 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Areas\VCSC\Views\web.config" />
     <Content Include="App_Code\VASChelpers.cshtml" />
+    <Content Include="Areas\VWSC\Views\web.config" />
+    <Content Include="Areas\VWSC\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\VWSC\Views\vwsc\Index.cshtml" />
+    <EntityDeploy Include="Areas\VWSC\Models\vwscModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>vwscModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Areas\VWSC\Models\vwscModel.edmx.diagram">
+      <DependentUpon>vwscModel.edmx</DependentUpon>
+    </Content>
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gotsvw11292-PRODUCTION-VCTA.pubxml" />
     <None Include="Properties\PublishProfiles\VCC22700-Testing.pubxml" />

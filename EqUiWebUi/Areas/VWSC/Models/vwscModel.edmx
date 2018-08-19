@@ -1,0 +1,484 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="VWSC.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="NPT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="15" />
+          <Property Name="OwnerId" Type="int" Nullable="false" />
+          <Property Name="LoginPass" Type="nchar" MaxLength="15" />
+          <Property Name="LoginUser" Type="nchar" MaxLength="15" />
+          <Property Name="RemoreServer" Type="nchar" MaxLength="250" />
+          <Property Name="active" Type="bit" />
+          <Property Name="enable_bit" Type="int" />
+        </EntityType>
+        <EntityType Name="Timer">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="15" />
+          <Property Name="NptId" Type="int" />
+          <Property Name="Robot" Type="nchar" MaxLength="10" />
+          <Property Name="location" Type="varchar" MaxLength="256" />
+          <Property Name="c_timer_class_id" Type="int" />
+          <Property Name="enable_bit" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.WELDING2.c_bosch_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="c_bosch_view">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="view" Type="varchar(max)" />
+          <Property Name="enable_bit" Type="int" />
+          <Property Name="poll_rate" Type="int" />
+          <Property Name="flag" Type="int" />
+          <Property Name="rt_table" Type="varchar" MaxLength="50" />
+          <Property Name="day_limit" Type="int" />
+        </EntityType>
+        <EntityType Name="c_error">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="enable_bit" Type="int" />
+          <Property Name="ordinal" Type="int" />
+          <Property Name="isError" Type="int" />
+          <Property Name="errorCode1" Type="int" />
+          <Property Name="errorCode1_text" Type="varchar" MaxLength="256" />
+          <Property Name="errorCode2" Type="int" />
+          <Property Name="errorCode2_text" Type="varchar" MaxLength="256" />
+          <Property Name="_operator" Type="int" />
+          <Property Name="flags" Type="int" />
+          <Property Name="UserComment" Type="varchar" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="c_service_setup">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="bit_id" Type="bigint" />
+          <Property Name="name" Type="varchar" MaxLength="40" />
+          <Property Name="value" Type="varchar" MaxLength="128" />
+          <Property Name="description" Type="varchar" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="c_severity">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="enable_bit" Type="int" />
+          <Property Name="isError_txt" Type="varchar" MaxLength="256" />
+          <Property Name="value" Type="int" />
+        </EntityType>
+        <EntityType Name="c_timer_class">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="cBoschViewMask" Type="int" />
+          <Property Name="cErrorMask" Type="int" />
+          <Property Name="cSeverityMask" Type="int" />
+        </EntityType>
+        <EntityType Name="L_operation">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="_timestamp" Type="datetime" />
+          <Property Name="code" Type="int" />
+          <Property Name="Vwsc_name" Type="varchar" MaxLength="50" />
+          <Property Name="controller_id" Type="int" />
+          <Property Name="Description" Type="varchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="rt_active_info">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="timerId" Type="int" />
+          <Property Name="_timestamp" Type="datetime" />
+          <Property Name="online" Type="bit" />
+          <Property Name="communicationState" Type="tinyint" />
+          <Property Name="errorNumber" Type="int" />
+          <Property Name="errorText" Type="varchar" MaxLength="64" />
+          <Property Name="rt_alarm_id" Type="int" />
+          <Property Name="rt_job_id" Type="int" />
+          <Property Name="vwsc_state" Type="int" />
+          <Property Name="rt_weldfault_id" Type="int" />
+          <Property Name="rt_weldmeasureprotddw_id" Type="int" />
+          <Property Name="rt_datechangeprot_id" Type="int" />
+        </EntityType>
+        <EntityType Name="rt_communication_state">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="timerId" Type="int" />
+          <Property Name="_timestamp" Type="datetime" />
+          <Property Name="online" Type="bit" />
+          <Property Name="communicationState" Type="tinyint" />
+        </EntityType>
+        <Association Name="FK_Timer_NPT">
+          <End Role="NPT" Type="Self.NPT" Multiplicity="0..1" />
+          <End Role="Timer" Type="Self.Timer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NPT">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Timer">
+              <PropertyRef Name="NptId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="VWSCStoreContainer">
+          <EntitySet Name="NPT" EntityType="Self.NPT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Timer" EntityType="Self.Timer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="c_error" EntityType="Self.c_error" Schema="WELDING2" store:Type="Tables" />
+          <EntitySet Name="c_service_setup" EntityType="Self.c_service_setup" Schema="WELDING2" store:Type="Tables" />
+          <EntitySet Name="c_severity" EntityType="Self.c_severity" Schema="WELDING2" store:Type="Tables" />
+          <EntitySet Name="c_timer_class" EntityType="Self.c_timer_class" Schema="WELDING2" store:Type="Tables" />
+          <EntitySet Name="L_operation" EntityType="Self.L_operation" Schema="WELDING2" store:Type="Tables" />
+          <EntitySet Name="rt_active_info" EntityType="Self.rt_active_info" Schema="WELDING2" store:Type="Tables" />
+          <EntitySet Name="rt_communication_state" EntityType="Self.rt_communication_state" Schema="WELDING2" store:Type="Tables" />
+          <EntitySet Name="c_bosch_view" EntityType="Self.c_bosch_view" store:Type="Tables" store:Schema="WELDING2">
+            <DefiningQuery>SELECT 
+    [c_bosch_view].[id] AS [id], 
+    [c_bosch_view].[view] AS [view], 
+    [c_bosch_view].[enable_bit] AS [enable_bit], 
+    [c_bosch_view].[poll_rate] AS [poll_rate], 
+    [c_bosch_view].[flag] AS [flag], 
+    [c_bosch_view].[rt_table] AS [rt_table], 
+    [c_bosch_view].[day_limit] AS [day_limit]
+    FROM [WELDING2].[c_bosch_view] AS [c_bosch_view]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Timer_NPT" Association="Self.FK_Timer_NPT">
+            <End Role="NPT" EntitySet="NPT" />
+            <End Role="Timer" EntitySet="Timer" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="VWSC" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="c_error">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="enable_bit" Type="Int32" />
+          <Property Name="ordinal" Type="Int32" />
+          <Property Name="isError" Type="Int32" />
+          <Property Name="errorCode1" Type="Int32" />
+          <Property Name="errorCode1_text" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="errorCode2" Type="Int32" />
+          <Property Name="errorCode2_text" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="C_operator" Type="Int32" />
+          <Property Name="flags" Type="Int32" />
+          <Property Name="UserComment" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="c_service_setup">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="bit_id" Type="Int64" />
+          <Property Name="name" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="value" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="c_severity">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="enable_bit" Type="Int32" />
+          <Property Name="isError_txt" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="value" Type="Int32" />
+        </EntityType>
+        <EntityType Name="c_timer_class">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cBoschViewMask" Type="Int32" />
+          <Property Name="cErrorMask" Type="Int32" />
+          <Property Name="cSeverityMask" Type="Int32" />
+        </EntityType>
+        <EntityType Name="L_operation">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="C_timestamp" Type="DateTime" Precision="3" />
+          <Property Name="code" Type="Int32" />
+          <Property Name="Vwsc_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="controller_id" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="rt_active_info">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="timerId" Type="Int32" />
+          <Property Name="C_timestamp" Type="DateTime" Precision="3" />
+          <Property Name="online" Type="Boolean" />
+          <Property Name="communicationState" Type="Byte" />
+          <Property Name="errorNumber" Type="Int32" />
+          <Property Name="errorText" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="rt_alarm_id" Type="Int32" />
+          <Property Name="rt_job_id" Type="Int32" />
+          <Property Name="vwsc_state" Type="Int32" />
+          <Property Name="rt_weldfault_id" Type="Int32" />
+          <Property Name="rt_weldmeasureprotddw_id" Type="Int32" />
+          <Property Name="rt_datechangeprot_id" Type="Int32" />
+        </EntityType>
+        <EntityType Name="c_bosch_view">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="view" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="enable_bit" Type="Int32" />
+          <Property Name="poll_rate" Type="Int32" />
+          <Property Name="flag" Type="Int32" />
+          <Property Name="rt_table" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="day_limit" Type="Int32" />
+        </EntityType>
+        <EntityContainer Name="GADATAEntitiesVwsc" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="c_error" EntityType="Self.c_error" />
+          <EntitySet Name="c_service_setup" EntityType="Self.c_service_setup" />
+          <EntitySet Name="c_severity" EntityType="Self.c_severity" />
+          <EntitySet Name="c_timer_class" EntityType="Self.c_timer_class" />
+          <EntitySet Name="L_operation" EntityType="Self.L_operation" />
+          <EntitySet Name="rt_active_info" EntityType="Self.rt_active_info" />
+          <EntitySet Name="c_bosch_view" EntityType="Self.c_bosch_view" />
+          <EntitySet Name="rt_communication_state" EntityType="VWSC.rt_communication_state" />
+          <EntitySet Name="NPT" EntityType="VWSC.NPT" />
+          <EntitySet Name="Timer" EntityType="VWSC.Timer" />
+          <AssociationSet Name="FK_Timer_NPT" Association="VWSC.FK_Timer_NPT">
+            <End Role="NPT" EntitySet="NPT" />
+            <End Role="Timer" EntitySet="Timer" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="rt_communication_state">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="timerId" Type="Int32" />
+          <Property Name="C_timestamp" Type="DateTime" Precision="3" />
+          <Property Name="online" Type="Boolean" />
+          <Property Name="communicationState" Type="Byte" />
+        </EntityType>
+        <EntityType Name="NPT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="OwnerId" Type="Int32" Nullable="false" />
+          <Property Name="LoginPass" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="LoginUser" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="RemoreServer" Type="String" MaxLength="250" FixedLength="true" Unicode="true" />
+          <Property Name="active" Type="Boolean" />
+          <Property Name="enable_bit" Type="Int32" />
+          <NavigationProperty Name="Timer" Relationship="VWSC.FK_Timer_NPT" FromRole="NPT" ToRole="Timer" />
+        </EntityType>
+        <EntityType Name="Timer">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="NptId" Type="Int32" />
+          <Property Name="Robot" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="location" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="c_timer_class_id" Type="Int32" />
+          <Property Name="enable_bit" Type="Int32" />
+          <NavigationProperty Name="NPT" Relationship="VWSC.FK_Timer_NPT" FromRole="Timer" ToRole="NPT" />
+        </EntityType>
+        <Association Name="FK_Timer_NPT">
+          <End Type="VWSC.NPT" Role="NPT" Multiplicity="0..1" />
+          <End Type="VWSC.Timer" Role="Timer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NPT">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Timer">
+              <PropertyRef Name="NptId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="VWSCStoreContainer" CdmEntityContainer="GADATAEntitiesVwsc">
+          <EntitySetMapping Name="c_error">
+            <EntityTypeMapping TypeName="VWSC.c_error">
+              <MappingFragment StoreEntitySet="c_error">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="enable_bit" ColumnName="enable_bit" />
+                <ScalarProperty Name="ordinal" ColumnName="ordinal" />
+                <ScalarProperty Name="isError" ColumnName="isError" />
+                <ScalarProperty Name="errorCode1" ColumnName="errorCode1" />
+                <ScalarProperty Name="errorCode1_text" ColumnName="errorCode1_text" />
+                <ScalarProperty Name="errorCode2" ColumnName="errorCode2" />
+                <ScalarProperty Name="errorCode2_text" ColumnName="errorCode2_text" />
+                <ScalarProperty Name="C_operator" ColumnName="_operator" />
+                <ScalarProperty Name="flags" ColumnName="flags" />
+                <ScalarProperty Name="UserComment" ColumnName="UserComment" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="c_service_setup">
+            <EntityTypeMapping TypeName="VWSC.c_service_setup">
+              <MappingFragment StoreEntitySet="c_service_setup">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="bit_id" ColumnName="bit_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="value" ColumnName="value" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="c_severity">
+            <EntityTypeMapping TypeName="VWSC.c_severity">
+              <MappingFragment StoreEntitySet="c_severity">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="enable_bit" ColumnName="enable_bit" />
+                <ScalarProperty Name="isError_txt" ColumnName="isError_txt" />
+                <ScalarProperty Name="value" ColumnName="value" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="c_timer_class">
+            <EntityTypeMapping TypeName="VWSC.c_timer_class">
+              <MappingFragment StoreEntitySet="c_timer_class">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="cBoschViewMask" ColumnName="cBoschViewMask" />
+                <ScalarProperty Name="cErrorMask" ColumnName="cErrorMask" />
+                <ScalarProperty Name="cSeverityMask" ColumnName="cSeverityMask" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="L_operation">
+            <EntityTypeMapping TypeName="VWSC.L_operation">
+              <MappingFragment StoreEntitySet="L_operation">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="Vwsc_name" ColumnName="Vwsc_name" />
+                <ScalarProperty Name="controller_id" ColumnName="controller_id" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="rt_active_info">
+            <EntityTypeMapping TypeName="VWSC.rt_active_info">
+              <MappingFragment StoreEntitySet="rt_active_info">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="timerId" ColumnName="timerId" />
+                <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
+                <ScalarProperty Name="online" ColumnName="online" />
+                <ScalarProperty Name="communicationState" ColumnName="communicationState" />
+                <ScalarProperty Name="errorNumber" ColumnName="errorNumber" />
+                <ScalarProperty Name="errorText" ColumnName="errorText" />
+                <ScalarProperty Name="rt_alarm_id" ColumnName="rt_alarm_id" />
+                <ScalarProperty Name="rt_job_id" ColumnName="rt_job_id" />
+                <ScalarProperty Name="vwsc_state" ColumnName="vwsc_state" />
+                <ScalarProperty Name="rt_weldfault_id" ColumnName="rt_weldfault_id" />
+                <ScalarProperty Name="rt_weldmeasureprotddw_id" ColumnName="rt_weldmeasureprotddw_id" />
+                <ScalarProperty Name="rt_datechangeprot_id" ColumnName="rt_datechangeprot_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="c_bosch_view">
+            <EntityTypeMapping TypeName="VWSC.c_bosch_view">
+              <MappingFragment StoreEntitySet="c_bosch_view">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="view" ColumnName="view" />
+                <ScalarProperty Name="enable_bit" ColumnName="enable_bit" />
+                <ScalarProperty Name="poll_rate" ColumnName="poll_rate" />
+                <ScalarProperty Name="flag" ColumnName="flag" />
+                <ScalarProperty Name="rt_table" ColumnName="rt_table" />
+                <ScalarProperty Name="day_limit" ColumnName="day_limit" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="rt_communication_state">
+            <EntityTypeMapping TypeName="VWSC.rt_communication_state">
+              <MappingFragment StoreEntitySet="rt_communication_state">
+                <ScalarProperty Name="communicationState" ColumnName="communicationState" />
+                <ScalarProperty Name="online" ColumnName="online" />
+                <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
+                <ScalarProperty Name="timerId" ColumnName="timerId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NPT">
+            <EntityTypeMapping TypeName="VWSC.NPT">
+              <MappingFragment StoreEntitySet="NPT">
+                <ScalarProperty Name="enable_bit" ColumnName="enable_bit" />
+                <ScalarProperty Name="active" ColumnName="active" />
+                <ScalarProperty Name="RemoreServer" ColumnName="RemoreServer" />
+                <ScalarProperty Name="LoginUser" ColumnName="LoginUser" />
+                <ScalarProperty Name="LoginPass" ColumnName="LoginPass" />
+                <ScalarProperty Name="OwnerId" ColumnName="OwnerId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Timer">
+            <EntityTypeMapping TypeName="VWSC.Timer">
+              <MappingFragment StoreEntitySet="Timer">
+                <ScalarProperty Name="enable_bit" ColumnName="enable_bit" />
+                <ScalarProperty Name="c_timer_class_id" ColumnName="c_timer_class_id" />
+                <ScalarProperty Name="location" ColumnName="location" />
+                <ScalarProperty Name="Robot" ColumnName="Robot" />
+                <ScalarProperty Name="NptId" ColumnName="NptId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
