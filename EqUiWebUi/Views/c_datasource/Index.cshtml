@@ -5,10 +5,11 @@
 @Html.Grid(Model).Named("c_datasourceGrid").Build(columns =>
 {
     columns.Add(c => c.Id).Titled("id").InitialSort(GridSortOrder.Asc);
+    columns.Add(c => c.Name).Titled("Name");
     columns.Add(c => c.Description).Titled("Description");
     //columns.Add(c => c.Type).Titled("Type");
     columns.Add(c => c._db_type).Titled("_db_type").Filterable(false);
-    columns.Add(c => c.ConnectionString).Titled("ConnectionString");
+    //columns.Add(c => c.ConnectionString).Titled("ConnectionString");
     columns.Add(c => c.isAlertSource).Titled("isAlertSource");
     columns.Add(c => c)
                     .Titled("")
