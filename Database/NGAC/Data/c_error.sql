@@ -21,3 +21,4 @@ INSERT [NGAC].[c_error] ([id], [enable_bit], [ordinal], [error_number], [error_c
 INSERT [NGAC].[c_error] ([id], [enable_bit], [ordinal], [error_number], [error_category], [error_number_mask], [error_category_mask], [_operator], [flags], [Ignore], [UserComment]) VALUES (17, 1, 100, 142, 2, -1, 0, 1, 2, NULL, N'Start rejected')
 INSERT [NGAC].[c_error] ([id], [enable_bit], [ordinal], [error_number], [error_category], [error_number_mask], [error_category_mask], [_operator], [flags], [Ignore], [UserComment]) VALUES (18, 1, 100, 2, 8, -1, 0, 0, 2, N'%SwErrorRecover:%', N'is duplicate to "welding not ready in time"')
 SET IDENTITY_INSERT [NGAC].[c_error] OFF
+END
