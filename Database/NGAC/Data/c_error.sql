@@ -1,7 +1,7 @@
 ﻿print 'init check [NGAC].[c_error]'
 IF (SELECT count(*) FROM  [NGAC].[c_error]) = 0
-Print 'init data insert [NGAC].[c_error]'
 BEGIN
+Print 'init data insert [NGAC].[c_error]'
 SET IDENTITY_INSERT [NGAC].[c_error] ON 
 INSERT [NGAC].[c_error] ([id], [enable_bit], [ordinal], [error_number], [error_category], [error_number_mask], [error_category_mask], [_operator], [flags], [Ignore], [UserComment]) VALUES (2, 1, 100, 1492, 7, -1, 0, 1, 2, NULL, N'Profinet diagnostic data')
 INSERT [NGAC].[c_error] ([id], [enable_bit], [ordinal], [error_number], [error_category], [error_number_mask], [error_category_mask], [_operator], [flags], [Ignore], [UserComment]) VALUES (3, 1, 100, 148, 2, -1, 0, 1, 2, NULL, N'confirm rejected ')

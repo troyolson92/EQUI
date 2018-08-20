@@ -1,7 +1,7 @@
 ﻿print 'init check [Alerts].[c_state]'
 IF (SELECT count(*) FROM  [Alerts].[c_state]) = 0
-Print 'init data insert [Alerts].[c_state]'
 BEGIN
+Print 'init data insert [Alerts].[c_state]'
 SET IDENTITY_INSERT [Alerts].[c_state] ON
 INSERT [Alerts].[c_state] ([id], [discription], [state]) VALUES (1, N'WGK', N'WGK')
 INSERT [Alerts].[c_state] ([id], [discription], [state]) VALUES (2, N'OKREQ', N'OKREQ')

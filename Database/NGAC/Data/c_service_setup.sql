@@ -1,8 +1,8 @@
 ﻿print 'init check [NGAC].[c_service_setup]'
 IF (SELECT count(*) FROM  [NGAC].[c_service_setup]) = 0
+BEGIN
 Print 'init data insert [NGAC].[c_service_setup]'
 /*key for VASCdev 632A64BA78FF63171857E26B49EBAA50DC425073CFF24ACBB58DADFD42788C34*/
-BEGIN
 	SET IDENTITY_INSERT [NGAC].[c_service_setup] ON
 	INSERT INTO [NGAC].[c_service_setup] ([id], [bit_id], [name], [value], [description]) VALUES (2, 1, N'DB_RT_SERVER', N'$(DB_C_SERVER)', N'Run-time server database')
 	INSERT INTO [NGAC].[c_service_setup] ([id], [bit_id], [name], [value], [description]) VALUES (3, 1, N'DB_C_SERVER', N'$(DB_C_SERVER)', N'Configuration server database')

@@ -1,7 +1,7 @@
 ﻿print 'init check [EqUi].[c_controller]'
 IF (SELECT count(*) FROM  [EqUi].[c_controller]) = 0
-Print 'init data insert [EqUi].[c_controller]'
 BEGIN
+Print 'init data insert [EqUi].[c_controller]'
 SET IDENTITY_INSERT [NGAC].[c_controller] ON 
 
 INSERT [NGAC].[c_controller] ([id], [controller_name], [enable_bit], [systemId], [ip], [class_id], [flags], [LocationTree], [Assetnum], [ProductionTeam], [ResponsibleTechnicianTeam], [ResponsibleProductionTeam], [ClassificationTree], [CLassificationId], [hasRackidAsBodynum], [hasSpotweld]) VALUES (1, N'336061R01', 1, N'dbe90ef8-e535-4991-a727-3883ec4de0f9', N'10.205.42.240', 2, 1, N'VCG -> A -> A GA1.0 -> A LIJN 336 -> A STN336061 -> 336061R01', N'URA-0195', N'A TEAM 17', NULL, NULL, NULL, N'URA', 0, 0)

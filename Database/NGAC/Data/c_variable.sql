@@ -1,7 +1,7 @@
 ﻿print 'init check [NGAC].[c_variable]'
 IF (SELECT count(*) FROM  [NGAC].[c_variable]) = 0
-Print 'init data insert [NGAC].[c_variable]'
 BEGIN
+Print 'init data insert [NGAC].[c_variable]'
 SET IDENTITY_INSERT [NGAC].[c_variable] ON 
 INSERT [NGAC].[c_variable] ([id], [variable], [poll_rate], [enable_bit], [event_enum], [sql_action], [rt_table]) VALUES (1, N'RAPID/T_ROB1/HTPU/SendAl_errwrite', -1, 1, 102, 13, N'[rt_value]')
 INSERT [NGAC].[c_variable] ([id], [variable], [poll_rate], [enable_bit], [event_enum], [sql_action], [rt_table]) VALUES (2, N'IO/GI_Pgno', -1, 1, 100, 12, N'[rt_value]')

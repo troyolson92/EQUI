@@ -1,7 +1,7 @@
 ﻿print 'init check [EqUi].[c_areas]'
 IF (SELECT count(*) FROM  [EqUi].[c_areas]) = 0
-Print 'init data insert [EqUi].[c_areas]'
 BEGIN
+Print 'init data insert [EqUi].[c_areas]'
 SET IDENTITY_INSERT [EqUi].[c_areas] ON 
 INSERT [EqUi].[c_areas] ([id], [Plant], [Optgroup], [Area], [LocationTreeFilter1], [LocationTreeFilter2], [LocationTreeFilter3], [LocationTreeFilter4], [UserComment]) VALUES (1, N'GA', N'CMA UB12 floorline', N'A GA1.0 Floor (all)', N'VCG -> A -> A GA1.0 -> A LIJN 33', NULL, NULL, NULL, NULL)
 INSERT [EqUi].[c_areas] ([id], [Plant], [Optgroup], [Area], [LocationTreeFilter1], [LocationTreeFilter2], [LocationTreeFilter3], [LocationTreeFilter4], [UserComment]) VALUES (2, N'GA', N'CMA UB12 floorline', N'A GA1.0 Frontstructure', N'VCG -> A -> A GA1.0 -> A LIJN 331', NULL, NULL, NULL, NULL)

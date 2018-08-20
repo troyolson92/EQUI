@@ -1,8 +1,7 @@
 ﻿print 'init check [Volvo].[c_datasource]'
 IF (SELECT count(*) FROM  [Volvo].[c_userRoles]) = 0
-Print 'init data insert [Volvo].[c_datasource]'
 BEGIN
-
+Print 'init data insert [Volvo].[c_datasource]'
 --SET IDENTITY_INSERT [Volvo].[c_userRoles] ON 
 INSERT [Volvo].[c_userRoles] ([Role], [Description]) VALUES (N'AAOSR', N'robotgroep member')
 INSERT [Volvo].[c_userRoles] ([Role], [Description]) VALUES (N'Administrator', N'Admin full power')

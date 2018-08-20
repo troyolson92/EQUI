@@ -1,7 +1,7 @@
 ﻿print 'init check [EqUi].[c_logClassSystem]'
 IF (SELECT count(*) FROM  [EqUi].[c_logClassSystem]) = 0
-Print 'init data insert [EqUi].[c_logClassSystem]'
 BEGIN
+Print 'init data insert [EqUi].[c_logClassSystem]'
 SET IDENTITY_INSERT [EqUi].[c_logClassSystem] ON 
 
 INSERT [EqUi].[c_logClassSystem] ([id], [c_datasource_id], [Name], [Description], [SelectStatement], [UpdateStatement], [RunRuleStatement]) VALUES (8, 1, N'VASC_NGAC', N'ABB ngac gneration robot. (data in ngac.L_error)', N'SELECT L_error._id as ''id''
