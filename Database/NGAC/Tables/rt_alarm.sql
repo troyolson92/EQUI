@@ -16,6 +16,8 @@
     CONSTRAINT [FK_rt_alarm_c_controller] FOREIGN KEY ([controller_id]) REFERENCES [NGAC].[c_controller] ([id])
 );
 
+
+
 go
 CREATE NONCLUSTERED INDEX [nci_forVASC] ON [NGAC].[rt_alarm]
 (
@@ -25,3 +27,7 @@ CREATE NONCLUSTERED INDEX [nci_forVASC] ON [NGAC].[rt_alarm]
 	[error_timestamp] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
+CREATE NONCLUSTERED INDEX [nci_FORVASCSTARTUP]
+    ON [NGAC].[rt_alarm]([controller_id] ASC)
+    INCLUDE([_timestamp], [error_timestamp], [sequenceNumber]);
+
