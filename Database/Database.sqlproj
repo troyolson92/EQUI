@@ -241,6 +241,14 @@
     <None Include="GADATAprod.publish.xml" />
     <None Include="GADATAdev.publish.xml" />
     <None Include="GADATAqa.publish.xml" />
+    <None Include="Alerts\Data\c_smsSystem.sql" />
+    <None Include="NGAC\Data\c_controller.sql" />
+    <None Include="NGAC\Data\c_controller_class.sql" />
+    <None Include="NGAC\Data\c_csv_log.sql" />
+    <None Include="NGAC\Data\c_error.sql" />
+    <None Include="NGAC\Data\c_job.sql" />
+    <None Include="NGAC\Data\c_variable.sql" />
+    <None Include="NGAC\Data\c_variable_search.sql" />
   </ItemGroup>
   <ItemGroup>
     <SqlCmdVariable Include="DB_C_NAME">
