@@ -6,6 +6,7 @@
 
 
 
+
 CREATE VIEW [NGAC].[NGAC_Supervisie]
 AS
 SELECT DISTINCT 
@@ -53,7 +54,7 @@ SELECT
 
 FROM NGAC.ControllerEventLog with (NOLOCK) 
 where 
-ControllerEventLog.[timestamp] BETWEEN getdate()-'1900-01-05 00:00:00' AND getdate() --limit to max 5 days of data
+ControllerEventLog.[timestamp] < getdate() --to filter out bad timestamps
 and
 ControllerEventLog.Category in ('Hardware')
 
@@ -80,7 +81,7 @@ select
       ,[controller_type]
 FROM NGAC.breakdown as breakdown with (NOLOCK) 
 where 
-breakdown.[timestamp]  BETWEEN getdate()-'1900-01-05 00:00:00' AND getdate() --limit to max 5 days of data
+breakdown.[timestamp]  < getdate() --to filter out bad timestamps
 and 
 1*60 <= breakdown.Downtime
 

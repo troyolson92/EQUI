@@ -4,6 +4,7 @@
 
 
 
+
 CREATE VIEW [NGAC].[TipDressLogFile]
 AS
 select 
@@ -65,9 +66,9 @@ select
 ,[NGAC].[DistanceBetweenPoints]([GunTCP_X],[GunTCP_Y],[GunTCP_Z],[GunRefTCP_X],[GunRefTCP_Y],[GunRefTCP_Z]) as 'DeltaRef'
 ,[NGAC].[DistanceBetweenPoints]([GunTCP_X],[GunTCP_Y],[GunTCP_Z],[NomTCP_X],[NomTCP_Y],[NomTCP_Z]) as 'DeltaNom'
 ,rt._timestamp
-from NGAC.rt_TipDressLogFile as rt 
-left join NGAC.rt_csv_file as rt_csv on rt.rt_csv_file_id = rt_csv.id
-left join NGAC.c_controller as c on c.id = rt_csv.c_controller_id
+from NGAC.rt_TipDressLogFile as rt with(nolock)
+left join NGAC.rt_csv_file as rt_csv with(nolock) on rt.rt_csv_file_id = rt_csv.id
+left join NGAC.c_controller as c with(nolock) on c.id = rt_csv.c_controller_id
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 1, @level0type = N'SCHEMA', @level0name = N'NGAC', @level1type = N'VIEW', @level1name = N'TipDressLogFile';
 

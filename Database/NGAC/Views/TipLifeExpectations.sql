@@ -4,6 +4,8 @@
 
 
 
+
+
 CREATE VIEW [NGAC].[TipLifeExpectations]
 AS
 SELECT 
@@ -26,7 +28,7 @@ SELECT
  ,ROUND(AVG(twBc.ESTnSpotsMoveWearBefore100)/MAX(nWearComponent.TotWearComponent),0) as 'avgPartsMoveBefore100'
  --refID
  ,MAX(twbc.refid) as 'refid'
-  FROM [NGAC].[TipwearBeforeChange] as twBc
+  FROM [NGAC].[TipwearBeforeChange] as twBc with(nolock)
 --**************************************************************************--
 --join number of spots per car for this tip. 
 --**************************************************************************--
@@ -34,7 +36,7 @@ left join (
 SELECT 
        Sum([WearComponent]) as 'TotWearComponent' --this is wrong it just sums the variants 
       ,[Robot]
-  FROM [NGAC].[ABBWearComponent]
+  FROM [NGAC].[ABBWearComponent] with(nolock)
   group by Robot
   ) as nWearComponent on nWearComponent.Robot = twBc.controller_name
   --AND

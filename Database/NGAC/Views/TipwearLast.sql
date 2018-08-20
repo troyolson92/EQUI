@@ -1,4 +1,5 @@
 ﻿
+
 CREATE VIEW [NGAC].[TipwearLast]
 AS
 select 
@@ -22,8 +23,8 @@ from
 select x.*  from(--nested to optimize return result for next join
 select
  rt.*
-,ROW_NUMBER() OVER (PARTITION BY rt.controller_name, rt.Tool_Nr ORDER BY rt.[Date Time] DESC) AS 'rnDesc'
-from NGAC.TipDressLogFile as rt 
+,ROW_NUMBER() OVER (PARTITION BY rt.controller_name, rt.Tool_nr ORDER BY rt.[Date Time] DESC) AS 'rnDesc'
+from NGAC.TipDressLogFile as rt with(nolock)
 where
 --SDB bug trap 'divide by 0' 18w4d1
 /*
@@ -40,7 +41,7 @@ where x.rnDesc =1
 --SDEBEUL 18w22D2 we join [TipLifeExpectations] first because we can force the datawindow to 30 days 
 --prequery on tipwearbeforechange table based on last 30 days of data 
 --**************************************************************************--
-left join NGAC.[TipLifeExpectations] as TipLifeExpectations on
+left join NGAC.[TipLifeExpectations] as TipLifeExpectations with(nolock) on
   TipLifeExpectations.controller_name = y.controller_name
   AND 
   TipLifeExpectations.Tool_Nr = y.Tool_Nr
