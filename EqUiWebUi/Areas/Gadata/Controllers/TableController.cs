@@ -97,7 +97,7 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
                 }).Where(
                  p => 
                  (//EXCLUDE
-                 (p.Downtime_min_ > 20 || p.Count > 4)  //longer than 20 min or more than 4 times 
+                 (p.Downtime_min_ > 20 * 60 || p.Count > 4)  //longer than 20 min or more than 4 times 
                  && p.Logtype != "LIVE"  //EXCLUDE
                  )
                  || p.animation == "ALERT" //INCLUDE (this is on the animation because when the animation of an alert is "Alert" this alert is not in WGK 
