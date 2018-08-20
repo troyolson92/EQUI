@@ -31,7 +31,7 @@ print 'Start post deployement script'
 :r .\Alerts\Data\c_triggers.sql 
 
 --users are by default disbaled. fix this 
---print 'enable users'
---GRANT CONNECT TO [EqUiAdmin]
---GRANT CONNECT TO [VASC_a]
+print 'enable users'
+GRANT CONNECT TO [EqUiAdmin]
+GRANT CONNECT TO [VASC_a]
 print 'post deployement done' 
