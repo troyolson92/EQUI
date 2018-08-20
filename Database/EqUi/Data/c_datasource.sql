@@ -1,7 +1,7 @@
 ﻿print 'init check [EqUi].[c_datasource]'
 IF (SELECT count(*) FROM  [EqUi].[c_datasource]) = 0
-Print 'init data insert [EqUi].[c_datasource]'
 BEGIN
+Print 'init data insert [EqUi].[c_datasource]'
 SET IDENTITY_INSERT [EqUi].[c_datasource] ON 
 
 INSERT [EqUi].[c_datasource] ([Id], [Name], [Description], [Type], [ConnectionString], [isAlertSource]) VALUES (1, N'$(DatabaseName)', N'$(DatabaseName) ', 1, N'user id=EqUiAdmin; password=EqUiAdmin; server=$(DB_C_SERVER) Trusted_Connection=no; database=$(DatabaseName); connection timeout=15', 1)
