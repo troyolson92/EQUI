@@ -3,11 +3,11 @@
 @Html.Grid(Model).Named("Workorders").Build(columns =>
 {
     columns.Add(c => c.WONUM).Titled("WONUM");
-    columns.Add(c => c.WORKTYPE).Titled("WORKTYPE").Css("hidden-md hidden-sm hidden-xs");
-    columns.Add(c => c.LOCATION).Titled("LOCATION").Css("hidden-xs").Filterable(true);
-    columns.Add(c => c.STATUS).Titled("STATUS").Css("hidden-md hidden-sm hidden-xs").Filterable(true);
-    columns.Add(c => c.STATUSDATE).Titled("STATUSDATE").Css("hidden-md hidden-sm hidden-xs");
-    columns.Add(c => c.DESCRIPTION).Titled("DESCRIPTION").Sortable(false).Filterable(true);
+    columns.Add(c => c.WORKTYPE).Titled("WORKTYPE");
+    columns.Add(c => c.LOCATION).Titled("LOCATION").Filterable(true);
+    columns.Add(c => c.STATUS).Titled("STATUS").Filterable(true);
+    columns.Add(c => c.STATUSDATE).Titled("STATUSDATE");
+    columns.Add(c => c.DESCRIPTION).Titled("DESCRIPTION").Css("d-none d-lg-table-cell").Sortable(false).Filterable(true);
 
 //add edit button
 columns.Add(c => c)
