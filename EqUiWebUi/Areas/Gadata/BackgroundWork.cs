@@ -395,6 +395,10 @@ namespace EqUiWebUi.Areas.Gadata
                 ,animation = x.Logtype
             }).Where(x => x.timestamp > DataBuffer.EndDate).ToList();
             context.WriteLine(DataBuffer.dataVASC.Count());
+            //fire and forget TIPLIFE
+            context.WriteLine("Fire Tiplife norm");
+            Areas.Tiplife.Backgroundwork backgroundworkTiplife = new Tiplife.Backgroundwork();
+            BackgroundJob.Enqueue(() => backgroundworkTiplife.UpdateTipstatus(null));
         }
 
         //run daily cleanup

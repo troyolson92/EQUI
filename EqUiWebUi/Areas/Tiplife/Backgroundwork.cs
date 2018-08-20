@@ -28,10 +28,7 @@ namespace EqUiWebUi.Areas.Tiplife
         public void configHangfireJobs()
         {
             //background work
-            Backgroundwork backgroundwork = new Backgroundwork();
-            //**********************************TipDresData table***************************************************
-            //set job to refresh every minute
-            RecurringJob.AddOrUpdate("BT_NGAC_tipSTS", () => backgroundwork.UpdateTipstatus(null), Cron.Minutely);
+            //I call this now at the end of nom_NGAC
         }
 
 
