@@ -159,7 +159,7 @@ namespace EqUiWebUi.Areas.user_management.Controllers
                 }
 
             }
-            return new SelectList(selectList, "Value","Text","Group.Name",0); 
+            return new SelectList(selectList, "Value","Text","Group.Name"); 
         }
     }
 }

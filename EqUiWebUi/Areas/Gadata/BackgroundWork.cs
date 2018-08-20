@@ -7,6 +7,7 @@ using Hangfire;
 using EQUICommunictionLib;
 using Hangfire.Server;
 using Hangfire.Console;
+using System.Configuration;
 
 namespace EqUiWebUi.Areas.Gadata
 {
@@ -109,9 +110,9 @@ namespace EqUiWebUi.Areas.Gadata
         if (DataBuffer.dataSTO == null) DataBuffer.dataSTO = new List<EqUiWebUi.Areas.Gadata.SupervisieDummy>();
 
             //number of shifts to load in memory (when set to 9 NGAc started timeing out)
-            int NumShifts = 6;
+            int NumShifts = Convert.ToInt32(ConfigurationManager.AppSettings["DatabufferNumShifts"]);
             //number of hours to load in memory (in case there is no timeline data)
-            int NumDefaultHours = -48;
+            int NumDefaultHours = Convert.ToInt32(ConfigurationManager.AppSettings["DatabufferNumDefaultHours"]) * -1;
             DateTime now = System.DateTime.Now;
             //get timeline
             Gadata.Models.GADATAEntities2 gADATAEntities2 = new Models.GADATAEntities2();
@@ -271,6 +272,7 @@ namespace EqUiWebUi.Areas.Gadata
             //update supervisie databuffer
             context.WriteLine("Supervisie dataC3G"); 
             Gadata.Models.GADATAEntities2 GADATAEntities2 = new Gadata.Models.GADATAEntities2();
+            GADATAEntities2.Database.CommandTimeout = 45; // default 30 
             DataBuffer.dataC3G = GADATAEntities2.C3G_Supervisie.Select(x => new EqUiWebUi.Areas.Gadata.SupervisieDummy() {
                  Location= x.Location
                 ,logtext = x.logtext
