@@ -272,7 +272,6 @@ namespace EqUiWebUi.Areas.Gadata
             //update supervisie databuffer
             context.WriteLine("Supervisie dataC3G"); 
             Gadata.Models.GADATAEntities2 GADATAEntities2 = new Gadata.Models.GADATAEntities2();
-            GADATAEntities2.Database.CommandTimeout = 45; // default 30 
             DataBuffer.dataC3G = GADATAEntities2.C3G_Supervisie.Select(x => new EqUiWebUi.Areas.Gadata.SupervisieDummy() {
                  Location= x.Location
                 ,logtext = x.logtext
@@ -374,6 +373,7 @@ namespace EqUiWebUi.Areas.Gadata
             //update supervisie databuffer
             context.WriteLine("Supervisie dataVASC");
             VASC.Models.GADATAEntitiesVASC gADATAEntitiesVASC = new VASC.Models.GADATAEntitiesVASC();
+            gADATAEntitiesVASC.Database.CommandTimeout = 45; // default 30 
             DataBuffer.dataVASC = gADATAEntitiesVASC.NGAC_Supervisie.Select(x => new EqUiWebUi.Areas.Gadata.SupervisieDummy() {
                  Location= x.Location
                 ,logtext = x.logtext

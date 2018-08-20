@@ -1,5 +1,8 @@
 ﻿@model EqUiWebUi.Models.c_LogClassRules
 
+@{
+    ViewBag.Title = "ClassificationTools";
+}
 
 <div class="">
     <div class="card-header bg-dark">
@@ -21,7 +24,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.c_logClassSystem_id, "c_logClassSystem_id", htmlAttributes: new { @class = "control-label col-md-4" })
                         <div class="col-md-4">
-                            @Html.DropDownList("c_logClassSystem_id", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.DropDownList("c_logClassSystem_id", null, htmlAttributes: new { @class = "form-control" }, optionLabel: "--Select a system--")
                         </div>
                     </div>
 
@@ -482,7 +485,7 @@
         MakeRule();
     });
 //at end of script run the grids (init)
-    GetGridSearch(false);
-    GetRules();
+    //GetGridSearch(false);
+    //GetRules();
     </script>
 }
