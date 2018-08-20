@@ -9,6 +9,7 @@
 
 
 
+
 CREATE VIEW [NGAC].[TipMonitor]
 AS
 SELECT DISTINCT top 10000  c.controller_name as 'Robot'
@@ -58,15 +59,15 @@ SELECT DISTINCT top 10000  c.controller_name as 'Robot'
 						  END as 'Status'
 						 ,ROUND(rt.Wear_Fixed+rt.Wear_Move,2) as 'RobotWear'
 
-                      FROM NGAC.c_controller as c
-					  left join [NGAC].[TipwearLast] as rt on rt.controller_name = c.controller_name
+                      FROM NGAC.c_controller as c with(nolock)
+					  left join [NGAC].[TipwearLast] as rt with(nolock) on rt.controller_name = c.controller_name
 					  --join active tiplife alerts
-					  left join Alerts.Alerts as tipalert on tipalert.LocationTree = rt.LocationTree 
+					  left join Alerts.Alerts as tipalert with(nolock) on tipalert.LocationTree = rt.LocationTree 
 					  and tipalert.Subgroup like '%TIPLIFE%'
 					  and tipalert.Category = 'WGK'
 					  and tipalert.[timestamp] > getdate()-3 -- limit search window
                       
-					  where ((rt.[Date Time] < getdate()) or rt.[Date Time] is null) AND (c.hasSpotweld = 1) --only robots with the bit set will be handed!
+					  where ((rt.[Date Time] < getdate()) or rt.[Date Time] is null) AND (c.hasspotweld = 1) --only robots with the bit set will be handed!
 					  --
                       Order by [pWear] DESC
 GO

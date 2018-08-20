@@ -9,3 +9,11 @@
     CONSTRAINT [FK_rt_device_info_c_device_info] FOREIGN KEY ([c_device_info_id]) REFERENCES [NGAC].[c_device_info] ([id])
 );
 
+
+
+
+GO
+CREATE NONCLUSTERED INDEX [nci_FORVASCSTARTUP]
+    ON [NGAC].[rt_device_info]([c_controller_id] ASC, [c_device_info_id] ASC)
+    INCLUDE([_timestamp], [value]);
+

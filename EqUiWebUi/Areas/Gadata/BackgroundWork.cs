@@ -396,9 +396,9 @@ namespace EqUiWebUi.Areas.Gadata
             }).Where(x => x.timestamp > DataBuffer.EndDate).ToList();
             context.WriteLine(DataBuffer.dataVASC.Count());
             //fire and forget TIPLIFE
-            context.WriteLine("Fire Tiplife norm");
             Areas.Tiplife.Backgroundwork backgroundworkTiplife = new Tiplife.Backgroundwork();
-            BackgroundJob.Enqueue(() => backgroundworkTiplife.UpdateTipstatus(null));
+            var tiplifeJobID = BackgroundJob.Enqueue(() => backgroundworkTiplife.UpdateTipstatus(null));
+            context.WriteLine(string.Format("Fired Tiplife norm (job:http://equi/hangfire/jobs/details/{0})", tiplifeJobID));
         }
 
         //run daily cleanup
