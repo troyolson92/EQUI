@@ -101,7 +101,12 @@
             },
             error: function (result) {
                 console.log(result);
-                $.toaster({ title: 'getcontrolchartData', priority: 'danger', message: result.statusCode });
+                if (result.statusText !== null) {
+                    $.toaster({ title: 'JQTriggerBtn', priority: 'danger', message: result.statusText });
+                }
+                else {
+                    $.toaster({ title: 'JQTriggerBtn', priority: 'danger', message: 'Whatever you did failed!' });
+                }
                 $("#controlchartContainer").html('<div>Request failed!!</div>');
             }
         });
