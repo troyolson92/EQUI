@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -74,13 +75,23 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                 chartSettings.scaleLabel = "<%=value%>";
             }
 
-            //Query to get value data
-            IQueryable<l_dummyControlchartResult> Qresult = db.l_dummyControlchartResult.SqlQuery(c_Trigger.controlChartSqlStatement,
-                              new SqlParameter("@c_trigger_id", chartSettings.c_trigger_id),
-                              new SqlParameter("@alarmobject", chartSettings.alarmobject)
-             ).Where(l => l.timestamp > chartSettings.startdate && l.timestamp < chartSettings.enddate).AsQueryable();
+            List<l_dummyControlchartResult> result = new List<l_dummyControlchartResult>();
+            try
+            {
+                //Query to get value data
+                IQueryable<l_dummyControlchartResult> Qresult = db.l_dummyControlchartResult.SqlQuery(c_Trigger.controlChartSqlStatement,
+                                  new SqlParameter("@c_trigger_id", chartSettings.c_trigger_id),
+                                  new SqlParameter("@alarmobject", chartSettings.alarmobject)
+                 ).Where(l => l.timestamp > chartSettings.startdate && l.timestamp < chartSettings.enddate).AsQueryable();
+                 result = Qresult.ToList();
+            }
+            catch (Exception ex)
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                Response.StatusDescription = ex.Message;
+                return Json(null, JsonRequestBehavior.AllowGet);
+            }
 
-            List <l_dummyControlchartResult> result = Qresult.ToList();
 
             object ValueData = from e in result
                               select new

@@ -37,11 +37,12 @@ namespace EqUiWebUi.Areas.PlcSupervisie
         public void PushDatafromSTOtoGADATA()
         {
             var jobId1 = BackgroundJob.Enqueue(() => HandleStoTable("ALARM_DATA_UB12",null));
-            var jobId2 = BackgroundJob.ContinueWith(jobId1,() => HandleStoTable("ALARM_DATA_SUBASSY", null));
-            var jobId3 = BackgroundJob.ContinueWith(jobId2, () => HandleStoTable("ALARM_DATA_BODY_SIDES", null));
-            var jobId4 = BackgroundJob.ContinueWith(jobId3, () => HandleStoTable("ALARM_DATA_PREASSY", null));
-            var jobId5 = BackgroundJob.ContinueWith(jobId4, () => NormalizeSTOdata());
-            var jobId6 = BackgroundJob.ContinueWith(jobId5, () => ClassificationOfSTOdata());
+            var jobId2 = BackgroundJob.ContinueWith(jobId1,() => HandleStoTable("ALARM_DATA_SUBASSY", null), JobContinuationOptions.OnAnyFinishedState);
+            var jobId3 = BackgroundJob.ContinueWith(jobId2, () => HandleStoTable("ALARM_DATA_BODY_SIDES", null), JobContinuationOptions.OnAnyFinishedState);
+            var jobId4 = BackgroundJob.ContinueWith(jobId3, () => HandleStoTable("ALARM_DATA_PREASSY", null), JobContinuationOptions.OnAnyFinishedState);
+            var jobId5 = BackgroundJob.ContinueWith(jobId4, () => HandleStoTable("ALARM_DATA", null), JobContinuationOptions.OnAnyFinishedState);
+            var jobId6 = BackgroundJob.ContinueWith(jobId5, () => NormalizeSTOdata(), JobContinuationOptions.OnAnyFinishedState);
+            var jobId7 = BackgroundJob.ContinueWith(jobId6, () => ClassificationOfSTOdata(), JobContinuationOptions.OnAnyFinishedState);
         }
 
         //update new data from STO to gadata for a specifc table . 
@@ -49,15 +50,17 @@ namespace EqUiWebUi.Areas.PlcSupervisie
         [Queue("sto")]
         public void HandleStoTable(string TargetTable, PerformContext context) 
         {
+            context.WriteLine("Start handeling table");
             ConnectionManager connectionManager = new ConnectionManager();
             //get last record in GADATA 
             string gadataGetMaxTimestampQry = string.Format(@"select max(_timestamp) as 'ts' FROM STO.h_breakdown
                                                             left join STO.c_StoTable on c_StoTable.id = h_breakdown.c_stotable_id
                                                             where c_StoTable.StoTable = '{0}'", TargetTable);
-            DataTable dtGadataMaxTS = connectionManager.RunQuery(gadataGetMaxTimestampQry);
+            DataTable dtGadataMaxTS = connectionManager.RunQuery(gadataGetMaxTimestampQry,enblExeptions:true);
             //handel empty table copy last 30 days
             DateTime GadataMAxTs = System.DateTime.Now.AddDays(-30);
-            if (dtGadataMaxTS.Rows.Count != 0)
+
+            if (!DBNull.Value.Equals(dtGadataMaxTS.Rows[0]["ts"]))
             {
                 GadataMAxTs = dtGadataMaxTS.Rows[0].Field<DateTime>("ts");
                 context.WriteLine("GadataMAxTs: " + GadataMAxTs.ToString());
