@@ -1,5 +1,5 @@
 ﻿print 'init check [EqUi].[c_controller]'
-IF (SELECT count(*) FROM  [EqUi].[c_controller]) = 0
+IF (SELECT count(*) FROM  [NGAC].[c_controller]) = 0
 BEGIN
 Print 'init data insert [EqUi].[c_controller]'
 SET IDENTITY_INSERT [NGAC].[c_controller] ON 
