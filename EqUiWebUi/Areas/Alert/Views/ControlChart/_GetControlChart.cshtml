@@ -12,8 +12,8 @@
     </div>
 
     <div class="card-body" style="position:relative">
-        <div id="gaphContainer">
-            <canvas id='graphCanvas'></canvas>
+        <div id="controlchartContainer">
+            <canvas id='controlchartCanvas'></canvas>
         </div>
     </div>
 </div>
@@ -42,11 +42,11 @@
 <script>
     //global vars
     var ControlChart;
-    var endDate = moment('@Model.startdate.ToString("o")');
-    var startDate = moment('@Model.enddate.ToString("o")'); 
+    var ControlchartendDate = moment('@Model.startdate.ToString("o")');
+    var ControlchartstartDate = moment('@Model.enddate.ToString("o")'); 
 
     //setting up datetimePicker
-    function setDaterangepicker() {
+    function setgetcontrolchartDaterangepicker() {
         $('#ControlChartDatepicker').daterangepicker({
             "showWeekNumbers": true,
             "showISOWeekNumbers": true,
@@ -58,18 +58,17 @@
                 'Last Year': [moment().subtract(365, 'days'), moment()],
                 'Last 5Year': [moment().subtract(365 * 5, 'days'), moment()]
             },
-            "startDate": startDate,
-            "endDate": endDate,
+            "startDate": ControlchartstartDate,
+            "endDate": ControlchartendDate,
 
         }, function (end, start, label) {
-            console.log("New date range selected: " + start.format('YYYY-MM-DD') + " to " + end.format('YYYY-MM-DD') + " (predefined range: " + label + ")");
-            startDate = start;
-            endDate = end;
+            console.log("New Controlchartend date range selected: " + start.format('YYYY-MM-DD') + " to " + end.format('YYYY-MM-DD') + " (predefined range: " + label + ")");
+            ControlchartstartDate = start;
+            ControlchartendDate = end;
             //update
-            getChartData();
+            getcontrolchartData();
         });
     };
-
 
     //enable popover for settings.
     $("#ControlChartOptionsPopover").popover({
@@ -80,9 +79,9 @@
     });
 
     //get chart data
-    function getChartData() {
+    function getcontrolchartData() {
         //spinner
-        $("#gaphContainer").html("<div class='card-body'><i class='fa fa-spinner fa-pulse fa-2x fa-fw'></i><span class='sr-only'></span>Loading....</div>");
+        $("#controlchartContainer").html("<div class='card-body'><i class='fa fa-spinner fa-pulse fa-2x fa-fw'></i><span class='sr-only'></span>Loading....</div>");
         //make ajax request
         $.ajax({
             type: 'GET',
@@ -90,37 +89,37 @@
             data: {
                 chartname: '@Model.chartname',
                 scaleLabel: '@Html.Raw(Model.scaleLabel)',
-                startdate: moment(endDate).toISOString(),
-                enddate: moment(startDate).toISOString(),
+                startdate: moment(ControlchartendDate).toISOString(),
+                enddate: moment(ControlchartstartDate).toISOString(),
                 alarmobject: '@Model.alarmobject',
                 c_trigger_id : @Model.c_trigger_id
             },
             success: function (result) {
-                console && console.log("request chart data succeeded");
-                $("#gaphContainer").html(""); //hide spinner
-                buildchart(result);
+                console && console.log("request controlchart data succeeded");
+                $("#controlchartContainer").html(""); //hide spinner
+                buildControlchart(result);
             },
             error: function (result) {
                 console.log(result);
-                $.toaster({ title: 'getChartdata', priority: 'danger', message: result.statusCode });
-                $("#gaphContainer").html('<div>Request failed!!</div>');
+                $.toaster({ title: 'getcontrolchartData', priority: 'danger', message: result.statusCode });
+                $("#controlchartContainer").html('<div>Request failed!!</div>');
             }
         });
     };
 
     //build the chart Calls when ajax request ends
-    function buildchart(dataPayload) {
+    function buildControlchart(dataPayload) {
         console.log(dataPayload);
         //destroy chart if exists
         if (ControlChart) {
             ControlChart.destroy();
         }
         //clear the cancas just to be shure
-        $("#graphCanvas").remove();
+        $("#controlchartCanvas").remove();
         //add the new canvas
-        $("#gaphContainer").append('<canvas id="graphCanvas" height="400" width="1800" ></canvas>');
+        $("#controlchartContainer").append('<canvas id="controlchartCanvas" height="400" width="1800" ></canvas>');
         //build the chart
-        var ctx = document.getElementById("graphCanvas").getContext("2d");
+        var ctxcontrolChart = document.getElementById("controlchartCanvas").getContext("2d");
         //chart options
         var options =
             {
@@ -166,15 +165,14 @@
 
         ];
         //build
-        ControlChart = new Chart(ctx).Scatter(data, options);
+        ControlChart = new Chart(ctxcontrolChart).Scatter(data, options);
         //init daterangepicker
-        setDaterangepicker();
+        setgetcontrolchartDaterangepicker();
     }
-
 
     //init on doc loaded done
     $(document).ready(function () {
-        getChartData();
+        getcontrolchartData();
     });
 </script>
 
