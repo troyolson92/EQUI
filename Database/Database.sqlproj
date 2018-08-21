@@ -211,9 +211,7 @@
     <Build Include="Security\MAXIMO.sql" />
     <Build Include="NGAC\Stored Procedures\sp_update_cleanLogteksts.sql" />
     <Build Include="NGAC\Stored Procedures\sp_LinkAssets.sql" />
-    <Build Include="Security\db_accessEquiAdmin.sql" />
-    <Build Include="Security\VASC_a.sql" />
-    <Build Include="Security\EqUiAdmin.sql" />
+    <Build Include="Security\UserAndRoles.sql" />
     <Build Include="NGAC\Functions\TrimX.sql" />
     <Build Include="NGAC\Functions\TrimEmptylines.sql" />
     <Build Include="NGAC\Functions\RTrimX.sql" />
@@ -236,6 +234,8 @@
     <None Include="EqUi\Data\c_logClassSystem.sql" />
     <None Include="Volvo\Data\c_userRoles.sql" />
     <None Include="EqUi\Data\c_areas.sql" />
+    <Build Include="Security\VCCNET_SDEBEUL.sql" />
+    <Build Include="Security\RoleMemberships.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="GADATAprod.publish.xml" />
@@ -249,6 +249,7 @@
     <None Include="NGAC\Data\c_job.sql" />
     <None Include="NGAC\Data\c_variable.sql" />
     <None Include="NGAC\Data\c_variable_search.sql" />
+    <None Include="TADATAprod.publish.xml" />
   </ItemGroup>
   <ItemGroup>
     <SqlCmdVariable Include="DB_C_NAME">
