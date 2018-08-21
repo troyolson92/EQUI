@@ -1,4 +1,6 @@
-﻿CREATE LOGIN [VASC_a] WITH PASSWORD=N'JweDpPYdey5/9ke2D/IYUuTzR2KqfUB4I23iL+2GV1o=', DEFAULT_DATABASE=[$(DatabaseName)], DEFAULT_LANGUAGE=[us_english], CHECK_EXPIRATION=OFF, CHECK_POLICY=OFF
+﻿--do passwords will not match if you autocreate on other server! set op logins by hand!
+
+CREATE LOGIN [VASC_a] WITH PASSWORD=N'JweDpPYdey5/9ke2D/IYUuTzR2KqfUB4I23iL+2GV1o=', DEFAULT_DATABASE=[$(DatabaseName)], DEFAULT_LANGUAGE=[us_english], CHECK_EXPIRATION=OFF, CHECK_POLICY=OFF
 GO
 CREATE USER [VASC_a] FOR LOGIN [VASC_a];
 GO
