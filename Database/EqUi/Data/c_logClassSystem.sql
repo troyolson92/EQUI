@@ -4,13 +4,14 @@ BEGIN
 Print 'init data insert [EqUi].[c_logClassSystem]'
 SET IDENTITY_INSERT [EqUi].[c_logClassSystem] ON 
 
-INSERT [EqUi].[c_logClassSystem] ([id], [c_datasource_id], [Name], [Description], [SelectStatement], [UpdateStatement], [RunRuleStatement]) VALUES (8, 1, N'VASC_NGAC', N'ABB ngac gneration robot. (data in ngac.L_error)', N'SELECT L_error._id as ''id''
+INSERT [EqUi].[c_logClassSystem] ([id], [c_datasource_id], [Name], [Description], [SelectStatement], [UpdateStatement], [RunRuleStatement]) VALUES (8, 1, N'VASC_NGAC', N'ABB ngac gneration robot. (data in ngac.L_error)', 
+N'SELECT L_error._id as ''id''
       ,L_error.Number as ''code''
       ,L_error.Title as ''text''
       ,L_error.c_RuleId as  ''c_logcClassRules_id''
       ,L_error.c_ClassificationId as ''c_Classification_id''
       ,L_error.c_SubgroupId as ''c_Subgroup_id''
-  FROM [GADATA].ngac.L_error ', N'UPDATE GADATA.NGAC.l_error
+  FROM ngac.L_error ', N'UPDATE NGAC.l_error
 SET  c_ClassificationID =  CASE  
 							WHEN @Clear = 0 THEN @c_ClassificationId 
 							ELSE NULL
@@ -23,7 +24,7 @@ SET  c_ClassificationID =  CASE
 							WHEN @Clear = 0 THEN -1 
 							ELSE NULL
 						    END
- FROM GADATA.NGAC.L_error
+ FROM NGAC.L_error
   WHERE  
   --Group update
   (
@@ -39,7 +40,7 @@ SET  c_ClassificationID =  CASE
   L_error._id = @rowID
   AND
   @rowID <> 0 
-  )', N'UPDATE GADATA.NGAC.l_error
+  )', N'UPDATE NGAC.l_error
 SET  c_ClassificationID =  CASE  
 							WHEN @Clear = 0 THEN r.c_ClassificationId 
 							ELSE NULL
@@ -53,8 +54,8 @@ SET  c_ClassificationID =  CASE
 							ELSE NULL
 						    END
 
-  FROM [GADATA].NGAC.L_error as L
-  left join GADATA.EQUI.c_LogClassRules as r on
+  FROM NGAC.L_error as L
+  left join EQUI.c_LogClassRules as r on
   (
   r.c_logClassSystem_id = @logClassSystem_id
   AND
