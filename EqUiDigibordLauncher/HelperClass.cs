@@ -48,7 +48,6 @@ namespace EqUiDigibordLauncher
     public class ChromeTools
     {
         int ChromeStartDelay = 3000;
-        string chromePath = @"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe";
     
         public void LaunchChrome(string Url = "HTTP://EQUI", int MonitorNum = 1)
         {
@@ -58,12 +57,12 @@ namespace EqUiDigibordLauncher
             if (MonitorNum == 1)
             {
                 //start chrome with arguments
-                Process.Start(chromePath, "--new-window  " + Url);
+                Process.Start("chrome", "--new-window  " + Url);
             }
             else
             {
                 //start chrome with arguments
-                Process.Start(chromePath, "--new-window --incognito  " + Url);
+                Process.Start("chrome", "--new-window --incognito  " + Url);
             }
             //sleep
             System.Threading.Thread.Sleep(ChromeStartDelay);
