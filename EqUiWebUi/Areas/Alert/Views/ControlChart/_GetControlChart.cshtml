@@ -11,8 +11,8 @@
         </h6>
     </div>
 
-    <div class="card-body" style="position:relative">
-        <div id="controlchartContainer">
+    <div class="card-body" >
+        <div id="controlchartContainer" style="position:relative">
             <canvas id='controlchartCanvas'></canvas>
         </div>
     </div>
@@ -122,7 +122,7 @@
         //clear the cancas just to be shure
         $("#controlchartCanvas").remove();
         //add the new canvas
-        $("#controlchartContainer").append('<canvas id="controlchartCanvas" height="400" width="1800" ></canvas>');
+        $("#controlchartContainer").append('<canvas id="controlchartCanvas" height="300"></canvas>');
         //build the chart
         var ctxcontrolChart = document.getElementById("controlchartCanvas").getContext("2d");
         //chart options
@@ -147,6 +147,9 @@
                 scaleTimeFormat: "HH:MM",
                 // String - full date format (used for point labels)
                 scaleDateTimeFormat: "yy-mm-dd HH:MM:ss",
+                //for resize
+                maintainAspectRatio: false,
+                responsive: true,
             };
         //dataset
         var data = [
