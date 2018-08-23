@@ -7,6 +7,7 @@
 
 
 
+
 CREATE VIEW [NGAC].[NGAC_Supervisie]
 AS
 SELECT DISTINCT 
@@ -82,8 +83,6 @@ select
 FROM NGAC.breakdown as breakdown with (NOLOCK) 
 where 
 breakdown.[timestamp]  < getdate() --to filter out bad timestamps
-and 
-1*60 <= breakdown.Downtime
 
 --*******************************************************************************************************--
 --NGAC live (active breakdown)

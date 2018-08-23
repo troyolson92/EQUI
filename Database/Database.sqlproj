@@ -235,7 +235,6 @@
     <None Include="Volvo\Data\c_userRoles.sql" />
     <None Include="EqUi\Data\c_areas.sql" />
     <Build Include="Security\VCCNET_SDEBEUL.sql" />
-    <Build Include="Security\RoleMemberships.sql" />
     <Build Include="NGAC\Views\ErrDispLog.sql" />
     <Build Include="NGAC\Functions\fn_GetSeverity.sql" />
     <Build Include="NGAC\Functions\AddifSomething.sql" />
