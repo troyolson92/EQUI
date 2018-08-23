@@ -407,13 +407,13 @@ namespace EqUiWebUi.Areas.Alert
                 sbSMS.Append("Alert: ").AppendLine(alert.location + " ");
                 sbSMS.AppendLine(trigger.alertType + " " );
                 sbSMS.AppendLine(alert.info + " " );
-                //USE HANGFIRE to send it!
-                
-                Hangfire.BackgroundJob.Enqueue(() => smsComm.SendSMS(SMSconfig.c_CPT600.System, sbSMS.ToString()));
+                //use hangfire to send it
+                string jobid = smsComm.EnqueueSMS(SMSconfig.c_CPT600.System, sbSMS.ToString());
                 //Add in the comment section that the sms was send. (a badge for each SMS)
                 sbComments.AppendLine("<div class='alert alert-info'>");
                 sbComments.AppendLine("<strong>SMS send!: " + SMSconfig.c_CPT600.System + "</strong>");
                 sbComments.AppendLine(sbSMS.ToString());
+                sbComments.Append("Job:http://equi/hangfire/jobs/details/"+jobid);
                 sbComments.AppendLine("</div>");
                 alert.comments = sbComments.ToString();
             }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Hangfire.Console;
+using Hangfire.Server;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -36,8 +38,16 @@ namespace EqUiWebUi.Areas.Alert
 
         bool debugMode = false; //if debug mode nu sms is send 
 
-        public void SendSMS(string Messagetype, string Message)
+        //EnqueueSMS in hangfire (returns jobid)
+        public string EnqueueSMS(string Messagetype, string Message)
         {
+           return Hangfire.BackgroundJob.Enqueue(() => SendSMS(Messagetype, Message,null));
+        }
+
+        //SEND sms 
+        public void SendSMS(string Messagetype, string Message, PerformContext context)
+        {
+            context.WriteLine("SendingSMS");
             string filenamePrefix = "XPR001-EQUI_";
             string filenameId = System.DateTime.Now.ToString("yyyyMMddHHmmssFFF");
             var path = System.Web.Hosting.HostingEnvironment.MapPath(string.Format("~/App_Data/{0}.txt", filenamePrefix + filenameId));
@@ -51,9 +61,11 @@ namespace EqUiWebUi.Areas.Alert
                 {
                     file.WriteLine(Messagetype + ";" + Message);
                 }
+                context.WriteLine("File build: " + path);
             }
             catch (Exception ex)
             {
+                context.WriteLine("Failed to build SMS: " + ex.Message);
                 log.Error("Failed to build SMS", ex);
                 throw;
             }
@@ -61,6 +73,7 @@ namespace EqUiWebUi.Areas.Alert
             //debug mode
             if(debugMode)
             {
+                context.WriteLine("DEBUG MODE ACTIVE DID NOT SEND SMS");
                 log.Info("Sms debugmode active SMS NOT SEND");
                 return;
             }
@@ -70,11 +83,13 @@ namespace EqUiWebUi.Areas.Alert
                 {
                     var credentials = new NetworkCredential(publishUser, publishPass);
                     NetworkConnection networkConnection = new NetworkConnection(publishHost, credentials);
+                    context.WriteLine("logged in on network using incode credentials");
                     log.Debug("logged in on network using incode credentials");
                 }
                 catch(Exception ex)
                 {
-                log.Error("Error connecting to server", ex);
+                   context.WriteLine("Error connecting to server " + ex.Message);
+                   log.Error("Error connecting to server", ex);
                     //continue might get lucky
                 }
 
@@ -83,12 +98,25 @@ namespace EqUiWebUi.Areas.Alert
             {
                 string publishFullname = Path.Combine(publishLocation, filenamePrefix + filenameId + ".txt");
                 File.Copy(path, publishFullname,true);
+                //if succes delete file out of data
+                try
+                {
+                    File.Delete(path);
+                    context.WriteLine("Failed deleted from appdata");
+                }
+                catch(Exception ex)
+                {
+                    context.WriteLine("Failed to delete file " + ex.Message);
+                    log.Error("Failed to delete file", ex);
+                }
             }
             catch (Exception ex)
             {
+                context.WriteLine("Failed to send SMS to server " + ex.Message);
                 log.Error("Failed to send SMS to server", ex);
                 throw;
             }
+            context.WriteLine("Done (succes)");
             log.Info("SMS send Type: " + Messagetype + " => " + Message);
         }
     }
