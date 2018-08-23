@@ -169,7 +169,8 @@ namespace EqUiWebUi.Areas.Alert
                         //ask gadata for location tree and location
                         string qry =
                             @"select top 1 LocationTree, Location from GADATA.EqUi.ASSETS as a 
-                            where REPLACE('{0}','ZM','ZS') LIKE a.[LOCATION] + '%'";
+                            where REPLACE('{0}','ZM','ZS') LIKE a.[LOCATION] + '%'
+                            order by a.LocationTree desc ";
                         DataTable result = connectionManager.RunQuery(string.Format(qry, ActiveAlert.alarmobject));
                         if (result.Rows.Count == 1)
                         {

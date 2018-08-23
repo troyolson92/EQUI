@@ -145,7 +145,7 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
                 ,LOCANCESTOR.ANCESTOR
                 FROM MAXIMO.WORKORDER WORKORDER
                 left join MAXIMO.LOCANCESTOR LOCANCESTOR on WORKORDER.LOCATION = LOCANCESTOR.LOCATION AND LOCANCESTOR.SYSTEMID = '{0}'"
-                ,System.Configuration.ConfigurationManager.AppSettings["Maximo_LOCATION_SYSTEMID"].ToString()));
+                , System.Configuration.ConfigurationManager.AppSettings["Maximo_LOCATION_SYSTEMID"].ToString()));
 
             //start where clause
             sbqry.AppendLine("WHERE ((WORKORDER.woclass = 'WORKORDER' or WORKORDER.woclass = 'ACTIVITY') and WORKORDER.historyflag = 0 and WORKORDER.istask = 0)");

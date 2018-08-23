@@ -53,6 +53,7 @@ select
 ,WORKORDER.REPORTEDBY
 ,WORKORDER.REPORTDATE
 ,locancestor.ANCESTOR
+,(SELECT SUM(REGULARHRS) FROM MAXIMO.LABTRANS WHERE LABTRANS.REFWO = WORKORDER.WONUM GROUP BY LABTRANS.REFWO) SUM_LABTRANS_HOURS
 from MAXIMO.WORKORDER WORKORDER
 join MAXIMO.locancestor locancestor on 
 locancestor.LOCATION = WORKORDER.LOCATION
@@ -65,7 +66,7 @@ workorder.status not in ('CLOSE','CLOSEVOID') --they changes something where the
 and
 workorder.changedate >= sysdate - 100
 "
-,System.Configuration.ConfigurationManager.AppSettings["Maximo_ORGID"].ToString() //siteID
+, System.Configuration.ConfigurationManager.AppSettings["Maximo_ORGID"].ToString() //siteID
 ,System.Configuration.ConfigurationManager.AppSettings["Maximo_TOPANCESTOR"].ToString()); //Top level ancestor location to get workorders from
 
             DataTable newMaximoDt;

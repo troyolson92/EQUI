@@ -31,4 +31,10 @@
     function goback() {
         window.history.back()
     }
+    //reload afhter 1 min
+    setTimeout(
+        function () {
+            console.log('try reload page');
+            window.history.back()
+        }, 1000*60);
 </script>
