@@ -50,7 +50,7 @@ namespace EqUiWebUi.Areas.Alert
             context.WriteLine("SendingSMS");
             string filenamePrefix = "XPR001-EQUI_";
             string filenameId = System.DateTime.Now.ToString("yyyyMMddHHmmssFFF");
-            var path = System.Web.Hosting.HostingEnvironment.MapPath(string.Format("~/App_Data/{0}.txt", filenamePrefix + filenameId));
+            var path = System.Web.Hosting.HostingEnvironment.MapPath(string.Format("~/App_Data/{0}.txt", filenamePrefix + Messagetype + filenameId));
             //check message max length
 
             //make file
@@ -98,11 +98,12 @@ namespace EqUiWebUi.Areas.Alert
             {
                 string publishFullname = Path.Combine(publishLocation, filenamePrefix + filenameId + ".txt");
                 File.Copy(path, publishFullname,true);
+                context.WriteLine("file copied: " + filenamePrefix);
                 //if succes delete file out of data
                 try
                 {
                     File.Delete(path);
-                    context.WriteLine("Failed deleted from appdata");
+                    context.WriteLine("Deleted from appdata");
                 }
                 catch(Exception ex)
                 {
