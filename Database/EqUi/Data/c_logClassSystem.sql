@@ -7,11 +7,14 @@ SET IDENTITY_INSERT [EqUi].[c_logClassSystem] ON
 INSERT [EqUi].[c_logClassSystem] ([id], [c_datasource_id], [Name], [Description], [SelectStatement], [UpdateStatement], [RunRuleStatement]) VALUES (8, 1, N'VASC_NGAC', N'ABB ngac gneration robot. (data in ngac.L_error)', 
 N'SELECT L_error._id as ''id''
       ,L_error.Number as ''code''
-      ,L_error.Title as ''text''
+      ,L_error.Title + ' ' + l_description.Description as ''text''
       ,L_error.c_RuleId as  ''c_logcClassRules_id''
       ,L_error.c_ClassificationId as ''c_Classification_id''
       ,L_error.c_SubgroupId as ''c_Subgroup_id''
-  FROM ngac.L_error ', N'UPDATE NGAC.l_error
+  FROM NGAC.L_error 
+  left join NGAC.L_description on L_description.id = L_error.l_description_id ', 
+  
+N'  UPDATE GADATA.NGAC.l_error
 SET  c_ClassificationID =  CASE  
 							WHEN @Clear = 0 THEN @c_ClassificationId 
 							ELSE NULL
@@ -25,10 +28,11 @@ SET  c_ClassificationID =  CASE
 							ELSE NULL
 						    END
  FROM NGAC.L_error
+ left join NGAC.L_description on L_description.id = L_error.l_description_id
   WHERE  
   --Group update
   (
-  L_error.Title like @textSearch
+  L_error.Title + ' ' + l_description.Description like @textSearch
   AND 
   L_error.Number between @coderangeStart and @coderangeEnd
   AND
@@ -40,7 +44,9 @@ SET  c_ClassificationID =  CASE
   L_error._id = @rowID
   AND
   @rowID <> 0 
-  )', N'UPDATE NGAC.l_error
+  )', 
+  
+  N'  UPDATE GADATA.NGAC.l_error
 SET  c_ClassificationID =  CASE  
 							WHEN @Clear = 0 THEN r.c_ClassificationId 
 							ELSE NULL
@@ -55,11 +61,12 @@ SET  c_ClassificationID =  CASE
 						    END
 
   FROM NGAC.L_error as L
+  left join NGAC.L_description on L_description.id = L.l_description_id
   left join EQUI.c_LogClassRules as r on
   (
   r.c_logClassSystem_id = @logClassSystem_id
   AND
-  l.Title like ISNULL(r.textSearch,''%'')
+  L.Title + ' ' + l_description.Description like ISNULL(r.textSearch,'%')
   AND 
   l.Number between ISNULL(r.coderangeStart,0) and ISNULL(r.coderangeEnd,1000000)
   )
@@ -84,6 +91,8 @@ SET  c_ClassificationID =  CASE
   OR 
   @UPDATE = 1
   )
+
+  
 
   
 ')

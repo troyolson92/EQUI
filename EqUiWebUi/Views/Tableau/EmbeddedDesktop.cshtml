@@ -27,6 +27,8 @@
             {
                 var url = 'https://tableau-test.volvocars.biz/t/Ghent/views/'.concat('@ViewBag.workbook').concat('/').concat('@ViewBag.sheet');
             }
+            console.log('CurrentUserLocationRoot: @CurrentUser.Getuser.LocationRoot');
+            console.log('UserAreaFilter: @ViewBag.LocationTreeFilter' );
 
             var size = findDashboardSize();
             var vizOptions = {

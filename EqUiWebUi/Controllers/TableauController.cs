@@ -30,6 +30,7 @@ namespace EqUiWebUi.Controllers
             ViewBag.sheet = sheet;
             ViewBag.Weeknum = CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(System.DateTime.Now, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
             ViewBag.Weekday = (int)System.DateTime.Now.DayOfWeek;
+
             ViewBag.LocationTreeFilter = GetUsersAreaname();
             //
             ViewBag.TrustedAuth = TrustedAuth;
