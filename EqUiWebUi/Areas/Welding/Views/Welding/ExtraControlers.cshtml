@@ -53,7 +53,7 @@ columns.Add(c => c.time_uit_adaptief).Titled("time_uit_adaptief").InitialSort(Gr
                 $(row).addClass("bg-info");
                 $("#placeholder1").remove(); //clear placeholder is exists
                 //add new placeholder afhter selected row
-                $(row).after('<tr id="placeholder1"><td colspan="10000"><div class=""><div class="" id ="placeholderPartial1"></div></div></td></tr>');
+                $(row).after('<tr id="placeholder1"><td colspan="1000"><div class=""><div class="" id ="placeholderPartial1"></div></div></td></tr>');
                 //set Extra info partial with row data
                 $('#time_uit_adaptief').html(data.time_uit_adaptief);
                 $('#durationOFF').html(data.durationOFF);

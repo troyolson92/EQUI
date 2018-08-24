@@ -154,7 +154,6 @@ namespace EqUiWebUi.Areas.user_management.Controllers
             string realUserName = CurrentUser.Getuser.username;
             Session["user"] = Impresonatinguser;
             Session["Impersonating"] = realUserName;
-
             //Pass screen lifecycle
 
 
