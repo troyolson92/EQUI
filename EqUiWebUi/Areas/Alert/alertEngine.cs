@@ -413,7 +413,7 @@ namespace EqUiWebUi.Areas.Alert
                 sbComments.AppendLine("<div class='alert alert-info'>");
                 sbComments.AppendLine("<strong>SMS send!: " + SMSconfig.c_CPT600.System + "</strong>");
                 sbComments.AppendLine(sbSMS.ToString());
-                sbComments.Append("Job:http://equi/hangfire/jobs/details/"+jobid);
+                sbComments.Append("Job:"+jobid);
                 sbComments.AppendLine("</div>");
                 alert.comments = sbComments.ToString();
             }

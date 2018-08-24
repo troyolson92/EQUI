@@ -121,6 +121,14 @@ namespace EqUiWebUi.Areas.VASC.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             c_variable c_variable = db.c_variable.Find(id);
+            //remove the data
+            string qry = @"delete NGAC.{0}
+                        from NGAC.{0}
+                        left join NGAC.c_variable on c_variable.id = {0}.c_variable_id
+                        where c_variable.id = {1}";
+            EQUICommunictionLib.ConnectionManager connectionManager = new EQUICommunictionLib.ConnectionManager();
+            connectionManager.RunCommand(string.Format(qry,c_variable.rt_table,c_variable.id), enblExeptions: true);
+            //remove the c_variable
             db.c_variable.Remove(c_variable);
             db.SaveChanges();
             return RedirectToAction("Index");
@@ -129,9 +137,9 @@ namespace EqUiWebUi.Areas.VASC.Controllers
         //routine to clear rt_value from all data that is no longer configured in c_variable
         public void CleanUpRt_value()
         {
-            string qry = @"delete GADATA.NGAC.rt_value
-                        from GADATA.NGAC.rt_value
-                        left join GADATA.NGAC.c_variable on c_variable.id = rt_value.c_variable_id
+            string qry = @"delete NGAC.rt_value
+                        from NGAC.rt_value
+                        left join NGAC.c_variable on c_variable.id = rt_value.c_variable_id
                         where c_variable.id is null";
             EQUICommunictionLib.ConnectionManager connectionManager = new EQUICommunictionLib.ConnectionManager();
             connectionManager.RunCommand(qry, enblExeptions: true);
