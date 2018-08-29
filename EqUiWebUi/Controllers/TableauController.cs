@@ -23,7 +23,7 @@ namespace EqUiWebUi.Controllers
 
         //handels inbedded views from tableau for FullHD and smaller type monitors
         [HttpGet]
-        public ActionResult EmbeddedDesktop(string workbook, string sheet, bool TrustedAuth = false)
+        public ActionResult EmbeddedDesktop(string workbook, string sheet, bool TrustedAuth = true)
         {
             //
             ViewBag.workbook = workbook;

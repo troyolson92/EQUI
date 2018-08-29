@@ -38,7 +38,7 @@ namespace EqUiWebUi
                     Authorization = new[] { new MyAuthorizationFilter() }
                 });
                 //setup hangfire options
-                var HFoptions = new BackgroundJobServerOptions
+                BackgroundJobServerOptions HFoptions = new BackgroundJobServerOptions
                 {
                     //MUST BE LOWERCASE ONLY !!!!!!
                     Queues = ConfigurationManager.AppSettings["HangfireQueues"].Split(';'),
