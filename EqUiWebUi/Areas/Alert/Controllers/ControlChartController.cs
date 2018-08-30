@@ -97,7 +97,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                               select new
                               {
                                 x = ((e.timestamp - UnixEpoch).Ticks / TimeSpan.TicksPerMillisecond),
-                                y = Math.Round(e.value,2),
+                                y = Math.Round(e.value,3),
                                 r = SetPointSize(e)
                               };
 
@@ -147,16 +147,16 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                               select new //startpoints
                               {
                                   x = ((e.CreateDate.AddSeconds(300) - UnixEpoch).Ticks / TimeSpan.TicksPerMillisecond),
-                                  y = Math.Round(e.UpperLimit.GetValueOrDefault(), 2),
-                                  LCL = Math.Round(e.LowerLimit.GetValueOrDefault(), 2),
+                                  y = Math.Round(e.UpperLimit.GetValueOrDefault(), 3),
+                                  LCL = Math.Round(e.LowerLimit.GetValueOrDefault(), 3),
                                   r = controllimitPointSize
 
                               }).Union((from e in limits
                                         select new //endpoints
                                         {
                                             x = ((e.ChangeDate.GetValueOrDefault(chartSettings.enddate) - UnixEpoch).Ticks / TimeSpan.TicksPerMillisecond),
-                                            y = Math.Round(e.UpperLimit.GetValueOrDefault(), 2),
-                                            LCL = Math.Round(e.LowerLimit.GetValueOrDefault(), 2),
+                                            y = Math.Round(e.UpperLimit.GetValueOrDefault(), 3),
+                                            LCL = Math.Round(e.LowerLimit.GetValueOrDefault(), 3),
                                             r = controllimitPointSize
                                         })).OrderBy(e => e.x);
 
@@ -164,14 +164,14 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                               select new //startpoints
                               {
                                   x = ((e.CreateDate.AddSeconds(300) - UnixEpoch).Ticks / TimeSpan.TicksPerMillisecond),
-                                  y = Math.Round(e.LowerLimit.GetValueOrDefault(), 2),
+                                  y = Math.Round(e.LowerLimit.GetValueOrDefault(), 3),
                                   r = controllimitPointSize
 
                               }).Union((from e in limits
                                         select new //endpoints
                                         {
                                             x = ((e.ChangeDate.GetValueOrDefault(chartSettings.enddate) - UnixEpoch).Ticks / TimeSpan.TicksPerMillisecond),
-                                            y = Math.Round(e.LowerLimit.GetValueOrDefault(), 2),
+                                            y = Math.Round(e.LowerLimit.GetValueOrDefault(), 3),
                                             r = controllimitPointSize
                                         })).OrderBy(e => e.x);
 
