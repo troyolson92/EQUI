@@ -65,6 +65,15 @@ namespace EqUiWebUi.Areas.Alert.Controllers
         {
             if (ModelState.IsValid)
             {
+                //check that there is no other control limit for this object
+                if(db.l_controlLimits.Where(l => l.alarmobject == l_controlLimits.alarmobject && l.c_trigger_id == l_controlLimits.c_trigger_id).Count() != 0)
+                {
+                    ModelState.AddModelError("alarmobject", "A control limit already exist for this alarmobject / trigger");
+                    ModelState.AddModelError("c_trigger_id", "A control limit already exist for this alarmobject / trigger");
+                    goto ThrowModelValidation;
+                }
+
+                //ok create it
                 l_controlLimits.CreateDate = System.DateTime.Now;
                 l_controlLimits.Createuser = CurrentUser.Getuser.id;
                 l_controlLimits.ChangeDate = null; //a changedate of null means it stil active. only DEAD limits have a changedate
@@ -74,7 +83,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
+            ThrowModelValidation:
             ViewBag.c_trigger_id = new SelectList(db.c_triggers, "id", "alertType", l_controlLimits.c_trigger_id);
             return View(l_controlLimits);
         }
