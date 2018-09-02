@@ -155,6 +155,23 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                 }
                 else //just add the one new record
                 {
+                    //get the old control limit
+                    l_controlLimits oldControlimit = db.l_controlLimits.Where(c => c.id == l_controlLimits.id).First();
+                    //check that the ULC or LCL has changed
+                    if ((oldControlimit.UpperLimit == l_controlLimits.UpperLimit) && (oldControlimit.LowerLimit == l_controlLimits.LowerLimit))
+                    {
+                        //no change throw error
+                        ModelState.AddModelError("UpperLimit", "Upper and Lower limit same as previous!");
+                        ModelState.AddModelError("LowerLimit", "Upper and Lower limit same as previous!");
+                        goto labelThrowValidationError;
+                    }
+                    //check that the comment has changed
+                    else if (oldControlimit.Comment == l_controlLimits.Comment)
+                    {
+                        //no comment change throw error
+                        ModelState.AddModelError("Comment", "Please change the comment!");
+                        goto labelThrowValidationError;
+                    }
                     //copy the object, set the create user data and add it to the db
                     l_controlLimits newControlimit = l_controlLimits;
                     newControlimit.CreateDate = System.DateTime.Now;
@@ -164,8 +181,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                     newControlimit.isdead = false;
                     //add
                     db.l_controlLimits.Add(newControlimit);
-                    //get the old control limit set the change user and mark it dead 
-                    l_controlLimits oldControlimit = db.l_controlLimits.Where(c => c.id == l_controlLimits.id).First();
+                    //change old control limit set the change user and mark it dead 
                     oldControlimit.ChangeDate = System.DateTime.Now;
                     oldControlimit.ChangeUser = CurrentUser.Getuser.id;
                     oldControlimit.isdead = true;
@@ -184,7 +200,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                     return Redirect(returnURL);
                 }
             }
-
+            labelThrowValidationError:
             ViewBag.c_trigger_id = new SelectList(db.c_triggers, "id", "alertType", l_controlLimits.c_trigger_id);
             ViewBag.l_variants_id = new SelectList(db.l_variants.Where(l => l.c_trigger_id == l_controlLimits.c_trigger_id), "id", "variantGroup", l_controlLimits.l_variants_id);
             return View(l_controlLimits);
