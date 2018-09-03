@@ -29,23 +29,6 @@
           <Property Name="ResponsibleTechnicianTeam" Type="varchar" MaxLength="50" />
           <Property Name="ResponsibleProductionTeam" Type="varchar" MaxLength="50" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'GADATA_qa.EqUi.ASSETS_fromMX7' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="ASSETS_fromMX7">
-          <Property Name="SYSTEMID" Type="varchar" MaxLength="255" />
-          <Property Name="LOCATION" Type="varchar" MaxLength="255" />
-          <Property Name="LocationDescription" Type="varchar" MaxLength="255" />
-          <Property Name="ASSETNUM" Type="varchar" MaxLength="255" />
-          <Property Name="AssetDescription" Type="varchar" MaxLength="255" />
-          <Property Name="LocationTree" Type="varchar(max)" />
-          <Property Name="ClassDescription" Type="varchar" MaxLength="255" />
-          <Property Name="ClassStructureId" Type="varchar" MaxLength="255" />
-          <Property Name="CLassificationId" Type="varchar" MaxLength="255" />
-          <Property Name="ClassificationTree" Type="varchar(max)" />
-          <Property Name="Station" Type="varchar" MaxLength="255" />
-          <Property Name="Area" Type="varchar" MaxLength="255" />
-          <Property Name="Team" Type="varchar" MaxLength="255" />
-        </EntityType>-->
         <EntityType Name="c_datasource">
           <Key>
             <PropertyRef Name="Id" />
@@ -92,6 +75,30 @@ warning 6013: The table/view 'GADATA_qa.EqUi.ASSETS_fromMX7' does not have a pri
           <Property Name="c_logcClassRules_id" Type="int" />
           <Property Name="c_Classification_id" Type="int" />
           <Property Name="c_Subgroup_id" Type="int" />
+        </EntityType>
+        <EntityType Name="L_link">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="L_pannel_id" Type="int" />
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="url" Type="varchar(max)" />
+          <Property Name="description" Type="varchar(max)" />
+          <Property Name="iconcss" Type="varchar" MaxLength="50" />
+          <Property Name="icon" Type="varchar" MaxLength="50" />
+          <Property Name="Wiki_id" Type="int" />
+          <Property Name="helptext" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="L_pannel">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="description" Type="varchar(max)" />
+          <Property Name="collapsed" Type="bit" Nullable="false" />
+          <Property Name="HeaderCss" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Wiki">
           <Key>
@@ -192,12 +199,38 @@ warning 6013: The table/view 'GADATA_qa.EqUi.ASSETS_fromMX7' does not have a pri
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_L_link_L_pannel">
+          <End Role="L_pannel" Type="Self.L_pannel" Multiplicity="0..1" />
+          <End Role="L_link" Type="Self.L_link" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="L_pannel">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="L_link">
+              <PropertyRef Name="L_pannel_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_L_link_Wiki">
+          <End Role="Wiki" Type="Self.Wiki" Multiplicity="0..1" />
+          <End Role="L_link" Type="Self.L_link" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Wiki">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="L_link">
+              <PropertyRef Name="Wiki_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="GADATAModelEQUIStoreContainer">
           <EntitySet Name="ASSETS" EntityType="Self.ASSETS" Schema="EqUi" store:Type="Tables" />
           <EntitySet Name="c_datasource" EntityType="Self.c_datasource" Schema="EqUi" store:Type="Tables" />
           <EntitySet Name="c_LogClassRules" EntityType="Self.c_LogClassRules" Schema="EqUi" store:Type="Tables" />
           <EntitySet Name="c_logClassSystem" EntityType="Self.c_logClassSystem" Schema="EqUi" store:Type="Tables" />
           <EntitySet Name="l_dummyLogClassResult" EntityType="Self.l_dummyLogClassResult" Schema="EqUi" store:Type="Tables" />
+          <EntitySet Name="L_link" EntityType="Self.L_link" Schema="EqUi" store:Type="Tables" />
+          <EntitySet Name="L_pannel" EntityType="Self.L_pannel" Schema="EqUi" store:Type="Tables" />
           <EntitySet Name="Wiki" EntityType="Self.Wiki" Schema="EqUi" store:Type="Tables" />
           <EntitySet Name="c_Classification" EntityType="Self.c_Classification" Schema="Volvo" store:Type="Tables" />
           <EntitySet Name="c_Subgroup" EntityType="Self.c_Subgroup" Schema="Volvo" store:Type="Tables" />
@@ -224,6 +257,14 @@ warning 6013: The table/view 'GADATA_qa.EqUi.ASSETS_fromMX7' does not have a pri
           <AssociationSet Name="FK_l_dummyLogClassResult_c_Subgroup" Association="Self.FK_l_dummyLogClassResult_c_Subgroup">
             <End Role="c_Subgroup" EntitySet="c_Subgroup" />
             <End Role="l_dummyLogClassResult" EntitySet="l_dummyLogClassResult" />
+          </AssociationSet>
+          <AssociationSet Name="FK_L_link_L_pannel" Association="Self.FK_L_link_L_pannel">
+            <End Role="L_pannel" EntitySet="L_pannel" />
+            <End Role="L_link" EntitySet="L_link" />
+          </AssociationSet>
+          <AssociationSet Name="FK_L_link_Wiki" Association="Self.FK_L_link_Wiki">
+            <End Role="Wiki" EntitySet="Wiki" />
+            <End Role="L_link" EntitySet="L_link" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -263,6 +304,16 @@ warning 6013: The table/view 'GADATA_qa.EqUi.ASSETS_fromMX7' does not have a pri
           </AssociationSet>
           <EntitySet Name="Wiki" EntityType="GADATAModelEQUI.Wiki" />
           <EntitySet Name="ASSETS" EntityType="GADATAModelEQUI.ASSETS" />
+          <EntitySet Name="L_link" EntityType="GADATAModelEQUI.L_link" />
+          <EntitySet Name="L_pannel" EntityType="GADATAModelEQUI.L_pannel" />
+          <AssociationSet Name="FK_L_link_L_pannel" Association="GADATAModelEQUI.FK_L_link_L_pannel">
+            <End Role="L_pannel" EntitySet="L_pannel" />
+            <End Role="L_link" EntitySet="L_link" />
+          </AssociationSet>
+          <AssociationSet Name="FK_L_link_Wiki" Association="GADATAModelEQUI.FK_L_link_Wiki">
+            <End Role="Wiki" EntitySet="Wiki" />
+            <End Role="L_link" EntitySet="L_link" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="c_datasource">
           <Key>
@@ -421,6 +472,7 @@ warning 6013: The table/view 'GADATA_qa.EqUi.ASSETS_fromMX7' does not have a pri
           <Property Name="Culture" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="wiki1" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="searchtags" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="L_link" Relationship="GADATAModelEQUI.FK_L_link_Wiki" FromRole="Wiki" ToRole="L_link" />
         </EntityType>
         <EntityType Name="ASSETS">
           <Key>
@@ -446,6 +498,57 @@ warning 6013: The table/view 'GADATA_qa.EqUi.ASSETS_fromMX7' does not have a pri
           <Property Name="ResponsibleTechnicianTeam" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ResponsibleProductionTeam" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="L_link">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="L_pannel_id" Type="Int32" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="iconcss" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="icon" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Wiki_id" Type="Int32" />
+          <NavigationProperty Name="L_pannel" Relationship="GADATAModelEQUI.FK_L_link_L_pannel" FromRole="L_link" ToRole="L_pannel" />
+          <NavigationProperty Name="Wiki" Relationship="GADATAModelEQUI.FK_L_link_Wiki" FromRole="L_link" ToRole="Wiki" />
+          <Property Name="url" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="helptext" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="L_pannel">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="collapsed" Type="Boolean" Nullable="false" />
+          <Property Name="HeaderCss" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="L_link" Relationship="GADATAModelEQUI.FK_L_link_L_pannel" FromRole="L_pannel" ToRole="L_link" />
+        </EntityType>
+        <Association Name="FK_L_link_L_pannel">
+          <End Type="GADATAModelEQUI.L_pannel" Role="L_pannel" Multiplicity="0..1" />
+          <End Type="GADATAModelEQUI.L_link" Role="L_link" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="L_pannel">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="L_link">
+              <PropertyRef Name="L_pannel_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_L_link_Wiki">
+          <End Type="GADATAModelEQUI.Wiki" Role="Wiki" Multiplicity="0..1" />
+          <End Type="GADATAModelEQUI.L_link" Role="L_link" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Wiki">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="L_link">
+              <PropertyRef Name="Wiki_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -554,6 +657,32 @@ warning 6013: The table/view 'GADATA_qa.EqUi.ASSETS_fromMX7' does not have a pri
                 <ScalarProperty Name="ASSETNUM" ColumnName="ASSETNUM" />
                 <ScalarProperty Name="LOCATION" ColumnName="LOCATION" />
                 <ScalarProperty Name="SYSTEMID" ColumnName="SYSTEMID" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="L_link">
+            <EntityTypeMapping TypeName="GADATAModelEQUI.L_link">
+              <MappingFragment StoreEntitySet="L_link">
+                <ScalarProperty Name="helptext" ColumnName="helptext" />
+                <ScalarProperty Name="url" ColumnName="url" />
+                <ScalarProperty Name="Wiki_id" ColumnName="Wiki_id" />
+                <ScalarProperty Name="icon" ColumnName="icon" />
+                <ScalarProperty Name="iconcss" ColumnName="iconcss" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="L_pannel_id" ColumnName="L_pannel_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="L_pannel">
+            <EntityTypeMapping TypeName="GADATAModelEQUI.L_pannel">
+              <MappingFragment StoreEntitySet="L_pannel">
+                <ScalarProperty Name="HeaderCss" ColumnName="HeaderCss" />
+                <ScalarProperty Name="collapsed" ColumnName="collapsed" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

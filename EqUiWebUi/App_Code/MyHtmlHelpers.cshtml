@@ -1,28 +1,67 @@
 ﻿@*helper to create links*@
 @helper EquiLink(string url, string icon, string linkText, string iconClasses = "", string helperText = "", string helpurl = "")
 {
-        <div class="col-md-12">
-            <div class="update-nag" onclick="location.href='@url'">
-                <div class="update-split @iconClasses">
-                    <i class="far @icon fa-2x"></i>
-                </div>
-                <div class="update-text">
-                    <div class="title">@linkText</div>
-                    <div class="d-none d-md-block text-muted">
-                        @helperText
-                        @*show helplink only if there is one*@
-                        @if (helpurl != "")
-                        {
-                            <i class="fas fa-question-circle text-primary" onclick="window.open('@helpurl', 'EQUI', 'window settings')"></i>
-                        }
-                    </div>
-                    @*show collapes helper tooltip only if there is helpertext*@
-                    @if (helperText != "")
+    <div class="col-md-12">
+        <div class="update-nag" onclick="location.href='@url'">
+            <div class="update-split @iconClasses">
+                <i class="far @icon fa-2x"></i>
+            </div>
+            <div class="update-text">
+                <div class="title">@linkText</div>
+                <div class="d-none d-md-block text-muted">
+                    @helperText
+                    @*show helplink only if there is one*@
+                    @if (helpurl != "")
                     {
-                        <a class="d-block d-md-none"><i class="fas fa-info-circle" data-toggle="tooltip" data-placement="right" title="@helperText"></i></a>
+                        <i class="fas fa-question-circle text-primary" onclick="window.open('@helpurl', 'EQUI', 'window settings')"></i>
                     }
                 </div>
+                @*show collapes helper tooltip only if there is helpertext*@
+                @if (helperText != "")
+                {
+                    <a class="d-block d-md-none"><i class="fas fa-info-circle" data-toggle="tooltip" data-placement="right" title="@helperText"></i></a>
+                }
             </div>
         </div>
+    </div>
+
+}
+
+@*help to render a link pannel from the database*@
+@helper EquiRenderPanel(string pannelName)
+{
+EqUiWebUi.Models.GADATAEntitiesEQUI db = new EqUiWebUi.Models.GADATAEntitiesEQUI();
+EqUiWebUi.Models.L_pannel pannel = db.L_pannel.Where(p => p.name == pannelName).FirstOrDefault();
+if (pannel == null)
+{
+    <div class="alert alert-warning">did not find pannel in db: @pannelName</div>
+    return;
+}
+
+List<EqUiWebUi.Models.L_link> links = db.L_link.Where(l => l.L_pannel_id == pannel.id).ToList();
+
+    <div class="card">
+        <div class="card-header @(pannel.HeaderCss ?? "bg-dark")">
+            <h5 class="card-title text-white">
+                <strong>@pannel.name:</strong>  @pannel.description
+                <span class="clickable float-right"><i class="fas fa-chevron-circle-up  @(pannel.collapsed ? "fa-rotate-180" : "")  fa-1"></i></span>
+            </h5>
+        </div>
+        <div class="card-body">
+            @if (links.Count == 0)
+            {
+                <div class="alert alert-warning">no links to render in this pannel</div>
+            }
+            else
+            {
+                foreach(EqUiWebUi.Models.L_link link in links)
+                {
+                    EquiLink(link.url, link.icon, link.name, iconClasses: link.iconcss, helperText: link.helptext, helpurl: "");
+                }
+            }
+
+        </div>
+    </div>
+
 
 }

@@ -112,7 +112,7 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
                                           && tipMonitor.LocationTree.Contains(LocationRoot) //apply user filter
                                           orderby tipMonitor.nRcars ascending
                                           select tipMonitor;
-            log.Info("Plantipchange for: " + locationFilter + " resultCount: " + data.Count());
+            log.Info($"Plantipchange for: {locationFilter} Filters: minwear: {minWear} minparts: {minParts} maxDress: {maxDress}  |resultCount: {data.Count()}");
 
             return PartialView(data);
         }

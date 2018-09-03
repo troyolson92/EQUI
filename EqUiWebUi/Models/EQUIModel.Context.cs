@@ -33,5 +33,7 @@ namespace EqUiWebUi.Models
         public virtual DbSet<l_dummyLogClassResult> l_dummyLogClassResult { get; set; }
         public virtual DbSet<Wiki> Wiki { get; set; }
         public virtual DbSet<ASSETS> ASSETS { get; set; }
+        public virtual DbSet<L_link> L_link { get; set; }
+        public virtual DbSet<L_pannel> L_pannel { get; set; }
     }
 }

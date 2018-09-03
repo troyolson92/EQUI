@@ -12,20 +12,19 @@ namespace EqUiWebUi.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Wiki
+    public partial class L_pannel
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Wiki()
+        public L_pannel()
         {
             this.L_link = new HashSet<L_link>();
         }
     
         public int id { get; set; }
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public string Culture { get; set; }
-        public string wiki1 { get; set; }
-        public string searchtags { get; set; }
+        public string name { get; set; }
+        public string description { get; set; }
+        public bool collapsed { get; set; }
+        public string HeaderCss { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<L_link> L_link { get; set; }

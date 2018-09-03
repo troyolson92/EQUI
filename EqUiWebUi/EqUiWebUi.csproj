@@ -658,6 +658,12 @@
     <Compile Include="Models\l_dummyLogClassResult.cs">
       <DependentUpon>EQUIModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\L_link.cs">
+      <DependentUpon>EQUIModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\L_pannel.cs">
+      <DependentUpon>EQUIModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Wiki.cs">
       <DependentUpon>EQUIModel.tt</DependentUpon>
     </Compile>
