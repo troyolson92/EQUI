@@ -19,6 +19,10 @@
         <AssociationConnector Association="GADATAModelEQUI.FK_l_dummyLogClassResult_c_Subgroup" />
         <EntityTypeShape EntityType="GADATAModelEQUI.Wiki" Width="1.5" PointX="12.5" PointY="1" FillColor="255, 255, 128" />
         <EntityTypeShape EntityType="GADATAModelEQUI.ASSETS" Width="1.5" PointX="12.5" PointY="4.875" FillColor="Navy" />
+        <EntityTypeShape EntityType="GADATAModelEQUI.L_link" Width="1.5" PointX="18.5" PointY="1" />
+        <EntityTypeShape EntityType="GADATAModelEQUI.L_pannel" Width="1.5" PointX="16.125" PointY="4" />
+        <AssociationConnector Association="GADATAModelEQUI.FK_L_link_L_pannel" />
+        <AssociationConnector Association="GADATAModelEQUI.FK_L_link_Wiki" />
       </Diagram>
       <Diagram DiagramId="e951f762f729496390f1ab74d6241e77" Name="Frontend" >
       </Diagram>

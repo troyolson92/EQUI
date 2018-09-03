@@ -65,7 +65,7 @@ namespace EQUIToolsLib
         public SBCUStats(string Controller, string Toolid)
         {
             //
-            string cmd = string.Format("select top 1 *  from GADATA.volvo.RobotWeldGunRelation where Robot = '{0}' and ElectrodeNbr = {1}", Controller.Trim(), Toolid);
+            string cmd = $"select top 1 *  from GADATA.volvo.RobotWeldGunRelation where Robot = '{Controller.Trim()}' and ElectrodeNbr = {Toolid}";
             DataTable dt = connectionManager.RunQuery(cmd);
             if (dt.Rows.Count == 0)
             {
