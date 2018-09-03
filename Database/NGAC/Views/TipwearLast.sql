@@ -1,5 +1,6 @@
 ﻿
 
+
 CREATE VIEW [NGAC].[TipwearLast]
 AS
 select 
@@ -20,7 +21,10 @@ select
 ,TipLifeExpectations.[Last%MovWearBeforeChange]
 from
 (
-select x.*  from(--nested to optimize return result for next join
+select 
+ x.*
+,LEAD(x.Dress_Num) OVER (PARTITION BY x.controller_name, x.Tool_nr ORDER BY x.[Date Time] DESC) as 'PrevDress_Num'
+from(--nested to optimize return result for next join
 select
  rt.*
 ,ROW_NUMBER() OVER (PARTITION BY rt.controller_name, rt.Tool_nr ORDER BY rt.[Date Time] DESC) AS 'rnDesc'
@@ -35,7 +39,7 @@ rt.Max_Wear_Fixed <> 0 and rt.Max_Wear_Move <> 0
 --limit the data range we search. (qry performance) If no data for 48 hours we lose it
 AND rt._timestamp between GETDATE() - 2 and GETDATE()
 ) as x 
-where x.rnDesc =1
+where x.rnDesc in(1,2) --last 2 rows to find PrevDress_Num
 ) as y 
 --**************************************************************************--
 --SDEBEUL 18w22D2 we join [TipLifeExpectations] first because we can force the datawindow to 30 days 
@@ -45,6 +49,8 @@ left join NGAC.[TipLifeExpectations] as TipLifeExpectations with(nolock) on
   TipLifeExpectations.controller_name = y.controller_name
   AND 
   TipLifeExpectations.Tool_Nr = y.Tool_Nr
+--
+where y.rnDesc = 1 --only last row 
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 1, @level0type = N'SCHEMA', @level0name = N'NGAC', @level1type = N'VIEW', @level1name = N'TipwearLast';
 

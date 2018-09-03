@@ -10,10 +10,23 @@ UPDATE NGAC.c_controller
 SET c_controller.LocationTree = mx.LocationTree 
    ,c_controller.Assetnum = mx.ASSETNUM
    ,c_controller.ProductionTeam = mx.Team
-  -- ,c_controller.ClassificationTree = mx.ClassificationTree
-  -- ,c_controller.CLassificationId = mx.CLassificationId
+   --geoloc
+	,c_controller.Asset_x =  ISNULL(ISNULL(assetlevelXY.X_pos, assetlevelXY2.X_pos),assetlevelXY3.X_pos) 
+	,c_controller.Asset_y = ISNULL(ISNULL(assetlevelXY.Y_pos, assetlevelXY2.Y_pos),assetlevelXY3.Y_pos) 
+	,c_controller.Asset_png = ISNULL(ISNULL(assetlevelXY.png,assetlevelXY2.PNG),assetlevelXY3.PNG) 
+	,c_controller.Station_x =  stationlevelXY.X_pos 
+	,c_controller.Station_y = stationlevelXY.Y_pos
+	,c_controller.Station_png = stationlevelXY.png 
 FROM NGAC.c_controller as C 
 LEFT JOIN EqUi.ASSETS_fromMX7 as mx on mx.LOCATION = C.controller_name AND mx.SYSTEMID = 'PRODMID'
+--for geoloc
+LEFT OUTER JOIN EqUi.Assets_XY as assetlevelXY ON assetlevelXY.[location] = mx.[location]
+--Asset that are null and have a know controller can join the controller 
+LEFT OUTER JOIN Equi.Assets_XY assetlevelXY2 on assetlevelXY2.[location] = c.controller_name
+--Asset that are still null plot them on the station
+LEFT OUTER JOIN Equi.Assets_XY assetlevelXY3 on assetlevelXY3.[location] = mx.Station 
+--join station level
+LEFT OUTER JOIN EqUi.Assets_XY as stationlevelXY ON stationlevelXY.[location] = mx.station
 
 
 --*******************************************************************************************************************--
@@ -23,13 +36,13 @@ LEFT JOIN EqUi.ASSETS_fromMX7 as mx on mx.LOCATION = C.controller_name AND mx.SY
 UPDATE  NGAC.c_controller
 set ResponsibleTechnicianTeam = c_ownership.[Ownership]
 from  NGAC.c_controller as c
-left join  EqUi.c_ownership on c_ownership.Optgroup = 'TechnicianTeams'
+left join  EqUi.c_ownership on c_ownership.optgroup = 'TechnicianTeams'
 and c.LocationTree like c_ownership.LocationTree 
 
 UPDATE  NGAC.c_controller
 set  ResponsibleProductionTeam = c_ownership.[Ownership]
 from  NGAC.c_controller as c
-left join  EqUi.c_ownership on c_ownership.Optgroup = 'ProductionTeams'
+left join  EqUi.c_ownership on c_ownership.optgroup = 'ProductionTeams'
 and c.LocationTree like c_ownership.LocationTree 
 
 --*******************************************************************************************************************--
