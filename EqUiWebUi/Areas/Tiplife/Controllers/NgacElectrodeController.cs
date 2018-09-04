@@ -88,14 +88,19 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
         [HttpGet]
         public ActionResult TipDressData(int daysback = 360)
         {
+            return View();
+        }
+        public ActionResult _TipDressDataGrid(int daysback = 360, string location = "", int tool_nr = 1)
+        {
             var startdate = DateTime.Now.Date.AddDays(daysback * -1);
             GADATAEntitiesTiplife gADATAEntities = new GADATAEntitiesTiplife();
             string LocationRoot = CurrentUser.Getuser.LocationRoot;
             IQueryable<TipDressLogFile> data = from t in gADATAEntities.TipDressLogFile
                                                where t.Date_Time > startdate
                                                && (t.LocationTree ?? "").Contains(LocationRoot)
+                                               && ((t.controller_name == location && t.Tool_Nr == tool_nr) || location == "")
                                                select t;
-            return View(data);
+            return PartialView(data);
         }
 
         //------------------------------------tabel met TipLifeExpectations-------------------------------------------------

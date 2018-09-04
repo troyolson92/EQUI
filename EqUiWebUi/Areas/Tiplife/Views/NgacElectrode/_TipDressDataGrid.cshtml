@@ -1,0 +1,22 @@
+﻿@model IQueryable<EqUiWebUi.Areas.Tiplife.Models.TipDressLogFile>
+
+@Html.Grid(Model).Named("TipDressLogFileGrid").Build(columns =>
+{
+    columns.Add(c => c.controller_name).Titled("Robot").Filterable(true);
+    columns.Add(c => c.Date_Time).Titled("Time_Robot").Formatted("{0:dd-MM-yyyy HH:mm}").InitialSort(GridSortOrder.Desc);
+    columns.Add(c => c.C_timestamp).Titled("Time_db").Formatted("{0:dd-MM-yyyy HH:mm}").Css("XXd-none XXd-md-block");
+    columns.Add(c => c.Weld_Counter).Titled("Weld_Counter").Css("XXd-none XXd-md-block");
+    columns.Add(c => c.Dress_Num).Titled("#Dress");
+    columns.Add(c => c.Wear_Fixed).Titled("(mm)Wear_Fixed");
+    columns.Add(c => c.Wear_Move).Titled("(mm)Wear_Move");
+    columns.Add(c => c.ErrorType).Titled("Error");
+
+    columns.Add()
+      .Encoded(false)
+      .Filterable(false)
+      .Sortable(false)
+      .RenderedAs(c => MyEquiToolkit.SbcuTool(c.controller_name, "1")).Css("XXd-none XXd-md-block"); //need to add the toolnumber in die model
+}).Sortable().Filterable(true).Pageable(pager =>
+{
+    pager.RowsPerPage = 20;
+}).Empty("No data found").Css("table-hover")

@@ -42,11 +42,25 @@
             </div>
 
         </div>
+
+        <hr />
+
+        <div class="card">
+            <div class="card-header bg-primary">
+                <h4>TipDresslogfile</h4>
+            </div>
+
+            <div class="card-body">
+                <div id="TipDressDataGrid" class="mvc-grid"></div>
+            </div>
+
+        </div>
     </div>
 
 <!--sctips for Tipinfo-->
     <script type="text/javascript">
         //load tiplifeexpectations
+        $('#TipLifeExpectationsGrid').html("Loading...");
         $('#TipLifeExpectationsGrid').mvcgrid({
             sourceUrl: '@Url.Action("_TipLifeExpectationsGrid", new { location = ViewBag.location, tool_nr = ViewBag.tool_nr })', // Grid source url string
             requestType: 'get', // Ajax grid request type
@@ -76,9 +90,27 @@
                             $("#TipwearBeforeChangeGrid").html("<div class='alert alert-danger'>Error while loading!! </div>");
                         }
                 });
-             }
+            },
+            reloadFailed: function (result) {
+                console.log(result);
+                $("#TipLifeExpectationsGrid").html("<div class='alert alert-danger'>Error while loading!! </div>");
+            }
         });
 
         //load all control limits for this object
+        $('#controllimitPlaceholder').html("Loading...");
         $("#controllimitPlaceholder").load("@Url.Action("_List", "L_controlLimits", new {Area = "Alert", alarmobject = ViewBag.location + "_tool" + ViewBag.tool_nr,  showIsDead = ViewBag.showIsDead })");
+
+        //load tipdress data grid 
+        $('#TipDressDataGrid').html("Loading...  very slow :(");
+        $('#TipDressDataGrid').mvcgrid({
+            sourceUrl: '@Url.Action("_TipDressDataGrid", new { location = ViewBag.location, tool_nr = ViewBag.tool_nr })', // Grid source url string
+            requestType: 'get', // Ajax grid request type
+            reload: true, // Grid reload indicator
+            reloadFailed: function (result) {
+                console.log(result);
+                $("#TipDressDataGrid").html("<div class='alert alert-danger'>Error while loading!! </div>");
+            }
+        });
+
     </script>
