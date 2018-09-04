@@ -13,21 +13,22 @@
     columns.Add(c => c.RobotWear).Titled("Wear(mm)").Css("d-none d-lg-table-cell");
     columns.Add(c => c.Time_DressCycleTime).Titled("Ct (s)").Css("d-none d-lg-table-cell");
     columns.Add(c => c.LocationTree).Filterable(true).Css("d-none"); //used for filtering
-//RenderStatusIcon
-columns.Add()
+    columns.Add(c => c.Tool_Nr).Filterable(true).Css("d-none"); 
+    //RenderStatusIcon
+    columns.Add()
                  .Titled("Status")
                  .Encoded(false)
                  .Filterable(false)
                  .Sortable(false)
                  .RenderedAs(c => MyFilters.TipMonitorIcon(c.Status, c.RobotWear));
-//launch sbcu tool
-columns.Add()
-                 .Encoded(false)
-                 .Filterable(false)
-                 .Sortable(false)
-                 .RenderedAs(c => MyEquiToolkit.SbcuTool(c.Robot, "1")); //need to add the toolnumber in die model
+    //launch sbcu tool
+    columns.Add()
+                     .Encoded(false)
+                     .Filterable(false)
+                     .Sortable(false)
+                     .RenderedAs(c => MyEquiToolkit.SbcuTool(c.Robot, "1")); //need to add the toolnumber in die model
 }).Sortable().Pageable(pager =>
 {
-pager.RowsPerPage = 20;
+    pager.RowsPerPage = 20;
 }).Empty("No data found").Css("table-hover").RowCss(row => MyRowStyling.getRowStyleByWearValue(row.pWear, row.nDress, row.nRcars, row.Status))
 

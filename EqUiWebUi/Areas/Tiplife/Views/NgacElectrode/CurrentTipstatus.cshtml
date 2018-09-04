@@ -8,10 +8,13 @@
     </div>
 
     <div class="card-body">
-        <div id="TipstatusGridSpincontainer" style="position:relative">
-            <div id="TipstatusGrid" class="mvc-grid"></div>
-        </div>
+        <div id="TipstatusGrid" class="mvc-grid"></div>
     </div>
+</div>
+
+@*render popuover modal*@
+<div id="MyModal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class='card-body'><i class='fa fa-spinner fa-pulse fa-4x fa-fw text-white'></i><span class='sr-only'>Loading...</span></div>
 </div>
 
 
@@ -22,25 +25,32 @@
         $("#allcontent").removeClass("container");
     </script>
 
-    <!--ploegrapport script-->
+    <!--Tipstatus script-->
     <script type="text/javascript">
-    var TipstatusGridspinner = new Spinner();
     //render grid and subscrible to row clicked events
         $('#TipstatusGrid').mvcgrid({
             sourceUrl: '@Url.Action("_TipStatus")', // Grid source url string
             requestType: 'get', // Ajax grid request type
             reload: true, // Grid reload indicator
-
+            rowClicked: function (row, data, e) {
+                $('#MyModal').removeData('bs.modal');
+                $('#MyModal').modal({ show: true });
+                var urlTipinfo = '@Url.Action("_Tipinfo")?location=' + encodeURIComponent(data.Robot)
+                    + '&tool_nr=' + encodeURIComponent(data.Tool_Nr);
+                $('#MyModal').load(urlTipinfo, function (result) { });
+            },
             reloadStarted: function () {
-                TipstatusGridspinner.spin(document.getElementById('TipstatusGridSpincontainer'));
             },
             reloadEnded: function () {
-                TipstatusGridspinner.stop();
             },
             reloadFailed: function (result) {
-                TipstatusGridspinner.stop();
                 $("#TipstatusGrid").html("Error while loading!!!");
             }
+        });
+
+        //on modal close
+        $('#MyModal').on('hidden.bs.modal', function (e) {
+            $('#MyModal').html("<div class='card-body'><i class='fa fa-spinner fa-pulse fa-4x fa-fw text-white' ></i ><span class='sr-only'>Loading...</span></div >");
         });
     </script>
 
@@ -53,7 +63,7 @@
                 console.log("TipstatusGrid SignalR connected");
                 $.connection.dataRefreshHub.server.joinGroup("TipstatusGrid");
             })
-            .fail(function () { console.log("TipstatusGrid SignalR connect ERROR") });
+            .fail(function () { console.log("TipstatusGrid SignalR connect ERROR");});
 
         //trigger full window reload
         $.connection.dataRefreshHub.client.newData = function () {
@@ -61,6 +71,6 @@
             $('#NgacTipStatus').mvcgrid({
                 reload: true
             });
-        }
+        };
     </script>
 }

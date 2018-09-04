@@ -1,30 +1,38 @@
-﻿@model IQueryable<EqUiWebUi.Areas.Alert.Models.l_controlLimits>
-@Html.Grid(Model).Named("l_controlLimits").Build(columns =>
-{
-    columns.Add(c => c.id).Titled("ID").InitialSort(GridSortOrder.Desc).Css("d-none d-lg-table-cell");
-    columns.Add(c => c.c_triggers.alertType).Titled("alertType");
-    columns.Add(c => c.CreateDate).Titled("CreateDate").Formatted("{0:dd-MM-yyyy HH:mm:ss}").Css("d-none d-lg-table-cell");
-    columns.Add(c => c.L_CreateUser.username).Titled("L_CreateUser").Css("d-none d-lg-table-cell");
-    columns.Add(c => c.alarmobject).Titled("alarmobject");
-    columns.Add(c => c.UpperLimit).Titled("UCL");
-    columns.Add(c => c.LowerLimit).Titled("LCL");
-    columns.Add(c => c.l_variants.variantGroup).Titled("variantGroup");
-    columns.Add(c => c.Comment).Titled("Comment");
-    columns.Add(c => c.isdead).Titled("isdead");
-    //add edit button
-    columns.Add(c => c)
-                .Titled("")
-                .Encoded(false)
-                .RenderedAs(c => MyFilters.IconActionLink(Url.Action("Edit", new { id = c.id, closeOnSave = true }), "fas fa-pencil-alt", "", "Edit this controllimit", enabeld: !c.isdead, classes: "OpenNewWindow")
-                ).Filterable(false);
-
-}).Filterable().Sortable().Pageable(pager =>
-{
-    pager.RowsPerPage = 17;
-}).Empty("Did not find anything").Css("table-hover")
+﻿
+<div id="l_controlLimitsGrid" class="mvc-grid"></div>
 
 
-<script>
-    //subscribe to click event (launch external window)
-    initUrlNewWindow();
-</script>
+    <script>
+        $("#l_controlLimitsGrid").mvcgrid({
+            sourceUrl: '@Url.Action("_ControlLimitsGrid", new { alarmobject = ViewBag.alarmobject, c_trigger_id = ViewBag.c_trigger_id, showIsDead = ViewBag.showIsDead })',
+            requestType: 'get',
+            reload: true,
+            rowClicked: function (row, data, e) {
+            //if row already has this clase close the modal
+            if ($(row).hasClass("bg-info")) {
+                $("#placeholder1").remove();
+                $(row).removeClass("bg-info");
+                return;
+            }
+            //clear selected rows for this table
+            $('tr').removeClass('bg-info'); //THIS IS WRONG
+            $(row).addClass("bg-info");
+            $("#placeholder1").remove(); //clear placeholder is exists
+            //add new placeholder afhter selected row
+            $(row).after('<tr id="placeholder1"><td colspan="1000"><div class=""><div class="" id ="placeholderPartial1"></div></div></td></tr>');
+            //load partial into div
+            $("#placeholderPartial1").load('@Url.Action("_ControlChart","Alert")?l_controllimit_id=' + data.id );
+            //listen toclick events
+            //
+            },
+            reloadStarted: function () {
+
+            },
+            reloadEnded: function () {
+
+            },
+            reloadFailed: function (result) {
+                $('#dummyLogClassResultGrid').html("Error while loading!!!");
+            }
+            });
+    </script>

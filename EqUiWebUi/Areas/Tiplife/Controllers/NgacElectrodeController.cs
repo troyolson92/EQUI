@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -33,6 +34,15 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
             if (data == null)
             {
                 data = new List<TipMonitor>();
+                if (Debugger.IsAttached)
+                {
+                    log.Warn("Loading tipstatus in method (debug mode)");
+                    //in debug mode get the data here
+                    GADATAEntitiesTiplife gADATAEntities = new GADATAEntitiesTiplife();
+                    DataBuffer.Tipstatus = (from tipstatus in gADATAEntities.TipMonitor
+                                            select tipstatus).ToList();
+                    data = DataBuffer.Tipstatus;
+                }
             }
 
             string LocationRoot = CurrentUser.Getuser.LocationRoot;
@@ -45,10 +55,23 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
             //
             return PartialView(data);
         }
-
-        //------------------------------------tabel met elektrode wissels.-------------------------------------------------
+        //------------------------------------Tiplife info partial.--------------------------------------------------------
         [HttpGet]
-        public ActionResult TipwearBeforeChange(int daysback = 360)
+        public ActionResult _Tipinfo(string location, int tool_nr)
+        {
+            ViewBag.location = location;
+            ViewBag.tool_nr = tool_nr;
+            return PartialView();
+        }
+
+        //------------------------------------Tabel met elektrode wissels.-------------------------------------------------
+        [HttpGet]
+        public ActionResult TipwearBeforeChange()
+        {
+            return View();
+        }
+        [HttpGet]
+        public ActionResult _TipwearBeforeChangeGrid(int daysback = 360, string location = "", int tool_nr = 1)
         {
             var startdate = DateTime.Now.Date.AddDays(daysback * -1);
             GADATAEntitiesTiplife gADATAEntities = new GADATAEntitiesTiplife();
@@ -56,8 +79,9 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
             IQueryable<TipwearBeforeChange> data = from t in gADATAEntities.TipwearBeforeChange
                                                    where t.TipchangeTimestamp > startdate
                                                    && (t.LocationTree ?? "").Contains(LocationRoot)
+                                                   && ((t.controller_name == location && t.Tool_Nr == tool_nr) || location == "")
                                                    select t;
-            return View(data);
+            return PartialView(data);
         }
 
         //------------------------------------tabel met ruwe tipdress data.-------------------------------------------------
@@ -78,12 +102,18 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
         [HttpGet]
         public ActionResult TipLifeExpectations()
         {
+            return View();
+        }
+        [HttpGet]
+        public ActionResult _TipLifeExpectationsGrid(string location = "", int tool_nr = 1)
+        {
             GADATAEntitiesTiplife gADATAEntities = new GADATAEntitiesTiplife();
             string LocationRoot = CurrentUser.Getuser.LocationRoot;
             IQueryable<TipLifeExpectations> data = from t in gADATAEntities.TipLifeExpectations
-                                               where (t.LocationTree ?? "").Contains(LocationRoot)
-                                               select t;
-            return View(data);
+                                                   where (t.LocationTree ?? "").Contains(LocationRoot)
+                                                   && ((t.controller_name.Contains(location) && t.Tool_Nr == tool_nr) || location == "")
+                                                   select t;
+            return PartialView(data);
         }
 
         //----------------------------------onderhouds plannings tools------------------------------------------------------

@@ -17,6 +17,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
         // GET: Alert/L_controlLimits
         public ActionResult Index(bool showIsDead = false)
         {
+            ViewBag.showIsDead = showIsDead;
             return View();
         }
 
@@ -24,13 +25,20 @@ namespace EqUiWebUi.Areas.Alert.Controllers
         //is showisdead = true all is show else only active control limits
         //alarmobject has value than prefilter
         //c_trigger_id has value than prefilter
-        public ActionResult _List( string alarmobject, int? c_trigger_id, bool showIsDead = false)
+        public ActionResult _List(string alarmobject, int? c_trigger_id, bool showIsDead = false)
+        {
+            ViewBag.alarmobject = alarmobject;
+            ViewBag.c_trigger_id = c_trigger_id;
+            ViewBag.showIsDead = showIsDead;
+            return PartialView();
+        }
+        public ActionResult _ControlLimitsGrid(string alarmobject, int? c_trigger_id, bool showIsDead = false)
         {
             IQueryable<l_controlLimits> l_controlLimits = db.l_controlLimits.Include(l => l.c_triggers).Include(l => l.L_ChangeUser).Include(l => l.L_CreateUser)
                 .Where(l => 
                 (l.isdead == false || l.isdead == showIsDead)
                 &&(l.c_trigger_id == c_trigger_id || c_trigger_id == null)
-                &&(l.alarmobject == alarmobject || alarmobject == null)
+                &&(l.alarmobject.Contains(alarmobject) || alarmobject == null)
                 );
             return PartialView(l_controlLimits);
         }
