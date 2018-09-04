@@ -1100,6 +1100,10 @@
     <Content Include="Areas\VWSC\Views\web.config" />
     <Content Include="Areas\VWSC\Views\_ViewStart.cshtml" />
     <Content Include="Areas\VWSC\Views\vwsc\Index.cshtml" />
+    <Content Include="Areas\Tiplife\Views\NgacElectrode\_TipLifeExpectationsGrid.cshtml" />
+    <Content Include="Areas\Tiplife\Views\NgacElectrode\_TipwearBeforeChangeGrid.cshtml" />
+    <Content Include="Areas\Tiplife\Views\NgacElectrode\_Tipinfo.cshtml" />
+    <Content Include="Areas\Alert\Views\L_controlLimits\_ControlLimitsGrid.cshtml" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gotsvw11292-PRODUCTION-VCTA.pubxml" />
     <None Include="Properties\PublishProfiles\VCC22700-Testing.pubxml" />

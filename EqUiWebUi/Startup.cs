@@ -52,7 +52,8 @@ namespace EqUiWebUi
             {
                 log.Warn("Hangfire not enabled in web.config");
             }
-        //
+            //
+            //things to do if in debug mode.
         }
 
         //handle hangfire authentication
