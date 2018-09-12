@@ -18,6 +18,7 @@
     //full with screen
     $("#allcontent").removeClass("body-content");
     $("#allcontent").removeClass("container");
+    $("#controllimitPlaceholder").html("Loading...");
     $("#controllimitPlaceholder").load("@Url.Action("_List", new { showIsDead = ViewBag.showIsDead })");
 </script>
 }
