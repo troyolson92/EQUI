@@ -95,104 +95,6 @@ namespace ABBCommTest
             debugger.Message("done with scan");
         }
 
-        //change socket config in autorun. to robot
-        private void SocketConfigureRobot(ControllerInfo ci, DataGridViewRow row)
-        {
-            string tempdir = @"c:\temp\debug\";
-            string FilePathOnControler = @"/hd0a/TEMP/";
-
-            try
-            {
-                if (ci.Availability != Availability.Available) { debugger.Message("controller busy: " + ci.Id); return; } //stop if controller is not available
-                //
-                controller = ControllerFactory.CreateFrom(ci); //get controller from factory
-                if (controller.OperatingMode != ControllerOperatingMode.Auto) //controller must be on auto to take master 
-                {
-                    row.Cells[dataGridView1.Columns["AutoOK"].Index].Value = "NOK";
-                    return;
-                }
-                else
-                {
-                    row.Cells[dataGridView1.Columns["AutoOK"].Index].Value = "OK";
-
-                    // get modules from controller task trob1
-                    ABB.Robotics.Controllers.RapidDomain.Task tRob1 = controller.Rapid.GetTask("T_ROB1");
-                    Module[] mx  = tRob1.GetModules();
-                    //find the one we need 
-                    foreach (Module m in mx)
-                    {
-                        if (m.Name.StartsWith("LR",StringComparison.InvariantCulture))
-                        {
-                            Routine proc = m.GetRoutine("InitUser");
-                            if (proc != null) //check if we have the right module
-                            {
-                                //find the module on the controller and get it **************************************
-                                    //save it on the controller
-                                    m.SaveToFile(FilePathOnControler);
-                                    System.Threading.Thread.Sleep(1000);
-                                    //get file from controler to pc 
-                                    FileSystem cntrlFileSystem;
-                                    cntrlFileSystem = controller.FileSystem;
-                                    controller.FileSystem.RemoteDirectory = FilePathOnControler;
-                                    controller.FileSystem.LocalDirectory = tempdir;
-                                    //move file to pc
-                                    controller.FileSystem.GetFile(m.Name + ".mod", m.Name + ".mod", true);
-                                //process the file******************************************************************
-                                    string lrModule = File.ReadAllText(tempdir + m.Name + ".mod");
-                                    lrModule = lrModule.Replace("bUseSocket", "!bUseSocket");
-                                    lrModule = lrModule.Replace("bBodyIDActive", "!bBodyIDActive");
-                                    File.WriteAllText(tempdir + m.Name + ".mod", lrModule);
-                                //put the file back*****************************************************************
-                                    try
-                                    {
-                                        //get controller mastership
-                                        using (Mastership master = Mastership.Request(controller))
-                                        {
-
-                                            //put the file back on the controller
-                                            controller.FileSystem.PutFile(m.Name + ".mod", m.Name + ".mod", true);
-
-
-                                            //check if controller if home for load.
-                                            Signal O_Homepos = controller.IOSystem.GetSignal("O_Homepos");
-                                            if (O_Homepos.Value == 1)
-                                            {
-                                                tRob1.LoadModuleFromFile(FilePathOnControler + m.Name + ".mod", RapidLoadMode.Replace);
-                                                row.Cells[dataGridView1.Columns["LoadOK"].Index].Value = "OK";
-                                            }
-                                            else
-                                            {
-                                                row.Cells[dataGridView1.Columns["LoadOK"].Index].Value = "NOK";           
-                                            }
-
-                                            //release master
-                                            master.Release();
-                                        }
-                                    }
-                                    catch (System.InvalidOperationException ex)
-                                    {
-                                        debugger.Exeption(ex);
-                                        debugger.Message("error in write to controller");
-                                        return;
-                                    }
-                            }
-                      
-                        }
-
-                    }
-                }
-                row.Cells[dataGridView1.Columns["ConnectOK"].Index].Value = "OK";   
-        }     
-            catch (Exception ex)
-            {
-                row.Cells[dataGridView1.Columns["ConnectOK"].Index].Value = "NOK";
-                debugger.Exeption(ex);
-                debugger.Message("Error connecting to controller");
-                return;
-            }
-        }
-
-
 
         /*
     PROC InitUser()
@@ -449,7 +351,7 @@ namespace ABBCommTest
         }
 
         //change tipdress parameter.
-        private void ChangeMAxnoDress(ControllerInfo ci, DataGridViewRow row)
+        private void ChangeDressParm(ControllerInfo ci, DataGridViewRow row)
         {
 
             try
@@ -480,26 +382,25 @@ namespace ABBCommTest
                     {
                         theDataType = RapidDataType.GetDataType(rs);
 
-                        if (theDataType.Name.StartsWith("gundata") && rs.Scope[1].EndsWith("UserData")) //type tipdress data in a module that ends with user data
+                        if (theDataType.Name.StartsWith("Tipdressdata") && rs.Scope[1].EndsWith("UserData")) //type tipdress data in a module that ends with user data
                         {
                         RapidData rd = controller.Rapid.GetRapidData(rs.Scope[0], rs.Scope[1], rs.Scope[2]);
 
                         RapidDataType rdt = controller.Rapid.GetRapidDataType(rs.Scope[0], rs.Scope[1], rs.Scope[2]);
-                        UserDefined gundata = new UserDefined(rdt);
+                        UserDefined dressdata = new UserDefined(rdt);
 
-                        gundata = (UserDefined)rd.Value;
-                        string maxWelds = gundata.Components[2].ToString();
+                        dressdata = (UserDefined)rd.Value;
+                        string totalcutter = dressdata.Components[13].ToString();
 
-                        Console.WriteLine("{0}; {1}; {2}", controller.Name, rs.Scope[2], maxWelds);
-
+                        Console.WriteLine("{0}; {1}; {2}", controller.Name, rs.Scope[2], totalcutter);
                             //change it 
                             try
                             {
                                 //get controller mastership
                                 using (Mastership master = Mastership.Request(controller))
                                 {
-                                    gundata.Components[2].FillFromString("60"); // set new value to 60
-                                    rd.Value = gundata;
+                                    dressdata.Components[13].FillFromString("True"); // set TRUE
+                                    rd.Value = dressdata;
                                     row.Cells[dataGridView1.Columns["WriteOk"].Index].Value = "OK";
                                     //release master
                                     master.Release();
@@ -618,33 +519,9 @@ namespace ABBCommTest
 
         }
 
-        //adding code to change XML file 
-        //get pino config file name
-        private string GetPino(Controller controller)
+        //change tipwearRatioInterval parameter.
+        private void ChangeValue(ControllerInfo ci, DataGridViewRow row,string Modulename, string Varname, double newValue)
         {
-
-            ConfigurationDatabase cfg = controller.Configuration;
-            Domain sioDomain = controller.Configuration.SerialIO;
-
-            // read parm to see if config was done
-            string[] path = { "SIO", "INDUSTRIAL_NETWORK_USER", "NetworkUserConfig", "FileCfgName" };
-            string data = null;
-            try { data = cfg.Read(path); }
-            catch (Exception) { }
-            return data;
-        }
-
-        //get controller gateway
-        private string GetGateway(Controller controller)
-        {
-            NetworkSettingsInfo nsi = controller.NetworkSettings;
-            return nsi.Gateway.ToString();
-        }
-
-        private void PINOUPDATE(ControllerInfo ci, DataGridViewRow row)
-        {
-            FileSystem cntrlFileSystem;
-
             try
             {
                 if (ci.Availability != Availability.Available) { debugger.Message("controller busy: " + ci.Id); return; } //stop if controller is not available
@@ -658,8 +535,33 @@ namespace ABBCommTest
                 else
                 {
                     row.Cells[dataGridView1.Columns["AutoOK"].Index].Value = "OK";
+                    try
+                    {
+                        RapidData rd = controller.Rapid.GetRapidData("T_ROB1", Modulename, Varname);
+                        debugger.Log($"{ci.ControllerName}; {Varname}  FOUND");
+                        //test that data type is correct before cast
+                        if (rd.Value is ABB.Robotics.Controllers.RapidDomain.Num)
+                        {
+                            ABB.Robotics.Controllers.RapidDomain.Num rapidNum = (ABB.Robotics.Controllers.RapidDomain.Num)rd.Value;
+                            rapidNum.Value = newValue;
+                            //get controller mastership
+                            using (Mastership master = Mastership.Request(controller))
+                            {
+                                rd.Value = rapidNum;
+                                row.Cells[dataGridView1.Columns["WriteOk"].Index].Value = "OK";
+                                //release master
+                                master.Release();
+                            }
+                            debugger.Log($"{ci.ControllerName}; {Varname} WRITE OK");
+                        }
+                    }
+                    catch(Exception ex)
+                    {
+                        debugger.Log($"{ci.ControllerName}; {Varname} NOT FOUND");
+                    }
+
+
                 }
-                controller.Logon(UserInfo.DefaultUser); //logon to controller
                 row.Cells[dataGridView1.Columns["ConnectOK"].Index].Value = "OK";
             }
             catch (Exception ex)
@@ -670,102 +572,8 @@ namespace ABBCommTest
                 return;
             }
 
-
-            try
-            {
-                //get controller mastership
-                using (Mastership m = Mastership.Request(controller))
-                {
-                    // get pino filename
-                    string pinofilename = GetPino(controller);
-                    //get controller gateway 
-                    string controllergateway = GetGateway(controller);
-
-                    //get file from controler to pc 
-                    cntrlFileSystem = controller.FileSystem;
-                    controller.FileSystem.RemoteDirectory = string.Format(@"/hd0a/{0}/HOME", controller.SystemName);
-                    controller.FileSystem.LocalDirectory = @"c:\temp\";
-                    //move file to pc
-                    controller.FileSystem.GetFile(pinofilename, pinofilename, true);
-                    //edit the pino file to the new gataway.
-                    editPino(controllergateway, @"c:\temp\" + pinofilename);
-                    //put the file back on the controller
-                    controller.FileSystem.PutFile(pinofilename, pinofilename, true);
-
-
-                    //check if controller if home for restart.
-                    Signal O_Homepos = controller.IOSystem.GetSignal("O_Homepos");
-                    if (O_Homepos.Value == 1)
-                    {
-                        //RESTART !!!!!!!!!!!!!!!!!
-                        if (controller.State == ControllerState.MotorsOn)
-                        {
-                            controller.State = ControllerState.MotorsOff;
-                        }
-                        controller.Restart(ControllerStartMode.Warm);
-                        //
-                        row.Cells[dataGridView1.Columns["restartOK"].Index].Value = "OK";
-                    }
-                    else
-                    {
-                        row.Cells[dataGridView1.Columns["restartOK"].Index].Value = "NOK";
-                    }
-
-                    //release master
-                    m.Release();
-                    row.Cells[dataGridView1.Columns["ConfigOK"].Index].Value = "OK";
-                }
-            }
-            catch (System.InvalidOperationException ex)
-            {
-                row.Cells[dataGridView1.Columns["ConfigOK"].Index].Value = "NOK";
-                debugger.Exeption(ex);
-                debugger.Message("error in write to controller");
-                return;
-            }
-
-
-
         }
 
-        private void editPino(string newGateway, string file)
-        {
-            string[] gateway = newGateway.Split('.');
-
-            XDocument xmlDoc = XDocument.Load(file);
-
-            var items = from item in xmlDoc.Descendants("Gate")
-                        select item;
-
-            foreach (XElement itemElement in items)
-            {
-                if (itemElement.Attribute("d1").Value != gateway[0].ToString())
-                {
-                    debugger.Log(string.Format("File: {0} d1:{1} -> {2}", file, itemElement.Attribute("d1").Value, gateway[0].ToString()));
-                    itemElement.SetAttributeValue("d1", gateway[0].ToString());
-                }
-
-                if (itemElement.Attribute("d2").Value != gateway[1].ToString())
-                {
-                    debugger.Log(string.Format("File: {0} d2:{1} -> {2}", file, itemElement.Attribute("d2").Value, gateway[1].ToString()));
-                    itemElement.SetAttributeValue("d2", gateway[1].ToString());
-                }
-
-                if (itemElement.Attribute("d3").Value != gateway[2].ToString())
-                {
-                    debugger.Log(string.Format("File: {0} d3:{1} -> {2}", file, itemElement.Attribute("d3").Value, gateway[2].ToString()));
-                    itemElement.SetAttributeValue("d3", gateway[2].ToString());
-                }
-
-                if (itemElement.Attribute("d4").Value != gateway[3].ToString())
-                {
-                    debugger.Log(string.Format("File: {0} d4:{1} -> {2}", file, itemElement.Attribute("d4").Value, gateway[3].ToString()));
-                    itemElement.SetAttributeValue("d4", gateway[3].ToString());
-                }
-            }
-
-            xmlDoc.Save(file);
-        }
 
         //buttons
         private void Btn_scanNetwork_Click(object sender, EventArgs e)
@@ -837,15 +645,15 @@ namespace ABBCommTest
             dt_robots.Columns.Add("SystemId", System.Type.GetType("System.String"));
             dt_robots.Columns.Add("ControllerName", System.Type.GetType("System.String"));
             dt_robots.Columns.Add("autoOK", System.Type.GetType("System.String"));
-          //  dt_robots.Columns.Add("Version", System.Type.GetType("System.String"));
-         //   dt_robots.Columns.Add("VersionOK", System.Type.GetType("System.String"));
+            dt_robots.Columns.Add("Version", System.Type.GetType("System.String"));
+            dt_robots.Columns.Add("VersionOK", System.Type.GetType("System.String"));
             dt_robots.Columns.Add("RobotHome", System.Type.GetType("System.String"));
             dt_robots.Columns.Add("ConnectOK", System.Type.GetType("System.String"));
-            dt_robots.Columns.Add("HasRedress", System.Type.GetType("System.String"));
-            dt_robots.Columns.Add("LoadOK", System.Type.GetType("System.String"));
-            dt_robots.Columns.Add("ConfigOK", System.Type.GetType("System.String"));
-            dt_robots.Columns.Add("restartOK", System.Type.GetType("System.String"));
-            dt_robots.Columns.Add("WriteOk", System.Type.GetType("System.String"));
+       //     dt_robots.Columns.Add("HasRedress", System.Type.GetType("System.String"));
+        //    dt_robots.Columns.Add("LoadOK", System.Type.GetType("System.String"));
+      //      dt_robots.Columns.Add("ConfigOK", System.Type.GetType("System.String"));
+      //      dt_robots.Columns.Add("restartOK", System.Type.GetType("System.String"));
+           dt_robots.Columns.Add("WriteOk", System.Type.GetType("System.String"));
             //  dt_robots.Columns.Add("HasTipneed", System.Type.GetType("System.String"));
             // dt_robots.Columns.Add("HasTipneedComment", System.Type.GetType("System.String"));
             //  dt_robots.Columns.Add("Found", System.Type.GetType("System.String"));
@@ -867,8 +675,9 @@ namespace ABBCommTest
                     {
                         this.controller = ControllerFactory.CreateFrom(ci);
                         this.controller.Logon(UserInfo.DefaultUser);
-                       // PFMConfigureRobot(ci, row);
-                        PINOUPDATE(ci, row);
+                        //ChangeValue(ci, row, "HMeasurment", "nMaxRatioDiffFromAverage", 25);
+                        //ChangeValue(ci, row, "HDress", "nMaxNoOffAutoReDress", 1);
+                        ChangeDressParm(ci, row);
                     }
                     else
                     {

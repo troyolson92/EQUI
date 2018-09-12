@@ -39,7 +39,12 @@ select
  null id
 ,EMPLOYEE.OPERSFN LastName
 ,EMPLOYEE.OPERSVN SurName 
-,STW040.IMACHINE
+,CASE 
+WHEN MACHINE.OMACHINE LIKE '%STATION%' THEN 'A STN' || STW040.IMACHINE
+ELSE STW040.IMACHINE 
+END IMACHINE
+--,STW040.IMACHINE
+--,MACHINE.OMACHINE
 ,STW040.KPLOEG
 ,STW040.DBSTASTO 
 ,STW040.DBSTOSTO 
@@ -75,9 +80,9 @@ LEFT JOIN APPLICATION.TBI270 FOUT on STW040.KFOUT5 = FOUT.KFOUT5 and STW040.KEIG
 LEFT JOIN APPLICATION.TBI280 OORZAAK on STW040.KOORZAAK = OORZAAK.KOORZAAK and STW040.KEIG = OORZAAK.KOORZGRP
 WHERE 
 STW040.KFAB = 'GA'
-AND STW040.DBSTASTO > sysdate-((1*24*60)/1440) --work with last 1 days of data.
+--AND STW040.DBSTASTO > sysdate-((1*24*60)/1440) --work with last 1 days of data.
 AND STW040.KMANUEEL <> 'N'
---AND STW040.IMACHINE like '336060%'
+--AND STW040.IMACHINE like '72030%'
 ";
 
             //get data from stw040 database.
@@ -85,15 +90,19 @@ AND STW040.KMANUEEL <> 'N'
             ConnectionManager connectionManager = new ConnectionManager();
             DataTable dt = new DataTable();
 
-            context.WriteLine(" Get STW040 data From DBI started");
+            context.WriteLine("Get STW040 data From DBI started");
             dt = connectionManager.RunQuery(STW040qry,dbName: "DBI", enblExeptions: true, maxEXECtime: 600);
-            context.WriteLine(string.Format(" Get STW040 data From DBI done (rowcount:{0})",dt.Rows.Count));
+            context.WriteLine(string.Format("Get STW040 data From DBI done (rowcount:{0})",dt.Rows.Count));
+            //clear data in gadata
+            connectionManager.RunCommand("DELETE GADATA.STW040.STW040 from GADATA.STW040.STW040", enblExeptions: true, maxEXECtime: 60);
             //push data to server
-            context.WriteLine(" Push to gadata started");
+            context.WriteLine("Push to gadata started");
             connectionManager.BulkCopy(dt, "[STW040].[STW040]", enblExeptions: true, maxEXECtime: 300);
-            context.WriteLine(" Push to gadata done");
+            context.WriteLine("Push to gadata done");
+
+            /*
             //remove duplicates
-            context.WriteLine(" Remove dups on gadata");
+            context.WriteLine("Remove dups on gadata");
             string STW040RemoveDups = @"
 DELETE GADATA.STW040.STW040 
 --select lx.*
@@ -115,7 +124,9 @@ WHERE
    KeepRows.Id IS NULL
    and lx.DBSTOSTO > GETDATE()-2 --limit view window to 5 days";
             connectionManager.RunCommand(STW040RemoveDups, enblExeptions: true, maxEXECtime: 60);
-            context.WriteLine(" Remove dups on gadata done");
+            context.WriteLine("Remove dups on gadata done");
+            */
+
             return;
         }
 

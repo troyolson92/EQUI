@@ -79,7 +79,7 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
             IQueryable<TipwearBeforeChange> data = from t in gADATAEntities.TipwearBeforeChange
                                                    where t.TipchangeTimestamp > startdate
                                                    && (t.LocationTree ?? "").Contains(LocationRoot)
-                                                   && ((t.controller_name == location && t.Tool_Nr == tool_nr) || location == "")
+                                                   && (t.controller_name.Contains(location) && t.Tool_Nr == tool_nr)
                                                    select t;
             return PartialView(data);
         }
@@ -98,7 +98,7 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
             IQueryable<TipDressLogFile> data = from t in gADATAEntities.TipDressLogFile
                                                where t.Date_Time > startdate
                                                && (t.LocationTree ?? "").Contains(LocationRoot)
-                                               && ((t.controller_name == location && t.Tool_Nr == tool_nr) || location == "")
+                                               && (t.controller_name.Contains(location) && t.Tool_Nr == tool_nr) 
                                                select t;
             return PartialView(data);
         }
@@ -116,7 +116,7 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
             string LocationRoot = CurrentUser.Getuser.LocationRoot;
             IQueryable<TipLifeExpectations> data = from t in gADATAEntities.TipLifeExpectations
                                                    where (t.LocationTree ?? "").Contains(LocationRoot)
-                                                   && ((t.controller_name.Contains(location) && t.Tool_Nr == tool_nr) || location == "")
+                                                   && (t.controller_name.Contains(location) && t.Tool_Nr == tool_nr)
                                                    select t;
             return PartialView(data);
         }
