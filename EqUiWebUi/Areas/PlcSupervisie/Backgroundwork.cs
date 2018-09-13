@@ -77,8 +77,7 @@ namespace EqUiWebUi.Areas.PlcSupervisie
                                            {1}.*
                                         , '{1}' StoTable 
                                         FROM STO_SYS.{1}
-                                        WHERE CHANGETS > TO_TIMESTAMP('{0}', 'YYYY/MM/DD HH24:MI:SS')
-"
+                                        WHERE CHANGETS > TO_TIMESTAMP('{0}', 'YYYY/MM/DD HH24:MI:SS')"
                 , GadataMAxTs.ToString("yyyy-MM-dd HH:mm:ss"),TargetTable); //USE BIG HH for 24 hour format !!!!
 
             context.WriteLine("Get new data from DST started");
