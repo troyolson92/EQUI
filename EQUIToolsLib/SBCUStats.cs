@@ -730,6 +730,7 @@ SELECT * FROM (
 SELECT DISTINCT 
        [WeldgunName]  as 'Toolname'
   FROM [GADATA].[Volvo].[RobotWeldGunRelation]
+  WHERE enable_bit <> -1
 UNION
 SELECT DISTINCT
          SUBSTRING([controller_name],0,CHARINDEX('R', [controller_name]) )
