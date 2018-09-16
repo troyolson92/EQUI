@@ -1105,6 +1105,7 @@
     <Content Include="Areas\Tiplife\Views\NgacElectrode\_Tipinfo.cshtml" />
     <Content Include="Areas\Alert\Views\L_controlLimits\_ControlLimitsGrid.cshtml" />
     <Content Include="Areas\Tiplife\Views\NgacElectrode\_TipDressDataGrid.cshtml" />
+    <Content Include="Areas\Alert\Views\L_controlLimits\Delete.cshtml" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gotsvw11292-PRODUCTION-VCTA.pubxml" />
     <None Include="Properties\PublishProfiles\VCC22700-Testing.pubxml" />

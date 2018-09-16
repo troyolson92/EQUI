@@ -5,10 +5,6 @@
 }
 
 <div class="card">
-    <div class="card-header bg-primary">
-        <h4>BodyTrackWebgrid</h4>
-        BodyID: <input class="grid-search" />
-    </div>
 
     <div class="card-body">
         @Html.Grid(Model).Named("DataGrid").Build(columns =>
@@ -19,7 +15,7 @@
        columns.Add(c => c.CycleStart).Titled("CycleStart").Formatted("{0:dd-MM-yyyy HH:mm}").Filterable(true).InitialSort(GridSortOrder.Desc);
        columns.Add(c => c.CycleEnd).Titled("CycleEnd").Formatted("{0:HH:mm}").Filterable(true);
       // columns.Add(c => c.ts_breakDownStart).Titled("ts_breakDownStart").Formatted("{0:dd-MM-yyyy HH:mm}").Filterable(true);
-      // columns.Add(c => c.ts_breakDownAck).Titled("ts_breakDownAck").Formatted("{0:dd-MM-yyyy HH:mm}").Filterable(true);
+       columns.Add(c => c.ts_breakDownAck).Titled("ack").Formatted("{0:dd-MM-yyyy HH:mm}").Filterable(true);
       // columns.Add(c => c.ts_breakDownEnd).Titled("ts_breakDownEnd").Formatted("{0:dd-MM-yyyy HH:mm}").Filterable(true);
       // columns.Add(c => c.ts_breakDownEnd).Titled("ts_breakDownEnd").Formatted("{0:dd-MM-yyyy HH:mm}").Filterable(true);
        columns.Add(c => c.FullLogtext).Titled("FullLogtext").Filterable(true);

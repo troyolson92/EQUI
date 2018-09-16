@@ -61,7 +61,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
         // GET: Alert/L_controlLimits/Create
         public ActionResult Create()
         {
-            ViewBag.c_trigger_id = new SelectList(db.c_triggers, "id", "discription");
+            ViewBag.c_trigger_id = new SelectList(db.c_triggers.Where(c => c.hasControlLimits == true), "id", "discription");
             return View();
         }
 
@@ -92,7 +92,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                 return RedirectToAction("Index");
             }
             ThrowModelValidation:
-            ViewBag.c_trigger_id = new SelectList(db.c_triggers, "id", "alertType", l_controlLimits.c_trigger_id);
+            ViewBag.c_trigger_id = new SelectList(db.c_triggers.Where(c => c.hasControlLimits == true), "id", "alertType", l_controlLimits.c_trigger_id);
             return View(l_controlLimits);
         }
 
@@ -129,7 +129,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                 return new HttpStatusCodeResult(404, "not possible to edit a dead control limit id:" + id.ToString());
             }
 
-            ViewBag.c_trigger_id = new SelectList(db.c_triggers, "id", "alertType", l_controlLimits.c_trigger_id);
+            ViewBag.c_trigger_id = new SelectList(db.c_triggers.Where(c => c.hasControlLimits == true), "id", "alertType", l_controlLimits.c_trigger_id);
             ViewBag.l_variants_id = new SelectList(db.l_variants.Where(l => l.c_trigger_id == l_controlLimits.c_trigger_id), "id", "variantGroup", l_controlLimits.l_variants_id);
             return View(l_controlLimits);
         }
@@ -218,9 +218,40 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                 }
             }
             labelThrowValidationError:
-            ViewBag.c_trigger_id = new SelectList(db.c_triggers, "id", "alertType", l_controlLimits.c_trigger_id);
+            ViewBag.c_trigger_id = new SelectList(db.c_triggers.Where(c => c.hasControlLimits == true), "id", "alertType", l_controlLimits.c_trigger_id);
             ViewBag.l_variants_id = new SelectList(db.l_variants.Where(l => l.c_trigger_id == l_controlLimits.c_trigger_id), "id", "variantGroup", l_controlLimits.l_variants_id);
             return View(l_controlLimits);
+        }
+
+        // GET: Alert/h_alert/Delete/5
+        [Authorize(Roles = "Administrator, AlertMaster, AlertPowerUser")]
+        public  ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            l_controlLimits l_controlLimits =  db.l_controlLimits.Find(id);
+            if (l_controlLimits == null)
+            {
+                return HttpNotFound();
+            }
+            return View(l_controlLimits);
+        }
+
+        // POST: Alert/h_alert/Delete/5
+        [Authorize(Roles = "Administrator, AlertMaster, AlertPowerUser")]
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            l_controlLimits l_controlLimits =  db.l_controlLimits.Find(id);
+            l_controlLimits.ChangeDate = System.DateTime.Now;
+            l_controlLimits.ChangeUser = CurrentUser.Getuser.id;
+            l_controlLimits.isdead = true;
+            db.Entry(l_controlLimits).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
 
 
