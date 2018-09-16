@@ -22,7 +22,7 @@ namespace EqUiWebUi.Areas.PlcSupervisie
             if (EqUiWebUi.MyBooleanExtensions.IsAreaEnabled("PlcSupervisie"))
             {
                 Backgroundwork backgroundwork = new Backgroundwork();
-                Hangfire.RecurringJob.AddOrUpdate("STO=>GADATA", () => backgroundwork.PushDatafromSTOtoGADATA(), Cron.MinuteInterval(5));
+                Hangfire.RecurringJob.AddOrUpdate("STO=>GADATA", () => backgroundwork.PushDatafromSTOtoGADATA(), Cron.MinuteInterval(10));
             }
             else
             {
@@ -53,12 +53,11 @@ namespace EqUiWebUi.Areas.PlcSupervisie
             context.WriteLine("Start handeling table");
             ConnectionManager connectionManager = new ConnectionManager();
             //get last record in GADATA 
-            string gadataGetMaxTimestampQry = string.Format(@"select max(_timestamp) as 'ts' FROM STO.h_breakdown
-                                                            left join STO.c_StoTable on c_StoTable.id = h_breakdown.c_stotable_id
-                                                            where c_StoTable.StoTable = '{0}'", TargetTable);
+            string gadataGetMaxTimestampQry = string.Format(@"select max(CHANGETS) as 'ts' FROM STO.rt_error
+                                                            where rt_error.StoTable = '{0}'", TargetTable);
             DataTable dtGadataMaxTS = connectionManager.RunQuery(gadataGetMaxTimestampQry,enblExeptions:true);
-            //handel empty table copy last 30 days
-            DateTime GadataMAxTs = System.DateTime.Now.AddDays(-30);
+            //handel empty table copy last 5 days
+            DateTime GadataMAxTs = System.DateTime.Now.AddDays(-5);
 
             if (!DBNull.Value.Equals(dtGadataMaxTS.Rows[0]["ts"]))
             {
@@ -67,7 +66,7 @@ namespace EqUiWebUi.Areas.PlcSupervisie
             }
             else
             {
-                string msg = String.Format("TargetTable: {0} had no data so full refresh", TargetTable);
+                string msg = String.Format("TargetTable: {0} had no data (in sto.rt_error) so full refresh", TargetTable);
                 context.WriteLine(msg);
                 log.Error(msg);
             }

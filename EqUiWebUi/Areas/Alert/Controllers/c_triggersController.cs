@@ -13,7 +13,7 @@ using System.Text.RegularExpressions;
 
 namespace EqUiWebUi.Areas.Alert.Controllers
 {
-    [Authorize(Roles = "Administrator, AlertMaster")]
+
     public class c_triggersController : Controller
     {
         private GADATA_AlertModel db = new GADATA_AlertModel();
@@ -26,6 +26,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
         }
 
         //run the alert trigger in debug mode (manual triggerd no hangfire
+        [Authorize(Roles = "Administrator, AlertMaster, AlertPowerUser")]
         public void RunAlertTrigger(int triggerID)
         {
             AlertEngine alertEngine = new AlertEngine();
@@ -34,6 +35,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
 
         // GET: Alert/c_triggers/Edit/5
         // We will handle the creation of a new trigger also in EDIT. (to make code simplere) to create a new trigger pass ID = -1
+        [Authorize(Roles = "Administrator, AlertMaster, AlertPowerUser")]
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
@@ -67,6 +69,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
         // POST: Alert/c_triggers/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Administrator, AlertMaster")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateInput(false)] //to alow posting of raw html data
@@ -105,6 +108,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
         }
 
         // GET: Alert/c_triggers/Delete/5
+        [Authorize(Roles = "Administrator, AlertMaster")]
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
@@ -120,6 +124,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
         }
 
         // POST: Alert/c_triggers/Delete/5
+        [Authorize(Roles = "Administrator, AlertMaster")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)

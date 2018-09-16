@@ -126,3 +126,9 @@ else if (Model.l_variants_id.HasValue)
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+
+<hr />
+
+<div class="alert alert-danger">
+    <p><a href="@Url.Action("DELETE",new {id = Model.id} )" class="btn btn-danger btn-sm">DELETE &raquo;</a>Delete control limit. (marks it dead and does not create new limit)</p>
+</div>
