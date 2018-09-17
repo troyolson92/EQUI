@@ -23,7 +23,11 @@
         <EntityTypeShape EntityType="GADATAModelEQUI.L_pannel" Width="1.5" PointX="16.125" PointY="4" />
         <AssociationConnector Association="GADATAModelEQUI.FK_L_link_L_pannel" />
         <AssociationConnector Association="GADATAModelEQUI.FK_L_link_Wiki" />
-      </Diagram>
+        <EntityTypeShape EntityType="GADATAModelEQUI.c_job" Width="1.5" PointX="1.5" PointY="4.75" FillColor="Fuchsia" />
+        <EntityTypeShape EntityType="GADATAModelEQUI.c_schedule" Width="1.5" PointX="1.5" PointY="9.75" FillColor="Fuchsia" />
+        <AssociationConnector Association="GADATAModelEQUI.FK_c_job_c_datasource" />
+        <AssociationConnector Association="GADATAModelEQUI.FK_c_job_c_schedule" />
+        </Diagram>
       <Diagram DiagramId="e951f762f729496390f1ab74d6241e77" Name="Frontend" >
       </Diagram>
     </edmx:Diagrams>

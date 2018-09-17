@@ -1,0 +1,34 @@
+﻿@model IEnumerable<EqUiWebUi.Models.c_schedule>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index of all schedules</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Edit", new { id = -1 })
+</p>
+@Html.Grid(Model).Named("c_schedule").Build(columns =>
+{
+columns.Add(c => c.id).Titled("ID").InitialSort(GridSortOrder.Asc).Css("d-none d-lg-table-cell");
+columns.Add(c => c.enabled).Titled("enabled");
+columns.Add(c => c.name).Titled("name");
+columns.Add(c => c.description).Titled("description");
+columns.Add(c => c.jcron).Titled("jcron");
+columns.Add(c => c.id)
+            .Titled("")
+            .Encoded(false)
+            .RenderedAs(c => @Html.ActionLink("Edit", "Edit", new { id = c.id }) + " | " +
+                             @Html.ActionLink("Delete", "Delete", new { id = c.id })
+            ).Filterable(false);
+}).Filterable().Sortable().Empty("Did not find anything").Css("table-hover")
+
+@section scripts{
+    <script>
+        //full with screen
+        $("#allcontent").removeClass("body-content");
+        $("#allcontent").removeClass("container");
+    </script>
+}

@@ -40,6 +40,24 @@
           <Property Name="ConnectionString" Type="varchar(max)" Nullable="false" />
           <Property Name="isAlertSource" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="c_job">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="enabled" Type="bit" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="description" Type="varchar(max)" Nullable="false" />
+          <Property Name="c_schedule_id" Type="int" Nullable="false" />
+          <Property Name="c_datasource_id" Type="int" Nullable="false" />
+          <Property Name="sqlCommand" Type="varchar(max)" Nullable="false" />
+          <Property Name="ordinal" Type="int" Nullable="false" />
+          <Property Name="interval" Type="int" Nullable="false" />
+          <Property Name="intervalCounter" Type="int" Nullable="false" />
+          <Property Name="continueOnJobFailure" Type="bit" Nullable="false" />
+          <Property Name="maxRuntime" Type="int" />
+          <Property Name="warnRuntime" Type="int" />
+        </EntityType>
         <EntityType Name="c_LogClassRules">
           <Key>
             <PropertyRef Name="id" />
@@ -64,6 +82,16 @@
           <Property Name="SelectStatement" Type="varchar(max)" Nullable="false" />
           <Property Name="UpdateStatement" Type="varchar(max)" />
           <Property Name="RunRuleStatement" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="c_schedule">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="enabled" Type="bit" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="description" Type="varchar(max)" Nullable="false" />
+          <Property Name="jcron" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="l_dummyLogClassResult">
           <Key>
@@ -127,6 +155,30 @@
           <Property Name="Subgroup" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Discription" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
+        <Association Name="FK_c_job_c_datasource">
+          <End Role="c_datasource" Type="Self.c_datasource" Multiplicity="1" />
+          <End Role="c_job" Type="Self.c_job" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_datasource">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="c_job">
+              <PropertyRef Name="c_datasource_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_c_job_c_schedule">
+          <End Role="c_schedule" Type="Self.c_schedule" Multiplicity="1" />
+          <End Role="c_job" Type="Self.c_job" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_schedule">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="c_job">
+              <PropertyRef Name="c_schedule_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_c_LogClassRules_c_Classification">
           <End Role="c_Classification" Type="Self.c_Classification" Multiplicity="1" />
           <End Role="c_LogClassRules" Type="Self.c_LogClassRules" Multiplicity="*" />
@@ -226,14 +278,24 @@
         <EntityContainer Name="GADATAModelEQUIStoreContainer">
           <EntitySet Name="ASSETS" EntityType="Self.ASSETS" Schema="EqUi" store:Type="Tables" />
           <EntitySet Name="c_datasource" EntityType="Self.c_datasource" Schema="EqUi" store:Type="Tables" />
+          <EntitySet Name="c_job" EntityType="Self.c_job" Schema="EqUi" store:Type="Tables" />
           <EntitySet Name="c_LogClassRules" EntityType="Self.c_LogClassRules" Schema="EqUi" store:Type="Tables" />
           <EntitySet Name="c_logClassSystem" EntityType="Self.c_logClassSystem" Schema="EqUi" store:Type="Tables" />
+          <EntitySet Name="c_schedule" EntityType="Self.c_schedule" Schema="EqUi" store:Type="Tables" />
           <EntitySet Name="l_dummyLogClassResult" EntityType="Self.l_dummyLogClassResult" Schema="EqUi" store:Type="Tables" />
           <EntitySet Name="L_link" EntityType="Self.L_link" Schema="EqUi" store:Type="Tables" />
           <EntitySet Name="L_pannel" EntityType="Self.L_pannel" Schema="EqUi" store:Type="Tables" />
           <EntitySet Name="Wiki" EntityType="Self.Wiki" Schema="EqUi" store:Type="Tables" />
           <EntitySet Name="c_Classification" EntityType="Self.c_Classification" Schema="Volvo" store:Type="Tables" />
           <EntitySet Name="c_Subgroup" EntityType="Self.c_Subgroup" Schema="Volvo" store:Type="Tables" />
+          <AssociationSet Name="FK_c_job_c_datasource" Association="Self.FK_c_job_c_datasource">
+            <End Role="c_datasource" EntitySet="c_datasource" />
+            <End Role="c_job" EntitySet="c_job" />
+          </AssociationSet>
+          <AssociationSet Name="FK_c_job_c_schedule" Association="Self.FK_c_job_c_schedule">
+            <End Role="c_schedule" EntitySet="c_schedule" />
+            <End Role="c_job" EntitySet="c_job" />
+          </AssociationSet>
           <AssociationSet Name="FK_c_LogClassRules_c_Classification" Association="Self.FK_c_LogClassRules_c_Classification">
             <End Role="c_Classification" EntitySet="c_Classification" />
             <End Role="c_LogClassRules" EntitySet="c_LogClassRules" />
@@ -314,7 +376,17 @@
             <End Role="Wiki" EntitySet="Wiki" />
             <End Role="L_link" EntitySet="L_link" />
           </AssociationSet>
-        </EntityContainer>
+          <EntitySet Name="c_job" EntityType="GADATAModelEQUI.c_job" />
+          <EntitySet Name="c_schedule" EntityType="GADATAModelEQUI.c_schedule" />
+          <AssociationSet Name="FK_c_job_c_datasource" Association="GADATAModelEQUI.FK_c_job_c_datasource">
+            <End Role="c_datasource" EntitySet="c_datasource" />
+            <End Role="c_job" EntitySet="c_job" />
+          </AssociationSet>
+          <AssociationSet Name="FK_c_job_c_schedule" Association="GADATAModelEQUI.FK_c_job_c_schedule">
+            <End Role="c_schedule" EntitySet="c_schedule" />
+            <End Role="c_job" EntitySet="c_job" />
+          </AssociationSet>
+          </EntityContainer>
         <EntityType Name="c_datasource">
           <Key>
             <PropertyRef Name="Id" />
@@ -326,6 +398,7 @@
           <Property Name="ConnectionString" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="isAlertSource" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="c_logClassSystem" Relationship="GADATAModelEQUI.FK_c_logClassSystem_c_datasource" FromRole="c_datasource" ToRole="c_logClassSystem" />
+          <NavigationProperty Name="c_job" Relationship="GADATAModelEQUI.FK_c_job_c_datasource" FromRole="c_datasource" ToRole="c_job" />
         </EntityType>
         <EntityType Name="c_LogClassRules">
           <Key>
@@ -549,7 +622,62 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        <EntityType Name="c_job">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="enabled" Type="Boolean" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="c_schedule_id" Type="Int32" Nullable="false" />
+          <Property Name="c_datasource_id" Type="Int32" Nullable="false" />
+          <Property Name="sqlCommand" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ordinal" Type="Int32" Nullable="false" />
+          <Property Name="interval" Type="Int32" Nullable="false" />
+          <Property Name="intervalCounter" Type="Int32" Nullable="false" />
+          <Property Name="continueOnJobFailure" Type="Boolean" Nullable="false" />
+          <Property Name="maxRuntime" Type="Int32" />
+          <Property Name="warnRuntime" Type="Int32" />
+          <NavigationProperty Name="c_datasource" Relationship="GADATAModelEQUI.FK_c_job_c_datasource" FromRole="c_job" ToRole="c_datasource" />
+          <NavigationProperty Name="c_schedule" Relationship="GADATAModelEQUI.FK_c_job_c_schedule" FromRole="c_job" ToRole="c_schedule" />
+        </EntityType>
+        <EntityType Name="c_schedule">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="enabled" Type="Boolean" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="jcron" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="c_job" Relationship="GADATAModelEQUI.FK_c_job_c_schedule" FromRole="c_schedule" ToRole="c_job" />
+        </EntityType>
+        <Association Name="FK_c_job_c_datasource">
+          <End Type="GADATAModelEQUI.c_datasource" Role="c_datasource" Multiplicity="1" />
+          <End Type="GADATAModelEQUI.c_job" Role="c_job" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_datasource">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="c_job">
+              <PropertyRef Name="c_datasource_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_c_job_c_schedule">
+          <End Type="GADATAModelEQUI.c_schedule" Role="c_schedule" Multiplicity="1" />
+          <End Type="GADATAModelEQUI.c_job" Role="c_job" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_schedule">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="c_job">
+              <PropertyRef Name="c_schedule_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -687,7 +815,37 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-        </EntityContainerMapping>
+          <EntitySetMapping Name="c_job">
+            <EntityTypeMapping TypeName="GADATAModelEQUI.c_job">
+              <MappingFragment StoreEntitySet="c_job">
+                <ScalarProperty Name="warnRuntime" ColumnName="warnRuntime" />
+                <ScalarProperty Name="maxRuntime" ColumnName="maxRuntime" />
+                <ScalarProperty Name="continueOnJobFailure" ColumnName="continueOnJobFailure" />
+                <ScalarProperty Name="intervalCounter" ColumnName="intervalCounter" />
+                <ScalarProperty Name="interval" ColumnName="interval" />
+                <ScalarProperty Name="ordinal" ColumnName="ordinal" />
+                <ScalarProperty Name="sqlCommand" ColumnName="sqlCommand" />
+                <ScalarProperty Name="c_datasource_id" ColumnName="c_datasource_id" />
+                <ScalarProperty Name="c_schedule_id" ColumnName="c_schedule_id" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="enabled" ColumnName="enabled" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="c_schedule">
+            <EntityTypeMapping TypeName="GADATAModelEQUI.c_schedule">
+              <MappingFragment StoreEntitySet="c_schedule">
+                <ScalarProperty Name="jcron" ColumnName="jcron" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="enabled" ColumnName="enabled" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

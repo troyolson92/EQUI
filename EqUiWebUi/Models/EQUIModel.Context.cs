@@ -35,5 +35,7 @@ namespace EqUiWebUi.Models
         public virtual DbSet<ASSETS> ASSETS { get; set; }
         public virtual DbSet<L_link> L_link { get; set; }
         public virtual DbSet<L_pannel> L_pannel { get; set; }
+        public virtual DbSet<c_job> c_job { get; set; }
+        public virtual DbSet<c_schedule> c_schedule { get; set; }
     }
 }
