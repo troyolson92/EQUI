@@ -39,23 +39,6 @@ namespace EqUiWebUi.Areas.HangfireArea.Controllers
             return PartialView();
         }
 
-        // GET: hanfireArea/Makejob
-        [HttpGet]
-        public ActionResult MakeJob()
-        {
-            return View();
-        }
-
-        // POST: hanfireArea/Makejob
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public void MakeJob(Job job)
-        {
-            Jobengine jobengine = new Jobengine();
-            jobengine.Makejob(job.name, job.command, job.cron, job.maxExectime, job.maxRetry);
-            Response.Redirect("~/hangfire/recurring");
-        }
-
         //init background work jobs.
         public void ConfiureBackgroundJobs()
         {
@@ -74,7 +57,9 @@ namespace EqUiWebUi.Areas.HangfireArea.Controllers
             //STO jobs
             Areas.PlcSupervisie.Backgroundwork backgroundWorkSTO = new PlcSupervisie.Backgroundwork();
             backgroundWorkSTO.configHangfireJobs();
-
+            //hangfire jobs
+            Areas.HangfireArea.Jobengine Jobengine = new Jobengine();
+            Jobengine.configure_schedules();
         }
 
     }

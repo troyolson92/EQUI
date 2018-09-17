@@ -10,10 +10,11 @@ using EqUiWebUi.Models;
 
 namespace EqUiWebUi.Areas.HangfireArea.Controllers
 {
-    [Authorize(Roles = "Administrator")]
+    [Authorize(Roles = "Administrator, HangFire")]
     public class c_scheduleController : Controller
     {
         private GADATAEntitiesEQUI db = new GADATAEntitiesEQUI();
+        private HangfireArea.Jobengine Jobengine = new Jobengine();
 
         // GET: HangfireArea/c_schedule
         public ActionResult Index()
@@ -63,6 +64,7 @@ namespace EqUiWebUi.Areas.HangfireArea.Controllers
                     db.Entry(c_schedule).State = EntityState.Modified;
                 }
                 db.SaveChanges();
+                Jobengine.configure_schedules();
                 return RedirectToAction("Index");
             }
             return View(c_schedule);
@@ -91,6 +93,7 @@ namespace EqUiWebUi.Areas.HangfireArea.Controllers
             c_schedule c_schedule = db.c_schedule.Find(id);
             db.c_schedule.Remove(c_schedule);
             db.SaveChanges();
+            Jobengine.configure_schedules();
             return RedirectToAction("Index");
         }
 
