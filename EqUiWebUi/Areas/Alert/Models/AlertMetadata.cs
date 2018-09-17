@@ -125,6 +125,8 @@ namespace EqUiWebUi.Areas.Alert.Models
         public DateTime enddate { get; set; }
         public string alarmobject { get; set; }
         public int c_trigger_id { get; set; }
+        public Nullable<int> OptValueDataNum { get; set; }
+        public bool hideOptData { get; set; }
     }
 
     public class AlertResult

@@ -11,7 +11,7 @@
         </h6>
     </div>
 
-    <div class="card-body" >
+    <div class="card-body">
         <div id="controlchartContainer" style="position:relative">
             <canvas id='controlchartCanvas'></canvas>
         </div>
@@ -43,7 +43,7 @@
     //global vars
     var ControlChart;
     var ControlchartendDate = moment('@Model.startdate.ToString("o")');
-    var ControlchartstartDate = moment('@Model.enddate.ToString("o")'); 
+    var ControlchartstartDate = moment('@Model.enddate.ToString("o")');
 
     //setting up datetimePicker
     function setgetcontrolchartDaterangepicker() {
@@ -170,8 +170,17 @@
                 strokeColor: '#F16220',
                 data: dataPayload[3]
             }
-
         ];
+
+        var hideOpdata = @Model.hideOptData.ToString().ToLower();
+        if (hideOpdata == false) {
+            data.append({
+                label: 'OptValue',
+                strokeColor: '#6f42c1',
+                data: dataPayload[4]
+            })
+        } 
+
         //build
         ControlChart = new Chart(ctxcontrolChart).Scatter(data, options);
         //init daterangepicker
