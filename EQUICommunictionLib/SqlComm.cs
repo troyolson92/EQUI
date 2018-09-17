@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Text;
 
 namespace EQUICommunictionLib
 {
@@ -9,6 +10,7 @@ namespace EQUICommunictionLib
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         SqlConnection Conn;
+        StringBuilder sbSqlmsg = new StringBuilder(); 
 
         public SqlComm(string ConnectionString)
         {
@@ -63,7 +65,7 @@ namespace EQUICommunictionLib
             }
         }
 
-        public void RunCommand(string sqlCommand, bool enblExeptions = false, int maxEXECtime = 300)
+        public string RunCommand(string sqlCommand, bool enblExeptions = false, int maxEXECtime = 300)
         {
             try
             {
@@ -83,6 +85,8 @@ namespace EQUICommunictionLib
                 using (SqlCommand myCommand = new SqlCommand(sqlCommand, Conn))
                 {
                     myCommand.CommandTimeout = maxEXECtime;
+                    sbSqlmsg.Clear();
+                    Conn.InfoMessage += new System.Data.SqlClient.SqlInfoMessageEventHandler(cn_InfoMessage);
                     myCommand.ExecuteNonQuery();
 
                     try
@@ -108,7 +112,17 @@ namespace EQUICommunictionLib
                 }
             }
 
+            return sbSqlmsg.ToString();
+        }
 
+        void cn_InfoMessage(object sender, SqlInfoMessageEventArgs e)
+        {
+            sbSqlmsg.AppendLine(e.Message);
+
+            foreach (SqlError err in e.Errors)
+            {
+                log.Error(err.Message);
+            }
         }
 
         public DataTable RunQuery(string sqlQuery, bool enblExeptions = false, int maxEXECtime = 300)

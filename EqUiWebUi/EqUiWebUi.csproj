@@ -899,7 +899,6 @@
     <Content Include="Areas\Alert\Views\Alert\AASPOTIndex.cshtml" />
     <Content Include="Areas\Alert\Views\Alert\Index.cshtml" />
     <Content Include="Areas\HangfireArea\Views\web.config" />
-    <Content Include="Areas\HangfireArea\Views\Job\MakeJob.cshtml" />
     <Content Include="Areas\HangfireArea\Views\Job\Index.cshtml" />
     <Content Include="Areas\Alert\Views\Alert\_settings.cshtml" />
     <Content Include="Areas\user_management\Views\UserScreens\_settings.cshtml" />

@@ -25,6 +25,8 @@ namespace EqUiWebUi.Models
         public string name { get; set; }
         public string description { get; set; }
         public string jcron { get; set; }
+        public bool runContinues { get; set; }
+        public int minRunInterval { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<c_job> c_job { get; set; }

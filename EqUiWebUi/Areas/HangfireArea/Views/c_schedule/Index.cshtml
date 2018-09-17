@@ -12,12 +12,13 @@
 </p>
 @Html.Grid(Model).Named("c_schedule").Build(columns =>
 {
-columns.Add(c => c.id).Titled("ID").InitialSort(GridSortOrder.Asc).Css("d-none d-lg-table-cell");
-columns.Add(c => c.enabled).Titled("enabled");
-columns.Add(c => c.name).Titled("name");
-columns.Add(c => c.description).Titled("description");
-columns.Add(c => c.jcron).Titled("jcron");
-columns.Add(c => c.id)
+    columns.Add(c => c.id).Titled("ID").InitialSort(GridSortOrder.Asc).Css("d-none d-lg-table-cell");
+    columns.Add(c => c.enabled).Titled("enabled");
+    columns.Add(c => c.name).Titled("name");
+    columns.Add(c => c.description).Titled("description");
+    columns.Add(c => c.jcron).Titled("jcron");
+    columns.Add(c => c.runContinues).Titled("runContinues");
+    columns.Add(c => c.id)
             .Titled("")
             .Encoded(false)
             .RenderedAs(c => @Html.ActionLink("Edit", "Edit", new { id = c.id }) + " | " +

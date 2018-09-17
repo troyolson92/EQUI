@@ -10,6 +10,7 @@ using EqUiWebUi.Models;
 
 namespace EqUiWebUi.Areas.HangfireArea.Controllers
 {
+    [Authorize(Roles = "Administrator, HangFire")]
     public class c_jobController : Controller
     {
         private GADATAEntitiesEQUI db = new GADATAEntitiesEQUI();

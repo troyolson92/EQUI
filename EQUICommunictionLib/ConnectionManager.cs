@@ -171,8 +171,9 @@ namespace EQUICommunictionLib
         //run Command form a db
         //option to run get database by name or by ID
         //if dbName and ID is left blank run against main datbase
-        public void RunCommand(string sqlCommand, string dbName = "", int dbID = 0, bool enblExeptions = false, int maxEXECtime = 300)
+        public string RunCommand(string sqlCommand, string dbName = "", int dbID = 0, bool enblExeptions = false, int maxEXECtime = 300)
         {
+            string returnmsg = "no msg";
             Database db = new Database();
             if (dbName != "" || dbID != 0)
             {
@@ -188,7 +189,7 @@ namespace EQUICommunictionLib
             {
                 case db_type.msSqlServer:
                     SqlComm sqlComm = new SqlComm(db.ConnectionString);
-                    sqlComm.RunCommand(sqlCommand, enblExeptions: enblExeptions, maxEXECtime: maxEXECtime);
+                    returnmsg = sqlComm.RunCommand(sqlCommand, enblExeptions: enblExeptions, maxEXECtime: maxEXECtime);
                     break;
 
                 case db_type.Orcacle:
@@ -201,6 +202,7 @@ namespace EQUICommunictionLib
                     throw new NotSupportedException();
             }
 
+            return returnmsg;
         }
 
         //run bulkCopy command (only for msSQL)
