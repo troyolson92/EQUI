@@ -127,8 +127,12 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             }
 
             //adjust the active control limit to fit in the 'View' window
-            l_controlLimits activeLimit = limits.Where(l => l.isdead == false).First();
-            if (activeLimit.CreateDate > chartSettings.enddate)//if the active limit is newer than the daterange. => Drop it.
+            l_controlLimits activeLimit = limits.Where(l => l.isdead == false).FirstOrDefault();
+            if (activeLimit == null) //no active limit. (removed system)
+            {
+               //do nothing.
+            }
+            else if (activeLimit.CreateDate > chartSettings.enddate)//if the active limit is newer than the daterange. => Drop it.
             {
                 limits.Remove(activeLimit);
             }
