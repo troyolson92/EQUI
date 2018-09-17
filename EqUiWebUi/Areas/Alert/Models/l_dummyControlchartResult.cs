@@ -23,6 +23,7 @@ namespace EqUiWebUi.Areas.Alert.Models
         public Nullable<int> l_controlLimits_id { get; set; }
         public string Comment { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
+        public Nullable<double> OptValue { get; set; }
     
         public virtual l_controlLimits l_controlLimits { get; set; }
     }

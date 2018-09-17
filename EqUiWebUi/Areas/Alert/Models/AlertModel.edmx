@@ -123,6 +123,7 @@
           <Property Name="l_controlLimits_id" Type="int" />
           <Property Name="Comment" Type="varchar(max)" />
           <Property Name="CreateDate" Type="datetime" />
+          <Property Name="OptValue" Type="float" />
         </EntityType>
         <EntityType Name="l_variants">
           <Key>
@@ -169,13 +170,14 @@ warning 6002: The table/view 'GADATA.Alerts.Alerts' does not have a primary key 
             
             
             
+            
             <PropertyRef Name="refId" />
             
             
           </Key>
           <Property Name="Location" Type="varchar(max)" Nullable="false" />
           <Property Name="AssetID" Type="varchar" MaxLength="1" Nullable="false" />
-          <Property Name="Logtype" Type="varchar" MaxLength="50" />
+          <Property Name="Logtype" Type="varchar" MaxLength="5" Nullable="false" />
           <Property Name="timestamp" Type="datetime" Nullable="false" />
           <Property Name="Logcode" Type="varchar(max)" />
           <Property Name="Severity" Type="varchar(max)" />
@@ -977,6 +979,7 @@ warning 6002: The table/view 'GADATA.Alerts.Alerts' does not have a primary key 
           <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="CreateDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="l_controlLimits" Relationship="AlertModel.FK_l_dummyControlchartResult_l_controlLimits" FromRole="l_dummyControlchartResult" ToRole="l_controlLimits" />
+          <Property Name="OptValue" Type="Double" />
         </EntityType>
         <Association Name="FK_l_dummyControlchartResult_l_controlLimits">
           <End Type="AlertModel.l_controlLimits" Role="l_controlLimits" Multiplicity="0..1" />
@@ -996,7 +999,7 @@ warning 6002: The table/view 'GADATA.Alerts.Alerts' does not have a primary key 
           </Key>
           <Property Name="Location" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="AssetID" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="Logtype" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Logtype" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="timestamp" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Logcode" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Severity" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
@@ -1180,6 +1183,7 @@ warning 6002: The table/view 'GADATA.Alerts.Alerts' does not have a primary key 
           <EntitySetMapping Name="l_dummyControlchartResult">
             <EntityTypeMapping TypeName="AlertModel.l_dummyControlchartResult">
               <MappingFragment StoreEntitySet="l_dummyControlchartResult">
+                <ScalarProperty Name="OptValue" ColumnName="OptValue" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="Comment" ColumnName="Comment" />
                 <ScalarProperty Name="l_controlLimits_id" ColumnName="l_controlLimits_id" />

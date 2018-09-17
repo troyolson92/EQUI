@@ -32,6 +32,10 @@ namespace EqUiWebUi.Areas.Alert.Controllers
         [HttpGet]
         public ActionResult _GetControlChart(ChartSettings chartSettings)
         {
+            //dbg dsbl optdataset
+            chartSettings.hideOptData = true;
+            chartSettings.OptValueDataNum = 1;
+
             return PartialView(chartSettings);
         }
 
@@ -51,11 +55,10 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             }
 
         }
-
         //get data for the chart => returns json result
         /*
-         DECLARE @c_trigger_id as int 
-         DECLARE @alarmobject as varchar(max)
+        DECLARE @c_trigger_id as int 
+        DECLARE @alarmobject as varchar(max)
         set @c_trigger_id = 22
         set @alarmobject = '35200R01_gun1'
 */
@@ -75,6 +78,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                 chartSettings.scaleLabel = "<%=value%>";
             }
 
+            //get data
             List<l_dummyControlchartResult> result = new List<l_dummyControlchartResult>();
             try
             {
@@ -92,7 +96,6 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                 return Json(null, JsonRequestBehavior.AllowGet);
             }
 
-
             object ValueData = from e in result
                               select new
                               {
@@ -101,6 +104,14 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                                 r = SetPointSize(e)
                               };
 
+            //get optional dataset
+            object OptValueData = from e in result
+                               select new
+                               {
+                                   x = ((e.timestamp - UnixEpoch).Ticks / TimeSpan.TicksPerMillisecond),
+                                   y = Math.Round(e.OptValue.GetValueOrDefault(), 3),
+                                   r = 0.7
+                               };
 
             //get the control limits seperate. (else a point is returned for each record and the rendering looks bad.
             double controllimitPointSize = 0.6;
@@ -185,6 +196,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             data.Add(ValueData);
             data.Add(UCLData);
             data.Add(LCLData);
+            data.Add(OptValueData);
             //
             return Json(data, JsonRequestBehavior.AllowGet);
         }
