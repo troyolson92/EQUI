@@ -61,7 +61,7 @@
         @Html.LabelFor(model => model.sqlCommand, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             <div class="panel" style="border:ridge">
-                <textarea id="sqlCommand" name="sqlStatement">@Model.sqlCommand</textarea>
+                <textarea id="sqlCommand" name="sqlCommand">@Model.sqlCommand</textarea>
             </div>
             @Html.ValidationMessageFor(model => model.sqlCommand, "", new { @class = "text-danger" })
             @Html.HelpTextFor(model => model.sqlCommand)

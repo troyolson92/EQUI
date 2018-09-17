@@ -57,6 +57,7 @@ namespace EqUiWebUi.Areas.HangfireArea.Controllers
             {
                 if (c_job.id == -1)//add new 
                 {
+                    c_job.intervalCounter = 0;
                     db.c_job.Add(c_job);
                 }
                 else //update existing
