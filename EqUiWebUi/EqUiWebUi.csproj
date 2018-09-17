@@ -293,6 +293,8 @@
     <Compile Include="Areas\Gadata\Models\Timeline.cs">
       <DependentUpon>Gadata.tt</DependentUpon>
     </Compile>
+    <Compile Include="Areas\HangfireArea\Controllers\c_jobController.cs" />
+    <Compile Include="Areas\HangfireArea\Controllers\c_scheduleController.cs" />
     <Compile Include="Areas\HangfireArea\Controllers\JobController.cs" />
     <Compile Include="Areas\HangfireArea\HangfireAreaAreaRegistration.cs" />
     <Compile Include="Areas\HangfireArea\Jobengine.cs" />
@@ -628,10 +630,16 @@
       <DependentUpon>EQUIModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\c_datasourceMetadata.cs" />
+    <Compile Include="Models\c_job.cs">
+      <DependentUpon>EQUIModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\c_LogClassRules.cs">
       <DependentUpon>EQUIModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\c_logClassSystem.cs">
+      <DependentUpon>EQUIModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\c_schedule.cs">
       <DependentUpon>EQUIModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\c_Subgroup.cs">
@@ -1106,6 +1114,12 @@
     <Content Include="Areas\Alert\Views\L_controlLimits\_ControlLimitsGrid.cshtml" />
     <Content Include="Areas\Tiplife\Views\NgacElectrode\_TipDressDataGrid.cshtml" />
     <Content Include="Areas\Alert\Views\L_controlLimits\Delete.cshtml" />
+    <Content Include="Areas\HangfireArea\Views\c_schedule\Delete.cshtml" />
+    <Content Include="Areas\HangfireArea\Views\c_schedule\Edit.cshtml" />
+    <Content Include="Areas\HangfireArea\Views\c_schedule\Index.cshtml" />
+    <Content Include="Areas\HangfireArea\Views\c_job\Delete.cshtml" />
+    <Content Include="Areas\HangfireArea\Views\c_job\Edit.cshtml" />
+    <Content Include="Areas\HangfireArea\Views\c_job\Index.cshtml" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gotsvw11292-PRODUCTION-VCTA.pubxml" />
     <None Include="Properties\PublishProfiles\VCC22700-Testing.pubxml" />

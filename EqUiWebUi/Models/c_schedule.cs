@@ -12,24 +12,20 @@ namespace EqUiWebUi.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class c_datasource
+    public partial class c_schedule
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public c_datasource()
+        public c_schedule()
         {
-            this.c_logClassSystem = new HashSet<c_logClassSystem>();
             this.c_job = new HashSet<c_job>();
         }
     
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public int Type { get; set; }
-        public string ConnectionString { get; set; }
-        public bool isAlertSource { get; set; }
+        public int id { get; set; }
+        public bool enabled { get; set; }
+        public string name { get; set; }
+        public string description { get; set; }
+        public string jcron { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<c_logClassSystem> c_logClassSystem { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<c_job> c_job { get; set; }
     }
