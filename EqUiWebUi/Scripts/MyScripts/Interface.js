@@ -5,8 +5,8 @@ function initInterface() {
     //navbar
     $("#allcontent").animate({ "margin-top": "60px" }, "fast");
     $("#navbar").autoHidingNavbar();
-    //for user popover
 
+    //for user popover
     $(".userhelp").popover({
         placement: "left",
         html: true,
@@ -22,6 +22,16 @@ function initInterface() {
                 });
             return output;
         }
+    });
+    //hide popovers on body click
+    $('body').on('click', function (e) {
+        $('[data-toggle="popover"]').each(function () {
+            //the 'is' for buttons that trigger popups
+            //the 'has' for icons within a button that triggers a popup
+            if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+                $(this).popover('hide');
+            }
+        });
     });
 
     //for fullscreen mode
