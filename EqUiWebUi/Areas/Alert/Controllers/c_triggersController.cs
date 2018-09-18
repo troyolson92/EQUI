@@ -30,7 +30,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
         public void RunAlertTrigger(int triggerID)
         {
             AlertEngine alertEngine = new AlertEngine();
-            alertEngine.CheckForalerts(triggerID, "debugRun");
+            alertEngine.CheckForalerts(triggerID, "debugRun",null);
         }
 
         // GET: Alert/c_triggers/Edit/5
@@ -62,6 +62,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             ViewBag.initial_state = new SelectList(db.c_state, "id", "discription", c_triggers.initial_state);
             ViewBag.c_datasource_id = new SelectList(db.c_datasource, "Id", "Name", c_triggers.c_datasource_id);
             ViewBag.Animation = new SelectList(getanimationList(), "Value", "Text", c_triggers.Animation);
+            ViewBag.c_schedule_id = new SelectList(db.c_schedule, "id", "name", c_triggers.c_schedule_id);
             //
             return View(c_triggers);
         }
@@ -86,17 +87,6 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                     db.Entry(c_triggers).State = EntityState.Modified;
                 }
                 await db.SaveChangesAsync();
-                //if safe if Oke commit the alert to hangfire
-                AlertEngine alertEngine = new AlertEngine();
-                if (c_triggers.enabled)
-                {
-                    alertEngine.ConfigureHangfireAlertWork(c_triggers.id);
-                }
-                else
-                {
-                    alertEngine.ClearHanfireAlertwork();
-                }
-
                 //
                 return RedirectToAction("Index");
             }
@@ -104,6 +94,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             ViewBag.initial_state = new SelectList(db.c_state, "id", "discription", c_triggers.initial_state);
             ViewBag.c_datasource_id = new SelectList(db.c_datasource, "Id", "Name", c_triggers.c_datasource_id);
             ViewBag.Animation = new SelectList(getanimationList(), "Value", "Text", c_triggers.Animation);
+            ViewBag.c_schedule_id = new SelectList(db.c_schedule, "id", "name", c_triggers.c_schedule_id);
             return View(c_triggers);
         }
 
@@ -137,8 +128,6 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             //clear hangfire
             db.c_triggers.Find(id).enabled = false;
             db.SaveChanges();
-            AlertEngine alertEngine = new AlertEngine();
-            alertEngine.ClearHanfireAlertwork(); 
             //delete the trigger 
             c_triggers c_triggers = await db.c_triggers.FindAsync(id);
             db.c_triggers.Remove(c_triggers);

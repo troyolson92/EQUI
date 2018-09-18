@@ -204,7 +204,7 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
             catch (Exception ex)
             {
                 log.Error("Failed to run query using the realtimeConn", ex);
-                if (RealtimeConn) //if we where using the realtime connection retry useing reporting db
+                if (RealtimeConn) //if we where using the realtime connection retry useing reporting dbEQUI
                 {
                     RealtimeConn = false;
                     dataTable = ConnectionManager.RunQuery(sbqry.ToString(), dbName: "MAXIMO7rep", maxEXECtime: 15, enblExeptions: true);

@@ -17,7 +17,9 @@ namespace EqUiWebUi.Areas.HangfireArea
     {
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        private GADATAEntitiesEQUI db = new GADATAEntitiesEQUI();
+        private GADATAEntitiesEQUI dbEQUI = new GADATAEntitiesEQUI();
+        private Alert.Models.GADATA_AlertModel dbALERT = new Alert.Models.GADATA_AlertModel();
+        private Alert.AlertEngine AlertEngine = new Alert.AlertEngine();
 
         public void Makejob(string jobname, string command, string cron, int maxExectime, int maxRetry)
         {
@@ -40,7 +42,7 @@ namespace EqUiWebUi.Areas.HangfireArea
 
         public void configure_schedules(bool onlyStartrunContinues = false)
         {
-            List<c_schedule> list = db.c_schedule.ToList();
+            List<c_schedule> list = dbEQUI.c_schedule.ToList();
             foreach (c_schedule Schedule in list)
             {
                 if (Schedule.enabled)
@@ -68,7 +70,7 @@ namespace EqUiWebUi.Areas.HangfireArea
         [AutomaticRetry(Attempts = 0)] //no hangfire retrys 
         public void Run_schedule(int c_schedule_id, PerformContext context)
         {
-            c_schedule schedule = db.c_schedule.Find(c_schedule_id);
+            c_schedule schedule = dbEQUI.c_schedule.Find(c_schedule_id);
             if (schedule == null)
             {
                 context.WriteLine("schedule not found");
@@ -82,16 +84,23 @@ namespace EqUiWebUi.Areas.HangfireArea
             else
             {
                 context.WriteLine("getting jobs");
-                List<c_job> jobs = db.c_job.Where(c => c.c_schedule_id == c_schedule_id).OrderBy(c => c.ordinal).ToList();
+                List<c_job> jobs = dbEQUI.c_job.Where(c => c.c_schedule_id == c_schedule_id).OrderBy(c => c.ordinal).ToList();
                 if (jobs.Count() == 0)
                 {
                     context.WriteLine("no jobs found.");
                 }
-
+                context.WriteLine("getting alerttriggers");
+                List<Alert.Models.c_triggers> triggers = dbALERT.c_triggers.Where(c => c.c_schedule_id == c_schedule_id).OrderBy(c => c.ordinal).ToList();
+                if (triggers.Count() == 0)
+                {
+                    context.WriteLine("no alerttriggers found.");
+                }
+           
                 string previousJobId = null;
+                //handel jobs
                 foreach (c_job job in jobs)
                 {
-                    context.WriteLine($"processing: {job.name} ordinal: {job.ordinal}");
+                    context.WriteLine($"processing job: {job.name} ordinal: {job.ordinal}");
                     if (previousJobId == null)
                     {
                         previousJobId = BackgroundJob.Enqueue(() => Run_job(job.name, job.id, context));
@@ -105,6 +114,26 @@ namespace EqUiWebUi.Areas.HangfireArea
                         else
                         {
                             previousJobId = BackgroundJob.ContinueWith(previousJobId, () => Run_job(job.name, job.id, context), JobContinuationOptions.OnlyOnSucceededState);
+                        }
+                    }
+                }
+                //handel alerts
+                foreach (Alert.Models.c_triggers trigger in triggers)
+                {
+                    context.WriteLine($"processing Alert: {trigger.alertType} ordinal: {trigger.ordinal}");
+                    if (previousJobId == null)
+                    {
+                        previousJobId = BackgroundJob.Enqueue(() => AlertEngine.CheckForalerts(trigger.id, trigger.discription, context));
+                    }
+                    else
+                    {
+                        if (trigger.continueOnJobFailure)
+                        {
+                            previousJobId = BackgroundJob.ContinueWith(previousJobId, () => AlertEngine.CheckForalerts(trigger.id, trigger.discription, context), JobContinuationOptions.OnAnyFinishedState);
+                        }
+                        else
+                        {
+                            previousJobId = BackgroundJob.ContinueWith(previousJobId, () => AlertEngine.CheckForalerts(trigger.id, trigger.discription, context), JobContinuationOptions.OnlyOnSucceededState);
                         }
                     }
                 }
@@ -136,7 +165,7 @@ namespace EqUiWebUi.Areas.HangfireArea
         [AutomaticRetry(Attempts = 0)] //no hangfire retrys 
         public void Run_job(string name, int c_job_id , PerformContext context)
         {
-            c_job job = db.c_job.Find(c_job_id);
+            c_job job = dbEQUI.c_job.Find(c_job_id);
             context.WriteLine($"running: {job.name}");
             if (job.enabled == false)
             {
@@ -181,8 +210,8 @@ namespace EqUiWebUi.Areas.HangfireArea
                 {
                     job.intervalCounter = 0;
                 }
-                db.Entry(job).State = EntityState.Modified;
-                db.SaveChanges();
+                dbEQUI.Entry(job).State = EntityState.Modified;
+                dbEQUI.SaveChanges();
             }
         }
 

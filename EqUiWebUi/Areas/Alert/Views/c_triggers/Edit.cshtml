@@ -119,6 +119,40 @@ else
                     </div>
                 </div>
 
+                <div class="form-group">
+                    @Html.LabelFor(model => model.c_schedule_id, "c_schedule_id", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("c_schedule_id", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.c_schedule_id, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ordinal, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.ordinal, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ordinal, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.interval, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.interval, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.interval, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.continueOnJobFailure, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <div class="checkbox">
+                            @Html.EditorFor(model => model.continueOnJobFailure)
+                            @Html.ValidationMessageFor(model => model.continueOnJobFailure, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
 
                 <div class="form-group">
                     @Html.LabelFor(model => model.AutoSetStateTechComp, htmlAttributes: new { @class = "control-label col-md-4" })
@@ -277,6 +311,15 @@ else
                         @Html.EditorFor(model => model.controlChartYlabel, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.controlChartYlabel, "", new { @class = "text-danger" })
                         @Html.HelpTextFor(model => model.controlChartYlabel)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.OptValueLabels, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.OptValueLabels, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.OptValueLabels, "", new { @class = "text-danger" })
+                        @Html.HelpTextFor(model => model.OptValueLabels)
                     </div>
                 </div>
 

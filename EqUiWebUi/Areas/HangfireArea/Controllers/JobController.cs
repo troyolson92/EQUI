@@ -7,23 +7,6 @@ using System.Web.Mvc;
 
 namespace EqUiWebUi.Areas.HangfireArea.Controllers
 {
-    //helper class 
-    public class Job
-    {
-        [HelpText("give the job a short name")]
-        public string name { get; set; }
-        [HelpText("command to run in gadata")]
-        public string command { get; set; }
-        [HelpText("when to run the job")]
-        public string cron { get; set; }
-        [HelpText("Max time to run the job (second)")]
-        [Range(10, 60*10)]
-        public int maxExectime { get; set; }
-        [HelpText("Max # of retry on fail")]
-        [Range(0, 5)]
-        public int maxRetry { get; set; }
-    }
-
     [Authorize(Roles = "Administrator,HangFire")]
     public class JobController : Controller
     {

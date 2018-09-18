@@ -56,6 +56,11 @@
           <Property Name="smsSystem" Type="int" />
           <Property Name="initial_state" Type="int" Nullable="false" />
           <Property Name="Cron" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="c_schedule_id" Type="int" Nullable="false" />
+          <Property Name="continueOnJobFailure" Type="bit" Nullable="false" />
+          <Property Name="ordinal" Type="int" Nullable="false" />
+          <Property Name="interval" Type="int" Nullable="false" />
+          <Property Name="intervalCounter" Type="int" Nullable="false" />
           <Property Name="alertType" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="AutoSetStateTechComp" Type="bit" Nullable="false" />
           <Property Name="smsOnRetrigger" Type="bit" Nullable="false" />
@@ -69,6 +74,7 @@
           <Property Name="isDebugmode" Type="bit" Nullable="false" />
           <Property Name="c_datasource_id" Type="int" Nullable="false" />
           <Property Name="controlChartYlabel" Type="varchar(max)" />
+          <Property Name="OptValueLabels" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="h_alert">
           <Key>
@@ -146,6 +152,18 @@
           <Property Name="Type" Type="int" Nullable="false" />
           <Property Name="ConnectionString" Type="varchar(max)" Nullable="false" />
           <Property Name="isAlertSource" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="c_schedule">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="enabled" Type="bit" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="description" Type="varchar(max)" Nullable="false" />
+          <Property Name="jcron" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="runContinues" Type="bit" Nullable="false" />
+          <Property Name="minRunInterval" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="L_users">
           <Key>
@@ -232,6 +250,18 @@ warning 6002: The table/view 'GADATA.Alerts.Alerts' does not have a primary key 
             </Principal>
             <Dependent Role="c_triggers">
               <PropertyRef Name="c_datasource_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_c_triggers_c_schedule">
+          <End Role="c_schedule" Type="Self.c_schedule" Multiplicity="1" />
+          <End Role="c_triggers" Type="Self.c_triggers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_schedule">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="c_triggers">
+              <PropertyRef Name="c_schedule_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -414,6 +444,7 @@ warning 6002: The table/view 'GADATA.Alerts.Alerts' does not have a primary key 
           <EntitySet Name="l_dummyControlchartResult" EntityType="Self.l_dummyControlchartResult" Schema="Alerts" store:Type="Tables" />
           <EntitySet Name="l_variants" EntityType="Self.l_variants" Schema="Alerts" store:Type="Tables" />
           <EntitySet Name="c_datasource" EntityType="Self.c_datasource" Schema="EqUi" store:Type="Tables" />
+          <EntitySet Name="c_schedule" EntityType="Self.c_schedule" Schema="EqUi" store:Type="Tables" />
           <EntitySet Name="L_users" EntityType="Self.L_users" Schema="Volvo" store:Type="Tables" />
           <EntitySet Name="Alerts" EntityType="Self.Alerts" store:Type="Views" store:Schema="Alerts">
             <DefiningQuery>SELECT 
@@ -452,6 +483,10 @@ warning 6002: The table/view 'GADATA.Alerts.Alerts' does not have a primary key 
           </AssociationSet>
           <AssociationSet Name="FK_c_triggers_c_datasource" Association="Self.FK_c_triggers_c_datasource">
             <End Role="c_datasource" EntitySet="c_datasource" />
+            <End Role="c_triggers" EntitySet="c_triggers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_c_triggers_c_schedule" Association="Self.FK_c_triggers_c_schedule">
+            <End Role="c_schedule" EntitySet="c_schedule" />
             <End Role="c_triggers" EntitySet="c_triggers" />
           </AssociationSet>
           <AssociationSet Name="FK_c_triggers_c_smsSystem" Association="Self.FK_c_triggers_c_smsSystem">
@@ -714,6 +749,11 @@ warning 6002: The table/view 'GADATA.Alerts.Alerts' does not have a primary key 
             <End Role="l_dummyControlchartResult" EntitySet="l_dummyControlchartResult" />
           </AssociationSet>
           <EntitySet Name="Alerts" EntityType="AlertModel.Alerts" />
+          <EntitySet Name="c_schedule" EntityType="AlertModel.c_schedule" />
+          <AssociationSet Name="FK_c_triggers_c_schedule" Association="AlertModel.FK_c_triggers_c_schedule">
+            <End Role="c_schedule" EntitySet="c_schedule" />
+            <End Role="c_triggers" EntitySet="c_triggers" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="c_triggers">
           <Key>
@@ -746,6 +786,13 @@ warning 6002: The table/view 'GADATA.Alerts.Alerts' does not have a primary key 
           <NavigationProperty Name="c_datasource" Relationship="AlertModel.FK_c_triggers_c_datasource" FromRole="c_triggers" ToRole="c_datasource" />
           <NavigationProperty Name="l_controlLimits" Relationship="AlertModel.FK_l_controlLimits_c_triggers" FromRole="c_triggers" ToRole="l_controlLimits" />
           <Property Name="controlChartYlabel" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="c_schedule_id" Type="Int32" Nullable="false" />
+          <Property Name="ordinal" Type="Int32" Nullable="false" />
+          <Property Name="interval" Type="Int32" Nullable="false" />
+          <Property Name="intervalCounter" Type="Int32" Nullable="false" />
+          <Property Name="OptValueLabels" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="c_schedule" Relationship="AlertModel.FK_c_triggers_c_schedule" FromRole="c_triggers" ToRole="c_schedule" />
+          <Property Name="continueOnJobFailure" Type="Boolean" Nullable="false" />
         </EntityType>
         <Association Name="FK_c_triggers_c_smsSystem">
           <End Type="AlertModel.c_smsSystem" Role="c_smsSystem" Multiplicity="0..1" />
@@ -1021,6 +1068,31 @@ warning 6002: The table/view 'GADATA.Alerts.Alerts' does not have a primary key 
           <Property Name="shift" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
           <Property Name="animation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="c_schedule">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="enabled" Type="Boolean" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="jcron" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="runContinues" Type="Boolean" Nullable="false" />
+          <Property Name="minRunInterval" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="c_triggers" Relationship="AlertModel.FK_c_triggers_c_schedule" FromRole="c_schedule" ToRole="c_triggers" />
+        </EntityType>
+        <Association Name="FK_c_triggers_c_schedule">
+          <End Type="AlertModel.c_schedule" Role="c_schedule" Multiplicity="1" />
+          <End Type="AlertModel.c_triggers" Role="c_triggers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_schedule">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="c_triggers">
+              <PropertyRef Name="c_schedule_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1089,6 +1161,12 @@ warning 6002: The table/view 'GADATA.Alerts.Alerts' does not have a primary key 
           <EntitySetMapping Name="c_triggers">
             <EntityTypeMapping TypeName="AlertModel.c_triggers">
               <MappingFragment StoreEntitySet="c_triggers">
+                <ScalarProperty Name="continueOnJobFailure" ColumnName="continueOnJobFailure" />
+                <ScalarProperty Name="OptValueLabels" ColumnName="OptValueLabels" />
+                <ScalarProperty Name="intervalCounter" ColumnName="intervalCounter" />
+                <ScalarProperty Name="interval" ColumnName="interval" />
+                <ScalarProperty Name="ordinal" ColumnName="ordinal" />
+                <ScalarProperty Name="c_schedule_id" ColumnName="c_schedule_id" />
                 <ScalarProperty Name="controlChartYlabel" ColumnName="controlChartYlabel" />
                 <ScalarProperty Name="c_datasource_id" ColumnName="c_datasource_id" />
                 <ScalarProperty Name="isDebugmode" ColumnName="isDebugmode" />
@@ -1222,6 +1300,19 @@ warning 6002: The table/view 'GADATA.Alerts.Alerts' does not have a primary key 
                 <ScalarProperty Name="Logtype" ColumnName="Logtype" />
                 <ScalarProperty Name="AssetID" ColumnName="AssetID" />
                 <ScalarProperty Name="Location" ColumnName="Location" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="c_schedule">
+            <EntityTypeMapping TypeName="AlertModel.c_schedule">
+              <MappingFragment StoreEntitySet="c_schedule">
+                <ScalarProperty Name="minRunInterval" ColumnName="minRunInterval" />
+                <ScalarProperty Name="runContinues" ColumnName="runContinues" />
+                <ScalarProperty Name="jcron" ColumnName="jcron" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="enabled" ColumnName="enabled" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

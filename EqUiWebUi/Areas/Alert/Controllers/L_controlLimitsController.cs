@@ -149,7 +149,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                     List<l_controlLimits> list = db.l_controlLimits.Where(l => l.l_variants_id == l_variants_group_id && l.isdead == false).ToList();
                     foreach(l_controlLimits controllimit in list)
                     {
-                        //copy the object, set the create user data and add it to the db
+                        //copy the object, set the create user data and add it to the dbEQUI
                         l_controlLimits newControlimit = controllimit;
                         newControlimit.CreateDate = System.DateTime.Now;
                         newControlimit.Createuser = CurrentUser.Getuser.id;
@@ -189,7 +189,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                         ModelState.AddModelError("Comment", "Please change the comment!");
                         goto labelThrowValidationError;
                     }
-                    //copy the object, set the create user data and add it to the db
+                    //copy the object, set the create user data and add it to the dbEQUI
                     l_controlLimits newControlimit = l_controlLimits;
                     newControlimit.CreateDate = System.DateTime.Now;
                     newControlimit.Createuser = CurrentUser.Getuser.id;

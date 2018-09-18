@@ -46,7 +46,7 @@ namespace EqUiWebUi.Areas.Alert.Models
         [StringLength(16, MinimumLength = 3)]
         [HelpText("Gets used in sms and shown as alert subgroup")]
         public string alertType { get; set; }
-        [HelpText("This statement is run against db")]
+        [HelpText("This statement is run against dbEQUI")]
         public string sqlStatement { get; set; }
         [HelpText("CPT600 sms system to be used. MUST be defined in CPT600!!!")]
         public Nullable<int> smsSystem { get; set; }

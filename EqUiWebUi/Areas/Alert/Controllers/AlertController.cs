@@ -27,25 +27,6 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             return PartialView();
         }
 
-        //Rewrite hangfire configureAtion
-        public void ConfigureHangfire()
-        {
-            log.Info("Hangfire config for alerts has be rewritten");
-            AlertEngine alertEngine = new AlertEngine();
-            //do cleanup in hangfire for triggers that are not active
-            alertEngine.ClearHanfireAlertwork();
-            //write confirareation to hangefire.
-            alertEngine.ConfigureHangfireAlertWork();
-        }
-
-        //stop al alert processing in hangefire
-        public void StopHanfire()
-        {
-            log.Info("Hangfire config for alerts has been stopped!");
-            AlertEngine alertEngine = new AlertEngine();
-            alertEngine.ClearHanfireAlertwork(ClearALL: true);
-        }
-
         //interface where users can manage the alerts
         private GADATA_AlertModel db = new GADATA_AlertModel();
 
