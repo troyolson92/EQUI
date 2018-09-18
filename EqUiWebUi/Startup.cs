@@ -31,7 +31,7 @@ namespace EqUiWebUi
                             PrepareSchemaIfNecessary = Convert.ToBoolean(ConfigurationManager.AppSettings["HangfirePrepareSchemas"]) // auto build hangfire tabels (if true it fails when we debloy empty tables)
                         }
                         )
-                        .UseConsole(); //extension to hangefire for better logging https://github.com/pieceofsummer/Hangfire.Console
+                        .UseConsole(new ConsoleOptions {ExpireIn = TimeSpan.FromDays(5) }); //extension to hangefire for better logging https://github.com/pieceofsummer/Hangfire.Console
                //set up hangefire dashboard
                 app.UseHangfireDashboard("/hangfire", new DashboardOptions
                 {

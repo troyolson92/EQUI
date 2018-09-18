@@ -32,7 +32,6 @@ namespace EqUiWebUi.Areas.Alert.Models
         public bool AutoSetStateTechComp { get; set; }
         public bool smsOnRetrigger { get; set; }
         public bool enableSMS { get; set; }
-        public string Cron { get; set; }
         public bool isDowntime { get; set; }
         public bool isInReport { get; set; }
         public string sqlStatement { get; set; }
