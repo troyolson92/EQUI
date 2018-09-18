@@ -21,15 +21,17 @@
 
 @*popover content*@
 <div class="d-none" id="ControlChartOptionsPopoverContent">
-    <div class="panel panel-body">
-        <div class="row">
-            <div class=" col-3">
-                <div>no options yet</div>
-            </div>
-
-            <div class="col-9">
-
-            </div>
+    <div class="panel panel-body">      
+        <div class="form-group">
+            <label for="ControlchartoptDataDropdown">Show OptDataset</label>
+            <select class="form-control" id="ControlchartoptDataDropdown">
+                <option value="0" selected="selected">NoOptData</option>
+                <option value="1">OptData1</option>
+                <option value="2">OptData2</option>
+                <option value="3">OptData3</option>
+                <option value="4">OptData4</option>
+                <option value="5">OptData5</option>
+            </select>
         </div>
     </div>
 </div>
@@ -44,6 +46,7 @@
     var ControlChart;
     var ControlchartendDate = moment('@Model.startdate.ToString("o")');
     var ControlchartstartDate = moment('@Model.enddate.ToString("o")');
+    var ControlchartoptDatanum = 0;
 
     //setting up datetimePicker
     function setgetcontrolchartDaterangepicker() {
@@ -77,6 +80,13 @@
             return $('#ControlChartOptionsPopoverContent').html();
         },
     });
+    //listen to popover events.
+    $(document).on("change", "#ControlchartoptDataDropdown", function () {
+        if (ControlchartoptDatanum != this.value) {
+            ControlchartoptDatanum = this.value;
+            getcontrolchartData();
+        };
+    });
 
     //get chart data
     function getcontrolchartData() {
@@ -92,7 +102,8 @@
                 startdate: moment(ControlchartendDate).toISOString(),
                 enddate: moment(ControlchartstartDate).toISOString(),
                 alarmobject: '@Model.alarmobject',
-                c_trigger_id : @Model.c_trigger_id
+                optDatanum: ControlchartoptDatanum,
+                c_trigger_id: @Model.c_trigger_id
             },
             success: function (result) {
                 console && console.log("request controlchart data succeeded");
@@ -172,14 +183,13 @@
             }
         ];
 
-        var hideOpdata = @Model.hideOptData.ToString().ToLower();
-        if (hideOpdata == false) {
-            data.append({
+        if (ControlchartoptDatanum != 0) {
+            data.push({
                 label: 'OptValue',
                 strokeColor: '#6f42c1',
                 data: dataPayload[4]
             })
-        } 
+        }
 
         //build
         ControlChart = new Chart(ctxcontrolChart).Scatter(data, options);
