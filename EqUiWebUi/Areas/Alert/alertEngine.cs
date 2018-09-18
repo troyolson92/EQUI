@@ -6,6 +6,8 @@ using EqUiWebUi.Areas.Alert.Models;
 using EQUICommunictionLib;
 using Hangfire;
 using System.Text;
+using Hangfire.Server;
+using Hangfire.Console;
 
 namespace EqUiWebUi.Areas.Alert
 {
@@ -13,50 +15,10 @@ namespace EqUiWebUi.Areas.Alert
     {
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        //write alert trigger configureation to hangfire
-        public void ConfigureHangfireAlertWork(int? id = null)
-        {
-            //get alert pol config from database and configure hangfire.
-            Models.GADATA_AlertModel gADATA_AlertModel = new GADATA_AlertModel();
-            List<c_triggers> c_Triggers = (from triggers in gADATA_AlertModel.c_triggers.Where(c => c.id == id || !id.HasValue)
-                                           select triggers).ToList();
-
-            AlertEngine alertEngine = new AlertEngine();
-            foreach (c_triggers trigger in c_Triggers)
-            {
-                if (trigger.enabled)
-                {
-                    log.Info("Adding HF alertTriggerJob for: " + trigger.id);
-                    Hangfire.RecurringJob.AddOrUpdate("AT" + trigger.id + "_" + trigger.alertType, () => alertEngine.CheckForalerts(trigger.id, trigger.discription),trigger.Cron);
-                }
-            }
-
-        }
-
-        //Clear al the 'inactive' triggers from hangfire
-        //if ClearAll remove everything active or not
-        public void ClearHanfireAlertwork(bool ClearALL = false)
-        {
-            //get alert pol config from database and configure hangfire.
-            Models.GADATA_AlertModel gADATA_AlertModel = new GADATA_AlertModel();
-            List<c_triggers> c_Triggers = (from triggers in gADATA_AlertModel.c_triggers
-                                           select triggers).ToList();
-
-            AlertEngine alertEngine = new AlertEngine();
-            foreach (c_triggers trigger in c_Triggers)
-            {
-                if (trigger.enabled == false || ClearALL == true)
-                {
-                    log.Info("Removing HF alertTriggerJob for: " + trigger.id);
-                    RecurringJob.RemoveIfExists("AT" + trigger.id + "_" + trigger.alertType);
-                }
-            }
-        }
-
         //Gets called by Hanfire to processAlertwork.
         [Queue("alertengine")]
         [AutomaticRetry(Attempts = 0)] //no hangfire retrys 
-        public void CheckForalerts(int c_triggerID,string AlertDiscription)
+        public void CheckForalerts(int c_triggerID,string AlertDiscription, PerformContext context)
         {
             //get trigger 
             GADATA_AlertModel gADATA_AlertModel = new GADATA_AlertModel();
@@ -74,7 +36,7 @@ namespace EqUiWebUi.Areas.Alert
             //if trigger not active stop processing
             if (trigger.enabled == false)
             {
-                log.Debug("trigger not enabled:" + c_triggerID);
+                context.WriteLine("trigger not enabled:" + c_triggerID);
                 return;
             }
             
@@ -92,7 +54,7 @@ namespace EqUiWebUi.Areas.Alert
             }
             else
             {
-                log.Debug("trigger: " + trigger.alertType + " count:" + ActiveAlerts.Rows.Count);
+                context.WriteLine("trigger: " + trigger.alertType + " count:" + ActiveAlerts.Rows.Count);
             }
             //build an listobject from the datatable.
             List<Models.AlertResult> alertResults = new List<AlertResult>(); 
@@ -125,8 +87,9 @@ namespace EqUiWebUi.Areas.Alert
                 //if more than one active we have a config issue
                 if (h_alert.Count > 1)
                 {
+                    context.WriteLine("More than one alert active for alarmobject: " + ActiveAlert.alarmobject);
                     log.Error("More than one alert active for alarmobject: " + ActiveAlert.alarmobject);
-                  //allow continue ? 
+                    //allow continue ? 
                 }
 
                 //in 1 AlertRun we can have multible results for the same alarmobject. 
@@ -134,7 +97,7 @@ namespace EqUiWebUi.Areas.Alert
                 //if already handeld jup to next item.
                 if (ActiveAlert.handeld)
                 {
-                    log.Debug("This alert was already handeld skipping");
+                    context.WriteLine("This alert was already handeld skipping");
                     continue;
                 }
                 else
@@ -146,7 +109,7 @@ namespace EqUiWebUi.Areas.Alert
                //if alert not active make  one
                 if (h_alert.Count == 0)
                 {
-                    log.Info("New alert for: " + ActiveAlert.alarmobject + " => "+ ActiveAlert.info);
+                    context.WriteLine("New alert for: " + ActiveAlert.alarmobject + " => "+ ActiveAlert.info);
 
                     h_alert newAlert = new h_alert
                     {
@@ -179,7 +142,7 @@ namespace EqUiWebUi.Areas.Alert
                         }
                         else //handle if we don't get a response from gadata
                         {
-                            log.Debug("did not get a valid location tree from gadata");
+                            context.WriteLine("did not get a valid location tree from gadata");
                             newAlert.locationTree = ActiveAlert.alarmobject;
                             newAlert.location = ActiveAlert.alarmobject;
                         }
@@ -198,7 +161,7 @@ namespace EqUiWebUi.Areas.Alert
                         }
                         else //handle if we don't get a response from gadata
                         {
-                            log.Debug("did not get a valid location tree from gadata");
+                            context.WriteLine("did not get a valid location tree from gadata");
                             newAlert.locationTree = ActiveAlert.alarmobject;
                             newAlert.location = ActiveAlert.alarmobject;
                         }
@@ -231,7 +194,7 @@ namespace EqUiWebUi.Areas.Alert
                     //check if we need to send SMS
                     if (trigger.enableSMS)
                     {
-                       newAlert =  HandleSms(trigger, newAlert);
+                       newAlert =  HandleSms(trigger, newAlert, context);
                     }
                     //dont forget to ADD and SAVE! 
                     gADATA_AlertModel.h_alert.Add(newAlert);
@@ -241,12 +204,12 @@ namespace EqUiWebUi.Areas.Alert
                 //Alert is already active RETRIGGER
                 else
                 {
-                    log.Debug("Alert already active: " + ActiveAlert.alarmobject);              
+                    context.WriteLine("Alert already active: " + ActiveAlert.alarmobject);              
                     //if the active alert has a new timestamp tis should mean a new datapoint (retrigger event)
 
                     if (h_alert[0].lastTriggerd.ToString("yyyy-MM-dd HH:mm:ss") != ActiveAlert.timestamp.ToString("yyyy-MM-dd HH:mm:ss"))
                     {
-                        log.Info("Retriggerd: " + h_alert[0].alarmobject + " "  + h_alert[0].lastTriggerd.ToString("yyyy-MM-dd HH:mm:ss") + " => " + ActiveAlert.timestamp.ToString("yyyy-MM-dd HH:mm:ss"));
+                        context.WriteLine("Retriggerd: " + h_alert[0].alarmobject + " "  + h_alert[0].lastTriggerd.ToString("yyyy-MM-dd HH:mm:ss") + " => " + ActiveAlert.timestamp.ToString("yyyy-MM-dd HH:mm:ss"));
                         //added badge to comment with retrigger event
                         StringBuilder sb = new StringBuilder(); 
                         sb.AppendLine(h_alert[0].comments);
@@ -269,7 +232,7 @@ namespace EqUiWebUi.Areas.Alert
                         //check if we need to REsend SMS
                         if (trigger.enableSMS && trigger.smsOnRetrigger)
                         {        
-                            h_alert[0] = HandleSms(trigger, h_alert[0]);
+                            h_alert[0] = HandleSms(trigger, h_alert[0], context);
                         }
                         //dont forget SAVE!!
                         gADATA_AlertModel.SaveChanges();
@@ -293,7 +256,7 @@ namespace EqUiWebUi.Areas.Alert
                     //check aganst the active alerts and if not active anymore close it.
                     if (ActiveAlerts.AsEnumerable().Any(row => OpenAlert.alarmobject == row.Field<String>("alarmobject")))
                     {
-                        log.Debug("Alert is still active must not close it <" + OpenAlert.location + ">id:" + OpenAlert.id.ToString());
+                        context.WriteLine("Alert is still active must not close it <" + OpenAlert.location + ">id:" + OpenAlert.id.ToString());
                         if (trigger.isDebugmode)
                         {
                             //adde badge to comment when closses
@@ -312,7 +275,7 @@ namespace EqUiWebUi.Areas.Alert
                     }
                     else
                     {
-                        log.Info("Alert no longer active closing it <" + OpenAlert.alarmobject + ">id:" + OpenAlert.id.ToString());
+                        context.WriteLine("Alert no longer active closing it <" + OpenAlert.alarmobject + ">id:" + OpenAlert.id.ToString());
                         //set state
                         OpenAlert.state = (int)alertState.TECHCOMP; //techcomp
                         //set last triggerd timestamp when close so we can calc downtime
@@ -339,7 +302,7 @@ namespace EqUiWebUi.Areas.Alert
 
         //handle the sms message 
         //add comments alert (the ref makes alert in out parameter
-        public h_alert HandleSms(c_triggers trigger,  h_alert alert)
+        public h_alert HandleSms(c_triggers trigger,  h_alert alert, PerformContext context)
         {
             SmsComm smsComm = new SmsComm();
             //init comments
@@ -355,11 +318,11 @@ namespace EqUiWebUi.Areas.Alert
                 {
                     if (alert.locationTree.Contains(SMSconfig.c_CPT600.LocationTree))
                     {
-                        log.Debug("locationTree tree oke Can send");
+                        context.WriteLine("locationTree tree oke Can send");
                     }
                     else
                     {
-                        log.Debug("locationTree NOK next");
+                        context.WriteLine("locationTree NOK next");
                         continue;
                     }
                 }
@@ -369,11 +332,11 @@ namespace EqUiWebUi.Areas.Alert
                 {
                     if (alert.Classification.Contains(SMSconfig.c_CPT600.AssetRoot))
                     {
-                        log.Debug("Asset root oke Can send");
+                        context.WriteLine("Asset root oke Can send");
                     }
                     else
                     {
-                        log.Debug("Asser root NOK next");
+                        context.WriteLine("Asser root NOK next");
                         continue;
                     }
                 }
@@ -381,12 +344,12 @@ namespace EqUiWebUi.Areas.Alert
                 //check if were are not at limmit
                 if(SMSconfig.c_CPT600.SMSlimit.GetValueOrDefault(10000) >= SMSconfig.c_CPT600.SMSsend.GetValueOrDefault(0))
                 {
-                    log.Debug("Sms limit oke Can Send");
+                    context.WriteLine("Sms limit oke Can Send");
                     SMSconfig.c_CPT600.SMSsend += 1;
                 }
                 else
                 {
-                    log.Debug("Sms limit NOK can not Send");
+                    context.WriteLine("Sms limit NOK can not Send");
                     continue;
                 }
 

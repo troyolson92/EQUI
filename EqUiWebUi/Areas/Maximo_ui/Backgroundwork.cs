@@ -81,7 +81,7 @@ workorder.changedate >= sysdate - 100
             {
                 context.WriteLine("FAILURE for MAXIMOrt connection! " + ex.Message);
                 log.Error("FAILURE for MAXIMOrt connection", ex);
-                //if fails try reporting db
+                //if fails try reporting dbEQUI
                 context.WriteLine("giving it another try using MAXIMO7rep");
                 newMaximoDt = connectionManager.RunQuery(MaximoQry, dbName: "MAXIMO7rep", maxEXECtime: 120, enblExeptions: true);
                 context.WriteLine("Done (used MAXIMO7rep)");

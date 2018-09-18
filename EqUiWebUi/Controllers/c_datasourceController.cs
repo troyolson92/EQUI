@@ -111,7 +111,7 @@ namespace EqUiWebUi.Controllers
         }
 
 
-        //Test a db 
+        //Test a dbEQUI 
         // Test all configured database. if id is null
         public JsonResult RunDbTest(int? id)
         {
@@ -130,7 +130,7 @@ namespace EqUiWebUi.Controllers
                     {
                         connectionManager.TestDb(db.Id);
                     }
-                    return Json(new { Msg = "RunDbTest (all db) OK" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Msg = "RunDbTest (all dbEQUI) OK" }, JsonRequestBehavior.AllowGet);
                 }
             }
             catch (Exception ex)

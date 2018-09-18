@@ -122,7 +122,7 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
             catch (Exception ex)
             {
                 log.Error("Failed to run query using the realtimeConn", ex);
-                if (RealtimeConn) //if we where using the realtime connection retry useing reporting db
+                if (RealtimeConn) //if we where using the realtime connection retry useing reporting dbEQUI
                 {
                     RealtimeConn = false;
                     MaximoDbName = "MAXIMO7rep";

@@ -43,6 +43,12 @@ namespace EqUiWebUi.Areas.Alert.Models
         public bool isDebugmode { get; set; }
         public int c_datasource_id { get; set; }
         public string controlChartYlabel { get; set; }
+        public int c_schedule_id { get; set; }
+        public int ordinal { get; set; }
+        public int interval { get; set; }
+        public int intervalCounter { get; set; }
+        public string OptValueLabels { get; set; }
+        public bool continueOnJobFailure { get; set; }
     
         public virtual c_smsSystem c_smsSystem { get; set; }
         public virtual c_state c_state { get; set; }
@@ -53,5 +59,6 @@ namespace EqUiWebUi.Areas.Alert.Models
         public virtual c_datasource c_datasource { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<l_controlLimits> l_controlLimits { get; set; }
+        public virtual c_schedule c_schedule { get; set; }
     }
 }
