@@ -32,9 +32,6 @@ namespace EqUiWebUi.Areas.Alert.Controllers
         [HttpGet]
         public ActionResult _GetControlChart(ChartSettings chartSettings)
         {
-            //dbg dsbl optdataset
-            chartSettings.hideOptData = true;
-            chartSettings.OptValueDataNum = 1;
 
             return PartialView(chartSettings);
         }
@@ -104,7 +101,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                                 r = SetPointSize(e)
                               };
 
-            //get optional dataset
+            //get optional datasets
             object OptValueData = from e in result
                                select new
                                {
@@ -112,6 +109,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                                    y = Math.Round(e.OptValue.GetValueOrDefault(), 3),
                                    r = 0.7
                                };
+  
 
             //get the control limits seperate. (else a point is returned for each record and the rendering looks bad.
             double controllimitPointSize = 0.6;
