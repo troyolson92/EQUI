@@ -105,20 +105,6 @@ else
                     </div>
                 </div>
 
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Cron, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        <div id="jCron"></div>
-                        <p></p>
-                        <div>
-                            <input class="form-control text-box single-line" id="Cron" name="Cron" type="text" value="">
-                        </div>
-                        @Html.ValidationMessageFor(model => model.Cron, "", new { @class = "text-danger" })
-                        @Html.HelpTextFor(model => model.Cron)
-                    </div>
-                </div>
-
                 <div class="form-group">
                     @Html.LabelFor(model => model.c_schedule_id, "c_schedule_id", htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
@@ -360,12 +346,6 @@ else
     <link href="~/Content/codemirror/neat.css" rel="stylesheet" />
     <script src="~/Scripts/Codemirror/mode/sql.js"></script>
 
-    @*http://shawnchin.github.io/jquery-cron/*@
-    <link href="~/Content/jquery-cron.css" rel="stylesheet" />
-    <link href="~/Scripts/gentleSelect/jquery-gentleSelect.css" rel="stylesheet" />
-    <script src="~/Scripts/gentleSelect/jquery-gentleSelect.js"></script>
-    <script src="~/Scripts/jquery-cron.js"></script>
-
     <script>
         //for code mirror editor
         //sqlstatement
@@ -385,13 +365,6 @@ else
             lineNumbers: true,
             mode: "sql",
             theme: "neat"
-        });
-        //for jcron editor
-        $('#jCron').cron({
-            initial: "@(Model.Cron == null ? "0 * * * *" : Model.Cron)",
-            onChange: function () {
-                $('#Cron').val($(this).cron("value"));
-            }
         });
 
         //for check statement

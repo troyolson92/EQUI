@@ -21,15 +21,8 @@ namespace EqUiWebUi.Areas.HangfireArea
         private Alert.Models.GADATA_AlertModel dbALERT = new Alert.Models.GADATA_AlertModel();
         private Alert.AlertEngine AlertEngine = new Alert.AlertEngine();
 
-        public void Makejob(string jobname, string command, string cron, int maxExectime, int maxRetry)
-        {
 
-            //SDB need to add max retry here but how? 
-
-            log.Debug("Makejob: " + jobname);
-            Hangfire.RecurringJob.AddOrUpdate("BGJ_" + jobname, () => Runjob(command, maxExectime), cron);
-        }
-
+        //NEEDS TO BE DELETE WHEN JENS MOVED HIS STUFF*****
         [Queue("jobengine")]
         [AutomaticRetry(Attempts = 0)] //no hangfire retrys 
                                        //  [DisableConcurrentExecution(60*10)] //max exec time 10 minutes no dual running
@@ -39,6 +32,7 @@ namespace EqUiWebUi.Areas.HangfireArea
             ConnectionManager connectionManager = new ConnectionManager();
             connectionManager.RunCommand(command, enblExeptions: true, maxEXECtime: maxExectime);
         }
+        //**********************************************************************************
 
         public void configure_schedules(bool onlyStartrunContinues = false)
         {
@@ -116,6 +110,8 @@ namespace EqUiWebUi.Areas.HangfireArea
                             previousJobId = BackgroundJob.ContinueWith(previousJobId, () => Run_job(job.name, job.id, context), JobContinuationOptions.OnlyOnSucceededState);
                         }
                     }
+                    //add url to created job.
+                    context.WriteLine(System.Configuration.ConfigurationManager.AppSettings["HangfireDetailsBasepath"].ToString() + previousJobId);
                 }
                 //handel alerts
                 foreach (Alert.Models.c_triggers trigger in triggers)
@@ -136,6 +132,8 @@ namespace EqUiWebUi.Areas.HangfireArea
                             previousJobId = BackgroundJob.ContinueWith(previousJobId, () => AlertEngine.CheckForalerts(trigger.id, trigger.discription, context), JobContinuationOptions.OnlyOnSucceededState);
                         }
                     }
+                    //add url to created job.                 
+                    context.WriteLine(System.Configuration.ConfigurationManager.AppSettings["HangfireDetailsBasepath"].ToString() + previousJobId);
                 }
 
                 //if job had to run continues. add schedule at last job.

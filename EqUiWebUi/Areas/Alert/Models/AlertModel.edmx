@@ -55,7 +55,6 @@
           <Property Name="sqlStatement" Type="varchar(max)" />
           <Property Name="smsSystem" Type="int" />
           <Property Name="initial_state" Type="int" Nullable="false" />
-          <Property Name="Cron" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="c_schedule_id" Type="int" Nullable="false" />
           <Property Name="continueOnJobFailure" Type="bit" Nullable="false" />
           <Property Name="ordinal" Type="int" Nullable="false" />
@@ -772,7 +771,6 @@ warning 6002: The table/view 'GADATA.Alerts.Alerts' does not have a primary key 
           <NavigationProperty Name="c_state" Relationship="AlertModel.FK_c_triggers_c_state" FromRole="c_triggers" ToRole="c_state" />
           <NavigationProperty Name="h_alert" Relationship="AlertModel.FK_h_alert_c_triggers" FromRole="c_triggers" ToRole="h_alert" />
           <Property Name="enableSMS" Type="Boolean" Nullable="false" />
-          <Property Name="Cron" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="isDowntime" Type="Boolean" Nullable="false" />
           <Property Name="isInReport" Type="Boolean" Nullable="false" />
           <Property Name="sqlStatement" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
@@ -1177,7 +1175,6 @@ warning 6002: The table/view 'GADATA.Alerts.Alerts' does not have a primary key 
                 <ScalarProperty Name="sqlStatement" ColumnName="sqlStatement" />
                 <ScalarProperty Name="isInReport" ColumnName="isInReport" />
                 <ScalarProperty Name="isDowntime" ColumnName="isDowntime" />
-                <ScalarProperty Name="Cron" ColumnName="Cron" />
                 <ScalarProperty Name="enableSMS" ColumnName="enableSMS" />
                 <ScalarProperty Name="smsOnRetrigger" ColumnName="smsOnRetrigger" />
                 <ScalarProperty Name="AutoSetStateTechComp" ColumnName="AutoSetStateTechComp" />
