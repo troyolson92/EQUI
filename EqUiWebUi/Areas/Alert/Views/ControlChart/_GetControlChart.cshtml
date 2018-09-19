@@ -21,16 +21,18 @@
 
 @*popover content*@
 <div class="d-none" id="ControlChartOptionsPopoverContent">
-    <div class="panel panel-body">      
+    <div class="panel panel-body">
         <div class="form-group">
             <label for="ControlchartoptDataDropdown">Show OptDataset</label>
             <select class="form-control" id="ControlchartoptDataDropdown">
                 <option value="0" selected="selected">NoOptData</option>
-                <option value="1">OptData1</option>
-                <option value="2">OptData2</option>
-                <option value="3">OptData3</option>
-                <option value="4">OptData4</option>
-                <option value="5">OptData5</option>
+                @if (Model.optDataLabels != null)
+                {
+                    for (int i = 1; i <= Model.optDataLabels.Count; i++)
+                    {
+                        <option value="@i">@Model.optDataLabels[i-1].ToString()</option>
+                    }
+                }
             </select>
         </div>
     </div>
@@ -90,6 +92,8 @@
 
     //get chart data
     function getcontrolchartData() {
+        console.log('test' + ControlchartoptDatanum);
+
         //hide popover
         $('.popover').popover('hide');
         //spinner
@@ -162,7 +166,7 @@
                 scaleDateTimeFormat: "yy-mm-dd HH:MM:ss",
                 //for resize
                 maintainAspectRatio: false,
-                responsive: true,
+                responsive: true
             };
         //dataset
         var data = [
@@ -187,7 +191,7 @@
 
         if (ControlchartoptDatanum != 0) {
             data.push({
-                label: 'OptValue',
+                label: $("#ControlchartoptDataDropdown>option:selected").html(),
                 strokeColor: '#6f42c1',
                 data: dataPayload[4]
             })
