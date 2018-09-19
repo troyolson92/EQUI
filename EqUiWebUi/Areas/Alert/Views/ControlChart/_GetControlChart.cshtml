@@ -92,8 +92,6 @@
 
     //get chart data
     function getcontrolchartData() {
-        console.log('test' + ControlchartoptDatanum);
-
         //hide popover
         $('.popover').popover('hide');
         //spinner
@@ -166,8 +164,9 @@
                 scaleDateTimeFormat: "yy-mm-dd HH:MM:ss",
                 //for resize
                 maintainAspectRatio: false,
-                responsive: true
-            };
+            responsive: true
+        };
+
         //dataset
         var data = [
             {
@@ -193,6 +192,7 @@
             data.push({
                 label: $("#ControlchartoptDataDropdown>option:selected").html(),
                 strokeColor: '#6f42c1',
+                yAxisID: 'B',
                 data: dataPayload[4]
             })
         }
