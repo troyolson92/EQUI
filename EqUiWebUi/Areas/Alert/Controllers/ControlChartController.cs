@@ -32,7 +32,13 @@ namespace EqUiWebUi.Areas.Alert.Controllers
         [HttpGet]
         public ActionResult _GetControlChart(ChartSettings chartSettings)
         {
-
+            //get opt data labels 
+            c_triggers trigger = db.c_triggers.Find(chartSettings.c_trigger_id);
+            if (trigger.OptValueLabels != null)
+            {
+                chartSettings.optDataLabels = trigger.OptValueLabels.Split(';').ToList();
+            }
+            //
             return PartialView(chartSettings);
         }
 
@@ -55,9 +61,11 @@ namespace EqUiWebUi.Areas.Alert.Controllers
         //get data for the chart => returns json result
         /*
         DECLARE @c_trigger_id as int 
+        DECLARE @optDatanum as int
         DECLARE @alarmobject as varchar(max)
         set @c_trigger_id = 22
         set @alarmobject = '35200R01_gun1'
+        set @optDatanum = 0
 */
         [HttpGet]
         public JsonResult _getData(ChartSettings chartSettings)
@@ -82,7 +90,8 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                 //Query to get value data
                 IQueryable<l_dummyControlchartResult> Qresult = db.l_dummyControlchartResult.SqlQuery(c_Trigger.controlChartSqlStatement,
                                   new SqlParameter("@c_trigger_id", chartSettings.c_trigger_id),
-                                  new SqlParameter("@alarmobject", chartSettings.alarmobject)
+                                  new SqlParameter("@alarmobject", chartSettings.alarmobject),
+                                  new SqlParameter("@optDatanum", chartSettings.optDatanum)
                  ).Where(l => l.timestamp > chartSettings.startdate && l.timestamp < chartSettings.enddate).AsQueryable();
                  result = Qresult.ToList();
             }

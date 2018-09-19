@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using TrackerEnabledDbContext;
@@ -124,7 +125,7 @@ namespace EqUiWebUi.Areas.Alert.Models
         public string alarmobject { get; set; }
         public int c_trigger_id { get; set; }
         public int optDatanum { get; set; } //from 0-5 0=no opt data 1-5 op data set 
-        public string optDataLabels { get; set; }
+        public List<string> optDataLabels { get; set; }
     }
 
     public class AlertResult
