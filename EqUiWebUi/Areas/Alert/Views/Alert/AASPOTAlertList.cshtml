@@ -14,9 +14,9 @@
 
 @Html.Grid(Model).Named("h_alert").Build(columns =>
 {
-    columns.Add(c => c.id).Titled("id").Filterable(true).InitialSort(GridSortOrder.Desc);
+    columns.Add(c => c.id).Titled("id").Filterable(true);
     columns.Add(c => c.location).Titled("location").Filterable(true).MultiFilterable(true);
-    columns.Add(c => c.C_timestamp).Titled("C_timestamp").Formatted("{0:dd-MM-yyyy HH:mm}");
+    columns.Add(c => c.lastTriggerd).Titled("timestamp").Formatted("{0:dd-MM-yyyy HH:mm}").InitialSort(GridSortOrder.Desc);
     columns.Add(c => c.info).Titled("info");
     columns.Add(c => c.ChangedUser.username.Replace(@"VCCNET\", "")).Titled("ChangedUser");
     columns.Add(c => c.triggerCount).Titled("TC").Filterable(true);

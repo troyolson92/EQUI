@@ -90,6 +90,10 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             {
                 return HttpNotFound();
             }
+
+            //bug 18w36d4 URI to long... 
+            //if you use EDIT it does work. strange...
+
             ViewBag.AddTrendChart = AddTrendChart;
             return PartialView(h_alert);
         }

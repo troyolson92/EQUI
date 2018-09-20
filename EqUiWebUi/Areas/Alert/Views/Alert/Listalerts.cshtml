@@ -9,9 +9,9 @@
 
 @Html.Grid(Model).Named("h_alert").Build(columns =>
 {
-    columns.Add(c => c.id).Titled("ID").InitialSort(GridSortOrder.Desc);
+    columns.Add(c => c.id).Titled("ID");
     columns.Add(c => c.c_triggers.alertType).Titled("alertType");
-    columns.Add(c => c.C_timestamp).Titled("C_timestamp").Formatted("{0:dd-MM-yyyy HH:mm}");
+    columns.Add(c => c.lastTriggerd).Titled("timestamp").Formatted("{0:dd-MM-yyyy HH:mm}").InitialSort(GridSortOrder.Desc);
     columns.Add(c => c.location).Titled("location");
     columns.Add(c => c.alarmobject).Titled("alarmobject");
     columns.Add(c => c.Classification).Titled("Class");
