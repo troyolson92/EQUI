@@ -213,6 +213,11 @@ namespace EqUiWebUi.Areas.HangfireArea
             }
         }
 
+        private void ConnectionManager_SomethingHappened(string foo)
+        {
+            log.Info("event: " + foo);
+        }
+
         [Queue("jobengine")]
         [AutomaticRetry(Attempts = 0)] //no hangfire retrys 
         public void Wait_job(string name, int waittime, PerformContext context)

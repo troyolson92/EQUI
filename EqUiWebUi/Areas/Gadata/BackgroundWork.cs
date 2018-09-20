@@ -84,7 +84,6 @@ namespace EqUiWebUi.Areas.Gadata
                     RecurringJob.AddOrUpdate("norm_C3G", () => backgroundwork.norm_c3g(null), Cron.Minutely);
                     RecurringJob.AddOrUpdate("norm_C4G", () => backgroundwork.norm_c4g(null), Cron.Minutely);
                     RecurringJob.AddOrUpdate("norm_NGAC", () => backgroundwork.norm_NGAC(null), Cron.Minutely);
-                    RecurringJob.AddOrUpdate("norm_1day", () => backgroundwork.norm_1day(null), Cron.Daily);
                 }
                 else
                 {
@@ -93,7 +92,6 @@ namespace EqUiWebUi.Areas.Gadata
                     RecurringJob.RemoveIfExists("norm_C3G");
                     RecurringJob.RemoveIfExists("norm_C4G");
                     RecurringJob.RemoveIfExists("norm_NGAC");
-                    RecurringJob.RemoveIfExists("norm_1day");
                 }
             }
 
@@ -350,75 +348,74 @@ namespace EqUiWebUi.Areas.Gadata
             context.WriteLine(DataBuffer.dataC4G.Count());
         }
 
+        private static bool _isRunningUpdateNGAC;
         //run NGAC normalisation steps.
         [Queue("gadata")]
         [AutomaticRetry(Attempts = 0)]
         public void norm_NGAC(PerformContext context)
         {
-            //
-            ConnectionManager connectionManager = new ConnectionManager();
-            context.WriteLine("EXEC [NGAC].[sp_update_cleanLogteksts]");
-            connectionManager.RunCommand("EXEC [NGAC].[sp_update_cleanLogteksts]", enblExeptions: true, maxEXECtime: 300);
-            context.WriteLine("Done");
-
-            context.WriteLine("runRule started");
-            //stupid that I need to spin up all these classes to get it to run... (temp solution)
-            EqUiWebUi.Controllers.ClassificationController classificationController = new EqUiWebUi.Controllers.ClassificationController();
-            EqUiWebUi.Models.c_LogClassRules c_LogClassRule = new EqUiWebUi.Models.c_LogClassRules();
-            EqUiWebUi.Models.GADATAEntitiesEQUI db = new EqUiWebUi.Models.GADATAEntitiesEQUI();
-            c_LogClassRule.c_logClassSystem_id = db.c_logClassSystem.Where(c => c.Name == "VASC_NGAC").First().id;
-            c_LogClassRule.id = 0; //this causes us to run all rules
-            classificationController.RunRule(c_LogClassRule, overrideManualSet: false, Clear: false, UPDATE: false);
-            context.WriteLine("runRule done");
-            //update supervisie databuffer
-            context.WriteLine("Supervisie dataVASC");
-            VASC.Models.GADATAEntitiesVASC gADATAEntitiesVASC = new VASC.Models.GADATAEntitiesVASC();
-            gADATAEntitiesVASC.Database.CommandTimeout = 45; // default 30 
-            DataBuffer.dataVASC = gADATAEntitiesVASC.NGAC_Supervisie.Select(x => new EqUiWebUi.Areas.Gadata.SupervisieDummy() {
-                 Location= x.Location
-                ,logtext = x.logtext
-                ,RT = x.RT
-                ,DT = x.DT
-                ,Classification = x.Classification
-                ,Subgroup = x.Subgroup
-                ,Severity = x.Severity
-                ,Logcode = x.Logcode
-                ,Logtype = x.Logtype
-                ,refId = x.refId
-                ,timestamp = x.timestamp
-                ,LocationTree = x.LocationTree
-                ,ClassTree = x.ClassTree
-                ,Vyear = x.Vyear
-                ,Vweek = x.Vweek
-                ,Vday = x.Vday
-                ,shift = x.shift
-                ,animation = x.Logtype
-            }).Where(x => x.timestamp > DataBuffer.EndDate).ToList();
-            context.WriteLine(DataBuffer.dataVASC.Count());
-            //fire and forget TIPLIFE
-            Areas.Tiplife.Backgroundwork backgroundworkTiplife = new Tiplife.Backgroundwork();
-            var tiplifeJobID = BackgroundJob.Enqueue(() => backgroundworkTiplife.UpdateTipstatus(null));
-            context.WriteLine(string.Format("Fired Tiplife norm (job:http://equi/hangfire/jobs/details/{0})", tiplifeJobID));
-        }
-
-        //run daily cleanup
-        [Queue("gadata")]
-        [AutomaticRetry(Attempts = 5)]
-        public void norm_1day(PerformContext context)
-        {
-            ConnectionManager connectionManager = new ConnectionManager();
-            string[] cmds = { "exec C3G.sp_Housekeeping"
-                    ,"exec c4g.sp_Housekeeping"
-                    ,"exec NGAC.sp_Housekeeping"
-            };
-
-            foreach (string cmd in cmds)
+            try
             {
-                context.WriteLine(" " + cmd);
-                connectionManager.RunCommand(cmd, enblExeptions: true, maxEXECtime: 300);
-                context.WriteLine(" Done");
+                if (_isRunningUpdateNGAC)
+                {
+                    log.Error("job was already running CANCEL job");
+                    context.WriteLine("job was already running CANCEL job");
+                    return;
+                }
+                _isRunningUpdateNGAC = true;
+
+                // Logic...
+                ConnectionManager connectionManager = new ConnectionManager();
+                context.WriteLine("EXEC [NGAC].[sp_update_cleanLogteksts]");
+                connectionManager.RunCommand("EXEC [NGAC].[sp_update_cleanLogteksts]", enblExeptions: true, maxEXECtime: 300);
+                context.WriteLine("Done");
+
+                context.WriteLine("runRule started");
+                //stupid that I need to spin up all these classes to get it to run... (temp solution)
+                EqUiWebUi.Controllers.ClassificationController classificationController = new EqUiWebUi.Controllers.ClassificationController();
+                EqUiWebUi.Models.c_LogClassRules c_LogClassRule = new EqUiWebUi.Models.c_LogClassRules();
+                EqUiWebUi.Models.GADATAEntitiesEQUI db = new EqUiWebUi.Models.GADATAEntitiesEQUI();
+                c_LogClassRule.c_logClassSystem_id = db.c_logClassSystem.Where(c => c.Name == "VASC_NGAC").First().id;
+                c_LogClassRule.id = 0; //this causes us to run all rules
+                classificationController.RunRule(c_LogClassRule, overrideManualSet: false, Clear: false, UPDATE: false);
+                context.WriteLine("runRule done");
+                //update supervisie databuffer
+                context.WriteLine("Supervisie dataVASC");
+                VASC.Models.GADATAEntitiesVASC gADATAEntitiesVASC = new VASC.Models.GADATAEntitiesVASC();
+                gADATAEntitiesVASC.Database.CommandTimeout = 45; // default 30 
+                DataBuffer.dataVASC = gADATAEntitiesVASC.NGAC_Supervisie.Select(x => new EqUiWebUi.Areas.Gadata.SupervisieDummy() {
+                     Location= x.Location
+                    ,logtext = x.logtext
+                    ,RT = x.RT
+                    ,DT = x.DT
+                    ,Classification = x.Classification
+                    ,Subgroup = x.Subgroup
+                    ,Severity = x.Severity
+                    ,Logcode = x.Logcode
+                    ,Logtype = x.Logtype
+                    ,refId = x.refId
+                    ,timestamp = x.timestamp
+                    ,LocationTree = x.LocationTree
+                    ,ClassTree = x.ClassTree
+                    ,Vyear = x.Vyear
+                    ,Vweek = x.Vweek
+                    ,Vday = x.Vday
+                    ,shift = x.shift
+                    ,animation = x.Logtype
+                }).Where(x => x.timestamp > DataBuffer.EndDate).ToList();
+                context.WriteLine(DataBuffer.dataVASC.Count());
+                //fire and forget TIPLIFE
+                Areas.Tiplife.Backgroundwork backgroundworkTiplife = new Tiplife.Backgroundwork();
+                var tiplifeJobID = BackgroundJob.Enqueue(() => backgroundworkTiplife.UpdateTipstatus(null));
+                context.WriteLine(string.Format("Fired Tiplife norm (job:http://equi/hangfire/jobs/details/{0})", tiplifeJobID));
             }
+            finally
+            {
+                _isRunningUpdateNGAC = false;
+            }
+          
         }
+
     }
 }
  

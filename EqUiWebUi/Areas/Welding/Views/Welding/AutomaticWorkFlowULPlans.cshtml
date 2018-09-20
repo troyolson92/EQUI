@@ -6,19 +6,19 @@
 <h2>AutomaticWorkFlowULPlans</h2>
 @Html.Grid(Model).Named("AutomaticWorkFlowULPlans").Build(columns =>
 {
-    columns.Add(c => c.ID).Titled("ID").InitialSort(GridSortOrder.Desc);
-    columns.Add(c => c.BuildBody_s).Titled("BuildBody_s");
-    columns.Add(c => c.LastInspectionTime).Titled("LastInspectionTime").Formatted("{0:dd-MM-yyyy HH:mm:ss}");
-    columns.Add(c => c.SpotIdent).Titled("SpotIdent");
+    columns.Add(c => c.LastInspectionTime).Titled("LastInspectionTime").Formatted("{0:dd-MM-yyyy HH:mm:ss}").InitialSort(GridSortOrder.Desc);
     columns.Add(c => c.UL_plan).Titled("UL_plan");
-    //een berekening
-    columns.Add(c => c)
-                        .Titled("test")
-                        .Encoded(false)
-                        .RenderedAs(c => c.ID *100)
-                        .Filterable(false);
+    columns.Add(c => c.BuildBody_s).Titled("BuildBody_s");
+    columns.Add(c => c.WorkGroup).Titled("WorkGroup");
+    columns.Add(c => c.WorkLocation).Titled("WorkLocation");
+    columns.Add(c => c.Last30min_productionStatus).Titled("Last30min_productionStatus");
 
-}).Filterable().Sortable().Pageable(pager =>
-{
-    pager.RowsPerPage = 17;
-}).Empty("Did not find anything").Css("table-hover")
+}).Filterable().Sortable().Empty("Did not find anything").Css("table-hover").RowCss(row => MyRowStyling.getRowStyleAutomaticWorkFlowULPlans(row.Last30min_productionStatus))
+
+@section scripts{
+    <script>
+        //full with screen
+        $("#allcontent").removeClass("body-content");
+        $("#allcontent").removeClass("container");
+    </script>
+}

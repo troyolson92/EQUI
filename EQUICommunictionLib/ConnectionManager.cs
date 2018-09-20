@@ -205,6 +205,7 @@ namespace EQUICommunictionLib
             return returnmsg;
         }
 
+
         //run bulkCopy command (only for msSQL)
         //option to run get database by name or by ID
         //if dbName and ID is left blank run against main datbase
