@@ -14,7 +14,7 @@ namespace EqUiWebUi.Areas.Welding.Models
     
     public partial class AutomaticWorkFlowULPlans
     {
-        public Nullable<System.DateTime> LastInspectionTime { get; set; }
+        public System.DateTime LastInspectionTime { get; set; }
         public string UL_plan { get; set; }
         public int BuildBody_s { get; set; }
         public Nullable<System.TimeSpan> WorkTime { get; set; }

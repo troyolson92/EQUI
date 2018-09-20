@@ -33,50 +33,68 @@ namespace EqUiWebUi.Areas.Tiplife
 
 
         //update the local datatable with tipstatus called every minute #hangfire
+        private static bool _isRunningUpdateTipstatus;
         [AutomaticRetry(Attempts = 0)]
         [Queue("gadata")]
         public void UpdateTipstatus(PerformContext context)
         {
-            context.WriteLine("Get gADATAEntities.TipMonitor");
-            GADATAEntitiesTiplife gADATAEntities = new GADATAEntitiesTiplife();
-            gADATAEntities.Database.CommandTimeout = 60; //override default 30 seconds timeout. 
-            List<TipMonitor> data = (from tipstatus in gADATAEntities.TipMonitor
-                                     select tipstatus).ToList();
-
-            if (data.Count != 0)
+            try
             {
-                DataBuffer.Tipstatus = data;
+                if (_isRunningUpdateTipstatus)
+                {
+                    log.Error("job was already running CANCEL job");
+                    context.WriteLine("job was already running CANCEL job");
+                    return;
+                }
+                _isRunningUpdateTipstatus = true;
 
-                DateTime maxDate = data
-                            .Where(r => r != null)
-                            .Select(r => r.Date_time)
-                            .Max();
+                // Logic...
+                context.WriteLine("Get gADATAEntities.TipMonitor");
+                GADATAEntitiesTiplife gADATAEntities = new GADATAEntitiesTiplife();
+                gADATAEntities.Database.CommandTimeout = 60; //override default 30 seconds timeout. 
+                List<TipMonitor> data = (from tipstatus in gADATAEntities.TipMonitor
+                                            select tipstatus).ToList();
 
-                DataBuffer.TipstatusLastDt = maxDate;
-                context.WriteLine(string.Format("Buffer table updated ({0} rows)", data.Count));
-                //notify clients
-                var SignalRcontext = Microsoft.AspNet.SignalR.GlobalHost.ConnectionManager.GetHubContext<Areas.Gadata.DataRefreshHub>();
-                SignalRcontext.Clients.Group("TipstatusGrid").newData();
+                if (data.Count != 0)
+                {
+                    DataBuffer.Tipstatus = data;
+
+                    DateTime maxDate = data
+                                .Where(r => r != null)
+                                .Select(r => r.Date_time)
+                                .Max();
+
+                    DataBuffer.TipstatusLastDt = maxDate;
+                    context.WriteLine(string.Format("Buffer table updated ({0} rows)", data.Count));
+                    //notify clients
+                    var SignalRcontext = Microsoft.AspNet.SignalR.GlobalHost.ConnectionManager.GetHubContext<Areas.Gadata.DataRefreshHub>();
+                    SignalRcontext.Clients.Group("TipstatusGrid").newData();
+                }
+                else
+                {
+                    context.WriteLine("UpdateTipstatus did not return any data");
+                    log.Error("UpdateTipstatus did not return any data");
+                }
+
+                //update tipwear before change every 5 minutes
+                int TipWearbeforechangeInterval = 5;
+                if (DataBuffer.TipWearbeforechangeCounter >= TipWearbeforechangeInterval)
+                {
+                    context.WriteLine("TipWearbeforechange update START");
+                    gADATAEntities.Database.ExecuteSqlCommand("exec [NGAC].[sp_CalcTipWearBeforeChange]");
+                    DataBuffer.TipWearbeforechangeCounter = 0;
+                    context.WriteLine("Done");
+                }
+                else
+                {
+                    DataBuffer.TipWearbeforechangeCounter += 1;
+                    context.WriteLine(string.Format("TipWearbeforechange update SKIPPED (interval:{0}/{1})",DataBuffer.TipWearbeforechangeCounter, TipWearbeforechangeInterval));
+                }
+
             }
-            else
+            finally
             {
-                context.WriteLine("UpdateTipstatus did not return any data");
-                log.Error("UpdateTipstatus did not return any data");
-            }
-
-            //update tipwear before change every 5 minutes
-            int TipWearbeforechangeInterval = 5;
-            if (DataBuffer.TipWearbeforechangeCounter >= TipWearbeforechangeInterval)
-            {
-                context.WriteLine("TipWearbeforechange update START");
-                gADATAEntities.Database.ExecuteSqlCommand("exec [NGAC].[sp_CalcTipWearBeforeChange]");
-                DataBuffer.TipWearbeforechangeCounter = 0;
-                context.WriteLine("Done");
-            }
-            else
-            {
-                DataBuffer.TipWearbeforechangeCounter += 1;
-                context.WriteLine(string.Format("TipWearbeforechange update SKIPPED (interval:{0}/{1})",DataBuffer.TipWearbeforechangeCounter, TipWearbeforechangeInterval));
+                _isRunningUpdateTipstatus = false;
             }
         }
 

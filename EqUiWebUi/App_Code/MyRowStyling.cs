@@ -79,5 +79,26 @@ namespace EqUiWebUi
             }
         }
 
+        //jens zijn tools
+        //AutomaticWorkFlowULPlans
+        public static string getRowStyleAutomaticWorkFlowULPlans(string status)
+        {
+            switch (status)
+            {
+                case "production running":
+                    return "TableLogtypeGreen";
+
+                case "no production":
+                    return "TableLogtypeRed";
+
+                case "LOW production":
+                    return "TableLogtypeYellow";
+
+                default:
+                    return "";
+
+            }
+        }
+
     }
 }

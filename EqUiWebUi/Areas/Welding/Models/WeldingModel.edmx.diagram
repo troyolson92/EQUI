@@ -7,7 +7,7 @@
       <Diagram DiagramId="e109b52680e54941aea1e1f5eb0cf409" Name="Diagram1">
         <EntityTypeShape EntityType="GADATAModelWelding.ExtraControles" Width="1.5" PointX="5.5" PointY="0.5" />
         <EntityTypeShape EntityType="GADATAModelWelding.ExtraUltralogUitadaptief3" Width="1.5" PointX="7.25" PointY="0.5" />
-        <EntityTypeShape EntityType="GADATAModelWelding.AutomaticWorkFlowULPlans" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="GADATAModelWelding.AutomaticWorkFlowULPlans" Width="1.5" PointX="3.375" PointY="0.5" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

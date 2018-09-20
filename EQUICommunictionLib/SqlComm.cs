@@ -118,7 +118,6 @@ namespace EQUICommunictionLib
         void cn_InfoMessage(object sender, SqlInfoMessageEventArgs e)
         {
             sbSqlmsg.AppendLine(e.Message);
-
             foreach (SqlError err in e.Errors)
             {
                 log.Error(err.Message);

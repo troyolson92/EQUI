@@ -12,8 +12,9 @@ warning 6002: The table/view 'GADATA.UL.AutomaticWorkFlowULPlans' does not have 
             <PropertyRef Name="BuildBody's" />
             <PropertyRef Name="Last30min_productionStatus" />
             <PropertyRef Name="onderhoudswerken" />
+            <PropertyRef Name="LastInspectionTime" />
           </Key>
-          <Property Name="LastInspectionTime" Type="datetime" />
+          <Property Name="LastInspectionTime" Type="datetime" Nullable="false" />
           <Property Name="UL plan" Type="nchar" MaxLength="50" />
           <Property Name="BuildBody's" Type="int" Nullable="false" />
           <Property Name="WorkTime" Type="time" Precision="7" />
@@ -28,9 +29,9 @@ warning 6002: The table/view 'GADATA.UL.AutomaticWorkFlowULPlans' does not have 
 warning 6002: The table/view 'GADATA.UL.ExtraControles' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="ExtraControles">
           <Key>
+            <PropertyRef Name="statusAdaptive" />
             <PropertyRef Name="spot" />
             <PropertyRef Name="typecontrole" />
-            <PropertyRef Name="statusAdaptive" />
           </Key>
           <Property Name="statusAdaptive" Type="nvarchar" MaxLength="23" Nullable="false" />
           <Property Name="Model" Type="nchar" MaxLength="10" />
@@ -138,11 +139,12 @@ warning 6002: The table/view 'GADATA.WELDING.ExtraUltralogUitadaptief3' does not
         </EntityType>
         <EntityType Name="AutomaticWorkFlowULPlans">
           <Key>
-            <PropertyRef Name="BuildBody_s" />
             <PropertyRef Name="Last30min_productionStatus" />
             <PropertyRef Name="onderhoudswerken" />
+            <PropertyRef Name="BuildBody_s" />
+            <PropertyRef Name="LastInspectionTime" />
           </Key>
-          <Property Name="LastInspectionTime" Type="DateTime" Precision="3" />
+          <Property Name="LastInspectionTime" Type="DateTime" Precision="3" Nullable="false" />
           <Property Name="UL_plan" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
           <Property Name="BuildBody_s" Type="Int32" Nullable="false" />
           <Property Name="WorkTime" Type="Time" Precision="7" />
