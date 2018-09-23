@@ -79,6 +79,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Rel_GA|AnyCPU'">
     <OutputPath>bin\Rel_GA\</OutputPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DEV_GA|AnyCPU'">
+    <OutputPath>bin\DEV_GA\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="ABB.Robotics.Controllers.PC">
       <HintPath>..\..\..\..\..\..\Program Files (x86)\ABB Industrial IT\Robotics IT\SDK\PCSDK 6.05\ABB.Robotics.Controllers.PC.dll</HintPath>
