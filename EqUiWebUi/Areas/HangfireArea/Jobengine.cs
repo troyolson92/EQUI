@@ -20,12 +20,12 @@ namespace EqUiWebUi.Areas.HangfireArea
         private GADATAEntitiesEQUI dbEQUI = new GADATAEntitiesEQUI();
         private Alert.Models.GADATA_AlertModel dbALERT = new Alert.Models.GADATA_AlertModel();
         private Alert.AlertEngine AlertEngine = new Alert.AlertEngine();
+        private PerformContext MainContext;
 
 
         //NEEDS TO BE DELETE WHEN JENS MOVED HIS STUFF*****
         [Queue("jobengine")]
         [AutomaticRetry(Attempts = 0)] //no hangfire retrys 
-                                       //  [DisableConcurrentExecution(60*10)] //max exec time 10 minutes no dual running
         public void Runjob(string command, int maxExectime = 300)
         {
             log.Debug("runjob: " + command);
@@ -179,24 +179,19 @@ namespace EqUiWebUi.Areas.HangfireArea
             if (job.interval == 0 || (job.intervalCounter >= job.interval))
             {
                 EQUICommunictionLib.ConnectionManager connectionManager = new ConnectionManager();
+                MainContext = context;
+                connectionManager.InfoMessage += ConnectionManager_InfoMessage;
+
                 Stopwatch stopwatch = new Stopwatch();
                 stopwatch.Start();
-                string msg;
                 context.WriteLine($"Running sql command on {job.c_datasource.Name}");
-                msg = connectionManager.RunCommand(job.sqlCommand,dbID: job.c_datasource.Id, enblExeptions: true, maxEXECtime: job.maxRuntime.GetValueOrDefault(200));
+                connectionManager.RunCommand(job.sqlCommand,dbID: job.c_datasource.Id, enblExeptions: true, maxEXECtime: job.maxRuntime.GetValueOrDefault(200),subscribeToMessages:true);
                 stopwatch.Stop();
-                if (msg.Length != 0)
-                {
-                    context.SetTextColor(ConsoleTextColor.Yellow);
-                    context.WriteLine("Sql messages");
-                    context.WriteLine(msg);
-                    context.ResetTextColor();
-                }
 
                 if (stopwatch.Elapsed.TotalSeconds > job.warnRuntime.GetValueOrDefault(180))
                 {
                     context.SetTextColor(ConsoleTextColor.Yellow);
-                    context.WriteLine($"job overtime warning! {stopwatch.Elapsed.TotalSeconds}/{job.warnRuntime}");
+                    context.WriteLine($"job overtime warning! {Math.Round(stopwatch.Elapsed.TotalSeconds,1)}/{job.warnRuntime}");
                     context.ResetTextColor();
                 }
             }
@@ -213,9 +208,11 @@ namespace EqUiWebUi.Areas.HangfireArea
             }
         }
 
-        private void ConnectionManager_SomethingHappened(string foo)
+        private void ConnectionManager_InfoMessage(string msg)
         {
-            log.Info("event: " + foo);
+            MainContext.SetTextColor(ConsoleTextColor.Yellow);
+            MainContext.WriteLine(msg);
+            MainContext.ResetTextColor();
         }
 
         [Queue("jobengine")]

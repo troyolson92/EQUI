@@ -18,10 +18,13 @@ namespace EqUiWebUi.Areas.Gadata
         public static List<EqUiWebUi.Areas.Gadata.SupervisieDummy> Supervisie { get; set; }
         public static List<EqUiWebUi.Areas.Gadata.SupervisieDummy> dataALERT { get; set; }
         public static List<EqUiWebUi.Areas.Gadata.SupervisieDummy> dataVASC { get; set; }
+        public static bool _isRunningUpdateNGAC;
         public static List<EqUiWebUi.Areas.Gadata.SupervisieDummy> dataC3G { get; set; }
         public static List<EqUiWebUi.Areas.Gadata.SupervisieDummy> dataC4G { get; set; }
         public static List<EqUiWebUi.Areas.Gadata.SupervisieDummy> dataS4C { get; set; }
         public static List<EqUiWebUi.Areas.Gadata.SupervisieDummy> dataSTO { get; set; }
+        public static bool _isRunningNormalizeSTO;
+        public static bool _isRunningUpdateSTO;
         public static DateTime SupervisieLastDt { get; set; }
         //
         public static DateTime StartDate { get; set; }
@@ -258,6 +261,7 @@ namespace EqUiWebUi.Areas.Gadata
                 connectionManager.RunCommand(cmd, enblExeptions: true, maxEXECtime: 300);
                 context.WriteLine("Done");
             }
+
             context.WriteLine("runRule started");
             //stupid that I need to spin up all these classes to get it to run... (temp solution)
             EqUiWebUi.Controllers.ClassificationController classificationController = new EqUiWebUi.Controllers.ClassificationController();
@@ -267,6 +271,7 @@ namespace EqUiWebUi.Areas.Gadata
             c_LogClassRule.id = 0; //this causes us to run all rules
             classificationController.RunRule(c_LogClassRule, overrideManualSet: false, Clear: false, UPDATE: false);
             context.WriteLine("runRule done");
+            
             //update supervisie databuffer
             context.WriteLine("Supervisie dataC3G"); 
             Gadata.Models.GADATAEntities2 GADATAEntities2 = new Gadata.Models.GADATAEntities2();
@@ -348,7 +353,6 @@ namespace EqUiWebUi.Areas.Gadata
             context.WriteLine(DataBuffer.dataC4G.Count());
         }
 
-        private static bool _isRunningUpdateNGAC;
         //run NGAC normalisation steps.
         [Queue("gadata")]
         [AutomaticRetry(Attempts = 0)]
@@ -356,13 +360,13 @@ namespace EqUiWebUi.Areas.Gadata
         {
             try
             {
-                if (_isRunningUpdateNGAC)
+                if (DataBuffer._isRunningUpdateNGAC)
                 {
                     log.Error("job was already running CANCEL job");
                     context.WriteLine("job was already running CANCEL job");
                     return;
                 }
-                _isRunningUpdateNGAC = true;
+                DataBuffer._isRunningUpdateNGAC = true;
 
                 // Logic...
                 ConnectionManager connectionManager = new ConnectionManager();
@@ -379,6 +383,7 @@ namespace EqUiWebUi.Areas.Gadata
                 c_LogClassRule.id = 0; //this causes us to run all rules
                 classificationController.RunRule(c_LogClassRule, overrideManualSet: false, Clear: false, UPDATE: false);
                 context.WriteLine("runRule done");
+
                 //update supervisie databuffer
                 context.WriteLine("Supervisie dataVASC");
                 VASC.Models.GADATAEntitiesVASC gADATAEntitiesVASC = new VASC.Models.GADATAEntitiesVASC();
@@ -404,14 +409,15 @@ namespace EqUiWebUi.Areas.Gadata
                     ,animation = x.Logtype
                 }).Where(x => x.timestamp > DataBuffer.EndDate).ToList();
                 context.WriteLine(DataBuffer.dataVASC.Count());
+
                 //fire and forget TIPLIFE
                 Areas.Tiplife.Backgroundwork backgroundworkTiplife = new Tiplife.Backgroundwork();
                 var tiplifeJobID = BackgroundJob.Enqueue(() => backgroundworkTiplife.UpdateTipstatus(null));
-                context.WriteLine(string.Format("Fired Tiplife norm (job:http://equi/hangfire/jobs/details/{0})", tiplifeJobID));
+                context.WriteLine($"Fired Tiplife norm (job:http://equi/hangfire/jobs/details/{tiplifeJobID})");
             }
             finally
             {
-                _isRunningUpdateNGAC = false;
+                DataBuffer._isRunningUpdateNGAC = false;
             }
           
         }

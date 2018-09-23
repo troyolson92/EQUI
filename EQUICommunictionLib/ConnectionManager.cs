@@ -171,9 +171,8 @@ namespace EQUICommunictionLib
         //run Command form a db
         //option to run get database by name or by ID
         //if dbName and ID is left blank run against main datbase
-        public string RunCommand(string sqlCommand, string dbName = "", int dbID = 0, bool enblExeptions = false, int maxEXECtime = 300)
+        public void RunCommand(string sqlCommand, string dbName = "", int dbID = 0, bool enblExeptions = false, int maxEXECtime = 300,bool subscribeToMessages = false)
         {
-            string returnmsg = "no msg";
             Database db = new Database();
             if (dbName != "" || dbID != 0)
             {
@@ -189,7 +188,12 @@ namespace EQUICommunictionLib
             {
                 case db_type.msSqlServer:
                     SqlComm sqlComm = new SqlComm(db.ConnectionString);
-                    returnmsg = sqlComm.RunCommand(sqlCommand, enblExeptions: enblExeptions, maxEXECtime: maxEXECtime);
+                    if (subscribeToMessages)
+                    {
+                        sqlComm.Conn.Open();
+                        sqlComm.Conn.InfoMessage += Conn_InfoMessage;
+                    }
+                    sqlComm.RunCommand(sqlCommand, enblExeptions: enblExeptions, maxEXECtime: maxEXECtime);
                     break;
 
                 case db_type.Orcacle:
@@ -202,9 +206,19 @@ namespace EQUICommunictionLib
                     throw new NotSupportedException();
             }
 
-            return returnmsg;
         }
 
+        public delegate void _InfoMessage(string msg);
+        public event _InfoMessage InfoMessage;
+        private void Conn_InfoMessage(object sender, SqlInfoMessageEventArgs e)
+        {
+            InfoMessage(e.Message);
+            foreach (SqlError err in e.Errors)
+            {
+                log.Error(err.Message);
+                InfoMessage(err.Message);
+            }
+        }
 
         //run bulkCopy command (only for msSQL)
         //option to run get database by name or by ID
