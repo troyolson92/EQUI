@@ -1,6 +1,6 @@
 ﻿
 CREATE PROCEDURE [NGAC].[sp_CalcTipWearBeforeChange]
-  @daysBack as int = 40 --must be this high because some tips are on the robot a LONG time
+  @daysBack as int = 100 --must be this high because some tips are on the robot a LONG time
 AS
 BEGIN
 ---------------------------------------------------------------------------------------------------------------------
@@ -78,6 +78,7 @@ SELECT
 from NGAC.rt_TipDressLogFile as rt with (nolock)
 left join NGAC.rt_csv_file as rt_csv with (nolock) on rt.rt_csv_file_id = rt_csv.id
 left join NGAC.c_controller as c with (nolock) on c.id = rt_csv.c_controller_id
+
 --SDEBEUL bugfix 18w04d3
 /*
 When we have a fault like weld colaps or something like that a record gets inserted with no read wear values.
@@ -86,12 +87,15 @@ controller_name	id	rt_csv_file_id	Date Time	Tool_Nr	Dress_Num	Weld_Counter	Dress
 This must be excluded. Can be detected by Dress_reason = "" o
 */
 WHERE len(rt.Dress_Reason) > 1
-
 --limit date range for Query performance
 AND rt._timestamp between GETDATE()-@daysBack and GETDATE()
+--for performance SDEBEUL 18w38d7
+AND rt.Dress_Reason in('FullDress','InitDress')
+And RT.Dress_Num in(0,1,2,3,4)
 ) AS Y
-WHERE 
 
+
+WHERE 
 --robot mounted guns
 (
 	Y.Dress_Num = 0 
