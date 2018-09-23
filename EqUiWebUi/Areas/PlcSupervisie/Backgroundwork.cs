@@ -41,8 +41,8 @@ namespace EqUiWebUi.Areas.PlcSupervisie
             var jobId3 = BackgroundJob.ContinueWith(jobId2, () => HandleStoTable("ALARM_DATA_BODY_SIDES", null), JobContinuationOptions.OnAnyFinishedState);
             var jobId4 = BackgroundJob.ContinueWith(jobId3, () => HandleStoTable("ALARM_DATA_PREASSY", null), JobContinuationOptions.OnAnyFinishedState);
             var jobId5 = BackgroundJob.ContinueWith(jobId4, () => HandleStoTable("ALARM_DATA", null), JobContinuationOptions.OnAnyFinishedState);
-            var jobId6 = BackgroundJob.ContinueWith(jobId5, () => NormalizeSTOdata(), JobContinuationOptions.OnAnyFinishedState);
-            var jobId7 = BackgroundJob.ContinueWith(jobId6, () => ClassificationOfSTOdata(), JobContinuationOptions.OnAnyFinishedState);
+            var jobId6 = BackgroundJob.ContinueWith(jobId5, () => NormalizeSTOdata(null), JobContinuationOptions.OnAnyFinishedState);
+            var jobId7 = BackgroundJob.ContinueWith(jobId6, () => ClassificationOfSTOdata(null), JobContinuationOptions.OnAnyFinishedState);
         }
 
         //update new data from STO to gadata for a specifc table . 
@@ -57,7 +57,7 @@ namespace EqUiWebUi.Areas.PlcSupervisie
                                                             where rt_error.StoTable = '{0}'", TargetTable);
             DataTable dtGadataMaxTS = connectionManager.RunQuery(gadataGetMaxTimestampQry,enblExeptions:true);
             //handel empty table copy last 5 days
-            DateTime GadataMAxTs = System.DateTime.Now.AddDays(-5);
+            DateTime GadataMAxTs = System.DateTime.Now.AddHours(-8);
 
             if (!DBNull.Value.Equals(dtGadataMaxTS.Rows[0]["ts"]))
             {
@@ -88,50 +88,80 @@ namespace EqUiWebUi.Areas.PlcSupervisie
             context.WriteLine("Done");
         }
 
-        [AutomaticRetry(Attempts = 2)]
+        [AutomaticRetry(Attempts = 0)]
         [Queue("sto")]
-        public void NormalizeSTOdata()
+        public void NormalizeSTOdata(PerformContext context)
         {
-            ConnectionManager connectionManager = new ConnectionManager();
-           connectionManager.RunCommand("EXEC STO.[sp_update_L]", enblExeptions: true);
+            try
+            {
+                if (EqUiWebUi.Areas.Gadata.DataBuffer._isRunningNormalizeSTO)
+                {
+                    log.Error("job was already running CANCEL job");
+                    context.WriteLine("job was already running CANCEL job");
+                    return;
+                }
+                EqUiWebUi.Areas.Gadata.DataBuffer._isRunningNormalizeSTO = true;
+
+                ConnectionManager connectionManager = new ConnectionManager();
+                connectionManager.RunCommand("EXEC STO.[sp_update_L]", enblExeptions: true);
+            }
+            finally
+            {
+                EqUiWebUi.Areas.Gadata.DataBuffer._isRunningNormalizeSTO = false;
+            }
         }
 
-        [AutomaticRetry(Attempts = 2)]
+        [AutomaticRetry(Attempts = 0)]
         [Queue("sto")]
-        public void ClassificationOfSTOdata()
+        public void ClassificationOfSTOdata(PerformContext context)
         {
-            //stupid that I need to spin up all these classes to get it to run... (temp solution)
-            EqUiWebUi.Controllers.ClassificationController classificationController = new EqUiWebUi.Controllers.ClassificationController();
-            EqUiWebUi.Models.c_LogClassRules c_LogClassRule = new EqUiWebUi.Models.c_LogClassRules();
-            EqUiWebUi.Models.GADATAEntitiesEQUI db = new EqUiWebUi.Models.GADATAEntitiesEQUI();
-            c_LogClassRule.c_logClassSystem_id = db.c_logClassSystem.Where(c => c.Name == "DBI_STO").First().id;
-            c_LogClassRule.id = 0; //this causes us to run all rules
-            classificationController.RunRule(c_LogClassRule,overrideManualSet: false, Clear: false, UPDATE: false);
+            try
+            {
+                if (EqUiWebUi.Areas.Gadata.DataBuffer._isRunningUpdateSTO)
+                {
+                    log.Error("job was already running CANCEL job");
+                    context.WriteLine("job was already running CANCEL job");
+                    return;
+                }
+                EqUiWebUi.Areas.Gadata.DataBuffer._isRunningUpdateSTO = true;
 
-            //update supervisie databuffer
-            //context.WriteLine("Supervisie dataC3G"); 
-            Gadata.Models.GADATAEntities2 GADATAEntities2 = new Gadata.Models.GADATAEntities2();
-            EqUiWebUi.Areas.Gadata.DataBuffer.dataSTO = GADATAEntities2.STO_Supervisie.Select(x => new EqUiWebUi.Areas.Gadata.SupervisieDummy() {
-                 Location= x.Location
-                ,logtext = x.logtext
-                ,RT = x.RT
-                ,DT = x.DT
-                ,Classification = x.Classification
-                ,Subgroup = x.Subgroup
-                ,Severity = x.Severity
-                ,Logcode = x.Logcode
-                ,Logtype = x.Logtype
-                ,refId = x.refId
-                ,timestamp = x.timestamp
-                ,LocationTree = x.LocationTree
-                ,ClassTree = x.ClassTree
-                ,Vyear = x.Vyear
-                ,Vweek = x.Vweek
-                ,Vday = x.Vday
-                ,shift = x.shift
-                ,animation = x.Logtype
-            }).Where(x => x.timestamp > EqUiWebUi.Areas.Gadata.DataBuffer.EndDate).ToList();
-            //context.WriteLine(DataBuffer.dataC3G.Count());
+                //stupid that I need to spin up all these classes to get it to run... (temp solution)
+                EqUiWebUi.Controllers.ClassificationController classificationController = new EqUiWebUi.Controllers.ClassificationController();
+                EqUiWebUi.Models.c_LogClassRules c_LogClassRule = new EqUiWebUi.Models.c_LogClassRules();
+                EqUiWebUi.Models.GADATAEntitiesEQUI db = new EqUiWebUi.Models.GADATAEntitiesEQUI();
+                c_LogClassRule.c_logClassSystem_id = db.c_logClassSystem.Where(c => c.Name == "DBI_STO").First().id;
+                c_LogClassRule.id = 0; //this causes us to run all rules
+                classificationController.RunRule(c_LogClassRule,overrideManualSet: false, Clear: false, UPDATE: false);
+
+                //update supervisie databuffer
+                //context.WriteLine("Supervisie dataC3G"); 
+                Gadata.Models.GADATAEntities2 GADATAEntities2 = new Gadata.Models.GADATAEntities2();
+                EqUiWebUi.Areas.Gadata.DataBuffer.dataSTO = GADATAEntities2.STO_Supervisie.Select(x => new EqUiWebUi.Areas.Gadata.SupervisieDummy() {
+                     Location= x.Location
+                    ,logtext = x.logtext
+                    ,RT = x.RT
+                    ,DT = x.DT
+                    ,Classification = x.Classification
+                    ,Subgroup = x.Subgroup
+                    ,Severity = x.Severity
+                    ,Logcode = x.Logcode
+                    ,Logtype = x.Logtype
+                    ,refId = x.refId
+                    ,timestamp = x.timestamp
+                    ,LocationTree = x.LocationTree
+                    ,ClassTree = x.ClassTree
+                    ,Vyear = x.Vyear
+                    ,Vweek = x.Vweek
+                    ,Vday = x.Vday
+                    ,shift = x.shift
+                    ,animation = x.Logtype
+                }).Where(x => x.timestamp > EqUiWebUi.Areas.Gadata.DataBuffer.EndDate).ToList();
+                //context.WriteLine(DataBuffer.dataC3G.Count());
+            }
+            finally
+            {
+                EqUiWebUi.Areas.Gadata.DataBuffer._isRunningUpdateSTO = false;
+            }
         }
     }
 }

@@ -15,6 +15,7 @@ namespace EqUiWebUi.Areas.Tiplife
         //
         public static List<TipMonitor> Tipstatus { get; set; }
         public static DateTime TipstatusLastDt { get; set; }
+        public static bool _isRunningUpdateTipstatus;
         public static int TipWearbeforechangeCounter { get; set; }
     }
 
@@ -33,25 +34,23 @@ namespace EqUiWebUi.Areas.Tiplife
 
 
         //update the local datatable with tipstatus called every minute #hangfire
-        private static bool _isRunningUpdateTipstatus;
         [AutomaticRetry(Attempts = 0)]
         [Queue("gadata")]
         public void UpdateTipstatus(PerformContext context)
         {
             try
             {
-                if (_isRunningUpdateTipstatus)
+                if (DataBuffer._isRunningUpdateTipstatus)
                 {
                     log.Error("job was already running CANCEL job");
                     context.WriteLine("job was already running CANCEL job");
                     return;
                 }
-                _isRunningUpdateTipstatus = true;
+                DataBuffer._isRunningUpdateTipstatus = true;
 
                 // Logic...
                 context.WriteLine("Get gADATAEntities.TipMonitor");
                 GADATAEntitiesTiplife gADATAEntities = new GADATAEntitiesTiplife();
-                gADATAEntities.Database.CommandTimeout = 60; //override default 30 seconds timeout. 
                 List<TipMonitor> data = (from tipstatus in gADATAEntities.TipMonitor
                                             select tipstatus).ToList();
 
@@ -94,7 +93,7 @@ namespace EqUiWebUi.Areas.Tiplife
             }
             finally
             {
-                _isRunningUpdateTipstatus = false;
+                DataBuffer._isRunningUpdateTipstatus = false;
             }
         }
 
