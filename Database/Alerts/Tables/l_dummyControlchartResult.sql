@@ -8,7 +8,10 @@
     [l_controlLimits_id] INT           NULL,
     [Comment]            VARCHAR (MAX) NULL,
     [CreateDate]         DATETIME      NULL,
+    [OptValue]           FLOAT (53)    NULL,
     CONSTRAINT [PK_l_dummyControlchartResult] PRIMARY KEY CLUSTERED ([id] ASC),
     CONSTRAINT [FK_l_dummyControlchartResult_l_controlLimits] FOREIGN KEY ([l_controlLimits_id]) REFERENCES [Alerts].[l_controlLimits] ([id])
 );
+
+
 

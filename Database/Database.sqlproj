@@ -238,6 +238,10 @@
     <Build Include="NGAC\Views\ErrDispLog.sql" />
     <Build Include="NGAC\Functions\fn_GetSeverity.sql" />
     <Build Include="NGAC\Functions\AddifSomething.sql" />
+    <Build Include="EqUi\Tables\L_pannel.sql" />
+    <Build Include="EqUi\Tables\L_link.sql" />
+    <Build Include="EqUi\Tables\c_schedule.sql" />
+    <Build Include="EqUi\Tables\c_job.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="GADATAprod.publish.xml" />
