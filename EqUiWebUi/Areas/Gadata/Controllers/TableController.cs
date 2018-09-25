@@ -74,7 +74,7 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
                      s.Location
                     ,s.LocationTree               
                     ,s.Logtype
-                    ,s.Subgroup
+                    //,s.Subgroup
                     ,s.Classification
                     ,s.Vyear
                     ,s.Vweek
@@ -87,7 +87,7 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
                     ,Downtime_min_ = p.Sum (x => x.DT)
                     ,Count = p.Count()
                     ,Classification = p.Key.Classification
-                    ,Subgroup = p.Key.Subgroup
+                    ,Subgroup = p.First().Subgroup
                     ,Logcode = p.First().Logcode
                     ,Logtype = p.Key.Logtype
                     ,refId = p.First().refId
