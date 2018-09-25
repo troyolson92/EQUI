@@ -80,6 +80,7 @@ namespace EqUiWebUi.Areas.Tiplife
                 if (DataBuffer.TipWearbeforechangeCounter >= TipWearbeforechangeInterval)
                 {
                     context.WriteLine("TipWearbeforechange update START");
+                    gADATAEntities.Database.CommandTimeout = 60;
                     gADATAEntities.Database.ExecuteSqlCommand("exec [NGAC].[sp_CalcTipWearBeforeChange]");
                     DataBuffer.TipWearbeforechangeCounter = 0;
                     context.WriteLine("Done");
