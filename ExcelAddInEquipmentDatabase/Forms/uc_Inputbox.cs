@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace ExcelAddInEquipmentDatabase.Forms
 {
-    public partial class uc_Inputbox : MetroFramework.Controls.MetroUserControl 
+    public partial class uc_Inputbox : UserControl
     {
         //this indicates that this box is used for varchar or integers. (needed for rebuilding the qurery)
         bool lIntOnly = false;

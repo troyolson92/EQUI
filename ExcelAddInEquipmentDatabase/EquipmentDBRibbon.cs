@@ -50,14 +50,8 @@ namespace ExcelAddInEquipmentDatabase
         //if user trigger a refresh (because i'm an idiot and did not find a refresh finished event)
         bool TriggerRefresh = false;
 
-
-
-
-
         public string DsnMX7 { get { return "MX7"; } }
         public string DsnGADATA { get { return "GADATA"; } }
-
-
 
         private void EquipmentDBRibbon_Load(object sender, RibbonUIEventArgs e)
         {

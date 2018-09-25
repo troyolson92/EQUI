@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace ExcelAddInEquipmentDatabase.Forms
 {
-    public partial class EquiBrowser : MetroFramework.Forms.MetroForm
+    public partial class EquiBrowser : Form
     {
         public EquiBrowser(string url)
         {
