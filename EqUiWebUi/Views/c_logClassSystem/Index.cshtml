@@ -2,7 +2,7 @@
 <h3>c_logClassSystem</h3>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "EDIT",new {id = -1 })
 </p>
 @Html.Grid(Model).Named("c_logClassSystemGrid").Build(columns =>
 {
@@ -20,13 +20,3 @@
 }).Empty("Did not find anything").Css("table-hover")
 
 
-
-<div class="card">
-    <div class="card card-title bg-primary">
-
-    </div>
-    <div class="card card-body">
-
-
-    </div>
-</div>

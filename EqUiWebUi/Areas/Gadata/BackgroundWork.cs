@@ -197,7 +197,19 @@ namespace EqUiWebUi.Areas.Gadata
                 //TIA STO
                 context.WriteLine("dataSTO count:" + DataBuffer.dataSTO.Count());
                 data.AddRange(DataBuffer.dataSTO);
+
                 //ABB s4c is here because it has no norm
+                //run classiciation
+                context.WriteLine("S4C runRule started");
+                //stupid that I need to spin up all these classes to get it to run... (temp solution)
+                EqUiWebUi.Controllers.ClassificationController classificationController = new EqUiWebUi.Controllers.ClassificationController();
+                EqUiWebUi.Models.c_LogClassRules c_LogClassRule = new EqUiWebUi.Models.c_LogClassRules();
+                EqUiWebUi.Models.GADATAEntitiesEQUI db = new EqUiWebUi.Models.GADATAEntitiesEQUI();
+                c_LogClassRule.c_logClassSystem_id = db.c_logClassSystem.Where(c => c.Name == "VASC_S4C").First().id;
+                c_LogClassRule.id = 0; //this causes us to run all rules
+                classificationController.RunRule(c_LogClassRule, overrideManualSet: false, Clear: false, UPDATE: false);
+                context.WriteLine("S4C runRule done");
+                //get supervision data
                 Gadata.Models.GADATAEntities2 GADATAEntities2 = new Gadata.Models.GADATAEntities2();
                     DataBuffer.dataS4C = GADATAEntities2.S4C_Supervisie.Select(x => new EqUiWebUi.Areas.Gadata.SupervisieDummy() {
                      Location= x.Location

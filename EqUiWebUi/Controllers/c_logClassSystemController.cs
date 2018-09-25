@@ -10,6 +10,7 @@ using EqUiWebUi.Models;
 
 namespace EqUiWebUi.Controllers
 {
+    [Authorize(Roles = "Administrator")]
     public class c_logClassSystemController : Controller
     {
         private GADATAEntitiesEQUI db = new GADATAEntitiesEQUI();
@@ -20,6 +21,7 @@ namespace EqUiWebUi.Controllers
             var c_logClassSystem = db.c_logClassSystem.Include(c => c.c_datasource);
             return View(c_logClassSystem.ToList());
         }
+
         // GET: c_logClassSystem/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -27,7 +29,20 @@ namespace EqUiWebUi.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            c_logClassSystem c_logClassSystem = db.c_logClassSystem.Find(id);
+            c_logClassSystem c_logClassSystem;
+
+            if (id == -1) //create new alert
+            {
+                c_logClassSystem = new c_logClassSystem();
+            }
+            else //find the existing alert 
+            {
+                c_logClassSystem =  db.c_logClassSystem.Find(id);
+                if (c_logClassSystem == null)
+                {
+                    return HttpNotFound();
+                }
+            }
             if (c_logClassSystem == null)
             {
                 return HttpNotFound();
@@ -46,7 +61,14 @@ namespace EqUiWebUi.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(c_logClassSystem).State = EntityState.Modified;
+                if (c_logClassSystem.id == -1)//add new 
+                {
+                    db.c_logClassSystem.Add(c_logClassSystem);
+                }
+                else //update existing
+                {
+                    db.Entry(c_logClassSystem).State = EntityState.Modified;
+                }
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
