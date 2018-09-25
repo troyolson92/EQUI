@@ -11,6 +11,7 @@ using EqUiWebUi.Areas.Alert.Models;
 
 namespace EqUiWebUi.Areas.Alert.Controllers
 {
+    [Authorize(Roles = "Administrator, AlertMaster, AlertPowerUser")]
     public class c_smsSystemController : Controller
     {
         private GADATA_AlertModel db = new GADATA_AlertModel();

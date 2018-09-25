@@ -629,7 +629,7 @@ namespace ExcelAddInEquipmentDatabase
 
         private void btn_help_Click(object sender, RibbonControlEventArgs e)
         {
-            string helpfile = @"https://sharepoint.volvocars.net/sites/vcg_ga_aaosr/PublicDocuments/VSTO/Manuals/VSTO EQdatabase.pdf";
+            string helpfile = @"https://sway.com/csCS9cdjEpcpPhw0?ref=Link";
             try
             {
                 Process process = new Process();

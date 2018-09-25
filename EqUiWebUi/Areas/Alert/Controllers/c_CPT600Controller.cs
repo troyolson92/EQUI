@@ -11,6 +11,7 @@ using EqUiWebUi.Areas.Alert.Models;
 
 namespace EqUiWebUi.Areas.Alert.Controllers
 {
+    [Authorize(Roles = "Administrator, AlertMaster")]
     public class c_CPT600Controller : Controller
     {
         private GADATA_AlertModel db = new GADATA_AlertModel();
@@ -114,6 +115,12 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             db.c_CPT600.Remove(c_CPT600);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
+        }
+
+        public void TestSMS(string system)
+        {
+            Alert.SmsComm smsComm = new SmsComm();
+            smsComm.EnqueueSMS(system, $"This is a test send@{System.DateTime.Now.ToString()}");
         }
 
         protected override void Dispose(bool disposing)
