@@ -119,17 +119,17 @@ namespace EqUiWebUi.Areas.HangfireArea
                     context.WriteLine($"processing Alert: {trigger.alertType} ordinal: {trigger.ordinal}");
                     if (previousJobId == null)
                     {
-                        previousJobId = BackgroundJob.Enqueue(() => AlertEngine.CheckForalerts(trigger.id, trigger.discription, context));
+                        previousJobId = BackgroundJob.Enqueue(() => AlertEngine.CheckForalerts(trigger.id, trigger.discription, context,false));
                     }
                     else
                     {
                         if (trigger.continueOnJobFailure)
                         {
-                            previousJobId = BackgroundJob.ContinueWith(previousJobId, () => AlertEngine.CheckForalerts(trigger.id, trigger.discription, context), JobContinuationOptions.OnAnyFinishedState);
+                            previousJobId = BackgroundJob.ContinueWith(previousJobId, () => AlertEngine.CheckForalerts(trigger.id, trigger.discription, context, false), JobContinuationOptions.OnAnyFinishedState);
                         }
                         else
                         {
-                            previousJobId = BackgroundJob.ContinueWith(previousJobId, () => AlertEngine.CheckForalerts(trigger.id, trigger.discription, context), JobContinuationOptions.OnlyOnSucceededState);
+                            previousJobId = BackgroundJob.ContinueWith(previousJobId, () => AlertEngine.CheckForalerts(trigger.id, trigger.discription, context, false), JobContinuationOptions.OnlyOnSucceededState);
                         }
                     }
                     //add url to created job.                 
