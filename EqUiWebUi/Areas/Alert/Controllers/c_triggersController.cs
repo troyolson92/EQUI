@@ -30,7 +30,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
         public void RunAlertTrigger(int triggerID)
         {
             AlertEngine alertEngine = new AlertEngine();
-            alertEngine.CheckForalerts(triggerID, "debugRun",null);
+            alertEngine.CheckForalerts(triggerID, "debugRun",null,RunWhenDisabled:true);
         }
 
         // GET: Alert/c_triggers/Edit/5

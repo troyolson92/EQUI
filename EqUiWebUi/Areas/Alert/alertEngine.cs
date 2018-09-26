@@ -18,7 +18,7 @@ namespace EqUiWebUi.Areas.Alert
         //Gets called by Hanfire to processAlertwork.
         [Queue("alertengine")]
         [AutomaticRetry(Attempts = 0)] //no hangfire retrys 
-        public void CheckForalerts(int c_triggerID,string AlertDiscription, PerformContext context)
+        public void CheckForalerts(int c_triggerID,string AlertDiscription, PerformContext context, bool RunWhenDisabled = false)
         {
             //get trigger 
             GADATA_AlertModel gADATA_AlertModel = new GADATA_AlertModel();
@@ -34,7 +34,7 @@ namespace EqUiWebUi.Areas.Alert
             }
 
             //if trigger not active stop processing
-            if (trigger.enabled == false)
+            if (trigger.enabled == false && RunWhenDisabled == false)
             {
                 context.WriteLine("trigger not enabled:" + c_triggerID);
                 return;
