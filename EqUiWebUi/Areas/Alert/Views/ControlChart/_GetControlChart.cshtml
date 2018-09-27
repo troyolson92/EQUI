@@ -14,6 +14,7 @@
     <div class="card-body">
         <div id="controlchartContainer" style="position:relative">
             <canvas id='controlchartCanvas'></canvas>
+            <canvas id='controlchartOptCanvas'></canvas>
         </div>
     </div>
 </div>
@@ -46,6 +47,7 @@
 <script>
     //global vars
     var ControlChart;
+    var ControlChartOpt;
     var ControlchartendDate = moment('@Model.startdate.ToString("o")');
     var ControlchartstartDate = moment('@Model.enddate.ToString("o")');
     var ControlchartoptDatanum = 0;
@@ -134,12 +136,23 @@
         if (ControlChart) {
             ControlChart.destroy();
         }
-        //clear the cancas just to be shure
+        if (ControlChartOpt) {
+            ControlChartOpt.destroy();
+        }
+        //clear the cancas just to be sure
         $("#controlchartCanvas").remove();
+        $("#controlchartOptCanvas").remove();
+
         //add the new canvas
         $("#controlchartContainer").append('<canvas id="controlchartCanvas" height="300"></canvas>');
         //build the chart
         var ctxcontrolChart = document.getElementById("controlchartCanvas").getContext("2d");
+        //for opt chart 
+        if (ControlchartoptDatanum != 0) {
+
+            $("#controlchartContainer").append('<canvas id="controlchartOptCanvas"></canvas>');
+            var ctxcontrolChartOpt = document.getElementById("controlchartOptCanvas").getContext("2d");
+        }
         //chart options
         var options =
             {
@@ -164,7 +177,7 @@
                 scaleDateTimeFormat: "yy-mm-dd HH:MM:ss",
                 //for resize
                 maintainAspectRatio: false,
-            responsive: true
+                responsive: true
         };
 
         //dataset
@@ -188,17 +201,19 @@
             }
         ];
 
-        if (ControlchartoptDatanum != 0) {
-            data.push({
+        var dataOpt = [
+            {
                 label: $("#ControlchartoptDataDropdown>option:selected").html(),
                 strokeColor: '#6f42c1',
-                yAxisID: 'B',
                 data: dataPayload[4]
-            })
-        }
+            }
+        ];
 
         //build
         ControlChart = new Chart(ctxcontrolChart).Scatter(data, options);
+        if (ControlchartoptDatanum != 0) {
+            ControlChartOpt = new Chart(ctxcontrolChartOpt).Scatter(dataOpt, options);
+        }
         //init daterangepicker
         setgetcontrolchartDaterangepicker();
     }
