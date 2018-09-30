@@ -18,7 +18,7 @@
     //full with screen
     $("#allcontent").removeClass("body-content");
     $("#allcontent").removeClass("container");
-    $("#controllimitPlaceholder").html("Loading...");
+    $("#controllimitPlaceholder").html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
     $("#controllimitPlaceholder").load("@Url.Action("_List", new { showIsDead = ViewBag.showIsDead })");
 </script>
 }

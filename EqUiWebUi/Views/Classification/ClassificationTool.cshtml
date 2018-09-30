@@ -244,7 +244,7 @@
 
     //function to reload search grid
         function GetGridSearch(bSearchByClassification) {
-            $("#dummyLogClassResultGrid").html("Loading...");
+            $("#dummyLogClassResultGrid").html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
             $("#dummyLogClassResultGrid").mvcgrid({
                 sourceUrl: '@Url.Action("_logSearchResult")',
                 data: {
@@ -302,7 +302,7 @@
 
     //get logclassRulesGrid
         function GetRules() {
-            $("#c_LogClassRulesGrid").html("Loading...");
+            $("#c_LogClassRulesGrid").html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
             $("#c_LogClassRulesGrid").mvcgrid({
                 sourceUrl: '@Url.Action("_GetLogClassRulesGrid", "c_logClassRules")',
                 data: {

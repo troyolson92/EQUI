@@ -3,7 +3,7 @@
 
 
     <script>
-        $('#l_controlLimitsGrid').html("Loading...");
+        $('#l_controlLimitsGrid').html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
         $("#l_controlLimitsGrid").mvcgrid({
             sourceUrl: '@Url.Action("_ControlLimitsGrid", new { alarmobject = ViewBag.alarmobject, c_trigger_id = ViewBag.c_trigger_id, showIsDead = ViewBag.showIsDead })',
             requestType: 'get',

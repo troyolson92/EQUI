@@ -55,7 +55,7 @@
                 //add new placeholder afhter selected row
                 $(row).after('<tr id="placeholder"><td colspan="1000"><div class="card"><div class="card-body" id ="placeholderPartial"></div></div></td></tr>');
                 //animation
-                $("#placeholderPartial").html("Loading.....");
+                $("#placeholderPartial").html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
                 //load url in placeholder
                 var url = "@Url.Action("_Details")?AddTrendChart=true&id=" + data["id"];
                 $("#placeholderPartial").load(url);

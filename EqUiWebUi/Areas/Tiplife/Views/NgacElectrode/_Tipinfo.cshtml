@@ -60,7 +60,7 @@
 <!--sctips for Tipinfo-->
     <script type="text/javascript">
         //load tiplifeexpectations
-        $('#TipLifeExpectationsGrid').html("Loading...");
+        $('#TipLifeExpectationsGrid').html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
         $('#TipLifeExpectationsGrid').mvcgrid({
             sourceUrl: '@Url.Action("_TipLifeExpectationsGrid", new { location = ViewBag.location, tool_nr = ViewBag.tool_nr })', // Grid source url string
             requestType: 'get', // Ajax grid request type
@@ -79,7 +79,7 @@
                 //add new placeholder afhter selected row
                 $(row).after('<tr id="placeholder"><td colspan="1000"><div class="card bg-info"><div id="TipwearBeforeChangeGrid" class="mvc-grid card-body"></div></div></td></tr>');
                 //animation
-                $("#TipwearBeforeChangeGrid").html("Loading.....");
+                $("#TipwearBeforeChangeGrid").html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
                     //load supervisiegird in placeholder
                 $('#TipwearBeforeChangeGrid').mvcgrid({
                         sourceUrl: '@Url.Action("_TipwearBeforeChangeGrid", new { location = ViewBag.location, tool_nr = ViewBag.tool_nr })', // Grid source url string
@@ -98,11 +98,11 @@
         });
 
         //load all control limits for this object
-        $('#controllimitPlaceholder').html("Loading...");
+        $('#controllimitPlaceholder').html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
         $("#controllimitPlaceholder").load("@Url.Action("_List", "L_controlLimits", new {Area = "Alert", alarmobject = ViewBag.location + "_tool" + ViewBag.tool_nr,  showIsDead = ViewBag.showIsDead })");
 
         //load tipdress data grid 
-        $('#TipDressDataGrid').html("Loading...");
+        $('#TipDressDataGrid').html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
         $('#TipDressDataGrid').mvcgrid({
             sourceUrl: '@Url.Action("_TipDressDataGrid", new { location = ViewBag.location, tool_nr = ViewBag.tool_nr })', // Grid source url string
             requestType: 'get', // Ajax grid request type
