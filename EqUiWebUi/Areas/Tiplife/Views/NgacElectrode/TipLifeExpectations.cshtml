@@ -21,7 +21,7 @@
         //full with screen
         $("#allcontent").removeClass("body-content");
         $("#allcontent").removeClass("container");
-
+        $('#TipLifeExpectationsGrid').html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
         $('#TipLifeExpectationsGrid').mvcgrid({
             sourceUrl: '@Url.Action("_TipLifeExpectationsGrid")', // Grid source url string
             requestType: 'get', // Ajax grid request type

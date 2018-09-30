@@ -59,7 +59,7 @@
                     //add new placeholder afhter selected row
                     $(row).after('<tr id="placeholder"><td colspan="1000"><div class="card bg-info"><div id="SupervisieGrid" class="mvc-grid card-body"></div></div></td></tr>');
                     //animation
-                    $("#SupervisieGrid").html("Loading.....");
+                    $("#SupervisieGrid").html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
                     //load supervisiegird in placeholder
                         $('#SupervisieGrid').mvcgrid({
                             sourceUrl: '@Url.Action("_supervisie")', // Grid source url string

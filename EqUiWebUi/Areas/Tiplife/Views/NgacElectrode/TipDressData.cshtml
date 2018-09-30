@@ -21,7 +21,7 @@
         //full with screen
         $("#allcontent").removeClass("body-content");
         $("#allcontent").removeClass("container");
-        $('#TipDressDataGrid').html('Loading...');
+        $('#TipDressDataGrid').html("<i class='fas fa-spinner fa-spin fa-2x'></i>")
         $('#TipDressDataGrid').mvcgrid({
             sourceUrl: '@Url.Action("_TipDressDataGrid")', // Grid source url string
             requestType: 'get', // Ajax grid request type

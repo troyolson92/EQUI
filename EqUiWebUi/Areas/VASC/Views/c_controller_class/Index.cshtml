@@ -71,7 +71,7 @@
         //render details when they click on it.
         $('.mvc-grid').mvcgrid({
             rowClicked: function (row, data, e) {
-                $("#c_controller_classDetails").html("Loading.....");
+                $("#c_controller_classDetails").html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
                 var url = '@Url.Action("_Details")?id=' + data.id + '&controller_id=@ViewBag.controller_id'
                 $("#c_controller_classDetails").load(url);
             }
