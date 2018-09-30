@@ -244,6 +244,7 @@
 
     //function to reload search grid
         function GetGridSearch(bSearchByClassification) {
+            $("#dummyLogClassResultGrid").html("Loading...");
             $("#dummyLogClassResultGrid").mvcgrid({
                 sourceUrl: '@Url.Action("_logSearchResult")',
                 data: {
@@ -291,12 +292,6 @@
                     });
                 //
                 },
-                reloadStarted: function () {
-                    $("#dummyLogClassResultGrid").parent().addClass("bg-secondary");
-                },
-                reloadEnded: function () {
-                    $("#dummyLogClassResultGrid").parent().removeClass("bg-secondary");
-                },
                 reloadFailed: function (result) {
                     $('#dummyLogClassResultGrid').html("Error while loading!!!");
                     console.log(result);
@@ -307,6 +302,7 @@
 
     //get logclassRulesGrid
         function GetRules() {
+            $("#c_LogClassRulesGrid").html("Loading...");
             $("#c_LogClassRulesGrid").mvcgrid({
                 sourceUrl: '@Url.Action("_GetLogClassRulesGrid", "c_logClassRules")',
                 data: {
@@ -345,12 +341,6 @@
                         $('#btnRuleClear').click(function () {
                             RunRule(data.id, false, true);
                         });
-                },
-                reloadStarted: function () {
-                    $("#c_LogClassRulesGrid").parent().addClass("bg-secondary")
-                },
-                reloadEnded: function () {
-                    $("#c_LogClassRulesGrid").parent().removeClass("bg-secondary")
                 },
                 reloadFailed: function (result) {
                     $('#c_LogClassRulesGrid').html("Error while loading!!!");
