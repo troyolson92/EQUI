@@ -69,7 +69,7 @@
         $("#allcontent").removeClass("container");
 
         //render details when they click on it.
-        $('#c_controller_class').mvcgrid({
+        $('.mvc-grid').mvcgrid({
             rowClicked: function (row, data, e) {
                 $("#c_controller_classDetails").html("Loading.....");
                 var url = '@Url.Action("_Details")?id=' + data.id + '&controller_id=@ViewBag.controller_id'

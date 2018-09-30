@@ -13,16 +13,16 @@
     columns.Add(c => c._Enable_bit).Titled("enable_mask");
     columns.Add(c => c.bit_id).Titled("bit_id").Css("d-none");
     columns.Add(c => c.SessionName).Titled("SessionName");
-    //columns.Add(c => c.description).Titled("description");
-    columns.Add(c => c.ServiceName).Titled("ServiceName");
+//columns.Add(c => c.description).Titled("description");
+columns.Add(c => c.ServiceName).Titled("ServiceName");
     columns.Add(c => c.ServiceDisplayName).Titled("ServiceDisplayName");
     columns.Add(c => c)
        .Titled("ServiceStatus")
        .Encoded(false)
        .Filterable(true)
        .RenderedAs(c => VASChelpers.SetServiceState(c.ServiceName, c.ServiceStatus));
-    //columns.Add(c => c.ServiceStartName).Titled("StartName");
-    columns.Add(c => c.ServiceDescription).Titled("ServiceDescription");
+//columns.Add(c => c.ServiceStartName).Titled("StartName");
+columns.Add(c => c.ServiceDescription).Titled("ServiceDescription");
 }).Filterable().Sortable().Empty("Did not find anything").Css("table-hover")
 
 <hr />
@@ -37,8 +37,9 @@
 
 <div class="alert alert-danger">
     <strong>WARNING!</strong>
-    if the option has a sessiondatabit set to -1 this means its for <strong>ALL SESSIONS</strong>
-</div> 
+    if the option has a sessiondatabit set to -1 this means its for
+    <strong>ALL SESSIONS</strong>
+</div>
 
 <div class="modal-body">
     <div class="modal-content">
@@ -49,26 +50,25 @@
 
 
 @section scripts{
-<script>
+    <script>
         //full with screen
         $("#allcontent").removeClass("body-content");
         $("#allcontent").removeClass("container");
-
         //render details when they click on it.
-        $('#c_service_setupSessionsGrid').mvcgrid({
-            rowClicked: function (row, data, e) {
+    $('.mvc-grid').mvcgrid({
+        rowClicked: function (row, data, e) {
                 $("#sessiondetails").html("Loading.....");
-                var url1 = '@Url.Action("_sessionDetails")?sessionName=' + data.value
+                var url1 = '@Url.Action("_sessionDetails")?sessionName=' + data["session-name"]
                 $("#sessiondetails").load(url1);
 
                 $("#c_service_setupDetails").html("Loading.....");
-                var url2 = '@Url.Action("_sessionSetup")?enable_mask=' + data.bit_id
+                var url2 = '@Url.Action("_sessionSetup")?enable_mask=' + data["bit_id"]
                 $("#c_service_setupDetails").load(url2);
             }
         });
 
         //sim click on first row.
         $("#c_service_setupSessionsGrid>table>tbody>tr:first").trigger('click');
-</script>
+    </script>
 }
 
