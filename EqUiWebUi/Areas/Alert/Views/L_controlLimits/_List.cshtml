@@ -3,6 +3,7 @@
 
 
     <script>
+        $('#l_controlLimitsGrid').html("Loading...");
         $("#l_controlLimitsGrid").mvcgrid({
             sourceUrl: '@Url.Action("_ControlLimitsGrid", new { alarmobject = ViewBag.alarmobject, c_trigger_id = ViewBag.c_trigger_id, showIsDead = ViewBag.showIsDead })',
             requestType: 'get',
@@ -21,18 +22,12 @@
             //add new placeholder afhter selected row
             $(row).after('<tr id="placeholder1"><td colspan="1000"><div class=""><div class="" id ="placeholderPartial1"></div></div></td></tr>');
             //load partial into div
-            $("#placeholderPartial1").load('@Url.Action("_ControlChart","Alert")?l_controllimit_id=' + data.id );
+            $("#placeholderPartial1").load('@Url.Action("_ControlChart","Alert")?l_controllimit_id=' + data["id"] );
             //listen toclick events
             //
             },
-            reloadStarted: function () {
-
-            },
-            reloadEnded: function () {
-
-            },
             reloadFailed: function (result) {
-                $('#dummyLogClassResultGrid').html("Error while loading!!!");
+                $('#l_controlLimitsGrid').html("Error while loading!!!");
             }
             });
     </script>

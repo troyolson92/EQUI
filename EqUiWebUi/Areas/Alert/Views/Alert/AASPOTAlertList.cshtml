@@ -80,7 +80,7 @@ columns.Add(c => c)
                 //animation
                 $("#placeholderPartial").html("Loading.....");
                 //load url in placeholder
-                var url = "@Url.Action("_Details")?id=" + data.id;
+                var url = "@Url.Action("_Details")?id=" + data["id"];
                 $("#placeholderPartial").load(url);
             }
         });

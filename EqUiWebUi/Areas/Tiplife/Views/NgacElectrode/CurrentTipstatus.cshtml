@@ -27,7 +27,8 @@
 
     <!--Tipstatus script-->
     <script type="text/javascript">
-    //render grid and subscrible to row clicked events
+        //render grid and subscrible to row clicked events
+        $('#TipstatusGrid').html('Loading...');
         $('#TipstatusGrid').mvcgrid({
             sourceUrl: '@Url.Action("_TipStatus")', // Grid source url string
             requestType: 'get', // Ajax grid request type
@@ -35,8 +36,8 @@
             rowClicked: function (row, data, e) {
                 $('#MyModal').removeData('bs.modal');
                 $('#MyModal').modal({ show: true });
-                var urlTipinfo = '@Url.Action("_Tipinfo")?location=' + encodeURIComponent(data.Robot)
-                    + '&tool_nr=' + encodeURIComponent(data.Tool_Nr);
+                var urlTipinfo = '@Url.Action("_Tipinfo")?location=' + encodeURIComponent(data["robot"]) + '&tool_nr=' + encodeURIComponent(data["tool_-nr"]);
+
                 $('#MyModal').load(urlTipinfo, function (result) { });
             },
             reloadStarted: function () {

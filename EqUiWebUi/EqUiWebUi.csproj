@@ -48,8 +48,8 @@
     <Reference Include="Hangfire.SqlServer, Version=1.6.20.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Hangfire.SqlServer.1.6.20\lib\net45\Hangfire.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="HtmlAgilityPack, Version=1.8.7.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
-      <HintPath>..\packages\HtmlAgilityPack.1.8.7\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    <Reference Include="HtmlAgilityPack, Version=1.8.8.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.8.8\lib\Net45\HtmlAgilityPack.dll</HintPath>
     </Reference>
     <Reference Include="HtmlDiff, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\htmldiff.net.1.3\lib\net35\HtmlDiff.dll</HintPath>
@@ -79,8 +79,8 @@
     <Reference Include="Microsoft.Owin.Security, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.Security.4.0.0\lib\net451\Microsoft.Owin.Security.dll</HintPath>
     </Reference>
-    <Reference Include="Mvc.Grid.Core, Version=4.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\NonFactors.Grid.Core.Mvc5.4.3.0\lib\net45\Mvc.Grid.Core.dll</HintPath>
+    <Reference Include="Mvc.Grid.Core, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NonFactors.Grid.Core.Mvc5.5.0.0\lib\net45\Mvc.Grid.Core.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -777,13 +777,11 @@
     <Content Include="Content\codemirror\neat.css" />
     <Content Include="Content\CustomHyperlinkBoxes.css" />
     <Content Include="Content\CustomStyleTweeks.css" />
-    <Content Include="Content\Cyborg.css" />
     <Content Include="Content\daterangepicker.css" />
     <Content Include="Content\fontawesome-all.css" />
     <Content Include="Content\images\volvo-50.png" />
     <Content Include="Content\jquery-cron.css" />
     <Content Include="Content\jquery-ui.css" />
-    <Content Include="Content\mvc-grid.css" />
     <Content Include="Content\MvcGrid\mvc-grid.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\summernote-bs4.css" />
@@ -1076,7 +1074,6 @@
     <Content Include="Areas\Welding\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Welding\Views\Welding\Index.cshtml" />
     <Content Include="Areas\Welding\Views\Welding\Pagina1.cshtml" />
-    <Content Include="Content\MvcGrid\Fonts\GridGlyphs.woff" />
     <EntityDeploy Include="Areas\Welding\Models\WeldingModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>WeldingModel.Designer.cs</LastGenOutput>
@@ -1122,6 +1119,7 @@
     <Content Include="Areas\HangfireArea\Views\c_job\Delete.cshtml" />
     <Content Include="Areas\HangfireArea\Views\c_job\Edit.cshtml" />
     <Content Include="Areas\HangfireArea\Views\c_job\Index.cshtml" />
+    <Content Include="Content\MvcGrid\Fonts\GridGlyphs.woff" />
     <None Include="Properties\PublishProfiles\gensvw1178-DEV-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gotsvw11292-PRODUCTION-VCTA.pubxml" />
@@ -1214,9 +1212,6 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
-    <Content Include="Views\Shared\MvcGrid\_Pager.cshtml" />
-    <Content Include="Views\Shared\MvcGrid\_Grid.cshtml" />
-    <Content Include="Views\Shared\MvcGrid\_AjaxGrid.cshtml" />
     <Content Include="Views\Error\AccessDenied.cshtml" />
     <Content Include="Views\EQUISetup\_settings.cshtml" />
     <Content Include="Views\Classification\ClassificationTool.cshtml" />
@@ -1251,6 +1246,8 @@
     <Content Include="Views\c_datasource\Delete.cshtml" />
     <Content Include="Views\c_datasource\Edit.cshtml" />
     <Content Include="Views\c_datasource\Index.cshtml" />
+    <Content Include="Views\Shared\MvcGrid\_Pager.cshtml" />
+    <Content Include="Views\Shared\MvcGrid\_Grid.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
