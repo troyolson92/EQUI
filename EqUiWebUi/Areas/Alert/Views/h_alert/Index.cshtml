@@ -53,8 +53,11 @@
                 //animation
                 $("#placeholderPartial").html("Loading.....");
                 //load url in placeholder
-                var url = "@Url.Action("_Details","Alert",new {Area = "Alert" })?id=" + data.id;
+                var url = "@Url.Action("_Details","Alert",new {Area = "Alert" })?id=" + data["id"];
                 $("#placeholderPartial").load(url);
+            },
+            reloadFailed: function (result) {
+                $('#placeholderPartial').html("Error while loading!!!");
             }
         });
     </script>

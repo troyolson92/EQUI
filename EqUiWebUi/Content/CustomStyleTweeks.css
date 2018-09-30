@@ -8,6 +8,14 @@
     z-index: 2000;
 }
 
+/*no grid borders*/
+.mvc-grid th,
+.mvc-grid td {
+    border: none;
+    border-bottom: 0.5px solid #adadad;
+    padding: 8px;
+}
+
 /*max with for popovers*/
 .popover {
     max-width: 100%; /* Max Width of the popover (depending on the container!) */

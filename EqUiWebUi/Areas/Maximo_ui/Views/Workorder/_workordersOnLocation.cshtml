@@ -50,8 +50,6 @@
             return $('#workorderOnLocationPopoverContent').html();
         },
     });
-    //
-    var workorderOnLocationGridspinner = new Spinner();
     //build query string
     function workorderOnLocationGridUrlParms() {
         var result = "&location=@Model.location" +
@@ -99,15 +97,10 @@
                 //animation
                 $("#placeholderPartial").html("<div class='card-body'><i class='fa fa-spinner fa-pulse fa-2x fa-fw'></i><span class='sr-only'></span>Loading....</div>");
                 //load url in placeholder
-                var url = "@Url.Action("_woDetails", "WorkorderDetails")?RealtimeConn=@Model.realtimeConn&wonum=" + data.WONUM;
+                var url = "@Url.Action("_woDetails", "WorkorderDetails")?RealtimeConn=@Model.realtimeConn&wonum=" + data["w-o-n-u-m"];
                 $("#placeholderPartial").load(url);
             },
-            reloadStarted: function () {
-                workorderOnLocationGridspinner.spin(document.getElementById('workorderOnLocationGridSpincontainer'));
-                // this - grid instance which invoked the event
-            },
             reloadEnded: function () {
-                workorderOnLocationGridspinner.stop();
                 //simulate click on first row so that the details load automatic IF ROWCOUNT == 1
                 console.log($('#Workorders>table>tbody>tr').length);
                 if ($('#Workorders>table>tbody>tr').length == 1) {
@@ -117,7 +110,6 @@
                 initUrlNewWindow();
             },
             reloadFailed: function (result) {
-                workorderOnLocationGridspinner.stop();
                 $("#workorderOnLocationGrid").html("Error while loading!!!");
                 // this - grid instance which invoked the event
                 // result - failed ajax response result

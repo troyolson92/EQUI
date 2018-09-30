@@ -39,12 +39,12 @@ namespace EqUiWebUi
              
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/Bootstrap.css",
-                      "~/Content/mvc-grid.css", //style for mvc grids
+                      "~/Content/MvcGrid/mvc-grid.css", //style for mvc grids
                       "~/Content/daterangepicker.css", //style for datarange pickers
                       "~/Content/fontawesome-all.css",  //for or icons https://fontawesome.com
-                      "~/Content/CustomStyleTweeks.css", //custom style tweeks
                       "~/Content/TableRowStyles.css", //custom table row sytles and animations
-                      "~/Content/CustomHyperlinkBoxes.css" //custom CustomHyperlinkBoxes
+                      "~/Content/CustomHyperlinkBoxes.css", //custom CustomHyperlinkBoxes
+                      "~/Content/CustomStyleTweeks.css" //custom style tweeks
                       ));
         }
     }

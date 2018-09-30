@@ -22,7 +22,7 @@
       .Filterable(false)
       .Sortable(false)
       .RenderedAs(c => MyEquiToolkit.SbcuTool(c.controller_name, "1")).Css("d-none d-lg-table-cell"); //need to add the toolnumber in die model
-}).Sortable().Filterable(true).Pageable(pager =>
+}).Sortable().Filterable().Pageable(pager =>
 {
 pager.RowsPerPage = 20;
 }).Empty("No data found").Css("table-hover")
