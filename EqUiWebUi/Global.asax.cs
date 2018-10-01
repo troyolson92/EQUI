@@ -255,6 +255,9 @@ namespace EqUiWebUi
                     user = new users();
                     HttpContext.Current.Session["user"] = user;
                 }
+                //fix for whitespaces at begin or start of roots
+                user.AssetRoot = user.AssetRoot.Trim();
+                user.LocationRoot = user.LocationRoot.Trim();
                 return user;
             }
 

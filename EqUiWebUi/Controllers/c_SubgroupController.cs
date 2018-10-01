@@ -10,7 +10,7 @@ using EqUiWebUi.Models;
 
 namespace EqUiWebUi.Controllers
 {
-    [Authorize(Roles = "Administrator")]
+    [Authorize(Roles = "Administrator,PowerUser")]
     public class c_SubgroupController : Controller
     {
         private GADATAEntitiesEQUI db = new GADATAEntitiesEQUI();

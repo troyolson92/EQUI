@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace EqUiWebUi.Controllers
 {
-    [Authorize(Roles = "Administrator")]
+    [Authorize(Roles = "Administrator,PowerUser")]
     public class EQUISetupController : Controller
     {
         // GET: EQUISetup

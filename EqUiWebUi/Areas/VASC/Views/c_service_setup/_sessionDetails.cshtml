@@ -10,18 +10,18 @@
     <div class="alert-info">
     </div>
     <div class="card-body">
-        <div id="l_operationGridContainer" class="mvc-grid"></div>
+        <div class="mvc-grid"  data-name="L_operationGrid"></div>
     </div>
 </div>
 
 
 <script>
-    $("#l_operationGridContainer").html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
-    $('#l_operationGridContainer').mvcgrid({
+   // $('[data-name="L_operationGrid"]').html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
+    $('[data-name="L_operationGrid"]').mvcgrid({
         sourceUrl: '@Html.Raw(@Url.Action("_List", "l_operation",new { sessionName = ViewBag.sessionName }))',
         requestType: 'get', // Ajax grid request type
         reloadFailed: function (result) {
-            $("#l_operationGridContainer").html("Error while loading!!!");
+            $('[data-name="L_operationGrids"]').html("Error while loading!!!");
         }
     });
 </script>

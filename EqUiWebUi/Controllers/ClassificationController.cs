@@ -10,7 +10,7 @@ using EqUiWebUi.Models;
 
 namespace EqUiWebUi.Controllers
 {
-    [Authorize(Roles = "Administrator")]
+    [Authorize(Roles = "Administrator,PowerUser")]
     public class ClassificationController : Controller
     {
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
