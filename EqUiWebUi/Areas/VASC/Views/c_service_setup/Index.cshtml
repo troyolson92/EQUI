@@ -55,13 +55,11 @@ columns.Add(c => c.ServiceDescription).Titled("ServiceDescription");
         $("#allcontent").removeClass("body-content");
         $("#allcontent").removeClass("container");
         //render details when they click on it.
-    $('.mvc-grid').mvcgrid({
+        $('[data-name="c_service_setupSessionsGrid"]').mvcgrid({
         rowClicked: function (row, data, e) {
-                $("#sessiondetails").html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
                 var url1 = '@Url.Action("_sessionDetails")?sessionName=' + data["session-name"]
                 $("#sessiondetails").load(url1);
 
-                $("#c_service_setupDetails").html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
                 var url2 = '@Url.Action("_sessionSetup")?enable_mask=' + data["bit_id"]
                 $("#c_service_setupDetails").load(url2);
             }

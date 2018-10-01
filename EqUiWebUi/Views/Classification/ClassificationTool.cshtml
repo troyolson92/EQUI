@@ -141,7 +141,7 @@
                 </h5>
             </div>
             <div class="card-body">
-                <div id="dummyLogClassResultGrid" class="mvc-grid"></div>
+                <div  class="mvc-grid" data-name="dummyLogClassResultGrid"></div>
             </div>
         </div>
 
@@ -156,7 +156,7 @@
                 </h5>
             </div>
             <div class="card-body">
-                <div id="c_LogClassRulesGrid" class="mvc-grid"></div>
+                <div class="mvc-grid"  data-name="c_LogClassRulesGrid"></div>
             </div>
         </div>
 
@@ -244,8 +244,9 @@
 
     //function to reload search grid
         function GetGridSearch(bSearchByClassification) {
-            $("#dummyLogClassResultGrid").html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
-            $("#dummyLogClassResultGrid").mvcgrid({
+            console.log("hit");
+            $('[data-name="dummyLogClassResultGrid"]').html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
+            $('[data-name="dummyLogClassResultGrid"]').mvcgrid({
                 sourceUrl: '@Url.Action("_logSearchResult")',
                 data: {
                     c_logClassSystem_id: $('#c_logClassSystem_id').val(),
@@ -293,7 +294,7 @@
                 //
                 },
                 reloadFailed: function (result) {
-                    $('#dummyLogClassResultGrid').html("Error while loading!!!");
+                    $('[data-name="dummyLogClassResultGrid"]').html("Error while loading!!!");
                     console.log(result);
                     $.toaster({ title: 'Grid', priority: 'danger', message: result.statusText });
                 }
@@ -302,8 +303,8 @@
 
     //get logclassRulesGrid
         function GetRules() {
-            $("#c_LogClassRulesGrid").html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
-            $("#c_LogClassRulesGrid").mvcgrid({
+            $('[data-name="c_LogClassRulesGrid"]').html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
+            $('[data-name="c_LogClassRulesGrid"]').mvcgrid({
                 sourceUrl: '@Url.Action("_GetLogClassRulesGrid", "c_logClassRules")',
                 data: {
                     c_ClassificationId: $('#c_ClassificationId').val(),
@@ -343,7 +344,7 @@
                         });
                 },
                 reloadFailed: function (result) {
-                    $('#c_LogClassRulesGrid').html("Error while loading!!!");
+                    $('[data-name="c_LogClassRulesGrid"]').html("Error while loading!!!");
                     console.log(result);
                     $.toaster({ title: 'Grid', priority: 'danger', message: result.statusText });
                 }
