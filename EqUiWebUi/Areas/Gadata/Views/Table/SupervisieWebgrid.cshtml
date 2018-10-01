@@ -34,12 +34,6 @@
                 $('#MyModal').modal({ show: true });
                 $('#MyModal').load(urlMoreInfo, function (result) {});
         },
-        reloadStarted: function () {
-            console.log("reload start");
-        },
-        reloadEnded: function () {
-            console.log("reload done");
-        },
         reloadFailed: function (result) {
             console.log(result);
             $("#SupervisieGrid").html("<div class='alert alert-danger'>Error while loading!! </div>");

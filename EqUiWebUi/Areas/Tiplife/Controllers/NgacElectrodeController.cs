@@ -148,6 +148,12 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
                                           orderby tipMonitor.nRcars ascending
                                           select tipMonitor;
             log.Info($"Plantipchange for: {locationFilter} Filters: minwear: {minWear} minparts: {minParts} maxDress: {maxDress}  |resultCount: {data.Count()}");
+            //debug added to store result in log and see if they follow the plan.
+            List<TipMonitor> results = data.ToList();
+            foreach (TipMonitor result in results )
+            {
+                log.Info($"PlantipchangeResult for: {result.Robot} wear: {result.pWear} parts: {result.nRcars} dresses: {result.nDress} status: {result.Status}");
+            }
 
             return PartialView(data);
         }
@@ -170,19 +176,5 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
             return PartialView(data);
         }
 
-
-        //------------------------------------tabel ct van dressen (voor remo.)-------------------------------------------------
-        [HttpGet]
-        public ActionResult TipDressCycleTimeREMO(int daysback = 360)
-        {
-            var startdate = DateTime.Now.Date.AddDays(daysback * -1);
-            GADATAEntitiesTiplife gADATAEntities = new GADATAEntitiesTiplife();
-            string LocationRoot = CurrentUser.Getuser.LocationRoot;
-            IQueryable<TipDressCycleTimeREMO> data = from t in gADATAEntities.TipDressCycleTimeREMO
-                                                     where t.C_timestamp > startdate
-                                                   && (t.LocationTree ?? "").Contains(LocationRoot)
-                                                   select t;
-            return View(data);
-        }
     }
 }

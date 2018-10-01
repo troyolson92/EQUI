@@ -74,12 +74,6 @@
             sourceUrl: '@Url.Action("_workordersOnLocationGrid")?' + workorderOnLocationGridUrlParms(), // Grid source url string
             //query: '?search=test', // Grid query string
             requestType: 'get', // Ajax grid request type
-            data: {
-                // Ajax grid query data
-            },
-            filters: {
-                // Grid filters to extend or use
-            },
             reload: true, // Grid reload indicator
             rowClicked: function (row, data, e) {
                 //if row already has this clase close the modal
@@ -102,9 +96,9 @@
             },
             reloadEnded: function () {
                 //simulate click on first row so that the details load automatic IF ROWCOUNT == 1
-                console.log($('#Workorders>table>tbody>tr').length);
-                if ($('#Workorders>table>tbody>tr').length == 1) {
-                    $("#Workorders>table>tbody>tr:first").trigger('click');
+                if ($('[data-name="Workorders"]>table>tbody>tr').length == 1) {
+                  
+                    $('[data-name="Workorders"]>table>tbody>tr:first').trigger('click');
                 }
                 //subscribe to click event (launch external window)
                 initUrlNewWindow();

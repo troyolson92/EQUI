@@ -13,7 +13,7 @@
     columns.Add(c => c.RobotWear).Titled("Wear(mm)").Css("d-none d-lg-table-cell");
     columns.Add(c => c.Time_DressCycleTime).Titled("Ct (s)").Css("d-none d-lg-table-cell");
     columns.Add(c => c.LocationTree).Filterable(true).Css("d-none"); //used for filtering
-    columns.Add(c => c.Tool_Nr).Filterable(true).Css("d-none"); 
+    columns.Add(c => c.Tool_Nr).Filterable(true).Css("d-none");
     //RenderStatusIcon
     columns.Add()
                  .Titled("Status")
@@ -30,5 +30,8 @@
 }).Sortable().Pageable(pager =>
 {
     pager.RowsPerPage = 20;
+    pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 20, "20" }, { 40, "40" }, { 80, "80" }, { 100, "100" } };
+    pager.ShowPageSizes = true;
+
 }).Empty("No data found").Css("table-hover").RowCss(row => MyRowStyling.getRowStyleByWearValue(row.pWear, row.nDress, row.nRcars, row.Status))
 

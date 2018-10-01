@@ -30,6 +30,5 @@ namespace EqUiWebUi.Areas.Tiplife.Models
         public virtual DbSet<TipwearLast> TipwearLast { get; set; }
         public virtual DbSet<TipLifeExpectations> TipLifeExpectations { get; set; }
         public virtual DbSet<TipMonitor> TipMonitor { get; set; }
-        public virtual DbSet<TipDressCycleTimeREMO> TipDressCycleTimeREMO { get; set; }
     }
 }

@@ -6,7 +6,7 @@
     <div class="card-header bg-primary row">
           
         <h4 class="col-8">CurrentTipstatus</h4>
-        <a href="@Url.Action("PlanTipChange")" class="btn btn-warning btn-lg col-4">Plan tipchange &raquo;</a>
+        <a href="@Url.Action("PlanTipChange")" class="btn btn-warning btn-md col-4">Plan tipchange &raquo;</a>
     </div>
 
     <div class="card-body">
@@ -41,10 +41,6 @@
                 var urlTipinfo = '@Url.Action("_Tipinfo")?location=' + encodeURIComponent(data["robot"]) + '&tool_nr=' + encodeURIComponent(data["tool_-nr"]);
 
                 $('#MyModal').load(urlTipinfo, function (result) { });
-            },
-            reloadStarted: function () {
-            },
-            reloadEnded: function () {
             },
             reloadFailed: function (result) {
                 $("#TipstatusGrid").html("Error while loading!!!");
