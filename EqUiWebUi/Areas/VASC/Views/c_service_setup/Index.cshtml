@@ -68,7 +68,7 @@ columns.Add(c => c.ServiceDescription).Titled("ServiceDescription");
         });
 
         //sim click on first row.
-        $("#c_service_setupSessionsGrid>table>tbody>tr:first").trigger('click');
+        $('[data-name="c_service_setupSessionsGrid"]>table>tbody>tr:first').trigger('click');
     </script>
 }
 

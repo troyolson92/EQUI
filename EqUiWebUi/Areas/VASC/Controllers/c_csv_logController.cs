@@ -110,22 +110,44 @@ namespace EqUiWebUi.Areas.VASC.Controllers
             }
         }
 
-        // DELETE all data for a CSV file. (clears the data from the data table AND clears the csvFile data
-        //DANGEROUS!!!!!
-        public void DeleteCsvData(int c_csv_log_id)
+        // GET: VASC/c_csv_log/Delete/5
+        public ActionResult Delete(int? id)
         {
-            //get config
-            c_csv_log c_Csv_Log = db.c_csv_log.Where(c => c.id == c_csv_log_id).FirstOrDefault();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            c_csv_log c_csv_log = db.c_csv_log.Find(id);
+            if (c_csv_log == null)
+            {
+                return HttpNotFound();
+            }
+            return View(c_csv_log);
+        }
 
+        // POST: VASC/c_csv_log/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            c_csv_log c_csv_log = db.c_csv_log.Find(id);
+            //remove the data
             //must still change to DELETE
-
             string DATADELETEqry = @"select * from GADATA.NGAC.c_csv_log as c 
                                     left join GADATA.NGAC.rt_csv_file as csvFile on csvFile.c_csv_log_id = c.id
                                     left join {0} as csvData on csvData.[rt_csv_file_id] = csvfile.id
                                     where c.id = {1}";
+            string DATADELETEcmd = string.Format(DATADELETEqry, c_csv_log.rt_table, c_csv_log.id);
+            EQUICommunictionLib.ConnectionManager connectionManager = new EQUICommunictionLib.ConnectionManager();
+            connectionManager.RunCommand(string.Format(DATADELETEcmd, c_csv_log.rt_table, c_csv_log.id), enblExeptions: true);
+            
+            //remove th rt_file
 
-            string cmd = string.Format(DATADELETEqry, c_Csv_Log.rt_table, c_Csv_Log.id);
-
+            
+            //remove the c_variable
+            db.c_csv_log.Remove(c_csv_log);
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
