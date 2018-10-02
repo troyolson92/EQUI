@@ -9,12 +9,12 @@
     columns.Add(c => c.STATUSDATE).Titled("STATUSDATE").Css("d-none d-lg-table-cell");
     columns.Add(c => c.DESCRIPTION).Titled("DESCRIPTION").Sortable(false).Filterable(true);
 
-    //add edit button
-    columns.Add(c => c)
-    .Titled("")
-    .Encoded(false)
-    .RenderedAs(c => MyFilters.IconActionLink("http://maximoui.volvocars.biz/maximo/ui/maximo.jsp?event=loadapp&value=wotrack&additionalevent=useqbe&additionaleventvalue=wonum=" + c.WONUM, "fas fa-pencil-alt", "", "Edit this workorder in maximo",classes: "OpenNewWindow")
-    ).Filterable(false);
+//add edit button
+columns.Add(c => c)
+.Titled("")
+.Encoded(false)
+.RenderedAs(c => MyFilters.IconActionLink("http://maximoui.volvocars.biz/maximo/ui/maximo.jsp?event=loadapp&value=wotrack&additionalevent=useqbe&additionaleventvalue=wonum=" + c.WONUM, "fas fa-pencil-alt", "", "Edit this workorder in maximo", classes: "OpenNewWindow")
+).Filterable(false);
 
 
 }).Sortable().Pageable(pager =>
@@ -32,10 +32,7 @@
         RT
     </div>
 }
+@*  <textarea style="height:200px" class="w-100" id="sqlStatement" name="sqlStatement">@ViewBag.Qry</textarea>*@
 
-@*
-     <h6>Sql Statement</h6>
-    <div>
-        @ViewBag.Qry
-    </div>
-*@
+
+
