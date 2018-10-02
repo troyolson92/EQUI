@@ -15,7 +15,7 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
     {
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        //default number of days we search back in hystory
+        //default number of days we search back in history
         int MaximoWorkordersDaysback = -1000;
 
         // GET: Maximo_ui/Workorder
