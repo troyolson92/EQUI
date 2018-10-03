@@ -8,41 +8,6 @@
     </div>
     <div class="card-body">
 
-
-        <div class="col-md-12">
-            <div class="update-nag" onclick="location.href='/Gadata/Table/PloegRapportWebgrid'">
-                <div class="update-split"><i class="far fa-list-alt"></i></div>
-                <div class="update-text">
-                    <div class="title">@EqUiWebUi.defaultArea.ShiftReport</div>
-                    <div class="d-none d-md-block text-muted">
-                        Bevat storingen groter dan 20 minuten of die meer dan 3 keer zijn voorgevallen
-                        <a href="google.com"><i class="fas fa-question-circle"></i></a>
-                    </div>                
-                    <a class="d-block d-md-none"><i class="fas fa-info-circle" data-toggle="tooltip" data-placement="right" title="Bevat storingen groter dan 20 minuten of die meer dan 3 keer zijn voorgevallen"></i></a>
-                </div>
-
-            </div>
-        </div>
-
-        <p>
-            @MyHtmlHelpers.EquiLink("/Gadata/Table/PloegRapportWebgrid", "fa-list-alt",EqUiWebUi.defaultArea.ShiftReport,helperText:"Dingens die veel voorvallen",helpurl:"google.com")
-
-        </p>
-
-        <div class="col-md-12">
-            <div class="update-nag">
-                <div class="update-split bg-info"><i class="fas fa-chart-line"></i></div>
-                <div class="update-text">Bevat storingen groter dan 20 minuten of die meer dan 3 keer zijn voorgevallen <a href="~/Gadata/Table/PloegRapportWebgrid">@EqUiWebUi.defaultArea.ShiftReport</a> </div>
-            </div>
-        </div>
-
-        <div class="col-md-12">
-            <div class="update-nag">
-                <div class="update-split bg-danger"><i class="far fa-question-circle"></i></div>
-                <div class="update-text">Bevat storingen groter dan 20 minuten of die meer dan 3 keer zijn voorgevallen <a href="~/Gadata/Table/PloegRapportWebgrid">@EqUiWebUi.defaultArea.ShiftReport</a> </div>
-            </div>
-        </div>
-
         @MyHtmlHelpers.EquiRenderPanel("Testname")
     </div>
 </div>
