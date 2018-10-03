@@ -170,6 +170,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Alert\Views\Shared\" />
+    <Folder Include="Areas\CycleTime\Controllers\" />
+    <Folder Include="Areas\CycleTime\Models\" />
+    <Folder Include="Areas\CycleTime\Views\Shared\" />
     <Folder Include="Areas\HangfireArea\Models\" />
     <Folder Include="Areas\HangfireArea\Views\Shared\" />
     <Folder Include="Areas\Maximo_ui\Views\Shared\" />
@@ -262,6 +265,8 @@
       <DependentUpon>AlertModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Alert\SmsComm.cs" />
+    <Compile Include="Areas\CycleTime\BackgroundWork.cs" />
+    <Compile Include="Areas\CycleTime\CycleTimeAreaRegistration.cs" />
     <Compile Include="Areas\Gadata\BackgroundWork.cs" />
     <Compile Include="Areas\Gadata\Controllers\TableController.cs" />
     <Compile Include="Areas\Gadata\GadataAreaRegistration.cs" />
@@ -1116,6 +1121,8 @@
     <Content Include="Areas\HangfireArea\Views\c_job\Edit.cshtml" />
     <Content Include="Areas\HangfireArea\Views\c_job\Index.cshtml" />
     <Content Include="Content\MvcGrid\Fonts\GridGlyphs.woff" />
+    <Content Include="Areas\CycleTime\Views\web.config" />
+    <Content Include="Areas\CycleTime\Views\_ViewStart.cshtml" />
     <None Include="Properties\PublishProfiles\gensvw1178-DEV-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gotsvw11292-PRODUCTION-VCTA.pubxml" />
