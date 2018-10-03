@@ -51,6 +51,7 @@ namespace EqUiWebUi.Areas.Tiplife
                 // Logic...
                 context.WriteLine("Get gADATAEntities.TipMonitor");
                 GADATAEntitiesTiplife gADATAEntities = new GADATAEntitiesTiplife();
+                gADATAEntities.Database.CommandTimeout = 45; // default 30 
                 List<TipMonitor> data = (from tipstatus in gADATAEntities.TipMonitor
                                             select tipstatus).ToList();
 

@@ -1,21 +1,15 @@
 ﻿using Hangfire;
 using Hangfire.Console;
 using Hangfire.Server;
+using RestSharp;
 using System;
-using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Security.Cryptography.Xml;
-using System.Web;
 
 namespace EqUiWebUi.Areas.CycleTime
 {
     public class BackgroundWork
     {
+        
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public void configHangfireJobs()
@@ -63,45 +57,27 @@ namespace EqUiWebUi.Areas.CycleTime
         [AutomaticRetry(Attempts = 0)]
         public void GetP4CycleTime(PerformContext context)
         {
-            System.DateTime fromDate = System.DateTime.Now.AddDays(-10);
-            System.DateTime toDate = System.DateTime.Now;
+            System.DateTime fromDate = System.DateTime.Now.AddDays(-11);
+            System.DateTime toDate = System.DateTime.Now.AddDays(-10);
+            const string Format = "yyyyMMddHHmmss0000";
             string model = carmodels.XC40;
             int ignoreBelow = 20;
             context.WriteLine($"Get GetP4CycleTime from:{fromDate} to:{toDate} model:{model} ignoreBelow:{ignoreBelow}");
-            //build api string
-            string basepath = "http://gensvw2107.gen.volvocars.net/CMACTAPP/api/GetCyclesP4/GetOverView";
-            NameValueCollection queryString = System.Web.HttpUtility.ParseQueryString(string.Empty);
-            queryString["fromDate"] = fromDate.ToString("yyyymmddhhMMss0000");
-            queryString["fromDate"] = fromDate.ToString("yyyymmddhhMMss0000");
-            queryString["toDate"] = toDate.ToString();
-            queryString["model"] = model;
-            queryString["ignoreBelow"] = ignoreBelow.ToString();
-            context.WriteLine(basepath + queryString.ToString());
-            //make call
-            HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri(basepath);
-            // Add an Accept header for JSON format.
-            client.DefaultRequestHeaders.Accept.Add(
-            new MediaTypeWithQualityHeaderValue("application/json"));
-            // List data response.
-            HttpResponseMessage response = client.GetAsync(queryString.ToString()).Result;  // Blocking call! Program will wait here until a response is received or a timeout occurs.
-            if (response.IsSuccessStatusCode)
-            {
-                // Parse the response body.
-                var dataObjects = response.Content.ReadAsAsync<IEnumerable<DataObject>>().Result;  //Make sure to add a reference to System.Net.Http.Formatting.dll
-                foreach (var d in dataObjects)
-                {
-                 //   Console.WriteLine("{0}", d.Name);
-                }
-            }
-            else
-            {
-                log.Error("CycleTime API call failed");
-                Console.WriteLine($"error in api call {(int)response.StatusCode} ({response.ReasonPhrase})");
-            }
-            client.Dispose();
+            //
+            var client = new RestClient("http://gensvw2107.gen.volvocars.net/CMACTAPP/api/");
+            var request = new RestRequest("GetCyclesP4/GetOverView?fromDate={fromDate}&toDate={toDate}&model={model}&ignoreBelow={ignoreBelow}", Method.GET);
+            request.AddParameter("fromDate", fromDate.ToString(Format), ParameterType.UrlSegment);
+            request.AddParameter("toDate", toDate.ToString(Format), ParameterType.UrlSegment);
+            request.AddParameter("model", model, ParameterType.UrlSegment);
+            request.AddParameter("ignoreBelow", ignoreBelow.ToString(), ParameterType.UrlSegment);
 
+            request.OnBeforeDeserialization = resp => { resp.ContentType = "application/json"; };
+     
+            var queryResult = client.Execute(request);
 
+            context.WriteLine(queryResult.Content);
+
+            context.WriteLine("end");
             //handle data
 
         }
