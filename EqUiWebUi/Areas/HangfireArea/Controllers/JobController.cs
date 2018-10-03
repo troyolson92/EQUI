@@ -43,6 +43,9 @@ namespace EqUiWebUi.Areas.HangfireArea.Controllers
             //hangfire jobs
             Areas.HangfireArea.Jobengine Jobengine = new Jobengine();
             Jobengine.configure_schedules();
+            //cylcetime
+            Areas.CycleTime.BackgroundWork backgroundWorkCyletime = new CycleTime.BackgroundWork();
+            backgroundWorkCyletime.configHangfireJobs();
         }
 
     }

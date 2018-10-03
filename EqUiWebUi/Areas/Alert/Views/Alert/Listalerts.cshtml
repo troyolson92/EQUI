@@ -20,12 +20,12 @@
     columns.Add(c => c.triggerCount).Titled("TC");
     columns.Add(c => c.c_state.state).Titled("state");
 
-    //add edit button
-    columns.Add(c => c)
-                .Titled("")
-                .Encoded(false)
-                .RenderedAs(c => MyFilters.IconActionLink(Url.Action("Edit", new { id = c.id }), "fas fa-pencil-alt", "", "Edit this alert")
-                ).Filterable(false);
+//add edit button
+columns.Add(c => c)
+        .Titled("")
+        .Encoded(false)
+        .RenderedAs(c => MyFilters.IconActionLink(Url.Action("Edit", new { id = c.id }), "fas fa-pencil-alt", "", "Edit this alert")
+        ).Filterable(false);
 
 }).Filterable().Sortable().Pageable(pager =>
 {
@@ -36,13 +36,13 @@
 
 
 @section scripts{
-<script>
+    <script>
         //full with screen
         $("#allcontent").removeClass("body-content");
         $("#allcontent").removeClass("container");
 
         //subscribe to row clicked events
-        $('.mvc-grid').mvcgrid({
+        $('[data-name="h_alert"]').mvcgrid({
             rowClicked: function (row, data, e) {
                 //if row already has this clase close the modal
                 if ($(row).hasClass("bg-info")) {
@@ -63,6 +63,6 @@
                 $("#placeholderPartial").load(url);
             }
         });
-</script>
+    </script>
 }
 

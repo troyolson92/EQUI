@@ -2,13 +2,11 @@
 
 @{
     EqUiWebUi.Areas.VASC.Models.rt_job job = (EqUiWebUi.Areas.VASC.Models.rt_job)ViewBag.job;
-
 }
 
 
 <div>
     <h5>Breakdown substops</h5>
-
 </div>
 
 @Html.Grid("_BreakDownGridLayout", Model).Named("rt_job_breakdown").Build(columns =>
