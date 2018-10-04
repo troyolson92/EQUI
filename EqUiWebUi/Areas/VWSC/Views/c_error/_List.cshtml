@@ -1,0 +1,30 @@
+﻿@model List<EqUiWebUi.Areas.VWSC.Models.VWSC_c_error>
+
+@Html.Grid(Model).Named("c_errorGrid").Build(columns =>
+{
+    columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Asc);
+    columns.Add(c => c._Enable_bit).Titled("enable_bit").Filterable(false);
+    columns.Add(c => c.enable_bit).Titled("eb");
+    columns.Add(c => c.ordinal).Titled("ordinal");
+    columns.Add(c => c.isError).Titled("isError");
+  //  columns.Add(c => c.errorCode1).Titled("errorCode1");
+  //  columns.Add(c => c.errorCode1_text).Titled("errorCode1_text");
+  //  columns.Add(c => c.errorCode2).Titled("errorCode2");
+  //  columns.Add(c => c.errorCode2_text).Titled("errorCode2_text");
+    columns.Add(c => c._C_operator).Titled("Operator");
+    columns.Add(c => c._Flags).Titled("Flags");
+    columns.Add(c => c.UserComment).Titled("UserComment");
+
+    columns.Add(c => c)
+                    .Titled("")
+                    .Encoded(false)
+                    .RenderedAs(c => @Html.ActionLink("Edit", "Edit", new { id = c.id })
+                    ).Filterable(false);
+}).Filterable().Sortable().Pageable(pager =>
+{
+    pager.RowsPerPage = 10;
+}).Empty("Did not find anything").Css("table-hover")
+
+<div class="badge">Count: @Model.Count()</div>
+
+
