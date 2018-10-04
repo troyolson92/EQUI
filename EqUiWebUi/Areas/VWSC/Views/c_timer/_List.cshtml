@@ -1,0 +1,27 @@
+﻿@model IQueryable<EqUiWebUi.Areas.VWSC.Models.VWSC_c_Timer>
+
+@Html.Grid(Model).Named("c_timerGrid").Build(columns =>
+{
+    columns.Add(c => c.ID).Titled("id").InitialSort(GridSortOrder.Asc);
+    columns.Add(c => c._Enable_bit).Titled("enable_bit");
+    columns.Add(c => c.enable_bit).Titled("eb");
+    columns.Add(c => c.Name).Titled("Name");
+    columns.Add(c => c.NPT.Name).Titled("NPT");
+    columns.Add(c => c.c_timer_class.name).Titled("TimerClass");
+    columns.Add(c => c)
+                    .Titled("")
+                    .Encoded(false)
+                    .RenderedAs(c => @Html.ActionLink("Edit", "Edit", new { id = c.ID })
+                    ).Filterable(false);
+    columns.Add(c => c)
+        .Titled("")
+        .Encoded(false)
+        .RenderedAs(c => @Html.ActionLink("Show", "Index", "c_controller_class", new { controller_id = c.ID }, null)
+        ).Filterable(false);
+}).Filterable().Sortable().Pageable(pager =>
+{
+    pager.RowsPerPage = 10;
+}).Empty("Did not find anything").Css("table-hover")
+
+<div class="badge">Count: @Model.Count()</div>
+

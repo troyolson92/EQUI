@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="df444a20cf7b48b0a6f1379e6d62b6d2" Name="Diagram1" ZoomLevel="97">
+        <EntityTypeShape EntityType="GADATAModelVWSC.VWSC_c_error" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GADATAModelVWSC.VWSC_c_service_setup" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GADATAModelVWSC.VWSC_c_severity" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GADATAModelVWSC.VWSC_c_timer_class" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GADATAModelVWSC.VWSC_L_operation" Width="1.5" PointX="4.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GADATAModelVWSC.VWSC_rt_active_info" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GADATAModelVWSC.VWSC_c_bosch_view" Width="1.5" PointX="0.75" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="GADATAModelVWSC.VWSC_c_Timer" Width="1.5" PointX="3.375" PointY="6.75" FillColor="Red" />
+        <EntityTypeShape EntityType="GADATAModelVWSC.VWSC_c_NPT" Width="1.5" PointX="5.375" PointY="7" FillColor="Red" />
+        <AssociationConnector Association="GADATAModelVWSC.FK_Timer_NPT" />
+        <AssociationConnector Association="GADATAModelVWSC.FK_Timer_c_timer_class" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

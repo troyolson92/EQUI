@@ -1,0 +1,25 @@
+﻿@model IEnumerable<EqUiWebUi.Areas.VWSC.Models.VWSC_c_Timer>
+
+@{
+                /**/
+
+                ViewBag.Title = "Index";
+                Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Add a new Timer", "Edit", new { id = -1 })
+</p>
+
+@Html.AjaxGrid(Url.Action("_List"))
+
+@section scripts{
+    <script>
+        //full with screen
+        $("#allcontent").removeClass("body-content");
+        $("#allcontent").removeClass("container");
+    </script>
+}
+

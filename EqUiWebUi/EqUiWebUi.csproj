@@ -187,7 +187,6 @@
     <Folder Include="Areas\VCSC\Controllers\" />
     <Folder Include="Areas\VCSC\Models\" />
     <Folder Include="Areas\VCSC\Views\Shared\" />
-    <Folder Include="Areas\VWSC\Models\" />
     <Folder Include="Areas\VWSC\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
@@ -586,7 +585,54 @@
     <Compile Include="Areas\VASC\Models\winService.cs" />
     <Compile Include="Areas\VASC\VASCAreaRegistration.cs" />
     <Compile Include="Areas\VCSC\VCSCAreaRegistration.cs" />
+    <Compile Include="Areas\VWSC\Controllers\c_timerController.cs" />
+    <Compile Include="Areas\VWSC\Controllers\c_timer_classController.cs" />
     <Compile Include="Areas\VWSC\Controllers\vwscController.cs" />
+    <Compile Include="Areas\VWSC\Models\VWSC_c_NPT.cs">
+      <DependentUpon>VWSC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VWSC\Models\VWSC_c_timerMetadata.cs" />
+    <Compile Include="Areas\VWSC\Models\VWSC_c_Timer.cs">
+      <DependentUpon>VWSC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VWSC\Models\VWSC_c_timer_classMetadata.cs" />
+    <Compile Include="Areas\VWSC\Models\VWSCenums.cs" />
+    <Compile Include="Areas\VWSC\Models\VWSC.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>VWSC.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VWSC\Models\VWSC.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>VWSC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VWSC\Models\VWSC.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>VWSC.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VWSC\Models\VWSC_c_bosch_view.cs">
+      <DependentUpon>VWSC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VWSC\Models\VWSC_c_error.cs">
+      <DependentUpon>VWSC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VWSC\Models\VWSC_c_service_setup.cs">
+      <DependentUpon>VWSC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VWSC\Models\VWSC_c_severity.cs">
+      <DependentUpon>VWSC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VWSC\Models\VWSC_c_timer_class.cs">
+      <DependentUpon>VWSC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VWSC\Models\VWSC_L_operation.cs">
+      <DependentUpon>VWSC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VWSC\Models\VWSC_rt_active_info.cs">
+      <DependentUpon>VWSC.tt</DependentUpon>
+    </Compile>
     <Compile Include="Areas\VWSC\VWSCAreaRegistration.cs" />
     <Compile Include="Areas\Welding\Models\AutomaticWorkFlowULPlans.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
@@ -764,6 +810,16 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>VASC.edmx</DependentUpon>
       <LastGenOutput>VASC.cs</LastGenOutput>
+    </Content>
+    <Content Include="Areas\VWSC\Models\VWSC.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>VWSC.edmx</DependentUpon>
+      <LastGenOutput>VWSC.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Areas\VWSC\Models\VWSC.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>VWSC.edmx</DependentUpon>
+      <LastGenOutput>VWSC.cs</LastGenOutput>
     </Content>
     <Content Include="Areas\Welding\Models\WeldingModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -1126,6 +1182,17 @@
     <Content Include="Content\MvcGrid\Fonts\GridGlyphs.woff" />
     <Content Include="Areas\CycleTime\Views\web.config" />
     <Content Include="Areas\CycleTime\Views\_ViewStart.cshtml" />
+    <EntityDeploy Include="Areas\VWSC\Models\VWSC.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>VWSC.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Areas\VWSC\Models\VWSC.edmx.diagram">
+      <DependentUpon>VWSC.edmx</DependentUpon>
+    </Content>
+    <Content Include="Areas\VWSC\Views\c_timer_class\Index.cshtml" />
+    <Content Include="Areas\VWSC\Views\c_timer_class\_Details.cshtml" />
+    <Content Include="Areas\VWSC\Views\c_timer\_List.cshtml" />
+    <Content Include="Areas\VWSC\Views\c_timer\Index.cshtml" />
     <None Include="Properties\PublishProfiles\gensvw1178-DEV-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gotsvw11292-PRODUCTION-VCTA.pubxml" />
@@ -1303,8 +1370,8 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <OutputPath>bin\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <Optimize>false</Optimize>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
