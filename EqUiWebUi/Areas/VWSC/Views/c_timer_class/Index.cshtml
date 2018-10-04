@@ -1,0 +1,73 @@
+﻿@model IEnumerable<EqUiWebUi.Areas.VWSC.Models.VWSC_c_timer_class>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (ViewBag.timer_id != null)
+{
+<h3>Filtered on timer_id: @ViewBag.timer_id</h3>
+}
+
+<div class="container">
+    <h2>Index c_controller_class</h2>
+    <div class="alert alert-info">
+        <h4>
+            Configuration of the timer class sets what a timer in that class should do
+        </h4>
+
+        <div class="text-muted">
+            <p>*See VWSC manual for more details</p>
+        </div>
+    </div>
+</div>
+
+<p>
+    @Html.ActionLink("ADD controller class", "Edit", new { id = -1 })
+</p>
+
+
+@Html.Grid(Model).Named("c_timer_class").Build(columns =>
+{
+    columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Asc);
+    columns.Add(c => c.name).Titled("name");
+    columns.Add(c => c.cBoschViewMask).Titled("cBoschViewMask").Css("d-none d-lg-table-cell");
+    columns.Add(c => c.cErrorMask).Titled("cErrorMask").Css("d-none d-lg-table-cell");
+    columns.Add(c => c.cSeverityMask).Titled("cSeverityMask").Css("d-none d-lg-table-cell");
+    columns.Add(c => c)
+                    .Titled("")
+                    .Encoded(false)
+                    .RenderedAs(c => @Html.ActionLink("Edit", "Edit", new { id = c.id })
+                    ).Filterable(false);
+}).Filterable().Sortable().Empty("Did not find anything").Css("table-hover")
+
+
+<hr />
+
+<div class=" modal-body">
+    <div class="modal-content">
+        <div class="alert alert-info">This is connected to selected timer class</div>
+        <div id="c_timer_classDetails">Click on a timer class to see what is configured</div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script>
+        //full with screen
+        $("#allcontent").removeClass("body-content");
+        $("#allcontent").removeClass("container");
+
+        //render details when they click on it.
+        $('[data-name="c_timer_class"]').mvcgrid({
+            rowClicked: function (row, data, e) {
+                $("#c_timer_classDetails").html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
+                var url = '@Url.Action("_Details")?id=' + data.id + '&timer_id=@ViewBag.timer_id'
+                $("#c_timer_classDetails").load(url);
+            }
+        });
+        //sim click on first row.
+        $('[data-name="c_timer_class"]>table>tbody>tr:first').trigger('click');
+    </script>
+}
