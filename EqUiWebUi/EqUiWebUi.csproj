@@ -187,6 +187,7 @@
     <Folder Include="Areas\VCSC\Controllers\" />
     <Folder Include="Areas\VCSC\Models\" />
     <Folder Include="Areas\VCSC\Views\Shared\" />
+    <Folder Include="Areas\VWSC\Views\c_bosch_view\" />
     <Folder Include="Areas\VWSC\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
@@ -585,12 +586,14 @@
     <Compile Include="Areas\VASC\Models\winService.cs" />
     <Compile Include="Areas\VASC\VASCAreaRegistration.cs" />
     <Compile Include="Areas\VCSC\VCSCAreaRegistration.cs" />
+    <Compile Include="Areas\VWSC\Controllers\c_bosch_viewController.cs" />
     <Compile Include="Areas\VWSC\Controllers\c_timerController.cs" />
     <Compile Include="Areas\VWSC\Controllers\c_timer_classController.cs" />
     <Compile Include="Areas\VWSC\Controllers\vwscController.cs" />
     <Compile Include="Areas\VWSC\Models\VWSC_c_NPT.cs">
       <DependentUpon>VWSC.tt</DependentUpon>
     </Compile>
+    <Compile Include="Areas\VWSC\Models\VWSC_c_bosch_viewMetadata.cs" />
     <Compile Include="Areas\VWSC\Models\VWSC_c_timerMetadata.cs" />
     <Compile Include="Areas\VWSC\Models\VWSC_c_Timer.cs">
       <DependentUpon>VWSC.tt</DependentUpon>
