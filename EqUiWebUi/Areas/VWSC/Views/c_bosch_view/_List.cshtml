@@ -1,0 +1,24 @@
+﻿@model List<EqUiWebUi.Areas.VWSC.Models.VWSC_c_bosch_view>
+
+@Html.Grid(Model).Named("c_bosch_viewGrid").Build(columns =>
+{
+    columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Asc);
+    columns.Add(c => c._Enable_bit).Titled("enable_bit").Filterable(false);
+    columns.Add(c => c.enable_bit).Titled("eb");
+    columns.Add(c => c.view).Titled("view");
+    columns.Add(c => c.rt_table).Titled("rt_table");
+    columns.Add(c => c._Poll_rate).Titled("poll_rate").Filterable(false);
+    columns.Add(c => c.day_limit).Titled("day_limit");
+    columns.Add(c => c)
+                    .Titled("")
+                    .Encoded(false)
+                    .RenderedAs(c => @Html.ActionLink("Edit", "Edit", new { id = c.id })
+                    ).Filterable(false);
+}).Filterable().Sortable().Pageable(pager =>
+{
+    pager.RowsPerPage = 10;
+}).Empty("Did not find anything").Css("table-hover")
+
+<div class="badge">Count: @Model.Count()</div>
+
+

@@ -30,6 +30,7 @@ namespace EqUiWebUi.Areas.VWSC.Models
             ReadOnConnect = 0,
             //predefined times in miliseconds
             EverySecond = 1000,
+            Every2Seconds = 1000 * 2,
             Every10Seconds = 1000 * 10,
             EveryMinute = 1000 * 60,
             Every5Minutes = 1000 * 60 * 5
@@ -55,6 +56,13 @@ namespace EqUiWebUi.Areas.VWSC.Models
             Insert_into_rt_alarm = 0x2,
             Use_for_breakdown_analysis = 0x4,
             Marks_the_end_breakdown = 0x8
+        }
+
+        public enum c_error_isError
+        {
+            WarningOrError = -1,
+            Warning = 0,
+            Error = 1
         }
 
         //global use

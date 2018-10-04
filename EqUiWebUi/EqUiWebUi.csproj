@@ -187,7 +187,6 @@
     <Folder Include="Areas\VCSC\Controllers\" />
     <Folder Include="Areas\VCSC\Models\" />
     <Folder Include="Areas\VCSC\Views\Shared\" />
-    <Folder Include="Areas\VWSC\Views\c_bosch_view\" />
     <Folder Include="Areas\VWSC\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
@@ -587,9 +586,11 @@
     <Compile Include="Areas\VASC\VASCAreaRegistration.cs" />
     <Compile Include="Areas\VCSC\VCSCAreaRegistration.cs" />
     <Compile Include="Areas\VWSC\Controllers\c_bosch_viewController.cs" />
+    <Compile Include="Areas\VWSC\Controllers\c_errorController.cs" />
     <Compile Include="Areas\VWSC\Controllers\c_timerController.cs" />
     <Compile Include="Areas\VWSC\Controllers\c_timer_classController.cs" />
     <Compile Include="Areas\VWSC\Controllers\vwscController.cs" />
+    <Compile Include="Areas\VWSC\Models\VWSC_c_errorMetadata.cs" />
     <Compile Include="Areas\VWSC\Models\VWSC_c_NPT.cs">
       <DependentUpon>VWSC.tt</DependentUpon>
     </Compile>
@@ -1196,6 +1197,10 @@
     <Content Include="Areas\VWSC\Views\c_timer_class\_Details.cshtml" />
     <Content Include="Areas\VWSC\Views\c_timer\_List.cshtml" />
     <Content Include="Areas\VWSC\Views\c_timer\Index.cshtml" />
+    <Content Include="Areas\VWSC\Views\c_bosch_view\_List.cshtml" />
+    <Content Include="Areas\VWSC\Views\c_bosch_view\Index.cshtml" />
+    <Content Include="Areas\VWSC\Views\c_error\_List.cshtml" />
+    <Content Include="Areas\VWSC\Views\c_error\Index.cshtml" />
     <None Include="Properties\PublishProfiles\gensvw1178-DEV-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gotsvw11292-PRODUCTION-VCTA.pubxml" />
