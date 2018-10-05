@@ -1,0 +1,73 @@
+﻿
+@model IEnumerable<EqUiWebUi.Areas.VWSC.Models.winService>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>List of all VWSC sessions</h2>
+
+@Html.Grid(Model).Named("c_service_setupSessionsGrid").Build(columns =>
+{
+    columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Asc);
+    columns.Add(c => c._Enable_bit).Titled("enable_mask");
+    columns.Add(c => c.bit_id).Titled("bit_id").Css("d-none");
+    columns.Add(c => c.SessionName).Titled("SessionName");
+//columns.Add(c => c.description).Titled("description");
+columns.Add(c => c.ServiceName).Titled("ServiceName");
+    columns.Add(c => c.ServiceDisplayName).Titled("ServiceDisplayName");
+    columns.Add(c => c)
+       .Titled("ServiceStatus")
+       .Encoded(false)
+       .Filterable(true)
+       .RenderedAs(c => VASChelpers.SetServiceState(c.ServiceName, c.ServiceStatus));
+//columns.Add(c => c.ServiceStartName).Titled("StartName");
+columns.Add(c => c.ServiceDescription).Titled("ServiceDescription");
+}).Filterable().Sortable().Empty("Did not find anything").Css("table-hover")
+
+<hr />
+
+<div class="modal-body">
+    <div class="modal-content">
+        <div class="alert alert-warning">More options for selected session</div>
+        <div id="sessiondetails"></div>
+    </div>
+</div>
+
+
+<div class="alert alert-danger">
+    <strong>WARNING!</strong>
+    if the option has a sessiondatabit set to -1 this means its for
+    <strong>ALL SESSIONS</strong>
+</div>
+
+<div class="modal-body">
+    <div class="modal-content">
+        <div class="alert alert-info">settings for the selected session</div>
+        <div id="c_service_setupDetails"></div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script>
+        //full with screen
+        $("#allcontent").removeClass("body-content");
+        $("#allcontent").removeClass("container");
+        //render details when they click on it.
+        $('[data-name="c_service_setupSessionsGrid"]').mvcgrid({
+        rowClicked: function (row, data, e) {
+                var url1 = '@Url.Action("_sessionDetails")?sessionName=' + data["session-name"]
+                $("#sessiondetails").load(url1);
+
+                var url2 = '@Url.Action("_sessionSetup")?enable_mask=' + data["bit_id"]
+                $("#c_service_setupDetails").load(url2);
+            }
+        });
+
+        //sim click on first row.
+        $('[data-name="c_service_setupSessionsGrid"]>table>tbody>tr:first').trigger('click');
+    </script>
+}
+

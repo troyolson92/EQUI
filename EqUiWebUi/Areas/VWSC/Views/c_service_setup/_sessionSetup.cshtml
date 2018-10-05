@@ -1,0 +1,27 @@
+﻿<div class="card">
+    <div class="card-header">
+        <h5 class="card-title text">Session settings</h5>
+        <div class="text-muted">
+            @Html.ActionLink("Create New parameter", "Create")
+        </div>
+        <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
+    </div>
+    <div class="alert-info">
+    </div>
+    <div class="card-body">
+        <div data-name="c_service_setupGrid" class="mvc-grid"></div>
+    </div>
+</div>
+
+
+<script>
+    $('[data-name="c_service_setupGrid"]').html("Loading...");
+    $('[data-name="c_service_setupGrid"]').mvcgrid({
+        sourceUrl: '@Html.Raw(@Url.Action("_sessionSetupGrid",new { enable_mask = ViewBag.enable_mask }))',
+        requestType: 'get', // Ajax grid request type
+        reload: true,
+        reloadFailed: function (result) {
+            $('[data-name="c_service_setupGrid"]').html("Error while loading!!!");
+        }
+    });
+</script>

@@ -587,9 +587,13 @@
     <Compile Include="Areas\VCSC\VCSCAreaRegistration.cs" />
     <Compile Include="Areas\VWSC\Controllers\c_bosch_viewController.cs" />
     <Compile Include="Areas\VWSC\Controllers\c_errorController.cs" />
+    <Compile Include="Areas\VWSC\Controllers\c_service_setupController.cs" />
     <Compile Include="Areas\VWSC\Controllers\c_timerController.cs" />
     <Compile Include="Areas\VWSC\Controllers\c_timer_classController.cs" />
+    <Compile Include="Areas\VWSC\Controllers\L_operationController.cs" />
+    <Compile Include="Areas\VWSC\Controllers\rt_active_infoController.cs" />
     <Compile Include="Areas\VWSC\Controllers\vwscController.cs" />
+    <Compile Include="Areas\VWSC\Models\VWSC_rt_active_infoMetadata.cs" />
     <Compile Include="Areas\VWSC\Models\VWSC_c_errorMetadata.cs" />
     <Compile Include="Areas\VWSC\Models\VWSC_c_NPT.cs">
       <DependentUpon>VWSC.tt</DependentUpon>
@@ -637,6 +641,7 @@
     <Compile Include="Areas\VWSC\Models\VWSC_rt_active_info.cs">
       <DependentUpon>VWSC.tt</DependentUpon>
     </Compile>
+    <Compile Include="Areas\VWSC\Models\winService.cs" />
     <Compile Include="Areas\VWSC\VWSCAreaRegistration.cs" />
     <Compile Include="Areas\Welding\Models\AutomaticWorkFlowULPlans.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
@@ -1201,6 +1206,14 @@
     <Content Include="Areas\VWSC\Views\c_bosch_view\Index.cshtml" />
     <Content Include="Areas\VWSC\Views\c_error\_List.cshtml" />
     <Content Include="Areas\VWSC\Views\c_error\Index.cshtml" />
+    <Content Include="Areas\VWSC\Views\l_operation\_List.cshtml" />
+    <Content Include="Areas\VWSC\Views\l_operation\Index.cshtml" />
+    <Content Include="Areas\VWSC\Views\rt_active_info\Index.cshtml" />
+    <Content Include="Areas\VWSC\Views\rt_active_info\Details.cshtml" />
+    <Content Include="Areas\VWSC\Views\c_service_setup\Index.cshtml" />
+    <Content Include="Areas\VWSC\Views\c_service_setup\_sessionDetails.cshtml" />
+    <Content Include="Areas\VWSC\Views\c_service_setup\_sessionSetup.cshtml" />
+    <Content Include="Areas\VWSC\Views\c_service_setup\_sessionSetupGrid.cshtml" />
     <None Include="Properties\PublishProfiles\gensvw1178-DEV-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gotsvw11292-PRODUCTION-VCTA.pubxml" />

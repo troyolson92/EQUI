@@ -1,0 +1,17 @@
+﻿@model IQueryable<EqUiWebUi.Areas.VWSC.Models.VWSC_L_operation>
+
+@Html.Grid(Model).Named("L_operationGrid").Build(columns =>
+{
+    columns.Add(c => c.ID).Titled("id").InitialSort(GridSortOrder.Desc).Css("d-none d-lg-table-cell");
+    columns.Add(c => c.C_timestamp).Titled("_timestamp");
+    columns.Add(c => c.code).Titled("code");
+    columns.Add(c => c.Vwsc_name).Titled("Vwsc_name").Css("d-none d-lg-table-cell");
+    columns.Add(c => c.controller_id).Titled("controller_id").Css("d-none d-lg-table-cell");
+    columns.Add(c => c.Timer.Name).Titled("Timer");
+    columns.Add(c => c.Description).Titled("Desciption");
+}).Filterable().Sortable().Pageable(pager =>
+{
+    pager.RowsPerPage = 15;
+}).Empty("Did not find anything").Css("table-hover")
+
+<div class="badge">Count: @Model.Count()</div>
