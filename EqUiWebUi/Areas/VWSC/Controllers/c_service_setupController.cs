@@ -27,19 +27,38 @@ namespace EqUiWebUi.Areas.VWSC.Controllers
             List<Models.winService> result = new List<winService>();
             foreach (VWSC_c_service_setup session in sessions)
             {
-                Models.winService service = servicesOnServer.Where(s => s.ServiceName == session.value).FirstOrDefault();
-                if (service == null)
+                //check if session is of master type.
+                if(db.c_service_setup.Where(c => c.name == "SESSION_TYPE" && c.value == 1.ToString() && c.bit_id == session.bit_id).Count() != 0)
                 {
-                    log.Warn("vwsc session: " + session.name + " not found on server");
-                    service = new winService();
-                    service.ServiceName = "NOT FOUND";
-                    service.ServiceDescription = "no service found named " + session.value;
+                    Models.winService service = servicesOnServer.Where(s => s.ServiceName.Contains(session.value)).FirstOrDefault();
+                    if (service == null)
+                    {
+                        log.Warn("vwsc MASTER session: " + session.name + " not found on server");
+                        service = new winService();
+                        service.ServiceName = "NOT FOUND";
+                        service.ServiceDescription = "no service found named " + session.value;
+                    }
+                    service._SessionType = VWSCenums.VWSCSessionType.Master;
+                    service.id = session.id;
+                    service.bit_id = session.bit_id;
+                    service.SessionName = session.value;
+                    service.description = session.description;
+                    result.Add(service);
                 }
-                service.id = session.id;
-                service.bit_id = session.bit_id;
-                service.SessionName = session.value;
-                service.description = session.description;
-                result.Add(service);
+                else
+                {
+                    log.Info($"session= {session.name} is not a master type session");
+                    log.Warn("vwsc SLAVE session: " + session.name + " not found on server");
+                    winService service = new winService();
+                    service.ServiceName = "Slave runs on the npt!";
+                    service.ServiceDescription = "";
+                    service._SessionType = VWSCenums.VWSCSessionType.Slave;
+                    service.id = session.id;
+                    service.bit_id = session.bit_id;
+                    service.SessionName = session.value;
+                    service.description = session.description;
+                    result.Add(service);
+            }
             }
 
             return View(result);
@@ -137,14 +156,14 @@ namespace EqUiWebUi.Areas.VWSC.Controllers
         }
 
         //
-        public ActionResult _sessionSetup(int? enable_mask)
+        public ActionResult _sessionSetup(long? enable_mask)
         {
             ViewBag.enable_mask = enable_mask;
             return PartialView();
         }
 
         // GET: VASC/c_service_setup/_sessionSetup
-        public ActionResult _sessionSetupGrid(int? enable_mask)
+        public ActionResult _sessionSetupGrid(long? enable_mask)
         {
             List<VWSC_c_service_setup> list = new List<VWSC_c_service_setup>();
             if (enable_mask is null)
@@ -153,7 +172,7 @@ namespace EqUiWebUi.Areas.VWSC.Controllers
             }
             else
             {
-                var setbits = Enumerable.Range(0, 32).Where(x => ((enable_mask >> x) & 1) == 1);
+                var setbits = Enumerable.Range(0, 64).Where(x => ((enable_mask >> x) & 1) == 1);
 
                 foreach (int setbit in setbits)
                 {

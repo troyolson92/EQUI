@@ -1214,6 +1214,11 @@
     <Content Include="Areas\VWSC\Views\c_service_setup\_sessionDetails.cshtml" />
     <Content Include="Areas\VWSC\Views\c_service_setup\_sessionSetup.cshtml" />
     <Content Include="Areas\VWSC\Views\c_service_setup\_sessionSetupGrid.cshtml" />
+    <Content Include="Areas\VWSC\Views\c_service_setup\Edit.cshtml" />
+    <Content Include="Areas\VWSC\Views\c_timer_class\Edit.cshtml" />
+    <Content Include="Areas\VWSC\Views\c_bosch_view\Edit.cshtml" />
+    <Content Include="Areas\VWSC\Views\c_error\Edit.cshtml" />
+    <Content Include="Areas\VWSC\Views\c_timer\Edit.cshtml" />
     <None Include="Properties\PublishProfiles\gensvw1178-DEV-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gotsvw11292-PRODUCTION-VCTA.pubxml" />
