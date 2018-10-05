@@ -18,10 +18,12 @@ namespace EqUiWebUi.Areas.VWSC.Models
         public Nullable<int> enable_bit { get; set; }
         public Nullable<int> ordinal { get; set; }
         public Nullable<int> isError { get; set; }
+
         public Nullable<int> errorCode1 { get; set; }
         public string errorCode1_text { get; set; }
         public Nullable<int> errorCode2 { get; set; }
         public string errorCode2_text { get; set; }
+
         public Nullable<int> C_operator { get; set; }
         public Nullable<int> flags { get; set; }
         public string UserComment { get; set; }

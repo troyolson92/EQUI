@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace EqUiWebUi.Areas.VWSC.Models
 {
@@ -21,6 +22,29 @@ namespace EqUiWebUi.Areas.VWSC.Models
                 }
             }
             return listValue.ToArray();
+        }
+
+        public static List<SelectListItem> Enable_bit_MASK_SelectList
+        {
+            get
+            {
+                List<SelectListItem> items = new List<SelectListItem>();
+                foreach (string action in Enum.GetNames(typeof(Enable_bit_MASK)))
+                {
+                    if ((int)Enum.Parse(typeof(Enable_bit_MASK), action) == 0) continue; //skip 0 value (nothing active label)
+                    SelectListItem listItem = new SelectListItem
+                    {
+                        Text = action,
+                        Value = ((int)Enum.Parse(typeof(Enable_bit_MASK), action)).ToString(),
+                    };
+                    items.Add(listItem);
+                }
+                return items;
+            }
+            set
+            {
+                //does not need a set
+            }
         }
 
         //for c_bosch view
@@ -88,7 +112,27 @@ namespace EqUiWebUi.Areas.VWSC.Models
             Enablebit13 = 13,
             Enablebit14 = 14,
             Enablebit15 = 15,
-            Enablebit16 = 16
+            Enablebit16 = 16,
+
+            Enablebit17 = 17,
+            Enablebit18 = 18,
+            Enablebit19 = 19,
+            Enablebit20 = 20,
+
+            Enablebit21 = 21,
+            Enablebit22 = 22,
+            Enablebit23 = 23,
+            Enablebit24 = 23,
+
+            Enablebit25 = 25,
+            Enablebit26 = 26,
+            Enablebit27 = 27,
+            Enablebit28 = 28,
+
+            Enablebit29 = 29,
+            Enablebit30 = 30,
+            Enablebit31 = 31
+         //   Enablebit32 = 32
         }
 
         public enum Enable_bit_MASK
@@ -113,12 +157,38 @@ namespace EqUiWebUi.Areas.VWSC.Models
             Enablebit13 = 0x1000,
             Enablebit14 = 0x2000,
             Enablebit15 = 0x4000,
-            Enablebit16 = 0x8000
+            Enablebit16 = 0x8000,
+
+            Enablebit17 = 0x10000,
+            Enablebit18 = 0x20000,
+            Enablebit19 = 0x40000,
+            Enablebit20 = 0x80000,
+
+            Enablebit21 = 0x100000,
+            Enablebit22 = 0x200000,
+            Enablebit23 = 0x400000,
+            Enablebit24 = 0x800000,
+
+            Enablebit25 = 0x1000000,
+            Enablebit26 = 0x2000000,
+            Enablebit27 = 0x4000000,
+            Enablebit28 = 0x8000000,
+
+            Enablebit29 = 0x10000000,
+            Enablebit30 = 0x20000000,
+            Enablebit31 = 0x40000000
+          //  Enablebit32 = 0x80000000
         }
 
         public enum VWSCState
         {
             STATE_CONNECTED = 9999 //not in manual ! 
+        }
+
+        public enum VWSCSessionType
+        {
+            Master = 1,
+            Slave = 2
         }
 
     }
