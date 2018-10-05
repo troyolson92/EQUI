@@ -14,6 +14,13 @@ namespace EqUiWebUi.Areas.VWSC.Models
     
     public partial class VWSC_c_Timer
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public VWSC_c_Timer()
+        {
+            this.rt_active_info = new HashSet<VWSC_rt_active_info>();
+            this.L_operation = new HashSet<VWSC_L_operation>();
+        }
+    
         public int ID { get; set; }
         public string Name { get; set; }
         public Nullable<int> NptId { get; set; }
@@ -24,5 +31,9 @@ namespace EqUiWebUi.Areas.VWSC.Models
     
         public virtual VWSC_c_NPT NPT { get; set; }
         public virtual VWSC_c_timer_class c_timer_class { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<VWSC_rt_active_info> rt_active_info { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<VWSC_L_operation> L_operation { get; set; }
     }
 }

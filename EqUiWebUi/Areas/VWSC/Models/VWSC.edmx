@@ -30,8 +30,6 @@
           <Property Name="c_timer_class_id" Type="int" />
           <Property Name="enable_bit" Type="int" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'GADATA.WELDING2.c_bosch_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="c_bosch_view">
           <Key>
             <PropertyRef Name="id" />
@@ -118,6 +116,30 @@ warning 6002: The table/view 'GADATA.WELDING2.c_bosch_view' does not have a prim
           <Property Name="rt_weldmeasureprotddw_id" Type="int" />
           <Property Name="rt_datechangeprot_id" Type="int" />
         </EntityType>
+        <Association Name="FK_L_operation_Timer">
+          <End Role="Timer" Type="Self.Timer" Multiplicity="0..1" />
+          <End Role="L_operation" Type="Self.L_operation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Timer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="L_operation">
+              <PropertyRef Name="controller_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rt_active_info_Timer">
+          <End Role="Timer" Type="Self.Timer" Multiplicity="0..1" />
+          <End Role="rt_active_info" Type="Self.rt_active_info" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Timer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="rt_active_info">
+              <PropertyRef Name="timerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Timer_c_timer_class">
           <End Role="c_timer_class" Type="Self.c_timer_class" Multiplicity="0..1" />
           <End Role="Timer" Type="Self.Timer" Multiplicity="*" />
@@ -145,23 +167,21 @@ warning 6002: The table/view 'GADATA.WELDING2.c_bosch_view' does not have a prim
         <EntityContainer Name="GADATAModelVWSCStoreContainer">
           <EntitySet Name="NPT" EntityType="Self.NPT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Timer" EntityType="Self.Timer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="c_bosch_view" EntityType="Self.c_bosch_view" Schema="WELDING2" store:Type="Tables" />
           <EntitySet Name="c_error" EntityType="Self.c_error" Schema="WELDING2" store:Type="Tables" />
           <EntitySet Name="c_service_setup" EntityType="Self.c_service_setup" Schema="WELDING2" store:Type="Tables" />
           <EntitySet Name="c_severity" EntityType="Self.c_severity" Schema="WELDING2" store:Type="Tables" />
           <EntitySet Name="c_timer_class" EntityType="Self.c_timer_class" Schema="WELDING2" store:Type="Tables" />
           <EntitySet Name="L_operation" EntityType="Self.L_operation" Schema="WELDING2" store:Type="Tables" />
           <EntitySet Name="rt_active_info" EntityType="Self.rt_active_info" Schema="WELDING2" store:Type="Tables" />
-          <EntitySet Name="c_bosch_view" EntityType="Self.c_bosch_view" store:Type="Tables" store:Schema="WELDING2">
-            <DefiningQuery>SELECT 
-    [c_bosch_view].[id] AS [id], 
-    [c_bosch_view].[view] AS [view], 
-    [c_bosch_view].[enable_bit] AS [enable_bit], 
-    [c_bosch_view].[poll_rate] AS [poll_rate], 
-    [c_bosch_view].[flag] AS [flag], 
-    [c_bosch_view].[rt_table] AS [rt_table], 
-    [c_bosch_view].[day_limit] AS [day_limit]
-    FROM [WELDING2].[c_bosch_view] AS [c_bosch_view]</DefiningQuery>
-          </EntitySet>
+          <AssociationSet Name="FK_L_operation_Timer" Association="Self.FK_L_operation_Timer">
+            <End Role="Timer" EntitySet="Timer" />
+            <End Role="L_operation" EntitySet="L_operation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rt_active_info_Timer" Association="Self.FK_rt_active_info_Timer">
+            <End Role="Timer" EntitySet="Timer" />
+            <End Role="rt_active_info" EntitySet="rt_active_info" />
+          </AssociationSet>
           <AssociationSet Name="FK_Timer_c_timer_class" Association="Self.FK_Timer_c_timer_class">
             <End Role="c_timer_class" EntitySet="c_timer_class" />
             <End Role="Timer" EntitySet="Timer" />
@@ -231,6 +251,7 @@ warning 6002: The table/view 'GADATA.WELDING2.c_bosch_view' does not have a prim
           <Property Name="Vwsc_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="controller_id" Type="Int32" />
           <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Timer" Relationship="GADATAModelVWSC.FK_L_operation_Timer" FromRole="VWSC_L_operation" ToRole="VWSC_c_Timer" />
         </EntityType>
         <EntityType Name="VWSC_rt_active_info">
           <Key>
@@ -249,6 +270,7 @@ warning 6002: The table/view 'GADATA.WELDING2.c_bosch_view' does not have a prim
           <Property Name="rt_weldfault_id" Type="Int32" />
           <Property Name="rt_weldmeasureprotddw_id" Type="Int32" />
           <Property Name="rt_datechangeprot_id" Type="Int32" />
+          <NavigationProperty Name="Timer" Relationship="GADATAModelVWSC.FK_rt_active_info_Timer" FromRole="VWSC_rt_active_info" ToRole="VWSC_c_Timer" />
         </EntityType>
         <EntityType Name="VWSC_c_bosch_view">
           <Key>
@@ -280,6 +302,14 @@ warning 6002: The table/view 'GADATA.WELDING2.c_bosch_view' does not have a prim
             <End Role="VWSC_c_timer_class" EntitySet="c_timer_class" />
             <End Role="VWSC_c_Timer" EntitySet="Timer" />
           </AssociationSet>
+          <AssociationSet Name="FK_rt_active_info_Timer" Association="GADATAModelVWSC.FK_rt_active_info_Timer">
+            <End Role="VWSC_c_Timer" EntitySet="Timer" />
+            <End Role="VWSC_rt_active_info" EntitySet="rt_active_info" />
+          </AssociationSet>
+          <AssociationSet Name="FK_L_operation_Timer" Association="GADATAModelVWSC.FK_L_operation_Timer">
+            <End Role="VWSC_c_Timer" EntitySet="Timer" />
+            <End Role="VWSC_L_operation" EntitySet="L_operation" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="VWSC_c_Timer">
           <Key>
@@ -294,6 +324,8 @@ warning 6002: The table/view 'GADATA.WELDING2.c_bosch_view' does not have a prim
           <Property Name="enable_bit" Type="Int32" />
           <NavigationProperty Name="NPT" Relationship="GADATAModelVWSC.FK_Timer_NPT" FromRole="VWSC_c_Timer" ToRole="NPT" />
           <NavigationProperty Name="c_timer_class" Relationship="GADATAModelVWSC.FK_Timer_c_timer_class" FromRole="VWSC_c_Timer" ToRole="VWSC_c_timer_class" />
+          <NavigationProperty Name="rt_active_info" Relationship="GADATAModelVWSC.FK_rt_active_info_Timer" FromRole="VWSC_c_Timer" ToRole="VWSC_rt_active_info" />
+          <NavigationProperty Name="L_operation" Relationship="GADATAModelVWSC.FK_L_operation_Timer" FromRole="VWSC_c_Timer" ToRole="VWSC_L_operation" />
         </EntityType>
         <EntityType Name="VWSC_c_NPT">
           <Key>
@@ -330,6 +362,30 @@ warning 6002: The table/view 'GADATA.WELDING2.c_bosch_view' does not have a prim
             </Principal>
             <Dependent Role="VWSC_c_Timer">
               <PropertyRef Name="c_timer_class_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rt_active_info_Timer">
+          <End Type="GADATAModelVWSC.VWSC_c_Timer" Role="VWSC_c_Timer" Multiplicity="0..1" />
+          <End Type="GADATAModelVWSC.VWSC_rt_active_info" Role="VWSC_rt_active_info" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VWSC_c_Timer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="VWSC_rt_active_info">
+              <PropertyRef Name="timerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_L_operation_Timer">
+          <End Type="GADATAModelVWSC.VWSC_c_Timer" Role="VWSC_c_Timer" Multiplicity="0..1" />
+          <End Type="GADATAModelVWSC.VWSC_L_operation" Role="VWSC_L_operation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VWSC_c_Timer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="VWSC_L_operation">
+              <PropertyRef Name="controller_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>

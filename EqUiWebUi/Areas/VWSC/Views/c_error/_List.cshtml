@@ -3,8 +3,7 @@
 @Html.Grid(Model).Named("c_errorGrid").Build(columns =>
 {
     columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Asc);
-    columns.Add(c => c._Enable_bit).Titled("enable_bit").Filterable(false);
-    columns.Add(c => c.enable_bit).Titled("eb");
+    columns.Add(c => c._Enable_bit).Titled("enable_bit");
     columns.Add(c => c.ordinal).Titled("ordinal");
     columns.Add(c => c.isError).Titled("isError");
   //  columns.Add(c => c.errorCode1).Titled("errorCode1");

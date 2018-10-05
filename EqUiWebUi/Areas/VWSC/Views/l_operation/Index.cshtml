@@ -1,0 +1,36 @@
+﻿@model IEnumerable<EqUiWebUi.Areas.VWSC.Models.VWSC_L_operation>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (ViewBag.timer_id != null)
+{
+<h3>Filtered on timer_id: @ViewBag.timer_id</h3>
+}
+
+<div class="container">
+    <h2>Index L_operation</h2>
+    <div class="alert alert-info">
+        <h4>
+            L_operation
+        </h4>
+
+        <div class="text-muted">
+        </div>
+    </div>
+</div>
+
+@Html.AjaxGrid(Url.Action("_List", new { timer_id = ViewBag.timer_id, sessionName = ViewBag.sessionName }))
+
+<hr />
+
+@section scripts{
+    <script>
+        //full with screen
+        $("#allcontent").removeClass("body-content");
+        $("#allcontent").removeClass("container");
+    </script>
+}
+

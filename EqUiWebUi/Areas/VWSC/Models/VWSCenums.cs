@@ -116,5 +116,10 @@ namespace EqUiWebUi.Areas.VWSC.Models
             Enablebit16 = 0x8000
         }
 
+        public enum VWSCState
+        {
+            STATE_CONNECTED = 9999 //not in manual ! 
+        }
+
     }
 }

@@ -20,5 +20,7 @@ namespace EqUiWebUi.Areas.VWSC.Models
         public string Vwsc_name { get; set; }
         public Nullable<int> controller_id { get; set; }
         public string Description { get; set; }
+    
+        public virtual VWSC_c_Timer Timer { get; set; }
     }
 }
