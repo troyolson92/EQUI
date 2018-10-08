@@ -12,7 +12,7 @@ CREATE VIEW [NGAC].[NGAC_Supervisie]
 AS
 SELECT DISTINCT 
   output.Location       AS 'Location' 
-, output.logtext		AS 'logtext'
+, output.Logtext		AS 'Logtext'
 , output.Response		AS 'RT'
 , output.Downtime		AS 'DT'
 , CONVERT(char(19),output.[timestamp], 108) AS 'time' 
@@ -42,7 +42,7 @@ SELECT
       ,[timestamp]
       ,[Logcode]
       ,[Severity]
-      ,[logtext]
+      ,[Logtext]
       ,[Response]
       ,[Downtime]
       ,[Classification]
@@ -70,7 +70,7 @@ select
       ,[timestamp]
       ,[Logcode]
       ,[Severity]
-      ,[logtext]
+      ,[Logtext]
       ,[Response]
       ,[Downtime]
       ,[Classification]
@@ -95,12 +95,12 @@ select
       ,[timestamp]
       ,[Logcode]
       ,[Severity]
-      ,[logtext]
+      ,[Logtext]
       ,[Response]
       ,[Downtime]
       ,[Classification]
       ,[Subgroup]
-      ,[refId]
+      ,[refid]
       ,[LocationTree]
       ,[ClassTree]
       ,[controller_name]
@@ -109,7 +109,7 @@ FROM NGAC.ActiveState as ActiveState with (NOLOCK)
 --*******************************************************************************************************--
 
 ) as output
-left join volvo.L_timeline as timeline on output.[timestamp] between timeline.starttime and timeline.endtime
+left join Volvo.L_timeline as timeline on output.[timestamp] between timeline.starttime and timeline.endtime
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 1, @level0type = N'SCHEMA', @level0name = N'NGAC', @level1type = N'VIEW', @level1name = N'NGAC_Supervisie';
 

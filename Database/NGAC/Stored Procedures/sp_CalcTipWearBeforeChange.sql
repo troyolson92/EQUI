@@ -52,7 +52,7 @@ FROM(
 --join previous tipchange to get that timestamp************************************************************************************--
 SELECT 
 *
-,lead(Y.TipchangeTimestamp) OVER (PARTITION BY y.controller_name, y.Tool_nr  ORDER BY y.TipchangeTimestamp desc) as 'PreviousTipchange' 
+,lead(Y.TipchangeTimestamp) OVER (PARTITION BY y.controller_name, y.[Tool_Nr]  ORDER BY y.TipchangeTimestamp desc) as 'PreviousTipchange' 
 --*********************************************************************************************************************************--
 FROM (
 --get date from a single tip interval**********************************************************************************************--
@@ -70,11 +70,11 @@ SELECT
 ,rt.Dress_Reason
 ,rt.ErrorType
 ,[NGAC].[DistanceBetweenPoints]([GunTCP_X],[GunTCP_Y],[GunTCP_Z],[NomTCP_X],[NomTCP_Y],[NomTCP_Z]) as 'DeltaNom'
-,lead([NGAC].[DistanceBetweenPoints]([GunTCP_X],[GunTCP_Y],[GunTCP_Z],[NomTCP_X],[NomTCP_Y],[NomTCP_Z])) OVER (PARTITION BY c.controller_name, rt.Tool_nr  ORDER BY rt.[Date Time] desc) as 'DeltaNomBeforeChange'
-,lead(rt.Wear_Fixed) OVER (PARTITION BY c.controller_name, rt.Tool_nr  ORDER BY rt.[Date Time] desc) as 'FixedWearBeforeChange'
-,lead(rt.Wear_Move) OVER (PARTITION BY c.controller_name, rt.Tool_nr  ORDER BY rt.[Date Time] desc) as 'MoveWearBeforeChange'
-,lead(rt.Current_TipWear) OVER (PARTITION BY c.controller_name, rt.Tool_nr  ORDER BY rt.[Date Time] desc) as 'WearBeforeChange'
-,lead(rt.Dress_num) OVER (PARTITION BY c.controller_name, rt.Tool_nr  ORDER BY rt.[Date Time] desc) as 'DressBeforeChange'
+,lead([NGAC].[DistanceBetweenPoints]([GunTCP_X],[GunTCP_Y],[GunTCP_Z],[NomTCP_X],[NomTCP_Y],[NomTCP_Z])) OVER (PARTITION BY c.controller_name, rt.[Tool_Nr]  ORDER BY rt.[Date Time] desc) as 'DeltaNomBeforeChange'
+,lead(rt.Wear_Fixed) OVER (PARTITION BY c.controller_name, rt.[Tool_Nr]  ORDER BY rt.[Date Time] desc) as 'FixedWearBeforeChange'
+,lead(rt.Wear_Move) OVER (PARTITION BY c.controller_name, rt.[Tool_Nr]  ORDER BY rt.[Date Time] desc) as 'MoveWearBeforeChange'
+,lead(rt.Current_TipWear) OVER (PARTITION BY c.controller_name, rt.[Tool_Nr]  ORDER BY rt.[Date Time] desc) as 'WearBeforeChange'
+,lead(rt.Dress_Num) OVER (PARTITION BY c.controller_name, rt.[Tool_Nr]  ORDER BY rt.[Date Time] desc) as 'DressBeforeChange'
 from NGAC.rt_TipDressLogFile as rt with (nolock)
 left join NGAC.rt_csv_file as rt_csv with (nolock) on rt.rt_csv_file_id = rt_csv.id
 left join NGAC.c_controller as c with (nolock) on c.id = rt_csv.c_controller_id
@@ -125,8 +125,8 @@ select * from #TipWearBeforeChange
 ---------------------------------------------------------------------------------------
 print'insert new data'
 ---------------------------------------------------------------------------------------
---DROP TABLE ngac.h_TipWearBeforeChange
-INSERT INTO ngac.h_TipWearBeforeChange
+--DROP TABLE NGAC.h_TipWearBeforeChange
+INSERT INTO NGAC.h_TipWearBeforeChange
 SELECT 
 	   temp.[controller_name]
       ,temp.[controller_id]
@@ -148,7 +148,7 @@ SELECT
 --INTO gadata.ngac.h_TipWearBeforeChange
 FROM #TipWearBeforeChange as temp
 
-Left join ngac.h_TipWearBeforeChange as h with (nolock) on
+Left join NGAC.h_TipWearBeforeChange as h with (nolock) on
 h.tipDressID = temp.tipDressID
 where 
 h.tipDressID IS NULL

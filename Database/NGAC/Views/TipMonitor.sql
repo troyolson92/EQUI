@@ -68,7 +68,7 @@ SELECT DISTINCT top 10000  c.controller_name as 'Robot'
 					  and tipalert.Category = 'WGK'
 					  and tipalert.[timestamp] > getdate()-3 -- limit search window
                       
-					  where ((rt.[Date Time] < getdate()) or rt.[Date Time] is null) AND (c.hasspotweld = 1) --only robots with the bit set will be handed!
+					  where ((rt.[Date Time] < getdate()) or rt.[Date Time] is null) AND (c.hasSpotweld = 1) --only robots with the bit set will be handed!
 					  --
                       Order by [pWear] DESC
 GO

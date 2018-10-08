@@ -11,7 +11,7 @@ SELECT
 , T.starttime AS 'Timestamp'
 , NULL AS 'Logcode'
 , Null AS 'Severity'
-, 'Timeline for:  ' + cast(t.Vyear as varchar(4)) + 'W' + cast(t.Vweek as varchar(2)) + 'D' + cast(t.Vday as varchar(1)) + '   | above here starts the ' + t.Ploeg + ' shift'  AS 'Logtekst'
+, 'Timeline for:  ' + cast(t.Vyear as varchar(4)) + 'W' + cast(t.Vweek as varchar(2)) + 'D' + cast(t.Vday as varchar(1)) + '   | above here starts the ' + t.PLOEG + ' shift'  AS 'Logtekst'
 ,NULL AS 'DOWNTIME'
 , T.Vyear AS 'Year'
 , T.Vweek AS 'Week'

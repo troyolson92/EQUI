@@ -39,8 +39,8 @@ SELECT
  ELSE ''
  END AS 'Severity'
 
-,CASE when rtjb.h_alarm_id is not null THEN h.logtext
- when rtjb.rt_alarm_id is not null THEN rt.logtext
+,CASE when rtjb.h_alarm_id is not null THEN h.Logtext
+ when rtjb.rt_alarm_id is not null THEN rt.Logtext
  ELSE 'state change'
  END AS 'Logtext'
 
@@ -75,8 +75,8 @@ SELECT
 
 FROM  NGAC.rt_job AS rtj  with (NOLOCK)
 LEFT JOIN NGAC.rt_job_breakdown as rtjb with (NOLOCK) on rtjb.rt_job_active_id = rtj.id AND rtjb.[index] = 1
-LEFT JOIN NGAC.ControllerEventLog as h  with (NOLOCK)on h.refid = rtjb.h_alarm_id
-LEFT JOIN NGAC.junk_alarms as rt with (NOLOCK) on rt.refid = rtjb.rt_alarm_id
+LEFT JOIN NGAC.ControllerEventLog as h  with (NOLOCK)on h.refId = rtjb.h_alarm_id
+LEFT JOIN NGAC.junk_alarms as rt with (NOLOCK) on rt.refId = rtjb.rt_alarm_id
 
 
 LEFT JOIN NGAC.c_controller as c with (NOLOCK) on c.id = rtj.c_controller_id
