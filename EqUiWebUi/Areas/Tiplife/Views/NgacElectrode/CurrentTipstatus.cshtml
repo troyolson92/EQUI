@@ -10,7 +10,7 @@
     </div>
 
     <div class="card-body">
-        <div id="TipstatusGrid" class="mvc-grid"></div>
+        <div class="mvc-grid" data-name="TipStatusGrid"></div>
     </div>
 </div>
 
@@ -30,8 +30,8 @@
     <!--Tipstatus script-->
     <script type="text/javascript">
         //render grid and subscrible to row clicked events
-        $('#TipstatusGrid').html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
-        $('#TipstatusGrid').mvcgrid({
+        $('[data-name="TipStatusGrid"]').html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
+        $('[data-name="TipStatusGrid"]').mvcgrid({
             sourceUrl: '@Url.Action("_TipStatus")', // Grid source url string
             requestType: 'get', // Ajax grid request type
             reload: true, // Grid reload indicator
@@ -43,7 +43,7 @@
                 $('#MyModal').load(urlTipinfo, function (result) { });
             },
             reloadFailed: function (result) {
-                $("#TipstatusGrid").html("Error while loading!!!");
+                $('[data-name="TipStatusGrid"]').html("Error while loading!!!");
             }
         });
 
@@ -67,7 +67,7 @@
         //trigger full window reload
         $.connection.dataRefreshHub.client.newData = function () {
             console.log("TipstatusGrid reload");
-            $('#NgacTipStatus').mvcgrid({
+            $('[data-name="TipStatusGrid"]').mvcgrid({
                 reload: true
             });
         };

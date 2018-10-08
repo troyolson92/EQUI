@@ -4,7 +4,7 @@
 }
 
 <div id="PloegRapportGridSpincontainer" style="position:relative">
-    <div id="PloegRapportGrid" class="mvc-grid"></div>
+    <div data-name="PloegRapportGrid" class="mvc-grid"></div>
 </div>
 
 @*render popuover modal*@
@@ -34,7 +34,7 @@
         }
 
     //render grid and subscrible to row clicked events
-        $('#PloegRapportGrid').mvcgrid({
+        $('[data-name="PloegRapportGrid"]').mvcgrid({
             sourceUrl: '@Url.Action("_ploegRapport")', // Grid source url string
             requestType: 'get', // Ajax grid request type
             reload: true, // Grid reload indicator
@@ -57,11 +57,11 @@
                     $(row).addClass("bg-info");
                     $("#placeholder").remove(); //clear placeholder is exists
                     //add new placeholder afhter selected row
-                    $(row).after('<tr id="placeholder"><td colspan="1000"><div class="card bg-info"><div id="SupervisieGrid" class="mvc-grid card-body"></div></div></td></tr>');
+                    $(row).after('<tr id="placeholder"><td colspan="1000"><div class="card bg-info"><div data-name="SupervisieGrid" class="mvc-grid card-body"></div></div></td></tr>');
                     //animation
-                    $("#SupervisieGrid").html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
+                    $('[data-name="SupervisieGrid"]').html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
                     //load supervisiegird in placeholder
-                        $('#SupervisieGrid').mvcgrid({
+                    $('[data-name="SupervisieGrid"]').mvcgrid({
                             sourceUrl: '@Url.Action("_supervisie")', // Grid source url string
                             requestType: 'get', // Ajax grid request type
                             data: { locationRootFilter: data["location-tree"]},
@@ -71,14 +71,14 @@
                             },
                             reloadFailed: function (result) {
                                 console.log(result);
-                                $("#SupervisieGrid").html("<div class='alert alert-danger'>Error while loading!! </div>");
+                                $('[data-name="SupervisieGrid"]').html("<div class='alert alert-danger'>Error while loading!! </div>");
                             }
                         });
                 }
             },
             reloadFailed: function (result) {
                 console.log(result);
-                $("#PloegRapportGrid").html("<div class='alert alert-danger'>Error while loading!! </div>");
+                $('[data-name="PloegRapportGrid"]').html("<div class='alert alert-danger'>Error while loading!! </div>");
             }
         });
 
@@ -107,7 +107,7 @@
         $.connection.dataRefreshHub.client.newData = function () {
             if (supervisieIsExpanded != true) {
                 console.log("PloegRapportGrid reload");
-                $('#PloegRapport').mvcgrid({
+                $('[data-name="PloegRapportGrid"]').mvcgrid({
                     reload: true
                 });
             }

@@ -62,8 +62,8 @@ SELECT
  ELSE 'junk*'
  END AS 'Subgroup'
 
-,CASE when rtjb.h_alarm_id is not null THEN h.category
- when rtjb.rt_alarm_id is not null THEN  rt.category
+,CASE when rtjb.h_alarm_id is not null THEN h.Category
+ when rtjb.rt_alarm_id is not null THEN  rt.Category
  ELSE ''
  END AS 'Category'
 

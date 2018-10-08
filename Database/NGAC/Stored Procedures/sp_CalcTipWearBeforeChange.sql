@@ -1,6 +1,6 @@
 ﻿
 CREATE PROCEDURE [NGAC].[sp_CalcTipWearBeforeChange]
-  @daysBack as int = 100 --must be this high because some tips are on the robot a LONG time
+  @daysBack as int = 40 --must be this high because some tips are on the robot a LONG time
 AS
 BEGIN
 ---------------------------------------------------------------------------------------------------------------------
@@ -89,9 +89,6 @@ This must be excluded. Can be detected by Dress_reason = "" o
 WHERE len(rt.Dress_Reason) > 1
 --limit date range for Query performance
 AND rt._timestamp between GETDATE()-@daysBack and GETDATE()
---for performance SDEBEUL 18w38d7
-AND rt.Dress_Reason in('FullDress','InitDress')
-And RT.Dress_Num in(0,1,2,3,4)
 ) AS Y
 
 
@@ -122,7 +119,7 @@ AND Y.DressBeforeChange is not null
 ) AS Z
 ) AS X
 
---select * from #TipWearBeforeChange
+select * from #TipWearBeforeChange
 
 
 ---------------------------------------------------------------------------------------

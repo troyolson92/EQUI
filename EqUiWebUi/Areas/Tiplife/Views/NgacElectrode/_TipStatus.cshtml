@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<EqUiWebUi.Areas.Tiplife.Models.TipMonitor>
 
-@Html.Grid(Model).Named("NgacTipStatus").Build(columns =>
+@Html.Grid(Model).Named("TipStatusGrid").Build(columns =>
 {
     columns.Add(c => c.Robot).Titled("Robot").Filterable(true);
     columns.Add(c => c.Date_time).Titled("Laatst gefreest").Formatted("{0:dd-MM-yyyy HH:mm}");

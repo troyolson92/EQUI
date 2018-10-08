@@ -1,6 +1,6 @@
 ﻿@model List<EqUiWebUi.Areas.Gadata.SupervisieDummy>
 
-@Html.Grid(Model).Named("Supervisie").Build(columns =>
+@Html.Grid(Model).Named("SupervisieGrid").Build(columns =>
 {
     columns.Add(c => c.Location).Titled("Location").Filterable(true);
     columns.Add(c => c.logtext).Titled("Logtext").Filterable(true);

@@ -10,10 +10,11 @@
 
 
 
+
 CREATE VIEW [NGAC].[TipMonitor]
 AS
 SELECT DISTINCT top 10000  c.controller_name as 'Robot'
-					      ,rt.Tool_Nr 
+					      ,ISNULL(rt.Tool_Nr,1) as 'Tool_Nr' 
                           ,isnull(rt.[Date Time],getdate()) as 'Date time'
                           ,rt.[Dress_Num] as 'nDress'
                           ,rt.[Weld_Counter] as 'nWelds'

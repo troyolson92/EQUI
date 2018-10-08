@@ -25,7 +25,7 @@ SELECT
 , NULL     AS 'Downtime'
 , 'Undefined**'  AS 'Classification'
 , 'Undefined**'  AS 'Subgroup'
-, ISNULL(lc.category,'Undefined*') AS 'Category'
+, ISNULL(lc.Category,'Undefined*') AS 'Category'
 , rt.id				 AS 'refId'
 , c.LocationTree     As 'LocationTree'
 , c.ClassificationTree as 'ClassTree'

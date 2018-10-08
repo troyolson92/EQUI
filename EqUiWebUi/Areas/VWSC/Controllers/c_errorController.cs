@@ -1,10 +1,8 @@
 ﻿using EqUiWebUi.Areas.VWSC.Models;
-using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using static EqUiWebUi.Areas.VWSC.Models.VWSCenums;
 
@@ -13,7 +11,6 @@ namespace EqUiWebUi.Areas.VWSC.Controllers
     [Authorize(Roles = "Administrator")]
     public class c_errorController : Controller
     {
-
         private GADATAEntitiesVWSC db = new GADATAEntitiesVWSC();
 
         // GET:VWSC/c_error
@@ -59,7 +56,6 @@ namespace EqUiWebUi.Areas.VWSC.Controllers
             return View(c_error);
         }
 
-
         // GET: VWSC/c_error/Edit/5
         // We will handle the creation of a new trigger also in EDIT. (to make code simplere) to create a new trigger pass ID = -1
         public ActionResult Edit(int? id)
@@ -75,7 +71,7 @@ namespace EqUiWebUi.Areas.VWSC.Controllers
                 c_error = new VWSC_c_error();
                 c_error.enable_bit = (int)Enable_bit.Disabled;
             }
-            else //find the existing alert 
+            else //find the existing alert
             {
                 c_error = db.c_error.Find(id);
 
@@ -88,7 +84,7 @@ namespace EqUiWebUi.Areas.VWSC.Controllers
         }
 
         // POST: VWSC/c_error/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -96,7 +92,7 @@ namespace EqUiWebUi.Areas.VWSC.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (c_error.id == -1)//add new 
+                if (c_error.id == -1)//add new
                 {
                     db.c_error.Add(c_error);
                 }

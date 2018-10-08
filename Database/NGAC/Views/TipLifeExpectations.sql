@@ -6,6 +6,8 @@
 
 
 
+
+
 CREATE VIEW [NGAC].[TipLifeExpectations]
 AS
 SELECT 
@@ -48,16 +50,15 @@ SELECT
    twBc.TipchangeTimestamp between getdate()-30 and getdate()
    AND 
   --The tipwear must be more than x% to include it in the calculation
-   twBc.[%FixedWearBeforeChange] >= 25 --zeker 25% wear gehad hebben voor wissel
+   twBc.[%FixedWearBeforeChange] >= 10 --zeker 25% wear gehad hebben voor wissel
    AND 
-   twBc.[%MoveWearBeforeChange] >= 25 --zeker 25% wear gehad hebben voor wissel
+   twBc.[%MoveWearBeforeChange] >= 10 --zeker 25% wear gehad hebben voor wissel
    AND
    twBc.[%FixedWearBeforeChange] < 100 --niet meer dan 100% wear voor wissel
    AND 
    twBc.[%MoveWearBeforeChange] < 100 --niet meer dan 100% wear voor wissel
    AND 
    twBc.WeldsBeforeChange > 200 --moet minsten 200 spot gelast hebben voor wissel
-  
   --THIS DESTROYSSSS performance!!!!
   -- AND 
   --SDEBEUL 18w22 added this limit  to only look at the last 20 changes 
