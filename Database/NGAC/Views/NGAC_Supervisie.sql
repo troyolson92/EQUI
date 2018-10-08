@@ -80,7 +80,7 @@ select
       ,[ClassTree]
       ,[controller_name]
       ,[controller_type]
-FROM NGAC.breakdown as breakdown with (NOLOCK) 
+FROM NGAC.Breakdown as breakdown with (NOLOCK) 
 where 
 breakdown.[timestamp]  < getdate() --to filter out bad timestamps
 

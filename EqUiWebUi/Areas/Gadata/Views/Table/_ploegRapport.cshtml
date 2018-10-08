@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<EqUiWebUi.Areas.Gadata.PloegRaport_dummy>
 
-@Html.Grid(Model).Named("PloegRapport").Build(columns =>
+@Html.Grid(Model).Named("PloegRapportGrid").Build(columns =>
 {
     columns.Add(c => c.Location).Titled("Location").Filterable(true);
     columns.Add(c => c.logtext).Titled("Logtext").Filterable(true);
