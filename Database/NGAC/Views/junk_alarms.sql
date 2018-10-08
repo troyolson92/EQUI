@@ -7,19 +7,19 @@ SELECT
 , c.CLassificationId     AS 'AssetID'
 ,'ControllerEvent**'	  AS 'Logtype'
 , ISNULL(rt._timestamp,rt.error_timestamp)        AS 'timestamp'
-, CAST(rt.Number as varchar(max))     AS 'Logcode'
+, CAST(rt.number as varchar(max))     AS 'Logcode'
 , CAST(0 as varchar(max))    AS 'Severity'
 
 --SDB 18w04D2 can not drop all titles with '%' because of GB ORG L
 ,CASE when (rt.[title] LIKE '%ErrDisplay 1 : %') OR (rt.[title] LIKE '%External weld fault reported%')
- THEN ISNULL(rt.[Description],'#No Description available')
+ THEN ISNULL(rt.[description],'#No Description available')
  ELSE ISNULL(RTRIM(LTRIM(rt.[title])),'#No Title available')
  END AS 'Logtext'
 
  ,CASE when (rt.[title] LIKE '%ErrDisplay 1 : %') OR (rt.[title] LIKE '%External weld fault reported%')
- THEN ISNULL(rt.[Description],'#No Description available')
+ THEN ISNULL(rt.description,'#No Description available')
  ELSE isnull(RTRIM(LTRIM(rt.[title])),'#No Title available') + CHAR(13)+CHAR(10) +  
-  isnull(rt.[Description] ,'#No Description available')
+  isnull(rt.[description] ,'#No Description available')
  END AS 'FullLogtext'
 , NULL     AS 'Response'
 , NULL     AS 'Downtime'
@@ -33,7 +33,7 @@ SELECT
 , 'NGAC'		As 'controller_type'
 
 FROM  NGAC.rt_alarm AS rt with (NOLOCK) 
-LEFT OUTER JOIN NGAC.L_category as lc with (NOLOCK)  on lc.id = rt.CategoryId
+LEFT OUTER JOIN NGAC.L_category as lc with (NOLOCK)  on lc.id = rt.categoryId
 
 
 LEFT JOIN NGAC.c_controller as c with (NOLOCK) on c.id = rt.controller_id

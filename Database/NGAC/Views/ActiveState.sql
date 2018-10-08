@@ -36,7 +36,7 @@ SELECT
 ,CASE 
  WHEN (rtai.vasc_state <> 1) THEN 'VASC ERROR: ' + [NGAC].[VASCstate](rtai.vasc_state) + '  |Session: '+ISNULL(rtai.vasc_session,'unknown')
  WHEN rtai.h_alarm_id is not null and h.[timestamp] > rt.[timestamp]
- THEN h.logtext
+ THEN h.Logtext
  ELSE rt.Logtext
  END AS 'Logtext'
 
@@ -67,8 +67,8 @@ SELECT
 ,CASE  
  WHEN (rtai.vasc_state <> 1) THEN 'VASC'
  WHEN rtai.h_alarm_id is not null and h.[timestamp] > rt.[timestamp]
- THEN h.category
- ELSE rt.category
+ THEN h.Category
+ ELSE rt.Category
  END AS 'Category'
 
 ,CASE 
@@ -84,8 +84,8 @@ SELECT
 
 FROM [NGAC].[rt_active_info] as rtai with (NOLOCK)
 LEFT JOIN NGAC.c_controller as c with (NOLOCK) on c.id = rtai.c_controller_id
-LEFT JOIN NGAC.ControllerEventLog as h with (NOLOCK) on h.refid = rtai.h_alarm_id
-LEFT JOIN NGAC.junk_alarms as rt with (NOLOCK) on rt.refid = rtai.rt_alarm_id
+LEFT JOIN NGAC.ControllerEventLog as h with (NOLOCK) on h.refId = rtai.h_alarm_id
+LEFT JOIN NGAC.junk_alarms as rt with (NOLOCK) on rt.refId = rtai.rt_alarm_id
 
 WHERE 
 (
