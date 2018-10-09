@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace EqUiWebUi
+﻿namespace EqUiWebUi
 {
     public static class MyRowStyling
     {
@@ -20,7 +15,6 @@ namespace EqUiWebUi
 
                 default:
                     return "";
-
             }
         }
 
@@ -52,20 +46,18 @@ namespace EqUiWebUi
 
                 default:
                     return logtype; //this is used for alerts the pass the animation direcly (when alert is active else they just pass "ALERT"
-
             }
         }
-
 
         //tiplife tool
         //returns a Css style based on value
         public static string getRowStyleByWearValue(double? pWear, int? nDress, double? nRparts, string Status)
         {
-
-            if (pWear.GetValueOrDefault(0) > 98 || nDress.GetValueOrDefault(0) > 210 ) //severe tiplife
+            if (pWear.GetValueOrDefault(0) > 98 || nDress.GetValueOrDefault(0) > 210) //severe tiplife
             {
                 return "ani_PulseRed";
-            } else if(pWear.GetValueOrDefault(0) > 90 || nDress.GetValueOrDefault(0) > 200 ) //mild tiplife
+            }
+            else if (pWear.GetValueOrDefault(0) > 90 || nDress.GetValueOrDefault(0) > 200) //mild tiplife
             {
                 return "ani_PulseRedFast";
             }
@@ -96,9 +88,7 @@ namespace EqUiWebUi
 
                 default:
                     return "";
-
             }
         }
-
     }
 }

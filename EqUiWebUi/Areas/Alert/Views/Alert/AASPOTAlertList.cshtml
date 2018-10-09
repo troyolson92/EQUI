@@ -20,35 +20,35 @@
     columns.Add(c => c.info).Titled("info");
     columns.Add(c => c.ChangedUser.username.Replace(@"VCCNET\", "")).Titled("ChangedUser");
     columns.Add(c => c.triggerCount).Titled("TC").Filterable(true);
-//render dropdown to set alert status
-columns.Add(c => c.c_state.state)
-               .Titled("State")
-               .Encoded(false)
-               .Filterable(true)
-               .RenderedAs(c => MyFilters.ChangeAlertStatus(c.id, c.c_state.state));
+    //render dropdown to set alert status
+    columns.Add(c => c.c_state.state)
+                   .Titled("State")
+                   .Encoded(false)
+                   .Filterable(true)
+                   .RenderedAs(c => MyFilters.ChangeAlertStatus(c.id, c.c_state.state));
 
-//launch sbcu tool
-columns.Add(c => c)
-                      .Encoded(false)
-                      .Filterable(false)
-                      .Sortable(false)
-                      //gefoefel om de tool id er uit te halen! Dit kan falen als er geen 'gun:' in de omschrijving zit dus is ROMMEL code
-                      //in de laatste versie is het niet meer gun:x maar gunx (het alarmobject) vandaar de replace
-                      .RenderedAs(c => MyEquiToolkit.SbcuTool(c.location, c.info.Replace(":", "").Substring(c.info.IndexOf("gun"), 5).Replace("gun", "")));
+    //launch sbcu tool
+    columns.Add(c => c)
+                          .Encoded(false)
+                          .Filterable(false)
+                          .Sortable(false)
+                          //gefoefel om de tool id er uit te halen! Dit kan falen als er geen 'gun:' in de omschrijving zit dus is ROMMEL code
+                          //in de laatste versie is het niet meer gun:x maar gunx (het alarmobject) vandaar de replace
+                          .RenderedAs(c => MyEquiToolkit.SbcuTool(c.location, c.info.Replace(":", "").Substring(c.info.IndexOf("gun"), 5).Replace("gun", "")));
 
-//add filterbutton
-columns.Add(c => c)
-                    .Titled("")
-                    .Encoded(false)
-                    .RenderedAs(c => MyFilters.IconActionLink(Url.Action("AASPOTAlertList", new { LocationFilter = c.location }), "fas fa-filter", "", "Filter alerts for this location")
-                    ).Filterable(false);
+    //add filterbutton
+    columns.Add(c => c)
+                        .Titled("")
+                        .Encoded(false)
+                        .RenderedAs(c => MyFilters.IconActionLink(Url.Action("AASPOTAlertList", new { LocationFilter = c.location }), "fas fa-filter", "", "Filter alerts for this location")
+                        ).Filterable(false);
 
-//add edit button
-columns.Add(c => c)
-                    .Titled("")
-                    .Encoded(false)
-                    .RenderedAs(c => MyFilters.IconActionLink(Url.Action("Edit", new { id = c.id }), "fas fa-pencil-alt", "", "Edit this alert")
-                    ).Filterable(false);
+    //add edit button
+    columns.Add(c => c)
+                        .Titled("")
+                        .Encoded(false)
+                        .RenderedAs(c => MyFilters.IconActionLink(Url.Action("Edit", new { id = c.id }), "fas fa-pencil-alt", "", "Edit this alert")
+                        ).Filterable(false);
 
 }).Filterable().Sortable().Pageable(pager =>
 {
