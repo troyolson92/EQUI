@@ -1,12 +1,9 @@
 ﻿using EqUiWebUi.Areas.Alert.Models;
-using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 
 namespace EqUiWebUi.Areas.Alert.Controllers
@@ -40,12 +37,11 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             return View(h_alert.Where(a => a.locationTree.Contains(UserLocationroot)));
         }
 
-
         //specific Alert interface for AASPOT
         //Get AASPOTIndex
         public ActionResult AASPOTIndex()
         {
-            return  View();
+            return View();
         }
 
         //specific Alert interface
@@ -58,19 +54,21 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             //filter alerts basted on user profile!
             string UserLocationroot = CurrentUser.Getuser.LocationRoot;
             var h_alert = db.h_alert.Include(h => h.c_state).Include(h => h.c_triggers).Include(h => h.ChangedUser).Include(h => h.CloseUser).Include(h => h.AcceptUser);
-            var  result =   h_alert.Where(a => a.locationTree.Contains(UserLocationroot)
-                                               && (
-                                                  a.c_triggers.alertType == "SBCUalert" //only allow this trigger type
-                                                  || a.c_triggers.alertType == "GUNalert"
-                                               )
-                                               && (
-                                                 ActiveAlertOnly == false //Allow filtering on active items only
-                                                 || (a.state != (int)alertState.COMP && a.state != (int)alertState.TECHCOMP && a.state != (int)alertState.VOID) //not a closed item
-                                               )
-                                               && (
-                                                 LocationFilter == null //Allow filtering on a location
-                                                 || a.location.Contains(LocationFilter) //filter out specific location
-                                               ));
+            var result = h_alert.Where(a => a.locationTree.Contains(UserLocationroot)
+                                            &&
+                                               a.c_triggers.enabled == true
+                                            && (
+                                               a.c_triggers.alertType == "SBCUalert" //only allow this trigger type
+                                               || a.c_triggers.alertType == "GUNalert"
+                                            )
+                                            && (
+                                              ActiveAlertOnly == false //Allow filtering on active items only
+                                              || (a.state != (int)alertState.COMP && a.state != (int)alertState.TECHCOMP && a.state != (int)alertState.VOID) //not a closed item
+                                            )
+                                            && (
+                                              LocationFilter == null //Allow filtering on a location
+                                              || a.location.Contains(LocationFilter) //filter out specific location
+                                            ));
 
             //count the total number of record to display as 'total triggers'
             ViewBag.LocationFilter = LocationFilter;
@@ -78,8 +76,8 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             return View(result);
         }
 
-        // GET: Alert/Details partial to get basic info about alert 
-        public ActionResult _Details (int? id, bool AddTrendChart = false)
+        // GET: Alert/Details partial to get basic info about alert
+        public ActionResult _Details(int? id, bool AddTrendChart = false)
         {
             if (id == null)
             {
@@ -91,7 +89,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                 return HttpNotFound();
             }
 
-            //bug 18w36d4 URI to long... 
+            //bug 18w36d4 URI to long...
             //if you use EDIT it does work. strange...
 
             ViewBag.AddTrendChart = AddTrendChart;
@@ -99,7 +97,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
         }
 
         // GET: Alert/_ControlChart partial. (control charts and hystory of limis)
-        public ActionResult _ControlChart (h_alert h_Alert, int? l_controllimit_id)
+        public ActionResult _ControlChart(h_alert h_Alert, int? l_controllimit_id)
         {
             if (l_controllimit_id.HasValue)
             {
@@ -134,7 +132,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
         }
 
         // POST: Alert/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -154,15 +152,15 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                 {
                     org_alert = ChangeState(org_alert, _alert.state);
                 }
-                //update last changed user 
+                //update last changed user
                 org_alert.lastChangedTimestamp = System.DateTime.Now;
                 org_alert.lastChangedUserID = CurrentUser.Getuser.id;
 
                 //append the users new comments (we do this because we don't whant the user to be able to edit previous comments)
                 StringBuilder sb = new StringBuilder();
-                //add existing 
+                //add existing
                 sb.AppendLine(org_alert.comments);
-                //add break 
+                //add break
                 sb.AppendLine("<hr />");
                 //add new pannel
                 sb.AppendLine("<div class='card card-info'>");
@@ -175,7 +173,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                 sb.AppendLine("</div>");
                 sb.AppendLine("</div>");
                 org_alert.comments = sb.ToString();
-                //save it 
+                //save it
                 db.Entry(org_alert).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 //because this edit form gets called from both ListAlerts and AASPOTalert list we must redirect to the right page.
@@ -187,16 +185,16 @@ namespace EqUiWebUi.Areas.Alert.Controllers
         }
 
         //change the state of an alert
-        private h_alert ChangeState (h_alert alert, int newstate)
+        private h_alert ChangeState(h_alert alert, int newstate)
         {
-            //store current state 
+            //store current state
             string Oldstate = alert.c_state.state;
             string test = System.Enum.GetName(typeof(alertState), 3);
             //do some stuff based on the new state request
             switch (newstate)
             {
-                case (int)alertState.WGK: 
-                        //nothing to do
+                case (int)alertState.WGK:
+                    //nothing to do
                     break;
 
                 case (int)alertState.OKREQ:
@@ -215,17 +213,18 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                         alert.closeUserID = CurrentUser.Getuser.id;
                     }
                     break;
+
                 default:
                     //unhandled state
                     break;
             }
-            //set the new state 
+            //set the new state
             alert.state = newstate;
             //add badgje for the statechange
             StringBuilder sb = new StringBuilder();
-            //add existing 
+            //add existing
             sb.AppendLine(alert.comments);
-            //add break 
+            //add break
             sb.AppendLine("<hr />");
             sb.AppendLine("<div class='card card-warning'>");
             sb.AppendLine("<div class='card-block'>");
@@ -241,18 +240,18 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             return alert;
         }
 
-        // Change the state of an alert. 
-        // used by quick acces dropdown 
-        // GET: alert status 
+        // Change the state of an alert.
+        // used by quick acces dropdown
+        // GET: alert status
         [HttpGet]
         public void SetState(int id, int newstate)
         {
             h_alert alert = (from a in db.h_alert
-                              where a.id == id
-                              select a).ToList().First();
+                             where a.id == id
+                             select a).ToList().First();
             //set the new state
             alert = ChangeState(alert, newstate);
-            //update last changed user 
+            //update last changed user
             alert.lastChangedTimestamp = System.DateTime.Now;
             alert.lastChangedUserID = CurrentUser.Getuser.id;
             //
