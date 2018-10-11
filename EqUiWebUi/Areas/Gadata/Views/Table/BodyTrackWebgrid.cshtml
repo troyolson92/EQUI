@@ -4,36 +4,27 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="card">
+@Html.Grid(Model).Named("DataGrid").Build(columns =>
+{
+//  columns.Add(c => c.id).Titled("Jobid").Filterable(true);
+columns.Add(c => c.bodyNo).Titled("bodyNo").Filterable(true);
+columns.Add(c => c.controller_name).Titled("Robot").Filterable(true);
+columns.Add(c => c.CycleStart).Titled("CycleStart").Formatted("{0:dd-MM-yyyy HH:mm:ss}").Filterable(true).InitialSort(GridSortOrder.Desc);
+columns.Add(c => c.CycleEnd).Titled("CycleEnd").Formatted("{0:HH:mm:ss}").Filterable(true);
+columns.Add(c => c.ts_breakDownStart).Titled("breakDownStart").Formatted("{0:HH:mm:ss}").Filterable(true);
+columns.Add(c => c.ts_breakDownAck).Titled("ack").Formatted("{0:HH:mm:ss}").Filterable(true);
+// columns.Add(c => c.ts_breakDownEnd).Titled("ts_breakDownEnd").Formatted("{0:dd-MM-yyyy HH:mm}").Filterable(true);
+// columns.Add(c => c.ts_breakDownEnd).Titled("ts_breakDownEnd").Formatted("{0:dd-MM-yyyy HH:mm}").Filterable(true);
+columns.Add(c => c.FullLogtext).Titled("FullLogtext").Filterable(true);
+columns.Add(c => c)
+           .Titled("Job")
+           .Encoded(false)
+           .RenderedAs(c => MyFilters.IconActionLink(Url.Action("rtJob", "Breakdown", new {Area = "VASC", jobID = c.refId.GetValueOrDefault(0) }), "fas fa-info-circle", "", "show vasc job details")
+           ).Filterable(false);
 
-    <div class="card-body">
-        @Html.Grid(Model).Named("DataGrid").Build(columns =>
-   {
-       //  columns.Add(c => c.id).Titled("Jobid").Filterable(true);
-       columns.Add(c => c.bodyNo).Titled("bodyNo").Filterable(true);
-       columns.Add(c => c.controller_name).Titled("Robot").Filterable(true);
-       columns.Add(c => c.CycleStart).Titled("CycleStart").Formatted("{0:dd-MM-yyyy HH:mm}").Filterable(true).InitialSort(GridSortOrder.Desc);
-       columns.Add(c => c.CycleEnd).Titled("CycleEnd").Formatted("{0:HH:mm}").Filterable(true);
-       // columns.Add(c => c.ts_breakDownStart).Titled("ts_breakDownStart").Formatted("{0:dd-MM-yyyy HH:mm}").Filterable(true);
-       columns.Add(c => c.ts_breakDownAck).Titled("ack").Formatted("{0:dd-MM-yyyy HH:mm}").Filterable(true);
-       // columns.Add(c => c.ts_breakDownEnd).Titled("ts_breakDownEnd").Formatted("{0:dd-MM-yyyy HH:mm}").Filterable(true);
-       // columns.Add(c => c.ts_breakDownEnd).Titled("ts_breakDownEnd").Formatted("{0:dd-MM-yyyy HH:mm}").Filterable(true);
-       columns.Add(c => c.FullLogtext).Titled("FullLogtext").Filterable(true);
-       columns.Add(c => c)
-                   .Titled("Job")
-                   .Encoded(false)
-                   .RenderedAs(c => MyFilters.IconActionLink(Url.Action("rtJob", "Breakdown", new {Area = "VASC", jobID = c.refId.GetValueOrDefault(0) }), "fas fa-info-circle", "", "show vasc job details")
-                   ).Filterable(false);
-
-   }).Sortable().Pageable(pager =>
-   {
-       pager.RowsPerPage = 20;
-       pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 20, "20" }, { 40, "40" }, { 80, "80" }, { 100, "100" } };
-       pager.ShowPageSizes = true;
-   }).Empty("No data found").Css("table-hover")
-    </div>
-
-    <div class="panel-footer">
-        <p style="float:right">(data from last 30 days)</p>
-    </div>
-</div>
+}).Sortable().Pageable(pager =>
+{
+pager.RowsPerPage = 20;
+pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 20, "20" }, { 40, "40" }, { 80, "80" }, { 100, "100" } };
+pager.ShowPageSizes = true;
+}).Empty("No data found").Css("table-hover")

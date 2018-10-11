@@ -2,19 +2,19 @@
 
 @Html.Grid(Model).Named("PloegRapportGrid").Build(columns =>
 {
-    columns.Add(c => c.Location).Titled("Location").Filterable(true);
-    columns.Add(c => c.logtext).Titled("Logtext").Filterable(true);
-    columns.Add(c => MyIntExtensions.If0ThenNull(c.Response_min_ / 60 )).Titled("RT").Filterable(false); //filtering does not work if I use the function
-    columns.Add(c => MyIntExtensions.If0ThenNull(c.Downtime_min_ / 60)).Titled("DT").Filterable(false);
-    columns.Add(c => MyIntExtensions.If1ThenNull(c.Count)).Titled("Count").Filterable(false);
+    columns.Add(c => c.Location).Titled("Location");
+    columns.Add(c => c.logtext).Titled("Logtext");
+    columns.Add(c => MyIntExtensions.If0ThenNull(c.Response_min_ / 60)).Titled("RT").Filterable(true).Sortable(true);
+    columns.Add(c => MyIntExtensions.If0ThenNull(c.Downtime_min_ / 60)).Titled("DT").Filterable(true).Sortable(true);
+    columns.Add(c => MyIntExtensions.If1ThenNull(c.Count)).Titled("Count").Filterable(true).Sortable(true);
     columns.Add(c => c.timestamp).Formatted("{0:HH:mm:ss}").Titled("Time");
-    columns.Add(c => c.Subgroup).Titled("Subgroup").Filterable(true).Css("d-none d-lg-table-cell");
-    columns.Add(c => c.Logtype).Titled("Logtype").Filterable(true).Css("d-none d-lg-table-cell");
-    columns.Add(c => c.LocationTree).Filterable(true).Css("d-none"); //all of these d-none filed are hidden but NEEDED! for the java row clicked
+    columns.Add(c => c.Subgroup).Titled("Subgroup").Css("d-none d-lg-table-cell");
+    columns.Add(c => c.Logtype).Titled("Logtype").Css("d-none d-lg-table-cell");
+    columns.Add(c => c.LocationTree).Css("d-none"); //all of these d-none filed are hidden but NEEDED! for the java row clicked
     columns.Add(c => c.Logcode).Css("d-none");
     columns.Add(c => c.refId).Css("d-none");
     columns.Add(c => c.Count).Css("d-none");
-}).Sortable().Pageable(pager =>
+}).Sortable().Filterable().Pageable(pager =>
 {
     pager.RowsPerPage = 20;
     pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 20, "20" }, { 40, "40" }, { 80, "80" }, { 100, "100" } };

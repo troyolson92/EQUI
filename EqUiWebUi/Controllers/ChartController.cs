@@ -18,7 +18,7 @@ namespace EqUiWebUi.Controllers
             return View();
         }
 
-        //standalone view to get error trrend 
+        //standalone view to get error trend 
         [HttpGet]
         public ActionResult GetErrorTrend(string location, string errornum, int? refid, string logtype, string logtext)
         {
@@ -31,21 +31,21 @@ namespace EqUiWebUi.Controllers
             return View(logInfo);
         }
 
-        //partial viaw to get error trend.
+        //partial view to get error trend.
         [HttpGet]
         public ActionResult _getErrorTrend(LogInfo logInfo)
         {
             return PartialView();
         }
 
-        //get data for the chart => returns json result
+        //get data for the chart => returns j son result
         [HttpGet]
         public JsonResult _getData(string location ,string  errornum ,string logtekst ,string logtype, int refid, DateTime startDate, DateTime endDate, grouptType grouptType = grouptType.Hour)
         {
             ConnectionManager connectionManager = new ConnectionManager();
 
             //
-            // need to handle how many days we fetch! use the grouptype 
+            // need to handle how many days we fetch! use the group type 
             //
 
             //if start date is today set it to now. (else it will plots hours in the future)
@@ -59,7 +59,7 @@ namespace EqUiWebUi.Controllers
             , location, errornum, logtekst, logtype, refid);
             DataTable dt = connectionManager.RunQuery(qry);
 
-            //if groupmode auto (0) find out best grouping mode based on set timespan.
+            //if group mode auto (0) find out best grouping mode based on set timespan.
             if (grouptType == grouptType.auto)
             {
                 double span = (startDate - endDate).TotalDays;
