@@ -3,7 +3,7 @@
     font-size: 16px;
     text-align: left;
     background-color: #fff;
-    height: 60px;
+    height: 70px;
     -webkit-box-shadow: 0 1px 1px 0 rgba(0,0,0,.2);
     box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
     margin-bottom: 10px;
@@ -24,11 +24,10 @@
         text-align: center;
     }
 
-
-        .update-nag > .update-split > .far {
-            position: relative;
-            top: calc(50% - 16px) !important; /* 50% - 3/4 of icon height */
-        }
+    .update-nag > .update-split > .update-icon {
+        position: relative;
+        top: calc(50% - 16px); /* 50% - 3/4 of icon height */
+    }
 
     .update-nag > .update-text {
         line-height: 19px;

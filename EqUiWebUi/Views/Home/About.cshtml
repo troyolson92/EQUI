@@ -2,25 +2,16 @@
     ViewBag.Title = "About";
 }
 
-<h2>Start here</h2>
-<p><a href="file://gnlsnm0101.gen.volvocars.net/PROJ/6308-SHR-VCC22700/Equi_TheDataStory.pdf" class="btn btn-primary btn-sm">Equi_TheDataStory &raquo;</a></p>
+<div class="card card-body">
+    <h2>Learn</h2>
+    @MyHtmlHelpers.EquiLink("file://gnlsnm0101.gen.volvocars.net/PROJ/6308-SHR-VCC22700/Equi_TheDataStory.pdf", "fas fa-power-off", "Equi_TheDataStory", helperText: "A good place to start.")
+</div>
 
 <hr />
 
-<div class="jumbotron">
+<div class="card card-body">
     <h2>We work best with Chrome!</h2>
-    Use this link to instal chrome
-    <p><a href="https://www.google.com/chrome/browser/desktop/index.html" class="btn btn-primary btn-sm">Chromeinstal &raquo;</a></p>
-
-    <hr />
-
-    <h3>For optimal use you should install these chrome extensions.</h3>
-    <p></p>
-    <div>
-        <h5>ClickOnce for Google Chrome</h5>
-        <p>
-            <a href="https://chrome.google.com/webstore/detail/clickonce-for-google-chro/kekahkplibinaibelipdcikofmedafmb" class="btn btn-primary btn-sm">ClickOnce for Google Chrome &raquo;</a>
-            Needed to launch the VSTO click once tools in the chrome browser
-        </p>
-    </div>
+    @MyHtmlHelpers.EquiLink("https://www.google.com/chrome/browser/desktop/index.html", "fab fa-chrome", "Chromeinstal", helperText: "Use this link to instal chrome.")
+    <h4>For optimal use you should install this chrome extension.</h4>
+    @MyHtmlHelpers.EquiLink("https://chrome.google.com/webstore/detail/clickonce-for-google-chro/kekahkplibinaibelipdcikofmedafmb", "fab fa-chrome", "ClickOnce for Google Chrome", helperText: "Needed to launch the VSTO click once tools in the chrome browser.")
 </div>

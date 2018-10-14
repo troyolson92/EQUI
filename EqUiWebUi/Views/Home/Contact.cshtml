@@ -2,18 +2,22 @@
     ViewBag.Title = "Contact";
 }
 
-    <div class="jumbotron">
-        <h2>@ViewBag.Title.</h2>
-        <h3>@ViewBag.Message</h3>
+<div class="card card-body">
+    <h2>@ViewBag.Title.</h2>
+    <h3>@ViewBag.Message</h3>
 
-        <address>
-            Volvo Cars Gent<br />
-            <abbr title="Phone">P:</abbr>
-            09 250 30 69
-        </address>
+    <address>
+        Volvo Cars Gent<br />
+        <i class="fas fa-phone"></i>
+        09 250 30 69
+    </address>
 
-        <address>
-            <strong>Support:</strong>   <a href="mailto:Support@example.com">sam.de.beul@volvocars.com</a><br />
-        </address>
+    <address>
+        <i class="fas fa-envelope"></i> <strong> Support:</strong>   <a href="mailto:Support@example.com">sam.de.beul@volvocars.com</a><br />
+    </address>
 
-    </div>
+    @MyHtmlHelpers.EquiLink("https://sharepoint.volvocars.net/sites/maintenance_a_shop/Lists/EQdbDevelopment/AllItems.aspx", "fas fa-bug", "IssueTracking", iconClasses: "bg-warning", helperText: "Report bugs or request features")
+    @MyHtmlHelpers.EquiLink("https://github.com/SDEBEUL/ExcelPluginFrontEnd", "fab fa-github", "Github", helperText: "No secrets, every line of code is on github")
+</div>
+
+
