@@ -6,97 +6,391 @@
     <edmx:StorageModels>
     <Schema Namespace="GADATAModelWelding.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <!--Errors Found During Generation:
-warning 6002: The table/view 'GADATA.UL.AutomaticWorkFlowULPlans' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="AutomaticWorkFlowULPlans">
+warning 6002: The table/view 'GADATA.UL.rt_AutoWorkFlowULPlans' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="rt_AutoWorkFlowULPlans">
           <Key>
-            <PropertyRef Name="BuildBody's" />
-            <PropertyRef Name="Last30min_productionStatus" />
-            <PropertyRef Name="onderhoudswerken" />
-            <PropertyRef Name="LastInspectionTime" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="LastInspectionTime" Type="datetime" Nullable="false" />
-          <Property Name="UL plan" Type="nchar" MaxLength="50" />
-          <Property Name="BuildBody's" Type="int" Nullable="false" />
-          <Property Name="WorkTime" Type="time" Precision="7" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LastinspectionTime" Type="datetime" />
+          <Property Name="UL Plan" Type="nchar" MaxLength="100" />
+          <Property Name="BuildBody" Type="int" />
+          <Property Name="Worktime" Type="time" Precision="7" />
           <Property Name="WorkGroup" Type="int" />
-          <Property Name="WorkLocation" Type="nchar" MaxLength="50" />
-          <Property Name="Body'slast_30Min_start" Type="int" />
-          <Property Name="Body'slast_30Min_end" Type="int" />
-          <Property Name="Last30min_productionStatus" Type="varchar" MaxLength="23" Nullable="false" />
-          <Property Name="onderhoudswerken" Type="varchar" MaxLength="16" Nullable="false" />
+          <Property Name="WorkLocation" Type="nchar" MaxLength="25" />
+          <Property Name="BodyLast30minStart" Type="int" />
+          <Property Name="BodyLast30minEnd" Type="int" />
+          <Property Name="Last30min_productionStatus" Type="nchar" MaxLength="100" />
+          <Property Name="onderhoudswerken" Type="nchar" MaxLength="100" />
+          <Property Name="LastnumberFromPlanBusy" Type="int" />
+          <Property Name="Planlenght" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'GADATA.UL.ExtraControles' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="ExtraControles">
+warning 6002: The table/view 'GADATA.UL.rt_ExtraControles' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="rt_ExtraControles">
           <Key>
-            <PropertyRef Name="statusAdaptive" />
-            <PropertyRef Name="spot" />
-            <PropertyRef Name="typecontrole" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="statusAdaptive" Type="nvarchar" MaxLength="23" Nullable="false" />
-          <Property Name="Model" Type="nchar" MaxLength="10" />
-          <Property Name="Robot" Type="nvarchar(max)" />
-          <Property Name="spot" Type="int" Nullable="false" />
-          <Property Name="plan" Type="nchar" MaxLength="50" />
-          <Property Name="plannummer" Type="int" />
-          <Property Name="typecontrole" Type="varchar" MaxLength="15" Nullable="false" />
-          <Property Name="time_uit_adaptief" Type="datetime" />
-          <Property Name="durationOFF" Type="time" Precision="7" />
-          <Property Name="EndTime" Type="datetime" />
-          <Property Name="lastInspectiontime" Type="datetime" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'GADATA.WELDING.ExtraUltralogUitadaptief3' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="ExtraUltralogUitadaptief3">
-          <Key>
-            <PropertyRef Name="CDSID" />
-          </Key>
-          <Property Name="Timer" Type="nchar" MaxLength="15" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="statusadaptieve" Type="nchar" MaxLength="50" />
+          <Property Name="model" Type="nchar" MaxLength="10" />
+          <Property Name="robot" Type="nchar" MaxLength="25" />
           <Property Name="spot" Type="int" />
-          <Property Name="uitAdaptief" Type="bit" />
-          <Property Name="NPT" Type="nchar" MaxLength="15" />
-          <Property Name="CDSID" Type="nchar" MaxLength="10" Nullable="false" />
-          <Property Name="Expr1" Type="datetime" />
+          <Property Name="plan" Type="nchar" MaxLength="100" />
+          <Property Name="plannummer" Type="int" />
+          <Property Name="typecontrole" Type="nchar" MaxLength="50" />
+          <Property Name="time_uitadaptief" Type="datetime" />
+          <Property Name="durationOFF" Type="time" Precision="7" />
+          <Property Name="endtime" Type="datetime" />
+          <Property Name="lastinspectiontime" Type="datetime" />
+          <Property Name="planid" Type="int" />
+          <Property Name="NPTOwner" Type="nchar" MaxLength="50" />
+          <Property Name="NPT" Type="nchar" MaxLength="10" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.dbo.WeldtimeSpotsSetup' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="WeldtimeSpotsSetup">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="NPT" Type="nchar" MaxLength="15" />
+          <Property Name="Timer" Type="nchar" MaxLength="15" />
+          <Property Name="Number" Type="int" />
+          <Property Name="WeldTime" Type="float" />
+          <Property Name="ID" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.LAUNCH.BosProgramAvailable' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="BosProgramAvailable">
+          <Key>
+            <PropertyRef Name="bosprogram" />
+          </Key>
+          <Property Name="Name" Type="nchar" MaxLength="15" />
+          <Property Name="bosprogram" Type="int" Nullable="false" />
+          <Property Name="Program_Available" Type="tinyint" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.LAUNCH.BrownfieldLastMeasurements' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="BrownfieldLastMeasurements">
+          <Key>
+            <PropertyRef Name="Program" />
+            <PropertyRef Name="Date" />
+            <PropertyRef Name="Shift" />
+          </Key>
+          <Property Name="Expr1" Type="nchar" MaxLength="15" />
+          <Property Name="Name" Type="nchar" MaxLength="15" />
+          <Property Name="Number" Type="int" />
+          <Property Name="Program" Type="tinyint" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="Shift" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="NbrSplash" Type="smallint" />
+          <Property Name="NbrWeld" Type="smallint" />
+          <Property Name="NbrReweld" Type="smallint" />
+          <Property Name="AvgEnergy" Type="real" />
+          <Property Name="AvgPSF" Type="real" />
+          <Property Name="AvgOhm" Type="real" />
+          <Property Name="AvgUIP" Type="real" />
+          <Property Name="AvgWeldTIme" Type="real" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.LAUNCH.CheckDubbelPrograms' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="CheckDubbelPrograms">
+          <Key>
+            <PropertyRef Name="SpotName" />
+            <PropertyRef Name="WeldProgram" />
+          </Key>
+          <Property Name="Name" Type="nchar" MaxLength="15" />
+          <Property Name="SpotName" Type="int" Nullable="false" />
+          <Property Name="WeldProgram" Type="smallint" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.LAUNCH.ComparePitchV316' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ComparePitchV316">
+          <Key>
+            <PropertyRef Name="timerNumber" />
+            <PropertyRef Name="lastWeldTime" />
+          </Key>
+          <Property Name="timerNumber" Type="varchar" MaxLength="17" Nullable="false" />
+          <Property Name="lastWeldTime" Type="varchar" MaxLength="23" Nullable="false" />
+          <Property Name="SpotID" Type="nchar" MaxLength="25" />
+          <Property Name="Timer" Type="nchar" MaxLength="25" />
+          <Property Name="AlternativeNumber" Type="nchar" MaxLength="25" />
+          <Property Name="Model" Type="nchar" MaxLength="10" />
+          <Property Name="lastULControleTime" Type="datetime" />
+          <Property Name="TotalThickness" Type="float" />
+          <Property Name="Expr1" Type="nchar" MaxLength="255" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.LAUNCH.DoubleSpotCheck' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="DoubleSpotCheck">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="SpotName" Type="int" />
+          <Property Name="WeldProgram" Type="int" />
+          <Property Name="TimerName" Type="nchar" MaxLength="15" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.LAUNCH.dressrequired' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="dressrequired">
+          <Key>
+            <PropertyRef Name="DateTime" />
+            <PropertyRef Name="ErrorText" />
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="Name" Type="nchar" MaxLength="15" />
+          <Property Name="DateTime" Type="datetime" Nullable="false" />
+          <Property Name="ErrorText" Type="nchar" MaxLength="255" Nullable="false" />
+          <Property Name="ID" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.LAUNCH.GreenFieldLastMeasurements' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="GreenFieldLastMeasurements">
+          <Key>
+            <PropertyRef Name="Program" />
+            <PropertyRef Name="Date" />
+            <PropertyRef Name="Shift" />
+          </Key>
+          <Property Name="NPT" Type="nchar" MaxLength="15" />
+          <Property Name="Name" Type="nchar" MaxLength="15" />
+          <Property Name="Number" Type="int" />
+          <Property Name="Program" Type="tinyint" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="Shift" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="NbrSplash" Type="smallint" />
+          <Property Name="NbrWeld" Type="smallint" />
+          <Property Name="NbrReweld" Type="smallint" />
+          <Property Name="AvgEnergy" Type="real" />
+          <Property Name="AvgPSF" Type="real" />
+          <Property Name="AvgOhm" Type="real" />
+          <Property Name="AvgUIP" Type="real" />
+          <Property Name="AvgWeldTIme" Type="real" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.LAUNCH.StabilityInDicationV316' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="StabilityInDicationV316">
+          <Key>
+            <PropertyRef Name="Program" />
+          </Key>
+          <Property Name="NPT" Type="nchar" MaxLength="15" />
+          <Property Name="Timer" Type="nchar" MaxLength="15" />
+          <Property Name="Program" Type="tinyint" Nullable="false" />
+          <Property Name="Number" Type="int" />
+          <Property Name="nbrWelds" Type="smallint" />
+          <Property Name="StabiliteitsIni" Type="real" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.UL.ULRapportering' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ULRapportering">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="starttimePlan" Type="datetime" />
+          <Property Name="EndTimePlan" Type="datetime" />
+          <Property Name="name" Type="nchar" MaxLength="255" />
+          <Property Name="buildbody" Type="int" />
+          <Property Name="CDSID" Type="nchar" MaxLength="255" />
+          <Property Name="Ullaptop" Type="nchar" MaxLength="50" />
+          <Property Name="bodynr" Type="int" />
+          <Property Name="Worklocation" Type="int" />
+          <Property Name="DurationStoring" Type="int" />
+          <Property Name="userComment" Type="nvarchar(max)" />
+          <Property Name="Vyear" Type="int" />
+          <Property Name="Vweek" Type="int" />
+          <Property Name="vday" Type="int" />
+          <Property Name="Shift" Type="varchar" MaxLength="2" />
+          <Property Name="spot" Type="int" />
+          <Property Name="loose?" Type="bit" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.WELDING2.ConnectionState' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ConnectionState">
+          <Key>
+            <PropertyRef Name="NoConnection" />
+          </Key>
+          <Property Name="NoConnection" Type="varchar" MaxLength="33" Nullable="false" />
+          <Property Name="TimerName" Type="nchar" MaxLength="15" />
+          <Property Name="_timestamp" Type="datetime" />
+          <Property Name="onlineInBos6000" Type="bit" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="TimerBreakdowns_busy">
+          <Property Name="NPT" Type="nchar" MaxLength="15" />
+          <Property Name="Timer" Type="nchar" MaxLength="15" />
+          <Property Name="location" Type="varchar" MaxLength="256" />
+          <Property Name="errorText" Type="varchar" MaxLength="64" />
+          <Property Name="_timestamp" Type="datetime" />
+          <Property Name="timerfault" Type="varchar" MaxLength="64" />
+          <Property Name="timerfault_Extra" Type="varchar" MaxLength="64" />
+          <Property Name="ts_breakdownStart" Type="datetime" />
+          <Property Name="ts_breakdownEnd" Type="datetime" />
+        </EntityType>-->
         <EntityContainer Name="GADATAModelWeldingStoreContainer">
-          <EntitySet Name="AutomaticWorkFlowULPlans" EntityType="Self.AutomaticWorkFlowULPlans" store:Type="Views" store:Schema="UL">
+          <EntitySet Name="rt_AutoWorkFlowULPlans" EntityType="Self.rt_AutoWorkFlowULPlans" store:Type="Tables" store:Schema="UL">
             <DefiningQuery>SELECT 
-    [AutomaticWorkFlowULPlans].[LastInspectionTime] AS [LastInspectionTime], 
-    [AutomaticWorkFlowULPlans].[UL plan] AS [UL plan], 
-    [AutomaticWorkFlowULPlans].[BuildBody's] AS [BuildBody's], 
-    [AutomaticWorkFlowULPlans].[WorkTime] AS [WorkTime], 
-    [AutomaticWorkFlowULPlans].[WorkGroup] AS [WorkGroup], 
-    [AutomaticWorkFlowULPlans].[WorkLocation] AS [WorkLocation], 
-    [AutomaticWorkFlowULPlans].[Body'slast_30Min_start] AS [Body'slast_30Min_start], 
-    [AutomaticWorkFlowULPlans].[Body'slast_30Min_end] AS [Body'slast_30Min_end], 
-    [AutomaticWorkFlowULPlans].[Last30min_productionStatus] AS [Last30min_productionStatus], 
-    [AutomaticWorkFlowULPlans].[onderhoudswerken] AS [onderhoudswerken]
-    FROM [UL].[AutomaticWorkFlowULPlans] AS [AutomaticWorkFlowULPlans]</DefiningQuery>
+    [rt_AutoWorkFlowULPlans].[ID] AS [ID], 
+    [rt_AutoWorkFlowULPlans].[LastinspectionTime] AS [LastinspectionTime], 
+    [rt_AutoWorkFlowULPlans].[UL Plan] AS [UL Plan], 
+    [rt_AutoWorkFlowULPlans].[BuildBody] AS [BuildBody], 
+    [rt_AutoWorkFlowULPlans].[Worktime] AS [Worktime], 
+    [rt_AutoWorkFlowULPlans].[WorkGroup] AS [WorkGroup], 
+    [rt_AutoWorkFlowULPlans].[WorkLocation] AS [WorkLocation], 
+    [rt_AutoWorkFlowULPlans].[BodyLast30minStart] AS [BodyLast30minStart], 
+    [rt_AutoWorkFlowULPlans].[BodyLast30minEnd] AS [BodyLast30minEnd], 
+    [rt_AutoWorkFlowULPlans].[Last30min_productionStatus] AS [Last30min_productionStatus], 
+    [rt_AutoWorkFlowULPlans].[onderhoudswerken] AS [onderhoudswerken], 
+    [rt_AutoWorkFlowULPlans].[LastnumberFromPlanBusy] AS [LastnumberFromPlanBusy], 
+    [rt_AutoWorkFlowULPlans].[Planlenght] AS [Planlenght]
+    FROM [UL].[rt_AutoWorkFlowULPlans] AS [rt_AutoWorkFlowULPlans]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="ExtraControles" EntityType="Self.ExtraControles" store:Type="Views" store:Schema="UL">
+          <EntitySet Name="rt_ExtraControles" EntityType="Self.rt_ExtraControles" store:Type="Tables" store:Schema="UL">
             <DefiningQuery>SELECT 
-    [ExtraControles].[statusAdaptive] AS [statusAdaptive], 
-    [ExtraControles].[Model] AS [Model], 
-    [ExtraControles].[Robot] AS [Robot], 
-    [ExtraControles].[spot] AS [spot], 
-    [ExtraControles].[plan] AS [plan], 
-    [ExtraControles].[plannummer] AS [plannummer], 
-    [ExtraControles].[typecontrole] AS [typecontrole], 
-    [ExtraControles].[time_uit_adaptief] AS [time_uit_adaptief], 
-    [ExtraControles].[durationOFF] AS [durationOFF], 
-    [ExtraControles].[EndTime] AS [EndTime], 
-    [ExtraControles].[lastInspectiontime] AS [lastInspectiontime]
-    FROM [UL].[ExtraControles] AS [ExtraControles]</DefiningQuery>
+    [rt_ExtraControles].[ID] AS [ID], 
+    [rt_ExtraControles].[statusadaptieve] AS [statusadaptieve], 
+    [rt_ExtraControles].[model] AS [model], 
+    [rt_ExtraControles].[robot] AS [robot], 
+    [rt_ExtraControles].[spot] AS [spot], 
+    [rt_ExtraControles].[plan] AS [plan], 
+    [rt_ExtraControles].[plannummer] AS [plannummer], 
+    [rt_ExtraControles].[typecontrole] AS [typecontrole], 
+    [rt_ExtraControles].[time_uitadaptief] AS [time_uitadaptief], 
+    [rt_ExtraControles].[durationOFF] AS [durationOFF], 
+    [rt_ExtraControles].[endtime] AS [endtime], 
+    [rt_ExtraControles].[lastinspectiontime] AS [lastinspectiontime], 
+    [rt_ExtraControles].[planid] AS [planid], 
+    [rt_ExtraControles].[NPTOwner] AS [NPTOwner], 
+    [rt_ExtraControles].[NPT] AS [NPT]
+    FROM [UL].[rt_ExtraControles] AS [rt_ExtraControles]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="ExtraUltralogUitadaptief3" EntityType="Self.ExtraUltralogUitadaptief3" store:Type="Views" store:Schema="WELDING">
+          <EntitySet Name="WeldtimeSpotsSetup" EntityType="Self.WeldtimeSpotsSetup" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
-    [ExtraUltralogUitadaptief3].[Timer] AS [Timer], 
-    [ExtraUltralogUitadaptief3].[spot] AS [spot], 
-    [ExtraUltralogUitadaptief3].[uitAdaptief] AS [uitAdaptief], 
-    [ExtraUltralogUitadaptief3].[NPT] AS [NPT], 
-    [ExtraUltralogUitadaptief3].[CDSID] AS [CDSID], 
-    [ExtraUltralogUitadaptief3].[Expr1] AS [Expr1]
-    FROM [WELDING].[ExtraUltralogUitadaptief3] AS [ExtraUltralogUitadaptief3]</DefiningQuery>
+    [WeldtimeSpotsSetup].[NPT] AS [NPT], 
+    [WeldtimeSpotsSetup].[Timer] AS [Timer], 
+    [WeldtimeSpotsSetup].[Number] AS [Number], 
+    [WeldtimeSpotsSetup].[WeldTime] AS [WeldTime], 
+    [WeldtimeSpotsSetup].[ID] AS [ID]
+    FROM [dbo].[WeldtimeSpotsSetup] AS [WeldtimeSpotsSetup]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="BosProgramAvailable" EntityType="Self.BosProgramAvailable" store:Type="Views" store:Schema="LAUNCH">
+            <DefiningQuery>SELECT 
+    [BosProgramAvailable].[Name] AS [Name], 
+    [BosProgramAvailable].[bosprogram] AS [bosprogram], 
+    [BosProgramAvailable].[Program_Available] AS [Program_Available]
+    FROM [LAUNCH].[BosProgramAvailable] AS [BosProgramAvailable]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="BrownfieldLastMeasurements" EntityType="Self.BrownfieldLastMeasurements" store:Type="Views" store:Schema="LAUNCH">
+            <DefiningQuery>SELECT 
+    [BrownfieldLastMeasurements].[Expr1] AS [Expr1], 
+    [BrownfieldLastMeasurements].[Name] AS [Name], 
+    [BrownfieldLastMeasurements].[Number] AS [Number], 
+    [BrownfieldLastMeasurements].[Program] AS [Program], 
+    [BrownfieldLastMeasurements].[Date] AS [Date], 
+    [BrownfieldLastMeasurements].[Shift] AS [Shift], 
+    [BrownfieldLastMeasurements].[NbrSplash] AS [NbrSplash], 
+    [BrownfieldLastMeasurements].[NbrWeld] AS [NbrWeld], 
+    [BrownfieldLastMeasurements].[NbrReweld] AS [NbrReweld], 
+    [BrownfieldLastMeasurements].[AvgEnergy] AS [AvgEnergy], 
+    [BrownfieldLastMeasurements].[AvgPSF] AS [AvgPSF], 
+    [BrownfieldLastMeasurements].[AvgOhm] AS [AvgOhm], 
+    [BrownfieldLastMeasurements].[AvgUIP] AS [AvgUIP], 
+    [BrownfieldLastMeasurements].[AvgWeldTIme] AS [AvgWeldTIme]
+    FROM [LAUNCH].[BrownfieldLastMeasurements] AS [BrownfieldLastMeasurements]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="CheckDubbelPrograms" EntityType="Self.CheckDubbelPrograms" store:Type="Views" store:Schema="LAUNCH">
+            <DefiningQuery>SELECT 
+    [CheckDubbelPrograms].[Name] AS [Name], 
+    [CheckDubbelPrograms].[SpotName] AS [SpotName], 
+    [CheckDubbelPrograms].[WeldProgram] AS [WeldProgram]
+    FROM [LAUNCH].[CheckDubbelPrograms] AS [CheckDubbelPrograms]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="ComparePitchV316" EntityType="Self.ComparePitchV316" store:Type="Views" store:Schema="LAUNCH">
+            <DefiningQuery>SELECT 
+    [ComparePitchV316].[timerNumber] AS [timerNumber], 
+    [ComparePitchV316].[lastWeldTime] AS [lastWeldTime], 
+    [ComparePitchV316].[SpotID] AS [SpotID], 
+    [ComparePitchV316].[Timer] AS [Timer], 
+    [ComparePitchV316].[AlternativeNumber] AS [AlternativeNumber], 
+    [ComparePitchV316].[Model] AS [Model], 
+    [ComparePitchV316].[lastULControleTime] AS [lastULControleTime], 
+    [ComparePitchV316].[TotalThickness] AS [TotalThickness], 
+    [ComparePitchV316].[Expr1] AS [Expr1]
+    FROM [LAUNCH].[ComparePitchV316] AS [ComparePitchV316]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="DoubleSpotCheck" EntityType="Self.DoubleSpotCheck" store:Type="Views" store:Schema="LAUNCH">
+            <DefiningQuery>SELECT 
+    [DoubleSpotCheck].[SpotName] AS [SpotName], 
+    [DoubleSpotCheck].[WeldProgram] AS [WeldProgram], 
+    [DoubleSpotCheck].[TimerName] AS [TimerName], 
+    [DoubleSpotCheck].[ID] AS [ID]
+    FROM [LAUNCH].[DoubleSpotCheck] AS [DoubleSpotCheck]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="dressrequired" EntityType="Self.dressrequired" store:Type="Views" store:Schema="LAUNCH">
+            <DefiningQuery>SELECT 
+    [dressrequired].[Name] AS [Name], 
+    [dressrequired].[DateTime] AS [DateTime], 
+    [dressrequired].[ErrorText] AS [ErrorText], 
+    [dressrequired].[ID] AS [ID]
+    FROM [LAUNCH].[dressrequired] AS [dressrequired]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="GreenFieldLastMeasurements" EntityType="Self.GreenFieldLastMeasurements" store:Type="Views" store:Schema="LAUNCH">
+            <DefiningQuery>SELECT 
+    [GreenFieldLastMeasurements].[NPT] AS [NPT], 
+    [GreenFieldLastMeasurements].[Name] AS [Name], 
+    [GreenFieldLastMeasurements].[Number] AS [Number], 
+    [GreenFieldLastMeasurements].[Program] AS [Program], 
+    [GreenFieldLastMeasurements].[Date] AS [Date], 
+    [GreenFieldLastMeasurements].[Shift] AS [Shift], 
+    [GreenFieldLastMeasurements].[NbrSplash] AS [NbrSplash], 
+    [GreenFieldLastMeasurements].[NbrWeld] AS [NbrWeld], 
+    [GreenFieldLastMeasurements].[NbrReweld] AS [NbrReweld], 
+    [GreenFieldLastMeasurements].[AvgEnergy] AS [AvgEnergy], 
+    [GreenFieldLastMeasurements].[AvgPSF] AS [AvgPSF], 
+    [GreenFieldLastMeasurements].[AvgOhm] AS [AvgOhm], 
+    [GreenFieldLastMeasurements].[AvgUIP] AS [AvgUIP], 
+    [GreenFieldLastMeasurements].[AvgWeldTIme] AS [AvgWeldTIme]
+    FROM [LAUNCH].[GreenFieldLastMeasurements] AS [GreenFieldLastMeasurements]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="StabilityInDicationV316" EntityType="Self.StabilityInDicationV316" store:Type="Views" store:Schema="LAUNCH">
+            <DefiningQuery>SELECT 
+    [StabilityInDicationV316].[NPT] AS [NPT], 
+    [StabilityInDicationV316].[Timer] AS [Timer], 
+    [StabilityInDicationV316].[Program] AS [Program], 
+    [StabilityInDicationV316].[Number] AS [Number], 
+    [StabilityInDicationV316].[nbrWelds] AS [nbrWelds], 
+    [StabilityInDicationV316].[StabiliteitsIni] AS [StabiliteitsIni]
+    FROM [LAUNCH].[StabilityInDicationV316] AS [StabilityInDicationV316]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="ULRapportering" EntityType="Self.ULRapportering" store:Type="Views" store:Schema="UL">
+            <DefiningQuery>SELECT 
+    [ULRapportering].[id] AS [id], 
+    [ULRapportering].[starttimePlan] AS [starttimePlan], 
+    [ULRapportering].[EndTimePlan] AS [EndTimePlan], 
+    [ULRapportering].[name] AS [name], 
+    [ULRapportering].[buildbody] AS [buildbody], 
+    [ULRapportering].[CDSID] AS [CDSID], 
+    [ULRapportering].[Ullaptop] AS [Ullaptop], 
+    [ULRapportering].[bodynr] AS [bodynr], 
+    [ULRapportering].[Worklocation] AS [Worklocation], 
+    [ULRapportering].[DurationStoring] AS [DurationStoring], 
+    [ULRapportering].[userComment] AS [userComment], 
+    [ULRapportering].[Vyear] AS [Vyear], 
+    [ULRapportering].[Vweek] AS [Vweek], 
+    [ULRapportering].[vday] AS [vday], 
+    [ULRapportering].[Shift] AS [Shift], 
+    [ULRapportering].[spot] AS [spot], 
+    [ULRapportering].[loose?] AS [loose?]
+    FROM [UL].[ULRapportering] AS [ULRapportering]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="ConnectionState" EntityType="Self.ConnectionState" store:Type="Views" store:Schema="WELDING2">
+            <DefiningQuery>SELECT 
+    [ConnectionState].[NoConnection] AS [NoConnection], 
+    [ConnectionState].[TimerName] AS [TimerName], 
+    [ConnectionState].[_timestamp] AS [_timestamp], 
+    [ConnectionState].[onlineInBos6000] AS [onlineInBos6000]
+    FROM [WELDING2].[ConnectionState] AS [ConnectionState]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -104,56 +398,205 @@ warning 6002: The table/view 'GADATA.WELDING.ExtraUltralogUitadaptief3' does not
     <edmx:ConceptualModels>
       <Schema Namespace="GADATAModelWelding" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="GADATAEntitiesWelding" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="ExtraControles" EntityType="GADATAModelWelding.ExtraControles" />
-          <EntitySet Name="ExtraUltralogUitadaptief3" EntityType="GADATAModelWelding.ExtraUltralogUitadaptief3" />
-          <EntitySet Name="AutomaticWorkFlowULPlans" EntityType="GADATAModelWelding.AutomaticWorkFlowULPlans" />
+          <EntitySet Name="rt_AutoWorkFlowULPlans" EntityType="GADATAModelWelding.rt_AutoWorkFlowULPlans" />
+          <EntitySet Name="rt_ExtraControles" EntityType="GADATAModelWelding.rt_ExtraControles" />
+          <EntitySet Name="ULRapporterings" EntityType="GADATAModelWelding.ULRapportering" />
+          <EntitySet Name="BrownfieldLastMeasurements" EntityType="GADATAModelWelding.BrownfieldLastMeasurement" />
+          <EntitySet Name="GreenFieldLastMeasurements" EntityType="GADATAModelWelding.GreenFieldLastMeasurement" />
+          <EntitySet Name="DoubleSpotCheck" EntityType="GADATAModelWelding.DoubleSpotCheck" />
+          <EntitySet Name="CheckDubbelPrograms" EntityType="GADATAModelWelding.CheckDubbelPrograms" />
+          <EntitySet Name="BosProgramAvailable" EntityType="GADATAModelWelding.BosProgramAvailable" />
+          <EntitySet Name="dressrequired" EntityType="GADATAModelWelding.dressrequired" />
+          <EntitySet Name="WeldtimeSpotsSetup" EntityType="GADATAModelWelding.WeldtimeSpotsSetup" />
+          <EntitySet Name="StabilityInDicationV316" EntityType="GADATAModelWelding.StabilityInDicationV316" />
+          <EntitySet Name="ComparePitchV316" EntityType="GADATAModelWelding.ComparePitchV316" />
+          <EntitySet Name="ConnectionState" EntityType="GADATAModelWelding.ConnectionState" />
         </EntityContainer>
-        <EntityType Name="ExtraControles">
+        <EntityType Name="rt_AutoWorkFlowULPlans">
           <Key>
-            <PropertyRef Name="spot" />
-            <PropertyRef Name="typecontrole" />
-            <PropertyRef Name="statusAdaptive" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="statusAdaptive" Type="String" Nullable="false" MaxLength="23" FixedLength="false" Unicode="true" />
-          <Property Name="Model" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="Robot" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="spot" Type="Int32" Nullable="false" />
-          <Property Name="plan" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
-          <Property Name="plannummer" Type="Int32" />
-          <Property Name="typecontrole" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="time_uit_adaptief" Type="DateTime" Precision="3" />
-          <Property Name="durationOFF" Type="Time" Precision="7" />
-          <Property Name="EndTime" Type="DateTime" Precision="3" />
-          <Property Name="lastInspectiontime" Type="DateTime" Precision="3" />
-        </EntityType>
-        <EntityType Name="ExtraUltralogUitadaptief3">
-          <Key>
-            <PropertyRef Name="CDSID" />
-          </Key>
-          <Property Name="Timer" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
-          <Property Name="spot" Type="Int32" />
-          <Property Name="uitAdaptief" Type="Boolean" />
-          <Property Name="NPT" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
-          <Property Name="CDSID" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="Expr1" Type="DateTime" Precision="3" />
-        </EntityType>
-        <EntityType Name="AutomaticWorkFlowULPlans">
-          <Key>
-            <PropertyRef Name="Last30min_productionStatus" />
-            <PropertyRef Name="onderhoudswerken" />
-            <PropertyRef Name="BuildBody_s" />
-            <PropertyRef Name="LastInspectionTime" />
-          </Key>
-          <Property Name="LastInspectionTime" Type="DateTime" Precision="3" Nullable="false" />
-          <Property Name="UL_plan" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
-          <Property Name="BuildBody_s" Type="Int32" Nullable="false" />
-          <Property Name="WorkTime" Type="Time" Precision="7" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LastinspectionTime" Type="DateTime" Precision="3" />
+          <Property Name="UL_Plan" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="BuildBody" Type="Int32" />
+          <Property Name="Worktime" Type="Time" Precision="7" />
           <Property Name="WorkGroup" Type="Int32" />
-          <Property Name="WorkLocation" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
-          <Property Name="Body_slast_30Min_start" Type="Int32" />
-          <Property Name="Body_slast_30Min_end" Type="Int32" />
-          <Property Name="Last30min_productionStatus" Type="String" Nullable="false" MaxLength="23" FixedLength="false" Unicode="false" />
-          <Property Name="onderhoudswerken" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="WorkLocation" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
+          <Property Name="BodyLast30minStart" Type="Int32" />
+          <Property Name="BodyLast30minEnd" Type="Int32" />
+          <Property Name="Last30min_productionStatus" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="onderhoudswerken" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="LastnumberFromPlanBusy" Type="Int32" />
+          <Property Name="Planlenght" Type="Int32" />
+        </EntityType>
+        <EntityType Name="rt_ExtraControles">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="statusadaptieve" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="model" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="robot" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
+          <Property Name="spot" Type="Int32" />
+          <Property Name="plan" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="plannummer" Type="Int32" />
+          <Property Name="typecontrole" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="time_uitadaptief" Type="DateTime" Precision="3" />
+          <Property Name="durationOFF" Type="Time" Precision="7" />
+          <Property Name="endtime" Type="DateTime" Precision="3" />
+          <Property Name="lastinspectiontime" Type="DateTime" Precision="3" />
+          <Property Name="planid" Type="Int32" />
+          <Property Name="NPTOwner" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="NPT" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ULRapportering">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="starttimePlan" Type="DateTime" Precision="3" />
+          <Property Name="EndTimePlan" Type="DateTime" Precision="3" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="true" Unicode="true" />
+          <Property Name="buildbody" Type="Int32" />
+          <Property Name="CDSID" Type="String" MaxLength="255" FixedLength="true" Unicode="true" />
+          <Property Name="Ullaptop" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="bodynr" Type="Int32" />
+          <Property Name="Worklocation" Type="Int32" />
+          <Property Name="DurationStoring" Type="Int32" />
+          <Property Name="userComment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Vyear" Type="Int32" />
+          <Property Name="Vweek" Type="Int32" />
+          <Property Name="vday" Type="Int32" />
+          <Property Name="Shift" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="spot" Type="Int32" />
+          <Property Name="loose_" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="BrownfieldLastMeasurement">
+          <Key>
+            <PropertyRef Name="Program" />
+            <PropertyRef Name="Date" />
+            <PropertyRef Name="Shift" />
+          </Key>
+          <Property Name="Expr1" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="Number" Type="Int32" />
+          <Property Name="Program" Type="Byte" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Shift" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="NbrSplash" Type="Int16" />
+          <Property Name="NbrWeld" Type="Int16" />
+          <Property Name="NbrReweld" Type="Int16" />
+          <Property Name="AvgEnergy" Type="Single" />
+          <Property Name="AvgPSF" Type="Single" />
+          <Property Name="AvgOhm" Type="Single" />
+          <Property Name="AvgUIP" Type="Single" />
+          <Property Name="AvgWeldTIme" Type="Single" />
+        </EntityType>
+        <EntityType Name="GreenFieldLastMeasurement">
+          <Key>
+            <PropertyRef Name="Program" />
+            <PropertyRef Name="Date" />
+            <PropertyRef Name="Shift" />
+          </Key>
+          <Property Name="NPT" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="Number" Type="Int32" />
+          <Property Name="Program" Type="Byte" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Shift" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="NbrSplash" Type="Int16" />
+          <Property Name="NbrWeld" Type="Int16" />
+          <Property Name="NbrReweld" Type="Int16" />
+          <Property Name="AvgEnergy" Type="Single" />
+          <Property Name="AvgPSF" Type="Single" />
+          <Property Name="AvgOhm" Type="Single" />
+          <Property Name="AvgUIP" Type="Single" />
+          <Property Name="AvgWeldTIme" Type="Single" />
+        </EntityType>
+        <EntityType Name="DoubleSpotCheck">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="SpotName" Type="Int32" />
+          <Property Name="WeldProgram" Type="Int32" />
+          <Property Name="TimerName" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="CheckDubbelPrograms">
+          <Key>
+            <PropertyRef Name="SpotName" />
+            <PropertyRef Name="WeldProgram" />
+          </Key>
+          <Property Name="Name" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="SpotName" Type="Int32" Nullable="false" />
+          <Property Name="WeldProgram" Type="Int16" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BosProgramAvailable">
+          <Key>
+            <PropertyRef Name="bosprogram" />
+          </Key>
+          <Property Name="Name" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="bosprogram" Type="Int32" Nullable="false" />
+          <Property Name="Program_Available" Type="Byte" />
+        </EntityType>
+        <EntityType Name="dressrequired">
+          <Key>
+            <PropertyRef Name="DateTime" />
+            <PropertyRef Name="ErrorText" />
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="Name" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="DateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ErrorText" Type="String" Nullable="false" MaxLength="255" FixedLength="true" Unicode="true" />
+          <Property Name="ID" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WeldtimeSpotsSetup">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="NPT" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="Timer" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="Number" Type="Int32" />
+          <Property Name="WeldTime" Type="Double" />
+          <Property Name="ID" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StabilityInDicationV316">
+          <Key>
+            <PropertyRef Name="Program" />
+          </Key>
+          <Property Name="NPT" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="Timer" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="Program" Type="Byte" Nullable="false" />
+          <Property Name="Number" Type="Int32" />
+          <Property Name="nbrWelds" Type="Int16" />
+          <Property Name="StabiliteitsIni" Type="Single" />
+        </EntityType>
+        <EntityType Name="ComparePitchV316">
+          <Key>
+            <PropertyRef Name="timerNumber" />
+            <PropertyRef Name="lastWeldTime" />
+          </Key>
+          <Property Name="timerNumber" Type="String" Nullable="false" MaxLength="17" FixedLength="false" Unicode="false" />
+          <Property Name="lastWeldTime" Type="String" Nullable="false" MaxLength="23" FixedLength="false" Unicode="false" />
+          <Property Name="spotid" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
+          <Property Name="Timer" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
+          <Property Name="Variant" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="AlternativeNumber" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
+          <Property Name="Model" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="lastULControleTime" Type="DateTime" Precision="3" />
+          <Property Name="TotalThickness" Type="Double" />
+          <Property Name="SpotID" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
+          <Property Name="Expr1" Type="String" MaxLength="255" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ConnectionState">
+          <Key>
+            <PropertyRef Name="NoConnection" />
+          </Key>
+          <Property Name="NoConnection" Type="String" Nullable="false" MaxLength="33" FixedLength="false" Unicode="false" />
+          <Property Name="TimerName" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="C_timestamp" Type="DateTime" Precision="3" />
+          <Property Name="onlineInBos6000" Type="Boolean" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -161,48 +604,192 @@ warning 6002: The table/view 'GADATA.WELDING.ExtraUltralogUitadaptief3' does not
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="GADATAModelWeldingStoreContainer" CdmEntityContainer="GADATAEntitiesWelding">
-          <EntitySetMapping Name="ExtraControles">
-            <EntityTypeMapping TypeName="GADATAModelWelding.ExtraControles">
-              <MappingFragment StoreEntitySet="ExtraControles">
-                <ScalarProperty Name="lastInspectiontime" ColumnName="lastInspectiontime" />
-                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+          <EntitySetMapping Name="rt_AutoWorkFlowULPlans">
+            <EntityTypeMapping TypeName="GADATAModelWelding.rt_AutoWorkFlowULPlans">
+              <MappingFragment StoreEntitySet="rt_AutoWorkFlowULPlans">
+                <ScalarProperty Name="Planlenght" ColumnName="Planlenght" />
+                <ScalarProperty Name="LastnumberFromPlanBusy" ColumnName="LastnumberFromPlanBusy" />
+                <ScalarProperty Name="onderhoudswerken" ColumnName="onderhoudswerken" />
+                <ScalarProperty Name="Last30min_productionStatus" ColumnName="Last30min_productionStatus" />
+                <ScalarProperty Name="BodyLast30minEnd" ColumnName="BodyLast30minEnd" />
+                <ScalarProperty Name="BodyLast30minStart" ColumnName="BodyLast30minStart" />
+                <ScalarProperty Name="WorkLocation" ColumnName="WorkLocation" />
+                <ScalarProperty Name="WorkGroup" ColumnName="WorkGroup" />
+                <ScalarProperty Name="Worktime" ColumnName="Worktime" />
+                <ScalarProperty Name="BuildBody" ColumnName="BuildBody" />
+                <ScalarProperty Name="UL_Plan" ColumnName="UL Plan" />
+                <ScalarProperty Name="LastinspectionTime" ColumnName="LastinspectionTime" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="rt_ExtraControles">
+            <EntityTypeMapping TypeName="GADATAModelWelding.rt_ExtraControles">
+              <MappingFragment StoreEntitySet="rt_ExtraControles">
+                <ScalarProperty Name="NPT" ColumnName="NPT" />
+                <ScalarProperty Name="NPTOwner" ColumnName="NPTOwner" />
+                <ScalarProperty Name="planid" ColumnName="planid" />
+                <ScalarProperty Name="lastinspectiontime" ColumnName="lastinspectiontime" />
+                <ScalarProperty Name="endtime" ColumnName="endtime" />
                 <ScalarProperty Name="durationOFF" ColumnName="durationOFF" />
-                <ScalarProperty Name="time_uit_adaptief" ColumnName="time_uit_adaptief" />
+                <ScalarProperty Name="time_uitadaptief" ColumnName="time_uitadaptief" />
                 <ScalarProperty Name="typecontrole" ColumnName="typecontrole" />
                 <ScalarProperty Name="plannummer" ColumnName="plannummer" />
                 <ScalarProperty Name="plan" ColumnName="plan" />
                 <ScalarProperty Name="spot" ColumnName="spot" />
-                <ScalarProperty Name="Robot" ColumnName="Robot" />
-                <ScalarProperty Name="Model" ColumnName="Model" />
-                <ScalarProperty Name="statusAdaptive" ColumnName="statusAdaptive" />
+                <ScalarProperty Name="robot" ColumnName="robot" />
+                <ScalarProperty Name="model" ColumnName="model" />
+                <ScalarProperty Name="statusadaptieve" ColumnName="statusadaptieve" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ExtraUltralogUitadaptief3">
-            <EntityTypeMapping TypeName="GADATAModelWelding.ExtraUltralogUitadaptief3">
-              <MappingFragment StoreEntitySet="ExtraUltralogUitadaptief3">
-                <ScalarProperty Name="Expr1" ColumnName="Expr1" />
-                <ScalarProperty Name="CDSID" ColumnName="CDSID" />
-                <ScalarProperty Name="NPT" ColumnName="NPT" />
-                <ScalarProperty Name="uitAdaptief" ColumnName="uitAdaptief" />
+          <EntitySetMapping Name="ULRapporterings">
+            <EntityTypeMapping TypeName="GADATAModelWelding.ULRapportering">
+              <MappingFragment StoreEntitySet="ULRapportering">
+                <ScalarProperty Name="loose_" ColumnName="loose?" />
                 <ScalarProperty Name="spot" ColumnName="spot" />
-                <ScalarProperty Name="Timer" ColumnName="Timer" />
+                <ScalarProperty Name="Shift" ColumnName="Shift" />
+                <ScalarProperty Name="vday" ColumnName="vday" />
+                <ScalarProperty Name="Vweek" ColumnName="Vweek" />
+                <ScalarProperty Name="Vyear" ColumnName="Vyear" />
+                <ScalarProperty Name="userComment" ColumnName="userComment" />
+                <ScalarProperty Name="DurationStoring" ColumnName="DurationStoring" />
+                <ScalarProperty Name="Worklocation" ColumnName="Worklocation" />
+                <ScalarProperty Name="bodynr" ColumnName="bodynr" />
+                <ScalarProperty Name="Ullaptop" ColumnName="Ullaptop" />
+                <ScalarProperty Name="CDSID" ColumnName="CDSID" />
+                <ScalarProperty Name="buildbody" ColumnName="buildbody" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="EndTimePlan" ColumnName="EndTimePlan" />
+                <ScalarProperty Name="starttimePlan" ColumnName="starttimePlan" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="AutomaticWorkFlowULPlans">
-            <EntityTypeMapping TypeName="GADATAModelWelding.AutomaticWorkFlowULPlans">
-              <MappingFragment StoreEntitySet="AutomaticWorkFlowULPlans">
-                <ScalarProperty Name="onderhoudswerken" ColumnName="onderhoudswerken" />
-                <ScalarProperty Name="Last30min_productionStatus" ColumnName="Last30min_productionStatus" />
-                <ScalarProperty Name="Body_slast_30Min_end" ColumnName="Body'slast_30Min_end" />
-                <ScalarProperty Name="Body_slast_30Min_start" ColumnName="Body'slast_30Min_start" />
-                <ScalarProperty Name="WorkLocation" ColumnName="WorkLocation" />
-                <ScalarProperty Name="WorkGroup" ColumnName="WorkGroup" />
-                <ScalarProperty Name="WorkTime" ColumnName="WorkTime" />
-                <ScalarProperty Name="BuildBody_s" ColumnName="BuildBody's" />
-                <ScalarProperty Name="UL_plan" ColumnName="UL plan" />
-                <ScalarProperty Name="LastInspectionTime" ColumnName="LastInspectionTime" />
+          <EntitySetMapping Name="BrownfieldLastMeasurements">
+            <EntityTypeMapping TypeName="GADATAModelWelding.BrownfieldLastMeasurement">
+              <MappingFragment StoreEntitySet="BrownfieldLastMeasurements">
+                <ScalarProperty Name="AvgWeldTIme" ColumnName="AvgWeldTIme" />
+                <ScalarProperty Name="AvgUIP" ColumnName="AvgUIP" />
+                <ScalarProperty Name="AvgOhm" ColumnName="AvgOhm" />
+                <ScalarProperty Name="AvgPSF" ColumnName="AvgPSF" />
+                <ScalarProperty Name="AvgEnergy" ColumnName="AvgEnergy" />
+                <ScalarProperty Name="NbrReweld" ColumnName="NbrReweld" />
+                <ScalarProperty Name="NbrWeld" ColumnName="NbrWeld" />
+                <ScalarProperty Name="NbrSplash" ColumnName="NbrSplash" />
+                <ScalarProperty Name="Shift" ColumnName="Shift" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Program" ColumnName="Program" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Expr1" ColumnName="Expr1" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GreenFieldLastMeasurements">
+            <EntityTypeMapping TypeName="GADATAModelWelding.GreenFieldLastMeasurement">
+              <MappingFragment StoreEntitySet="GreenFieldLastMeasurements">
+                <ScalarProperty Name="AvgWeldTIme" ColumnName="AvgWeldTIme" />
+                <ScalarProperty Name="AvgUIP" ColumnName="AvgUIP" />
+                <ScalarProperty Name="AvgOhm" ColumnName="AvgOhm" />
+                <ScalarProperty Name="AvgPSF" ColumnName="AvgPSF" />
+                <ScalarProperty Name="AvgEnergy" ColumnName="AvgEnergy" />
+                <ScalarProperty Name="NbrReweld" ColumnName="NbrReweld" />
+                <ScalarProperty Name="NbrWeld" ColumnName="NbrWeld" />
+                <ScalarProperty Name="NbrSplash" ColumnName="NbrSplash" />
+                <ScalarProperty Name="Shift" ColumnName="Shift" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Program" ColumnName="Program" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="NPT" ColumnName="NPT" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DoubleSpotCheck">
+            <EntityTypeMapping TypeName="GADATAModelWelding.DoubleSpotCheck">
+              <MappingFragment StoreEntitySet="DoubleSpotCheck">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="TimerName" ColumnName="TimerName" />
+                <ScalarProperty Name="WeldProgram" ColumnName="WeldProgram" />
+                <ScalarProperty Name="SpotName" ColumnName="SpotName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CheckDubbelPrograms">
+            <EntityTypeMapping TypeName="GADATAModelWelding.CheckDubbelPrograms">
+              <MappingFragment StoreEntitySet="CheckDubbelPrograms">
+                <ScalarProperty Name="WeldProgram" ColumnName="WeldProgram" />
+                <ScalarProperty Name="SpotName" ColumnName="SpotName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BosProgramAvailable">
+            <EntityTypeMapping TypeName="GADATAModelWelding.BosProgramAvailable">
+              <MappingFragment StoreEntitySet="BosProgramAvailable">
+                <ScalarProperty Name="Program_Available" ColumnName="Program_Available" />
+                <ScalarProperty Name="bosprogram" ColumnName="bosprogram" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="dressrequired">
+            <EntityTypeMapping TypeName="GADATAModelWelding.dressrequired">
+              <MappingFragment StoreEntitySet="dressrequired">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ErrorText" ColumnName="ErrorText" />
+                <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WeldtimeSpotsSetup">
+            <EntityTypeMapping TypeName="GADATAModelWelding.WeldtimeSpotsSetup">
+              <MappingFragment StoreEntitySet="WeldtimeSpotsSetup">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="WeldTime" ColumnName="WeldTime" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="Timer" ColumnName="Timer" />
+                <ScalarProperty Name="NPT" ColumnName="NPT" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StabilityInDicationV316">
+            <EntityTypeMapping TypeName="GADATAModelWelding.StabilityInDicationV316">
+              <MappingFragment StoreEntitySet="StabilityInDicationV316">
+                <ScalarProperty Name="StabiliteitsIni" ColumnName="StabiliteitsIni" />
+                <ScalarProperty Name="nbrWelds" ColumnName="nbrWelds" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="Program" ColumnName="Program" />
+                <ScalarProperty Name="Timer" ColumnName="Timer" />
+                <ScalarProperty Name="NPT" ColumnName="NPT" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ComparePitchV316">
+            <EntityTypeMapping TypeName="GADATAModelWelding.ComparePitchV316">
+              <MappingFragment StoreEntitySet="ComparePitchV316">
+                <ScalarProperty Name="Expr1" ColumnName="Expr1" />
+                <ScalarProperty Name="SpotID" ColumnName="SpotID" />
+                <ScalarProperty Name="TotalThickness" ColumnName="TotalThickness" />
+                <ScalarProperty Name="lastULControleTime" ColumnName="lastULControleTime" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="AlternativeNumber" ColumnName="AlternativeNumber" />
+                <ScalarProperty Name="Timer" ColumnName="Timer" />
+                <ScalarProperty Name="lastWeldTime" ColumnName="lastWeldTime" />
+                <ScalarProperty Name="timerNumber" ColumnName="timerNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ConnectionState">
+            <EntityTypeMapping TypeName="GADATAModelWelding.ConnectionState">
+              <MappingFragment StoreEntitySet="ConnectionState">
+                <ScalarProperty Name="onlineInBos6000" ColumnName="onlineInBos6000" />
+                <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
+                <ScalarProperty Name="TimerName" ColumnName="TimerName" />
+                <ScalarProperty Name="NoConnection" ColumnName="NoConnection" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -220,8 +807,8 @@ warning 6002: The table/view 'GADATA.WELDING.ExtraUltralogUitadaptief3' does not
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="false" />
-        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>

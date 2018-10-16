@@ -25,8 +25,18 @@ namespace EqUiWebUi.Areas.Welding.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<ExtraControles> ExtraControles { get; set; }
-        public virtual DbSet<ExtraUltralogUitadaptief3> ExtraUltralogUitadaptief3 { get; set; }
-        public virtual DbSet<AutomaticWorkFlowULPlans> AutomaticWorkFlowULPlans { get; set; }
+        public virtual DbSet<rt_AutoWorkFlowULPlans> rt_AutoWorkFlowULPlans { get; set; }
+        public virtual DbSet<rt_ExtraControles> rt_ExtraControles { get; set; }
+        public virtual DbSet<ULRapportering> ULRapporterings { get; set; }
+        public virtual DbSet<BrownfieldLastMeasurement> BrownfieldLastMeasurements { get; set; }
+        public virtual DbSet<GreenFieldLastMeasurement> GreenFieldLastMeasurements { get; set; }
+        public virtual DbSet<DoubleSpotCheck> DoubleSpotCheck { get; set; }
+        public virtual DbSet<CheckDubbelPrograms> CheckDubbelPrograms { get; set; }
+        public virtual DbSet<BosProgramAvailable> BosProgramAvailable { get; set; }
+        public virtual DbSet<dressrequired> dressrequired { get; set; }
+        public virtual DbSet<WeldtimeSpotsSetup> WeldtimeSpotsSetup { get; set; }
+        public virtual DbSet<StabilityInDicationV316> StabilityInDicationV316 { get; set; }
+        public virtual DbSet<ComparePitchV316> ComparePitchV316 { get; set; }
+        public virtual DbSet<ConnectionState> ConnectionState { get; set; }
     }
 }

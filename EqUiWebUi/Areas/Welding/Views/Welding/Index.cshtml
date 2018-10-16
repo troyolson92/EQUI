@@ -2,65 +2,75 @@
     ViewBag.Title = "VCG GA ARO Homepage";
 }
 <div class="jumbotron">
-    <h1>WELCOME bij ARO</h1>
+    <h1>WELCOME in het Welding Team</h1>
 </div>
-
-<p></p>
 
 <div class="card">
     <div class="card-header bg-dark">
         <h5 class="card-title text-white">
-            Test
+            Home Page WeldingTeam
             <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
         </h5>
     </div>
     <div class="card-body">
         @*voorbeeld externe link*@
         @{
-        string urlIntranetSupervis = @Uri.EscapeDataString("http://webapps.gen.volvocars.net/applications/eng/equipment/supervisiep1/intranet");
-        <p>
-            <a href="~/Home/Rendersite?url=@urlIntranetSupervis" class="btn btn-primary btn-sm">Supervisie Intranet P1 &raquo;</a>
-            Supervisie (intranet)
-        </p>
+            string urlIntranetSupervis = @Uri.EscapeDataString("http://webapps.gen.volvocars.net/applications/eng/equipment/supervisiep1/intranet");
+            <p>
+                <a href="~/Home/Rendersite?url=@urlIntranetSupervis" class="btn btn-primary btn-sm">Supervisie Intranet P1 &raquo;</a>
+                Supervisie (intranet)
+            </p>
         }
         @*voorbeeld interne link*@
         <p>
             <a href="~/Alert/Alert/AASPOTIndex" class="btn btn-primary btn-sm">Alerts &raquo;</a>
             Waarschuwingen gebaseerd op triggers
         </p>
-
-        <p>
-            <a href="~/Welding/Welding/Pagina1" class="btn btn-primary btn-sm">Pagina1 &raquo;</a>
-        </p>
     </div>
 </div>
-
 <p></p>
-
 <div class="card">
     <div class="card-header bg-dark">
         <h5 class="card-title text-white">
-            Grid basics
+            ARO Technicians
             <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
         </h5>
     </div>
     <div class="card-body">
 
         <p>
-            <a href="~/Welding/Welding/AutomaticWorkFlowULPlans" class="btn btn-primary btn-sm">AutomaticWorkFlowULPlans &raquo;</a>
-        </p>
-
-        <p>
-            <a href="~/Welding/Welding/AutomaticWorkFlowULPlansFilter" class="btn btn-primary btn-sm">AutomaticWorkFlowULPlansFilter &raquo;</a>
-            (no param passed)
-        </p>
-
-        <p>
-            <a href="~/Welding/Welding/AutomaticWorkFlowULPlansFilter?Ul_plan=ietsanders" class="btn btn-primary btn-sm">AutomaticWorkFlowULPlansFilter &raquo;</a>
-            (with param passed)
-        </p>
+            @MyHtmlHelpers.EquiLink("/Welding/ARO/Index", "fab fa-qq", "ARO Technician", helperText: "startpagina van het ARO team")
     </div>
 </div>
+<p></p>
+<div class="card">
+    <div class="card-header bg-dark">
+        <h5 class="card-title text-white">
+            WeldingMasters
+            <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
+        </h5>
+    </div>
+    <div class="card-body">
+
+        <p>
+            @MyHtmlHelpers.EquiLink("/Welding/WM/Index", "fab fa-qq", "Welding Masters", helperText: "startpagina van de weldingMasters")
+    </div>
+</div>
+<p></p>
+<div class="card">
+    <div class="card-header bg-dark">
+        <h5 class="card-title text-white">
+            Qteam
+            <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
+        </h5>
+    </div>
+    <div class="card-body">
+
+        <p>
+            @MyHtmlHelpers.EquiLink("/Welding/Qteam/Index", "fab fa-qq", "Qteam", helperText: "startpagina van het Qteam")
+    </div>
+</div>
+
 
 <p></p>
 
