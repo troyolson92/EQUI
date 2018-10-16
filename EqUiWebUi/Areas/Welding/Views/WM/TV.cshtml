@@ -1,0 +1,39 @@
+﻿
+<h1>TimerConnections</h1>
+<div data-name="ConnectionState" class="mvc-grid"></div>
+
+<hr /><hr /><hr /><hr />
+
+
+
+<h1>QisCheck</h1>
+<div data-name="QISViewer" class="mvc-grid"></div>
+
+<hr /><hr /><hr /><hr />
+
+
+
+
+@section scripts{
+    <script>
+        //full with screen
+        $("#allcontent").removeClass("body-content");
+        $("#allcontent").removeClass("container");
+
+        $('[data-name="ConnectionState"]').html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
+        $('[data-name="ConnectionState"]').mvcgrid({
+            sourceUrl: '@Url.Action("_ConnectionState")', // Grid source url string
+            requestType: 'get', // Ajax grid request type
+            reload: true
+        });
+
+        $('[data-name="QISViewer"]').html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
+        $('[data-name="QISViewer"]').mvcgrid({
+            sourceUrl: '@Url.Action("_QISvieuwer")', // Grid source url string
+            requestType: 'get', // Ajax grid request type
+            reload: true
+        });
+
+    </script>
+}
+
