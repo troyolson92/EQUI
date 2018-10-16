@@ -46,6 +46,7 @@ namespace EqUiWebUi.Areas.Welding.Controllers
         {
             IQueryable<WeldtimeSpotsSetup> data = db.WeldtimeSpotsSetup.AsQueryable();
             return View(data);
+            //test
         }
 
         public ActionResult StabilityInDicationV316()
