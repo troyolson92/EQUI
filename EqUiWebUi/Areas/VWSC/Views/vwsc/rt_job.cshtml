@@ -1,0 +1,65 @@
+﻿@model IQueryable<EqUiWebUi.Areas.VWSC.Models.VWSC_rt_job>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Grid(Model).Named("VWSC_rt_job").Build(columns =>
+{
+    columns.Add(c => c.id).Titled("rt_job_id").InitialSort(GridSortOrder.Desc);
+    columns.Add(c => c.C_timestamp).Titled("C_timestamp");
+    columns.Add(c =>  (c.ts_End-c.ts_Start).GetValueOrDefault().TotalSeconds).Titled("CT");
+    columns.Add(c => c.rt_weldmeasureprotddw_count).Titled("weldCount");
+
+
+    columns.Add(c => c.timerId);
+    columns.Add(c => c.rt_weldmeasureprotddw_id_Start);
+    columns.Add(c => c.rt_weldmeasureprotddw_id_End);
+
+    columns.Add(c => c.Timer.Name).Titled("Timer");
+    columns.Add(c => c.rt_breakdown_count).Titled("rt_breakdown_count");
+    columns.Add(c => c.rt_job_breakdown.Where(b => b.index == 1).FirstOrDefault().rt_alarm.dateTime).Titled("FirstErrdateTime");
+    columns.Add(c => c.rt_job_breakdown.Where(b => b.index == 1).FirstOrDefault().rt_alarm.errorCode1).Titled("FirstErrcode");
+    columns.Add(c => c.rt_job_breakdown.Where(b => b.index == 1).FirstOrDefault().rt_alarm.errorCode1_txt).Titled("FirstErrTxt");
+
+}).Filterable().Sortable().Pageable(pager =>
+{
+    pager.RowsPerPage = 20;
+    pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 20, "20" }, { 40, "40" }, { 80, "80" }, { 100, "100" } };
+    pager.ShowPageSizes = true;
+}).Empty("Did not find anything").Css("table-hover")
+
+
+@section scripts{
+    <script>
+        //full with screen
+        $("#allcontent").removeClass("body-content");
+        $("#allcontent").removeClass("container");
+
+        //subscribe to row clicked events
+        $('[data-name="VWSC_rt_job"]').mvcgrid({
+            rowClicked: function (row, data, e) {
+                //if row already has this clase close the modal
+                if ($(row).hasClass("bg-info")) {
+                    $("#placeholder").remove();
+                    $(row).removeClass("bg-info");
+                    return;
+                }
+                //clear selected rows for this table
+                $('tr').removeClass('bg-info'); //THIS IS WRONG
+                $(row).addClass("bg-info");
+                $("#placeholder").remove(); //clear placeholder is exists
+                //add new placeholder afhter selected row
+                $(row).after('<tr id="placeholder"><td colspan="1000"><div class="card"><div class="card-body" id ="placeholderPartial"></div></div></td></tr>');
+                //animation
+                $("#placeholderPartial").html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
+                //load url in placeholder
+                console.log(data);
+                var url = "@Url.Action("_welds")?timerId=" + data["timer-id"] + "&weldmeasureprotddw_id_Start=" + data["rt_weldmeasureprotddw_id_-start"] + "&weldmeasureprotddw_id_End=" + data["rt_weldmeasureprotddw_id_-end"];
+                $("#placeholderPartial").load(url);
+            }
+        });
+    </script>
+}
+

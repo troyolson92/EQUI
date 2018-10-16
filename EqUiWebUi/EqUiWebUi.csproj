@@ -1246,6 +1246,8 @@
     <Content Include="Areas\VWSC\Views\c_bosch_view\Edit.cshtml" />
     <Content Include="Areas\VWSC\Views\c_error\Edit.cshtml" />
     <Content Include="Areas\VWSC\Views\c_timer\Edit.cshtml" />
+    <Content Include="Areas\VWSC\Views\vwsc\rt_job.cshtml" />
+    <Content Include="Areas\VWSC\Views\vwsc\_welds.cshtml" />
     <None Include="Properties\PublishProfiles\gensvw1178-DEV-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gotsvw11292-PRODUCTION-VCTA.pubxml" />
