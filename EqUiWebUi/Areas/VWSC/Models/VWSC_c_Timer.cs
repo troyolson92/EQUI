@@ -19,6 +19,11 @@ namespace EqUiWebUi.Areas.VWSC.Models
         {
             this.rt_active_info = new HashSet<VWSC_rt_active_info>();
             this.L_operation = new HashSet<VWSC_L_operation>();
+            this.rt_alarm = new HashSet<VWSC_rt_alarm>();
+            this.rt_communication_state = new HashSet<VWSC_rt_communication_state>();
+            this.rt_job = new HashSet<VWSC_rt_job>();
+            this.rt_job1 = new HashSet<VWSC_rt_job>();
+            this.rt_weldfault = new HashSet<VWSC_rt_weldfault>();
         }
     
         public int ID { get; set; }
@@ -35,5 +40,15 @@ namespace EqUiWebUi.Areas.VWSC.Models
         public virtual ICollection<VWSC_rt_active_info> rt_active_info { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<VWSC_L_operation> L_operation { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<VWSC_rt_alarm> rt_alarm { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<VWSC_rt_communication_state> rt_communication_state { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<VWSC_rt_job> rt_job { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<VWSC_rt_job> rt_job1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<VWSC_rt_weldfault> rt_weldfault { get; set; }
     }
 }

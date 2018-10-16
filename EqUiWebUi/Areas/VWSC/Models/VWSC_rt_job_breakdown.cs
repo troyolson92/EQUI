@@ -12,18 +12,16 @@ namespace EqUiWebUi.Areas.VWSC.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class VWSC_c_error
+    public partial class VWSC_rt_job_breakdown
     {
         public int id { get; set; }
-        public Nullable<int> enable_bit { get; set; }
-        public Nullable<int> ordinal { get; set; }
-        public Nullable<int> isError { get; set; }
-        public Nullable<int> errorCode1 { get; set; }
-        public string errorCode1_text { get; set; }
-        public Nullable<int> errorCode2 { get; set; }
-        public string errorCode2_text { get; set; }
-        public Nullable<int> C_operator { get; set; }
-        public Nullable<int> flags { get; set; }
-        public string UserComment { get; set; }
+        public Nullable<int> rt_job_id { get; set; }
+        public Nullable<int> rt_alarm_id { get; set; }
+        public Nullable<System.DateTime> ts_breakdownStart { get; set; }
+        public Nullable<System.DateTime> ts_breakdownEnd { get; set; }
+        public Nullable<int> index { get; set; }
+    
+        public virtual VWSC_rt_alarm rt_alarm { get; set; }
+        public virtual VWSC_rt_job rt_job { get; set; }
     }
 }

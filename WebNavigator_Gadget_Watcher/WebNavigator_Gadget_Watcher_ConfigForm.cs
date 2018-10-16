@@ -429,7 +429,7 @@ namespace WebNavigator_Gadget_Watcher
                 catch (Exception ex)
                 {
                     log.Fatal("Failed to read image size", ex);
-                    //if something realy bad happens wait 10 seconds and restart. 
+                    //if something bad happens wait 10 seconds and restart. 
                     System.Threading.Thread.Sleep(10000);
                     Environment.Exit(999);
                 }
@@ -440,23 +440,23 @@ namespace WebNavigator_Gadget_Watcher
             }
         }
 
-        //in case of error with publish wachter
+        //in case of error with publish watcher
         private void PublishWatcher_Error(object sender, ErrorEventArgs e)
         {
             log.Fatal("PublishWatcher error detected (Shutting down)", e.GetException());
-            //if something realy bad happens wait 10 seconds and restart. 
+            //if something bad happens wait 10 seconds and restart. 
             System.Threading.Thread.Sleep(10000);
             Environment.Exit(999);
         }
 
-        //manualy start monitoring
+        //manually start monitoring
         private void btn_StartMonitoring_Click(object sender, EventArgs e)
         {
             log.Info("PublishWatcher manual click");
             MonitorForPublisedImages();
         }
 
-        //manualy clean out directory
+        //manually clean out directory
         private void button1_Click(object sender, EventArgs e)
         {
             CleanInetCache();
@@ -479,7 +479,7 @@ namespace WebNavigator_Gadget_Watcher
                     {
                         log.Error("Failed to delete file", ex);
                     }
-                log.Info("CleanInetCache succes");
+                log.Info("CleanInetCache success");
 
             }
             catch(Exception ex)
