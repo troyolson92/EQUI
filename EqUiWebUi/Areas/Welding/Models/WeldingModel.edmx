@@ -160,6 +160,21 @@ warning 6002: The table/view 'GADATA.LAUNCH.StabilityInDicationV316' does not ha
           <Property Name="StabiliteitsIni" Type="real" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.QIS.QISViewer' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="QISViewer">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="Timestamp" Type="datetime" />
+          <Property Name="TimerName" Type="nchar" MaxLength="20" />
+          <Property Name="program" Type="int" />
+          <Property Name="parameter" Type="nchar" MaxLength="250" />
+          <Property Name="bos6000Value" Type="nchar" MaxLength="250" />
+          <Property Name="RequiredValue" Type="nchar" MaxLength="250" />
+          <Property Name="remark" Type="nchar" MaxLength="50" />
+          <Property Name="id" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'GADATA.UL.ULRapportering' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="ULRapportering">
           <Key>
@@ -194,10 +209,20 @@ warning 6002: The table/view 'GADATA.WELDING2.ConnectionState' does not have a p
           <Property Name="_timestamp" Type="datetime" />
           <Property Name="onlineInBos6000" Type="bit" />
         </EntityType>
-        <Function Name="Lastwelds1" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="WELDING" StoreFunctionName="Lastwelds">
-          <Parameter Name="Timer" Type="nchar" Mode="In" />
-          <Parameter Name="spot" Type="int" Mode="In" />
-        </Function>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="TimerBreakdowns_busy">
+          <Property Name="NPT" Type="nchar" MaxLength="15" />
+          <Property Name="Timer" Type="nchar" MaxLength="15" />
+          <Property Name="location" Type="varchar" MaxLength="256" />
+          <Property Name="errorText" Type="varchar" MaxLength="64" />
+          <Property Name="_timestamp" Type="datetime" />
+          <Property Name="timerfault" Type="varchar" MaxLength="64" />
+          <Property Name="timerfault_Extra" Type="varchar" MaxLength="64" />
+          <Property Name="ts_breakdownStart" Type="datetime" />
+          <Property Name="breakdowntime" Type="int" />
+          <Property Name="ID" Type="int" />
+        </EntityType>-->
         <EntityContainer Name="GADATAModelWeldingStoreContainer">
           <EntitySet Name="rt_AutoWorkFlowULPlans" EntityType="Self.rt_AutoWorkFlowULPlans" store:Type="Tables" store:Schema="UL">
             <DefiningQuery>SELECT 
@@ -316,6 +341,18 @@ warning 6002: The table/view 'GADATA.WELDING2.ConnectionState' does not have a p
     [StabilityInDicationV316].[StabiliteitsIni] AS [StabiliteitsIni]
     FROM [LAUNCH].[StabilityInDicationV316] AS [StabilityInDicationV316]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="QISViewer" EntityType="Self.QISViewer" store:Type="Views" store:Schema="QIS">
+            <DefiningQuery>SELECT 
+    [QISViewer].[Timestamp] AS [Timestamp], 
+    [QISViewer].[TimerName] AS [TimerName], 
+    [QISViewer].[program] AS [program], 
+    [QISViewer].[parameter] AS [parameter], 
+    [QISViewer].[bos6000Value] AS [bos6000Value], 
+    [QISViewer].[RequiredValue] AS [RequiredValue], 
+    [QISViewer].[remark] AS [remark], 
+    [QISViewer].[id] AS [id]
+    FROM [QIS].[QISViewer] AS [QISViewer]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="ULRapportering" EntityType="Self.ULRapportering" store:Type="Views" store:Schema="UL">
             <DefiningQuery>SELECT 
     [ULRapportering].[id] AS [id], 
@@ -367,6 +404,7 @@ warning 6002: The table/view 'GADATA.WELDING2.ConnectionState' does not have a p
             <Parameter Name="spot" Mode="In" Type="Int32" />
           </FunctionImport>
           <EntitySet Name="LastWelds" EntityType="GADATAModelWelding.LastWelds" />
+          <EntitySet Name="QISViewer" EntityType="GADATAModelWelding.QISViewer" />
         </EntityContainer>
         <EntityType Name="rt_AutoWorkFlowULPlans">
           <Key>
@@ -549,6 +587,19 @@ warning 6002: The table/view 'GADATA.WELDING2.ConnectionState' does not have a p
           <Property Name="AvgWeldTIme" Type="Single" />
           <Property Name="ID" Type="Int32" Nullable="false" />
         </EntityType>
+        <EntityType Name="QISViewer">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="Timestamp" Type="DateTime" Precision="3" />
+          <Property Name="TimerName" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="program" Type="Int32" />
+          <Property Name="parameter" Type="String" MaxLength="250" FixedLength="true" Unicode="true" />
+          <Property Name="bos6000Value" Type="String" MaxLength="250" FixedLength="true" Unicode="true" />
+          <Property Name="RequiredValue" Type="String" MaxLength="250" FixedLength="true" Unicode="true" />
+          <Property Name="remark" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="id" Type="Int32" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -704,26 +755,6 @@ warning 6002: The table/view 'GADATA.WELDING2.ConnectionState' does not have a p
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="Lastwelds" FunctionName="GADATAModelWelding.Store.Lastwelds1">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="GADATAModelWelding.Lastwelds_Result">
-                <ScalarProperty Name="Expr1" ColumnName="Expr1" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Number" ColumnName="Number" />
-                <ScalarProperty Name="Program" ColumnName="Program" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="Shift" ColumnName="Shift" />
-                <ScalarProperty Name="NbrSplash" ColumnName="NbrSplash" />
-                <ScalarProperty Name="NbrWeld" ColumnName="NbrWeld" />
-                <ScalarProperty Name="NbrReweld" ColumnName="NbrReweld" />
-                <ScalarProperty Name="AvgEnergy" ColumnName="AvgEnergy" />
-                <ScalarProperty Name="AvgPSF" ColumnName="AvgPSF" />
-                <ScalarProperty Name="AvgOhm" ColumnName="AvgOhm" />
-                <ScalarProperty Name="AvgUIP" ColumnName="AvgUIP" />
-                <ScalarProperty Name="AvgWeldTIme" ColumnName="AvgWeldTIme" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <EntitySetMapping Name="LastWelds">
             <EntityTypeMapping TypeName="GADATAModelWelding.LastWelds">
               <MappingFragment StoreEntitySet="LastWelds">
@@ -742,6 +773,20 @@ warning 6002: The table/view 'GADATA.WELDING2.ConnectionState' does not have a p
                 <ScalarProperty Name="Number" ColumnName="Number" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Expr1" ColumnName="Expr1" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QISViewer">
+            <EntityTypeMapping TypeName="GADATAModelWelding.QISViewer">
+              <MappingFragment StoreEntitySet="QISViewer">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="remark" ColumnName="remark" />
+                <ScalarProperty Name="RequiredValue" ColumnName="RequiredValue" />
+                <ScalarProperty Name="bos6000Value" ColumnName="bos6000Value" />
+                <ScalarProperty Name="parameter" ColumnName="parameter" />
+                <ScalarProperty Name="program" ColumnName="program" />
+                <ScalarProperty Name="TimerName" ColumnName="TimerName" />
+                <ScalarProperty Name="Timestamp" ColumnName="Timestamp" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

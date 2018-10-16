@@ -1,0 +1,19 @@
+﻿@model IQueryable<EqUiWebUi.Areas.Welding.Models.ConnectionState>
+
+@Html.Grid(Model).Named("ConnectionState").Build(columns =>
+{
+    columns.Add(c => c.NoConnection).Titled("NoConnection");
+    columns.Add(c => c.TimerName).Titled("TimerName");
+    columns.Add(c => c.C_timestamp).Titled("Datetime").Formatted("{0:dd-MM-yyyy HH:mm:ss}");
+    columns.Add(c => c.onlineInBos6000).Titled("OnlineInBos6000");
+
+
+}).Filterable().Pageable(pager =>
+{
+    pager.RowsPerPage = 20;
+    pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" } };
+    //{ 20, "20" }, { 40, "40" }, { 80, "80" }, { 100, "100" } };
+    pager.ShowPageSizes = true;
+}
+).Sortable()
+

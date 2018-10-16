@@ -39,6 +39,7 @@ namespace EqUiWebUi.Areas.Welding.Models
         public virtual DbSet<ConnectionState> ConnectionState { get; set; }
         public virtual DbSet<ComparePitchV316> ComparePitchV316 { get; set; }
         public virtual DbSet<LastWelds> LastWelds { get; set; }
+        public virtual DbSet<QISViewer> QISViewer { get; set; }
     
         public virtual ObjectResult<Lastwelds_Result> Lastwelds(string timer, Nullable<int> spot)
         {

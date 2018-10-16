@@ -27,7 +27,24 @@ namespace EqUiWebUi.Areas.Welding.Controllers
             return View(data);
         }
 
+        public ActionResult TV()
+        {
+            IQueryable<QISViewer> data = db.QISViewer.AsQueryable();
+            return View(data);
+        }
+   
+
+    public ActionResult _ConnectionState()
+    {
+        IQueryable<ConnectionState> data = db.ConnectionState.AsQueryable();
+        return PartialView(data);
     }
 
+    public ActionResult _QISvieuwer()
+    {
+        IQueryable<QISViewer> data = db.QISViewer.AsQueryable();
+        return PartialView(data);
+    }
 
+    }
 }
