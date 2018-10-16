@@ -183,6 +183,7 @@
     <Folder Include="Areas\VCSC\Views\Shared\" />
     <Folder Include="Areas\VWSC\Models\" />
     <Folder Include="Areas\VWSC\Views\Shared\" />
+    <Folder Include="Areas\Welding\Views\ARO\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Code\MyRowStyling.cs" />
@@ -580,13 +581,44 @@
     <Compile Include="Areas\VCSC\VCSCAreaRegistration.cs" />
     <Compile Include="Areas\VWSC\Controllers\vwscController.cs" />
     <Compile Include="Areas\VWSC\VWSCAreaRegistration.cs" />
-    <Compile Include="Areas\Welding\Models\AutomaticWorkFlowULPlans.cs">
+    <Compile Include="Areas\Welding\Controllers\AROController.cs" />
+    <Compile Include="Areas\Welding\Controllers\QteamController.cs" />
+    <Compile Include="Areas\Welding\Controllers\LaunchController.cs" />
+    <Compile Include="Areas\Welding\Controllers\WMController.cs" />
+    <Compile Include="Areas\Welding\Models\BosProgramAvailable.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Areas\Welding\Models\ExtraControles.cs">
+    <Compile Include="Areas\Welding\Models\BrownfieldLastMeasurement.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Areas\Welding\Models\ExtraUltralogUitadaptief3.cs">
+    <Compile Include="Areas\Welding\Models\CheckDubbelPrograms.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Welding\Models\ComparePitchV316.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Welding\Models\ConnectionState.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Welding\Models\DoubleSpotCheck.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Welding\Models\dressrequired.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Welding\Models\GreenFieldLastMeasurement.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Welding\Models\rt_AutoWorkFlowULPlans.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Welding\Models\rt_ExtraControles.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Welding\Models\StabilityInDicationV316.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Welding\Models\ULRapportering.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Welding\Models\WeldingModel.Context.cs">
@@ -603,6 +635,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>WeldingModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Welding\Models\WeldtimeSpotsSetup.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Welding\WeldingAreaRegistration.cs" />
     <Compile Include="Areas\Welding\Controllers\WeldingController.cs" />
@@ -1069,7 +1104,6 @@
     <Content Include="Areas\Welding\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Welding\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Welding\Views\Welding\Index.cshtml" />
-    <Content Include="Areas\Welding\Views\Welding\Pagina1.cshtml" />
     <EntityDeploy Include="Areas\Welding\Models\WeldingModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>WeldingModel.Designer.cs</LastGenOutput>
@@ -1077,8 +1111,6 @@
     <Content Include="Areas\Welding\Models\WeldingModel.edmx.diagram">
       <DependentUpon>WeldingModel.edmx</DependentUpon>
     </Content>
-    <Content Include="Areas\Welding\Views\Welding\AutomaticWorkFlowULPlans.cshtml" />
-    <Content Include="Areas\Welding\Views\Welding\AutomaticWorkFlowULPlansFilter.cshtml" />
     <Content Include="Areas\PlcSupervisie\Views\Screenshot\CarouselBF.cshtml" />
     <Content Include="Areas\user_management\Views\user\ForbiddenMethod.cshtml" />
     <Content Include="Areas\user_management\Views\user\LoginPrompt.cshtml" />
@@ -1094,7 +1126,6 @@
     <Content Include="Areas\Alert\Views\L_controlLimits\_List.cshtml" />
     <Content Include="Areas\Alert\Views\Alert\_ControlChart.cshtml" />
     <Content Include="App_Code\MyHtmlHelpers.cshtml" />
-    <Content Include="Areas\Welding\Views\Welding\ExtraControlers.cshtml" />
     <Content Include="Areas\VASC\Views\c_service_setup\_sessionSetupGrid.cshtml" />
     <Content Include="Content\bootstrap.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
@@ -1116,6 +1147,23 @@
     <Content Include="Areas\HangfireArea\Views\c_job\Edit.cshtml" />
     <Content Include="Areas\HangfireArea\Views\c_job\Index.cshtml" />
     <Content Include="Content\MvcGrid\Fonts\GridGlyphs.woff" />
+    <Content Include="Areas\Welding\Views\Qteam\Index.cshtml" />
+    <Content Include="Areas\Welding\Views\Qteam\rt_AutoWorkFlowULPlans.cshtml" />
+    <Content Include="Areas\Welding\Views\Qteam\ULRapportering.cshtml" />
+    <Content Include="Areas\Welding\Views\Qteam\rt_ExtraControles.cshtml" />
+    <Content Include="Areas\Welding\Views\WM\Index.cshtml" />
+    <Content Include="Areas\Welding\Views\WM\BrownfieldLastMeasurement.cshtml" />
+    <Content Include="Areas\Welding\Views\WM\GreenFieldLastMeasurement.cshtml" />
+    <Content Include="Areas\Welding\Views\WM\Launch.cshtml" />
+    <Content Include="Areas\Welding\Views\WM\DoubleSpotCheck.cshtml" />
+    <Content Include="Areas\Welding\Views\Launch\DoubleSpotCheck.cshtml" />
+    <Content Include="Areas\Welding\Views\Launch\Index.cshtml" />
+    <Content Include="Areas\Welding\Views\Launch\CheckDubbelPrograms.cshtml" />
+    <Content Include="Areas\Welding\Views\Launch\BosProgramAvailable.cshtml" />
+    <Content Include="Areas\Welding\Views\Launch\dressrequired.cshtml" />
+    <Content Include="Areas\Welding\Views\Launch\WeldtimeSpotsSetup.cshtml" />
+    <Content Include="Areas\Welding\Views\Launch\StabilityInDicationV316.cshtml" />
+    <Content Include="Areas\Welding\Views\Launch\ComparePitchV316.cshtml" />
     <None Include="Properties\PublishProfiles\gensvw1178-DEV-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gotsvw11292-PRODUCTION-VCTA.pubxml" />
@@ -1293,8 +1341,8 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <OutputPath>bin\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <Optimize>false</Optimize>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>

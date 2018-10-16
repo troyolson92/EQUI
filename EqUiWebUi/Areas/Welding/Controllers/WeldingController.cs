@@ -9,8 +9,7 @@ namespace EqUiWebUi.Areas.Welding
 {
     public class WeldingController : Controller
     {
-        GADATAEntitiesWelding db = new GADATAEntitiesWelding();
-
+       
         // GET: Welding/Welding
         public ActionResult Index()
         {
@@ -24,26 +23,5 @@ namespace EqUiWebUi.Areas.Welding
             return View();
         }
 
-        //basic grid 
-        public ActionResult AutomaticWorkFlowULPlans()
-        {
-            var data = db.AutomaticWorkFlowULPlans;
-            return View(data);
-        }
-
-        public ActionResult AutomaticWorkFlowULPlansFilter(string Ul_plan = "test")
-        {
-            ViewBag.Ul_planFilter = Ul_plan;
-            var data = db.AutomaticWorkFlowULPlans.Where(c => c.UL_plan.Contains(Ul_plan));
-            return View(data);
-        }
-
-
-        //for file "Extra controles"
-        public ActionResult ExtraControlers()
-        {
-            IQueryable<ExtraControles> data = db.ExtraControles.AsQueryable();
-            return View(data);
         }
     }
-}

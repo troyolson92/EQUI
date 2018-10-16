@@ -86,7 +86,7 @@ namespace EqUiWebUi
             switch (status)
             {
                 case "production running":
-                    return "TableLogtypeGreen";
+                    return "ani_PulseGreen";
 
                 case "no production":
                     return "TableLogtypeRed";

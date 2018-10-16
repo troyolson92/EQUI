@@ -1,0 +1,58 @@
+﻿
+@{
+
+                ViewBag.Title = "Index WM";
+}
+<div class="jumbotron">
+    <h1>Welding Master HomePage</h1>
+</div>
+
+<p></p>
+
+<div class="card">
+    <div class="card-header bg-primary">
+        <h5 class="card-title text-white">
+            General Tools
+            <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
+        </h5>
+    </div>
+
+    <p></p>
+
+    @MyHtmlHelpers.EquiLink("/Welding/WM/BrownFieldLastMeasurement", "fab fa-qq", "Last Weld Measurements GA2", helperText: "omschrijving =>> Automatische lijst met de laatste Weld voor iedere spot GA2")
+
+    <p></p>
+
+    @MyHtmlHelpers.EquiLink("/Welding/WM/GreenFieldLastMeasurement", "fab fa-qq", "Last Weld Measurements GA1 en GA4", helperText: "omschrijving =>> Automatische lijst met de laatste Weld voor iedere spot GA1 en GA4")
+    <p></p>
+    @MyHtmlHelpers.EquiLink("/Welding/WM/WMTV", "fab fa-qq", "TV", helperText: "Qis system, live weldfaults factory, online timers")
+    <p></p>
+
+</div>
+<p></p>
+
+<div class="card">
+    <div class="card-header bg-primary">
+        <h5 class="card-title text-white">
+            Welding Master Personal pages
+            <span class="clickable float-right"><i class="fas fa-chevron-circle-up  fa-rotate-180 fa-1"></i></span>
+        </h5>
+    </div>
+    <div class="card-body" style="display:none">
+
+        <p></p>
+
+        @MyHtmlHelpers.EquiLink("/Welding/Launch", "fab fa-qq", "Tools for Launch activity", helperText: "launch data")
+
+        <p></p>
+
+        @MyHtmlHelpers.EquiLink("/Welding/WM/Coppejens Jens", "fab fa-qq", "Coppejans Jens", helperText: "personal workflow")
+
+        <p></p>
+
+        @MyHtmlHelpers.EquiLink("/Welding/WM/Leemans Thomas", "fab fa-qq", "Leemans Thomas", helperText: "personal workflow")
+
+    </div>
+    <p></p>
+
+

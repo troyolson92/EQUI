@@ -4,10 +4,20 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="e109b52680e54941aea1e1f5eb0cf409" Name="Diagram1">
-        <EntityTypeShape EntityType="GADATAModelWelding.ExtraControles" Width="1.5" PointX="5.5" PointY="0.5" />
-        <EntityTypeShape EntityType="GADATAModelWelding.ExtraUltralogUitadaptief3" Width="1.5" PointX="7.25" PointY="0.5" />
-        <EntityTypeShape EntityType="GADATAModelWelding.AutomaticWorkFlowULPlans" Width="1.5" PointX="3.375" PointY="0.5" />
+      <Diagram DiagramId="e109b52680e54941aea1e1f5eb0cf409" Name="Diagram1" ZoomLevel="86">
+        <EntityTypeShape EntityType="GADATAModelWelding.rt_AutoWorkFlowULPlans" Width="1.5" PointX="0.625" PointY="0.5" />
+        <EntityTypeShape EntityType="GADATAModelWelding.rt_ExtraControles" Width="1.5" PointX="2.375" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="GADATAModelWelding.ULRapportering" Width="1.5" PointX="4" PointY="0.5" />
+        <EntityTypeShape EntityType="GADATAModelWelding.BrownfieldLastMeasurement" Width="1.5" PointX="10" PointY="0.5" />
+        <EntityTypeShape EntityType="GADATAModelWelding.GreenFieldLastMeasurement" Width="1.5" PointX="11.625" PointY="0.5" />
+        <EntityTypeShape EntityType="GADATAModelWelding.DoubleSpotCheck" Width="1.5" PointX="8.375" PointY="0.5" />
+        <EntityTypeShape EntityType="GADATAModelWelding.CheckDubbelPrograms" Width="1.5" PointX="8.375" PointY="2.5" />
+        <EntityTypeShape EntityType="GADATAModelWelding.BosProgramAvailable" Width="1.5" PointX="8.375" PointY="4.5" />
+        <EntityTypeShape EntityType="GADATAModelWelding.dressrequired" Width="1.5" PointX="10" PointY="4.5" />
+        <EntityTypeShape EntityType="GADATAModelWelding.WeldtimeSpotsSetup" Width="1.5" PointX="11.625" PointY="4.5" />
+        <EntityTypeShape EntityType="GADATAModelWelding.StabilityInDicationV316" Width="1.5" PointX="6.625" PointY="0.5" />
+        <EntityTypeShape EntityType="GADATAModelWelding.ComparePitchV316" Width="1.5" PointX="6.625" PointY="2.875" />
+        <EntityTypeShape EntityType="GADATAModelWelding.ConnectionState" Width="1.5" PointX="0.875" PointY="5.125" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

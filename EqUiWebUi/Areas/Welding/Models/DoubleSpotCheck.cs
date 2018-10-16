@@ -12,13 +12,11 @@ namespace EqUiWebUi.Areas.Welding.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class ExtraUltralogUitadaptief3
+    public partial class DoubleSpotCheck
     {
-        public string Timer { get; set; }
-        public Nullable<int> spot { get; set; }
-        public Nullable<bool> uitAdaptief { get; set; }
-        public string NPT { get; set; }
-        public string CDSID { get; set; }
-        public Nullable<System.DateTime> Expr1 { get; set; }
+        public Nullable<int> SpotName { get; set; }
+        public Nullable<int> WeldProgram { get; set; }
+        public string TimerName { get; set; }
+        public int ID { get; set; }
     }
 }
