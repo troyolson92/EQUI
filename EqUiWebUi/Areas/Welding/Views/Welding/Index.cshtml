@@ -1,11 +1,12 @@
 ﻿@{
     ViewBag.Title = "VCG GA ARO Homepage";
+   
 }
 <div class="jumbotron">
     <h1>WELCOME in het Welding Team</h1>
 </div>
 
-<div class="card">
+<div class="card" style="background-color:#efeaea">
     <div class="card-header bg-dark">
         <h5 class="card-title text-white">
             Home Page WeldingTeam
@@ -68,6 +69,23 @@
 
         <p>
             @MyHtmlHelpers.EquiLink("/Welding/Qteam/Index", "fab fa-qq", "Qteam", helperText: "startpagina van het Qteam")
+    </div>
+</div>
+
+
+<p></p>
+
+<div class="card">
+    <div class="card-header bg-dark">
+        <h5 class="card-title text-white">
+            TeardownTeam
+            <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
+        </h5>
+    </div>
+    <div class="card-body">
+
+        <p>
+            @MyHtmlHelpers.EquiLink("/Welding/TeardownTeam/Index", "fab fa-qq", "TeardownTeam", helperText: "startpagina van het TeardownTeam")
     </div>
 </div>
 

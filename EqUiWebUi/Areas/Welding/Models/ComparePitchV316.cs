@@ -16,14 +16,12 @@ namespace EqUiWebUi.Areas.Welding.Models
     {
         public string timerNumber { get; set; }
         public string lastWeldTime { get; set; }
-        public string spotid { get; set; }
+        public string SpotID { get; set; }
         public string Timer { get; set; }
-        public string Variant { get; set; }
         public string AlternativeNumber { get; set; }
         public string Model { get; set; }
         public Nullable<System.DateTime> lastULControleTime { get; set; }
         public Nullable<double> TotalThickness { get; set; }
-        public string SpotID { get; set; }
         public string Expr1 { get; set; }
     }
 }

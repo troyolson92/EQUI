@@ -9,7 +9,11 @@
 {
     columns.Add(c => c.LastinspectionTime).Titled("LastinspectionTime").Formatted("{0:dd-MM-yyyy HH:mm:ss}");
     columns.Add(c => c.UL_Plan).Titled("UL_Plan");
-    columns.Add(c => c.LastnumberFromPlanBusy).Titled("Planbusy").Css("bolded") ;
+    columns.Add(c => c.LastnumberFromPlanBusy).Titled("Planbusy");
+    //columns.Add(c => c)
+      //  .Titled("Planbusy")
+        //.Encoded(false)
+       // .RenderedAs(c => "<div class='bg-danger'>Test</div>");
     columns.Add(c => c.Planlenght).Titled("Planlenght").Css("bolded");
     columns.Add(c => c.Last30min_productionStatus).Titled("Last30min_productionStatus");
     columns.Add(c => c.BuildBody).Titled("BuildBody").InitialSort(GridSortOrder.Desc);
@@ -22,7 +26,8 @@
     //{ 20, "20" }, { 40, "40" }, { 80, "80" }, { 100, "100" } };
     pager.ShowPageSizes = true;
 }
-).Sortable();
+).Sortable()
+
 
 
 @section scripts{
@@ -30,7 +35,7 @@
         //full with screen
         $("#allcontent").removeClass("body-content");
         $("#allcontent").removeClass("container");
-        $actualRow.css('background-color', '#0094ff');
+      //  $actualRow.css('background-color', '#0094ff');
                        // $("#allcontent").html("<i class='fas fa-spinner fa-spin fa-2x'></i>")
 
 
@@ -55,7 +60,7 @@
 
         setInterval(function () {
             refreshGrid()
-        }, 1000*10)
+        }, 1000*60)
 
     </script>
     <style>

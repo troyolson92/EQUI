@@ -10,11 +10,10 @@
 namespace EqUiWebUi.Areas.Welding.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class GreenFieldLastMeasurement
+    public partial class Lastwelds_Result
     {
-        public string NPT { get; set; }
+        public string Expr1 { get; set; }
         public string Name { get; set; }
         public Nullable<int> Number { get; set; }
         public byte Program { get; set; }

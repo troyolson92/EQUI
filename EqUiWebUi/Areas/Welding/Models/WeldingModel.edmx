@@ -70,29 +70,6 @@ warning 6002: The table/view 'GADATA.LAUNCH.BosProgramAvailable' does not have a
           <Property Name="Program_Available" Type="tinyint" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'GADATA.LAUNCH.BrownfieldLastMeasurements' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="BrownfieldLastMeasurements">
-          <Key>
-            <PropertyRef Name="Program" />
-            <PropertyRef Name="Date" />
-            <PropertyRef Name="Shift" />
-          </Key>
-          <Property Name="Expr1" Type="nchar" MaxLength="15" />
-          <Property Name="Name" Type="nchar" MaxLength="15" />
-          <Property Name="Number" Type="int" />
-          <Property Name="Program" Type="tinyint" Nullable="false" />
-          <Property Name="Date" Type="datetime" Nullable="false" />
-          <Property Name="Shift" Type="char" MaxLength="1" Nullable="false" />
-          <Property Name="NbrSplash" Type="smallint" />
-          <Property Name="NbrWeld" Type="smallint" />
-          <Property Name="NbrReweld" Type="smallint" />
-          <Property Name="AvgEnergy" Type="real" />
-          <Property Name="AvgPSF" Type="real" />
-          <Property Name="AvgOhm" Type="real" />
-          <Property Name="AvgUIP" Type="real" />
-          <Property Name="AvgWeldTIme" Type="real" />
-        </EntityType>
-        <!--Errors Found During Generation:
 warning 6002: The table/view 'GADATA.LAUNCH.CheckDubbelPrograms' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="CheckDubbelPrograms">
           <Key>
@@ -145,14 +122,15 @@ warning 6002: The table/view 'GADATA.LAUNCH.dressrequired' does not have a prima
           <Property Name="ID" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'GADATA.LAUNCH.GreenFieldLastMeasurements' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="GreenFieldLastMeasurements">
+warning 6002: The table/view 'GADATA.LAUNCH.LastWelds' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="LastWelds">
           <Key>
             <PropertyRef Name="Program" />
             <PropertyRef Name="Date" />
             <PropertyRef Name="Shift" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="NPT" Type="nchar" MaxLength="15" />
+          <Property Name="Expr1" Type="nchar" MaxLength="15" />
           <Property Name="Name" Type="nchar" MaxLength="15" />
           <Property Name="Number" Type="int" />
           <Property Name="Program" Type="tinyint" Nullable="false" />
@@ -166,6 +144,7 @@ warning 6002: The table/view 'GADATA.LAUNCH.GreenFieldLastMeasurements' does not
           <Property Name="AvgOhm" Type="real" />
           <Property Name="AvgUIP" Type="real" />
           <Property Name="AvgWeldTIme" Type="real" />
+          <Property Name="ID" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'GADATA.LAUNCH.StabilityInDicationV316' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -215,19 +194,10 @@ warning 6002: The table/view 'GADATA.WELDING2.ConnectionState' does not have a p
           <Property Name="_timestamp" Type="datetime" />
           <Property Name="onlineInBos6000" Type="bit" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="TimerBreakdowns_busy">
-          <Property Name="NPT" Type="nchar" MaxLength="15" />
-          <Property Name="Timer" Type="nchar" MaxLength="15" />
-          <Property Name="location" Type="varchar" MaxLength="256" />
-          <Property Name="errorText" Type="varchar" MaxLength="64" />
-          <Property Name="_timestamp" Type="datetime" />
-          <Property Name="timerfault" Type="varchar" MaxLength="64" />
-          <Property Name="timerfault_Extra" Type="varchar" MaxLength="64" />
-          <Property Name="ts_breakdownStart" Type="datetime" />
-          <Property Name="ts_breakdownEnd" Type="datetime" />
-        </EntityType>-->
+        <Function Name="Lastwelds1" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="WELDING" StoreFunctionName="Lastwelds">
+          <Parameter Name="Timer" Type="nchar" Mode="In" />
+          <Parameter Name="spot" Type="int" Mode="In" />
+        </Function>
         <EntityContainer Name="GADATAModelWeldingStoreContainer">
           <EntitySet Name="rt_AutoWorkFlowULPlans" EntityType="Self.rt_AutoWorkFlowULPlans" store:Type="Tables" store:Schema="UL">
             <DefiningQuery>SELECT 
@@ -281,24 +251,6 @@ warning 6013: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
     [BosProgramAvailable].[Program_Available] AS [Program_Available]
     FROM [LAUNCH].[BosProgramAvailable] AS [BosProgramAvailable]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="BrownfieldLastMeasurements" EntityType="Self.BrownfieldLastMeasurements" store:Type="Views" store:Schema="LAUNCH">
-            <DefiningQuery>SELECT 
-    [BrownfieldLastMeasurements].[Expr1] AS [Expr1], 
-    [BrownfieldLastMeasurements].[Name] AS [Name], 
-    [BrownfieldLastMeasurements].[Number] AS [Number], 
-    [BrownfieldLastMeasurements].[Program] AS [Program], 
-    [BrownfieldLastMeasurements].[Date] AS [Date], 
-    [BrownfieldLastMeasurements].[Shift] AS [Shift], 
-    [BrownfieldLastMeasurements].[NbrSplash] AS [NbrSplash], 
-    [BrownfieldLastMeasurements].[NbrWeld] AS [NbrWeld], 
-    [BrownfieldLastMeasurements].[NbrReweld] AS [NbrReweld], 
-    [BrownfieldLastMeasurements].[AvgEnergy] AS [AvgEnergy], 
-    [BrownfieldLastMeasurements].[AvgPSF] AS [AvgPSF], 
-    [BrownfieldLastMeasurements].[AvgOhm] AS [AvgOhm], 
-    [BrownfieldLastMeasurements].[AvgUIP] AS [AvgUIP], 
-    [BrownfieldLastMeasurements].[AvgWeldTIme] AS [AvgWeldTIme]
-    FROM [LAUNCH].[BrownfieldLastMeasurements] AS [BrownfieldLastMeasurements]</DefiningQuery>
-          </EntitySet>
           <EntitySet Name="CheckDubbelPrograms" EntityType="Self.CheckDubbelPrograms" store:Type="Views" store:Schema="LAUNCH">
             <DefiningQuery>SELECT 
     [CheckDubbelPrograms].[Name] AS [Name], 
@@ -335,23 +287,24 @@ warning 6013: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
     [dressrequired].[ID] AS [ID]
     FROM [LAUNCH].[dressrequired] AS [dressrequired]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="GreenFieldLastMeasurements" EntityType="Self.GreenFieldLastMeasurements" store:Type="Views" store:Schema="LAUNCH">
+          <EntitySet Name="LastWelds" EntityType="Self.LastWelds" store:Type="Views" store:Schema="LAUNCH">
             <DefiningQuery>SELECT 
-    [GreenFieldLastMeasurements].[NPT] AS [NPT], 
-    [GreenFieldLastMeasurements].[Name] AS [Name], 
-    [GreenFieldLastMeasurements].[Number] AS [Number], 
-    [GreenFieldLastMeasurements].[Program] AS [Program], 
-    [GreenFieldLastMeasurements].[Date] AS [Date], 
-    [GreenFieldLastMeasurements].[Shift] AS [Shift], 
-    [GreenFieldLastMeasurements].[NbrSplash] AS [NbrSplash], 
-    [GreenFieldLastMeasurements].[NbrWeld] AS [NbrWeld], 
-    [GreenFieldLastMeasurements].[NbrReweld] AS [NbrReweld], 
-    [GreenFieldLastMeasurements].[AvgEnergy] AS [AvgEnergy], 
-    [GreenFieldLastMeasurements].[AvgPSF] AS [AvgPSF], 
-    [GreenFieldLastMeasurements].[AvgOhm] AS [AvgOhm], 
-    [GreenFieldLastMeasurements].[AvgUIP] AS [AvgUIP], 
-    [GreenFieldLastMeasurements].[AvgWeldTIme] AS [AvgWeldTIme]
-    FROM [LAUNCH].[GreenFieldLastMeasurements] AS [GreenFieldLastMeasurements]</DefiningQuery>
+    [LastWelds].[Expr1] AS [Expr1], 
+    [LastWelds].[Name] AS [Name], 
+    [LastWelds].[Number] AS [Number], 
+    [LastWelds].[Program] AS [Program], 
+    [LastWelds].[Date] AS [Date], 
+    [LastWelds].[Shift] AS [Shift], 
+    [LastWelds].[NbrSplash] AS [NbrSplash], 
+    [LastWelds].[NbrWeld] AS [NbrWeld], 
+    [LastWelds].[NbrReweld] AS [NbrReweld], 
+    [LastWelds].[AvgEnergy] AS [AvgEnergy], 
+    [LastWelds].[AvgPSF] AS [AvgPSF], 
+    [LastWelds].[AvgOhm] AS [AvgOhm], 
+    [LastWelds].[AvgUIP] AS [AvgUIP], 
+    [LastWelds].[AvgWeldTIme] AS [AvgWeldTIme], 
+    [LastWelds].[ID] AS [ID]
+    FROM [LAUNCH].[LastWelds] AS [LastWelds]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="StabilityInDicationV316" EntityType="Self.StabilityInDicationV316" store:Type="Views" store:Schema="LAUNCH">
             <DefiningQuery>SELECT 
@@ -401,16 +354,19 @@ warning 6013: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
           <EntitySet Name="rt_AutoWorkFlowULPlans" EntityType="GADATAModelWelding.rt_AutoWorkFlowULPlans" />
           <EntitySet Name="rt_ExtraControles" EntityType="GADATAModelWelding.rt_ExtraControles" />
           <EntitySet Name="ULRapporterings" EntityType="GADATAModelWelding.ULRapportering" />
-          <EntitySet Name="BrownfieldLastMeasurements" EntityType="GADATAModelWelding.BrownfieldLastMeasurement" />
-          <EntitySet Name="GreenFieldLastMeasurements" EntityType="GADATAModelWelding.GreenFieldLastMeasurement" />
           <EntitySet Name="DoubleSpotCheck" EntityType="GADATAModelWelding.DoubleSpotCheck" />
           <EntitySet Name="CheckDubbelPrograms" EntityType="GADATAModelWelding.CheckDubbelPrograms" />
           <EntitySet Name="BosProgramAvailable" EntityType="GADATAModelWelding.BosProgramAvailable" />
           <EntitySet Name="dressrequired" EntityType="GADATAModelWelding.dressrequired" />
           <EntitySet Name="WeldtimeSpotsSetup" EntityType="GADATAModelWelding.WeldtimeSpotsSetup" />
           <EntitySet Name="StabilityInDicationV316" EntityType="GADATAModelWelding.StabilityInDicationV316" />
-          <EntitySet Name="ComparePitchV316" EntityType="GADATAModelWelding.ComparePitchV316" />
           <EntitySet Name="ConnectionState" EntityType="GADATAModelWelding.ConnectionState" />
+          <EntitySet Name="ComparePitchV316" EntityType="GADATAModelWelding.ComparePitchV316" />
+          <FunctionImport Name="Lastwelds" ReturnType="Collection(GADATAModelWelding.Lastwelds_Result)">
+            <Parameter Name="Timer" Mode="In" Type="String" />
+            <Parameter Name="spot" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="LastWelds" EntityType="GADATAModelWelding.LastWelds" />
         </EntityContainer>
         <EntityType Name="rt_AutoWorkFlowULPlans">
           <Key>
@@ -472,48 +428,6 @@ warning 6013: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
           <Property Name="spot" Type="Int32" />
           <Property Name="loose_" Type="Boolean" />
         </EntityType>
-        <EntityType Name="BrownfieldLastMeasurement">
-          <Key>
-            <PropertyRef Name="Program" />
-            <PropertyRef Name="Date" />
-            <PropertyRef Name="Shift" />
-          </Key>
-          <Property Name="Expr1" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
-          <Property Name="Name" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
-          <Property Name="Number" Type="Int32" />
-          <Property Name="Program" Type="Byte" Nullable="false" />
-          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Shift" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="NbrSplash" Type="Int16" />
-          <Property Name="NbrWeld" Type="Int16" />
-          <Property Name="NbrReweld" Type="Int16" />
-          <Property Name="AvgEnergy" Type="Single" />
-          <Property Name="AvgPSF" Type="Single" />
-          <Property Name="AvgOhm" Type="Single" />
-          <Property Name="AvgUIP" Type="Single" />
-          <Property Name="AvgWeldTIme" Type="Single" />
-        </EntityType>
-        <EntityType Name="GreenFieldLastMeasurement">
-          <Key>
-            <PropertyRef Name="Program" />
-            <PropertyRef Name="Date" />
-            <PropertyRef Name="Shift" />
-          </Key>
-          <Property Name="NPT" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
-          <Property Name="Name" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
-          <Property Name="Number" Type="Int32" />
-          <Property Name="Program" Type="Byte" Nullable="false" />
-          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Shift" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="NbrSplash" Type="Int16" />
-          <Property Name="NbrWeld" Type="Int16" />
-          <Property Name="NbrReweld" Type="Int16" />
-          <Property Name="AvgEnergy" Type="Single" />
-          <Property Name="AvgPSF" Type="Single" />
-          <Property Name="AvgOhm" Type="Single" />
-          <Property Name="AvgUIP" Type="Single" />
-          <Property Name="AvgWeldTIme" Type="Single" />
-        </EntityType>
         <EntityType Name="DoubleSpotCheck">
           <Key>
             <PropertyRef Name="ID" />
@@ -572,23 +486,6 @@ warning 6013: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
           <Property Name="nbrWelds" Type="Int16" />
           <Property Name="StabiliteitsIni" Type="Single" />
         </EntityType>
-        <EntityType Name="ComparePitchV316">
-          <Key>
-            <PropertyRef Name="timerNumber" />
-            <PropertyRef Name="lastWeldTime" />
-          </Key>
-          <Property Name="timerNumber" Type="String" Nullable="false" MaxLength="17" FixedLength="false" Unicode="false" />
-          <Property Name="lastWeldTime" Type="String" Nullable="false" MaxLength="23" FixedLength="false" Unicode="false" />
-          <Property Name="spotid" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
-          <Property Name="Timer" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
-          <Property Name="Variant" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
-          <Property Name="AlternativeNumber" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
-          <Property Name="Model" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="lastULControleTime" Type="DateTime" Precision="3" />
-          <Property Name="TotalThickness" Type="Double" />
-          <Property Name="SpotID" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
-          <Property Name="Expr1" Type="String" MaxLength="255" FixedLength="true" Unicode="true" />
-        </EntityType>
         <EntityType Name="ConnectionState">
           <Key>
             <PropertyRef Name="NoConnection" />
@@ -597,6 +494,60 @@ warning 6013: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
           <Property Name="TimerName" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
           <Property Name="C_timestamp" Type="DateTime" Precision="3" />
           <Property Name="onlineInBos6000" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="ComparePitchV316">
+          <Key>
+            <PropertyRef Name="timerNumber" />
+            <PropertyRef Name="lastWeldTime" />
+          </Key>
+          <Property Name="timerNumber" Type="String" Nullable="false" MaxLength="17" FixedLength="false" Unicode="false" />
+          <Property Name="lastWeldTime" Type="String" Nullable="false" MaxLength="23" FixedLength="false" Unicode="false" />
+          <Property Name="SpotID" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
+          <Property Name="Timer" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
+          <Property Name="AlternativeNumber" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
+          <Property Name="Model" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="lastULControleTime" Type="DateTime" Precision="3" />
+          <Property Name="TotalThickness" Type="Double" />
+          <Property Name="Expr1" Type="String" MaxLength="255" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <ComplexType Name="Lastwelds_Result">
+          <Property Type="String" Name="Expr1" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="15" />
+          <Property Type="Int32" Name="Number" Nullable="true" />
+          <Property Type="Byte" Name="Program" Nullable="false" />
+          <Property Type="DateTime" Name="Date" Nullable="false" Precision="23" />
+          <Property Type="String" Name="Shift" Nullable="false" MaxLength="1" />
+          <Property Type="Int16" Name="NbrSplash" Nullable="true" />
+          <Property Type="Int16" Name="NbrWeld" Nullable="true" />
+          <Property Type="Int16" Name="NbrReweld" Nullable="true" />
+          <Property Type="Single" Name="AvgEnergy" Nullable="true" />
+          <Property Type="Single" Name="AvgPSF" Nullable="true" />
+          <Property Type="Single" Name="AvgOhm" Nullable="true" />
+          <Property Type="Single" Name="AvgUIP" Nullable="true" />
+          <Property Type="Single" Name="AvgWeldTIme" Nullable="true" />
+        </ComplexType>
+        <EntityType Name="LastWelds">
+          <Key>
+            <PropertyRef Name="Program" />
+            <PropertyRef Name="Date" />
+            <PropertyRef Name="Shift" />
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="Expr1" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="Number" Type="Int32" />
+          <Property Name="Program" Type="Byte" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Shift" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="NbrSplash" Type="Int16" />
+          <Property Name="NbrWeld" Type="Int16" />
+          <Property Name="NbrReweld" Type="Int16" />
+          <Property Name="AvgEnergy" Type="Single" />
+          <Property Name="AvgPSF" Type="Single" />
+          <Property Name="AvgOhm" Type="Single" />
+          <Property Name="AvgUIP" Type="Single" />
+          <Property Name="AvgWeldTIme" Type="Single" />
+          <Property Name="ID" Type="Int32" Nullable="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -667,46 +618,6 @@ warning 6013: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="BrownfieldLastMeasurements">
-            <EntityTypeMapping TypeName="GADATAModelWelding.BrownfieldLastMeasurement">
-              <MappingFragment StoreEntitySet="BrownfieldLastMeasurements">
-                <ScalarProperty Name="AvgWeldTIme" ColumnName="AvgWeldTIme" />
-                <ScalarProperty Name="AvgUIP" ColumnName="AvgUIP" />
-                <ScalarProperty Name="AvgOhm" ColumnName="AvgOhm" />
-                <ScalarProperty Name="AvgPSF" ColumnName="AvgPSF" />
-                <ScalarProperty Name="AvgEnergy" ColumnName="AvgEnergy" />
-                <ScalarProperty Name="NbrReweld" ColumnName="NbrReweld" />
-                <ScalarProperty Name="NbrWeld" ColumnName="NbrWeld" />
-                <ScalarProperty Name="NbrSplash" ColumnName="NbrSplash" />
-                <ScalarProperty Name="Shift" ColumnName="Shift" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="Program" ColumnName="Program" />
-                <ScalarProperty Name="Number" ColumnName="Number" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Expr1" ColumnName="Expr1" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="GreenFieldLastMeasurements">
-            <EntityTypeMapping TypeName="GADATAModelWelding.GreenFieldLastMeasurement">
-              <MappingFragment StoreEntitySet="GreenFieldLastMeasurements">
-                <ScalarProperty Name="AvgWeldTIme" ColumnName="AvgWeldTIme" />
-                <ScalarProperty Name="AvgUIP" ColumnName="AvgUIP" />
-                <ScalarProperty Name="AvgOhm" ColumnName="AvgOhm" />
-                <ScalarProperty Name="AvgPSF" ColumnName="AvgPSF" />
-                <ScalarProperty Name="AvgEnergy" ColumnName="AvgEnergy" />
-                <ScalarProperty Name="NbrReweld" ColumnName="NbrReweld" />
-                <ScalarProperty Name="NbrWeld" ColumnName="NbrWeld" />
-                <ScalarProperty Name="NbrSplash" ColumnName="NbrSplash" />
-                <ScalarProperty Name="Shift" ColumnName="Shift" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="Program" ColumnName="Program" />
-                <ScalarProperty Name="Number" ColumnName="Number" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="NPT" ColumnName="NPT" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="DoubleSpotCheck">
             <EntityTypeMapping TypeName="GADATAModelWelding.DoubleSpotCheck">
               <MappingFragment StoreEntitySet="DoubleSpotCheck">
@@ -768,21 +679,6 @@ warning 6013: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ComparePitchV316">
-            <EntityTypeMapping TypeName="GADATAModelWelding.ComparePitchV316">
-              <MappingFragment StoreEntitySet="ComparePitchV316">
-                <ScalarProperty Name="Expr1" ColumnName="Expr1" />
-                <ScalarProperty Name="SpotID" ColumnName="SpotID" />
-                <ScalarProperty Name="TotalThickness" ColumnName="TotalThickness" />
-                <ScalarProperty Name="lastULControleTime" ColumnName="lastULControleTime" />
-                <ScalarProperty Name="Model" ColumnName="Model" />
-                <ScalarProperty Name="AlternativeNumber" ColumnName="AlternativeNumber" />
-                <ScalarProperty Name="Timer" ColumnName="Timer" />
-                <ScalarProperty Name="lastWeldTime" ColumnName="lastWeldTime" />
-                <ScalarProperty Name="timerNumber" ColumnName="timerNumber" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="ConnectionState">
             <EntityTypeMapping TypeName="GADATAModelWelding.ConnectionState">
               <MappingFragment StoreEntitySet="ConnectionState">
@@ -790,6 +686,62 @@ warning 6013: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
                 <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
                 <ScalarProperty Name="TimerName" ColumnName="TimerName" />
                 <ScalarProperty Name="NoConnection" ColumnName="NoConnection" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ComparePitchV316">
+            <EntityTypeMapping TypeName="GADATAModelWelding.ComparePitchV316">
+              <MappingFragment StoreEntitySet="ComparePitchV316">
+                <ScalarProperty Name="Expr1" ColumnName="Expr1" />
+                <ScalarProperty Name="TotalThickness" ColumnName="TotalThickness" />
+                <ScalarProperty Name="lastULControleTime" ColumnName="lastULControleTime" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="AlternativeNumber" ColumnName="AlternativeNumber" />
+                <ScalarProperty Name="Timer" ColumnName="Timer" />
+                <ScalarProperty Name="SpotID" ColumnName="SpotID" />
+                <ScalarProperty Name="lastWeldTime" ColumnName="lastWeldTime" />
+                <ScalarProperty Name="timerNumber" ColumnName="timerNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="Lastwelds" FunctionName="GADATAModelWelding.Store.Lastwelds1">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GADATAModelWelding.Lastwelds_Result">
+                <ScalarProperty Name="Expr1" ColumnName="Expr1" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="Program" ColumnName="Program" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Shift" ColumnName="Shift" />
+                <ScalarProperty Name="NbrSplash" ColumnName="NbrSplash" />
+                <ScalarProperty Name="NbrWeld" ColumnName="NbrWeld" />
+                <ScalarProperty Name="NbrReweld" ColumnName="NbrReweld" />
+                <ScalarProperty Name="AvgEnergy" ColumnName="AvgEnergy" />
+                <ScalarProperty Name="AvgPSF" ColumnName="AvgPSF" />
+                <ScalarProperty Name="AvgOhm" ColumnName="AvgOhm" />
+                <ScalarProperty Name="AvgUIP" ColumnName="AvgUIP" />
+                <ScalarProperty Name="AvgWeldTIme" ColumnName="AvgWeldTIme" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="LastWelds">
+            <EntityTypeMapping TypeName="GADATAModelWelding.LastWelds">
+              <MappingFragment StoreEntitySet="LastWelds">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="AvgWeldTIme" ColumnName="AvgWeldTIme" />
+                <ScalarProperty Name="AvgUIP" ColumnName="AvgUIP" />
+                <ScalarProperty Name="AvgOhm" ColumnName="AvgOhm" />
+                <ScalarProperty Name="AvgPSF" ColumnName="AvgPSF" />
+                <ScalarProperty Name="AvgEnergy" ColumnName="AvgEnergy" />
+                <ScalarProperty Name="NbrReweld" ColumnName="NbrReweld" />
+                <ScalarProperty Name="NbrWeld" ColumnName="NbrWeld" />
+                <ScalarProperty Name="NbrSplash" ColumnName="NbrSplash" />
+                <ScalarProperty Name="Shift" ColumnName="Shift" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Program" ColumnName="Program" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Expr1" ColumnName="Expr1" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
