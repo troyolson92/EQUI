@@ -184,6 +184,7 @@
     <Folder Include="Areas\VWSC\Models\" />
     <Folder Include="Areas\VWSC\Views\Shared\" />
     <Folder Include="Areas\Welding\Views\ARO\" />
+    <Folder Include="Areas\Welding\Views\Teardown Team\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Code\MyRowStyling.cs" />
@@ -581,14 +582,12 @@
     <Compile Include="Areas\VCSC\VCSCAreaRegistration.cs" />
     <Compile Include="Areas\VWSC\Controllers\vwscController.cs" />
     <Compile Include="Areas\VWSC\VWSCAreaRegistration.cs" />
+    <Compile Include="Areas\Welding\Controllers\TeardownTeam.cs" />
     <Compile Include="Areas\Welding\Controllers\AROController.cs" />
     <Compile Include="Areas\Welding\Controllers\QteamController.cs" />
     <Compile Include="Areas\Welding\Controllers\LaunchController.cs" />
     <Compile Include="Areas\Welding\Controllers\WMController.cs" />
     <Compile Include="Areas\Welding\Models\BosProgramAvailable.cs">
-      <DependentUpon>WeldingModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\Welding\Models\BrownfieldLastMeasurement.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Welding\Models\CheckDubbelPrograms.cs">
@@ -606,7 +605,10 @@
     <Compile Include="Areas\Welding\Models\dressrequired.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Areas\Welding\Models\GreenFieldLastMeasurement.cs">
+    <Compile Include="Areas\Welding\Models\LastWelds.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Welding\Models\Lastwelds_Result.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Welding\Models\rt_AutoWorkFlowULPlans.cs">
@@ -1152,10 +1154,7 @@
     <Content Include="Areas\Welding\Views\Qteam\ULRapportering.cshtml" />
     <Content Include="Areas\Welding\Views\Qteam\rt_ExtraControles.cshtml" />
     <Content Include="Areas\Welding\Views\WM\Index.cshtml" />
-    <Content Include="Areas\Welding\Views\WM\BrownfieldLastMeasurement.cshtml" />
-    <Content Include="Areas\Welding\Views\WM\GreenFieldLastMeasurement.cshtml" />
     <Content Include="Areas\Welding\Views\WM\Launch.cshtml" />
-    <Content Include="Areas\Welding\Views\WM\DoubleSpotCheck.cshtml" />
     <Content Include="Areas\Welding\Views\Launch\DoubleSpotCheck.cshtml" />
     <Content Include="Areas\Welding\Views\Launch\Index.cshtml" />
     <Content Include="Areas\Welding\Views\Launch\CheckDubbelPrograms.cshtml" />
@@ -1164,6 +1163,7 @@
     <Content Include="Areas\Welding\Views\Launch\WeldtimeSpotsSetup.cshtml" />
     <Content Include="Areas\Welding\Views\Launch\StabilityInDicationV316.cshtml" />
     <Content Include="Areas\Welding\Views\Launch\ComparePitchV316.cshtml" />
+    <Content Include="Areas\Welding\Views\WM\LastWelds.cshtml" />
     <None Include="Properties\PublishProfiles\gensvw1178-DEV-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gotsvw11292-PRODUCTION-VCTA.pubxml" />

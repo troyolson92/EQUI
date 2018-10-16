@@ -12,7 +12,7 @@ namespace EqUiWebUi.Areas.Welding.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class BrownfieldLastMeasurement
+    public partial class LastWelds
     {
         public string Expr1 { get; set; }
         public string Name { get; set; }
@@ -28,5 +28,6 @@ namespace EqUiWebUi.Areas.Welding.Models
         public Nullable<float> AvgOhm { get; set; }
         public Nullable<float> AvgUIP { get; set; }
         public Nullable<float> AvgWeldTIme { get; set; }
+        public int ID { get; set; }
     }
 }

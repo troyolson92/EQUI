@@ -20,21 +20,12 @@ namespace EqUiWebUi.Areas.Welding.Controllers
         }
         // GET: Weldingmaster 
 
-        public ActionResult BrownfieldLastMeasurement()
-        {
-            IQueryable<BrownfieldLastMeasurement> data = db.BrownfieldLastMeasurements.AsQueryable();
-            return View(data);
 
-        }
-
-        public ActionResult GreenLastMeasurement()
+        public ActionResult LastWelds()
         {
-            IQueryable<GreenFieldLastMeasurement> data = db.GreenFieldLastMeasurements.AsQueryable();
+            IQueryable<LastWelds> data = db.LastWelds.AsQueryable();
             return View(data);
         }
-    
-
-
 
     }
 
