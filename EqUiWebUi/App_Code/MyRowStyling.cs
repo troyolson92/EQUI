@@ -1,4 +1,6 @@
-﻿namespace EqUiWebUi
+﻿using System;
+
+namespace EqUiWebUi
 {
     public static class MyRowStyling
     {
@@ -68,6 +70,20 @@
             else
             {
                 return "";
+            }
+        }
+
+        //tip life tool
+        //to calculate the wear
+        public static double getPwear(EqUiWebUi.Areas.Tiplife.Models.TipDressLogFile tipDressLogFile)
+        {
+            if (tipDressLogFile.Wear_Fixed >= tipDressLogFile.Wear_Move)
+            {
+                return Math.Round((tipDressLogFile.Wear_Fixed.GetValueOrDefault() / tipDressLogFile.Max_Wear_Fixed.GetValueOrDefault()) * 100, 0);
+            }
+            else
+            {
+                return Math.Round((tipDressLogFile.Wear_Move.GetValueOrDefault() / tipDressLogFile.Max_Wear_Move.GetValueOrDefault()) * 100, 0);
             }
         }
 

@@ -641,6 +641,33 @@
     <Compile Include="Areas\VWSC\Models\VWSC_rt_active_info.cs">
       <DependentUpon>VWSC.tt</DependentUpon>
     </Compile>
+    <Compile Include="Areas\VWSC\Models\VWSC_rt_alarm.cs">
+      <DependentUpon>VWSC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VWSC\Models\VWSC_rt_comment.cs">
+      <DependentUpon>VWSC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VWSC\Models\VWSC_rt_communication_state.cs">
+      <DependentUpon>VWSC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VWSC\Models\VWSC_rt_datachangeprot.cs">
+      <DependentUpon>VWSC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VWSC\Models\VWSC_rt_job.cs">
+      <DependentUpon>VWSC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VWSC\Models\VWSC_rt_job_breakdown.cs">
+      <DependentUpon>VWSC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VWSC\Models\VWSC_rt_spot.cs">
+      <DependentUpon>VWSC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VWSC\Models\VWSC_rt_weldfault.cs">
+      <DependentUpon>VWSC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VWSC\Models\VWSC_rt_weldmeasureprotddw.cs">
+      <DependentUpon>VWSC.tt</DependentUpon>
+    </Compile>
     <Compile Include="Areas\VWSC\Models\winService.cs" />
     <Compile Include="Areas\VWSC\VWSCAreaRegistration.cs" />
     <Compile Include="Areas\Welding\Models\AutomaticWorkFlowULPlans.cs">

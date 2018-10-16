@@ -12,18 +12,10 @@ namespace EqUiWebUi.Areas.VWSC.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class VWSC_c_error
+    public partial class VWSC_rt_comment
     {
         public int id { get; set; }
-        public Nullable<int> enable_bit { get; set; }
-        public Nullable<int> ordinal { get; set; }
-        public Nullable<int> isError { get; set; }
-        public Nullable<int> errorCode1 { get; set; }
-        public string errorCode1_text { get; set; }
-        public Nullable<int> errorCode2 { get; set; }
-        public string errorCode2_text { get; set; }
-        public Nullable<int> C_operator { get; set; }
-        public Nullable<int> flags { get; set; }
-        public string UserComment { get; set; }
+        public Nullable<System.DateTime> C_timestamp { get; set; }
+        public string comment { get; set; }
     }
 }
