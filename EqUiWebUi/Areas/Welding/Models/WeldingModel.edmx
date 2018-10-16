@@ -222,6 +222,7 @@ warning 6013: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
           <Property Name="ts_breakdownStart" Type="datetime" />
           <Property Name="breakdowntime" Type="int" />
           <Property Name="ID" Type="int" />
+          <Property Name="Expr1" Type="int" />
         </EntityType>-->
         <EntityContainer Name="GADATAModelWeldingStoreContainer">
           <EntitySet Name="rt_AutoWorkFlowULPlans" EntityType="Self.rt_AutoWorkFlowULPlans" store:Type="Tables" store:Schema="UL">
