@@ -11,14 +11,13 @@
     columns.Add(c => c.C_timestamp).Titled("C_timestamp");
     columns.Add(c =>  (c.ts_End-c.ts_Start).GetValueOrDefault().TotalSeconds).Titled("CT");
     columns.Add(c => c.rt_weldmeasureprotddw_count).Titled("weldCount");
-
-
-    columns.Add(c => c.timerId);
-    columns.Add(c => c.rt_weldmeasureprotddw_id_Start);
-    columns.Add(c => c.rt_weldmeasureprotddw_id_End);
-
+    //
+    columns.Add(c => c.rt_weldmeasureprotddw_id_Start).Titled("weldmeasureStart");
+    columns.Add(c => c.rt_weldmeasureprotddw_id_End).Titled("weldmeasureEnd");
+    //
     columns.Add(c => c.Timer.Name).Titled("Timer");
     columns.Add(c => c.rt_breakdown_count).Titled("rt_breakdown_count");
+    //
     columns.Add(c => c.rt_job_breakdown.Where(b => b.index == 1).FirstOrDefault().rt_alarm.dateTime).Titled("FirstErrdateTime");
     columns.Add(c => c.rt_job_breakdown.Where(b => b.index == 1).FirstOrDefault().rt_alarm.errorCode1).Titled("FirstErrcode");
     columns.Add(c => c.rt_job_breakdown.Where(b => b.index == 1).FirstOrDefault().rt_alarm.errorCode1_txt).Titled("FirstErrTxt");
@@ -55,8 +54,7 @@
                 //animation
                 $("#placeholderPartial").html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
                 //load url in placeholder
-                console.log(data);
-                var url = "@Url.Action("_welds")?timerId=" + data["timer-id"] + "&weldmeasureprotddw_id_Start=" + data["rt_weldmeasureprotddw_id_-start"] + "&weldmeasureprotddw_id_End=" + data["rt_weldmeasureprotddw_id_-end"];
+                var url = "@Url.Action("_jobdetails")?id=" + data["id"];
                 $("#placeholderPartial").load(url);
             }
         });

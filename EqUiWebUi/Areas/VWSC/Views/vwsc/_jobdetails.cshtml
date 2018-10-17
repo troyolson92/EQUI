@@ -1,0 +1,64 @@
+﻿@model EqUiWebUi.Areas.VWSC.Models.VWSC_rt_job
+
+<br />
+<span class="badge badge-info">breakdownGrid</span>
+<div data-name="breakdownGrid" class="mvc-grid"></div>
+
+<br />
+<span class="badge badge-info">weldFaultGrid</span>
+<div data-name="weldFaultGrid" class="mvc-grid"></div>
+
+<br />
+<span class="badge badge-info">weldMeasureGrid</span>
+<div data-name="weldMeasureGrid" class="mvc-grid"></div>
+
+
+<script>
+    $('[data-name="breakdownGrid"]').html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
+    $('[data-name="breakdownGrid"]').mvcgrid({
+        sourceUrl: '@Url.Action("_jobBreakdown")', // Grid source url string
+        data: {
+            id: @Model.id,
+        },
+        requestType: 'get', // Ajax grid request type
+        reload: true, // Grid reload indicator
+        reloadFailed: function (result) {
+                console.log(result);
+            $('[data-name="breakdownGrid"]').html("<div class='alert alert-danger'>Error while loading!! </div>");
+            }
+    });
+
+    $('[data-name="weldFaultGrid"]').html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
+    $('[data-name="weldFaultGrid"]').mvcgrid({
+        sourceUrl: '@Url.Action("_weldFault")', // Grid source url string
+        data: {
+            timerId: @Model.timerId,
+            weldfaultprot_id_Start: @Model.rt_weldfaultprot_id_Start,
+            weldfaultprot_id_End: @Model.rt_weldfaultprot_id_End
+        },
+        requestType: 'get', // Ajax grid request type
+        reload: true, // Grid reload indicator
+        reloadFailed: function (result) {
+                console.log(result);
+            $('[data-name="weldFaultGrid"]').html("<div class='alert alert-danger'>Error while loading!! </div>");
+            }
+    });
+
+    $('[data-name="weldMeasureGrid"]').html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
+    $('[data-name="weldMeasureGrid"]').mvcgrid({
+        sourceUrl: '@Url.Action("_weldMeasure")', // Grid source url string
+        data: {
+            timerId: @Model.timerId,
+            weldmeasureprotddw_id_Start: @Model.rt_weldmeasureprotddw_id_Start,
+            weldmeasureprotddw_id_End: @Model.rt_weldmeasureprotddw_id_End
+        },
+        requestType: 'get', // Ajax grid request type
+        reload: true, // Grid reload indicator
+        reloadFailed: function (result) {
+                console.log(result);
+            $('[data-name="weldMeasureGrid"]').html("<div class='alert alert-danger'>Error while loading!! </div>");
+            }
+    });
+
+
+</script>

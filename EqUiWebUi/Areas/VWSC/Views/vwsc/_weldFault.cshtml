@@ -1,12 +1,13 @@
-﻿@model IQueryable<EqUiWebUi.Areas.VWSC.Models.VWSC_rt_weldmeasureprotddw>
+﻿@model IQueryable<EqUiWebUi.Areas.VWSC.Models.VWSC_rt_weldfault>
 
-@Html.Grid(Model).Named("welds").Build(columns =>
+@Html.Grid(Model).Named("weldFaultGrid").Build(columns =>
 {
     columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Desc);
     columns.Add(c => c.C_timestamp).Titled("timestamp");
     columns.Add(c => c.progNo).Titled("progNo");
     columns.Add(c => c.spotId).Titled("spotId");
-    columns.Add(c => c.energyActualValue).Titled("energyActualValue");
+    columns.Add(c => c.monitorState_txt).Titled("monitorState_txt");
+    columns.Add(c => c.regulationState_txt).Titled("regulationState_txt");
 
 }).Filterable().Sortable().Pageable(pager =>
 {
