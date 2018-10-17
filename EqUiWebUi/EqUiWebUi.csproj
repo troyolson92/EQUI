@@ -1247,7 +1247,10 @@
     <Content Include="Areas\VWSC\Views\c_error\Edit.cshtml" />
     <Content Include="Areas\VWSC\Views\c_timer\Edit.cshtml" />
     <Content Include="Areas\VWSC\Views\vwsc\rt_job.cshtml" />
-    <Content Include="Areas\VWSC\Views\vwsc\_welds.cshtml" />
+    <Content Include="Areas\VWSC\Views\vwsc\_weldMeasure.cshtml" />
+    <Content Include="Areas\VWSC\Views\vwsc\_jobdetails.cshtml" />
+    <Content Include="Areas\VWSC\Views\vwsc\_weldFault.cshtml" />
+    <Content Include="Areas\VWSC\Views\vwsc\_jobBreakdown.cshtml" />
     <None Include="Properties\PublishProfiles\gensvw1178-DEV-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gotsvw11292-PRODUCTION-VCTA.pubxml" />
