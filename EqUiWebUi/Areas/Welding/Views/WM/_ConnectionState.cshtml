@@ -7,13 +7,16 @@
     columns.Add(c => c.C_timestamp).Titled("Datetime").Formatted("{0:dd-MM-yyyy HH:mm:ss}");
     columns.Add(c => c.onlineInBos6000).Titled("OnlineInBos6000");
 
-
-}).Filterable().Pageable(pager =>
-{
-    pager.RowsPerPage = 20;
-    pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" } };
-    //{ 20, "20" }, { 40, "40" }, { 80, "80" }, { 100, "100" } };
-    pager.ShowPageSizes = true;
 }
-).Sortable()
+).Sortable().Css("css-classes").AppendCss("table-hover").Empty("No data found").Css("tableStyle")
+
+<style>
+    .table-hover tbody tr:hover {
+        background-color: rgba(243, 15, 15, 0.28);
+    }
+
+    .tableStyle {
+        color: #ff0000
+    }
+</style>
 

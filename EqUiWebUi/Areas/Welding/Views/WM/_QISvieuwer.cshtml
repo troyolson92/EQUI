@@ -4,17 +4,21 @@
 {
     columns.Add(c => c.Timestamp).Titled("Timestamp").Formatted("{0:dd-MM-yyyy HH:mm:ss}");
     columns.Add(c => c.TimerName).Titled("TimerName");
+    columns.Add(c => c.parameter).Titled("Parameter");
     columns.Add(c => c.program).Titled("program");
     columns.Add(c => c.bos6000Value).Titled("bos6000Value");
     columns.Add(c => c.RequiredValue).Titled("RequiredValue");
     columns.Add(c => c.remark).Titled("Remark");
 
-
-}).Filterable().Pageable(pager =>
-{
-    pager.RowsPerPage = 20;
-    pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" } };
-    //{ 20, "20" }, { 40, "40" }, { 80, "80" }, { 100, "100" } };
-    pager.ShowPageSizes = true;
 }
-).Sortable()
+).Sortable().Css("css-classes").AppendCss("table-hover").Empty("No data found").Css("tableStyle")
+
+<style>
+    .table-hover tbody tr:hover {
+        background-color: rgba(243, 15, 15, 0.28);
+    }
+    .tableStyle {
+        color: #ff0000
+        
+    }
+</style>

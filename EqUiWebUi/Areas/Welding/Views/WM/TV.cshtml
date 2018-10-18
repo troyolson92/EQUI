@@ -4,16 +4,17 @@
 
 <div data-name="ConnectionState" class="mvc-grid"></div>
 
-<hr /><hr /><hr /><hr />
-
-
+<hr />
 
 <center><h1>QisCheck</h1></center>
 <p></p>
 <div data-name="QISViewer" class="mvc-grid"></div>
 
-<hr /><hr /><hr /><hr />
+<hr />
 
+<center><h1>TimerBreakdowns</h1></center>
+<p></p>
+<div data-name="TimerBreakdowns_busy" class="mvc-grid"></div>
 
 
 
@@ -23,19 +24,35 @@
         $("#allcontent").removeClass("body-content");
         $("#allcontent").removeClass("container");
 
+        function refreshGrid() {
         $('[data-name="ConnectionState"]').html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
         $('[data-name="ConnectionState"]').mvcgrid({
             sourceUrl: '@Url.Action("_ConnectionState")', // Grid source url string
             requestType: 'get', // Ajax grid request type
             reload: true
+           
         });
+        
+            $('[data-name="QISViewer"]').html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
+            $('[data-name="QISViewer"]').mvcgrid({
+                sourceUrl: '@Url.Action("_QISvieuwer")', // Grid source url string
+                requestType: 'get', // Ajax grid request type
+                reload: true
 
-        $('[data-name="QISViewer"]').html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
-        $('[data-name="QISViewer"]').mvcgrid({
-            sourceUrl: '@Url.Action("_QISvieuwer")', // Grid source url string
-            requestType: 'get', // Ajax grid request type
-            reload: true
-        });
+            });
+
+            $('[data-name="TimerBreakdowns_busy"]').html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
+            $('[data-name="TimerBreakdowns_busy"]').mvcgrid({
+                sourceUrl: '@Url.Action("_TimerBreakdowns_busy")', // Grid source url string
+                requestType: 'get', // Ajax grid request type
+                reload: true
+
+            });
+        }
+
+        setInterval(function () {
+            refreshGrid()
+        }, 1000 * 20)
 
     </script>
 }

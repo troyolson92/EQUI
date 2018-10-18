@@ -210,20 +210,18 @@ warning 6002: The table/view 'GADATA.WELDING2.ConnectionState' does not have a p
           <Property Name="onlineInBos6000" Type="bit" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6013: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="TimerBreakdowns_busy">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
           <Property Name="NPT" Type="nchar" MaxLength="15" />
-          <Property Name="Timer" Type="nchar" MaxLength="15" />
-          <Property Name="location" Type="varchar" MaxLength="256" />
-          <Property Name="errorText" Type="varchar" MaxLength="64" />
+          <Property Name="TimerName" Type="nchar" MaxLength="15" />
+          <Property Name="Fault" Type="varchar" MaxLength="64" />
           <Property Name="_timestamp" Type="datetime" />
-          <Property Name="timerfault" Type="varchar" MaxLength="64" />
-          <Property Name="timerfault_Extra" Type="varchar" MaxLength="64" />
-          <Property Name="ts_breakdownStart" Type="datetime" />
-          <Property Name="breakdowntime" Type="int" />
-          <Property Name="ID" Type="int" />
-          <Property Name="Expr1" Type="int" />
-        </EntityType>-->
+          <Property Name="BreakdownTime" Type="int" />
+          <Property Name="id" Type="int" Nullable="false" />
+        </EntityType>
         <EntityContainer Name="GADATAModelWeldingStoreContainer">
           <EntitySet Name="rt_AutoWorkFlowULPlans" EntityType="Self.rt_AutoWorkFlowULPlans" store:Type="Tables" store:Schema="UL">
             <DefiningQuery>SELECT 
@@ -383,6 +381,16 @@ warning 6013: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
     [ConnectionState].[onlineInBos6000] AS [onlineInBos6000]
     FROM [WELDING2].[ConnectionState] AS [ConnectionState]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="TimerBreakdowns_busy" EntityType="Self.TimerBreakdowns_busy" store:Type="Views" store:Schema="WELDING2">
+            <DefiningQuery>SELECT 
+    [TimerBreakdowns_busy].[NPT] AS [NPT], 
+    [TimerBreakdowns_busy].[TimerName] AS [TimerName], 
+    [TimerBreakdowns_busy].[Fault] AS [Fault], 
+    [TimerBreakdowns_busy].[_timestamp] AS [_timestamp], 
+    [TimerBreakdowns_busy].[BreakdownTime] AS [BreakdownTime], 
+    [TimerBreakdowns_busy].[id] AS [id]
+    FROM [WELDING2].[TimerBreakdowns_busy] AS [TimerBreakdowns_busy]</DefiningQuery>
+          </EntitySet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -406,6 +414,7 @@ warning 6013: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
           </FunctionImport>
           <EntitySet Name="LastWelds" EntityType="GADATAModelWelding.LastWelds" />
           <EntitySet Name="QISViewer" EntityType="GADATAModelWelding.QISViewer" />
+          <EntitySet Name="TimerBreakdowns_busy" EntityType="GADATAModelWelding.TimerBreakdowns_busy" />
         </EntityContainer>
         <EntityType Name="rt_AutoWorkFlowULPlans">
           <Key>
@@ -601,6 +610,17 @@ warning 6013: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
           <Property Name="remark" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
           <Property Name="id" Type="Int32" Nullable="false" />
         </EntityType>
+        <EntityType Name="TimerBreakdowns_busy">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="NPT" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="TimerName" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="Fault" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="C_timestamp" Type="DateTime" Precision="3" />
+          <Property Name="BreakdownTime" Type="Int32" />
+          <Property Name="id" Type="Int32" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -791,6 +811,18 @@ warning 6013: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="TimerBreakdowns_busy">
+            <EntityTypeMapping TypeName="GADATAModelWelding.TimerBreakdowns_busy">
+              <MappingFragment StoreEntitySet="TimerBreakdowns_busy">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="BreakdownTime" ColumnName="BreakdownTime" />
+                <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
+                <ScalarProperty Name="Fault" ColumnName="Fault" />
+                <ScalarProperty Name="TimerName" ColumnName="TimerName" />
+                <ScalarProperty Name="NPT" ColumnName="NPT" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -806,7 +838,7 @@ warning 6013: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="False" />
-        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="False" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
