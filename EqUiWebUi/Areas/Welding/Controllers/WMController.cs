@@ -45,6 +45,15 @@ namespace EqUiWebUi.Areas.Welding.Controllers
         IQueryable<QISViewer> data = db.QISViewer.AsQueryable();
         return PartialView(data);
     }
+        public ActionResult _TimerBreakdowns_busy()
+        {
+            IQueryable<TimerBreakdowns_busy > data = db.TimerBreakdowns_busy.AsQueryable();
+            return PartialView(data);
+        }
+
 
     }
+
+
+   
 }
