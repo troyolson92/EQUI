@@ -16,7 +16,11 @@
 <p></p>
 <div data-name="TimerBreakdowns_busy" class="mvc-grid"></div>
 
+<hr />
 
+<center><h1>spotControl</h1></center>
+<p></p>
+<div data-name="rt_ExtraControles" class="mvc-grid"></div>
 
 @section scripts{
     <script>
@@ -30,9 +34,9 @@
             sourceUrl: '@Url.Action("_ConnectionState")', // Grid source url string
             requestType: 'get', // Ajax grid request type
             reload: true
-           
+
         });
-        
+
            // $('[data-name="QISViewer"]').html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
             $('[data-name="QISViewer"]').mvcgrid({
                 sourceUrl: '@Url.Action("_QISvieuwer")', // Grid source url string
@@ -46,14 +50,24 @@
                 sourceUrl: '@Url.Action("_TimerBreakdowns_busy")', // Grid source url string
                 requestType: 'get', // Ajax grid request type
                 reload: true
+            });   
 
-            });
+            
+         // $('[data-name="rt_ExtraControles"]').html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
+          $('[data-name="rt_ExtraControles"]').mvcgrid({
+           sourceUrl: '@Url.Action("rt_ExtraControlesWM")', // Grid source url string
+           requestType: 'get', // Ajax grid request type
+              reload: true
+            });   
         }
 
         setInterval(function () {
             refreshGrid()
         }, 1000 * 10)
+        
 
+
+       
     </script>
 }
 

@@ -2,23 +2,20 @@
 
 @Html.Grid(Model).Named("QISViewer").Build(columns =>
 {
-    columns.Add(c => c.Timestamp).Titled("Timestamp").Formatted("{0:dd-MM-yyyy HH:mm:ss}");
-    columns.Add(c => c.TimerName).Titled("TimerName");
-    columns.Add(c => c.parameter).Titled("Parameter");
-    columns.Add(c => c.program).Titled("program");
-    columns.Add(c => c.bos6000Value).Titled("bos6000Value");
-    columns.Add(c => c.RequiredValue).Titled("RequiredValue");
-    columns.Add(c => c.remark).Titled("Remark");
+    columns.Add(c => c.Timestamp).Titled("Timestamp").Formatted("{0:dd-MM-yyyy HH:mm:ss}").Css("ani_ PulseRedRepeat");
+    columns.Add(c => c.TimerName).Titled("TimerName").Css("ani_ PulseRedRepeat");
+    columns.Add(c => c.parameter).Titled("Parameter").Css("ani_ PulseRedRepeat");
+    columns.Add(c => c.program).Titled("program").Css("ani_ PulseRedRepeat");
+    columns.Add(c => c.bos6000Value).Titled("bos6000Value").Css("ani_ PulseRedRepeat");
+    columns.Add(c => c.RequiredValue).Titled("RequiredValue").Css("ani_ PulseRedRepeat");
+    columns.Add(c => c.remark).Titled("Remark").Css("ani_ PulseRedRepeat");
 
 }
-).Sortable().Css("css-classes").AppendCss("table-hover").Empty("No data found").Css("tableStyle")
+).Sortable().Empty("No data found")
 
 <style>
-    .table-hover tbody tr:hover {
-        background-color: rgba(243, 15, 15, 0.28);
-    }
-    .tableStyle {
-        color: #ff0000
-        
+    .ani_ PulseRedRepeat {
+        background-color: #f21a1a;
+        -webkit-animation: PulseBlue 3s infinite;
     }
 </style>
