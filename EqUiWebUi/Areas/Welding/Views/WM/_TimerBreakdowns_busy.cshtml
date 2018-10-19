@@ -2,19 +2,26 @@
 
 @Html.Grid(Model).Named("TimerBreakdowns_busy").Build(columns =>
 {
-    columns.Add(c => c.NPT).Titled("NPT").Css("ani_ PulseRedRepeat");
-    columns.Add(c => c.TimerName).Titled("TimerName").Css("ani_ PulseRedRepeat");
-    columns.Add(c => c.Fault).Titled("program").Css("ani_ PulseRedRepeat");
-    columns.Add(c => c.C_timestamp).Titled("BreakDownStart").Formatted("{0:dd-MM-yyyy HH:mm:ss}").Css("ani_ PulseRedRepeat"); 
-    columns.Add(c => c.BreakdownTime).Titled("BreakdownTime(in min)").Css("ani_ PulseRedRepeat");
+    columns.Add(c => c.NPT).Titled("NPT").Css("colorred");
+    columns.Add(c => c.TimerName).Titled("TimerName").Css("colorred");
+    columns.Add(c => c.Fault).Titled("Fault").Css("colorred");
+    columns.Add(c => c.C_timestamp).Titled("BreakDownStart").Formatted("{0:dd-MM-yyyy HH:mm:ss}").Css("colorred"); 
+    columns.Add(c => c.BreakdownTime).Titled("BreakdownTime(in min)").Css("colorred");
+
 
 
 }
-).Sortable().Empty("No data found")
+).Sortable().Empty("No data found").Css(".ani_ PulseRedRepeat")
 
 <style>
     .ani_ PulseRedRepeat {
         background-color: #f21a1a;
         -webkit-animation: PulseBlue 3s infinite;
+    }
+
+
+    .colorred {
+        background-color: rgba(190, 48, 48, 0.39)
+        ;font-weight: bolder;
     }
 </style>
