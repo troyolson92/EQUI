@@ -11,17 +11,23 @@ namespace EqUiWebUi.Areas.VWSC.Controllers
     {
         private GADATAEntitiesVWSC db = new GADATAEntitiesVWSC();
 
-        // GET: VWSC/vwsc
+        /// <summary>
+        /// GET: VWSC/vwsc
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Index()
         {
             return View();
         }
 
-        //get: VWSC/rt_job
-        public ActionResult rt_job()
-        {
-            IQueryable<VWSC_rt_job> data = db.rt_job.AsQueryable();
-
+        /// <summary>
+        /// get: VWSC/rt_job
+        /// </summary>
+        /// <param name="bShowUnfinishedJobs"></param>
+        /// <returns></returns>
+        public ActionResult rt_job(bool bShowUnfinishedJobs = false)
+        {   
+            IQueryable<VWSC_rt_job> data = db.rt_job.Where(c => c.ts_End.HasValue != bShowUnfinishedJobs).AsQueryable();
             return View(data);
         }
 

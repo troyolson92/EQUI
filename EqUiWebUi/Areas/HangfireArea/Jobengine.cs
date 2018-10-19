@@ -160,7 +160,7 @@ namespace EqUiWebUi.Areas.HangfireArea
         }
 
         [Queue("jobengine")]
-        [AutomaticRetry(Attempts = 0)] //no hangfire retrys 
+        [AutomaticRetry(Attempts = 0)]
         public void Run_job(string name, int c_job_id , PerformContext context)
         {
             c_job job = dbEQUI.c_job.Find(c_job_id);

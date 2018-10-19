@@ -50,7 +50,7 @@
                 $(row).addClass("bg-info");
                 $("#placeholder").remove(); //clear placeholder is exists
                 //add new placeholder afhter selected row
-                $(row).after('<tr id="placeholder"><td colspan="1000"><div class="card"><div class="card-body" id ="placeholderPartial"></div></div></td></tr>');
+                $(row).after('<tr id="placeholder"><td colspan="1000"><div class="card border-info"><div class="card-body" id ="placeholderPartial"></div></div></td></tr>');
                 //animation
                 $("#placeholderPartial").html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
                 //load url in placeholder
@@ -58,6 +58,12 @@
                 $("#placeholderPartial").load(url);
             }
         });
+
+        //if only one row open automatic 
+        if ($('[data-name="VWSC_rt_job"]>table>tbody>tr').length == 1) {
+
+            $('[data-name="VWSC_rt_job"]>table>tbody>tr:first').trigger('click');
+        }
     </script>
 }
 

@@ -17,9 +17,10 @@ namespace EqUiWebUi.Areas.Alert
 
         //Gets called by Hanfire to processAlertwork.
         [Queue("alertengine")]
-        [AutomaticRetry(Attempts = 0)] //no hangfire retrys
+        [AutomaticRetry(Attempts = 0)]
         public void CheckForalerts(int c_triggerID, string AlertDiscription, PerformContext context, bool RunWhenDisabled = false)
         {
+          
             //get trigger
             GADATA_AlertModel gADATA_AlertModel = new GADATA_AlertModel();
             c_triggers trigger = (from trig in gADATA_AlertModel.c_triggers
