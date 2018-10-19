@@ -1,0 +1,46 @@
+﻿
+@model IQueryable<EqUiWebUi.Areas.Welding.Models.LastWelds>
+@{
+    ViewBag.Title = "LastWelds";
+}
+
+
+<h2>LastWelds</h2>
+
+@Html.Grid(Model).Named("LastWelds").Build(columns =>
+{
+    columns.Add(c => c.Expr1).Titled("NPT");
+    columns.Add(c => c.Name).Titled("TimerName");
+    columns.Add(c => c.Number).Titled("SpotName");
+    columns.Add(c => c.Program).Titled("Program");
+    columns.Add(c => c.Date).Titled("Date").Formatted("{0:dd-MM-yyyy HH:mm:ss}"); 
+    columns.Add(c => c.Shift).Titled("Shift");
+    columns.Add(c => c.NbrSplash).Titled("NbrSplash");
+    columns.Add(c => c.NbrWeld).Titled("NbrWeld");
+    columns.Add(c => c.AvgEnergy).Titled("AvgEnergy");
+    columns.Add(c => c.AvgPSF).Titled("AvgPSF");
+    columns.Add(c => c.AvgOhm).Titled("AvgOhm");
+    columns.Add(c => c.AvgUIP).Titled("AvgUIP");
+    columns.Add(c => c.AvgWeldTIme).Titled("AvgWeldTime");
+    columns.Add(c => c.ID).Titled("id").InitialSort(GridSortOrder.Desc);
+
+
+
+}).Css("css-classes").AppendCss("table-hover").Filterable().Pageable(pager =>
+{
+    pager.RowsPerPage = 20;
+    pager.PageSizes = new Dictionary<Int32, String> {
+    //{ { 0, "All" } };
+    { 20, "20" }, { 40, "40" }, { 80, "80" }, { 100, "100" } };
+    pager.ShowPageSizes = true;
+}
+    ).Sortable();
+
+@section scripts{
+    <script>
+            //full with screen
+            $("#allcontent").removeClass("body-content");
+            $("#allcontent").removeClass("container");
+    </script>
+}
+

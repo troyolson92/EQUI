@@ -1,0 +1,60 @@
+﻿
+@{
+
+    ViewBag.Title = "Index Launch";
+}
+<div class="jumbotron">
+    <h1>Launch Welding Master Page</h1>
+</div>
+
+<p></p>@{
+    ViewBag.Title = "Welding Master Launch Page";
+}
+<div class="jumbotron">
+    <h1>Launch activity</h1>
+
+    <p></p>
+    <div class="card">
+        <div class="card-header bg-dark">
+            <h5 class="card-title text-white">
+                Launch Tools
+                <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
+            </h5>
+        </div>
+        <div class="card-body">
+
+            <p>
+            @MyHtmlHelpers.EquiLink("/Welding/Launch/ComparePitchV316", "fab fa-qq", "Pitch compare", helperText: "Compare the Pitch file with the weldtimers en UL data")
+            <p></p>
+            @MyHtmlHelpers.EquiLink("/Welding/Launch/DoubleSpotcheck", "fab fa-qq", "double spots", helperText: "check after double spots in welding timers")
+            <p></p>
+            @MyHtmlHelpers.EquiLink("/Welding/Launch/CheckDubbelPrograms", "fab fa-qq", "double program", helperText: "check after double programs in welding timers")
+            <p></p>
+            @MyHtmlHelpers.EquiLink("/Welding/Launch/BosProgramAvailable", "fab fa-qq", "FreePrograms", helperText: "check in welding Timers for not used programs")
+            <p></p>
+            @MyHtmlHelpers.EquiLink("/Welding/Launch/dressrequired", "fab fa-qq", "DressRequestNOK", helperText: "check if dress request is ok")
+            <p></p>
+            @MyHtmlHelpers.EquiLink("/Welding/Launch/WeldtimeSpotsSetup", "fab fa-qq", "WeldtimeCheck", helperText: "check the  total weldtimes in from all spots")
+            <p></p>
+            @MyHtmlHelpers.EquiLink("/Welding/Launch/StabilityInDicationV316", "fab fa-qq", "Psf Spreiding", helperText: "Check for Std Process stability")
+
+        </div>
+    </div>
+    <p></p>
+
+    <div class="card">
+        <div class="card-header bg-dark">
+            <h5 class="card-title text-white">
+                Quality Launch tools
+                <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
+            </h5>
+        </div>
+        <div class="card-body">
+
+            <p>
+                @MyHtmlHelpers.EquiLink("/Welding/Launch/TDTResults", "fab fa-qq", "TDT analyse", helperText: "Check  all teardown results")
+            <p></p>
+                @MyHtmlHelpers.EquiLink("/Welding/Launch/TDTActions", "fab fa-qq", "TDT Actions", helperText: "Check  all teardown Actions")
+
+
+

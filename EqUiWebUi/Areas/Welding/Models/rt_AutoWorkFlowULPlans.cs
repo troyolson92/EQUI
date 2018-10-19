@@ -12,17 +12,20 @@ namespace EqUiWebUi.Areas.Welding.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class AutomaticWorkFlowULPlans
+    public partial class rt_AutoWorkFlowULPlans
     {
-        public System.DateTime LastInspectionTime { get; set; }
-        public string UL_plan { get; set; }
-        public int BuildBody_s { get; set; }
-        public Nullable<System.TimeSpan> WorkTime { get; set; }
+        public int ID { get; set; }
+        public Nullable<System.DateTime> LastinspectionTime { get; set; }
+        public string UL_Plan { get; set; }
+        public Nullable<int> BuildBody { get; set; }
+        public Nullable<System.TimeSpan> Worktime { get; set; }
         public Nullable<int> WorkGroup { get; set; }
         public string WorkLocation { get; set; }
-        public Nullable<int> Body_slast_30Min_start { get; set; }
-        public Nullable<int> Body_slast_30Min_end { get; set; }
+        public Nullable<int> BodyLast30minStart { get; set; }
+        public Nullable<int> BodyLast30minEnd { get; set; }
         public string Last30min_productionStatus { get; set; }
         public string onderhoudswerken { get; set; }
+        public Nullable<int> LastnumberFromPlanBusy { get; set; }
+        public Nullable<int> Planlenght { get; set; }
     }
 }

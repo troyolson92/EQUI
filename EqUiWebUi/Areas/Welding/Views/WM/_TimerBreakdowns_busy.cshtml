@@ -1,0 +1,22 @@
+﻿@model IQueryable<EqUiWebUi.Areas.Welding.Models.TimerBreakdowns_busy>
+
+@Html.Grid(Model).Named("TimerBreakdowns_busy").Build(columns =>
+{
+    columns.Add(c => c.NPT).Titled("NPT");
+    columns.Add(c => c.TimerName).Titled("TimerName");
+    columns.Add(c => c.Fault).Titled("program");
+    columns.Add(c => c.C_timestamp).Titled("BreakDownStart").Formatted("{0:dd-MM-yyyy HH:mm:ss}"); 
+    columns.Add(c => c.BreakdownTime).Titled("BreakdownTime(in min)");
+
+
+}
+).Sortable().AppendCss("table-hover").Empty("No data found").Css("tableStyle")
+
+<style>
+    .table-hover tbody tr:hover {
+        background-color: rgba(243, 15, 15, 0.28);
+    }
+    .tableStyle{
+        color: #ff0000
+    }
+</style>

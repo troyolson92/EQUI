@@ -1,0 +1,48 @@
+﻿
+@{
+
+                ViewBag.Title = "Index WM";
+}
+<div class="jumbotron">
+    <h1>Welding Master HomePage</h1>
+</div>
+
+<p></p>
+
+<div class="card">
+    <div class="card-header bg-primary">
+        <h5 class="card-title text-white">
+            General Tools
+            <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
+        </h5>
+    </div>
+
+    <p></p>
+  
+    @MyHtmlHelpers.EquiLink("/Welding/WM/TV", "fab fa-qq", "TV", helperText: "Qis system, live weldfaults factory, online timers")
+    <p></p>
+
+</div>
+<p></p>
+
+<div class="card">
+    <div class="card-header bg-primary">
+        <h5 class="card-title text-white">
+            Data Tools
+            <span class="clickable float-right"><i class="fas fa-chevron-circle-up  fa-rotate-180 fa-1"></i></span>
+        </h5>
+    </div>
+    <div class="card-body" style="display:none">
+
+        <p></p>
+
+        @MyHtmlHelpers.EquiLink("/Welding/Launch", "fab fa-qq", "Tools for Launch activity", helperText: "launch data")
+
+        <p></p>
+
+     
+
+    </div>
+    <p></p>
+
+

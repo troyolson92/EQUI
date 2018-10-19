@@ -1,0 +1,58 @@
+﻿@model IQueryable<EqUiWebUi.Areas.Welding.Models.rt_ExtraControles>
+@{
+    ViewBag.Title = "rt_ExtraControles";
+}
+
+<h2>ExtraControles</h2>
+@Html.Grid(Model).Named("rt_ExtraControles").Build(columns =>
+{
+    columns.Add(c => c.time_uitadaptief).Titled("time_uit_adaptief").Formatted("{0:dd-MM-yyyy HH:mm:ss}");
+    columns.Add(c => c.statusadaptieve).Titled("statusadaptief");
+    columns.Add(c => c.robot).Titled("Robot");
+    columns.Add(c => c.spot).Titled("spot");
+    columns.Add(c => c.plan).Titled("Plan").InitialSort(GridSortOrder.Desc);
+    columns.Add(c => c.plannummer).Titled("plannummer").InitialSort(GridSortOrder.Asc);
+    columns.Add(c => c.typecontrole).Titled("TypeControle");
+    columns.Add(c => c.lastinspectiontime).Titled("lastinspectiontime");
+
+
+}).Filterable(
+).Sortable().RowCss(c => (c.time_uitadaptief.GetValueOrDefault() < System.DateTime.Now.AddHours(-1)) || c.robot.Contains("test") ? "bg-warning" : "")
+
+@section scripts{
+    <script>
+        //full with screen
+        $("#allcontent").removeClass("body-content");
+        $("#allcontent").removeClass("container");
+
+
+        //function to refresh grid
+        function refreshGrid() {
+            console.log('function is being called')
+            $('[data-name="rt_ExtraControles"]').mvcgrid({
+                reload: true,
+
+                reloadStarted: function () {
+                    // this - grid instance which invoked the event
+                },
+                reloadEnded: function () {
+                    // this - grid instance which invoked the event
+                },
+                reloadFailed: function (result) {
+                    // this - grid instance which invoked the event
+                    // result - failed ajax response result
+                }
+            });
+        }
+
+        setInterval(function () {
+            refreshGrid()
+        }, 1000 * 120)
+    </script>
+}
+<style>
+    .colorred
+    {
+        background-color :rgba(190, 48, 48, 0.39)
+    }
+</style>

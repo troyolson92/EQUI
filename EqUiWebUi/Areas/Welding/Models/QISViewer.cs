@@ -12,13 +12,15 @@ namespace EqUiWebUi.Areas.Welding.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class ExtraUltralogUitadaptief3
+    public partial class QISViewer
     {
-        public string Timer { get; set; }
-        public Nullable<int> spot { get; set; }
-        public Nullable<bool> uitAdaptief { get; set; }
-        public string NPT { get; set; }
-        public string CDSID { get; set; }
-        public Nullable<System.DateTime> Expr1 { get; set; }
+        public Nullable<System.DateTime> Timestamp { get; set; }
+        public string TimerName { get; set; }
+        public Nullable<int> program { get; set; }
+        public string parameter { get; set; }
+        public string bos6000Value { get; set; }
+        public string RequiredValue { get; set; }
+        public string remark { get; set; }
+        public int id { get; set; }
     }
 }
