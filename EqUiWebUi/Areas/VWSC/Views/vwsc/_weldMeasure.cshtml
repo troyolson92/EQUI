@@ -15,4 +15,4 @@
     pager.RowsPerPage = 20;
     pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 20, "20" }, { 40, "40" }, { 80, "80" }, { 100, "100" } };
     pager.ShowPageSizes = true;
-}).Empty("Did not find anything").Css("table-hover").RowCss(c => c.sequenceRepeat.GetValueOrDefault() == 1 ? "bg-warning" :  "" )
+}).Empty("Did not find anything").Css("table-hover").RowCss(c => c.uirMeasuringActive == 0 || c.regulation2 == 2 && c.uirWeldTimeProlongationActive == 1 ? "bg-warning" : "") 
