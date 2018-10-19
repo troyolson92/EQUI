@@ -1,0 +1,31 @@
+﻿
+@{
+
+                ViewBag.Title = "Index WM";
+}
+<div class="jumbotron">
+    <h1>Welding Master HomePage</h1>
+</div>
+
+<p></p>@{
+    ViewBag.Title = "Welding Master Launch Page";
+}
+<div class="jumbotron">
+    <h1>Launch activity</h1>
+
+    <p></p>
+    <div class="card">
+        <div class="card-header bg-dark">
+            <h5 class="card-title text-white">
+                double spots
+                <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
+            </h5>
+        </div>
+        <div class="card-body">
+
+            <p>
+                @MyHtmlHelpers.EquiLink("/Welding/WM/Launch", "fab fa-qq", "double spots", helperText: "check after double spots in welding timers")
+        </div>
+    </div>
+    <p></p>
+

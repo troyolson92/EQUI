@@ -12,6 +12,8 @@ namespace EqUiWebUi.Areas.Welding.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class GADATAEntitiesWelding : DbContext
     {
@@ -25,8 +27,32 @@ namespace EqUiWebUi.Areas.Welding.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<ExtraControles> ExtraControles { get; set; }
-        public virtual DbSet<ExtraUltralogUitadaptief3> ExtraUltralogUitadaptief3 { get; set; }
-        public virtual DbSet<AutomaticWorkFlowULPlans> AutomaticWorkFlowULPlans { get; set; }
+        public virtual DbSet<rt_AutoWorkFlowULPlans> rt_AutoWorkFlowULPlans { get; set; }
+        public virtual DbSet<rt_ExtraControles> rt_ExtraControles { get; set; }
+        public virtual DbSet<ULRapportering> ULRapporterings { get; set; }
+        public virtual DbSet<DoubleSpotCheck> DoubleSpotCheck { get; set; }
+        public virtual DbSet<CheckDubbelPrograms> CheckDubbelPrograms { get; set; }
+        public virtual DbSet<BosProgramAvailable> BosProgramAvailable { get; set; }
+        public virtual DbSet<dressrequired> dressrequired { get; set; }
+        public virtual DbSet<WeldtimeSpotsSetup> WeldtimeSpotsSetup { get; set; }
+        public virtual DbSet<StabilityInDicationV316> StabilityInDicationV316 { get; set; }
+        public virtual DbSet<ConnectionState> ConnectionState { get; set; }
+        public virtual DbSet<ComparePitchV316> ComparePitchV316 { get; set; }
+        public virtual DbSet<LastWelds> LastWelds { get; set; }
+        public virtual DbSet<QISViewer> QISViewer { get; set; }
+        public virtual DbSet<TimerBreakdowns_busy> TimerBreakdowns_busy { get; set; }
+    
+        public virtual ObjectResult<Lastwelds_Result> Lastwelds(string timer, Nullable<int> spot)
+        {
+            var timerParameter = timer != null ?
+                new ObjectParameter("Timer", timer) :
+                new ObjectParameter("Timer", typeof(string));
+    
+            var spotParameter = spot.HasValue ?
+                new ObjectParameter("spot", spot) :
+                new ObjectParameter("spot", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Lastwelds_Result>("Lastwelds", timerParameter, spotParameter);
+        }
     }
 }

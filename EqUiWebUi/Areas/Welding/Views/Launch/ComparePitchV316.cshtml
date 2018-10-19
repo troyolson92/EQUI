@@ -1,0 +1,39 @@
+﻿
+@model IQueryable<EqUiWebUi.Areas.Welding.Models.ComparePitchV316>
+@{
+    ViewBag.Title = "ComparePitchV316";
+}
+
+
+<h2>DoubleSpotCheck</h2>
+
+@Html.Grid(Model).Named("ComparePitchV316").Build(columns =>
+{
+    columns.Add(c => c.timerNumber).Titled("TimerNumber");
+    columns.Add(c => c.lastWeldTime).Titled("lastWeldTime");
+ //   columns.Add(c => c.spotid).Titled("spotid");
+    columns.Add(c => c.Timer).Titled("TimerInPitch");
+    //columns.Add(c => c.Variant).Titled("Variant");
+    columns.Add(c => c.lastULControleTime).Titled("ULControl?").Formatted("{0:dd-MM-yyyy HH:mm:ss}");
+
+
+
+
+
+}).Css("css-classes").AppendCss("table-hover").Filterable().Pageable(pager =>
+{
+    pager.RowsPerPage = 20;
+    pager.PageSizes = new Dictionary<Int32, String>
+    { { 0, "All" } };
+    //{ 20, "20" }, { 40, "40" }, { 80, "80" }, { 100, "100" } };
+    pager.ShowPageSizes = true;
+}
+    ).Sortable();
+
+@section scripts{
+    <script>
+            //full with screen
+            $("#allcontent").removeClass("body-content");
+            $("#allcontent").removeClass("container");
+    </script>
+}
