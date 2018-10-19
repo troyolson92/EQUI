@@ -3,7 +3,6 @@
     ViewBag.Title = "rt_ExtraControles";
 }
 
-
 @Html.Grid(Model).Named("rt_ExtraControles").Build(columns =>
 {
     
@@ -16,9 +15,8 @@
     columns.Add(c => c.lastinspectiontime).Titled("lastinspectiontime");
 
 
-
 }).Filterable(
-).Sortable().RowCss(c => (c.time_uitadaptief.GetValueOrDefault() < System.DateTime.Now.AddHours(-1)) || c.robot.Contains("test") ? "bg-warning" : "")
+).Sortable().RowCss(c => (c.time_uitadaptief.GetValueOrDefault() < System.DateTime.Now.AddHours(-24)) || c.robot.Contains("test") ? "bg-warning" : "")
 
 @section scripts{
     <script>
