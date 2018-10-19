@@ -11,13 +11,13 @@
     columns.Add(c => c.robot).Titled("Robot");
     columns.Add(c => c.spot).Titled("spot");
     columns.Add(c => c.plan).Titled("Plan").InitialSort(GridSortOrder.Desc);
-    columns.Add(c => c.plannummer).Titled("plannummer").InitialSort(GridSortOrder.Asc); 
+    columns.Add(c => c.plannummer).Titled("plannummer").InitialSort(GridSortOrder.Asc);
     columns.Add(c => c.typecontrole).Titled("TypeControle");
     columns.Add(c => c.lastinspectiontime).Titled("lastinspectiontime");
 
 
 }).Filterable(
-).Sortable()
+).Sortable().RowCss(c => (c.time_uitadaptief.GetValueOrDefault() < System.DateTime.Now.AddHours(-1)) || c.robot.Contains("test") ? "bg-warning" : "")
 
 @section scripts{
     <script>
