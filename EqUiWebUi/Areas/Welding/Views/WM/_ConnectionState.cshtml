@@ -2,21 +2,18 @@
 
 @Html.Grid(Model).Named("ConnectionState").Build(columns =>
 {
-    columns.Add(c => c.NoConnection).Titled("NoConnection");
-    columns.Add(c => c.TimerName).Titled("TimerName");
-    columns.Add(c => c.C_timestamp).Titled("Datetime").Formatted("{0:dd-MM-yyyy HH:mm:ss}");
-    columns.Add(c => c.onlineInBos6000).Titled("OnlineInBos6000");
+    columns.Add(c => c.NoConnection).Titled("NoConnection").Css("color");
+    columns.Add(c => c.TimerName).Titled("TimerName").Css("color"); ;
+    columns.Add(c => c.C_timestamp).Titled("Datetime").Formatted("{0:dd-MM-yyyy HH:mm:ss}").Css("color"); ;
+    columns.Add(c => c.onlineInBos6000).Titled("OnlineInBos6000").Css("color"); ;
 
 }
-).Sortable().Css("css-classes").AppendCss("table-hover").Empty("No data found").Css("tableStyle")
+).Sortable().Empty("No data found")
 
 <style>
-    .table-hover tbody tr:hover {
-        background-color: rgba(243, 15, 15, 0.28);
-    }
-
-    .tableStyle {
-        color: #ff0000
+    .color {
+        background-color: #ff0000;
+        font-weight: bolder;
     }
 </style>
 

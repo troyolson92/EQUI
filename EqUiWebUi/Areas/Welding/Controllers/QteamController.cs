@@ -20,9 +20,9 @@ namespace EqUiWebUi.Areas.Welding.Controllers
         }
 
         //for file "Extra controles"
-        public ActionResult rt_ExtraControles()
+        public ActionResult rt_ExtraControles(string robotStartsWith = "")
         {
-            IQueryable<rt_ExtraControles> data = db.rt_ExtraControles.AsQueryable();
+            IQueryable<rt_ExtraControles> data = db.rt_ExtraControles.Where(c => c.robot.StartsWith(robotStartsWith)).AsQueryable();
             return View(data);
         }
         public ActionResult rt_AutoWorkFlowULPlans()

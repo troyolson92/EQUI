@@ -25,7 +25,7 @@
         $("#allcontent").removeClass("container");
 
         function refreshGrid() {
-        $('[data-name="ConnectionState"]').html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
+       // $('[data-name="ConnectionState"]').html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
         $('[data-name="ConnectionState"]').mvcgrid({
             sourceUrl: '@Url.Action("_ConnectionState")', // Grid source url string
             requestType: 'get', // Ajax grid request type
@@ -33,7 +33,7 @@
            
         });
         
-            $('[data-name="QISViewer"]').html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
+           // $('[data-name="QISViewer"]').html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
             $('[data-name="QISViewer"]').mvcgrid({
                 sourceUrl: '@Url.Action("_QISvieuwer")', // Grid source url string
                 requestType: 'get', // Ajax grid request type
@@ -41,7 +41,7 @@
 
             });
 
-            $('[data-name="TimerBreakdowns_busy"]').html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
+          //  $('[data-name="TimerBreakdowns_busy"]').html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
             $('[data-name="TimerBreakdowns_busy"]').mvcgrid({
                 sourceUrl: '@Url.Action("_TimerBreakdowns_busy")', // Grid source url string
                 requestType: 'get', // Ajax grid request type
@@ -52,7 +52,7 @@
 
         setInterval(function () {
             refreshGrid()
-        }, 1000 * 20)
+        }, 1000 * 10)
 
     </script>
 }
