@@ -17,11 +17,11 @@
 
 }).Filterable().Pageable(pager =>
 {
-    pager.RowsPerPage = 20;
+    pager.RowsPerPage = 40;
     pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 20, "20" }, { 40, "40" }, { 80, "80" }, { 100, "100" } };
     pager.ShowPageSizes = true;
 }
-).Sortable();
+).Sortable().RowCss(model => model.spot > 0 ? "red" : "");
 
 @section scripts{
     <script>
@@ -29,4 +29,10 @@
         $("#allcontent").removeClass("body-content");
         $("#allcontent").removeClass("container");
     </script>
+    <style>
+        .red {
+            background-color: #ff0000;
+        }
+    </style>
+  
 }

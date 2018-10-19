@@ -7,24 +7,52 @@
 @Html.Grid(Model).Named("rt_ExtraControles").Build(columns =>
 {
     columns.Add(c => c.time_uitadaptief).Titled("time_uit_adaptief").Formatted("{0:dd-MM-yyyy HH:mm:ss}");
+    columns.Add(c => c.statusadaptieve).Titled("statusadaptief");
     columns.Add(c => c.robot).Titled("Robot");
     columns.Add(c => c.spot).Titled("spot");
-    columns.Add(c => c.plan).Titled("Plan").InitialSort(GridSortOrder.Desc); 
-    columns.Add(c => c.plannummer).Titled("plannummer");
+    columns.Add(c => c.plan).Titled("Plan").InitialSort(GridSortOrder.Desc);
+    columns.Add(c => c.plannummer).Titled("plannummer").InitialSort(GridSortOrder.Asc); 
     columns.Add(c => c.typecontrole).Titled("TypeControle");
+    columns.Add(c => c.lastinspectiontime).Titled("lastinspectiontime");
 
-}).Filterable().Pageable(pager =>
-{
-    pager.RowsPerPage = 20;
-    pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 20, "20" }, { 40, "40" }, { 80, "80" }, { 100, "100" } };
-    pager.ShowPageSizes = true;
-}
-).Sortable();
+
+}).Filterable(
+).Sortable()
 
 @section scripts{
     <script>
         //full with screen
         $("#allcontent").removeClass("body-content");
         $("#allcontent").removeClass("container");
+
+
+        //function to refresh grid
+        function refreshGrid() {
+            console.log('function is being called')
+            $('[data-name="rt_ExtraControles"]').mvcgrid({
+                reload: true,
+
+                reloadStarted: function () {
+                    // this - grid instance which invoked the event
+                },
+                reloadEnded: function () {
+                    // this - grid instance which invoked the event
+                },
+                reloadFailed: function (result) {
+                    // this - grid instance which invoked the event
+                    // result - failed ajax response result
+                }
+            });
+        }
+
+        setInterval(function () {
+            refreshGrid()
+        }, 1000 * 120)
     </script>
 }
+<style>
+    .colorred
+    {
+        background-color :rgba(190, 48, 48, 0.39)
+    }
+</style>
