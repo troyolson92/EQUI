@@ -23,5 +23,7 @@ namespace EqUiWebUi.Areas.Welding.Models
         public Nullable<System.DateTime> lastULControleTime { get; set; }
         public Nullable<double> TotalThickness { get; set; }
         public string Expr1 { get; set; }
+        public int ID { get; set; }
+        public int Expr2 { get; set; }
     }
 }

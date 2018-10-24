@@ -17,8 +17,6 @@ namespace EqUiWebUi.Areas.Welding.Models
     
     public partial class GADATAEntitiesWelding : DbContext
     {
-        internal readonly object ExtraControles;
-
         public GADATAEntitiesWelding()
             : base("name=GADATAEntitiesWelding")
         {
@@ -43,6 +41,7 @@ namespace EqUiWebUi.Areas.Welding.Models
         public virtual DbSet<LastWelds> LastWelds { get; set; }
         public virtual DbSet<QISViewer> QISViewer { get; set; }
         public virtual DbSet<TimerBreakdowns_busy> TimerBreakdowns_busy { get; set; }
+        public virtual DbSet<TimerBreakdownDatachange> TimerBreakdownDatachange { get; set; }
     
         public virtual ObjectResult<Lastwelds_Result> Lastwelds(string timer, Nullable<int> spot)
         {

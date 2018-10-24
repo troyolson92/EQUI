@@ -5,10 +5,10 @@
 
 @Html.Grid(Model).Named("rt_ExtraControles").Build(columns =>
 {
-    
+
     columns.Add(c => c.NPT).Titled("NPT");
     columns.Add(c => c.NPTOwner).Titled("NPTOwner");
-    columns.Add(c => c.time_uitadaptief).Titled("time_uit_adaptief").Formatted("{0:dd-MM-yyyy HH:mm:ss}");
+    columns.Add(c => c.time_uitadaptief).Titled("time_uit_adaptief").Formatted("{0:dd-MM-yyyy HH:mm:ss}").InitialSort(GridSortOrder.Desc); ;
     columns.Add(c => c.statusadaptieve).Titled("statusadaptief");
     columns.Add(c => c.robot).Titled("Robot");
     columns.Add(c => c.spot).Titled("spot");
