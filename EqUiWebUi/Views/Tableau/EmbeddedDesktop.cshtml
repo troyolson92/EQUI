@@ -3,10 +3,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<body>
-    @*render the viz*@
-    <div id="viz"></div>
-</body>
+@*render the viz*@
+<div id="viz" class="viz"></div>
 
 @section scripts{
     <script src="~/Scripts/tableau-2.0.0.min.js"></script>
@@ -42,13 +40,8 @@
                 onFirstInteractive: function (e) {
                     $('.viz iframe').attr("scrolling", "no");
                     $('.viz iframe').css('overflow', 'hidden');
-                }
-                ,'LocationTreeFilter' : '@ViewBag.LocationTreeFilter'
-            //don't set time filter do this relative in tableau
-            //    , 'Week': '@ViewBag.Weeknum'
-            //    , 'Dag': '@ViewBag.Weekday'
-            //    , 'Vweek': '@ViewBag.Weeknum'
-            //    , 'Vday' : '@ViewBag.Weekday'
+                },
+                'LocationTreeFilter': '@ViewBag.LocationTreeFilter'
             };
 
             new tableauSoftware.Viz(document.getElementById('viz'), url, vizOptions)

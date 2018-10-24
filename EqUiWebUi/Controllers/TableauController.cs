@@ -48,10 +48,26 @@ namespace EqUiWebUi.Controllers
 
         //handels inbedded views from tablea 4K monitors  
         [HttpGet]
-        public ActionResult Embedded4K(string workbook, string sheet)
+        public ActionResult Embedded4K(string workbook, string sheet, bool TrustedAuth = true)
         {
+            //
             ViewBag.workbook = workbook;
             ViewBag.sheet = sheet;
+            ViewBag.Weeknum = CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(System.DateTime.Now, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
+            ViewBag.Weekday = (int)System.DateTime.Now.DayOfWeek;
+
+            ViewBag.LocationTreeFilter = GetUsersAreaname();
+            //
+            ViewBag.TrustedAuth = TrustedAuth;
+            if (TrustedAuth)
+            {
+                ViewBag.Ticket = GetTableauAuthenticationTicket(tabServer: "https://tableau-test.volvocars.biz", user: "BPPEQDB1", site: "Ghent");
+                if (ViewBag.Ticket == "-1")
+                {
+                    //auth failure
+                    ViewBag.TrustedAuth = false;
+                }
+            }
             return View();
         }
 
