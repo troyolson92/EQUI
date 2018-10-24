@@ -1303,7 +1303,6 @@
     <Content Include="Areas\Welding\Views\Qteam\rt_ExtraControles.cshtml" />
     <Content Include="Areas\Welding\Views\Qteam\ULRapportering.cshtml" />
     <Content Include="Areas\Welding\Views\WM\Index.cshtml" />
-    <Content Include="Areas\Welding\Views\WM\LastWelds.cshtml" />
     <Content Include="Areas\Welding\Views\WM\Launch.cshtml" />
     <Content Include="Areas\Welding\Views\Launch\DoubleSpotCheck.cshtml" />
     <Content Include="Areas\Welding\Views\Launch\Index.cshtml" />
