@@ -70,6 +70,8 @@ namespace EqUiWebUi.Areas.VWSC.Controllers
             {
                 c_error = new VWSC_c_error();
                 c_error.enable_bit = (int)Enable_bit.Disabled;
+                c_error.C_operator = (int)LogicOperator.AND;
+                c_error.flags = (int)c_error_flags.Insert_into_rt_alarm;
             }
             else //find the existing alert
             {

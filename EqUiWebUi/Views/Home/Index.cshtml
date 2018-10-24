@@ -49,7 +49,7 @@
     </div>
     <div class="card-body">
         @MyHtmlHelpers.EquiLink("/Tiplife/NgacElectrode/index", "fas fa-industry", "Electrode", helperText: "Alles in verband met de Electrodes (greenfield)")
-        @MyHtmlHelpers.EquiLink("http://gensvw2107/CMACTAPP/", "fas fa-stopwatch", "cmaCTapp", helperText: "Tool van IE om Cycle times te bekijken")
+        @MyHtmlHelpers.EquiLink("http://gensvw2107.gen.volvocars.net/CMACTAPP/", "fas fa-stopwatch", "cmaCTapp", helperText: "Tool van IE om Cycle times te bekijken")
         @MyHtmlHelpers.EquiLink("/PlcSupervisie/Screenshot/Carousel", "far fa-object-group", "Supervisie (UB12)", helperText: "Plc Supervisie voor UB12 (mobile friendly)")
         @MyHtmlHelpers.EquiLink("/Home/Rendersite?url=" + @Uri.EscapeDataString("http://webapps.gen.volvocars.net/applications/eng/equipment/SuperVisieCma/"), "far fa-object-group", "Supervisie (Greenfield)", helperText: "Tia supervisie schermen")
     </div>
@@ -71,6 +71,21 @@
 
 <p></p>
 
+<div class="card">
+    <div class="card-header bg-dark">
+        <h5 class="card-title text-white">
+            AASPOT (in beta)
+            <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
+        </h5>
+    </div>
+    <div class="card-body">
+        @MyHtmlHelpers.EquiLink("/Welding/Welding/index", "fas fa-bolt", "AASPOT homepage", helperText: "Nieuwe website voor AASPOT (jens)")
+    </div>
+</div>
+
+<p></p>
+
+
 @*This card is default collapsed see fa-rotate-180 and display:none*@
 <div class="card">
     <div class="card-header bg-danger">
@@ -80,34 +95,9 @@
         </h5>
     </div>
     <div class="card-body" style="display:none">
-        <p>
-            <a href="~/VASC/Breakdown/getBreakdowns" class="btn btn-primary btn-sm">NGAC breakdown&raquo;</a>(test)
-            Test met niet gebufferde query
-        </p>
-
-        <p>
-            <a href="~/PJV/pjv/index" class="btn btn-primary btn-sm">PJV&raquo;</a>(test)
-            Test met pjv UI
-        </p>
-
-        <p>
-            <a href="~/STW040/STW040/index" class="btn btn-primary btn-sm">STW040&raquo;</a>(test)
-            Test met db toegang naar stw040
-        </p>
-
-        <p>
-            <a href="~/Welding/Welding/index" class="btn btn-primary btn-sm">AASPOT&raquo;</a>(test)
-            Jens zijn area
-        </p>
-
-        <p>
-            <a href="~/Home/TestPage" class="btn btn-primary btn-sm">TestPage&raquo;</a>
-        </p>
-
-        <p>
-            <a href="~/Gadata/Table/BodyTrackWebgrid?DataGrid-body-no-equals=99999999" class="btn btn-primary btn-sm">Bodytracking &raquo;</a>
-            Body tracking (robot data A LIJN 339 ONLY!)
-        </p>
+        @MyHtmlHelpers.EquiLink("/VASC/Breakdown/getBreakdowns", "fas fa-vial", "getBreakdowns", helperText: "NGAC breakdown details")
+        @MyHtmlHelpers.EquiLink("/PJV/pjv/index", "fas fa-vial", "PJV", helperText: "Track changed and modifications on robot process points")
+        @MyHtmlHelpers.EquiLink("/Gadata/Table/BodyTrackWebgrid?DataGrid-body-no-equals=99999999", "fas fa-vial", "Track cars by bodynum", helperText: "weldbolt line only")
     </div>
 </div>
 

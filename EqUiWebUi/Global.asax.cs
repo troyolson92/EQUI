@@ -83,7 +83,7 @@ namespace EqUiWebUi
 
         }
 
-        //custom handelers for errors 
+        //custom handlers for errors 
         protected void Application_Error(object sender, EventArgs e)
         {
             var httpContext = ((MvcApplication)sender).Context;
