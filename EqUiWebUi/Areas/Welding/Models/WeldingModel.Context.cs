@@ -17,6 +17,8 @@ namespace EqUiWebUi.Areas.Welding.Models
     
     public partial class GADATAEntitiesWelding : DbContext
     {
+        internal readonly object ExtraControles;
+
         public GADATAEntitiesWelding()
             : base("name=GADATAEntitiesWelding")
         {
