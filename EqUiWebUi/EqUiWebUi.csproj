@@ -713,6 +713,9 @@
     <Compile Include="Areas\Welding\Models\StabilityInDicationV316.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Areas\Welding\Models\TimerBreakdownDatachange.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Areas\Welding\Models\TimerBreakdowns_busy.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
@@ -1317,6 +1320,7 @@
     <Content Include="Areas\Welding\Views\WM\_QISvieuwer.cshtml" />
     <Content Include="Areas\Welding\Views\WM\_TimerBreakdowns_busy.cshtml" />
     <Content Include="Areas\Welding\Views\WM\rt_ExtraControlesWM.cshtml" />
+    <Content Include="Areas\Welding\Views\WM\_TimerBreakdownDatachange.cshtml" />
     <None Include="Properties\PublishProfiles\gensvw1178-DEV-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gotsvw11292-PRODUCTION-VCTA.pubxml" />
