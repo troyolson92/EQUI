@@ -84,9 +84,12 @@ warning 6002: The table/view 'GADATA.LAUNCH.CheckDubbelPrograms' does not have a
 warning 6002: The table/view 'GADATA.LAUNCH.ComparePitchV316' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="ComparePitchV316">
           <Key>
+            <PropertyRef Name="ID" />
             <PropertyRef Name="timerNumber" />
             <PropertyRef Name="lastWeldTime" />
+            <PropertyRef Name="Expr2" />
           </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
           <Property Name="timerNumber" Type="varchar" MaxLength="17" Nullable="false" />
           <Property Name="lastWeldTime" Type="varchar" MaxLength="23" Nullable="false" />
           <Property Name="SpotID" Type="nchar" MaxLength="25" />
@@ -96,6 +99,7 @@ warning 6002: The table/view 'GADATA.LAUNCH.ComparePitchV316' does not have a pr
           <Property Name="lastULControleTime" Type="datetime" />
           <Property Name="TotalThickness" Type="float" />
           <Property Name="Expr1" Type="nchar" MaxLength="255" />
+          <Property Name="Expr2" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'GADATA.LAUNCH.DoubleSpotCheck' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -199,6 +203,31 @@ warning 6002: The table/view 'GADATA.UL.ULRapportering' does not have a primary 
           <Property Name="loose?" Type="bit" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.WELDING.TimerBreakdownDatachange' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="TimerBreakdownDatachange">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="15" />
+          <Property Name="location" Type="varchar" MaxLength="256" />
+          <Property Name="Expr1" Type="nchar" MaxLength="15" />
+          <Property Name="errorstarttime" Type="datetime" />
+          <Property Name="errorEndTime" Type="datetime" />
+          <Property Name="BreakdownTime" Type="time" Precision="7" />
+          <Property Name="Vyear" Type="int" />
+          <Property Name="Vweek" Type="int" />
+          <Property Name="Vday" Type="int" />
+          <Property Name="Shift" Type="int" />
+          <Property Name="DataChangeTime" Type="datetime" />
+          <Property Name="Parameter" Type="nchar" MaxLength="100" />
+          <Property Name="OldValue" Type="nchar" MaxLength="50" />
+          <Property Name="NewValue" Type="nchar" MaxLength="50" />
+          <Property Name="CDSID" Type="nchar" MaxLength="25" />
+          <Property Name="WMComment" Type="nchar" MaxLength="255" />
+          <Property Name="TimerFault" Type="nchar" MaxLength="50" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'GADATA.WELDING2.ConnectionState' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="ConnectionState">
           <Key>
@@ -284,6 +313,7 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
           </EntitySet>
           <EntitySet Name="ComparePitchV316" EntityType="Self.ComparePitchV316" store:Type="Views" store:Schema="LAUNCH">
             <DefiningQuery>SELECT 
+    [ComparePitchV316].[ID] AS [ID], 
     [ComparePitchV316].[timerNumber] AS [timerNumber], 
     [ComparePitchV316].[lastWeldTime] AS [lastWeldTime], 
     [ComparePitchV316].[SpotID] AS [SpotID], 
@@ -292,7 +322,8 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
     [ComparePitchV316].[Model] AS [Model], 
     [ComparePitchV316].[lastULControleTime] AS [lastULControleTime], 
     [ComparePitchV316].[TotalThickness] AS [TotalThickness], 
-    [ComparePitchV316].[Expr1] AS [Expr1]
+    [ComparePitchV316].[Expr1] AS [Expr1], 
+    [ComparePitchV316].[Expr2] AS [Expr2]
     FROM [LAUNCH].[ComparePitchV316] AS [ComparePitchV316]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="DoubleSpotCheck" EntityType="Self.DoubleSpotCheck" store:Type="Views" store:Schema="LAUNCH">
@@ -373,6 +404,28 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
     [ULRapportering].[loose?] AS [loose?]
     FROM [UL].[ULRapportering] AS [ULRapportering]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="TimerBreakdownDatachange" EntityType="Self.TimerBreakdownDatachange" store:Type="Views" store:Schema="WELDING">
+            <DefiningQuery>SELECT 
+    [TimerBreakdownDatachange].[id] AS [id], 
+    [TimerBreakdownDatachange].[Name] AS [Name], 
+    [TimerBreakdownDatachange].[location] AS [location], 
+    [TimerBreakdownDatachange].[Expr1] AS [Expr1], 
+    [TimerBreakdownDatachange].[errorstarttime] AS [errorstarttime], 
+    [TimerBreakdownDatachange].[errorEndTime] AS [errorEndTime], 
+    [TimerBreakdownDatachange].[BreakdownTime] AS [BreakdownTime], 
+    [TimerBreakdownDatachange].[Vyear] AS [Vyear], 
+    [TimerBreakdownDatachange].[Vweek] AS [Vweek], 
+    [TimerBreakdownDatachange].[Vday] AS [Vday], 
+    [TimerBreakdownDatachange].[Shift] AS [Shift], 
+    [TimerBreakdownDatachange].[DataChangeTime] AS [DataChangeTime], 
+    [TimerBreakdownDatachange].[Parameter] AS [Parameter], 
+    [TimerBreakdownDatachange].[OldValue] AS [OldValue], 
+    [TimerBreakdownDatachange].[NewValue] AS [NewValue], 
+    [TimerBreakdownDatachange].[CDSID] AS [CDSID], 
+    [TimerBreakdownDatachange].[WMComment] AS [WMComment], 
+    [TimerBreakdownDatachange].[TimerFault] AS [TimerFault]
+    FROM [WELDING].[TimerBreakdownDatachange] AS [TimerBreakdownDatachange]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="ConnectionState" EntityType="Self.ConnectionState" store:Type="Views" store:Schema="WELDING2">
             <DefiningQuery>SELECT 
     [ConnectionState].[NoConnection] AS [NoConnection], 
@@ -415,6 +468,7 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
           <EntitySet Name="LastWelds" EntityType="GADATAModelWelding.LastWelds" />
           <EntitySet Name="QISViewer" EntityType="GADATAModelWelding.QISViewer" />
           <EntitySet Name="TimerBreakdowns_busy" EntityType="GADATAModelWelding.TimerBreakdowns_busy" />
+          <EntitySet Name="TimerBreakdownDatachange" EntityType="GADATAModelWelding.TimerBreakdownDatachange" />
         </EntityContainer>
         <EntityType Name="rt_AutoWorkFlowULPlans">
           <Key>
@@ -547,6 +601,8 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
           <Key>
             <PropertyRef Name="timerNumber" />
             <PropertyRef Name="lastWeldTime" />
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Expr2" />
           </Key>
           <Property Name="timerNumber" Type="String" Nullable="false" MaxLength="17" FixedLength="false" Unicode="false" />
           <Property Name="lastWeldTime" Type="String" Nullable="false" MaxLength="23" FixedLength="false" Unicode="false" />
@@ -557,6 +613,8 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
           <Property Name="lastULControleTime" Type="DateTime" Precision="3" />
           <Property Name="TotalThickness" Type="Double" />
           <Property Name="Expr1" Type="String" MaxLength="255" FixedLength="true" Unicode="true" />
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Expr2" Type="Int32" Nullable="false" />
         </EntityType>
         <ComplexType Name="Lastwelds_Result">
           <Property Type="String" Name="Expr1" Nullable="true" MaxLength="15" />
@@ -620,6 +678,29 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
           <Property Name="C_timestamp" Type="DateTime" Precision="3" />
           <Property Name="BreakdownTime" Type="Int32" />
           <Property Name="id" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TimerBreakdownDatachange">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="location" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="Expr1" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="errorstarttime" Type="DateTime" Precision="3" />
+          <Property Name="errorEndTime" Type="DateTime" Precision="3" />
+          <Property Name="BreakdownTime" Type="Time" Precision="7" />
+          <Property Name="Vyear" Type="Int32" />
+          <Property Name="Vweek" Type="Int32" />
+          <Property Name="Vday" Type="Int32" />
+          <Property Name="Shift" Type="Int32" />
+          <Property Name="DataChangeTime" Type="DateTime" Precision="3" />
+          <Property Name="Parameter" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="OldValue" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="NewValue" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="CDSID" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
+          <Property Name="WMComment" Type="String" MaxLength="255" FixedLength="true" Unicode="true" />
+          <Property Name="TimerFault" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -764,6 +845,8 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
           <EntitySetMapping Name="ComparePitchV316">
             <EntityTypeMapping TypeName="GADATAModelWelding.ComparePitchV316">
               <MappingFragment StoreEntitySet="ComparePitchV316">
+                <ScalarProperty Name="Expr2" ColumnName="Expr2" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Expr1" ColumnName="Expr1" />
                 <ScalarProperty Name="TotalThickness" ColumnName="TotalThickness" />
                 <ScalarProperty Name="lastULControleTime" ColumnName="lastULControleTime" />
@@ -823,6 +906,30 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="TimerBreakdownDatachange">
+            <EntityTypeMapping TypeName="GADATAModelWelding.TimerBreakdownDatachange">
+              <MappingFragment StoreEntitySet="TimerBreakdownDatachange">
+                <ScalarProperty Name="TimerFault" ColumnName="TimerFault" />
+                <ScalarProperty Name="WMComment" ColumnName="WMComment" />
+                <ScalarProperty Name="CDSID" ColumnName="CDSID" />
+                <ScalarProperty Name="NewValue" ColumnName="NewValue" />
+                <ScalarProperty Name="OldValue" ColumnName="OldValue" />
+                <ScalarProperty Name="Parameter" ColumnName="Parameter" />
+                <ScalarProperty Name="DataChangeTime" ColumnName="DataChangeTime" />
+                <ScalarProperty Name="Shift" ColumnName="Shift" />
+                <ScalarProperty Name="Vday" ColumnName="Vday" />
+                <ScalarProperty Name="Vweek" ColumnName="Vweek" />
+                <ScalarProperty Name="Vyear" ColumnName="Vyear" />
+                <ScalarProperty Name="BreakdownTime" ColumnName="BreakdownTime" />
+                <ScalarProperty Name="errorEndTime" ColumnName="errorEndTime" />
+                <ScalarProperty Name="errorstarttime" ColumnName="errorstarttime" />
+                <ScalarProperty Name="Expr1" ColumnName="Expr1" />
+                <ScalarProperty Name="location" ColumnName="location" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -838,7 +945,7 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="False" />
-        <DesignerProperty Name="IncludeForeignKeysInModel" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
