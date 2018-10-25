@@ -19,6 +19,7 @@
         <EntityTypeShape EntityType="GADATAModelWelding.LastWelds" Width="1.5" PointX="8.5" PointY="2.5" />
         <EntityTypeShape EntityType="GADATAModelWelding.QISViewer" Width="1.5" PointX="6.875" PointY="0.5" />
         <EntityTypeShape EntityType="GADATAModelWelding.TimerBreakdowns_busy" Width="1.5" PointX="6.875" PointY="3.375" />
+        <EntityTypeShape EntityType="GADATAModelWelding.TimerBreakdownDatachange" Width="1.5" PointX="4" PointY="5" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

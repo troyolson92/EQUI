@@ -1,0 +1,44 @@
+﻿@model IQueryable<EqUiWebUi.Areas.Welding.Models.TimerBreakdownDatachange>
+@{
+    ViewBag.Title = "TimerBreakdownDatachange";
+}
+
+@Html.Grid(Model).Named("TimerBreakdownDatachange").Build(columns =>
+{
+
+    columns.Add(c => c.Name).Titled("NPT");
+    columns.Add(c => c.location).Titled("Location");
+    columns.Add(c => c.Expr1).Titled("Timer");
+    columns.Add(c => c.TimerFault).Titled("TimerFault");
+    columns.Add(c => c.errorstarttime).Titled("statusadaptief").Formatted("{0:dd-MM-yyyy HH:mm:ss}").InitialSort(GridSortOrder.Desc); ;
+    columns.Add(c => c.BreakdownTime).Titled("BreakdownTime");
+
+    columns.Add(c => c.DataChangeTime).Titled("dataChangeTime");
+    columns.Add(c => c.Parameter).Titled("Parameter");
+    columns.Add(c => c.OldValue).Titled("OldValue");
+    columns.Add(c => c.NewValue).Titled("NewValue");
+    columns.Add(c => c.CDSID).Titled("CDSID");
+    columns.Add(c => c.WMComment).Titled("WMComment");
+
+    columns.Add(c => c.Vyear).Titled("Vyear");
+    columns.Add(c => c.Vweek).Titled("Vweek");
+    columns.Add(c => c.Vday).Titled("Vday");
+    columns.Add(c => c.Shift).Titled("Shift");
+
+
+}).Filterable(
+).Sortable().RowCss(c => c.Parameter != null ? "Green" : "")
+
+@section scripts{
+    <script>
+        //full with screen
+        $("#allcontent").removeClass("body-content");
+        $("#allcontent").removeClass("container");
+        name
+    </script>
+}
+<style>
+    .Green {
+        background-color:rgba(76, 255, 0, 0.65)
+    }
+</style>
