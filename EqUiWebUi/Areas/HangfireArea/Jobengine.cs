@@ -20,19 +20,8 @@ namespace EqUiWebUi.Areas.HangfireArea
         private GADATAEntitiesEQUI dbEQUI = new GADATAEntitiesEQUI();
         private Alert.Models.GADATA_AlertModel dbALERT = new Alert.Models.GADATA_AlertModel();
         private Alert.AlertEngine AlertEngine = new Alert.AlertEngine();
+        private EqUiWebUi.HouseKeepingengine HouseKeepingengine = new HouseKeepingengine();
         private PerformContext MainContext;
-
-
-        //NEEDS TO BE DELETE WHEN JENS MOVED HIS STUFF*****
-        [Queue("jobengine")]
-        [AutomaticRetry(Attempts = 0)] //no hangfire retrys 
-        public void Runjob(string command, int maxExectime = 300)
-        {
-            log.Debug("runjob: " + command);
-            ConnectionManager connectionManager = new ConnectionManager();
-            connectionManager.RunCommand(command, enblExeptions: true, maxEXECtime: maxExectime);
-        }
-        //**********************************************************************************
 
         public void configure_schedules(bool onlyStartrunContinues = false)
         {
@@ -83,15 +72,21 @@ namespace EqUiWebUi.Areas.HangfireArea
                 {
                     context.WriteLine("no jobs found.");
                 }
-                context.WriteLine("getting alerttriggers");
+                context.WriteLine("getting alert triggers");
                 List<Alert.Models.c_triggers> triggers = dbALERT.c_triggers.Where(c => c.c_schedule_id == c_schedule_id).OrderBy(c => c.ordinal).ToList();
                 if (triggers.Count() == 0)
                 {
-                    context.WriteLine("no alerttriggers found.");
+                    context.WriteLine("no alert triggers found.");
                 }
-           
+                context.WriteLine("getting housekeeping jobs");
+                List<EqUiWebUi.Models.c_housekeeping> housekeepings = dbEQUI.c_housekeeping.Where(c => c.c_schedule_id == c_schedule_id).OrderBy(c => c.Ordinal).ToList();
+                if (triggers.Count() == 0)
+                {
+                    context.WriteLine("no housekeeping jobs found.");
+                }
+
                 string previousJobId = null;
-                //handel jobs
+                //handle jobs
                 foreach (c_job job in jobs)
                 {
                     context.WriteLine($"processing job: {job.name} ordinal: {job.ordinal}");
@@ -113,7 +108,7 @@ namespace EqUiWebUi.Areas.HangfireArea
                     //add url to created job.
                     context.WriteLine(System.Configuration.ConfigurationManager.AppSettings["HangfireDetailsBasepath"].ToString() + previousJobId);
                 }
-                //handel alerts
+                //handle alerts
                 foreach (Alert.Models.c_triggers trigger in triggers)
                 {
                     context.WriteLine($"processing Alert: {trigger.alertType} ordinal: {trigger.ordinal}");
@@ -131,6 +126,21 @@ namespace EqUiWebUi.Areas.HangfireArea
                         {
                             previousJobId = BackgroundJob.ContinueWith(previousJobId, () => AlertEngine.CheckForalerts(trigger.id, trigger.discription, context, false), JobContinuationOptions.OnlyOnSucceededState);
                         }
+                    }
+                    //add url to created job.                 
+                    context.WriteLine(System.Configuration.ConfigurationManager.AppSettings["HangfireDetailsBasepath"].ToString() + previousJobId);
+                }
+                //handle house keeping
+                foreach (EqUiWebUi.Models.c_housekeeping trigger in housekeepings)
+                {
+                    context.WriteLine($"processing house keeping: {trigger.Name} ordinal: {trigger.Ordinal}");
+                    if (previousJobId == null)
+                    {
+                        previousJobId = BackgroundJob.Enqueue(() => AlertEngine.CheckForalerts(trigger.id, trigger.Description, context, false));
+                    }
+                    else
+                    {
+                        previousJobId = BackgroundJob.ContinueWith(previousJobId, () => HouseKeepingengine.Run_houseKeeping(trigger.Name, trigger.id, context), JobContinuationOptions.OnAnyFinishedState);
                     }
                     //add url to created job.                 
                     context.WriteLine(System.Configuration.ConfigurationManager.AppSettings["HangfireDetailsBasepath"].ToString() + previousJobId);

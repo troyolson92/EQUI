@@ -18,6 +18,7 @@ namespace EqUiWebUi.Models
         public c_schedule()
         {
             this.c_job = new HashSet<c_job>();
+            this.c_housekeeping = new HashSet<c_housekeeping>();
         }
     
         public int id { get; set; }
@@ -30,5 +31,7 @@ namespace EqUiWebUi.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<c_job> c_job { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<c_housekeeping> c_housekeeping { get; set; }
     }
 }
