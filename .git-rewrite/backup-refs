@@ -1,0 +1,10 @@
+59de32846c9f8956abc1a807154fed7aba45966b commit	refs/heads/Jens2
+52fb3a4738ba396d63933aff4f6cc61d07fc06fa commit	refs/heads/Master
+21e3c099d0669591b786b50b6c68eb754b37c96f commit	refs/heads/sync
+52fb3a4738ba396d63933aff4f6cc61d07fc06fa commit	refs/remotes/origin/HEAD
+59de32846c9f8956abc1a807154fed7aba45966b commit	refs/remotes/origin/Jens2
+28dd7f958f5fa83e96cf0eeeaca32a587aebf720 commit	refs/remotes/origin/JensTest
+52fb3a4738ba396d63933aff4f6cc61d07fc06fa commit	refs/remotes/origin/Master
+9cae1717f9e152ea5810d9e4168dd66b175f44ee commit	refs/remotes/origin/staging
+21e3c099d0669591b786b50b6c68eb754b37c96f commit	refs/remotes/origin/sync
+f1e86ad69455f448931d6658ebadee79fc19ee2d commit	refs/tags/Release1
