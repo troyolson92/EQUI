@@ -40,6 +40,24 @@
           <Property Name="ConnectionString" Type="varchar(max)" Nullable="false" />
           <Property Name="isAlertSource" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="c_housekeeping">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="c_schedule_id" Type="int" Nullable="false" />
+          <Property Name="c_datasource_id" Type="int" />
+          <Property Name="Ordinal" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="varchar(max)" />
+          <Property Name="SchemaName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="TableName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="nDaysKeepHistory" Type="int" Nullable="false" />
+          <Property Name="nDeleteBatchSize" Type="int" Nullable="false" />
+          <Property Name="nMaxRunTime" Type="int" Nullable="false" />
+          <Property Name="IdColName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DateTimeColName" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="c_job">
           <Key>
             <PropertyRef Name="id" />
@@ -106,6 +124,20 @@
           <Property Name="c_Classification_id" Type="int" />
           <Property Name="c_Subgroup_id" Type="int" />
         </EntityType>
+        <EntityType Name="L_housekeeping">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="c_housekeeping_id" Type="int" Nullable="false" />
+          <Property Name="timestamp" Type="datetime" Nullable="false" />
+          <Property Name="nRowCountStart" Type="int" />
+          <Property Name="nRowCountEnd" Type="int" />
+          <Property Name="nLoopCount" Type="int" />
+          <Property Name="nDeleteCount" Type="int" />
+          <Property Name="nRunTime" Type="int" />
+          <Property Name="nJobID" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="L_link">
           <Key>
             <PropertyRef Name="id" />
@@ -157,6 +189,30 @@
           <Property Name="Subgroup" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Discription" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
+        <Association Name="FK_c_housekeeping_c_datasource">
+          <End Role="c_datasource" Type="Self.c_datasource" Multiplicity="0..1" />
+          <End Role="c_housekeeping" Type="Self.c_housekeeping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_datasource">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="c_housekeeping">
+              <PropertyRef Name="c_datasource_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_c_housekeeping_c_schedule">
+          <End Role="c_schedule" Type="Self.c_schedule" Multiplicity="1" />
+          <End Role="c_housekeeping" Type="Self.c_housekeeping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_schedule">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="c_housekeeping">
+              <PropertyRef Name="c_schedule_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_c_job_c_datasource">
           <End Role="c_datasource" Type="Self.c_datasource" Multiplicity="1" />
           <End Role="c_job" Type="Self.c_job" Multiplicity="*" />
@@ -253,6 +309,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_L_housekeeping_c_housekeeping">
+          <End Role="c_housekeeping" Type="Self.c_housekeeping" Multiplicity="1" />
+          <End Role="L_housekeeping" Type="Self.L_housekeeping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_housekeeping">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="L_housekeeping">
+              <PropertyRef Name="c_housekeeping_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_L_link_L_pannel">
           <End Role="L_pannel" Type="Self.L_pannel" Multiplicity="0..1" />
           <End Role="L_link" Type="Self.L_link" Multiplicity="*" />
@@ -280,16 +348,26 @@
         <EntityContainer Name="GADATAModelEQUIStoreContainer">
           <EntitySet Name="ASSETS" EntityType="Self.ASSETS" Schema="EqUi" store:Type="Tables" />
           <EntitySet Name="c_datasource" EntityType="Self.c_datasource" Schema="EqUi" store:Type="Tables" />
+          <EntitySet Name="c_housekeeping" EntityType="Self.c_housekeeping" Schema="EqUi" store:Type="Tables" />
           <EntitySet Name="c_job" EntityType="Self.c_job" Schema="EqUi" store:Type="Tables" />
           <EntitySet Name="c_LogClassRules" EntityType="Self.c_LogClassRules" Schema="EqUi" store:Type="Tables" />
           <EntitySet Name="c_logClassSystem" EntityType="Self.c_logClassSystem" Schema="EqUi" store:Type="Tables" />
           <EntitySet Name="c_schedule" EntityType="Self.c_schedule" Schema="EqUi" store:Type="Tables" />
           <EntitySet Name="l_dummyLogClassResult" EntityType="Self.l_dummyLogClassResult" Schema="EqUi" store:Type="Tables" />
+          <EntitySet Name="L_housekeeping" EntityType="Self.L_housekeeping" Schema="EqUi" store:Type="Tables" />
           <EntitySet Name="L_link" EntityType="Self.L_link" Schema="EqUi" store:Type="Tables" />
           <EntitySet Name="L_pannel" EntityType="Self.L_pannel" Schema="EqUi" store:Type="Tables" />
           <EntitySet Name="Wiki" EntityType="Self.Wiki" Schema="EqUi" store:Type="Tables" />
           <EntitySet Name="c_Classification" EntityType="Self.c_Classification" Schema="Volvo" store:Type="Tables" />
           <EntitySet Name="c_Subgroup" EntityType="Self.c_Subgroup" Schema="Volvo" store:Type="Tables" />
+          <AssociationSet Name="FK_c_housekeeping_c_datasource" Association="Self.FK_c_housekeeping_c_datasource">
+            <End Role="c_datasource" EntitySet="c_datasource" />
+            <End Role="c_housekeeping" EntitySet="c_housekeeping" />
+          </AssociationSet>
+          <AssociationSet Name="FK_c_housekeeping_c_schedule" Association="Self.FK_c_housekeeping_c_schedule">
+            <End Role="c_schedule" EntitySet="c_schedule" />
+            <End Role="c_housekeeping" EntitySet="c_housekeeping" />
+          </AssociationSet>
           <AssociationSet Name="FK_c_job_c_datasource" Association="Self.FK_c_job_c_datasource">
             <End Role="c_datasource" EntitySet="c_datasource" />
             <End Role="c_job" EntitySet="c_job" />
@@ -321,6 +399,10 @@
           <AssociationSet Name="FK_l_dummyLogClassResult_c_Subgroup" Association="Self.FK_l_dummyLogClassResult_c_Subgroup">
             <End Role="c_Subgroup" EntitySet="c_Subgroup" />
             <End Role="l_dummyLogClassResult" EntitySet="l_dummyLogClassResult" />
+          </AssociationSet>
+          <AssociationSet Name="FK_L_housekeeping_c_housekeeping" Association="Self.FK_L_housekeeping_c_housekeeping">
+            <End Role="c_housekeeping" EntitySet="c_housekeeping" />
+            <End Role="L_housekeeping" EntitySet="L_housekeeping" />
           </AssociationSet>
           <AssociationSet Name="FK_L_link_L_pannel" Association="Self.FK_L_link_L_pannel">
             <End Role="L_pannel" EntitySet="L_pannel" />
@@ -388,6 +470,20 @@
             <End Role="c_schedule" EntitySet="c_schedule" />
             <End Role="c_job" EntitySet="c_job" />
           </AssociationSet>
+          <EntitySet Name="L_housekeeping" EntityType="GADATAModelEQUI.L_housekeeping" />
+          <EntitySet Name="c_housekeeping" EntityType="GADATAModelEQUI.c_housekeeping" />
+          <AssociationSet Name="FK_c_housekeeping_c_datasource" Association="GADATAModelEQUI.FK_c_housekeeping_c_datasource">
+            <End Role="c_datasource" EntitySet="c_datasource" />
+            <End Role="c_housekeeping" EntitySet="c_housekeeping" />
+          </AssociationSet>
+          <AssociationSet Name="FK_c_housekeeping_c_schedule" Association="GADATAModelEQUI.FK_c_housekeeping_c_schedule">
+            <End Role="c_schedule" EntitySet="c_schedule" />
+            <End Role="c_housekeeping" EntitySet="c_housekeeping" />
+          </AssociationSet>
+          <AssociationSet Name="FK_L_housekeeping_c_housekeeping" Association="GADATAModelEQUI.FK_L_housekeeping_c_housekeeping">
+            <End Role="c_housekeeping" EntitySet="c_housekeeping" />
+            <End Role="L_housekeeping" EntitySet="L_housekeeping" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="c_datasource">
           <Key>
@@ -401,6 +497,7 @@
           <Property Name="isAlertSource" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="c_logClassSystem" Relationship="GADATAModelEQUI.FK_c_logClassSystem_c_datasource" FromRole="c_datasource" ToRole="c_logClassSystem" />
           <NavigationProperty Name="c_job" Relationship="GADATAModelEQUI.FK_c_job_c_datasource" FromRole="c_datasource" ToRole="c_job" />
+          <NavigationProperty Name="c_housekeeping" Relationship="GADATAModelEQUI.FK_c_housekeeping_c_datasource" FromRole="c_datasource" ToRole="c_housekeeping" />
         </EntityType>
         <EntityType Name="c_LogClassRules">
           <Key>
@@ -656,7 +753,8 @@
           <NavigationProperty Name="c_job" Relationship="GADATAModelEQUI.FK_c_job_c_schedule" FromRole="c_schedule" ToRole="c_job" />
           <Property Name="runContinues" Type="Boolean" Nullable="false" />
           <Property Name="minRunInterval" Type="Int32" Nullable="false" />
-        </EntityType>
+          <NavigationProperty Name="c_housekeeping" Relationship="GADATAModelEQUI.FK_c_housekeeping_c_schedule" FromRole="c_schedule" ToRole="c_housekeeping" />
+          </EntityType>
         <Association Name="FK_c_job_c_datasource">
           <End Type="GADATAModelEQUI.c_datasource" Role="c_datasource" Multiplicity="1" />
           <End Type="GADATAModelEQUI.c_job" Role="c_job" Multiplicity="*" />
@@ -678,6 +776,78 @@
             </Principal>
             <Dependent Role="c_job">
               <PropertyRef Name="c_schedule_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="L_housekeeping">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="c_housekeeping_id" Type="Int32" Nullable="false" />
+          <Property Name="timestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="nRowCountStart" Type="Int32" />
+          <Property Name="nRowCountEnd" Type="Int32" />
+          <Property Name="nLoopCount" Type="Int32" />
+          <Property Name="nDeleteCount" Type="Int32" />
+          <Property Name="nRunTime" Type="Int32" />
+          <Property Name="nJobID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="c_housekeeping" Relationship="GADATAModelEQUI.FK_L_housekeeping_c_housekeeping" FromRole="L_housekeeping" ToRole="c_housekeeping" />
+        </EntityType>
+        <EntityType Name="c_housekeeping">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="c_schedule_id" Type="Int32" Nullable="false" />
+          <Property Name="c_datasource_id" Type="Int32" />
+          <Property Name="Ordinal" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="SchemaName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TableName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="nDaysKeepHistory" Type="Int32" Nullable="false" />
+          <Property Name="nDeleteBatchSize" Type="Int32" Nullable="false" />
+          <Property Name="nMaxRunTime" Type="Int32" Nullable="false" />
+          <Property Name="IdColName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DateTimeColName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="c_datasource" Relationship="GADATAModelEQUI.FK_c_housekeeping_c_datasource" FromRole="c_housekeeping" ToRole="c_datasource" />
+          <NavigationProperty Name="c_schedule" Relationship="GADATAModelEQUI.FK_c_housekeeping_c_schedule" FromRole="c_housekeeping" ToRole="c_schedule" />
+          <NavigationProperty Name="L_housekeeping" Relationship="GADATAModelEQUI.FK_L_housekeeping_c_housekeeping" FromRole="c_housekeeping" ToRole="L_housekeeping" />
+        </EntityType>
+        <Association Name="FK_c_housekeeping_c_datasource">
+          <End Type="GADATAModelEQUI.c_datasource" Role="c_datasource" Multiplicity="0..1" />
+          <End Type="GADATAModelEQUI.c_housekeeping" Role="c_housekeeping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_datasource">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="c_housekeeping">
+              <PropertyRef Name="c_datasource_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_c_housekeeping_c_schedule">
+          <End Type="GADATAModelEQUI.c_schedule" Role="c_schedule" Multiplicity="1" />
+          <End Type="GADATAModelEQUI.c_housekeeping" Role="c_housekeeping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_schedule">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="c_housekeeping">
+              <PropertyRef Name="c_schedule_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_L_housekeeping_c_housekeeping">
+          <End Type="GADATAModelEQUI.c_housekeeping" Role="c_housekeeping" Multiplicity="1" />
+          <End Type="GADATAModelEQUI.L_housekeeping" Role="L_housekeeping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_housekeeping">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="L_housekeeping">
+              <PropertyRef Name="c_housekeeping_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -847,6 +1017,40 @@
                 <ScalarProperty Name="description" ColumnName="description" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="enabled" ColumnName="enabled" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="L_housekeeping">
+            <EntityTypeMapping TypeName="GADATAModelEQUI.L_housekeeping">
+              <MappingFragment StoreEntitySet="L_housekeeping">
+                <ScalarProperty Name="nJobID" ColumnName="nJobID" />
+                <ScalarProperty Name="nRunTime" ColumnName="nRunTime" />
+                <ScalarProperty Name="nDeleteCount" ColumnName="nDeleteCount" />
+                <ScalarProperty Name="nLoopCount" ColumnName="nLoopCount" />
+                <ScalarProperty Name="nRowCountEnd" ColumnName="nRowCountEnd" />
+                <ScalarProperty Name="nRowCountStart" ColumnName="nRowCountStart" />
+                <ScalarProperty Name="timestamp" ColumnName="timestamp" />
+                <ScalarProperty Name="c_housekeeping_id" ColumnName="c_housekeeping_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="c_housekeeping">
+            <EntityTypeMapping TypeName="GADATAModelEQUI.c_housekeeping">
+              <MappingFragment StoreEntitySet="c_housekeeping">
+                <ScalarProperty Name="DateTimeColName" ColumnName="DateTimeColName" />
+                <ScalarProperty Name="IdColName" ColumnName="IdColName" />
+                <ScalarProperty Name="nMaxRunTime" ColumnName="nMaxRunTime" />
+                <ScalarProperty Name="nDeleteBatchSize" ColumnName="nDeleteBatchSize" />
+                <ScalarProperty Name="nDaysKeepHistory" ColumnName="nDaysKeepHistory" />
+                <ScalarProperty Name="TableName" ColumnName="TableName" />
+                <ScalarProperty Name="SchemaName" ColumnName="SchemaName" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Ordinal" ColumnName="Ordinal" />
+                <ScalarProperty Name="c_datasource_id" ColumnName="c_datasource_id" />
+                <ScalarProperty Name="c_schedule_id" ColumnName="c_schedule_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

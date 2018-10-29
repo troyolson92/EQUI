@@ -12,28 +12,31 @@ namespace EqUiWebUi.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class c_datasource
+    public partial class c_housekeeping
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public c_datasource()
+        public c_housekeeping()
         {
-            this.c_logClassSystem = new HashSet<c_logClassSystem>();
-            this.c_job = new HashSet<c_job>();
-            this.c_housekeeping = new HashSet<c_housekeeping>();
+            this.L_housekeeping = new HashSet<L_housekeeping>();
         }
     
-        public int Id { get; set; }
+        public int id { get; set; }
+        public int c_schedule_id { get; set; }
+        public Nullable<int> c_datasource_id { get; set; }
+        public int Ordinal { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public int Type { get; set; }
-        public string ConnectionString { get; set; }
-        public bool isAlertSource { get; set; }
+        public string SchemaName { get; set; }
+        public string TableName { get; set; }
+        public int nDaysKeepHistory { get; set; }
+        public int nDeleteBatchSize { get; set; }
+        public int nMaxRunTime { get; set; }
+        public string IdColName { get; set; }
+        public string DateTimeColName { get; set; }
     
+        public virtual c_datasource c_datasource { get; set; }
+        public virtual c_schedule c_schedule { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<c_logClassSystem> c_logClassSystem { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<c_job> c_job { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<c_housekeeping> c_housekeeping { get; set; }
+        public virtual ICollection<L_housekeeping> L_housekeeping { get; set; }
     }
 }

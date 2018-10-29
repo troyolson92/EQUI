@@ -747,6 +747,7 @@
     <Compile Include="Controllers\ClassificationController.cs" />
     <Compile Include="Controllers\c_ClassificationController.cs" />
     <Compile Include="Controllers\c_datasourceController.cs" />
+    <Compile Include="Controllers\c_housekeepingController.cs" />
     <Compile Include="Controllers\c_LogClassRulesController.cs" />
     <Compile Include="Controllers\c_logClassSystemController.cs" />
     <Compile Include="Controllers\c_SubgroupController.cs" />
@@ -755,6 +756,7 @@
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\TableauController.cs" />
     <Compile Include="Controllers\WikisController.cs" />
+    <Compile Include="HouseKeepingengine.cs" />
     <Compile Include="Models\ASSETS.cs">
       <DependentUpon>EQUIModel.tt</DependentUpon>
     </Compile>
@@ -766,6 +768,9 @@
       <DependentUpon>EQUIModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\c_datasourceMetadata.cs" />
+    <Compile Include="Models\c_housekeeping.cs">
+      <DependentUpon>EQUIModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\c_job.cs">
       <DependentUpon>EQUIModel.tt</DependentUpon>
     </Compile>
@@ -800,6 +805,9 @@
     <Compile Include="Models\gadataModel.cs" />
     <Compile Include="Areas\user_management\roleProvider.cs" />
     <Compile Include="Models\l_dummyLogClassResult.cs">
+      <DependentUpon>EQUIModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\L_housekeeping.cs">
       <DependentUpon>EQUIModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\L_link.cs">
@@ -1449,6 +1457,12 @@
     <Content Include="Views\c_datasource\Index.cshtml" />
     <Content Include="Views\Shared\MvcGrid\_Pager.cshtml" />
     <Content Include="Views\Shared\MvcGrid\_Grid.cshtml" />
+    <Content Include="Views\c_housekeeping\Create.cshtml" />
+    <Content Include="Views\c_housekeeping\Delete.cshtml" />
+    <Content Include="Views\c_housekeeping\Edit.cshtml" />
+    <Content Include="Views\c_housekeeping\Index.cshtml" />
+    <Content Include="Views\c_housekeeping\_L_housekeeping.cshtml" />
+    <Content Include="Views\c_housekeeping\Details.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
