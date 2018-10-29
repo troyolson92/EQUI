@@ -189,7 +189,6 @@
     <Folder Include="Areas\VCSC\Views\Shared\" />
     <Folder Include="Areas\VWSC\Views\Shared\" />
     <Folder Include="Areas\Welding\Views\ARO\" />
-    <Folder Include="Areas\Welding\Views\Teardown Team\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Code\MyRowStyling.cs" />
@@ -711,6 +710,9 @@
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Welding\Models\StabilityInDicationV316.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Welding\Models\TDTResults.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Welding\Models\TimerBreakdownDatachange.cs">
@@ -1321,6 +1323,8 @@
     <Content Include="Areas\Welding\Views\WM\_TimerBreakdowns_busy.cshtml" />
     <Content Include="Areas\Welding\Views\WM\rt_ExtraControlesWM.cshtml" />
     <Content Include="Areas\Welding\Views\WM\_TimerBreakdownDatachange.cshtml" />
+    <Content Include="Areas\Welding\Views\TeardownTeam\Index.cshtml" />
+    <Content Include="Areas\Welding\Views\TeardownTeam\_TDTResults.cshtml" />
     <None Include="Properties\PublishProfiles\gensvw1178-DEV-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gotsvw11292-PRODUCTION-VCTA.pubxml" />

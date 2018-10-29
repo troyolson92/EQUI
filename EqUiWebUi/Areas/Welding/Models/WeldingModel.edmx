@@ -164,6 +164,23 @@ warning 6002: The table/view 'GADATA.LAUNCH.StabilityInDicationV316' does not ha
           <Property Name="StabiliteitsIni" Type="real" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.LAUNCH.TDTResults' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="TDTResults">
+          <Key>
+            <PropertyRef Name="Date" />
+            <PropertyRef Name="TDTResult" />
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="Number" Type="int" />
+          <Property Name="Model" Type="nchar" MaxLength="10" />
+          <Property Name="NuggetDemand" Type="real" />
+          <Property Name="TearDownNugget" Type="real" />
+          <Property Name="1.3spot" Type="real" />
+          <Property Name="TDTResult" Type="varchar" MaxLength="6" Nullable="false" />
+          <Property Name="ID" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'GADATA.QIS.QISViewer' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="QISViewer">
           <Key>
@@ -371,6 +388,18 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
     [StabilityInDicationV316].[StabiliteitsIni] AS [StabiliteitsIni]
     FROM [LAUNCH].[StabilityInDicationV316] AS [StabilityInDicationV316]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="TDTResults" EntityType="Self.TDTResults" store:Type="Views" store:Schema="LAUNCH">
+            <DefiningQuery>SELECT 
+    [TDTResults].[Date] AS [Date], 
+    [TDTResults].[Number] AS [Number], 
+    [TDTResults].[Model] AS [Model], 
+    [TDTResults].[NuggetDemand] AS [NuggetDemand], 
+    [TDTResults].[TearDownNugget] AS [TearDownNugget], 
+    [TDTResults].[1.3spot] AS [1.3spot], 
+    [TDTResults].[TDTResult] AS [TDTResult], 
+    [TDTResults].[ID] AS [ID]
+    FROM [LAUNCH].[TDTResults] AS [TDTResults]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="QISViewer" EntityType="Self.QISViewer" store:Type="Views" store:Schema="QIS">
             <DefiningQuery>SELECT 
     [QISViewer].[Timestamp] AS [Timestamp], 
@@ -460,7 +489,6 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
           <EntitySet Name="WeldtimeSpotsSetup" EntityType="GADATAModelWelding.WeldtimeSpotsSetup" />
           <EntitySet Name="StabilityInDicationV316" EntityType="GADATAModelWelding.StabilityInDicationV316" />
           <EntitySet Name="ConnectionState" EntityType="GADATAModelWelding.ConnectionState" />
-          <EntitySet Name="ComparePitchV316" EntityType="GADATAModelWelding.ComparePitchV316" />
           <FunctionImport Name="Lastwelds" ReturnType="Collection(GADATAModelWelding.Lastwelds_Result)">
             <Parameter Name="Timer" Mode="In" Type="String" />
             <Parameter Name="spot" Mode="In" Type="Int32" />
@@ -469,6 +497,8 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
           <EntitySet Name="QISViewer" EntityType="GADATAModelWelding.QISViewer" />
           <EntitySet Name="TimerBreakdowns_busy" EntityType="GADATAModelWelding.TimerBreakdowns_busy" />
           <EntitySet Name="TimerBreakdownDatachange" EntityType="GADATAModelWelding.TimerBreakdownDatachange" />
+          <EntitySet Name="ComparePitchV316" EntityType="GADATAModelWelding.ComparePitchV316" />
+          <EntitySet Name="TDTResults" EntityType="GADATAModelWelding.TDTResults" />
         </EntityContainer>
         <EntityType Name="rt_AutoWorkFlowULPlans">
           <Key>
@@ -597,25 +627,6 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
           <Property Name="C_timestamp" Type="DateTime" Precision="3" />
           <Property Name="onlineInBos6000" Type="Boolean" />
         </EntityType>
-        <EntityType Name="ComparePitchV316">
-          <Key>
-            <PropertyRef Name="timerNumber" />
-            <PropertyRef Name="lastWeldTime" />
-            <PropertyRef Name="ID" />
-            <PropertyRef Name="Expr2" />
-          </Key>
-          <Property Name="timerNumber" Type="String" Nullable="false" MaxLength="17" FixedLength="false" Unicode="false" />
-          <Property Name="lastWeldTime" Type="String" Nullable="false" MaxLength="23" FixedLength="false" Unicode="false" />
-          <Property Name="SpotID" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
-          <Property Name="Timer" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
-          <Property Name="AlternativeNumber" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
-          <Property Name="Model" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="lastULControleTime" Type="DateTime" Precision="3" />
-          <Property Name="TotalThickness" Type="Double" />
-          <Property Name="Expr1" Type="String" MaxLength="255" FixedLength="true" Unicode="true" />
-          <Property Name="ID" Type="Int32" Nullable="false" />
-          <Property Name="Expr2" Type="Int32" Nullable="false" />
-        </EntityType>
         <ComplexType Name="Lastwelds_Result">
           <Property Type="String" Name="Expr1" Nullable="true" MaxLength="15" />
           <Property Type="String" Name="Name" Nullable="true" MaxLength="15" />
@@ -701,6 +712,40 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
           <Property Name="CDSID" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
           <Property Name="WMComment" Type="String" MaxLength="255" FixedLength="true" Unicode="true" />
           <Property Name="TimerFault" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ComparePitchV316">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="timerNumber" />
+            <PropertyRef Name="lastWeldTime" />
+            <PropertyRef Name="Expr2" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="timerNumber" Type="String" Nullable="false" MaxLength="17" FixedLength="false" Unicode="false" />
+          <Property Name="lastWeldTime" Type="String" Nullable="false" MaxLength="23" FixedLength="false" Unicode="false" />
+          <Property Name="SpotID" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
+          <Property Name="Timer" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
+          <Property Name="AlternativeNumber" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
+          <Property Name="Model" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="lastULControleTime" Type="DateTime" Precision="3" />
+          <Property Name="TotalThickness" Type="Double" />
+          <Property Name="Expr1" Type="String" MaxLength="255" FixedLength="true" Unicode="true" />
+          <Property Name="Expr2" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TDTResults">
+          <Key>
+            <PropertyRef Name="Date" />
+            <PropertyRef Name="TDTResult" />
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Number" Type="Int32" />
+          <Property Name="Model" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="NuggetDemand" Type="Single" />
+          <Property Name="TearDownNugget" Type="Single" />
+          <Property Name="C1_3spot" Type="Single" />
+          <Property Name="TDTResult" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -842,23 +887,6 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ComparePitchV316">
-            <EntityTypeMapping TypeName="GADATAModelWelding.ComparePitchV316">
-              <MappingFragment StoreEntitySet="ComparePitchV316">
-                <ScalarProperty Name="Expr2" ColumnName="Expr2" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Expr1" ColumnName="Expr1" />
-                <ScalarProperty Name="TotalThickness" ColumnName="TotalThickness" />
-                <ScalarProperty Name="lastULControleTime" ColumnName="lastULControleTime" />
-                <ScalarProperty Name="Model" ColumnName="Model" />
-                <ScalarProperty Name="AlternativeNumber" ColumnName="AlternativeNumber" />
-                <ScalarProperty Name="Timer" ColumnName="Timer" />
-                <ScalarProperty Name="SpotID" ColumnName="SpotID" />
-                <ScalarProperty Name="lastWeldTime" ColumnName="lastWeldTime" />
-                <ScalarProperty Name="timerNumber" ColumnName="timerNumber" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="LastWelds">
             <EntityTypeMapping TypeName="GADATAModelWelding.LastWelds">
               <MappingFragment StoreEntitySet="LastWelds">
@@ -927,6 +955,37 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
                 <ScalarProperty Name="location" ColumnName="location" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ComparePitchV316">
+            <EntityTypeMapping TypeName="GADATAModelWelding.ComparePitchV316">
+              <MappingFragment StoreEntitySet="ComparePitchV316">
+                <ScalarProperty Name="Expr2" ColumnName="Expr2" />
+                <ScalarProperty Name="Expr1" ColumnName="Expr1" />
+                <ScalarProperty Name="TotalThickness" ColumnName="TotalThickness" />
+                <ScalarProperty Name="lastULControleTime" ColumnName="lastULControleTime" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="AlternativeNumber" ColumnName="AlternativeNumber" />
+                <ScalarProperty Name="Timer" ColumnName="Timer" />
+                <ScalarProperty Name="SpotID" ColumnName="SpotID" />
+                <ScalarProperty Name="lastWeldTime" ColumnName="lastWeldTime" />
+                <ScalarProperty Name="timerNumber" ColumnName="timerNumber" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TDTResults">
+            <EntityTypeMapping TypeName="GADATAModelWelding.TDTResults">
+              <MappingFragment StoreEntitySet="TDTResults">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="TDTResult" ColumnName="TDTResult" />
+                <ScalarProperty Name="C1_3spot" ColumnName="1.3spot" />
+                <ScalarProperty Name="TearDownNugget" ColumnName="TearDownNugget" />
+                <ScalarProperty Name="NuggetDemand" ColumnName="NuggetDemand" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
