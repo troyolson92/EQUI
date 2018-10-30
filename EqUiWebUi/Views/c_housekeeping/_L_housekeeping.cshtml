@@ -1,0 +1,20 @@
+﻿@model IQueryable<EqUiWebUi.Models.L_housekeeping>
+
+@Html.Grid(Model).Named("L_housekeepingGrid").Build(columns =>
+{
+    columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Asc);
+    columns.Add(c => c.c_housekeeping.Name).Titled("Name");
+    columns.Add(c => c.timestamp).Titled("timestamp");
+    columns.Add(c => c.nRunTime).Titled("runTime");
+    columns.Add(c => c.nRowCountStart).Titled("nRowCountStart");
+    columns.Add(c => c.nRowCountEnd).Titled("nRowCountEnd");
+    columns.Add(c => c.nDeleteCount).Titled("nDeleteCount");
+    columns.Add(c => c)
+                .Titled("")
+                .Encoded(false)
+                .RenderedAs(c => MyFilters.IconActionLink(System.Configuration.ConfigurationManager.AppSettings["HangfireDetailsBasepath"].ToString() + c.nJobID, "fas fa-user-md", "", "Goto hangfire") 
+                ).Filterable(false);
+}).Filterable().Sortable().Pageable(pager =>
+{
+    pager.RowsPerPage = 10;
+}).Empty("Did not find anything").Css("table-hover")
