@@ -675,6 +675,8 @@
     <Compile Include="Areas\Welding\Controllers\LaunchController.cs" />
     <Compile Include="Areas\Welding\Controllers\QteamController.cs" />
     <Compile Include="Areas\Welding\Controllers\TeardownTeam.cs" />
+    <Compile Include="Areas\Welding\Controllers\ToDoListsController.cs" />
+    <Compile Include="Areas\Welding\Controllers\ToDoList_RemarkController.cs" />
     <Compile Include="Areas\Welding\Controllers\WMController.cs" />
     <Compile Include="Areas\Welding\Models\BosProgramAvailable.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
@@ -719,6 +721,12 @@
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Welding\Models\TimerBreakdowns_busy.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Welding\Models\ToDoList.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Welding\Models\ToDoList_Remark.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Welding\Models\ULRapportering.cs">
@@ -1325,6 +1333,17 @@
     <Content Include="Areas\Welding\Views\WM\_TimerBreakdownDatachange.cshtml" />
     <Content Include="Areas\Welding\Views\TeardownTeam\Index.cshtml" />
     <Content Include="Areas\Welding\Views\TeardownTeam\_TDTResults.cshtml" />
+    <Content Include="Areas\Welding\Views\Launch\_ToDoLaunch.cshtml" />
+    <Content Include="Areas\Welding\Views\ToDoList_Remark\Create.cshtml" />
+    <Content Include="Areas\Welding\Views\ToDoList_Remark\Delete.cshtml" />
+    <Content Include="Areas\Welding\Views\ToDoList_Remark\Details.cshtml" />
+    <Content Include="Areas\Welding\Views\ToDoList_Remark\Edit.cshtml" />
+    <Content Include="Areas\Welding\Views\ToDoList_Remark\Index.cshtml" />
+    <Content Include="Areas\Welding\Views\ToDoLists\Create.cshtml" />
+    <Content Include="Areas\Welding\Views\ToDoLists\Delete.cshtml" />
+    <Content Include="Areas\Welding\Views\ToDoLists\Details.cshtml" />
+    <Content Include="Areas\Welding\Views\ToDoLists\Edit.cshtml" />
+    <Content Include="Areas\Welding\Views\ToDoLists\Index.cshtml" />
     <None Include="Properties\PublishProfiles\gensvw1178-DEV-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gotsvw11292-PRODUCTION-VCTA.pubxml" />

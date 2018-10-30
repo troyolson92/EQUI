@@ -5,6 +5,26 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="GADATAModelWelding.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ToDoList">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ToDoItem" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="object" Type="nchar" MaxLength="10" />
+          <Property Name="ProjectModel" Type="nchar" MaxLength="25" />
+          <Property Name="ControleFrequence" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="ToDoList_Remark">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TodoID" Type="int" Nullable="false" />
+          <Property Name="Timestamp" Type="datetime" Nullable="false" />
+          <Property Name="Remark" Type="nvarchar(max)" />
+          <Property Name="UserID" Type="int" />
+        </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'GADATA.UL.rt_AutoWorkFlowULPlans' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="rt_AutoWorkFlowULPlans">
@@ -268,7 +288,21 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
           <Property Name="BreakdownTime" Type="int" />
           <Property Name="id" Type="int" Nullable="false" />
         </EntityType>
+        <Association Name="FK__ToDoList___TodoI__32F76870">
+          <End Role="ToDoList" Type="Self.ToDoList" Multiplicity="1" />
+          <End Role="ToDoList_Remark" Type="Self.ToDoList_Remark" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ToDoList">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ToDoList_Remark">
+              <PropertyRef Name="TodoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="GADATAModelWeldingStoreContainer">
+          <EntitySet Name="ToDoList" EntityType="Self.ToDoList" Schema="LAUNCH" store:Type="Tables" />
+          <EntitySet Name="ToDoList_Remark" EntityType="Self.ToDoList_Remark" Schema="LAUNCH" store:Type="Tables" />
           <EntitySet Name="rt_AutoWorkFlowULPlans" EntityType="Self.rt_AutoWorkFlowULPlans" store:Type="Tables" store:Schema="UL">
             <DefiningQuery>SELECT 
     [rt_AutoWorkFlowULPlans].[ID] AS [ID], 
@@ -473,6 +507,10 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
     [TimerBreakdowns_busy].[id] AS [id]
     FROM [WELDING2].[TimerBreakdowns_busy] AS [TimerBreakdowns_busy]</DefiningQuery>
           </EntitySet>
+          <AssociationSet Name="FK__ToDoList___TodoI__32F76870" Association="Self.FK__ToDoList___TodoI__32F76870">
+            <End Role="ToDoList" EntitySet="ToDoList" />
+            <End Role="ToDoList_Remark" EntitySet="ToDoList_Remark" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -499,6 +537,12 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
           <EntitySet Name="TimerBreakdownDatachange" EntityType="GADATAModelWelding.TimerBreakdownDatachange" />
           <EntitySet Name="ComparePitchV316" EntityType="GADATAModelWelding.ComparePitchV316" />
           <EntitySet Name="TDTResults" EntityType="GADATAModelWelding.TDTResults" />
+          <EntitySet Name="ToDoList" EntityType="GADATAModelWelding.ToDoList" />
+          <EntitySet Name="ToDoList_Remark" EntityType="GADATAModelWelding.ToDoList_Remark" />
+          <AssociationSet Name="FK__ToDoList___TodoI__32F76870" Association="GADATAModelWelding.FK__ToDoList___TodoI__32F76870">
+            <End Role="ToDoList" EntitySet="ToDoList" />
+            <End Role="ToDoList_Remark" EntitySet="ToDoList_Remark" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="rt_AutoWorkFlowULPlans">
           <Key>
@@ -747,6 +791,40 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
           <Property Name="TDTResult" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="false" />
           <Property Name="ID" Type="Int32" Nullable="false" />
         </EntityType>
+        <EntityType Name="ToDoList">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ToDoItem" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="object" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="ProjectModel" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
+          <Property Name="ControleFrequence" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ToDoList_Remark" Relationship="GADATAModelWelding.FK__ToDoList___TodoI__32F76870" FromRole="ToDoList" ToRole="ToDoList_Remark" />
+        </EntityType>
+        <EntityType Name="ToDoList_Remark">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TodoID" Type="Int32" Nullable="false" />
+          <Property Name="Timestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Remark" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UserID" Type="Int32" />
+          <NavigationProperty Name="ToDoList" Relationship="GADATAModelWelding.FK__ToDoList___TodoI__32F76870" FromRole="ToDoList_Remark" ToRole="ToDoList" />
+        </EntityType>
+        <Association Name="FK__ToDoList___TodoI__32F76870">
+          <End Type="GADATAModelWelding.ToDoList" Role="ToDoList" Multiplicity="1" />
+          <End Type="GADATAModelWelding.ToDoList_Remark" Role="ToDoList_Remark" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ToDoList">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ToDoList_Remark">
+              <PropertyRef Name="TodoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -986,6 +1064,28 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
                 <ScalarProperty Name="Model" ColumnName="Model" />
                 <ScalarProperty Name="Number" ColumnName="Number" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ToDoList">
+            <EntityTypeMapping TypeName="GADATAModelWelding.ToDoList">
+              <MappingFragment StoreEntitySet="ToDoList">
+                <ScalarProperty Name="ControleFrequence" ColumnName="ControleFrequence" />
+                <ScalarProperty Name="ProjectModel" ColumnName="ProjectModel" />
+                <ScalarProperty Name="object" ColumnName="object" />
+                <ScalarProperty Name="ToDoItem" ColumnName="ToDoItem" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ToDoList_Remark">
+            <EntityTypeMapping TypeName="GADATAModelWelding.ToDoList_Remark">
+              <MappingFragment StoreEntitySet="ToDoList_Remark">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="Timestamp" ColumnName="Timestamp" />
+                <ScalarProperty Name="TodoID" ColumnName="TodoID" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

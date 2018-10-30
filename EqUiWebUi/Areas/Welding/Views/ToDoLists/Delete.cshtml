@@ -1,0 +1,56 @@
+﻿@model EqUiWebUi.Areas.Welding.Models.ToDoList
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>ToDoList</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ToDoItem)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ToDoItem)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.@object)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.@object)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProjectModel)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProjectModel)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ControleFrequence)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ControleFrequence)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>
