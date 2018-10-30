@@ -12,7 +12,7 @@
     columns.Add(c => c)
                 .Titled("")
                 .Encoded(false)
-                .RenderedAs(c => MyFilters.IconActionLink(Url.Action("blabla", new { id = c.id }), "fas fa-pencil-alt", "", "Goto hangfire") 
+                .RenderedAs(c => MyFilters.IconActionLink(System.Configuration.ConfigurationManager.AppSettings["HangfireDetailsBasepath"].ToString() + c.nJobID, "fas fa-user-md", "", "Goto hangfire") 
                 ).Filterable(false);
 }).Filterable().Sortable().Pageable(pager =>
 {
