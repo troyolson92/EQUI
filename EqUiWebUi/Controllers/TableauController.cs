@@ -36,7 +36,14 @@ namespace EqUiWebUi.Controllers
             ViewBag.TrustedAuth = TrustedAuth;
             if (TrustedAuth)
             {
-                ViewBag.Ticket = GetTableauAuthenticationTicket(tabServer: "https://tableau-test.volvocars.biz",user: "BPPEQDB1", site: "Ghent");
+                string TableauUser = "BPPEQDB1";
+                //test to see if I still get logged out of tableau 
+                if (CurrentUser.Getuser.username.Contains("SDEBEUL"))
+                {
+                    TableauUser = "SDEBEUL";
+                }
+
+                ViewBag.Ticket = GetTableauAuthenticationTicket(tabServer: "https://tableau-test.volvocars.biz",user: TableauUser, site: "Ghent");
                 if(ViewBag.Ticket == "-1")
                 {
                     //auth failure

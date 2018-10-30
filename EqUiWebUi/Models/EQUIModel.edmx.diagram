@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="d5dc149468964a6aa4c17e0f7b3d2d84" Name="Backend" ZoomLevel="72">
+      <Diagram DiagramId="d5dc149468964a6aa4c17e0f7b3d2d84" Name="Backend" ZoomLevel="111">
         <EntityTypeShape EntityType="GADATAModelEQUI.c_datasource" Width="1.5" PointX="0.75" PointY="1" FillColor="255, 128, 0" />
         <EntityTypeShape EntityType="GADATAModelEQUI.c_LogClassRules" Width="1.5" PointX="5.25" PointY="1" />
         <EntityTypeShape EntityType="GADATAModelEQUI.c_logClassSystem" Width="1.5" PointX="3" PointY="1" />
@@ -27,6 +27,11 @@
         <EntityTypeShape EntityType="GADATAModelEQUI.c_schedule" Width="1.5" PointX="1.5" PointY="9.75" FillColor="Fuchsia" />
         <AssociationConnector Association="GADATAModelEQUI.FK_c_job_c_datasource" />
         <AssociationConnector Association="GADATAModelEQUI.FK_c_job_c_schedule" />
+        <EntityTypeShape EntityType="GADATAModelEQUI.L_housekeeping" Width="1.5" PointX="6" PointY="9.25" FillColor="Green" />
+        <EntityTypeShape EntityType="GADATAModelEQUI.c_housekeeping" Width="1.5" PointX="3.75" PointY="8.75" FillColor="0, 192, 0" />
+        <AssociationConnector Association="GADATAModelEQUI.FK_c_housekeeping_c_datasource" />
+        <AssociationConnector Association="GADATAModelEQUI.FK_c_housekeeping_c_schedule" />
+        <AssociationConnector Association="GADATAModelEQUI.FK_L_housekeeping_c_housekeeping" />
         </Diagram>
       <Diagram DiagramId="e951f762f729496390f1ab74d6241e77" Name="Frontend" >
       </Diagram>

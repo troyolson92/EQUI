@@ -131,7 +131,7 @@ namespace EQUICommunictionLib
         //run Query for a db
         //option to run get database by name or by ID
         //if dbName and ID is left blank run against main datbase
-        public DataTable RunQuery(string sqlQuery, string dbName = "", int dbID = 0 , bool enblExeptions = false, int maxEXECtime = 300)
+        public DataTable RunQuery(string sqlQuery, string dbName = "", int dbID = 0 , bool enblExeptions = false, int maxEXECtime = 300, bool subscribeToMessages = false)
         {
             Database db = new Database();
             if (dbName != "" || dbID != 0)
@@ -143,7 +143,6 @@ namespace EQUICommunictionLib
                 db = DefaultDatabase();
             }
 
-
             //temp debug
             if (dbID == 1)
             {
@@ -151,11 +150,15 @@ namespace EQUICommunictionLib
                 db = DefaultDatabase();
             }
 
-
             switch (db.Type)
             {
                 case db_type.msSqlServer:
                     SqlComm sqlComm = new SqlComm(db.ConnectionString);
+                    if (subscribeToMessages)
+                    {
+                        sqlComm.Conn.Open();
+                        sqlComm.Conn.InfoMessage += Conn_InfoMessage;
+                    }
                     return sqlComm.RunQuery(sqlQuery, enblExeptions: enblExeptions, maxEXECtime: maxEXECtime);
 
                 case db_type.Orcacle:
@@ -170,7 +173,7 @@ namespace EQUICommunictionLib
 
         //run Command form a db
         //option to run get database by name or by ID
-        //if dbName and ID is left blank run against main datbase
+        //if dbName and ID is left blank run against main database
         public void RunCommand(string sqlCommand, string dbName = "", int dbID = 0, bool enblExeptions = false, int maxEXECtime = 300,bool subscribeToMessages = false)
         {
             Database db = new Database();
@@ -354,8 +357,6 @@ namespace EQUICommunictionLib
             }
             log.Debug("Ended db PWcheck for: " + db.Name);
         }
-
-
 
         //test command to test al DB's
         //I just do a getdate() sysdata on all systems. (if logon error like that will crap out)
