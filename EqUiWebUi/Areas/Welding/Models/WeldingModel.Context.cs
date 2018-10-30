@@ -43,6 +43,8 @@ namespace EqUiWebUi.Areas.Welding.Models
         public virtual DbSet<TimerBreakdownDatachange> TimerBreakdownDatachange { get; set; }
         public virtual DbSet<ComparePitchV316> ComparePitchV316 { get; set; }
         public virtual DbSet<TDTResults> TDTResults { get; set; }
+        public virtual DbSet<ToDoList> ToDoList { get; set; }
+        public virtual DbSet<ToDoList_Remark> ToDoList_Remark { get; set; }
     
         public virtual ObjectResult<Lastwelds_Result> Lastwelds(string timer, Nullable<int> spot)
         {

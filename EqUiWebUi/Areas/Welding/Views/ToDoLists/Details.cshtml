@@ -1,0 +1,50 @@
+﻿@model EqUiWebUi.Areas.Welding.Models.ToDoList
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ToDoList</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ToDoItem)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ToDoItem)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.@object)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.@object)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProjectModel)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProjectModel)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ControleFrequence)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ControleFrequence)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

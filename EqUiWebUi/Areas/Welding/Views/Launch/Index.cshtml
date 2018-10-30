@@ -18,12 +18,14 @@
         <div class="card-header bg-dark">
             <h5 class="card-title text-white">
                 Launch Tools
-                <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
+                <span class="clickable float-right"><i class="far fa-edit"></i></span>
             </h5>
         </div>
         <div class="card-body">
 
             <p>
+            @MyHtmlHelpers.EquiLink("/Welding//ToDoList_Remark/Index", "fab fa-qq", "Launch ToDoList", helperText: "Follow Up list Launch Work Welding Master")
+            <p></p>
             @MyHtmlHelpers.EquiLink("/Welding/Launch/ComparePitchV316", "fab fa-qq", "Pitch compare", helperText: "Compare the Pitch file with the weldtimers en UL data")
             <p></p>
             @MyHtmlHelpers.EquiLink("/Welding/Launch/DoubleSpotcheck", "fab fa-qq", "double spots", helperText: "check after double spots in welding timers")
@@ -42,19 +44,9 @@
     </div>
     <p></p>
 
-    <div class="card">
-        <div class="card-header bg-dark">
-            <h5 class="card-title text-white">
-                Quality Launch tools
-                <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
-            </h5>
-        </div>
-        <div class="card-body">
+ 
 
-            <p>
-                @MyHtmlHelpers.EquiLink("/Welding/Launch/TDTResults", "fab fa-qq", "TDT analyse", helperText: "Check  all teardown results")
-            <p></p>
-                @MyHtmlHelpers.EquiLink("/Welding/Launch/TDTActions", "fab fa-qq", "TDT Actions", helperText: "Check  all teardown Actions")
+         
 
 
 

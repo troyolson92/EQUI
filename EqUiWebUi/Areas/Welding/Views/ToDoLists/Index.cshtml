@@ -1,0 +1,66 @@
+﻿
+<center><h1>Launch Activity List</h1></center>
+<p></p>
+
+<div data-name="ToDoList" class="table"></div>
+
+<hr />
+
+<center><h1>Insert new Activity</h1></center>
+<p></p>
+<div data-name="ToDoList_Remarks" class="mvc-grid"></div>
+
+<hr />
+
+
+@model IEnumerable<EqUiWebUi.Areas.Welding.Models.ToDoList>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ToDoItem)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.@object)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProjectModel)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ControleFrequence)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ToDoItem)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.@object)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProjectModel)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ControleFrequence)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.id })
+            </td>
+        </tr>
+    }
+
+</table>
