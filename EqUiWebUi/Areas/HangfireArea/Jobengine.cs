@@ -30,9 +30,9 @@ namespace EqUiWebUi.Areas.HangfireArea
             {
                 if (Schedule.enabled)
                 {
-                    if (Schedule.runContinues) // use endles loop (triggerd here and than runs without intervention
+                    if (Schedule.runContinues) // use endless loop (triggers here and than runs without intervention
                     {
-                        //to handle swithing from jcron to endles
+                        //to handle switching from jcron to endless
                         Hangfire.RecurringJob.RemoveIfExists("sch_" + Schedule.name);
                         //this is dangerous! each time you do this you CREATE a new loop. 
                         BackgroundJob.Enqueue(() => Run_schedule(Schedule.id, null));
@@ -50,7 +50,7 @@ namespace EqUiWebUi.Areas.HangfireArea
         }
 
         [Queue("jobengine")]
-        [AutomaticRetry(Attempts = 0)] //no hangfire retrys 
+        [AutomaticRetry(Attempts = 0)] //no hang-fire retry 
         public void Run_schedule(int c_schedule_id, PerformContext context)
         {
             c_schedule schedule = dbEQUI.c_schedule.Find(c_schedule_id);
@@ -66,30 +66,15 @@ namespace EqUiWebUi.Areas.HangfireArea
             }
             else
             {
-                context.WriteLine("getting jobs");
                 List<c_job> jobs = dbEQUI.c_job.Where(c => c.c_schedule_id == c_schedule_id).OrderBy(c => c.ordinal).ToList();
-                if (jobs.Count() == 0)
-                {
-                    context.WriteLine("no jobs found.");
-                }
-                context.WriteLine("getting alert triggers");
                 List<Alert.Models.c_triggers> triggers = dbALERT.c_triggers.Where(c => c.c_schedule_id == c_schedule_id).OrderBy(c => c.ordinal).ToList();
-                if (triggers.Count() == 0)
-                {
-                    context.WriteLine("no alert triggers found.");
-                }
-                context.WriteLine("getting housekeeping jobs");
                 List<EqUiWebUi.Models.c_housekeeping> housekeepings = dbEQUI.c_housekeeping.Where(c => c.c_schedule_id == c_schedule_id).OrderBy(c => c.Ordinal).ToList();
-                if (triggers.Count() == 0)
-                {
-                    context.WriteLine("no housekeeping jobs found.");
-                }
 
                 string previousJobId = null;
                 //handle jobs
                 foreach (c_job job in jobs)
                 {
-                    context.WriteLine($"processing job: {job.name} ordinal: {job.ordinal}");
+                    context.WriteLine($"processing Job: {job.name} ordinal: {job.ordinal}");
                     if (previousJobId == null)
                     {
                         previousJobId = BackgroundJob.Enqueue(() => Run_job(job.name, job.id, context));
@@ -105,7 +90,7 @@ namespace EqUiWebUi.Areas.HangfireArea
                             previousJobId = BackgroundJob.ContinueWith(previousJobId, () => Run_job(job.name, job.id, context), JobContinuationOptions.OnlyOnSucceededState);
                         }
                     }
-                    //add url to created job.
+                    //add URL to created job.
                     context.WriteLine(System.Configuration.ConfigurationManager.AppSettings["HangfireDetailsBasepath"].ToString() + previousJobId);
                 }
                 //handle alerts
@@ -127,22 +112,22 @@ namespace EqUiWebUi.Areas.HangfireArea
                             previousJobId = BackgroundJob.ContinueWith(previousJobId, () => AlertEngine.CheckForalerts(trigger.id, trigger.discription, context, false), JobContinuationOptions.OnlyOnSucceededState);
                         }
                     }
-                    //add url to created job.                 
+                    //add URL to created job.                 
                     context.WriteLine(System.Configuration.ConfigurationManager.AppSettings["HangfireDetailsBasepath"].ToString() + previousJobId);
                 }
                 //handle house keeping
                 foreach (EqUiWebUi.Models.c_housekeeping trigger in housekeepings)
                 {
-                    context.WriteLine($"processing house keeping: {trigger.Name} ordinal: {trigger.Ordinal}");
+                    context.WriteLine($"processing House keeping: {trigger.Name} ordinal: {trigger.Ordinal}");
                     if (previousJobId == null)
                     {
-                        previousJobId = BackgroundJob.Enqueue(() => AlertEngine.CheckForalerts(trigger.id, trigger.Description, context, false));
+                        previousJobId = BackgroundJob.Enqueue(() => HouseKeepingengine.Run_houseKeeping(trigger.Name, trigger.id, context));
                     }
                     else
                     {
                         previousJobId = BackgroundJob.ContinueWith(previousJobId, () => HouseKeepingengine.Run_houseKeeping(trigger.Name, trigger.id, context), JobContinuationOptions.OnAnyFinishedState);
                     }
-                    //add url to created job.                 
+                    //add URL to created job.                 
                     context.WriteLine(System.Configuration.ConfigurationManager.AppSettings["HangfireDetailsBasepath"].ToString() + previousJobId);
                 }
 
@@ -163,7 +148,7 @@ namespace EqUiWebUi.Areas.HangfireArea
                     }
                     else
                     {
-                        context.WriteLine("endless loop stopped because schedule is disbaled");
+                        context.WriteLine("endless loop stopped because schedule is disabled");
                     }
                 }
             }
@@ -185,7 +170,7 @@ namespace EqUiWebUi.Areas.HangfireArea
             {
                 context.WriteLine($"jobinterval {job.intervalCounter}/{job.interval}");
             }
-            //run job if no interval or interval condifion OK
+            //run job if no interval or interval condition OK
             if (job.interval == 0 || (job.intervalCounter >= job.interval))
             {
                 EQUICommunictionLib.ConnectionManager connectionManager = new ConnectionManager();
