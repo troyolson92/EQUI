@@ -26,6 +26,18 @@
           <Property Name="UserID" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.TDT.test' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="test">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="TDTSpot" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TDTSpot" Type="nchar" MaxLength="25" Nullable="false" />
+          <Property Name="NomDiameter" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="MeasDiameter" Type="decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'GADATA.UL.rt_AutoWorkFlowULPlans' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="rt_AutoWorkFlowULPlans">
           <Key>
@@ -303,6 +315,14 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
         <EntityContainer Name="GADATAModelWeldingStoreContainer">
           <EntitySet Name="ToDoList" EntityType="Self.ToDoList" Schema="LAUNCH" store:Type="Tables" />
           <EntitySet Name="ToDoList_Remark" EntityType="Self.ToDoList_Remark" Schema="LAUNCH" store:Type="Tables" />
+          <EntitySet Name="test" EntityType="Self.test" store:Type="Tables" store:Schema="TDT">
+            <DefiningQuery>SELECT 
+    [test].[ID] AS [ID], 
+    [test].[TDTSpot] AS [TDTSpot], 
+    [test].[NomDiameter] AS [NomDiameter], 
+    [test].[MeasDiameter] AS [MeasDiameter]
+    FROM [TDT].[test] AS [test]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="rt_AutoWorkFlowULPlans" EntityType="Self.rt_AutoWorkFlowULPlans" store:Type="Tables" store:Schema="UL">
             <DefiningQuery>SELECT 
     [rt_AutoWorkFlowULPlans].[ID] AS [ID], 
@@ -543,6 +563,7 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
             <End Role="ToDoList" EntitySet="ToDoList" />
             <End Role="ToDoList_Remark" EntitySet="ToDoList_Remark" />
           </AssociationSet>
+          <EntitySet Name="test" EntityType="GADATAModelWelding.test" />
         </EntityContainer>
         <EntityType Name="rt_AutoWorkFlowULPlans">
           <Key>
@@ -825,6 +846,16 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="test">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="TDTSpot" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TDTSpot" Type="String" Nullable="false" MaxLength="25" FixedLength="true" Unicode="true" />
+          <Property Name="NomDiameter" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="MeasDiameter" Type="Decimal" Precision="18" Scale="0" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1086,6 +1117,16 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
                 <ScalarProperty Name="Timestamp" ColumnName="Timestamp" />
                 <ScalarProperty Name="TodoID" ColumnName="TodoID" />
                 <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="test">
+            <EntityTypeMapping TypeName="GADATAModelWelding.test">
+              <MappingFragment StoreEntitySet="test">
+                <ScalarProperty Name="MeasDiameter" ColumnName="MeasDiameter" />
+                <ScalarProperty Name="NomDiameter" ColumnName="NomDiameter" />
+                <ScalarProperty Name="TDTSpot" ColumnName="TDTSpot" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
