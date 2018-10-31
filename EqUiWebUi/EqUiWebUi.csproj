@@ -1356,6 +1356,7 @@
     <Content Include="Areas\Welding\Views\ToDoLists\Edit.cshtml" />
     <Content Include="Areas\Welding\Views\ToDoLists\Index.cshtml" />
     <Content Include="Areas\Welding\Views\TeardownTeam\TeardownTest.cshtml" />
+    <Content Include="Areas\Welding\Views\TeardownTeam\_SIS6000.cshtml" />
     <None Include="Properties\PublishProfiles\gensvw1178-DEV-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gotsvw11292-PRODUCTION-VCTA.pubxml" />

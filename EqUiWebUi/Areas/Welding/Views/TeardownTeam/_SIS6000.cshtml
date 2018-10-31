@@ -1,0 +1,40 @@
+﻿
+<center><h1>SIS6000 new</h1></center>
+<p></p>
+
+<div data-name="ConnectionState" class="mvc-grid"></div>
+
+<hr />
+
+<center><h1>TDT foto</h1></center>
+<p></p>
+
+<div data-name="ConnectionState" class="mvc-grid"></div>
+
+<hr />
+
+
+
+@section scripts{
+    <script>
+        //full with screen
+        $("#allcontent").removeClass("body-content");
+        $("#allcontent").removeClass("container");
+
+
+           // $('[data-name="QISViewer"]').html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
+            $('[data-name="test"]').mvcgrid({
+                sourceUrl: '@Url.Action("TeardownTest")', // Grid source url string
+                requestType: 'get', // Ajax grid request type
+                reload: true
+
+            });
+
+   
+
+
+
+
+    </script>
+}
+
