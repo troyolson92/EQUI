@@ -6,7 +6,11 @@
     <title>@ViewBag.Title - VCG GA UB12</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-</head>
+    @section scripts{
+        <script src="~/Scripts/jquery-1.10.2 min.js"></script>
+        <script src="~/Scripts/bootstrap.min.js"></script>
+        @RenderSection("Scripts", false)
+    </head>
 <body>
 
     @*changed navbar color for bg-dark to bg-succes to show that it is a complete differnt layout*@

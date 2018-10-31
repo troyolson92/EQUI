@@ -13,17 +13,18 @@
         <EntityTypeShape EntityType="GADATAModelWelding.BosProgramAvailable" Width="1.5" PointX="10.125" PointY="2.5" />
         <EntityTypeShape EntityType="GADATAModelWelding.dressrequired" Width="1.5" PointX="11.875" PointY="0.5" />
         <EntityTypeShape EntityType="GADATAModelWelding.WeldtimeSpotsSetup" Width="1.5" PointX="11.875" PointY="2.5" />
-        <EntityTypeShape EntityType="GADATAModelWelding.StabilityInDicationV316" Width="1.5" PointX="13.5" PointY="3.375" />
+        <EntityTypeShape EntityType="GADATAModelWelding.StabilityInDicationV316" Width="1.5" PointX="13.5" PointY="4" />
         <EntityTypeShape EntityType="GADATAModelWelding.ConnectionState" Width="1.5" PointX="8.5" PointY="0.5" />
         <EntityTypeShape EntityType="GADATAModelWelding.LastWelds" Width="1.5" PointX="8.5" PointY="2.5" />
         <EntityTypeShape EntityType="GADATAModelWelding.QISViewer" Width="1.5" PointX="6.875" PointY="0.5" />
         <EntityTypeShape EntityType="GADATAModelWelding.TimerBreakdowns_busy" Width="1.5" PointX="6.875" PointY="3.375" />
         <EntityTypeShape EntityType="GADATAModelWelding.TimerBreakdownDatachange" Width="1.5" PointX="15.125" PointY="0.5" />
         <EntityTypeShape EntityType="GADATAModelWelding.ComparePitchV316" Width="1.5" PointX="13.5" PointY="0.5" />
-        <EntityTypeShape EntityType="GADATAModelWelding.TDTResults" Width="1.5" PointX="4" PointY="5" />
+        <EntityTypeShape EntityType="GADATAModelWelding.TDTResults" Width="1.5" PointX="0.75" PointY="7.875" />
         <EntityTypeShape EntityType="GADATAModelWelding.ToDoList" Width="1.5" PointX="10.125" PointY="8.125" />
         <EntityTypeShape EntityType="GADATAModelWelding.ToDoList_Remark" Width="1.5" PointX="13.875" PointY="7.125" />
         <AssociationConnector Association="GADATAModelWelding.FK__ToDoList___TodoI__32F76870" />
+        <EntityTypeShape EntityType="GADATAModelWelding.test" Width="1.5" PointX="0.75" PointY="5.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
