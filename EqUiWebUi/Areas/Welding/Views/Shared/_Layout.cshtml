@@ -6,11 +6,9 @@
     <title>@ViewBag.Title - VCG GA UB12</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-    @section scripts{
-        <script src="~/Scripts/jquery-1.10.2 min.js"></script>
-        <script src="~/Scripts/bootstrap.min.js"></script>
-        @RenderSection("Scripts", false)
-    </head>
+    <script src="~/Scripts/jquery-1.10.2 min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+</head>
 <body>
 
     @*changed navbar color for bg-dark to bg-succes to show that it is a complete differnt layout*@
@@ -34,44 +32,44 @@
                         Shortcuts AASPOT
                     </a>
                     <ul class="dropdown-menu">
-                       
-                         
-                        </li>
-                       <li class="dropdown-divider"></li>
-                        
-                          
-                        </li>
-                    </ul>
-                </li>
 
-                <li class="nav-item">@Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                <li class="nav-item">@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
 
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-                        VSTO toolkit
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li class="dropdown-item">
-                            <a href="http://equi/EqUi_UtilManager/EqUi_UtilManger.application?Tool=SBCUstats">WeldgunData</a>
-                        </li>
-                        <li class="dropdown-divider"></li>
-                        <li class="dropdown-item">
-                            <a href="http://equi/EqUi_UtilManager/EqUi_UtilManger.application?Tool=sleepBlock">Block autologoff</a>
-                        </li>
-                        <li class="dropdown-divider"></li>
-                        <li class="dropdown-item">
-                            <a href="https://sway.com/csCS9cdjEpcpPhw0?ref=Link">VSTO Excel Manual</a>
-                        </li>
-                        <li class="dropdown-item">
-                            <a href="https://sharepoint.volvocars.net/sites/vcg_ga_aaosr/SitePages/EQDB.aspx">VSTO Excel plugin</a>
-                        </li>
-                        <li class="dropdown-divider"></li>
-                        <li class="dropdown-item">
-                            <a href="https://sway.com/5uelU8Pra3GK1N9i">Tableau Manual</a>
-                        </li>
-                    </ul>
                 </li>
+                <li class="dropdown-divider"></li>
+
+
+                </li>
+            </ul>
+            </li>
+
+            <li class="nav-item">@Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+            <li class="nav-item">@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                    VSTO toolkit
+                </a>
+                <ul class="dropdown-menu">
+                    <li class="dropdown-item">
+                        <a href="http://equi/EqUi_UtilManager/EqUi_UtilManger.application?Tool=SBCUstats">WeldgunData</a>
+                    </li>
+                    <li class="dropdown-divider"></li>
+                    <li class="dropdown-item">
+                        <a href="http://equi/EqUi_UtilManager/EqUi_UtilManger.application?Tool=sleepBlock">Block autologoff</a>
+                    </li>
+                    <li class="dropdown-divider"></li>
+                    <li class="dropdown-item">
+                        <a href="https://sway.com/csCS9cdjEpcpPhw0?ref=Link">VSTO Excel Manual</a>
+                    </li>
+                    <li class="dropdown-item">
+                        <a href="https://sharepoint.volvocars.net/sites/vcg_ga_aaosr/SitePages/EQDB.aspx">VSTO Excel plugin</a>
+                    </li>
+                    <li class="dropdown-divider"></li>
+                    <li class="dropdown-item">
+                        <a href="https://sway.com/5uelU8Pra3GK1N9i">Tableau Manual</a>
+                    </li>
+                </ul>
+            </li>
 
             </ul>
 
@@ -114,14 +112,14 @@
     @Scripts.Render("~/bundles/MyScripts")
     <script>
         //enable general interface stuff
-        initInterface(); 
+        initInterface();
     </script>
 
     @*start render script sections in vieuws*@
     @RenderSection("scripts", required: false)
     @RenderSection("partials", required: false)
+ 
 
-
-</body>
+    </body>
 </html>
 

@@ -12,7 +12,7 @@
 
     {
         columns.Add(c => c.TDTSpot).Titled("TDTspot");
-        columns.Add(c => c.NomDiameter).Titled("NomDiameter").Formatted("{0:dd-MM-yyyy HH:mm:ss}");
+        columns.Add(c => c.NomDiameter).Titled("NomDiameter");
         columns.Add(c => c.MeasDiameter).Titled("MeasDiameter");
 
     }).Css("css-classes").AppendCss("table-hover").Filterable().Pageable(pager =>
