@@ -1,0 +1,18 @@
+﻿@**HTML helpers for table single cell styling *@
+
+
+@**Example For VWSC timerstate*@
+@helper VWSCTimerState(bool? online)
+{ 
+<div class='@(online.GetValueOrDefault() == true ? "bg-danger" : "bg-succes")'>
+    State: @online
+    @if (online.GetValueOrDefault())
+    {
+        <i class="fas fa-plug text-primary"></i>
+    }
+    else
+    {
+        <i class="fas fa-thulbs-down text-primary"></i>
+    }
+</div>
+}
