@@ -17,7 +17,10 @@ namespace EQUICommunictionLib
         public OracleComm(string ConnectionString)
         {
             Conn.ConnectionString = ConnectionString;
+            OriginalConnectionString = ConnectionString;
         }
+
+        private string OriginalConnectionString { get; set; }
 
         public DataTable RunQuery(string Query, bool enblExeptions = false, int maxEXECtime = 300)
         {
@@ -53,8 +56,27 @@ namespace EQUICommunictionLib
 
         public void RunCommand(string sqlCommand, bool enblExeptions = false, int maxEXECtime = 300)
         {
-            //never needed this before but its already here... :) 
-            throw new NotImplementedException();
+            //THIS MUST RUN AS CULTRUE en-US or we get BULLSHIT for the maximo reporting connection.
+            CultureInfo UserCulture = Thread.CurrentThread.CurrentCulture;
+            Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo("en-US");
+            //
+            try
+            {
+                using (OracleCommand cmd = new OracleCommand(sqlCommand, Conn))
+                {
+                    cmd.ExecuteNonQuery();
+                    //Set the culture back to original.
+                    Thread.CurrentThread.CurrentCulture = UserCulture;
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error("Command Failed", ex);
+                if (enblExeptions)
+                {
+                    throw ex;
+                }
+            }
         }
 
         public string GetCLOB(string as_query, bool enblExeptions = false)
@@ -111,10 +133,8 @@ namespace EQUICommunictionLib
             }
         }
 
-        public bool CheckPassWorkExpired(bool ChangeIfExpired = false, string newPW = "")
+        public bool CheckPassWordExpired()
         {
-            Boolean hasError = false;
-            Boolean hasAuthError = false;
             OracleCommand cmd = new OracleCommand();
             cmd.Connection = Conn;
 
@@ -127,47 +147,24 @@ namespace EQUICommunictionLib
                     //allow to continue if the password is simply expired, otherwise just show the message
                     if (ex.Number != 28001)
                     {
-                        log.Error("Non Authenticaion error",ex);
-                        hasError = true;
+                        log.Error("Non Authentication error",ex);
+                        throw ex;
                     }
                     else
                     {
-                        hasAuthError = true;
                         log.Info("Password is expired");
+                        return true;
                     }
                 }
+            return false;
+        }
 
-                if (!hasError && ChangeIfExpired && hasAuthError)
-                {
-                    //successful authentication, open as password change account
-                    cmd.Connection.Close();
-                    cmd.Connection.ConnectionString = Conn.ConnectionString;
-                    cmd.Connection.Open();
-                    cmd.CommandText = "SysChangePassword";
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    SqlConnectionStringBuilder Connbuilder = new SqlConnectionStringBuilder(Conn.ConnectionString);
-                    cmd.Parameters.Add("username", Connbuilder.UserID);
-                    cmd.Parameters.Add("newpassword", newPW);
-                    try
-                    {
-                        cmd.ExecuteNonQuery();
-                        log.Info("Password has been changed");
-                    }
-                    catch (OracleException ex)
-                    {
-                        log.Error("Failed to change password", ex);
-                        hasError = true;
-                    }
-                }
-
-                if(!hasError && hasAuthError)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+        public void ChangePassWord(string newPW = "")
+        {
+            SqlConnectionStringBuilder Connbuilder = new SqlConnectionStringBuilder(OriginalConnectionString);
+            string cmd = $"alter user {Connbuilder.UserID} identified by \"{newPW}\" replace \"{Connbuilder.Password}\"";
+            RunCommand(cmd, enblExeptions: true);
+            log.Info("Password has been changed");
         }
     }
 }
