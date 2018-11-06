@@ -61,7 +61,7 @@ namespace EQUICommunictionLib
             get { return ConfigurationManager.ConnectionStrings["EQUIConnectionString"].ConnectionString; }
         }
 
-        //returns the default databaseobject
+        //returns the default database object
         public Database DefaultDatabase()
         {
             Database DB = new Database();
@@ -359,7 +359,7 @@ namespace EQUICommunictionLib
                             List<string> Passwords = db.GetPasswordsList();
                             int Currentindex = Passwords.IndexOf(Connbuilder.Password);
                             string NewPw;
-                            if (Currentindex >= Passwords.Count())
+                            if (Currentindex >= Passwords.Count()-1)
                             {
                                 //get first item
                                 NewPw = Passwords[0];
@@ -392,7 +392,7 @@ namespace EQUICommunictionLib
 
         //test command to test al DB's
         //I just do a getdate() sysdata on all systems. (if logon error like that will crap out)
-        public void TestDb(int id)
+        public void TestDb(int id ,bool ChangePassword = false)
         {
             Database db = GetDB(dbID: id).First();
             log.Debug("Starting db test for: " + db.Name);
@@ -408,7 +408,7 @@ namespace EQUICommunictionLib
                     case db_type.Orcacle:
                         OracleComm oracleComm = new OracleComm(db.ConnectionString);
                         oracleComm.RunQuery("SELECT SYSDATE FROM DUAL", enblExeptions: true);
-                        PWCheck(db.Name, ChangeIfExpired: true);
+                        PWCheck(db.Name, ChangeIfExpired: true,ForceChange: ChangePassword);
                         break;
 
                     default:

@@ -17,7 +17,10 @@ namespace EQUICommunictionLib
         public OracleComm(string ConnectionString)
         {
             Conn.ConnectionString = ConnectionString;
+            OriginalConnectionString = ConnectionString;
         }
+
+        private string OriginalConnectionString { get; set; }
 
         public DataTable RunQuery(string Query, bool enblExeptions = false, int maxEXECtime = 300)
         {
@@ -53,8 +56,27 @@ namespace EQUICommunictionLib
 
         public void RunCommand(string sqlCommand, bool enblExeptions = false, int maxEXECtime = 300)
         {
-            //never needed this before but its already here... :) 
-            throw new NotImplementedException();
+            //THIS MUST RUN AS CULTRUE en-US or we get BULLSHIT for the maximo reporting connection.
+            CultureInfo UserCulture = Thread.CurrentThread.CurrentCulture;
+            Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo("en-US");
+            //
+            try
+            {
+                using (OracleCommand cmd = new OracleCommand(sqlCommand, Conn))
+                {
+                    cmd.ExecuteNonQuery();
+                    //Set the culture back to original.
+                    Thread.CurrentThread.CurrentCulture = UserCulture;
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error("Command Failed", ex);
+                if (enblExeptions)
+                {
+                    throw ex;
+                }
+            }
         }
 
         public string GetCLOB(string as_query, bool enblExeptions = false)
@@ -125,7 +147,7 @@ namespace EQUICommunictionLib
                     //allow to continue if the password is simply expired, otherwise just show the message
                     if (ex.Number != 28001)
                     {
-                        log.Error("Non Authenticaion error",ex);
+                        log.Error("Non Authentication error",ex);
                         throw ex;
                     }
                     else
@@ -139,18 +161,9 @@ namespace EQUICommunictionLib
 
         public void ChangePassWord(string newPW = "")
         {
-            // THIS IS BULLSHIT BLOCK AND IS NOT SUPPORTED IN ORACLE AT ALL 
-            throw new NotSupportedException();
-            OracleCommand cmd = new OracleCommand();
-            cmd.Connection = Conn;
-            if (Conn.State != ConnectionState.Open) { Conn.Open(); }
-            cmd.CommandText = "SysChangePassword";
-            cmd.CommandType = CommandType.StoredProcedure;
-            SqlConnectionStringBuilder Connbuilder = new SqlConnectionStringBuilder(Conn.ConnectionString);
-            cmd.Parameters.Add("username", Connbuilder.UserID);
-            cmd.Parameters.Add("newpassword", newPW);
-            string debug = cmd.ToString();
-            cmd.ExecuteNonQuery();
+            SqlConnectionStringBuilder Connbuilder = new SqlConnectionStringBuilder(OriginalConnectionString);
+            string cmd = $"alter user {Connbuilder.UserID} identified by \"{newPW}\" replace \"{Connbuilder.Password}\"";
+            RunCommand(cmd, enblExeptions: true);
             log.Info("Password has been changed");
         }
     }
