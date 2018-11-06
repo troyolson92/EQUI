@@ -28,6 +28,7 @@ namespace EqUiWebUi.Models
         public int Type { get; set; }
         public string ConnectionString { get; set; }
         public bool isAlertSource { get; set; }
+        public string PwList { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<c_logClassSystem> c_logClassSystem { get; set; }
