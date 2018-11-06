@@ -17,6 +17,11 @@ COUNT: @Model.Count()
     columns.Add(c => c.communicationState).Titled("communicationState");
     columns.Add(c => c._VWSCState).Titled("_VWSCState");
     columns.Add(c => c)
+        .Titled("TestOnline")
+        .Encoded(false)
+        .RenderedAs(c => @MyCellStyling.VWSCTimerState(c.online)
+        ).Filterable(false);
+    columns.Add(c => c)
             .Titled("")
             .Encoded(false)
             .RenderedAs(c => @Html.ActionLink("Show", "Index", "c_timer_class", new { timer_id = c.timerId }, null)
