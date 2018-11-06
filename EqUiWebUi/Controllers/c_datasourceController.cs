@@ -113,14 +113,14 @@ namespace EqUiWebUi.Controllers
 
         //Test a dbEQUI 
         // Test all configured database. if id is null
-        public JsonResult RunDbTest(int? id)
+        public JsonResult RunDbTest(int? id, bool ChangePassword = false)
         {
             ConnectionManager connectionManager = new ConnectionManager();
             try
             {
                 if (id.HasValue)
                 {
-                    connectionManager.TestDb(id.GetValueOrDefault());
+                    connectionManager.TestDb(id.GetValueOrDefault(),ChangePassword: ChangePassword);
                     return Json(new { Msg = "RunDbTest id: " + id + " OK" }, JsonRequestBehavior.AllowGet);
                 }
                 else
@@ -128,7 +128,7 @@ namespace EqUiWebUi.Controllers
                     List <EQUICommunictionLib.Database> list = connectionManager.GetDB();
                     foreach(EQUICommunictionLib.Database db in list)
                     {
-                        connectionManager.TestDb(db.Id);
+                        connectionManager.TestDb(db.Id, ChangePassword: false);
                     }
                     return Json(new { Msg = "RunDbTest (all dbEQUI) OK" }, JsonRequestBehavior.AllowGet);
                 }
@@ -141,11 +141,5 @@ namespace EqUiWebUi.Controllers
             }
         }
 
-        //Test change password
-        public void ChangePWTest()
-        {
-            ConnectionManager connectionManager = new ConnectionManager();
-            connectionManager.PWCheck(dbName: "MAXIMOrt", ChangeIfExpired: true, newPW: "NEWPWTEST");
-        }
     }
 }

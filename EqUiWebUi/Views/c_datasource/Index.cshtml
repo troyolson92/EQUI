@@ -7,19 +7,21 @@
 </p>
 @Html.Grid(Model).Named("c_datasourceGrid").Build(columns =>
 {
-    columns.Add(c => c.Id).Titled("id").InitialSort(GridSortOrder.Asc);
-    columns.Add(c => c.Name).Titled("Name");
-    columns.Add(c => c.Description).Titled("Description");
-    //columns.Add(c => c.Type).Titled("Type");
-    columns.Add(c => c._db_type).Titled("_db_type").Filterable(false);
-    //columns.Add(c => c.ConnectionString).Titled("ConnectionString");
-    columns.Add(c => c.isAlertSource).Titled("isAlertSource");
-    columns.Add(c => c)
-                    .Titled("")
-                    .Encoded(false)
-                .RenderedAs(c => MyFilters.IconActionLink(Url.Action("Edit", new { id = c.Id }), "fas fa-pencil-alt", "", "Edit this") + " | " +
-                                 MyFilters.IconActionLink(Url.Action("Delete", new { id = c.Id }), "fas fa-trash-alt", "", "Delete this") + " | " +
-                                 MyFilters.IconActionLink(Url.Action("RunDbTest", new { id = c.Id }), "fas fa-stethoscope", "", "check connection", classes: "JQresultTriggerBtn")
+columns.Add(c => c.Id).Titled("id").InitialSort(GridSortOrder.Asc);
+columns.Add(c => c.Name).Titled("Name");
+columns.Add(c => c.Description).Titled("Description");
+//columns.Add(c => c.Type).Titled("Type");
+columns.Add(c => c._db_type).Titled("_db_type");
+columns.Add(c => c.PwList).Titled("PwList");
+//columns.Add(c => c.ConnectionString).Titled("ConnectionString");
+columns.Add(c => c.isAlertSource).Titled("isAlertSource");
+columns.Add(c => c)
+                .Titled("")
+                .Encoded(false)
+            .RenderedAs(c => MyFilters.IconActionLink(Url.Action("Edit", new { id = c.Id }), "fas fa-pencil-alt", "", "Edit this") + " | " +
+                             MyFilters.IconActionLink(Url.Action("Delete", new { id = c.Id }), "fas fa-trash-alt", "", "Delete this") + " | " +
+                             MyFilters.IconActionLink(Url.Action("RunDbTest", new {id = c.Id, ChangePassword = false }), "fas fa-stethoscope", "", "check connection", classes: "JQresultTriggerBtn") + " | " +
+                             MyFilters.IconActionLink(Url.Action("RunDbTest", new {id = c.Id, ChangePassword = true }), "fas fa-key", "", "change password (rotate list)", classes: "JQresultTriggerBtn")
                     ).Filterable(false);
 }).Filterable().Sortable().Pageable(pager =>
 {

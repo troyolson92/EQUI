@@ -39,6 +39,7 @@
           <Property Name="Type" Type="int" Nullable="false" />
           <Property Name="ConnectionString" Type="varchar(max)" Nullable="false" />
           <Property Name="isAlertSource" Type="bit" Nullable="false" />
+          <Property Name="PwList" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="c_housekeeping">
           <Key>
@@ -498,6 +499,7 @@
           <NavigationProperty Name="c_logClassSystem" Relationship="GADATAModelEQUI.FK_c_logClassSystem_c_datasource" FromRole="c_datasource" ToRole="c_logClassSystem" />
           <NavigationProperty Name="c_job" Relationship="GADATAModelEQUI.FK_c_job_c_datasource" FromRole="c_datasource" ToRole="c_job" />
           <NavigationProperty Name="c_housekeeping" Relationship="GADATAModelEQUI.FK_c_housekeeping_c_datasource" FromRole="c_datasource" ToRole="c_housekeeping" />
+          <Property Name="PwList" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="c_LogClassRules">
           <Key>
@@ -860,6 +862,7 @@
           <EntitySetMapping Name="c_datasource">
             <EntityTypeMapping TypeName="GADATAModelEQUI.c_datasource">
               <MappingFragment StoreEntitySet="c_datasource">
+                <ScalarProperty Name="PwList" ColumnName="PwList" />
                 <ScalarProperty Name="isAlertSource" ColumnName="isAlertSource" />
                 <ScalarProperty Name="ConnectionString" ColumnName="ConnectionString" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
