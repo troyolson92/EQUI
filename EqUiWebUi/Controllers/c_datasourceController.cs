@@ -141,11 +141,5 @@ namespace EqUiWebUi.Controllers
             }
         }
 
-        //Test change password
-        public void ChangePWTest()
-        {
-            ConnectionManager connectionManager = new ConnectionManager();
-            connectionManager.PWCheck(dbName: "MAXIMOrt", ChangeIfExpired: true, newPW: "NEWPWTEST");
-        }
     }
 }

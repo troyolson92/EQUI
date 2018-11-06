@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 
 namespace EQUICommunictionLib
 {
@@ -23,12 +22,31 @@ namespace EQUICommunictionLib
         public db_type Type { get; set; }
         public string ConnectionString { get; set; }
         public string Description { get; set; }
-        //method to update connectingstring from DB
+
+        //method to update connecting string from DB
         public void UpdateConnectionString(string newConnString)
         {
             ConnectionManager connectionManager = new ConnectionManager();
             string updateCommand = "UPDATE GADATA.EqUi.c_datasource set ConnectionString = '{1}' from GADATA.EqUi.c_datasource where [id] = {0}";
-            connectionManager.RunCommand(string.Format(updateCommand,Id,newConnString),enblExeptions:true);
+            connectionManager.RunCommand(string.Format(updateCommand, Id, newConnString), enblExeptions: true);
+        }
+
+        //method to get list of rotation passwords
+        public List<string> GetPasswordsList()
+        {
+            ConnectionManager connectionManager = new ConnectionManager();
+            string qry = "SELECT PwList from GADATA.EqUi.c_datasource where [id] = {0}";
+            DataTable dt = connectionManager.RunQuery(string.Format(qry, Id), enblExeptions: true);
+            if (dt.Rows.Count != 1)
+            {
+                throw new NoNullAllowedException();
+            }
+            string result = dt.Rows[0].Field<string>("PwList");
+            if (result == "")
+            {
+                throw new FormatException();
+            }
+            return result.Split(';').ToList();
         }
     }
 
@@ -131,12 +149,12 @@ namespace EQUICommunictionLib
         //run Query for a db
         //option to run get database by name or by ID
         //if dbName and ID is left blank run against main datbase
-        public DataTable RunQuery(string sqlQuery, string dbName = "", int dbID = 0 , bool enblExeptions = false, int maxEXECtime = 300, bool subscribeToMessages = false)
+        public DataTable RunQuery(string sqlQuery, string dbName = "", int dbID = 0, bool enblExeptions = false, int maxEXECtime = 300, bool subscribeToMessages = false)
         {
             Database db = new Database();
             if (dbName != "" || dbID != 0)
             {
-                db = GetDB(dbName,dbID).First();
+                db = GetDB(dbName, dbID).First();
             }
             else
             {
@@ -174,7 +192,7 @@ namespace EQUICommunictionLib
         //run Command form a db
         //option to run get database by name or by ID
         //if dbName and ID is left blank run against main database
-        public void RunCommand(string sqlCommand, string dbName = "", int dbID = 0, bool enblExeptions = false, int maxEXECtime = 300,bool subscribeToMessages = false)
+        public void RunCommand(string sqlCommand, string dbName = "", int dbID = 0, bool enblExeptions = false, int maxEXECtime = 300, bool subscribeToMessages = false)
         {
             Database db = new Database();
             if (dbName != "" || dbID != 0)
@@ -185,7 +203,6 @@ namespace EQUICommunictionLib
             {
                 db = DefaultDatabase();
             }
-        
 
             switch (db.Type)
             {
@@ -208,11 +225,12 @@ namespace EQUICommunictionLib
                     log.Error("db type not supported");
                     throw new NotSupportedException();
             }
-
         }
 
         public delegate void _InfoMessage(string msg);
+
         public event _InfoMessage InfoMessage;
+
         private void Conn_InfoMessage(object sender, SqlInfoMessageEventArgs e)
         {
             InfoMessage(e.Message);
@@ -226,7 +244,7 @@ namespace EQUICommunictionLib
         //run bulkCopy command (only for msSQL)
         //option to run get database by name or by ID
         //if dbName and ID is left blank run against main datbase
-        public void BulkCopy(DataTable data,string destination, string dbName = "", int dbID = 0, bool enblExeptions = false, int maxEXECtime = 300)
+        public void BulkCopy(DataTable data, string destination, string dbName = "", int dbID = 0, bool enblExeptions = false, int maxEXECtime = 300)
         {
             Database db = new Database();
             if (dbName != "" || dbID != 0)
@@ -237,7 +255,6 @@ namespace EQUICommunictionLib
             {
                 db = DefaultDatabase();
             }
-
 
             switch (db.Type)
             {
@@ -253,12 +270,11 @@ namespace EQUICommunictionLib
                     log.Error("db type not supported");
                     throw new NotSupportedException();
             }
-
         }
 
         //run CLOB command (only for oracle)
         //option to run get database by name or by ID
-        //if dbName and ID is left blank run against main datbase
+        //if dbName and ID is left blank run against main database
         public string GetCLOB(string qry, string dbName = "", int dbID = 0, bool enblExeptions = false)
         {
             Database db = new Database();
@@ -271,7 +287,6 @@ namespace EQUICommunictionLib
                 db = DefaultDatabase();
             }
 
-
             switch (db.Type)
             {
                 case db_type.msSqlServer:
@@ -279,18 +294,17 @@ namespace EQUICommunictionLib
 
                 case db_type.Orcacle:
                     OracleComm oracleComm = new OracleComm(db.ConnectionString);
-                    return oracleComm.GetCLOB(qry,enblExeptions:enblExeptions);
+                    return oracleComm.GetCLOB(qry, enblExeptions: enblExeptions);
 
                 default:
                     log.Error("db type not supported");
                     throw new NotSupportedException();
             }
-
         }
 
-        //get storced proc parameters (only for msSQL)
+        //get stored proc parameters (only for msSQL)
         //option to run get database by name or by ID
-        //if dbName and ID is left blank run against main datbase
+        //if dbName and ID is left blank run against main database
         public SqlCommand GetSpParms(string sp_name, string dbName = "", int dbID = 0, bool enblExeptions = false)
         {
             Database db = new Database();
@@ -302,7 +316,6 @@ namespace EQUICommunictionLib
             {
                 db = DefaultDatabase();
             }
-
 
             switch (db.Type)
             {
@@ -317,11 +330,10 @@ namespace EQUICommunictionLib
                     log.Error("db type not supported");
                     throw new NotSupportedException();
             }
-
         }
 
         //test to auto change passwords for DB
-        public void PWCheck(string dbName = "", bool ChangeIfExpired = false, string newPW = "")
+        public void PWCheck(string dbName = "", bool ChangeIfExpired = false, bool ForceChange = false)
         {
             Database db = GetDB(dbName).FirstOrDefault();
             log.Debug("Starting db PWcheck for: " + db.Name);
@@ -332,16 +344,36 @@ namespace EQUICommunictionLib
 
                 case db_type.Orcacle:
                     OracleComm oracleComm = new OracleComm(db.ConnectionString);
-                    if (oracleComm.CheckPassWorkExpired())
+                    if (oracleComm.CheckPassWordExpired() || ForceChange)
                     {
-                        log.Info("password Expired");
-                        if (ChangeIfExpired)
+                        if (!ForceChange)
                         {
-                            //change the pasword on the server
-                            oracleComm.CheckPassWorkExpired(ChangeIfExpired: true, newPW: newPW);
-                            //update the connectionstring in the connfiguration
+                            log.Info("password Expired");
+                        }
+
+                        if (ChangeIfExpired || ForceChange)
+                        {
+                            //get connection string
                             SqlConnectionStringBuilder Connbuilder = new SqlConnectionStringBuilder(db.ConnectionString);
-                            Connbuilder.Password = newPW;
+                            //get next PW
+                            List<string> Passwords = db.GetPasswordsList();
+                            int Currentindex = Passwords.IndexOf(Connbuilder.Password);
+                            string NewPw;
+                            if (Currentindex >= Passwords.Count())
+                            {
+                                //get first item
+                                NewPw = Passwords[0];
+                            }
+                            else
+                            {
+                                //get next item
+                                NewPw = Passwords[Currentindex + 1];
+                            }
+
+                            //change the password on the server
+                            oracleComm.ChangePassWord(newPW: NewPw);
+                            //update the connection string in the configuration
+                            Connbuilder.Password = NewPw;
                             db.UpdateConnectionString(Connbuilder.ConnectionString);
                         }
                     }
@@ -360,35 +392,36 @@ namespace EQUICommunictionLib
 
         //test command to test al DB's
         //I just do a getdate() sysdata on all systems. (if logon error like that will crap out)
-        public void TestDb(int id )
+        public void TestDb(int id)
         {
-                Database db = GetDB(dbID: id).First();
-                log.Debug("Starting db test for: " + db.Name);
-                try
+            Database db = GetDB(dbID: id).First();
+            log.Debug("Starting db test for: " + db.Name);
+            try
+            {
+                switch (db.Type)
                 {
-                    switch (db.Type)
-                    {
-                        case db_type.msSqlServer:
-                            SqlComm sqlComm = new SqlComm(db.ConnectionString);
-                            sqlComm.RunQuery("SELECT GETDATE()", enblExeptions: true);
-                            break;
+                    case db_type.msSqlServer:
+                        SqlComm sqlComm = new SqlComm(db.ConnectionString);
+                        sqlComm.RunQuery("SELECT GETDATE()", enblExeptions: true);
+                        break;
 
-                        case db_type.Orcacle:
-                            OracleComm oracleComm = new OracleComm(db.ConnectionString);
-                            oracleComm.RunQuery("SELECT SYSDATE FROM DUAL", enblExeptions: true);
-                            break;
+                    case db_type.Orcacle:
+                        OracleComm oracleComm = new OracleComm(db.ConnectionString);
+                        oracleComm.RunQuery("SELECT SYSDATE FROM DUAL", enblExeptions: true);
+                        PWCheck(db.Name, ChangeIfExpired: true);
+                        break;
 
-                        default:
-                            log.Error("db type not supported");
-                            throw new NotSupportedException();
-                    }
-                    log.Debug("Ended db test for: " + db.Name);
+                    default:
+                        log.Error("db type not supported");
+                        throw new NotSupportedException();
                 }
-                catch(Exception ex)
-                {
-                    log.Error("db test for: " + db.Name + " failed", ex);
-                    throw ex;
-                }
+                log.Debug("Ended db test for: " + db.Name);
+            }
+            catch (Exception ex)
+            {
+                log.Error("db test for: " + db.Name + " failed", ex);
+                throw ex;
+            }
         }
     }
 }

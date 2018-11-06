@@ -111,10 +111,8 @@ namespace EQUICommunictionLib
             }
         }
 
-        public bool CheckPassWorkExpired(bool ChangeIfExpired = false, string newPW = "")
+        public bool CheckPassWordExpired()
         {
-            Boolean hasError = false;
-            Boolean hasAuthError = false;
             OracleCommand cmd = new OracleCommand();
             cmd.Connection = Conn;
 
@@ -128,46 +126,32 @@ namespace EQUICommunictionLib
                     if (ex.Number != 28001)
                     {
                         log.Error("Non Authenticaion error",ex);
-                        hasError = true;
+                        throw ex;
                     }
                     else
                     {
-                        hasAuthError = true;
                         log.Info("Password is expired");
+                        return true;
                     }
                 }
+            return false;
+        }
 
-                if (!hasError && ChangeIfExpired && hasAuthError)
-                {
-                    //successful authentication, open as password change account
-                    cmd.Connection.Close();
-                    cmd.Connection.ConnectionString = Conn.ConnectionString;
-                    cmd.Connection.Open();
-                    cmd.CommandText = "SysChangePassword";
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    SqlConnectionStringBuilder Connbuilder = new SqlConnectionStringBuilder(Conn.ConnectionString);
-                    cmd.Parameters.Add("username", Connbuilder.UserID);
-                    cmd.Parameters.Add("newpassword", newPW);
-                    try
-                    {
-                        cmd.ExecuteNonQuery();
-                        log.Info("Password has been changed");
-                    }
-                    catch (OracleException ex)
-                    {
-                        log.Error("Failed to change password", ex);
-                        hasError = true;
-                    }
-                }
-
-                if(!hasError && hasAuthError)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+        public void ChangePassWord(string newPW = "")
+        {
+            // THIS IS BULLSHIT BLOCK AND IS NOT SUPPORTED IN ORACLE AT ALL 
+            throw new NotSupportedException();
+            OracleCommand cmd = new OracleCommand();
+            cmd.Connection = Conn;
+            if (Conn.State != ConnectionState.Open) { Conn.Open(); }
+            cmd.CommandText = "SysChangePassword";
+            cmd.CommandType = CommandType.StoredProcedure;
+            SqlConnectionStringBuilder Connbuilder = new SqlConnectionStringBuilder(Conn.ConnectionString);
+            cmd.Parameters.Add("username", Connbuilder.UserID);
+            cmd.Parameters.Add("newpassword", newPW);
+            string debug = cmd.ToString();
+            cmd.ExecuteNonQuery();
+            log.Info("Password has been changed");
         }
     }
 }
