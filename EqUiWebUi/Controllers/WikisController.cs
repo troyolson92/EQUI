@@ -70,7 +70,7 @@ namespace EqUiWebUi.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [ValidateInput(false)] //to alow posting of raw html data
+        [ValidateInput(false)] //to allow posting of raw HTML data
         public ActionResult Edit(Wiki wiki)
         {
             if (ModelState.IsValid)
