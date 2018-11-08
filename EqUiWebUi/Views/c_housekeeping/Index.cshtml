@@ -13,7 +13,8 @@
 {
     columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Asc);
     columns.Add(c => c.c_schedule.name).Titled("scheduleName");
-    columns.Add(c => c.Name).Titled("Name");
+    columns.Add(c => c.Name).Titled("NameSimple").Css("editTestCollumSimple"); //simple sample
+    columns.Add(c => c.Name).Titled("NameFull").Css("editTestCollumFull"); //full code sample
     columns.Add(c => c.SchemaName).Titled("SchemaName");
     columns.Add(c => c.TableName).Titled("TableName");
     columns.Add(c => c.nDaysKeepHistory).Titled("KeepDays");
@@ -31,6 +32,8 @@
 
 
 @section scripts{
+    <script src="~/node_modules/jquery-jeditable/dist/jquery.jeditable.min.js"></script>
+
     <script>
         //full with screen
         $("#allcontent").removeClass("body-content");
@@ -58,5 +61,61 @@
                 $("#placeholderPartial").load(url);
             }
         });
+
+        //test with Jeditable for in place table editable
+        //https://github.com/NicolasCARPi/jquery_jeditable/
+        //Sample code 
+        https://jeditable.elabftw.net/
+
+        //simple sample basic
+        $('.editTestCollumSimple').editable('@Url.Action("UpdateLabel")');
+
+        //full sample
+        function submitdata(revert, settings, submitdata) {
+            console.log("Revert text: " + revert);
+            console.log(settings);
+            console.log("User submitted text: " + submitdata.value);
+        }
+
+
+        $('.editTestCollumFull').editable("save.php", {
+            indicator: "<i class='far fa-sad-tear'></i>",
+            type: "text",
+            // only limit to three letters example
+            //pattern: "[A-Za-z]{3}",
+            onedit: function () { console.log('If I return false edition will be canceled'); return true; },
+            before: function () { console.log('Triggered before form appears') },
+            callback: function (result, settings, submitdata) {
+                console.log('Triggered after submit');
+                console.log('Result: ' + result);
+                console.log('Settings.width: ' + settings.width);
+                console.log('Submitdata: ' + submitdata.pwet);
+            },
+            cancel: 'Cancel',
+            cssclass: 'custom-class',
+            cancelcssclass: 'btn btn-danger',
+            submitcssclass: 'btn btn-success',
+            maxlength: 200,
+            // select all text
+            select: true,
+            label: 'This is a label',
+            onreset: function () { console.log('Triggered before reset') },
+            onsubmit: function () { console.log('Triggered before submit') },
+            showfn: function (elem) { elem.fadeIn('slow') },
+            submit: 'Save',
+            submitdata: submitdata,
+            /* submitdata as a function example
+            submitdata : function(revert, settings, submitdata) {
+                console.log("Revert text: " + revert);
+                console.log(settings);
+                console.log("User submitted text: " + submitdata.value);
+            },
+            */
+            tooltip: "Click to edit...",
+            width: 160
+        });
+
+
+
     </script>
 }

@@ -140,5 +140,12 @@ namespace EqUiWebUi.Controllers
             }
             base.Dispose(disposing);
         }
+
+
+        //test for in line edit 
+        public string UpdateLabel(string id, string value)
+        {
+            return value;
+        }
     }
 }
