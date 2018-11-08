@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using EqUiWebUi.Models;
+using Newtonsoft.Json.Linq;
 
 namespace EqUiWebUi.Controllers
 {
@@ -147,5 +148,33 @@ namespace EqUiWebUi.Controllers
         {
             return value;
         }
+
+        public ActionResult saveuser(int id, string propertyName, string value)
+        {
+            var status = false;
+            var message = "";
+
+            //Update data to database 
+            /*
+            using (MyDatabaseEntities dc = new MyDatabaseEntities())
+            {
+                var user = dc.SiteUsers.Find(id);
+                if (user != null)
+                {
+                    dc.Entry(user).Property(propertyName).CurrentValue = value;
+                    dc.SaveChanges();
+                    status = true;
+                }
+                else
+                {
+                    message = "Error!";
+                }
+            }
+            */
+            var response = new { value = value, status = status, message = message };
+            JObject o = JObject.FromObject(response);
+            return Content(o.ToString());
+        }
+
     }
 }
