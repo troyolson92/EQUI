@@ -45,7 +45,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.wiki1, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <textarea id="wiki1" name="wiki1"></textarea>
+                <textarea id="wiki1" name="wiki1">@Model.wiki1</textarea>
                 @Html.ValidationMessageFor(model => model.wiki1, "", new { @class = "text-danger" })
             </div>
         </div>
