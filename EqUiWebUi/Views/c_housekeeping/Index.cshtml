@@ -14,6 +14,8 @@
     columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Asc);
     columns.Add(c => c.c_schedule.name).Titled("scheduleName");
     columns.Add(c => c.Name).Titled("Name");
+    columns.Add(c => "<p id=" + c.id + " class='editTestCollum1'>" + c.Name).Encoded(false).Titled("NameEdit1");
+    columns.Add(c => "<p id=" + c.id + " class='editTestCollum2'>" + c.Name).Encoded(false).Titled("NameEdit2");
     columns.Add(c => c.SchemaName).Titled("SchemaName");
     columns.Add(c => c.TableName).Titled("TableName");
     columns.Add(c => c.nDaysKeepHistory).Titled("KeepDays");
@@ -31,6 +33,8 @@
 
 
 @section scripts{
+    <script src="~/node_modules/jquery-jeditable/dist/jquery.jeditable.min.js"></script>
+
     <script>
         //full with screen
         $("#allcontent").removeClass("body-content");
@@ -39,6 +43,9 @@
         //subscribe to row clicked events
         $('[data-name="c_housekeepingGrid"]').mvcgrid({
             rowClicked: function (row, data, e) {
+                return;
+
+
                 //if row already has this clase close the modal
                 if ($(row).hasClass("bg-info")) {
                     $("#placeholder").remove();
@@ -57,6 +64,22 @@
                 var url = "@Url.Action("_L_housekeeping")?id=" + data["id"];
                 $("#placeholderPartial").load(url);
             }
+        });
+
+        //test with Jeditable for in place table editable
+        //https://github.com/NicolasCARPi/jquery_jeditable/
+        //Sample code
+        https://jeditable.elabftw.net/
+
+
+        //simple sample basic
+        $('.editTestCollum1').editable('@Url.Action("UpdateLabel")');
+
+        //full sample
+        $('.editTestCollum2').editable('@Url.Action("UpdateLabel")', {
+            data   : '{"E":"Letter E","F":"Letter F","G":"Letter G", "selected":"F"}',
+            type   : 'select',
+            submit : 'OK'
         });
     </script>
 }

@@ -2,6 +2,7 @@
   "name": "myproject",
   "version": "1.0.0",
   "devDependencies": {
-    "codemirror": "^5.34.0"
+    "codemirror": "^5.34.0",
+    "jquery-jeditable": "^2.0.6"
   }
 }

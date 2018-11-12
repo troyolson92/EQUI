@@ -43,8 +43,17 @@ namespace EqUiWebUi
                     SqlConnectionStringBuilder EFProviderConnectionString = new SqlConnectionStringBuilder(EFConnectionstring.ProviderConnectionString);
                     EFProviderConnectionString.DataSource = EQUIConnectionString.DataSource;
                     EFProviderConnectionString.InitialCatalog = EQUIConnectionString.InitialCatalog;
-                    EFProviderConnectionString.UserID = EQUIConnectionString.UserID;
-                    EFProviderConnectionString.Password = EQUIConnectionString.Password;
+                    if (EQUIConnectionString.IntegratedSecurity)
+                    {
+                        EFProviderConnectionString.IntegratedSecurity = true;
+                        EFProviderConnectionString.Remove("User ID");
+                        EFProviderConnectionString.Remove("Password");
+                    }
+                    else
+                    {
+                        EFProviderConnectionString.UserID = EQUIConnectionString.UserID;
+                        EFProviderConnectionString.Password = EQUIConnectionString.Password;
+                    }
                     EFConnectionstring.ProviderConnectionString = EFProviderConnectionString.ToString();
                     //set the web.config if connectionstring is different.
                     if (section.ConnectionStrings[c.Name].ConnectionString != EFConnectionstring.ToString())

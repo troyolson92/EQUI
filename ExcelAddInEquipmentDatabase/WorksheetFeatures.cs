@@ -278,7 +278,7 @@ namespace ExcelAddInEquipmentDatabase
         {
             try
             {
-                string urlSkelation = @"http:\\equi\Maximo_ui\workorderdetails\WoDetails?wonum={0}";
+                string urlSkelation = @"http:\\gensvw1178.gen.volvocars.net\Maximo_ui\workorderdetails\WoDetails?wonum={0}";
                 string url = string.Format(urlSkelation, Uri.EscapeDataString(wonum));
                 System.Diagnostics.Process.Start(url);
                 //System.Windows.Forms.Application.Run(new ExcelAddInEquipmentDatabase.Forms.EquiBrowser(url));
@@ -300,7 +300,7 @@ namespace ExcelAddInEquipmentDatabase
         {
             try
             {
-                string urlSkelation = @"http:\\equi\gadata\table\Moreinfo?location={0}&errornum={1}&refid={2}&logtype={3}&logtext={4}";
+                string urlSkelation = @"http:\\gensvw1178.gen.volvocars.net\gadata\table\Moreinfo?location={0}&errornum={1}&refid={2}&logtype={3}&logtext={4}";
                 string url = string.Format(urlSkelation
                     , Uri.EscapeDataString(location)
                     , Uri.EscapeDataString(errornum)
@@ -328,7 +328,7 @@ namespace ExcelAddInEquipmentDatabase
         { 
             try
             {
-                string urlSkelation = @"http:\\equi\chart\GetErrorTrend?location={0}&errornum={1}&refid={2}&logtype={3}&logtext={4}";
+                string urlSkelation = @"http:\\gensvw1178.gen.volvocars.net\chart\GetErrorTrend?location={0}&errornum={1}&refid={2}&logtype={3}&logtext={4}";
                 string url = string.Format(urlSkelation
                     ,Uri.EscapeDataString(location)
                     ,Uri.EscapeDataString(errornum)
@@ -406,7 +406,7 @@ namespace ExcelAddInEquipmentDatabase
         {
             try
             {
-                string urlSkelation = @"http:\\equi\Maximo_ui\Workorder\Workorders?location={0}&loadOnInit=true";
+                string urlSkelation = @"http:\\gensvw1178.gen.volvocars.net\Maximo_ui\Workorder\Workorders?location={0}&loadOnInit=true";
                 string url = string.Format(urlSkelation, Uri.EscapeDataString(location));
                 System.Diagnostics.Process.Start(url);
                 //System.Windows.Forms.Application.Run(new ExcelAddInEquipmentDatabase.Forms.EquiBrowser(url));
@@ -425,11 +425,12 @@ namespace ExcelAddInEquipmentDatabase
             newThread.SetApartmentState(System.Threading.ApartmentState.STA);
             newThread.Start();
         }
+
         public void frmNewPartsonlocationThread()
         {
             try
             {
-                string urlSkelation = @"http:\\equi\Maximo_ui\Workorder\PartsOnLocation?location={0}&loadOnInit=true";
+                string urlSkelation = @"http:\\gensvw1178.gen.volvocars.net\Maximo_ui\Workorder\PartsOnLocation?location={0}&loadOnInit=true";
                 string url = string.Format(urlSkelation, Uri.EscapeDataString(location));
                 System.Diagnostics.Process.Start(url);
                 //System.Windows.Forms.Application.Run(new ExcelAddInEquipmentDatabase.Forms.EquiBrowser(url));

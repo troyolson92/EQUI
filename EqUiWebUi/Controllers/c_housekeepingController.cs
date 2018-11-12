@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using EqUiWebUi.Models;
+using System;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using EqUiWebUi.Models;
 
 namespace EqUiWebUi.Controllers
 {
@@ -53,7 +51,7 @@ namespace EqUiWebUi.Controllers
         }
 
         // POST: c_housekeeping/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -89,7 +87,7 @@ namespace EqUiWebUi.Controllers
         }
 
         // POST: c_housekeeping/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -140,5 +138,14 @@ namespace EqUiWebUi.Controllers
             }
             base.Dispose(disposing);
         }
+
+        //test for in line edit 1 method for 1 value
+        public void UpdateLabel(string id, string value)
+        {
+            c_housekeeping housekeeping = db.c_housekeeping.Find(Int32.Parse(id));
+            housekeeping.Name = value;
+            //  db.SaveChanges();
+        }
+
     }
 }
