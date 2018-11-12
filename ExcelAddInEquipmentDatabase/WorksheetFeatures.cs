@@ -417,7 +417,7 @@ namespace ExcelAddInEquipmentDatabase
                 Debugger.Message("Dam..." + ex.Message);
             }
 
-        //}
+        }
 
         void btnShowPartsWorkorderClick(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)
         {
@@ -425,6 +425,7 @@ namespace ExcelAddInEquipmentDatabase
             newThread.SetApartmentState(System.Threading.ApartmentState.STA);
             newThread.Start();
         }
+
         public void frmNewPartsonlocationThread()
         {
             try
