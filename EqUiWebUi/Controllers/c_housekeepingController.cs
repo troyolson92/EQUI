@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using EqUiWebUi.Models;
+using System;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using EqUiWebUi.Models;
-using Newtonsoft.Json.Linq;
 
 namespace EqUiWebUi.Controllers
 {
@@ -54,7 +51,7 @@ namespace EqUiWebUi.Controllers
         }
 
         // POST: c_housekeeping/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -90,7 +87,7 @@ namespace EqUiWebUi.Controllers
         }
 
         // POST: c_housekeeping/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -142,38 +139,12 @@ namespace EqUiWebUi.Controllers
             base.Dispose(disposing);
         }
 
-
-        //test for in line edit 
-        public string UpdateLabel(string id, string value)
+        //test for in line edit 1 method for 1 value
+        public void UpdateLabel(string id, string value)
         {
-            return value;
-        }
-
-        public ActionResult saveuser(int id, string propertyName, string value)
-        {
-            var status = false;
-            var message = "";
-
-            //Update data to database 
-            /*
-            using (MyDatabaseEntities dc = new MyDatabaseEntities())
-            {
-                var user = dc.SiteUsers.Find(id);
-                if (user != null)
-                {
-                    dc.Entry(user).Property(propertyName).CurrentValue = value;
-                    dc.SaveChanges();
-                    status = true;
-                }
-                else
-                {
-                    message = "Error!";
-                }
-            }
-            */
-            var response = new { value = value, status = status, message = message };
-            JObject o = JObject.FromObject(response);
-            return Content(o.ToString());
+            c_housekeeping housekeeping = db.c_housekeeping.Find(Int32.Parse(id));
+            housekeeping.Name = value;
+            //  db.SaveChanges();
         }
 
     }
