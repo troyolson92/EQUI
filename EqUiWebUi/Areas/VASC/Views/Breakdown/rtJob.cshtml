@@ -7,3 +7,13 @@
 <h2>rtJob</h2>
 
 @Html.Action("_getJob", new { jobID = ViewBag.jobID })
+
+
+
+@section scripts{
+    <script>
+        //full with screen
+        $("#allcontent").removeClass("body-content");
+        $("#allcontent").removeClass("container");
+    </script>
+}

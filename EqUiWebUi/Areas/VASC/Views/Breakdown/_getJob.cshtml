@@ -16,6 +16,7 @@
     columns.Add(c => c.ts_breakdownAck).Titled("ts_breakdownAck").Css("d-none d-lg-table-cell");
     columns.Add(c =>  (c.ts_breakdownAck-c.ts_breakdownStart) ).Titled("AckTime");
     columns.Add(c => c.ts_breakdownEnd).Titled("ts_breakdownEnd").Css("d-none d-lg-table-cell");
+    columns.Add(c => (c.ts_breakdownEnd - c.ts_breakdownAck)).Titled("RepTime");
     columns.Add(c => (c.ts_breakdownEnd - c.ts_breakdownStart)).Titled("StopTime");
     columns.Add(c => c._ev_breakdownStart).Titled("ev_breakdownStart").Filterable(false).Sortable(false);
     columns.Add(c => c.val_breakdownStart).Titled("val").Css("d-none d-lg-table-cell");
