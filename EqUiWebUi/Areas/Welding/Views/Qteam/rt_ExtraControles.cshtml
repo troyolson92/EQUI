@@ -17,9 +17,12 @@
 
 
 }).Filterable(
-).Sortable().RowCss(c => (c.time_uitadaptief.GetValueOrDefault() < System.DateTime.Now.AddHours(-1)) || c.robot.Contains("test") ? "bg-warning" : "")
+).Sortable().RowCss(c => (c.time_uitadaptief.GetValueOrDefault() < System.DateTime.Now.AddHours(-8)) ? "ani_PulseRed" : "ani_PulseBlueRepeat")
 
-@section scripts{
+
+
+@section scripts{)
+
     <script>
         //full with screen
         $("#allcontent").removeClass("body-content");
@@ -50,9 +53,3 @@
         }, 1000 * 120)
     </script>
 }
-<style>
-    .colorred
-    {
-        background-color :rgba(190, 48, 48, 0.39)
-    }
-</style>

@@ -5,6 +5,41 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="GADATAModelWelding.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="NPT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="15" />
+          <Property Name="OwnerId" Type="int" Nullable="false" />
+          <Property Name="LoginPass" Type="nchar" MaxLength="15" />
+          <Property Name="LoginUser" Type="nchar" MaxLength="15" />
+          <Property Name="RemoreServer" Type="nchar" MaxLength="250" />
+          <Property Name="active" Type="bit" />
+          <Property Name="enable_bit" Type="int" />
+        </EntityType>
+        <EntityType Name="Timer">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="15" />
+          <Property Name="NptId" Type="int" />
+          <Property Name="Robot" Type="nchar" MaxLength="10" />
+          <Property Name="location" Type="varchar" MaxLength="256" />
+          <Property Name="c_timer_class_id" Type="int" />
+          <Property Name="enable_bit" Type="int" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CDSID" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="Voornaam" Type="nchar" MaxLength="25" />
+          <Property Name="Achternaam" Type="nchar" MaxLength="50" />
+          <Property Name="object" Type="nchar" MaxLength="10" />
+        </EntityType>
         <EntityType Name="ToDoList">
           <Key>
             <PropertyRef Name="id" />
@@ -25,6 +60,94 @@
           <Property Name="Remark" Type="nvarchar(max)" />
           <Property Name="UserID" Type="int" />
         </EntityType>
+        <EntityType Name="blanco">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="pjvspotid" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="pictureID" Type="int" />
+          <Property Name="TDTTypeID" Type="int" />
+          <Property Name="FoutcodeID" Type="int" />
+          <Property Name="StartComment" Type="nvarchar" MaxLength="100" />
+          <Property Name="Plates" Type="int" Nullable="false" />
+          <Property Name="BodyNbr" Type="int" />
+          <Property Name="Nomdiameter" Type="numeric" Precision="28" Scale="0" Nullable="false" />
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Type_ID" Type="int" Nullable="false" />
+          <Property Name="Picture_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="comment">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="comment" Type="varchar" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <EntityType Name="foutcode">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="foutcodenbr" Type="int" Nullable="false" />
+          <Property Name="foutcodename" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="picture">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="picturenbr" Type="int" Nullable="false" />
+          <Property Name="picturename_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="picturename">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="picturename" Type="varchar" MaxLength="125" Nullable="false" />
+          <Property Name="picturepath" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="result">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="teardownid" Type="int" Nullable="false" />
+          <Property Name="teardownresult" Type="varchar" MaxLength="25" Nullable="false" />
+        </EntityType>
+        <EntityType Name="teardown">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="spotid" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="starttime" Type="datetime" Nullable="false" />
+          <Property Name="endtime" Type="datetime" Nullable="false" />
+          <Property Name="measdate" Type="datetime" />
+          <Property Name="bodynbr" Type="int" />
+          <Property Name="comment_id" Type="int" Nullable="false" />
+          <Property Name="result_id" Type="int" Nullable="false" />
+          <Property Name="foutcode_id" Type="int" Nullable="false" />
+          <Property Name="type_id" Type="int" Nullable="false" />
+          <Property Name="picture_id" Type="int" Nullable="false" />
+          <Property Name="plates" Type="int" Nullable="false" />
+          <Property Name="startcomment" Type="varchar" MaxLength="50" />
+          <Property Name="nomdiameter" Type="numeric" Precision="28" Scale="0" Nullable="false" />
+          <Property Name="measdiameter" Type="numeric" Precision="28" Scale="0" />
+        </EntityType>
+        <EntityType Name="TeardownResults">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="Spotid" Type="int" Nullable="false" />
+          <Property Name="NuggetDemand" Type="real" />
+          <Property Name="TearDownNugget" Type="real" />
+          <Property Name="TeardownStatus" Type="nchar" MaxLength="30" />
+          <Property Name="TeardownEvalution" Type="nchar" MaxLength="50" />
+          <Property Name="TDTComment" Type="nchar" MaxLength="100" />
+        </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'GADATA.TDT.test' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="test">
@@ -36,6 +159,13 @@ warning 6002: The table/view 'GADATA.TDT.test' does not have a primary key defin
           <Property Name="TDTSpot" Type="nchar" MaxLength="25" Nullable="false" />
           <Property Name="NomDiameter" Type="decimal" Precision="18" Scale="0" />
           <Property Name="MeasDiameter" Type="decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="type">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="tdttype" Type="varchar" MaxLength="125" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'GADATA.UL.rt_AutoWorkFlowULPlans' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -79,6 +209,375 @@ warning 6002: The table/view 'GADATA.UL.rt_ExtraControles' does not have a prima
           <Property Name="NPTOwner" Type="nchar" MaxLength="50" />
           <Property Name="NPT" Type="nchar" MaxLength="10" />
         </EntityType>
+        <EntityType Name="c_error">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="enable_bit" Type="int" />
+          <Property Name="ordinal" Type="int" />
+          <Property Name="isError" Type="int" />
+          <Property Name="errorCode1" Type="int" />
+          <Property Name="errorCode1_text" Type="varchar" MaxLength="256" />
+          <Property Name="errorCode2" Type="int" />
+          <Property Name="errorCode2_text" Type="varchar" MaxLength="256" />
+          <Property Name="_operator" Type="int" />
+          <Property Name="flags" Type="int" />
+          <Property Name="UserComment" Type="varchar" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="h_Midair">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DateTime" Type="datetime" />
+          <Property Name="SpotId" Type="int" Nullable="false" />
+          <Property Name="ResisActual" Type="smallint" />
+          <Property Name="ResisRef" Type="smallint" />
+          <Property Name="ElectrodeNo" Type="tinyint" />
+          <Property Name="EnergyActual" Type="smallint" />
+          <Property Name="WeldTimeActual" Type="smallint" />
+          <Property Name="Iactual2" Type="real" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.WELDING2.h_Nut_Bolt_Measure' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="h_Nut_Bolt_Measure">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Timestamp" />
+            <PropertyRef Name="SpotID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Timestamp" Type="datetime" Nullable="false" />
+          <Property Name="SpotID" Type="int" Nullable="false" />
+          <Property Name="wear" Type="int" />
+          <Property Name="I_demand" Type="float" />
+          <Property Name="I_Actual" Type="float" />
+          <Property Name="regulation" Type="nchar" MaxLength="5" />
+          <Property Name="BodyNr" Type="nchar" MaxLength="50" />
+          <Property Name="ElectrodeNr" Type="smallint" />
+          <Property Name="Weldtime" Type="int" />
+          <Property Name="EnergyActual" Type="int" />
+          <Property Name="EnergyRef" Type="int" />
+          <Property Name="ResistanceActual" Type="int" />
+          <Property Name="ResistanceRef" Type="int" />
+          <Property Name="ExpulsionTime" Type="int" />
+        </EntityType>
+        <EntityType Name="h_weldmeasure">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="L_timeline_starttime" Type="datetime" />
+          <Property Name="L_timeline_endtime" Type="datetime" />
+          <Property Name="L_timeline_id" Type="int" />
+          <Property Name="timerId" Type="int" />
+          <Property Name="progNo" Type="smallint" />
+          <Property Name="spotId" Type="int" />
+          <Property Name="count" Type="int" />
+          <Property Name="dt_FirstValue" Type="datetime" />
+          <Property Name="dt_LastValue" Type="datetime" />
+          <Property Name="Expulsions" Type="int" />
+          <Property Name="Rewelds" Type="int" />
+          <Property Name="AVG_uirExpulsionTime" Type="float" />
+          <Property Name="AVG_voltage" Type="float" />
+          <Property Name="AVG_current" Type="float" />
+          <Property Name="AVG_weldtime" Type="float" />
+          <Property Name="AVG_enegery" Type="float" />
+          <Property Name="AVG_power" Type="float" />
+          <Property Name="AVG_resistance" Type="float" />
+          <Property Name="AVG_pulseWith" Type="float" />
+          <Property Name="AVG_uip" Type="float" />
+          <Property Name="AVG_stabilisationFactor" Type="float" />
+          <Property Name="MIN_uirExpulsionTime" Type="int" />
+          <Property Name="MIN_voltage" Type="float" />
+          <Property Name="MIN_current" Type="float" />
+          <Property Name="MIN_weldtime" Type="int" />
+          <Property Name="MIN_enegery" Type="float" />
+          <Property Name="MIN_power" Type="float" />
+          <Property Name="MIN_resistance" Type="int" />
+          <Property Name="MIN_pulseWith" Type="float" />
+          <Property Name="MIN_uip" Type="int" />
+          <Property Name="MIN_stabilisationFactor" Type="float" />
+          <Property Name="MAX_uirExpulsionTime" Type="int" />
+          <Property Name="MAX_voltage" Type="float" />
+          <Property Name="MAX_current" Type="float" />
+          <Property Name="MAX_weldtime" Type="int" />
+          <Property Name="MAX_enegery" Type="float" />
+          <Property Name="MAX_power" Type="float" />
+          <Property Name="MAX_resistance" Type="int" />
+          <Property Name="MAX_pulseWith" Type="float" />
+          <Property Name="MAX_uip" Type="int" />
+          <Property Name="MAX_stabilisationFactor" Type="float" />
+          <Property Name="STDEV_uirExpulsionTime" Type="float" />
+          <Property Name="STDEV_voltage" Type="float" />
+          <Property Name="STDEV_current" Type="float" />
+          <Property Name="STDEV_weldtime" Type="float" />
+          <Property Name="STDEV_enegery" Type="float" />
+          <Property Name="STDEV_power" Type="float" />
+          <Property Name="STDEV_resistance" Type="float" />
+          <Property Name="STDEV_pulseWith" Type="float" />
+          <Property Name="STDEV_uip" Type="float" />
+          <Property Name="STDEV_stabilisationFactor" Type="float" />
+        </EntityType>
+        <EntityType Name="L_operation">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="_timestamp" Type="datetime" />
+          <Property Name="code" Type="int" />
+          <Property Name="Vwsc_name" Type="varchar" MaxLength="50" />
+          <Property Name="controller_id" Type="int" />
+          <Property Name="Description" Type="varchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="rt_active_info">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="timerId" Type="int" />
+          <Property Name="_timestamp" Type="datetime" />
+          <Property Name="online" Type="bit" />
+          <Property Name="communicationState" Type="tinyint" />
+          <Property Name="errorNumber" Type="int" />
+          <Property Name="errorText" Type="varchar" MaxLength="64" />
+          <Property Name="rt_alarm_id" Type="int" />
+          <Property Name="rt_job_id" Type="int" />
+          <Property Name="vwsc_state" Type="int" />
+          <Property Name="rt_weldfault_id" Type="int" />
+          <Property Name="rt_weldmeasureprotddw_id" Type="int" />
+          <Property Name="rt_datechangeprot_id" Type="int" />
+        </EntityType>
+        <EntityType Name="rt_alarm">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="timerId" Type="int" />
+          <Property Name="_timestamp" Type="datetime" />
+          <Property Name="protRecord_ID" Type="int" />
+          <Property Name="dateTime" Type="datetime" />
+          <Property Name="errorCode1" Type="int" />
+          <Property Name="errorCode1_txt" Type="varchar" MaxLength="64" />
+          <Property Name="errorCode2" Type="int" />
+          <Property Name="errorCode2_txt" Type="varchar" MaxLength="64" />
+          <Property Name="isError" Type="bit" />
+          <Property Name="isError_txt" Type="varchar" MaxLength="64" />
+        </EntityType>
+        <EntityType Name="rt_comment">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="_timestamp" Type="datetime" />
+          <Property Name="comment" Type="varchar" MaxLength="40" />
+        </EntityType>
+        <EntityType Name="rt_communication_state">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="timerId" Type="int" />
+          <Property Name="_timestamp" Type="datetime" />
+          <Property Name="online" Type="bit" />
+          <Property Name="communicationState" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="rt_datachangeprot">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="timerId" Type="int" />
+          <Property Name="_timestamp" Type="datetime" />
+          <Property Name="protRecord_ID" Type="int" />
+          <Property Name="dateTime" Type="datetime" />
+          <Property Name="param_ID" Type="int" />
+          <Property Name="param_status_txt" Type="varchar" MaxLength="81" />
+          <Property Name="subIndex" Type="int" />
+          <Property Name="oldValue" Type="varchar" MaxLength="81" />
+          <Property Name="oldValue_txt" Type="varchar" MaxLength="81" />
+          <Property Name="newValue" Type="varchar" MaxLength="81" />
+          <Property Name="newValue_txt" Type="varchar" MaxLength="81" />
+          <Property Name="oldNormValue" Type="varchar" MaxLength="81" />
+          <Property Name="newNormValue" Type="varchar" MaxLength="81" />
+          <Property Name="physicalUnitId" Type="int" />
+          <Property Name="physicalUnitId_txt" Type="varchar" MaxLength="64" />
+          <Property Name="computerName" Type="varchar" MaxLength="64" />
+          <Property Name="userName" Type="varchar" MaxLength="64" />
+          <Property Name="comment" Type="varchar" MaxLength="64" />
+        </EntityType>
+        <EntityType Name="rt_job">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="_timestamp" Type="datetime" />
+          <Property Name="timerId" Type="int" />
+          <Property Name="ngac_rt_job_id" Type="int" />
+          <Property Name="ts_Start" Type="datetime" />
+          <Property Name="ts_End" Type="datetime" />
+          <Property Name="rt_weldmeasureprotddw_id_Start" Type="int" />
+          <Property Name="rt_weldmeasureprotddw_id_End" Type="int" />
+          <Property Name="rt_weldfaultprot_id_Start" Type="int" />
+          <Property Name="rt_weldfaultprot_id_End" Type="int" />
+          <Property Name="state" Type="int" />
+          <Property Name="rt_expulsion_count" Type="int" />
+          <Property Name="rt_weldmeasureprotddw_count" Type="int" />
+          <Property Name="rt_weldfaultprot_count" Type="int" />
+          <Property Name="rt_breakdown_count" Type="int" />
+        </EntityType>
+        <EntityType Name="rt_job_breakdown">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="rt_job_id" Type="int" />
+          <Property Name="rt_alarm_id" Type="int" />
+          <Property Name="ts_breakdownStart" Type="datetime" />
+          <Property Name="ts_breakdownEnd" Type="datetime" />
+          <Property Name="index" Type="int" />
+        </EntityType>
+        <EntityType Name="rt_job_expulsion">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="rt_job_id" Type="int" />
+          <Property Name="_timestamp" Type="datetime" />
+          <Property Name="rt_weldmeasureprotddw_id" Type="int" />
+        </EntityType>
+        <EntityType Name="rt_spot">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="_timestamp" Type="datetime" />
+          <Property Name="timerId" Type="int" />
+          <Property Name="spotId" Type="int" />
+          <Property Name="spotname" Type="varchar" MaxLength="64" />
+          <Property Name="pjv_joiningpointdata_id" Type="int" />
+          <Property Name="vwscComment" Type="varchar" MaxLength="256" />
+          <Property Name="Comment1" Type="int" />
+          <Property Name="Comment2" Type="int" />
+          <Property Name="Comment3" Type="int" />
+          <Property Name="weldProgramNo" Type="int" />
+          <Property Name="isDead" Type="int" />
+        </EntityType>
+        <EntityType Name="rt_weldfault">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="timerId" Type="int" />
+          <Property Name="_timestamp" Type="datetime" />
+          <Property Name="protRecord_ID" Type="int" />
+          <Property Name="dateTime" Type="datetime" />
+          <Property Name="progNo" Type="int" />
+          <Property Name="monitorState" Type="int" />
+          <Property Name="monitorState_txt" Type="varchar" MaxLength="64" />
+          <Property Name="regulationState" Type="int" />
+          <Property Name="regulationState_txt" Type="varchar" MaxLength="64" />
+          <Property Name="measureState" Type="int" />
+          <Property Name="measureState_txt" Type="varchar" MaxLength="64" />
+          <Property Name="weldProgValue" Type="real" />
+          <Property Name="weldActualValue" Type="real" />
+          <Property Name="wear" Type="numeric" Precision="12" Scale="2" />
+          <Property Name="spotId" Type="int" />
+          <Property Name="isError" Type="bit" />
+          <Property Name="WMComment" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="rt_weldmeasureprotddw">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="timerId" Type="int" />
+          <Property Name="_timestamp" Type="datetime" />
+          <Property Name="protRecord_ID" Type="int" />
+          <Property Name="dateTime" Type="datetime" />
+          <Property Name="progNo" Type="smallint" />
+          <Property Name="spotId" Type="int" />
+          <Property Name="wear" Type="numeric" Precision="12" Scale="2" />
+          <Property Name="wearPerCent" Type="numeric" Precision="8" Scale="2" />
+          <Property Name="monitorState" Type="int" />
+          <Property Name="monitorState_txt" Type="varchar" MaxLength="64" />
+          <Property Name="regulationState" Type="int" />
+          <Property Name="regulationState_txt" Type="varchar" MaxLength="64" />
+          <Property Name="measureState" Type="int" />
+          <Property Name="measureState_txt" Type="varchar" MaxLength="64" />
+          <Property Name="powerState" Type="int" />
+          <Property Name="powerState_txt" Type="varchar" MaxLength="64" />
+          <Property Name="sequenceState" Type="int" />
+          <Property Name="sequenceState_txt" Type="varchar" MaxLength="64" />
+          <Property Name="sequenceStateAdd" Type="int" />
+          <Property Name="sequenceStateAdd_txt" Type="varchar" MaxLength="64" />
+          <Property Name="sequenceRepeat" Type="int" />
+          <Property Name="sequenceRepeat_txt" Type="varchar" MaxLength="64" />
+          <Property Name="monitorMode" Type="int" />
+          <Property Name="monitorMode_txt" Type="varchar" MaxLength="64" />
+          <Property Name="iDemandStd" Type="numeric" Precision="8" Scale="2" />
+          <Property Name="ilsts" Type="numeric" Precision="8" Scale="2" />
+          <Property Name="regulationStd" Type="int" />
+          <Property Name="regulationStd_txt" Type="varchar" MaxLength="64" />
+          <Property Name="iDemand1" Type="numeric" Precision="8" Scale="2" />
+          <Property Name="iActual1" Type="numeric" Precision="8" Scale="2" />
+          <Property Name="regulation1" Type="int" />
+          <Property Name="regulation1_txt" Type="varchar" MaxLength="64" />
+          <Property Name="iDemand2" Type="numeric" Precision="8" Scale="2" />
+          <Property Name="iActual2" Type="numeric" Precision="8" Scale="2" />
+          <Property Name="regulation2" Type="int" />
+          <Property Name="regulation2_txt" Type="varchar" MaxLength="64" />
+          <Property Name="iDemand3" Type="numeric" Precision="8" Scale="2" />
+          <Property Name="iActual3" Type="numeric" Precision="8" Scale="2" />
+          <Property Name="regulation3" Type="int" />
+          <Property Name="regulation3_txt" Type="varchar" MaxLength="64" />
+          <Property Name="phaStd" Type="numeric" Precision="8" Scale="2" />
+          <Property Name="pha1" Type="numeric" Precision="8" Scale="2" />
+          <Property Name="pha2" Type="numeric" Precision="8" Scale="2" />
+          <Property Name="pha3" Type="numeric" Precision="8" Scale="2" />
+          <Property Name="t_iDemandStd" Type="numeric" Precision="8" Scale="2" />
+          <Property Name="tActualStd" Type="numeric" Precision="8" Scale="2" />
+          <Property Name="partIdentString" Type="varchar" MaxLength="16" />
+          <Property Name="tipDressCounter" Type="int" />
+          <Property Name="electrodeNo" Type="int" />
+          <Property Name="voltageActualValue" Type="numeric" Precision="8" Scale="2" />
+          <Property Name="voltageRefValue" Type="numeric" Precision="8" Scale="2" />
+          <Property Name="currentActualValue" Type="numeric" Precision="8" Scale="2" />
+          <Property Name="currentReferenceValue" Type="numeric" Precision="8" Scale="2" />
+          <Property Name="weldTimeActualValue" Type="int" />
+          <Property Name="weldTimeRefValue" Type="int" />
+          <Property Name="energyActualValue" Type="real" />
+          <Property Name="energyRefValue" Type="real" />
+          <Property Name="powerActualValue" Type="real" />
+          <Property Name="powerRefValue" Type="real" />
+          <Property Name="resistanceActualValue" Type="int" />
+          <Property Name="resistanceRefValue" Type="int" />
+          <Property Name="pulseWidthActualValue" Type="numeric" Precision="8" Scale="2" />
+          <Property Name="pulseWidthRefValue" Type="numeric" Precision="8" Scale="2" />
+          <Property Name="stabilisationFactorActValue" Type="numeric" Precision="8" Scale="2" />
+          <Property Name="stabilisationFactorRefValue" Type="numeric" Precision="8" Scale="2" />
+          <Property Name="thresholdStabilisationFactor" Type="numeric" Precision="8" Scale="2" />
+          <Property Name="wldEffectStabilisationFactor" Type="numeric" Precision="8" Scale="2" />
+          <Property Name="uipActualValue" Type="int" />
+          <Property Name="uipRefValue" Type="int" />
+          <Property Name="uirExpulsionTime" Type="int" />
+          <Property Name="uirMeasuringActive" Type="int" />
+          <Property Name="uirMeasuringActive_txt" Type="varchar" MaxLength="64" />
+          <Property Name="uirRegulationActive" Type="int" />
+          <Property Name="uirRegulationActive_txt" Type="varchar" MaxLength="64" />
+          <Property Name="uirMonitoringActive" Type="int" />
+          <Property Name="uirMonitoringActive_txt" Type="varchar" MaxLength="64" />
+          <Property Name="uirWeldTimeProlongationActive" Type="int" />
+          <Property Name="uirWeldTimeProlongActive_txt" Type="varchar" MaxLength="64" />
+          <Property Name="uirQStoppRefCntValue" Type="int" />
+          <Property Name="uirQStoppActCntValue" Type="int" />
+          <Property Name="uirUipUpperTol" Type="numeric" Precision="8" Scale="2" />
+          <Property Name="uirUipLowerTol" Type="numeric" Precision="8" Scale="2" />
+          <Property Name="uirUipCondTol" Type="numeric" Precision="8" Scale="2" />
+          <Property Name="uirPsfLowerTol" Type="numeric" Precision="8" Scale="2" />
+          <Property Name="uirPsfCondTol" Type="numeric" Precision="8" Scale="2" />
+        </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'GADATA.dbo.WeldtimeSpotsSetup' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="WeldtimeSpotsSetup">
@@ -116,12 +615,11 @@ warning 6002: The table/view 'GADATA.LAUNCH.CheckDubbelPrograms' does not have a
 warning 6002: The table/view 'GADATA.LAUNCH.ComparePitchV316' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="ComparePitchV316">
           <Key>
-            <PropertyRef Name="ID" />
+            <PropertyRef Name="id" />
             <PropertyRef Name="timerNumber" />
             <PropertyRef Name="lastWeldTime" />
-            <PropertyRef Name="Expr2" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="id" Type="int" Nullable="false" />
           <Property Name="timerNumber" Type="varchar" MaxLength="17" Nullable="false" />
           <Property Name="lastWeldTime" Type="varchar" MaxLength="23" Nullable="false" />
           <Property Name="SpotID" Type="nchar" MaxLength="25" />
@@ -131,7 +629,6 @@ warning 6002: The table/view 'GADATA.LAUNCH.ComparePitchV316' does not have a pr
           <Property Name="lastULControleTime" Type="datetime" />
           <Property Name="TotalThickness" Type="float" />
           <Property Name="Expr1" Type="nchar" MaxLength="255" />
-          <Property Name="Expr2" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'GADATA.LAUNCH.DoubleSpotCheck' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -300,6 +797,54 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
           <Property Name="BreakdownTime" Type="int" />
           <Property Name="id" Type="int" Nullable="false" />
         </EntityType>
+        <Association Name="blanco_picture_fk">
+          <End Role="picture" Type="Self.picture" Multiplicity="1" />
+          <End Role="blanco" Type="Self.blanco" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="picture">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="blanco">
+              <PropertyRef Name="Picture_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="blanco_pictures_fk">
+          <End Role="picture" Type="Self.picture" Multiplicity="1" />
+          <End Role="blanco" Type="Self.blanco" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="picture">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="blanco">
+              <PropertyRef Name="Picture_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="blanco_type_fk">
+          <End Role="type" Type="Self.type" Multiplicity="1" />
+          <End Role="blanco" Type="Self.blanco" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="type">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="blanco">
+              <PropertyRef Name="Type_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="blanco_types_fk">
+          <End Role="type" Type="Self.type" Multiplicity="1" />
+          <End Role="blanco" Type="Self.blanco" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="type">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="blanco">
+              <PropertyRef Name="Type_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__ToDoList___TodoI__32F76870">
           <End Role="ToDoList" Type="Self.ToDoList" Multiplicity="1" />
           <End Role="ToDoList_Remark" Type="Self.ToDoList_Remark" Multiplicity="*" />
@@ -312,9 +857,312 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_L_operation_Timer">
+          <End Role="Timer" Type="Self.Timer" Multiplicity="0..1" />
+          <End Role="L_operation" Type="Self.L_operation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Timer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="L_operation">
+              <PropertyRef Name="controller_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rt_active_info_Timer">
+          <End Role="Timer" Type="Self.Timer" Multiplicity="0..1" />
+          <End Role="rt_active_info" Type="Self.rt_active_info" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Timer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="rt_active_info">
+              <PropertyRef Name="timerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rt_alarm_Timer">
+          <End Role="Timer" Type="Self.Timer" Multiplicity="0..1" />
+          <End Role="rt_alarm" Type="Self.rt_alarm" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Timer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="rt_alarm">
+              <PropertyRef Name="timerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rt_communication_state_Timer">
+          <End Role="Timer" Type="Self.Timer" Multiplicity="0..1" />
+          <End Role="rt_communication_state" Type="Self.rt_communication_state" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Timer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="rt_communication_state">
+              <PropertyRef Name="timerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rt_job_breakdown_rt_alarm">
+          <End Role="rt_alarm" Type="Self.rt_alarm" Multiplicity="0..1" />
+          <End Role="rt_job_breakdown" Type="Self.rt_job_breakdown" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="rt_alarm">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="rt_job_breakdown">
+              <PropertyRef Name="rt_alarm_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rt_job_breakdown_rt_job">
+          <End Role="rt_job" Type="Self.rt_job" Multiplicity="0..1" />
+          <End Role="rt_job_breakdown" Type="Self.rt_job_breakdown" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="rt_job">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="rt_job_breakdown">
+              <PropertyRef Name="rt_job_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rt_job_Timer">
+          <End Role="Timer" Type="Self.Timer" Multiplicity="0..1" />
+          <End Role="rt_job" Type="Self.rt_job" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Timer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="rt_job">
+              <PropertyRef Name="timerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rt_job_Timer1">
+          <End Role="Timer" Type="Self.Timer" Multiplicity="0..1" />
+          <End Role="rt_job" Type="Self.rt_job" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Timer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="rt_job">
+              <PropertyRef Name="timerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rt_weldfault_Timer">
+          <End Role="Timer" Type="Self.Timer" Multiplicity="0..1" />
+          <End Role="rt_weldfault" Type="Self.rt_weldfault" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Timer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="rt_weldfault">
+              <PropertyRef Name="timerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rt_weldmeasureprotddw_Timer">
+          <End Role="Timer" Type="Self.Timer" Multiplicity="0..1" />
+          <End Role="rt_weldmeasureprotddw" Type="Self.rt_weldmeasureprotddw" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Timer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="rt_weldmeasureprotddw">
+              <PropertyRef Name="timerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Timer_NPT">
+          <End Role="NPT" Type="Self.NPT" Multiplicity="0..1" />
+          <End Role="Timer" Type="Self.Timer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NPT">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Timer">
+              <PropertyRef Name="NptId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="picture_picturename_fk">
+          <End Role="picturename" Type="Self.picturename" Multiplicity="1" />
+          <End Role="picture" Type="Self.picture" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="picturename">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="picture">
+              <PropertyRef Name="picturename_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="picture_picturenames_fk">
+          <End Role="picturename" Type="Self.picturename" Multiplicity="1" />
+          <End Role="picture" Type="Self.picture" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="picturename">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="picture">
+              <PropertyRef Name="picturename_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="teardown_comment_fk">
+          <End Role="comment" Type="Self.comment" Multiplicity="1" />
+          <End Role="teardown" Type="Self.teardown" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="comment">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="teardown">
+              <PropertyRef Name="comment_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="teardown_comments_fk">
+          <End Role="comment" Type="Self.comment" Multiplicity="1" />
+          <End Role="teardown" Type="Self.teardown" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="comment">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="teardown">
+              <PropertyRef Name="comment_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="teardown_foutcode_fk">
+          <End Role="foutcode" Type="Self.foutcode" Multiplicity="1" />
+          <End Role="teardown" Type="Self.teardown" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="foutcode">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="teardown">
+              <PropertyRef Name="foutcode_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="teardown_foutcodes_fk">
+          <End Role="foutcode" Type="Self.foutcode" Multiplicity="1" />
+          <End Role="teardown" Type="Self.teardown" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="foutcode">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="teardown">
+              <PropertyRef Name="foutcode_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="teardown_picture_fk">
+          <End Role="picture" Type="Self.picture" Multiplicity="1" />
+          <End Role="teardown" Type="Self.teardown" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="picture">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="teardown">
+              <PropertyRef Name="picture_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="teardown_pictures_fk">
+          <End Role="picture" Type="Self.picture" Multiplicity="1" />
+          <End Role="teardown" Type="Self.teardown" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="picture">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="teardown">
+              <PropertyRef Name="picture_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="teardown_result_fk">
+          <End Role="result" Type="Self.result" Multiplicity="1" />
+          <End Role="teardown" Type="Self.teardown" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="result">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="teardown">
+              <PropertyRef Name="result_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="teardown_results_fk">
+          <End Role="result" Type="Self.result" Multiplicity="1" />
+          <End Role="teardown" Type="Self.teardown" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="result">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="teardown">
+              <PropertyRef Name="result_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="teardown_type_fk">
+          <End Role="type" Type="Self.type" Multiplicity="1" />
+          <End Role="teardown" Type="Self.teardown" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="type">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="teardown">
+              <PropertyRef Name="type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="teardown_types_fk">
+          <End Role="type" Type="Self.type" Multiplicity="1" />
+          <End Role="teardown" Type="Self.teardown" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="type">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="teardown">
+              <PropertyRef Name="type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="GADATAModelWeldingStoreContainer">
+          <EntitySet Name="NPT" EntityType="Self.NPT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Timer" EntityType="Self.Timer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ToDoList" EntityType="Self.ToDoList" Schema="LAUNCH" store:Type="Tables" />
           <EntitySet Name="ToDoList_Remark" EntityType="Self.ToDoList_Remark" Schema="LAUNCH" store:Type="Tables" />
+          <EntitySet Name="blanco" EntityType="Self.blanco" Schema="TDT" store:Type="Tables" />
+          <EntitySet Name="comment" EntityType="Self.comment" Schema="TDT" store:Type="Tables" />
+          <EntitySet Name="foutcode" EntityType="Self.foutcode" Schema="TDT" store:Type="Tables" />
+          <EntitySet Name="picture" EntityType="Self.picture" Schema="TDT" store:Type="Tables" />
+          <EntitySet Name="picturename" EntityType="Self.picturename" Schema="TDT" store:Type="Tables" />
+          <EntitySet Name="result" EntityType="Self.result" Schema="TDT" store:Type="Tables" />
+          <EntitySet Name="teardown" EntityType="Self.teardown" Schema="TDT" store:Type="Tables" />
+          <EntitySet Name="TeardownResults" EntityType="Self.TeardownResults" Schema="TDT" store:Type="Tables" />
+          <EntitySet Name="type" EntityType="Self.type" Schema="TDT" store:Type="Tables" />
+          <EntitySet Name="c_error" EntityType="Self.c_error" Schema="WELDING2" store:Type="Tables" />
+          <EntitySet Name="h_Midair" EntityType="Self.h_Midair" Schema="WELDING2" store:Type="Tables" />
+          <EntitySet Name="h_weldmeasure" EntityType="Self.h_weldmeasure" Schema="WELDING2" store:Type="Tables" />
+          <EntitySet Name="L_operation" EntityType="Self.L_operation" Schema="WELDING2" store:Type="Tables" />
+          <EntitySet Name="rt_active_info" EntityType="Self.rt_active_info" Schema="WELDING2" store:Type="Tables" />
+          <EntitySet Name="rt_alarm" EntityType="Self.rt_alarm" Schema="WELDING2" store:Type="Tables" />
+          <EntitySet Name="rt_comment" EntityType="Self.rt_comment" Schema="WELDING2" store:Type="Tables" />
+          <EntitySet Name="rt_communication_state" EntityType="Self.rt_communication_state" Schema="WELDING2" store:Type="Tables" />
+          <EntitySet Name="rt_datachangeprot" EntityType="Self.rt_datachangeprot" Schema="WELDING2" store:Type="Tables" />
+          <EntitySet Name="rt_job" EntityType="Self.rt_job" Schema="WELDING2" store:Type="Tables" />
+          <EntitySet Name="rt_job_breakdown" EntityType="Self.rt_job_breakdown" Schema="WELDING2" store:Type="Tables" />
+          <EntitySet Name="rt_job_expulsion" EntityType="Self.rt_job_expulsion" Schema="WELDING2" store:Type="Tables" />
+          <EntitySet Name="rt_spot" EntityType="Self.rt_spot" Schema="WELDING2" store:Type="Tables" />
+          <EntitySet Name="rt_weldfault" EntityType="Self.rt_weldfault" Schema="WELDING2" store:Type="Tables" />
+          <EntitySet Name="rt_weldmeasureprotddw" EntityType="Self.rt_weldmeasureprotddw" Schema="WELDING2" store:Type="Tables" />
           <EntitySet Name="test" EntityType="Self.test" store:Type="Tables" store:Schema="TDT">
             <DefiningQuery>SELECT 
     [test].[ID] AS [ID], 
@@ -359,6 +1207,25 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
     [rt_ExtraControles].[NPT] AS [NPT]
     FROM [UL].[rt_ExtraControles] AS [rt_ExtraControles]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="h_Nut_Bolt_Measure" EntityType="Self.h_Nut_Bolt_Measure" store:Type="Tables" store:Schema="WELDING2">
+            <DefiningQuery>SELECT 
+    [h_Nut_Bolt_Measure].[ID] AS [ID], 
+    [h_Nut_Bolt_Measure].[Timestamp] AS [Timestamp], 
+    [h_Nut_Bolt_Measure].[SpotID] AS [SpotID], 
+    [h_Nut_Bolt_Measure].[wear] AS [wear], 
+    [h_Nut_Bolt_Measure].[I_demand] AS [I_demand], 
+    [h_Nut_Bolt_Measure].[I_Actual] AS [I_Actual], 
+    [h_Nut_Bolt_Measure].[regulation] AS [regulation], 
+    [h_Nut_Bolt_Measure].[BodyNr] AS [BodyNr], 
+    [h_Nut_Bolt_Measure].[ElectrodeNr] AS [ElectrodeNr], 
+    [h_Nut_Bolt_Measure].[Weldtime] AS [Weldtime], 
+    [h_Nut_Bolt_Measure].[EnergyActual] AS [EnergyActual], 
+    [h_Nut_Bolt_Measure].[EnergyRef] AS [EnergyRef], 
+    [h_Nut_Bolt_Measure].[ResistanceActual] AS [ResistanceActual], 
+    [h_Nut_Bolt_Measure].[ResistanceRef] AS [ResistanceRef], 
+    [h_Nut_Bolt_Measure].[ExpulsionTime] AS [ExpulsionTime]
+    FROM [WELDING2].[h_Nut_Bolt_Measure] AS [h_Nut_Bolt_Measure]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="WeldtimeSpotsSetup" EntityType="Self.WeldtimeSpotsSetup" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [WeldtimeSpotsSetup].[NPT] AS [NPT], 
@@ -384,7 +1251,7 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
           </EntitySet>
           <EntitySet Name="ComparePitchV316" EntityType="Self.ComparePitchV316" store:Type="Views" store:Schema="LAUNCH">
             <DefiningQuery>SELECT 
-    [ComparePitchV316].[ID] AS [ID], 
+    [ComparePitchV316].[id] AS [id], 
     [ComparePitchV316].[timerNumber] AS [timerNumber], 
     [ComparePitchV316].[lastWeldTime] AS [lastWeldTime], 
     [ComparePitchV316].[SpotID] AS [SpotID], 
@@ -393,8 +1260,7 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
     [ComparePitchV316].[Model] AS [Model], 
     [ComparePitchV316].[lastULControleTime] AS [lastULControleTime], 
     [ComparePitchV316].[TotalThickness] AS [TotalThickness], 
-    [ComparePitchV316].[Expr1] AS [Expr1], 
-    [ComparePitchV316].[Expr2] AS [Expr2]
+    [ComparePitchV316].[Expr1] AS [Expr1]
     FROM [LAUNCH].[ComparePitchV316] AS [ComparePitchV316]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="DoubleSpotCheck" EntityType="Self.DoubleSpotCheck" store:Type="Views" store:Schema="LAUNCH">
@@ -527,9 +1393,117 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
     [TimerBreakdowns_busy].[id] AS [id]
     FROM [WELDING2].[TimerBreakdowns_busy] AS [TimerBreakdowns_busy]</DefiningQuery>
           </EntitySet>
+          <AssociationSet Name="blanco_picture_fk" Association="Self.blanco_picture_fk">
+            <End Role="picture" EntitySet="picture" />
+            <End Role="blanco" EntitySet="blanco" />
+          </AssociationSet>
+          <AssociationSet Name="blanco_pictures_fk" Association="Self.blanco_pictures_fk">
+            <End Role="picture" EntitySet="picture" />
+            <End Role="blanco" EntitySet="blanco" />
+          </AssociationSet>
+          <AssociationSet Name="blanco_type_fk" Association="Self.blanco_type_fk">
+            <End Role="type" EntitySet="type" />
+            <End Role="blanco" EntitySet="blanco" />
+          </AssociationSet>
+          <AssociationSet Name="blanco_types_fk" Association="Self.blanco_types_fk">
+            <End Role="type" EntitySet="type" />
+            <End Role="blanco" EntitySet="blanco" />
+          </AssociationSet>
           <AssociationSet Name="FK__ToDoList___TodoI__32F76870" Association="Self.FK__ToDoList___TodoI__32F76870">
             <End Role="ToDoList" EntitySet="ToDoList" />
             <End Role="ToDoList_Remark" EntitySet="ToDoList_Remark" />
+          </AssociationSet>
+          <AssociationSet Name="FK_L_operation_Timer" Association="Self.FK_L_operation_Timer">
+            <End Role="Timer" EntitySet="Timer" />
+            <End Role="L_operation" EntitySet="L_operation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rt_active_info_Timer" Association="Self.FK_rt_active_info_Timer">
+            <End Role="Timer" EntitySet="Timer" />
+            <End Role="rt_active_info" EntitySet="rt_active_info" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rt_alarm_Timer" Association="Self.FK_rt_alarm_Timer">
+            <End Role="Timer" EntitySet="Timer" />
+            <End Role="rt_alarm" EntitySet="rt_alarm" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rt_communication_state_Timer" Association="Self.FK_rt_communication_state_Timer">
+            <End Role="Timer" EntitySet="Timer" />
+            <End Role="rt_communication_state" EntitySet="rt_communication_state" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rt_job_breakdown_rt_alarm" Association="Self.FK_rt_job_breakdown_rt_alarm">
+            <End Role="rt_alarm" EntitySet="rt_alarm" />
+            <End Role="rt_job_breakdown" EntitySet="rt_job_breakdown" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rt_job_breakdown_rt_job" Association="Self.FK_rt_job_breakdown_rt_job">
+            <End Role="rt_job" EntitySet="rt_job" />
+            <End Role="rt_job_breakdown" EntitySet="rt_job_breakdown" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rt_job_Timer" Association="Self.FK_rt_job_Timer">
+            <End Role="Timer" EntitySet="Timer" />
+            <End Role="rt_job" EntitySet="rt_job" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rt_job_Timer1" Association="Self.FK_rt_job_Timer1">
+            <End Role="Timer" EntitySet="Timer" />
+            <End Role="rt_job" EntitySet="rt_job" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rt_weldfault_Timer" Association="Self.FK_rt_weldfault_Timer">
+            <End Role="Timer" EntitySet="Timer" />
+            <End Role="rt_weldfault" EntitySet="rt_weldfault" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rt_weldmeasureprotddw_Timer" Association="Self.FK_rt_weldmeasureprotddw_Timer">
+            <End Role="Timer" EntitySet="Timer" />
+            <End Role="rt_weldmeasureprotddw" EntitySet="rt_weldmeasureprotddw" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Timer_NPT" Association="Self.FK_Timer_NPT">
+            <End Role="NPT" EntitySet="NPT" />
+            <End Role="Timer" EntitySet="Timer" />
+          </AssociationSet>
+          <AssociationSet Name="picture_picturename_fk" Association="Self.picture_picturename_fk">
+            <End Role="picturename" EntitySet="picturename" />
+            <End Role="picture" EntitySet="picture" />
+          </AssociationSet>
+          <AssociationSet Name="picture_picturenames_fk" Association="Self.picture_picturenames_fk">
+            <End Role="picturename" EntitySet="picturename" />
+            <End Role="picture" EntitySet="picture" />
+          </AssociationSet>
+          <AssociationSet Name="teardown_comment_fk" Association="Self.teardown_comment_fk">
+            <End Role="comment" EntitySet="comment" />
+            <End Role="teardown" EntitySet="teardown" />
+          </AssociationSet>
+          <AssociationSet Name="teardown_comments_fk" Association="Self.teardown_comments_fk">
+            <End Role="comment" EntitySet="comment" />
+            <End Role="teardown" EntitySet="teardown" />
+          </AssociationSet>
+          <AssociationSet Name="teardown_foutcode_fk" Association="Self.teardown_foutcode_fk">
+            <End Role="foutcode" EntitySet="foutcode" />
+            <End Role="teardown" EntitySet="teardown" />
+          </AssociationSet>
+          <AssociationSet Name="teardown_foutcodes_fk" Association="Self.teardown_foutcodes_fk">
+            <End Role="foutcode" EntitySet="foutcode" />
+            <End Role="teardown" EntitySet="teardown" />
+          </AssociationSet>
+          <AssociationSet Name="teardown_picture_fk" Association="Self.teardown_picture_fk">
+            <End Role="picture" EntitySet="picture" />
+            <End Role="teardown" EntitySet="teardown" />
+          </AssociationSet>
+          <AssociationSet Name="teardown_pictures_fk" Association="Self.teardown_pictures_fk">
+            <End Role="picture" EntitySet="picture" />
+            <End Role="teardown" EntitySet="teardown" />
+          </AssociationSet>
+          <AssociationSet Name="teardown_result_fk" Association="Self.teardown_result_fk">
+            <End Role="result" EntitySet="result" />
+            <End Role="teardown" EntitySet="teardown" />
+          </AssociationSet>
+          <AssociationSet Name="teardown_results_fk" Association="Self.teardown_results_fk">
+            <End Role="result" EntitySet="result" />
+            <End Role="teardown" EntitySet="teardown" />
+          </AssociationSet>
+          <AssociationSet Name="teardown_type_fk" Association="Self.teardown_type_fk">
+            <End Role="type" EntitySet="type" />
+            <End Role="teardown" EntitySet="teardown" />
+          </AssociationSet>
+          <AssociationSet Name="teardown_types_fk" Association="Self.teardown_types_fk">
+            <End Role="type" EntitySet="type" />
+            <End Role="teardown" EntitySet="teardown" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -555,7 +1529,6 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
           <EntitySet Name="QISViewer" EntityType="GADATAModelWelding.QISViewer" />
           <EntitySet Name="TimerBreakdowns_busy" EntityType="GADATAModelWelding.TimerBreakdowns_busy" />
           <EntitySet Name="TimerBreakdownDatachange" EntityType="GADATAModelWelding.TimerBreakdownDatachange" />
-          <EntitySet Name="ComparePitchV316" EntityType="GADATAModelWelding.ComparePitchV316" />
           <EntitySet Name="TDTResults" EntityType="GADATAModelWelding.TDTResults" />
           <EntitySet Name="ToDoList" EntityType="GADATAModelWelding.ToDoList" />
           <EntitySet Name="ToDoList_Remark" EntityType="GADATAModelWelding.ToDoList_Remark" />
@@ -564,7 +1537,144 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
             <End Role="ToDoList_Remark" EntitySet="ToDoList_Remark" />
           </AssociationSet>
           <EntitySet Name="test" EntityType="GADATAModelWelding.test" />
-        </EntityContainer>
+          <EntitySet Name="blanco" EntityType="GADATAModelWelding.blanco" />
+          <EntitySet Name="comment" EntityType="GADATAModelWelding.comment" />
+          <EntitySet Name="foutcode" EntityType="GADATAModelWelding.foutcode" />
+          <EntitySet Name="picture" EntityType="GADATAModelWelding.picture" />
+          <EntitySet Name="picturename" EntityType="GADATAModelWelding.picturename" />
+          <EntitySet Name="result" EntityType="GADATAModelWelding.result" />
+          <EntitySet Name="teardown" EntityType="GADATAModelWelding.teardown" />
+          <EntitySet Name="TeardownResults" EntityType="GADATAModelWelding.TeardownResults" />
+          <EntitySet Name="type" EntityType="GADATAModelWelding.type" />
+          <AssociationSet Name="blanco_picture_fk" Association="GADATAModelWelding.blanco_picture_fk">
+            <End Role="picture" EntitySet="picture" />
+            <End Role="blanco" EntitySet="blanco" />
+          </AssociationSet>
+          <AssociationSet Name="blanco_pictures_fk" Association="GADATAModelWelding.blanco_pictures_fk">
+            <End Role="picture" EntitySet="picture" />
+            <End Role="blanco" EntitySet="blanco" />
+          </AssociationSet>
+          <AssociationSet Name="blanco_type_fk" Association="GADATAModelWelding.blanco_type_fk">
+            <End Role="type" EntitySet="type" />
+            <End Role="blanco" EntitySet="blanco" />
+          </AssociationSet>
+          <AssociationSet Name="blanco_types_fk" Association="GADATAModelWelding.blanco_types_fk">
+            <End Role="type" EntitySet="type" />
+            <End Role="blanco" EntitySet="blanco" />
+          </AssociationSet>
+          <AssociationSet Name="teardown_comment_fk" Association="GADATAModelWelding.teardown_comment_fk">
+            <End Role="comment" EntitySet="comment" />
+            <End Role="teardown" EntitySet="teardown" />
+          </AssociationSet>
+          <AssociationSet Name="teardown_comments_fk" Association="GADATAModelWelding.teardown_comments_fk">
+            <End Role="comment" EntitySet="comment" />
+            <End Role="teardown" EntitySet="teardown" />
+          </AssociationSet>
+          <AssociationSet Name="teardown_foutcode_fk" Association="GADATAModelWelding.teardown_foutcode_fk">
+            <End Role="foutcode" EntitySet="foutcode" />
+            <End Role="teardown" EntitySet="teardown" />
+          </AssociationSet>
+          <AssociationSet Name="teardown_foutcodes_fk" Association="GADATAModelWelding.teardown_foutcodes_fk">
+            <End Role="foutcode" EntitySet="foutcode" />
+            <End Role="teardown" EntitySet="teardown" />
+          </AssociationSet>
+          <AssociationSet Name="picture_picturename_fk" Association="GADATAModelWelding.picture_picturename_fk">
+            <End Role="picturename" EntitySet="picturename" />
+            <End Role="picture" EntitySet="picture" />
+          </AssociationSet>
+          <AssociationSet Name="picture_picturenames_fk" Association="GADATAModelWelding.picture_picturenames_fk">
+            <End Role="picturename" EntitySet="picturename" />
+            <End Role="picture" EntitySet="picture" />
+          </AssociationSet>
+          <AssociationSet Name="teardown_picture_fk" Association="GADATAModelWelding.teardown_picture_fk">
+            <End Role="picture" EntitySet="picture" />
+            <End Role="teardown" EntitySet="teardown" />
+          </AssociationSet>
+          <AssociationSet Name="teardown_pictures_fk" Association="GADATAModelWelding.teardown_pictures_fk">
+            <End Role="picture" EntitySet="picture" />
+            <End Role="teardown" EntitySet="teardown" />
+          </AssociationSet>
+          <AssociationSet Name="teardown_result_fk" Association="GADATAModelWelding.teardown_result_fk">
+            <End Role="result" EntitySet="result" />
+            <End Role="teardown" EntitySet="teardown" />
+          </AssociationSet>
+          <AssociationSet Name="teardown_results_fk" Association="GADATAModelWelding.teardown_results_fk">
+            <End Role="result" EntitySet="result" />
+            <End Role="teardown" EntitySet="teardown" />
+          </AssociationSet>
+          <AssociationSet Name="teardown_type_fk" Association="GADATAModelWelding.teardown_type_fk">
+            <End Role="type" EntitySet="type" />
+            <End Role="teardown" EntitySet="teardown" />
+          </AssociationSet>
+          <AssociationSet Name="teardown_types_fk" Association="GADATAModelWelding.teardown_types_fk">
+            <End Role="type" EntitySet="type" />
+            <End Role="teardown" EntitySet="teardown" />
+          </AssociationSet>
+          <EntitySet Name="ComparePitchV316" EntityType="GADATAModelWelding.ComparePitchV316" />
+          <EntitySet Name="c_error" EntityType="GADATAModelWelding.c_error" />
+          <EntitySet Name="h_Midair" EntityType="GADATAModelWelding.h_Midair" />
+          <EntitySet Name="h_weldmeasure" EntityType="GADATAModelWelding.h_weldmeasure" />
+          <EntitySet Name="L_operation" EntityType="GADATAModelWelding.L_operation" />
+          <EntitySet Name="rt_active_info" EntityType="GADATAModelWelding.rt_active_info" />
+          <EntitySet Name="rt_alarm" EntityType="GADATAModelWelding.rt_alarm" />
+          <EntitySet Name="rt_comment" EntityType="GADATAModelWelding.rt_comment" />
+          <EntitySet Name="rt_communication_state" EntityType="GADATAModelWelding.rt_communication_state" />
+          <EntitySet Name="rt_datachangeprot" EntityType="GADATAModelWelding.rt_datachangeprot" />
+          <EntitySet Name="rt_job" EntityType="GADATAModelWelding.rt_job" />
+          <EntitySet Name="rt_job_breakdown" EntityType="GADATAModelWelding.rt_job_breakdown" />
+          <EntitySet Name="rt_job_expulsion" EntityType="GADATAModelWelding.rt_job_expulsion" />
+          <EntitySet Name="rt_spot" EntityType="GADATAModelWelding.rt_spot" />
+          <EntitySet Name="rt_weldfault" EntityType="GADATAModelWelding.rt_weldfault" />
+          <EntitySet Name="rt_weldmeasureprotddw" EntityType="GADATAModelWelding.rt_weldmeasureprotddw" />
+          <EntitySet Name="h_Nut_Bolt_Measure" EntityType="GADATAModelWelding.h_Nut_Bolt_Measure" />
+          <AssociationSet Name="FK_rt_job_breakdown_rt_alarm" Association="GADATAModelWelding.FK_rt_job_breakdown_rt_alarm">
+            <End Role="rt_alarm" EntitySet="rt_alarm" />
+            <End Role="rt_job_breakdown" EntitySet="rt_job_breakdown" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rt_job_breakdown_rt_job" Association="GADATAModelWelding.FK_rt_job_breakdown_rt_job">
+            <End Role="rt_job" EntitySet="rt_job" />
+            <End Role="rt_job_breakdown" EntitySet="rt_job_breakdown" />
+          </AssociationSet>
+          <EntitySet Name="NPT" EntityType="GADATAModelWelding.NPT" />
+          <EntitySet Name="Timer" EntityType="GADATAModelWelding.Timer" />
+          <EntitySet Name="Users" EntityType="GADATAModelWelding.Users" />
+          <AssociationSet Name="FK_Timer_NPT" Association="GADATAModelWelding.FK_Timer_NPT">
+            <End Role="NPT" EntitySet="NPT" />
+            <End Role="Timer" EntitySet="Timer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_L_operation_Timer" Association="GADATAModelWelding.FK_L_operation_Timer">
+            <End Role="Timer" EntitySet="Timer" />
+            <End Role="L_operation" EntitySet="L_operation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rt_active_info_Timer" Association="GADATAModelWelding.FK_rt_active_info_Timer">
+            <End Role="Timer" EntitySet="Timer" />
+            <End Role="rt_active_info" EntitySet="rt_active_info" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rt_alarm_Timer" Association="GADATAModelWelding.FK_rt_alarm_Timer">
+            <End Role="Timer" EntitySet="Timer" />
+            <End Role="rt_alarm" EntitySet="rt_alarm" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rt_communication_state_Timer" Association="GADATAModelWelding.FK_rt_communication_state_Timer">
+            <End Role="Timer" EntitySet="Timer" />
+            <End Role="rt_communication_state" EntitySet="rt_communication_state" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rt_job_Timer" Association="GADATAModelWelding.FK_rt_job_Timer">
+            <End Role="Timer" EntitySet="Timer" />
+            <End Role="rt_job" EntitySet="rt_job" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rt_job_Timer1" Association="GADATAModelWelding.FK_rt_job_Timer1">
+            <End Role="Timer" EntitySet="Timer" />
+            <End Role="rt_job" EntitySet="rt_job" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rt_weldfault_Timer" Association="GADATAModelWelding.FK_rt_weldfault_Timer">
+            <End Role="Timer" EntitySet="Timer" />
+            <End Role="rt_weldfault" EntitySet="rt_weldfault" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rt_weldmeasureprotddw_Timer" Association="GADATAModelWelding.FK_rt_weldmeasureprotddw_Timer">
+            <End Role="Timer" EntitySet="Timer" />
+            <End Role="rt_weldmeasureprotddw" EntitySet="rt_weldmeasureprotddw" />
+          </AssociationSet>
+          </EntityContainer>
         <EntityType Name="rt_AutoWorkFlowULPlans">
           <Key>
             <PropertyRef Name="ID" />
@@ -778,25 +1888,6 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
           <Property Name="WMComment" Type="String" MaxLength="255" FixedLength="true" Unicode="true" />
           <Property Name="TimerFault" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
         </EntityType>
-        <EntityType Name="ComparePitchV316">
-          <Key>
-            <PropertyRef Name="ID" />
-            <PropertyRef Name="timerNumber" />
-            <PropertyRef Name="lastWeldTime" />
-            <PropertyRef Name="Expr2" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" />
-          <Property Name="timerNumber" Type="String" Nullable="false" MaxLength="17" FixedLength="false" Unicode="false" />
-          <Property Name="lastWeldTime" Type="String" Nullable="false" MaxLength="23" FixedLength="false" Unicode="false" />
-          <Property Name="SpotID" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
-          <Property Name="Timer" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
-          <Property Name="AlternativeNumber" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
-          <Property Name="Model" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="lastULControleTime" Type="DateTime" Precision="3" />
-          <Property Name="TotalThickness" Type="Double" />
-          <Property Name="Expr1" Type="String" MaxLength="255" FixedLength="true" Unicode="true" />
-          <Property Name="Expr2" Type="Int32" Nullable="false" />
-        </EntityType>
         <EntityType Name="TDTResults">
           <Key>
             <PropertyRef Name="Date" />
@@ -856,7 +1947,899 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
           <Property Name="NomDiameter" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="MeasDiameter" Type="Decimal" Precision="18" Scale="0" />
         </EntityType>
-      </Schema>
+        <EntityType Name="blanco">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="pjvspotid" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="pictureID" Type="Int32" />
+          <Property Name="TDTTypeID" Type="Int32" />
+          <Property Name="FoutcodeID" Type="Int32" />
+          <Property Name="StartComment" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Plates" Type="Int32" Nullable="false" />
+          <Property Name="BodyNbr" Type="Int32" />
+          <Property Name="Nomdiameter" Type="Decimal" Nullable="false" Precision="28" Scale="0" />
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Type_ID" Type="Int32" Nullable="false" />
+          <Property Name="Picture_ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="picture" Relationship="GADATAModelWelding.blanco_picture_fk" FromRole="blanco" ToRole="picture" />
+          <NavigationProperty Name="picture1" Relationship="GADATAModelWelding.blanco_pictures_fk" FromRole="blanco" ToRole="picture" />
+          <NavigationProperty Name="type" Relationship="GADATAModelWelding.blanco_type_fk" FromRole="blanco" ToRole="type" />
+          <NavigationProperty Name="type1" Relationship="GADATAModelWelding.blanco_types_fk" FromRole="blanco" ToRole="type" />
+        </EntityType>
+        <EntityType Name="comment">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="comment1" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="teardown" Relationship="GADATAModelWelding.teardown_comment_fk" FromRole="comment" ToRole="teardown" />
+          <NavigationProperty Name="teardown1" Relationship="GADATAModelWelding.teardown_comments_fk" FromRole="comment" ToRole="teardown" />
+        </EntityType>
+        <EntityType Name="foutcode">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="foutcodenbr" Type="Int32" Nullable="false" />
+          <Property Name="foutcodename" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="teardown" Relationship="GADATAModelWelding.teardown_foutcode_fk" FromRole="foutcode" ToRole="teardown" />
+          <NavigationProperty Name="teardown1" Relationship="GADATAModelWelding.teardown_foutcodes_fk" FromRole="foutcode" ToRole="teardown" />
+        </EntityType>
+        <EntityType Name="picture">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="picturenbr" Type="Int32" Nullable="false" />
+          <Property Name="picturename_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="blanco" Relationship="GADATAModelWelding.blanco_picture_fk" FromRole="picture" ToRole="blanco" />
+          <NavigationProperty Name="blanco1" Relationship="GADATAModelWelding.blanco_pictures_fk" FromRole="picture" ToRole="blanco" />
+          <NavigationProperty Name="picturename" Relationship="GADATAModelWelding.picture_picturename_fk" FromRole="picture" ToRole="picturename" />
+          <NavigationProperty Name="picturename1" Relationship="GADATAModelWelding.picture_picturenames_fk" FromRole="picture" ToRole="picturename" />
+          <NavigationProperty Name="teardown" Relationship="GADATAModelWelding.teardown_picture_fk" FromRole="picture" ToRole="teardown" />
+          <NavigationProperty Name="teardown1" Relationship="GADATAModelWelding.teardown_pictures_fk" FromRole="picture" ToRole="teardown" />
+        </EntityType>
+        <EntityType Name="picturename">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="picturename1" Type="String" Nullable="false" MaxLength="125" FixedLength="false" Unicode="false" />
+          <Property Name="picturepath" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="picture" Relationship="GADATAModelWelding.picture_picturename_fk" FromRole="picturename" ToRole="picture" />
+          <NavigationProperty Name="picture1" Relationship="GADATAModelWelding.picture_picturenames_fk" FromRole="picturename" ToRole="picture" />
+        </EntityType>
+        <EntityType Name="result">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="teardownid" Type="Int32" Nullable="false" />
+          <Property Name="teardownresult" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="teardown" Relationship="GADATAModelWelding.teardown_result_fk" FromRole="result" ToRole="teardown" />
+          <NavigationProperty Name="teardown1" Relationship="GADATAModelWelding.teardown_results_fk" FromRole="result" ToRole="teardown" />
+        </EntityType>
+        <EntityType Name="teardown">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="spotid" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="starttime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="endtime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="measdate" Type="DateTime" Precision="3" />
+          <Property Name="bodynbr" Type="Int32" />
+          <Property Name="comment_id" Type="Int32" Nullable="false" />
+          <Property Name="result_id" Type="Int32" Nullable="false" />
+          <Property Name="foutcode_id" Type="Int32" Nullable="false" />
+          <Property Name="type_id" Type="Int32" Nullable="false" />
+          <Property Name="picture_id" Type="Int32" Nullable="false" />
+          <Property Name="plates" Type="Int32" Nullable="false" />
+          <Property Name="startcomment" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="nomdiameter" Type="Decimal" Nullable="false" Precision="28" Scale="0" />
+          <Property Name="measdiameter" Type="Decimal" Precision="28" Scale="0" />
+          <NavigationProperty Name="comment" Relationship="GADATAModelWelding.teardown_comment_fk" FromRole="teardown" ToRole="comment" />
+          <NavigationProperty Name="comment1" Relationship="GADATAModelWelding.teardown_comments_fk" FromRole="teardown" ToRole="comment" />
+          <NavigationProperty Name="foutcode" Relationship="GADATAModelWelding.teardown_foutcode_fk" FromRole="teardown" ToRole="foutcode" />
+          <NavigationProperty Name="foutcode1" Relationship="GADATAModelWelding.teardown_foutcodes_fk" FromRole="teardown" ToRole="foutcode" />
+          <NavigationProperty Name="picture" Relationship="GADATAModelWelding.teardown_picture_fk" FromRole="teardown" ToRole="picture" />
+          <NavigationProperty Name="picture1" Relationship="GADATAModelWelding.teardown_pictures_fk" FromRole="teardown" ToRole="picture" />
+          <NavigationProperty Name="result" Relationship="GADATAModelWelding.teardown_result_fk" FromRole="teardown" ToRole="result" />
+          <NavigationProperty Name="result1" Relationship="GADATAModelWelding.teardown_results_fk" FromRole="teardown" ToRole="result" />
+          <NavigationProperty Name="type" Relationship="GADATAModelWelding.teardown_type_fk" FromRole="teardown" ToRole="type" />
+          <NavigationProperty Name="type1" Relationship="GADATAModelWelding.teardown_types_fk" FromRole="teardown" ToRole="type" />
+        </EntityType>
+        <EntityType Name="TeardownResults">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Spotid" Type="Int32" Nullable="false" />
+          <Property Name="NuggetDemand" Type="Single" />
+          <Property Name="TearDownNugget" Type="Single" />
+          <Property Name="TeardownStatus" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="TeardownEvalution" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="TDTComment" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="type">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="tdttype" Type="String" Nullable="false" MaxLength="125" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="blanco" Relationship="GADATAModelWelding.blanco_type_fk" FromRole="type" ToRole="blanco" />
+          <NavigationProperty Name="blanco1" Relationship="GADATAModelWelding.blanco_types_fk" FromRole="type" ToRole="blanco" />
+          <NavigationProperty Name="teardown" Relationship="GADATAModelWelding.teardown_type_fk" FromRole="type" ToRole="teardown" />
+          <NavigationProperty Name="teardown1" Relationship="GADATAModelWelding.teardown_types_fk" FromRole="type" ToRole="teardown" />
+        </EntityType>
+        <Association Name="blanco_picture_fk">
+          <End Type="GADATAModelWelding.picture" Role="picture" Multiplicity="1" />
+          <End Type="GADATAModelWelding.blanco" Role="blanco" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="picture">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="blanco">
+              <PropertyRef Name="Picture_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="blanco_pictures_fk">
+          <End Type="GADATAModelWelding.picture" Role="picture" Multiplicity="1" />
+          <End Type="GADATAModelWelding.blanco" Role="blanco" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="picture">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="blanco">
+              <PropertyRef Name="Picture_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="blanco_type_fk">
+          <End Type="GADATAModelWelding.type" Role="type" Multiplicity="1" />
+          <End Type="GADATAModelWelding.blanco" Role="blanco" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="type">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="blanco">
+              <PropertyRef Name="Type_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="blanco_types_fk">
+          <End Type="GADATAModelWelding.type" Role="type" Multiplicity="1" />
+          <End Type="GADATAModelWelding.blanco" Role="blanco" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="type">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="blanco">
+              <PropertyRef Name="Type_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="teardown_comment_fk">
+          <End Type="GADATAModelWelding.comment" Role="comment" Multiplicity="1" />
+          <End Type="GADATAModelWelding.teardown" Role="teardown" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="comment">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="teardown">
+              <PropertyRef Name="comment_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="teardown_comments_fk">
+          <End Type="GADATAModelWelding.comment" Role="comment" Multiplicity="1" />
+          <End Type="GADATAModelWelding.teardown" Role="teardown" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="comment">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="teardown">
+              <PropertyRef Name="comment_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="teardown_foutcode_fk">
+          <End Type="GADATAModelWelding.foutcode" Role="foutcode" Multiplicity="1" />
+          <End Type="GADATAModelWelding.teardown" Role="teardown" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="foutcode">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="teardown">
+              <PropertyRef Name="foutcode_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="teardown_foutcodes_fk">
+          <End Type="GADATAModelWelding.foutcode" Role="foutcode" Multiplicity="1" />
+          <End Type="GADATAModelWelding.teardown" Role="teardown" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="foutcode">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="teardown">
+              <PropertyRef Name="foutcode_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="picture_picturename_fk">
+          <End Type="GADATAModelWelding.picturename" Role="picturename" Multiplicity="1" />
+          <End Type="GADATAModelWelding.picture" Role="picture" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="picturename">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="picture">
+              <PropertyRef Name="picturename_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="picture_picturenames_fk">
+          <End Type="GADATAModelWelding.picturename" Role="picturename" Multiplicity="1" />
+          <End Type="GADATAModelWelding.picture" Role="picture" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="picturename">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="picture">
+              <PropertyRef Name="picturename_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="teardown_picture_fk">
+          <End Type="GADATAModelWelding.picture" Role="picture" Multiplicity="1" />
+          <End Type="GADATAModelWelding.teardown" Role="teardown" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="picture">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="teardown">
+              <PropertyRef Name="picture_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="teardown_pictures_fk">
+          <End Type="GADATAModelWelding.picture" Role="picture" Multiplicity="1" />
+          <End Type="GADATAModelWelding.teardown" Role="teardown" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="picture">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="teardown">
+              <PropertyRef Name="picture_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="teardown_result_fk">
+          <End Type="GADATAModelWelding.result" Role="result" Multiplicity="1" />
+          <End Type="GADATAModelWelding.teardown" Role="teardown" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="result">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="teardown">
+              <PropertyRef Name="result_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="teardown_results_fk">
+          <End Type="GADATAModelWelding.result" Role="result" Multiplicity="1" />
+          <End Type="GADATAModelWelding.teardown" Role="teardown" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="result">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="teardown">
+              <PropertyRef Name="result_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="teardown_type_fk">
+          <End Type="GADATAModelWelding.type" Role="type" Multiplicity="1" />
+          <End Type="GADATAModelWelding.teardown" Role="teardown" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="type">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="teardown">
+              <PropertyRef Name="type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="teardown_types_fk">
+          <End Type="GADATAModelWelding.type" Role="type" Multiplicity="1" />
+          <End Type="GADATAModelWelding.teardown" Role="teardown" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="type">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="teardown">
+              <PropertyRef Name="type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ComparePitchV316">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="timerNumber" />
+            <PropertyRef Name="lastWeldTime" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="timerNumber" Type="String" Nullable="false" MaxLength="17" FixedLength="false" Unicode="false" />
+          <Property Name="lastWeldTime" Type="String" Nullable="false" MaxLength="23" FixedLength="false" Unicode="false" />
+          <Property Name="SpotID" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
+          <Property Name="Timer" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
+          <Property Name="AlternativeNumber" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
+          <Property Name="Model" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="lastULControleTime" Type="DateTime" Precision="3" />
+          <Property Name="TotalThickness" Type="Double" />
+          <Property Name="Expr1" Type="String" MaxLength="255" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="c_error">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="enable_bit" Type="Int32" />
+          <Property Name="ordinal" Type="Int32" />
+          <Property Name="isError" Type="Int32" />
+          <Property Name="errorCode1" Type="Int32" />
+          <Property Name="errorCode1_text" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="errorCode2" Type="Int32" />
+          <Property Name="errorCode2_text" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="C_operator" Type="Int32" />
+          <Property Name="flags" Type="Int32" />
+          <Property Name="UserComment" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="h_Midair">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DateTime" Type="DateTime" Precision="3" />
+          <Property Name="SpotId" Type="Int32" Nullable="false" />
+          <Property Name="ResisActual" Type="Int16" />
+          <Property Name="ResisRef" Type="Int16" />
+          <Property Name="ElectrodeNo" Type="Byte" />
+          <Property Name="EnergyActual" Type="Int16" />
+          <Property Name="WeldTimeActual" Type="Int16" />
+          <Property Name="Iactual2" Type="Single" />
+        </EntityType>
+        <EntityType Name="h_weldmeasure">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="L_timeline_starttime" Type="DateTime" Precision="3" />
+          <Property Name="L_timeline_endtime" Type="DateTime" Precision="3" />
+          <Property Name="L_timeline_id" Type="Int32" />
+          <Property Name="timerId" Type="Int32" />
+          <Property Name="progNo" Type="Int16" />
+          <Property Name="spotId" Type="Int32" />
+          <Property Name="count" Type="Int32" />
+          <Property Name="dt_FirstValue" Type="DateTime" Precision="3" />
+          <Property Name="dt_LastValue" Type="DateTime" Precision="3" />
+          <Property Name="Expulsions" Type="Int32" />
+          <Property Name="Rewelds" Type="Int32" />
+          <Property Name="AVG_uirExpulsionTime" Type="Double" />
+          <Property Name="AVG_voltage" Type="Double" />
+          <Property Name="AVG_current" Type="Double" />
+          <Property Name="AVG_weldtime" Type="Double" />
+          <Property Name="AVG_enegery" Type="Double" />
+          <Property Name="AVG_power" Type="Double" />
+          <Property Name="AVG_resistance" Type="Double" />
+          <Property Name="AVG_pulseWith" Type="Double" />
+          <Property Name="AVG_uip" Type="Double" />
+          <Property Name="AVG_stabilisationFactor" Type="Double" />
+          <Property Name="MIN_uirExpulsionTime" Type="Int32" />
+          <Property Name="MIN_voltage" Type="Double" />
+          <Property Name="MIN_current" Type="Double" />
+          <Property Name="MIN_weldtime" Type="Int32" />
+          <Property Name="MIN_enegery" Type="Double" />
+          <Property Name="MIN_power" Type="Double" />
+          <Property Name="MIN_resistance" Type="Int32" />
+          <Property Name="MIN_pulseWith" Type="Double" />
+          <Property Name="MIN_uip" Type="Int32" />
+          <Property Name="MIN_stabilisationFactor" Type="Double" />
+          <Property Name="MAX_uirExpulsionTime" Type="Int32" />
+          <Property Name="MAX_voltage" Type="Double" />
+          <Property Name="MAX_current" Type="Double" />
+          <Property Name="MAX_weldtime" Type="Int32" />
+          <Property Name="MAX_enegery" Type="Double" />
+          <Property Name="MAX_power" Type="Double" />
+          <Property Name="MAX_resistance" Type="Int32" />
+          <Property Name="MAX_pulseWith" Type="Double" />
+          <Property Name="MAX_uip" Type="Int32" />
+          <Property Name="MAX_stabilisationFactor" Type="Double" />
+          <Property Name="STDEV_uirExpulsionTime" Type="Double" />
+          <Property Name="STDEV_voltage" Type="Double" />
+          <Property Name="STDEV_current" Type="Double" />
+          <Property Name="STDEV_weldtime" Type="Double" />
+          <Property Name="STDEV_enegery" Type="Double" />
+          <Property Name="STDEV_power" Type="Double" />
+          <Property Name="STDEV_resistance" Type="Double" />
+          <Property Name="STDEV_pulseWith" Type="Double" />
+          <Property Name="STDEV_uip" Type="Double" />
+          <Property Name="STDEV_stabilisationFactor" Type="Double" />
+        </EntityType>
+        <EntityType Name="L_operation">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="C_timestamp" Type="DateTime" Precision="3" />
+          <Property Name="code" Type="Int32" />
+          <Property Name="Vwsc_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="controller_id" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Timer" Relationship="GADATAModelWelding.FK_L_operation_Timer" FromRole="L_operation" ToRole="Timer" />
+        </EntityType>
+        <EntityType Name="rt_active_info">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="timerId" Type="Int32" />
+          <Property Name="C_timestamp" Type="DateTime" Precision="3" />
+          <Property Name="online" Type="Boolean" />
+          <Property Name="communicationState" Type="Byte" />
+          <Property Name="errorNumber" Type="Int32" />
+          <Property Name="errorText" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="rt_alarm_id" Type="Int32" />
+          <Property Name="rt_job_id" Type="Int32" />
+          <Property Name="vwsc_state" Type="Int32" />
+          <Property Name="rt_weldfault_id" Type="Int32" />
+          <Property Name="rt_weldmeasureprotddw_id" Type="Int32" />
+          <Property Name="rt_datechangeprot_id" Type="Int32" />
+          <NavigationProperty Name="Timer" Relationship="GADATAModelWelding.FK_rt_active_info_Timer" FromRole="rt_active_info" ToRole="Timer" />
+        </EntityType>
+        <EntityType Name="rt_alarm">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="timerId" Type="Int32" />
+          <Property Name="C_timestamp" Type="DateTime" Precision="3" />
+          <Property Name="protRecord_ID" Type="Int32" />
+          <Property Name="dateTime" Type="DateTime" Precision="3" />
+          <Property Name="errorCode1" Type="Int32" />
+          <Property Name="errorCode1_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="errorCode2" Type="Int32" />
+          <Property Name="errorCode2_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="isError" Type="Boolean" />
+          <Property Name="isError_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="rt_job_breakdown" Relationship="GADATAModelWelding.FK_rt_job_breakdown_rt_alarm" FromRole="rt_alarm" ToRole="rt_job_breakdown" />
+          <NavigationProperty Name="Timer" Relationship="GADATAModelWelding.FK_rt_alarm_Timer" FromRole="rt_alarm" ToRole="Timer" />
+        </EntityType>
+        <EntityType Name="rt_comment">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="C_timestamp" Type="DateTime" Precision="3" />
+          <Property Name="comment" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="rt_communication_state">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="timerId" Type="Int32" />
+          <Property Name="C_timestamp" Type="DateTime" Precision="3" />
+          <Property Name="online" Type="Boolean" />
+          <Property Name="communicationState" Type="Byte" />
+          <NavigationProperty Name="Timer" Relationship="GADATAModelWelding.FK_rt_communication_state_Timer" FromRole="rt_communication_state" ToRole="Timer" />
+        </EntityType>
+        <EntityType Name="rt_datachangeprot">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="timerId" Type="Int32" />
+          <Property Name="C_timestamp" Type="DateTime" Precision="3" />
+          <Property Name="protRecord_ID" Type="Int32" />
+          <Property Name="dateTime" Type="DateTime" Precision="3" />
+          <Property Name="param_ID" Type="Int32" />
+          <Property Name="param_status_txt" Type="String" MaxLength="81" FixedLength="false" Unicode="false" />
+          <Property Name="subIndex" Type="Int32" />
+          <Property Name="oldValue" Type="String" MaxLength="81" FixedLength="false" Unicode="false" />
+          <Property Name="oldValue_txt" Type="String" MaxLength="81" FixedLength="false" Unicode="false" />
+          <Property Name="newValue" Type="String" MaxLength="81" FixedLength="false" Unicode="false" />
+          <Property Name="newValue_txt" Type="String" MaxLength="81" FixedLength="false" Unicode="false" />
+          <Property Name="oldNormValue" Type="String" MaxLength="81" FixedLength="false" Unicode="false" />
+          <Property Name="newNormValue" Type="String" MaxLength="81" FixedLength="false" Unicode="false" />
+          <Property Name="physicalUnitId" Type="Int32" />
+          <Property Name="physicalUnitId_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="computerName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="userName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="comment" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="rt_job">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="C_timestamp" Type="DateTime" Precision="3" />
+          <Property Name="timerId" Type="Int32" />
+          <Property Name="ngac_rt_job_id" Type="Int32" />
+          <Property Name="ts_Start" Type="DateTime" Precision="3" />
+          <Property Name="ts_End" Type="DateTime" Precision="3" />
+          <Property Name="rt_weldmeasureprotddw_id_Start" Type="Int32" />
+          <Property Name="rt_weldmeasureprotddw_id_End" Type="Int32" />
+          <Property Name="rt_weldfaultprot_id_Start" Type="Int32" />
+          <Property Name="rt_weldfaultprot_id_End" Type="Int32" />
+          <Property Name="state" Type="Int32" />
+          <Property Name="rt_expulsion_count" Type="Int32" />
+          <Property Name="rt_weldmeasureprotddw_count" Type="Int32" />
+          <Property Name="rt_weldfaultprot_count" Type="Int32" />
+          <Property Name="rt_breakdown_count" Type="Int32" />
+          <NavigationProperty Name="rt_job_breakdown" Relationship="GADATAModelWelding.FK_rt_job_breakdown_rt_job" FromRole="rt_job" ToRole="rt_job_breakdown" />
+          <NavigationProperty Name="Timer" Relationship="GADATAModelWelding.FK_rt_job_Timer" FromRole="rt_job" ToRole="Timer" />
+          <NavigationProperty Name="Timer1" Relationship="GADATAModelWelding.FK_rt_job_Timer1" FromRole="rt_job" ToRole="Timer" />
+        </EntityType>
+        <EntityType Name="rt_job_breakdown">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="rt_job_id" Type="Int32" />
+          <Property Name="rt_alarm_id" Type="Int32" />
+          <Property Name="ts_breakdownStart" Type="DateTime" Precision="3" />
+          <Property Name="ts_breakdownEnd" Type="DateTime" Precision="3" />
+          <Property Name="index" Type="Int32" />
+          <NavigationProperty Name="rt_alarm" Relationship="GADATAModelWelding.FK_rt_job_breakdown_rt_alarm" FromRole="rt_job_breakdown" ToRole="rt_alarm" />
+          <NavigationProperty Name="rt_job" Relationship="GADATAModelWelding.FK_rt_job_breakdown_rt_job" FromRole="rt_job_breakdown" ToRole="rt_job" />
+        </EntityType>
+        <EntityType Name="rt_job_expulsion">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="rt_job_id" Type="Int32" />
+          <Property Name="C_timestamp" Type="DateTime" Precision="3" />
+          <Property Name="rt_weldmeasureprotddw_id" Type="Int32" />
+        </EntityType>
+        <EntityType Name="rt_spot">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="C_timestamp" Type="DateTime" Precision="3" />
+          <Property Name="timerId" Type="Int32" />
+          <Property Name="spotId" Type="Int32" />
+          <Property Name="spotname" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="pjv_joiningpointdata_id" Type="Int32" />
+          <Property Name="vwscComment" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="Comment1" Type="Int32" />
+          <Property Name="Comment2" Type="Int32" />
+          <Property Name="Comment3" Type="Int32" />
+          <Property Name="weldProgramNo" Type="Int32" />
+          <Property Name="isDead" Type="Int32" />
+        </EntityType>
+        <EntityType Name="rt_weldfault">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="timerId" Type="Int32" />
+          <Property Name="C_timestamp" Type="DateTime" Precision="3" />
+          <Property Name="protRecord_ID" Type="Int32" />
+          <Property Name="dateTime" Type="DateTime" Precision="3" />
+          <Property Name="progNo" Type="Int32" />
+          <Property Name="monitorState" Type="Int32" />
+          <Property Name="monitorState_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="regulationState" Type="Int32" />
+          <Property Name="regulationState_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="measureState" Type="Int32" />
+          <Property Name="measureState_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="weldProgValue" Type="Single" />
+          <Property Name="weldActualValue" Type="Single" />
+          <Property Name="wear" Type="Decimal" Precision="12" Scale="2" />
+          <Property Name="spotId" Type="Int32" />
+          <Property Name="isError" Type="Boolean" />
+          <Property Name="WMComment" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Timer" Relationship="GADATAModelWelding.FK_rt_weldfault_Timer" FromRole="rt_weldfault" ToRole="Timer" />
+        </EntityType>
+        <EntityType Name="rt_weldmeasureprotddw">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="timerId" Type="Int32" />
+          <Property Name="C_timestamp" Type="DateTime" Precision="3" />
+          <Property Name="protRecord_ID" Type="Int32" />
+          <Property Name="dateTime" Type="DateTime" Precision="3" />
+          <Property Name="progNo" Type="Int16" />
+          <Property Name="spotId" Type="Int32" />
+          <Property Name="wear" Type="Decimal" Precision="12" Scale="2" />
+          <Property Name="wearPerCent" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="monitorState" Type="Int32" />
+          <Property Name="monitorState_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="regulationState" Type="Int32" />
+          <Property Name="regulationState_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="measureState" Type="Int32" />
+          <Property Name="measureState_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="powerState" Type="Int32" />
+          <Property Name="powerState_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="sequenceState" Type="Int32" />
+          <Property Name="sequenceState_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="sequenceStateAdd" Type="Int32" />
+          <Property Name="sequenceStateAdd_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="sequenceRepeat" Type="Int32" />
+          <Property Name="sequenceRepeat_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="monitorMode" Type="Int32" />
+          <Property Name="monitorMode_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="iDemandStd" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="ilsts" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="regulationStd" Type="Int32" />
+          <Property Name="regulationStd_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="iDemand1" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="iActual1" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="regulation1" Type="Int32" />
+          <Property Name="regulation1_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="iDemand2" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="iActual2" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="regulation2" Type="Int32" />
+          <Property Name="regulation2_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="iDemand3" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="iActual3" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="regulation3" Type="Int32" />
+          <Property Name="regulation3_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="phaStd" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="pha1" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="pha2" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="pha3" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="t_iDemandStd" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="tActualStd" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="partIdentString" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="tipDressCounter" Type="Int32" />
+          <Property Name="electrodeNo" Type="Int32" />
+          <Property Name="voltageActualValue" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="voltageRefValue" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="currentActualValue" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="currentReferenceValue" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="weldTimeActualValue" Type="Int32" />
+          <Property Name="weldTimeRefValue" Type="Int32" />
+          <Property Name="energyActualValue" Type="Single" />
+          <Property Name="energyRefValue" Type="Single" />
+          <Property Name="powerActualValue" Type="Single" />
+          <Property Name="powerRefValue" Type="Single" />
+          <Property Name="resistanceActualValue" Type="Int32" />
+          <Property Name="resistanceRefValue" Type="Int32" />
+          <Property Name="pulseWidthActualValue" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="pulseWidthRefValue" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="stabilisationFactorActValue" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="stabilisationFactorRefValue" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="thresholdStabilisationFactor" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="wldEffectStabilisationFactor" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="uipActualValue" Type="Int32" />
+          <Property Name="uipRefValue" Type="Int32" />
+          <Property Name="uirExpulsionTime" Type="Int32" />
+          <Property Name="uirMeasuringActive" Type="Int32" />
+          <Property Name="uirMeasuringActive_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="uirRegulationActive" Type="Int32" />
+          <Property Name="uirRegulationActive_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="uirMonitoringActive" Type="Int32" />
+          <Property Name="uirMonitoringActive_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="uirWeldTimeProlongationActive" Type="Int32" />
+          <Property Name="uirWeldTimeProlongActive_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="uirQStoppRefCntValue" Type="Int32" />
+          <Property Name="uirQStoppActCntValue" Type="Int32" />
+          <Property Name="uirUipUpperTol" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="uirUipLowerTol" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="uirUipCondTol" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="uirPsfLowerTol" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="uirPsfCondTol" Type="Decimal" Precision="8" Scale="2" />
+          <NavigationProperty Name="Timer" Relationship="GADATAModelWelding.FK_rt_weldmeasureprotddw_Timer" FromRole="rt_weldmeasureprotddw" ToRole="Timer" />
+        </EntityType>
+        <EntityType Name="h_Nut_Bolt_Measure">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Timestamp" />
+            <PropertyRef Name="SpotID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Timestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="SpotID" Type="Int32" Nullable="false" />
+          <Property Name="wear" Type="Int32" />
+          <Property Name="I_demand" Type="Double" />
+          <Property Name="I_Actual" Type="Double" />
+          <Property Name="regulation" Type="String" MaxLength="5" FixedLength="true" Unicode="true" />
+          <Property Name="BodyNr" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="ElectrodeNr" Type="Int16" />
+          <Property Name="Weldtime" Type="Int32" />
+          <Property Name="EnergyActual" Type="Int32" />
+          <Property Name="EnergyRef" Type="Int32" />
+          <Property Name="ResistanceActual" Type="Int32" />
+          <Property Name="ResistanceRef" Type="Int32" />
+          <Property Name="ExpulsionTime" Type="Int32" />
+        </EntityType>
+        <Association Name="FK_rt_job_breakdown_rt_alarm">
+          <End Type="GADATAModelWelding.rt_alarm" Role="rt_alarm" Multiplicity="0..1" />
+          <End Type="GADATAModelWelding.rt_job_breakdown" Role="rt_job_breakdown" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="rt_alarm">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="rt_job_breakdown">
+              <PropertyRef Name="rt_alarm_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rt_job_breakdown_rt_job">
+          <End Type="GADATAModelWelding.rt_job" Role="rt_job" Multiplicity="0..1" />
+          <End Type="GADATAModelWelding.rt_job_breakdown" Role="rt_job_breakdown" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="rt_job">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="rt_job_breakdown">
+              <PropertyRef Name="rt_job_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="NPT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="OwnerId" Type="Int32" Nullable="false" />
+          <Property Name="LoginPass" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="LoginUser" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="RemoreServer" Type="String" MaxLength="250" FixedLength="true" Unicode="true" />
+          <Property Name="active" Type="Boolean" />
+          <Property Name="enable_bit" Type="Int32" />
+          <NavigationProperty Name="Timer" Relationship="GADATAModelWelding.FK_Timer_NPT" FromRole="NPT" ToRole="Timer" />
+        </EntityType>
+        <EntityType Name="Timer">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="NptId" Type="Int32" />
+          <Property Name="Robot" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="location" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="c_timer_class_id" Type="Int32" />
+          <Property Name="enable_bit" Type="Int32" />
+          <NavigationProperty Name="NPT" Relationship="GADATAModelWelding.FK_Timer_NPT" FromRole="Timer" ToRole="NPT" />
+          <NavigationProperty Name="L_operation" Relationship="GADATAModelWelding.FK_L_operation_Timer" FromRole="Timer" ToRole="L_operation" />
+          <NavigationProperty Name="rt_active_info" Relationship="GADATAModelWelding.FK_rt_active_info_Timer" FromRole="Timer" ToRole="rt_active_info" />
+          <NavigationProperty Name="rt_alarm" Relationship="GADATAModelWelding.FK_rt_alarm_Timer" FromRole="Timer" ToRole="rt_alarm" />
+          <NavigationProperty Name="rt_communication_state" Relationship="GADATAModelWelding.FK_rt_communication_state_Timer" FromRole="Timer" ToRole="rt_communication_state" />
+          <NavigationProperty Name="rt_job" Relationship="GADATAModelWelding.FK_rt_job_Timer" FromRole="Timer" ToRole="rt_job" />
+          <NavigationProperty Name="rt_job1" Relationship="GADATAModelWelding.FK_rt_job_Timer1" FromRole="Timer" ToRole="rt_job" />
+          <NavigationProperty Name="rt_weldfault" Relationship="GADATAModelWelding.FK_rt_weldfault_Timer" FromRole="Timer" ToRole="rt_weldfault" />
+          <NavigationProperty Name="rt_weldmeasureprotddw" Relationship="GADATAModelWelding.FK_rt_weldmeasureprotddw_Timer" FromRole="Timer" ToRole="rt_weldmeasureprotddw" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CDSID" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Voornaam" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
+          <Property Name="Achternaam" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="object" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_Timer_NPT">
+          <End Type="GADATAModelWelding.NPT" Role="NPT" Multiplicity="0..1" />
+          <End Type="GADATAModelWelding.Timer" Role="Timer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NPT">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Timer">
+              <PropertyRef Name="NptId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_L_operation_Timer">
+          <End Type="GADATAModelWelding.Timer" Role="Timer" Multiplicity="0..1" />
+          <End Type="GADATAModelWelding.L_operation" Role="L_operation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Timer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="L_operation">
+              <PropertyRef Name="controller_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rt_active_info_Timer">
+          <End Type="GADATAModelWelding.Timer" Role="Timer" Multiplicity="0..1" />
+          <End Type="GADATAModelWelding.rt_active_info" Role="rt_active_info" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Timer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="rt_active_info">
+              <PropertyRef Name="timerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rt_alarm_Timer">
+          <End Type="GADATAModelWelding.Timer" Role="Timer" Multiplicity="0..1" />
+          <End Type="GADATAModelWelding.rt_alarm" Role="rt_alarm" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Timer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="rt_alarm">
+              <PropertyRef Name="timerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rt_communication_state_Timer">
+          <End Type="GADATAModelWelding.Timer" Role="Timer" Multiplicity="0..1" />
+          <End Type="GADATAModelWelding.rt_communication_state" Role="rt_communication_state" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Timer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="rt_communication_state">
+              <PropertyRef Name="timerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rt_job_Timer">
+          <End Type="GADATAModelWelding.Timer" Role="Timer" Multiplicity="0..1" />
+          <End Type="GADATAModelWelding.rt_job" Role="rt_job" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Timer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="rt_job">
+              <PropertyRef Name="timerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rt_job_Timer1">
+          <End Type="GADATAModelWelding.Timer" Role="Timer" Multiplicity="0..1" />
+          <End Type="GADATAModelWelding.rt_job" Role="rt_job" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Timer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="rt_job">
+              <PropertyRef Name="timerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rt_weldfault_Timer">
+          <End Type="GADATAModelWelding.Timer" Role="Timer" Multiplicity="0..1" />
+          <End Type="GADATAModelWelding.rt_weldfault" Role="rt_weldfault" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Timer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="rt_weldfault">
+              <PropertyRef Name="timerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rt_weldmeasureprotddw_Timer">
+          <End Type="GADATAModelWelding.Timer" Role="Timer" Multiplicity="0..1" />
+          <End Type="GADATAModelWelding.rt_weldmeasureprotddw" Role="rt_weldmeasureprotddw" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Timer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="rt_weldmeasureprotddw">
+              <PropertyRef Name="timerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -1067,23 +3050,6 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ComparePitchV316">
-            <EntityTypeMapping TypeName="GADATAModelWelding.ComparePitchV316">
-              <MappingFragment StoreEntitySet="ComparePitchV316">
-                <ScalarProperty Name="Expr2" ColumnName="Expr2" />
-                <ScalarProperty Name="Expr1" ColumnName="Expr1" />
-                <ScalarProperty Name="TotalThickness" ColumnName="TotalThickness" />
-                <ScalarProperty Name="lastULControleTime" ColumnName="lastULControleTime" />
-                <ScalarProperty Name="Model" ColumnName="Model" />
-                <ScalarProperty Name="AlternativeNumber" ColumnName="AlternativeNumber" />
-                <ScalarProperty Name="Timer" ColumnName="Timer" />
-                <ScalarProperty Name="SpotID" ColumnName="SpotID" />
-                <ScalarProperty Name="lastWeldTime" ColumnName="lastWeldTime" />
-                <ScalarProperty Name="timerNumber" ColumnName="timerNumber" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="TDTResults">
             <EntityTypeMapping TypeName="GADATAModelWelding.TDTResults">
               <MappingFragment StoreEntitySet="TDTResults">
@@ -1130,7 +3096,546 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-        </EntityContainerMapping>
+          <EntitySetMapping Name="blanco">
+            <EntityTypeMapping TypeName="GADATAModelWelding.blanco">
+              <MappingFragment StoreEntitySet="blanco">
+                <ScalarProperty Name="Picture_ID" ColumnName="Picture_ID" />
+                <ScalarProperty Name="Type_ID" ColumnName="Type_ID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nomdiameter" ColumnName="Nomdiameter" />
+                <ScalarProperty Name="BodyNbr" ColumnName="BodyNbr" />
+                <ScalarProperty Name="Plates" ColumnName="Plates" />
+                <ScalarProperty Name="StartComment" ColumnName="StartComment" />
+                <ScalarProperty Name="FoutcodeID" ColumnName="FoutcodeID" />
+                <ScalarProperty Name="TDTTypeID" ColumnName="TDTTypeID" />
+                <ScalarProperty Name="pictureID" ColumnName="pictureID" />
+                <ScalarProperty Name="pjvspotid" ColumnName="pjvspotid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="comment">
+            <EntityTypeMapping TypeName="GADATAModelWelding.comment">
+              <MappingFragment StoreEntitySet="comment">
+                <ScalarProperty Name="comment1" ColumnName="comment" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="foutcode">
+            <EntityTypeMapping TypeName="GADATAModelWelding.foutcode">
+              <MappingFragment StoreEntitySet="foutcode">
+                <ScalarProperty Name="foutcodename" ColumnName="foutcodename" />
+                <ScalarProperty Name="foutcodenbr" ColumnName="foutcodenbr" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="picture">
+            <EntityTypeMapping TypeName="GADATAModelWelding.picture">
+              <MappingFragment StoreEntitySet="picture">
+                <ScalarProperty Name="picturename_id" ColumnName="picturename_id" />
+                <ScalarProperty Name="picturenbr" ColumnName="picturenbr" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="picturename">
+            <EntityTypeMapping TypeName="GADATAModelWelding.picturename">
+              <MappingFragment StoreEntitySet="picturename">
+                <ScalarProperty Name="picturepath" ColumnName="picturepath" />
+                <ScalarProperty Name="picturename1" ColumnName="picturename" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="result">
+            <EntityTypeMapping TypeName="GADATAModelWelding.result">
+              <MappingFragment StoreEntitySet="result">
+                <ScalarProperty Name="teardownresult" ColumnName="teardownresult" />
+                <ScalarProperty Name="teardownid" ColumnName="teardownid" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="teardown">
+            <EntityTypeMapping TypeName="GADATAModelWelding.teardown">
+              <MappingFragment StoreEntitySet="teardown">
+                <ScalarProperty Name="measdiameter" ColumnName="measdiameter" />
+                <ScalarProperty Name="nomdiameter" ColumnName="nomdiameter" />
+                <ScalarProperty Name="startcomment" ColumnName="startcomment" />
+                <ScalarProperty Name="plates" ColumnName="plates" />
+                <ScalarProperty Name="picture_id" ColumnName="picture_id" />
+                <ScalarProperty Name="type_id" ColumnName="type_id" />
+                <ScalarProperty Name="foutcode_id" ColumnName="foutcode_id" />
+                <ScalarProperty Name="result_id" ColumnName="result_id" />
+                <ScalarProperty Name="comment_id" ColumnName="comment_id" />
+                <ScalarProperty Name="bodynbr" ColumnName="bodynbr" />
+                <ScalarProperty Name="measdate" ColumnName="measdate" />
+                <ScalarProperty Name="endtime" ColumnName="endtime" />
+                <ScalarProperty Name="starttime" ColumnName="starttime" />
+                <ScalarProperty Name="spotid" ColumnName="spotid" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TeardownResults">
+            <EntityTypeMapping TypeName="GADATAModelWelding.TeardownResults">
+              <MappingFragment StoreEntitySet="TeardownResults">
+                <ScalarProperty Name="TDTComment" ColumnName="TDTComment" />
+                <ScalarProperty Name="TeardownEvalution" ColumnName="TeardownEvalution" />
+                <ScalarProperty Name="TeardownStatus" ColumnName="TeardownStatus" />
+                <ScalarProperty Name="TearDownNugget" ColumnName="TearDownNugget" />
+                <ScalarProperty Name="NuggetDemand" ColumnName="NuggetDemand" />
+                <ScalarProperty Name="Spotid" ColumnName="Spotid" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="type">
+            <EntityTypeMapping TypeName="GADATAModelWelding.type">
+              <MappingFragment StoreEntitySet="type">
+                <ScalarProperty Name="tdttype" ColumnName="tdttype" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ComparePitchV316">
+            <EntityTypeMapping TypeName="GADATAModelWelding.ComparePitchV316">
+              <MappingFragment StoreEntitySet="ComparePitchV316">
+                <ScalarProperty Name="Expr1" ColumnName="Expr1" />
+                <ScalarProperty Name="TotalThickness" ColumnName="TotalThickness" />
+                <ScalarProperty Name="lastULControleTime" ColumnName="lastULControleTime" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="AlternativeNumber" ColumnName="AlternativeNumber" />
+                <ScalarProperty Name="Timer" ColumnName="Timer" />
+                <ScalarProperty Name="SpotID" ColumnName="SpotID" />
+                <ScalarProperty Name="lastWeldTime" ColumnName="lastWeldTime" />
+                <ScalarProperty Name="timerNumber" ColumnName="timerNumber" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="c_error">
+            <EntityTypeMapping TypeName="GADATAModelWelding.c_error">
+              <MappingFragment StoreEntitySet="c_error">
+                <ScalarProperty Name="UserComment" ColumnName="UserComment" />
+                <ScalarProperty Name="flags" ColumnName="flags" />
+                <ScalarProperty Name="C_operator" ColumnName="_operator" />
+                <ScalarProperty Name="errorCode2_text" ColumnName="errorCode2_text" />
+                <ScalarProperty Name="errorCode2" ColumnName="errorCode2" />
+                <ScalarProperty Name="errorCode1_text" ColumnName="errorCode1_text" />
+                <ScalarProperty Name="errorCode1" ColumnName="errorCode1" />
+                <ScalarProperty Name="isError" ColumnName="isError" />
+                <ScalarProperty Name="ordinal" ColumnName="ordinal" />
+                <ScalarProperty Name="enable_bit" ColumnName="enable_bit" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="h_Midair">
+            <EntityTypeMapping TypeName="GADATAModelWelding.h_Midair">
+              <MappingFragment StoreEntitySet="h_Midair">
+                <ScalarProperty Name="Iactual2" ColumnName="Iactual2" />
+                <ScalarProperty Name="WeldTimeActual" ColumnName="WeldTimeActual" />
+                <ScalarProperty Name="EnergyActual" ColumnName="EnergyActual" />
+                <ScalarProperty Name="ElectrodeNo" ColumnName="ElectrodeNo" />
+                <ScalarProperty Name="ResisRef" ColumnName="ResisRef" />
+                <ScalarProperty Name="ResisActual" ColumnName="ResisActual" />
+                <ScalarProperty Name="SpotId" ColumnName="SpotId" />
+                <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="h_weldmeasure">
+            <EntityTypeMapping TypeName="GADATAModelWelding.h_weldmeasure">
+              <MappingFragment StoreEntitySet="h_weldmeasure">
+                <ScalarProperty Name="STDEV_stabilisationFactor" ColumnName="STDEV_stabilisationFactor" />
+                <ScalarProperty Name="STDEV_uip" ColumnName="STDEV_uip" />
+                <ScalarProperty Name="STDEV_pulseWith" ColumnName="STDEV_pulseWith" />
+                <ScalarProperty Name="STDEV_resistance" ColumnName="STDEV_resistance" />
+                <ScalarProperty Name="STDEV_power" ColumnName="STDEV_power" />
+                <ScalarProperty Name="STDEV_enegery" ColumnName="STDEV_enegery" />
+                <ScalarProperty Name="STDEV_weldtime" ColumnName="STDEV_weldtime" />
+                <ScalarProperty Name="STDEV_current" ColumnName="STDEV_current" />
+                <ScalarProperty Name="STDEV_voltage" ColumnName="STDEV_voltage" />
+                <ScalarProperty Name="STDEV_uirExpulsionTime" ColumnName="STDEV_uirExpulsionTime" />
+                <ScalarProperty Name="MAX_stabilisationFactor" ColumnName="MAX_stabilisationFactor" />
+                <ScalarProperty Name="MAX_uip" ColumnName="MAX_uip" />
+                <ScalarProperty Name="MAX_pulseWith" ColumnName="MAX_pulseWith" />
+                <ScalarProperty Name="MAX_resistance" ColumnName="MAX_resistance" />
+                <ScalarProperty Name="MAX_power" ColumnName="MAX_power" />
+                <ScalarProperty Name="MAX_enegery" ColumnName="MAX_enegery" />
+                <ScalarProperty Name="MAX_weldtime" ColumnName="MAX_weldtime" />
+                <ScalarProperty Name="MAX_current" ColumnName="MAX_current" />
+                <ScalarProperty Name="MAX_voltage" ColumnName="MAX_voltage" />
+                <ScalarProperty Name="MAX_uirExpulsionTime" ColumnName="MAX_uirExpulsionTime" />
+                <ScalarProperty Name="MIN_stabilisationFactor" ColumnName="MIN_stabilisationFactor" />
+                <ScalarProperty Name="MIN_uip" ColumnName="MIN_uip" />
+                <ScalarProperty Name="MIN_pulseWith" ColumnName="MIN_pulseWith" />
+                <ScalarProperty Name="MIN_resistance" ColumnName="MIN_resistance" />
+                <ScalarProperty Name="MIN_power" ColumnName="MIN_power" />
+                <ScalarProperty Name="MIN_enegery" ColumnName="MIN_enegery" />
+                <ScalarProperty Name="MIN_weldtime" ColumnName="MIN_weldtime" />
+                <ScalarProperty Name="MIN_current" ColumnName="MIN_current" />
+                <ScalarProperty Name="MIN_voltage" ColumnName="MIN_voltage" />
+                <ScalarProperty Name="MIN_uirExpulsionTime" ColumnName="MIN_uirExpulsionTime" />
+                <ScalarProperty Name="AVG_stabilisationFactor" ColumnName="AVG_stabilisationFactor" />
+                <ScalarProperty Name="AVG_uip" ColumnName="AVG_uip" />
+                <ScalarProperty Name="AVG_pulseWith" ColumnName="AVG_pulseWith" />
+                <ScalarProperty Name="AVG_resistance" ColumnName="AVG_resistance" />
+                <ScalarProperty Name="AVG_power" ColumnName="AVG_power" />
+                <ScalarProperty Name="AVG_enegery" ColumnName="AVG_enegery" />
+                <ScalarProperty Name="AVG_weldtime" ColumnName="AVG_weldtime" />
+                <ScalarProperty Name="AVG_current" ColumnName="AVG_current" />
+                <ScalarProperty Name="AVG_voltage" ColumnName="AVG_voltage" />
+                <ScalarProperty Name="AVG_uirExpulsionTime" ColumnName="AVG_uirExpulsionTime" />
+                <ScalarProperty Name="Rewelds" ColumnName="Rewelds" />
+                <ScalarProperty Name="Expulsions" ColumnName="Expulsions" />
+                <ScalarProperty Name="dt_LastValue" ColumnName="dt_LastValue" />
+                <ScalarProperty Name="dt_FirstValue" ColumnName="dt_FirstValue" />
+                <ScalarProperty Name="count" ColumnName="count" />
+                <ScalarProperty Name="spotId" ColumnName="spotId" />
+                <ScalarProperty Name="progNo" ColumnName="progNo" />
+                <ScalarProperty Name="timerId" ColumnName="timerId" />
+                <ScalarProperty Name="L_timeline_id" ColumnName="L_timeline_id" />
+                <ScalarProperty Name="L_timeline_endtime" ColumnName="L_timeline_endtime" />
+                <ScalarProperty Name="L_timeline_starttime" ColumnName="L_timeline_starttime" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="L_operation">
+            <EntityTypeMapping TypeName="GADATAModelWelding.L_operation">
+              <MappingFragment StoreEntitySet="L_operation">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="controller_id" ColumnName="controller_id" />
+                <ScalarProperty Name="Vwsc_name" ColumnName="Vwsc_name" />
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="rt_active_info">
+            <EntityTypeMapping TypeName="GADATAModelWelding.rt_active_info">
+              <MappingFragment StoreEntitySet="rt_active_info">
+                <ScalarProperty Name="rt_datechangeprot_id" ColumnName="rt_datechangeprot_id" />
+                <ScalarProperty Name="rt_weldmeasureprotddw_id" ColumnName="rt_weldmeasureprotddw_id" />
+                <ScalarProperty Name="rt_weldfault_id" ColumnName="rt_weldfault_id" />
+                <ScalarProperty Name="vwsc_state" ColumnName="vwsc_state" />
+                <ScalarProperty Name="rt_job_id" ColumnName="rt_job_id" />
+                <ScalarProperty Name="rt_alarm_id" ColumnName="rt_alarm_id" />
+                <ScalarProperty Name="errorText" ColumnName="errorText" />
+                <ScalarProperty Name="errorNumber" ColumnName="errorNumber" />
+                <ScalarProperty Name="communicationState" ColumnName="communicationState" />
+                <ScalarProperty Name="online" ColumnName="online" />
+                <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
+                <ScalarProperty Name="timerId" ColumnName="timerId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="rt_alarm">
+            <EntityTypeMapping TypeName="GADATAModelWelding.rt_alarm">
+              <MappingFragment StoreEntitySet="rt_alarm">
+                <ScalarProperty Name="isError_txt" ColumnName="isError_txt" />
+                <ScalarProperty Name="isError" ColumnName="isError" />
+                <ScalarProperty Name="errorCode2_txt" ColumnName="errorCode2_txt" />
+                <ScalarProperty Name="errorCode2" ColumnName="errorCode2" />
+                <ScalarProperty Name="errorCode1_txt" ColumnName="errorCode1_txt" />
+                <ScalarProperty Name="errorCode1" ColumnName="errorCode1" />
+                <ScalarProperty Name="dateTime" ColumnName="dateTime" />
+                <ScalarProperty Name="protRecord_ID" ColumnName="protRecord_ID" />
+                <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
+                <ScalarProperty Name="timerId" ColumnName="timerId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="rt_comment">
+            <EntityTypeMapping TypeName="GADATAModelWelding.rt_comment">
+              <MappingFragment StoreEntitySet="rt_comment">
+                <ScalarProperty Name="comment" ColumnName="comment" />
+                <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="rt_communication_state">
+            <EntityTypeMapping TypeName="GADATAModelWelding.rt_communication_state">
+              <MappingFragment StoreEntitySet="rt_communication_state">
+                <ScalarProperty Name="communicationState" ColumnName="communicationState" />
+                <ScalarProperty Name="online" ColumnName="online" />
+                <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
+                <ScalarProperty Name="timerId" ColumnName="timerId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="rt_datachangeprot">
+            <EntityTypeMapping TypeName="GADATAModelWelding.rt_datachangeprot">
+              <MappingFragment StoreEntitySet="rt_datachangeprot">
+                <ScalarProperty Name="comment" ColumnName="comment" />
+                <ScalarProperty Name="userName" ColumnName="userName" />
+                <ScalarProperty Name="computerName" ColumnName="computerName" />
+                <ScalarProperty Name="physicalUnitId_txt" ColumnName="physicalUnitId_txt" />
+                <ScalarProperty Name="physicalUnitId" ColumnName="physicalUnitId" />
+                <ScalarProperty Name="newNormValue" ColumnName="newNormValue" />
+                <ScalarProperty Name="oldNormValue" ColumnName="oldNormValue" />
+                <ScalarProperty Name="newValue_txt" ColumnName="newValue_txt" />
+                <ScalarProperty Name="newValue" ColumnName="newValue" />
+                <ScalarProperty Name="oldValue_txt" ColumnName="oldValue_txt" />
+                <ScalarProperty Name="oldValue" ColumnName="oldValue" />
+                <ScalarProperty Name="subIndex" ColumnName="subIndex" />
+                <ScalarProperty Name="param_status_txt" ColumnName="param_status_txt" />
+                <ScalarProperty Name="param_ID" ColumnName="param_ID" />
+                <ScalarProperty Name="dateTime" ColumnName="dateTime" />
+                <ScalarProperty Name="protRecord_ID" ColumnName="protRecord_ID" />
+                <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
+                <ScalarProperty Name="timerId" ColumnName="timerId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="rt_job">
+            <EntityTypeMapping TypeName="GADATAModelWelding.rt_job">
+              <MappingFragment StoreEntitySet="rt_job">
+                <ScalarProperty Name="rt_breakdown_count" ColumnName="rt_breakdown_count" />
+                <ScalarProperty Name="rt_weldfaultprot_count" ColumnName="rt_weldfaultprot_count" />
+                <ScalarProperty Name="rt_weldmeasureprotddw_count" ColumnName="rt_weldmeasureprotddw_count" />
+                <ScalarProperty Name="rt_expulsion_count" ColumnName="rt_expulsion_count" />
+                <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="rt_weldfaultprot_id_End" ColumnName="rt_weldfaultprot_id_End" />
+                <ScalarProperty Name="rt_weldfaultprot_id_Start" ColumnName="rt_weldfaultprot_id_Start" />
+                <ScalarProperty Name="rt_weldmeasureprotddw_id_End" ColumnName="rt_weldmeasureprotddw_id_End" />
+                <ScalarProperty Name="rt_weldmeasureprotddw_id_Start" ColumnName="rt_weldmeasureprotddw_id_Start" />
+                <ScalarProperty Name="ts_End" ColumnName="ts_End" />
+                <ScalarProperty Name="ts_Start" ColumnName="ts_Start" />
+                <ScalarProperty Name="ngac_rt_job_id" ColumnName="ngac_rt_job_id" />
+                <ScalarProperty Name="timerId" ColumnName="timerId" />
+                <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="rt_job_breakdown">
+            <EntityTypeMapping TypeName="GADATAModelWelding.rt_job_breakdown">
+              <MappingFragment StoreEntitySet="rt_job_breakdown">
+                <ScalarProperty Name="index" ColumnName="index" />
+                <ScalarProperty Name="ts_breakdownEnd" ColumnName="ts_breakdownEnd" />
+                <ScalarProperty Name="ts_breakdownStart" ColumnName="ts_breakdownStart" />
+                <ScalarProperty Name="rt_alarm_id" ColumnName="rt_alarm_id" />
+                <ScalarProperty Name="rt_job_id" ColumnName="rt_job_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="rt_job_expulsion">
+            <EntityTypeMapping TypeName="GADATAModelWelding.rt_job_expulsion">
+              <MappingFragment StoreEntitySet="rt_job_expulsion">
+                <ScalarProperty Name="rt_weldmeasureprotddw_id" ColumnName="rt_weldmeasureprotddw_id" />
+                <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
+                <ScalarProperty Name="rt_job_id" ColumnName="rt_job_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="rt_spot">
+            <EntityTypeMapping TypeName="GADATAModelWelding.rt_spot">
+              <MappingFragment StoreEntitySet="rt_spot">
+                <ScalarProperty Name="isDead" ColumnName="isDead" />
+                <ScalarProperty Name="weldProgramNo" ColumnName="weldProgramNo" />
+                <ScalarProperty Name="Comment3" ColumnName="Comment3" />
+                <ScalarProperty Name="Comment2" ColumnName="Comment2" />
+                <ScalarProperty Name="Comment1" ColumnName="Comment1" />
+                <ScalarProperty Name="vwscComment" ColumnName="vwscComment" />
+                <ScalarProperty Name="pjv_joiningpointdata_id" ColumnName="pjv_joiningpointdata_id" />
+                <ScalarProperty Name="spotname" ColumnName="spotname" />
+                <ScalarProperty Name="spotId" ColumnName="spotId" />
+                <ScalarProperty Name="timerId" ColumnName="timerId" />
+                <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="rt_weldfault">
+            <EntityTypeMapping TypeName="GADATAModelWelding.rt_weldfault">
+              <MappingFragment StoreEntitySet="rt_weldfault">
+                <ScalarProperty Name="WMComment" ColumnName="WMComment" />
+                <ScalarProperty Name="isError" ColumnName="isError" />
+                <ScalarProperty Name="spotId" ColumnName="spotId" />
+                <ScalarProperty Name="wear" ColumnName="wear" />
+                <ScalarProperty Name="weldActualValue" ColumnName="weldActualValue" />
+                <ScalarProperty Name="weldProgValue" ColumnName="weldProgValue" />
+                <ScalarProperty Name="measureState_txt" ColumnName="measureState_txt" />
+                <ScalarProperty Name="measureState" ColumnName="measureState" />
+                <ScalarProperty Name="regulationState_txt" ColumnName="regulationState_txt" />
+                <ScalarProperty Name="regulationState" ColumnName="regulationState" />
+                <ScalarProperty Name="monitorState_txt" ColumnName="monitorState_txt" />
+                <ScalarProperty Name="monitorState" ColumnName="monitorState" />
+                <ScalarProperty Name="progNo" ColumnName="progNo" />
+                <ScalarProperty Name="dateTime" ColumnName="dateTime" />
+                <ScalarProperty Name="protRecord_ID" ColumnName="protRecord_ID" />
+                <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
+                <ScalarProperty Name="timerId" ColumnName="timerId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="rt_weldmeasureprotddw">
+            <EntityTypeMapping TypeName="GADATAModelWelding.rt_weldmeasureprotddw">
+              <MappingFragment StoreEntitySet="rt_weldmeasureprotddw">
+                <ScalarProperty Name="uirPsfCondTol" ColumnName="uirPsfCondTol" />
+                <ScalarProperty Name="uirPsfLowerTol" ColumnName="uirPsfLowerTol" />
+                <ScalarProperty Name="uirUipCondTol" ColumnName="uirUipCondTol" />
+                <ScalarProperty Name="uirUipLowerTol" ColumnName="uirUipLowerTol" />
+                <ScalarProperty Name="uirUipUpperTol" ColumnName="uirUipUpperTol" />
+                <ScalarProperty Name="uirQStoppActCntValue" ColumnName="uirQStoppActCntValue" />
+                <ScalarProperty Name="uirQStoppRefCntValue" ColumnName="uirQStoppRefCntValue" />
+                <ScalarProperty Name="uirWeldTimeProlongActive_txt" ColumnName="uirWeldTimeProlongActive_txt" />
+                <ScalarProperty Name="uirWeldTimeProlongationActive" ColumnName="uirWeldTimeProlongationActive" />
+                <ScalarProperty Name="uirMonitoringActive_txt" ColumnName="uirMonitoringActive_txt" />
+                <ScalarProperty Name="uirMonitoringActive" ColumnName="uirMonitoringActive" />
+                <ScalarProperty Name="uirRegulationActive_txt" ColumnName="uirRegulationActive_txt" />
+                <ScalarProperty Name="uirRegulationActive" ColumnName="uirRegulationActive" />
+                <ScalarProperty Name="uirMeasuringActive_txt" ColumnName="uirMeasuringActive_txt" />
+                <ScalarProperty Name="uirMeasuringActive" ColumnName="uirMeasuringActive" />
+                <ScalarProperty Name="uirExpulsionTime" ColumnName="uirExpulsionTime" />
+                <ScalarProperty Name="uipRefValue" ColumnName="uipRefValue" />
+                <ScalarProperty Name="uipActualValue" ColumnName="uipActualValue" />
+                <ScalarProperty Name="wldEffectStabilisationFactor" ColumnName="wldEffectStabilisationFactor" />
+                <ScalarProperty Name="thresholdStabilisationFactor" ColumnName="thresholdStabilisationFactor" />
+                <ScalarProperty Name="stabilisationFactorRefValue" ColumnName="stabilisationFactorRefValue" />
+                <ScalarProperty Name="stabilisationFactorActValue" ColumnName="stabilisationFactorActValue" />
+                <ScalarProperty Name="pulseWidthRefValue" ColumnName="pulseWidthRefValue" />
+                <ScalarProperty Name="pulseWidthActualValue" ColumnName="pulseWidthActualValue" />
+                <ScalarProperty Name="resistanceRefValue" ColumnName="resistanceRefValue" />
+                <ScalarProperty Name="resistanceActualValue" ColumnName="resistanceActualValue" />
+                <ScalarProperty Name="powerRefValue" ColumnName="powerRefValue" />
+                <ScalarProperty Name="powerActualValue" ColumnName="powerActualValue" />
+                <ScalarProperty Name="energyRefValue" ColumnName="energyRefValue" />
+                <ScalarProperty Name="energyActualValue" ColumnName="energyActualValue" />
+                <ScalarProperty Name="weldTimeRefValue" ColumnName="weldTimeRefValue" />
+                <ScalarProperty Name="weldTimeActualValue" ColumnName="weldTimeActualValue" />
+                <ScalarProperty Name="currentReferenceValue" ColumnName="currentReferenceValue" />
+                <ScalarProperty Name="currentActualValue" ColumnName="currentActualValue" />
+                <ScalarProperty Name="voltageRefValue" ColumnName="voltageRefValue" />
+                <ScalarProperty Name="voltageActualValue" ColumnName="voltageActualValue" />
+                <ScalarProperty Name="electrodeNo" ColumnName="electrodeNo" />
+                <ScalarProperty Name="tipDressCounter" ColumnName="tipDressCounter" />
+                <ScalarProperty Name="partIdentString" ColumnName="partIdentString" />
+                <ScalarProperty Name="tActualStd" ColumnName="tActualStd" />
+                <ScalarProperty Name="t_iDemandStd" ColumnName="t_iDemandStd" />
+                <ScalarProperty Name="pha3" ColumnName="pha3" />
+                <ScalarProperty Name="pha2" ColumnName="pha2" />
+                <ScalarProperty Name="pha1" ColumnName="pha1" />
+                <ScalarProperty Name="phaStd" ColumnName="phaStd" />
+                <ScalarProperty Name="regulation3_txt" ColumnName="regulation3_txt" />
+                <ScalarProperty Name="regulation3" ColumnName="regulation3" />
+                <ScalarProperty Name="iActual3" ColumnName="iActual3" />
+                <ScalarProperty Name="iDemand3" ColumnName="iDemand3" />
+                <ScalarProperty Name="regulation2_txt" ColumnName="regulation2_txt" />
+                <ScalarProperty Name="regulation2" ColumnName="regulation2" />
+                <ScalarProperty Name="iActual2" ColumnName="iActual2" />
+                <ScalarProperty Name="iDemand2" ColumnName="iDemand2" />
+                <ScalarProperty Name="regulation1_txt" ColumnName="regulation1_txt" />
+                <ScalarProperty Name="regulation1" ColumnName="regulation1" />
+                <ScalarProperty Name="iActual1" ColumnName="iActual1" />
+                <ScalarProperty Name="iDemand1" ColumnName="iDemand1" />
+                <ScalarProperty Name="regulationStd_txt" ColumnName="regulationStd_txt" />
+                <ScalarProperty Name="regulationStd" ColumnName="regulationStd" />
+                <ScalarProperty Name="ilsts" ColumnName="ilsts" />
+                <ScalarProperty Name="iDemandStd" ColumnName="iDemandStd" />
+                <ScalarProperty Name="monitorMode_txt" ColumnName="monitorMode_txt" />
+                <ScalarProperty Name="monitorMode" ColumnName="monitorMode" />
+                <ScalarProperty Name="sequenceRepeat_txt" ColumnName="sequenceRepeat_txt" />
+                <ScalarProperty Name="sequenceRepeat" ColumnName="sequenceRepeat" />
+                <ScalarProperty Name="sequenceStateAdd_txt" ColumnName="sequenceStateAdd_txt" />
+                <ScalarProperty Name="sequenceStateAdd" ColumnName="sequenceStateAdd" />
+                <ScalarProperty Name="sequenceState_txt" ColumnName="sequenceState_txt" />
+                <ScalarProperty Name="sequenceState" ColumnName="sequenceState" />
+                <ScalarProperty Name="powerState_txt" ColumnName="powerState_txt" />
+                <ScalarProperty Name="powerState" ColumnName="powerState" />
+                <ScalarProperty Name="measureState_txt" ColumnName="measureState_txt" />
+                <ScalarProperty Name="measureState" ColumnName="measureState" />
+                <ScalarProperty Name="regulationState_txt" ColumnName="regulationState_txt" />
+                <ScalarProperty Name="regulationState" ColumnName="regulationState" />
+                <ScalarProperty Name="monitorState_txt" ColumnName="monitorState_txt" />
+                <ScalarProperty Name="monitorState" ColumnName="monitorState" />
+                <ScalarProperty Name="wearPerCent" ColumnName="wearPerCent" />
+                <ScalarProperty Name="wear" ColumnName="wear" />
+                <ScalarProperty Name="spotId" ColumnName="spotId" />
+                <ScalarProperty Name="progNo" ColumnName="progNo" />
+                <ScalarProperty Name="dateTime" ColumnName="dateTime" />
+                <ScalarProperty Name="protRecord_ID" ColumnName="protRecord_ID" />
+                <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
+                <ScalarProperty Name="timerId" ColumnName="timerId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="h_Nut_Bolt_Measure">
+            <EntityTypeMapping TypeName="GADATAModelWelding.h_Nut_Bolt_Measure">
+              <MappingFragment StoreEntitySet="h_Nut_Bolt_Measure">
+                <ScalarProperty Name="ExpulsionTime" ColumnName="ExpulsionTime" />
+                <ScalarProperty Name="ResistanceRef" ColumnName="ResistanceRef" />
+                <ScalarProperty Name="ResistanceActual" ColumnName="ResistanceActual" />
+                <ScalarProperty Name="EnergyRef" ColumnName="EnergyRef" />
+                <ScalarProperty Name="EnergyActual" ColumnName="EnergyActual" />
+                <ScalarProperty Name="Weldtime" ColumnName="Weldtime" />
+                <ScalarProperty Name="ElectrodeNr" ColumnName="ElectrodeNr" />
+                <ScalarProperty Name="BodyNr" ColumnName="BodyNr" />
+                <ScalarProperty Name="regulation" ColumnName="regulation" />
+                <ScalarProperty Name="I_Actual" ColumnName="I_Actual" />
+                <ScalarProperty Name="I_demand" ColumnName="I_demand" />
+                <ScalarProperty Name="wear" ColumnName="wear" />
+                <ScalarProperty Name="SpotID" ColumnName="SpotID" />
+                <ScalarProperty Name="Timestamp" ColumnName="Timestamp" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NPT">
+            <EntityTypeMapping TypeName="GADATAModelWelding.NPT">
+              <MappingFragment StoreEntitySet="NPT">
+                <ScalarProperty Name="enable_bit" ColumnName="enable_bit" />
+                <ScalarProperty Name="active" ColumnName="active" />
+                <ScalarProperty Name="RemoreServer" ColumnName="RemoreServer" />
+                <ScalarProperty Name="LoginUser" ColumnName="LoginUser" />
+                <ScalarProperty Name="LoginPass" ColumnName="LoginPass" />
+                <ScalarProperty Name="OwnerId" ColumnName="OwnerId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Timer">
+            <EntityTypeMapping TypeName="GADATAModelWelding.Timer">
+              <MappingFragment StoreEntitySet="Timer">
+                <ScalarProperty Name="enable_bit" ColumnName="enable_bit" />
+                <ScalarProperty Name="c_timer_class_id" ColumnName="c_timer_class_id" />
+                <ScalarProperty Name="location" ColumnName="location" />
+                <ScalarProperty Name="Robot" ColumnName="Robot" />
+                <ScalarProperty Name="NptId" ColumnName="NptId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="GADATAModelWelding.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="object" ColumnName="object" />
+                <ScalarProperty Name="Achternaam" ColumnName="Achternaam" />
+                <ScalarProperty Name="Voornaam" ColumnName="Voornaam" />
+                <ScalarProperty Name="CDSID" ColumnName="CDSID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

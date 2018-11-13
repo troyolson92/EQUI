@@ -12,17 +12,16 @@ namespace EqUiWebUi.Areas.Welding.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class ComparePitchV316
+    public partial class rt_job_breakdown
     {
         public int id { get; set; }
-        public string timerNumber { get; set; }
-        public string lastWeldTime { get; set; }
-        public string SpotID { get; set; }
-        public string Timer { get; set; }
-        public string AlternativeNumber { get; set; }
-        public string Model { get; set; }
-        public Nullable<System.DateTime> lastULControleTime { get; set; }
-        public Nullable<double> TotalThickness { get; set; }
-        public string Expr1 { get; set; }
+        public Nullable<int> rt_job_id { get; set; }
+        public Nullable<int> rt_alarm_id { get; set; }
+        public Nullable<System.DateTime> ts_breakdownStart { get; set; }
+        public Nullable<System.DateTime> ts_breakdownEnd { get; set; }
+        public Nullable<int> index { get; set; }
+    
+        public virtual rt_alarm rt_alarm { get; set; }
+        public virtual rt_job rt_job { get; set; }
     }
 }
