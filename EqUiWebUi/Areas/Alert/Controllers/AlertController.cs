@@ -34,7 +34,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             var h_alert = db.h_alert.Include(h => h.c_state).Where(h =>
                 ((h.id == (id ?? 0)) || (id == null))
                 && ((h.c_tirgger_id == (c_trigger_id ?? 0)) || (c_trigger_id == null))
-                && ((h.location == Location)||(Location == ""))
+                && ((h.location.StartsWith(Location))||(Location == ""))
                 ).Include(h => h.c_triggers).Include(h => h.ChangedUser).Include(h => h.CloseUser).Include(h => h.AcceptUser);
 
             //only apply location filter if no parms are passed 

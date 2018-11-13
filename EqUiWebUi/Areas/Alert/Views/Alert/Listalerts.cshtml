@@ -63,6 +63,12 @@ columns.Add(c => c)
                 $("#placeholderPartial").load(url);
             }
         });
+
+        //simulate click on first row so that the details load automatic IF ROWCOUNT == 1
+        if ($('[data-name="h_alert"]>table>tbody>tr').length == 1) {
+
+            $('[data-name="h_alert"]>table>tbody>tr:first').trigger('click');
+        }
     </script>
 }
 
