@@ -1,7 +1,7 @@
 ﻿
 @{
 
-                ViewBag.Title = "Index WM";
+    ViewBag.Title = "Index WM";
 }
 <div class="jumbotron">
     <h1>Welding Master HomePage</h1>
@@ -10,7 +10,7 @@
 <p></p>
 
 <div class="card">
-    <div class="card-header bg-primary">
+    <div class="card-header bg-dark">
         <h5 class="card-title text-white">
             General Tools
             <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
@@ -22,12 +22,29 @@
 
     <p></p>
     @MyHtmlHelpers.EquiLink("/Welding/WM/_TimerBreakdownDatachange", "far fa-file-alt", "TimerBreakdownDatachange", helperText: "All TimerBreakDowns with datachange WM")
+    
+    <p></p>
+    @MyHtmlHelpers.EquiLink("/Welding/WM/_QstopWarnings", "far fa-file-alt", "QstopWarning ---under construction---", helperText: "Pro Actief Qstops vermijden")
+    <p></p>
+    @MyHtmlHelpers.EquiLink("/Welding/WM/_SpatterData", "far fa-file-alt", "SpatterWarning ---under construction---", helperText: "Pro Actief vermijden van Spatters")
+
+    @*voorbeeld interne link*@
+    <p>
+    <p>
+        <a href="~/vwsc/vwsc/rt_job" class="btn btn-primary btn-sm">WeldData Job &raquo;</a>
+        WeldData Job Analyser
+    <p>
+    <p>
+
+        <a href="~/Welding/WM/_Weldfaultprotocol" class="btn btn-primary btn-sm">WeldFaultProtocol &raquo;</a>
+        Weldfaultprotocol ---under contruction---
+    </p>
 
 </div>
 <p></p>
 
 <div class="card">
-    <div class="card-header bg-primary">
+    <div class="card-header bg-dark">
         <h5 class="card-title text-white">
             Data Tools
             <span class="clickable float-right"><i class="fas fa-chevron-circle-up  fa-rotate-180 fa-1"></i></span>
@@ -41,7 +58,7 @@
 
         <p></p>
 
-     
+
 
     </div>
     <p></p>
