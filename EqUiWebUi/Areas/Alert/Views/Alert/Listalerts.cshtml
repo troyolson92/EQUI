@@ -9,11 +9,11 @@
 
 @Html.Grid(Model).Named("h_alert").Build(columns =>
 {
-    columns.Add(c => c.id).Titled("ID");
+    columns.Add(c => c.id).Titled("ID").Css("d-none d-lg-table-cell");
     columns.Add(c => c.c_triggers.alertType).Titled("alertType");
     columns.Add(c => c.lastTriggerd).Titled("timestamp").Formatted("{0:dd-MM-yyyy HH:mm}").InitialSort(GridSortOrder.Desc);
     columns.Add(c => c.location).Titled("location");
-    columns.Add(c => c.alarmobject).Titled("alarmobject");
+    columns.Add(c => c.alarmobject).Titled("alarmobject").Css("d-none d-lg-table-cell");
     columns.Add(c => c.Classification).Titled("Class");
     columns.Add(c => c.info).Titled("info").Css("d-none d-lg-block");
     columns.Add(c => c.ChangedUser.username.Replace(@"VCCNET\", "")).Titled("ChangedUser");
