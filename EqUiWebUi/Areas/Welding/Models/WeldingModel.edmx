@@ -797,6 +797,26 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
           <Property Name="BreakdownTime" Type="int" />
           <Property Name="id" Type="int" Nullable="false" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="WeldFaultProtocol">
+          <Key>
+            <PropertyRef Name="CDSID" />
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="NPT" Type="nchar" MaxLength="15" />
+          <Property Name="Name" Type="nchar" MaxLength="15" />
+          <Property Name="FaultStart" Type="datetime" />
+          <Property Name="FaultEnd" Type="datetime" />
+          <Property Name="breakdownTime" Type="int" />
+          <Property Name="errorCode1_txt" Type="varchar" MaxLength="64" />
+          <Property Name="errorCode2_txt" Type="varchar" MaxLength="64" />
+          <Property Name="CountFaultsInJob" Type="int" />
+          <Property Name="progNo" Type="int" />
+          <Property Name="CDSID" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="WMComment" Type="varchar" MaxLength="100" />
+          <Property Name="id" Type="int" Nullable="false" />
+        </EntityType>
         <Association Name="blanco_picture_fk">
           <End Role="picture" Type="Self.picture" Multiplicity="1" />
           <End Role="blanco" Type="Self.blanco" Multiplicity="*" />
@@ -1393,6 +1413,22 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
     [TimerBreakdowns_busy].[id] AS [id]
     FROM [WELDING2].[TimerBreakdowns_busy] AS [TimerBreakdowns_busy]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="WeldFaultProtocol" EntityType="Self.WeldFaultProtocol" store:Type="Views" store:Schema="WELDING2">
+            <DefiningQuery>SELECT 
+    [WeldFaultProtocol].[NPT] AS [NPT], 
+    [WeldFaultProtocol].[Name] AS [Name], 
+    [WeldFaultProtocol].[FaultStart] AS [FaultStart], 
+    [WeldFaultProtocol].[FaultEnd] AS [FaultEnd], 
+    [WeldFaultProtocol].[breakdownTime] AS [breakdownTime], 
+    [WeldFaultProtocol].[errorCode1_txt] AS [errorCode1_txt], 
+    [WeldFaultProtocol].[errorCode2_txt] AS [errorCode2_txt], 
+    [WeldFaultProtocol].[CountFaultsInJob] AS [CountFaultsInJob], 
+    [WeldFaultProtocol].[progNo] AS [progNo], 
+    [WeldFaultProtocol].[CDSID] AS [CDSID], 
+    [WeldFaultProtocol].[WMComment] AS [WMComment], 
+    [WeldFaultProtocol].[id] AS [id]
+    FROM [WELDING2].[WeldFaultProtocol] AS [WeldFaultProtocol]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="blanco_picture_fk" Association="Self.blanco_picture_fk">
             <End Role="picture" EntitySet="picture" />
             <End Role="blanco" EntitySet="blanco" />
@@ -1674,6 +1710,7 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
             <End Role="Timer" EntitySet="Timer" />
             <End Role="rt_weldmeasureprotddw" EntitySet="rt_weldmeasureprotddw" />
           </AssociationSet>
+          <EntitySet Name="WeldFaultProtocol" EntityType="GADATAModelWelding.WeldFaultProtocol" />
           </EntityContainer>
         <EntityType Name="rt_AutoWorkFlowULPlans">
           <Key>
@@ -2839,6 +2876,24 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="WeldFaultProtocol">
+          <Key>
+            <PropertyRef Name="CDSID" />
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="NPT" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="FaultStart" Type="DateTime" Precision="3" />
+          <Property Name="FaultEnd" Type="DateTime" Precision="3" />
+          <Property Name="breakdownTime" Type="Int32" />
+          <Property Name="errorCode1_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="errorCode2_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="CountFaultsInJob" Type="Int32" />
+          <Property Name="progNo" Type="Int32" />
+          <Property Name="CDSID" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="WMComment" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="id" Type="Int32" Nullable="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3632,6 +3687,24 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
                 <ScalarProperty Name="Voornaam" ColumnName="Voornaam" />
                 <ScalarProperty Name="CDSID" ColumnName="CDSID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WeldFaultProtocol">
+            <EntityTypeMapping TypeName="GADATAModelWelding.WeldFaultProtocol">
+              <MappingFragment StoreEntitySet="WeldFaultProtocol">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="WMComment" ColumnName="WMComment" />
+                <ScalarProperty Name="CDSID" ColumnName="CDSID" />
+                <ScalarProperty Name="progNo" ColumnName="progNo" />
+                <ScalarProperty Name="CountFaultsInJob" ColumnName="CountFaultsInJob" />
+                <ScalarProperty Name="errorCode2_txt" ColumnName="errorCode2_txt" />
+                <ScalarProperty Name="errorCode1_txt" ColumnName="errorCode1_txt" />
+                <ScalarProperty Name="breakdownTime" ColumnName="breakdownTime" />
+                <ScalarProperty Name="FaultEnd" ColumnName="FaultEnd" />
+                <ScalarProperty Name="FaultStart" ColumnName="FaultStart" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="NPT" ColumnName="NPT" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -16,7 +16,7 @@ namespace EqUiWebUi.Areas.Welding.Controllers
         //test for in line edit 1 method for 1 value
         public void UpdateLabel(string id, string value)
         {
-            rt_weldfault weldfault = db.rt_weldfault(Int32.Parse(id));
+            rt_weldfault weldfault = db.rt_weldfault.Find(Int32.Parse(id));
             weldfault.WMComment = value;
             //  db.SaveChanges();
         }

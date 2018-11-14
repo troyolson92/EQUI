@@ -1,26 +1,32 @@
-﻿
-@model IQueryable< EqUiWebUi.Areas.Welding.Models.rt_alarm>
+﻿@model IQueryable<EqUiWebUi.Areas.Welding.Models.WeldFaultProtocol>
 
 @{
     ViewBag.Title = "index";
 }
 
-<h2>test</h2>
+<h2>WeldFault TOP 10 langste storingen laatste 24 H</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-@Html.Grid(Model).Named("_WeldFaultanalyse").Build(columns =>
+
+@Html.Grid(Model).Named("_WeldFaultprotocol").Build(columns =>
 {
-    columns.Add(c => c.errorCode2_txt).Titled("id");
-    columns.Add(c => c.wmcomment).Titled("id");
 
+    columns.Add(c => c.Name).Titled("Timer");
+    columns.Add(c => c.FaultStart).Titled("Faultstart");
+    columns.Add(c => c.FaultEnd).Titled("FaultEnd");
+    columns.Add(c => c.breakdownTime).Titled("breakdowntime").InitialSort(GridSortOrder.Desc);
+    columns.Add(c => c.errorCode1_txt).Titled("faultName1");
+    columns.Add(c => c.errorCode2_txt).Titled("faultName2");
+    columns.Add(c => c.CountFaultsInJob).Titled("CountfaultsInjob");
+    columns.Add(c => c.progNo).Titled("Timerprogram");
+
+
+    columns.Add(c => c.WMComment).Titled("WMComment");
 
 
 }).Filterable().Sortable().Pageable(pager =>
 {
-    pager.RowsPerPage = 10;
-}).Empty("Did not find anything").Css("table-hover")
+
+}).Css("table-hover").RowCss(model => model.breakdownTime >= 5 ? "ani_PulseRed" : "")
 
 @section scripts{
     <script src="~/node_modules/jquery-jeditable/dist/jquery.jeditable.min.js"></script>
@@ -31,10 +37,9 @@
         $("#allcontent").removeClass("container");
 
         //subscribe to row clicked events
-        $('[data-name="c_housekeepingGrid"]').mvcgrid({
+        $('[data-name="WeldFaultProtocol"]').mvcgrid({
             rowClicked: function (row, data, e) {
                 return;
-
 
                 //if row already has this clase close the modal
                 if ($(row).hasClass("bg-info")) {
@@ -51,7 +56,7 @@
                 //animation
                 $("#placeholderPartial").html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
                 //load url in placeholder
-                var url = "@Url.Action("_L_housekeeping")?id=" + data["id"];
+                var url = "@Url.Action("_WeldFaulprotocol")?id=" + data["id"];
                 $("#placeholderPartial").load(url);
             }
         });
@@ -72,4 +77,4 @@
             submit : 'OK'
         });
     </script>
-}
+    }

@@ -190,6 +190,7 @@
     <Folder Include="Areas\VWSC\Views\Shared\" />
     <Folder Include="Areas\Welding\Views\ARO\" />
     <Folder Include="Areas\Welding\Views\Update\" />
+    <Folder Include="Areas\Welding\Views\WeldFault\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Code\MyRowStyling.cs" />
@@ -819,6 +820,9 @@
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Welding\Models\Users.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Welding\Models\WeldFaultProtocol.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Welding\Models\WeldingModel.Context.cs">
@@ -1882,7 +1886,6 @@
     <Content Include="Areas\Welding\Views\WM\_ConnectionState.cshtml" />
     <Content Include="Areas\Welding\Views\WM\_QISvieuwer.cshtml" />
     <Content Include="Areas\Welding\Views\WM\_TimerBreakdowns_busy.cshtml" />
-    <Content Include="Areas\Welding\Views\WM\rt_ExtraControlesWM.cshtml" />
     <Content Include="Areas\Welding\Views\WM\_TimerBreakdownDatachange.cshtml" />
     <Content Include="Areas\Welding\Views\TeardownTeam\Index.cshtml" />
     <Content Include="Areas\Welding\Views\TeardownTeam\_TDTResults.cshtml" />
@@ -1922,7 +1925,7 @@
     <Content Include="node_modules\jquery\package.json" />
     <Content Include="node_modules\jquery\README.md" />
     <Content Include="node_modules\jquery\src\.eslintrc.json" />
-    <Content Include="Areas\Welding\Views\WM\_Weldfaultanalyse.cshtml" />
+    <Content Include="Areas\Welding\Views\WM\_WeldFaultprotocol.cshtml" />
     <None Include="Properties\PublishProfiles\gensvw1178-DEV-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gotsvw11292-PRODUCTION-VCTA.pubxml" />
