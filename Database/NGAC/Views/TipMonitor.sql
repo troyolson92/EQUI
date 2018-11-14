@@ -11,6 +11,8 @@
 
 
 
+
+
 CREATE VIEW [NGAC].[TipMonitor]
 AS
 SELECT DISTINCT top 10000  c.controller_name as 'Robot'
@@ -66,9 +68,9 @@ SELECT DISTINCT top 10000  c.controller_name as 'Robot'
 					  left join Alerts.Alerts as tipalert with(nolock) on tipalert.LocationTree = rt.LocationTree 
 					  and tipalert.Subgroup like '%TIPLIFE%'
 					  and tipalert.Category = 'WGK'
-					  and tipalert.[timestamp] > getdate()-3 -- limit search window
-                      
-					  where ((rt.[Date Time] < getdate()) or rt.[Date Time] is null) AND (c.hasSpotweld = 1) --only robots with the bit set will be handed!
+					  and tipalert.[timestamp] > getdate()-3  -- limit search window
+                      --add 1 hour for daylight saving time.
+					  where ((rt.[Date Time] < getdate()+'1900-01-01 01:00:00') or rt.[Date Time] is null) AND (c.hasspotweld = 1) --only robots with the bit set will be handed!
 					  --
                       Order by [pWear] DESC
 GO

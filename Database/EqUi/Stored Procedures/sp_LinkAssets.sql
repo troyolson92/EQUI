@@ -21,8 +21,8 @@ BEGIN
 	,NULL as 'Area'
 	,NULL as 'SubArea'
 	,Null as 'server'
-	,NGAC.LocationTree as 'Locationtree'
-	into #Robots
+	,NGAC.locationtree as 'locationtree'
+	into #robots
 	from NGAC.c_controller as NGAC
 	where class_id <> 8 -- exclude S4C class
 /*
@@ -111,23 +111,23 @@ END
                       ,assets.[ClassStructureId]
                       ,assets.[CLassificationId]
                       ,assets.[ClassificationTree]
-                      ,assets.[Station]
-                      ,assets.[Area]
+                      ,ISNULL(assets.[Station],assets.[LOCATION]) as 'Station' 
+                      ,ISNULL(ISNULL(assets.[Area],assets.Station),assets.[LOCATION]) as 'Area'
                       ,assets.[Team]
                       ,ISNULL(r.controller_name,ra.controller_name) as 'controller_name'
                       ,ISNULL(r.controller_type,ra.controller_type) as 'controller_type'
                       ,ISNULL(r.id,ra.id) as 'controller_id'
                       ,ROW_NUMBER() OVER (PARTITION BY 
                           ISNULL(r.controller_type,ra.controller_type)
-                        , ISNULL(r.id,ra.id), assets.[CLassificationId] 
-                        ORDER BY assets.[LOCATION] ASC) AS 'controller_ToolID'
+                        , ISNULL(r.id,ra.id), assets.classificationid 
+                        ORDER BY assets.location ASC) AS 'controller_ToolID'
 					  ,null as 'ResponsibleTechnicianTeam'
 					  ,null as 'ResponsibleProductionTeam'
-                  FROM EqUi.[ASSETS_fromMX7] as assets
+                  FROM [Equi].[ASSETS_fromMX7] as assets
 --***********************************************ROBOT CONTROLLER JOIN BLOCK***********************************************--
                   --join robot assets with there controller
                   left join #Robots as r on 
-                  r.controller_name = assets.[LOCATION]
+                  r.controller_name = assets.LOCATION
                   AND
                   (assets.ASSETNUM like 'URC%' OR assets.ASSETNUM like 'URA%') --COMAU and ABB assets
 --***********************************************ROBOT CONTROLLED ASSET JOIN BLOCK*******************************************-- 
@@ -170,13 +170,13 @@ END
 --Asset table
 UPDATE  EqUi.ASSETS
 set ResponsibleTechnicianTeam = c_ownership.[Ownership]
-from  EqUi.ASSETS as c
+from  EQUI.ASSETS as c
 left join  EqUi.c_ownership on c_ownership.Optgroup = 'TechnicianTeams'
 and c.LocationTree like c_ownership.LocationTree 
 
 UPDATE  EqUi.ASSETS
 set  ResponsibleProductionTeam = c_ownership.[Ownership]
-from  EqUi.ASSETS as c
+from  EQUI.ASSETS as c
 left join  EqUi.c_ownership on c_ownership.Optgroup = 'ProductionTeams'
 and c.LocationTree like c_ownership.LocationTree 
 

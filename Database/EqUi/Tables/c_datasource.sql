@@ -5,8 +5,11 @@
     [Type]             INT           NOT NULL,
     [ConnectionString] VARCHAR (MAX) NOT NULL,
     [isAlertSource]    BIT           NOT NULL,
+    [PwList]           VARCHAR (MAX) NULL,
     CONSTRAINT [PK_c_Databases] PRIMARY KEY CLUSTERED ([Id] ASC)
 );
+
+
 
 
 GO
