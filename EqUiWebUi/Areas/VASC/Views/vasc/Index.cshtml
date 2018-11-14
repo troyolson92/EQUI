@@ -81,3 +81,19 @@
         <p><a href="~/vasc/c_job/index" class="btn btn-danger btn-sm">c_job &raquo;</a>Manage c_job</p>
     </div>
 </div>
+
+<hr />
+
+<div class="card">
+    <div class="card-header bg-dark">
+        <h5 class="card-title text-white">
+            VASC Front
+            <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
+        </h5>
+    </div>
+
+    <div class="card-body">
+        @MyHtmlHelpers.EquiLink("/VASC/Breakdown/GetJobs", "fas fa-vial", "Rtjobs", helperText: "")
+        @MyHtmlHelpers.EquiLink("/VASC/Breakdown/GetBreakdowns", "fas fa-vial", "RtjobBreakdown", helperText: "")
+    </div>
+</div>

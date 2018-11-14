@@ -11,16 +11,17 @@
 {
     columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Desc).Css("d-none");
     columns.Add(c => c.bodyNo).Titled("bodyNo");
-    columns.Add(c => c.c_controller.controller_name).Titled("controller_name");
+    columns.Add(c => c.c_controller.controller_name).Titled("controller_name"); 
     columns.Add(c => c.ts_Start).Titled("CycleStart").Formatted("{0:dd-MM-yyyy HH:mm:ss}");
     columns.Add(c => c.ts_End).Titled("CycleEnd").Formatted("{0:HH:mm:ss}");
     columns.Add(c => c.ts_breakDownStart).Titled("ts_breakdownStart").Formatted("{0:HH:mm:ss}");
-    columns.Add(c => (c.ts_breakDownAck - c.ts_breakDownStart)).Titled("AckTime").Formatted("{0:HH:mm:ss}");
-    columns.Add(c => (c.ts_breakDownEnd - c.ts_breakDownAck)).Titled("RepTime").Formatted("{0:HH:mm:ss}");
-    columns.Add(c => (c.ts_breakDownEnd - c.ts_breakDownStart)).Titled("StopTime").Formatted("{0:HH:mm:ss}");
+    columns.Add(c => (c.ts_breakDownAck - c.ts_breakDownStart)).Titled("AckTime");
+    columns.Add(c => (c.ts_breakDownEnd - c.ts_breakDownAck)).Titled("RepTime");
+    columns.Add(c => (c.ts_breakDownEnd - c.ts_breakDownStart)).Titled("StopTime");
     columns.Add(c => c.breakDownCount).Titled("SubstopCount");
-    columns.Add(c => c.rt_job_breakdown.FirstOrDefault().h_alarm.L_error._Logtext).Titled("Logtext");
-    columns.Add(c => c.rt_job_breakdown.FirstOrDefault().phase1).Titled("phase1");
+    columns.Add(c => c.rt_job_breakdown.FirstOrDefault().h_alarm.L_error._Logtext).Titled("H_Logtext").Filterable(false);
+    columns.Add(c => c.rt_job_breakdown.FirstOrDefault().rt_alarm.description).Titled("RT_Logtext").Filterable(false);
+    columns.Add(c => c.rt_job_breakdown.FirstOrDefault().phase1).Titled("phase1").Filterable(false);
     columns.Add(c => c)
                .Titled("Job")
                .Encoded(false)
