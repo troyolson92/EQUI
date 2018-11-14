@@ -31,6 +31,21 @@ namespace EqUiWebUi.Areas.VASC.Controllers
 
         }
 
+        public ActionResult GetJobs()
+        {
+            db.Database.CommandTimeout = 60;
+            string LocationRoot = CurrentUser.Getuser.LocationRoot;
+            if (LocationRoot != "")
+            {
+                return View(db.rt_job.Where(c => (c.c_controller.LocationTree ?? "").Contains(LocationRoot)));
+            }
+            else
+            {
+                return View(db.rt_job);
+            }
+
+        }
+
         public ActionResult RtJob(int jobId)
         {
             ViewBag.jobID = jobId;

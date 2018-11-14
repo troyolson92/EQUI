@@ -10,6 +10,7 @@
 @Html.Grid(Model).Named("rt_job").Build(columns =>
 {
     columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Desc).Css("d-none");
+    columns.Add(c => c.bodyNo).Titled("bodyNo");
     columns.Add(c => c.c_controller.controller_name).Titled("controller_name");
     columns.Add(c => c.ts_breakDownStart).Titled("ts_breakdownStart");
     columns.Add(c => (c.ts_breakDownAck - c.ts_breakDownStart)).Titled("AckTime");

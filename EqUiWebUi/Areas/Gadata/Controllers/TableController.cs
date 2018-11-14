@@ -165,27 +165,6 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
         }
         //-------------------------------------------------------------------------------------------------
 
-        //------------------------------------Body track web grid-------------------------------------------------
-        [HttpGet]
-        public ActionResult BodyTrackWebgrid()
-        {
-            VASC.Models.GADATAEntitiesVASC GADATAEntitiesVASC = new VASC.Models.GADATAEntitiesVASC();
-            GADATAEntitiesVASC.Database.CommandTimeout = 60;
-            IQueryable<VASC.Models.Bodytracking> data = from bodytracking in GADATAEntitiesVASC.Bodytracking
-                                            select bodytracking;
-
-            return View(data);
-        }
-
-
-
-
-        //-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-        //-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-        //-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-
-
 
         //full view for more info ---------------------------------------------------------------------------------------------------------------------
         //contains _getErrorTrend _loginfo 
