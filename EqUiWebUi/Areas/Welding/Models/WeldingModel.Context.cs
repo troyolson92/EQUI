@@ -75,6 +75,7 @@ namespace EqUiWebUi.Areas.Welding.Models
         public virtual DbSet<Timer> Timer { get; set; }
         public virtual DbSet<Users> Users { get; set; }
         public virtual DbSet<WeldFaultProtocol> WeldFaultProtocol { get; set; }
+        public virtual DbSet<WeldfaultCount> WeldfaultCount { get; set; }
     
         public virtual ObjectResult<Lastwelds_Result> Lastwelds(string timer, Nullable<int> spot)
         {

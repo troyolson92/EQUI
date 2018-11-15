@@ -819,6 +819,9 @@
     <Compile Include="Areas\Welding\Models\Users.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Areas\Welding\Models\WeldfaultCount.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Areas\Welding\Models\WeldFaultProtocol.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
@@ -1923,6 +1926,8 @@
     <Content Include="Areas\VASC\Views\Breakdown\GetJobs.cshtml" />
     <Content Include="Areas\VASC\Views\Breakdown\_getJobs.cshtml" />
     <Content Include="Areas\Welding\Views\WM\_WeldFaultprotocol.cshtml" />
+    <Content Include="Areas\Welding\Views\WM\_WeldFaultprotocolTOP10.cshtml" />
+    <Content Include="Areas\Welding\Views\WM\WeldfaultTOP10.cshtml" />
     <None Include="Properties\PublishProfiles\gensvw1178-DEV-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gotsvw11292-PRODUCTION-VCTA.pubxml" />

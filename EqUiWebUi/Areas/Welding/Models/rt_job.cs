@@ -35,6 +35,7 @@ namespace EqUiWebUi.Areas.Welding.Models
         public Nullable<int> rt_weldmeasureprotddw_count { get; set; }
         public Nullable<int> rt_weldfaultprot_count { get; set; }
         public Nullable<int> rt_breakdown_count { get; set; }
+        public Nullable<int> rt_weldmeasureprotddw_distinct { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<rt_job_breakdown> rt_job_breakdown { get; set; }

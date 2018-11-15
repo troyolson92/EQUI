@@ -87,6 +87,7 @@
       </Diagram>
       <Diagram DiagramId="bcf85daa635e4a2d967ca8716d35520c" Name="Welding2Views" >
         <EntityTypeShape EntityType="GADATAModelWelding.WeldFaultProtocol" Width="1.5" PointX="0.625" PointY="0.5" />
+        <EntityTypeShape EntityType="GADATAModelWelding.WeldfaultCount" Width="1.5" PointX="3.125" PointY="0.5" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

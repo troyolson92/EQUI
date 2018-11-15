@@ -426,6 +426,7 @@ warning 6002: The table/view 'GADATA.WELDING2.h_Nut_Bolt_Measure' does not have 
           <Property Name="rt_weldmeasureprotddw_count" Type="int" />
           <Property Name="rt_weldfaultprot_count" Type="int" />
           <Property Name="rt_breakdown_count" Type="int" />
+          <Property Name="rt_weldmeasureprotddw_distinct" Type="int" />
         </EntityType>
         <EntityType Name="rt_job_breakdown">
           <Key>
@@ -798,6 +799,19 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
           <Property Name="id" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.WELDING2.WeldfaultCount' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="WeldfaultCount">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="location" Type="varchar" MaxLength="256" />
+          <Property Name="NPT" Type="nchar" MaxLength="15" />
+          <Property Name="Timer" Type="nchar" MaxLength="15" />
+          <Property Name="countofTimerFaults" Type="bigint" />
+          <Property Name="WMComment" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="WeldFaultProtocol">
           <Key>
@@ -812,8 +826,8 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
           <Property Name="errorCode1_txt" Type="varchar" MaxLength="64" />
           <Property Name="errorCode2_txt" Type="varchar" MaxLength="64" />
           <Property Name="CountFaultsInJob" Type="int" />
-          <Property Name="progNo" Type="int" />
           <Property Name="CDSID" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="progNo" Type="int" />
           <Property Name="WMComment" Type="varchar" MaxLength="100" />
           <Property Name="id" Type="int" Nullable="false" />
         </EntityType>
@@ -1413,6 +1427,16 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
     [TimerBreakdowns_busy].[id] AS [id]
     FROM [WELDING2].[TimerBreakdowns_busy] AS [TimerBreakdowns_busy]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="WeldfaultCount" EntityType="Self.WeldfaultCount" store:Type="Views" store:Schema="WELDING2">
+            <DefiningQuery>SELECT 
+    [WeldfaultCount].[id] AS [id], 
+    [WeldfaultCount].[location] AS [location], 
+    [WeldfaultCount].[NPT] AS [NPT], 
+    [WeldfaultCount].[Timer] AS [Timer], 
+    [WeldfaultCount].[countofTimerFaults] AS [countofTimerFaults], 
+    [WeldfaultCount].[WMComment] AS [WMComment]
+    FROM [WELDING2].[WeldfaultCount] AS [WeldfaultCount]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="WeldFaultProtocol" EntityType="Self.WeldFaultProtocol" store:Type="Views" store:Schema="WELDING2">
             <DefiningQuery>SELECT 
     [WeldFaultProtocol].[NPT] AS [NPT], 
@@ -1423,8 +1447,8 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
     [WeldFaultProtocol].[errorCode1_txt] AS [errorCode1_txt], 
     [WeldFaultProtocol].[errorCode2_txt] AS [errorCode2_txt], 
     [WeldFaultProtocol].[CountFaultsInJob] AS [CountFaultsInJob], 
-    [WeldFaultProtocol].[progNo] AS [progNo], 
     [WeldFaultProtocol].[CDSID] AS [CDSID], 
+    [WeldFaultProtocol].[progNo] AS [progNo], 
     [WeldFaultProtocol].[WMComment] AS [WMComment], 
     [WeldFaultProtocol].[id] AS [id]
     FROM [WELDING2].[WeldFaultProtocol] AS [WeldFaultProtocol]</DefiningQuery>
@@ -1711,6 +1735,7 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
             <End Role="rt_weldmeasureprotddw" EntitySet="rt_weldmeasureprotddw" />
           </AssociationSet>
           <EntitySet Name="WeldFaultProtocol" EntityType="GADATAModelWelding.WeldFaultProtocol" />
+          <EntitySet Name="WeldfaultCount" EntityType="GADATAModelWelding.WeldfaultCount" />
           </EntityContainer>
         <EntityType Name="rt_AutoWorkFlowULPlans">
           <Key>
@@ -2521,6 +2546,7 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
           <NavigationProperty Name="rt_job_breakdown" Relationship="GADATAModelWelding.FK_rt_job_breakdown_rt_job" FromRole="rt_job" ToRole="rt_job_breakdown" />
           <NavigationProperty Name="Timer" Relationship="GADATAModelWelding.FK_rt_job_Timer" FromRole="rt_job" ToRole="Timer" />
           <NavigationProperty Name="Timer1" Relationship="GADATAModelWelding.FK_rt_job_Timer1" FromRole="rt_job" ToRole="Timer" />
+          <Property Name="rt_weldmeasureprotddw_distinct" Type="Int32" />
         </EntityType>
         <EntityType Name="rt_job_breakdown">
           <Key>
@@ -2893,6 +2919,17 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
           <Property Name="CDSID" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="WMComment" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="id" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WeldfaultCount">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="location" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="NPT" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="Timer" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="countofTimerFaults" Type="Int64" />
+          <Property Name="WMComment" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -3457,6 +3494,7 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
           <EntitySetMapping Name="rt_job">
             <EntityTypeMapping TypeName="GADATAModelWelding.rt_job">
               <MappingFragment StoreEntitySet="rt_job">
+                <ScalarProperty Name="rt_weldmeasureprotddw_distinct" ColumnName="rt_weldmeasureprotddw_distinct" />
                 <ScalarProperty Name="rt_breakdown_count" ColumnName="rt_breakdown_count" />
                 <ScalarProperty Name="rt_weldfaultprot_count" ColumnName="rt_weldfaultprot_count" />
                 <ScalarProperty Name="rt_weldmeasureprotddw_count" ColumnName="rt_weldmeasureprotddw_count" />
@@ -3705,6 +3743,18 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
                 <ScalarProperty Name="FaultStart" ColumnName="FaultStart" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="NPT" ColumnName="NPT" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WeldfaultCount">
+            <EntityTypeMapping TypeName="GADATAModelWelding.WeldfaultCount">
+              <MappingFragment StoreEntitySet="WeldfaultCount">
+                <ScalarProperty Name="WMComment" ColumnName="WMComment" />
+                <ScalarProperty Name="countofTimerFaults" ColumnName="countofTimerFaults" />
+                <ScalarProperty Name="Timer" ColumnName="Timer" />
+                <ScalarProperty Name="NPT" ColumnName="NPT" />
+                <ScalarProperty Name="location" ColumnName="location" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
