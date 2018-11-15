@@ -37,6 +37,7 @@
         <AssociationConnector Association="GADATAModelVWSC.FK_rt_job_Timer" />
         <AssociationConnector Association="GADATAModelVWSC.FK_rt_job_Timer1" />
         <AssociationConnector Association="GADATAModelVWSC.FK_rt_weldfault_Timer" />
+        <AssociationConnector Association="GADATAModelVWSC.FK_rt_weldmeasureprotddw_Timer" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

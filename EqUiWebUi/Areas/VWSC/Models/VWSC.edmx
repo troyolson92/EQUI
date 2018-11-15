@@ -193,6 +193,7 @@
           <Property Name="rt_weldmeasureprotddw_count" Type="int" />
           <Property Name="rt_weldfaultprot_count" Type="int" />
           <Property Name="rt_breakdown_count" Type="int" />
+          <Property Name="rt_weldmeasureprotddw_distinct" Type="int" />
         </EntityType>
         <EntityType Name="rt_job_breakdown">
           <Key>
@@ -243,6 +244,7 @@
           <Property Name="wear" Type="numeric" Precision="12" Scale="2" />
           <Property Name="spotId" Type="int" />
           <Property Name="isError" Type="bit" />
+          <Property Name="WMComment" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="rt_weldmeasureprotddw">
           <Key>
@@ -443,6 +445,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_rt_weldmeasureprotddw_Timer">
+          <End Role="Timer" Type="Self.Timer" Multiplicity="0..1" />
+          <End Role="rt_weldmeasureprotddw" Type="Self.rt_weldmeasureprotddw" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Timer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="rt_weldmeasureprotddw">
+              <PropertyRef Name="timerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Timer_c_timer_class">
           <End Role="c_timer_class" Type="Self.c_timer_class" Multiplicity="0..1" />
           <End Role="Timer" Type="Self.Timer" Multiplicity="*" />
@@ -521,6 +535,10 @@
           <AssociationSet Name="FK_rt_weldfault_Timer" Association="Self.FK_rt_weldfault_Timer">
             <End Role="Timer" EntitySet="Timer" />
             <End Role="rt_weldfault" EntitySet="rt_weldfault" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rt_weldmeasureprotddw_Timer" Association="Self.FK_rt_weldmeasureprotddw_Timer">
+            <End Role="Timer" EntitySet="Timer" />
+            <End Role="rt_weldmeasureprotddw" EntitySet="rt_weldmeasureprotddw" />
           </AssociationSet>
           <AssociationSet Name="FK_Timer_c_timer_class" Association="Self.FK_Timer_c_timer_class">
             <End Role="c_timer_class" EntitySet="c_timer_class" />
@@ -687,6 +705,10 @@
             <End Role="rt_job" EntitySet="rt_job" />
             <End Role="rt_job_breakdown" EntitySet="rt_job_breakdown" />
           </AssociationSet>
+          <AssociationSet Name="FK_rt_weldmeasureprotddw_Timer" Association="GADATAModelVWSC.FK_rt_weldmeasureprotddw_Timer">
+            <End Role="VWSC_c_Timer" EntitySet="Timer" />
+            <End Role="VWSC_rt_weldmeasureprotddw" EntitySet="rt_weldmeasureprotddw" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="VWSC_c_Timer">
           <Key>
@@ -708,6 +730,7 @@
           <NavigationProperty Name="rt_job" Relationship="GADATAModelVWSC.FK_rt_job_Timer" FromRole="VWSC_c_Timer" ToRole="rt_job" />
           <NavigationProperty Name="rt_job1" Relationship="GADATAModelVWSC.FK_rt_job_Timer1" FromRole="VWSC_c_Timer" ToRole="rt_job" />
           <NavigationProperty Name="rt_weldfault" Relationship="GADATAModelVWSC.FK_rt_weldfault_Timer" FromRole="VWSC_c_Timer" ToRole="rt_weldfault" />
+          <NavigationProperty Name="rt_weldmeasureprotddw" Relationship="GADATAModelVWSC.FK_rt_weldmeasureprotddw_Timer" FromRole="VWSC_c_Timer" ToRole="VWSC_rt_weldmeasureprotddw" />
         </EntityType>
         <EntityType Name="VWSC_c_NPT">
           <Key>
@@ -854,6 +877,7 @@
           <NavigationProperty Name="Timer" Relationship="GADATAModelVWSC.FK_rt_job_Timer" FromRole="rt_job" ToRole="VWSC_c_Timer" />
           <NavigationProperty Name="Timer1" Relationship="GADATAModelVWSC.FK_rt_job_Timer1" FromRole="rt_job" ToRole="VWSC_c_Timer" />
           <NavigationProperty Name="rt_job_breakdown" Relationship="GADATAModelVWSC.FK_rt_job_breakdown_rt_job" FromRole="rt_job" ToRole="rt_job_breakdown" />
+          <Property Name="rt_weldmeasureprotddw_distinct" Type="Int32" />
         </EntityType>
         <EntityType Name="VWSC_rt_job_breakdown">
           <Key>
@@ -907,6 +931,7 @@
           <Property Name="spotId" Type="Int32" />
           <Property Name="isError" Type="Boolean" />
           <NavigationProperty Name="Timer" Relationship="GADATAModelVWSC.FK_rt_weldfault_Timer" FromRole="rt_weldfault" ToRole="VWSC_c_Timer" />
+          <Property Name="WMComment" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="VWSC_rt_weldmeasureprotddw">
           <Key>
@@ -998,6 +1023,7 @@
           <Property Name="uirUipCondTol" Type="Decimal" Precision="8" Scale="2" />
           <Property Name="uirPsfLowerTol" Type="Decimal" Precision="8" Scale="2" />
           <Property Name="uirPsfCondTol" Type="Decimal" Precision="8" Scale="2" />
+          <NavigationProperty Name="Timer" Relationship="GADATAModelVWSC.FK_rt_weldmeasureprotddw_Timer" FromRole="VWSC_rt_weldmeasureprotddw" ToRole="VWSC_c_Timer" />
         </EntityType>
         <Association Name="FK_rt_alarm_Timer">
           <End Type="GADATAModelVWSC.VWSC_c_Timer" Role="VWSC_c_Timer" Multiplicity="0..1" />
@@ -1080,6 +1106,18 @@
             </Principal>
             <Dependent Role="rt_job_breakdown">
               <PropertyRef Name="rt_job_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rt_weldmeasureprotddw_Timer">
+          <End Type="GADATAModelVWSC.VWSC_c_Timer" Role="VWSC_c_Timer" Multiplicity="0..1" />
+          <End Type="GADATAModelVWSC.VWSC_rt_weldmeasureprotddw" Role="VWSC_rt_weldmeasureprotddw" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VWSC_c_Timer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="VWSC_rt_weldmeasureprotddw">
+              <PropertyRef Name="timerId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1274,6 +1312,7 @@
           <EntitySetMapping Name="rt_job">
             <EntityTypeMapping TypeName="GADATAModelVWSC.VWSC_rt_job">
               <MappingFragment StoreEntitySet="rt_job">
+                <ScalarProperty Name="rt_weldmeasureprotddw_distinct" ColumnName="rt_weldmeasureprotddw_distinct" />
                 <ScalarProperty Name="rt_breakdown_count" ColumnName="rt_breakdown_count" />
                 <ScalarProperty Name="rt_weldfaultprot_count" ColumnName="rt_weldfaultprot_count" />
                 <ScalarProperty Name="rt_weldmeasureprotddw_count" ColumnName="rt_weldmeasureprotddw_count" />
@@ -1325,6 +1364,7 @@
           <EntitySetMapping Name="rt_weldfault">
             <EntityTypeMapping TypeName="GADATAModelVWSC.VWSC_rt_weldfault">
               <MappingFragment StoreEntitySet="rt_weldfault">
+                <ScalarProperty Name="WMComment" ColumnName="WMComment" />
                 <ScalarProperty Name="isError" ColumnName="isError" />
                 <ScalarProperty Name="spotId" ColumnName="spotId" />
                 <ScalarProperty Name="wear" ColumnName="wear" />

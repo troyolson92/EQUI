@@ -53,7 +53,6 @@ namespace EqUiWebUi.Areas.VASC.Models
         public virtual DbSet<L_error> L_error { get; set; }
         public virtual DbSet<L_type> L_type { get; set; }
         public virtual DbSet<L_category> L_category { get; set; }
-        public virtual DbSet<Bodytracking> Bodytracking { get; set; }
         public virtual DbSet<NGAC_Supervisie> NGAC_Supervisie { get; set; }
     }
 }

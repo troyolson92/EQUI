@@ -124,7 +124,6 @@
     <Build Include="HangFire\Tables\Counter.sql" />
     <Build Include="EqUi\Tables\c_ownership.sql" />
     <Build Include="HangFire\Tables\Hash.sql" />
-    <Build Include="EqUi\Tables\JobPerformanceTrack.sql" />
     <Build Include="EqUi\Tables\l_dummyLogClassResult.sql" />
     <Build Include="HangFire\Tables\AggregatedCounter.sql" />
     <Build Include="EqUi\Tables\QUERYParameters.sql" />

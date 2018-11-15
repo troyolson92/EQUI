@@ -425,22 +425,6 @@
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'GADATA.NGAC.Bodytracking' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="Bodytracking">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" Nullable="false" />
-          <Property Name="controller_name" Type="varchar" MaxLength="30" />
-          <Property Name="jobNo" Type="int" />
-          <Property Name="bodyNo" Type="int" />
-          <Property Name="CycleStart" Type="datetime" />
-          <Property Name="CycleEnd" Type="datetime" />
-          <Property Name="ts_breakDownStart" Type="datetime" />
-          <Property Name="ts_breakDownAck" Type="datetime" />
-          <Property Name="ts_breakDownEnd" Type="datetime" />
-          <Property Name="FullLogtext" Type="varchar(max)" />
-          <Property Name="refId" Type="int" />
-        </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'GADATA.NGAC.NGAC_Supervisie' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="NGAC_Supervisie">
@@ -810,21 +794,6 @@ warning 6002: The table/view 'GADATA.NGAC.NGAC_Supervisie' does not have a prima
           <EntitySet Name="rt_job_breakdown" EntityType="Self.rt_job_breakdown" Schema="NGAC" store:Type="Tables" />
           <EntitySet Name="rt_search_value" EntityType="Self.rt_search_value" Schema="NGAC" store:Type="Tables" />
           <EntitySet Name="rt_value" EntityType="Self.rt_value" Schema="NGAC" store:Type="Tables" />
-          <EntitySet Name="Bodytracking" EntityType="Self.Bodytracking" store:Type="Views" store:Schema="NGAC">
-            <DefiningQuery>SELECT 
-    [Bodytracking].[id] AS [id], 
-    [Bodytracking].[controller_name] AS [controller_name], 
-    [Bodytracking].[jobNo] AS [jobNo], 
-    [Bodytracking].[bodyNo] AS [bodyNo], 
-    [Bodytracking].[CycleStart] AS [CycleStart], 
-    [Bodytracking].[CycleEnd] AS [CycleEnd], 
-    [Bodytracking].[ts_breakDownStart] AS [ts_breakDownStart], 
-    [Bodytracking].[ts_breakDownAck] AS [ts_breakDownAck], 
-    [Bodytracking].[ts_breakDownEnd] AS [ts_breakDownEnd], 
-    [Bodytracking].[FullLogtext] AS [FullLogtext], 
-    [Bodytracking].[refId] AS [refId]
-    FROM [NGAC].[Bodytracking] AS [Bodytracking]</DefiningQuery>
-          </EntitySet>
           <EntitySet Name="NGAC_Supervisie" EntityType="Self.NGAC_Supervisie" store:Type="Views" store:Schema="NGAC">
             <DefiningQuery>SELECT 
     [NGAC_Supervisie].[Location] AS [Location], 
@@ -1149,7 +1118,6 @@ warning 6002: The table/view 'GADATA.NGAC.NGAC_Supervisie' does not have a prima
             <End Role="rt_alarm" EntitySet="rt_alarm" />
             <End Role="rt_job_breakdown" EntitySet="rt_job_breakdown" />
           </AssociationSet>
-          <EntitySet Name="Bodytracking" EntityType="GADATAModelVASC.Bodytracking" />
           <EntitySet Name="NGAC_Supervisie" EntityType="GADATAModelVASC.NGAC_Supervisie" />
         </EntityContainer>
         <EntityType Name="c_error">
@@ -1874,22 +1842,6 @@ warning 6002: The table/view 'GADATA.NGAC.NGAC_Supervisie' does not have a prima
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="Bodytracking">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" />
-          <Property Name="controller_name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="jobNo" Type="Int32" />
-          <Property Name="bodyNo" Type="Int32" />
-          <Property Name="CycleStart" Type="DateTime" Precision="3" />
-          <Property Name="CycleEnd" Type="DateTime" Precision="3" />
-          <Property Name="ts_breakDownStart" Type="DateTime" Precision="3" />
-          <Property Name="ts_breakDownAck" Type="DateTime" Precision="3" />
-          <Property Name="ts_breakDownEnd" Type="DateTime" Precision="3" />
-          <Property Name="FullLogtext" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="refId" Type="Int32" />
-        </EntityType>
         <EntityType Name="NGAC_Supervisie">
           <Key>
             <PropertyRef Name="refId" />
@@ -2362,23 +2314,6 @@ warning 6002: The table/view 'GADATA.NGAC.NGAC_Supervisie' does not have a prima
                 <ScalarProperty Name="C_session" ColumnName="_session" />
                 <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
                 <ScalarProperty Name="Category" ColumnName="Category" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Bodytracking">
-            <EntityTypeMapping TypeName="GADATAModelVASC.Bodytracking">
-              <MappingFragment StoreEntitySet="Bodytracking">
-                <ScalarProperty Name="refId" ColumnName="refId" />
-                <ScalarProperty Name="FullLogtext" ColumnName="FullLogtext" />
-                <ScalarProperty Name="ts_breakDownEnd" ColumnName="ts_breakDownEnd" />
-                <ScalarProperty Name="ts_breakDownAck" ColumnName="ts_breakDownAck" />
-                <ScalarProperty Name="ts_breakDownStart" ColumnName="ts_breakDownStart" />
-                <ScalarProperty Name="CycleEnd" ColumnName="CycleEnd" />
-                <ScalarProperty Name="CycleStart" ColumnName="CycleStart" />
-                <ScalarProperty Name="bodyNo" ColumnName="bodyNo" />
-                <ScalarProperty Name="jobNo" ColumnName="jobNo" />
-                <ScalarProperty Name="controller_name" ColumnName="controller_name" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

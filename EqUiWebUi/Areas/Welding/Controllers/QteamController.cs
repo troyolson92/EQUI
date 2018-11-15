@@ -9,7 +9,7 @@ namespace EqUiWebUi.Areas.Welding.Controllers
 {
 
    
-    [Authorize(Roles = "QteamPoweruser")]
+   // [Authorize(Roles = "QteamPoweruser")]
     public class QteamController : Controller
     {
         GADATAEntitiesWelding db = new GADATAEntitiesWelding();

@@ -147,7 +147,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
         //guess the parameter type based on its value
         private TypeCode guess_typecode(string sValue)
         {
-            try { if (DateTime.ParseExact(sValue, "yyyy-MM-dd hh:mm:ss", CultureInfo.InvariantCulture) != null) return TypeCode.DateTime; }
+            try { if (DateTime.ParseExact(sValue, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture) != null) return TypeCode.DateTime; }
             catch { }
             try { if (DateTime.ParseExact(sValue, "yyyy-MM-dd", CultureInfo.InvariantCulture) != null) return TypeCode.DateTime; }
             catch { }
@@ -398,7 +398,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
                     //Debug.WriteLine("name: {0}  enbled: {1}  value: {2}", nDateb.Name, nDateb.active, nDateb.input.ToString("yyyy-MM-dd hh:mm:ss"));
                     if (nDateb.active)
                     {
-                        sbQuery.Append(string.Format(" {0} = '{1}' ,", nDateb.Name, nDateb.input.ToString("yyyy-MM-dd hh:mm:ss")));
+                        sbQuery.Append(string.Format(" {0} = '{1}' ,", nDateb.Name, nDateb.input.ToString("yyyy-MM-dd HH:mm:ss")));
                     }
                 }
                 else if (control is Forms.uc_Checkbox)

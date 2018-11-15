@@ -1,0 +1,60 @@
+﻿@{
+    ViewBag.Title = "getBreakdowns";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index getJobs</h2>
+
+@if (ViewBag.PromptBodynum)
+{
+    <small class="form-text text-muted">Enter bodynum and press Find body</small>
+    <div class="input-group mb-3 col-3">
+        <input type="number" class="form-control" id="bodynum">
+        <div class="input-group-append">
+            <span class="btn btn-primary" id="btnGet">Find body</span>
+        </div>
+    </div>
+}
+
+<div data-name="rtjobGrid" class="mvc-grid"></div>
+
+@section scripts{
+    <script>
+        //full with screen
+        $("#allcontent").removeClass("body-content");
+        $("#allcontent").removeClass("container");
+
+        function loadGrid() {
+            $('[data-name= "rtjobGrid"]').html("<i class='fa fa-spinner fa-pulse fa-4x fa-fw'></i>");
+            $('[data-name= "rtjobGrid"]').mvcgrid({
+                sourceUrl: '@Url.Action("_getJobs")', // Grid source url string
+                    data: {
+                        bodyNo: $('#bodynum').val(),
+                        hasBreakdowns: @ViewBag.hasBreakdowns.ToString().ToLower()
+                    },
+                requestType: 'get', // Ajax grid request type
+                reload: true, // Grid reload indicator
+                reloadEnded: function () {
+                   $('#btnGet').removeClass('disabled');
+                },
+                reloadFailed: function (result) {
+                    console.log(result);
+                    $('#btnGet').removeClass('disabled');
+                    $('[data-name="rtjobGrid"]').html("<div class='alert alert-danger'>Error while loading!! </div>");
+                }
+             });
+        }
+
+        //if in bodynum mode wait for click
+        $("#btnGet").click(function () {
+            $('#btnGet').addClass('disabled');
+            loadGrid();
+        });
+
+        //load when not in bodynum mode
+        if ($("#btnGet").length == 0) {
+            loadGrid();
+        }
+
+    </script>
+}

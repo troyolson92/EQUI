@@ -14,7 +14,7 @@ namespace EqUiWebUi.Areas.Welding.Models
     
     public partial class ComparePitchV316
     {
-        public int ID { get; set; }
+        public int id { get; set; }
         public string timerNumber { get; set; }
         public string lastWeldTime { get; set; }
         public string SpotID { get; set; }
@@ -24,6 +24,5 @@ namespace EqUiWebUi.Areas.Welding.Models
         public Nullable<System.DateTime> lastULControleTime { get; set; }
         public Nullable<double> TotalThickness { get; set; }
         public string Expr1 { get; set; }
-        public int Expr2 { get; set; }
     }
 }
