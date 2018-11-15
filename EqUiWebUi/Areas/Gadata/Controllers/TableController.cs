@@ -22,13 +22,15 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
 
         //------------------------------------PloegRapport-------------------------------------------------
         [HttpGet]
-        public ActionResult PloegRapportWebgrid()
+        public ActionResult PloegRapportWebgrid(int minSumOfDownTime = 20, int minCountOfDownTime = 4)
         {
+            ViewBag.minSumOfDownTime = minSumOfDownTime;
+            ViewBag.minCountOfDownTime = minCountOfDownTime;
             return View();
         }
 
         [HttpGet]
-        public ActionResult _ploegRapport()
+        public ActionResult _ploegRapport(int minSumOfDownTime = 20, int minCountOfDownTime = 4 )
         {
             var data = DataBuffer.Supervisie;
             //in case still null trow error return empty result 
@@ -97,7 +99,7 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
                 }).Where(
                  p => 
                  (//EXCLUDE
-                 (p.Downtime_min_ > 20 * 60 || p.Count > 4)  //longer than 20 min or more than 4 times 
+                 (p.Downtime_min_ > minSumOfDownTime * 60 || p.Count > minCountOfDownTime)  //longer than 20 min or more than 4 times 
                  && p.Logtype != "LIVE"  //EXCLUDE
                  )
                  || p.animation == "ALERT" //INCLUDE (this is on the animation because when the animation of an alert is "Alert" this alert is not in WGK 
