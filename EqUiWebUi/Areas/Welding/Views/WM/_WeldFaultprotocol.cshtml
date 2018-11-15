@@ -1,0 +1,80 @@
+﻿@model IQueryable<EqUiWebUi.Areas.Welding.Models.WeldFaultProtocol>
+
+@{
+    ViewBag.Title = "index";
+}
+
+<h2>WeldFault TOP 10 langste storingen laatste 24 H</h2>
+
+
+@Html.Grid(Model).Named("_WeldFaultprotocol").Build(columns =>
+{
+
+    columns.Add(c => c.Name).Titled("Timer");
+    columns.Add(c => c.FaultStart).Titled("Faultstart");
+    columns.Add(c => c.FaultEnd).Titled("FaultEnd");
+    columns.Add(c => c.breakdownTime).Titled("breakdowntime").InitialSort(GridSortOrder.Desc);
+    columns.Add(c => c.errorCode1_txt).Titled("faultName1");
+    columns.Add(c => c.errorCode2_txt).Titled("faultName2");
+    columns.Add(c => c.CountFaultsInJob).Titled("CountfaultsInjob");
+    columns.Add(c => c.progNo).Titled("Timerprogram");
+
+
+    columns.Add(c => c.WMComment).Titled("WMComment");
+
+
+}).Filterable().Sortable().Pageable(pager =>
+{
+
+}).Css("table-hover").RowCss(model => model.breakdownTime >= 10 ? "ani_PulseRed" : "")
+
+@section scripts{
+    <script src="~/node_modules/jquery-jeditable/dist/jquery.jeditable.min.js"></script>
+
+    <script>
+        //full with screen
+        $("#allcontent").removeClass("body-content");
+        $("#allcontent").removeClass("container");
+
+        //subscribe to row clicked events
+        $('[data-name="WeldFaultprotocol"]').mvcgrid({
+            rowClicked: function (row, data, e) {
+                return;
+
+                //if row already has this clase close the modal
+                if ($(row).hasClass("bg-info")) {
+                    $("#placeholder").remove();
+                    $(row).removeClass("bg-info");
+                    return;
+                }
+                //clear selected rows for this table
+                $('tr').removeClass('bg-info'); //THIS IS WRONG
+                $(row).addClass("bg-info");
+                $("#placeholder").remove(); //clear placeholder is exists
+                //add new placeholder afhter selected row
+                $(row).after('<tr id="placeholder"><td colspan="1000"><div class="card border-info"><div class="card-body" id ="placeholderPartial"></div></div></td></tr>');
+                //animation
+                $("#placeholderPartial").html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
+                //load url in placeholder
+                var url = "@Url.Action("_WeldFaulprotocol")?id=" + data["id"];
+                $("#placeholderPartial").load(url);
+            }
+        });
+
+        //test with Jeditable for in place table editable
+        //https://github.com/NicolasCARPi/jquery_jeditable/
+        //Sample code
+        https://jeditable.elabftw.net/
+
+
+        //simple sample basic
+        $('.editTestCollum1').editable('@Url.Action("UpdateLabel")');
+
+        //full sample
+        $('.editTestCollum2').editable('@Url.Action("UpdateLabel")', {
+            data   : '{"E":"Letter E","F":"Letter F","G":"Letter G", "selected":"F"}',
+            type   : 'select',
+            submit : 'OK'
+        });
+    </script>
+    }

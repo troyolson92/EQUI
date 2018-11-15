@@ -89,9 +89,9 @@ namespace EqUiWebUi
 
         //jens zijn tools
         //AutomaticWorkFlowULPlans
-        public static string getRowStyleAutomaticWorkFlowULPlans(string status)
+        public static string getRowStyleAutomaticWorkFlowULPlans(string Last30min_productionStatus)
         {
-            switch (status)
+            switch (Last30min_productionStatus)
             {
                 case "production running":
                     return "TableLogtypeGreen";

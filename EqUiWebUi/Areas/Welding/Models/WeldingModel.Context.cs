@@ -41,11 +41,40 @@ namespace EqUiWebUi.Areas.Welding.Models
         public virtual DbSet<QISViewer> QISViewer { get; set; }
         public virtual DbSet<TimerBreakdowns_busy> TimerBreakdowns_busy { get; set; }
         public virtual DbSet<TimerBreakdownDatachange> TimerBreakdownDatachange { get; set; }
-        public virtual DbSet<ComparePitchV316> ComparePitchV316 { get; set; }
         public virtual DbSet<TDTResults> TDTResults { get; set; }
         public virtual DbSet<ToDoList> ToDoList { get; set; }
         public virtual DbSet<ToDoList_Remark> ToDoList_Remark { get; set; }
         public virtual DbSet<test> test { get; set; }
+        public virtual DbSet<blanco> blanco { get; set; }
+        public virtual DbSet<comment> comment { get; set; }
+        public virtual DbSet<foutcode> foutcode { get; set; }
+        public virtual DbSet<picture> picture { get; set; }
+        public virtual DbSet<picturename> picturename { get; set; }
+        public virtual DbSet<result> result { get; set; }
+        public virtual DbSet<teardown> teardown { get; set; }
+        public virtual DbSet<TeardownResults> TeardownResults { get; set; }
+        public virtual DbSet<type> type { get; set; }
+        public virtual DbSet<ComparePitchV316> ComparePitchV316 { get; set; }
+        public virtual DbSet<c_error> c_error { get; set; }
+        public virtual DbSet<h_Midair> h_Midair { get; set; }
+        public virtual DbSet<h_weldmeasure> h_weldmeasure { get; set; }
+        public virtual DbSet<L_operation> L_operation { get; set; }
+        public virtual DbSet<rt_active_info> rt_active_info { get; set; }
+        public virtual DbSet<rt_alarm> rt_alarm { get; set; }
+        public virtual DbSet<rt_comment> rt_comment { get; set; }
+        public virtual DbSet<rt_communication_state> rt_communication_state { get; set; }
+        public virtual DbSet<rt_datachangeprot> rt_datachangeprot { get; set; }
+        public virtual DbSet<rt_job> rt_job { get; set; }
+        public virtual DbSet<rt_job_breakdown> rt_job_breakdown { get; set; }
+        public virtual DbSet<rt_job_expulsion> rt_job_expulsion { get; set; }
+        public virtual DbSet<rt_spot> rt_spot { get; set; }
+        public virtual DbSet<rt_weldfault> rt_weldfault { get; set; }
+        public virtual DbSet<rt_weldmeasureprotddw> rt_weldmeasureprotddw { get; set; }
+        public virtual DbSet<h_Nut_Bolt_Measure> h_Nut_Bolt_Measure { get; set; }
+        public virtual DbSet<NPT> NPT { get; set; }
+        public virtual DbSet<Timer> Timer { get; set; }
+        public virtual DbSet<Users> Users { get; set; }
+        public virtual DbSet<WeldFaultProtocol> WeldFaultProtocol { get; set; }
     
         public virtual ObjectResult<Lastwelds_Result> Lastwelds(string timer, Nullable<int> spot)
         {

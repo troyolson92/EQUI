@@ -12,17 +12,12 @@ namespace EqUiWebUi.Areas.Welding.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class ComparePitchV316
+    public partial class Users
     {
-        public int id { get; set; }
-        public string timerNumber { get; set; }
-        public string lastWeldTime { get; set; }
-        public string SpotID { get; set; }
-        public string Timer { get; set; }
-        public string AlternativeNumber { get; set; }
-        public string Model { get; set; }
-        public Nullable<System.DateTime> lastULControleTime { get; set; }
-        public Nullable<double> TotalThickness { get; set; }
-        public string Expr1 { get; set; }
+        public int ID { get; set; }
+        public string CDSID { get; set; }
+        public string Voornaam { get; set; }
+        public string Achternaam { get; set; }
+        public string @object { get; set; }
     }
 }
