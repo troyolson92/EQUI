@@ -80,8 +80,6 @@
     </div>
     <div class="card-body">
         @MyHtmlHelpers.EquiLink("/Welding/Welding/index", "fas fa-bolt", "AASPOT homepage", helperText: "Nieuwe website voor AASPOT (jens)")
-        <hr />
-        <p class="text-muted">*In beta </p>
         @MyHtmlHelpers.EquiLink("/PJV/pjv/index", "fas fa-vial", "PJV", helperText: "Track changed and modifications on robot process points")
     </div>
 </div>
@@ -98,7 +96,7 @@
         </h5>
     </div>
     <div class="card-body" style="display:none">
-        @MyHtmlHelpers.EquiLink("/VASC/Breakdown/GetJobs?DataGrid-body-no-equals=99999999", "fas fa-vial", "Track cars by bodynum", helperText: "weldbolt line only")
+        @MyHtmlHelpers.EquiLink("/VASC/Breakdown/GetJobs?PromptBodynum=true", "fas fa-vial", "Track cars by bodynum", helperText: "weldbolt line only")
     </div>
 </div>
 

@@ -1832,6 +1832,7 @@
     <Content Include="node_modules\jquery\README.md" />
     <Content Include="node_modules\jquery\src\.eslintrc.json" />
     <Content Include="Areas\VASC\Views\Breakdown\GetJobs.cshtml" />
+    <Content Include="Areas\VASC\Views\Breakdown\_getJobs.cshtml" />
     <None Include="Properties\PublishProfiles\gensvw1178-DEV-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gotsvw11292-PRODUCTION-VCTA.pubxml" />

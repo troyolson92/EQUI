@@ -8,9 +8,11 @@
 @Html.Grid(Model).Named("VWSC_rt_job").Build(columns =>
 {
     columns.Add(c => c.id).Titled("rt_job_id").InitialSort(GridSortOrder.Desc);
+    columns.Add(c => c.ngac_rt_job_id).Titled("ngacJobId");
     columns.Add(c => c.C_timestamp).Titled("C_timestamp");
     columns.Add(c =>  (c.ts_End-c.ts_Start).GetValueOrDefault().TotalSeconds).Titled("CT");
     columns.Add(c => c.rt_weldmeasureprotddw_count).Titled("weldCount");
+    columns.Add(c => c.rt_weldmeasureprotddw_distinct).Titled("DistinctCount");
     //
     columns.Add(c => c.rt_weldmeasureprotddw_id_Start).Titled("weldmeasureStart");
     columns.Add(c => c.rt_weldmeasureprotddw_id_End).Titled("weldmeasureEnd");

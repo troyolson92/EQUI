@@ -1,44 +1,55 @@
-﻿@model IQueryable<EqUiWebUi.Areas.VASC.Models.rt_job>
-
-@{
+﻿@{
     ViewBag.Title = "getBreakdowns";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Index getJobs</h2>
 
-@Html.Grid(Model).Named("rt_job").Build(columns =>
+@if (ViewBag.PromptBodynum)
 {
-    columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Desc).Css("d-none");
-    columns.Add(c => c.bodyNo).Titled("bodyNo");
-    columns.Add(c => c.c_controller.controller_name).Titled("controller_name"); 
-    columns.Add(c => c.ts_Start).Titled("CycleStart").Formatted("{0:dd-MM-yyyy HH:mm:ss}");
-    columns.Add(c => c.ts_End).Titled("CycleEnd").Formatted("{0:HH:mm:ss}");
-    columns.Add(c => c.ts_breakDownStart).Titled("ts_breakdownStart").Formatted("{0:HH:mm:ss}");
-    columns.Add(c => (c.ts_breakDownAck - c.ts_breakDownStart)).Titled("AckTime");
-    columns.Add(c => (c.ts_breakDownEnd - c.ts_breakDownAck)).Titled("RepTime");
-    columns.Add(c => (c.ts_breakDownEnd - c.ts_breakDownStart)).Titled("StopTime");
-    columns.Add(c => c.breakDownCount).Titled("SubstopCount");
-    columns.Add(c => c.rt_job_breakdown.FirstOrDefault().h_alarm.L_error._Logtext).Titled("H_Logtext").Filterable(false);
-    columns.Add(c => c.rt_job_breakdown.FirstOrDefault().rt_alarm.description).Titled("RT_Logtext").Filterable(false);
-    columns.Add(c => c.rt_job_breakdown.FirstOrDefault().phase1).Titled("phase1").Filterable(false);
-    columns.Add(c => c)
-               .Titled("Job")
-               .Encoded(false)
-               .RenderedAs(c => MyFilters.IconActionLink(Url.Action("rtJob", "Breakdown", new { Area = "VASC", jobID = c.id }), "fas fa-info-circle", "", "show vasc job details")
-               ).Filterable(false);
-}).Filterable().Sortable().Pageable(pager =>
-{
-    pager.RowsPerPage = 20;
-    pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 20, "20" }, { 40, "40" }, { 80, "80" }, { 100, "100" } };
-    pager.ShowPageSizes = true;
-}).Empty("Did not find anything").Css("table-hover")
+    <small class="form-text text-muted">Enter bodynum and press Find body</small>
+    <div class="input-group mb-3 col-3">
+        <input type="number" class="form-control" id="bodynum">
+        <div class="input-group-append">
+            <span class="input-group-text btn" id="btnGet">Find body</span>
+        </div>
+    </div>
+}
 
+<div data-name="rtjobGrid" class="mvc-grid"></div>
 
 @section scripts{
     <script>
         //full with screen
         $("#allcontent").removeClass("body-content");
         $("#allcontent").removeClass("container");
+
+        function loadGrid() {
+            $('[data-name="rtjobGrid"]').mvcgrid({
+                sourceUrl: '@Url.Action("_getJobs")', // Grid source url string
+                    data: {
+                        bodyNo: $('#bodynum').val(),
+                        hasBreakdowns: @ViewBag.hasBreakdowns.ToString().ToLower()
+                    },
+                requestType: 'get', // Ajax grid request type
+                reload: true, // Grid reload indicator
+                reloadFailed: function (result) {
+                    console.log(result);
+                    $('[data-name="rtjobGrid"]').html("<div class='alert alert-danger'>Error while loading!! </div>");
+                }
+             });
+        }
+
+        //if in bodynum mode wait for click
+        $("#btnGet").click(function () {
+            $(this).prop("disabled", true);
+            loadGrid();
+        });
+
+        //load when not in bodynum mode
+        if ($("#btnGet").length == 0) {
+            loadGrid();
+        }
+
     </script>
 }

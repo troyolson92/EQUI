@@ -18,19 +18,30 @@ namespace EqUiWebUi.Areas.VASC.Controllers
         }
 
         // Get list of all rt jobs
-        public ActionResult GetJobs(bool hasBreakdowns = false)
+        public ActionResult GetJobs(bool hasBreakdowns = false, bool PromptBodynum = false)
+        {
+            ViewBag.hasBreakdowns = hasBreakdowns;
+            ViewBag.PromptBodynum = PromptBodynum;
+            return View();
+        }
+
+        // Get list of all rt jobs (grid)
+        public ActionResult _getJobs(int? bodyNo, bool hasBreakdowns = false)
         {
             db.Database.CommandTimeout = 60;
+            IQueryable<rt_job> data;
+            data = db.rt_job.Where(c => 
+            (c.breakDownCount != 0 || hasBreakdowns == false)
+            && (c.bodyNo == bodyNo || bodyNo == null)
+            );
+
             string LocationRoot = CurrentUser.Getuser.LocationRoot;
             if (LocationRoot != "")
             {
-                return View(db.rt_job.Where(c => (c.c_controller.LocationTree ?? "").Contains(LocationRoot) && (c.breakDownCount != 0 || hasBreakdowns == false)));
-            }
-            else
-            {
-                return View(db.rt_job.Where(c =>  (c.breakDownCount != 0 || hasBreakdowns == false)));
+                data = data.Where(c => (c.c_controller.LocationTree ?? "").Contains(LocationRoot));
             }
 
+            return PartialView(data);
         }
 
         //Get specific RT job (single job)
