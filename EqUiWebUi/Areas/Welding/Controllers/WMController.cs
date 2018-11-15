@@ -15,7 +15,6 @@ namespace EqUiWebUi.Areas.Welding.Controllers
 {
     public class WMController : Controller
 
-
     {
         GADATAEntitiesWelding db = new GADATAEntitiesWelding();
 
@@ -66,7 +65,7 @@ namespace EqUiWebUi.Areas.Welding.Controllers
                         
                         select i;
 
-            return View(data.Take(10));
+            return PartialView(data.Take(10));
         }
         // GET: Welding/Update
         //test for in line edit 1 method for 1 value

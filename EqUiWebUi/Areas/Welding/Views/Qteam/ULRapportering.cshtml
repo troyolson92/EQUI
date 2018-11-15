@@ -21,7 +21,7 @@
     pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 20, "20" }, { 40, "40" }, { 80, "80" }, { 100, "100" } };
     pager.ShowPageSizes = true;
 }
-).Sortable().RowCss(model => model.spot > 0 ? "red" : "");
+).Sortable().RowCss(model => model.DurationStoring > 0  || model.spot > 0 ? "ani_PulseBlueRepeat" : "");
 
 @section scripts{
     <script>
