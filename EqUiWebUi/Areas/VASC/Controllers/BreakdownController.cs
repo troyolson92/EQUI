@@ -17,41 +17,30 @@ namespace EqUiWebUi.Areas.VASC.Controllers
             return View();
         }
 
-        public ActionResult GetBreakdowns()
-        {
-            string LocationRoot = CurrentUser.Getuser.LocationRoot;
-            if (LocationRoot != "")
-            {
-                return View(db.rt_job.Where(c => c.ts_breakDownStart != null && (c.c_controller.LocationTree ?? "").Contains(LocationRoot)));
-            }
-            else
-            {
-                return View(db.rt_job.Where(c => c.ts_breakDownStart != null));
-            }
-
-        }
-
-        public ActionResult GetJobs()
+        // Get list of all rt jobs
+        public ActionResult GetJobs(bool hasBreakdowns = false)
         {
             db.Database.CommandTimeout = 60;
             string LocationRoot = CurrentUser.Getuser.LocationRoot;
             if (LocationRoot != "")
             {
-                return View(db.rt_job.Where(c => (c.c_controller.LocationTree ?? "").Contains(LocationRoot)));
+                return View(db.rt_job.Where(c => (c.c_controller.LocationTree ?? "").Contains(LocationRoot) && (c.breakDownCount != 0 || hasBreakdowns == false)));
             }
             else
             {
-                return View(db.rt_job);
+                return View(db.rt_job.Where(c =>  (c.breakDownCount != 0 || hasBreakdowns == false)));
             }
 
         }
 
+        //Get specific RT job (single job)
         public ActionResult RtJob(int jobId)
         {
             ViewBag.jobID = jobId;
             return View();
         }
 
+        //Get specific RT job (single job) GRID
         public ActionResult _getJob(int jobID)
         {
             //need to add this in the bag

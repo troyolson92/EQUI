@@ -1142,7 +1142,6 @@
     <Content Include="Areas\VASC\Views\Breakdown\Index.cshtml" />
     <Content Include="Areas\VASC\Views\Breakdown\rtJob.cshtml" />
     <Content Include="Areas\VASC\Views\Breakdown\_BreakDownGridLayout.cshtml" />
-    <Content Include="Areas\VASC\Views\Breakdown\getBreakdowns.cshtml" />
     <Content Include="Areas\PJV\Views\web.config" />
     <Content Include="Areas\Alert\Views\_ViewStart.cshtml" />
     <Content Include="Areas\PJV\Views\_ViewStart.cshtml" />
