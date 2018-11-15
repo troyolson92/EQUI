@@ -466,9 +466,6 @@
     <Compile Include="Areas\VASC\Controllers\L_operationController.cs" />
     <Compile Include="Areas\VASC\Controllers\rt_active_infoController.cs" />
     <Compile Include="Areas\VASC\Controllers\vascController.cs" />
-    <Compile Include="Areas\VASC\Models\Bodytracking.cs">
-      <DependentUpon>VASC.tt</DependentUpon>
-    </Compile>
     <Compile Include="Areas\VASC\Models\breakdownMetadata.cs" />
     <Compile Include="Areas\VASC\Models\c_controller.cs">
       <DependentUpon>VASC.tt</DependentUpon>
@@ -1139,7 +1136,6 @@
     <Content Include="Areas\Gadata\Views\Table\PloegRapportWebgrid.cshtml" />
     <Content Include="Areas\Gadata\Views\Shared\_Moreinfo.cshtml" />
     <Content Include="Areas\Gadata\Views\Table\_supervisie.cshtml" />
-    <Content Include="Areas\Gadata\Views\Table\BodyTrackWebgrid.cshtml" />
     <Content Include="Areas\Gadata\Views\Table\SupervisieWebgrid.cshtml" />
     <Content Include="Areas\Gadata\Views\Table\MoreInfo.cshtml" />
     <Content Include="Areas\Gadata\Views\Table\_loginfo.cshtml" />
@@ -1236,7 +1232,6 @@
     <Content Include="Areas\VASC\Views\Breakdown\Index.cshtml" />
     <Content Include="Areas\VASC\Views\Breakdown\rtJob.cshtml" />
     <Content Include="Areas\VASC\Views\Breakdown\_BreakDownGridLayout.cshtml" />
-    <Content Include="Areas\VASC\Views\Breakdown\getBreakdowns.cshtml" />
     <Content Include="Areas\PJV\Views\web.config" />
     <Content Include="Areas\Alert\Views\_ViewStart.cshtml" />
     <Content Include="Areas\PJV\Views\_ViewStart.cshtml" />
@@ -1925,6 +1920,8 @@
     <Content Include="node_modules\jquery\package.json" />
     <Content Include="node_modules\jquery\README.md" />
     <Content Include="node_modules\jquery\src\.eslintrc.json" />
+    <Content Include="Areas\VASC\Views\Breakdown\GetJobs.cshtml" />
+    <Content Include="Areas\VASC\Views\Breakdown\_getJobs.cshtml" />
     <Content Include="Areas\Welding\Views\WM\_WeldFaultprotocol.cshtml" />
     <None Include="Properties\PublishProfiles\gensvw1178-DEV-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION-VCG.pubxml" />

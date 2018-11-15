@@ -100,5 +100,7 @@ namespace EqUiWebUi.Areas.VWSC.Models
         public Nullable<decimal> uirUipCondTol { get; set; }
         public Nullable<decimal> uirPsfLowerTol { get; set; }
         public Nullable<decimal> uirPsfCondTol { get; set; }
+    
+        public virtual VWSC_c_Timer Timer { get; set; }
     }
 }

@@ -29,12 +29,25 @@ namespace EqUiWebUi.Areas.Alert.Controllers
 
         //Global Alert interface
         // GET: Listalerts AND filter the alerts based on the users profile
-        public ActionResult Listalerts()
-        {
-            //filter alerts basted on user profile!
-            string UserLocationroot = CurrentUser.Getuser.LocationRoot;
-            var h_alert = db.h_alert.Include(h => h.c_state).Include(h => h.c_triggers).Include(h => h.ChangedUser).Include(h => h.CloseUser).Include(h => h.AcceptUser);
-            return View(h_alert.Where(a => a.locationTree.Contains(UserLocationroot)));
+        public ActionResult Listalerts(int? c_trigger_id, int? id, string Location = "")
+        {           
+            var h_alert = db.h_alert.Include(h => h.c_state).Where(h =>
+                ((h.id == (id ?? 0)) || (id == null))
+                && ((h.c_tirgger_id == (c_trigger_id ?? 0)) || (c_trigger_id == null))
+                && ((h.location.StartsWith(Location))||(Location == ""))
+                ).Include(h => h.c_triggers).Include(h => h.ChangedUser).Include(h => h.CloseUser).Include(h => h.AcceptUser);
+
+            //only apply location filter if no parms are passed 
+            if (c_trigger_id.HasValue || id.HasValue || Location != "")
+            {
+                return View(h_alert);
+            }
+            else
+            {
+                //filter alerts basted on user profile!
+                string UserLocationroot = CurrentUser.Getuser.LocationRoot;
+                return View(h_alert.Where(a => a.locationTree.Contains(UserLocationroot)));
+            }
         }
 
         //specific Alert interface for AASPOT

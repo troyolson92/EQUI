@@ -24,6 +24,7 @@ namespace EqUiWebUi.Areas.VWSC.Models
             this.rt_job = new HashSet<VWSC_rt_job>();
             this.rt_job1 = new HashSet<VWSC_rt_job>();
             this.rt_weldfault = new HashSet<VWSC_rt_weldfault>();
+            this.rt_weldmeasureprotddw = new HashSet<VWSC_rt_weldmeasureprotddw>();
         }
     
         public int ID { get; set; }
@@ -50,5 +51,7 @@ namespace EqUiWebUi.Areas.VWSC.Models
         public virtual ICollection<VWSC_rt_job> rt_job1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<VWSC_rt_weldfault> rt_weldfault { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<VWSC_rt_weldmeasureprotddw> rt_weldmeasureprotddw { get; set; }
     }
 }

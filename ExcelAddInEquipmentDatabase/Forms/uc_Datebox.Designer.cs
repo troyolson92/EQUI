@@ -92,7 +92,7 @@
             this.dt_1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.dt_1.CustomFormat = "yyyy-MM-dd hh:mm:ss";
+            this.dt_1.CustomFormat = "yyyy-MM-dd HH:mm:ss";
             this.dt_1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dt_1.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dt_1.Location = new System.Drawing.Point(72, 2);

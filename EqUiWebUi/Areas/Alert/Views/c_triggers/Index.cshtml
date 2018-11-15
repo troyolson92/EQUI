@@ -8,7 +8,7 @@
 <h2>Index of all alerts triggers</h2>
 
 <p>
-    @Html.ActionLink("Create New trigger", "Edit",new {id = -1 }) 
+    @Html.ActionLink("Create New trigger", "Edit", new { id = -1 })
 </p>
 
 
@@ -26,10 +26,11 @@
     columns.Add(c => c.id)
                 .Titled("")
                 .Encoded(false)
-                .RenderedAs(c => @Html.ActionLink("Edit", "Edit", new { id = c.id }) + " | " +
-                                 @Html.ActionLink("Show", "Index","h_alert", new { c_trigger_id = c.id },null) + " | " +
-                                 @Html.ActionLink("Delete", "Delete", new { id = c.id })
-                ).InitialSort(GridSortOrder.Asc).Filterable(false);
+                .RenderedAs(c => MyFilters.IconActionLink(Url.Action("Edit", new { id = c.id }), "fas fa-pencil-alt", "", "Edit this trigger") + " | " +
+                                 MyFilters.IconActionLink(Url.Action("Index", "h_alert", new { c_trigger_id = c.id }), "fas fa-eye", "", "Show h_alert") + " | " +
+                                 MyFilters.IconActionLink(Url.Action("Delete", new { id = c.id }), "fas fa-trash-alt", "", "Delete") + " | " +
+                                 MyFilters.IconActionLink(Url.Action("RunAlertTrigger", new { triggerID = c.id }), "fas fa-fire", "", "Test fire",classes: "JQresultTriggerBtn")
+                ).Filterable(false);
 }).Filterable().Sortable().Empty("Did not find anything").Css("table-hover")
 
 @section scripts{

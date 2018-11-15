@@ -5,6 +5,9 @@
     [Culture]     VARCHAR (50)  NULL,
     [wiki]        VARCHAR (MAX) NULL,
     [searchtags]  VARCHAR (MAX) NULL,
+    [Comments]    VARCHAR (MAX) NULL,
     CONSTRAINT [PK_Wiki] PRIMARY KEY CLUSTERED ([id] ASC)
 );
+
+
 
