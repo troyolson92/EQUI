@@ -7,6 +7,22 @@
     <div data-name="PloegRapportGrid" class="mvc-grid"></div>
 </div>
 
+@*box to change ploegrapport settings*@
+<small class="form-text text-muted">PloegRapportSettings</small>
+<div class="input-group mb-3 col-3">
+    <input type="number" class="form-control" id="minSumOfDownTime" value=@ViewBag.minSumOfDownTime>
+    <div class="input-group-append">
+        <span class="btn btn-primary" id="btnSet">Set</span>
+    </div>
+</div>
+<div class="input-group mb-3 col-3">
+    <input type="number" class="form-control" id="minCountOfDownTime" value=@ViewBag.minCountOfDownTime>
+    <div class="input-group-append">
+        <span class="btn btn-primary" id="btnSet">Set</span>
+    </div>
+</div>
+
+
 @*render popuover modal*@
 <div id="MyModal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class='card-body'>
@@ -38,6 +54,10 @@
             sourceUrl: '@Url.Action("_ploegRapport")', // Grid source url string
             requestType: 'get', // Ajax grid request type
             reload: true, // Grid reload indicator
+            data: {
+                minSumOfDownTime: $('#minSumOfDownTime').val(),
+                minCountOfDownTime: $('#minCountOfDownTime').val()
+            },
             //if rowclicked and count is 1 show popup else expand the count and load a filterd supervision grid.
             rowClicked: function (row, data, e) {
                 if (data["count"] == "1") {
