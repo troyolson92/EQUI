@@ -9,7 +9,7 @@
 {
     columns.Add(c => c.id).Titled("rt_job_id").InitialSort(GridSortOrder.Desc);
     columns.Add(c => c.ngac_rt_job_id).Titled("ngacJobId");
-    columns.Add(c => c.Timer.NptId).Titled("NptId");
+    columns.Add(c => c.c_timer.NptId).Titled("NptId");
     columns.Add(c => c.C_timestamp).Titled("C_timestamp");
     columns.Add(c =>  (c.ts_End-c.ts_Start).GetValueOrDefault().TotalSeconds).Titled("CT");
     columns.Add(c => c.rt_weldmeasureprotddw_count).Titled("WC");
@@ -19,7 +19,7 @@
     columns.Add(c => c.rt_weldmeasureprotddw_id_Start).Titled("weldmeasureStart");
     columns.Add(c => c.rt_weldmeasureprotddw_id_End).Titled("weldmeasureEnd");
     //
-    columns.Add(c => c.Timer.Name).Titled("Timer");
+    columns.Add(c => c.c_timer.Name).Titled("Timer");
     columns.Add(c => c.rt_breakdown_count).Titled("rt_breakdown_count");
     //
     columns.Add(c => c.rt_job_breakdown.Where(b => b.index == 1).FirstOrDefault().rt_alarm.dateTime).Titled("FirstErrdateTime");
