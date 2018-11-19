@@ -5,31 +5,6 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="GADATAModelVWSC.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="NPT">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nchar" MaxLength="15" />
-          <Property Name="OwnerId" Type="int" Nullable="false" />
-          <Property Name="LoginPass" Type="nchar" MaxLength="15" />
-          <Property Name="LoginUser" Type="nchar" MaxLength="15" />
-          <Property Name="RemoreServer" Type="nchar" MaxLength="250" />
-          <Property Name="active" Type="bit" />
-          <Property Name="enable_bit" Type="int" />
-        </EntityType>
-        <EntityType Name="Timer">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nchar" MaxLength="15" />
-          <Property Name="NptId" Type="int" />
-          <Property Name="Robot" Type="nchar" MaxLength="10" />
-          <Property Name="location" Type="varchar" MaxLength="256" />
-          <Property Name="c_timer_class_id" Type="int" />
-          <Property Name="enable_bit" Type="int" />
-        </EntityType>
         <EntityType Name="c_bosch_view">
           <Key>
             <PropertyRef Name="id" />
@@ -58,6 +33,19 @@
           <Property Name="flags" Type="int" />
           <Property Name="UserComment" Type="varchar" MaxLength="256" />
         </EntityType>
+        <EntityType Name="c_NPT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="15" />
+          <Property Name="OwnerId" Type="int" Nullable="false" />
+          <Property Name="LoginPass" Type="nchar" MaxLength="15" />
+          <Property Name="LoginUser" Type="nchar" MaxLength="15" />
+          <Property Name="RemoreServer" Type="nchar" MaxLength="250" />
+          <Property Name="active" Type="bit" />
+          <Property Name="enable_bit" Type="int" />
+        </EntityType>
         <EntityType Name="c_service_setup">
           <Key>
             <PropertyRef Name="id" />
@@ -76,6 +64,18 @@
           <Property Name="enable_bit" Type="int" />
           <Property Name="isError_txt" Type="varchar" MaxLength="256" />
           <Property Name="value" Type="int" />
+        </EntityType>
+        <EntityType Name="c_timer">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="15" />
+          <Property Name="NptId" Type="int" />
+          <Property Name="Robot" Type="nchar" MaxLength="10" />
+          <Property Name="location" Type="varchar" MaxLength="256" />
+          <Property Name="c_timer_class_id" Type="int" />
+          <Property Name="enable_bit" Type="int" />
         </EntityType>
         <EntityType Name="c_timer_class">
           <Key>
@@ -115,6 +115,8 @@
           <Property Name="rt_weldfault_id" Type="int" />
           <Property Name="rt_weldmeasureprotddw_id" Type="int" />
           <Property Name="rt_datechangeprot_id" Type="int" />
+          <Property Name="errorNumber_2" Type="int" />
+          <Property Name="errorText_2" Type="varchar" MaxLength="64" />
         </EntityType>
         <EntityType Name="rt_alarm">
           <Key>
@@ -337,11 +339,35 @@
           <Property Name="uirPsfLowerTol" Type="numeric" Precision="8" Scale="2" />
           <Property Name="uirPsfCondTol" Type="numeric" Precision="8" Scale="2" />
         </EntityType>
-        <Association Name="FK_L_operation_Timer">
-          <End Role="Timer" Type="Self.Timer" Multiplicity="0..1" />
+        <Association Name="FK_c_timer_c_NPT">
+          <End Role="c_NPT" Type="Self.c_NPT" Multiplicity="0..1" />
+          <End Role="c_timer" Type="Self.c_timer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_NPT">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="c_timer">
+              <PropertyRef Name="NptId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_c_Timer_c_timer_class">
+          <End Role="c_timer_class" Type="Self.c_timer_class" Multiplicity="0..1" />
+          <End Role="c_timer" Type="Self.c_timer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_timer_class">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="c_timer">
+              <PropertyRef Name="c_timer_class_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_L_operation_c_timer">
+          <End Role="c_timer" Type="Self.c_timer" Multiplicity="0..1" />
           <End Role="L_operation" Type="Self.L_operation" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Timer">
+            <Principal Role="c_timer">
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="L_operation">
@@ -349,11 +375,11 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_rt_active_info_Timer">
-          <End Role="Timer" Type="Self.Timer" Multiplicity="0..1" />
+        <Association Name="FK_rt_active_info_c_timer">
+          <End Role="c_timer" Type="Self.c_timer" Multiplicity="0..1" />
           <End Role="rt_active_info" Type="Self.rt_active_info" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Timer">
+            <Principal Role="c_timer">
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="rt_active_info">
@@ -361,11 +387,11 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_rt_alarm_Timer">
-          <End Role="Timer" Type="Self.Timer" Multiplicity="0..1" />
+        <Association Name="FK_rt_alarm_c_timer">
+          <End Role="c_timer" Type="Self.c_timer" Multiplicity="0..1" />
           <End Role="rt_alarm" Type="Self.rt_alarm" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Timer">
+            <Principal Role="c_timer">
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="rt_alarm">
@@ -373,14 +399,38 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_rt_communication_state_Timer">
-          <End Role="Timer" Type="Self.Timer" Multiplicity="0..1" />
+        <Association Name="FK_rt_communication_state_c_timer">
+          <End Role="c_timer" Type="Self.c_timer" Multiplicity="0..1" />
           <End Role="rt_communication_state" Type="Self.rt_communication_state" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Timer">
+            <Principal Role="c_timer">
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="rt_communication_state">
+              <PropertyRef Name="timerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rt_datachangeprot_c_timer">
+          <End Role="c_timer" Type="Self.c_timer" Multiplicity="0..1" />
+          <End Role="rt_datachangeprot" Type="Self.rt_datachangeprot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_timer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="rt_datachangeprot">
+              <PropertyRef Name="timerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rt_datachangeprot_c_timer_class">
+          <End Role="c_timer_class" Type="Self.c_timer_class" Multiplicity="0..1" />
+          <End Role="rt_datachangeprot" Type="Self.rt_datachangeprot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_timer_class">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="rt_datachangeprot">
               <PropertyRef Name="timerId" />
             </Dependent>
           </ReferentialConstraint>
@@ -409,11 +459,11 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_rt_job_Timer">
-          <End Role="Timer" Type="Self.Timer" Multiplicity="0..1" />
+        <Association Name="FK_rt_job_c_timer">
+          <End Role="c_timer" Type="Self.c_timer" Multiplicity="0..1" />
           <End Role="rt_job" Type="Self.rt_job" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Timer">
+            <Principal Role="c_timer">
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="rt_job">
@@ -421,23 +471,11 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_rt_job_Timer1">
-          <End Role="Timer" Type="Self.Timer" Multiplicity="0..1" />
-          <End Role="rt_job" Type="Self.rt_job" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Timer">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="rt_job">
-              <PropertyRef Name="timerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_rt_weldfault_Timer">
-          <End Role="Timer" Type="Self.Timer" Multiplicity="0..1" />
+        <Association Name="FK_rt_weldfault_c_timer">
+          <End Role="c_timer" Type="Self.c_timer" Multiplicity="0..1" />
           <End Role="rt_weldfault" Type="Self.rt_weldfault" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Timer">
+            <Principal Role="c_timer">
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="rt_weldfault">
@@ -445,11 +483,11 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_rt_weldmeasureprotddw_Timer">
-          <End Role="Timer" Type="Self.Timer" Multiplicity="0..1" />
+        <Association Name="FK_rt_weldmeasureprotddw_c_timer">
+          <End Role="c_timer" Type="Self.c_timer" Multiplicity="0..1" />
           <End Role="rt_weldmeasureprotddw" Type="Self.rt_weldmeasureprotddw" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Timer">
+            <Principal Role="c_timer">
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="rt_weldmeasureprotddw">
@@ -457,37 +495,13 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Timer_c_timer_class">
-          <End Role="c_timer_class" Type="Self.c_timer_class" Multiplicity="0..1" />
-          <End Role="Timer" Type="Self.Timer" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="c_timer_class">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Timer">
-              <PropertyRef Name="c_timer_class_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Timer_NPT">
-          <End Role="NPT" Type="Self.NPT" Multiplicity="0..1" />
-          <End Role="Timer" Type="Self.Timer" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="NPT">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Timer">
-              <PropertyRef Name="NptId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="GADATAModelVWSCStoreContainer">
-          <EntitySet Name="NPT" EntityType="Self.NPT" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Timer" EntityType="Self.Timer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="c_bosch_view" EntityType="Self.c_bosch_view" Schema="WELDING2" store:Type="Tables" />
           <EntitySet Name="c_error" EntityType="Self.c_error" Schema="WELDING2" store:Type="Tables" />
+          <EntitySet Name="c_NPT" EntityType="Self.c_NPT" Schema="WELDING2" store:Type="Tables" />
           <EntitySet Name="c_service_setup" EntityType="Self.c_service_setup" Schema="WELDING2" store:Type="Tables" />
           <EntitySet Name="c_severity" EntityType="Self.c_severity" Schema="WELDING2" store:Type="Tables" />
+          <EntitySet Name="c_timer" EntityType="Self.c_timer" Schema="WELDING2" store:Type="Tables" />
           <EntitySet Name="c_timer_class" EntityType="Self.c_timer_class" Schema="WELDING2" store:Type="Tables" />
           <EntitySet Name="L_operation" EntityType="Self.L_operation" Schema="WELDING2" store:Type="Tables" />
           <EntitySet Name="rt_active_info" EntityType="Self.rt_active_info" Schema="WELDING2" store:Type="Tables" />
@@ -500,21 +514,37 @@
           <EntitySet Name="rt_spot" EntityType="Self.rt_spot" Schema="WELDING2" store:Type="Tables" />
           <EntitySet Name="rt_weldfault" EntityType="Self.rt_weldfault" Schema="WELDING2" store:Type="Tables" />
           <EntitySet Name="rt_weldmeasureprotddw" EntityType="Self.rt_weldmeasureprotddw" Schema="WELDING2" store:Type="Tables" />
-          <AssociationSet Name="FK_L_operation_Timer" Association="Self.FK_L_operation_Timer">
-            <End Role="Timer" EntitySet="Timer" />
+          <AssociationSet Name="FK_c_timer_c_NPT" Association="Self.FK_c_timer_c_NPT">
+            <End Role="c_NPT" EntitySet="c_NPT" />
+            <End Role="c_timer" EntitySet="c_timer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_c_Timer_c_timer_class" Association="Self.FK_c_Timer_c_timer_class">
+            <End Role="c_timer_class" EntitySet="c_timer_class" />
+            <End Role="c_timer" EntitySet="c_timer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_L_operation_c_timer" Association="Self.FK_L_operation_c_timer">
+            <End Role="c_timer" EntitySet="c_timer" />
             <End Role="L_operation" EntitySet="L_operation" />
           </AssociationSet>
-          <AssociationSet Name="FK_rt_active_info_Timer" Association="Self.FK_rt_active_info_Timer">
-            <End Role="Timer" EntitySet="Timer" />
+          <AssociationSet Name="FK_rt_active_info_c_timer" Association="Self.FK_rt_active_info_c_timer">
+            <End Role="c_timer" EntitySet="c_timer" />
             <End Role="rt_active_info" EntitySet="rt_active_info" />
           </AssociationSet>
-          <AssociationSet Name="FK_rt_alarm_Timer" Association="Self.FK_rt_alarm_Timer">
-            <End Role="Timer" EntitySet="Timer" />
+          <AssociationSet Name="FK_rt_alarm_c_timer" Association="Self.FK_rt_alarm_c_timer">
+            <End Role="c_timer" EntitySet="c_timer" />
             <End Role="rt_alarm" EntitySet="rt_alarm" />
           </AssociationSet>
-          <AssociationSet Name="FK_rt_communication_state_Timer" Association="Self.FK_rt_communication_state_Timer">
-            <End Role="Timer" EntitySet="Timer" />
+          <AssociationSet Name="FK_rt_communication_state_c_timer" Association="Self.FK_rt_communication_state_c_timer">
+            <End Role="c_timer" EntitySet="c_timer" />
             <End Role="rt_communication_state" EntitySet="rt_communication_state" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rt_datachangeprot_c_timer" Association="Self.FK_rt_datachangeprot_c_timer">
+            <End Role="c_timer" EntitySet="c_timer" />
+            <End Role="rt_datachangeprot" EntitySet="rt_datachangeprot" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rt_datachangeprot_c_timer_class" Association="Self.FK_rt_datachangeprot_c_timer_class">
+            <End Role="c_timer_class" EntitySet="c_timer_class" />
+            <End Role="rt_datachangeprot" EntitySet="rt_datachangeprot" />
           </AssociationSet>
           <AssociationSet Name="FK_rt_job_breakdown_rt_alarm" Association="Self.FK_rt_job_breakdown_rt_alarm">
             <End Role="rt_alarm" EntitySet="rt_alarm" />
@@ -524,29 +554,17 @@
             <End Role="rt_job" EntitySet="rt_job" />
             <End Role="rt_job_breakdown" EntitySet="rt_job_breakdown" />
           </AssociationSet>
-          <AssociationSet Name="FK_rt_job_Timer" Association="Self.FK_rt_job_Timer">
-            <End Role="Timer" EntitySet="Timer" />
+          <AssociationSet Name="FK_rt_job_c_timer" Association="Self.FK_rt_job_c_timer">
+            <End Role="c_timer" EntitySet="c_timer" />
             <End Role="rt_job" EntitySet="rt_job" />
           </AssociationSet>
-          <AssociationSet Name="FK_rt_job_Timer1" Association="Self.FK_rt_job_Timer1">
-            <End Role="Timer" EntitySet="Timer" />
-            <End Role="rt_job" EntitySet="rt_job" />
-          </AssociationSet>
-          <AssociationSet Name="FK_rt_weldfault_Timer" Association="Self.FK_rt_weldfault_Timer">
-            <End Role="Timer" EntitySet="Timer" />
+          <AssociationSet Name="FK_rt_weldfault_c_timer" Association="Self.FK_rt_weldfault_c_timer">
+            <End Role="c_timer" EntitySet="c_timer" />
             <End Role="rt_weldfault" EntitySet="rt_weldfault" />
           </AssociationSet>
-          <AssociationSet Name="FK_rt_weldmeasureprotddw_Timer" Association="Self.FK_rt_weldmeasureprotddw_Timer">
-            <End Role="Timer" EntitySet="Timer" />
+          <AssociationSet Name="FK_rt_weldmeasureprotddw_c_timer" Association="Self.FK_rt_weldmeasureprotddw_c_timer">
+            <End Role="c_timer" EntitySet="c_timer" />
             <End Role="rt_weldmeasureprotddw" EntitySet="rt_weldmeasureprotddw" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Timer_c_timer_class" Association="Self.FK_Timer_c_timer_class">
-            <End Role="c_timer_class" EntitySet="c_timer_class" />
-            <End Role="Timer" EntitySet="Timer" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Timer_NPT" Association="Self.FK_Timer_NPT">
-            <End Role="NPT" EntitySet="NPT" />
-            <End Role="Timer" EntitySet="Timer" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -597,7 +615,8 @@
           <Property Name="cBoschViewMask" Type="Int32" />
           <Property Name="cErrorMask" Type="Int32" />
           <Property Name="cSeverityMask" Type="Int32" />
-          <NavigationProperty Name="Timer" Relationship="GADATAModelVWSC.FK_Timer_c_timer_class" FromRole="VWSC_c_timer_class" ToRole="VWSC_c_Timer" />
+          <NavigationProperty Name="c_timer" Relationship="GADATAModelVWSC.FK_c_Timer_c_timer_class" FromRole="VWSC_c_timer_class" ToRole="c_timer" />
+          <NavigationProperty Name="rt_datachangeprot" Relationship="GADATAModelVWSC.FK_rt_datachangeprot_c_timer_class" FromRole="VWSC_c_timer_class" ToRole="VWSC_rt_datachangeprot" />
         </EntityType>
         <EntityType Name="VWSC_L_operation">
           <Key>
@@ -609,7 +628,7 @@
           <Property Name="Vwsc_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="controller_id" Type="Int32" />
           <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Timer" Relationship="GADATAModelVWSC.FK_L_operation_Timer" FromRole="VWSC_L_operation" ToRole="VWSC_c_Timer" />
+          <NavigationProperty Name="c_timer" Relationship="GADATAModelVWSC.FK_L_operation_c_timer" FromRole="VWSC_L_operation" ToRole="c_timer" />
         </EntityType>
         <EntityType Name="VWSC_rt_active_info">
           <Key>
@@ -628,7 +647,9 @@
           <Property Name="rt_weldfault_id" Type="Int32" />
           <Property Name="rt_weldmeasureprotddw_id" Type="Int32" />
           <Property Name="rt_datechangeprot_id" Type="Int32" />
-          <NavigationProperty Name="Timer" Relationship="GADATAModelVWSC.FK_rt_active_info_Timer" FromRole="VWSC_rt_active_info" ToRole="VWSC_c_Timer" />
+          <Property Name="errorNumber_2" Type="Int32" />
+          <Property Name="errorText_2" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="c_timer" Relationship="GADATAModelVWSC.FK_rt_active_info_c_timer" FromRole="VWSC_rt_active_info" ToRole="c_timer" />
         </EntityType>
         <EntityType Name="VWSC_c_bosch_view">
           <Key>
@@ -650,24 +671,6 @@
           <EntitySet Name="L_operation" EntityType="GADATAModelVWSC.VWSC_L_operation" />
           <EntitySet Name="rt_active_info" EntityType="GADATAModelVWSC.VWSC_rt_active_info" />
           <EntitySet Name="c_bosch_view" EntityType="GADATAModelVWSC.VWSC_c_bosch_view" />
-          <EntitySet Name="Timer" EntityType="GADATAModelVWSC.VWSC_c_Timer" />
-          <EntitySet Name="NPT" EntityType="GADATAModelVWSC.VWSC_c_NPT" />
-          <AssociationSet Name="FK_Timer_NPT" Association="GADATAModelVWSC.FK_Timer_NPT">
-            <End Role="NPT" EntitySet="NPT" />
-            <End Role="VWSC_c_Timer" EntitySet="Timer" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Timer_c_timer_class" Association="GADATAModelVWSC.FK_Timer_c_timer_class">
-            <End Role="VWSC_c_timer_class" EntitySet="c_timer_class" />
-            <End Role="VWSC_c_Timer" EntitySet="Timer" />
-          </AssociationSet>
-          <AssociationSet Name="FK_rt_active_info_Timer" Association="GADATAModelVWSC.FK_rt_active_info_Timer">
-            <End Role="VWSC_c_Timer" EntitySet="Timer" />
-            <End Role="VWSC_rt_active_info" EntitySet="rt_active_info" />
-          </AssociationSet>
-          <AssociationSet Name="FK_L_operation_Timer" Association="GADATAModelVWSC.FK_L_operation_Timer">
-            <End Role="VWSC_c_Timer" EntitySet="Timer" />
-            <End Role="VWSC_L_operation" EntitySet="L_operation" />
-          </AssociationSet>
           <EntitySet Name="rt_alarm" EntityType="GADATAModelVWSC.VWSC_rt_alarm" />
           <EntitySet Name="rt_comment" EntityType="GADATAModelVWSC.VWSC_rt_comment" />
           <EntitySet Name="rt_communication_state" EntityType="GADATAModelVWSC.VWSC_rt_communication_state" />
@@ -677,26 +680,6 @@
           <EntitySet Name="rt_spot" EntityType="GADATAModelVWSC.VWSC_rt_spot" />
           <EntitySet Name="rt_weldfault" EntityType="GADATAModelVWSC.VWSC_rt_weldfault" />
           <EntitySet Name="rt_weldmeasureprotddw" EntityType="GADATAModelVWSC.VWSC_rt_weldmeasureprotddw" />
-          <AssociationSet Name="FK_rt_alarm_Timer" Association="GADATAModelVWSC.FK_rt_alarm_Timer">
-            <End Role="VWSC_c_Timer" EntitySet="Timer" />
-            <End Role="rt_alarm" EntitySet="rt_alarm" />
-          </AssociationSet>
-          <AssociationSet Name="FK_rt_communication_state_Timer" Association="GADATAModelVWSC.FK_rt_communication_state_Timer">
-            <End Role="VWSC_c_Timer" EntitySet="Timer" />
-            <End Role="rt_communication_state" EntitySet="rt_communication_state" />
-          </AssociationSet>
-          <AssociationSet Name="FK_rt_job_Timer" Association="GADATAModelVWSC.FK_rt_job_Timer">
-            <End Role="VWSC_c_Timer" EntitySet="Timer" />
-            <End Role="rt_job" EntitySet="rt_job" />
-          </AssociationSet>
-          <AssociationSet Name="FK_rt_job_Timer1" Association="GADATAModelVWSC.FK_rt_job_Timer1">
-            <End Role="VWSC_c_Timer" EntitySet="Timer" />
-            <End Role="rt_job" EntitySet="rt_job" />
-          </AssociationSet>
-          <AssociationSet Name="FK_rt_weldfault_Timer" Association="GADATAModelVWSC.FK_rt_weldfault_Timer">
-            <End Role="VWSC_c_Timer" EntitySet="Timer" />
-            <End Role="rt_weldfault" EntitySet="rt_weldfault" />
-          </AssociationSet>
           <AssociationSet Name="FK_rt_job_breakdown_rt_alarm" Association="GADATAModelVWSC.FK_rt_job_breakdown_rt_alarm">
             <End Role="rt_alarm" EntitySet="rt_alarm" />
             <End Role="rt_job_breakdown" EntitySet="rt_job_breakdown" />
@@ -705,95 +688,53 @@
             <End Role="rt_job" EntitySet="rt_job" />
             <End Role="rt_job_breakdown" EntitySet="rt_job_breakdown" />
           </AssociationSet>
-          <AssociationSet Name="FK_rt_weldmeasureprotddw_Timer" Association="GADATAModelVWSC.FK_rt_weldmeasureprotddw_Timer">
-            <End Role="VWSC_c_Timer" EntitySet="Timer" />
+          <EntitySet Name="c_NPT" EntityType="GADATAModelVWSC.VWSC_c_NPT" />
+          <EntitySet Name="c_timer" EntityType="GADATAModelVWSC.VWSC_c_timer" />
+          <AssociationSet Name="FK_c_timer_c_NPT" Association="GADATAModelVWSC.FK_c_timer_c_NPT">
+            <End Role="c_NPT" EntitySet="c_NPT" />
+            <End Role="c_timer" EntitySet="c_timer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_c_Timer_c_timer_class" Association="GADATAModelVWSC.FK_c_Timer_c_timer_class">
+            <End Role="VWSC_c_timer_class" EntitySet="c_timer_class" />
+            <End Role="c_timer" EntitySet="c_timer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_L_operation_c_timer" Association="GADATAModelVWSC.FK_L_operation_c_timer">
+            <End Role="c_timer" EntitySet="c_timer" />
+            <End Role="VWSC_L_operation" EntitySet="L_operation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rt_active_info_c_timer" Association="GADATAModelVWSC.FK_rt_active_info_c_timer">
+            <End Role="c_timer" EntitySet="c_timer" />
+            <End Role="VWSC_rt_active_info" EntitySet="rt_active_info" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rt_alarm_c_timer" Association="GADATAModelVWSC.FK_rt_alarm_c_timer">
+            <End Role="c_timer" EntitySet="c_timer" />
+            <End Role="VWSC_rt_alarm" EntitySet="rt_alarm" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rt_communication_state_c_timer" Association="GADATAModelVWSC.FK_rt_communication_state_c_timer">
+            <End Role="c_timer" EntitySet="c_timer" />
+            <End Role="VWSC_rt_communication_state" EntitySet="rt_communication_state" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rt_datachangeprot_c_timer" Association="GADATAModelVWSC.FK_rt_datachangeprot_c_timer">
+            <End Role="c_timer" EntitySet="c_timer" />
+            <End Role="VWSC_rt_datachangeprot" EntitySet="rt_datachangeprot" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rt_job_c_timer" Association="GADATAModelVWSC.FK_rt_job_c_timer">
+            <End Role="c_timer" EntitySet="c_timer" />
+            <End Role="VWSC_rt_job" EntitySet="rt_job" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rt_weldfault_c_timer" Association="GADATAModelVWSC.FK_rt_weldfault_c_timer">
+            <End Role="c_timer" EntitySet="c_timer" />
+            <End Role="VWSC_rt_weldfault" EntitySet="rt_weldfault" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rt_weldmeasureprotddw_c_timer" Association="GADATAModelVWSC.FK_rt_weldmeasureprotddw_c_timer">
+            <End Role="c_timer" EntitySet="c_timer" />
             <End Role="VWSC_rt_weldmeasureprotddw" EntitySet="rt_weldmeasureprotddw" />
           </AssociationSet>
+          <AssociationSet Name="FK_rt_datachangeprot_c_timer_class" Association="GADATAModelVWSC.FK_rt_datachangeprot_c_timer_class">
+            <End Role="VWSC_c_timer_class" EntitySet="c_timer_class" />
+            <End Role="VWSC_rt_datachangeprot" EntitySet="rt_datachangeprot" />
+          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="VWSC_c_Timer">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
-          <Property Name="NptId" Type="Int32" />
-          <Property Name="Robot" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="location" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
-          <Property Name="c_timer_class_id" Type="Int32" />
-          <Property Name="enable_bit" Type="Int32" />
-          <NavigationProperty Name="NPT" Relationship="GADATAModelVWSC.FK_Timer_NPT" FromRole="VWSC_c_Timer" ToRole="NPT" />
-          <NavigationProperty Name="c_timer_class" Relationship="GADATAModelVWSC.FK_Timer_c_timer_class" FromRole="VWSC_c_Timer" ToRole="VWSC_c_timer_class" />
-          <NavigationProperty Name="rt_active_info" Relationship="GADATAModelVWSC.FK_rt_active_info_Timer" FromRole="VWSC_c_Timer" ToRole="VWSC_rt_active_info" />
-          <NavigationProperty Name="L_operation" Relationship="GADATAModelVWSC.FK_L_operation_Timer" FromRole="VWSC_c_Timer" ToRole="VWSC_L_operation" />
-          <NavigationProperty Name="rt_alarm" Relationship="GADATAModelVWSC.FK_rt_alarm_Timer" FromRole="VWSC_c_Timer" ToRole="rt_alarm" />
-          <NavigationProperty Name="rt_communication_state" Relationship="GADATAModelVWSC.FK_rt_communication_state_Timer" FromRole="VWSC_c_Timer" ToRole="rt_communication_state" />
-          <NavigationProperty Name="rt_job" Relationship="GADATAModelVWSC.FK_rt_job_Timer" FromRole="VWSC_c_Timer" ToRole="rt_job" />
-          <NavigationProperty Name="rt_job1" Relationship="GADATAModelVWSC.FK_rt_job_Timer1" FromRole="VWSC_c_Timer" ToRole="rt_job" />
-          <NavigationProperty Name="rt_weldfault" Relationship="GADATAModelVWSC.FK_rt_weldfault_Timer" FromRole="VWSC_c_Timer" ToRole="rt_weldfault" />
-          <NavigationProperty Name="rt_weldmeasureprotddw" Relationship="GADATAModelVWSC.FK_rt_weldmeasureprotddw_Timer" FromRole="VWSC_c_Timer" ToRole="VWSC_rt_weldmeasureprotddw" />
-        </EntityType>
-        <EntityType Name="VWSC_c_NPT">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
-          <Property Name="OwnerId" Type="Int32" Nullable="false" />
-          <Property Name="LoginPass" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
-          <Property Name="LoginUser" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
-          <Property Name="RemoreServer" Type="String" MaxLength="250" FixedLength="true" Unicode="true" />
-          <Property Name="active" Type="Boolean" />
-          <Property Name="enable_bit" Type="Int32" />
-          <NavigationProperty Name="Timer" Relationship="GADATAModelVWSC.FK_Timer_NPT" FromRole="NPT" ToRole="VWSC_c_Timer" />
-        </EntityType>
-        <Association Name="FK_Timer_NPT">
-          <End Type="GADATAModelVWSC.VWSC_c_NPT" Role="NPT" Multiplicity="0..1" />
-          <End Type="GADATAModelVWSC.VWSC_c_Timer" Role="VWSC_c_Timer" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="NPT">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="VWSC_c_Timer">
-              <PropertyRef Name="NptId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Timer_c_timer_class">
-          <End Type="GADATAModelVWSC.VWSC_c_timer_class" Role="VWSC_c_timer_class" Multiplicity="0..1" />
-          <End Type="GADATAModelVWSC.VWSC_c_Timer" Role="VWSC_c_Timer" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="VWSC_c_timer_class">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="VWSC_c_Timer">
-              <PropertyRef Name="c_timer_class_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_rt_active_info_Timer">
-          <End Type="GADATAModelVWSC.VWSC_c_Timer" Role="VWSC_c_Timer" Multiplicity="0..1" />
-          <End Type="GADATAModelVWSC.VWSC_rt_active_info" Role="VWSC_rt_active_info" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="VWSC_c_Timer">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="VWSC_rt_active_info">
-              <PropertyRef Name="timerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_L_operation_Timer">
-          <End Type="GADATAModelVWSC.VWSC_c_Timer" Role="VWSC_c_Timer" Multiplicity="0..1" />
-          <End Type="GADATAModelVWSC.VWSC_L_operation" Role="VWSC_L_operation" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="VWSC_c_Timer">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="VWSC_L_operation">
-              <PropertyRef Name="controller_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="VWSC_rt_alarm">
           <Key>
             <PropertyRef Name="id" />
@@ -809,8 +750,8 @@
           <Property Name="errorCode2_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
           <Property Name="isError" Type="Boolean" />
           <Property Name="isError_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Timer" Relationship="GADATAModelVWSC.FK_rt_alarm_Timer" FromRole="rt_alarm" ToRole="VWSC_c_Timer" />
           <NavigationProperty Name="rt_job_breakdown" Relationship="GADATAModelVWSC.FK_rt_job_breakdown_rt_alarm" FromRole="rt_alarm" ToRole="rt_job_breakdown" />
+          <NavigationProperty Name="c_timer" Relationship="GADATAModelVWSC.FK_rt_alarm_c_timer" FromRole="VWSC_rt_alarm" ToRole="c_timer" />
         </EntityType>
         <EntityType Name="VWSC_rt_comment">
           <Key>
@@ -829,7 +770,7 @@
           <Property Name="C_timestamp" Type="DateTime" Precision="3" />
           <Property Name="online" Type="Boolean" />
           <Property Name="communicationState" Type="Byte" />
-          <NavigationProperty Name="Timer" Relationship="GADATAModelVWSC.FK_rt_communication_state_Timer" FromRole="rt_communication_state" ToRole="VWSC_c_Timer" />
+          <NavigationProperty Name="c_timer" Relationship="GADATAModelVWSC.FK_rt_communication_state_c_timer" FromRole="VWSC_rt_communication_state" ToRole="c_timer" />
         </EntityType>
         <EntityType Name="VWSC_rt_datachangeprot">
           <Key>
@@ -854,6 +795,8 @@
           <Property Name="computerName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
           <Property Name="userName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
           <Property Name="comment" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="c_timer" Relationship="GADATAModelVWSC.FK_rt_datachangeprot_c_timer" FromRole="VWSC_rt_datachangeprot" ToRole="c_timer" />
+          <NavigationProperty Name="c_timer_class" Relationship="GADATAModelVWSC.FK_rt_datachangeprot_c_timer_class" FromRole="VWSC_rt_datachangeprot" ToRole="VWSC_c_timer_class" />
         </EntityType>
         <EntityType Name="VWSC_rt_job">
           <Key>
@@ -874,10 +817,9 @@
           <Property Name="rt_weldmeasureprotddw_count" Type="Int32" />
           <Property Name="rt_weldfaultprot_count" Type="Int32" />
           <Property Name="rt_breakdown_count" Type="Int32" />
-          <NavigationProperty Name="Timer" Relationship="GADATAModelVWSC.FK_rt_job_Timer" FromRole="rt_job" ToRole="VWSC_c_Timer" />
-          <NavigationProperty Name="Timer1" Relationship="GADATAModelVWSC.FK_rt_job_Timer1" FromRole="rt_job" ToRole="VWSC_c_Timer" />
           <NavigationProperty Name="rt_job_breakdown" Relationship="GADATAModelVWSC.FK_rt_job_breakdown_rt_job" FromRole="rt_job" ToRole="rt_job_breakdown" />
           <Property Name="rt_weldmeasureprotddw_distinct" Type="Int32" />
+          <NavigationProperty Name="c_timer" Relationship="GADATAModelVWSC.FK_rt_job_c_timer" FromRole="VWSC_rt_job" ToRole="c_timer" />
         </EntityType>
         <EntityType Name="VWSC_rt_job_breakdown">
           <Key>
@@ -930,8 +872,8 @@
           <Property Name="wear" Type="Decimal" Precision="12" Scale="2" />
           <Property Name="spotId" Type="Int32" />
           <Property Name="isError" Type="Boolean" />
-          <NavigationProperty Name="Timer" Relationship="GADATAModelVWSC.FK_rt_weldfault_Timer" FromRole="rt_weldfault" ToRole="VWSC_c_Timer" />
           <Property Name="WMComment" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="c_timer" Relationship="GADATAModelVWSC.FK_rt_weldfault_c_timer" FromRole="VWSC_rt_weldfault" ToRole="c_timer" />
         </EntityType>
         <EntityType Name="VWSC_rt_weldmeasureprotddw">
           <Key>
@@ -1023,68 +965,8 @@
           <Property Name="uirUipCondTol" Type="Decimal" Precision="8" Scale="2" />
           <Property Name="uirPsfLowerTol" Type="Decimal" Precision="8" Scale="2" />
           <Property Name="uirPsfCondTol" Type="Decimal" Precision="8" Scale="2" />
-          <NavigationProperty Name="Timer" Relationship="GADATAModelVWSC.FK_rt_weldmeasureprotddw_Timer" FromRole="VWSC_rt_weldmeasureprotddw" ToRole="VWSC_c_Timer" />
+          <NavigationProperty Name="c_timer" Relationship="GADATAModelVWSC.FK_rt_weldmeasureprotddw_c_timer" FromRole="VWSC_rt_weldmeasureprotddw" ToRole="c_timer" />
         </EntityType>
-        <Association Name="FK_rt_alarm_Timer">
-          <End Type="GADATAModelVWSC.VWSC_c_Timer" Role="VWSC_c_Timer" Multiplicity="0..1" />
-          <End Type="GADATAModelVWSC.VWSC_rt_alarm" Role="rt_alarm" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="VWSC_c_Timer">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="rt_alarm">
-              <PropertyRef Name="timerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_rt_communication_state_Timer">
-          <End Type="GADATAModelVWSC.VWSC_c_Timer" Role="VWSC_c_Timer" Multiplicity="0..1" />
-          <End Type="GADATAModelVWSC.VWSC_rt_communication_state" Role="rt_communication_state" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="VWSC_c_Timer">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="rt_communication_state">
-              <PropertyRef Name="timerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_rt_job_Timer">
-          <End Type="GADATAModelVWSC.VWSC_c_Timer" Role="VWSC_c_Timer" Multiplicity="0..1" />
-          <End Type="GADATAModelVWSC.VWSC_rt_job" Role="rt_job" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="VWSC_c_Timer">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="rt_job">
-              <PropertyRef Name="timerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_rt_job_Timer1">
-          <End Type="GADATAModelVWSC.VWSC_c_Timer" Role="VWSC_c_Timer" Multiplicity="0..1" />
-          <End Type="GADATAModelVWSC.VWSC_rt_job" Role="rt_job" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="VWSC_c_Timer">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="rt_job">
-              <PropertyRef Name="timerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_rt_weldfault_Timer">
-          <End Type="GADATAModelVWSC.VWSC_c_Timer" Role="VWSC_c_Timer" Multiplicity="0..1" />
-          <End Type="GADATAModelVWSC.VWSC_rt_weldfault" Role="rt_weldfault" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="VWSC_c_Timer">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="rt_weldfault">
-              <PropertyRef Name="timerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_rt_job_breakdown_rt_alarm">
           <End Type="GADATAModelVWSC.VWSC_rt_alarm" Role="rt_alarm" Multiplicity="0..1" />
           <End Type="GADATAModelVWSC.VWSC_rt_job_breakdown" Role="rt_job_breakdown" Multiplicity="*" />
@@ -1109,14 +991,170 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_rt_weldmeasureprotddw_Timer">
-          <End Type="GADATAModelVWSC.VWSC_c_Timer" Role="VWSC_c_Timer" Multiplicity="0..1" />
+        <EntityType Name="VWSC_c_NPT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="OwnerId" Type="Int32" Nullable="false" />
+          <Property Name="LoginPass" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="LoginUser" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="RemoreServer" Type="String" MaxLength="250" FixedLength="true" Unicode="true" />
+          <Property Name="active" Type="Boolean" />
+          <Property Name="enable_bit" Type="Int32" />
+          <NavigationProperty Name="c_timer" Relationship="GADATAModelVWSC.FK_c_timer_c_NPT" FromRole="c_NPT" ToRole="c_timer" />
+        </EntityType>
+        <EntityType Name="VWSC_c_timer">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="NptId" Type="Int32" />
+          <Property Name="Robot" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="location" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="c_timer_class_id" Type="Int32" />
+          <Property Name="enable_bit" Type="Int32" />
+          <NavigationProperty Name="c_NPT" Relationship="GADATAModelVWSC.FK_c_timer_c_NPT" FromRole="c_timer" ToRole="c_NPT" />
+          <NavigationProperty Name="c_timer_class" Relationship="GADATAModelVWSC.FK_c_Timer_c_timer_class" FromRole="c_timer" ToRole="VWSC_c_timer_class" />
+          <NavigationProperty Name="L_operation" Relationship="GADATAModelVWSC.FK_L_operation_c_timer" FromRole="c_timer" ToRole="VWSC_L_operation" />
+          <NavigationProperty Name="rt_active_info" Relationship="GADATAModelVWSC.FK_rt_active_info_c_timer" FromRole="c_timer" ToRole="VWSC_rt_active_info" />
+          <NavigationProperty Name="rt_alarm" Relationship="GADATAModelVWSC.FK_rt_alarm_c_timer" FromRole="c_timer" ToRole="VWSC_rt_alarm" />
+          <NavigationProperty Name="rt_communication_state" Relationship="GADATAModelVWSC.FK_rt_communication_state_c_timer" FromRole="c_timer" ToRole="VWSC_rt_communication_state" />
+          <NavigationProperty Name="rt_datachangeprot" Relationship="GADATAModelVWSC.FK_rt_datachangeprot_c_timer" FromRole="c_timer" ToRole="VWSC_rt_datachangeprot" />
+          <NavigationProperty Name="rt_job" Relationship="GADATAModelVWSC.FK_rt_job_c_timer" FromRole="c_timer" ToRole="VWSC_rt_job" />
+          <NavigationProperty Name="rt_weldfault" Relationship="GADATAModelVWSC.FK_rt_weldfault_c_timer" FromRole="c_timer" ToRole="VWSC_rt_weldfault" />
+          <NavigationProperty Name="rt_weldmeasureprotddw" Relationship="GADATAModelVWSC.FK_rt_weldmeasureprotddw_c_timer" FromRole="c_timer" ToRole="VWSC_rt_weldmeasureprotddw" />
+        </EntityType>
+        <Association Name="FK_c_timer_c_NPT">
+          <End Type="GADATAModelVWSC.VWSC_c_NPT" Role="c_NPT" Multiplicity="0..1" />
+          <End Type="GADATAModelVWSC.VWSC_c_timer" Role="c_timer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_NPT">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="c_timer">
+              <PropertyRef Name="NptId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_c_Timer_c_timer_class">
+          <End Type="GADATAModelVWSC.VWSC_c_timer_class" Role="VWSC_c_timer_class" Multiplicity="0..1" />
+          <End Type="GADATAModelVWSC.VWSC_c_timer" Role="c_timer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VWSC_c_timer_class">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="c_timer">
+              <PropertyRef Name="c_timer_class_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_L_operation_c_timer">
+          <End Type="GADATAModelVWSC.VWSC_c_timer" Role="c_timer" Multiplicity="0..1" />
+          <End Type="GADATAModelVWSC.VWSC_L_operation" Role="VWSC_L_operation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_timer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="VWSC_L_operation">
+              <PropertyRef Name="controller_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rt_active_info_c_timer">
+          <End Type="GADATAModelVWSC.VWSC_c_timer" Role="c_timer" Multiplicity="0..1" />
+          <End Type="GADATAModelVWSC.VWSC_rt_active_info" Role="VWSC_rt_active_info" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_timer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="VWSC_rt_active_info">
+              <PropertyRef Name="timerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rt_alarm_c_timer">
+          <End Type="GADATAModelVWSC.VWSC_c_timer" Role="c_timer" Multiplicity="0..1" />
+          <End Type="GADATAModelVWSC.VWSC_rt_alarm" Role="VWSC_rt_alarm" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_timer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="VWSC_rt_alarm">
+              <PropertyRef Name="timerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rt_communication_state_c_timer">
+          <End Type="GADATAModelVWSC.VWSC_c_timer" Role="c_timer" Multiplicity="0..1" />
+          <End Type="GADATAModelVWSC.VWSC_rt_communication_state" Role="VWSC_rt_communication_state" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_timer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="VWSC_rt_communication_state">
+              <PropertyRef Name="timerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rt_datachangeprot_c_timer">
+          <End Type="GADATAModelVWSC.VWSC_c_timer" Role="c_timer" Multiplicity="0..1" />
+          <End Type="GADATAModelVWSC.VWSC_rt_datachangeprot" Role="VWSC_rt_datachangeprot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_timer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="VWSC_rt_datachangeprot">
+              <PropertyRef Name="timerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rt_job_c_timer">
+          <End Type="GADATAModelVWSC.VWSC_c_timer" Role="c_timer" Multiplicity="0..1" />
+          <End Type="GADATAModelVWSC.VWSC_rt_job" Role="VWSC_rt_job" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_timer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="VWSC_rt_job">
+              <PropertyRef Name="timerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rt_weldfault_c_timer">
+          <End Type="GADATAModelVWSC.VWSC_c_timer" Role="c_timer" Multiplicity="0..1" />
+          <End Type="GADATAModelVWSC.VWSC_rt_weldfault" Role="VWSC_rt_weldfault" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_timer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="VWSC_rt_weldfault">
+              <PropertyRef Name="timerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rt_weldmeasureprotddw_c_timer">
+          <End Type="GADATAModelVWSC.VWSC_c_timer" Role="c_timer" Multiplicity="0..1" />
           <End Type="GADATAModelVWSC.VWSC_rt_weldmeasureprotddw" Role="VWSC_rt_weldmeasureprotddw" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="VWSC_c_Timer">
+            <Principal Role="c_timer">
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="VWSC_rt_weldmeasureprotddw">
+              <PropertyRef Name="timerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rt_datachangeprot_c_timer_class">
+          <End Type="GADATAModelVWSC.VWSC_c_timer_class" Role="VWSC_c_timer_class" Multiplicity="0..1" />
+          <End Type="GADATAModelVWSC.VWSC_rt_datachangeprot" Role="VWSC_rt_datachangeprot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VWSC_c_timer_class">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="VWSC_rt_datachangeprot">
               <PropertyRef Name="timerId" />
             </Dependent>
           </ReferentialConstraint>
@@ -1191,6 +1229,8 @@
           <EntitySetMapping Name="rt_active_info">
             <EntityTypeMapping TypeName="GADATAModelVWSC.VWSC_rt_active_info">
               <MappingFragment StoreEntitySet="rt_active_info">
+                <ScalarProperty Name="errorText_2" ColumnName="errorText_2" />
+                <ScalarProperty Name="errorNumber_2" ColumnName="errorNumber_2" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="timerId" ColumnName="timerId" />
                 <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
@@ -1217,33 +1257,6 @@
                 <ScalarProperty Name="flag" ColumnName="flag" />
                 <ScalarProperty Name="rt_table" ColumnName="rt_table" />
                 <ScalarProperty Name="day_limit" ColumnName="day_limit" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Timer">
-            <EntityTypeMapping TypeName="GADATAModelVWSC.VWSC_c_Timer">
-              <MappingFragment StoreEntitySet="Timer">
-                <ScalarProperty Name="enable_bit" ColumnName="enable_bit" />
-                <ScalarProperty Name="c_timer_class_id" ColumnName="c_timer_class_id" />
-                <ScalarProperty Name="location" ColumnName="location" />
-                <ScalarProperty Name="Robot" ColumnName="Robot" />
-                <ScalarProperty Name="NptId" ColumnName="NptId" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="NPT">
-            <EntityTypeMapping TypeName="GADATAModelVWSC.VWSC_c_NPT">
-              <MappingFragment StoreEntitySet="NPT">
-                <ScalarProperty Name="enable_bit" ColumnName="enable_bit" />
-                <ScalarProperty Name="active" ColumnName="active" />
-                <ScalarProperty Name="RemoreServer" ColumnName="RemoreServer" />
-                <ScalarProperty Name="LoginUser" ColumnName="LoginUser" />
-                <ScalarProperty Name="LoginPass" ColumnName="LoginPass" />
-                <ScalarProperty Name="OwnerId" ColumnName="OwnerId" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1474,6 +1487,33 @@
                 <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
                 <ScalarProperty Name="timerId" ColumnName="timerId" />
                 <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="c_NPT">
+            <EntityTypeMapping TypeName="GADATAModelVWSC.VWSC_c_NPT">
+              <MappingFragment StoreEntitySet="c_NPT">
+                <ScalarProperty Name="enable_bit" ColumnName="enable_bit" />
+                <ScalarProperty Name="active" ColumnName="active" />
+                <ScalarProperty Name="RemoreServer" ColumnName="RemoreServer" />
+                <ScalarProperty Name="LoginUser" ColumnName="LoginUser" />
+                <ScalarProperty Name="LoginPass" ColumnName="LoginPass" />
+                <ScalarProperty Name="OwnerId" ColumnName="OwnerId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="c_timer">
+            <EntityTypeMapping TypeName="GADATAModelVWSC.VWSC_c_timer">
+              <MappingFragment StoreEntitySet="c_timer">
+                <ScalarProperty Name="enable_bit" ColumnName="enable_bit" />
+                <ScalarProperty Name="c_timer_class_id" ColumnName="c_timer_class_id" />
+                <ScalarProperty Name="location" ColumnName="location" />
+                <ScalarProperty Name="Robot" ColumnName="Robot" />
+                <ScalarProperty Name="NptId" ColumnName="NptId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

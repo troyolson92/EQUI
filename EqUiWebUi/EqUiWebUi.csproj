@@ -593,16 +593,16 @@
     <Compile Include="Areas\VWSC\Controllers\L_operationController.cs" />
     <Compile Include="Areas\VWSC\Controllers\rt_active_infoController.cs" />
     <Compile Include="Areas\VWSC\Controllers\vwscController.cs" />
-    <Compile Include="Areas\VWSC\Models\VWSC_rt_active_infoMetadata.cs" />
-    <Compile Include="Areas\VWSC\Models\VWSC_c_errorMetadata.cs" />
     <Compile Include="Areas\VWSC\Models\VWSC_c_NPT.cs">
       <DependentUpon>VWSC.tt</DependentUpon>
     </Compile>
-    <Compile Include="Areas\VWSC\Models\VWSC_c_bosch_viewMetadata.cs" />
-    <Compile Include="Areas\VWSC\Models\VWSC_c_timerMetadata.cs" />
-    <Compile Include="Areas\VWSC\Models\VWSC_c_Timer.cs">
+    <Compile Include="Areas\VWSC\Models\VWSC_c_timer.cs">
       <DependentUpon>VWSC.tt</DependentUpon>
     </Compile>
+    <Compile Include="Areas\VWSC\Models\VWSC_rt_active_infoMetadata.cs" />
+    <Compile Include="Areas\VWSC\Models\VWSC_c_errorMetadata.cs" />
+    <Compile Include="Areas\VWSC\Models\VWSC_c_bosch_viewMetadata.cs" />
+    <Compile Include="Areas\VWSC\Models\VWSC_c_timerMetadata.cs" />
     <Compile Include="Areas\VWSC\Models\VWSC_c_timer_classMetadata.cs" />
     <Compile Include="Areas\VWSC\Models\VWSCenums.cs" />
     <Compile Include="Areas\VWSC\Models\VWSC.Context.cs">

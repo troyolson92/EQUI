@@ -1,11 +1,11 @@
-﻿@model IQueryable<EqUiWebUi.Areas.VWSC.Models.VWSC_c_Timer>
+﻿@model IQueryable<EqUiWebUi.Areas.VWSC.Models.VWSC_c_timer>
 
 @Html.Grid(Model).Named("c_timerGrid").Build(columns =>
 {
     columns.Add(c => c.ID).Titled("id").InitialSort(GridSortOrder.Asc);
     columns.Add(c => c._Enable_bit).Titled("enable_bit");
     columns.Add(c => c.Name).Titled("Name");
-    columns.Add(c => c.NPT.Name).Titled("NPT");
+    columns.Add(c => c.c_NPT.Name).Titled("NPT");
     columns.Add(c => c.c_timer_class.name).Titled("TimerClass");
     columns.Add(c => c)
                     .Titled("")

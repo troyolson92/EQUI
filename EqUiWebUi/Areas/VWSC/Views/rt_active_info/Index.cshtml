@@ -11,9 +11,9 @@ COUNT: @Model.Count()
 @Html.Grid(Model).Named("rt_active_info").Build(columns =>
 {
     columns.Add(c => c.timerId).Titled("timerId").InitialSort(GridSortOrder.Asc);
-    columns.Add(c => c.Timer._Enable_bit).Titled("enable_bit");
+    columns.Add(c => c.c_timer._Enable_bit).Titled("enable_bit");
     // columns.Add(c => c.vwsc_session).Titled("vwsc_session");
-    columns.Add(c => c.Timer.Name).Titled("Timer");
+    columns.Add(c => c.c_timer.Name).Titled("Timer");
     columns.Add(c => c.communicationState).Titled("communicationState");
     columns.Add(c => c._VWSCState).Titled("_VWSCState");
     columns.Add(c => c)

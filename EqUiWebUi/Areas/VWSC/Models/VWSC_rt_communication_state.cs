@@ -20,6 +20,6 @@ namespace EqUiWebUi.Areas.VWSC.Models
         public Nullable<bool> online { get; set; }
         public Nullable<byte> communicationState { get; set; }
     
-        public virtual VWSC_c_Timer Timer { get; set; }
+        public virtual VWSC_c_timer c_timer { get; set; }
     }
 }

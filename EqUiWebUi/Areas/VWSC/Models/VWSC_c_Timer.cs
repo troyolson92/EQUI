@@ -12,17 +12,17 @@ namespace EqUiWebUi.Areas.VWSC.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class VWSC_c_Timer
+    public partial class VWSC_c_timer
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public VWSC_c_Timer()
+        public VWSC_c_timer()
         {
-            this.rt_active_info = new HashSet<VWSC_rt_active_info>();
             this.L_operation = new HashSet<VWSC_L_operation>();
+            this.rt_active_info = new HashSet<VWSC_rt_active_info>();
             this.rt_alarm = new HashSet<VWSC_rt_alarm>();
             this.rt_communication_state = new HashSet<VWSC_rt_communication_state>();
+            this.rt_datachangeprot = new HashSet<VWSC_rt_datachangeprot>();
             this.rt_job = new HashSet<VWSC_rt_job>();
-            this.rt_job1 = new HashSet<VWSC_rt_job>();
             this.rt_weldfault = new HashSet<VWSC_rt_weldfault>();
             this.rt_weldmeasureprotddw = new HashSet<VWSC_rt_weldmeasureprotddw>();
         }
@@ -35,20 +35,20 @@ namespace EqUiWebUi.Areas.VWSC.Models
         public Nullable<int> c_timer_class_id { get; set; }
         public Nullable<int> enable_bit { get; set; }
     
-        public virtual VWSC_c_NPT NPT { get; set; }
+        public virtual VWSC_c_NPT c_NPT { get; set; }
         public virtual VWSC_c_timer_class c_timer_class { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<VWSC_rt_active_info> rt_active_info { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<VWSC_L_operation> L_operation { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<VWSC_rt_active_info> rt_active_info { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<VWSC_rt_alarm> rt_alarm { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<VWSC_rt_communication_state> rt_communication_state { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<VWSC_rt_job> rt_job { get; set; }
+        public virtual ICollection<VWSC_rt_datachangeprot> rt_datachangeprot { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<VWSC_rt_job> rt_job1 { get; set; }
+        public virtual ICollection<VWSC_rt_job> rt_job { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<VWSC_rt_weldfault> rt_weldfault { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

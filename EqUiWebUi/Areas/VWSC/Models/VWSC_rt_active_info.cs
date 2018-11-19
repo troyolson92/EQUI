@@ -27,7 +27,9 @@ namespace EqUiWebUi.Areas.VWSC.Models
         public Nullable<int> rt_weldfault_id { get; set; }
         public Nullable<int> rt_weldmeasureprotddw_id { get; set; }
         public Nullable<int> rt_datechangeprot_id { get; set; }
+        public Nullable<int> errorNumber_2 { get; set; }
+        public string errorText_2 { get; set; }
     
-        public virtual VWSC_c_Timer Timer { get; set; }
+        public virtual VWSC_c_timer c_timer { get; set; }
     }
 }
