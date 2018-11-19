@@ -7,6 +7,28 @@
     <div data-name="PloegRapportGrid" class="mvc-grid"></div>
 </div>
 
+@*box to change ploegrapport settings*@
+<small class="form-text text-muted">PloegRapportSettings</small>
+<div class="input-group input-group-sm col-2">
+    <div class="input-group-prepend">
+        <span class="input-group-text">minSumOfDownTime</span>
+    </div>
+    <input type="number" class="form-control" id="minSumOfDownTime" value=@ViewBag.minSumOfDownTime>
+    <div class="input-group-append">
+        <span class="btn btn-primary" id="btnSet">Set</span>
+    </div>
+</div>
+<div class="input-group input-group-sm mb-3 col-2">
+    <div class="input-group-prepend">
+        <span class="input-group-text">minCountOfDownTime</span>
+    </div>
+    <input type="number" class="form-control" id="minCountOfDownTime" value=@ViewBag.minCountOfDownTime>
+    <div class="input-group-append">
+        <span class="btn btn-primary" id="btnSet">Set</span>
+    </div>
+</div>
+
+
 @*render popuover modal*@
 <div id="MyModal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class='card-body'>
@@ -38,6 +60,10 @@
             sourceUrl: '@Url.Action("_ploegRapport")', // Grid source url string
             requestType: 'get', // Ajax grid request type
             reload: true, // Grid reload indicator
+            data: {
+                minSumOfDownTime: $('#minSumOfDownTime').val(),
+                minCountOfDownTime: $('#minCountOfDownTime').val()
+            },
             //if rowclicked and count is 1 show popup else expand the count and load a filterd supervision grid.
             rowClicked: function (row, data, e) {
                 if (data["count"] == "1") {
@@ -85,6 +111,17 @@
         //on modal close
         $('#MyModal').on('hidden.bs.modal', function (e) {
             $('#MyModal').html("<div class='card-body'><i class='fa fa-spinner fa-pulse fa-4x fa-fw text-white' ></i ><span class='sr-only'>Loading...</span></div >");
+        });
+
+        //function to change ploegrapport parameters.
+        $("#btnSet").click(function () {
+            $('[data-name="PloegRapportGrid"]').mvcgrid({
+                reload: true, // Grid reload indicator
+                data: {
+                    minSumOfDownTime: $('#minSumOfDownTime').val(),
+                    minCountOfDownTime: $('#minCountOfDownTime').val()
+                }
+            });
         });
 
         //full with screen
