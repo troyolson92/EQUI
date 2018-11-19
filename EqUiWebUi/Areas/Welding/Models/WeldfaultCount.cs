@@ -12,11 +12,13 @@ namespace EqUiWebUi.Areas.Welding.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class test
+    public partial class WeldfaultCount
     {
-        public int ID { get; set; }
-        public string TDTSpot { get; set; }
-        public Nullable<decimal> NomDiameter { get; set; }
-        public Nullable<decimal> MeasDiameter { get; set; }
+        public int id { get; set; }
+        public string location { get; set; }
+        public string NPT { get; set; }
+        public string Timer { get; set; }
+        public Nullable<long> countofTimerFaults { get; set; }
+        public string WMComment { get; set; }
     }
 }

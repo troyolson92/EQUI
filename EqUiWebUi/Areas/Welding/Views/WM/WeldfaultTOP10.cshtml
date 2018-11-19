@@ -1,0 +1,46 @@
+﻿
+
+
+<div data-name="WeldFaultProtocol" class="mvc-grid"></div>
+
+<hr />
+<p></p>
+<div data-name="WeldfaultCount" class="mvc-grid"></div>
+
+<hr />
+
+
+
+@section scripts{
+    <script>
+        //full with screen
+        $("#allcontent").removeClass("body-content");
+        $("#allcontent").removeClass("container");
+
+        function refreshGrid() {
+            $('[data-name="WeldFaultProtocol"]').html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
+            $('[data-name="WeldFaultProtocol"]').mvcgrid({
+            sourceUrl: '@Url.Action("_WeldFaultprotocol")', // Grid source url string
+            requestType: 'get', // Ajax grid request type
+            reload: true
+
+        });
+
+            $('[data-name="WeldfaultCount"]').html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
+            $('[data-name="WeldfaultCount"]').mvcgrid({
+                sourceUrl: '@Url.Action("_WeldFaultprotocolTOP10")', // Grid source url string
+                requestType: 'get', // Ajax grid request type
+                reload: true
+            });
+        }
+
+            setInterval(function () {
+                refreshGrid()
+            }, 1000 * 1)
+
+
+      
+
+    </script>
+}
+

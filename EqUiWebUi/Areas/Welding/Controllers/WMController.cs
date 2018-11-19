@@ -67,9 +67,30 @@ namespace EqUiWebUi.Areas.Welding.Controllers
 
             return PartialView(data.Take(10));
         }
+        public ActionResult _WeldFaultprotocolTOP10()
+        {
+            IQueryable<WeldfaultCount> data = db.WeldfaultCount.AsQueryable();
+
+            var query1 = from x in db.WeldfaultCount
+                         orderby x.countofTimerFaults descending
+
+                         select x;
+           
+            return PartialView(data.Take(10));
+        }
+
+        public ActionResult WeldFaultTOP10()
+        {
+            IQueryable<WeldfaultCount> data = db.WeldfaultCount.AsQueryable();
+            return View(data);
+        }
+
+
+
+
         // GET: Welding/Update
         //test for in line edit 1 method for 1 value
-        public void UpdateLabel(string id, string value)
+        public void UpdateLabel1(string id, string value)
         {
             WeldFaultProtocol weldFaultProtocol = db.WeldFaultProtocol.Find(Int32.Parse(id));
             weldFaultProtocol.WMComment = value;

@@ -1,35 +1,34 @@
-﻿@model IQueryable<EqUiWebUi.Areas.Welding.Models.WeldFaultProtocol>
+﻿@model IQueryable<EqUiWebUi.Areas.Welding.Models.WeldfaultCount>
 
 @{
     ViewBag.Title = "index";
 }
 
-<h2>WeldFault TOP 10 langste storingen laatste 24 H</h2>
+<h2>Meeste weldFaults TOP 10 laatste 24 H</h2>
 
 
-@Html.Grid(Model).Named("_WeldFaultprotocol").Build(columns =>
+@Html.Grid(Model).Named("_WeldFaultprotocolTOP10").Build(columns =>
 {
 
-    columns.Add(c => c.Name).Titled("Timer");
-    columns.Add(c => c.FaultStart).Titled("Faultstart");
-    columns.Add(c => c.FaultEnd).Titled("FaultEnd");
-    columns.Add(c => c.breakdownTime).Titled("breakdowntime").InitialSort(GridSortOrder.Desc);
-    columns.Add(c => c.errorCode1_txt).Titled("faultName1");
-    columns.Add(c => c.errorCode2_txt).Titled("faultName2");
-    columns.Add(c => c.CountFaultsInJob).Titled("CountfaultsInjob");
-    columns.Add(c => c.progNo).Titled("Timerprogram");
-    // columns.Add(c => "<p id=" + c.id + " class='editTestCollum2'>" + c.Timer).Encoded(false).Titled("Timertest");
+    columns.Add(c => c.location).Titled("Location");
+    columns.Add(c => c.NPT).Titled("NPT");
+    columns.Add(c => c.Timer).Titled("Timer");
 
-     columns.Add(c => "<p id=" + c.id + " class='editTestCollum1'>" + c.WMComment).Encoded(false).Titled("WMComment");
-     columns.Add(c => c)
-                  .Titled("")
-                  .Encoded(false)
-                  .RenderedAs(c => MyFilters.IconActionLink(Url.Action("Edit", new { id = c.id }), "fas fa-pencil-alt", "", "Edit this")
+    // columns.Add(c => "<p id=" + c.id + " class='editTestCollum2'>" + c.Timer).Encoded(false).Titled("Timertest");
+    columns.Add(c => c.countofTimerFaults).Titled("countofTimerFaults").InitialSort(GridSortOrder.Desc);
+    columns.Add(c => "<p id=" + c.id + " class='editTestCollum1'>" + c.WMComment).Encoded(false).Titled("WMComment");
+
+
+
+ columns.Add(c => c)
+               .Titled("")
+               .Encoded(false)
+              .RenderedAs(c => MyFilters.IconActionLink(Url.Action("Edit", new { id = c.id }), "fas fa-pencil-alt", "", "Edit this") 
 
 ).Filterable(true);
 
-
-}).Css("table-hover").RowCss(model => model.CountFaultsInJob >= 10 ? "ani_PulseRed" : "")
+   
+}).Css("table-hover").RowCss(model => model.countofTimerFaults >= 10 ? "ani_PulseRed" : "")
 
 @section scripts{
     <script src="~/node_modules/jquery-jeditable/dist/jquery.jeditable.min.js"></script>
@@ -40,7 +39,7 @@
         $("#allcontent").removeClass("container");
 
         //subscribe to row clicked events
-        $('[data-name="WeldFaultprotocol"]').mvcgrid({
+        $('[data-name="WeldfaultCount"]').mvcgrid({
             rowClicked: function (row, data, e) {
                 return;
 
@@ -59,7 +58,7 @@
                 //animation
                 $("#placeholderPartial").html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
                 //load url in placeholder
-                var url = "@Url.Action("_WeldFaulprotocol")?id=" + data["id"];
+                var url = "@Url.Action("_WeldFaultprotocolTOP10")?id=" + data["id"];
                 $("#placeholderPartial").load(url);
             }
         });
@@ -74,10 +73,11 @@
         $('.editTestCollum1').editable('@Url.Action("UpdateLabel1")');
 
         //full sample
-        $('.editTestCollum2').editable('@Url.Action("UpdateLabel1")', {
-            data   : '{"E":"Letter E","F":"Letter F","G":"Letter G", "selected":"F"}',
-            type   : 'select',
-            submit : 'OK'
-        });
+       // $('.editTestCollum2').editable('//', {
+        //    data   : '{"E":"Letter E","F":"Letter F","G":"Letter G", "selected":"F"}',
+        //    type   : 'select',
+        //    submit : 'OK'
+       // });
     </script>
-    }
+}
+

@@ -792,9 +792,6 @@
     <Compile Include="Areas\Welding\Models\TeardownResults.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Areas\Welding\Models\test.cs">
-      <DependentUpon>WeldingModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Areas\Welding\Models\Timer.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
@@ -817,6 +814,9 @@
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Welding\Models\Users.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Welding\Models\WeldfaultCount.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Welding\Models\WeldFaultProtocol.cs">
@@ -1895,8 +1895,6 @@
     <Content Include="Areas\Welding\Views\ToDoLists\Details.cshtml" />
     <Content Include="Areas\Welding\Views\ToDoLists\Edit.cshtml" />
     <Content Include="Areas\Welding\Views\ToDoLists\Index.cshtml" />
-    <Content Include="Areas\Welding\Views\TeardownTeam\TeardownTest.cshtml" />
-    <Content Include="Areas\Welding\Views\TeardownTeam\_SIS6000.cshtml" />
     <Content Include="App_Code\MyCellStyling.cshtml" />
     <Content Include="node_modules\codemirror\AUTHORS" />
     <Content Include="node_modules\codemirror\CHANGELOG.md" />
@@ -1923,6 +1921,8 @@
     <Content Include="Areas\VASC\Views\Breakdown\GetJobs.cshtml" />
     <Content Include="Areas\VASC\Views\Breakdown\_getJobs.cshtml" />
     <Content Include="Areas\Welding\Views\WM\_WeldFaultprotocol.cshtml" />
+    <Content Include="Areas\Welding\Views\WM\_WeldFaultprotocolTOP10.cshtml" />
+    <Content Include="Areas\Welding\Views\WM\WeldfaultTOP10.cshtml" />
     <None Include="Properties\PublishProfiles\gensvw1178-DEV-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gotsvw11292-PRODUCTION-VCTA.pubxml" />
