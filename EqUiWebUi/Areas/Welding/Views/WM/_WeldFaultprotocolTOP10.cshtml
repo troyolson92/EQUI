@@ -13,13 +13,21 @@
     columns.Add(c => c.location).Titled("Location");
     columns.Add(c => c.NPT).Titled("NPT");
     columns.Add(c => c.Timer).Titled("Timer");
+
+    // columns.Add(c => "<p id=" + c.id + " class='editTestCollum2'>" + c.Timer).Encoded(false).Titled("Timertest");
     columns.Add(c => c.countofTimerFaults).Titled("countofTimerFaults").InitialSort(GridSortOrder.Desc);
-    columns.Add(c => c.WMComment).Titled("WMComment");
+    columns.Add(c => "<p id=" + c.id + " class='editTestCollum1'>" + c.WMComment).Encoded(false).Titled("WMComment");
 
 
-}).Filterable().Sortable().Pageable(pager =>
-{
 
+ columns.Add(c => c)
+               .Titled("")
+               .Encoded(false)
+              .RenderedAs(c => MyFilters.IconActionLink(Url.Action("Edit", new { id = c.id }), "fas fa-pencil-alt", "", "Edit this") 
+
+).Filterable(true);
+
+   
 }).Css("table-hover").RowCss(model => model.countofTimerFaults >= 10 ? "ani_PulseRed" : "")
 
 @section scripts{
@@ -62,14 +70,14 @@
 
 
         //simple sample basic
-        $('.editTestCollum1').editable('@Url.Action("UpdateLabel")');
+        $('.editTestCollum1').editable('@Url.Action("UpdateLabel1")');
 
         //full sample
-        $('.editTestCollum2').editable('@Url.Action("UpdateLabel")', {
-            data   : '{"E":"Letter E","F":"Letter F","G":"Letter G", "selected":"F"}',
-            type   : 'select',
-            submit : 'OK'
-        });
+       // $('.editTestCollum2').editable('//', {
+        //    data   : '{"E":"Letter E","F":"Letter F","G":"Letter G", "selected":"F"}',
+        //    type   : 'select',
+        //    submit : 'OK'
+       // });
     </script>
 }
 

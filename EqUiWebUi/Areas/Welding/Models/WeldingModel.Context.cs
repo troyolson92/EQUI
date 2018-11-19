@@ -44,7 +44,6 @@ namespace EqUiWebUi.Areas.Welding.Models
         public virtual DbSet<TDTResults> TDTResults { get; set; }
         public virtual DbSet<ToDoList> ToDoList { get; set; }
         public virtual DbSet<ToDoList_Remark> ToDoList_Remark { get; set; }
-        public virtual DbSet<test> test { get; set; }
         public virtual DbSet<blanco> blanco { get; set; }
         public virtual DbSet<comment> comment { get; set; }
         public virtual DbSet<foutcode> foutcode { get; set; }

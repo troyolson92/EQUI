@@ -18,15 +18,18 @@
     columns.Add(c => c.errorCode2_txt).Titled("faultName2");
     columns.Add(c => c.CountFaultsInJob).Titled("CountfaultsInjob");
     columns.Add(c => c.progNo).Titled("Timerprogram");
+    // columns.Add(c => "<p id=" + c.id + " class='editTestCollum2'>" + c.Timer).Encoded(false).Titled("Timertest");
+
+     columns.Add(c => "<p id=" + c.id + " class='editTestCollum1'>" + c.WMComment).Encoded(false).Titled("WMComment");
+     columns.Add(c => c)
+                  .Titled("")
+                  .Encoded(false)
+                  .RenderedAs(c => MyFilters.IconActionLink(Url.Action("Edit", new { id = c.id }), "fas fa-pencil-alt", "", "Edit this")
+
+).Filterable(true);
 
 
-    columns.Add(c => c.WMComment).Titled("WMComment");
-
-
-}).Filterable().Sortable().Pageable(pager =>
-{
-
-}).Css("table-hover").RowCss(model => model.breakdownTime >= 10 ? "ani_PulseRed" : "")
+}).Css("table-hover").RowCss(model => model.CountFaultsInJob >= 10 ? "ani_PulseRed" : "")
 
 @section scripts{
     <script src="~/node_modules/jquery-jeditable/dist/jquery.jeditable.min.js"></script>
@@ -68,10 +71,10 @@
 
 
         //simple sample basic
-        $('.editTestCollum1').editable('@Url.Action("UpdateLabel")');
+        $('.editTestCollum1').editable('@Url.Action("UpdateLabel1")');
 
         //full sample
-        $('.editTestCollum2').editable('@Url.Action("UpdateLabel")', {
+        $('.editTestCollum2').editable('@Url.Action("UpdateLabel1")', {
             data   : '{"E":"Letter E","F":"Letter F","G":"Letter G", "selected":"F"}',
             type   : 'select',
             submit : 'OK'

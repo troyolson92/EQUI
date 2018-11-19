@@ -90,7 +90,7 @@ namespace EqUiWebUi.Areas.Welding.Controllers
 
         // GET: Welding/Update
         //test for in line edit 1 method for 1 value
-        public void UpdateLabel(string id, string value)
+        public void UpdateLabel1(string id, string value)
         {
             WeldFaultProtocol weldFaultProtocol = db.WeldFaultProtocol.Find(Int32.Parse(id));
             weldFaultProtocol.WMComment = value;

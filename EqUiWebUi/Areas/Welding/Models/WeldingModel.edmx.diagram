@@ -18,18 +18,17 @@
         <EntityTypeShape EntityType="GADATAModelWelding.LastWelds" Width="1.5" PointX="8.5" PointY="2.5" />
         <EntityTypeShape EntityType="GADATAModelWelding.QISViewer" Width="1.5" PointX="6.875" PointY="0.5" />
         <EntityTypeShape EntityType="GADATAModelWelding.TimerBreakdowns_busy" Width="1.5" PointX="6.875" PointY="3.375" />
-        <EntityTypeShape EntityType="GADATAModelWelding.TimerBreakdownDatachange" Width="1.5" PointX="15.125" PointY="0.5" />
+        <EntityTypeShape EntityType="GADATAModelWelding.TimerBreakdownDatachange" Width="1.5" PointX="15.5" PointY="0.5" />
         <EntityTypeShape EntityType="GADATAModelWelding.TDTResults" Width="1.5" PointX="0.75" PointY="7.875" />
         <EntityTypeShape EntityType="GADATAModelWelding.ToDoList" Width="1.5" PointX="10.125" PointY="8.125" />
         <EntityTypeShape EntityType="GADATAModelWelding.ToDoList_Remark" Width="1.5" PointX="13.875" PointY="7.125" />
         <AssociationConnector Association="GADATAModelWelding.FK__ToDoList___TodoI__32F76870" />
-        <EntityTypeShape EntityType="GADATAModelWelding.test" Width="1.5" PointX="0.75" PointY="5.75" />
         <EntityTypeShape EntityType="GADATAModelWelding.ComparePitchV316" Width="1.5" PointX="3.375" PointY="5.75" />
       </Diagram>
       <Diagram DiagramId="4894cb9c299b4076bc2e6a2d9089b8ea" Name="Teardown" ZoomLevel="55" >
         <EntityTypeShape EntityType="GADATAModelWelding.blanco" Width="1.5" PointX="7" PointY="6.5" />
         <EntityTypeShape EntityType="GADATAModelWelding.comment" Width="1.5" PointX="11.625" PointY="4.25" />
-        <EntityTypeShape EntityType="GADATAModelWelding.foutcode" Width="1.5" PointX="10.625" PointY="10.625" />
+        <EntityTypeShape EntityType="GADATAModelWelding.foutcode" Width="1.5" PointX="9.125" PointY="10.875" />
         <EntityTypeShape EntityType="GADATAModelWelding.picture" Width="1.5" PointX="4.375" PointY="0.5" />
         <EntityTypeShape EntityType="GADATAModelWelding.picturename" Width="1.5" PointX="2.125" PointY="1.625" />
         <EntityTypeShape EntityType="GADATAModelWelding.result" Width="1.5" PointX="1.375" PointY="10.25" />

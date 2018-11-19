@@ -792,9 +792,6 @@
     <Compile Include="Areas\Welding\Models\TeardownResults.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Areas\Welding\Models\test.cs">
-      <DependentUpon>WeldingModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Areas\Welding\Models\Timer.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
@@ -1898,8 +1895,6 @@
     <Content Include="Areas\Welding\Views\ToDoLists\Details.cshtml" />
     <Content Include="Areas\Welding\Views\ToDoLists\Edit.cshtml" />
     <Content Include="Areas\Welding\Views\ToDoLists\Index.cshtml" />
-    <Content Include="Areas\Welding\Views\TeardownTeam\TeardownTest.cshtml" />
-    <Content Include="Areas\Welding\Views\TeardownTeam\_SIS6000.cshtml" />
     <Content Include="App_Code\MyCellStyling.cshtml" />
     <Content Include="node_modules\codemirror\AUTHORS" />
     <Content Include="node_modules\codemirror\CHANGELOG.md" />

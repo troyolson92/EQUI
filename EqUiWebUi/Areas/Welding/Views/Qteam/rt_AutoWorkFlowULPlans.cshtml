@@ -21,58 +21,54 @@
 
 }).Filterable().Pageable(pager =>
 {
-    pager.RowsPerPage = 20;
-    pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" } };
-    //{ 20, "20" }, { 40, "40" }, { 80, "80" }, { 100, "100" } };
-    pager.ShowPageSizes = true;
+    pager.RowsPerPage = 15;
+   
 }
-).Sortable().Css("table-hover").RowCss(model => model.LastnumberFromPlanBusy > 0 ? "ani_PulseRed" : "")
+        ).Sortable().Css("table-hover").RowCss(model => model.LastnumberFromPlanBusy > 0 ? "ani_PulseBlueRepeat" : "");
 
 
 
 
-@section scripts{
-    <script>
-        //full with screen
-        $("#allcontent").removeClass("body-content");
-        $("#allcontent").removeClass("container");
-        //  $actualRow.css('background-color', '#0094ff');
-        // $("#allcontent").html("<i class='fas fa-spinner fa-spin fa-2x'></i>")
+        @section scripts{
+            <script>
+                //full with screen
+                $("#allcontent").removeClass("body-content");
+                $("#allcontent").removeClass("container");
+                //  $actualRow.css('background-color', '#0094ff');
+                // $("#allcontent").html("<i class='fas fa-spinner fa-spin fa-2x'></i>")
 
 
-        //function to refresh grid
-        function refreshGrid() {
-            console.log('function is being called')
-            $('[data-name="rt_AutoWorkFlowULPlans"]').mvcgrid({
-                reload: true,
+                //function to refresh grid
+                function refreshGrid() {
+                    console.log('function is being called')
+                    $('[data-name="rt_AutoWorkFlowULPlans"]').mvcgrid({
+                        reload: true,
 
-                reloadStarted: function () {
-                    // this - grid instance which invoked the event
-                },
-                reloadEnded: function () {
-                    // this - grid instance which invoked the event
-                },
-                reloadFailed: function (result) {
-                    // this - grid instance which invoked the event
-                    // result - failed ajax response result
+                        reloadStarted: function () {
+                            // this - grid instance which invoked the event
+                        },
+                        reloadEnded: function () {
+                            // this - grid instance which invoked the event
+                        },
+                        reloadFailed: function (result) {
+                            // this - grid instance which invoked the event
+                            // result - failed ajax response result
+                        }
+                    });
                 }
-            });
-        }
 
-        setInterval(function () {
-            refreshGrid()
-        }, 1000 * 60)
+                setInterval(function () {
+                    refreshGrid()
+                }, 1000 * 60)
 
 
-    </script>
+            </script>
 
-    <style>
-.red { 
-    background-color:#d26161
+            <style>
+                .red {
+                    background-color: #d26161
+                }
+            </style>
 
-
-}
-
-    </style>
-
+     
 }

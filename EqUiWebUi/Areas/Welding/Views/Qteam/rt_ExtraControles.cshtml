@@ -18,7 +18,7 @@
 
 
 }).Filterable(
-).Sortable().RowCss(c => (c.lastinspectiontime.GetValueOrDefault() < System.DateTime.Now.AddHours(-4)) ? "ani_PulseRed" : "ani_PulseBlueRepeat")
+).Sortable().RowCss(c => (c.lastinspectiontime.GetValueOrDefault() < System.DateTime.Now.AddHours(-4)) ? "ani_PulseRed" : "")
 
 
 
@@ -51,6 +51,6 @@
 
         setInterval(function () {
             refreshGrid()
-        }, 1000 * 120)
+        }, 1000 * 600)
     </script>
 }
