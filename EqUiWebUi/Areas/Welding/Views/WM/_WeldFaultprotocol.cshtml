@@ -1,83 +1,30 @@
-﻿@model IQueryable<EqUiWebUi.Areas.Welding.Models.WeldFaultProtocol>
-
-@{
-    ViewBag.Title = "index";
-}
-
-<h2>WeldFault TOP 10 langste storingen laatste 24 H</h2>
-
+﻿@model IEnumerable<EqUiWebUi.Areas.Welding.Models.WeldFaultProtocol>
 
 @Html.Grid(Model).Named("_WeldFaultprotocol").Build(columns =>
 {
+    columns.Add(c => c.id).Titled("id");
+    columns.Add(c => c.NPT).Titled("NPT");
+    columns.Add(c => c.Name).Titled("timerName");
+    columns.Add(c => c.errorCode1_txt).Titled("Fault");
+    columns.Add(c => c.FaultStart).Titled("Fault").InitialSort(GridSortOrder.Desc);
+    columns.Add(c => c.breakdownTime).Titled("BreakdownTime");
+    columns.Add(c => c.CountFaultsInJob).Titled("CountFaultsInJob");
 
-    columns.Add(c => c.Name).Titled("Timer");
-    columns.Add(c => c.FaultStart).Titled("Faultstart");
-    columns.Add(c => c.FaultEnd).Titled("FaultEnd");
-    columns.Add(c => c.breakdownTime).Titled("breakdowntime").InitialSort(GridSortOrder.Desc);
-    columns.Add(c => c.errorCode1_txt).Titled("faultName1");
-    columns.Add(c => c.errorCode2_txt).Titled("faultName2");
-    columns.Add(c => c.CountFaultsInJob).Titled("CountfaultsInjob");
+
+
     columns.Add(c => c.progNo).Titled("Timerprogram");
+    // columns.Add(c => c.spotId).Titled("Spotid");
     // columns.Add(c => "<p id=" + c.id + " class='editTestCollum2'>" + c.Timer).Encoded(false).Titled("Timertest");
 
-     columns.Add(c => "<p id=" + c.id + " class='editTestCollum1'>" + c.WMComment).Encoded(false).Titled("WMComment");
-     columns.Add(c => c)
-                  .Titled("")
-                  .Encoded(false)
-                  .RenderedAs(c => MyFilters.IconActionLink(Url.Action("Edit", new { id = c.id }), "fas fa-pencil-alt", "", "Edit this")
-
-).Filterable(true);
+    columns.Add(c => "<p id=" + c.id + " class='comment'>" + c.WMComment).Encoded(false).Titled("WMComment");
+    columns.Add(c => c)
+                 .Titled("")
+                 .Encoded(false)
+                 .RenderedAs(c => MyFilters.IconActionLink(Url.Action("Edit", new { id = c.id }), "fas fa-pencil-alt", "", "Edit this"));
 
 
-}).Css("table-hover").RowCss(model => model.CountFaultsInJob >= 10 ? "ani_PulseRed" : "")
+}).Filterable().Pageable(pager =>
+{
+    pager.RowsPerPage = 10;
 
-@section scripts{
-    <script src="~/node_modules/jquery-jeditable/dist/jquery.jeditable.min.js"></script>
-
-    <script>
-        //full with screen
-        $("#allcontent").removeClass("body-content");
-        $("#allcontent").removeClass("container");
-
-        //subscribe to row clicked events
-        $('[data-name="WeldFaultprotocol"]').mvcgrid({
-            rowClicked: function (row, data, e) {
-                return;
-
-                //if row already has this clase close the modal
-                if ($(row).hasClass("bg-info")) {
-                    $("#placeholder").remove();
-                    $(row).removeClass("bg-info");
-                    return;
-                }
-                //clear selected rows for this table
-                $('tr').removeClass('bg-info'); //THIS IS WRONG
-                $(row).addClass("bg-info");
-                $("#placeholder").remove(); //clear placeholder is exists
-                //add new placeholder afhter selected row
-                $(row).after('<tr id="placeholder"><td colspan="1000"><div class="card border-info"><div class="card-body" id ="placeholderPartial"></div></div></td></tr>');
-                //animation
-                $("#placeholderPartial").html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
-                //load url in placeholder
-                var url = "@Url.Action("_WeldFaulprotocol")?id=" + data["id"];
-                $("#placeholderPartial").load(url);
-            }
-        });
-
-        //test with Jeditable for in place table editable
-        //https://github.com/NicolasCARPi/jquery_jeditable/
-        //Sample code
-        https://jeditable.elabftw.net/
-
-
-        //simple sample basic
-        $('.editTestCollum1').editable('@Url.Action("UpdateLabel1")');
-
-        //full sample
-        $('.editTestCollum2').editable('@Url.Action("UpdateLabel1")', {
-            data   : '{"E":"Letter E","F":"Letter F","G":"Letter G", "selected":"F"}',
-            type   : 'select',
-            submit : 'OK'
-        });
-    </script>
-    }
+}).Sortable().Css("table-hover")

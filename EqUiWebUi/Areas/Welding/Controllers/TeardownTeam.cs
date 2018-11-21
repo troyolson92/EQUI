@@ -1,4 +1,5 @@
 ﻿using EqUiWebUi.Areas.Welding.Models;
+using Hangfire.Server;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,8 @@ namespace EqUiWebUi.Areas.Welding.Controllers
 
 {
     public class TeardownTeamController : Controller
+
+
     {
         GADATAEntitiesWelding db = new GADATAEntitiesWelding();
         // GET: TeardownTeam
@@ -23,12 +26,58 @@ namespace EqUiWebUi.Areas.Welding.Controllers
             return View(data);
         }
 
-        public ActionResult _StartTeardown()
+
+
+        public static class TeardownData
         {
+            public static List<EqUiWebUi.Areas.Welding.Models.StartTeardown> StartTeardown { get; set; }
+            public static List<EqUiWebUi.Areas.Welding.Models.type> Type { get; set; }
 
-            return View();
-        }
-        
         }
 
-    }
+        public partial class StartDummy
+        {
+            public string Type { get; set; }
+            public string BodyNbr { get; set; }
+            public string TDTStartTime { get; set; }
+
+            public class _TDT
+            {
+                GADATAEntitiesWelding db = new GADATAEntitiesWelding();
+
+                public void TDT(PerformContext context)
+                {
+                    List<StartDummy> data = new List<Areas.Welding.Controllers.TeardownTeamController.StartDummy>();
+                }
+            }
+        }
+
+
+        public ActionResult _startTeardown()
+        {
+            var data = db.ComparePitchV316.Select (p => new StartDummy() {
+                Type = p.AlternativeNumber
+                ,BodyNbr = p.id.ToString()
+                ,TDTStartTime = p.SpotID
+
+                }).ToList();
+
+            return View(data);
+        }
+
+
+            }
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+

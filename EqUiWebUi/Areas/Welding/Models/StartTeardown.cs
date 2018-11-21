@@ -12,11 +12,12 @@ namespace EqUiWebUi.Areas.Welding.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class rt_job_expulsion
+    public partial class StartTeardown
     {
         public int id { get; set; }
-        public Nullable<int> rt_job_id { get; set; }
-        public Nullable<System.DateTime> C_timestamp { get; set; }
-        public Nullable<int> rt_weldmeasureprotddw_id { get; set; }
+        public Nullable<int> TypeId { get; set; }
+        public Nullable<int> bodynbr { get; set; }
+        public System.DateTime startTeardown1 { get; set; }
+        public Nullable<System.DateTime> EndTeardown { get; set; }
     }
 }

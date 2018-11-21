@@ -1,0 +1,95 @@
+﻿@model IEnumerable<EqUiWebUi.Areas.Welding.Models.WeldFaultProtocol>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NPT)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FaultStart)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FaultEnd)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.breakdownTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.errorCode1_txt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.errorCode2_txt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CountFaultsInJob)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.progNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WMComment)
+            </th>
+            <th></th>
+        </tr>
+    
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NPT)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FaultStart)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FaultEnd)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.breakdownTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.errorCode1_txt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.errorCode2_txt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CountFaultsInJob)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.progNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WMComment)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+    }
+    
+    </table>
+</body>
+</html>

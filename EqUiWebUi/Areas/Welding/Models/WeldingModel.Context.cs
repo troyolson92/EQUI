@@ -60,12 +60,10 @@ namespace EqUiWebUi.Areas.Welding.Models
         public virtual DbSet<L_operation> L_operation { get; set; }
         public virtual DbSet<rt_active_info> rt_active_info { get; set; }
         public virtual DbSet<rt_alarm> rt_alarm { get; set; }
-        public virtual DbSet<rt_comment> rt_comment { get; set; }
         public virtual DbSet<rt_communication_state> rt_communication_state { get; set; }
         public virtual DbSet<rt_datachangeprot> rt_datachangeprot { get; set; }
         public virtual DbSet<rt_job> rt_job { get; set; }
         public virtual DbSet<rt_job_breakdown> rt_job_breakdown { get; set; }
-        public virtual DbSet<rt_job_expulsion> rt_job_expulsion { get; set; }
         public virtual DbSet<rt_spot> rt_spot { get; set; }
         public virtual DbSet<rt_weldfault> rt_weldfault { get; set; }
         public virtual DbSet<rt_weldmeasureprotddw> rt_weldmeasureprotddw { get; set; }
@@ -75,6 +73,10 @@ namespace EqUiWebUi.Areas.Welding.Models
         public virtual DbSet<Users> Users { get; set; }
         public virtual DbSet<WeldFaultProtocol> WeldFaultProtocol { get; set; }
         public virtual DbSet<WeldfaultCount> WeldfaultCount { get; set; }
+        public virtual DbSet<rt_paramvalues> rt_paramvalues { get; set; }
+        public virtual DbSet<xx_c_Spot> xx_c_Spot { get; set; }
+        public virtual DbSet<StartTeardown> StartTeardown { get; set; }
+        public virtual DbSet<AutomaticPlanControleWeldBolt> AutomaticPlanControleWeldBolt { get; set; }
     
         public virtual ObjectResult<Lastwelds_Result> Lastwelds(string timer, Nullable<int> spot)
         {
