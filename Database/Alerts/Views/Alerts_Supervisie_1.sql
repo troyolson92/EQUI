@@ -1,15 +1,6 @@
 ﻿
-
-
-
-
-
-
-
-
-
-/*only show alert when this is set*/
-CREATE VIEW [Alerts].[Alerts]
+/*only show alert when enabled*/
+CREATE VIEW [Alerts].[Alerts_Supervisie]
 AS
  SELECT 
   h_alert.[location] 	   AS 'Location' 
@@ -55,11 +46,10 @@ left join Alerts.c_triggers with(nolock) on c_triggers.id = h_alert.c_tirgger_id
 left join Alerts.c_state  with(nolock) on h_alert.[state] = c_state.id
 left join volvo.L_timeline as timeline with(nolock) on h_alert.lastTriggerd between timeline.starttime and timeline.endtime
 
---temp jens needs to remove 
 where c_triggers.isInReport = 1 --only show alert when this is set
 and c_triggers.[enabled] = 1 --only show alert when enabled
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 1, @level0type = N'SCHEMA', @level0name = N'Alerts', @level1type = N'VIEW', @level1name = N'Alerts';
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 1, @level0type = N'SCHEMA', @level0name = N'Alerts', @level1type = N'VIEW', @level1name = N'Alerts_Supervisie';
 
 
 GO
@@ -138,7 +128,7 @@ Begin DesignProperties =
             Begin Extent = 
                Top = 6
                Left = 38
-               Bottom = 135
+               Bottom = 136
                Right = 253
             End
             DisplayFlags = 280
@@ -148,8 +138,8 @@ Begin DesignProperties =
             Begin Extent = 
                Top = 6
                Left = 291
-               Bottom = 135
-               Right = 507
+               Bottom = 136
+               Right = 517
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -157,9 +147,19 @@ Begin DesignProperties =
          Begin Table = "c_state (Alerts)"
             Begin Extent = 
                Top = 6
-               Left = 545
-               Bottom = 118
-               Right = 715
+               Left = 555
+               Bottom = 119
+               Right = 725
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "timeline"
+            Begin Extent = 
+               Top = 6
+               Left = 763
+               Bottom = 136
+               Right = 933
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -190,5 +190,5 @@ Begin DesignProperties =
       End
    End
 End
-', @level0type = N'SCHEMA', @level0name = N'Alerts', @level1type = N'VIEW', @level1name = N'Alerts';
+', @level0type = N'SCHEMA', @level0name = N'Alerts', @level1type = N'VIEW', @level1name = N'Alerts_Supervisie';
 

@@ -8,58 +8,44 @@
 
 
 
-/*only show alert when this is set*/
-CREATE VIEW [Alerts].[Alerts]
+
+
+
+
+
+
+
+CREATE VIEW [EqUi].[GeoAssets]
 AS
- SELECT 
-  h_alert.[location] 	   AS 'Location' 
-, ''     AS 'AssetID' 
-,'ALERT'  AS 'Logtype' 
+SELECT 
+A.*
+--if no asset try controller then try station if stil no join plot on line 
+,ISNULL(ISNULL(ISNULL(assetlevelXY.X_pos, assetlevelXY2.X_pos),assetlevelXY3.X_pos),linelevelXY.X_pos) as  'Asset_x'  
+,ISNULL(ISNULL(ISNULL(assetlevelXY.Y_pos, assetlevelXY2.Y_pos),assetlevelXY3.Y_pos),linelevelXY.Y_pos) as 'Asset_y'
+,ISNULL(ISNULL(ISNULL(assetlevelXY.png,assetlevelXY2.PNG),assetlevelXY3.PNG),linelevelXY.PNG)  as 'Asset_png'
+--If station not found use line xy
+,ISNULL(stationlevelXY.X_pos,linelevelXY.X_pos) as 'Station_x'
+,ISNULL(stationlevelXY.Y_pos,linelevelXY.Y_pos)  as 'Station_y'
+,ISNULL(stationlevelXY.png,linelevelXY.PNG) as 'Station_png'
+--ALL LINES MUST BE DELCARED IN asset_XY else we can plot nulls!
+,linelevelXY.X_pos as 'Line_x'
+,linelevelXY.Y_pos as 'Line_y'
+,linelevelXY.PNG as 'Line_png'
 
-,CASE 
-WHEN h_alert.[state] = 1 THEN GETDATE()
-ELSE h_alert.lastTriggerd
-END   AS 'timestamp'
+FROM     EqUi.Assets as A 
+--join asset level 
+LEFT OUTER JOIN EqUi.Assets_XY as assetlevelXY ON assetlevelXY.[location] = A.[location] 
+--Asset that are null and have a know controller can join the controller (helps to find assets mounted on a robot)
+LEFT OUTER JOIN Equi.Assets_XY assetlevelXY2 on assetlevelXY2.[location] = A.controller_name 
+--Asset that are still null plot them on the station
+LEFT OUTER JOIN Equi.Assets_XY assetlevelXY3 on assetlevelXY3.[location] = A.Station 
 
-, CAST(c_triggers.id as varchar(max))    AS 'Logcode'
-, CAST(h_alert.[state] as varchar(max)) AS 'Severity'
-, h_alert.info AS 'Logtext'
-, h_alert.info  AS 'FullLogtext'
-, NULL     AS 'Response'
-
-,CASE 
- WHEN c_triggers.isDowntime = 1 THEN DATEDIFF(second,h_alert._timestamp,h_alert.lastTriggerd)
- ELSE NULL 
- END as 'Downtime'
-
-, h_alert.[Classification]  AS 'Classification'
-, c_triggers.alertType AS 'Subgroup'
-, c_state.[state] AS 'Category'
-, h_alert.id				 AS 'refId'
-, h_alert.locationTree     As 'LocationTree'
-, NULL as 'ClassTree'
-, 'Alertengine'	AS 'controller_name'
-, 'EQUI'		As 'controller_type'
-,timeline.Vyear
-,timeline.Vweek
-,timeline.Vday
-,timeline.shift
-
-,CASE 
-WHEN h_alert.[state] = 1 THEN c_triggers.Animation 
-ELSE 'ALERT'
-END  as 'animation'
-
-from Alerts.h_alert with(nolock)
-left join Alerts.c_triggers with(nolock) on c_triggers.id = h_alert.c_tirgger_id
-left join Alerts.c_state  with(nolock) on h_alert.[state] = c_state.id
-left join volvo.L_timeline as timeline with(nolock) on h_alert.lastTriggerd between timeline.starttime and timeline.endtime
-
---temp jens needs to remove 
-where c_triggers.isInReport = 1 --only show alert when this is set
-and c_triggers.[enabled] = 1 --only show alert when enabled
+--join station level
+LEFT OUTER JOIN EqUi.Assets_XY as stationlevelXY ON stationlevelXY.[location] = A.station
+--join line level
+LEFT OUTER JOIN EqUi.Assets_XY as linelevelXY ON linelevelXY.[location] = A.Area
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 1, @level0type = N'SCHEMA', @level0name = N'Alerts', @level1type = N'VIEW', @level1name = N'Alerts';
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 1, @level0type = N'SCHEMA', @level0name = N'EqUi', @level1type = N'VIEW', @level1name = N'GeoAssets';
 
 
 GO
@@ -134,32 +120,22 @@ Begin DesignProperties =
          Left = 0
       End
       Begin Tables = 
-         Begin Table = "h_alert (Alerts)"
+         Begin Table = "ASSETS (EqUi)"
             Begin Extent = 
-               Top = 6
-               Left = 38
-               Bottom = 135
-               Right = 253
+               Top = 7
+               Left = 48
+               Bottom = 168
+               Right = 259
             End
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "c_triggers (Alerts)"
+         Begin Table = "Assets_XY (EqUi)"
             Begin Extent = 
-               Top = 6
-               Left = 291
-               Bottom = 135
-               Right = 507
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
-         Begin Table = "c_state (Alerts)"
-            Begin Extent = 
-               Top = 6
-               Left = 545
-               Bottom = 118
-               Right = 715
+               Top = 7
+               Left = 307
+               Bottom = 146
+               Right = 501
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -190,5 +166,5 @@ Begin DesignProperties =
       End
    End
 End
-', @level0type = N'SCHEMA', @level0name = N'Alerts', @level1type = N'VIEW', @level1name = N'Alerts';
+', @level0type = N'SCHEMA', @level0name = N'EqUi', @level1type = N'VIEW', @level1name = N'GeoAssets';
 
