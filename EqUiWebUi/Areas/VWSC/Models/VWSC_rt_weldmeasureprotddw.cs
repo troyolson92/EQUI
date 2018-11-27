@@ -100,6 +100,22 @@ namespace EqUiWebUi.Areas.VWSC.Models
         public Nullable<decimal> uirUipCondTol { get; set; }
         public Nullable<decimal> uirPsfLowerTol { get; set; }
         public Nullable<decimal> uirPsfCondTol { get; set; }
+        public string xxmonitorState_txt { get; set; }
+        public string xxregulationState_txt { get; set; }
+        public string xxmeasureState_txt { get; set; }
+        public string xxpowerState_txt { get; set; }
+        public string xxsequenceState_txt { get; set; }
+        public string xxsequenceStateAdd_txt { get; set; }
+        public string xxsequenceRepeat_txt { get; set; }
+        public string xxmonitorMode_txt { get; set; }
+        public string xxregulationStd_txt { get; set; }
+        public string xxregulation1_txt { get; set; }
+        public string xxregulation2_txt { get; set; }
+        public string xxregulation3_txt { get; set; }
+        public string xxuirMeasuringActive_txt { get; set; }
+        public string xxuirRegulationActive_txt { get; set; }
+        public string xxuirMonitoringActive_txt { get; set; }
+        public string xxuirWeldTimeProlongActive_txt { get; set; }
     
         public virtual VWSC_c_timer c_timer { get; set; }
     }

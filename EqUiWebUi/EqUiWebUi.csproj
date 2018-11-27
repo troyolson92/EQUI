@@ -644,9 +644,6 @@
     <Compile Include="Areas\VWSC\Models\VWSC_rt_alarm.cs">
       <DependentUpon>VWSC.tt</DependentUpon>
     </Compile>
-    <Compile Include="Areas\VWSC\Models\VWSC_rt_comment.cs">
-      <DependentUpon>VWSC.tt</DependentUpon>
-    </Compile>
     <Compile Include="Areas\VWSC\Models\VWSC_rt_communication_state.cs">
       <DependentUpon>VWSC.tt</DependentUpon>
     </Compile>

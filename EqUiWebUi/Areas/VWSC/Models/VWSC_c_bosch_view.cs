@@ -21,5 +21,6 @@ namespace EqUiWebUi.Areas.VWSC.Models
         public Nullable<int> flag { get; set; }
         public string rt_table { get; set; }
         public Nullable<int> day_limit { get; set; }
+        public Nullable<int> ordinal { get; set; }
     }
 }
