@@ -12,22 +12,28 @@ namespace EqUiWebUi.Areas.Welding.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class picturename
+    public partial class c_Teardown
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public picturename()
+        public c_Teardown()
         {
-            this.picture = new HashSet<picture>();
-            this.picture1 = new HashSet<picture>();
+            this.rt_Teardown = new HashSet<rt_Teardown>();
         }
     
-        public int id { get; set; }
-        public string picturename1 { get; set; }
-        public string picturepath { get; set; }
+        public string pjvspotid { get; set; }
+        public string StartComment { get; set; }
+        public int Plates { get; set; }
+        public decimal Nomdiameter { get; set; }
+        public int Id { get; set; }
+        public int Type_ID { get; set; }
+        public Nullable<int> c_job_id { get; set; }
+        public int c_Picture_id { get; set; }
+        public Nullable<int> ordinal { get; set; }
+        public Nullable<bool> isdead { get; set; }
     
+        public virtual c_Job c_Job { get; set; }
+        public virtual c_Picture c_Picture { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<picture> picture { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<picture> picture1 { get; set; }
+        public virtual ICollection<rt_Teardown> rt_Teardown { get; set; }
     }
 }

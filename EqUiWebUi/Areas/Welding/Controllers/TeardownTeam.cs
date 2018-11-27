@@ -28,12 +28,6 @@ namespace EqUiWebUi.Areas.Welding.Controllers
 
 
 
-        public static class TeardownData
-        {
-            public static List<EqUiWebUi.Areas.Welding.Models.StartTeardown> StartTeardown { get; set; }
-            public static List<EqUiWebUi.Areas.Welding.Models.type> Type { get; set; }
-
-        }
 
         public partial class StartDummy
         {

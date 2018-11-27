@@ -20,6 +20,6 @@ namespace EqUiWebUi.Areas.Welding.Models
         public Nullable<bool> online { get; set; }
         public Nullable<byte> communicationState { get; set; }
     
-        public virtual Timer Timer { get; set; }
+        public virtual c_timer c_timer { get; set; }
     }
 }

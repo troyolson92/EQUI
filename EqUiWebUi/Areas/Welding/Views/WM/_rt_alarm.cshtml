@@ -1,0 +1,71 @@
+﻿@model IEnumerable<EqUiWebUi.Areas.Welding.Models.rt_alarm>
+
+
+
+
+@Html.Grid(Model).Named("_rt_alarm").Build(columns =>
+{
+    columns.Add(c => c.id).Titled("id");
+    columns.Add(c => c.dateTime).Titled("datetime").InitialSort(GridSortOrder.Desc);
+    columns.Add(c => c.c_timer.Name).Titled("TimerName");
+
+    // columns.Add(c => c.Timer.Name).Titled("timerName");
+    columns.Add(c => c.errorCode1_txt).Titled("ErrorFault");
+    columns.Add(c => c.errorCode2_txt).Titled("WeldFault");
+    
+
+
+
+
+    // columns.Add(c => "<p id=" + c.id + " class='editTestCollum2'>" + c.Timer).Encoded(false).Titled("Timertest");
+
+    // columns.Add(c => "<p id=" + c.id + " class='comment'>" + c.WMComment).Encoded(false).Titled("WMComment");
+    columns.Add(c => c)
+                  .Titled("")
+                 .Encoded(false)
+                 .RenderedAs(c => MyFilters.IconActionLink(Url.Action("Edit", new { id = c.id }), "fas fa-pencil-alt", "", "Edit this"));
+
+
+}).Filterable().Pageable(pager =>
+{
+    pager.RowsPerPage = 10;
+
+}).Sortable().Css("table-hover")
+
+
+@section scripts{
+    <script>
+        //full with screen
+        $("#allcontent").removeClass("body-content");
+        $("#allcontent").removeClass("container");
+
+        //subscribe to row clicked events
+        $('[data-name="_rt_alarm"]').mvcgrid({
+            rowClicked: function (row, data, e) {
+                //if row already has this clase close the modal
+                if ($(row).hasClass("bg-info")) {
+                    $("#placeholder").remove();
+                    $(row).removeClass("bg-info");
+                    return;
+                }
+                //clear selected rows for this table
+                $('tr').removeClass('bg-info'); //THIS IS WRONG
+                $(row).addClass("bg-info");
+                $("#placeholder").remove(); //clear placeholder is exists
+                //add new placeholder afhter selected row
+                $(row).after('<tr id="placeholder"><td colspan="1000"><div class="card border-info"><div class="card-body" id ="placeholderPartial"></div></div></td></tr>');
+                //animation
+                $("#placeholderPartial").html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
+                //load url in placeholder
+                var url = "@Url.Action("_alarmdetails")?id=" + data["id"];
+                $("#placeholderPartial").load(url);
+            }
+        });
+
+        //if only one row open automatic
+        if ($('[data-name="_rt_alarm"]>table>tbody>tr').length == 1) {
+
+            $('[data-name="_rt_alarm"]>table>tbody>tr:first').trigger('click');
+        }
+    </script>
+}

@@ -12,16 +12,16 @@ namespace EqUiWebUi.Areas.Welding.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class L_operation
+    public partial class rt_job_breakdown1
     {
-        public int ID { get; set; }
-        public Nullable<System.DateTime> C_timestamp { get; set; }
-        public Nullable<int> code { get; set; }
-        public string Vwsc_name { get; set; }
-        public Nullable<int> npt_id { get; set; }
-        public Nullable<int> timer_id { get; set; }
-        public string Description { get; set; }
+        public int id { get; set; }
+        public Nullable<int> rt_job_id { get; set; }
+        public Nullable<int> rt_alarm_id { get; set; }
+        public Nullable<System.DateTime> ts_breakdownStart { get; set; }
+        public Nullable<System.DateTime> ts_breakdownEnd { get; set; }
+        public Nullable<int> index { get; set; }
     
-        public virtual c_timer c_timer { get; set; }
+        public virtual rt_alarm rt_alarm { get; set; }
+        public virtual rt_job11 rt_job1 { get; set; }
     }
 }

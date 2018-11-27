@@ -1,14 +1,20 @@
 ﻿
 
 <h2>WeldFault langste storingen laatste 24 H</h2>
-<div data-name="WeldFaultProtocol" class="mvc-grid"></div>
+<div data-name="rt_Alarm" class="mvc-grid"></div>
+
+
+
 
 <hr />
 <h2>Meeste weldFaults laatste 24 H</h2>
 <div data-name="WeldfaultCount" class="mvc-grid"></div>
 <hr />
 
-@MyFilters.IconActionLink(Url.Action("TestProc", new { id = 100 }), "fas fa-fire", "", "Test fire",classes: "JQresultTriggerBtn")
+
+
+
+@MyFilters.IconActionLink(Url.Action("TestProc", new { id = 100 }), "fas fa-fire", "", "Test fire", classes: "JQresultTriggerBtn")
 
 @section scripts{
     <script src="~/node_modules/jquery-jeditable/dist/jquery.jeditable.min.js"></script>
@@ -17,16 +23,16 @@
         $("#allcontent").removeClass("body-content");
         $("#allcontent").removeClass("container");
 
-        $('[data-name="WeldFaultProtocol"]').html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
-        $('[data-name="WeldFaultProtocol"]').mvcgrid({
+        $('[data-name="rt_Alarm"]').html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
+        $('[data-name="rt_Alarm"]').mvcgrid({
         sourceUrl: '@Url.Action("_WeldFaultprotocol")', // Grid source url string
         requestType: 'get', // Ajax grid request type
             reload: true,
-            
+
               reloadEnded: function () {
                 //simple sample basic
               $('.comment').editable('@Url.Action("UpdateLabel2")');
-               
+
             },
         });
 

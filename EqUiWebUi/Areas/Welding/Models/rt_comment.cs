@@ -12,12 +12,10 @@ namespace EqUiWebUi.Areas.Welding.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class StartTeardown
+    public partial class rt_comment
     {
         public int id { get; set; }
-        public Nullable<int> TypeId { get; set; }
-        public Nullable<int> bodynbr { get; set; }
-        public System.DateTime startTeardown1 { get; set; }
-        public Nullable<System.DateTime> EndTeardown { get; set; }
+        public Nullable<System.DateTime> C_timestamp { get; set; }
+        public string comment { get; set; }
     }
 }

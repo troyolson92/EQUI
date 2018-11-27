@@ -12,12 +12,11 @@ namespace EqUiWebUi.Areas.Welding.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Users
+    public partial class c_severity
     {
-        public int ID { get; set; }
-        public string CDSID { get; set; }
-        public string Voornaam { get; set; }
-        public string Achternaam { get; set; }
-        public string @object { get; set; }
+        public int id { get; set; }
+        public Nullable<int> enable_bit { get; set; }
+        public string isError_txt { get; set; }
+        public Nullable<int> value { get; set; }
     }
 }

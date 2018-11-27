@@ -12,22 +12,20 @@ namespace EqUiWebUi.Areas.Welding.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class foutcode
+    public partial class c_faultcode
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public foutcode()
+        public c_faultcode()
         {
-            this.teardown = new HashSet<teardown>();
-            this.teardown1 = new HashSet<teardown>();
+            this.rt_Teardown = new HashSet<rt_Teardown>();
         }
     
         public int id { get; set; }
         public int foutcodenbr { get; set; }
         public string foutcodename { get; set; }
+        public bool iddead { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<teardown> teardown { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<teardown> teardown1 { get; set; }
+        public virtual ICollection<rt_Teardown> rt_Teardown { get; set; }
     }
 }

@@ -12,21 +12,24 @@ namespace EqUiWebUi.Areas.Welding.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class comment
+    public partial class c_timer_class
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public comment()
+        public c_timer_class()
         {
-            this.teardown = new HashSet<teardown>();
-            this.teardown1 = new HashSet<teardown>();
+            this.c_timer = new HashSet<c_timer>();
+            this.rt_datachangeprot = new HashSet<rt_datachangeprot>();
         }
     
         public int id { get; set; }
-        public string comment1 { get; set; }
+        public string name { get; set; }
+        public Nullable<int> cBoschViewMask { get; set; }
+        public Nullable<int> cErrorMask { get; set; }
+        public Nullable<int> cSeverityMask { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<teardown> teardown { get; set; }
+        public virtual ICollection<c_timer> c_timer { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<teardown> teardown1 { get; set; }
+        public virtual ICollection<rt_datachangeprot> rt_datachangeprot { get; set; }
     }
 }

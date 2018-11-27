@@ -12,19 +12,11 @@ namespace EqUiWebUi.Areas.Welding.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class rt_spot
+    public partial class c_user
     {
         public int id { get; set; }
+        public Nullable<int> enable_bit { get; set; }
+        public string username { get; set; }
         public Nullable<System.DateTime> C_timestamp { get; set; }
-        public Nullable<int> timerId { get; set; }
-        public Nullable<int> spotId { get; set; }
-        public string spotname { get; set; }
-        public Nullable<int> pjv_joiningpointdata_id { get; set; }
-        public string vwscComment { get; set; }
-        public Nullable<int> Comment1 { get; set; }
-        public Nullable<int> Comment2 { get; set; }
-        public Nullable<int> Comment3 { get; set; }
-        public Nullable<int> weldProgramNo { get; set; }
-        public Nullable<int> isDead { get; set; }
     }
 }

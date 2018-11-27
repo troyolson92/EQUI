@@ -12,15 +12,20 @@ namespace EqUiWebUi.Areas.Welding.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class L_operation
+    public partial class rt_spottable
     {
-        public int ID { get; set; }
+        public int id { get; set; }
         public Nullable<System.DateTime> C_timestamp { get; set; }
-        public Nullable<int> code { get; set; }
-        public string Vwsc_name { get; set; }
-        public Nullable<int> npt_id { get; set; }
-        public Nullable<int> timer_id { get; set; }
-        public string Description { get; set; }
+        public Nullable<int> timerId { get; set; }
+        public Nullable<int> spot_ID { get; set; }
+        public string spotname { get; set; }
+        public Nullable<int> pjv_joiningpointdata_id { get; set; }
+        public string vwscComment { get; set; }
+        public Nullable<int> Comment1 { get; set; }
+        public Nullable<int> Comment2 { get; set; }
+        public Nullable<int> Comment3 { get; set; }
+        public Nullable<int> weldProgNo { get; set; }
+        public Nullable<int> isDead { get; set; }
     
         public virtual c_timer c_timer { get; set; }
     }
