@@ -14,9 +14,21 @@ namespace EqUiWebUi.Areas.Welding.Models
     
     public partial class c_user
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public c_user()
+        {
+            this.rt_datachangeprot = new HashSet<rt_datachangeprot>();
+            this.rt_user = new HashSet<rt_user>();
+        }
+    
         public int id { get; set; }
         public Nullable<int> enable_bit { get; set; }
         public string username { get; set; }
         public Nullable<System.DateTime> C_timestamp { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<rt_datachangeprot> rt_datachangeprot { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<rt_user> rt_user { get; set; }
     }
 }

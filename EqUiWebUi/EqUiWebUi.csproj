@@ -677,6 +677,9 @@
     <Compile Include="Areas\Welding\Controllers\UpdateController.cs" />
     <Compile Include="Areas\Welding\Controllers\WMController.cs" />
     <Compile Include="Areas\Welding\editController.cs" />
+    <Compile Include="Areas\Welding\Models\AlertsAASPOT.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Areas\Welding\Models\AutomaticPlanControleWeldBolt.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
@@ -1937,11 +1940,12 @@
     <Content Include="Areas\Welding\Views\WM\Edit.cshtml" />
     <Content Include="Areas\Welding\Views\WM\_breakdown.cshtml" />
     <Content Include="Areas\Welding\Views\WM\_alarmdetails.cshtml" />
-    <Content Include="Areas\Welding\Views\JobData\_jobBreakdown.cshtml" />
-    <Content Include="Areas\Welding\Views\JobData\_jobdetails.cshtml" />
-    <Content Include="Areas\Welding\Views\JobData\_weldFault.cshtml" />
-    <Content Include="Areas\Welding\Views\JobData\_weldMeasure.cshtml" />
-    <Content Include="Areas\Welding\Views\JobData\_rt_job.cshtml" />
+    <Content Include="Areas\Welding\Views\WM\_jobBreakdown1.cshtml" />
+    <Content Include="Areas\Welding\Views\WM\_jobdetails1.cshtml" />
+    <Content Include="Areas\Welding\Views\WM\_weldFault1.cshtml" />
+    <Content Include="Areas\Welding\Views\WM\_weldMeasure1.cshtml" />
+    <Content Include="Areas\Welding\Views\WM\_rt_job1.cshtml" />
+    <Content Include="Areas\Welding\Views\Welding\_alertsAASPOT.cshtml" />
     <None Include="Properties\PublishProfiles\gensvw1178-DEV-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gotsvw11292-PRODUCTION-VCTA.pubxml" />

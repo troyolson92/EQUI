@@ -1,25 +1,25 @@
 ﻿@model EqUiWebUi.Areas.Welding.Models.rt_job11
 
 
-<br />
+
 <span class="badge badge-info">weldFaultGrid</span>
-<div data-name="weldFaultGrid" class="mvc-grid"></div>
+<div data-name="weldFaultGrid1" class="mvc-grid"></div>
 
 <br />
 <span class="badge badge-info">weldMeasureGrid</span>
-<div data-name="weldMeasureGrid" class="mvc-grid"></div>
+<div data-name="weldMeasureGrid1" class="mvc-grid"></div>
 
 <br />
 <span class="badge badge-info">breakdownGrid</span>
-<div data-name="breakdownGrid" class="mvc-grid"></div>
+<div data-name="breakdownGrid1" class="mvc-grid"></div>
 
 
 <script>
 
 
-    $('[data-name="weldFaultGrid"]').html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
-    $('[data-name="weldFaultGrid"]').mvcgrid({
-        sourceUrl: '@Url.Action("_weldFault")', // Grid source url string
+    $('[data-name="weldFaultGrid1"]').html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
+    $('[data-name="weldFaultGrid1"]').mvcgrid({
+        sourceUrl: '@Url.Action("_weldFault1")', // Grid source url string
         data: {
             timerId: @Model.timerId,
             weldfaultprot_id_Start: @Model.rt_weldfaultprot_id_Start,
@@ -29,13 +29,13 @@
         reload: true, // Grid reload indicator
         reloadFailed: function (result) {
                 console.log(result);
-            $('[data-name="weldFaultGrid"]').html("<div class='alert alert-danger'>Error while loading!! </div>");
+            $('[data-name="weldFaultGrid1"]').html("<div class='alert alert-danger'>Error while loading!! </div>");
             }
     });
 
-    $('[data-name="weldMeasureGrid"]').html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
-    $('[data-name="weldMeasureGrid"]').mvcgrid({
-        sourceUrl: '@Url.Action("_weldMeasure")', // Grid source url string
+    $('[data-name="weldMeasureGrid1"]').html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
+    $('[data-name="weldMeasureGrid1"]').mvcgrid({
+        sourceUrl: '@Url.Action("_weldMeasure1")', // Grid source url string
         data: {
             timerId: @Model.timerId,
             weldmeasureprotddw_id_Start: @Model.rt_weldmeasureprotddw_id_Start,
@@ -45,12 +45,12 @@
         reload: true, // Grid reload indicator
         reloadFailed: function (result) {
                 console.log(result);
-            $('[data-name="weldMeasureGrid"]').html("<div class='alert alert-danger'>Error while loading!! </div>");
+            $('[data-name="weldMeasureGrid1"]').html("<div class='alert alert-danger'>Error while loading!! </div>");
             }
     });
-        $('[data-name="breakdownGrid"]').html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
-    $('[data-name="breakdownGrid"]').mvcgrid({
-        sourceUrl: '@Url.Action("_jobBreakdown")', // Grid source url string
+        $('[data-name="breakdownGrid1"]').html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
+    $('[data-name="breakdownGrid1"]').mvcgrid({
+        sourceUrl: '@Url.Action("_jobBreakdown1")', // Grid source url string
         data: {
             id: @Model.id,
         },
@@ -58,7 +58,7 @@
         reload: true, // Grid reload indicator
         reloadFailed: function (result) {
                 console.log(result);
-            $('[data-name="breakdownGrid"]').html("<div class='alert alert-danger'>Error while loading!! </div>");
+            $('[data-name="breakdownGrid1"]').html("<div class='alert alert-danger'>Error while loading!! </div>");
             }
     });
 

@@ -18,6 +18,7 @@ namespace EqUiWebUi.Areas.Welding.Models
         public c_NPT()
         {
             this.c_timer = new HashSet<c_timer>();
+            this.rt_user = new HashSet<rt_user>();
         }
     
         public int ID { get; set; }
@@ -31,5 +32,7 @@ namespace EqUiWebUi.Areas.Welding.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<c_timer> c_timer { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<rt_user> rt_user { get; set; }
     }
 }

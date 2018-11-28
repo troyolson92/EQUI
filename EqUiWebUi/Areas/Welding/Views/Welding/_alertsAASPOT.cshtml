@@ -1,0 +1,60 @@
+﻿@model IQueryable<EqUiWebUi.Areas.Welding.Models.AlertsAASPOT>
+@{
+    ViewBag.Title = "AlertsAASPOT";
+}
+
+<h2>ExtraControles</h2>
+@Html.Grid(Model).Named("_alertsAASPOT").Build(columns =>
+{
+    columns.Add(c => c.C_timestamp).Titled("timestamp").Formatted("{0:dd-MM-yyyy HH:mm:ss}").InitialSort(GridSortOrder.Desc);
+    columns.Add(c => c.location).Titled("location");
+    columns.Add(c => c.alarmobject).Titled("alarmobject");
+    columns.Add(c => c.info).Titled("Information");
+    columns.Add(c => c.state).Titled("status");
+    columns.Add(c => c.alertType).Titled("alertType");
+    columns.Add(c => c.triggerCount).Titled("AantalTriggers");
+
+
+
+
+}).Filterable().Pageable(pager =>
+{
+    pager.RowsPerPage = 12;
+}
+).Sortable().RowCss(c => ( c.info.StartsWith("Loose") ? "ani_PulseRed" : ""));
+
+
+
+@section scripts{)
+
+    <script>
+        //full with screen
+        $("#allcontent").removeClass("body-content");
+        $("#allcontent").removeClass("container");
+
+
+        //function to refresh grid
+        function refreshGrid() {
+            console.log('function is being called')
+            $('[data-name="_alertsAASPOT"]').mvcgrid({
+                reload: true,
+
+                reloadStarted: function () {
+                    // this - grid instance which invoked the event
+                },
+                reloadEnded: function () {
+                    // this - grid instance which invoked the event
+                },
+                reloadFailed: function (result) {
+                    // this - grid instance which invoked the event
+                    // result - failed ajax response result
+                }
+            });
+        }
+
+        setInterval(function () {
+            refreshGrid()
+        }, 1000 * 60)
+    </script>
+}
+

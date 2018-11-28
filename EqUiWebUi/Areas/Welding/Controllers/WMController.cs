@@ -129,25 +129,25 @@ namespace EqUiWebUi.Areas.Welding.Controllers
 
         /// <param name="bShowUnfinishedJobs"></param>
         /// <returns></returns>
-        public ActionResult _rt_job(bool bShowUnfinishedJobs = false)
+        public ActionResult _rt_job1(bool bShowUnfinishedJobs = false)
         {
             IQueryable<rt_job11> data = db.rt_job11.Where(c => c.ts_End.HasValue != bShowUnfinishedJobs &&  c.timerId == c.c_timer.ID ).AsQueryable();
             return View(data);
         }
 
-        public ActionResult _jobdetails(int id)
+        public ActionResult _jobdetails1(int id)
         {
             rt_job11 job = db.rt_job11.Find(id);
             return PartialView(job);
         }
 
-        public ActionResult _jobBreakdown(int id)
+        public ActionResult _jobBreakdown1(int id)
         {
             IQueryable<rt_job_breakdown1> breakdowns = db.rt_job_breakdown1.Where(c => c.rt_job_id == id).Where(c => c.index == '1').AsQueryable();
             return PartialView(breakdowns);
         }
 
-        public ActionResult _weldMeasure(int timerId, int weldmeasureprotddw_id_Start, int weldmeasureprotddw_id_End)
+        public ActionResult _weldMeasure1(int timerId, int weldmeasureprotddw_id_Start, int weldmeasureprotddw_id_End)
         {
             IQueryable<rt_weldmeasureprotddw> data = db.rt_weldmeasureprotddw.Where(c =>
             c.timerId == timerId
@@ -158,7 +158,7 @@ namespace EqUiWebUi.Areas.Welding.Controllers
             return PartialView(data);
         }
 
-        public ActionResult _weldFault(int timerId, int weldfaultprot_id_Start, int weldfaultprot_id_End)
+        public ActionResult _weldFault1(int timerId, int weldfaultprot_id_Start, int weldfaultprot_id_End)
         {
             IQueryable<rt_weldfault> data = db.rt_weldfault.Where(c =>
             c.timerId == timerId

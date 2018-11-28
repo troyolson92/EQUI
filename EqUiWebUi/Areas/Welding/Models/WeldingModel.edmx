@@ -615,15 +615,26 @@ warning 6002: The table/view 'GADATA.WELDING2.h_Nut_Bolt_Measure' does not have 
           <Property Name="uirPsfCondTol" Type="numeric" Precision="8" Scale="2" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6013: The table/view 'GADATA.WELDING2.TEMPWarning' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="TEMPWarning">
-          <Property Name="Timerid" Type="int" />
-          <Property Name="Spotid" Type="int" />
-          <Property Name="QCounter" Type="int" />
-          <Property Name="Qstop" Type="nchar" MaxLength="25" />
-          <Property Name="Starttime" Type="datetime" />
-          <Property Name="endtime" Type="datetime" />
-        </EntityType>-->
+warning 6002: The table/view 'GADATA.Alerts.AlertsAASPOT' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="AlertsAASPOT">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="_timestamp" />
+            <PropertyRef Name="location" />
+            <PropertyRef Name="alarmobject" />
+            <PropertyRef Name="triggerCount" />
+            <PropertyRef Name="state" />
+            <PropertyRef Name="alertType" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="_timestamp" Type="datetime" Nullable="false" />
+          <Property Name="location" Type="varchar(max)" Nullable="false" />
+          <Property Name="alarmobject" Type="varchar(max)" Nullable="false" />
+          <Property Name="info" Type="varchar(max)" />
+          <Property Name="triggerCount" Type="int" Nullable="false" />
+          <Property Name="state" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="alertType" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'GADATA.dbo.WeldtimeSpotsSetup' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="WeldtimeSpotsSetup">
@@ -1020,6 +1031,18 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_rt_datachangeprot_c_user">
+          <End Role="c_user" Type="Self.c_user" Multiplicity="0..1" />
+          <End Role="rt_datachangeprot" Type="Self.rt_datachangeprot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="rt_datachangeprot">
+              <PropertyRef Name="c_user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_rt_job_breakdown_rt_alarm">
           <End Role="rt_alarm" Type="Self.rt_alarm" Multiplicity="0..1" />
           <End Role="rt_job_breakdown" Type="Self.rt_job_breakdown" Multiplicity="*" />
@@ -1140,6 +1163,30 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_rt_user_c_NPT">
+          <End Role="c_NPT" Type="Self.c_NPT" Multiplicity="0..1" />
+          <End Role="rt_user" Type="Self.rt_user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_NPT">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="rt_user">
+              <PropertyRef Name="nptId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rt_user_c_user">
+          <End Role="c_user" Type="Self.c_user" Multiplicity="0..1" />
+          <End Role="rt_user" Type="Self.rt_user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="rt_user">
+              <PropertyRef Name="c_UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_rt_weldfault_c_timer">
           <End Role="c_timer" Type="Self.c_timer" Multiplicity="0..1" />
           <End Role="rt_weldfault" Type="Self.rt_weldfault" Multiplicity="*" />
@@ -1232,6 +1279,18 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
     [h_Nut_Bolt_Measure].[ResistanceRef] AS [ResistanceRef], 
     [h_Nut_Bolt_Measure].[ExpulsionTime] AS [ExpulsionTime]
     FROM [WELDING2].[h_Nut_Bolt_Measure] AS [h_Nut_Bolt_Measure]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="AlertsAASPOT" EntityType="Self.AlertsAASPOT" store:Type="Views" store:Schema="Alerts">
+            <DefiningQuery>SELECT 
+    [AlertsAASPOT].[id] AS [id], 
+    [AlertsAASPOT].[_timestamp] AS [_timestamp], 
+    [AlertsAASPOT].[location] AS [location], 
+    [AlertsAASPOT].[alarmobject] AS [alarmobject], 
+    [AlertsAASPOT].[info] AS [info], 
+    [AlertsAASPOT].[triggerCount] AS [triggerCount], 
+    [AlertsAASPOT].[state] AS [state], 
+    [AlertsAASPOT].[alertType] AS [alertType]
+    FROM [Alerts].[AlertsAASPOT] AS [AlertsAASPOT]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="WeldtimeSpotsSetup" EntityType="Self.WeldtimeSpotsSetup" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -1479,6 +1538,10 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
             <End Role="c_timer_class" EntitySet="c_timer_class" />
             <End Role="rt_datachangeprot" EntitySet="rt_datachangeprot" />
           </AssociationSet>
+          <AssociationSet Name="FK_rt_datachangeprot_c_user" Association="Self.FK_rt_datachangeprot_c_user">
+            <End Role="c_user" EntitySet="c_user" />
+            <End Role="rt_datachangeprot" EntitySet="rt_datachangeprot" />
+          </AssociationSet>
           <AssociationSet Name="FK_rt_job_breakdown_rt_alarm" Association="Self.FK_rt_job_breakdown_rt_alarm">
             <End Role="rt_alarm" EntitySet="rt_alarm" />
             <End Role="rt_job_breakdown" EntitySet="rt_job_breakdown" />
@@ -1518,6 +1581,14 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
           <AssociationSet Name="FK_rt_Teardown_rt_Job" Association="Self.FK_rt_Teardown_rt_Job">
             <End Role="rt_Job" EntitySet="rt_Job" />
             <End Role="rt_Teardown" EntitySet="rt_Teardown" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rt_user_c_NPT" Association="Self.FK_rt_user_c_NPT">
+            <End Role="c_NPT" EntitySet="c_NPT" />
+            <End Role="rt_user" EntitySet="rt_user" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rt_user_c_user" Association="Self.FK_rt_user_c_user">
+            <End Role="c_user" EntitySet="c_user" />
+            <End Role="rt_user" EntitySet="rt_user" />
           </AssociationSet>
           <AssociationSet Name="FK_rt_weldfault_c_timer" Association="Self.FK_rt_weldfault_c_timer">
             <End Role="c_timer" EntitySet="c_timer" />
@@ -1679,6 +1750,19 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
           <AssociationSet Name="FK_rt_job_breakdown_rt_job" Association="GADATAModelWelding.FK_rt_job_breakdown_rt_job">
             <End Role="rt_job11" EntitySet="rt_job11" />
             <End Role="rt_job_breakdown" EntitySet="rt_job_breakdown1" />
+          </AssociationSet>
+          <EntitySet Name="AlertsAASPOT" EntityType="GADATAModelWelding.AlertsAASPOT" />
+          <AssociationSet Name="FK_rt_user_c_NPT" Association="GADATAModelWelding.FK_rt_user_c_NPT">
+            <End Role="c_NPT" EntitySet="c_NPT" />
+            <End Role="rt_user" EntitySet="rt_user" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rt_datachangeprot_c_user" Association="GADATAModelWelding.FK_rt_datachangeprot_c_user">
+            <End Role="c_user" EntitySet="c_user" />
+            <End Role="rt_datachangeprot" EntitySet="rt_datachangeprot" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rt_user_c_user" Association="GADATAModelWelding.FK_rt_user_c_user">
+            <End Role="c_user" EntitySet="c_user" />
+            <End Role="rt_user" EntitySet="rt_user" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="rt_AutoWorkFlowULPlans">
@@ -2213,6 +2297,7 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
           <Property Name="active" Type="Boolean" />
           <Property Name="enable_bit" Type="Int32" />
           <NavigationProperty Name="c_timer" Relationship="GADATAModelWelding.FK_c_timer_c_NPT" FromRole="c_NPT" ToRole="c_timer" />
+          <NavigationProperty Name="rt_user" Relationship="GADATAModelWelding.FK_rt_user_c_NPT" FromRole="c_NPT" ToRole="rt_user" />
         </EntityType>
         <EntityType Name="c_severity">
           <Key>
@@ -2272,6 +2357,8 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
           <Property Name="enable_bit" Type="Int32" />
           <Property Name="username" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
           <Property Name="C_timestamp" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="rt_datachangeprot" Relationship="GADATAModelWelding.FK_rt_datachangeprot_c_user" FromRole="c_user" ToRole="rt_datachangeprot" />
+          <NavigationProperty Name="rt_user" Relationship="GADATAModelWelding.FK_rt_user_c_user" FromRole="c_user" ToRole="rt_user" />
         </EntityType>
         <EntityType Name="h_Midair">
           <Key>
@@ -2442,6 +2529,7 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
           <Property Name="rt_paramvalues_id" Type="Int32" />
           <NavigationProperty Name="c_timer" Relationship="GADATAModelWelding.FK_rt_datachangeprot_c_timer" FromRole="rt_datachangeprot" ToRole="c_timer" />
           <NavigationProperty Name="c_timer_class" Relationship="GADATAModelWelding.FK_rt_datachangeprot_c_timer_class" FromRole="rt_datachangeprot" ToRole="c_timer_class" />
+          <NavigationProperty Name="c_user" Relationship="GADATAModelWelding.FK_rt_datachangeprot_c_user" FromRole="rt_datachangeprot" ToRole="c_user" />
         </EntityType>
         <EntityType Name="rt_job11">
           <Key>
@@ -2523,6 +2611,8 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
           <Property Name="protRecord_ID_logout" Type="Decimal" Precision="12" Scale="0" />
           <Property Name="dateTime_login" Type="DateTime" Precision="3" />
           <Property Name="dateTime_logout" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="c_NPT" Relationship="GADATAModelWelding.FK_rt_user_c_NPT" FromRole="rt_user" ToRole="c_NPT" />
+          <NavigationProperty Name="c_user" Relationship="GADATAModelWelding.FK_rt_user_c_user" FromRole="rt_user" ToRole="c_user" />
         </EntityType>
         <EntityType Name="rt_weldfault">
           <Key>
@@ -2851,6 +2941,61 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
             </Principal>
             <Dependent Role="rt_job_breakdown">
               <PropertyRef Name="rt_job_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="AlertsAASPOT">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="C_timestamp" />
+            <PropertyRef Name="location" />
+            <PropertyRef Name="alarmobject" />
+            <PropertyRef Name="triggerCount" />
+            <PropertyRef Name="state" />
+            <PropertyRef Name="alertType" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="C_timestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="location" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="alarmobject" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="info" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="triggerCount" Type="Int32" Nullable="false" />
+          <Property Name="state" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="alertType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_rt_user_c_NPT">
+          <End Type="GADATAModelWelding.c_NPT" Role="c_NPT" Multiplicity="0..1" />
+          <End Type="GADATAModelWelding.rt_user" Role="rt_user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_NPT">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="rt_user">
+              <PropertyRef Name="nptId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rt_datachangeprot_c_user">
+          <End Type="GADATAModelWelding.c_user" Role="c_user" Multiplicity="0..1" />
+          <End Type="GADATAModelWelding.rt_datachangeprot" Role="rt_datachangeprot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="rt_datachangeprot">
+              <PropertyRef Name="c_user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rt_user_c_user">
+          <End Type="GADATAModelWelding.c_user" Role="c_user" Multiplicity="0..1" />
+          <End Type="GADATAModelWelding.rt_user" Role="rt_user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="rt_user">
+              <PropertyRef Name="c_UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3730,6 +3875,20 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
                 <ScalarProperty Name="SpotID" ColumnName="SpotID" />
                 <ScalarProperty Name="Timestamp" ColumnName="Timestamp" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AlertsAASPOT">
+            <EntityTypeMapping TypeName="GADATAModelWelding.AlertsAASPOT">
+              <MappingFragment StoreEntitySet="AlertsAASPOT">
+                <ScalarProperty Name="alertType" ColumnName="alertType" />
+                <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="triggerCount" ColumnName="triggerCount" />
+                <ScalarProperty Name="info" ColumnName="info" />
+                <ScalarProperty Name="alarmobject" ColumnName="alarmobject" />
+                <ScalarProperty Name="location" ColumnName="location" />
+                <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

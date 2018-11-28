@@ -8,22 +8,23 @@
         <EntityTypeShape EntityType="GADATAModelWelding.rt_AutoWorkFlowULPlans" Width="1.5" PointX="0.625" PointY="0.5" />
         <EntityTypeShape EntityType="GADATAModelWelding.ULRapportering" Width="1.5" PointX="4" PointY="0.5" />
         <EntityTypeShape EntityType="GADATAModelWelding.DoubleSpotCheck" Width="1.5" PointX="10.125" PointY="0.5" />
-        <EntityTypeShape EntityType="GADATAModelWelding.CheckDubbelPrograms" Width="1.5" PointX="11.875" PointY="4.625" />
+        <EntityTypeShape EntityType="GADATAModelWelding.CheckDubbelPrograms" Width="1.5" PointX="13.875" PointY="2.75" />
         <EntityTypeShape EntityType="GADATAModelWelding.BosProgramAvailable" Width="1.5" PointX="10.125" PointY="2.5" />
         <EntityTypeShape EntityType="GADATAModelWelding.dressrequired" Width="1.5" PointX="11.875" PointY="0.5" />
-        <EntityTypeShape EntityType="GADATAModelWelding.WeldtimeSpotsSetup" Width="1.5" PointX="11.875" PointY="2.5" />
-        <EntityTypeShape EntityType="GADATAModelWelding.StabilityInDicationV316" Width="1.5" PointX="13.5" PointY="4" />
+        <EntityTypeShape EntityType="GADATAModelWelding.WeldtimeSpotsSetup" Width="1.5" PointX="13.875" PointY="4.5" />
+        <EntityTypeShape EntityType="GADATAModelWelding.StabilityInDicationV316" Width="1.5" PointX="13.875" PointY="0.5" />
         <EntityTypeShape EntityType="GADATAModelWelding.ConnectionState" Width="1.5" PointX="8.5" PointY="0.5" />
         <EntityTypeShape EntityType="GADATAModelWelding.LastWelds" Width="1.5" PointX="8.5" PointY="2.5" />
         <EntityTypeShape EntityType="GADATAModelWelding.QISViewer" Width="1.5" PointX="6.875" PointY="0.5" />
         <EntityTypeShape EntityType="GADATAModelWelding.TimerBreakdowns_busy" Width="1.5" PointX="6.875" PointY="3.375" />
         <EntityTypeShape EntityType="GADATAModelWelding.TimerBreakdownDatachange" Width="1.5" PointX="15.5" PointY="0.5" />
         <EntityTypeShape EntityType="GADATAModelWelding.TDTResults" Width="1.5" PointX="0.75" PointY="7.875" />
-        <EntityTypeShape EntityType="GADATAModelWelding.ToDoList" Width="1.5" PointX="10.125" PointY="8.125" />
-        <EntityTypeShape EntityType="GADATAModelWelding.ToDoList_Remark" Width="1.5" PointX="13.125" PointY="7.125" />
+        <EntityTypeShape EntityType="GADATAModelWelding.ToDoList" Width="1.5" PointX="10.5" PointY="7.875" />
+        <EntityTypeShape EntityType="GADATAModelWelding.ToDoList_Remark" Width="1.5" PointX="12.875" PointY="9.5" />
         <AssociationConnector Association="GADATAModelWelding.FK__ToDoList___TodoI__32F76870" />
-        <EntityTypeShape EntityType="GADATAModelWelding.ComparePitchV316" Width="1.5" PointX="3.375" PointY="5.75" />
-        <EntityTypeShape EntityType="GADATAModelWelding.rt_ExtraControles" Width="1.5" PointX="5.375" PointY="6.75" />
+        <EntityTypeShape EntityType="GADATAModelWelding.ComparePitchV316" Width="1.5" PointX="0.625" PointY="4.125" />
+        <EntityTypeShape EntityType="GADATAModelWelding.rt_ExtraControles" Width="1.5" PointX="15.5" PointY="5.125" />
+        <EntityTypeShape EntityType="GADATAModelWelding.AlertsAASPOT" Width="1.5" PointX="2.5" PointY="6" />
       </Diagram>
       <Diagram DiagramId="4894cb9c299b4076bc2e6a2d9089b8ea" Name="Teardown" ZoomLevel="55" >
         <EntityTypeShape EntityType="GADATAModelWelding.c_faultcode" Width="1.5" PointX="6" PointY="1" />
@@ -80,6 +81,9 @@
         <AssociationConnector Association="GADATAModelWelding.FK_rt_datachangeprot_c_timer_class" />
         <AssociationConnector Association="GADATAModelWelding.FK_rt_job_breakdown_rt_alarm" />
         <AssociationConnector Association="GADATAModelWelding.FK_rt_job_breakdown_rt_job" />
+        <AssociationConnector Association="GADATAModelWelding.FK_rt_user_c_NPT" />
+        <AssociationConnector Association="GADATAModelWelding.FK_rt_datachangeprot_c_user" />
+        <AssociationConnector Association="GADATAModelWelding.FK_rt_user_c_user" />
       </Diagram>
       <Diagram DiagramId="bcf85daa635e4a2d967ca8716d35520c" Name="Welding2Views" >
         <EntityTypeShape EntityType="GADATAModelWelding.WeldFaultProtocol" Width="1.5" PointX="0.875" PointY="0.75" />

@@ -23,19 +23,19 @@
     @MyHtmlHelpers.EquiLink("/Welding/WM/", "far fa-file-alt", "Welding Master Interventions ---underconstruction---", helperText: "List up a intervention")
 
     <p></p>
-    @MyHtmlHelpers.EquiLink("/Welding/WM/", "far fa-file-alt", "QstopAlerts ---under construction---", helperText: "Pro Actief Qstops vermijden TOP ")
+    @MyHtmlHelpers.EquiLink("/Alert/Alert/Listalerts?h_alert-c_state.state-not-equals=TECHCOMP&h_alert-info-contains=QSTOP%20warning&h_alert-rows=20", "far fa-file-alt", "QstopWarnings", helperText: "Pro Actief Qstops vermijden ")
     <p></p>
     @MyHtmlHelpers.EquiLink("/Welding/WM/", "far fa-file-alt", "SpatterAlerts ---under construction---", helperText: "Spatters met melding productie ")
     <p></p>
     @MyHtmlHelpers.EquiLink("/Welding/WM/", "far fa-file-alt", " All D alerts ---under construction---", helperText: "Follow up all D alerts")
     <p></p>
-    @MyHtmlHelpers.EquiLink("/Welding/WM/", "far fa-file-alt", " All Q Alerts ---under construction---", helperText: "Follow up all Q alerts ")
+    @MyHtmlHelpers.EquiLink("/Alert/Alert/Listalerts?h_alert-c_triggers.alert-type-contains=Qalert&h_alert-rows=20", "far fa-file-alt", " All Q Alerts ", helperText: "Follow up all Q alerts ")
 
 
     @*voorbeeld interne link*@
     <p>
     <p>
-        <a href="~/Welding/JobData/_rt_job" class="btn btn-primary btn-sm">WeldData Job &raquo;</a>
+        <a href="~/Welding/WM/_rt_job1" class="btn btn-primary btn-sm">WeldData Job &raquo;</a>
         WeldData Job Analyser
     <p>
     <p>

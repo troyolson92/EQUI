@@ -22,5 +22,8 @@ namespace EqUiWebUi.Areas.Welding.Models
         public Nullable<decimal> protRecord_ID_logout { get; set; }
         public Nullable<System.DateTime> dateTime_login { get; set; }
         public Nullable<System.DateTime> dateTime_logout { get; set; }
+    
+        public virtual c_NPT c_NPT { get; set; }
+        public virtual c_user c_user { get; set; }
     }
 }

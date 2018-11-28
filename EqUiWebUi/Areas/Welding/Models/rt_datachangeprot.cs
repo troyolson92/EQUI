@@ -37,5 +37,6 @@ namespace EqUiWebUi.Areas.Welding.Models
     
         public virtual c_timer c_timer { get; set; }
         public virtual c_timer_class c_timer_class { get; set; }
+        public virtual c_user c_user { get; set; }
     }
 }

@@ -1,6 +1,6 @@
 ﻿@model IQueryable<EqUiWebUi.Areas.Welding.Models.rt_weldfault>
 
-@Html.Grid(Model).Named("weldFaultGrid").Build(columns =>
+@Html.Grid(Model).Named("weldFaultGrid1").Build(columns =>
 {
     columns.Add(c => c.id).Titled("id");
     columns.Add(c => c.dateTime).Titled("datetime").InitialSort(GridSortOrder.Desc);

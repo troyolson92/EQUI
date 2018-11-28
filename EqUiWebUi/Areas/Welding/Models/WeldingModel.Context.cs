@@ -78,6 +78,7 @@ namespace EqUiWebUi.Areas.Welding.Models
         public virtual DbSet<rt_weldfault> rt_weldfault { get; set; }
         public virtual DbSet<rt_weldmeasureprotddw> rt_weldmeasureprotddw { get; set; }
         public virtual DbSet<h_Nut_Bolt_Measure> h_Nut_Bolt_Measure { get; set; }
+        public virtual DbSet<AlertsAASPOT> AlertsAASPOT { get; set; }
     
         public virtual ObjectResult<Lastwelds_Result> Lastwelds(string timer, Nullable<int> spot)
         {
