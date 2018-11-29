@@ -3,7 +3,7 @@
     ViewBag.Title = "AlertsAASPOT";
 }
 
-<h2>ExtraControles</h2>
+<h2>WeldingTeam Alerts</h2>
 @Html.Grid(Model).Named("_alertsAASPOT").Build(columns =>
 {
     columns.Add(c => c.C_timestamp).Titled("timestamp").Formatted("{0:dd-MM-yyyy HH:mm:ss}").InitialSort(GridSortOrder.Desc);
