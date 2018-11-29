@@ -160,31 +160,6 @@
           <Property Name="online" Type="bit" />
           <Property Name="communicationState" Type="tinyint" />
         </EntityType>
-        <EntityType Name="rt_datachangeprot">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="timerId" Type="int" />
-          <Property Name="_timestamp" Type="datetime" />
-          <Property Name="protRecord_ID" Type="int" />
-          <Property Name="dateTime" Type="datetime" />
-          <Property Name="param_ID" Type="int" />
-          <Property Name="param_status_txt" Type="varchar" MaxLength="81" />
-          <Property Name="subIndex" Type="int" />
-          <Property Name="oldValue" Type="varchar" MaxLength="81" />
-          <Property Name="oldValue_txt" Type="varchar" MaxLength="81" />
-          <Property Name="newValue" Type="varchar" MaxLength="81" />
-          <Property Name="newValue_txt" Type="varchar" MaxLength="81" />
-          <Property Name="oldNormValue" Type="varchar" MaxLength="81" />
-          <Property Name="newNormValue" Type="varchar" MaxLength="81" />
-          <Property Name="physicalUnitId" Type="int" />
-          <Property Name="physicalUnitId_txt" Type="varchar" MaxLength="64" />
-          <Property Name="computerName" Type="varchar" MaxLength="64" />
-          <Property Name="comment" Type="varchar" MaxLength="64" />
-          <Property Name="c_user_id" Type="int" />
-          <Property Name="rt_paramvalues_id" Type="int" />
-        </EntityType>
         <EntityType Name="rt_job">
           <Key>
             <PropertyRef Name="id" />
@@ -403,30 +378,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_rt_datachangeprot_c_timer">
-          <End Role="c_timer" Type="Self.c_timer" Multiplicity="0..1" />
-          <End Role="rt_datachangeprot" Type="Self.rt_datachangeprot" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="c_timer">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="rt_datachangeprot">
-              <PropertyRef Name="timerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_rt_datachangeprot_c_timer_class">
-          <End Role="c_timer_class" Type="Self.c_timer_class" Multiplicity="0..1" />
-          <End Role="rt_datachangeprot" Type="Self.rt_datachangeprot" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="c_timer_class">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="rt_datachangeprot">
-              <PropertyRef Name="timerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_rt_job_breakdown_rt_alarm">
           <End Role="rt_alarm" Type="Self.rt_alarm" Multiplicity="0..1" />
           <End Role="rt_job_breakdown" Type="Self.rt_job_breakdown" Multiplicity="*" />
@@ -500,7 +451,6 @@
           <EntitySet Name="rt_alarm" EntityType="Self.rt_alarm" Schema="WELDING2" store:Type="Tables" />
           <EntitySet Name="rt_comment" EntityType="Self.rt_comment" Schema="WELDING2" store:Type="Tables" />
           <EntitySet Name="rt_communication_state" EntityType="Self.rt_communication_state" Schema="WELDING2" store:Type="Tables" />
-          <EntitySet Name="rt_datachangeprot" EntityType="Self.rt_datachangeprot" Schema="WELDING2" store:Type="Tables" />
           <EntitySet Name="rt_job" EntityType="Self.rt_job" Schema="WELDING2" store:Type="Tables" />
           <EntitySet Name="rt_job_breakdown" EntityType="Self.rt_job_breakdown" Schema="WELDING2" store:Type="Tables" />
           <EntitySet Name="rt_weldfault" EntityType="Self.rt_weldfault" Schema="WELDING2" store:Type="Tables" />
@@ -528,14 +478,6 @@
           <AssociationSet Name="FK_rt_communication_state_c_timer" Association="Self.FK_rt_communication_state_c_timer">
             <End Role="c_timer" EntitySet="c_timer" />
             <End Role="rt_communication_state" EntitySet="rt_communication_state" />
-          </AssociationSet>
-          <AssociationSet Name="FK_rt_datachangeprot_c_timer" Association="Self.FK_rt_datachangeprot_c_timer">
-            <End Role="c_timer" EntitySet="c_timer" />
-            <End Role="rt_datachangeprot" EntitySet="rt_datachangeprot" />
-          </AssociationSet>
-          <AssociationSet Name="FK_rt_datachangeprot_c_timer_class" Association="Self.FK_rt_datachangeprot_c_timer_class">
-            <End Role="c_timer_class" EntitySet="c_timer_class" />
-            <End Role="rt_datachangeprot" EntitySet="rt_datachangeprot" />
           </AssociationSet>
           <AssociationSet Name="FK_rt_job_breakdown_rt_alarm" Association="Self.FK_rt_job_breakdown_rt_alarm">
             <End Role="rt_alarm" EntitySet="rt_alarm" />
@@ -607,22 +549,6 @@
           <Property Name="cErrorMask" Type="Int32" />
           <Property Name="cSeverityMask" Type="Int32" />
           <NavigationProperty Name="c_timer" Relationship="GADATAModelVWSC.FK_c_Timer_c_timer_class" FromRole="VWSC_c_timer_class" ToRole="c_timer" />
-          <NavigationProperty Name="rt_datachangeprot" Relationship="GADATAModelVWSC.FK_rt_datachangeprot_c_timer_class" FromRole="VWSC_c_timer_class" ToRole="VWSC_rt_datachangeprot" />
-        </EntityType>
-        <EntityType Name="VWSC_L_operation">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="C_timestamp" Type="DateTime" Precision="3" />
-          <Property Name="code" Type="Int32" />
-          <Property Name="Vwsc_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="controller_id" Type="Int32" />
-          <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="c_timer" Relationship="GADATAModelVWSC.FK_L_operation_c_timer" FromRole="VWSC_L_operation" ToRole="c_timer" />
-          <Property Name="npt_id" Type="Int32" />
-          <Property Name="timer_id" Type="Int32" />
-          <NavigationProperty Name="c_timer1" Relationship="GADATAModelVWSC.FK_L_operation_c_timer1" FromRole="VWSC_L_operation" ToRole="VWSC_c_timer" />
         </EntityType>
         <EntityType Name="VWSC_rt_active_info">
           <Key>
@@ -646,35 +572,17 @@
           <NavigationProperty Name="c_timer" Relationship="GADATAModelVWSC.FK_rt_active_info_c_timer" FromRole="VWSC_rt_active_info" ToRole="c_timer" />
           <Property Name="rt_user_id" Type="Int32" />
         </EntityType>
-        <EntityType Name="VWSC_c_bosch_view">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="view" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="enable_bit" Type="Int32" />
-          <Property Name="poll_rate" Type="Int32" />
-          <Property Name="flag" Type="Int32" />
-          <Property Name="rt_table" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="day_limit" Type="Int32" />
-          <Property Name="ordinal" Type="Int32" />
-        </EntityType>
         <EntityContainer Name="GADATAEntitiesVWSC" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="c_error" EntityType="GADATAModelVWSC.VWSC_c_error" />
           <EntitySet Name="c_service_setup" EntityType="GADATAModelVWSC.VWSC_c_service_setup" />
           <EntitySet Name="c_severity" EntityType="GADATAModelVWSC.VWSC_c_severity" />
           <EntitySet Name="c_timer_class" EntityType="GADATAModelVWSC.VWSC_c_timer_class" />
-          <EntitySet Name="L_operation" EntityType="GADATAModelVWSC.VWSC_L_operation" />
           <EntitySet Name="rt_active_info" EntityType="GADATAModelVWSC.VWSC_rt_active_info" />
-          <EntitySet Name="c_bosch_view" EntityType="GADATAModelVWSC.VWSC_c_bosch_view" />
           <EntitySet Name="rt_alarm" EntityType="GADATAModelVWSC.VWSC_rt_alarm" />
           <EntitySet Name="rt_communication_state" EntityType="GADATAModelVWSC.VWSC_rt_communication_state" />
-          <EntitySet Name="rt_datachangeprot" EntityType="GADATAModelVWSC.VWSC_rt_datachangeprot" />
           <EntitySet Name="rt_job" EntityType="GADATAModelVWSC.VWSC_rt_job" />
           <EntitySet Name="rt_job_breakdown" EntityType="GADATAModelVWSC.VWSC_rt_job_breakdown" />
-          <EntitySet Name="rt_spot" EntityType="GADATAModelVWSC.VWSC_rt_spot" />
           <EntitySet Name="rt_weldfault" EntityType="GADATAModelVWSC.VWSC_rt_weldfault" />
-          <EntitySet Name="rt_weldmeasureprotddw" EntityType="GADATAModelVWSC.VWSC_rt_weldmeasureprotddw" />
           <AssociationSet Name="FK_rt_job_breakdown_rt_alarm" Association="GADATAModelVWSC.FK_rt_job_breakdown_rt_alarm">
             <End Role="rt_alarm" EntitySet="rt_alarm" />
             <End Role="rt_job_breakdown" EntitySet="rt_job_breakdown" />
@@ -693,10 +601,6 @@
             <End Role="VWSC_c_timer_class" EntitySet="c_timer_class" />
             <End Role="c_timer" EntitySet="c_timer" />
           </AssociationSet>
-          <AssociationSet Name="FK_L_operation_c_timer" Association="GADATAModelVWSC.FK_L_operation_c_timer">
-            <End Role="c_timer" EntitySet="c_timer" />
-            <End Role="VWSC_L_operation" EntitySet="L_operation" />
-          </AssociationSet>
           <AssociationSet Name="FK_rt_active_info_c_timer" Association="GADATAModelVWSC.FK_rt_active_info_c_timer">
             <End Role="c_timer" EntitySet="c_timer" />
             <End Role="VWSC_rt_active_info" EntitySet="rt_active_info" />
@@ -709,10 +613,6 @@
             <End Role="c_timer" EntitySet="c_timer" />
             <End Role="VWSC_rt_communication_state" EntitySet="rt_communication_state" />
           </AssociationSet>
-          <AssociationSet Name="FK_rt_datachangeprot_c_timer" Association="GADATAModelVWSC.FK_rt_datachangeprot_c_timer">
-            <End Role="c_timer" EntitySet="c_timer" />
-            <End Role="VWSC_rt_datachangeprot" EntitySet="rt_datachangeprot" />
-          </AssociationSet>
           <AssociationSet Name="FK_rt_job_c_timer" Association="GADATAModelVWSC.FK_rt_job_c_timer">
             <End Role="c_timer" EntitySet="c_timer" />
             <End Role="VWSC_rt_job" EntitySet="rt_job" />
@@ -721,17 +621,16 @@
             <End Role="c_timer" EntitySet="c_timer" />
             <End Role="VWSC_rt_weldfault" EntitySet="rt_weldfault" />
           </AssociationSet>
+          <EntitySet Name="rt_weldmeasureprotddw" EntityType="GADATAModelVWSC.VWSC_rt_weldmeasureprotddw" />
           <AssociationSet Name="FK_rt_weldmeasureprotddw_c_timer" Association="GADATAModelVWSC.FK_rt_weldmeasureprotddw_c_timer">
-            <End Role="c_timer" EntitySet="c_timer" />
-            <End Role="VWSC_rt_weldmeasureprotddw" EntitySet="rt_weldmeasureprotddw" />
-          </AssociationSet>
-          <AssociationSet Name="FK_rt_datachangeprot_c_timer_class" Association="GADATAModelVWSC.FK_rt_datachangeprot_c_timer_class">
-            <End Role="VWSC_c_timer_class" EntitySet="c_timer_class" />
-            <End Role="VWSC_rt_datachangeprot" EntitySet="rt_datachangeprot" />
-          </AssociationSet>
-          <AssociationSet Name="FK_L_operation_c_timer1" Association="GADATAModelVWSC.FK_L_operation_c_timer1">
             <End Role="VWSC_c_timer" EntitySet="c_timer" />
-            <End Role="VWSC_L_operation" EntitySet="L_operation" />
+            <End Role="rt_weldmeasureprotddw" EntitySet="rt_weldmeasureprotddw" />
+          </AssociationSet>
+          <EntitySet Name="c_bosch_view" EntityType="GADATAModelVWSC.VWSC_c_bosch_view" />
+          <EntitySet Name="L_operation" EntityType="GADATAModelVWSC.VWSC_L_operation" />
+          <AssociationSet Name="FK_L_operation_c_timer" Association="GADATAModelVWSC.FK_L_operation_c_timer">
+            <End Role="VWSC_c_timer" EntitySet="c_timer" />
+            <End Role="L_operation" EntitySet="L_operation" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="VWSC_rt_alarm">
@@ -762,34 +661,6 @@
           <Property Name="online" Type="Boolean" />
           <Property Name="communicationState" Type="Byte" />
           <NavigationProperty Name="c_timer" Relationship="GADATAModelVWSC.FK_rt_communication_state_c_timer" FromRole="VWSC_rt_communication_state" ToRole="c_timer" />
-        </EntityType>
-        <EntityType Name="VWSC_rt_datachangeprot">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="timerId" Type="Int32" />
-          <Property Name="C_timestamp" Type="DateTime" Precision="3" />
-          <Property Name="protRecord_ID" Type="Int32" />
-          <Property Name="dateTime" Type="DateTime" Precision="3" />
-          <Property Name="param_ID" Type="Int32" />
-          <Property Name="param_status_txt" Type="String" MaxLength="81" FixedLength="false" Unicode="false" />
-          <Property Name="subIndex" Type="Int32" />
-          <Property Name="oldValue" Type="String" MaxLength="81" FixedLength="false" Unicode="false" />
-          <Property Name="oldValue_txt" Type="String" MaxLength="81" FixedLength="false" Unicode="false" />
-          <Property Name="newValue" Type="String" MaxLength="81" FixedLength="false" Unicode="false" />
-          <Property Name="newValue_txt" Type="String" MaxLength="81" FixedLength="false" Unicode="false" />
-          <Property Name="oldNormValue" Type="String" MaxLength="81" FixedLength="false" Unicode="false" />
-          <Property Name="newNormValue" Type="String" MaxLength="81" FixedLength="false" Unicode="false" />
-          <Property Name="physicalUnitId" Type="Int32" />
-          <Property Name="physicalUnitId_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="computerName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="userName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="comment" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="c_timer" Relationship="GADATAModelVWSC.FK_rt_datachangeprot_c_timer" FromRole="VWSC_rt_datachangeprot" ToRole="c_timer" />
-          <NavigationProperty Name="c_timer_class" Relationship="GADATAModelVWSC.FK_rt_datachangeprot_c_timer_class" FromRole="VWSC_rt_datachangeprot" ToRole="VWSC_c_timer_class" />
-          <Property Name="c_user_id" Type="Int32" />
-          <Property Name="rt_paramvalues_id" Type="Int32" />
         </EntityType>
         <EntityType Name="VWSC_rt_job">
           <Key>
@@ -827,23 +698,6 @@
           <NavigationProperty Name="rt_alarm" Relationship="GADATAModelVWSC.FK_rt_job_breakdown_rt_alarm" FromRole="rt_job_breakdown" ToRole="rt_alarm" />
           <NavigationProperty Name="rt_job" Relationship="GADATAModelVWSC.FK_rt_job_breakdown_rt_job" FromRole="rt_job_breakdown" ToRole="rt_job" />
         </EntityType>
-        <EntityType Name="VWSC_rt_spot">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="C_timestamp" Type="DateTime" Precision="3" />
-          <Property Name="timerId" Type="Int32" />
-          <Property Name="spotId" Type="Int32" />
-          <Property Name="spotname" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="pjv_joiningpointdata_id" Type="Int32" />
-          <Property Name="vwscComment" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
-          <Property Name="Comment1" Type="Int32" />
-          <Property Name="Comment2" Type="Int32" />
-          <Property Name="Comment3" Type="Int32" />
-          <Property Name="weldProgramNo" Type="Int32" />
-          <Property Name="isDead" Type="Int32" />
-        </EntityType>
         <EntityType Name="VWSC_rt_weldfault">
           <Key>
             <PropertyRef Name="id" />
@@ -867,114 +721,6 @@
           <Property Name="isError" Type="Boolean" />
           <Property Name="WMComment" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="c_timer" Relationship="GADATAModelVWSC.FK_rt_weldfault_c_timer" FromRole="VWSC_rt_weldfault" ToRole="c_timer" />
-        </EntityType>
-        <EntityType Name="VWSC_rt_weldmeasureprotddw">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="timerId" Type="Int32" />
-          <Property Name="C_timestamp" Type="DateTime" Precision="3" />
-          <Property Name="protRecord_ID" Type="Int32" />
-          <Property Name="dateTime" Type="DateTime" Precision="3" />
-          <Property Name="progNo" Type="Int16" />
-          <Property Name="spotId" Type="Int32" />
-          <Property Name="wear" Type="Decimal" Precision="12" Scale="2" />
-          <Property Name="wearPerCent" Type="Decimal" Precision="8" Scale="2" />
-          <Property Name="monitorState" Type="Int32" />
-          <Property Name="monitorState_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="regulationState" Type="Int32" />
-          <Property Name="regulationState_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="measureState" Type="Int32" />
-          <Property Name="measureState_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="powerState" Type="Int32" />
-          <Property Name="powerState_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="sequenceState" Type="Int32" />
-          <Property Name="sequenceState_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="sequenceStateAdd" Type="Int32" />
-          <Property Name="sequenceStateAdd_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="sequenceRepeat" Type="Int32" />
-          <Property Name="sequenceRepeat_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="monitorMode" Type="Int32" />
-          <Property Name="monitorMode_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="iDemandStd" Type="Decimal" Precision="8" Scale="2" />
-          <Property Name="ilsts" Type="Decimal" Precision="8" Scale="2" />
-          <Property Name="regulationStd" Type="Int32" />
-          <Property Name="regulationStd_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="iDemand1" Type="Decimal" Precision="8" Scale="2" />
-          <Property Name="iActual1" Type="Decimal" Precision="8" Scale="2" />
-          <Property Name="regulation1" Type="Int32" />
-          <Property Name="regulation1_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="iDemand2" Type="Decimal" Precision="8" Scale="2" />
-          <Property Name="iActual2" Type="Decimal" Precision="8" Scale="2" />
-          <Property Name="regulation2" Type="Int32" />
-          <Property Name="regulation2_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="iDemand3" Type="Decimal" Precision="8" Scale="2" />
-          <Property Name="iActual3" Type="Decimal" Precision="8" Scale="2" />
-          <Property Name="regulation3" Type="Int32" />
-          <Property Name="regulation3_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="phaStd" Type="Decimal" Precision="8" Scale="2" />
-          <Property Name="pha1" Type="Decimal" Precision="8" Scale="2" />
-          <Property Name="pha2" Type="Decimal" Precision="8" Scale="2" />
-          <Property Name="pha3" Type="Decimal" Precision="8" Scale="2" />
-          <Property Name="t_iDemandStd" Type="Decimal" Precision="8" Scale="2" />
-          <Property Name="tActualStd" Type="Decimal" Precision="8" Scale="2" />
-          <Property Name="partIdentString" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
-          <Property Name="tipDressCounter" Type="Int32" />
-          <Property Name="electrodeNo" Type="Int32" />
-          <Property Name="voltageActualValue" Type="Decimal" Precision="8" Scale="2" />
-          <Property Name="voltageRefValue" Type="Decimal" Precision="8" Scale="2" />
-          <Property Name="currentActualValue" Type="Decimal" Precision="8" Scale="2" />
-          <Property Name="currentReferenceValue" Type="Decimal" Precision="8" Scale="2" />
-          <Property Name="weldTimeActualValue" Type="Int32" />
-          <Property Name="weldTimeRefValue" Type="Int32" />
-          <Property Name="energyActualValue" Type="Single" />
-          <Property Name="energyRefValue" Type="Single" />
-          <Property Name="powerActualValue" Type="Single" />
-          <Property Name="powerRefValue" Type="Single" />
-          <Property Name="resistanceActualValue" Type="Int32" />
-          <Property Name="resistanceRefValue" Type="Int32" />
-          <Property Name="pulseWidthActualValue" Type="Decimal" Precision="8" Scale="2" />
-          <Property Name="pulseWidthRefValue" Type="Decimal" Precision="8" Scale="2" />
-          <Property Name="stabilisationFactorActValue" Type="Decimal" Precision="8" Scale="2" />
-          <Property Name="stabilisationFactorRefValue" Type="Decimal" Precision="8" Scale="2" />
-          <Property Name="thresholdStabilisationFactor" Type="Decimal" Precision="8" Scale="2" />
-          <Property Name="wldEffectStabilisationFactor" Type="Decimal" Precision="8" Scale="2" />
-          <Property Name="uipActualValue" Type="Int32" />
-          <Property Name="uipRefValue" Type="Int32" />
-          <Property Name="uirExpulsionTime" Type="Int32" />
-          <Property Name="uirMeasuringActive" Type="Int32" />
-          <Property Name="uirMeasuringActive_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="uirRegulationActive" Type="Int32" />
-          <Property Name="uirRegulationActive_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="uirMonitoringActive" Type="Int32" />
-          <Property Name="uirMonitoringActive_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="uirWeldTimeProlongationActive" Type="Int32" />
-          <Property Name="uirWeldTimeProlongActive_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="uirQStoppRefCntValue" Type="Int32" />
-          <Property Name="uirQStoppActCntValue" Type="Int32" />
-          <Property Name="uirUipUpperTol" Type="Decimal" Precision="8" Scale="2" />
-          <Property Name="uirUipLowerTol" Type="Decimal" Precision="8" Scale="2" />
-          <Property Name="uirUipCondTol" Type="Decimal" Precision="8" Scale="2" />
-          <Property Name="uirPsfLowerTol" Type="Decimal" Precision="8" Scale="2" />
-          <Property Name="uirPsfCondTol" Type="Decimal" Precision="8" Scale="2" />
-          <NavigationProperty Name="c_timer" Relationship="GADATAModelVWSC.FK_rt_weldmeasureprotddw_c_timer" FromRole="VWSC_rt_weldmeasureprotddw" ToRole="c_timer" />
-          <Property Name="xxmonitorState_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="xxregulationState_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="xxmeasureState_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="xxpowerState_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="xxsequenceState_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="xxsequenceStateAdd_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="xxsequenceRepeat_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="xxmonitorMode_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="xxregulationStd_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="xxregulation1_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="xxregulation2_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="xxregulation3_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="xxuirMeasuringActive_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="xxuirRegulationActive_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="xxuirMonitoringActive_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="xxuirWeldTimeProlongActive_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_rt_job_breakdown_rt_alarm">
           <End Type="GADATAModelVWSC.VWSC_rt_alarm" Role="rt_alarm" Multiplicity="0..1" />
@@ -1027,20 +773,18 @@
           <Property Name="enable_bit" Type="Int32" />
           <NavigationProperty Name="c_NPT" Relationship="GADATAModelVWSC.FK_c_timer_c_NPT" FromRole="c_timer" ToRole="c_NPT" />
           <NavigationProperty Name="c_timer_class" Relationship="GADATAModelVWSC.FK_c_Timer_c_timer_class" FromRole="c_timer" ToRole="VWSC_c_timer_class" />
-          <NavigationProperty Name="L_operation" Relationship="GADATAModelVWSC.FK_L_operation_c_timer" FromRole="c_timer" ToRole="VWSC_L_operation" />
           <NavigationProperty Name="rt_active_info" Relationship="GADATAModelVWSC.FK_rt_active_info_c_timer" FromRole="c_timer" ToRole="VWSC_rt_active_info" />
           <NavigationProperty Name="rt_alarm" Relationship="GADATAModelVWSC.FK_rt_alarm_c_timer" FromRole="c_timer" ToRole="VWSC_rt_alarm" />
           <NavigationProperty Name="rt_communication_state" Relationship="GADATAModelVWSC.FK_rt_communication_state_c_timer" FromRole="c_timer" ToRole="VWSC_rt_communication_state" />
-          <NavigationProperty Name="rt_datachangeprot" Relationship="GADATAModelVWSC.FK_rt_datachangeprot_c_timer" FromRole="c_timer" ToRole="VWSC_rt_datachangeprot" />
           <NavigationProperty Name="rt_job" Relationship="GADATAModelVWSC.FK_rt_job_c_timer" FromRole="c_timer" ToRole="VWSC_rt_job" />
           <NavigationProperty Name="rt_weldfault" Relationship="GADATAModelVWSC.FK_rt_weldfault_c_timer" FromRole="c_timer" ToRole="VWSC_rt_weldfault" />
-          <NavigationProperty Name="rt_weldmeasureprotddw" Relationship="GADATAModelVWSC.FK_rt_weldmeasureprotddw_c_timer" FromRole="c_timer" ToRole="VWSC_rt_weldmeasureprotddw" />
           <Property Name="LocationTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Assetnum" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="ResponsibleWeldMaster" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Station" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Line" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="L_operation1" Relationship="GADATAModelVWSC.FK_L_operation_c_timer1" FromRole="VWSC_c_timer" ToRole="VWSC_L_operation" />
+          <NavigationProperty Name="rt_weldmeasureprotddw" Relationship="GADATAModelVWSC.FK_rt_weldmeasureprotddw_c_timer" FromRole="VWSC_c_timer" ToRole="rt_weldmeasureprotddw" />
+          <NavigationProperty Name="L_operation" Relationship="GADATAModelVWSC.FK_L_operation_c_timer" FromRole="VWSC_c_timer" ToRole="L_operation" />
         </EntityType>
         <Association Name="FK_c_timer_c_NPT">
           <End Type="GADATAModelVWSC.VWSC_c_NPT" Role="c_NPT" Multiplicity="0..1" />
@@ -1063,18 +807,6 @@
             </Principal>
             <Dependent Role="c_timer">
               <PropertyRef Name="c_timer_class_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_L_operation_c_timer">
-          <End Type="GADATAModelVWSC.VWSC_c_timer" Role="c_timer" Multiplicity="0..1" />
-          <End Type="GADATAModelVWSC.VWSC_L_operation" Role="VWSC_L_operation" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="c_timer">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="VWSC_L_operation">
-              <PropertyRef Name="controller_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1114,18 +846,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_rt_datachangeprot_c_timer">
-          <End Type="GADATAModelVWSC.VWSC_c_timer" Role="c_timer" Multiplicity="0..1" />
-          <End Type="GADATAModelVWSC.VWSC_rt_datachangeprot" Role="VWSC_rt_datachangeprot" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="c_timer">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="VWSC_rt_datachangeprot">
-              <PropertyRef Name="timerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_rt_job_c_timer">
           <End Type="GADATAModelVWSC.VWSC_c_timer" Role="c_timer" Multiplicity="0..1" />
           <End Type="GADATAModelVWSC.VWSC_rt_job" Role="VWSC_rt_job" Multiplicity="*" />
@@ -1150,38 +870,144 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="VWSC_rt_weldmeasureprotddw">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="timerId" Type="Int32" />
+          <Property Name="C_timestamp" Type="DateTime" Precision="3" />
+          <Property Name="protRecord_ID" Type="Int32" />
+          <Property Name="dateTime" Type="DateTime" Precision="3" />
+          <Property Name="progNo" Type="Int16" />
+          <Property Name="spotId" Type="Int32" />
+          <Property Name="wear" Type="Decimal" Precision="12" Scale="2" />
+          <Property Name="wearPerCent" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="monitorState" Type="Int32" />
+          <Property Name="xxmonitorState_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="regulationState" Type="Int32" />
+          <Property Name="xxregulationState_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="measureState" Type="Int32" />
+          <Property Name="xxmeasureState_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="powerState" Type="Int32" />
+          <Property Name="xxpowerState_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="sequenceState" Type="Int32" />
+          <Property Name="xxsequenceState_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="sequenceStateAdd" Type="Int32" />
+          <Property Name="xxsequenceStateAdd_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="sequenceRepeat" Type="Int32" />
+          <Property Name="xxsequenceRepeat_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="monitorMode" Type="Int32" />
+          <Property Name="xxmonitorMode_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="iDemandStd" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="ilsts" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="regulationStd" Type="Int32" />
+          <Property Name="xxregulationStd_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="iDemand1" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="iActual1" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="regulation1" Type="Int32" />
+          <Property Name="xxregulation1_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="iDemand2" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="iActual2" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="regulation2" Type="Int32" />
+          <Property Name="xxregulation2_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="iDemand3" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="iActual3" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="regulation3" Type="Int32" />
+          <Property Name="xxregulation3_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="phaStd" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="pha1" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="pha2" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="pha3" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="t_iDemandStd" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="tActualStd" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="partIdentString" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="tipDressCounter" Type="Int32" />
+          <Property Name="electrodeNo" Type="Int32" />
+          <Property Name="voltageActualValue" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="voltageRefValue" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="currentActualValue" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="currentReferenceValue" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="weldTimeActualValue" Type="Int32" />
+          <Property Name="weldTimeRefValue" Type="Int32" />
+          <Property Name="energyActualValue" Type="Single" />
+          <Property Name="energyRefValue" Type="Single" />
+          <Property Name="powerActualValue" Type="Single" />
+          <Property Name="powerRefValue" Type="Single" />
+          <Property Name="resistanceActualValue" Type="Int32" />
+          <Property Name="resistanceRefValue" Type="Int32" />
+          <Property Name="pulseWidthActualValue" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="pulseWidthRefValue" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="stabilisationFactorActValue" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="stabilisationFactorRefValue" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="thresholdStabilisationFactor" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="wldEffectStabilisationFactor" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="uipActualValue" Type="Int32" />
+          <Property Name="uipRefValue" Type="Int32" />
+          <Property Name="uirExpulsionTime" Type="Int32" />
+          <Property Name="uirMeasuringActive" Type="Int32" />
+          <Property Name="xxuirMeasuringActive_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="uirRegulationActive" Type="Int32" />
+          <Property Name="xxuirRegulationActive_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="uirMonitoringActive" Type="Int32" />
+          <Property Name="xxuirMonitoringActive_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="uirWeldTimeProlongationActive" Type="Int32" />
+          <Property Name="xxuirWeldTimeProlongActive_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="uirQStoppRefCntValue" Type="Int32" />
+          <Property Name="uirQStoppActCntValue" Type="Int32" />
+          <Property Name="uirUipUpperTol" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="uirUipLowerTol" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="uirUipCondTol" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="uirPsfLowerTol" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="uirPsfCondTol" Type="Decimal" Precision="8" Scale="2" />
+          <NavigationProperty Name="c_timer" Relationship="GADATAModelVWSC.FK_rt_weldmeasureprotddw_c_timer" FromRole="rt_weldmeasureprotddw" ToRole="VWSC_c_timer" />
+        </EntityType>
         <Association Name="FK_rt_weldmeasureprotddw_c_timer">
-          <End Type="GADATAModelVWSC.VWSC_c_timer" Role="c_timer" Multiplicity="0..1" />
-          <End Type="GADATAModelVWSC.VWSC_rt_weldmeasureprotddw" Role="VWSC_rt_weldmeasureprotddw" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="c_timer">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="VWSC_rt_weldmeasureprotddw">
-              <PropertyRef Name="timerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_rt_datachangeprot_c_timer_class">
-          <End Type="GADATAModelVWSC.VWSC_c_timer_class" Role="VWSC_c_timer_class" Multiplicity="0..1" />
-          <End Type="GADATAModelVWSC.VWSC_rt_datachangeprot" Role="VWSC_rt_datachangeprot" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="VWSC_c_timer_class">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="VWSC_rt_datachangeprot">
-              <PropertyRef Name="timerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_L_operation_c_timer1">
           <End Type="GADATAModelVWSC.VWSC_c_timer" Role="VWSC_c_timer" Multiplicity="0..1" />
-          <End Type="GADATAModelVWSC.VWSC_L_operation" Role="VWSC_L_operation" Multiplicity="*" />
+          <End Type="GADATAModelVWSC.VWSC_rt_weldmeasureprotddw" Role="rt_weldmeasureprotddw" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="VWSC_c_timer">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="VWSC_L_operation">
+            <Dependent Role="rt_weldmeasureprotddw">
+              <PropertyRef Name="timerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="VWSC_c_bosch_view">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="view" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="enable_bit" Type="Int32" />
+          <Property Name="poll_rate" Type="Int32" />
+          <Property Name="flag" Type="Int32" />
+          <Property Name="rt_table" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="day_limit" Type="Int32" />
+          <Property Name="ordinal" Type="Int32" />
+        </EntityType>
+        <EntityType Name="VWSC_L_operation">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="C_timestamp" Type="DateTime" Precision="3" />
+          <Property Name="code" Type="Int32" />
+          <Property Name="Vwsc_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="npt_id" Type="Int32" />
+          <Property Name="timer_id" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="c_timer" Relationship="GADATAModelVWSC.FK_L_operation_c_timer" FromRole="L_operation" ToRole="VWSC_c_timer" />
+        </EntityType>
+        <Association Name="FK_L_operation_c_timer">
+          <End Type="GADATAModelVWSC.VWSC_c_timer" Role="VWSC_c_timer" Multiplicity="0..1" />
+          <End Type="GADATAModelVWSC.VWSC_L_operation" Role="L_operation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VWSC_c_timer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="L_operation">
               <PropertyRef Name="npt_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -1241,19 +1067,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="L_operation">
-            <EntityTypeMapping TypeName="GADATAModelVWSC.VWSC_L_operation">
-              <MappingFragment StoreEntitySet="L_operation">
-                <ScalarProperty Name="timer_id" ColumnName="timer_id" />
-                <ScalarProperty Name="npt_id" ColumnName="npt_id" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
-                <ScalarProperty Name="code" ColumnName="code" />
-                <ScalarProperty Name="Vwsc_name" ColumnName="Vwsc_name" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="rt_active_info">
             <EntityTypeMapping TypeName="GADATAModelVWSC.VWSC_rt_active_info">
               <MappingFragment StoreEntitySet="rt_active_info">
@@ -1273,20 +1086,6 @@
                 <ScalarProperty Name="rt_weldfault_id" ColumnName="rt_weldfault_id" />
                 <ScalarProperty Name="rt_weldmeasureprotddw_id" ColumnName="rt_weldmeasureprotddw_id" />
                 <ScalarProperty Name="rt_datechangeprot_id" ColumnName="rt_datechangeprot_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="c_bosch_view">
-            <EntityTypeMapping TypeName="GADATAModelVWSC.VWSC_c_bosch_view">
-              <MappingFragment StoreEntitySet="c_bosch_view">
-                <ScalarProperty Name="ordinal" ColumnName="ordinal" />
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="view" ColumnName="view" />
-                <ScalarProperty Name="enable_bit" ColumnName="enable_bit" />
-                <ScalarProperty Name="poll_rate" ColumnName="poll_rate" />
-                <ScalarProperty Name="flag" ColumnName="flag" />
-                <ScalarProperty Name="rt_table" ColumnName="rt_table" />
-                <ScalarProperty Name="day_limit" ColumnName="day_limit" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1312,32 +1111,6 @@
               <MappingFragment StoreEntitySet="rt_communication_state">
                 <ScalarProperty Name="communicationState" ColumnName="communicationState" />
                 <ScalarProperty Name="online" ColumnName="online" />
-                <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
-                <ScalarProperty Name="timerId" ColumnName="timerId" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="rt_datachangeprot">
-            <EntityTypeMapping TypeName="GADATAModelVWSC.VWSC_rt_datachangeprot">
-              <MappingFragment StoreEntitySet="rt_datachangeprot">
-                <ScalarProperty Name="rt_paramvalues_id" ColumnName="rt_paramvalues_id" />
-                <ScalarProperty Name="c_user_id" ColumnName="c_user_id" />
-                <ScalarProperty Name="comment" ColumnName="comment" />
-                <ScalarProperty Name="computerName" ColumnName="computerName" />
-                <ScalarProperty Name="physicalUnitId_txt" ColumnName="physicalUnitId_txt" />
-                <ScalarProperty Name="physicalUnitId" ColumnName="physicalUnitId" />
-                <ScalarProperty Name="newNormValue" ColumnName="newNormValue" />
-                <ScalarProperty Name="oldNormValue" ColumnName="oldNormValue" />
-                <ScalarProperty Name="newValue_txt" ColumnName="newValue_txt" />
-                <ScalarProperty Name="newValue" ColumnName="newValue" />
-                <ScalarProperty Name="oldValue_txt" ColumnName="oldValue_txt" />
-                <ScalarProperty Name="oldValue" ColumnName="oldValue" />
-                <ScalarProperty Name="subIndex" ColumnName="subIndex" />
-                <ScalarProperty Name="param_status_txt" ColumnName="param_status_txt" />
-                <ScalarProperty Name="param_ID" ColumnName="param_ID" />
-                <ScalarProperty Name="dateTime" ColumnName="dateTime" />
-                <ScalarProperty Name="protRecord_ID" ColumnName="protRecord_ID" />
                 <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
                 <ScalarProperty Name="timerId" ColumnName="timerId" />
                 <ScalarProperty Name="id" ColumnName="id" />
@@ -1402,25 +1175,41 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="c_NPT">
+            <EntityTypeMapping TypeName="GADATAModelVWSC.VWSC_c_NPT">
+              <MappingFragment StoreEntitySet="c_NPT">
+                <ScalarProperty Name="enable_bit" ColumnName="enable_bit" />
+                <ScalarProperty Name="active" ColumnName="active" />
+                <ScalarProperty Name="RemoreServer" ColumnName="RemoreServer" />
+                <ScalarProperty Name="LoginUser" ColumnName="LoginUser" />
+                <ScalarProperty Name="LoginPass" ColumnName="LoginPass" />
+                <ScalarProperty Name="OwnerId" ColumnName="OwnerId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="c_timer">
+            <EntityTypeMapping TypeName="GADATAModelVWSC.VWSC_c_timer">
+              <MappingFragment StoreEntitySet="c_timer">
+                <ScalarProperty Name="Line" ColumnName="Line" />
+                <ScalarProperty Name="Station" ColumnName="Station" />
+                <ScalarProperty Name="ResponsibleWeldMaster" ColumnName="ResponsibleWeldMaster" />
+                <ScalarProperty Name="Assetnum" ColumnName="Assetnum" />
+                <ScalarProperty Name="LocationTree" ColumnName="LocationTree" />
+                <ScalarProperty Name="enable_bit" ColumnName="enable_bit" />
+                <ScalarProperty Name="c_timer_class_id" ColumnName="c_timer_class_id" />
+                <ScalarProperty Name="location" ColumnName="location" />
+                <ScalarProperty Name="Robot" ColumnName="Robot" />
+                <ScalarProperty Name="NptId" ColumnName="NptId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="rt_weldmeasureprotddw">
             <EntityTypeMapping TypeName="GADATAModelVWSC.VWSC_rt_weldmeasureprotddw">
               <MappingFragment StoreEntitySet="rt_weldmeasureprotddw">
-                <ScalarProperty Name="xxuirWeldTimeProlongActive_txt" ColumnName="xxuirWeldTimeProlongActive_txt" />
-                <ScalarProperty Name="xxuirMonitoringActive_txt" ColumnName="xxuirMonitoringActive_txt" />
-                <ScalarProperty Name="xxuirRegulationActive_txt" ColumnName="xxuirRegulationActive_txt" />
-                <ScalarProperty Name="xxuirMeasuringActive_txt" ColumnName="xxuirMeasuringActive_txt" />
-                <ScalarProperty Name="xxregulation3_txt" ColumnName="xxregulation3_txt" />
-                <ScalarProperty Name="xxregulation2_txt" ColumnName="xxregulation2_txt" />
-                <ScalarProperty Name="xxregulation1_txt" ColumnName="xxregulation1_txt" />
-                <ScalarProperty Name="xxregulationStd_txt" ColumnName="xxregulationStd_txt" />
-                <ScalarProperty Name="xxmonitorMode_txt" ColumnName="xxmonitorMode_txt" />
-                <ScalarProperty Name="xxsequenceRepeat_txt" ColumnName="xxsequenceRepeat_txt" />
-                <ScalarProperty Name="xxsequenceStateAdd_txt" ColumnName="xxsequenceStateAdd_txt" />
-                <ScalarProperty Name="xxsequenceState_txt" ColumnName="xxsequenceState_txt" />
-                <ScalarProperty Name="xxpowerState_txt" ColumnName="xxpowerState_txt" />
-                <ScalarProperty Name="xxmeasureState_txt" ColumnName="xxmeasureState_txt" />
-                <ScalarProperty Name="xxregulationState_txt" ColumnName="xxregulationState_txt" />
-                <ScalarProperty Name="xxmonitorState_txt" ColumnName="xxmonitorState_txt" />
                 <ScalarProperty Name="uirPsfCondTol" ColumnName="uirPsfCondTol" />
                 <ScalarProperty Name="uirPsfLowerTol" ColumnName="uirPsfLowerTol" />
                 <ScalarProperty Name="uirUipCondTol" ColumnName="uirUipCondTol" />
@@ -1428,9 +1217,13 @@
                 <ScalarProperty Name="uirUipUpperTol" ColumnName="uirUipUpperTol" />
                 <ScalarProperty Name="uirQStoppActCntValue" ColumnName="uirQStoppActCntValue" />
                 <ScalarProperty Name="uirQStoppRefCntValue" ColumnName="uirQStoppRefCntValue" />
+                <ScalarProperty Name="xxuirWeldTimeProlongActive_txt" ColumnName="xxuirWeldTimeProlongActive_txt" />
                 <ScalarProperty Name="uirWeldTimeProlongationActive" ColumnName="uirWeldTimeProlongationActive" />
+                <ScalarProperty Name="xxuirMonitoringActive_txt" ColumnName="xxuirMonitoringActive_txt" />
                 <ScalarProperty Name="uirMonitoringActive" ColumnName="uirMonitoringActive" />
+                <ScalarProperty Name="xxuirRegulationActive_txt" ColumnName="xxuirRegulationActive_txt" />
                 <ScalarProperty Name="uirRegulationActive" ColumnName="uirRegulationActive" />
+                <ScalarProperty Name="xxuirMeasuringActive_txt" ColumnName="xxuirMeasuringActive_txt" />
                 <ScalarProperty Name="uirMeasuringActive" ColumnName="uirMeasuringActive" />
                 <ScalarProperty Name="uirExpulsionTime" ColumnName="uirExpulsionTime" />
                 <ScalarProperty Name="uipRefValue" ColumnName="uipRefValue" />
@@ -1462,25 +1255,37 @@
                 <ScalarProperty Name="pha2" ColumnName="pha2" />
                 <ScalarProperty Name="pha1" ColumnName="pha1" />
                 <ScalarProperty Name="phaStd" ColumnName="phaStd" />
+                <ScalarProperty Name="xxregulation3_txt" ColumnName="xxregulation3_txt" />
                 <ScalarProperty Name="regulation3" ColumnName="regulation3" />
                 <ScalarProperty Name="iActual3" ColumnName="iActual3" />
                 <ScalarProperty Name="iDemand3" ColumnName="iDemand3" />
+                <ScalarProperty Name="xxregulation2_txt" ColumnName="xxregulation2_txt" />
                 <ScalarProperty Name="regulation2" ColumnName="regulation2" />
                 <ScalarProperty Name="iActual2" ColumnName="iActual2" />
                 <ScalarProperty Name="iDemand2" ColumnName="iDemand2" />
+                <ScalarProperty Name="xxregulation1_txt" ColumnName="xxregulation1_txt" />
                 <ScalarProperty Name="regulation1" ColumnName="regulation1" />
                 <ScalarProperty Name="iActual1" ColumnName="iActual1" />
                 <ScalarProperty Name="iDemand1" ColumnName="iDemand1" />
+                <ScalarProperty Name="xxregulationStd_txt" ColumnName="xxregulationStd_txt" />
                 <ScalarProperty Name="regulationStd" ColumnName="regulationStd" />
                 <ScalarProperty Name="ilsts" ColumnName="ilsts" />
                 <ScalarProperty Name="iDemandStd" ColumnName="iDemandStd" />
+                <ScalarProperty Name="xxmonitorMode_txt" ColumnName="xxmonitorMode_txt" />
                 <ScalarProperty Name="monitorMode" ColumnName="monitorMode" />
+                <ScalarProperty Name="xxsequenceRepeat_txt" ColumnName="xxsequenceRepeat_txt" />
                 <ScalarProperty Name="sequenceRepeat" ColumnName="sequenceRepeat" />
+                <ScalarProperty Name="xxsequenceStateAdd_txt" ColumnName="xxsequenceStateAdd_txt" />
                 <ScalarProperty Name="sequenceStateAdd" ColumnName="sequenceStateAdd" />
+                <ScalarProperty Name="xxsequenceState_txt" ColumnName="xxsequenceState_txt" />
                 <ScalarProperty Name="sequenceState" ColumnName="sequenceState" />
+                <ScalarProperty Name="xxpowerState_txt" ColumnName="xxpowerState_txt" />
                 <ScalarProperty Name="powerState" ColumnName="powerState" />
+                <ScalarProperty Name="xxmeasureState_txt" ColumnName="xxmeasureState_txt" />
                 <ScalarProperty Name="measureState" ColumnName="measureState" />
+                <ScalarProperty Name="xxregulationState_txt" ColumnName="xxregulationState_txt" />
                 <ScalarProperty Name="regulationState" ColumnName="regulationState" />
+                <ScalarProperty Name="xxmonitorState_txt" ColumnName="xxmonitorState_txt" />
                 <ScalarProperty Name="monitorState" ColumnName="monitorState" />
                 <ScalarProperty Name="wearPerCent" ColumnName="wearPerCent" />
                 <ScalarProperty Name="wear" ColumnName="wear" />
@@ -1494,34 +1299,29 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="c_NPT">
-            <EntityTypeMapping TypeName="GADATAModelVWSC.VWSC_c_NPT">
-              <MappingFragment StoreEntitySet="c_NPT">
+          <EntitySetMapping Name="c_bosch_view">
+            <EntityTypeMapping TypeName="GADATAModelVWSC.VWSC_c_bosch_view">
+              <MappingFragment StoreEntitySet="c_bosch_view">
+                <ScalarProperty Name="ordinal" ColumnName="ordinal" />
+                <ScalarProperty Name="day_limit" ColumnName="day_limit" />
+                <ScalarProperty Name="rt_table" ColumnName="rt_table" />
+                <ScalarProperty Name="flag" ColumnName="flag" />
+                <ScalarProperty Name="poll_rate" ColumnName="poll_rate" />
                 <ScalarProperty Name="enable_bit" ColumnName="enable_bit" />
-                <ScalarProperty Name="active" ColumnName="active" />
-                <ScalarProperty Name="RemoreServer" ColumnName="RemoreServer" />
-                <ScalarProperty Name="LoginUser" ColumnName="LoginUser" />
-                <ScalarProperty Name="LoginPass" ColumnName="LoginPass" />
-                <ScalarProperty Name="OwnerId" ColumnName="OwnerId" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="view" ColumnName="view" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="c_timer">
-            <EntityTypeMapping TypeName="GADATAModelVWSC.VWSC_c_timer">
-              <MappingFragment StoreEntitySet="c_timer">
-                <ScalarProperty Name="Line" ColumnName="Line" />
-                <ScalarProperty Name="Station" ColumnName="Station" />
-                <ScalarProperty Name="ResponsibleWeldMaster" ColumnName="ResponsibleWeldMaster" />
-                <ScalarProperty Name="Assetnum" ColumnName="Assetnum" />
-                <ScalarProperty Name="LocationTree" ColumnName="LocationTree" />
-                <ScalarProperty Name="enable_bit" ColumnName="enable_bit" />
-                <ScalarProperty Name="c_timer_class_id" ColumnName="c_timer_class_id" />
-                <ScalarProperty Name="location" ColumnName="location" />
-                <ScalarProperty Name="Robot" ColumnName="Robot" />
-                <ScalarProperty Name="NptId" ColumnName="NptId" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
+          <EntitySetMapping Name="L_operation">
+            <EntityTypeMapping TypeName="GADATAModelVWSC.VWSC_L_operation">
+              <MappingFragment StoreEntitySet="L_operation">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="timer_id" ColumnName="timer_id" />
+                <ScalarProperty Name="npt_id" ColumnName="npt_id" />
+                <ScalarProperty Name="Vwsc_name" ColumnName="Vwsc_name" />
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

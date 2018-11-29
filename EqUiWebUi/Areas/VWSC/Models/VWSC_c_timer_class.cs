@@ -18,7 +18,6 @@ namespace EqUiWebUi.Areas.VWSC.Models
         public VWSC_c_timer_class()
         {
             this.c_timer = new HashSet<VWSC_c_timer>();
-            this.rt_datachangeprot = new HashSet<VWSC_rt_datachangeprot>();
         }
     
         public int id { get; set; }
@@ -29,7 +28,5 @@ namespace EqUiWebUi.Areas.VWSC.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<VWSC_c_timer> c_timer { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<VWSC_rt_datachangeprot> rt_datachangeprot { get; set; }
     }
 }
