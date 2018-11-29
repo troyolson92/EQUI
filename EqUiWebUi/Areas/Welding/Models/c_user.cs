@@ -12,28 +12,23 @@ namespace EqUiWebUi.Areas.Welding.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class rt_alarm
+    public partial class c_user
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public rt_alarm()
+        public c_user()
         {
-            this.rt_job_breakdown = new HashSet<rt_job_breakdown1>();
+            this.rt_datachangeprot = new HashSet<rt_datachangeprot>();
+            this.rt_user = new HashSet<rt_user>();
         }
     
         public int id { get; set; }
-        public Nullable<int> timerId { get; set; }
+        public Nullable<int> enable_bit { get; set; }
+        public string username { get; set; }
         public Nullable<System.DateTime> C_timestamp { get; set; }
-        public Nullable<int> protRecord_ID { get; set; }
-        public Nullable<System.DateTime> dateTime { get; set; }
-        public Nullable<int> errorCode1 { get; set; }
-        public string errorCode1_txt { get; set; }
-        public Nullable<int> errorCode2 { get; set; }
-        public string errorCode2_txt { get; set; }
-        public Nullable<bool> isError { get; set; }
-        public string isError_txt { get; set; }
     
-        public virtual c_timer c_timer { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<rt_job_breakdown1> rt_job_breakdown { get; set; }
+        public virtual ICollection<rt_datachangeprot> rt_datachangeprot { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<rt_user> rt_user { get; set; }
     }
 }

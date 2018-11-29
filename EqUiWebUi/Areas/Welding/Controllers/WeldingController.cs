@@ -5,16 +5,29 @@ using System.Web;
 using System.Web.Mvc;
 using EqUiWebUi.Areas.Welding.Models;
 
-namespace EqUiWebUi.Areas.Welding
+namespace EqUiWebUi.Areas.Welding.Controllers
 {
     public class WeldingController : Controller
+
     {
+        GADATAEntitiesWelding db = new GADATAEntitiesWelding();
+    
        
         // GET: Welding/Welding
         public ActionResult Index()
         {
             return View();
         }
+
+
+        public ActionResult _alertsAASPOT ()
+        {
+            IQueryable<AlertsAASPOT> data = db.AlertsAASPOT.AsQueryable();
+            return View(data);
+        }
+
+
+
 
         public ActionResult Pagina1()
         {

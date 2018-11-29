@@ -12,16 +12,18 @@ namespace EqUiWebUi.Areas.Welding.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class L_operation
+    public partial class rt_user
     {
-        public int ID { get; set; }
+        public int id { get; set; }
+        public Nullable<int> nptId { get; set; }
+        public Nullable<int> c_UserId { get; set; }
         public Nullable<System.DateTime> C_timestamp { get; set; }
-        public Nullable<int> code { get; set; }
-        public string Vwsc_name { get; set; }
-        public Nullable<int> npt_id { get; set; }
-        public Nullable<int> timer_id { get; set; }
-        public string Description { get; set; }
+        public Nullable<decimal> protRecord_ID_login { get; set; }
+        public Nullable<decimal> protRecord_ID_logout { get; set; }
+        public Nullable<System.DateTime> dateTime_login { get; set; }
+        public Nullable<System.DateTime> dateTime_logout { get; set; }
     
-        public virtual c_timer c_timer { get; set; }
+        public virtual c_NPT c_NPT { get; set; }
+        public virtual c_user c_user { get; set; }
     }
 }

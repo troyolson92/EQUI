@@ -12,16 +12,17 @@ namespace EqUiWebUi.Areas.Welding.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class L_operation
+    public partial class rt_paramvalues
     {
-        public int ID { get; set; }
+        public int id { get; set; }
+        public Nullable<int> timerId { get; set; }
         public Nullable<System.DateTime> C_timestamp { get; set; }
-        public Nullable<int> code { get; set; }
-        public string Vwsc_name { get; set; }
-        public Nullable<int> npt_id { get; set; }
-        public Nullable<int> timer_id { get; set; }
-        public string Description { get; set; }
+        public Nullable<int> subindex { get; set; }
+        public string value { get; set; }
+        public Nullable<int> c_bosch_param_id { get; set; }
+        public Nullable<int> isDead { get; set; }
     
+        public virtual c_bosch_param c_bosch_param { get; set; }
         public virtual c_timer c_timer { get; set; }
     }
 }

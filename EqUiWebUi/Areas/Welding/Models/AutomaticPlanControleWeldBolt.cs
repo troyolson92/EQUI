@@ -12,11 +12,12 @@ namespace EqUiWebUi.Areas.Welding.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class rt_job_expulsion
+    public partial class AutomaticPlanControleWeldBolt
     {
-        public int id { get; set; }
-        public Nullable<int> rt_job_id { get; set; }
-        public Nullable<System.DateTime> C_timestamp { get; set; }
-        public Nullable<int> rt_weldmeasureprotddw_id { get; set; }
+        public Nullable<System.DateTime> LastinspectionTime { get; set; }
+        public string ULPlan { get; set; }
+        public Nullable<int> WorkGroup { get; set; }
+        public string WorkLocation { get; set; }
+        public int ID { get; set; }
     }
 }

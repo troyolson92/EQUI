@@ -56,6 +56,7 @@ namespace EqUiWebUi.Areas.VWSC.Controllers
 
         // GET: VWSC/c_timer/Edit/5
         // We will handle the creation of a new trigger also in EDIT. (to make code simplere) to create a new trigger pass ID = -1
+        [HttpGet]
         public ActionResult Edit(int? id)
         {
             if (id == null)

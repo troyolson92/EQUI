@@ -12,12 +12,15 @@ namespace EqUiWebUi.Areas.Welding.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Users
+    public partial class AlertsAASPOT
     {
-        public int ID { get; set; }
-        public string CDSID { get; set; }
-        public string Voornaam { get; set; }
-        public string Achternaam { get; set; }
-        public string @object { get; set; }
+        public int id { get; set; }
+        public System.DateTime C_timestamp { get; set; }
+        public string location { get; set; }
+        public string alarmobject { get; set; }
+        public string info { get; set; }
+        public int triggerCount { get; set; }
+        public string state { get; set; }
+        public string alertType { get; set; }
     }
 }

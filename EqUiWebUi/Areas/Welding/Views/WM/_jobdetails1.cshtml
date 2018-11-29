@@ -1,0 +1,66 @@
+﻿@model EqUiWebUi.Areas.Welding.Models.rt_job11
+
+
+
+<span class="badge badge-info">weldFaultGrid</span>
+<div data-name="weldFaultGrid1" class="mvc-grid"></div>
+
+<br />
+<span class="badge badge-info">weldMeasureGrid</span>
+<div data-name="weldMeasureGrid1" class="mvc-grid"></div>
+
+<br />
+<span class="badge badge-info">breakdownGrid</span>
+<div data-name="breakdownGrid1" class="mvc-grid"></div>
+
+
+<script>
+
+
+    $('[data-name="weldFaultGrid1"]').html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
+    $('[data-name="weldFaultGrid1"]').mvcgrid({
+        sourceUrl: '@Url.Action("_weldFault1")', // Grid source url string
+        data: {
+            timerId: @Model.timerId,
+            weldfaultprot_id_Start: @Model.rt_weldfaultprot_id_Start,
+            weldfaultprot_id_End: @Model.rt_weldfaultprot_id_End
+        },
+        requestType: 'get', // Ajax grid request type
+        reload: true, // Grid reload indicator
+        reloadFailed: function (result) {
+                console.log(result);
+            $('[data-name="weldFaultGrid1"]').html("<div class='alert alert-danger'>Error while loading!! </div>");
+            }
+    });
+
+    $('[data-name="weldMeasureGrid1"]').html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
+    $('[data-name="weldMeasureGrid1"]').mvcgrid({
+        sourceUrl: '@Url.Action("_weldMeasure1")', // Grid source url string
+        data: {
+            timerId: @Model.timerId,
+            weldmeasureprotddw_id_Start: @Model.rt_weldmeasureprotddw_id_Start,
+            weldmeasureprotddw_id_End: @Model.rt_weldmeasureprotddw_id_End
+        },
+        requestType: 'get', // Ajax grid request type
+        reload: true, // Grid reload indicator
+        reloadFailed: function (result) {
+                console.log(result);
+            $('[data-name="weldMeasureGrid1"]').html("<div class='alert alert-danger'>Error while loading!! </div>");
+            }
+    });
+        $('[data-name="breakdownGrid1"]').html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
+    $('[data-name="breakdownGrid1"]').mvcgrid({
+        sourceUrl: '@Url.Action("_jobBreakdown1")', // Grid source url string
+        data: {
+            id: @Model.id,
+        },
+        requestType: 'get', // Ajax grid request type
+        reload: true, // Grid reload indicator
+        reloadFailed: function (result) {
+                console.log(result);
+            $('[data-name="breakdownGrid1"]').html("<div class='alert alert-danger'>Error while loading!! </div>");
+            }
+    });
+
+
+</script>

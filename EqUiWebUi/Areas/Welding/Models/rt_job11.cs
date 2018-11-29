@@ -12,12 +12,12 @@ namespace EqUiWebUi.Areas.Welding.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class rt_job
+    public partial class rt_job11
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public rt_job()
+        public rt_job11()
         {
-            this.rt_job_breakdown = new HashSet<rt_job_breakdown>();
+            this.rt_job_breakdown = new HashSet<rt_job_breakdown1>();
         }
     
         public int id { get; set; }
@@ -37,9 +37,8 @@ namespace EqUiWebUi.Areas.Welding.Models
         public Nullable<int> rt_breakdown_count { get; set; }
         public Nullable<int> rt_weldmeasureprotddw_distinct { get; set; }
     
+        public virtual c_timer c_timer { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<rt_job_breakdown> rt_job_breakdown { get; set; }
-        public virtual Timer Timer { get; set; }
-        public virtual Timer Timer1 { get; set; }
+        public virtual ICollection<rt_job_breakdown1> rt_job_breakdown { get; set; }
     }
 }

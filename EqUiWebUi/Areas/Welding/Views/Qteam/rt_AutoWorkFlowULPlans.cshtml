@@ -4,7 +4,6 @@
     ViewBag.Title = "rt_AutoWorkFlowULPlans";
 }
 
-<h2>AutomaticWorkFlowULPlans</h2>
 @Html.Grid(Model).Named("rt_AutoWorkFlowULPlans").Build(columns =>
 {
     columns.Add(c => c.LastinspectionTime).Titled("LastinspectionTime").Formatted("{0:dd-MM-yyyy HH:mm:ss}");
@@ -15,14 +14,14 @@
     //.Encoded(false)
     // .RenderedAs(c => "<div class='bg-danger'>Test</div>");
     columns.Add(c => c.Planlenght).Titled("Planlenght");
-    columns.Add(c => c.Last30min_productionStatus).Titled("Last30min_productionStatus");
-    columns.Add(c => c.BuildBody).Titled("BuildBody").InitialSort(GridSortOrder.Desc);
-    columns.Add(c => c.WorkGroup).Titled("WorkGroup");
+    columns.Add(c => c.Last30min_productionStatus).Titled("Last30min_productionStatus").Css("bolded"); 
+    columns.Add(c => c.BuildBody).Titled("BuildBodys").InitialSort(GridSortOrder.Desc);
+  
 
 }).Filterable().Pageable(pager =>
 {
-    pager.RowsPerPage = 15;
-   
+    pager.RowsPerPage = 12;
+
 }
         ).Sortable().Css("table-hover").RowCss(model => model.LastnumberFromPlanBusy > 0 ? "ani_PulseBlueRepeat" : "");
 
@@ -39,7 +38,7 @@
 
 
                 //function to refresh grid
-                function refreshGrid() {
+               function refreshGrid() {
                     console.log('function is being called')
                     $('[data-name="rt_AutoWorkFlowULPlans"]').mvcgrid({
                         reload: true,
@@ -59,16 +58,11 @@
 
                 setInterval(function () {
                     refreshGrid()
-                }, 1000 * 60)
+                }, 1000 * 120)
 
 
             </script>
 
-            <style>
-                .red {
-                    background-color: #d26161
-                }
-            </style>
-
+      
      
 }

@@ -12,27 +12,24 @@ namespace EqUiWebUi.Areas.Welding.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class type
+    public partial class c_Job
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public type()
+        public c_Job()
         {
-            this.blanco = new HashSet<blanco>();
-            this.blanco1 = new HashSet<blanco>();
-            this.teardown = new HashSet<teardown>();
-            this.teardown1 = new HashSet<teardown>();
+            this.c_Teardown = new HashSet<c_Teardown>();
+            this.rt_Job = new HashSet<rt_Job1>();
         }
     
         public int id { get; set; }
-        public string tdttype { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public string Cartype { get; set; }
+        public bool idead { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<blanco> blanco { get; set; }
+        public virtual ICollection<c_Teardown> c_Teardown { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<blanco> blanco1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<teardown> teardown { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<teardown> teardown1 { get; set; }
+        public virtual ICollection<rt_Job1> rt_Job { get; set; }
     }
 }

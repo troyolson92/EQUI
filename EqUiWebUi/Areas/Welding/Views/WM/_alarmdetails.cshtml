@@ -1,0 +1,27 @@
+﻿@model EqUiWebUi.Areas.Welding.Models.rt_alarm
+
+<br />
+<span class="badge badge-info">breakdowngrid</span>
+<div data-name="breakdowngrid" class="mvc-grid"></div>
+
+
+
+<script>
+    $('[data-name="breakdowngrid"]').html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
+    $('[data-name="breakdowngrid"]').mvcgrid({
+        sourceUrl: '@Url.Action("_breakdown")', // Grid source url string
+        data: {
+           id:@Model.id        
+        },
+        requestType: 'get', // Ajax grid request type
+        reload: true, // Grid reload indicator
+        reloadFailed: function (result) {
+                console.log(result);
+            $('[data-name="breakdowngrid"]').html("<div class='alert alert-danger'>Error while loading!! </div>");
+            }
+    });
+
+
+
+
+</script>

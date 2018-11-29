@@ -33,6 +33,6 @@ namespace EqUiWebUi.Areas.Welding.Models
         public Nullable<bool> isError { get; set; }
         public string WMComment { get; set; }
     
-        public virtual Timer Timer { get; set; }
+        public virtual c_timer c_timer { get; set; }
     }
 }

@@ -12,24 +12,23 @@ namespace EqUiWebUi.Areas.Welding.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class NPT
+    public partial class c_Picture
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public NPT()
+        public c_Picture()
         {
-            this.Timer = new HashSet<Timer>();
+            this.c_Teardown = new HashSet<c_Teardown>();
         }
     
-        public int ID { get; set; }
-        public string Name { get; set; }
-        public int OwnerId { get; set; }
-        public string LoginPass { get; set; }
-        public string LoginUser { get; set; }
-        public string RemoreServer { get; set; }
-        public Nullable<bool> active { get; set; }
-        public Nullable<int> enable_bit { get; set; }
+        public int id { get; set; }
+        public int picturenbr { get; set; }
+        public int picturename_id { get; set; }
+        public bool idead { get; set; }
+        public string Comment { get; set; }
+        public string Description { get; set; }
+        public System.DateTime timestamp { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Timer> Timer { get; set; }
+        public virtual ICollection<c_Teardown> c_Teardown { get; set; }
     }
 }

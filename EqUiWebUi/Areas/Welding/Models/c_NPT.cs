@@ -12,22 +12,27 @@ namespace EqUiWebUi.Areas.Welding.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class result
+    public partial class c_NPT
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public result()
+        public c_NPT()
         {
-            this.teardown = new HashSet<teardown>();
-            this.teardown1 = new HashSet<teardown>();
+            this.c_timer = new HashSet<c_timer>();
+            this.rt_user = new HashSet<rt_user>();
         }
     
-        public int id { get; set; }
-        public int teardownid { get; set; }
-        public string teardownresult { get; set; }
+        public int ID { get; set; }
+        public string Name { get; set; }
+        public int OwnerId { get; set; }
+        public string LoginPass { get; set; }
+        public string LoginUser { get; set; }
+        public string RemoreServer { get; set; }
+        public Nullable<bool> active { get; set; }
+        public Nullable<int> enable_bit { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<teardown> teardown { get; set; }
+        public virtual ICollection<c_timer> c_timer { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<teardown> teardown1 { get; set; }
+        public virtual ICollection<rt_user> rt_user { get; set; }
     }
 }
