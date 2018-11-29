@@ -1,0 +1,25 @@
+﻿CREATE TABLE [WELDING2].[rt_datachangeprot] (
+    [id]                 INT          IDENTITY (1, 1) NOT NULL,
+    [timerId]            INT          NULL,
+    [_timestamp]         DATETIME     NULL,
+    [protRecord_ID]      INT          NULL,
+    [dateTime]           DATETIME     NULL,
+    [param_ID]           INT          NULL,
+    [param_status_txt]   VARCHAR (81) NULL,
+    [subIndex]           INT          NULL,
+    [oldValue]           VARCHAR (81) NULL,
+    [oldValue_txt]       VARCHAR (81) NULL,
+    [newValue]           VARCHAR (81) NULL,
+    [newValue_txt]       VARCHAR (81) NULL,
+    [oldNormValue]       VARCHAR (81) NULL,
+    [newNormValue]       VARCHAR (81) NULL,
+    [physicalUnitId]     INT          NULL,
+    [physicalUnitId_txt] VARCHAR (64) NULL,
+    [computerName]       VARCHAR (64) NULL,
+    [userName]           VARCHAR (64) NULL,
+    [comment]            VARCHAR (64) NULL,
+    CONSTRAINT [PK_rt_datachangeprot] PRIMARY KEY CLUSTERED ([id] ASC),
+    CONSTRAINT [FK_rt_datachangeprot_c_timer] FOREIGN KEY ([timerId]) REFERENCES [WELDING2].[c_timer] ([ID]),
+    CONSTRAINT [FK_rt_datachangeprot_c_timer_class] FOREIGN KEY ([timerId]) REFERENCES [WELDING2].[c_timer_class] ([id])
+);
+

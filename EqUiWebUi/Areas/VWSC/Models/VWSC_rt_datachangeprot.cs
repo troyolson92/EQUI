@@ -33,5 +33,8 @@ namespace EqUiWebUi.Areas.VWSC.Models
         public string computerName { get; set; }
         public string userName { get; set; }
         public string comment { get; set; }
+    
+        public virtual VWSC_c_timer c_timer { get; set; }
+        public virtual VWSC_c_timer_class c_timer_class { get; set; }
     }
 }
