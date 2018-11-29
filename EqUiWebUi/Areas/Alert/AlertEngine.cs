@@ -290,7 +290,7 @@ namespace EqUiWebUi.Areas.Alert
                         sb.AppendLine("<strong>Closed by server: " + System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "</strong>");
                         sb.AppendLine("<div>(AutoSetStateTechComp mode)</div>");
                         sb.AppendLine("</div>");
-                        OpenAlert.comments = sb.ToString(); 
+                        OpenAlert.comments = sb.ToString(); ;
                     }
                 }
                 //dont forget SAVE!
