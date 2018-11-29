@@ -33,7 +33,6 @@ namespace EqUiWebUi.Areas.VWSC.Models
         public virtual DbSet<VWSC_rt_active_info> rt_active_info { get; set; }
         public virtual DbSet<VWSC_c_bosch_view> c_bosch_view { get; set; }
         public virtual DbSet<VWSC_rt_alarm> rt_alarm { get; set; }
-        public virtual DbSet<VWSC_rt_comment> rt_comment { get; set; }
         public virtual DbSet<VWSC_rt_communication_state> rt_communication_state { get; set; }
         public virtual DbSet<VWSC_rt_datachangeprot> rt_datachangeprot { get; set; }
         public virtual DbSet<VWSC_rt_job> rt_job { get; set; }

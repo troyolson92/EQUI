@@ -10,7 +10,7 @@
         <EntityTypeShape EntityType="GADATAModelVWSC.VWSC_c_severity" Width="1.5" PointX="2.625" PointY="7.125" IsExpanded="true" />
         <EntityTypeShape EntityType="GADATAModelVWSC.VWSC_c_timer_class" Width="1.5" PointX="7" PointY="0.625" IsExpanded="true" />
         <EntityTypeShape EntityType="GADATAModelVWSC.VWSC_L_operation" Width="1.5" PointX="0.625" PointY="3.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="GADATAModelVWSC.VWSC_rt_active_info" Width="1.5" PointX="7" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="GADATAModelVWSC.VWSC_rt_active_info" Width="1.5" PointX="7" PointY="9.875" IsExpanded="true" />
         <EntityTypeShape EntityType="GADATAModelVWSC.VWSC_c_bosch_view" Width="1.5" PointX="2.625" PointY="4.25" IsExpanded="true" />
         <EntityTypeShape EntityType="GADATAModelVWSC.VWSC_c_NPT" Width="1.5" PointX="10" PointY="4.375" />
         <EntityTypeShape EntityType="GADATAModelVWSC.VWSC_c_timer" Width="1.5" PointX="7" PointY="3.625" />
@@ -18,10 +18,10 @@
         <AssociationConnector Association="GADATAModelVWSC.FK_c_Timer_c_timer_class" />
         <AssociationConnector Association="GADATAModelVWSC.FK_L_operation_c_timer" />
         <AssociationConnector Association="GADATAModelVWSC.FK_rt_active_info_c_timer" />
+        <AssociationConnector Association="GADATAModelVWSC.FK_L_operation_c_timer1" />
       </Diagram>
       <Diagram DiagramId="c4f0b3d6f8d64901ba9518ac5782c867" Name="Data" ZoomLevel="73" >
         <EntityTypeShape EntityType="GADATAModelVWSC.VWSC_rt_alarm" Width="1.5" PointX="13.75" PointY="2.625" />
-        <EntityTypeShape EntityType="GADATAModelVWSC.VWSC_rt_comment" Width="1.5" PointX="18.625" PointY="5.625" FillColor="255, 128, 128" />
         <EntityTypeShape EntityType="GADATAModelVWSC.VWSC_rt_communication_state" Width="1.5" PointX="1.875" PointY="2.125" />
         <EntityTypeShape EntityType="GADATAModelVWSC.VWSC_rt_datachangeprot" Width="1.5" PointX="18.625" PointY="0.5" FillColor="255, 128, 128" />
         <EntityTypeShape EntityType="GADATAModelVWSC.VWSC_rt_job" Width="1.5" PointX="7.625" PointY="2.625" />

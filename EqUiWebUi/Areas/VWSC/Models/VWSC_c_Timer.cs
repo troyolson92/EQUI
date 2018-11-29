@@ -25,6 +25,7 @@ namespace EqUiWebUi.Areas.VWSC.Models
             this.rt_job = new HashSet<VWSC_rt_job>();
             this.rt_weldfault = new HashSet<VWSC_rt_weldfault>();
             this.rt_weldmeasureprotddw = new HashSet<VWSC_rt_weldmeasureprotddw>();
+            this.L_operation1 = new HashSet<VWSC_L_operation>();
         }
     
         public int ID { get; set; }
@@ -34,6 +35,11 @@ namespace EqUiWebUi.Areas.VWSC.Models
         public string location { get; set; }
         public Nullable<int> c_timer_class_id { get; set; }
         public Nullable<int> enable_bit { get; set; }
+        public string LocationTree { get; set; }
+        public string Assetnum { get; set; }
+        public string ResponsibleWeldMaster { get; set; }
+        public string Station { get; set; }
+        public string Line { get; set; }
     
         public virtual VWSC_c_NPT c_NPT { get; set; }
         public virtual VWSC_c_timer_class c_timer_class { get; set; }
@@ -53,5 +59,7 @@ namespace EqUiWebUi.Areas.VWSC.Models
         public virtual ICollection<VWSC_rt_weldfault> rt_weldfault { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<VWSC_rt_weldmeasureprotddw> rt_weldmeasureprotddw { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<VWSC_L_operation> L_operation1 { get; set; }
     }
 }
