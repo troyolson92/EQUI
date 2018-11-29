@@ -12,7 +12,7 @@
 <div class="card">
     <div class="card-header bg-dark">
         <h5 class="card-title text-white">
-            General Tools 
+            General overview 
             <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
         </h5>
     </div>
@@ -27,7 +27,7 @@
     <p></p>
     @MyHtmlHelpers.EquiLink("/Welding/WM/", "far fa-file-alt", "SpatterAlerts ---under construction---", helperText: "Spatters met melding productie ")
     <p></p>
-    @MyHtmlHelpers.EquiLink("/Welding/WM/", "far fa-file-alt", " All D alerts ---under construction---", helperText: "Follow up all D alerts")
+    @MyHtmlHelpers.EquiLink("/Alert/Alert/Listalerts?h_alert-c_triggers.alert-type-contains=Dalert&h_alert-rows=20", "far fa-file-alt", " All D alerts ", helperText: "Follow up all D alerts")
     <p></p>
     @MyHtmlHelpers.EquiLink("/Alert/Alert/Listalerts?h_alert-c_triggers.alert-type-contains=Qalert&h_alert-rows=20", "far fa-file-alt", " All Q Alerts ", helperText: "Follow up all Q alerts ")
 
