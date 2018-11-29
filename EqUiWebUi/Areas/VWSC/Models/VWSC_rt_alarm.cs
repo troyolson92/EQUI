@@ -32,8 +32,8 @@ namespace EqUiWebUi.Areas.VWSC.Models
         public Nullable<bool> isError { get; set; }
         public string isError_txt { get; set; }
     
-        public virtual VWSC_c_Timer Timer { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<VWSC_rt_job_breakdown> rt_job_breakdown { get; set; }
+        public virtual VWSC_c_timer c_timer { get; set; }
     }
 }

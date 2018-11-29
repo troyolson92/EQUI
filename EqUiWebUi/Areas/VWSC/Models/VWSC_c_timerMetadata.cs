@@ -12,8 +12,8 @@ namespace EqUiWebUi.Areas.VWSC.Models
     {
     }
 
-    [MetadataType(typeof(VWSC_c_Timer))]
-    public partial class VWSC_c_Timer
+    [MetadataType(typeof(VWSC_c_timer))]
+    public partial class VWSC_c_timer
     {
 
         public Enable_bit _Enable_bit
