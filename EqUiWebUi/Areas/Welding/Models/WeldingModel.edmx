@@ -636,6 +636,27 @@ warning 6002: The table/view 'GADATA.Alerts.AlertsAASPOT' does not have a primar
           <Property Name="alertType" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.Alerts.AlertsQteam' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="AlertsQteam">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="_timestamp" />
+            <PropertyRef Name="location" />
+            <PropertyRef Name="alarmobject" />
+            <PropertyRef Name="triggerCount" />
+            <PropertyRef Name="state" />
+            <PropertyRef Name="alertType" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="_timestamp" Type="datetime" Nullable="false" />
+          <Property Name="location" Type="varchar(max)" Nullable="false" />
+          <Property Name="alarmobject" Type="varchar(max)" Nullable="false" />
+          <Property Name="info" Type="varchar(max)" />
+          <Property Name="triggerCount" Type="int" Nullable="false" />
+          <Property Name="state" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="alertType" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'GADATA.dbo.WeldtimeSpotsSetup' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="WeldtimeSpotsSetup">
           <Key>
@@ -1292,6 +1313,18 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
     [AlertsAASPOT].[alertType] AS [alertType]
     FROM [Alerts].[AlertsAASPOT] AS [AlertsAASPOT]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="AlertsQteam" EntityType="Self.AlertsQteam" store:Type="Views" store:Schema="Alerts">
+            <DefiningQuery>SELECT 
+    [AlertsQteam].[id] AS [id], 
+    [AlertsQteam].[_timestamp] AS [_timestamp], 
+    [AlertsQteam].[location] AS [location], 
+    [AlertsQteam].[alarmobject] AS [alarmobject], 
+    [AlertsQteam].[info] AS [info], 
+    [AlertsQteam].[triggerCount] AS [triggerCount], 
+    [AlertsQteam].[state] AS [state], 
+    [AlertsQteam].[alertType] AS [alertType]
+    FROM [Alerts].[AlertsQteam] AS [AlertsQteam]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="WeldtimeSpotsSetup" EntityType="Self.WeldtimeSpotsSetup" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [WeldtimeSpotsSetup].[NPT] AS [NPT], 
@@ -1764,6 +1797,7 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
             <End Role="c_user" EntitySet="c_user" />
             <End Role="rt_user" EntitySet="rt_user" />
           </AssociationSet>
+          <EntitySet Name="AlertsQteam" EntityType="GADATAModelWelding.AlertsQteam" />
           </EntityContainer>
         <EntityType Name="rt_AutoWorkFlowULPlans">
           <Key>
@@ -2999,6 +3033,25 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="AlertsQteam">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="C_timestamp" />
+            <PropertyRef Name="location" />
+            <PropertyRef Name="alarmobject" />
+            <PropertyRef Name="triggerCount" />
+            <PropertyRef Name="state" />
+            <PropertyRef Name="alertType" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="C_timestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="location" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="alarmobject" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="info" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="triggerCount" Type="Int32" Nullable="false" />
+          <Property Name="state" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="alertType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3881,6 +3934,20 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
           <EntitySetMapping Name="AlertsAASPOT">
             <EntityTypeMapping TypeName="GADATAModelWelding.AlertsAASPOT">
               <MappingFragment StoreEntitySet="AlertsAASPOT">
+                <ScalarProperty Name="alertType" ColumnName="alertType" />
+                <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="triggerCount" ColumnName="triggerCount" />
+                <ScalarProperty Name="info" ColumnName="info" />
+                <ScalarProperty Name="alarmobject" ColumnName="alarmobject" />
+                <ScalarProperty Name="location" ColumnName="location" />
+                <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AlertsQteam">
+            <EntityTypeMapping TypeName="GADATAModelWelding.AlertsQteam">
+              <MappingFragment StoreEntitySet="AlertsQteam">
                 <ScalarProperty Name="alertType" ColumnName="alertType" />
                 <ScalarProperty Name="state" ColumnName="state" />
                 <ScalarProperty Name="triggerCount" ColumnName="triggerCount" />

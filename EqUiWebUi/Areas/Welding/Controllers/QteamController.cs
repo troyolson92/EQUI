@@ -49,6 +49,9 @@ namespace EqUiWebUi.Areas.Welding.Controllers
             IQueryable<ULRapportering> data = db.ULRapporterings.AsQueryable();
             return View(data);
         }
+
+     
+       
     }
 }
 

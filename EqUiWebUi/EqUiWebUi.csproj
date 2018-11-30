@@ -680,6 +680,9 @@
     <Compile Include="Areas\Welding\Models\AlertsAASPOT.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Areas\Welding\Models\AlertsQteam.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Areas\Welding\Models\AutomaticPlanControleWeldBolt.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>

@@ -91,6 +91,7 @@
       </Diagram>
       <Diagram DiagramId="6c5a0a6f0e3c46ecbc5b4756677dc47e" Name="Ultralog" ZoomLevel="74" >
         <EntityTypeShape EntityType="GADATAModelWelding.AutomaticPlanControleWeldBolt" Width="1.5" PointX="0.5" PointY="0.5" FillColor="255, 192, 128" />
+        <EntityTypeShape EntityType="GADATAModelWelding.AlertsQteam" Width="1.5" PointX="0.5" PointY="2.75" FillColor="255, 192, 128" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
