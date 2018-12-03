@@ -1,4 +1,5 @@
 ﻿using EqUiWebUi.Areas.Alert.Models;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -29,7 +30,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
 
         //Global Alert interface
         // GET: Listalerts AND filter the alerts based on the users profile
-        public ActionResult Listalerts(int? c_trigger_id, int? id, string Location = "")
+        public ActionResult Listalerts(int? c_trigger_id, int? id, string Location = "", bool ApplyResponsibleArea = false)
         {           
             var h_alert = db.h_alert.Include(h => h.c_state).Where(h =>
                 ((h.id == (id ?? 0)) || (id == null))
@@ -46,7 +47,18 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             {
                 //filter alerts basted on user profile!
                 string UserLocationroot = CurrentUser.Getuser.LocationRoot;
-                return View(h_alert.Where(a => a.locationTree.Contains(UserLocationroot)));
+                if (UserLocationroot != "")
+                {
+                    h_alert = h_alert.Where(a => a.locationTree.Contains(UserLocationroot));
+                }
+
+                List<string> ResponsibleAreaLocations = CurrentUser.Getuser.ResponsibleAreaLocations;
+                if (ResponsibleAreaLocations != null && ApplyResponsibleArea == true)
+                {
+                  //  h_alert = h_alert.Where(a => a.locationTree.Any(x => ResponsibleAreaLocations.Contains(x.ToString())));
+                }
+
+                return View(h_alert);
             }
         }
 

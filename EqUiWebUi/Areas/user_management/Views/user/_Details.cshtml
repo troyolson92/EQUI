@@ -47,6 +47,15 @@
 
         <dd>
             @Html.DisplayFor(model => model.ResponsibleArea)
+            @if (Model.ResponsibleAreaLocations != null)
+             {
+              <ul class="text-muted">
+                 @foreach (string item in Model.ResponsibleAreaLocations)
+                  {
+                    <li>@item</li>
+                  }
+                </ul>
+             }
         </dd>
 
         <dt>
