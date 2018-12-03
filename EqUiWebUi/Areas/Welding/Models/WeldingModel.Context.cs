@@ -67,19 +67,19 @@ namespace EqUiWebUi.Areas.Welding.Models
         public virtual DbSet<L_operation> L_operation { get; set; }
         public virtual DbSet<rt_active_info> rt_active_info { get; set; }
         public virtual DbSet<rt_alarm> rt_alarm { get; set; }
-        public virtual DbSet<rt_comment> rt_comment { get; set; }
         public virtual DbSet<rt_communication_state> rt_communication_state { get; set; }
         public virtual DbSet<rt_datachangeprot> rt_datachangeprot { get; set; }
         public virtual DbSet<rt_job11> rt_job11 { get; set; }
         public virtual DbSet<rt_job_breakdown1> rt_job_breakdown1 { get; set; }
         public virtual DbSet<rt_paramvalues> rt_paramvalues { get; set; }
-        public virtual DbSet<rt_spottable> rt_spottable { get; set; }
         public virtual DbSet<rt_user> rt_user { get; set; }
         public virtual DbSet<rt_weldfault> rt_weldfault { get; set; }
         public virtual DbSet<rt_weldmeasureprotddw> rt_weldmeasureprotddw { get; set; }
         public virtual DbSet<h_Nut_Bolt_Measure> h_Nut_Bolt_Measure { get; set; }
         public virtual DbSet<AlertsAASPOT> AlertsAASPOT { get; set; }
         public virtual DbSet<AlertsQteam> AlertsQteam { get; set; }
+        public virtual DbSet<AlertsUsers> AlertsUsers { get; set; }
+        public virtual DbSet<ActualSpatter_> ActualSpatter_ { get; set; }
     
         public virtual ObjectResult<Lastwelds_Result> Lastwelds(string timer, Nullable<int> spot)
         {

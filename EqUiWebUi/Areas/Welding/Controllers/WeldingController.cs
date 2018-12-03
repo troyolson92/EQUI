@@ -26,6 +26,11 @@ namespace EqUiWebUi.Areas.Welding.Controllers
             return View(data);
         }
 
+        public ActionResult _AlertsUserRapport()
+        {
+            IQueryable<AlertsUsers> data = db.AlertsUsers.AsQueryable().Where(c => c.userAccept != null || c.userChanged != null || c.userClosed != null);
+            return View(data);
+        }
 
 
 

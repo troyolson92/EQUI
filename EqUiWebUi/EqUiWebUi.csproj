@@ -671,16 +671,23 @@
     <Compile Include="Areas\Welding\Controllers\AROController.cs" />
     <Compile Include="Areas\Welding\Controllers\LaunchController.cs" />
     <Compile Include="Areas\Welding\Controllers\QteamController.cs" />
+    <Compile Include="Areas\Welding\Controllers\SpatterController.cs" />
     <Compile Include="Areas\Welding\Controllers\TeardownTeam.cs" />
     <Compile Include="Areas\Welding\Controllers\ToDoListsController.cs" />
     <Compile Include="Areas\Welding\Controllers\ToDoList_RemarkController.cs" />
     <Compile Include="Areas\Welding\Controllers\UpdateController.cs" />
     <Compile Include="Areas\Welding\Controllers\WMController.cs" />
     <Compile Include="Areas\Welding\editController.cs" />
+    <Compile Include="Areas\Welding\Models\ActualSpatter_.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Areas\Welding\Models\AlertsAASPOT.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Welding\Models\AlertsQteam.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Welding\Models\AlertsUsers.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Welding\Models\AutomaticPlanControleWeldBolt.cs">
@@ -770,9 +777,6 @@
     <Compile Include="Areas\Welding\Models\rt_AutoWorkFlowULPlans.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Areas\Welding\Models\rt_comment.cs">
-      <DependentUpon>WeldingModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Areas\Welding\Models\rt_communication_state.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
@@ -792,9 +796,6 @@
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Welding\Models\rt_paramvalues.cs">
-      <DependentUpon>WeldingModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\Welding\Models\rt_spottable.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Welding\Models\rt_Teardown.cs">
@@ -1949,6 +1950,10 @@
     <Content Include="Areas\Welding\Views\WM\_weldMeasure1.cshtml" />
     <Content Include="Areas\Welding\Views\WM\_rt_job1.cshtml" />
     <Content Include="Areas\Welding\Views\Welding\_alertsAASPOT.cshtml" />
+    <Content Include="Areas\Welding\Views\Welding\_AlertsUserRapport.cshtml" />
+    <Content Include="Areas\Welding\Views\spatters\Index.cshtml" />
+    <Content Include="Areas\Welding\Views\Spatter\Index.cshtml" />
+    <Content Include="Areas\Welding\Views\Spatter\_SpikesV316.cshtml" />
     <None Include="Properties\PublishProfiles\gensvw1178-DEV-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gotsvw11292-PRODUCTION-VCTA.pubxml" />

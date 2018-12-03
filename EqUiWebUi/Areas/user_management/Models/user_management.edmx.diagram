@@ -7,14 +7,14 @@
       <Diagram DiagramId="ac1d8b7631b3418d95d797c3c70cdcf7" Name="Diagram1">
         <EntityTypeShape EntityType="GADATAModel.userRoles" Width="1.5" PointX="3.875" PointY="0.5" IsExpanded="true" />
         <EntityTypeShape EntityType="GADATAModel.usersPermisions" Width="1.5" PointX="7" PointY="1.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="GADATAModel.users" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="GADATAModel.users" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <AssociationConnector Association="GADATAModel.FK_h_usersPermisions_c_userRoles" ManuallyRouted="false" />
         <AssociationConnector Association="GADATAModel.FK_h_usersPermisions_L_users" ManuallyRouted="false" />
         <AssociationConnector Association="GADATAModel.FK_h_usersPermisions_L_users1" ManuallyRouted="false" />
         <EntityTypeShape EntityType="GADATAModel.L_Screens" Width="1.5" PointX="0.75" PointY="5" />
         <AssociationConnector Association="GADATAModel.FK_L_Screens_L_users" ManuallyRouted="false" >
         </AssociationConnector>
-        <EntityTypeShape EntityType="GADATAModel.c_areas" Width="1.5" PointX="6.375" PointY="5.375" FillColor="255, 128, 0" />
+        <EntityTypeShape EntityType="GADATAModel.c_areas" Width="1.75" PointX="5.75" PointY="4.625" FillColor="255, 128, 0" />
         <EntityTypeShape EntityType="GADATAModel.c_ownership" Width="1.5" PointX="8.25" PointY="5.375" FillColor="255, 128, 0" />
       </Diagram>
     </edmx:Diagrams>

@@ -1,36 +1,44 @@
 ﻿
-@model IQueryable<EqUiWebUi.Areas.Welding.Models.rt_AutoWorkFlowULPlans>
+<!DOCTYPE html>
+<html>
+<body>
+
+    <h2>Spikes V316</h2>
+    <img src="C:\Temp\V316Spikes.png" alt="Spikes V316" width="460" height="345">
+
+</body>
+</html>
+
+
+@model IQueryable<EqUiWebUi.Areas.Welding.Models.ActualSpatter_>
 @{
-    ViewBag.Title = "rt_AutoWorkFlowULPlans";
+    ViewBag.Title = "ActualSpatter_";
 }
 
-@Html.Grid(Model).Named("rt_AutoWorkFlowULPlans").Build(columns =>
+@Html.Grid(Model).Named("ActualSpatter_").Build(columns =>
 {
-    columns.Add(c => c.LastinspectionTime).Titled("LastinspectionTime").Formatted("{0:dd-MM-yyyy HH:mm:ss}");
-    columns.Add(c => c.UL_Plan).Titled("UL_Plan");
-    columns.Add(c => c.LastnumberFromPlanBusy).Titled("Planbusy");
-    //columns.Add(c => c)
-    //  .Titled("Planbusy")
-    //.Encoded(false)
-    // .RenderedAs(c => "<div class='bg-danger'>Test</div>");
-    columns.Add(c => c.Planlenght).Titled("Planlenght");
-    columns.Add(c => c.Last30min_productionStatus).Titled("Last30min_productionStatus").Css("bolded");
-    columns.Add(c => c.BuildBody).Titled("BuildBodys").InitialSort(GridSortOrder.Desc);
-    columns.Add(c => c.PreviousPlace).Titled("PreviousPlace");
+    columns.Add(c => c.SpatterUpdateTime).Titled("SpatterUpdateTime").Formatted("{0:dd-MM-yyyy HH:mm:ss}");
+    columns.Add(c => c.Zone).Titled("zone").InitialSort(GridSortOrder.Asc);
+    columns.Add(c => c.Spatters).Titled("NbrSpatters");
 
+    columns.Add(c => c.NbrWelds).Titled("NbrWelds");
+    columns.Add(c => c.C_ZoneSpatters).Titled("%ZoneSpatters").Css("bolded");
+    columns.Add(c => c.Last8HoursSpatterNbr).Titled("Last8HoursSpatterNbr");
+    columns.Add(c => c.Last8HoursNbrWelds).Titled("Last8HoursNbrWelds");
+    columns.Add(c => c.Last8Hours_spatter).Titled("Last8Hours%spatter");
 
 }).Filterable().Pageable(pager =>
 {
-    pager.RowsPerPage = 12;
+    pager.RowsPerPage = 15;
 
 }
-        ).Sortable().Css("table-hover").RowCss(model => model.LastnumberFromPlanBusy > 0 ? "ani_PulseBlueRepeat" : "");
+        ).Sortable().Css("table-hover").RowCss(model => model.C_ZoneSpatters > model.Last8Hours_spatter ? "ani_PulseRed" : "")
 
 
 
 
-        @section scripts{
-            <script>
+@section scripts{
+    <script>
                 //full with screen
                 $("#allcontent").removeClass("body-content");
                 $("#allcontent").removeClass("container");
@@ -41,7 +49,7 @@
                 //function to refresh grid
                function refreshGrid() {
                     console.log('function is being called')
-                    $('[data-name="rt_AutoWorkFlowULPlans"]').mvcgrid({
+                   $('[data-name="ActualSpatter_"]').mvcgrid({
                         reload: true,
 
                         reloadStarted: function () {
@@ -59,11 +67,11 @@
 
                 setInterval(function () {
                     refreshGrid()
-                }, 1000 * 120)
+                }, 1000 * 60)
 
 
-            </script>
+    </script>
 
-      
-     
+
+
 }

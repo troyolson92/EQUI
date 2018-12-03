@@ -27,5 +27,6 @@ namespace EqUiWebUi.Areas.Welding.Models
         public string onderhoudswerken { get; set; }
         public Nullable<int> LastnumberFromPlanBusy { get; set; }
         public Nullable<int> Planlenght { get; set; }
+        public Nullable<int> PreviousPlace { get; set; }
     }
 }

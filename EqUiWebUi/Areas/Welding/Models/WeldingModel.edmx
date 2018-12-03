@@ -119,6 +119,7 @@ warning 6002: The table/view 'GADATA.UL.rt_AutoWorkFlowULPlans' does not have a 
           <Property Name="onderhoudswerken" Type="nchar" MaxLength="100" />
           <Property Name="LastnumberFromPlanBusy" Type="int" />
           <Property Name="Planlenght" Type="int" />
+          <Property Name="PreviousPlace" Type="int" />
         </EntityType>
         <EntityType Name="rt_ExtraControles">
           <Key>
@@ -383,14 +384,6 @@ warning 6002: The table/view 'GADATA.WELDING2.h_Nut_Bolt_Measure' does not have 
           <Property Name="isError" Type="bit" />
           <Property Name="isError_txt" Type="varchar" MaxLength="64" />
         </EntityType>
-        <EntityType Name="rt_comment">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="_timestamp" Type="datetime" />
-          <Property Name="comment" Type="varchar" MaxLength="40" />
-        </EntityType>
         <EntityType Name="rt_communication_state">
           <Key>
             <PropertyRef Name="id" />
@@ -468,23 +461,6 @@ warning 6002: The table/view 'GADATA.WELDING2.h_Nut_Bolt_Measure' does not have 
           <Property Name="subindex" Type="int" />
           <Property Name="value" Type="varchar" MaxLength="1024" />
           <Property Name="c_bosch_param_id" Type="int" />
-          <Property Name="isDead" Type="int" />
-        </EntityType>
-        <EntityType Name="rt_spottable">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="_timestamp" Type="datetime" />
-          <Property Name="timerId" Type="int" />
-          <Property Name="spot_ID" Type="int" />
-          <Property Name="spotname" Type="varchar" MaxLength="64" />
-          <Property Name="pjv_joiningpointdata_id" Type="int" />
-          <Property Name="vwscComment" Type="varchar" MaxLength="256" />
-          <Property Name="Comment1" Type="int" />
-          <Property Name="Comment2" Type="int" />
-          <Property Name="Comment3" Type="int" />
-          <Property Name="weldProgNo" Type="int" />
           <Property Name="isDead" Type="int" />
         </EntityType>
         <EntityType Name="rt_user">
@@ -655,6 +631,32 @@ warning 6002: The table/view 'GADATA.Alerts.AlertsQteam' does not have a primary
           <Property Name="triggerCount" Type="int" Nullable="false" />
           <Property Name="state" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="alertType" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.Alerts.AlertsUsers' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="AlertsUsers">
+          <Key>
+            <PropertyRef Name="_timestamp" />
+            <PropertyRef Name="location" />
+            <PropertyRef Name="alarmobject" />
+            <PropertyRef Name="state" />
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="_timestamp" Type="datetime" Nullable="false" />
+          <Property Name="location" Type="varchar(max)" Nullable="false" />
+          <Property Name="alarmobject" Type="varchar(max)" Nullable="false" />
+          <Property Name="locationTree" Type="varchar(max)" />
+          <Property Name="info" Type="varchar(max)" />
+          <Property Name="state" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Classification" Type="varchar(max)" />
+          <Property Name="userAccept" Type="varchar" MaxLength="50" />
+          <Property Name="AcceptTime" Type="datetime" />
+          <Property Name="userChanged" Type="varchar" MaxLength="50" />
+          <Property Name="ChangedTime" Type="datetime" />
+          <Property Name="userClosed" Type="varchar" MaxLength="50" />
+          <Property Name="ClosedTime" Type="datetime" />
+          <Property Name="ResponsibleWeldMaster" Type="varchar" MaxLength="50" />
+          <Property Name="id" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'GADATA.dbo.WeldtimeSpotsSetup' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -862,6 +864,22 @@ warning 6002: The table/view 'GADATA.WELDING.TimerBreakdownDatachange' does not 
           <Property Name="CDSID" Type="nchar" MaxLength="25" />
           <Property Name="WMComment" Type="nchar" MaxLength="255" />
           <Property Name="TimerFault" Type="nchar" MaxLength="50" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.WELDING2.ActualSpatter%' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ActualSpatter%">
+          <Key>
+            <PropertyRef Name="SpatterUpdateTime" />
+          </Key>
+          <Property Name="SpatterUpdateTime" Type="datetime" Nullable="false" />
+          <Property Name="Zone" Type="tinyint" />
+          <Property Name="Spatters" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="NbrWelds" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="%ZoneSpatters" Type="decimal" Precision="3" Scale="0" />
+          <Property Name="Last8HoursSpatterNbr" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Last8HoursNbrWelds" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Last8Hours%spatter" Type="decimal" Precision="3" Scale="0" />
+          <Property Name="id" Type="bigint" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'GADATA.WELDING2.ConnectionState' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -1136,18 +1154,6 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_rt_spottable_c_timer">
-          <End Role="c_timer" Type="Self.c_timer" Multiplicity="0..1" />
-          <End Role="rt_spottable" Type="Self.rt_spottable" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="c_timer">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="rt_spottable">
-              <PropertyRef Name="timerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_rt_Teardown_c_faultcode">
           <End Role="c_faultcode" Type="Self.c_faultcode" Multiplicity="0..1" />
           <End Role="rt_Teardown" Type="Self.rt_Teardown" Multiplicity="*" />
@@ -1255,13 +1261,11 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
           <EntitySet Name="L_operation" EntityType="Self.L_operation" Schema="WELDING2" store:Type="Tables" />
           <EntitySet Name="rt_active_info" EntityType="Self.rt_active_info" Schema="WELDING2" store:Type="Tables" />
           <EntitySet Name="rt_alarm" EntityType="Self.rt_alarm" Schema="WELDING2" store:Type="Tables" />
-          <EntitySet Name="rt_comment" EntityType="Self.rt_comment" Schema="WELDING2" store:Type="Tables" />
           <EntitySet Name="rt_communication_state" EntityType="Self.rt_communication_state" Schema="WELDING2" store:Type="Tables" />
           <EntitySet Name="rt_datachangeprot" EntityType="Self.rt_datachangeprot" Schema="WELDING2" store:Type="Tables" />
           <EntitySet Name="rt_job1" EntityType="Self.rt_job1" Schema="WELDING2" Table="rt_job" store:Type="Tables" />
           <EntitySet Name="rt_job_breakdown" EntityType="Self.rt_job_breakdown" Schema="WELDING2" store:Type="Tables" />
           <EntitySet Name="rt_paramvalues" EntityType="Self.rt_paramvalues" Schema="WELDING2" store:Type="Tables" />
-          <EntitySet Name="rt_spottable" EntityType="Self.rt_spottable" Schema="WELDING2" store:Type="Tables" />
           <EntitySet Name="rt_user" EntityType="Self.rt_user" Schema="WELDING2" store:Type="Tables" />
           <EntitySet Name="rt_weldfault" EntityType="Self.rt_weldfault" Schema="WELDING2" store:Type="Tables" />
           <EntitySet Name="rt_weldmeasureprotddw" EntityType="Self.rt_weldmeasureprotddw" Schema="WELDING2" store:Type="Tables" />
@@ -1279,7 +1283,8 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
     [rt_AutoWorkFlowULPlans].[Last30min_productionStatus] AS [Last30min_productionStatus], 
     [rt_AutoWorkFlowULPlans].[onderhoudswerken] AS [onderhoudswerken], 
     [rt_AutoWorkFlowULPlans].[LastnumberFromPlanBusy] AS [LastnumberFromPlanBusy], 
-    [rt_AutoWorkFlowULPlans].[Planlenght] AS [Planlenght]
+    [rt_AutoWorkFlowULPlans].[Planlenght] AS [Planlenght], 
+    [rt_AutoWorkFlowULPlans].[PreviousPlace] AS [PreviousPlace]
     FROM [UL].[rt_AutoWorkFlowULPlans] AS [rt_AutoWorkFlowULPlans]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="h_Nut_Bolt_Measure" EntityType="Self.h_Nut_Bolt_Measure" store:Type="Tables" store:Schema="WELDING2">
@@ -1324,6 +1329,25 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
     [AlertsQteam].[state] AS [state], 
     [AlertsQteam].[alertType] AS [alertType]
     FROM [Alerts].[AlertsQteam] AS [AlertsQteam]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="AlertsUsers" EntityType="Self.AlertsUsers" store:Type="Views" store:Schema="Alerts">
+            <DefiningQuery>SELECT 
+    [AlertsUsers].[_timestamp] AS [_timestamp], 
+    [AlertsUsers].[location] AS [location], 
+    [AlertsUsers].[alarmobject] AS [alarmobject], 
+    [AlertsUsers].[locationTree] AS [locationTree], 
+    [AlertsUsers].[info] AS [info], 
+    [AlertsUsers].[state] AS [state], 
+    [AlertsUsers].[Classification] AS [Classification], 
+    [AlertsUsers].[userAccept] AS [userAccept], 
+    [AlertsUsers].[AcceptTime] AS [AcceptTime], 
+    [AlertsUsers].[userChanged] AS [userChanged], 
+    [AlertsUsers].[ChangedTime] AS [ChangedTime], 
+    [AlertsUsers].[userClosed] AS [userClosed], 
+    [AlertsUsers].[ClosedTime] AS [ClosedTime], 
+    [AlertsUsers].[ResponsibleWeldMaster] AS [ResponsibleWeldMaster], 
+    [AlertsUsers].[id] AS [id]
+    FROM [Alerts].[AlertsUsers] AS [AlertsUsers]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="WeldtimeSpotsSetup" EntityType="Self.WeldtimeSpotsSetup" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -1483,6 +1507,19 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
     [TimerBreakdownDatachange].[TimerFault] AS [TimerFault]
     FROM [WELDING].[TimerBreakdownDatachange] AS [TimerBreakdownDatachange]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="ActualSpatter%" EntityType="Self.ActualSpatter%" store:Type="Views" store:Schema="WELDING2">
+            <DefiningQuery>SELECT 
+    [ActualSpatter%].[SpatterUpdateTime] AS [SpatterUpdateTime], 
+    [ActualSpatter%].[Zone] AS [Zone], 
+    [ActualSpatter%].[Spatters] AS [Spatters], 
+    [ActualSpatter%].[NbrWelds] AS [NbrWelds], 
+    [ActualSpatter%].[%ZoneSpatters] AS [%ZoneSpatters], 
+    [ActualSpatter%].[Last8HoursSpatterNbr] AS [Last8HoursSpatterNbr], 
+    [ActualSpatter%].[Last8HoursNbrWelds] AS [Last8HoursNbrWelds], 
+    [ActualSpatter%].[Last8Hours%spatter] AS [Last8Hours%spatter], 
+    [ActualSpatter%].[id] AS [id]
+    FROM [WELDING2].[ActualSpatter%] AS [ActualSpatter%]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="ConnectionState" EntityType="Self.ConnectionState" store:Type="Views" store:Schema="WELDING2">
             <DefiningQuery>SELECT 
     [ConnectionState].[NoConnection] AS [NoConnection], 
@@ -1599,10 +1636,6 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
             <End Role="c_timer" EntitySet="c_timer" />
             <End Role="rt_paramvalues" EntitySet="rt_paramvalues" />
           </AssociationSet>
-          <AssociationSet Name="FK_rt_spottable_c_timer" Association="Self.FK_rt_spottable_c_timer">
-            <End Role="c_timer" EntitySet="c_timer" />
-            <End Role="rt_spottable" EntitySet="rt_spottable" />
-          </AssociationSet>
           <AssociationSet Name="FK_rt_Teardown_c_faultcode" Association="Self.FK_rt_Teardown_c_faultcode">
             <End Role="c_faultcode" EntitySet="c_faultcode" />
             <End Role="rt_Teardown" EntitySet="rt_Teardown" />
@@ -1709,13 +1742,11 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
           <EntitySet Name="L_operation" EntityType="GADATAModelWelding.L_operation" />
           <EntitySet Name="rt_active_info" EntityType="GADATAModelWelding.rt_active_info" />
           <EntitySet Name="rt_alarm" EntityType="GADATAModelWelding.rt_alarm" />
-          <EntitySet Name="rt_comment" EntityType="GADATAModelWelding.rt_comment" />
           <EntitySet Name="rt_communication_state" EntityType="GADATAModelWelding.rt_communication_state" />
           <EntitySet Name="rt_datachangeprot" EntityType="GADATAModelWelding.rt_datachangeprot" />
           <EntitySet Name="rt_job11" EntityType="GADATAModelWelding.rt_job11" />
           <EntitySet Name="rt_job_breakdown1" EntityType="GADATAModelWelding.rt_job_breakdown1" />
           <EntitySet Name="rt_paramvalues" EntityType="GADATAModelWelding.rt_paramvalues" />
-          <EntitySet Name="rt_spottable" EntityType="GADATAModelWelding.rt_spottable" />
           <EntitySet Name="rt_user" EntityType="GADATAModelWelding.rt_user" />
           <EntitySet Name="rt_weldfault" EntityType="GADATAModelWelding.rt_weldfault" />
           <EntitySet Name="rt_weldmeasureprotddw" EntityType="GADATAModelWelding.rt_weldmeasureprotddw" />
@@ -1760,10 +1791,6 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
             <End Role="c_timer" EntitySet="c_timer" />
             <End Role="rt_paramvalues" EntitySet="rt_paramvalues" />
           </AssociationSet>
-          <AssociationSet Name="FK_rt_spottable_c_timer" Association="GADATAModelWelding.FK_rt_spottable_c_timer">
-            <End Role="c_timer" EntitySet="c_timer" />
-            <End Role="rt_spottable" EntitySet="rt_spottable" />
-          </AssociationSet>
           <AssociationSet Name="FK_rt_weldfault_c_timer" Association="GADATAModelWelding.FK_rt_weldfault_c_timer">
             <End Role="c_timer" EntitySet="c_timer" />
             <End Role="rt_weldfault" EntitySet="rt_weldfault" />
@@ -1798,6 +1825,8 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
             <End Role="rt_user" EntitySet="rt_user" />
           </AssociationSet>
           <EntitySet Name="AlertsQteam" EntityType="GADATAModelWelding.AlertsQteam" />
+          <EntitySet Name="AlertsUsers" EntityType="GADATAModelWelding.AlertsUsers" />
+          <EntitySet Name="ActualSpatter_" EntityType="GADATAModelWelding.ActualSpatter_" />
           </EntityContainer>
         <EntityType Name="rt_AutoWorkFlowULPlans">
           <Key>
@@ -1816,6 +1845,7 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
           <Property Name="onderhoudswerken" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
           <Property Name="LastnumberFromPlanBusy" Type="Int32" />
           <Property Name="Planlenght" Type="Int32" />
+          <Property Name="PreviousPlace" Type="Int32" />
         </EntityType>
         <EntityType Name="ULRapportering">
           <Key>
@@ -2367,7 +2397,6 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
           <NavigationProperty Name="rt_datachangeprot" Relationship="GADATAModelWelding.FK_rt_datachangeprot_c_timer" FromRole="c_timer" ToRole="rt_datachangeprot" />
           <NavigationProperty Name="rt_job1" Relationship="GADATAModelWelding.FK_rt_job_c_timer" FromRole="c_timer" ToRole="rt_job11" />
           <NavigationProperty Name="rt_paramvalues" Relationship="GADATAModelWelding.FK_rt_paramvalues_c_timer" FromRole="c_timer" ToRole="rt_paramvalues" />
-          <NavigationProperty Name="rt_spottable" Relationship="GADATAModelWelding.FK_rt_spottable_c_timer" FromRole="c_timer" ToRole="rt_spottable" />
           <NavigationProperty Name="rt_weldfault" Relationship="GADATAModelWelding.FK_rt_weldfault_c_timer" FromRole="c_timer" ToRole="rt_weldfault" />
           <NavigationProperty Name="rt_weldmeasureprotddw" Relationship="GADATAModelWelding.FK_rt_weldmeasureprotddw_c_timer" FromRole="c_timer" ToRole="rt_weldmeasureprotddw" />
         </EntityType>
@@ -2518,14 +2547,6 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
           <NavigationProperty Name="c_timer" Relationship="GADATAModelWelding.FK_rt_alarm_c_timer" FromRole="rt_alarm" ToRole="c_timer" />
           <NavigationProperty Name="rt_job_breakdown" Relationship="GADATAModelWelding.FK_rt_job_breakdown_rt_alarm" FromRole="rt_alarm" ToRole="rt_job_breakdown" />
         </EntityType>
-        <EntityType Name="rt_comment">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="C_timestamp" Type="DateTime" Precision="3" />
-          <Property Name="comment" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityType Name="rt_communication_state">
           <Key>
             <PropertyRef Name="id" />
@@ -2614,24 +2635,6 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
           <Property Name="isDead" Type="Int32" />
           <NavigationProperty Name="c_bosch_param" Relationship="GADATAModelWelding.FK_rt_paramvalues_c_bosch_param" FromRole="rt_paramvalues" ToRole="c_bosch_param" />
           <NavigationProperty Name="c_timer" Relationship="GADATAModelWelding.FK_rt_paramvalues_c_timer" FromRole="rt_paramvalues" ToRole="c_timer" />
-        </EntityType>
-        <EntityType Name="rt_spottable">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="C_timestamp" Type="DateTime" Precision="3" />
-          <Property Name="timerId" Type="Int32" />
-          <Property Name="spot_ID" Type="Int32" />
-          <Property Name="spotname" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="pjv_joiningpointdata_id" Type="Int32" />
-          <Property Name="vwscComment" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
-          <Property Name="Comment1" Type="Int32" />
-          <Property Name="Comment2" Type="Int32" />
-          <Property Name="Comment3" Type="Int32" />
-          <Property Name="weldProgNo" Type="Int32" />
-          <Property Name="isDead" Type="Int32" />
-          <NavigationProperty Name="c_timer" Relationship="GADATAModelWelding.FK_rt_spottable_c_timer" FromRole="rt_spottable" ToRole="c_timer" />
         </EntityType>
         <EntityType Name="rt_user">
           <Key>
@@ -2906,18 +2909,6 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_rt_spottable_c_timer">
-          <End Type="GADATAModelWelding.c_timer" Role="c_timer" Multiplicity="0..1" />
-          <End Type="GADATAModelWelding.rt_spottable" Role="rt_spottable" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="c_timer">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="rt_spottable">
-              <PropertyRef Name="timerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_rt_weldfault_c_timer">
           <End Type="GADATAModelWelding.c_timer" Role="c_timer" Multiplicity="0..1" />
           <End Type="GADATAModelWelding.rt_weldfault" Role="rt_weldfault" Multiplicity="*" />
@@ -3052,6 +3043,44 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
           <Property Name="state" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="alertType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="AlertsUsers">
+          <Key>
+            <PropertyRef Name="C_timestamp" />
+            <PropertyRef Name="location" />
+            <PropertyRef Name="alarmobject" />
+            <PropertyRef Name="state" />
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="C_timestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="location" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="alarmobject" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="locationTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="info" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="state" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Classification" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="userAccept" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AcceptTime" Type="DateTime" Precision="3" />
+          <Property Name="userChanged" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ChangedTime" Type="DateTime" Precision="3" />
+          <Property Name="userClosed" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ClosedTime" Type="DateTime" Precision="3" />
+          <Property Name="ResponsibleWeldMaster" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="id" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ActualSpatter_">
+          <Key>
+            <PropertyRef Name="SpatterUpdateTime" />
+          </Key>
+          <Property Name="SpatterUpdateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Zone" Type="Byte" />
+          <Property Name="Spatters" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="NbrWelds" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="C_ZoneSpatters" Type="Decimal" Precision="3" Scale="0" />
+          <Property Name="Last8HoursSpatterNbr" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Last8HoursNbrWelds" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Last8Hours_spatter" Type="Decimal" Precision="3" Scale="0" />
+          <Property Name="id" Type="Int64" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3061,6 +3090,7 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
           <EntitySetMapping Name="rt_AutoWorkFlowULPlans">
             <EntityTypeMapping TypeName="GADATAModelWelding.rt_AutoWorkFlowULPlans">
               <MappingFragment StoreEntitySet="rt_AutoWorkFlowULPlans">
+                <ScalarProperty Name="PreviousPlace" ColumnName="PreviousPlace" />
                 <ScalarProperty Name="Planlenght" ColumnName="Planlenght" />
                 <ScalarProperty Name="LastnumberFromPlanBusy" ColumnName="LastnumberFromPlanBusy" />
                 <ScalarProperty Name="onderhoudswerken" ColumnName="onderhoudswerken" />
@@ -3669,15 +3699,6 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="rt_comment">
-            <EntityTypeMapping TypeName="GADATAModelWelding.rt_comment">
-              <MappingFragment StoreEntitySet="rt_comment">
-                <ScalarProperty Name="comment" ColumnName="comment" />
-                <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="rt_communication_state">
             <EntityTypeMapping TypeName="GADATAModelWelding.rt_communication_state">
               <MappingFragment StoreEntitySet="rt_communication_state">
@@ -3758,24 +3779,6 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
                 <ScalarProperty Name="subindex" ColumnName="subindex" />
                 <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
                 <ScalarProperty Name="timerId" ColumnName="timerId" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="rt_spottable">
-            <EntityTypeMapping TypeName="GADATAModelWelding.rt_spottable">
-              <MappingFragment StoreEntitySet="rt_spottable">
-                <ScalarProperty Name="isDead" ColumnName="isDead" />
-                <ScalarProperty Name="weldProgNo" ColumnName="weldProgNo" />
-                <ScalarProperty Name="Comment3" ColumnName="Comment3" />
-                <ScalarProperty Name="Comment2" ColumnName="Comment2" />
-                <ScalarProperty Name="Comment1" ColumnName="Comment1" />
-                <ScalarProperty Name="vwscComment" ColumnName="vwscComment" />
-                <ScalarProperty Name="pjv_joiningpointdata_id" ColumnName="pjv_joiningpointdata_id" />
-                <ScalarProperty Name="spotname" ColumnName="spotname" />
-                <ScalarProperty Name="spot_ID" ColumnName="spot_ID" />
-                <ScalarProperty Name="timerId" ColumnName="timerId" />
-                <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -3956,6 +3959,42 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
                 <ScalarProperty Name="location" ColumnName="location" />
                 <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
                 <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AlertsUsers">
+            <EntityTypeMapping TypeName="GADATAModelWelding.AlertsUsers">
+              <MappingFragment StoreEntitySet="AlertsUsers">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="ResponsibleWeldMaster" ColumnName="ResponsibleWeldMaster" />
+                <ScalarProperty Name="ClosedTime" ColumnName="ClosedTime" />
+                <ScalarProperty Name="userClosed" ColumnName="userClosed" />
+                <ScalarProperty Name="ChangedTime" ColumnName="ChangedTime" />
+                <ScalarProperty Name="userChanged" ColumnName="userChanged" />
+                <ScalarProperty Name="AcceptTime" ColumnName="AcceptTime" />
+                <ScalarProperty Name="userAccept" ColumnName="userAccept" />
+                <ScalarProperty Name="Classification" ColumnName="Classification" />
+                <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="info" ColumnName="info" />
+                <ScalarProperty Name="locationTree" ColumnName="locationTree" />
+                <ScalarProperty Name="alarmobject" ColumnName="alarmobject" />
+                <ScalarProperty Name="location" ColumnName="location" />
+                <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ActualSpatter_">
+            <EntityTypeMapping TypeName="GADATAModelWelding.ActualSpatter_">
+              <MappingFragment StoreEntitySet="ActualSpatter%">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Last8Hours_spatter" ColumnName="Last8Hours%spatter" />
+                <ScalarProperty Name="Last8HoursNbrWelds" ColumnName="Last8HoursNbrWelds" />
+                <ScalarProperty Name="Last8HoursSpatterNbr" ColumnName="Last8HoursSpatterNbr" />
+                <ScalarProperty Name="C_ZoneSpatters" ColumnName="%ZoneSpatters" />
+                <ScalarProperty Name="NbrWelds" ColumnName="NbrWelds" />
+                <ScalarProperty Name="Spatters" ColumnName="Spatters" />
+                <ScalarProperty Name="Zone" ColumnName="Zone" />
+                <ScalarProperty Name="SpatterUpdateTime" ColumnName="SpatterUpdateTime" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
