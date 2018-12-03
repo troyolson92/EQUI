@@ -88,7 +88,7 @@ namespace EqUiWebUi {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Contains stop longer than 20minutes combined downtime or more than 3 ocurences.
+        ///   Looks up a localized string similar to Contains stops longer than 20minutes combined downtime or more than 3 occurrences.
         /// </summary>
         public static string ShiftReportDescription {
             get {
@@ -106,7 +106,7 @@ namespace EqUiWebUi {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to All items currently stopped and finised breakdowns.
+        ///   Looks up a localized string similar to All items currently stopped and finished breakdowns.
         /// </summary>
         public static string SupervisionDescription {
             get {
