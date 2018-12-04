@@ -46,7 +46,7 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
             {
                 data = (from d in data
                         where (d.LocationTree ?? "").Contains(LocationRoot) //apply user locationroot
-                        || d.Logtype == "TIMELINE" //always allowtimeline
+                        || d.Logtype == "TIMELINE" //always allow timeline
                             select d).ToList();
             }
 
@@ -54,8 +54,8 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
             if (ResponsibleAreaLocations != null && ApplyResponsibleArea == true)
             {
                 data = (from d in data
-                        where ResponsibleAreaLocations.Contains(d.LocationTree ?? "") //apply user ResponsibleArea
-                        || d.Logtype == "TIMELINE" //always allowtimeline
+                        where (d.LocationTree ?? "").ListContaints(ResponsibleAreaLocations) //apply user ResponsibleArea
+                        || d.Logtype == "TIMELINE" //always allow timeline
                         select d).ToList();
             }
 
@@ -65,7 +65,7 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
                 data = (from d in data
                         where (d.Classification ?? "").Contains(AssetRoot) //apply user assetroot
                             || (d.Classification ?? "") == "" //or allow assets that are null
-                            || d.Logtype == "TIMELINE" //always allowtimeline
+                            || d.Logtype == "TIMELINE" //always allow timeline
                             select d).ToList();
             }
            
@@ -155,8 +155,8 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
             if (ResponsibleAreaLocations != null && ApplyResponsibleArea == true)
             {
                 data = (from d in data
-                        where ResponsibleAreaLocations.Contains(d.LocationTree ?? "") //apply user ResponsibleArea
-                        || d.Logtype == "TIMELINE" //always allowtimeline
+                        where (d.LocationTree ?? "").ListContaints(ResponsibleAreaLocations) //apply user ResponsibleArea
+                        || d.Logtype == "TIMELINE" //always allow timeline
                         select d).ToList();
             }
 
