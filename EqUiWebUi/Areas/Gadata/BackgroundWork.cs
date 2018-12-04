@@ -154,8 +154,7 @@ namespace EqUiWebUi.Areas.Gadata
             }
 
          //Get Alert data
-            Alert.Models.GADATA_AlertModel GADATA_AlertModel = new Alert.Models.GADATA_AlertModel();
-            DataBuffer.dataALERT  = GADATA_AlertModel.Alerts.Select(
+            DataBuffer.dataALERT  = gADATAEntities2.Alerts_Supervisie.Select(
                 x => new EqUiWebUi.Areas.Gadata.SupervisieDummy() {
                  Location= x.Location
                 ,logtext = x.Logtext

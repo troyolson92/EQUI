@@ -30,5 +30,6 @@ namespace EqUiWebUi.Areas.Gadata.Models
         public virtual DbSet<S4C_Supervisie> S4C_Supervisie { get; set; }
         public virtual DbSet<STO_Supervisie> STO_Supervisie { get; set; }
         public virtual DbSet<Timeline> Timeline { get; set; }
+        public virtual DbSet<Alerts_Supervisie> Alerts_Supervisie { get; set; }
     }
 }

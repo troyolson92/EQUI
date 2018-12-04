@@ -54,7 +54,7 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
             if (ResponsibleAreaLocations != null && ApplyResponsibleArea == true)
             {
                 data = (from d in data
-                        where (d.LocationTree ?? "").ListContains(ResponsibleAreaLocations) //apply user ResponsibleArea
+                        where ResponsibleAreaLocations.Contains(d.LocationTree ?? "") //apply user ResponsibleArea
                         || d.Logtype == "TIMELINE" //always allowtimeline
                         select d).ToList();
             }
@@ -155,7 +155,7 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
             if (ResponsibleAreaLocations != null && ApplyResponsibleArea == true)
             {
                 data = (from d in data
-                        where (d.LocationTree ?? "").ListContains(ResponsibleAreaLocations) //apply user ResponsibleArea
+                        where ResponsibleAreaLocations.Contains(d.LocationTree ?? "") //apply user ResponsibleArea
                         || d.Logtype == "TIMELINE" //always allowtimeline
                         select d).ToList();
             }

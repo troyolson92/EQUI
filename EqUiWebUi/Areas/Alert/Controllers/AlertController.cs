@@ -47,7 +47,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             {
                 //filter alerts basted on user profile!
                 string UserLocationroot = CurrentUser.Getuser.LocationRoot;
-                if (UserLocationroot != "")
+                if (UserLocationroot != "" && ApplyResponsibleArea == false)
                 {
                     h_alert = h_alert.Where(a => a.locationTree.Contains(UserLocationroot));
                 }
@@ -55,7 +55,8 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                 List<string> ResponsibleAreaLocations = CurrentUser.Getuser.ResponsibleAreaLocations;
                 if (ResponsibleAreaLocations != null && ApplyResponsibleArea == true)
                 {
-                  //  h_alert = h_alert.Where(a => a.locationTree.Any(x => ResponsibleAreaLocations.Contains(x.ToString())));
+                //    h_alert = h_alert.Join(ResponsibleAreaLocations.Where(b => h_alert)) .Where(a => ResponsibleAreaLocations.Contains(a.locationTree));
+          
                 }
 
                 return View(h_alert);
