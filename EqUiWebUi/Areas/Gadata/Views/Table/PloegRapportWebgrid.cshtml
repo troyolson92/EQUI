@@ -28,7 +28,6 @@
     </div>
 </div>
 
-
 @*render popuover modal*@
 <div id="MyModal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class='card-body'>
@@ -62,7 +61,8 @@
             reload: true, // Grid reload indicator
             data: {
                 minSumOfDownTime: $('#minSumOfDownTime').val(),
-                minCountOfDownTime: $('#minCountOfDownTime').val()
+                minCountOfDownTime: $('#minCountOfDownTime').val(),
+                ApplyResponsibleArea: @ViewBag.ApplyResponsibleArea.ToString().ToLower()
             },
             //if rowclicked and count is 1 show popup else expand the count and load a filterd supervision grid.
             rowClicked: function (row, data, e) {
@@ -119,7 +119,8 @@
                 reload: true, // Grid reload indicator
                 data: {
                     minSumOfDownTime: $('#minSumOfDownTime').val(),
-                    minCountOfDownTime: $('#minCountOfDownTime').val()
+                    minCountOfDownTime: $('#minCountOfDownTime').val(),
+                    ApplyResponsibleArea: @ViewBag.ApplyResponsibleArea.ToString().ToLower()
                 }
             });
         });

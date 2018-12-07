@@ -67,7 +67,7 @@ namespace EqUiWebUi.Areas.Alert
                 if (row.Table.Columns.Contains("LocationTree")) alertResult.LocationTree = row.Field<string>("LocationTree"); //no mandatory
                 if (row.Table.Columns.Contains("ClassTree")) alertResult.ClassTree = row.Field<string>("ClassTree"); //not mandatory
                 alertResult.Location = row.Field<string>("Location");
-                alertResult.alarmobject = row.Field<string>("alarmobject");
+                alertResult.alarmobject = row.Field<string>("alarmobject"); // parsing bug! NEEDS to be passes as string nothing else. (check to fix parsing issues) 
                 alertResult.handeld = false;
                 alertResults.Add(alertResult);
             }

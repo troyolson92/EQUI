@@ -7,12 +7,12 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace EqUiWebUi.Areas.Alert.Models
+namespace EqUiWebUi.Areas.Gadata.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Alerts
+    public partial class Alerts_Supervisie
     {
         public string Location { get; set; }
         public string AssetID { get; set; }

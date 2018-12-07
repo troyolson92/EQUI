@@ -48,6 +48,7 @@ namespace EqUiWebUi.Areas.Alert.Models
         public int intervalCounter { get; set; }
         public string OptValueLabels { get; set; }
         public bool continueOnJobFailure { get; set; }
+        public string alertGroup { get; set; }
     
         public virtual c_smsSystem c_smsSystem { get; set; }
         public virtual c_state c_state { get; set; }

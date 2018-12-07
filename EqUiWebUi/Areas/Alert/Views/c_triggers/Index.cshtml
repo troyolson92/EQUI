@@ -15,6 +15,7 @@
 @Html.Grid(Model).Named("c_triggers").Build(columns =>
 {
     columns.Add(c => c.id).Titled("ID").InitialSort(GridSortOrder.Asc).Css("d-none d-lg-table-cell");
+    columns.Add(c => c.alertGroup).Titled("alertGroup");
     columns.Add(c => c.alertType).Titled("alertType");
     columns.Add(c => c.enabled).Titled("enabled");
     columns.Add(c => c.discription).Titled("discription");
@@ -22,14 +23,14 @@
     columns.Add(c => c.ordinal).Titled("ordinal");
     columns.Add(c => c.enableSMS).Titled("enableSMS");
     columns.Add(c => c.c_smsSystem.system).Titled("SMSsystem");
-    columns.Add(c => c.smsOnRetrigger).Titled("smsOnRetrigger").Css("d-none d-lg-table-cell");
+  //  columns.Add(c => c.smsOnRetrigger).Titled("smsOnRetrigger").Css("d-none d-lg-table-cell");
     columns.Add(c => c.id)
                 .Titled("")
                 .Encoded(false)
-                .RenderedAs(c => MyFilters.IconActionLink(Url.Action("Edit", new { id = c.id }), "fas fa-pencil-alt", "", "Edit this trigger") + " | " +
-                                 MyFilters.IconActionLink(Url.Action("Index", "h_alert", new { c_trigger_id = c.id }), "fas fa-eye", "", "Show h_alert") + " | " +
-                                 MyFilters.IconActionLink(Url.Action("Delete", new { id = c.id }), "fas fa-trash-alt", "", "Delete") + " | " +
-                                 MyFilters.IconActionLink(Url.Action("RunAlertTrigger", new { triggerID = c.id }), "fas fa-fire", "", "Test fire",classes: "JQresultTriggerBtn")
+                .RenderedAs(c => MyFilters.IconActionLink(Url.Action("Edit", new { id = c.id }), "fas fa-pencil-alt", "", "Edit this trigger").ToHtmlString() +
+                                 MyFilters.IconActionLink(Url.Action("Index", "h_alert", new { c_trigger_id = c.id }), "fas fa-eye", "", "Show h_alert").ToHtmlString() +
+                                 MyFilters.IconActionLink(Url.Action("Delete", new { id = c.id }), "fas fa-trash-alt", "", "Delete").ToHtmlString() +
+                                 MyFilters.IconActionLink(Url.Action("RunAlertTrigger", new { triggerID = c.id }), "fas fa-fire", "", "Test fire",classes: "JQresultTriggerBtn").ToHtmlString()
                 ).Filterable(false);
 }).Filterable().Sortable().Empty("Did not find anything").Css("table-hover")
 
