@@ -18,7 +18,7 @@ namespace EqUiWebUi.Areas.Welding.Models
         public string statusadaptieve { get; set; }
         public string model { get; set; }
         public string robot { get; set; }
-        public int spot { get; set; }
+        public Nullable<int> spot { get; set; }
         public string plan { get; set; }
         public Nullable<int> plannummer { get; set; }
         public string typecontrole { get; set; }

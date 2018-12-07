@@ -18,7 +18,6 @@ namespace EqUiWebUi.Areas.Welding.Models
         public c_timer_class()
         {
             this.c_timer = new HashSet<c_timer>();
-            this.rt_datachangeprot = new HashSet<rt_datachangeprot>();
         }
     
         public int id { get; set; }
@@ -29,7 +28,5 @@ namespace EqUiWebUi.Areas.Welding.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<c_timer> c_timer { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<rt_datachangeprot> rt_datachangeprot { get; set; }
     }
 }

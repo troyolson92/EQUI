@@ -14,17 +14,28 @@ namespace EqUiWebUi.Areas.Welding.Models
     
     public partial class rt_spottable
     {
-        public int id { get; set; }
+        public int ID { get; set; }
         public Nullable<System.DateTime> C_timestamp { get; set; }
-        public Nullable<int> timerId { get; set; }
-        public Nullable<int> spot_ID { get; set; }
-        public string spotname { get; set; }
+        public int timerId { get; set; }
+        public string SpotName { get; set; }
         public Nullable<int> pjv_joiningpointdata_id { get; set; }
         public string vwscComment { get; set; }
-        public Nullable<int> Comment1 { get; set; }
-        public Nullable<int> Comment2 { get; set; }
-        public Nullable<int> Comment3 { get; set; }
-        public Nullable<int> weldProgNo { get; set; }
+        public Nullable<byte> Zone { get; set; }
+        public string Comment1 { get; set; }
+        public string Comment2 { get; set; }
+        public string Comment3 { get; set; }
+        public int PlateCombinationtId { get; set; }
+        public int weldProgNo { get; set; }
+        public byte ElectrodeDia { get; set; }
+        public string AlternativeNumber { get; set; }
+        public string Model { get; set; }
+        public string Variant { get; set; }
+        public Nullable<int> JobCode { get; set; }
+        public Nullable<float> NuggetDemand { get; set; }
+        public Nullable<bool> HiddenSpot { get; set; }
+        public Nullable<bool> GeoSpot { get; set; }
+        public Nullable<int> SpotLeft { get; set; }
+        public Nullable<int> SpotRight { get; set; }
         public Nullable<int> isDead { get; set; }
     
         public virtual c_timer c_timer { get; set; }

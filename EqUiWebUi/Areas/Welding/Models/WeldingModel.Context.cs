@@ -53,12 +53,14 @@ namespace EqUiWebUi.Areas.Welding.Models
         public virtual DbSet<c_Teardown> c_Teardown { get; set; }
         public virtual DbSet<rt_Job1> rt_Job1Set { get; set; }
         public virtual DbSet<rt_Teardown> rt_Teardown { get; set; }
+        public virtual DbSet<AlertsAASPOT> AlertsAASPOT { get; set; }
+        public virtual DbSet<AlertsQteam> AlertsQteam { get; set; }
+        public virtual DbSet<AlertsUsers> AlertsUsers { get; set; }
+        public virtual DbSet<ActualSpatter_> ActualSpatter_ { get; set; }
         public virtual DbSet<rt_ExtraControles> rt_ExtraControles { get; set; }
         public virtual DbSet<c_bosch_param> c_bosch_param { get; set; }
-        public virtual DbSet<c_bosch_view> c_bosch_view { get; set; }
         public virtual DbSet<c_error> c_error { get; set; }
         public virtual DbSet<c_NPT> c_NPT { get; set; }
-        public virtual DbSet<c_severity> c_severity { get; set; }
         public virtual DbSet<c_timer> c_timer { get; set; }
         public virtual DbSet<c_timer_class> c_timer_class { get; set; }
         public virtual DbSet<c_user> c_user { get; set; }
@@ -67,7 +69,6 @@ namespace EqUiWebUi.Areas.Welding.Models
         public virtual DbSet<L_operation> L_operation { get; set; }
         public virtual DbSet<rt_active_info> rt_active_info { get; set; }
         public virtual DbSet<rt_alarm> rt_alarm { get; set; }
-        public virtual DbSet<rt_comment> rt_comment { get; set; }
         public virtual DbSet<rt_communication_state> rt_communication_state { get; set; }
         public virtual DbSet<rt_datachangeprot> rt_datachangeprot { get; set; }
         public virtual DbSet<rt_job11> rt_job11 { get; set; }
@@ -78,7 +79,6 @@ namespace EqUiWebUi.Areas.Welding.Models
         public virtual DbSet<rt_weldfault> rt_weldfault { get; set; }
         public virtual DbSet<rt_weldmeasureprotddw> rt_weldmeasureprotddw { get; set; }
         public virtual DbSet<h_Nut_Bolt_Measure> h_Nut_Bolt_Measure { get; set; }
-        public virtual DbSet<AlertsAASPOT> AlertsAASPOT { get; set; }
     
         public virtual ObjectResult<Lastwelds_Result> Lastwelds(string timer, Nullable<int> spot)
         {

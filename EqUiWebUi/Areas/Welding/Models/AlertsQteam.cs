@@ -12,10 +12,15 @@ namespace EqUiWebUi.Areas.Welding.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class rt_comment
+    public partial class AlertsQteam
     {
         public int id { get; set; }
-        public Nullable<System.DateTime> C_timestamp { get; set; }
-        public string comment { get; set; }
+        public System.DateTime C_timestamp { get; set; }
+        public string location { get; set; }
+        public string alarmobject { get; set; }
+        public string info { get; set; }
+        public int triggerCount { get; set; }
+        public string state { get; set; }
+        public string alertType { get; set; }
     }
 }
