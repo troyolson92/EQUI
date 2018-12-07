@@ -14,10 +14,12 @@
     [weldProgValue]       REAL            NULL,
     [weldActualValue]     REAL            NULL,
     [wear]                NUMERIC (12, 2) NULL,
-    [spotId]              INT             NULL,
+    [rt_spot_id]          INT             NULL,
     [isError]             BIT             NULL,
     [WMComment]           VARCHAR (100)   NULL,
     CONSTRAINT [PK_rt_weldfault] PRIMARY KEY CLUSTERED ([id] ASC),
     CONSTRAINT [FK_rt_weldfault_c_timer] FOREIGN KEY ([timerId]) REFERENCES [WELDING2].[c_timer] ([ID])
 );
+
+
 

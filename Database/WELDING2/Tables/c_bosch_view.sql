@@ -5,7 +5,10 @@
     [poll_rate]  INT           NULL,
     [flag]       INT           NULL,
     [rt_table]   VARCHAR (50)  NULL,
-    [day_limit]  INT           NULL,
+    [hour_limit] INT           NULL,
+    [ordinal]    INT           NULL,
     CONSTRAINT [PK_c_bosch_view] PRIMARY KEY CLUSTERED ([id] ASC)
 );
+
+
 

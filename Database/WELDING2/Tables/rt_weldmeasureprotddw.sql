@@ -5,41 +5,29 @@
     [protRecord_ID]                 INT             NULL,
     [dateTime]                      DATETIME        NULL,
     [progNo]                        SMALLINT        NULL,
-    [spotId]                        INT             NULL,
+    [rt_spot_id]                    INT             NULL,
     [wear]                          NUMERIC (12, 2) NULL,
     [wearPerCent]                   NUMERIC (8, 2)  NULL,
     [monitorState]                  INT             NULL,
-    [monitorState_txt]              VARCHAR (64)    NULL,
     [regulationState]               INT             NULL,
-    [regulationState_txt]           VARCHAR (64)    NULL,
     [measureState]                  INT             NULL,
-    [measureState_txt]              VARCHAR (64)    NULL,
     [powerState]                    INT             NULL,
-    [powerState_txt]                VARCHAR (64)    NULL,
     [sequenceState]                 INT             NULL,
-    [sequenceState_txt]             VARCHAR (64)    NULL,
     [sequenceStateAdd]              INT             NULL,
-    [sequenceStateAdd_txt]          VARCHAR (64)    NULL,
     [sequenceRepeat]                INT             NULL,
-    [sequenceRepeat_txt]            VARCHAR (64)    NULL,
     [monitorMode]                   INT             NULL,
-    [monitorMode_txt]               VARCHAR (64)    NULL,
     [iDemandStd]                    NUMERIC (8, 2)  NULL,
     [ilsts]                         NUMERIC (8, 2)  NULL,
     [regulationStd]                 INT             NULL,
-    [regulationStd_txt]             VARCHAR (64)    NULL,
     [iDemand1]                      NUMERIC (8, 2)  NULL,
     [iActual1]                      NUMERIC (8, 2)  NULL,
     [regulation1]                   INT             NULL,
-    [regulation1_txt]               VARCHAR (64)    NULL,
     [iDemand2]                      NUMERIC (8, 2)  NULL,
     [iActual2]                      NUMERIC (8, 2)  NULL,
     [regulation2]                   INT             NULL,
-    [regulation2_txt]               VARCHAR (64)    NULL,
     [iDemand3]                      NUMERIC (8, 2)  NULL,
     [iActual3]                      NUMERIC (8, 2)  NULL,
     [regulation3]                   INT             NULL,
-    [regulation3_txt]               VARCHAR (64)    NULL,
     [phaStd]                        NUMERIC (8, 2)  NULL,
     [pha1]                          NUMERIC (8, 2)  NULL,
     [pha2]                          NUMERIC (8, 2)  NULL,
@@ -71,13 +59,9 @@
     [uipRefValue]                   INT             NULL,
     [uirExpulsionTime]              INT             NULL,
     [uirMeasuringActive]            INT             NULL,
-    [uirMeasuringActive_txt]        VARCHAR (64)    NULL,
     [uirRegulationActive]           INT             NULL,
-    [uirRegulationActive_txt]       VARCHAR (64)    NULL,
     [uirMonitoringActive]           INT             NULL,
-    [uirMonitoringActive_txt]       VARCHAR (64)    NULL,
     [uirWeldTimeProlongationActive] INT             NULL,
-    [uirWeldTimeProlongActive_txt]  VARCHAR (64)    NULL,
     [uirQStoppRefCntValue]          INT             NULL,
     [uirQStoppActCntValue]          INT             NULL,
     [uirUipUpperTol]                NUMERIC (8, 2)  NULL,
@@ -90,10 +74,14 @@
 );
 
 
+
+
 GO
 CREATE NONCLUSTERED INDEX [nci_Nut_bolt_measure2]
-    ON [WELDING2].[rt_weldmeasureprotddw]([spotId] ASC, [dateTime] ASC)
+    ON [WELDING2].[rt_weldmeasureprotddw]([rt_spot_id] ASC, [dateTime] ASC)
     INCLUDE([timerId], [progNo], [wear], [iDemand2], [iActual2], [regulation2], [electrodeNo], [weldTimeActualValue], [energyActualValue], [energyRefValue], [uirExpulsionTime]);
+
+
 
 
 GO

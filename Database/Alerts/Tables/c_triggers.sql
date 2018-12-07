@@ -11,6 +11,7 @@
     [ordinal]                  INT           NOT NULL,
     [interval]                 INT           NOT NULL,
     [intervalCounter]          INT           NOT NULL,
+    [alertGroup]               VARCHAR (50)  NULL,
     [alertType]                VARCHAR (50)  NOT NULL,
     [AutoSetStateTechComp]     BIT           NOT NULL,
     [smsOnRetrigger]           BIT           NOT NULL,
@@ -31,6 +32,8 @@
     CONSTRAINT [FK_c_triggers_c_smsSystem] FOREIGN KEY ([smsSystem]) REFERENCES [Alerts].[c_smsSystem] ([id]),
     CONSTRAINT [FK_c_triggers_c_state] FOREIGN KEY ([initial_state]) REFERENCES [Alerts].[c_state] ([id])
 );
+
+
 
 
 
