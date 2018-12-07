@@ -708,9 +708,6 @@
     <Compile Include="Areas\Welding\Models\c_bosch_param.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Areas\Welding\Models\c_bosch_view.cs">
-      <DependentUpon>WeldingModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Areas\Welding\Models\c_error.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
@@ -724,9 +721,6 @@
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Welding\Models\c_Picture.cs">
-      <DependentUpon>WeldingModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\Welding\Models\c_severity.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Welding\Models\c_Teardown.cs">
@@ -796,6 +790,9 @@
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Welding\Models\rt_paramvalues.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Welding\Models\rt_spottable.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Welding\Models\rt_Teardown.cs">

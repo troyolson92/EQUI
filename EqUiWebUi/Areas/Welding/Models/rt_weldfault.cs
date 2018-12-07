@@ -29,7 +29,7 @@ namespace EqUiWebUi.Areas.Welding.Models
         public Nullable<float> weldProgValue { get; set; }
         public Nullable<float> weldActualValue { get; set; }
         public Nullable<decimal> wear { get; set; }
-        public Nullable<int> spotId { get; set; }
+        public Nullable<int> rt_spot_id { get; set; }
         public Nullable<bool> isError { get; set; }
         public string WMComment { get; set; }
     

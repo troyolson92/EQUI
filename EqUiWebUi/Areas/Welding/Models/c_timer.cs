@@ -24,6 +24,7 @@ namespace EqUiWebUi.Areas.Welding.Models
             this.rt_datachangeprot = new HashSet<rt_datachangeprot>();
             this.rt_job1 = new HashSet<rt_job11>();
             this.rt_paramvalues = new HashSet<rt_paramvalues>();
+            this.rt_spottable = new HashSet<rt_spottable>();
             this.rt_weldfault = new HashSet<rt_weldfault>();
             this.rt_weldmeasureprotddw = new HashSet<rt_weldmeasureprotddw>();
         }
@@ -57,6 +58,8 @@ namespace EqUiWebUi.Areas.Welding.Models
         public virtual ICollection<rt_job11> rt_job1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<rt_paramvalues> rt_paramvalues { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<rt_spottable> rt_spottable { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<rt_weldfault> rt_weldfault { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

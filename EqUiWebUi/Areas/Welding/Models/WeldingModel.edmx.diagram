@@ -23,10 +23,10 @@
         <EntityTypeShape EntityType="GADATAModelWelding.ToDoList_Remark" Width="1.5" PointX="12" PointY="8.375" />
         <AssociationConnector Association="GADATAModelWelding.FK__ToDoList___TodoI__32F76870" />
         <EntityTypeShape EntityType="GADATAModelWelding.ComparePitchV316" Width="1.5" PointX="1.5" PointY="0.5" />
-        <EntityTypeShape EntityType="GADATAModelWelding.rt_ExtraControles" Width="1.5" PointX="15.5" PointY="5.125" />
         <EntityTypeShape EntityType="GADATAModelWelding.AlertsAASPOT" Width="1.5" PointX="1.5" PointY="3.625" />
         <EntityTypeShape EntityType="GADATAModelWelding.AlertsUsers" Width="1.5" PointX="3.375" PointY="4.375" />
         <EntityTypeShape EntityType="GADATAModelWelding.ActualSpatter_" Width="1.5" PointX="5.125" PointY="5" />
+        <EntityTypeShape EntityType="GADATAModelWelding.rt_ExtraControles" Width="1.5" PointX="5.375" PointY="8.75" />
       </Diagram>
       <Diagram DiagramId="4894cb9c299b4076bc2e6a2d9089b8ea" Name="Teardown" ZoomLevel="55" >
         <EntityTypeShape EntityType="GADATAModelWelding.c_faultcode" Width="1.5" PointX="6" PointY="1" />
@@ -42,31 +42,31 @@
         <AssociationConnector Association="GADATAModelWelding.FK_rt_Teardown_c_Teardown" />
         <AssociationConnector Association="GADATAModelWelding.FK_rt_Teardown_rt_Job" />
       </Diagram>
-      <Diagram DiagramId="9b71ac1a974c46738162e87a262b9de1" Name="Welding2" ZoomLevel="47" >
-        <EntityTypeShape EntityType="GADATAModelWelding.c_bosch_param" Width="1.5" PointX="16.75" PointY="0.75" />
-        <EntityTypeShape EntityType="GADATAModelWelding.c_bosch_view" Width="1.5" PointX="21.75" PointY="9.375" />
-        <EntityTypeShape EntityType="GADATAModelWelding.c_error" Width="1.5" PointX="21.75" PointY="12.125" />
-        <EntityTypeShape EntityType="GADATAModelWelding.c_NPT" Width="1.5" PointX="0.625" PointY="0.625" />
-        <EntityTypeShape EntityType="GADATAModelWelding.c_severity" Width="1.5" PointX="21.75" PointY="7.375" />
-        <EntityTypeShape EntityType="GADATAModelWelding.c_timer" Width="1.5" PointX="2.625" PointY="3.375" />
-        <EntityTypeShape EntityType="GADATAModelWelding.c_timer_class" Width="1.5" PointX="7.5" PointY="12.875" />
-        <EntityTypeShape EntityType="GADATAModelWelding.c_user" Width="1.5" PointX="19.625" PointY="5.25" />
-        <EntityTypeShape EntityType="GADATAModelWelding.h_Midair" Width="1.5" PointX="21.75" PointY="0.5" />
-        <EntityTypeShape EntityType="GADATAModelWelding.h_weldmeasure" Width="1.5" PointX="23.625" PointY="4.5" />
-        <EntityTypeShape EntityType="GADATAModelWelding.L_operation" Width="1.5" PointX="5.5" PointY="10.625" />
-        <EntityTypeShape EntityType="GADATAModelWelding.rt_active_info" Width="1.5" PointX="17.25" PointY="6" />
-        <EntityTypeShape EntityType="GADATAModelWelding.rt_alarm" Width="1.5" PointX="10.75" PointY="10.125" />
-        <EntityTypeShape EntityType="GADATAModelWelding.rt_communication_state" Width="1.5" PointX="0.5" PointY="10" />
-        <EntityTypeShape EntityType="GADATAModelWelding.rt_datachangeprot" Width="1.5" PointX="15.125" PointY="7.25" />
-        <EntityTypeShape EntityType="GADATAModelWelding.rt_job11" Width="1.5" PointX="8.75" PointY="0.75" />
-        <EntityTypeShape EntityType="GADATAModelWelding.rt_job_breakdown1" Width="1.5" PointX="11.375" PointY="1.375" />
-        <EntityTypeShape EntityType="GADATAModelWelding.rt_paramvalues" Width="1.5" PointX="13.75" PointY="1.875" />
-        <EntityTypeShape EntityType="GADATAModelWelding.rt_user" Width="1.5" PointX="19.75" PointY="1.25" />
-        <EntityTypeShape EntityType="GADATAModelWelding.rt_weldfault" Width="1.5" PointX="5.75" PointY="0.5" />
-        <EntityTypeShape EntityType="GADATAModelWelding.rt_weldmeasureprotddw" Width="1.5" PointX="3.5" PointY="10" />
-        <EntityTypeShape EntityType="GADATAModelWelding.h_Nut_Bolt_Measure" Width="1.5" PointX="23.625" PointY="0.5" />
+      <Diagram DiagramId="9b71ac1a974c46738162e87a262b9de1" Name="Welding2" ZoomLevel="50" >
+        <EntityTypeShape EntityType="GADATAModelWelding.c_bosch_param" Width="1.5" PointX="6" PointY="6.5" />
+        <EntityTypeShape EntityType="GADATAModelWelding.c_error" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="GADATAModelWelding.c_NPT" Width="1.5" PointX="0.75" PointY="32.25" />
+        <EntityTypeShape EntityType="GADATAModelWelding.c_timer" Width="1.5" PointX="3" PointY="30.875" />
+        <EntityTypeShape EntityType="GADATAModelWelding.c_timer_class" Width="1.5" PointX="0.75" PointY="28.625" />
+        <EntityTypeShape EntityType="GADATAModelWelding.c_user" Width="1.5" PointX="6" PointY="67.625" />
+        <EntityTypeShape EntityType="GADATAModelWelding.h_Midair" Width="1.5" PointX="2.75" PointY="4.75" />
+        <EntityTypeShape EntityType="GADATAModelWelding.h_weldmeasure" Width="1.5" PointX="8.75" PointY="0.75" />
+        <EntityTypeShape EntityType="GADATAModelWelding.L_operation" Width="1.5" PointX="5.25" PointY="10.125" />
+        <EntityTypeShape EntityType="GADATAModelWelding.rt_active_info" Width="1.5" PointX="5.25" PointY="36.75" />
+        <EntityTypeShape EntityType="GADATAModelWelding.rt_alarm" Width="1.5" PointX="5.25" PointY="27" />
+        <EntityTypeShape EntityType="GADATAModelWelding.rt_communication_state" Width="1.5" PointX="5.25" PointY="13.375" />
+        <EntityTypeShape EntityType="GADATAModelWelding.rt_datachangeprot" Width="1.5" PointX="8.25" PointY="36.375" />
+        <EntityTypeShape EntityType="GADATAModelWelding.rt_job11" Width="1.5" PointX="5.25" PointY="21.75" />
+        <EntityTypeShape EntityType="GADATAModelWelding.rt_job_breakdown1" Width="1.5" PointX="7.5" PointY="24.875" />
+        <EntityTypeShape EntityType="GADATAModelWelding.rt_paramvalues" Width="1.5" PointX="8.25" PointY="32.375" />
+        <EntityTypeShape EntityType="GADATAModelWelding.rt_spottable" Width="1.5" PointX="5.25" PointY="45.25" />
+        <EntityTypeShape EntityType="GADATAModelWelding.rt_user" Width="1.5" PointX="6" PointY="32.25" />
+        <EntityTypeShape EntityType="GADATAModelWelding.rt_weldfault" Width="1.5" PointX="5.25" PointY="16.375" />
+        <EntityTypeShape EntityType="GADATAModelWelding.rt_weldmeasureprotddw" Width="1.5" PointX="5.25" PointY="51.625" />
+        <EntityTypeShape EntityType="GADATAModelWelding.h_Nut_Bolt_Measure" Width="1.5" PointX="10.75" PointY="0.75" />
         <AssociationConnector Association="GADATAModelWelding.FK_rt_paramvalues_c_bosch_param" />
         <AssociationConnector Association="GADATAModelWelding.FK_c_timer_c_NPT" />
+        <AssociationConnector Association="GADATAModelWelding.FK_rt_user_c_NPT" />
         <AssociationConnector Association="GADATAModelWelding.FK_c_Timer_c_timer_class" />
         <AssociationConnector Association="GADATAModelWelding.FK_L_operation_c_timer" />
         <AssociationConnector Association="GADATAModelWelding.FK_rt_active_info_c_timer" />
@@ -75,14 +75,13 @@
         <AssociationConnector Association="GADATAModelWelding.FK_rt_datachangeprot_c_timer" />
         <AssociationConnector Association="GADATAModelWelding.FK_rt_job_c_timer" />
         <AssociationConnector Association="GADATAModelWelding.FK_rt_paramvalues_c_timer" />
+        <AssociationConnector Association="GADATAModelWelding.FK_rt_spottable_c_timer" />
         <AssociationConnector Association="GADATAModelWelding.FK_rt_weldfault_c_timer" />
         <AssociationConnector Association="GADATAModelWelding.FK_rt_weldmeasureprotddw_c_timer" />
-        <AssociationConnector Association="GADATAModelWelding.FK_rt_datachangeprot_c_timer_class" />
-        <AssociationConnector Association="GADATAModelWelding.FK_rt_job_breakdown_rt_alarm" />
-        <AssociationConnector Association="GADATAModelWelding.FK_rt_job_breakdown_rt_job" />
-        <AssociationConnector Association="GADATAModelWelding.FK_rt_user_c_NPT" />
         <AssociationConnector Association="GADATAModelWelding.FK_rt_datachangeprot_c_user" />
         <AssociationConnector Association="GADATAModelWelding.FK_rt_user_c_user" />
+        <AssociationConnector Association="GADATAModelWelding.FK_rt_job_breakdown_rt_alarm" />
+        <AssociationConnector Association="GADATAModelWelding.FK_rt_job_breakdown_rt_job" />
       </Diagram>
       <Diagram DiagramId="bcf85daa635e4a2d967ca8716d35520c" Name="Welding2Views" >
         <EntityTypeShape EntityType="GADATAModelWelding.WeldFaultProtocol" Width="1.5" PointX="0.875" PointY="0.75" />
