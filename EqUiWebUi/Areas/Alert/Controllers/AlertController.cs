@@ -30,28 +30,38 @@ namespace EqUiWebUi.Areas.Alert.Controllers
 
         /// <summary>
         /// Global Alert interface
+        /// all parameters are optional
         /// </summary>
         /// <param name="c_trigger_id">Filter by specific trigger</param>
         /// <param name="id">Get specific alert</param>
         /// <param name="Location">Filter on location</param>
+        /// <param name="alertGroup">Filter on alertGroup</param>
+        /// <param name="ActiveAlertOnly">only show alerts that are not closed</param>
         /// <param name="ApplyResponsibleArea">Filter on ApplyResponsibleArea</param>
         /// <returns></returns>
-        public ActionResult Listalerts(int? c_trigger_id, int? id, string Location = "", bool ApplyResponsibleArea = false)
+        public ActionResult Listalerts(int? c_trigger_id, int? id, string Location = "", string alertGroup = "", bool ActiveAlertOnly = false, bool ApplyResponsibleArea = false)
         {           
             var h_alert = db.h_alert.Include(h => h.c_state).Where(h =>
-                ((h.id == (id ?? 0)) || (id == null))
-                && ((h.c_tirgger_id == (c_trigger_id ?? 0)) || (c_trigger_id == null))
-                && ((h.location.StartsWith(Location))||(Location == ""))
+                h.c_triggers.enabled == true //only enabled triggers
+                &&((h.id == (id ?? 0)) || (id == null)) //get alert by ID
+                && ((h.c_tirgger_id == (c_trigger_id ?? 0)) || (c_trigger_id == null)) //get alerts by trigger id 
+                && (h.c_triggers.alertGroup == alertGroup || alertGroup == "") //filter on alert group
+                && (ActiveAlertOnly == false || (h.state != (int)alertState.COMP && h.state != (int)alertState.TECHCOMP && h.state != (int)alertState.VOID)) //only get active alerts
+                && ((h.location.StartsWith(Location))||(Location == "")) //get alerts by location
                 ).Include(h => h.c_triggers).Include(h => h.ChangedUser).Include(h => h.CloseUser).Include(h => h.AcceptUser);
 
-            //only apply location filter if no parms are passed 
+            //only apply location filter if no parameters are passed 
             if (c_trigger_id.HasValue || id.HasValue || Location != "")
             {
-                return View(h_alert);
+                //count the total number of record to display as 'total triggers'
+                ViewBag.LocationFilter = Location;
+                ViewBag.AlertCount = h_alert.Count();
             }
             else
             {
-                //filter alerts basted on user profile!
+
+                //Add extra filters based on user profile
+                //filter alerts basted on user profile! ignore if using ResponsibleAreaLocations
                 string UserLocationroot = CurrentUser.Getuser.LocationRoot;
                 if (UserLocationroot != "" && ApplyResponsibleArea == false)
                 {
@@ -62,24 +72,28 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                 List<string> ResponsibleAreaLocations = CurrentUser.Getuser.ResponsibleAreaLocations;
                 if (ResponsibleAreaLocations != null && ApplyResponsibleArea == true)
                 {
-                    var tempResult = h_alert;
+                    var baseQuery = h_alert;
                     foreach (string item in ResponsibleAreaLocations)
                     {
                         if (item == ResponsibleAreaLocations.First())
                         {
-                            tempResult = h_alert.Where(a => a.locationTree.Contains(item));
+                            h_alert = baseQuery.Where(a => a.locationTree.Contains(item));
                         }
                         else
                         {
-                            tempResult = tempResult.Union(h_alert.Where(a => a.locationTree.Contains(item)));
+                            h_alert = baseQuery.Union(h_alert.Where(a => a.locationTree.Contains(item)));
                         }
                     }
-                    h_alert = tempResult;
                 }
-
-                return View(h_alert);
             }
+
+            return View(h_alert);
         }
+
+
+
+        //!!!!!!!!!!!!!!!!!!!!!!!!!Start depreciation for this AASPOT side of the alerts. integrate everything in the main system.!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 
         //specific Alert interface for AASPOT
         //Get AASPOTIndex
@@ -87,7 +101,6 @@ namespace EqUiWebUi.Areas.Alert.Controllers
         {
             return View();
         }
-
         //specific Alert interface
         //GET: AASPOTAlertList (for SBCU and gun cylinder stuff with quick link toSbcu tool.
         //allow to filter on single location
@@ -102,8 +115,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                                             &&
                                                a.c_triggers.enabled == true
                                             && (
-                                               a.c_triggers.alertType == "SBCUalert" //only allow this trigger type
-                                               || a.c_triggers.alertType == "GUNalert"
+                                               a.c_triggers.alertGroup == "AASPOTvt"
                                             )
                                             && (
                                               ActiveAlertOnly == false //Allow filtering on active items only
@@ -119,6 +131,12 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             ViewBag.AlertCount = result.Count();
             return View(result);
         }
+
+
+
+
+
+
 
         // GET: Alert/Details partial to get basic info about alert
         public ActionResult _Details(int? id, bool AddTrendChart = false)
@@ -140,7 +158,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             return PartialView(h_alert);
         }
 
-        // GET: Alert/_ControlChart partial. (control charts and hystory of limis)
+        // GET: Alert/_ControlChart partial. (control charts and history of limits)
         public ActionResult _ControlChart(h_alert h_Alert, int? l_controllimit_id)
         {
             if (l_controllimit_id.HasValue)

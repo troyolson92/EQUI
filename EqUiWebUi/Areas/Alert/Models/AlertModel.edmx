@@ -60,6 +60,7 @@
           <Property Name="ordinal" Type="int" Nullable="false" />
           <Property Name="interval" Type="int" Nullable="false" />
           <Property Name="intervalCounter" Type="int" Nullable="false" />
+          <Property Name="alertGroup" Type="varchar" MaxLength="50" />
           <Property Name="alertType" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="AutoSetStateTechComp" Type="bit" Nullable="false" />
           <Property Name="smsOnRetrigger" Type="bit" Nullable="false" />
@@ -181,8 +182,6 @@
           <Property Name="Team" Type="varchar" MaxLength="50" />
           <Property Name="Culture" Type="varchar" MaxLength="50" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'GADATA.Alerts.Alerts_Supervisie' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <Association Name="FK_c_SMSconfig_c_CPT600">
           <End Role="c_CPT600" Type="Self.c_CPT600" Multiplicity="1" />
           <End Role="c_SMSconfig" Type="Self.c_SMSconfig" Multiplicity="*" />
@@ -730,6 +729,7 @@ warning 6002: The table/view 'GADATA.Alerts.Alerts_Supervisie' does not have a p
           <Property Name="OptValueLabels" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="c_schedule" Relationship="AlertModel.FK_c_triggers_c_schedule" FromRole="c_triggers" ToRole="c_schedule" />
           <Property Name="continueOnJobFailure" Type="Boolean" Nullable="false" />
+          <Property Name="alertGroup" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_c_triggers_c_smsSystem">
           <End Type="AlertModel.c_smsSystem" Role="c_smsSystem" Multiplicity="0..1" />
@@ -1071,6 +1071,7 @@ warning 6002: The table/view 'GADATA.Alerts.Alerts_Supervisie' does not have a p
           <EntitySetMapping Name="c_triggers">
             <EntityTypeMapping TypeName="AlertModel.c_triggers">
               <MappingFragment StoreEntitySet="c_triggers">
+                <ScalarProperty Name="alertGroup" ColumnName="alertGroup" />
                 <ScalarProperty Name="continueOnJobFailure" ColumnName="continueOnJobFailure" />
                 <ScalarProperty Name="OptValueLabels" ColumnName="OptValueLabels" />
                 <ScalarProperty Name="intervalCounter" ColumnName="intervalCounter" />
