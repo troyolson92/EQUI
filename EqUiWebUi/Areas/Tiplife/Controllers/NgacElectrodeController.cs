@@ -141,7 +141,7 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
                                           (tipMonitor.pWear > minWear
                                            || tipMonitor.nRcars.GetValueOrDefault(1000) < minParts //if no Rcars value available ignore! 
                                            || tipMonitor.nDress > maxDress
-                                           || tipMonitor.Status != ""
+                                           || (tipMonitor.Status != "" && tipMonitor.Status != "NWIC")  //do not push for no wear in clac 
                                           )
                                           && tipMonitor.LocationTree.Contains(locationFilter) //apply dropdown filter
                                           && tipMonitor.LocationTree.Contains(LocationRoot) //apply user filter
@@ -167,7 +167,7 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
                                            (tipMonitor.pWear > minWear
                                             || tipMonitor.nRcars.GetValueOrDefault(1000) < minParts //if no Rcars value available ignore! 
                                             || tipMonitor.nDress > maxDress
-                                            || tipMonitor.Status != ""
+                                            || (tipMonitor.Status != "" && tipMonitor.Status != "NWIC")  //do not push for no wear in clac 
                                            )
                                           && tipMonitor.LocationTree.Contains(locationFilter) //apply dropdown filter
                                           && tipMonitor.LocationTree.Contains(LocationRoot) //apply user filter

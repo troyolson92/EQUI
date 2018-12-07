@@ -591,10 +591,31 @@
     <Compile Include="Areas\VWSC\Controllers\L_operationController.cs" />
     <Compile Include="Areas\VWSC\Controllers\rt_active_infoController.cs" />
     <Compile Include="Areas\VWSC\Controllers\vwscController.cs" />
+    <Compile Include="Areas\VWSC\Models\VWSC_c_bosch_view.cs">
+      <DependentUpon>VWSC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VWSC\Models\VWSC_c_error.cs">
+      <DependentUpon>VWSC.tt</DependentUpon>
+    </Compile>
     <Compile Include="Areas\VWSC\Models\VWSC_c_NPT.cs">
       <DependentUpon>VWSC.tt</DependentUpon>
     </Compile>
+    <Compile Include="Areas\VWSC\Models\VWSC_c_service_setup.cs">
+      <DependentUpon>VWSC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VWSC\Models\VWSC_c_severity.cs">
+      <DependentUpon>VWSC.tt</DependentUpon>
+    </Compile>
     <Compile Include="Areas\VWSC\Models\VWSC_c_timer.cs">
+      <DependentUpon>VWSC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VWSC\Models\VWSC_c_timer_class.cs">
+      <DependentUpon>VWSC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VWSC\Models\VWSC_L_operation.cs">
+      <DependentUpon>VWSC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VWSC\Models\VWSC_rt_active_info.cs">
       <DependentUpon>VWSC.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\VWSC\Models\VWSC_rt_active_infoMetadata.cs" />
@@ -618,46 +639,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>VWSC.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Areas\VWSC\Models\VWSC_c_bosch_view.cs">
-      <DependentUpon>VWSC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\VWSC\Models\VWSC_c_error.cs">
-      <DependentUpon>VWSC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\VWSC\Models\VWSC_c_service_setup.cs">
-      <DependentUpon>VWSC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\VWSC\Models\VWSC_c_severity.cs">
-      <DependentUpon>VWSC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\VWSC\Models\VWSC_c_timer_class.cs">
-      <DependentUpon>VWSC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\VWSC\Models\VWSC_L_operation.cs">
-      <DependentUpon>VWSC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\VWSC\Models\VWSC_rt_active_info.cs">
-      <DependentUpon>VWSC.tt</DependentUpon>
-    </Compile>
     <Compile Include="Areas\VWSC\Models\VWSC_rt_alarm.cs">
       <DependentUpon>VWSC.tt</DependentUpon>
     </Compile>
-    <Compile Include="Areas\VWSC\Models\VWSC_rt_comment.cs">
-      <DependentUpon>VWSC.tt</DependentUpon>
-    </Compile>
     <Compile Include="Areas\VWSC\Models\VWSC_rt_communication_state.cs">
-      <DependentUpon>VWSC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\VWSC\Models\VWSC_rt_datachangeprot.cs">
       <DependentUpon>VWSC.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\VWSC\Models\VWSC_rt_job.cs">
       <DependentUpon>VWSC.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\VWSC\Models\VWSC_rt_job_breakdown.cs">
-      <DependentUpon>VWSC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\VWSC\Models\VWSC_rt_spot.cs">
       <DependentUpon>VWSC.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\VWSC\Models\VWSC_rt_weldfault.cs">
