@@ -18,12 +18,7 @@ namespace EqUiWebUi.Areas.user_management.Controllers
         public ActionResult _Details()
         {
             string username = System.Web.HttpContext.Current.User.Identity.Name;
-            users user = db.L_users.Where(u => u.username == username).First();
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
-
+            users user = GetUser(username);
             AreaFiltersController areaFiltersController = new EqUiWebUi.Areas.user_management.Controllers.AreaFiltersController();
             ViewBag.AreaSelectlist = areaFiltersController.getAreaSelectList();
             c_ownershipController ownership = new EqUiWebUi.Areas.user_management.Controllers.c_ownershipController();
@@ -135,6 +130,7 @@ namespace EqUiWebUi.Areas.user_management.Controllers
                               where users.username == username
                               select users).FirstOrDefault();
 
+                //handle new users
                 if (user == null)
                 {
                     //add new user to database
@@ -172,6 +168,14 @@ namespace EqUiWebUi.Areas.user_management.Controllers
                         }
                     }
                 }
+
+                //handle users ResponsibleArea
+                if (user.ResponsibleArea != null)
+                {
+                    user.ResponsibleAreaOptGroup = db.c_ownership.Where(c => c.Ownership == user.ResponsibleArea).First().Optgroup;
+                    user.ResponsibleAreaLocations = db.c_ownership.Where(c => c.Ownership == user.ResponsibleArea).Select(c => c.LocationTree).ToList();
+                }
+
                 return user;
             }
         }

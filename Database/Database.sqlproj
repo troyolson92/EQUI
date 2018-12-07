@@ -256,15 +256,12 @@
     <Build Include="WELDING2\Tables\h_Nut_Bolt_Measure.sql" />
     <Build Include="WELDING2\Tables\h_Midair.sql" />
     <Build Include="WELDING2\Tables\h_weldmeasure.sql" />
-    <Build Include="WELDING2\Tables\TEMPWarning.sql" />
     <Build Include="WELDING2\Tables\rt_weldmeasureprotddw.sql" />
     <Build Include="WELDING2\Tables\rt_weldfault.sql" />
-    <Build Include="WELDING2\Tables\rt_spot.sql" />
     <Build Include="WELDING2\Tables\rt_job_breakdown.sql" />
     <Build Include="WELDING2\Tables\rt_job.sql" />
     <Build Include="WELDING2\Tables\rt_datachangeprot.sql" />
     <Build Include="WELDING2\Tables\rt_communication_state.sql" />
-    <Build Include="WELDING2\Tables\rt_comment.sql" />
     <Build Include="WELDING2\Tables\rt_alarm.sql" />
     <Build Include="WELDING2\Tables\rt_active_info.sql" />
     <Build Include="WELDING2\Tables\L_operation.sql" />
@@ -274,7 +271,6 @@
     <Build Include="WELDING2\Tables\c_error.sql" />
     <Build Include="WELDING2\Tables\c_bosch_view.sql" />
     <Build Include="WELDING2\Tables\c_timer.sql" />
-    <Build Include="WELDING2\Tables\xx_c_Spot.sql" />
     <Build Include="WELDING2\Tables\c_NPT.sql" />
     <Build Include="WELDING2\Tables\rt_paramvalues.sql" />
     <Build Include="Security\VCCNET_BPPEQDB1.sql" />
@@ -283,6 +279,11 @@
     <Build Include="EqUi\Tables\c_housekeeping.sql" />
     <Build Include="EqUi\Views\GeoAssets.sql" />
     <Build Include="Alerts\Views\Alerts_Supervisie_1.sql" />
+    <Build Include="Security\RoleMemberships.sql" />
+    <Build Include="WELDING2\Tables\rt_user.sql" />
+    <Build Include="WELDING2\Tables\rt_spottable.sql" />
+    <Build Include="WELDING2\Tables\c_user.sql" />
+    <Build Include="WELDING2\Tables\c_bosch_param.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="GADATAprod.publish.xml" />

@@ -3,21 +3,22 @@
 @Html.Grid(Model).Named("Workorders").Build(columns =>
 {
     columns.Add(c => c.WONUM).Titled("WONUM");
-    columns.Add(c => c.WORKTYPE).Titled("WORKTYPE").Css("d-none d-lg-table-cell");
+    columns.Add(c => c.OWNERGROUP).Titled("GROUP").Css("d-none d-lg-table-cell");
+    columns.Add(c => c.WORKTYPE).Titled("TYPE").Css("d-none d-lg-table-cell");
     columns.Add(c => c.LOCATION).Titled("LOCATION").Filterable(true);
     columns.Add(c => c.STATUS).Titled("STATUS").Filterable(true);
     columns.Add(c => c.STATUSDATE).Titled("STATUSDATE").Css("d-none d-lg-table-cell");
     columns.Add(c => c.DESCRIPTION).Titled("DESCRIPTION").Sortable(false).Filterable(true);
 
-//add edit button
-columns.Add(c => c)
-.Titled("")
-.Encoded(false)
-.RenderedAs(c => MyFilters.IconActionLink("http://maximoui.volvocars.biz/maximo/ui/maximo.jsp?event=loadapp&value=wotrack&additionalevent=useqbe&additionaleventvalue=wonum=" + c.WONUM, "fas fa-pencil-alt", "", "Edit this workorder in maximo", classes: "OpenNewWindow")
-).Filterable(false);
+    //add edit button
+    columns.Add(c => c)
+    .Titled("")
+    .Encoded(false)
+    .RenderedAs(c => MyFilters.IconActionLink("http://maximoui.volvocars.biz/maximo/ui/maximo.jsp?event=loadapp&value=wotrack&additionalevent=useqbe&additionaleventvalue=wonum=" + c.WONUM, "fas fa-pencil-alt", "", "Edit this workorder in maximo", classes: "OpenNewWindow")
+    ).Filterable(false);
 
 
-}).Sortable().Pageable(pager =>
+}).Sortable().Filterable().Pageable(pager =>
 {
     pager.RowsPerPage = 10;
     pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 10, "10" }, { 20, "20" }, { 40, "40" }, { 80, "80" }, { 100, "100" } };

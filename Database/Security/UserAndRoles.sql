@@ -13,6 +13,8 @@ CREATE ROLE [db_accessEquiAdmin]
 
 
 
+
+
 GO
 GRANT SELECT TO [db_accessEquiAdmin];
 GO
@@ -32,4 +34,9 @@ ALTER ROLE [db_accessEquiAdmin] ADD MEMBER [VASC_a];
 
 ---GO
 --ALTER ROLE [db_accessEquiAdmin] ADD MEMBER [VCCNET\BPPEQDB1];
+
+
+
+GO
+ALTER ROLE [db_accessEquiAdmin] ADD MEMBER [VCCNET\BPPEQDB1];
 

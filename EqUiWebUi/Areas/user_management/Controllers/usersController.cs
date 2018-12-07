@@ -55,12 +55,17 @@ namespace EqUiWebUi.Areas.user_management.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            users users = await db.L_users.FindAsync(id);
-            if (users == null)
+            users user = await db.L_users.FindAsync(id);
+            if (user == null)
             {
                 return HttpNotFound();
             }
-            return View(users);
+            //handle users ResponsibleArea
+            if (user.ResponsibleArea != null)
+            {
+                user.ResponsibleAreaLocations = db.c_ownership.Where(c => c.Ownership == user.ResponsibleArea).Select(c => c.LocationTree).ToList();
+            }
+            return View(user);
         }
 
         // GET: user_management/users/Create

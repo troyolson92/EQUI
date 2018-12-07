@@ -19,7 +19,33 @@ namespace EqUiWebUi
                 if (toSearch == null) { return false; }
                 return new Regex(@"\A" + new Regex(@"\.|\$|\^|\{|\[|\(|\||\)|\*|\+|\?|\\").Replace(toFind, ch => @"\" + ch).Replace('_', '.').Replace("%", ".*") + @"\z", RegexOptions.Singleline).IsMatch(toSearch);
             }
+            public static bool Like(this string toSearch, List<string> toFind)
+            {
+                if (toSearch == null) { return false; }
+                foreach(string item in toFind)
+                {
+                    if (Like(item,toSearch))
+                    {
+                        return true;
+                    }
+                }
+            return false;
+            }
+
+        //check targetstring against list of string if any of list contains string in that list.
+        public static bool ListContaints(this string toSearch, List<string> toFind)
+        {
+            if (toSearch == null) { return false; }
+            foreach (string item in toFind)
+            {
+                if (toSearch.Contains(item))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
+    }
 
     //datetime extenstions
     public static class MyDatetimeExtensions

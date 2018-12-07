@@ -36,13 +36,13 @@ UPDATE  NGAC.c_controller
 set ResponsibleTechnicianTeam = c_ownership.[Ownership]
 from  NGAC.c_controller as c
 left join  EqUi.c_ownership on c_ownership.optgroup = 'TechnicianTeams'
-and c.LocationTree like c_ownership.LocationTree 
+and c.LocationTree like '%'+c_ownership.LocationTree+'%'
 
 UPDATE  NGAC.c_controller
 set  ResponsibleProductionTeam = c_ownership.[Ownership]
 from  NGAC.c_controller as c
 left join  EqUi.c_ownership on c_ownership.optgroup = 'ProductionTeams'
-and c.LocationTree like c_ownership.LocationTree 
+and c.LocationTree like '%'+c_ownership.LocationTree+'%'
 
 --*******************************************************************************************************************--
 --update hasspotweld bit for ngac
