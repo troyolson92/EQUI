@@ -6,8 +6,9 @@ namespace EqUiWebUi.Areas.user_management.Models
     [MetadataType(typeof (usersMetaData))]
     public partial class users
     {
-        //containts a list of Locationtree type that is sets by ResponsibleArea field from user profile
+        //contains a list of Location tree type that is sets by ResponsibleArea field from user profile
         public List<string> ResponsibleAreaLocations { get; set; }
+        public string ResponsibleAreaOptGroup { get; set; }
     }
 
     public class usersMetaData

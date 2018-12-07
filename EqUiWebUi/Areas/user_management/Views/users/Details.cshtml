@@ -28,25 +28,32 @@
             @Html.DisplayNameFor(model => model.AssetRoot)
         </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.AssetRoot)
-        </dd>
+        @if (Model.AssetRoot == " ")
+        {
+            <dd>No filter</dd>
+        }
+        else
+        {
+            <dd>
+                @Html.DisplayFor(model => model.AssetRoot)
+            </dd>
+        }
 
         <dt>
             @Html.DisplayNameFor(model => model.ResponsibleArea)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ResponsibleArea)
+            @Html.DisplayFor(model => model.ResponsibleAreaOptGroup) -> @Html.DisplayFor(model => model.ResponsibleArea)
             @if (Model.ResponsibleAreaLocations != null)
-             {
+            {
                 <ul class="text-muted">
                     @foreach (string item in Model.ResponsibleAreaLocations)
-                     {
-                      <li>@item</li>
-                     }
+                    {
+                        <li>@item</li>
+                    }
                 </ul>
-             }
+            }
         </dd>
 
         <dt>

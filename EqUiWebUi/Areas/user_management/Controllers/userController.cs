@@ -172,7 +172,8 @@ namespace EqUiWebUi.Areas.user_management.Controllers
                 //handle users ResponsibleArea
                 if (user.ResponsibleArea != null)
                 {
-                   user.ResponsibleAreaLocations = db.c_ownership.Where(c => c.Ownership == user.ResponsibleArea).Select(c => c.LocationTree).ToList();
+                    user.ResponsibleAreaOptGroup = db.c_ownership.Where(c => c.Ownership == user.ResponsibleArea).First().Optgroup;
+                    user.ResponsibleAreaLocations = db.c_ownership.Where(c => c.Ownership == user.ResponsibleArea).Select(c => c.LocationTree).ToList();
                 }
 
                 return user;
