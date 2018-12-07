@@ -28,8 +28,14 @@ namespace EqUiWebUi.Areas.Alert.Controllers
         //interface where users can manage the alerts
         private GADATA_AlertModel db = new GADATA_AlertModel();
 
-        //Global Alert interface
-        // GET: Listalerts AND filter the alerts based on the users profile
+        /// <summary>
+        /// Global Alert interface
+        /// </summary>
+        /// <param name="c_trigger_id">Filter by specific trigger</param>
+        /// <param name="id">Get specific alert</param>
+        /// <param name="Location">Filter on location</param>
+        /// <param name="ApplyResponsibleArea">Filter on ApplyResponsibleArea</param>
+        /// <returns></returns>
         public ActionResult Listalerts(int? c_trigger_id, int? id, string Location = "", bool ApplyResponsibleArea = false)
         {           
             var h_alert = db.h_alert.Include(h => h.c_state).Where(h =>
@@ -52,11 +58,23 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                     h_alert = h_alert.Where(a => a.locationTree.Contains(UserLocationroot));
                 }
 
+                //Ugly as fuck way of handling ResponsibleAreaLocations
                 List<string> ResponsibleAreaLocations = CurrentUser.Getuser.ResponsibleAreaLocations;
                 if (ResponsibleAreaLocations != null && ApplyResponsibleArea == true)
                 {
-                //    h_alert = h_alert.Join(ResponsibleAreaLocations.Where(b => h_alert)) .Where(a => ResponsibleAreaLocations.Contains(a.locationTree));
-          
+                    var tempResult = h_alert;
+                    foreach (string item in ResponsibleAreaLocations)
+                    {
+                        if (item == ResponsibleAreaLocations.First())
+                        {
+                            tempResult = h_alert.Where(a => a.locationTree.Contains(item));
+                        }
+                        else
+                        {
+                            tempResult = tempResult.Union(h_alert.Where(a => a.locationTree.Contains(item)));
+                        }
+                    }
+                    h_alert = tempResult;
                 }
 
                 return View(h_alert);
@@ -150,7 +168,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                 return HttpNotFound();
             }
             ViewBag.state = new SelectList(db.c_state, "id", "discription", h_alert.state);
-            //pass option to close after succesful save
+            //pass option to close after successful save
             ViewBag.CloseOnSaveSucces = CloseOnSaveSuccess;
             //pass the previous url in the viewbag so we can return on save action
             ViewBag.returnURL = System.Web.HttpContext.Current.Request.UrlReferrer;
