@@ -1159,8 +1159,8 @@
     <Content Include="Areas\HangfireArea\Views\Job\_settings.cshtml" />
     <Content Include="Areas\user_management\Views\users\ListSessions.cshtml" />
     <Content Include="Areas\user_management\Views\users\_settings.cshtml" />
-    <Content Include="Areas\Maximo_ui\Views\WorkorderDetails\_woParentDetails.cshtml" />
-    <Content Include="Areas\Maximo_ui\Views\WorkorderDetails\WoParentDetails.cshtml" />
+    <Content Include="Areas\Maximo_ui\Views\WorkorderDetails\_SubWoDetails.cshtml" />
+    <Content Include="Areas\Maximo_ui\Views\WorkorderDetails\SubWoDetails.cshtml" />
     <Content Include="Areas\Tiplife\Views\web.config" />
     <EntityDeploy Include="Areas\Tiplife\Models\TiplifeModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>

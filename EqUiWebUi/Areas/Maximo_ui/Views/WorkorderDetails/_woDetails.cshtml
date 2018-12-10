@@ -53,22 +53,24 @@
         }
 
         @grid.GetHtml(
-                                                            htmlAttributes: new { id = "gridMapping", style = "font-size: 12px" },
-                                                            tableStyle: "table table-striped grid-table",
-                                                            headerStyle: "grid-header-title",
-                                                            footerStyle: "grid-footer",
-                                                            alternatingRowStyle: "webgrid-alternating-row",
-                                                            selectedRowStyle: "grid-row grid-row-selected",
-                                                            rowStyle: "grid-row",
-                                                            mode: WebGridPagerModes.All,
-                                                            firstText: "<< First",
-                                                            previousText: "< Prev",
-                                                            nextText: "Next >",
-                                                            lastText: "Last >>",
-                                                            columns: ViewBag.LABORColumns
-                                                )
+            htmlAttributes: new { id = "gridMapping", style = "font-size: 12px" },
+            tableStyle: "table table-striped grid-table",
+            headerStyle: "grid-header-title",
+            footerStyle: "grid-footer",
+            alternatingRowStyle: "webgrid-alternating-row",
+            selectedRowStyle: "grid-row grid-row-selected",
+            rowStyle: "grid-row",
+            mode: WebGridPagerModes.All,
+            firstText: "<< First",
+            previousText: "< Prev",
+            nextText: "Next >",
+            lastText: "Last >>",
+            columns: ViewBag.LABORColumns
+           )
     </div>
 </div>
+
+<div id="SubWodetails"></div>
 
 @*inform user that this is a realtime connection*@
 @if (ViewBag.RealtimeConn)
@@ -76,4 +78,15 @@
     <div class="badge badge-pill badge-warning">
         RT
     </div>
+}
+
+<!--Get subworkorders-->
+@if (ViewBag.RenderSubwo)
+{
+<script type="text/javascript">
+    //load url in placeholder
+    $("#SubWodetails").html("<div class='card-body'><i class='fa fa-spinner fa-pulse fa-2x fa-fw'></i><span class='sr-only'></span>Loading subworkorders....</div>");
+    var url = "@Url.Action("_SubWoDetails", "WorkorderDetails")?RealtimeConn=@ViewBag.RealtimeConn&parentwonum=@ViewBag.wonum";
+    $("#SubWodetails").load(url);
+</script>
 }

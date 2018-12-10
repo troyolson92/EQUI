@@ -1,0 +1,28 @@
+﻿@model List<EqUiWebUi.Areas.Maximo_ui.Models.Workorder>
+
+@if (Model.Count == 0)
+{
+    <span class="badge badge-secondary">No subworkorders</span>
+}
+else
+{
+    <span class="badge badge-primary">subworkorders</span>
+    <div class="card">
+
+        <div class="card-body">
+            @foreach (EqUiWebUi.Areas.Maximo_ui.Models.Workorder subWo in Model)
+            {
+                <div class="card">
+                    <div class="card-header bg-light">
+                        <h6>WoDetails wo:<strong>@subWo.WONUM</strong>  location:<strong>@subWo.LOCATION</strong>  Ownergroup:<strong>@subWo.OWNERGROUP</strong> status:<strong>@subWo.STATUS</strong> (subwo)</h6>
+                    </div>
+
+                    <div class="card-body">
+                        @{Html.RenderAction("_woDetails", new { wonum = subWo.WONUM, RealtimeConn = ViewBag.RealtimeConn, RenderSubwo = false });}
+                    </div>
+
+                </div>
+            }
+        </div>
+    </div>
+}

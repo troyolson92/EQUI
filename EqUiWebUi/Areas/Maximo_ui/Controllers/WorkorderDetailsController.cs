@@ -28,9 +28,9 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
             return View();
         }
 
-        //standard details partial about 1 workorder (long text, failure, labor)
+        //standard details partial about 1 work order (long text, failure, labor)
         [HttpGet]
-        public ActionResult _woDetails(string wonum, bool RealtimeConn = false)
+        public ActionResult _woDetails(string wonum, bool RealtimeConn = false, bool RenderSubwo = true)
         {
             //check if user is allowed to user realtimeConn
             string MaximoDbName = "MAXIMO7rep";
@@ -50,6 +50,8 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
 
             if (wonum == null) wonum = "NoWonum";
             if (wonum == "") wonum = "NoWonum";
+            ViewBag.wonum = wonum;
+            ViewBag.RenderSubwo = RenderSubwo;
             #region querys
             string cmdWORKORDER = "select * from MAXIMO.WORKORDER WORKORDER WHERE WORKORDER.WONUM = '{0}'";
             cmdWORKORDER = string.Format(cmdWORKORDER, wonum);
@@ -122,7 +124,7 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
             catch (Exception ex)
             {
                 log.Error("Failed to run query using the realtimeConn", ex);
-                if (RealtimeConn) //if we where using the realtime connection retry useing reporting dbEQUI
+                if (RealtimeConn) //if we where using the real time connection retry using reporting dbEQUI
                 {
                     RealtimeConn = false;
                     MaximoDbName = "MAXIMO7rep";
@@ -134,7 +136,7 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
                 }
                 else
                 {
-                    //else just throw the exeption
+                    //else just throw the exception
                     throw ex;
                 }
             }
@@ -152,7 +154,7 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
             }        
             ViewBag.LongDescription = LONGDESCRIPTION;
             ViewBag.FailureRemark = FAILUREREMARK;
-            //parsing datatables using the dynamic system
+            //parsing data tables using the dynamic system
             WebGridHelpers.WebGridHelper webGridHelper = new WebGridHelper();
             ViewBag.LABORColumns = webGridHelper.getDatatabelCollumns(LABOR);
             List<dynamic> LABORdata = webGridHelper.datatableToDynamic(LABOR);
@@ -165,18 +167,18 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
         }
 
 
-        //details view about 1 main workorder and his childeren 
+        //details view about all children from given work order
         [HttpGet]
-        public ActionResult WoParentDetails(string parentwonum, bool RealtimeConn = false)
+        public ActionResult SubWoDetails(string parentwonum, bool RealtimeConn = false)
         {
             ViewBag.parentwonum = parentwonum;
             ViewBag.RealtimeConn = RealtimeConn;
             return View();
         }
 
-        //partial that gets details in 1 main workorder and loops all the childeren.
+        //partial that gets details of all the children of the given work order.
         [HttpGet]
-        public ActionResult _woParentDetails(string parentwonum, bool RealtimeConn = false)
+        public ActionResult _SubWoDetails(string parentwonum, bool RealtimeConn = false)
         {
             //check if user is allowed to user realtimeConn
             if (RealtimeConn)
@@ -188,9 +190,9 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
                 }
             }
             ViewBag.RealtimeConn = RealtimeConn;
-            //add the parent to the viewbag.
+            //add the parent to the view bag.
             ViewBag.parentwonum = parentwonum;
-            //Get a list of all the childeren WO for this parent
+            //Get a list of all the children WO for this parent
             if (parentwonum == null) parentwonum = "NoWonum";
             if (parentwonum == "") parentwonum = "NoWonum";
             string qrySubWO = "SELECT * FROM MAXIMO.WORKORDER WORKORDER WHERE WORKORDER.PARENT = '{0}' ORDER BY WORKORDER.LOCATION";
