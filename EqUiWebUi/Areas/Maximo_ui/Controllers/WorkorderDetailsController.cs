@@ -56,7 +56,7 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
             string cmdWORKORDER = "select * from MAXIMO.WORKORDER WORKORDER WHERE WORKORDER.WONUM = '{0}'";
             cmdWORKORDER = string.Format(cmdWORKORDER, wonum);
 
-            string cmdFAILUREREMARKdescription = "select* from MAXIMO.FAILUREREMARK FAILUREREMARK WHERE FAILUREREMARK.WONUM = '{0}'";
+            string cmdFAILUREREMARKdescription = "select * from MAXIMO.FAILUREREMARK FAILUREREMARK WHERE FAILUREREMARK.WONUM = '{0}'";
             cmdFAILUREREMARKdescription = string.Format(cmdFAILUREREMARKdescription, wonum);
 
             string cmdFAILUREREMARK = (@"
