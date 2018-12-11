@@ -1,4 +1,5 @@
 ﻿using EqUiWebUi.Areas.Alert.Models;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -302,6 +303,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             return alert;
         }
 
+        //DEPRECIATED!
         // Change the state of an alert.
         // used by quick acces dropdown
         // GET: alert status
@@ -318,6 +320,22 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             alert.lastChangedUserID = CurrentUser.Getuser.id;
             //
             db.SaveChanges();
+        }
+
+        //test for in line edit 1 method for 1 value
+        public string SetState(string id, string value)
+        {
+            h_alert alert = (from a in db.h_alert
+                             where a.id.ToString() == id
+                             select a).ToList().First();
+            //set the new state
+            alert = ChangeState(alert, int.Parse(value));
+            //update last changed user
+            alert.lastChangedTimestamp = System.DateTime.Now;
+            alert.lastChangedUserID = CurrentUser.Getuser.id;
+            db.SaveChanges();
+            //return select enum as string.
+            return Enum.GetName(typeof(EqUiWebUi.Areas.Alert.Models.alertState), alert.state);
         }
     }
 }

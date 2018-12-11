@@ -21,13 +21,7 @@
     columns.Add(c => c.info).Titled("info");
     columns.Add(c => c.ChangedUser.username.Replace(@"VCCNET\", "")).Titled("ChangedUser");
     columns.Add(c => c.triggerCount).Titled("TC").Filterable(true);
-    //change state
-    columns.Add(c => c.c_state.state)
-                   .Titled("State")
-                   .Encoded(false)
-                   .Filterable(true)
-                   .RenderedAs(c => MyFilters.ChangeAlertStatus(c.id, c.c_state.state));
-
+    columns.Add(c => "<p id=" + c.id + " class='setalertState btn btn-primary'>" + c.c_state.state).Encoded(false).Titled("State");
     //tools
     columns.Add(c => c)
                         .Titled("")
@@ -47,6 +41,7 @@
 
 
 @section scripts{
+    <script src="~/node_modules/jquery-jeditable/dist/jquery.jeditable.min.js"></script>
     <script>
         //full with screen
         $("#allcontent").removeClass("body-content");
@@ -80,6 +75,19 @@
 
             $('[data-name="h_alert"]>table>tbody>tr:first').trigger('click');
         }
+
+        //handle inline set state
+        $('.setalertState').editable('@Url.Action("SetState")', {
+            data   : '@(Html.EnumToMvcHtmlString<EqUiWebUi.Areas.Alert.Models.alertState>())',
+            type   : 'select',
+            onerror: function (settings, self, xhr) {
+                $.toaster({ title: 'setalertState', priority: 'danger', message: 'Error with status code: ' + xhr.status });
+            },
+            callback: function (value, settings) {
+                $.toaster({ title: 'setalertState', priority: 'success', message: 'The alert state has been changed' });
+                $(this).html(settings.data[value]);
+            }
+        });
     </script>
 }
 

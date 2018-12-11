@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
@@ -32,7 +33,7 @@ namespace EqUiWebUi
             return false;
             }
 
-        //check targetstring against list of string if any of list contains string in that list.
+        //check target string against list of string if any of list contains string in that list.
         public static bool ListContaints(this string toSearch, List<string> toFind)
         {
             if (toSearch == null) { return false; }
@@ -44,6 +45,14 @@ namespace EqUiWebUi
                 }
             }
             return false;
+        }
+
+        //convert any enum to json object
+        public static MvcHtmlString EnumToMvcHtmlString<T>(this HtmlHelper helper)
+        {
+            var values = Enum.GetValues(typeof(T)).Cast<int>();
+            var enumDictionary = values.ToDictionary(value => value, value => Enum.GetName(typeof(T), value));
+            return new MvcHtmlString(JsonConvert.SerializeObject(enumDictionary));
         }
     }
 
