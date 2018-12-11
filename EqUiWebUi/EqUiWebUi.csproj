@@ -1131,7 +1131,6 @@
     <Content Include="Areas\Alert\Views\c_smsSystem\Details.cshtml" />
     <Content Include="Areas\Alert\Views\c_smsSystem\Edit.cshtml" />
     <Content Include="Areas\Alert\Views\c_smsSystem\Index.cshtml" />
-    <Content Include="Areas\Alert\Views\Alert\AASPOTAlertList.cshtml" />
     <Content Include="Areas\Alert\Views\Alert\_Details.cshtml" />
     <Content Include="Areas\Gadata\Views\web.config" />
     <Content Include="Areas\Gadata\Views\_ViewStart.cshtml" />

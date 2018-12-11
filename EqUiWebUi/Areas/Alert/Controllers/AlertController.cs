@@ -87,14 +87,8 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                     }
                 }
             }
-
             return View(h_alert);
         }
-
-
-
-        //!!!!!!!!!!!!!!!!!!!!!!!!!Start depreciation for this AASPOT side of the alerts. integrate everything in the main system.!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
 
         //specific Alert interface for AASPOT
         //Get AASPOTIndex
@@ -102,42 +96,6 @@ namespace EqUiWebUi.Areas.Alert.Controllers
         {
             return View();
         }
-        //specific Alert interface
-        //GET: AASPOTAlertList (for SBCU and gun cylinder stuff with quick link toSbcu tool.
-        //allow to filter on single location
-        //allow to filter on open items
-        //
-        public ActionResult AASPOTAlertList(string LocationFilter, bool ActiveAlertOnly = false)
-        {
-            //filter alerts basted on user profile!
-            string UserLocationroot = CurrentUser.Getuser.LocationRoot;
-            var h_alert = db.h_alert.Include(h => h.c_state).Include(h => h.c_triggers).Include(h => h.ChangedUser).Include(h => h.CloseUser).Include(h => h.AcceptUser);
-            var result = h_alert.Where(a => a.locationTree.Contains(UserLocationroot)
-                                            &&
-                                               a.c_triggers.enabled == true
-                                            && (
-                                               a.c_triggers.alertGroup == "AASPOTvt"
-                                            )
-                                            && (
-                                              ActiveAlertOnly == false //Allow filtering on active items only
-                                              || (a.state != (int)alertState.COMP && a.state != (int)alertState.TECHCOMP && a.state != (int)alertState.VOID) //not a closed item
-                                            )
-                                            && (
-                                              LocationFilter == null //Allow filtering on a location
-                                              || a.location.Contains(LocationFilter) //filter out specific location
-                                            ));
-
-            //count the total number of record to display as 'total triggers'
-            ViewBag.LocationFilter = LocationFilter;
-            ViewBag.AlertCount = result.Count();
-            return View(result);
-        }
-
-
-
-
-
-
 
         // GET: Alert/Details partial to get basic info about alert
         public ActionResult _Details(int? id, bool AddTrendChart = false)
@@ -170,7 +128,6 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                 h_Alert.lastTriggerd = System.DateTime.Now;
                 h_Alert.alarmobject = controlLimit.alarmobject;
             }
-
             return PartialView(h_Alert);
         }
 
@@ -219,13 +176,13 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                 org_alert.lastChangedTimestamp = System.DateTime.Now;
                 org_alert.lastChangedUserID = CurrentUser.Getuser.id;
 
-                //append the users new comments (we do this because we don't whant the user to be able to edit previous comments)
+                //append the users new comments (we do this because we don't want the user to be able to edit previous comments)
                 StringBuilder sb = new StringBuilder();
                 //add existing
                 sb.AppendLine(org_alert.comments);
                 //add break
                 sb.AppendLine("<hr />");
-                //add new pannel
+                //add new panel
                 sb.AppendLine("<div class='card card-info'>");
                 sb.AppendLine("<div class='card-block'>");
                 sb.AppendLine("<h4 class='card-title'>" + CurrentUser.Getuser.username + "</h4>");
@@ -242,7 +199,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                 //because this edit form gets called from both ListAlerts and AASPOTalert list we must redirect to the right page.
                 return Redirect(returnURL);
             }
-            //if model not valid return to revalidate
+            //if model not valid return to re-validate
             ViewBag.state = new SelectList(db.c_state, "id", "discription", _alert.state);
             return View(_alert);
         }
@@ -278,12 +235,12 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                     break;
 
                 default:
-                    //unhandled state
+                    //unhanded state
                     break;
             }
             //set the new state
             alert.state = newstate;
-            //add badgje for the statechange
+            //add badge for the state change
             StringBuilder sb = new StringBuilder();
             //add existing
             sb.AppendLine(alert.comments);
@@ -303,26 +260,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             return alert;
         }
 
-        //DEPRECIATED!
-        // Change the state of an alert.
-        // used by quick acces dropdown
-        // GET: alert status
-        [HttpGet]
-        public void SetState(int id, int newstate)
-        {
-            h_alert alert = (from a in db.h_alert
-                             where a.id == id
-                             select a).ToList().First();
-            //set the new state
-            alert = ChangeState(alert, newstate);
-            //update last changed user
-            alert.lastChangedTimestamp = System.DateTime.Now;
-            alert.lastChangedUserID = CurrentUser.Getuser.id;
-            //
-            db.SaveChanges();
-        }
-
-        //test for in line edit 1 method for 1 value
+        //called by jeditable for inline edit.
         public string SetState(string id, string value)
         {
             h_alert alert = (from a in db.h_alert

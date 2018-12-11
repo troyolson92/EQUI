@@ -1,114 +1,88 @@
 ﻿@*drop down control for filtering on 'assets'*@
 @helper AssetDropdownGlobal(string id, string value = "")
-    {
-        /**/
-        <select class="form-control input-sm" id="@id" name="Selecteer locatie">
-            <option style="display:none"> -- select a asset root -- </option>
-            <option value=" ">no Filter</option> 
-            <option value="U">all known assets</option>
-            <optgroup label="Robots">
-                <option value="UR">all robots</option>
-                <option value="URC">comau</option>
-                <option value="URA">abb</option>
-            </optgroup>
-            <optgroup label="Process">
-                <option value="UAW">UAW</option>
-                <option value="UAWS">Spot</option>
-                <option value="UAWT">Tucker</option>
-                <option value="UG">Gripper</option>
-            </optgroup>
-        </select>
+{
+    /**/
+    <select class="form-control input-sm" id="@id" name="Selecteer locatie">
+        <option style="display:none"> -- select a asset root -- </option>
+        <option value=" ">no Filter</option>
+        <option value="U">all known assets</option>
+        <optgroup label="Robots">
+            <option value="UR">all robots</option>
+            <option value="URC">comau</option>
+            <option value="URA">abb</option>
+        </optgroup>
+        <optgroup label="Process">
+            <option value="UAW">UAW</option>
+            <option value="UAWS">Spot</option>
+            <option value="UAWT">Tucker</option>
+            <option value="UG">Gripper</option>
+        </optgroup>
+    </select>
 }
 
-
-@*DEPREVIATED! replacing with inline edit*@
-@*helper to change alter status users in ALERT ALERT*@
-@helper ChangeAlertStatus(int alertId, string currentState)
-    {
-        <div class="dropdown">
-            <button class="btn btn-sm btn-danger dropdown-toggle" type="button" data-toggle="dropdown">
-                @currentState <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu ">
-                @{
-                    foreach (EqUiWebUi.Areas.Alert.Models.alertState state in System.Enum.GetValues(typeof(EqUiWebUi.Areas.Alert.Models.alertState)))
-                    {
-                        int intState = (int)state;
-                        <li>
-                            <a class="JQresultTriggerBtn" href="/alert/alert/SetState?id=@alertId&newstate=@intState">@System.Enum.GetName(typeof(EqUiWebUi.Areas.Alert.Models.alertState), state)</a>
-                        </li>
-                    }
-                }
-            </ul>
-        </div>
-}
-
-@*helper to create ation link with an icon*@
+@*helper to create action link with an icon*@
 @helper IconActionLink(string url, string icon, string linkText, string helperText, string classes = "", bool enabeld = true)
+{
+    if (enabeld)
     {
-        if (enabeld)
-        {
-            <a href="@url" class="@classes" data-toggle="tooltip" title="@helperText">
-                <i class="@icon"></i>
-                <span>
-                    <strong>@linkText</strong>
-                </span>
-            </a>
-        }
-        else
-        {
-            <div></div>
-        }
-        /**/
-
-}
-
-@*helper to create info icon for tipmonitor*@
-@helper TipMonitorIcon(string Status, double? RobotWear)
-    {
-        string icon = "";
-        string linkText = "";
-        string tooltip = "";
-
-        //no data from robot for last 2 days
-        if (Status == "ND")
-        {
-            icon = "far fa-eye";
-            linkText = "No data";
-            tooltip = "No data from robot for 48hours check electrode by hand!";
-        }
-        //no tip change deteced alert but wait to change until more than 1 mm wear
-        else if (Status == "NTCD" && RobotWear < 1)
-        {
-            icon = "fas fa-exclamation-triangle";
-            linkText = "Wait for rechange";
-            tooltip = "No change deteced but wait to rechange electrode!";
-        }
-        //no tip change deteced alert and can be changed
-        else if (Status == "NTCD")
-        {
-            icon = "fas fa-retweet";
-            linkText = "Rechange";
-            tooltip = "No change deteced you can now try to change the electrode again";
-        }
-        //
-        else if (Status == "NWIC")
-        {
-            icon = "fas fa-thumbs-down";
-            linkText = "No wear in calc";
-            tooltip = "Tips are changed to fast I can not calculate the remaining parts";
-        }
-        //all is good.
-        else
-        {
-            icon = "far fa-heart";
-            linkText = "";
-            tooltip = "Everything is OK";
-        }
-
-        <a href="" class="@icon" data-toggle="tooltip" title="@tooltip">
+        <a href="@url" class="@classes" data-toggle="tooltip" title="@helperText">
+            <i class="@icon"></i>
             <span>
                 <strong>@linkText</strong>
             </span>
         </a>
+    }
+    else
+    {
+        <div></div>
+    }
+}
+
+@*helper to create info icon for tipmonitor*@
+@helper TipMonitorIcon(string Status, double? RobotWear)
+{
+    string icon = "";
+    string linkText = "";
+    string tooltip = "";
+
+    //no data from robot for last 2 days
+    if (Status == "ND")
+    {
+        icon = "far fa-eye";
+        linkText = "No data";
+        tooltip = "No data from robot for 48hours check electrode by hand!";
+    }
+    //no tip change detected alert but wait to change until more than 1 mm wear
+    else if (Status == "NTCD" && RobotWear < 1)
+    {
+        icon = "fas fa-exclamation-triangle";
+        linkText = "Wait for re-change";
+        tooltip = "No change detected but wait to re-change electrode!";
+    }
+    //no tip change detected alert and can be changed
+    else if (Status == "NTCD")
+    {
+        icon = "fas fa-retweet";
+        linkText = "Re-change";
+        tooltip = "No change detected you can now try to change the electrode again";
+    }
+    //
+    else if (Status == "NWIC")
+    {
+        icon = "fas fa-thumbs-down";
+        linkText = "No wear in calculation";
+        tooltip = "Tips are changed to fast I can not calculate the remaining parts";
+    }
+    //all is good.
+    else
+    {
+        icon = "far fa-heart";
+        linkText = "";
+        tooltip = "Everything is OK";
+    }
+    <a href="" class="@icon" data-toggle="tooltip" title="@tooltip">
+        <span>
+            <strong>@linkText</strong>
+        </span>
+    </a>
 }
