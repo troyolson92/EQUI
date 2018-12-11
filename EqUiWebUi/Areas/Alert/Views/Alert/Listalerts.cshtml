@@ -6,22 +6,37 @@
 }
 
 <h2>Index of alerts</h2>
-@if (ViewBag.LocationFilter != null)
+@if (ViewBag.alertGroup != "")
 {
+<span class="badge badge-pill badge-warning">Filter on alert group: @ViewBag.alertGroup</span>
+}
+@if (ViewBag.ActiveAlertOnly)
+{
+<span class="badge badge-pill badge-warning">Only Active alerts are shown!</span>
+}
+@if (ViewBag.ApplyResponsibleArea)
+{
+<span class="badge badge-pill badge-warning">Filter by ApplyResponsibleArea</span>
+}
+
+@if (ViewBag.LocationFilter != null)
+{<span class="badge badge-warning">
     <h3>Filtered on location: @ViewBag.LocationFilter</h3>
-    <h4>This location has @ViewBag.AlertCount alerts in his history</h4>
+    <h6 class="fa-pull-left">This location has @ViewBag.AlertCount alerts in his history</h6>
+</span>
 }
 
 @Html.Grid(Model).Named("h_alert").Build(columns =>
 {
     columns.Add(c => c.id).Titled("id").Css("d-none");
+    columns.Add(c => c.c_triggers.alertGroup).Titled("Group").Filterable(true);
     columns.Add(c => c.c_triggers.alertType).Titled("Type").Filterable(true);
     columns.Add(c => c.location).Titled("location").Filterable(true).MultiFilterable(true);
     columns.Add(c => c.lastTriggerd).Titled("timestamp").Formatted("{0:dd-MM-yyyy HH:mm}").InitialSort(GridSortOrder.Desc);
     columns.Add(c => c.info).Titled("info");
     columns.Add(c => c.ChangedUser.username.Replace(@"VCCNET\", "")).Titled("ChangedUser");
     columns.Add(c => c.triggerCount).Titled("TC").Filterable(true);
-    columns.Add(c => "<p id=" + c.id + " class='setalertState btn btn-primary'>" + c.c_state.state).Encoded(false).Titled("State");
+    columns.Add(c => "<p id=" + c.id + " class='setalertState btn btn-primary'>" + c.c_state.state).Encoded(false).Titled("State").Filterable(true);
     //tools
     columns.Add(c => c)
                         .Titled("")
@@ -50,6 +65,11 @@
         //subscribe to row clicked events
         $('[data-name="h_alert"]').mvcgrid({
             rowClicked: function (row, data, e) {
+                //ignore clicks not on td
+                console.log(e.target.tagName);
+                if (e.target.tagName.toUpperCase() != 'TD') {
+                    return;
+                }
                 //if row already has this class close the modal
                 if ($(row).hasClass("bg-info")) {
                     $("#placeholder").remove();

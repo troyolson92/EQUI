@@ -16,13 +16,15 @@
     columns.Add(c => c.alarmobject).Titled("alarmobject");
     columns.Add(c => c.info).Titled("info");
     columns.Add(c => c.c_state.state).Titled("state");
+    //tools
     columns.Add(c => c)
-                .Titled("")
-                .Encoded(false)
-                .RenderedAs(c => @Html.ActionLink("EditUser", "Edit", "Alert", new { id = c.id }, null) + " | " +
-                                 @Html.ActionLink("EditAdmin", "Edit", new { id = c.id }) + " | " +
-                                 @Html.ActionLink("Delete", "Delete", new { id = c.id })
-                ).Filterable(false);
+                        .Titled("")
+                        .Encoded(false)
+                        .RenderedAs(c =>
+                        MyFilters.IconActionLink(Url.Action("Edit","Alert", new { id = c.id }), "fas fa-pencil-alt", "", "Edit this alert").ToHtmlString() + //add edit button (alert controller)
+                        MyFilters.IconActionLink(Url.Action("Edit", new { id = c.id }), "fas fa-pencil-alt text-danger", "", "Edit this alert in admin mode").ToHtmlString() + //add edit button ADMIN
+                        MyFilters.IconActionLink(Url.Action("Delete", new { id = c.id }), "fas fa-trash-alt text-danger", "", "Delete this alert").ToHtmlString() //add edit button ADMIN
+                        ).Filterable(false);
 }).Filterable().Sortable().Pageable(pager =>
 {
     pager.RowsPerPage = 20;
@@ -38,6 +40,11 @@
         //subscribe to row clicked events
         $('.mvc-grid').mvcgrid({
             rowClicked: function (row, data, e) {
+                //ignore clicks not on td
+                console.log(e.target.tagName);
+                if (e.target.tagName.toUpperCase() != 'TD') {
+                    return;
+                }
                 //if row already has this clase close the modal
                 if ($(row).hasClass("bg-info")) {
                     $("#placeholder").remove();
