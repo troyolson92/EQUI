@@ -139,13 +139,5 @@ namespace EqUiWebUi.Controllers
             base.Dispose(disposing);
         }
 
-        //test for in line edit 1 method for 1 value
-        public void UpdateLabel(string id, string value)
-        {
-            c_housekeeping housekeeping = db.c_housekeeping.Find(Int32.Parse(id));
-            housekeeping.Name = value;
-            //  db.SaveChanges();
-        }
-
     }
 }

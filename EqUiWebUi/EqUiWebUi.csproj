@@ -1131,7 +1131,6 @@
     <Content Include="Areas\Alert\Views\c_smsSystem\Details.cshtml" />
     <Content Include="Areas\Alert\Views\c_smsSystem\Edit.cshtml" />
     <Content Include="Areas\Alert\Views\c_smsSystem\Index.cshtml" />
-    <Content Include="Areas\Alert\Views\Alert\AASPOTAlertList.cshtml" />
     <Content Include="Areas\Alert\Views\Alert\_Details.cshtml" />
     <Content Include="Areas\Gadata\Views\web.config" />
     <Content Include="Areas\Gadata\Views\_ViewStart.cshtml" />
@@ -1159,8 +1158,8 @@
     <Content Include="Areas\HangfireArea\Views\Job\_settings.cshtml" />
     <Content Include="Areas\user_management\Views\users\ListSessions.cshtml" />
     <Content Include="Areas\user_management\Views\users\_settings.cshtml" />
-    <Content Include="Areas\Maximo_ui\Views\WorkorderDetails\_woParentDetails.cshtml" />
-    <Content Include="Areas\Maximo_ui\Views\WorkorderDetails\WoParentDetails.cshtml" />
+    <Content Include="Areas\Maximo_ui\Views\WorkorderDetails\_SubWoDetails.cshtml" />
+    <Content Include="Areas\Maximo_ui\Views\WorkorderDetails\SubWoDetails.cshtml" />
     <Content Include="Areas\Tiplife\Views\web.config" />
     <EntityDeploy Include="Areas\Tiplife\Models\TiplifeModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
