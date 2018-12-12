@@ -99,7 +99,8 @@
         //handle inline set state
         $('.setalertState').editable('@Url.Action("SetState")', {
             data   : '@(Html.EnumToMvcHtmlString<EqUiWebUi.Areas.Alert.Models.alertState>())',
-            type   : 'select',
+            type: 'select',
+            showfn: function (elem) { }, //trigger select open from here .
             onerror: function (settings, self, xhr) {
                 $.toaster({ title: 'setalertState', priority: 'danger', message: 'Error with status code: ' + xhr.status });
             },

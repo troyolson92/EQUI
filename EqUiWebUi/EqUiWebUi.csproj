@@ -173,7 +173,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Alert\Views\Shared\" />
-    <Folder Include="Areas\CycleTime\Controllers\" />
     <Folder Include="Areas\CycleTime\Models\" />
     <Folder Include="Areas\CycleTime\Views\Shared\" />
     <Folder Include="Areas\HangfireArea\Models\" />
@@ -266,6 +265,7 @@
     </Compile>
     <Compile Include="Areas\Alert\SmsComm.cs" />
     <Compile Include="Areas\CycleTime\BackgroundWork.cs" />
+    <Compile Include="Areas\CycleTime\Controllers\CycleTimeUiController.cs" />
     <Compile Include="Areas\CycleTime\CycleTimeAreaRegistration.cs" />
     <Compile Include="Areas\Gadata\BackgroundWork.cs" />
     <Compile Include="Areas\Gadata\Controllers\TableController.cs" />
@@ -1941,6 +1941,7 @@
     <Content Include="Areas\Welding\Views\spatters\Index.cshtml" />
     <Content Include="Areas\Welding\Views\Spatter\Index.cshtml" />
     <Content Include="Areas\Welding\Views\Spatter\_SpikesV316.cshtml" />
+    <Content Include="Areas\CycleTime\Views\CycleTimeUi\Index.cshtml" />
     <None Include="Properties\PublishProfiles\gensvw1178-DEV-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gotsvw11292-PRODUCTION-VCTA.pubxml" />
