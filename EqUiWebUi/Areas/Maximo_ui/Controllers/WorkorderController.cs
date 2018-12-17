@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using EQUICommunictionLib;
@@ -107,28 +108,19 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
 
         //gets called by AJAX to render the workorder grid
         [HttpGet]
-        public ActionResult _workordersOnLocationGrid(string location, string locancestor, bool? b_ciblings, bool? b_preventive, string jpnum, string worktype, string wonum, string status, string ownergroup
+        public async Task<ActionResult> _workordersOnLocationGrid(string location, string locancestor, bool? b_ciblings, bool? b_preventive, string jpnum, string worktype, string wonum, string status, string ownergroup
             , DateTime? startdate, DateTime? enddate, bool RealtimeConn = false)
         {
             //check if user is allowed to user realtimeConn
             string MaximoDbName = "MAXIMO7rep";
+            int CommandTimeout = 30;
             if (RealtimeConn)
             {
-                roleProvider roleProvider = new roleProvider();
-                if (roleProvider.IsUserInRole(System.Web.HttpContext.Current.User.Identity.Name, "MAXIMOrealtime"))
-                {
-                    MaximoDbName = "MAXIMOrt";
-                }
-                else
-                {
-                    RealtimeConn = false;
-                }
+                MaximoDbName = "MAXIMOrt";
+                CommandTimeout = 5;
             }
 
-            //set controller timeout! (if somebody does a crazy query)
-            System.Web.HttpContext.Current.Server.ScriptTimeout = 10; //seconds
-
-            //build qyr
+            //build query
             StringBuilder sbqry = new StringBuilder();
             sbqry.AppendLine(string.Format(@"
                SELECT 
@@ -194,30 +186,12 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
             string TEST = sbqry.ToString();
             ViewBag.Qry = sbqry.ToString();
             //
-            //get data from maximo
+            //get data from Maximo
             EQUICommunictionLib.ConnectionManager ConnectionManager = new ConnectionManager();
             DataTable dataTable = new DataTable();
-            try
-            {
-                dataTable = ConnectionManager.RunQuery(sbqry.ToString(), dbName: MaximoDbName, maxEXECtime: 15, enblExeptions: true);
-            }
-            catch (Exception ex)
-            {
-                log.Error("Failed to run query using the realtimeConn", ex);
-                if (RealtimeConn) //if we where using the realtime connection retry useing reporting dbEQUI
-                {
-                    RealtimeConn = false;
-                    dataTable = ConnectionManager.RunQuery(sbqry.ToString(), dbName: "MAXIMO7rep", maxEXECtime: 15, enblExeptions: true);
-                }
-                else
-                {
-                    //else just throw the exeption
-                    throw ex;
-                }
-            }
+            await Task.Run(() => dataTable = ConnectionManager.RunQuery(sbqry.ToString(), dbName: MaximoDbName, maxEXECtime: CommandTimeout, enblExeptions: true));
 
-
-            //parse datatable to listobject
+            //parse data table to list object
             List<Models.Workorder> workorders = new List<Models.Workorder>();
             foreach (DataRow row in dataTable.Rows)
             {

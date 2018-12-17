@@ -35,6 +35,7 @@ namespace EQUICommunictionLib
                 using (OracleDataAdapter adapter = new OracleDataAdapter(Query, Conn))
                 {              
                     adapter.SelectCommand.CommandTimeout = maxEXECtime;
+        
                     DataTable table = new DataTable();
                     adapter.Fill(table);
                     //Set the culture back to original.

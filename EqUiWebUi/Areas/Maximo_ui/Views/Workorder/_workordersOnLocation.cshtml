@@ -75,6 +75,10 @@
             requestType: 'get', // Ajax grid request type
             reload: true, // Grid reload indicator
             rowClicked: function (row, data, e) {
+                //ignore clicks not on td
+                if (e.target.tagName.toUpperCase() != 'TD') {
+                    return;
+                }
                 //if row already has this clase close the modal
                 if ($(row).hasClass("bg-info")) {
                     $("#placeholder").remove();
@@ -104,7 +108,7 @@
             },
             reloadFailed: function (result) {
                 console.log(result);
-                $('[data-name= "Workorders"]').html("Error while loading!!!");
+                $('[data-name= "Workorders"]').html($("#Error", result.responseText).html());
             }
         });
     }
