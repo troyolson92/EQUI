@@ -20,23 +20,24 @@ namespace EQUICommunictionLib
             OriginalConnectionString = ConnectionString;
         }
 
-        private string OriginalConnectionString { get; set; }
+        private string OriginalConnectionString {get;}
 
         public DataTable RunQuery(string Query, bool enblExeptions = false, int maxEXECtime = 300)
         {
-            //THIS MUST RUN AS CULTRUE en-US or we get BULLSHIT for the maximo reporting connection.
+            //THIS MUST RUN AS CULTRUE en-US or we get BULLSHIT for the Maximo reporting connection.
+            //ORA-00604: error occurred at recursive SQL level 1
+            //ORA-12705: Cannot access NLS data files or invalid environment specified
             CultureInfo UserCulture = Thread.CurrentThread.CurrentCulture;
             Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo("en-US");
             //
             try
             {
                 using (OracleDataAdapter adapter = new OracleDataAdapter(Query, Conn))
-                {
-                    
+                {              
                     adapter.SelectCommand.CommandTimeout = maxEXECtime;
                     DataTable table = new DataTable();
                     adapter.Fill(table);
-                    //Set the culture back to orignial.
+                    //Set the culture back to original.
                     Thread.CurrentThread.CurrentCulture = UserCulture;
                     //
                     return table;
@@ -56,7 +57,7 @@ namespace EQUICommunictionLib
 
         public void RunCommand(string sqlCommand, bool enblExeptions = false, int maxEXECtime = 300)
         {
-            //THIS MUST RUN AS CULTRUE en-US or we get BULLSHIT for the maximo reporting connection.
+            //THIS MUST RUN AS CULTRUE en-US or we get BULLSHIT for the Maximo reporting connection.
             CultureInfo UserCulture = Thread.CurrentThread.CurrentCulture;
             Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo("en-US");
             //
@@ -122,7 +123,7 @@ namespace EQUICommunictionLib
             catch (Exception ex)
             {
                 log.Error("Command Failed", ex);
-                //disbale this how to I handle an empty clob ? 
+                //disable this how to I handle an empty clob ? 
                 /*
                 if (enblExeptions)
                 {
