@@ -101,7 +101,7 @@
                 //simulate click on first row so that the details load automatic IF ROWCOUNT == 1
                 if ($('[data-name="Workorders"]>table>tbody>tr').length == 1) {
 
-                    $('[data-name="Workorders"]>table>tbody>tr:first').trigger('click');
+                    $('[data-name="Workorders"]>table>tbody>tr>td:first').trigger('click');
                 }
                 //subscribe to click event (launch external window)
                 initUrlNewWindow();

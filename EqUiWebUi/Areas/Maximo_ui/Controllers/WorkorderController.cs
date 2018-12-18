@@ -29,7 +29,7 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
         [HttpGet]
         public ActionResult Workorders(string location, string locancestor, bool? b_ciblings, bool? b_preventive, string jpnum, string worktype, string wonum, string status, string ownergroup
             , DateTime? startdate, DateTime? enddate, Models.WorkorderSelectOptions workorderSelectOptions
-            , bool loadOnInit = false, bool fullscreen = false, int fontSize = 12, bool RealtimeConn = false)
+            , bool loadOnInit = false, bool fullscreen = false, int fontSize = 12, bool RealtimeConn = true)
         {
             //if a parm value is appended set it to the model ELSE MODEL IS BOSS
             if (location != null) workorderSelectOptions.location = location;
@@ -72,7 +72,7 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
         //can be called to be renders as partial in model or something like that...
         [HttpGet]
         public ActionResult _workordersOnLocation(string location, string locancestor, bool? b_ciblings, bool? b_preventive, string jpnum, string worktype, string wonum, string status, string ownergroup
-            , DateTime? startdate, DateTime? enddate, bool RealtimeConn = false)
+            , DateTime? startdate, DateTime? enddate, bool RealtimeConn = true)
         {
             Models.WorkorderSelectOptions workorderSelectOptions = new WorkorderSelectOptions();
             //set models to parms

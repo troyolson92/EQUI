@@ -1,0 +1,77 @@
+﻿
+@{
+    ViewBag.Title = "GetControlPlanPicture";
+}
+
+<h5>GetControlPlanPicture</h5>
+<div class="card-body" style="min-width: 375px">
+    <canvas id="outputCanvas" style="background-image:url('/Content/images/Pic2225.png'); background-size: 100% 100%;"></canvas>
+</div>
+
+
+<script src="~/Scripts/d3/d3.js"></script>
+<script src="~/Scripts/d3/Chart.bundle.js"></script>
+<script>
+    //full with screen
+    $("#allcontent").removeClass("body-content");
+    $("#allcontent").removeClass("container");
+
+    function buildControlPicture(dataPayload) {
+        var ctx = document.getElementById("outputCanvas").getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'scatter',
+            data: {
+                datasets: [{
+                    data: dataPayload[1],
+                    backgroundColor: 'rgba(0, 255, 0, 1)'
+                }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                title: {
+                    display: false
+                },
+                legend: {
+                    display: false,
+                },
+                showLines: false,
+                scales: {
+                    yAxes: [{
+                        display: false,
+                        ticks: {
+                            beginAtZero: true,
+                            max: dataPayload[0].Height * 15 //ultralog uses a x15 scaling between Ypos and picture size
+                        }
+                    }],
+                    xAxes: [{
+                        display: false,
+                        ticks: {
+                            beginAtZero: true,
+                            max: dataPayload[0].Width * 15 //ultralog uses a x15 scaling between Xpos and picture size
+                        }
+                    }]
+                }
+            }
+        });
+    }
+
+    //make ajax request to get data
+    $.ajax({
+        type: 'GET',
+        url: '/Ultralog/_GetControlPlanPicture',
+        data: {
+            //procedure parms
+        },
+        success: function (dataPayload) {
+            console.log(dataPayload);
+            $('#outputCanvas').css('background-image', 'url(' + dataPayload[0].Picture + ')');
+            $('#outputCanvas').css('height', dataPayload[0].Height + '%');
+            buildControlPicture(dataPayload);
+        },
+        error: function (result) {
+        }
+    });
+
+</script>
