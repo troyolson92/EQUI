@@ -1092,7 +1092,6 @@ iiigAooooAKKKKAP/9k=";
                                    {
                                        x = e.Xpos,
                                        y = (e.Ypos * -1) + (ultralogControlPicture.Height * 15), //flip Y axis and move Y axis origin from top left to bottom left 
-                                       r = 10
                                    };
 
                 //combine all data in 1 list object
