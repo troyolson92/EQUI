@@ -1863,7 +1863,6 @@
     <Content Include="Areas\VWSC\Views\vwsc\_jobBreakdown.cshtml" />
     <Content Include="Areas\Welding\Views\Launch\BosProgramAvailable.cshtml" />
     <Content Include="Areas\Welding\Views\Launch\CheckDubbelPrograms.cshtml" />
-    <Content Include="Areas\Welding\Views\Launch\ComparePitchV316.cshtml" />
     <Content Include="Areas\Welding\Views\Launch\dressrequired.cshtml" />
     <Content Include="Areas\Welding\Views\Launch\Index.cshtml" />
     <Content Include="Areas\Welding\Views\Launch\StabilityInDicationV316.cshtml" />
@@ -1880,7 +1879,6 @@
     <Content Include="Areas\Welding\Views\Launch\dressrequired.cshtml" />
     <Content Include="Areas\Welding\Views\Launch\WeldtimeSpotsSetup.cshtml" />
     <Content Include="Areas\Welding\Views\Launch\StabilityInDicationV316.cshtml" />
-    <Content Include="Areas\Welding\Views\Launch\ComparePitchV316.cshtml" />
     <Content Include="Areas\Welding\Views\WM\TV.cshtml" />
     <Content Include="Areas\Welding\Views\WM\_ConnectionState.cshtml" />
     <Content Include="Areas\Welding\Views\WM\_QISvieuwer.cshtml" />
@@ -1946,6 +1944,7 @@
     <Content Include="Areas\Welding\Views\WM\_TimerIpAdresses.cshtml" />
     <Content Include="Areas\Welding\Views\WM\_Datachange.cshtml" />
     <Content Include="Areas\Welding\Views\Launch\doublespotCheck.cshtml" />
+    <Content Include="Areas\Welding\Views\Launch\ComparePitchV316.cshtml" />
     <None Include="Properties\PublishProfiles\gensvw1178-DEV-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gotsvw11292-PRODUCTION-VCTA.pubxml" />

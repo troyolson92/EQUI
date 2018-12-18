@@ -21,13 +21,13 @@
         <EntityTypeShape EntityType="GADATAModelWelding.ToDoList" Width="1.5" PointX="8.125" PointY="8.75" />
         <EntityTypeShape EntityType="GADATAModelWelding.ToDoList_Remark" Width="1.5" PointX="12" PointY="8.375" />
         <AssociationConnector Association="GADATAModelWelding.FK__ToDoList___TodoI__32F76870" />
-        <EntityTypeShape EntityType="GADATAModelWelding.ComparePitchV316" Width="1.5" PointX="1.5" PointY="0.5" />
         <EntityTypeShape EntityType="GADATAModelWelding.AlertsAASPOT" Width="1.5" PointX="1.5" PointY="3.625" />
         <EntityTypeShape EntityType="GADATAModelWelding.AlertsUsers" Width="1.5" PointX="3.375" PointY="4.375" />
         <EntityTypeShape EntityType="GADATAModelWelding.ActualSpatter_" Width="1.5" PointX="5.125" PointY="5" />
         <EntityTypeShape EntityType="GADATAModelWelding.rt_ExtraControles" Width="1.5" PointX="5.375" PointY="8.75" />
         <EntityTypeShape EntityType="GADATAModelWelding.TimerIpAdresses" Width="1.5" PointX="1.75" PointY="9.875" />
         <EntityTypeShape EntityType="GADATAModelWelding.DoubleSpotCheck" Width="1.5" PointX="11.875" PointY="2.5" />
+        <EntityTypeShape EntityType="GADATAModelWelding.ComparePitchV316" Width="1.5" PointX="1.5" PointY="0.5" />
       </Diagram>
       <Diagram DiagramId="4894cb9c299b4076bc2e6a2d9089b8ea" Name="Teardown" ZoomLevel="55" >
         <EntityTypeShape EntityType="GADATAModelWelding.c_faultcode" Width="1.5" PointX="6" PointY="1" />

@@ -1715,7 +1715,6 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
             <End Role="ToDoList" EntitySet="ToDoList" />
             <End Role="ToDoList_Remark" EntitySet="ToDoList_Remark" />
           </AssociationSet>
-          <EntitySet Name="ComparePitchV316" EntityType="GADATAModelWelding.ComparePitchV316" />
           <EntitySet Name="WeldFaultProtocol" EntityType="GADATAModelWelding.WeldFaultProtocol" />
           <EntitySet Name="WeldfaultCount" EntityType="GADATAModelWelding.WeldfaultCount" />
           <EntitySet Name="AutomaticPlanControleWeldBolt" EntityType="GADATAModelWelding.AutomaticPlanControleWeldBolt" />
@@ -1849,6 +1848,7 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
           </AssociationSet>
           <EntitySet Name="TimerIpAdresses" EntityType="GADATAModelWelding.TimerIpAdresses" />
           <EntitySet Name="DoubleSpotCheck" EntityType="GADATAModelWelding.DoubleSpotCheck" />
+          <EntitySet Name="ComparePitchV316" EntityType="GADATAModelWelding.ComparePitchV316" />
           </EntityContainer>
         <EntityType Name="rt_AutoWorkFlowULPlans">
           <Key>
@@ -2084,23 +2084,6 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="ComparePitchV316">
-          <Key>
-            <PropertyRef Name="id" />
-            <PropertyRef Name="timerNumber" />
-            <PropertyRef Name="lastWeldTime" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" />
-          <Property Name="timerNumber" Type="String" Nullable="false" MaxLength="17" FixedLength="false" Unicode="false" />
-          <Property Name="lastWeldTime" Type="String" Nullable="false" MaxLength="23" FixedLength="false" Unicode="false" />
-          <Property Name="SpotID" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
-          <Property Name="Timer" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
-          <Property Name="AlternativeNumber" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
-          <Property Name="Model" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="lastULControleTime" Type="DateTime" Precision="3" />
-          <Property Name="TotalThickness" Type="Double" />
-          <Property Name="Expr1" Type="String" MaxLength="255" FixedLength="true" Unicode="true" />
-        </EntityType>
         <EntityType Name="WeldFaultProtocol">
           <Key>
             <PropertyRef Name="CDSID" />
@@ -3098,6 +3081,23 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
           <Property Name="Name" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
           <Property Name="ID" Type="Int32" Nullable="false" />
         </EntityType>
+        <EntityType Name="ComparePitchV316">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="timerNumber" />
+            <PropertyRef Name="lastWeldTime" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="timerNumber" Type="String" Nullable="false" MaxLength="17" FixedLength="false" Unicode="false" />
+          <Property Name="lastWeldTime" Type="String" Nullable="false" MaxLength="23" FixedLength="false" Unicode="false" />
+          <Property Name="SpotID" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
+          <Property Name="Timer" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
+          <Property Name="AlternativeNumber" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
+          <Property Name="Model" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="lastULControleTime" Type="DateTime" Precision="3" />
+          <Property Name="TotalThickness" Type="Double" />
+          <Property Name="Expr1" Type="String" MaxLength="255" FixedLength="true" Unicode="true" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3311,22 +3311,6 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
                 <ScalarProperty Name="Remark" ColumnName="Remark" />
                 <ScalarProperty Name="Timestamp" ColumnName="Timestamp" />
                 <ScalarProperty Name="TodoID" ColumnName="TodoID" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ComparePitchV316">
-            <EntityTypeMapping TypeName="GADATAModelWelding.ComparePitchV316">
-              <MappingFragment StoreEntitySet="ComparePitchV316">
-                <ScalarProperty Name="Expr1" ColumnName="Expr1" />
-                <ScalarProperty Name="TotalThickness" ColumnName="TotalThickness" />
-                <ScalarProperty Name="lastULControleTime" ColumnName="lastULControleTime" />
-                <ScalarProperty Name="Model" ColumnName="Model" />
-                <ScalarProperty Name="AlternativeNumber" ColumnName="AlternativeNumber" />
-                <ScalarProperty Name="Timer" ColumnName="Timer" />
-                <ScalarProperty Name="SpotID" ColumnName="SpotID" />
-                <ScalarProperty Name="lastWeldTime" ColumnName="lastWeldTime" />
-                <ScalarProperty Name="timerNumber" ColumnName="timerNumber" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -4006,6 +3990,22 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="weldProgNo" ColumnName="weldProgNo" />
                 <ScalarProperty Name="SpotName" ColumnName="SpotName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ComparePitchV316">
+            <EntityTypeMapping TypeName="GADATAModelWelding.ComparePitchV316">
+              <MappingFragment StoreEntitySet="ComparePitchV316">
+                <ScalarProperty Name="Expr1" ColumnName="Expr1" />
+                <ScalarProperty Name="TotalThickness" ColumnName="TotalThickness" />
+                <ScalarProperty Name="lastULControleTime" ColumnName="lastULControleTime" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="AlternativeNumber" ColumnName="AlternativeNumber" />
+                <ScalarProperty Name="Timer" ColumnName="Timer" />
+                <ScalarProperty Name="SpotID" ColumnName="SpotID" />
+                <ScalarProperty Name="lastWeldTime" ColumnName="lastWeldTime" />
+                <ScalarProperty Name="timerNumber" ColumnName="timerNumber" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
