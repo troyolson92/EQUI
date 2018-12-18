@@ -9,6 +9,10 @@
             requestType: 'get',
             reload: true,
             rowClicked: function (row, data, e) {
+            //ignore clicks not on td
+            if (e.target.tagName.toUpperCase() != 'TD') {
+                return;
+            }
             //if row already has this clase close the modal
             if ($(row).hasClass("bg-info")) {
                 $("#placeholder1").remove();

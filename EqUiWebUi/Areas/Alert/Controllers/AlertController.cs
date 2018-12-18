@@ -41,7 +41,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
         /// <param name="ApplyResponsibleArea">Filter on ApplyResponsibleArea</param>
         /// <returns></returns>
         public ActionResult Listalerts(int? c_trigger_id, int? id, string Location = "", string alertGroup = "", bool ActiveAlertOnly = false, bool ApplyResponsibleArea = false)
-        {           
+        {
             var h_alert = db.h_alert.Include(h => h.c_state).Where(h =>
                 h.c_triggers.enabled == true //only enabled triggers
                 &&((h.id == (id ?? 0)) || (id == null)) //get alert by ID
@@ -60,7 +60,6 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             }
             else
             {
-
                 //Add extra filters based on user profile
                 //filter alerts basted on user profile! ignore if using ResponsibleAreaLocations
                 string UserLocationroot = CurrentUser.Getuser.LocationRoot;
@@ -87,6 +86,11 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                     }
                 }
             }
+
+            ViewBag.alertGroup = alertGroup;
+            ViewBag.ActiveAlertOnly = ActiveAlertOnly;
+            ViewBag.ApplyResponsibleArea = ApplyResponsibleArea;
+
             return View(h_alert);
         }
 
