@@ -29,7 +29,6 @@ namespace EqUiWebUi.Areas.Welding.Models
     
         public virtual DbSet<rt_AutoWorkFlowULPlans> rt_AutoWorkFlowULPlans { get; set; }
         public virtual DbSet<ULRapportering> ULRapporterings { get; set; }
-        public virtual DbSet<DoubleSpotCheck> DoubleSpotCheck { get; set; }
         public virtual DbSet<CheckDubbelPrograms> CheckDubbelPrograms { get; set; }
         public virtual DbSet<BosProgramAvailable> BosProgramAvailable { get; set; }
         public virtual DbSet<dressrequired> dressrequired { get; set; }
@@ -79,6 +78,8 @@ namespace EqUiWebUi.Areas.Welding.Models
         public virtual DbSet<rt_weldfault> rt_weldfault { get; set; }
         public virtual DbSet<rt_weldmeasureprotddw> rt_weldmeasureprotddw { get; set; }
         public virtual DbSet<h_Nut_Bolt_Measure> h_Nut_Bolt_Measure { get; set; }
+        public virtual DbSet<TimerIpAdresses> TimerIpAdresses { get; set; }
+        public virtual DbSet<DoubleSpotCheck> DoubleSpotCheck { get; set; }
     
         public virtual ObjectResult<Lastwelds_Result> Lastwelds(string timer, Nullable<int> spot)
         {

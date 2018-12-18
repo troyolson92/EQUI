@@ -810,6 +810,9 @@
     <Compile Include="Areas\Welding\Models\TimerBreakdowns_busy.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Areas\Welding\Models\TimerIpAdresses.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Areas\Welding\Models\ToDoList.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
@@ -1861,7 +1864,6 @@
     <Content Include="Areas\Welding\Views\Launch\BosProgramAvailable.cshtml" />
     <Content Include="Areas\Welding\Views\Launch\CheckDubbelPrograms.cshtml" />
     <Content Include="Areas\Welding\Views\Launch\ComparePitchV316.cshtml" />
-    <Content Include="Areas\Welding\Views\Launch\DoubleSpotCheck.cshtml" />
     <Content Include="Areas\Welding\Views\Launch\dressrequired.cshtml" />
     <Content Include="Areas\Welding\Views\Launch\Index.cshtml" />
     <Content Include="Areas\Welding\Views\Launch\StabilityInDicationV316.cshtml" />
@@ -1872,7 +1874,6 @@
     <Content Include="Areas\Welding\Views\Qteam\ULRapportering.cshtml" />
     <Content Include="Areas\Welding\Views\WM\Index.cshtml" />
     <Content Include="Areas\Welding\Views\WM\Launch.cshtml" />
-    <Content Include="Areas\Welding\Views\Launch\DoubleSpotCheck.cshtml" />
     <Content Include="Areas\Welding\Views\Launch\Index.cshtml" />
     <Content Include="Areas\Welding\Views\Launch\CheckDubbelPrograms.cshtml" />
     <Content Include="Areas\Welding\Views\Launch\BosProgramAvailable.cshtml" />
@@ -1942,6 +1943,9 @@
     <Content Include="Areas\Welding\Views\spatters\Index.cshtml" />
     <Content Include="Areas\Welding\Views\Spatter\Index.cshtml" />
     <Content Include="Areas\Welding\Views\Spatter\_SpikesV316.cshtml" />
+    <Content Include="Areas\Welding\Views\WM\_TimerIpAdresses.cshtml" />
+    <Content Include="Areas\Welding\Views\WM\_Datachange.cshtml" />
+    <Content Include="Areas\Welding\Views\Launch\doublespotCheck.cshtml" />
     <None Include="Properties\PublishProfiles\gensvw1178-DEV-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gotsvw11292-PRODUCTION-VCTA.pubxml" />

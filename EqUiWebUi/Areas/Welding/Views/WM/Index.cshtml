@@ -27,9 +27,9 @@
     <p></p>
     @MyHtmlHelpers.EquiLink("/Welding/Spatter/Index", "far fa-file-alt", "SpatterPage ", helperText: "Spatters and spikes follow up ")
     <p></p>
-    @MyHtmlHelpers.EquiLink("/Alert/Alert/Listalerts?h_alert-c_triggers.alert-type-contains=Dalert&h_alert-rows=20", "far fa-file-alt", " All D alerts ", helperText: "Follow up all D alerts")
+    @MyHtmlHelpers.EquiLink("/equi/Alert/Alert/Listalerts?h_alert-c_triggers.alert-group-contains=Dalert", "far fa-file-alt", " All D alerts ", helperText: "Follow up all D alerts")
     <p></p>
-    @MyHtmlHelpers.EquiLink("/Alert/Alert/Listalerts?h_alert-c_triggers.alert-type-contains=Qalert&h_alert-rows=20", "far fa-file-alt", " All Q Alerts ", helperText: "Follow up all Q alerts ")
+    @MyHtmlHelpers.EquiLink("/Alert/Alert/Listalerts?h_alert-c_triggers.alert-group-contains=Qalert", "far fa-file-alt", " All Q Alerts ", helperText: "Follow up all Q alerts ")
 
 
     @*voorbeeld interne link*@
@@ -83,8 +83,12 @@
             Analyse ABB Dress Data
         <p>
         <p>
-            <a href="~//Welding/WM/" class="btn btn-primary btn-sm">Data change Weldtimers &raquo;</a>
+            <a href="~//Welding/WM/_datachange" class="btn btn-primary btn-sm">Data change Weldtimers &raquo;</a>
             Analyse WeldTimer Data Change only
+        <p>
+        <p>
+            <a href="~//Welding/WM/_TimerIpAdresses" class="btn btn-primary btn-sm">All Timer Ip Adresses &raquo;</a>
+            Look Up IP Adresses
 
         <p></p>
     </div>
@@ -120,11 +124,11 @@
                 Analyse your prio spots descending Process Stability
             <p>
             <p>
-                <a href="~//Welding/WM/" class="btn btn-primary btn-sm">D Alerts&raquo;</a>
+                <a href="~/Alert/Alert/Listalerts?h_alert-c_triggers.alert-type-contains=WM_D&h_alert-rows=20" class="btn btn-primary btn-sm">D Alerts&raquo;</a>
                 Analyse your D Alerts
             <p>
             <p>
-                <a href="~//Welding/WM/" class="btn btn-primary btn-sm">Q Alerts&raquo;</a>
+                <a href="~/Alert/Alert/Listalerts?h_alert-c_triggers.alert-type-contains=WM_Q&h_alert-rows=20" class="btn btn-primary btn-sm">Q Alerts&raquo;</a>
                 Analyse your Q Alerts
             <p></p>
 

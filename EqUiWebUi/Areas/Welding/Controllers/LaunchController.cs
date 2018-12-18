@@ -20,7 +20,6 @@ namespace EqUiWebUi.Areas.Welding.Controllers
         }
         // GET: launch
 
-
         public ActionResult doublespotCheck()
         {
             IQueryable<DoubleSpotCheck> data = db.DoubleSpotCheck.AsQueryable();

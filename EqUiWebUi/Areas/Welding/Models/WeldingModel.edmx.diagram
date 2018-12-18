@@ -7,7 +7,6 @@
       <Diagram DiagramId="e109b52680e54941aea1e1f5eb0cf409" Name="AllViews" ZoomLevel="62">
         <EntityTypeShape EntityType="GADATAModelWelding.rt_AutoWorkFlowULPlans" Width="1.5" PointX="3.375" PointY="0.5" />
         <EntityTypeShape EntityType="GADATAModelWelding.ULRapportering" Width="1.5" PointX="5.125" PointY="0.5" />
-        <EntityTypeShape EntityType="GADATAModelWelding.DoubleSpotCheck" Width="1.5" PointX="10.125" PointY="0.5" />
         <EntityTypeShape EntityType="GADATAModelWelding.CheckDubbelPrograms" Width="1.5" PointX="13.875" PointY="2.75" />
         <EntityTypeShape EntityType="GADATAModelWelding.BosProgramAvailable" Width="1.5" PointX="10.125" PointY="2.5" />
         <EntityTypeShape EntityType="GADATAModelWelding.dressrequired" Width="1.5" PointX="11.875" PointY="0.5" />
@@ -27,6 +26,8 @@
         <EntityTypeShape EntityType="GADATAModelWelding.AlertsUsers" Width="1.5" PointX="3.375" PointY="4.375" />
         <EntityTypeShape EntityType="GADATAModelWelding.ActualSpatter_" Width="1.5" PointX="5.125" PointY="5" />
         <EntityTypeShape EntityType="GADATAModelWelding.rt_ExtraControles" Width="1.5" PointX="5.375" PointY="8.75" />
+        <EntityTypeShape EntityType="GADATAModelWelding.TimerIpAdresses" Width="1.5" PointX="1.75" PointY="9.875" />
+        <EntityTypeShape EntityType="GADATAModelWelding.DoubleSpotCheck" Width="1.5" PointX="11.875" PointY="2.5" />
       </Diagram>
       <Diagram DiagramId="4894cb9c299b4076bc2e6a2d9089b8ea" Name="Teardown" ZoomLevel="55" >
         <EntityTypeShape EntityType="GADATAModelWelding.c_faultcode" Width="1.5" PointX="6" PointY="1" />

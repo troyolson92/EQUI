@@ -211,8 +211,6 @@ warning 6002: The table/view 'GADATA.UL.rt_ExtraControles' does not have a prima
           <Property Name="cErrorMask" Type="int" />
           <Property Name="cSeverityMask" Type="int" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'GADATA.WELDING2.c_timer_temp' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="c_user">
           <Key>
             <PropertyRef Name="id" />
@@ -705,12 +703,13 @@ warning 6002: The table/view 'GADATA.LAUNCH.ComparePitchV316' does not have a pr
 warning 6002: The table/view 'GADATA.LAUNCH.DoubleSpotCheck' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="DoubleSpotCheck">
           <Key>
+            <PropertyRef Name="weldProgNo" />
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="SpotName" Type="int" />
-          <Property Name="WeldProgram" Type="int" />
-          <Property Name="TimerName" Type="nchar" MaxLength="15" />
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SpotName" Type="varchar" MaxLength="50" />
+          <Property Name="weldProgNo" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="15" />
+          <Property Name="ID" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'GADATA.LAUNCH.dressrequired' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -855,6 +854,15 @@ warning 6002: The table/view 'GADATA.WELDING.TimerBreakdownDatachange' does not 
           <Property Name="CDSID" Type="nchar" MaxLength="25" />
           <Property Name="WMComment" Type="nchar" MaxLength="255" />
           <Property Name="TimerFault" Type="nchar" MaxLength="50" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.WELDING.TimerIpAdresses' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="TimerIpAdresses">
+          <Key>
+            <PropertyRef Name="TimerName" />
+          </Key>
+          <Property Name="TimerName" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="timerIpaddress" Type="char" MaxLength="15" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'GADATA.WELDING2.ActualSpatter%' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -1397,8 +1405,8 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
           <EntitySet Name="DoubleSpotCheck" EntityType="Self.DoubleSpotCheck" store:Type="Views" store:Schema="LAUNCH">
             <DefiningQuery>SELECT 
     [DoubleSpotCheck].[SpotName] AS [SpotName], 
-    [DoubleSpotCheck].[WeldProgram] AS [WeldProgram], 
-    [DoubleSpotCheck].[TimerName] AS [TimerName], 
+    [DoubleSpotCheck].[weldProgNo] AS [weldProgNo], 
+    [DoubleSpotCheck].[Name] AS [Name], 
     [DoubleSpotCheck].[ID] AS [ID]
     FROM [LAUNCH].[DoubleSpotCheck] AS [DoubleSpotCheck]</DefiningQuery>
           </EntitySet>
@@ -1514,6 +1522,12 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
     [TimerBreakdownDatachange].[WMComment] AS [WMComment], 
     [TimerBreakdownDatachange].[TimerFault] AS [TimerFault]
     FROM [WELDING].[TimerBreakdownDatachange] AS [TimerBreakdownDatachange]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="TimerIpAdresses" EntityType="Self.TimerIpAdresses" store:Type="Views" store:Schema="WELDING">
+            <DefiningQuery>SELECT 
+    [TimerIpAdresses].[TimerName] AS [TimerName], 
+    [TimerIpAdresses].[timerIpaddress] AS [timerIpaddress]
+    FROM [WELDING].[TimerIpAdresses] AS [TimerIpAdresses]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="ActualSpatter%" EntityType="Self.ActualSpatter%" store:Type="Views" store:Schema="WELDING2">
             <DefiningQuery>SELECT 
@@ -1680,7 +1694,6 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
         <EntityContainer Name="GADATAEntitiesWelding" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="rt_AutoWorkFlowULPlans" EntityType="GADATAModelWelding.rt_AutoWorkFlowULPlans" />
           <EntitySet Name="ULRapporterings" EntityType="GADATAModelWelding.ULRapportering" />
-          <EntitySet Name="DoubleSpotCheck" EntityType="GADATAModelWelding.DoubleSpotCheck" />
           <EntitySet Name="CheckDubbelPrograms" EntityType="GADATAModelWelding.CheckDubbelPrograms" />
           <EntitySet Name="BosProgramAvailable" EntityType="GADATAModelWelding.BosProgramAvailable" />
           <EntitySet Name="dressrequired" EntityType="GADATAModelWelding.dressrequired" />
@@ -1834,6 +1847,8 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
             <End Role="rt_job11" EntitySet="rt_job11" />
             <End Role="rt_job_breakdown" EntitySet="rt_job_breakdown1" />
           </AssociationSet>
+          <EntitySet Name="TimerIpAdresses" EntityType="GADATAModelWelding.TimerIpAdresses" />
+          <EntitySet Name="DoubleSpotCheck" EntityType="GADATAModelWelding.DoubleSpotCheck" />
           </EntityContainer>
         <EntityType Name="rt_AutoWorkFlowULPlans">
           <Key>
@@ -1875,15 +1890,6 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
           <Property Name="Shift" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
           <Property Name="spot" Type="Int32" />
           <Property Name="loose_" Type="Boolean" />
-        </EntityType>
-        <EntityType Name="DoubleSpotCheck">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="SpotName" Type="Int32" />
-          <Property Name="WeldProgram" Type="Int32" />
-          <Property Name="TimerName" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
         <EntityType Name="CheckDubbelPrograms">
           <Key>
@@ -3075,6 +3081,23 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="TimerIpAdresses">
+          <Key>
+            <PropertyRef Name="TimerName" />
+          </Key>
+          <Property Name="TimerName" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="timerIpaddress" Type="String" MaxLength="15" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="DoubleSpotCheck">
+          <Key>
+            <PropertyRef Name="weldProgNo" />
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="SpotName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="weldProgNo" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="ID" Type="Int32" Nullable="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3121,16 +3144,6 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
                 <ScalarProperty Name="EndTimePlan" ColumnName="EndTimePlan" />
                 <ScalarProperty Name="starttimePlan" ColumnName="starttimePlan" />
                 <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="DoubleSpotCheck">
-            <EntityTypeMapping TypeName="GADATAModelWelding.DoubleSpotCheck">
-              <MappingFragment StoreEntitySet="DoubleSpotCheck">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="TimerName" ColumnName="TimerName" />
-                <ScalarProperty Name="WeldProgram" ColumnName="WeldProgram" />
-                <ScalarProperty Name="SpotName" ColumnName="SpotName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3975,6 +3988,24 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
                 <ScalarProperty Name="SpotID" ColumnName="SpotID" />
                 <ScalarProperty Name="Timestamp" ColumnName="Timestamp" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TimerIpAdresses">
+            <EntityTypeMapping TypeName="GADATAModelWelding.TimerIpAdresses">
+              <MappingFragment StoreEntitySet="TimerIpAdresses">
+                <ScalarProperty Name="timerIpaddress" ColumnName="timerIpaddress" />
+                <ScalarProperty Name="TimerName" ColumnName="TimerName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DoubleSpotCheck">
+            <EntityTypeMapping TypeName="GADATAModelWelding.DoubleSpotCheck">
+              <MappingFragment StoreEntitySet="DoubleSpotCheck">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="weldProgNo" ColumnName="weldProgNo" />
+                <ScalarProperty Name="SpotName" ColumnName="SpotName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
