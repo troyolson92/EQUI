@@ -3,18 +3,19 @@
     ViewBag.Title = "ControlPlan";
 }
 
+@MyFilters.IconActionLink(Url.Action("ListControlPlans"), "fas fa-clipboard-list ", "Back to list", "Back to control plan list")
+
 <div class="card">
     <div class="card-header">
-        <h2>ControlPlan: @ViewBag.PlanName Id: @ViewBag.PlanId </h2>
-        <h6>Active picture id: <span class="badge badge-info" id="lbl_ActivePictureId"></span> </h6>
+        <h2>ControlPlan: @ViewBag.PlanName</h2>
+        <h6>Active picture id: <span class="badge badge-info" id="lbl_ActivePictureId"></span> Picture: <span class="badge badge-info" id="lbl_PictureCount"></span></h6>
     </div>
     <div class="card-body">
         <div id="ControlPlanPicturePartial">
-            <div class="alert alert-warning">Click "Start Plan" to load first picture</div> 
         </div>
     </div>
     <div class="card-footer">
-        <div class="btn btn-primary" id="btn_nextPicture">Start Plan</div>
+        <div class="btn btn-primary btn-sm" id="btn_nextPicture">Jump to next picture</div>
     </div>
 </div>
 
@@ -22,22 +23,21 @@
     //global vars
     var PictureList = @Html.Raw(Json.Encode(ViewBag.PictureList));
     var ActivePictureId = PictureList[0];
-    $("#lbl_ActivePictureId").html(ActivePictureId);
 
     $("#btn_nextPicture").click(function () {
         var index = PictureList.indexOf(ActivePictureId);
         ActivePictureId = PictureList[PictureList.indexOf(ActivePictureId) + 1];
         $("#lbl_ActivePictureId").html(ActivePictureId);
+        $("#lbl_PictureCount").html(PictureList.indexOf(ActivePictureId) + ' / ' + Object.keys(PictureList).length);
         //load control plan picute partial
         $("#ControlPlanPicturePartial").html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
         $("#ControlPlanPicturePartial").load("@Url.Action("_GetControlPlanPicture")?Id=" + ActivePictureId);
         //change btn if last picture
         if (PictureList[PictureList.indexOf(ActivePictureId) + 1] == PictureList[0]) {
-            $("#btn_nextPicture").html("Restart Plan");
-        } else {
-            $("#btn_nextPicture").html("Next picture");
-        } 
+            $("#btn_nextPicture").remove();
+        }
     });
 
-
+    //sim click to move to first picture
+    $("#btn_nextPicture").click();
 </script>

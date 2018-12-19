@@ -21,26 +21,55 @@ namespace EqUiWebUi.Areas.Welding.Controllers
         }
 
         /// <summary>
+        /// Get list of all control plans.
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult ListControlPlans()
+        {
+            List<string> plans = db.Database.SqlQuery<string>("SELECT [T_PlansList].[Name] FROM [UL].[T_PlansList]").ToList();
+            return View(plans);
+        }
+
+        /// <summary>
+        /// Make a control plan to check a single robot or timer
+        /// </summary>
+        /// <param name="Timername"></param>
+        /// <returns></returns>
+        public ActionResult MakeControlPlan(string Timername)
+        {
+            string qry = @"
+                 SELECT
+                 [T_PlansList].[Name]
+                ,T_PlanPoints.PlanID
+                ,T_PointsList.[Name] as 'SpotName'
+                ,T_PointsList.[Sequence]
+                ,T_PointsList.Diameter
+                ,c_timer.[Name] as 'Timername'
+                FROM[UL].[T_PlansList]
+                Left join UL.T_PlanPoints on T_PlanPoints.PlanID = T_PlansList.PlanID
+                Left join UL.T_PointsList on T_PointsList.PointID = T_PlanPoints.PointID
+                Left join WELDING2.rt_spottable on rt_spottable.SpotName = T_PointsList.[Name] and rt_spottable.isDead = 0
+                Left join WELDING2.c_timer on c_timer.id = rt_spottable.[timerId]
+                WHERE T_PlansList.[Name] = 'V316_331060_LHD'";
+            return View();
+        }
+
+        /// <summary>
         /// Get control plan and run to all the control plan pictures
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
-        public ActionResult GetControlPlan(int Id = 659)
+        public ActionResult GetControlPlan(string PlanName = "V316_331060_LHD")
         {
-            ViewBag.PlanId = Id;
-            ViewBag.PlanName = "V316_331060_LHD";
-            ViewBag.PictureList = new List<int> {
-                 3477
-                ,3478
-                ,3479
-                ,3480
-                ,3481
-                ,3482
-                ,3483
-                ,3484
-                ,3485
-                ,3486
-                ,3487 };
+            ViewBag.PlanName = PlanName;
+            string qry = @"SELECT distinct T_Picture.PictureID
+                            FROM [UL].[T_PlansList]
+                            Left join UL.T_PlanPoints on T_PlanPoints.PlanID = T_PlansList.PlanID
+                            Left join UL.T_PicturePoints on T_PicturePoints.PlanPointID = T_PlanPoints.PlanPointID
+                            Left join UL.T_Picture on T_Picture.PictureID = T_PicturePoints.PictureID
+                            where T_Picture.PictureID is not null AND T_PlansList.[Name] = '{0}'
+                            order by T_Picture.PictureID asc";
+            ViewBag.PictureList = db.Database.SqlQuery<int>(string.Format(qry, PlanName)).ToList();
             return View();
         }
 

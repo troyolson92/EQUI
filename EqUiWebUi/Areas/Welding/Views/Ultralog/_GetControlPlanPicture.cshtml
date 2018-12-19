@@ -13,10 +13,6 @@
     var ControlPlanChart;
     var dataPayload;
     var ActiveItem = 0;
-    //full with screen
-    $("#allcontent").removeClass("body-content");
-    $("#allcontent").removeClass("container");
-
     //function to build controlplan chart
     function buildControlPicture(dataPayload) {
         var ctx = document.getElementById("outputCanvas").getContext('2d');
@@ -100,6 +96,8 @@
         //remove button on end of this plan
         if (dataPayload[1][ActiveItem] == null) {
             $("#btn_next").remove();
+            //try and go to next picture
+            $("#btn_nextPicture").click();
         }
         ControlPlanChart.data.datasets[0].data[0] = dataPayload[1][ActiveItem];
         ControlPlanChart.update();

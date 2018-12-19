@@ -1950,6 +1950,7 @@
     <Content Include="Areas\Welding\Views\Ultralog\GetControlPlanPicture.cshtml" />
     <Content Include="Areas\Welding\Views\Ultralog\GetControlPlan.cshtml" />
     <Content Include="Areas\Welding\Views\Ultralog\_GetControlPlanPicture.cshtml" />
+    <Content Include="Areas\Welding\Views\Ultralog\ListControlPlans.cshtml" />
     <None Include="Properties\PublishProfiles\gensvw1178-DEV-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gotsvw11292-PRODUCTION-VCTA.pubxml" />
