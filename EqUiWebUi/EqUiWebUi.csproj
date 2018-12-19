@@ -817,6 +817,9 @@
     <Compile Include="Areas\Welding\Models\ToDoList_Remark.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Areas\Welding\Models\T_PicturePoints.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Areas\Welding\Models\ULRapportering.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
@@ -1035,7 +1038,6 @@
     <Content Include="Content\CustomStyleTweeks.css" />
     <Content Include="Content\daterangepicker.css" />
     <Content Include="Content\fontawesome-all.css" />
-    <Content Include="Content\images\Pic2225.png" />
     <Content Include="Content\images\volvo-50.png" />
     <Content Include="Content\jquery-cron.css" />
     <Content Include="Content\jquery-ui.css" />
@@ -1946,6 +1948,8 @@
     <Content Include="Areas\Welding\Views\Spatter\_SpikesV316.cshtml" />
     <Content Include="Areas\CycleTime\Views\CycleTimeUi\Index.cshtml" />
     <Content Include="Areas\Welding\Views\Ultralog\GetControlPlanPicture.cshtml" />
+    <Content Include="Areas\Welding\Views\Ultralog\GetControlPlan.cshtml" />
+    <Content Include="Areas\Welding\Views\Ultralog\_GetControlPlanPicture.cshtml" />
     <None Include="Properties\PublishProfiles\gensvw1178-DEV-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gotsvw11292-PRODUCTION-VCTA.pubxml" />

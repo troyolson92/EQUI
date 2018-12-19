@@ -1,0 +1,109 @@
+﻿<div class="card-body" style="min-width: 375px; max-width:1000px;">
+    <div id="ControlPicturePlaceHolder"></div>
+    <canvas id="outputCanvas" class="ControlPicture" style="background-size: 100% 100%;">
+        <i class='fas fa-spinner fa-spin fa-2x'></i>
+    </canvas>
+</div>
+<div class="btn btn-warning fa-pull-right" id="btn_next">Next point</div>
+
+<script src="~/Scripts/d3/d3.js"></script>
+<script src="~/Scripts/d3/Chart.bundle.js"></script>
+<script>
+    //global vars
+    var ControlPlanChart;
+    var dataPayload;
+    var ActiveItem = 0;
+    //full with screen
+    $("#allcontent").removeClass("body-content");
+    $("#allcontent").removeClass("container");
+
+    //function to build controlplan chart
+    function buildControlPicture(dataPayload) {
+        var ctx = document.getElementById("outputCanvas").getContext('2d');
+        ControlPlanChart = new Chart(ctx, {
+            type: 'scatter',
+            data: {
+                datasets: [
+                    { //dataset for active control point
+                        data: null,
+                        backgroundColor: 'rgba(255, 0, 0, 1)',
+                        pointRadius: 10,
+                        pointHoverRadius: 15
+                    },
+                    { //dataset to show all control points
+                        data: dataPayload[1],
+                        backgroundColor: 'rgba(0, 255, 0, 1)',
+                        pointRadius: 5,
+                        pointHoverRadius: 10
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                title: {
+                    display: false
+                },
+                legend: {
+                    display: false,
+                },
+                showLines: false,
+                scales: {
+                    yAxes: [{
+                        display: false,
+                        ticks: {
+                            beginAtZero: true,
+                            max: dataPayload[0].Height * 15 //ultralog uses a x15 scaling between Ypos and picture size
+                        }
+                    }],
+                    xAxes: [{
+                        display: false,
+                        ticks: {
+                            beginAtZero: true,
+                            max: dataPayload[0].Width * 15 //ultralog uses a x15 scaling between Xpos and picture size
+                        }
+                    }]
+                }
+            }
+        });
+    }
+
+    //make ajax request to get data
+    $.ajax({
+        type: 'GET',
+        url: '/Ultralog/_GetControlPlanPictureData',
+        data: {
+            Id: @ViewBag.ControlPlanPicture
+        },
+        success: function (returnValue) {
+            //store payload as global var
+            dataPayload = returnValue;
+            //create image as a style.
+            var style = document.createElement('style');
+            style.type = 'text/css';
+            style.innerHTML = '.ControlPicture {  background-image: url("data:image/png;base64, ' + dataPayload[0].Picture.replace(/(\r\n|\n|\r)/gm, "") + '");}';
+            document.getElementById('ControlPicturePlaceHolder').appendChild(style);
+            //add image Height to lock aspect ratio
+            $('#outputCanvas').css('height', dataPayload[0].Height + '%');
+            //build the chart
+            buildControlPicture(dataPayload);
+            //sim click to move to first point
+            $("#btn_next").click();
+        },
+        error: function (result) {
+            //error in getting data
+        }
+    });
+
+    //move to next point on each button click
+    $("#btn_next").click(function () {
+        //remove button on end of this plan
+        if (dataPayload[1][ActiveItem] == null) {
+            $("#btn_next").remove();
+        }
+        ControlPlanChart.data.datasets[0].data[0] = dataPayload[1][ActiveItem];
+        ControlPlanChart.update();
+        ActiveItem += 1;
+    });
+
+</script>
