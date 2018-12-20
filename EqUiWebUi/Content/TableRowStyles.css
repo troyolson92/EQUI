@@ -134,9 +134,9 @@
     }
 }
 
-.ani_ PulseRedRepeat {
+.ani_PulseRedRepeat {
     background-color: #f21a1a;
-    -webkit-animation: PulseBlue 3s infinite;
+    -webkit-animation: PulseRed 3s infinite;
 }
 
 @-webkit-keyframes PulseRed {

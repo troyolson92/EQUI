@@ -33,8 +33,6 @@
 
 
 @section scripts{
-    <script src="~/node_modules/jquery-jeditable/dist/jquery.jeditable.min.js"></script>
-
     <script>
         //full with screen
         $("#allcontent").removeClass("body-content");
@@ -66,20 +64,5 @@
             }
         });
 
-        //test with Jeditable for in place table editable
-        //https://github.com/NicolasCARPi/jquery_jeditable/
-        //Sample code
-        https://jeditable.elabftw.net/
-
-
-        //simple sample basic
-        $('.editTestCollum1').editable('@Url.Action("UpdateLabel")');
-
-        //full sample
-        $('.editTestCollum2').editable('@Url.Action("UpdateLabel")', {
-            data   : '{"E":"Letter E","F":"Letter F","G":"Letter G", "selected":"F"}',
-            type   : 'select',
-            submit : 'OK'
-        });
     </script>
 }

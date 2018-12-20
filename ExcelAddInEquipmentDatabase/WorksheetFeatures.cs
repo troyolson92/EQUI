@@ -9,7 +9,6 @@ using System.Diagnostics;
 using Microsoft.Office.Interop.Excel;
 using System.Windows.Forms;
 using EQUICommunictionLib;
-using EQUIToolsLib;
 using System.Threading;
 
 namespace ExcelAddInEquipmentDatabase
@@ -120,11 +119,6 @@ namespace ExcelAddInEquipmentDatabase
             if (location != "")
             {
                 addMaximoSubmenu(3); // if we have a reference location enable maximo tools
-            }
-            if (Logtype == "ALERT" || location.Like("%WS%") || location.Like("%JG%") || location.Like("%WT%"))
-            {
-                    btn = AddButtonToTableMenuItem("SBCUStats", 3, 433); 
-                    btn.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(SBCUStatsMenuItemClick);
             }
             if (Logtype == "TIMELINE" )
             {
@@ -345,25 +339,6 @@ namespace ExcelAddInEquipmentDatabase
                 Debugger.Message("Dam..." + ex.Message);
             }
         }
-        //**********************************SBCU Stats*********************************************
-        void SBCUStatsMenuItemClick(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)
-        {
-            var newThread = new System.Threading.Thread(frmNewSBCUstatsThread);
-            newThread.SetApartmentState(System.Threading.ApartmentState.STA);
-            newThread.Start();
-        }
-        public void frmNewSBCUstatsThread()
-        {
-            try
-            { 
-           System.Windows.Forms.Application.Run(new SBCUStats(location));
-            }
-            catch (Exception ex)
-            {
-                Debugger.Exeption(ex);
-                Debugger.Message("Dam..." + ex.Message);
-            }
-}
         //**********************************No Production*********************************************
         void SetNoProductionItemClick(Microsoft.Office.Core.CommandBarButton Ctrl, ref bool CancelDefault)
         {

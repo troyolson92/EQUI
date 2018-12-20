@@ -75,6 +75,10 @@
             requestType: 'get', // Ajax grid request type
             reload: true, // Grid reload indicator
             rowClicked: function (row, data, e) {
+                //ignore clicks not on td
+                if (e.target.tagName.toUpperCase() != 'TD') {
+                    return;
+                }
                 //if row already has this clase close the modal
                 if ($(row).hasClass("bg-info")) {
                     $("#placeholder").remove();
@@ -97,14 +101,14 @@
                 //simulate click on first row so that the details load automatic IF ROWCOUNT == 1
                 if ($('[data-name="Workorders"]>table>tbody>tr').length == 1) {
 
-                    $('[data-name="Workorders"]>table>tbody>tr:first').trigger('click');
+                    $('[data-name="Workorders"]>table>tbody>tr>td:first').trigger('click');
                 }
                 //subscribe to click event (launch external window)
                 initUrlNewWindow();
             },
             reloadFailed: function (result) {
                 console.log(result);
-                $('[data-name= "Workorders"]').html("Error while loading!!!");
+                $('[data-name= "Workorders"]').html($("#Error", result.responseText).html());
             }
         });
     }

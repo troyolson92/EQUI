@@ -1,0 +1,22 @@
+﻿@model List<string>
+@{
+    ViewBag.Title = "ListControlPlans";
+}
+
+<h2>ListControlPlans</h2>
+
+@Html.Grid(Model).Named("h_alert").Build(columns =>
+{
+    columns.Add(c => c).Titled("PlanName").Filterable(true);
+    columns.Add(c => c)
+                    .Titled("")
+                    .Encoded(false)
+                    .RenderedAs(c =>
+                    MyFilters.IconActionLink(Url.Action("GetControlPlan", new { PlanName = c }), "fas fa-clipboard-list ", "", "Go to control plan").ToHtmlString() 
+                    ).Filterable(false);
+}).Filterable().Sortable().Pageable(pager =>
+{
+    pager.RowsPerPage = 20;
+    pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 20, "20" }, { 40, "40" }, { 80, "80" }, { 100, "100" } };
+    pager.ShowPageSizes = true;
+}).Empty("Did not find anything").Css("table-hover")

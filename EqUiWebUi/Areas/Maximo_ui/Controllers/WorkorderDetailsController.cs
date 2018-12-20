@@ -28,33 +28,28 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
             return View();
         }
 
-        //standard details partial about 1 workorder (long text, failure, labor)
+        //standard details partial about 1 work order (long text, failure, labor)
         [HttpGet]
-        public ActionResult _woDetails(string wonum, bool RealtimeConn = false)
+        public ActionResult _woDetails(string wonum, bool RealtimeConn = false, bool RenderSubwo = true)
         {
             //check if user is allowed to user realtimeConn
             string MaximoDbName = "MAXIMO7rep";
+            int CommandTimeout = 30;
             if (RealtimeConn)
             {
-                roleProvider roleProvider = new roleProvider();
-                if (roleProvider.IsUserInRole(System.Web.HttpContext.Current.User.Identity.Name, "MAXIMOrealtime"))
-                {
-                    MaximoDbName = "MAXIMOrt";
-                }
-                else
-                {
-                    RealtimeConn = false;
-                }
+                MaximoDbName = "MAXIMOrt";
+                CommandTimeout = 5;
             }
-      
-
+     
             if (wonum == null) wonum = "NoWonum";
             if (wonum == "") wonum = "NoWonum";
+            ViewBag.wonum = wonum;
+            ViewBag.RenderSubwo = RenderSubwo;
             #region querys
             string cmdWORKORDER = "select * from MAXIMO.WORKORDER WORKORDER WHERE WORKORDER.WONUM = '{0}'";
             cmdWORKORDER = string.Format(cmdWORKORDER, wonum);
 
-            string cmdFAILUREREMARKdescription = "select* from MAXIMO.FAILUREREMARK FAILUREREMARK WHERE FAILUREREMARK.WONUM = '{0}'";
+            string cmdFAILUREREMARKdescription = "select * from MAXIMO.FAILUREREMARK FAILUREREMARK WHERE FAILUREREMARK.WONUM = '{0}'";
             cmdFAILUREREMARKdescription = string.Format(cmdFAILUREREMARKdescription, wonum);
 
             string cmdFAILUREREMARK = (@"
@@ -111,35 +106,12 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
             string LONGDESCRIPTION;
             string FAILUREREMARK;
             DataTable LABOR;
-            try
-            {
-                WORKORDER = connectionManager.RunQuery(cmdWORKORDER, dbName: MaximoDbName, maxEXECtime: 15, enblExeptions: true);
-                FAILUREREMARKdesc = connectionManager.RunQuery(cmdFAILUREREMARKdescription, dbName: MaximoDbName, maxEXECtime: 15, enblExeptions: true);
-                LONGDESCRIPTION = connectionManager.GetCLOB(cmdLONGDESCRIPTION, dbName: MaximoDbName, enblExeptions: true);
-                FAILUREREMARK = connectionManager.GetCLOB(cmdFAILUREREMARK, dbName: MaximoDbName, enblExeptions: true);
-                LABOR = connectionManager.RunQuery(cmdLabor, dbName: MaximoDbName, maxEXECtime: 15, enblExeptions: true);
-            }
-            catch (Exception ex)
-            {
-                log.Error("Failed to run query using the realtimeConn", ex);
-                if (RealtimeConn) //if we where using the realtime connection retry useing reporting dbEQUI
-                {
-                    RealtimeConn = false;
-                    MaximoDbName = "MAXIMO7rep";
-                    WORKORDER = connectionManager.RunQuery(cmdWORKORDER, dbName: MaximoDbName, maxEXECtime: 15, enblExeptions: true);
-                    FAILUREREMARKdesc = connectionManager.RunQuery(cmdFAILUREREMARKdescription, dbName: MaximoDbName, maxEXECtime: 15, enblExeptions: true);
-                    LONGDESCRIPTION = connectionManager.GetCLOB(cmdLONGDESCRIPTION, dbName: MaximoDbName, enblExeptions: true);
-                    FAILUREREMARK = connectionManager.GetCLOB(cmdFAILUREREMARK, dbName: MaximoDbName, enblExeptions: true);
-                    LABOR = connectionManager.RunQuery(cmdLabor, dbName: MaximoDbName, maxEXECtime: 15, enblExeptions: true);
-                }
-                else
-                {
-                    //else just throw the exeption
-                    throw ex;
-                }
-            }
 
-
+            WORKORDER = connectionManager.RunQuery(cmdWORKORDER, dbName: MaximoDbName, maxEXECtime: CommandTimeout, enblExeptions: true);
+            FAILUREREMARKdesc = connectionManager.RunQuery(cmdFAILUREREMARKdescription, dbName: MaximoDbName, maxEXECtime: CommandTimeout, enblExeptions: true);
+            LONGDESCRIPTION = connectionManager.GetCLOB(cmdLONGDESCRIPTION, dbName: MaximoDbName, enblExeptions: true);
+            FAILUREREMARK = connectionManager.GetCLOB(cmdFAILUREREMARK, dbName: MaximoDbName, enblExeptions: true);
+            LABOR = connectionManager.RunQuery(cmdLabor, dbName: MaximoDbName, maxEXECtime: CommandTimeout, enblExeptions: true);
             //   DataTable WORKLOG = maximoComm.oracle_runQuery(cmdWorkLog, RealtimeConn:RealtimeConn);
             if (WORKORDER.Rows.Count != 0)
             {
@@ -152,7 +124,7 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
             }        
             ViewBag.LongDescription = LONGDESCRIPTION;
             ViewBag.FailureRemark = FAILUREREMARK;
-            //parsing datatables using the dynamic system
+            //parsing data tables using the dynamic system
             WebGridHelpers.WebGridHelper webGridHelper = new WebGridHelper();
             ViewBag.LABORColumns = webGridHelper.getDatatabelCollumns(LABOR);
             List<dynamic> LABORdata = webGridHelper.datatableToDynamic(LABOR);
@@ -165,18 +137,18 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
         }
 
 
-        //details view about 1 main workorder and his childeren 
+        //details view about all children from given work order
         [HttpGet]
-        public ActionResult WoParentDetails(string parentwonum, bool RealtimeConn = false)
+        public ActionResult SubWoDetails(string parentwonum, bool RealtimeConn = false)
         {
             ViewBag.parentwonum = parentwonum;
             ViewBag.RealtimeConn = RealtimeConn;
             return View();
         }
 
-        //partial that gets details in 1 main workorder and loops all the childeren.
+        //partial that gets details of all the children of the given work order.
         [HttpGet]
-        public ActionResult _woParentDetails(string parentwonum, bool RealtimeConn = false)
+        public ActionResult _SubWoDetails(string parentwonum, bool RealtimeConn = false)
         {
             //check if user is allowed to user realtimeConn
             if (RealtimeConn)
@@ -188,9 +160,9 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
                 }
             }
             ViewBag.RealtimeConn = RealtimeConn;
-            //add the parent to the viewbag.
+            //add the parent to the view bag.
             ViewBag.parentwonum = parentwonum;
-            //Get a list of all the childeren WO for this parent
+            //Get a list of all the children WO for this parent
             if (parentwonum == null) parentwonum = "NoWonum";
             if (parentwonum == "") parentwonum = "NoWonum";
             string qrySubWO = "SELECT * FROM MAXIMO.WORKORDER WORKORDER WHERE WORKORDER.PARENT = '{0}' ORDER BY WORKORDER.LOCATION";

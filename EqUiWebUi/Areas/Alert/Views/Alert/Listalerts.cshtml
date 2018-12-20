@@ -6,39 +6,45 @@
 }
 
 <h2>Index of alerts</h2>
-@if (ViewBag.LocationFilter != null)
+@if (ViewBag.alertGroup != "")
 {
+<span class="badge badge-pill badge-warning">Filter on alert group: @ViewBag.alertGroup</span>
+}
+@if (ViewBag.ActiveAlertOnly)
+{
+<span class="badge badge-pill badge-warning">Only Active alerts are shown!</span>
+}
+@if (ViewBag.ApplyResponsibleArea)
+{
+<span class="badge badge-pill badge-warning">Filter by ApplyResponsibleArea</span>
+}
+
+@if (ViewBag.LocationFilter != null)
+{<span class="badge badge-warning">
     <h3>Filtered on location: @ViewBag.LocationFilter</h3>
-    <h4>This location has @ViewBag.AlertCount alerts in his history</h4>
+    <h6 class="fa-pull-left">This location has @ViewBag.AlertCount alerts in his history</h6>
+</span>
 }
 
 @Html.Grid(Model).Named("h_alert").Build(columns =>
 {
-    columns.Add(c => c.id).Titled("id").Filterable(true);
+    columns.Add(c => c.id).Titled("id").Css("d-none");
+    columns.Add(c => c.c_triggers.alertGroup).Titled("Group").Filterable(true);
+    columns.Add(c => c.c_triggers.alertType).Titled("Type").Filterable(true);
     columns.Add(c => c.location).Titled("location").Filterable(true).MultiFilterable(true);
     columns.Add(c => c.lastTriggerd).Titled("timestamp").Formatted("{0:dd-MM-yyyy HH:mm}").InitialSort(GridSortOrder.Desc);
     columns.Add(c => c.info).Titled("info");
     columns.Add(c => c.ChangedUser.username.Replace(@"VCCNET\", "")).Titled("ChangedUser");
     columns.Add(c => c.triggerCount).Titled("TC").Filterable(true);
-    //render dropdown to set alert status
-    columns.Add(c => c.c_state.state)
-                   .Titled("State")
-                   .Encoded(false)
-                   .Filterable(true)
-                   .RenderedAs(c => MyFilters.ChangeAlertStatus(c.id, c.c_state.state));
-
-    //add filterbutton
+    columns.Add(c => "<p id=" + c.id + " class='setalertState btn btn-primary'>" + c.c_state.state).Encoded(false).Titled("State").Filterable(true);
+    //tools
     columns.Add(c => c)
                         .Titled("")
                         .Encoded(false)
-                        .RenderedAs(c => MyFilters.IconActionLink(Url.Action("Listalerts", new { Location = c.location }), "fas fa-filter", "", "Filter alerts for this location")
-                        ).Filterable(false);
-
-    //add edit button
-    columns.Add(c => c)
-                        .Titled("")
-                        .Encoded(false)
-                        .RenderedAs(c => MyFilters.IconActionLink(Url.Action("Edit", new { id = c.id }), "fas fa-pencil-alt", "", "Edit this alert")
+                        .RenderedAs(c =>
+                        MyFilters.IconActionLink(Url.Action("Listalerts", new { Location = c.location }), "fas fa-filter", "", "Filter alerts for this location").ToHtmlString() +     //add filterbutton
+                        MyFilters.IconActionLink(Url.Action("Edit", new { id = c.id }), "fas fa-pencil-alt", "", "Edit this alert").ToHtmlString() +    //add edit button
+                        (c.info.Contains("gun") ? MyEquiToolkit.SbcuTool(c.location, c.info.Replace(":", "").Substring(c.info.IndexOf("gun"), 5).Replace("gun", "")).ToHtmlString() : "")  //launch sbcu tool (if needed)
                         ).Filterable(false);
 
 }).Filterable().Sortable().Pageable(pager =>
@@ -50,6 +56,7 @@
 
 
 @section scripts{
+    <script src="~/node_modules/jquery-jeditable/dist/jquery.jeditable.min.js"></script>
     <script>
         //full with screen
         $("#allcontent").removeClass("body-content");
@@ -58,6 +65,11 @@
         //subscribe to row clicked events
         $('[data-name="h_alert"]').mvcgrid({
             rowClicked: function (row, data, e) {
+                //ignore clicks not on td
+                console.log(e.target.tagName);
+                if (e.target.tagName.toUpperCase() != 'TD') {
+                    return;
+                }
                 //if row already has this class close the modal
                 if ($(row).hasClass("bg-info")) {
                     $("#placeholder").remove();
@@ -81,8 +93,22 @@
         //simulate click on first row so that the details load automatic IF ROWCOUNT == 1
         if ($('[data-name="h_alert"]>table>tbody>tr').length == 1) {
 
-            $('[data-name="h_alert"]>table>tbody>tr:first').trigger('click');
+            $('[data-name="h_alert"]>table>tbody>tr>td:first').trigger('click');
         }
+
+        //handle inline set state
+        $('.setalertState').editable('@Url.Action("SetState")', {
+            data   : '@(Html.EnumToMvcHtmlString<EqUiWebUi.Areas.Alert.Models.alertState>())',
+            type: 'select',
+            showfn: function (elem) { }, //trigger select open from here .
+            onerror: function (settings, self, xhr) {
+                $.toaster({ title: 'setalertState', priority: 'danger', message: 'Error with status code: ' + xhr.status });
+            },
+            callback: function (value, settings) {
+                $.toaster({ title: 'setalertState', priority: 'success', message: 'The alert state has been changed' });
+                $(this).html(settings.data[value]);
+            }
+        });
     </script>
 }
 

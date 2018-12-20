@@ -173,7 +173,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Alert\Views\Shared\" />
-    <Folder Include="Areas\CycleTime\Controllers\" />
     <Folder Include="Areas\CycleTime\Models\" />
     <Folder Include="Areas\CycleTime\Views\Shared\" />
     <Folder Include="Areas\HangfireArea\Models\" />
@@ -266,6 +265,7 @@
     </Compile>
     <Compile Include="Areas\Alert\SmsComm.cs" />
     <Compile Include="Areas\CycleTime\BackgroundWork.cs" />
+    <Compile Include="Areas\CycleTime\Controllers\CycleTimeUiController.cs" />
     <Compile Include="Areas\CycleTime\CycleTimeAreaRegistration.cs" />
     <Compile Include="Areas\Gadata\BackgroundWork.cs" />
     <Compile Include="Areas\Gadata\Controllers\TableController.cs" />
@@ -668,6 +668,7 @@
     <Compile Include="Areas\Welding\Controllers\TeardownTeam.cs" />
     <Compile Include="Areas\Welding\Controllers\DMLControllers\ToDoListsController.cs" />
     <Compile Include="Areas\Welding\Controllers\DMLControllers\ToDoList_RemarkController.cs" />
+    <Compile Include="Areas\Welding\Controllers\UltralogController.cs" />
     <Compile Include="Areas\Welding\Controllers\UpdateController.cs" />
     <Compile Include="Areas\Welding\Controllers\WMController.cs" />
     <Compile Include="Areas\Welding\Controllers\DMLControllers\editController.cs" />
@@ -846,6 +847,7 @@
     <Compile Include="Areas\Welding\Models\ULRapportering.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
+
     <Compile Include="Areas\Welding\Models\UltralogInspections.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
@@ -855,6 +857,7 @@
     <Compile Include="Areas\Welding\Models\Users.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Areas\Welding\Models\UltralogData.cs" />
     <Compile Include="Areas\Welding\Models\WeldfaultCount.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
@@ -1167,7 +1170,6 @@
     <Content Include="Areas\Alert\Views\c_smsSystem\Details.cshtml" />
     <Content Include="Areas\Alert\Views\c_smsSystem\Edit.cshtml" />
     <Content Include="Areas\Alert\Views\c_smsSystem\Index.cshtml" />
-    <Content Include="Areas\Alert\Views\Alert\AASPOTAlertList.cshtml" />
     <Content Include="Areas\Alert\Views\Alert\_Details.cshtml" />
     <Content Include="Areas\Gadata\Views\web.config" />
     <Content Include="Areas\Gadata\Views\_ViewStart.cshtml" />
@@ -1195,8 +1197,8 @@
     <Content Include="Areas\HangfireArea\Views\Job\_settings.cshtml" />
     <Content Include="Areas\user_management\Views\users\ListSessions.cshtml" />
     <Content Include="Areas\user_management\Views\users\_settings.cshtml" />
-    <Content Include="Areas\Maximo_ui\Views\WorkorderDetails\_woParentDetails.cshtml" />
-    <Content Include="Areas\Maximo_ui\Views\WorkorderDetails\WoParentDetails.cshtml" />
+    <Content Include="Areas\Maximo_ui\Views\WorkorderDetails\_SubWoDetails.cshtml" />
+    <Content Include="Areas\Maximo_ui\Views\WorkorderDetails\SubWoDetails.cshtml" />
     <Content Include="Areas\Tiplife\Views\web.config" />
     <EntityDeploy Include="Areas\Tiplife\Models\TiplifeModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
@@ -1993,6 +1995,11 @@
     <Content Include="Areas\Welding\Views\StoringsIngave\Details.cshtml" />
     <Content Include="Areas\Welding\Views\StoringsIngave\Edit.cshtml" />
     <Content Include="Areas\Welding\Views\StoringsIngave\Index.cshtml" />
+    <Content Include="Areas\CycleTime\Views\CycleTimeUi\Index.cshtml" />
+    <Content Include="Areas\Welding\Views\Ultralog\GetControlPlanPicture.cshtml" />
+    <Content Include="Areas\Welding\Views\Ultralog\GetControlPlan.cshtml" />
+    <Content Include="Areas\Welding\Views\Ultralog\_GetControlPlanPicture.cshtml" />
+    <Content Include="Areas\Welding\Views\Ultralog\ListControlPlans.cshtml" />
     <None Include="Properties\PublishProfiles\gensvw1178-DEV-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gotsvw11292-PRODUCTION-VCTA.pubxml" />
