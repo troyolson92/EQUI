@@ -141,7 +141,7 @@ workorder.changedate >= sysdate - 100
         ,ASSET.ASSETNUM
         ,ASSET.DESCRIPTION AssetDescription
         ,LOCATIONCTE.H_PATH LocationTree
-        ,null CLASSDESCRIPTION
+        ,CLASSSTRUCTURE.DESCRIPTION CLASSDESCRIPTION
         ,ASSET.CLASSSTRUCTUREID
         ,CLASSSTRUCTURE.CLASSIFICATIONID
         ,null ClassificationTree
@@ -202,6 +202,7 @@ workorder.changedate >= sysdate - 100
 
             cmds.Add("exec NGAC.[sp_LinkAssets]");
             cmds.Add("exec EQUI.[sp_LinkAssets]");
+            cmds.Add("exec WELDING2.[sp_LinkAssets]");
 
             foreach (string cmd in cmds)
             {

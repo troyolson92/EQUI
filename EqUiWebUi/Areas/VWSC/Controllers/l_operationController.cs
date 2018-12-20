@@ -41,7 +41,7 @@ namespace EqUiWebUi.Areas.VWSC.Controllers
             else
             {
                 //for a controller
-                return PartialView(db.L_operation.Where(c => (c.controller_id == timer_id && c.Vwsc_name.Contains(sessionName)) || (c.controller_id == null && c.Vwsc_name.Contains(sessionName))));
+                return PartialView(db.L_operation.Where(c => (c.timer_id == timer_id && c.Vwsc_name.Contains(sessionName)) || (c.timer_id == null && c.Vwsc_name.Contains(sessionName))));
             }
 
         }

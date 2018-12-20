@@ -1,0 +1,62 @@
+﻿@model IQueryable<EqUiWebUi.Areas.Welding.Models.rt_job11>
+
+
+
+@Html.Grid(Model).Named("_rt_job11").Build(columns =>
+{
+    columns.Add(c => c.id).Titled("Job_id");
+    columns.Add(c => c.c_timer.Name).Titled("TimerName");
+    columns.Add(c => c.ts_Start).Titled("StartJob").InitialSort(GridSortOrder.Desc);
+    columns.Add(c => c.ts_End).Titled("EndJob");
+    columns.Add(c => c.rt_expulsion_count).Titled("AantalSpatters");
+    columns.Add(c => c.rt_weldfaultprot_count).Titled("AantalWeldfaults");
+   columns.Add(c => c.rt_breakdown_count).Titled("AantalBreakdowns");
+    columns.Add(c => c.rt_job_breakdown.Where(b => b.index == 1).FirstOrDefault().rt_alarm.errorCode1_txt).Titled("error");
+ 
+   
+
+}).Filterable().Sortable().Pageable(pager =>
+{
+    pager.RowsPerPage = 20;
+    pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 20, "20" }, { 40, "40" }, { 80, "80" }, { 100, "100" } };
+    pager.ShowPageSizes = true;
+}).Empty("Did not find anything").Css("table-hover")
+
+
+@section scripts{
+    <script>
+        //full with screen
+        $("#allcontent").removeClass("body-content");
+        $("#allcontent").removeClass("container");
+
+        //subscribe to row clicked events
+        $('[data-name="_rt_job11"]').mvcgrid({
+            rowClicked: function (row, data, e) {
+                //if row already has this clase close the modal
+                if ($(row).hasClass("bg-info")) {
+                    $("#placeholder").remove();
+                    $(row).removeClass("bg-info");
+                    return;
+                }
+                //clear selected rows for this table
+                $('tr').removeClass('bg-info'); //THIS IS WRONG
+                $(row).addClass("bg-info");
+                $("#placeholder").remove(); //clear placeholder is exists
+                //add new placeholder afhter selected row
+                $(row).after('<tr id="placeholder"><td colspan="1000"><div class="card border-info"><div class="card-body" id ="placeholderPartial"></div></div></td></tr>');
+                //animation
+                $("#placeholderPartial").html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
+                //load url in placeholder
+                var url = "@Url.Action("_jobdetails1")?id=" + data["id"];
+                $("#placeholderPartial").load(url);
+            }
+        });
+
+        //if only one row open automatic
+        if ($('[data-name="_rt_job11"]>table>tbody>tr').length == 1) {
+
+            $('[data-name="_rt_job11"]>table>tbody>tr:first').trigger('click');
+        }
+    </script>
+}
+

@@ -35,10 +35,10 @@ namespace EqUiWebUi.Areas.VWSC.Models
         public Nullable<int> rt_weldmeasureprotddw_count { get; set; }
         public Nullable<int> rt_weldfaultprot_count { get; set; }
         public Nullable<int> rt_breakdown_count { get; set; }
+        public Nullable<int> rt_weldmeasureprotddw_distinct { get; set; }
     
-        public virtual VWSC_c_Timer Timer { get; set; }
-        public virtual VWSC_c_Timer Timer1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<VWSC_rt_job_breakdown> rt_job_breakdown { get; set; }
+        public virtual VWSC_c_timer c_timer { get; set; }
     }
 }

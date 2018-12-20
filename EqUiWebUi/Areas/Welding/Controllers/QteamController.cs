@@ -9,7 +9,7 @@ namespace EqUiWebUi.Areas.Welding.Controllers
 {
 
    
-    [Authorize(Roles = "QteamPoweruser")]
+   // [Authorize(Roles = "QteamPoweruser")]
     public class QteamController : Controller
     {
         GADATAEntitiesWelding db = new GADATAEntitiesWelding();
@@ -25,7 +25,20 @@ namespace EqUiWebUi.Areas.Welding.Controllers
             IQueryable<rt_ExtraControles> data = db.rt_ExtraControles.Where(c => c.robot.StartsWith(robotStartsWith)).AsQueryable();
             return View(data);
         }
+
+        //split plans with ultralogplans and weldbolt plans
+
         public ActionResult rt_AutoWorkFlowULPlans()
+        {
+            IQueryable<rt_AutoWorkFlowULPlans> data = db.rt_AutoWorkFlowULPlans.AsQueryable();
+            return PartialView(data);
+        }
+        public ActionResult _WeldBoltPlans()
+        {
+            IQueryable<AutomaticPlanControleWeldBolt> data = db.AutomaticPlanControleWeldBolt.AsQueryable();
+            return PartialView(data);
+        }
+        public ActionResult _Plans()
         {
             IQueryable<rt_AutoWorkFlowULPlans> data = db.rt_AutoWorkFlowULPlans.AsQueryable();
             return View(data);
@@ -36,6 +49,9 @@ namespace EqUiWebUi.Areas.Welding.Controllers
             IQueryable<ULRapportering> data = db.ULRapporterings.AsQueryable();
             return View(data);
         }
+
+     
+       
     }
 }
 

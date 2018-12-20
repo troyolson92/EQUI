@@ -34,7 +34,7 @@
         @MyHtmlHelpers.EquiLink("/Alert/Alert/Index", "fas fa-bell", EqUiWebUi.defaultArea.Alerts, helperText: EqUiWebUi.defaultArea.AlertsDescription, iconClasses: "bg-warning", helpurl: @Url.Action("ShowWiki", "Wikis", new { area = "", id = 3 }, null))
         @MyHtmlHelpers.EquiLink("https://volvocars.plantview.se/?v=ps&t=p:default,c:projectselector,m:t&ps=ps1&ps1=q:vcg", "fas fa-industry", "Plantview", helperText: "3d scans of all volvo plants")
         @MyHtmlHelpers.EquiLink("/Maximo_ui/Workorder/Workorders", "fas fa-briefcase", "Maximo_ui", helperText: "Fast and simple Maximo interface")
-        @MyHtmlHelpers.EquiLink("/Tableau/index", "fas fa-chart-line", "Tableau", helperText: "Dashbords done right")
+        @MyHtmlHelpers.EquiLink("/Tableau/index", "fas fa-chart-line", "Tableau", helperText: "Dashboards done right")
     </div>
 </div>
 
@@ -65,7 +65,7 @@
         </h5>
     </div>
     <div class="card-body">
-        @MyHtmlHelpers.EquiLink("/Home/Rendersite?url=" + @Uri.EscapeDataString("http://webapps.gen.volvocars.net/applications/eng/equipment/supervisiep1/intranet"), "far fa-object-group", "Supervisie (brownfield)", helperText: "Satline supervisie schermen")
+        @MyHtmlHelpers.EquiLink("/Home/Rendersite?url=" + @Uri.EscapeDataString("http://webapps.gen.volvocars.net/applications/eng/equipment/supervisiep1/intranet"), "far fa-object-group", "Supervisie (brownfield)", helperText: "Sattline supervisie schermen")
     </div>
 </div>
 
@@ -80,6 +80,7 @@
     </div>
     <div class="card-body">
         @MyHtmlHelpers.EquiLink("/Welding/Welding/index", "fas fa-bolt", "AASPOT homepage", helperText: "Nieuwe website voor AASPOT (jens)")
+        @MyHtmlHelpers.EquiLink("/PJV/pjv/index", "fas fa-vial", "PJV", helperText: "Track changed and modifications on robot process points")
     </div>
 </div>
 
@@ -95,9 +96,7 @@
         </h5>
     </div>
     <div class="card-body" style="display:none">
-        @MyHtmlHelpers.EquiLink("/VASC/Breakdown/getBreakdowns", "fas fa-vial", "getBreakdowns", helperText: "NGAC breakdown details")
-        @MyHtmlHelpers.EquiLink("/PJV/pjv/index", "fas fa-vial", "PJV", helperText: "Track changed and modifications on robot process points")
-        @MyHtmlHelpers.EquiLink("/Gadata/Table/BodyTrackWebgrid?DataGrid-body-no-equals=99999999", "fas fa-vial", "Track cars by bodynum", helperText: "weldbolt line only")
+        @MyHtmlHelpers.EquiLink("/VASC/Breakdown/GetJobs?PromptBodynum=true", "fas fa-vial", "Track cars by bodynum", helperText: "weldbolt line only")
     </div>
 </div>
 

@@ -22,13 +22,16 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
 
         //------------------------------------PloegRapport-------------------------------------------------
         [HttpGet]
-        public ActionResult PloegRapportWebgrid()
+        public ActionResult PloegRapportWebgrid(int minSumOfDownTime = 20, int minCountOfDownTime = 4, bool ApplyResponsibleArea = false)
         {
+            ViewBag.minSumOfDownTime = minSumOfDownTime;
+            ViewBag.minCountOfDownTime = minCountOfDownTime;
+            ViewBag.ApplyResponsibleArea = ApplyResponsibleArea;
             return View();
         }
 
         [HttpGet]
-        public ActionResult _ploegRapport()
+        public ActionResult _ploegRapport(int minSumOfDownTime = 20, int minCountOfDownTime = 4, bool ApplyResponsibleArea = false)
         {
             var data = DataBuffer.Supervisie;
             //in case still null trow error return empty result 
@@ -39,12 +42,21 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
 
             //apply user filters
             string LocationRoot = CurrentUser.Getuser.LocationRoot;
-            if (LocationRoot != "")
+            if (LocationRoot != "" && ApplyResponsibleArea == false)
             {
                 data = (from d in data
                         where (d.LocationTree ?? "").Contains(LocationRoot) //apply user locationroot
-                        || d.Logtype == "TIMELINE" //always allowtimeline
+                        || d.Logtype == "TIMELINE" //always allow timeline
                             select d).ToList();
+            }
+
+            List<string> ResponsibleAreaLocations = CurrentUser.Getuser.ResponsibleAreaLocations;
+            if (ResponsibleAreaLocations != null && ApplyResponsibleArea == true)
+            {
+                data = (from d in data
+                        where (d.LocationTree ?? "").ListContaints(ResponsibleAreaLocations) //apply user ResponsibleArea
+                        || d.Logtype == "TIMELINE" //always allow timeline
+                        select d).ToList();
             }
 
             string AssetRoot = CurrentUser.Getuser.AssetRoot;
@@ -53,10 +65,10 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
                 data = (from d in data
                         where (d.Classification ?? "").Contains(AssetRoot) //apply user assetroot
                             || (d.Classification ?? "") == "" //or allow assets that are null
-                            || d.Logtype == "TIMELINE" //always allowtimeline
+                            || d.Logtype == "TIMELINE" //always allow timeline
                             select d).ToList();
             }
-
+           
             //THIS SHOULD NOT STAY!!!! CLEAN THIS OUT YOU LAZy F
             //apply filter for "Operational"
             data = (from d in data
@@ -97,7 +109,7 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
                 }).Where(
                  p => 
                  (//EXCLUDE
-                 (p.Downtime_min_ > 20 * 60 || p.Count > 4)  //longer than 20 min or more than 4 times 
+                 (p.Downtime_min_ > minSumOfDownTime * 60 || p.Count > minCountOfDownTime)  //longer than 20 min or more than 4 times 
                  && p.Logtype != "LIVE"  //EXCLUDE
                  )
                  || p.animation == "ALERT" //INCLUDE (this is on the animation because when the animation of an alert is "Alert" this alert is not in WGK 
@@ -111,13 +123,14 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
 
         //------------------------------------Supervisie-------------------------------------------------
         [HttpGet]
-        public ActionResult SupervisieWebgrid()
+        public ActionResult SupervisieWebgrid(bool ApplyResponsibleArea = false)
         {
+            ViewBag.ApplyResponsibleArea = ApplyResponsibleArea;
             return View();
         }
 
         [HttpGet]
-        public ActionResult _supervisie(string locationRootFilter = "")
+        public ActionResult _supervisie(string locationRootFilter = "", bool ApplyResponsibleArea = false)
         {
             // 
             var data = DataBuffer.Supervisie;
@@ -126,18 +139,27 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
             {
                 data = new List<EqUiWebUi.Areas.Gadata.SupervisieDummy>();
             }
-            //apply location root filter
+            //apply user filters
             string LocationRoot = CurrentUser.Getuser.LocationRoot;
             //if the locationRootFilter is passed as arument allow this to override USER location filter. (is used in ploegrapport)
             if (locationRootFilter != "") LocationRoot = locationRootFilter;
-            if (LocationRoot != "")
+            if (LocationRoot != "" && ApplyResponsibleArea == false)
             {
                 data = (from d in data
                         where (d.LocationTree ?? "").Contains(LocationRoot)
                         || d.Logtype == "TIMELINE"
                         select d).ToList();
             }
-            //apply asset root filter
+
+            List<string> ResponsibleAreaLocations = CurrentUser.Getuser.ResponsibleAreaLocations;
+            if (ResponsibleAreaLocations != null && ApplyResponsibleArea == true)
+            {
+                data = (from d in data
+                        where (d.LocationTree ?? "").ListContaints(ResponsibleAreaLocations) //apply user ResponsibleArea
+                        || d.Logtype == "TIMELINE" //always allow timeline
+                        select d).ToList();
+            }
+
             string AssetRoot = CurrentUser.Getuser.AssetRoot;
             if (AssetRoot != "")
             {
@@ -148,10 +170,7 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
                             || d.Logtype == "TIMELINE" //always always allowtimeline
                         select d).ToList();
             }
-
-
-
-
+                        
             //THIS SHOULD NOT STAY!!!! CLEAN THIS OUT YOU LAZy F
             //apply filter for "Operational"
             data = (from d in data
@@ -164,27 +183,6 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
             return PartialView(data);;
         }
         //-------------------------------------------------------------------------------------------------
-
-        //------------------------------------Body track web grid-------------------------------------------------
-        [HttpGet]
-        public ActionResult BodyTrackWebgrid()
-        {
-            VASC.Models.GADATAEntitiesVASC GADATAEntitiesVASC = new VASC.Models.GADATAEntitiesVASC();
-            GADATAEntitiesVASC.Database.CommandTimeout = 60;
-            IQueryable<VASC.Models.Bodytracking> data = from bodytracking in GADATAEntitiesVASC.Bodytracking
-                                            select bodytracking;
-
-            return View(data);
-        }
-
-
-
-
-        //-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-        //-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-        //-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-
 
 
         //full view for more info ---------------------------------------------------------------------------------------------------------------------

@@ -1,4 +1,5 @@
 ﻿using EqUiWebUi.Areas.Welding.Models;
+using Hangfire.Server;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,8 @@ namespace EqUiWebUi.Areas.Welding.Controllers
 
 {
     public class TeardownTeamController : Controller
+
+
     {
         GADATAEntitiesWelding db = new GADATAEntitiesWelding();
         // GET: TeardownTeam
@@ -23,39 +26,52 @@ namespace EqUiWebUi.Areas.Welding.Controllers
             return View(data);
         }
 
-        public ActionResult TeardownTest()
+
+
+
+        public partial class StartDummy
         {
-            IQueryable<test> data = db.test.AsQueryable();
+            public string Type { get; set; }
+            public string BodyNbr { get; set; }
+            public string TDTStartTime { get; set; }
+
+            public class _TDT
+            {
+                GADATAEntitiesWelding db = new GADATAEntitiesWelding();
+
+                public void TDT(PerformContext context)
+                {
+                    List<StartDummy> data = new List<Areas.Welding.Controllers.TeardownTeamController.StartDummy>();
+                }
+            }
+        }
+
+
+        public ActionResult _startTeardown()
+        {
+            var data = db.ComparePitchV316.Select (p => new StartDummy() {
+                Type = p.AlternativeNumber
+                ,BodyNbr = p.id.ToString()
+                ,TDTStartTime = p.SpotID
+
+                }).ToList();
+
             return View(data);
-
         }
-           public ActionResult SaveSpot(int id,string propertyName, string value)
-            {
 
-            var Status = false;
-            var message = "";
-            //update data to gadata
-
-            var spot = db.test.Find(id);
-            if (spot != null)
-            {
-                db.Entry(spot).Property(propertyName).CurrentValue = value;
-                db.SaveChanges();
-                Status = true;
-            }
-            else
-            {
-                message = "error!!: contact Jens Coppejans";
-            }
-            
-            var response = new { value = value, status = Status, message = message };
-            JObject o = JObject.FromObject(Response);
-            return Content(o.ToString());
 
             }
-
-
 
         }
 
-    }
+
+
+
+
+
+
+
+
+
+
+

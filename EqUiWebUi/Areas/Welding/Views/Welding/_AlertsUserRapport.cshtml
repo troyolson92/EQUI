@@ -1,0 +1,37 @@
+﻿@model IQueryable<EqUiWebUi.Areas.Welding.Models.AlertsUsers>
+@{
+    ViewBag.Title = "AlertsUsers";
+}
+
+<h2>WeldingTeam Alerts</h2>
+@Html.Grid(Model).Named("_AlertsUsers").Build(columns =>
+{
+    columns.Add(c => c.C_timestamp).Titled("timestamp").Formatted("{0:dd-MM-yyyy HH:mm:ss}").InitialSort(GridSortOrder.Desc);
+    columns.Add(c => c.location).Titled("location");
+    columns.Add(c => c.alarmobject).Titled("alarmobject");
+    columns.Add(c => c.info).Titled("Information");
+    columns.Add(c => c.state).Titled("status");
+    columns.Add(c => c.ResponsibleWeldMaster).Titled("ResponsibleWeldMaster");
+    //
+    columns.Add(c => c.userAccept).Titled("userAccept");
+    columns.Add(c => c.AcceptTime).Titled("AcceptTime");
+    //
+    columns.Add(c => c.userChanged).Titled("userChanged");
+    columns.Add(c => c.ChangedTime).Titled("hangedTime");
+    //
+    columns.Add(c => c.userClosed).Titled("userClosed");
+    columns.Add(c => c.ClosedTime).Titled("ClosedTime");
+
+
+
+
+}).Filterable().Pageable(pager =>
+{
+    pager.RowsPerPage = 12;
+}
+).Sortable().RowCss(c => ( c.info.StartsWith("Loose") ? "ani_PulseRed" : ""))
+
+
+
+
+

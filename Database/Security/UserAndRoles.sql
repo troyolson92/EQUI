@@ -8,7 +8,12 @@ CREATE LOGIN [EqUiAdmin] WITH PASSWORD=N'akpC7iTebRcNCl/n/xVVP7g9IMn99R5idbGD11i
 GO
 CREATE USER [EqUiAdmin] FOR LOGIN [EqUiAdmin];
 GO
-CREATE ROLE [db_accessEquiAdmin] AUTHORIZATION [dbo];
+CREATE ROLE [db_accessEquiAdmin]
+    AUTHORIZATION [dbo];
+
+
+
+
 
 GO
 GRANT SELECT TO [db_accessEquiAdmin];
@@ -26,3 +31,12 @@ GO
 ALTER ROLE [db_accessEquiAdmin] ADD MEMBER [EqUiAdmin];
 GO
 ALTER ROLE [db_accessEquiAdmin] ADD MEMBER [VASC_a];
+
+---GO
+--ALTER ROLE [db_accessEquiAdmin] ADD MEMBER [VCCNET\BPPEQDB1];
+
+
+
+GO
+ALTER ROLE [db_accessEquiAdmin] ADD MEMBER [VCCNET\BPPEQDB1];
+

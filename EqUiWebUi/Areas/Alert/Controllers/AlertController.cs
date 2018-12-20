@@ -1,4 +1,6 @@
 ﻿using EqUiWebUi.Areas.Alert.Models;
+using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -27,27 +29,69 @@ namespace EqUiWebUi.Areas.Alert.Controllers
         //interface where users can manage the alerts
         private GADATA_AlertModel db = new GADATA_AlertModel();
 
-        //Global Alert interface
-        // GET: Listalerts AND filter the alerts based on the users profile
-        public ActionResult Listalerts(int? c_trigger_id, int? id, string Location = "")
-        {           
+        /// <summary>
+        /// Global Alert interface
+        /// all parameters are optional
+        /// </summary>
+        /// <param name="c_trigger_id">Filter by specific trigger</param>
+        /// <param name="id">Get specific alert</param>
+        /// <param name="Location">Filter on location</param>
+        /// <param name="alertGroup">Filter on alertGroup</param>
+        /// <param name="ActiveAlertOnly">only show alerts that are not closed</param>
+        /// <param name="ApplyResponsibleArea">Filter on ApplyResponsibleArea</param>
+        /// <returns></returns>
+        public ActionResult Listalerts(int? c_trigger_id, int? id, string Location = "", string alertGroup = "", bool ActiveAlertOnly = false, bool ApplyResponsibleArea = false)
+        {
             var h_alert = db.h_alert.Include(h => h.c_state).Where(h =>
-                ((h.id == (id ?? 0)) || (id == null))
-                && ((h.c_tirgger_id == (c_trigger_id ?? 0)) || (c_trigger_id == null))
-                && ((h.location.StartsWith(Location))||(Location == ""))
+                h.c_triggers.enabled == true //only enabled triggers
+                &&((h.id == (id ?? 0)) || (id == null)) //get alert by ID
+                && ((h.c_tirgger_id == (c_trigger_id ?? 0)) || (c_trigger_id == null)) //get alerts by trigger id 
+                && (h.c_triggers.alertGroup == alertGroup || alertGroup == "") //filter on alert group
+                && (ActiveAlertOnly == false || (h.state != (int)alertState.COMP && h.state != (int)alertState.TECHCOMP && h.state != (int)alertState.VOID)) //only get active alerts
+                && ((h.location.StartsWith(Location))||(Location == "")) //get alerts by location
                 ).Include(h => h.c_triggers).Include(h => h.ChangedUser).Include(h => h.CloseUser).Include(h => h.AcceptUser);
 
-            //only apply location filter if no parms are passed 
+            //only apply location filter if no parameters are passed 
             if (c_trigger_id.HasValue || id.HasValue || Location != "")
             {
-                return View(h_alert);
+                //count the total number of record to display as 'total triggers'
+                ViewBag.LocationFilter = Location;
+                ViewBag.AlertCount = h_alert.Count();
             }
             else
             {
-                //filter alerts basted on user profile!
+                //Add extra filters based on user profile
+                //filter alerts basted on user profile! ignore if using ResponsibleAreaLocations
                 string UserLocationroot = CurrentUser.Getuser.LocationRoot;
-                return View(h_alert.Where(a => a.locationTree.Contains(UserLocationroot)));
+                if (UserLocationroot != "" && ApplyResponsibleArea == false)
+                {
+                    h_alert = h_alert.Where(a => a.locationTree.Contains(UserLocationroot));
+                }
+
+                //Ugly as fuck way of handling ResponsibleAreaLocations
+                List<string> ResponsibleAreaLocations = CurrentUser.Getuser.ResponsibleAreaLocations;
+                if (ResponsibleAreaLocations != null && ApplyResponsibleArea == true)
+                {
+                    var baseQuery = h_alert;
+                    foreach (string item in ResponsibleAreaLocations)
+                    {
+                        if (item == ResponsibleAreaLocations.First())
+                        {
+                            h_alert = baseQuery.Where(a => a.locationTree.Contains(item));
+                        }
+                        else
+                        {
+                            h_alert = baseQuery.Union(h_alert.Where(a => a.locationTree.Contains(item)));
+                        }
+                    }
+                }
             }
+
+            ViewBag.alertGroup = alertGroup;
+            ViewBag.ActiveAlertOnly = ActiveAlertOnly;
+            ViewBag.ApplyResponsibleArea = ApplyResponsibleArea;
+
+            return View(h_alert);
         }
 
         //specific Alert interface for AASPOT
@@ -55,38 +99,6 @@ namespace EqUiWebUi.Areas.Alert.Controllers
         public ActionResult AASPOTIndex()
         {
             return View();
-        }
-
-        //specific Alert interface
-        //GET: AASPOTAlertList (for SBCU and gun cylinder stuff with quick link toSbcu tool.
-        //allow to filter on single location
-        //allow to filter on open items
-        //
-        public ActionResult AASPOTAlertList(string LocationFilter, bool ActiveAlertOnly = false)
-        {
-            //filter alerts basted on user profile!
-            string UserLocationroot = CurrentUser.Getuser.LocationRoot;
-            var h_alert = db.h_alert.Include(h => h.c_state).Include(h => h.c_triggers).Include(h => h.ChangedUser).Include(h => h.CloseUser).Include(h => h.AcceptUser);
-            var result = h_alert.Where(a => a.locationTree.Contains(UserLocationroot)
-                                            &&
-                                               a.c_triggers.enabled == true
-                                            && (
-                                               a.c_triggers.alertType == "SBCUalert" //only allow this trigger type
-                                               || a.c_triggers.alertType == "GUNalert"
-                                            )
-                                            && (
-                                              ActiveAlertOnly == false //Allow filtering on active items only
-                                              || (a.state != (int)alertState.COMP && a.state != (int)alertState.TECHCOMP && a.state != (int)alertState.VOID) //not a closed item
-                                            )
-                                            && (
-                                              LocationFilter == null //Allow filtering on a location
-                                              || a.location.Contains(LocationFilter) //filter out specific location
-                                            ));
-
-            //count the total number of record to display as 'total triggers'
-            ViewBag.LocationFilter = LocationFilter;
-            ViewBag.AlertCount = result.Count();
-            return View(result);
         }
 
         // GET: Alert/Details partial to get basic info about alert
@@ -109,7 +121,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             return PartialView(h_alert);
         }
 
-        // GET: Alert/_ControlChart partial. (control charts and hystory of limis)
+        // GET: Alert/_ControlChart partial. (control charts and history of limits)
         public ActionResult _ControlChart(h_alert h_Alert, int? l_controllimit_id)
         {
             if (l_controllimit_id.HasValue)
@@ -120,7 +132,6 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                 h_Alert.lastTriggerd = System.DateTime.Now;
                 h_Alert.alarmobject = controlLimit.alarmobject;
             }
-
             return PartialView(h_Alert);
         }
 
@@ -137,7 +148,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                 return HttpNotFound();
             }
             ViewBag.state = new SelectList(db.c_state, "id", "discription", h_alert.state);
-            //pass option to close after succesful save
+            //pass option to close after successful save
             ViewBag.CloseOnSaveSucces = CloseOnSaveSuccess;
             //pass the previous url in the viewbag so we can return on save action
             ViewBag.returnURL = System.Web.HttpContext.Current.Request.UrlReferrer;
@@ -169,13 +180,13 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                 org_alert.lastChangedTimestamp = System.DateTime.Now;
                 org_alert.lastChangedUserID = CurrentUser.Getuser.id;
 
-                //append the users new comments (we do this because we don't whant the user to be able to edit previous comments)
+                //append the users new comments (we do this because we don't want the user to be able to edit previous comments)
                 StringBuilder sb = new StringBuilder();
                 //add existing
                 sb.AppendLine(org_alert.comments);
                 //add break
                 sb.AppendLine("<hr />");
-                //add new pannel
+                //add new panel
                 sb.AppendLine("<div class='card card-info'>");
                 sb.AppendLine("<div class='card-block'>");
                 sb.AppendLine("<h4 class='card-title'>" + CurrentUser.Getuser.username + "</h4>");
@@ -192,7 +203,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                 //because this edit form gets called from both ListAlerts and AASPOTalert list we must redirect to the right page.
                 return Redirect(returnURL);
             }
-            //if model not valid return to revalidate
+            //if model not valid return to re-validate
             ViewBag.state = new SelectList(db.c_state, "id", "discription", _alert.state);
             return View(_alert);
         }
@@ -228,12 +239,12 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                     break;
 
                 default:
-                    //unhandled state
+                    //unhanded state
                     break;
             }
             //set the new state
             alert.state = newstate;
-            //add badgje for the statechange
+            //add badge for the state change
             StringBuilder sb = new StringBuilder();
             //add existing
             sb.AppendLine(alert.comments);
@@ -253,22 +264,20 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             return alert;
         }
 
-        // Change the state of an alert.
-        // used by quick acces dropdown
-        // GET: alert status
-        [HttpGet]
-        public void SetState(int id, int newstate)
+        //called by jeditable for inline edit.
+        public string SetState(string id, string value)
         {
             h_alert alert = (from a in db.h_alert
-                             where a.id == id
+                             where a.id.ToString() == id
                              select a).ToList().First();
             //set the new state
-            alert = ChangeState(alert, newstate);
+            alert = ChangeState(alert, int.Parse(value));
             //update last changed user
             alert.lastChangedTimestamp = System.DateTime.Now;
             alert.lastChangedUserID = CurrentUser.Getuser.id;
-            //
             db.SaveChanges();
+            //return select enum as string.
+            return Enum.GetName(typeof(EqUiWebUi.Areas.Alert.Models.alertState), alert.state);
         }
     }
 }

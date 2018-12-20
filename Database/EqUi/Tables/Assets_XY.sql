@@ -2,6 +2,9 @@
     [location] VARCHAR (MAX) NULL,
     [X_pos]    INT           NULL,
     [Y_pos]    INT           NULL,
-    [PNG]      VARCHAR (MAX) NULL
+    [PNG]      VARCHAR (MAX) NULL,
+    [isdead]   BIT           NULL
 );
+
+
 

@@ -6,7 +6,7 @@
     columns.Add(c => c.logtext).Titled("Logtext").Filterable(true);
     columns.Add(c => c.RT / 60).Titled("RT").Filterable(true);
     columns.Add(c => c.DT / 60).Titled("DT").Filterable(true);
-    columns.Add(c => c.timestamp).Formatted("{0:HH:mm:ss}").Titled("Time");
+    columns.Add(c => c.timestamp).Formatted("{0:dd MMM HH:mm:ss}").Titled("Time").Css("d-none d-md-table-cell");
     columns.Add(c => c.Classification).Titled("Class").Css("d-none d-lg-table-cell");
     columns.Add(c => c.Subgroup).Titled("Subgroup").Css("d-none d-lg-table-cell");
     columns.Add(c => c.Logtype).Titled("LogType").Css("d-none d-lg-table-cell").Filterable(true);

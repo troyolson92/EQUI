@@ -39,7 +39,7 @@ namespace EqUiWebUi.Areas.VWSC.Controllers
 
         public ActionResult _jobBreakdown(int id)
         {
-            IQueryable<VWSC_rt_job_breakdown> breakdowns = db.rt_job_breakdown.Where(c => c.rt_job_id == id).AsQueryable();
+            IQueryable<VWSC_rt_job_breakdown> breakdowns = db.rt_job_breakdown.Where(c => c.rt_job_id == id).Where(c => c.index == '1').AsQueryable();
             return PartialView(breakdowns);
         }
 

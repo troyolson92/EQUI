@@ -52,6 +52,15 @@ else
                 </div>
 
                 <div class="form-group">
+                    @Html.LabelFor(model => model.alertGroup, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.alertGroup, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.alertGroup, "", new { @class = "text-danger" })
+                        @Html.HelpTextFor(model => model.alertGroup)
+                    </div>
+                </div>
+
+                <div class="form-group">
                     @Html.LabelFor(model => model.alertType, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
                         @Html.EditorFor(model => model.alertType, new { htmlAttributes = new { @class = "form-control" } })
@@ -321,13 +330,6 @@ else
         </div>
     </div>
 }
-
-
-    <div class="float-right">
-        <p><a href="~/Alert/c_triggers/RunAlertTrigger?triggerID=@Model.id" class="btn btn-danger btn-sm JQresultTriggerBtn">Testfire &raquo;</a>(must be saved)</p>
-
-    </div>
-
 
 <div>
     @Html.ActionLink("Back to List", "Index")

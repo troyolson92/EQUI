@@ -24,9 +24,15 @@
         }
         @*voorbeeld interne link*@
         <p>
-            <a href="~/Alert/Alert/AASPOTIndex" class="btn btn-primary btn-sm">Alerts &raquo;</a>
-            Waarschuwingen gebaseerd op triggers
+            <a href="~/Alert/Alert/AASPOTIndex" class="btn btn-primary btn-sm">Aro Technician Alerts &raquo;</a>
+            Cylinder/SBCU data triggers
         </p>
+        <p>
+            <a href="~/Welding/Welding/_alertsAASPOT" class="btn btn-primary btn-sm">WeldingT Alerts &raquo;</a>
+            WeldingTeam Supervision Alerts
+        </p>
+
+
     </div>
 </div>
 <p></p>
@@ -96,19 +102,23 @@
 <div class="card">
     <div class="card-header bg-danger">
         <h5 class="card-title text-white">
-            Beta
+            Rapport and Config
             <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-rotate-180 fa-1"></i></span>
         </h5>
     </div>
     <div class="card-body" style="display:none">
 
         <p>
-            <a href="~/PJV/pjv/index" class="btn btn-primary btn-sm">PJV&raquo;</a>(test)
-            Test met pjv UI
+            <a href="~/PJV/pjv/index" class="btn btn-primary btn-sm">Rapport&raquo;</a>
+            PJV
+        <p>
+            <a href="~/Welding/Welding/_AlertsUserRapport" class="btn btn-primary btn-sm">alerts Rapport&raquo;</a>
+            AlertsUser Rapport
         </p>
+
+        @MyHtmlHelpers.EquiLink("/Welding/Ultralog/ListControlPlans", "far fa-file-alt", "List control plans", helperText: "Test with control plans")
 
     </div>
 </div>
 
 <p></p>
-}

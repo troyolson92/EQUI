@@ -19,11 +19,11 @@ namespace EqUiWebUi.Areas.VWSC.Controllers
         {
             if (ShowNOKonly)
             {
-                return View(db.rt_active_info.Where(c => c.vwsc_state != (int)VWSCState.STATE_CONNECTED).Include(r => r.Timer));
+                return View(db.rt_active_info.Where(c => c.vwsc_state != (int)VWSCState.STATE_CONNECTED).Include(r => r.c_timer));
             }
             else
             {
-                return View(db.rt_active_info.Include(c => c.Timer));
+                return View(db.rt_active_info.Include(c => c.c_timer));
             }
         }
 

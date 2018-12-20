@@ -127,13 +127,13 @@
     <value>Shiftreport</value>
   </data>
   <data name="ShiftReportDescription" xml:space="preserve">
-    <value>Contains stop longer than 20minutes combined downtime or more than 3 ocurences</value>
+    <value>Contains stops longer than 20minutes combined downtime or more than 3 occurrences</value>
   </data>
   <data name="Supervision" xml:space="preserve">
     <value>Supervision</value>
   </data>
   <data name="SupervisionDescription" xml:space="preserve">
-    <value>All items currently stopped and finised breakdowns</value>
+    <value>All items currently stopped and finished breakdowns</value>
   </data>
   <data name="SupervisionHeader" xml:space="preserve">
     <value>A shop supervision tools</value>

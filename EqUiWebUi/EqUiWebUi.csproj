@@ -173,7 +173,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Alert\Views\Shared\" />
-    <Folder Include="Areas\CycleTime\Controllers\" />
     <Folder Include="Areas\CycleTime\Models\" />
     <Folder Include="Areas\CycleTime\Views\Shared\" />
     <Folder Include="Areas\HangfireArea\Models\" />
@@ -228,9 +227,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AlertModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Areas\Alert\Models\Alerts.cs">
-      <DependentUpon>AlertModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Areas\Alert\Models\c_CPT600.cs">
       <DependentUpon>AlertModel.tt</DependentUpon>
     </Compile>
@@ -269,11 +265,15 @@
     </Compile>
     <Compile Include="Areas\Alert\SmsComm.cs" />
     <Compile Include="Areas\CycleTime\BackgroundWork.cs" />
+    <Compile Include="Areas\CycleTime\Controllers\CycleTimeUiController.cs" />
     <Compile Include="Areas\CycleTime\CycleTimeAreaRegistration.cs" />
     <Compile Include="Areas\Gadata\BackgroundWork.cs" />
     <Compile Include="Areas\Gadata\Controllers\TableController.cs" />
     <Compile Include="Areas\Gadata\GadataAreaRegistration.cs" />
     <Compile Include="Areas\Gadata\DataRefreshHub.cs" />
+    <Compile Include="Areas\Gadata\Models\Alerts_Supervisie.cs">
+      <DependentUpon>Gadata.tt</DependentUpon>
+    </Compile>
     <Compile Include="Areas\Gadata\Models\C3G_Supervisie.cs">
       <DependentUpon>Gadata.tt</DependentUpon>
     </Compile>
@@ -464,9 +464,6 @@
     <Compile Include="Areas\VASC\Controllers\L_operationController.cs" />
     <Compile Include="Areas\VASC\Controllers\rt_active_infoController.cs" />
     <Compile Include="Areas\VASC\Controllers\vascController.cs" />
-    <Compile Include="Areas\VASC\Models\Bodytracking.cs">
-      <DependentUpon>VASC.tt</DependentUpon>
-    </Compile>
     <Compile Include="Areas\VASC\Models\breakdownMetadata.cs" />
     <Compile Include="Areas\VASC\Models\c_controller.cs">
       <DependentUpon>VASC.tt</DependentUpon>
@@ -594,16 +591,37 @@
     <Compile Include="Areas\VWSC\Controllers\L_operationController.cs" />
     <Compile Include="Areas\VWSC\Controllers\rt_active_infoController.cs" />
     <Compile Include="Areas\VWSC\Controllers\vwscController.cs" />
-    <Compile Include="Areas\VWSC\Models\VWSC_rt_active_infoMetadata.cs" />
-    <Compile Include="Areas\VWSC\Models\VWSC_c_errorMetadata.cs" />
+    <Compile Include="Areas\VWSC\Models\VWSC_c_bosch_view.cs">
+      <DependentUpon>VWSC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VWSC\Models\VWSC_c_error.cs">
+      <DependentUpon>VWSC.tt</DependentUpon>
+    </Compile>
     <Compile Include="Areas\VWSC\Models\VWSC_c_NPT.cs">
       <DependentUpon>VWSC.tt</DependentUpon>
     </Compile>
-    <Compile Include="Areas\VWSC\Models\VWSC_c_bosch_viewMetadata.cs" />
-    <Compile Include="Areas\VWSC\Models\VWSC_c_timerMetadata.cs" />
-    <Compile Include="Areas\VWSC\Models\VWSC_c_Timer.cs">
+    <Compile Include="Areas\VWSC\Models\VWSC_c_service_setup.cs">
       <DependentUpon>VWSC.tt</DependentUpon>
     </Compile>
+    <Compile Include="Areas\VWSC\Models\VWSC_c_severity.cs">
+      <DependentUpon>VWSC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VWSC\Models\VWSC_c_timer.cs">
+      <DependentUpon>VWSC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VWSC\Models\VWSC_c_timer_class.cs">
+      <DependentUpon>VWSC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VWSC\Models\VWSC_L_operation.cs">
+      <DependentUpon>VWSC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VWSC\Models\VWSC_rt_active_info.cs">
+      <DependentUpon>VWSC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\VWSC\Models\VWSC_rt_active_infoMetadata.cs" />
+    <Compile Include="Areas\VWSC\Models\VWSC_c_errorMetadata.cs" />
+    <Compile Include="Areas\VWSC\Models\VWSC_c_bosch_viewMetadata.cs" />
+    <Compile Include="Areas\VWSC\Models\VWSC_c_timerMetadata.cs" />
     <Compile Include="Areas\VWSC\Models\VWSC_c_timer_classMetadata.cs" />
     <Compile Include="Areas\VWSC\Models\VWSCenums.cs" />
     <Compile Include="Areas\VWSC\Models\VWSC.Context.cs">
@@ -621,46 +639,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>VWSC.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Areas\VWSC\Models\VWSC_c_bosch_view.cs">
-      <DependentUpon>VWSC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\VWSC\Models\VWSC_c_error.cs">
-      <DependentUpon>VWSC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\VWSC\Models\VWSC_c_service_setup.cs">
-      <DependentUpon>VWSC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\VWSC\Models\VWSC_c_severity.cs">
-      <DependentUpon>VWSC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\VWSC\Models\VWSC_c_timer_class.cs">
-      <DependentUpon>VWSC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\VWSC\Models\VWSC_L_operation.cs">
-      <DependentUpon>VWSC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\VWSC\Models\VWSC_rt_active_info.cs">
-      <DependentUpon>VWSC.tt</DependentUpon>
-    </Compile>
     <Compile Include="Areas\VWSC\Models\VWSC_rt_alarm.cs">
       <DependentUpon>VWSC.tt</DependentUpon>
     </Compile>
-    <Compile Include="Areas\VWSC\Models\VWSC_rt_comment.cs">
-      <DependentUpon>VWSC.tt</DependentUpon>
-    </Compile>
     <Compile Include="Areas\VWSC\Models\VWSC_rt_communication_state.cs">
-      <DependentUpon>VWSC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\VWSC\Models\VWSC_rt_datachangeprot.cs">
       <DependentUpon>VWSC.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\VWSC\Models\VWSC_rt_job.cs">
       <DependentUpon>VWSC.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\VWSC\Models\VWSC_rt_job_breakdown.cs">
-      <DependentUpon>VWSC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\VWSC\Models\VWSC_rt_spot.cs">
       <DependentUpon>VWSC.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\VWSC\Models\VWSC_rt_weldfault.cs">
@@ -674,10 +662,29 @@
     <Compile Include="Areas\Welding\Controllers\AROController.cs" />
     <Compile Include="Areas\Welding\Controllers\LaunchController.cs" />
     <Compile Include="Areas\Welding\Controllers\QteamController.cs" />
+    <Compile Include="Areas\Welding\Controllers\SpatterController.cs" />
     <Compile Include="Areas\Welding\Controllers\TeardownTeam.cs" />
     <Compile Include="Areas\Welding\Controllers\ToDoListsController.cs" />
     <Compile Include="Areas\Welding\Controllers\ToDoList_RemarkController.cs" />
+    <Compile Include="Areas\Welding\Controllers\UltralogController.cs" />
+    <Compile Include="Areas\Welding\Controllers\UpdateController.cs" />
     <Compile Include="Areas\Welding\Controllers\WMController.cs" />
+    <Compile Include="Areas\Welding\editController.cs" />
+    <Compile Include="Areas\Welding\Models\ActualSpatter_.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Welding\Models\AlertsAASPOT.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Welding\Models\AlertsQteam.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Welding\Models\AlertsUsers.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Welding\Models\AutomaticPlanControleWeldBolt.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Areas\Welding\Models\BosProgramAvailable.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
@@ -690,10 +697,49 @@
     <Compile Include="Areas\Welding\Models\ConnectionState.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Areas\Welding\Models\c_bosch_param.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Welding\Models\c_error.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Welding\Models\c_faultcode.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Welding\Models\c_Job.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Welding\Models\c_NPT.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Welding\Models\c_Picture.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Welding\Models\c_Teardown.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Welding\Models\c_timer.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Welding\Models\c_timer_class.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Welding\Models\c_user.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Areas\Welding\Models\DoubleSpotCheck.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Welding\Models\dressrequired.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Welding\Models\h_Midair.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Welding\Models\h_Nut_Bolt_Measure.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Welding\Models\h_weldmeasure.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Welding\Models\LastWelds.cs">
@@ -702,22 +748,61 @@
     <Compile Include="Areas\Welding\Models\Lastwelds_Result.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Areas\Welding\Models\L_operation.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Areas\Welding\Models\QISViewer.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Welding\Models\rt_active_info.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Welding\Models\rt_alarm.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Welding\Models\rt_AutoWorkFlowULPlans.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Areas\Welding\Models\rt_communication_state.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Welding\Models\rt_datachangeprot.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Areas\Welding\Models\rt_ExtraControles.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Welding\Models\rt_Job1.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Welding\Models\rt_job11.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Welding\Models\rt_job_breakdown1.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Welding\Models\rt_paramvalues.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Welding\Models\rt_spottable.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Welding\Models\rt_Teardown.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Welding\Models\rt_user.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Welding\Models\rt_weldfault.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Welding\Models\rt_weldmeasureprotddw.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Welding\Models\StabilityInDicationV316.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Welding\Models\TDTResults.cs">
-      <DependentUpon>WeldingModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\Welding\Models\test.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Welding\Models\TimerBreakdownDatachange.cs">
@@ -732,7 +817,17 @@
     <Compile Include="Areas\Welding\Models\ToDoList_Remark.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Areas\Welding\Models\T_PicturePoints.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Areas\Welding\Models\ULRapportering.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Welding\Models\UltralogData.cs" />
+    <Compile Include="Areas\Welding\Models\WeldfaultCount.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Welding\Models\WeldFaultProtocol.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Welding\Models\WeldingModel.Context.cs">
@@ -1041,7 +1136,6 @@
     <Content Include="Areas\Alert\Views\c_smsSystem\Details.cshtml" />
     <Content Include="Areas\Alert\Views\c_smsSystem\Edit.cshtml" />
     <Content Include="Areas\Alert\Views\c_smsSystem\Index.cshtml" />
-    <Content Include="Areas\Alert\Views\Alert\AASPOTAlertList.cshtml" />
     <Content Include="Areas\Alert\Views\Alert\_Details.cshtml" />
     <Content Include="Areas\Gadata\Views\web.config" />
     <Content Include="Areas\Gadata\Views\_ViewStart.cshtml" />
@@ -1049,7 +1143,6 @@
     <Content Include="Areas\Gadata\Views\Table\PloegRapportWebgrid.cshtml" />
     <Content Include="Areas\Gadata\Views\Shared\_Moreinfo.cshtml" />
     <Content Include="Areas\Gadata\Views\Table\_supervisie.cshtml" />
-    <Content Include="Areas\Gadata\Views\Table\BodyTrackWebgrid.cshtml" />
     <Content Include="Areas\Gadata\Views\Table\SupervisieWebgrid.cshtml" />
     <Content Include="Areas\Gadata\Views\Table\MoreInfo.cshtml" />
     <Content Include="Areas\Gadata\Views\Table\_loginfo.cshtml" />
@@ -1070,8 +1163,8 @@
     <Content Include="Areas\HangfireArea\Views\Job\_settings.cshtml" />
     <Content Include="Areas\user_management\Views\users\ListSessions.cshtml" />
     <Content Include="Areas\user_management\Views\users\_settings.cshtml" />
-    <Content Include="Areas\Maximo_ui\Views\WorkorderDetails\_woParentDetails.cshtml" />
-    <Content Include="Areas\Maximo_ui\Views\WorkorderDetails\WoParentDetails.cshtml" />
+    <Content Include="Areas\Maximo_ui\Views\WorkorderDetails\_SubWoDetails.cshtml" />
+    <Content Include="Areas\Maximo_ui\Views\WorkorderDetails\SubWoDetails.cshtml" />
     <Content Include="Areas\Tiplife\Views\web.config" />
     <EntityDeploy Include="Areas\Tiplife\Models\TiplifeModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
@@ -1146,7 +1239,6 @@
     <Content Include="Areas\VASC\Views\Breakdown\Index.cshtml" />
     <Content Include="Areas\VASC\Views\Breakdown\rtJob.cshtml" />
     <Content Include="Areas\VASC\Views\Breakdown\_BreakDownGridLayout.cshtml" />
-    <Content Include="Areas\VASC\Views\Breakdown\getBreakdowns.cshtml" />
     <Content Include="Areas\PJV\Views\web.config" />
     <Content Include="Areas\Alert\Views\_ViewStart.cshtml" />
     <Content Include="Areas\PJV\Views\_ViewStart.cshtml" />
@@ -1796,7 +1888,6 @@
     <Content Include="Areas\Welding\Views\WM\_ConnectionState.cshtml" />
     <Content Include="Areas\Welding\Views\WM\_QISvieuwer.cshtml" />
     <Content Include="Areas\Welding\Views\WM\_TimerBreakdowns_busy.cshtml" />
-    <Content Include="Areas\Welding\Views\WM\rt_ExtraControlesWM.cshtml" />
     <Content Include="Areas\Welding\Views\WM\_TimerBreakdownDatachange.cshtml" />
     <Content Include="Areas\Welding\Views\TeardownTeam\Index.cshtml" />
     <Content Include="Areas\Welding\Views\TeardownTeam\_TDTResults.cshtml" />
@@ -1811,8 +1902,6 @@
     <Content Include="Areas\Welding\Views\ToDoLists\Details.cshtml" />
     <Content Include="Areas\Welding\Views\ToDoLists\Edit.cshtml" />
     <Content Include="Areas\Welding\Views\ToDoLists\Index.cshtml" />
-    <Content Include="Areas\Welding\Views\TeardownTeam\TeardownTest.cshtml" />
-    <Content Include="Areas\Welding\Views\TeardownTeam\_SIS6000.cshtml" />
     <Content Include="App_Code\MyCellStyling.cshtml" />
     <Content Include="node_modules\codemirror\AUTHORS" />
     <Content Include="node_modules\codemirror\CHANGELOG.md" />
@@ -1836,6 +1925,32 @@
     <Content Include="node_modules\jquery\package.json" />
     <Content Include="node_modules\jquery\README.md" />
     <Content Include="node_modules\jquery\src\.eslintrc.json" />
+    <Content Include="Areas\VASC\Views\Breakdown\GetJobs.cshtml" />
+    <Content Include="Areas\VASC\Views\Breakdown\_getJobs.cshtml" />
+    <Content Include="Areas\Welding\Views\WM\_rt_alarm.cshtml" />
+    <Content Include="Areas\Welding\Views\WM\_WeldFaultCount.cshtml" />
+    <Content Include="Areas\Welding\Views\WM\WeldfaultIndex.cshtml" />
+    <Content Include="Areas\Welding\Views\TeardownTeam\_startTeardown.cshtml" />
+    <Content Include="Areas\Welding\Views\Qteam\_WeldBoltPlans.cshtml" />
+    <Content Include="Areas\Welding\Views\Qteam\_Plans.cshtml" />
+    <Content Include="Areas\Welding\Views\WM\Edit.cshtml" />
+    <Content Include="Areas\Welding\Views\WM\_breakdown.cshtml" />
+    <Content Include="Areas\Welding\Views\WM\_alarmdetails.cshtml" />
+    <Content Include="Areas\Welding\Views\WM\_jobBreakdown1.cshtml" />
+    <Content Include="Areas\Welding\Views\WM\_jobdetails1.cshtml" />
+    <Content Include="Areas\Welding\Views\WM\_weldFault1.cshtml" />
+    <Content Include="Areas\Welding\Views\WM\_weldMeasure1.cshtml" />
+    <Content Include="Areas\Welding\Views\WM\_rt_job1.cshtml" />
+    <Content Include="Areas\Welding\Views\Welding\_alertsAASPOT.cshtml" />
+    <Content Include="Areas\Welding\Views\Welding\_AlertsUserRapport.cshtml" />
+    <Content Include="Areas\Welding\Views\spatters\Index.cshtml" />
+    <Content Include="Areas\Welding\Views\Spatter\Index.cshtml" />
+    <Content Include="Areas\Welding\Views\Spatter\_SpikesV316.cshtml" />
+    <Content Include="Areas\CycleTime\Views\CycleTimeUi\Index.cshtml" />
+    <Content Include="Areas\Welding\Views\Ultralog\GetControlPlanPicture.cshtml" />
+    <Content Include="Areas\Welding\Views\Ultralog\GetControlPlan.cshtml" />
+    <Content Include="Areas\Welding\Views\Ultralog\_GetControlPlanPicture.cshtml" />
+    <Content Include="Areas\Welding\Views\Ultralog\ListControlPlans.cshtml" />
     <None Include="Properties\PublishProfiles\gensvw1178-DEV-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gotsvw11292-PRODUCTION-VCTA.pubxml" />

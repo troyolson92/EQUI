@@ -14,13 +14,15 @@
     <div class='card-body'><i class='fa fa-spinner fa-pulse fa-4x fa-fw text-white'></i><span class='sr-only'>Loading...</span></div>
 </div>
 
-
 @section scripts{
     <!--script for supervisiegrid-->
     <script type="text/javascript">
     //render grid and subscrible to row clicked events
         $('[data-name="SupervisieGrid"]').mvcgrid({
         sourceUrl: '@Url.Action("_supervisie")', // Grid source url string
+        data: {
+            ApplyResponsibleArea: @ViewBag.ApplyResponsibleArea.ToString().ToLower()
+        },
         requestType: 'get', // Ajax grid request type
         reload: true, // Grid reload indicator
         rowClicked: function (row, data, e) {

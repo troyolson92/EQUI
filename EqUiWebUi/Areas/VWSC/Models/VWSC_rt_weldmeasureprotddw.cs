@@ -24,37 +24,37 @@ namespace EqUiWebUi.Areas.VWSC.Models
         public Nullable<decimal> wear { get; set; }
         public Nullable<decimal> wearPerCent { get; set; }
         public Nullable<int> monitorState { get; set; }
-        public string monitorState_txt { get; set; }
+        public string xxmonitorState_txt { get; set; }
         public Nullable<int> regulationState { get; set; }
-        public string regulationState_txt { get; set; }
+        public string xxregulationState_txt { get; set; }
         public Nullable<int> measureState { get; set; }
-        public string measureState_txt { get; set; }
+        public string xxmeasureState_txt { get; set; }
         public Nullable<int> powerState { get; set; }
-        public string powerState_txt { get; set; }
+        public string xxpowerState_txt { get; set; }
         public Nullable<int> sequenceState { get; set; }
-        public string sequenceState_txt { get; set; }
+        public string xxsequenceState_txt { get; set; }
         public Nullable<int> sequenceStateAdd { get; set; }
-        public string sequenceStateAdd_txt { get; set; }
+        public string xxsequenceStateAdd_txt { get; set; }
         public Nullable<int> sequenceRepeat { get; set; }
-        public string sequenceRepeat_txt { get; set; }
+        public string xxsequenceRepeat_txt { get; set; }
         public Nullable<int> monitorMode { get; set; }
-        public string monitorMode_txt { get; set; }
+        public string xxmonitorMode_txt { get; set; }
         public Nullable<decimal> iDemandStd { get; set; }
         public Nullable<decimal> ilsts { get; set; }
         public Nullable<int> regulationStd { get; set; }
-        public string regulationStd_txt { get; set; }
+        public string xxregulationStd_txt { get; set; }
         public Nullable<decimal> iDemand1 { get; set; }
         public Nullable<decimal> iActual1 { get; set; }
         public Nullable<int> regulation1 { get; set; }
-        public string regulation1_txt { get; set; }
+        public string xxregulation1_txt { get; set; }
         public Nullable<decimal> iDemand2 { get; set; }
         public Nullable<decimal> iActual2 { get; set; }
         public Nullable<int> regulation2 { get; set; }
-        public string regulation2_txt { get; set; }
+        public string xxregulation2_txt { get; set; }
         public Nullable<decimal> iDemand3 { get; set; }
         public Nullable<decimal> iActual3 { get; set; }
         public Nullable<int> regulation3 { get; set; }
-        public string regulation3_txt { get; set; }
+        public string xxregulation3_txt { get; set; }
         public Nullable<decimal> phaStd { get; set; }
         public Nullable<decimal> pha1 { get; set; }
         public Nullable<decimal> pha2 { get; set; }
@@ -86,13 +86,13 @@ namespace EqUiWebUi.Areas.VWSC.Models
         public Nullable<int> uipRefValue { get; set; }
         public Nullable<int> uirExpulsionTime { get; set; }
         public Nullable<int> uirMeasuringActive { get; set; }
-        public string uirMeasuringActive_txt { get; set; }
+        public string xxuirMeasuringActive_txt { get; set; }
         public Nullable<int> uirRegulationActive { get; set; }
-        public string uirRegulationActive_txt { get; set; }
+        public string xxuirRegulationActive_txt { get; set; }
         public Nullable<int> uirMonitoringActive { get; set; }
-        public string uirMonitoringActive_txt { get; set; }
+        public string xxuirMonitoringActive_txt { get; set; }
         public Nullable<int> uirWeldTimeProlongationActive { get; set; }
-        public string uirWeldTimeProlongActive_txt { get; set; }
+        public string xxuirWeldTimeProlongActive_txt { get; set; }
         public Nullable<int> uirQStoppRefCntValue { get; set; }
         public Nullable<int> uirQStoppActCntValue { get; set; }
         public Nullable<decimal> uirUipUpperTol { get; set; }
@@ -100,5 +100,7 @@ namespace EqUiWebUi.Areas.VWSC.Models
         public Nullable<decimal> uirUipCondTol { get; set; }
         public Nullable<decimal> uirPsfLowerTol { get; set; }
         public Nullable<decimal> uirPsfCondTol { get; set; }
+    
+        public virtual VWSC_c_timer c_timer { get; set; }
     }
 }

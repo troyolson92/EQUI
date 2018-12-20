@@ -25,7 +25,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             return View(await c_triggers.ToListAsync());
         }
 
-        //run the alert trigger in debug mode (manual triggerd no hangfire
+        //run the alert trigger in debug mode (manual triggered no hang-fire)
         [Authorize(Roles = "Administrator, AlertMaster, AlertPowerUser")]
         public void RunAlertTrigger(int triggerID)
         {
@@ -34,7 +34,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
         }
 
         // GET: Alert/c_triggers/Edit/5
-        // We will handle the creation of a new trigger also in EDIT. (to make code simplere) to create a new trigger pass ID = -1
+        // We will handle the creation of a new trigger also in EDIT. (to make code simpler) to create a new trigger pass ID = -1
         [Authorize(Roles = "Administrator, AlertMaster, AlertPowerUser")]
         public async Task<ActionResult> Edit(int? id)
         {

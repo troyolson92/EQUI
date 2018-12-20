@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
@@ -19,7 +20,41 @@ namespace EqUiWebUi
                 if (toSearch == null) { return false; }
                 return new Regex(@"\A" + new Regex(@"\.|\$|\^|\{|\[|\(|\||\)|\*|\+|\?|\\").Replace(toFind, ch => @"\" + ch).Replace('_', '.').Replace("%", ".*") + @"\z", RegexOptions.Singleline).IsMatch(toSearch);
             }
+            public static bool Like(this string toSearch, List<string> toFind)
+            {
+                if (toSearch == null) { return false; }
+                foreach(string item in toFind)
+                {
+                    if (Like(item,toSearch))
+                    {
+                        return true;
+                    }
+                }
+            return false;
+            }
+
+        //check target string against list of string if any of list contains string in that list.
+        public static bool ListContaints(this string toSearch, List<string> toFind)
+        {
+            if (toSearch == null) { return false; }
+            foreach (string item in toFind)
+            {
+                if (toSearch.Contains(item))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
+
+        //convert any enum to json object
+        public static MvcHtmlString EnumToMvcHtmlString<T>(this HtmlHelper helper)
+        {
+            var values = Enum.GetValues(typeof(T)).Cast<int>();
+            var enumDictionary = values.ToDictionary(value => value, value => Enum.GetName(typeof(T), value));
+            return new MvcHtmlString(JsonConvert.SerializeObject(enumDictionary));
+        }
+    }
 
     //datetime extenstions
     public static class MyDatetimeExtensions

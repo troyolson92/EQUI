@@ -1,0 +1,67 @@
+﻿
+@{
+
+    ViewBag.Title = "Index";
+}
+<div class="jumbotron">
+    <h1>Launch Welding Master Page</h1>
+</div>
+
+<p></p>@{
+    ViewBag.Title = "Spatters and Spikes Page";
+}
+<div class="jumbotron">
+    <h1>Launch activity</h1>
+
+    <p></p>
+    <div class="card">
+        <div class="card-header bg-dark">
+            <h5 class="card-title text-white">
+                Follow up list launch Work
+                <span class="clickable float-right"><i class="far fa-edit"></i></span>
+            </h5>
+        </div>
+        <div class="card-body">
+            <p>
+
+
+                @MyHtmlHelpers.EquiLink("/Welding//ToDoList_Remark/Index", "far fa-file-alt", "Insert new work", helperText: "inser into Follow Up list Launch  Welding Master")
+            <p></p>
+            @MyHtmlHelpers.EquiLink("/Welding//ToDoLists/Index", "far fa-file-alt", "Manage ToDoList", helperText: "Manage Follow Up list Launch Work Welding Master")
+            <p>
+
+                <div class="card">
+                    <div class="card-header bg-dark">
+                        <h5 class="card-title text-white">
+                            Launch Tools
+                            <span class="clickable float-right"><i class="far fa-edit"></i></span>
+                        </h5>
+                    </div>
+                    <div class="card-body">
+
+            <p></p>
+            @MyHtmlHelpers.EquiLink("/Welding/Launch/ComparePitchV316", "far fa-file-alt", "Pitch compare", helperText: "Compare the Pitch file with the weldtimers en UL data")
+            <p></p>
+            @MyHtmlHelpers.EquiLink("/Welding/Launch/DoubleSpotcheck", "far fa-file-alt", "double spots", helperText: "check after double spots in welding timers")
+            <p></p>
+            @MyHtmlHelpers.EquiLink("/Welding/Launch/CheckDubbelPrograms", "far fa-file-alt", "double program", helperText: "check after double programs in welding timers")
+            <p></p>
+            @MyHtmlHelpers.EquiLink("/Welding/Launch/BosProgramAvailable", "far fa-file-alt", "FreePrograms", helperText: "check in welding Timers for not used programs")
+            <p></p>
+            @MyHtmlHelpers.EquiLink("/Welding/Launch/dressrequired", "far fa-file-alt", "DressRequestNOK", helperText: "check if dress request is ok")
+            <p></p>
+            @MyHtmlHelpers.EquiLink("/Welding/Launch/WeldtimeSpotsSetup", "far fa-file-alt", "WeldtimeCheck", helperText: "check the  total weldtimes in from all spots")
+            <p></p>
+            @MyHtmlHelpers.EquiLink("/Welding/Launch/StabilityInDicationV316", "far fa-file-alt", "Psf Spreiding", helperText: "Check for Std Process stability")
+
+        </div>
+    </div>
+    <p></p>
+
+
+
+
+
+
+
+

@@ -6,6 +6,9 @@
 
 
 
+
+
+
 /*only show alert when this is set*/
 CREATE VIEW [Alerts].[Alerts]
 AS
@@ -51,10 +54,11 @@ END  as 'animation'
 from Alerts.h_alert with(nolock)
 left join Alerts.c_triggers with(nolock) on c_triggers.id = h_alert.c_tirgger_id
 left join Alerts.c_state  with(nolock) on h_alert.[state] = c_state.id
-left join Volvo.L_timeline as timeline with(nolock) on h_alert.lastTriggerd between timeline.starttime and timeline.endtime
+left join volvo.L_timeline as timeline with(nolock) on h_alert.lastTriggerd between timeline.starttime and timeline.endtime
 
-where c_triggers.isInReport = 1 --only show alert when this is set
-and c_triggers.[enabled] = 1 --only show alert when enabled
+--temp jens needs to remove 
+--where c_triggers.isInReport = 1 --only show alert when this is set
+--and c_triggers.[enabled] = 1 --only show alert when enabled
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 1, @level0type = N'SCHEMA', @level0name = N'Alerts', @level1type = N'VIEW', @level1name = N'Alerts';
 

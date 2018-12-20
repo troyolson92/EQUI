@@ -14,12 +14,16 @@
     columns.Add(c => c.plannummer).Titled("plannummer").InitialSort(GridSortOrder.Asc);
     columns.Add(c => c.typecontrole).Titled("TypeControle");
     columns.Add(c => c.lastinspectiontime).Titled("lastinspectiontime");
+    columns.Add(c => c.NPTOwner).Titled("NPTOwner");
 
 
 }).Filterable(
-).Sortable().RowCss(c => (c.time_uitadaptief.GetValueOrDefault() < System.DateTime.Now.AddHours(-1)) || c.robot.Contains("test") ? "bg-warning" : "")
+).Sortable().RowCss(c => (c.lastinspectiontime.GetValueOrDefault() < System.DateTime.Now.AddHours(-4)) ? "ani_PulseRed" : "")
 
-@section scripts{
+
+
+@section scripts{)
+
     <script>
         //full with screen
         $("#allcontent").removeClass("body-content");
@@ -47,12 +51,6 @@
 
         setInterval(function () {
             refreshGrid()
-        }, 1000 * 120)
+        }, 1000 * 600)
     </script>
 }
-<style>
-    .colorred
-    {
-        background-color :rgba(190, 48, 48, 0.39)
-    }
-</style>

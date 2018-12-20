@@ -1,0 +1,68 @@
+﻿
+@model IQueryable<EqUiWebUi.Areas.Welding.Models.AutomaticPlanControleWeldBolt>
+@{
+    ViewBag.Title = "AutomaticPlanControleWeldBolt";
+}
+
+@Html.Grid(Model).Named("_WeldBoltPlans").Build(columns =>
+{
+    columns.Add(c => c.LastinspectionTime).Titled("LastinspectionTime").InitialSort(GridSortOrder.Desc).Formatted("{0:dd-MM-yyyy HH:mm:ss}");
+    columns.Add(c => c.ULPlan).Titled("ULPlan");
+    columns.Add(c => c.WorkGroup).Titled("Workgroup");
+   // columns.Add(c => c)
+   //   .Titled("Ulplan")
+   // .Encoded(false)
+   // .RenderedAs(c => "<div class='bg-danger'>c</div>");
+ 
+
+}).Filterable()
+
+}
+        ).Sortable().Css("table-hover");
+
+
+
+
+@section scripts{
+    <script>
+                //full with screen
+                $("#allcontent").removeClass("body-content");
+                $("#allcontent").removeClass("container");
+                  $actualRow.css('background-color', '#0094ff');
+                 $("#allcontent").html("<i class='fas fa-spinner fa-spin fa-2x'></i>")
+
+
+                //function to refresh grid
+               function refreshGrid() {
+                    console.log('function is being called')
+                    $('[data-name="rt_AutoWorkFlowULPlans"]').mvcgrid({
+                        reload: true,
+
+                        reloadStarted: function () {
+                            // this - grid instance which invoked the event
+                        },
+                        reloadEnded: function () {
+                            // this - grid instance which invoked the event
+                        },
+                        reloadFailed: function (result) {
+                            // this - grid instance which invoked the event
+                            // result - failed ajax response result
+                        }
+                    });
+                }
+
+                setInterval(function () {
+                    refreshGrid()
+                }, 1000 * 60)
+
+
+    </script>
+
+    <style>
+        .test{
+            background-color: #d26161
+        }
+    </style>
+
+
+}

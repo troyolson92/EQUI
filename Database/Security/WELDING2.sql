@@ -1,0 +1,11 @@
+﻿CREATE SCHEMA [WELDING2]
+    AUTHORIZATION [dbo];
+
+
+
+
+
+
+
+
+

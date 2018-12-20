@@ -25,16 +25,16 @@ namespace EqUiWebUi.Areas.VWSC.Controllers
         {
             if (timer_id != null)
             {
-                return PartialView(db.Timer.Where(c => c.ID == timer_id));
+                return PartialView(db.c_timer.Where(c => c.ID == timer_id));
             }
 
             if (timerclass is null)
             {
-                return PartialView(db.Timer);
+                return PartialView(db.c_timer);
             }
             else
             {
-                return PartialView(db.Timer.Where(c => c.c_timer_class_id == timerclass));
+                return PartialView(db.c_timer.Where(c => c.c_timer_class_id == timerclass));
             }
         }
 
@@ -45,7 +45,7 @@ namespace EqUiWebUi.Areas.VWSC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            VWSC_c_Timer Timer = db.Timer.Find(id);
+            VWSC_c_timer Timer = db.c_timer.Find(id);
             if (Timer == null)
             {
                 return HttpNotFound();
@@ -56,22 +56,23 @@ namespace EqUiWebUi.Areas.VWSC.Controllers
 
         // GET: VWSC/c_timer/Edit/5
         // We will handle the creation of a new trigger also in EDIT. (to make code simplere) to create a new trigger pass ID = -1
+        [HttpGet]
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            VWSC_c_Timer Timer;
+            VWSC_c_timer Timer;
 
             if (id == -1) //create new
             {
-                Timer = new VWSC_c_Timer();
+                Timer = new VWSC_c_timer();
                 Timer.enable_bit = (int)Enable_bit.Disabled;
             }
             else //find the existing alert 
             {
-                Timer = db.Timer.Find(id);
+                Timer = db.c_timer.Find(id);
 
                 if (Timer == null)
                 {
@@ -79,7 +80,7 @@ namespace EqUiWebUi.Areas.VWSC.Controllers
                 }
             }
             ViewBag.class_id = new SelectList(db.c_timer_class, "id", "name", Timer.c_timer_class_id);
-            ViewBag.NptId = new SelectList(db.NPT, "id", "name", Timer.NptId);
+            ViewBag.NptId = new SelectList(db.c_NPT, "id", "name", Timer.NptId);
             return View(Timer);
         }
 
@@ -88,13 +89,13 @@ namespace EqUiWebUi.Areas.VWSC.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(VWSC_c_Timer Timer)
+        public ActionResult Edit(VWSC_c_timer Timer)
         {
             if (ModelState.IsValid)
             {
                 if (Timer.ID == -1)//add new 
                 {
-                    db.Timer.Add(Timer);
+                    db.c_timer.Add(Timer);
                 }
                 else
                 {
@@ -104,7 +105,7 @@ namespace EqUiWebUi.Areas.VWSC.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.class_id = new SelectList(db.c_timer_class, "id", "name", Timer.c_timer_class_id);
-            ViewBag.NptId = new SelectList(db.NPT, "id", "name", Timer.NptId);
+            ViewBag.NptId = new SelectList(db.c_NPT, "id", "name", Timer.NptId);
             return View(Timer);
         }
 
@@ -115,7 +116,7 @@ namespace EqUiWebUi.Areas.VWSC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            VWSC_c_Timer Timer = db.Timer.Find(id);
+            VWSC_c_timer Timer = db.c_timer.Find(id);
             if (Timer == null)
             {
                 return HttpNotFound();
@@ -128,8 +129,8 @@ namespace EqUiWebUi.Areas.VWSC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            VWSC_c_Timer Timer = db.Timer.Find(id);
-            db.Timer.Remove(Timer);
+            VWSC_c_timer Timer = db.c_timer.Find(id);
+            db.c_timer.Remove(Timer);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

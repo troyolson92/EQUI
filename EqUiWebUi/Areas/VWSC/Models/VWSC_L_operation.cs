@@ -18,9 +18,10 @@ namespace EqUiWebUi.Areas.VWSC.Models
         public Nullable<System.DateTime> C_timestamp { get; set; }
         public Nullable<int> code { get; set; }
         public string Vwsc_name { get; set; }
-        public Nullable<int> controller_id { get; set; }
+        public Nullable<int> npt_id { get; set; }
+        public Nullable<int> timer_id { get; set; }
         public string Description { get; set; }
     
-        public virtual VWSC_c_Timer Timer { get; set; }
+        public virtual VWSC_c_timer c_timer { get; set; }
     }
 }
