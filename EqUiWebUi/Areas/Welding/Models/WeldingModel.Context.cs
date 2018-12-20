@@ -29,7 +29,6 @@ namespace EqUiWebUi.Areas.Welding.Models
     
         public virtual DbSet<rt_AutoWorkFlowULPlans> rt_AutoWorkFlowULPlans { get; set; }
         public virtual DbSet<ULRapportering> ULRapporterings { get; set; }
-        public virtual DbSet<DoubleSpotCheck> DoubleSpotCheck { get; set; }
         public virtual DbSet<CheckDubbelPrograms> CheckDubbelPrograms { get; set; }
         public virtual DbSet<BosProgramAvailable> BosProgramAvailable { get; set; }
         public virtual DbSet<dressrequired> dressrequired { get; set; }
@@ -43,7 +42,6 @@ namespace EqUiWebUi.Areas.Welding.Models
         public virtual DbSet<TDTResults> TDTResults { get; set; }
         public virtual DbSet<ToDoList> ToDoList { get; set; }
         public virtual DbSet<ToDoList_Remark> ToDoList_Remark { get; set; }
-        public virtual DbSet<ComparePitchV316> ComparePitchV316 { get; set; }
         public virtual DbSet<WeldFaultProtocol> WeldFaultProtocol { get; set; }
         public virtual DbSet<WeldfaultCount> WeldfaultCount { get; set; }
         public virtual DbSet<AutomaticPlanControleWeldBolt> AutomaticPlanControleWeldBolt { get; set; }
@@ -79,6 +77,19 @@ namespace EqUiWebUi.Areas.Welding.Models
         public virtual DbSet<rt_weldfault> rt_weldfault { get; set; }
         public virtual DbSet<rt_weldmeasureprotddw> rt_weldmeasureprotddw { get; set; }
         public virtual DbSet<h_Nut_Bolt_Measure> h_Nut_Bolt_Measure { get; set; }
+        public virtual DbSet<TimerIpAdresses> TimerIpAdresses { get; set; }
+        public virtual DbSet<DoubleSpotCheck> DoubleSpotCheck { get; set; }
+        public virtual DbSet<ComparePitchV316> ComparePitchV316 { get; set; }
+        public virtual DbSet<Inspectionplan> Inspectionplan { get; set; }
+        public virtual DbSet<UltralogStations> UltralogStations { get; set; }
+        public virtual DbSet<UltralogInspections> UltralogInspections { get; set; }
+        public virtual DbSet<SpotIdentMeasurements> SpotIdentMeasurements { get; set; }
+        public virtual DbSet<ULplan_end> ULplan_end { get; set; }
+        public virtual DbSet<ULplan_start> ULplan_start { get; set; }
+        public virtual DbSet<Users> Users { get; set; }
+        public virtual DbSet<StoringName> StoringName { get; set; }
+        public virtual DbSet<StoringsCause> StoringsCause { get; set; }
+        public virtual DbSet<StoringsIngave_new> StoringsIngave_new { get; set; }
     
         public virtual ObjectResult<Lastwelds_Result> Lastwelds(string timer, Nullable<int> spot)
         {

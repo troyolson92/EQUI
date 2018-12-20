@@ -56,16 +56,44 @@
 <div class="card">
     <div class="card-header bg-dark">
         <h5 class="card-title text-white">
-            UL Data Tools
+            UL Data Tools & Alerts
             <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
         </h5>
     </div>
     <p>
     <p>
-        <a href="~/Alert/Alert/Listalerts?h_alert-c_triggers.alert-type-contains=ULrapport&h_alert-rows=20" class="btn btn-primary btn-sm"> pss en spot positie alert &raquo;</a>
- 
+        <a href="~/Alert/Alert/Listalerts?h_alert-c_triggers.alert-group-contains=UL&h_alert-rows=20" class="btn btn-primary btn-sm"> pss en spot positie alert &raquo;</a>
+
+    <p></p>
+
+    @*This card is default collapsed see fa-rotate-180 and display:none*@
+    <div class="card">
+        <div class="card-header bg-danger">
+            <h5 class="card-title text-white">
+             Ultralog Config
+                <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-rotate-180 fa-1"></i></span>
+            </h5>
+        </div>
+        <div class="card-body" style="display:none">
+
+            <p>
+                <a href="~/Welding/Inspectionplans/Index" class="btn btn-primary btn-sm">Config Ul plannen&raquo;</a>
+                Beheer van de DB plannen
+            </p>
+
+            <a href="~/Welding/ULplan_start/Index" class="btn btn-primary btn-sm">Plan Busy&raquo;</a>
+            Beheer van de DB plan busy list
+            </p>
+            <a href="~/Welding/StoringsIngave/Index" class="btn btn-primary btn-sm">StoringsIngave&raquo;</a>
+            Beheer van de StoringsIngaven
+            </p>
+         
 
 
+        </div>
+
+</div>
+</div>
 
 
 </div>

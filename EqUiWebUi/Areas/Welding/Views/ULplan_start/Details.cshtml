@@ -1,0 +1,98 @@
+﻿@model EqUiWebUi.Areas.Welding.Models.ULplan_start
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <h4>ULplan_start</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.planid)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.planid)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.lastplannumber)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.lastplannumber)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Startinspectiontime)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Startinspectiontime)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.planlenght)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.planlenght)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.inspectorid)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.inspectorid)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.StationId)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.StationId)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Worklocation)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Worklocation)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.bodynr)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.bodynr)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.plancounter)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.plancounter)
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>

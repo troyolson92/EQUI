@@ -1,0 +1,41 @@
+﻿
+@model IQueryable<EqUiWebUi.Areas.Welding.Models.rt_datachangeprot>
+@{
+    ViewBag.Title = "rt_datachangeprot";
+}
+
+
+<h2>Search in Timer Datachange</h2>
+
+@Html.Grid(Model).Named("rt_datachangeprot").Build(columns =>
+{
+    columns.Add(c => c.c_timer.location).Titled("location");
+    columns.Add(c => c.c_timer.Name).Titled("TimerName");
+    columns.Add(c => c.dateTime).Titled("datetime").InitialSort(GridSortOrder.Desc);
+    columns.Add(c => c.param_status_txt).Titled("parameter");
+    columns.Add(c => c.subIndex).Titled("program/electrode");
+    columns.Add(c => c.oldValue_txt).Titled("oldValue");
+    columns.Add(c => c.newValue_txt).Titled("newValue");
+    columns.Add(c => c.c_user.username).Titled("username");
+    columns.Add(c => c.c_timer.ResponsibleWeldMaster).Titled("ResponsibleWeldMaster");
+
+
+
+
+}).Filterable().Pageable(pager =>
+{
+    pager.RowsPerPage = 20;
+
+
+}
+   ).Sortable().Css("table-hover").RowCss(model => model.param_status_txt == "Monitoring (S)" && model.newValue_txt == "Off" || model.param_status_txt == "measurement (S)" && model.newValue_txt == "Off" ?  "ani_PulseBlueRepeat" : "");;
+
+    @section scripts{
+        <script>
+            //full with screen
+            $("#allcontent").removeClass("body-content");
+            $("#allcontent").removeClass("container");
+        </script>
+    }
+
+

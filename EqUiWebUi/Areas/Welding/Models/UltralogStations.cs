@@ -12,11 +12,18 @@ namespace EqUiWebUi.Areas.Welding.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class DoubleSpotCheck
+    public partial class UltralogStations
     {
-        public string SpotName { get; set; }
-        public int weldProgNo { get; set; }
-        public string Name { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public UltralogStations()
+        {
+            this.UltralogInspections = new HashSet<UltralogInspections>();
+        }
+    
         public int ID { get; set; }
+        public string Name { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UltralogInspections> UltralogInspections { get; set; }
     }
 }

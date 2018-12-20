@@ -12,11 +12,9 @@ namespace EqUiWebUi.Areas.Welding.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class DoubleSpotCheck
+    public partial class SpotIdentMeasurements
     {
-        public string SpotName { get; set; }
-        public int weldProgNo { get; set; }
-        public string Name { get; set; }
-        public int ID { get; set; }
+        public System.DateTime timestamp { get; set; }
+        public int SpotID { get; set; }
     }
 }
