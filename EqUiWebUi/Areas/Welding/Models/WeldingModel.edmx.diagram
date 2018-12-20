@@ -90,7 +90,23 @@
       </Diagram>
       <Diagram DiagramId="6c5a0a6f0e3c46ecbc5b4756677dc47e" Name="Ultralog" ZoomLevel="74" >
         <EntityTypeShape EntityType="GADATAModelWelding.AutomaticPlanControleWeldBolt" Width="1.5" PointX="0.5" PointY="0.5" FillColor="255, 192, 128" />
-        <EntityTypeShape EntityType="GADATAModelWelding.AlertsQteam" Width="1.5" PointX="0.5" PointY="2.75" FillColor="255, 192, 128" />
+        <EntityTypeShape EntityType="GADATAModelWelding.AlertsQteam" Width="1.5" PointX="2.25" PointY="0.5" FillColor="255, 192, 128" />
+        <EntityTypeShape EntityType="GADATAModelWelding.Inspectionplan" Width="1.5" PointX="10.375" PointY="0.625" />
+        <EntityTypeShape EntityType="GADATAModelWelding.UltralogStations" Width="1.5" PointX="5" PointY="2.5" />
+        <EntityTypeShape EntityType="GADATAModelWelding.UltralogInspections" Width="1.5" PointX="7.625" PointY="0.75" />
+        <EntityTypeShape EntityType="GADATAModelWelding.SpotIdentMeasurements" Width="1.5" PointX="2.25" PointY="3.25" FillColor="255, 192, 128" />
+        <EntityTypeShape EntityType="GADATAModelWelding.ULplan_end" Width="1.5" PointX="0.5" PointY="2.625" FillColor="255, 192, 128" />
+        <AssociationConnector Association="GADATAModelWelding.FK_UltralogInspections_Inspectionplan" />
+        <AssociationConnector Association="GADATAModelWelding.FK_UltralogInspections_UltralogStations" />
+        <EntityTypeShape EntityType="GADATAModelWelding.ULplan_start" Width="1.5" PointX="0.5" PointY="5.875" FillColor="255, 192, 128" />
+        <EntityTypeShape EntityType="GADATAModelWelding.Users" Width="1.5" PointX="10" PointY="5.5" />
+        <AssociationConnector Association="GADATAModelWelding.FK_UltralogInspections_Users" />
+        <EntityTypeShape EntityType="GADATAModelWelding.StoringName" Width="1.5" PointX="13.375" PointY="4.75" FillColor="255, 192, 128" />
+        <EntityTypeShape EntityType="GADATAModelWelding.StoringsCause" Width="1.5" PointX="13.375" PointY="2.5" FillColor="255, 192, 128" />
+        <EntityTypeShape EntityType="GADATAModelWelding.StoringsIngave_new" Width="1.5" PointX="15.625" PointY="0.625" FillColor="255, 192, 128" />
+        <AssociationConnector Association="GADATAModelWelding.FK_StoringsIngave_new_Users1" />
+        <AssociationConnector Association="GADATAModelWelding.FK_StoringsIngave_new_StoringName" />
+        <AssociationConnector Association="GADATAModelWelding.FK_StoringsIngave_new_StoringsCause" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

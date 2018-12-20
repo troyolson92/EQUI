@@ -660,15 +660,17 @@
     <Compile Include="Areas\VWSC\Models\winService.cs" />
     <Compile Include="Areas\VWSC\VWSCAreaRegistration.cs" />
     <Compile Include="Areas\Welding\Controllers\AROController.cs" />
+    <Compile Include="Areas\Welding\Controllers\DMLControllers\ULplan_startController.cs" />
     <Compile Include="Areas\Welding\Controllers\LaunchController.cs" />
     <Compile Include="Areas\Welding\Controllers\QteamController.cs" />
     <Compile Include="Areas\Welding\Controllers\SpatterController.cs" />
     <Compile Include="Areas\Welding\Controllers\TeardownTeam.cs" />
-    <Compile Include="Areas\Welding\Controllers\ToDoListsController.cs" />
-    <Compile Include="Areas\Welding\Controllers\ToDoList_RemarkController.cs" />
+    <Compile Include="Areas\Welding\Controllers\DMLControllers\ToDoListsController.cs" />
+    <Compile Include="Areas\Welding\Controllers\DMLControllers\ToDoList_RemarkController.cs" />
     <Compile Include="Areas\Welding\Controllers\UpdateController.cs" />
     <Compile Include="Areas\Welding\Controllers\WMController.cs" />
-    <Compile Include="Areas\Welding\editController.cs" />
+    <Compile Include="Areas\Welding\Controllers\DMLControllers\editController.cs" />
+    <Compile Include="Areas\Welding\Controllers\DMLControllers\InspectionplansController.cs" />
     <Compile Include="Areas\Welding\Models\ActualSpatter_.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
@@ -741,6 +743,9 @@
     <Compile Include="Areas\Welding\Models\h_weldmeasure.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Areas\Welding\Models\Inspectionplan.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Areas\Welding\Models\LastWelds.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
@@ -798,7 +803,19 @@
     <Compile Include="Areas\Welding\Models\rt_weldmeasureprotddw.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Areas\Welding\Models\SpotIdentMeasurements.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Areas\Welding\Models\StabilityInDicationV316.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Welding\Models\StoringName.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Welding\Models\StoringsCause.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Welding\Models\StoringsIngave_new.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Welding\Models\TDTResults.cs">
@@ -819,7 +836,22 @@
     <Compile Include="Areas\Welding\Models\ToDoList_Remark.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Areas\Welding\Models\ULplan_end.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Welding\Models\ULplan_start.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Areas\Welding\Models\ULRapportering.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Welding\Models\UltralogInspections.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Welding\Models\UltralogStations.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Welding\Models\Users.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Welding\Models\WeldfaultCount.cs">
@@ -1945,6 +1977,16 @@
     <Content Include="Areas\Welding\Views\WM\_Datachange.cshtml" />
     <Content Include="Areas\Welding\Views\Launch\doublespotCheck.cshtml" />
     <Content Include="Areas\Welding\Views\Launch\ComparePitchV316.cshtml" />
+    <Content Include="Areas\Welding\Views\Inspectionplans\Create.cshtml" />
+    <Content Include="Areas\Welding\Views\Inspectionplans\Delete.cshtml" />
+    <Content Include="Areas\Welding\Views\Inspectionplans\Details.cshtml" />
+    <Content Include="Areas\Welding\Views\Inspectionplans\Edit.cshtml" />
+    <Content Include="Areas\Welding\Views\Inspectionplans\Index.cshtml" />
+    <Content Include="Areas\Welding\Views\ULplan_start\Create.cshtml" />
+    <Content Include="Areas\Welding\Views\ULplan_start\Delete.cshtml" />
+    <Content Include="Areas\Welding\Views\ULplan_start\Details.cshtml" />
+    <Content Include="Areas\Welding\Views\ULplan_start\Edit.cshtml" />
+    <Content Include="Areas\Welding\Views\ULplan_start\Index.cshtml" />
     <None Include="Properties\PublishProfiles\gensvw1178-DEV-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gotsvw11292-PRODUCTION-VCTA.pubxml" />

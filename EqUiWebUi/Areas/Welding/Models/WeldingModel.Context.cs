@@ -80,6 +80,16 @@ namespace EqUiWebUi.Areas.Welding.Models
         public virtual DbSet<TimerIpAdresses> TimerIpAdresses { get; set; }
         public virtual DbSet<DoubleSpotCheck> DoubleSpotCheck { get; set; }
         public virtual DbSet<ComparePitchV316> ComparePitchV316 { get; set; }
+        public virtual DbSet<Inspectionplan> Inspectionplan { get; set; }
+        public virtual DbSet<UltralogStations> UltralogStations { get; set; }
+        public virtual DbSet<UltralogInspections> UltralogInspections { get; set; }
+        public virtual DbSet<SpotIdentMeasurements> SpotIdentMeasurements { get; set; }
+        public virtual DbSet<ULplan_end> ULplan_end { get; set; }
+        public virtual DbSet<ULplan_start> ULplan_start { get; set; }
+        public virtual DbSet<Users> Users { get; set; }
+        public virtual DbSet<StoringName> StoringName { get; set; }
+        public virtual DbSet<StoringsCause> StoringsCause { get; set; }
+        public virtual DbSet<StoringsIngave_new> StoringsIngave_new { get; set; }
     
         public virtual ObjectResult<Lastwelds_Result> Lastwelds(string timer, Nullable<int> spot)
         {

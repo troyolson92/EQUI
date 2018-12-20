@@ -1,0 +1,92 @@
+﻿@model IEnumerable<EqUiWebUi.Areas.Welding.Models.Inspectionplan>
+
+
+@{
+    ViewBag.Title = "Index";
+
+}
+
+
+<h2>Config UL plans</h2>
+
+
+    <p>
+        @Html.ActionLink("Create New Plan", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.PlanActive)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SpotIdent)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WorkTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WorkGroup)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WorkLocation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SpotBefore)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SpotAfter)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.PlanActive)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SpotIdent)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.WorkTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.WorkGroup)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.WorkLocation)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SpotBefore)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SpotAfter)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                </td>
+            </tr>
+        }
+        @section scripts{
+            <script>
+        //full with screen
+        $("#allcontent").removeClass("body-content");
+        $("#allcontent").removeClass("container");
+            </script>
+        }
+
+    </table>
+</body>
+</html>
