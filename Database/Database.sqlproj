@@ -284,6 +284,7 @@
     <Build Include="WELDING2\Tables\rt_spottable.sql" />
     <Build Include="WELDING2\Tables\c_user.sql" />
     <Build Include="WELDING2\Tables\c_bosch_param.sql" />
+    <Build Include="Security\db_accesEquiReadonly.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="GADATAprod.publish.xml" />
