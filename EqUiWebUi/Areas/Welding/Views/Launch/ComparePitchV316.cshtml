@@ -2,17 +2,17 @@
 @{
     ViewBag.Title = "ComparePitchV316";
 }
-
+<h2>Compare Pitch file with the same weldspots in the weldtimers if there welded in the last month!</h2>
 @Html.Grid(Model).Named("ComparePitchV316").Build(columns =>
 {
-    columns.Add(c => c.timerNumber).Titled("timernumber").Formatted("{0:dd-MM-yyyy HH:mm:ss}");
+    columns.Add(c => c.timerNumber).Titled("timernumber");
     columns.Add(c => c.Timer).Titled("timer").InitialSort(GridSortOrder.Desc);
-    columns.Add(c => c.SpotID).Titled("spotidFromPitch");
- 
-    columns.Add(c => c.AlternativeNumber).Titled("SpotInTimer");
-    columns.Add(c => c.lastWeldTime).Titled("Last30min_productionStatus").Formatted("{0:dd-MM-yyyy HH:mm:ss}");
+    columns.Add(c => c.SpotID).Titled("spotid");
+    columns.Add(c => c.AlternativeNumber).Titled("TimerSpotName");
+    columns.Add(c => c.lastWeldTime).Titled("lastWeldTime");
     columns.Add(c => c.lastULControleTime).Titled("lastULControleTime");
     columns.Add(c => c.Expr1).Titled("variant");
+
 
 
 }).Filterable().Pageable(pager =>
@@ -20,5 +20,5 @@
     pager.RowsPerPage = 20;
 
 }
-        ).Sortable().Css("table-hover").RowCss(model => model.AlternativeNumber != null ? "ani_PulseRed" : "");
+        ).Sortable().Css("table-hover").RowCss(model => model.SpotID != null ? "ani_PulseBlueRepeat" : "");;
 

@@ -660,6 +660,7 @@
     <Compile Include="Areas\VWSC\Models\winService.cs" />
     <Compile Include="Areas\VWSC\VWSCAreaRegistration.cs" />
     <Compile Include="Areas\Welding\Controllers\AROController.cs" />
+    <Compile Include="Areas\Welding\Controllers\DMLControllers\StoringsIngaveController.cs" />
     <Compile Include="Areas\Welding\Controllers\DMLControllers\ULplan_startController.cs" />
     <Compile Include="Areas\Welding\Controllers\LaunchController.cs" />
     <Compile Include="Areas\Welding\Controllers\QteamController.cs" />
@@ -1987,6 +1988,11 @@
     <Content Include="Areas\Welding\Views\ULplan_start\Details.cshtml" />
     <Content Include="Areas\Welding\Views\ULplan_start\Edit.cshtml" />
     <Content Include="Areas\Welding\Views\ULplan_start\Index.cshtml" />
+    <Content Include="Areas\Welding\Views\StoringsIngave\Create.cshtml" />
+    <Content Include="Areas\Welding\Views\StoringsIngave\Delete.cshtml" />
+    <Content Include="Areas\Welding\Views\StoringsIngave\Details.cshtml" />
+    <Content Include="Areas\Welding\Views\StoringsIngave\Edit.cshtml" />
+    <Content Include="Areas\Welding\Views\StoringsIngave\Index.cshtml" />
     <None Include="Properties\PublishProfiles\gensvw1178-DEV-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gotsvw11292-PRODUCTION-VCTA.pubxml" />

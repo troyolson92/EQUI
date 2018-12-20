@@ -54,7 +54,7 @@ namespace EqUiWebUi.Areas.Welding.Controllers
         }
         public ActionResult ComparePitchV316()
         {
-            IQueryable<ComparePitchV316> data = db.ComparePitchV316.Where(c=> c.AlternativeNumber != null).AsQueryable();
+            IQueryable<ComparePitchV316> data = db.ComparePitchV316.AsQueryable();
             return View(data);
         }
 
