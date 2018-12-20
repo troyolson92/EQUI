@@ -9,7 +9,6 @@ using System.Diagnostics;
 using Microsoft.Office.Interop.Excel;
 using System.Windows.Forms;
 using EQUICommunictionLib;
-using EQUIToolsLib;
 using System.Threading;
 
 namespace ExcelAddInEquipmentDatabase
@@ -355,8 +354,10 @@ namespace ExcelAddInEquipmentDatabase
         public void frmNewSBCUstatsThread()
         {
             try
-            { 
-           System.Windows.Forms.Application.Run(new SBCUStats(location));
+            {
+                string urlSkelation = @"http:\\gensvw1178.gen.volvocars.net\EqUi_UtilManager\EqUi_UtilManger.application?Tool=SBCUstats&target={0}";
+                string url = string.Format(urlSkelation, Uri.EscapeDataString(location));
+                System.Diagnostics.Process.Start(url);
             }
             catch (Exception ex)
             {

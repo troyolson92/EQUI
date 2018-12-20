@@ -42,7 +42,7 @@
     <PublishUrl>\\gnlsnm0101.gen.volvocars.net\proj\6308-SHR-VCC22700\VSTO\DEPLOYMENTBASE\</PublishUrl>
     <InstallUrl />
     <TargetCulture>en</TargetCulture>
-    <ApplicationVersion>3.0.2.79</ApplicationVersion>
+    <ApplicationVersion>3.0.3.0</ApplicationVersion>
     <AutoIncrementApplicationRevision>true</AutoIncrementApplicationRevision>
     <UpdateEnabled>true</UpdateEnabled>
     <UpdateInterval>0</UpdateInterval>
@@ -420,10 +420,6 @@
     <ProjectReference Include="..\EQUICommunictionLib\EQUICommunictionLib.csproj">
       <Project>{090979a1-2c7b-4c89-a921-f36a936412f2}</Project>
       <Name>EQUICommunictionLib</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\EQUIToolsLib\EQUIToolsLib.csproj">
-      <Project>{ebaded60-44dc-49f0-a1c5-a283baa1c392}</Project>
-      <Name>EQUIToolsLib</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
