@@ -2,9 +2,9 @@
 AS
 BEGIN
 BEGIN
-	if (len(ISNULL(@str,'')) > 1)
+	if (len(ISNULL(@STR,'')) > 1)
 	BEGIN
-		SET @str = ISNULL(@str,'') + char(10) + char(13)
+		SET @STR = ISNULL(@STR,'') + char(10) + char(13)
 	END
 END
 RETURN ISNULL(@str,'')
