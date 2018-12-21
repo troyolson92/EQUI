@@ -19,7 +19,7 @@
         sourceUrl: '@Html.Raw(@Url.Action("_sessionSetupGrid",new { enable_mask = ViewBag.enable_mask }))',
         requestType: 'get', // Ajax grid request type
         reloadFailed: function (result) {
-            $("#sessionSetupGridContainer").html("Error while loading!!!");
+            $("#sessionSetupGridContainer").html($("#Error", result.responseText).html());
         }
     });
 </script>

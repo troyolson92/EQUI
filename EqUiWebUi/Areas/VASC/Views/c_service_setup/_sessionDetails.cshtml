@@ -21,7 +21,7 @@
         sourceUrl: '@Html.Raw(@Url.Action("_List", "l_operation",new { sessionName = ViewBag.sessionName }))',
         requestType: 'get', // Ajax grid request type
         reloadFailed: function (result) {
-            $('[data-name="L_operationGrids"]').html("Error while loading!!!");
+            $('[data-name="L_operationGrids"]').html($("#Error", result.responseText).html());
         }
     });
 </script>

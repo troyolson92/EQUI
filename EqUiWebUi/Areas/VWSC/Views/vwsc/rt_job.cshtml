@@ -9,7 +9,7 @@
 {
     columns.Add(c => c.id).Titled("rt_job_id").InitialSort(GridSortOrder.Desc);
     columns.Add(c => c.ngac_rt_job_id).Titled("ngacJobId");
-    columns.Add(c => c.Timer.NptId).Titled("NptId");
+    columns.Add(c => c.c_timer.NptId).Titled("NptId");
     columns.Add(c => c.C_timestamp).Titled("C_timestamp");
     columns.Add(c =>  (c.ts_End-c.ts_Start).GetValueOrDefault().TotalSeconds).Titled("CT");
     columns.Add(c => c.rt_weldmeasureprotddw_count).Titled("WC");
@@ -43,7 +43,7 @@
         //subscribe to row clicked events
         $('[data-name="VWSC_rt_job"]').mvcgrid({
             rowClicked: function (row, data, e) {
-                //if row already has this clase close the modal
+                //if row already has this close close the modal
                 if ($(row).hasClass("bg-info")) {
                     $("#placeholder").remove();
                     $(row).removeClass("bg-info");

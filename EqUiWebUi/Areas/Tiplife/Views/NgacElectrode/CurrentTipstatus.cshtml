@@ -48,7 +48,7 @@
                 $('#MyModal').load(urlTipinfo, function (result) { });
             },
             reloadFailed: function (result) {
-                $('[data-name="TipStatusGrid"]').html("Error while loading!!!");
+                $('[data-name="TipStatusGrid"]').html($("#Error", result.responseText).html());
             }
         });
 

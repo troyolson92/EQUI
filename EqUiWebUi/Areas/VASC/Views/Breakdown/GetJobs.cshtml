@@ -40,7 +40,7 @@
                 reloadFailed: function (result) {
                     console.log(result);
                     $('#btnGet').removeClass('disabled');
-                    $('[data-name="rtjobGrid"]').html("<div class='alert alert-danger'>Error while loading!! </div>");
+                    $('[data-name="rtjobGrid"]').html($("#Error", result.responseText).html());
                 }
              });
         }
