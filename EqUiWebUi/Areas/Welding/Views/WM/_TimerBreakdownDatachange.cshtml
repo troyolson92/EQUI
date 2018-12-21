@@ -1,33 +1,30 @@
-﻿@model IQueryable<EqUiWebUi.Areas.Welding.Models.TimerBreakdownDatachange>
+﻿@model IQueryable<EqUiWebUi.Areas.Welding.Models.TimerBreakdowns_WMActions>
 @{
-    ViewBag.Title = "TimerBreakdownDatachange";
+    ViewBag.Title = "TimerBreakdowns_WMActions";
 }
-
-@Html.Grid(Model).Named("TimerBreakdownDatachange").Build(columns =>
+<h2>TimerFaults with downtime >= 5 min last month</h2>
+@Html.Grid(Model).Named("TimerBreakdowns_WMActions").Build(columns =>
 {
 
-    columns.Add(c => c.Name).Titled("NPT");
-    columns.Add(c => c.location).Titled("Location");
-    columns.Add(c => c.Expr1).Titled("Timer");
-    columns.Add(c => c.TimerFault).Titled("TimerFault");
-    columns.Add(c => c.errorstarttime).Titled("statusadaptief").Formatted("{0:dd-MM-yyyy HH:mm:ss}").InitialSort(GridSortOrder.Desc); ;
-    columns.Add(c => c.BreakdownTime).Titled("BreakdownTime");
 
-    columns.Add(c => c.DataChangeTime).Titled("dataChangeTime");
-    columns.Add(c => c.Parameter).Titled("Parameter");
-    columns.Add(c => c.OldValue).Titled("OldValue");
-    columns.Add(c => c.NewValue).Titled("NewValue");
-    columns.Add(c => c.CDSID).Titled("CDSID");
-    columns.Add(c => c.WMComment).Titled("WMComment");
+    columns.Add(c => c.dateTime).Titled("datetime");
+    columns.Add(c => c.timerName).Titled("TimerName");
+    columns.Add(c => c.fault).Titled("fault").Formatted("{0:dd-MM-yyyy HH:mm:ss}").InitialSort(GridSortOrder.Desc);
+    columns.Add(c => c.timerfault).Titled("Timerfault");
 
-    columns.Add(c => c.Vyear).Titled("Vyear");
-    columns.Add(c => c.Vweek).Titled("Vweek");
-    columns.Add(c => c.Vday).Titled("Vday");
-    columns.Add(c => c.Shift).Titled("Shift");
+    columns.Add(c => c.Start).Titled("start").Formatted("{0:dd-MM-yyyy HH:mm:ss}").InitialSort(GridSortOrder.Desc);
+    columns.Add(c => c.end).Titled("end");
+    columns.Add(c => c.downtime).Titled("downtime");
+    columns.Add(c => c.interventionTime).Titled("InterventionTime");
+    columns.Add(c => c.parameter).Titled("parameter");
+    columns.Add(c => c.oldValue).Titled("oldvalue");
+
+    columns.Add(c => c.newValue).Titled("newValue");
+    columns.Add(c => c.username).Titled("username");
 
 
 }).Filterable(
-).Sortable().RowCss(c => c.Parameter != null ? "Green" : "")
+).Sortable().RowCss(c => c.parameter != null ? "ani_PulseGreen" : "")
 
 @section scripts{
     <script>

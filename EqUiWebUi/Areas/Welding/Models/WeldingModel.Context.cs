@@ -38,7 +38,6 @@ namespace EqUiWebUi.Areas.Welding.Models
         public virtual DbSet<LastWelds> LastWelds { get; set; }
         public virtual DbSet<QISViewer> QISViewer { get; set; }
         public virtual DbSet<TimerBreakdowns_busy> TimerBreakdowns_busy { get; set; }
-        public virtual DbSet<TimerBreakdownDatachange> TimerBreakdownDatachange { get; set; }
         public virtual DbSet<TDTResults> TDTResults { get; set; }
         public virtual DbSet<ToDoList> ToDoList { get; set; }
         public virtual DbSet<ToDoList_Remark> ToDoList_Remark { get; set; }
@@ -90,6 +89,7 @@ namespace EqUiWebUi.Areas.Welding.Models
         public virtual DbSet<StoringName> StoringName { get; set; }
         public virtual DbSet<StoringsCause> StoringsCause { get; set; }
         public virtual DbSet<StoringsIngave_new> StoringsIngave_new { get; set; }
+        public virtual DbSet<TimerBreakdowns_WMActions> TimerBreakdowns_WMActions { get; set; }
     
         public virtual ObjectResult<Lastwelds_Result> Lastwelds(string timer, Nullable<int> spot)
         {

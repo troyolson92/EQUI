@@ -823,10 +823,10 @@
     <Compile Include="Areas\Welding\Models\TDTResults.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Areas\Welding\Models\TimerBreakdownDatachange.cs">
+    <Compile Include="Areas\Welding\Models\TimerBreakdowns_busy.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Areas\Welding\Models\TimerBreakdowns_busy.cs">
+    <Compile Include="Areas\Welding\Models\TimerBreakdowns_WMActions.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Welding\Models\TimerIpAdresses.cs">
@@ -847,7 +847,6 @@
     <Compile Include="Areas\Welding\Models\ULRapportering.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
-
     <Compile Include="Areas\Welding\Models\UltralogInspections.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
