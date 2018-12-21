@@ -10,38 +10,34 @@ namespace EqUiWebUi.Controllers
     {
         /// <summary>    /// Track Common Page Error
         /// </summary>    /// <returns></returns>
-        [HttpGet]
         public ActionResult Index()
         {
             TempData["error"] = "Error Occurred!";
-            return View("Index");
+            return View("Index");//use default Index error view
         }
         /// <summary>    /// Track Page Not Found Error
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
         public ActionResult NotFound()
         {
             TempData["error"] = "Page not Found";
-            return View("Index");
+            return View("Index");//use default Index error view
         }
         /// <summary>
         /// Track Access Denied
         /// </summary>    /// <returns></returns>
-        [HttpGet]
         public ActionResult AccessDenied()
         {
             TempData["error"] = "Access Denied";
-            return View();
+            return View();//custom Access Denied view
         }
 
         /// <summary>    /// Track Internal Server Error
         /// </summary>    /// <returns></returns>
-        [HttpGet]
         public ActionResult InternalServerError()
         {
             TempData["error"] = "Internal Server Error";
-            return View("Index");
+            return View("Index");//use default Index error view
         }
     }
 }

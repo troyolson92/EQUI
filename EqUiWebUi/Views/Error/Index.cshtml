@@ -10,32 +10,40 @@
                     <h5>
                         Exception
                         <span><small>(Controller: <strong>@Model.ControllerName</strong>  Action: <strong>@Model.ActionName)</strong></span></small>
-                    </h5>          
+                    </h5>
                 </div>
                 <div>
                     Description:  @Model.Exception.Message.ToString()
                 </div>
-                <hr />
-                InnerException:
-                <small>
-                    @Model.Exception.InnerException.Message.ToString()
-                </small>
+
+                @if (Model.Exception.InnerException != null)
+                {
+                    <hr />
+                    <div>
+                        InnerException:
+                        <small>
+                            @Model.Exception.InnerException.Message.ToString()
+                        </small>
+                    </div>
+                }
             </div>
 
-            <div class="card">
-                <div class="card-header bg-info">
-                    <h6 class="card-title text-white">
-                        StackTrace
-                        <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-rotate-180 fa-1"></i></span>
-                    </h6>
+            @if (Model.Exception.StackTrace != null)
+            {
+                <div class="card">
+                    <div class="card-header bg-info">
+                        <h6 class="card-title text-white">
+                            StackTrace
+                            <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-rotate-180 fa-1"></i></span>
+                        </h6>
+                    </div>
+                    <div class="card-body" style="display:none">
+                        <small>
+                            @Model.Exception.StackTrace.ToString()
+                        </small>
+                    </div>
                 </div>
-                <div class="card-body" style="display:none">
-                    <small>
-                        @Model.Exception.StackTrace.ToString()
-                    </small>
-                </div>
-            </div>
-
+            }
         </div>
     </div>
     <p>

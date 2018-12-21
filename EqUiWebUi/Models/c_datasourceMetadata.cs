@@ -9,12 +9,14 @@ namespace EqUiWebUi.Models
 {
     public class c_datasourceMetadata
     {
+        //[Required]
+       // public string Name { get; set; }
     }
 
-    [MetadataType(typeof(c_datasource))]
+    [MetadataType(typeof(c_datasourceMetadata))]
     public partial class c_datasource
     {
-
+        
         public EQUICommunictionLib.db_type _db_type
         {
             get
