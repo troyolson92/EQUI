@@ -1,15 +1,14 @@
 ﻿<div class="card">
-    <div class="card-header bg-danger">
+    <div class="card-header bg-dark">
         <h5 class="card-title text-white">
-            Alert settings
+            Alert management
             <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
         </h5>
     </div>
     <div class="card-body">
-        <p><a href="~/Alert/c_triggers/index" class="btn btn-danger btn-sm">c_trigger &raquo;</a>Manage alert triggers</p>
-        <hr />
-        <p><a href="~/Alert/c_SMSsystem/index" class="btn btn-warning btn-sm">c_SMSsystem &raquo;</a>List of sms "Systems" these dummy systems connect to an alert trigger</p>
-        <p><a href="~/Alert/c_SMSconfig/index" class="btn btn-warning btn-sm">c_SMS_config &raquo;</a>Join between SMSsystem and CPT600 (each system can send to one or more CPT600 profiles)</p>
-        <p><a href="~/Alert/c_CPT600/index" class="btn btn-warning btn-sm">c_CPT600 &raquo;</a>List of CPT600 profiles (with location asset root and sms counters)</p>
+        @MyHtmlHelpers.EquiLink("Alert/c_triggers/index", "fas fa-bell", "Alert setup", helperText: "Manage alert triggers")
+        <p>@MyFilters.IconActionLink("/Alert/c_SMSsystem/index", "fas fa-object-group", "SMS groups", "List of sms groups")</p>
+        <p>@MyFilters.IconActionLink("/Alert/c_SMSconfig/index", "fas fa-cogs", "SMS group config", "Join between SMSsystem and CPT600 (each system can send to one or more CPT600 profiles)")</p>
+        <p>@MyFilters.IconActionLink("/Alert/c_CPT600/index", "fas fa-phone", "CPT600", "List of CPT600 profiles (with location asset root and sms counters) This connects us to the VD that sends the SMS")</p>
     </div>
 </div>

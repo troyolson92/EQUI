@@ -12,7 +12,10 @@
         <hr />
         <h4>Data collectors</h4>
         @MyHtmlHelpers.EquiLink("/vasc/vasc/index", "fas fa-server", "VASC setup", helperText: "Manage configuration for Volvo ABB service center")
+        @if (EqUiWebUi.MyBooleanExtensions.IsAreaEnabled("VWSC"))
+        {
         @MyHtmlHelpers.EquiLink("/vwsc/vwsc/index", "fas fa-server", "VWSC setup", helperText: "Manage configuration for Volvo Welding service center")
+        }
         <hr />
         <h4>Data classification system</h4>
         @MyHtmlHelpers.EquiLink("/Classification/ClassificationTool", "fas fa-random", "Classification tool", helperText: "Tool for classification of data (put data in a 'class' and 'subgroup' manualiy or by makeing classification rules)")

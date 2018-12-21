@@ -1,17 +1,16 @@
 ﻿<div class="card">
-    <div class="card-header bg-danger">
+    <div class="card-header bg-dark">
         <h5 class="card-title text-white">
-            Hangfire
+            Background work management (Hangfire engine)
             <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
         </h5>
     </div>
     <div class="card-body">
-        <p><a href="~/Hangfire" class="btn btn-primary btn-sm">Hangfire &raquo;</a>Beheer van background jobs. </p>
-        <p><a href="~/HangfireArea/job/ConfiureBackgroundJobs" class="btn btn-danger btn-sm JQresultTriggerBtn">Configure jobs &raquo;</a>Configure hangfire jobs. (reset al to default)</p>
-
-        <p><a href="~/HangfireArea/c_schedule/index" class="btn btn-danger btn-sm">c_schedule &raquo;</a>Make hangfire c_schedule.</p>
-        <p><a href="~/HangfireArea/c_job/index" class="btn btn-danger btn-sm">c_job &raquo;</a>Make hangfire c_job.</p>
-
-        <p><a href="~/c_housekeeping/index" class="btn btn-danger btn-sm">c_housekeeping &raquo;</a>Make houskeeping job.</p>
+        @MyHtmlHelpers.EquiLink("/Hangfire", "fas fa-server", "Hangfire dashbord", helperText: "Hangfire is a jobmanager for running background processes")
+        <p>@MyFilters.IconActionLink("/HangfireArea/job/ConfiureBackgroundJobs", "fas fa-power-off", "Reset hangfire configuration", "Resets the hangfire reocurring job configuration (don't touch it!)", classes: "text-danger")</p>
+        @MyHtmlHelpers.EquiLink("/HangfireArea/c_schedule/index", "fas fa-calendar-plus", "Hangfire schedules", helperText: "Setup hangfire reocurring jobs to perform tasks ie: alerts, houskeeping, background job")
+        <p>@MyFilters.IconActionLink("/HangfireArea/c_job/index", "fas fa-list-ul", "List all background jobs", "sql commands that need to be run from time to time")</p>
+        <p>@MyFilters.IconActionLink("/c_housekeeping/c_job/index", "fas fa-broom", "List all housekeeping jobs", "cleaning of datatables")</p>
+        <p>@MyFilters.IconActionLink("/Alert/c_trigger/index", "fas fa-bell", "List all alert jobs", "alert triggers")</p>
     </div>
 </div>
