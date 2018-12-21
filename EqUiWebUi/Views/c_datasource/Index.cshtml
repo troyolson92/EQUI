@@ -10,15 +10,12 @@
 columns.Add(c => c.Id).Titled("id").InitialSort(GridSortOrder.Asc);
 columns.Add(c => c.Name).Titled("Name");
 columns.Add(c => c.Description).Titled("Description");
-//columns.Add(c => c.Type).Titled("Type");
-columns.Add(c => c._db_type).Titled("_db_type");
-columns.Add(c => c.PwList).Titled("PwList");
-//columns.Add(c => c.ConnectionString).Titled("ConnectionString");
+columns.Add(c => c._db_type).Titled("db_type");
 columns.Add(c => c.isAlertSource).Titled("isAlertSource");
 columns.Add(c => c)
                 .Titled("")
                 .Encoded(false)
-            .RenderedAs(c => MyFilters.IconActionLink(Url.Action("Edit", new { id = c.Id }), "fas fa-pencil-alt", "", "Edit this") + " | " +
+                .RenderedAs(c => MyFilters.IconActionLink(Url.Action("Edit", new { id = c.Id }), "fas fa-pencil-alt", "", "Edit this") + " | " +
                              MyFilters.IconActionLink(Url.Action("Delete", new { id = c.Id }), "fas fa-trash-alt", "", "Delete this") + " | " +
                              MyFilters.IconActionLink(Url.Action("RunDbTest", new {id = c.Id, ChangePassword = false }), "fas fa-stethoscope", "", "check connection", classes: "JQresultTriggerBtn") + " | " +
                              MyFilters.IconActionLink(Url.Action("RunDbTest", new {id = c.Id, ChangePassword = true }), "fas fa-key", "", "change password (rotate list)", classes: "JQresultTriggerBtn")
@@ -31,7 +28,8 @@ columns.Add(c => c)
 }).Empty("Did not find anything").Css("table-hover")
 
 <hr />
-<p><a href="~/c_datasource/RunDbTest" class="btn btn-primary btn-sm JQresultTriggerBtn">RunDbTests &raquo;</a>Test all databases in equi.c_datasources (login/select)</p>
+<p>@MyFilters.IconActionLink("/c_datasource/RunDbTest", "fas fa-stethoscope", "Run all database tests", "Test all databases in equi.c_datasources (login/select system date)", classes: "JQresultTriggerBtn")</p>
+
 
 @section scripts{
     <script>
