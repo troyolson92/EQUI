@@ -61,7 +61,6 @@
             this.tbtn_StopRightClick = this.Factory.CreateRibbonToggleButton();
             this.separator4 = this.Factory.CreateRibbonSeparator();
             this.btn_ConnectionManager = this.Factory.CreateRibbonButton();
-            this.btn_ErrorMngr = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
             this.rib2.SuspendLayout();
             this.group2.SuspendLayout();
@@ -229,7 +228,6 @@
             this.g_config.Items.Add(this.tbtn_StopRightClick);
             this.g_config.Items.Add(this.separator4);
             this.g_config.Items.Add(this.btn_ConnectionManager);
-            this.g_config.Items.Add(this.btn_ErrorMngr);
             this.g_config.Label = "Configuration";
             this.g_config.Name = "g_config";
             // 
@@ -303,15 +301,6 @@
             this.btn_ConnectionManager.SuperTip = "And change and manager connections";
             this.btn_ConnectionManager.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_ConnectionManager_Click);
             // 
-            // btn_ErrorMngr
-            // 
-            this.btn_ErrorMngr.Label = "MngErrors";
-            this.btn_ErrorMngr.Name = "btn_ErrorMngr";
-            this.btn_ErrorMngr.OfficeImageId = "QuerySelectQueryType";
-            this.btn_ErrorMngr.ShowImage = true;
-            this.btn_ErrorMngr.SuperTip = "Tools for manageing error classfication. !Amdins only!";
-            this.btn_ErrorMngr.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_ErrorMngr_Click);
-            // 
             // EquipmentDBRibbon
             // 
             this.Name = "EquipmentDBRibbon";
@@ -355,7 +344,6 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_help;
         internal Microsoft.Office.Tools.Ribbon.RibbonToggleButton tbtn_Autorefresh;
         internal Microsoft.Office.Tools.Ribbon.RibbonDropDown dd_User;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_ErrorMngr;
         internal Microsoft.Office.Tools.Ribbon.RibbonToggleButton tbtn_StopRightClick;
         internal Microsoft.Office.Tools.Ribbon.RibbonSeparator separator3;
         internal Microsoft.Office.Tools.Ribbon.RibbonToggleButton tbn_3;

@@ -110,12 +110,10 @@ namespace ExcelAddInEquipmentDatabase
             if (userRoles.Contains("Administrator"))
            {
               dd_User.Enabled = true; //inpersonator 
-              btn_ErrorMngr.Enabled = true;
            }
            else
            {
               dd_User.Enabled = false;
-              btn_ErrorMngr.Enabled = false;
            }
 
             if(userRoles.Contains("AAOSR"))
@@ -645,11 +643,6 @@ namespace ExcelAddInEquipmentDatabase
             }
         }
 
-        private void btn_ErrorMngr_Click(object sender, RibbonControlEventArgs e)
-        {
-            //removed wil make new web versions
-            throw new NotImplementedException();
-        }
 
         private void Refresh_Tick(object sender, EventArgs e)
         {
