@@ -8,7 +8,7 @@
 
 @Html.Grid(Model).Named("ListSessions").Build(columns =>
 {
-    columns.Add(c => c.username).Titled("Username").InitialSort(GridSortOrder.Asc);
+ //   columns.Add(c => c.username).Titled("Username").InitialSort(GridSortOrder.Asc); 
     columns.Add(c => c.sessionId).Titled("sessionId");
 
 }).Filterable().Sortable().Empty("Did not find anything").Css("table-hover")

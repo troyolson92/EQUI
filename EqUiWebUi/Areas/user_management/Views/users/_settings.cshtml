@@ -1,27 +1,25 @@
 ﻿
 <div class="card">
-    <div class="card-header bg-danger">
+    <div class="card-header bg-dark">
         <h5 class="card-title text-white">
             User management
             <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
         </h5>
     </div>
     <div class="card-body">
-        <p><a href="~/user_management/users/Index" class="btn btn-primary btn-sm">Users &raquo;</a>Beheer van gebruikers</p>
-        <p><a href="~/user_management/usersPermisions/Index" class="btn btn-primary btn-sm">UsersPermisions &raquo;</a>Beheer van rechten</p>
-        <p><a href="~/user_management/user/ForbiddenMethod" class="btn btn-danger btn-sm">ForbiddenMethod &raquo;</a>Test auth page</p>
-        <p><a href="~/user_management/user/LoginPrompt" class="btn btn-danger btn-sm">LoginPrompt &raquo;</a>Test login page</p>
-    </div>
-    <div class="card-footer">
-        <h6>Active sessions: @ViewBag.ActiveSessions</h6>
-        <p><a href="~/user_management/users/ListSessions" class="btn btn-primary btn-xs">List &raquo;</a></p>
+        @MyHtmlHelpers.EquiLink("/user_management/users/Index", "fas fa-users", "Users", helperText: "List all users")
+        <p>@MyFilters.IconActionLink("/user_management/usersPermisions/Index", "fas fa-users-cog", "User grants", "administrator page that show all site permissions")</p>
+        <p>
+            @MyFilters.IconActionLink("/user_management/users/ListSessions", "fas fa-th-list", "Sessions", "List active session tokens")
+            <span class="badge badge-info">Active sessions: @ViewBag.ActiveSessions</span>
+        </p>
     </div>
 </div>
 
 <p></p>
 
 <div class="card">
-    <div class="card-header bg-warning">
+    <div class="card-header bg-dark">
         <h5 class="card-title text-white">
             Asset management
             <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
@@ -29,11 +27,12 @@
     </div>
     <div class="card-body">
         <h4>Assets</h4>
-        <p><a href="~/Assets/Index" class="btn btn-primary btn-sm">Assets &raquo;</a>Asset list from maximo (joined with controllers)</p>
+        @MyHtmlHelpers.EquiLink("/Assets/Index", "fas fa-boxes", "Assets", helperText: "Asset list imported from Maximo (joined with data controllers)")
         <hr />
         <h4>Asset Filtering</h4>
-        <p><a href="~/user_management/AreaFilters/Index" class="btn btn-primary btn-sm">LocationFilters &raquo;</a>Beheer van location filters</p>
-        <p><a href="~/user_management/c_ownership/Index" class="btn btn-primary btn-sm">Ownership &raquo;</a>Beheer van ownership filters</p>
+        @MyHtmlHelpers.EquiLink("/user_management/AreaFilters/Index", "fas fa-filter", "LocationFilters", helperText: "Manage location filters (for user profile filtering)")
+        @MyHtmlHelpers.EquiLink("/user_management/c_ownership/Index", "fas fa-filter", "Ownership", helperText: "Manage ownership groups (for advanced filtering profiles)")
+
     </div>
 </div>
 
