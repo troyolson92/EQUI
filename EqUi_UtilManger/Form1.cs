@@ -10,17 +10,11 @@ namespace EqUi_UtilManger
         public Form1()
         {
             InitializeComponent();
-
         }
 
         private void btn_sbcuStat_Click(object sender, EventArgs e)
         {
             SBCUStats lSBCUStats = new SBCUStats();
-        }
-
-        private void btn_blockSleep_Click(object sender, EventArgs e)
-        {
-            SleepBlock sleepBlock = new SleepBlock();
         }
 
     }

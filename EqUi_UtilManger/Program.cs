@@ -11,16 +11,8 @@ namespace EqUi_UtilManger
     {
 
         // http://gnl1004zcbqc2/Clickonce/EqUi_UtilManger.application
-        // http://gnl1004zcbqc2/Clickonce/EqUi_UtilManger.application?Tool=SBCUstats
-        // http://gnl1004zcbqc2/Clickonce/EqUi_UtilManger.application?Tool=SBCUstats&target=32070WS02A
-        // http://gnl1004zcbqc2/Clickonce/EqUi_UtilManger.application?Tool=MaximoTool&Viewmode=vm_QualityOnLocation&target=A%20STN32000
         // http://equi/EqUi_UtilManager/EqUi_UtilManger.application?Tool=SBCUstats
         // http://equi/EqUi_UtilManager/EqUi_UtilManger.application?Tool=sharepoint
-
-        /*
-         * chlickonce extention support for Chrome! 
-         *chrome-extension://kekahkplibinaibelipdcikofmedafmb/install/plugin.html
-         */
 
         [STAThread] //because of issue with webbrower
         static void Main()
