@@ -275,6 +275,7 @@
     <Build Include="EqUi\Functions\TrimX.sql" />
     <Build Include="EqUi\Functions\RTrimX.sql" />
     <Build Include="EqUi\Functions\TrimEmptylines.sql" />
+    <None Include="EqUi\Data\c_schedule.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="GADATAprod.publish.xml" />

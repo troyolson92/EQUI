@@ -21,12 +21,14 @@ print 'Start post deployment script'
 --contains robots from GHENT line 336061 336062 (example and test robots)
 :r .\Ngac\Data\c_controller.sql
 */
+--
 :r .\Volvo\Data\c_userRoles.sql
-
+--
 :r .\EqUi\Data\c_areas.sql
 :r .\EqUi\Data\c_datasource.sql
+:r .\EqUi\Data\c_schedule.sql
 :r .\EqUi\Data\c_logClassSystem.sql
-
+--
 :r .\Alerts\Data\c_state.sql
 :r .\Alerts\Data\c_smsSystem.sql
 :r .\Alerts\Data\c_triggers.sql 
