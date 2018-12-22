@@ -54,7 +54,7 @@ namespace EqUiWebUi.Areas.Welding.Controllers
 
         public ActionResult _TimerBreakdownDatachange()
         {
-            IQueryable<TimerBreakdownDatachange> data = db.TimerBreakdownDatachange.AsQueryable();
+            IQueryable<TimerBreakdowns_WMActions> data = db.TimerBreakdowns_WMActions.AsQueryable();
             return View(data);
         }
 

@@ -976,29 +976,24 @@ warning 6002: The table/view 'GADATA.UL.ULRapportering' does not have a primary 
           <Property Name="loose?" Type="bit" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'GADATA.WELDING.TimerBreakdownDatachange' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="TimerBreakdownDatachange">
+warning 6002: The table/view 'GADATA.WELDING.TimerBreakdowns_WMActions' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="TimerBreakdowns_WMActions">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" Nullable="false" />
-          <Property Name="Name" Type="nchar" MaxLength="15" />
-          <Property Name="location" Type="varchar" MaxLength="256" />
-          <Property Name="Expr1" Type="nchar" MaxLength="15" />
-          <Property Name="errorstarttime" Type="datetime" />
-          <Property Name="errorEndTime" Type="datetime" />
-          <Property Name="BreakdownTime" Type="time" Precision="7" />
-          <Property Name="Vyear" Type="int" />
-          <Property Name="Vweek" Type="int" />
-          <Property Name="Vday" Type="int" />
-          <Property Name="Shift" Type="int" />
-          <Property Name="DataChangeTime" Type="datetime" />
-          <Property Name="Parameter" Type="nchar" MaxLength="100" />
-          <Property Name="OldValue" Type="nchar" MaxLength="50" />
-          <Property Name="NewValue" Type="nchar" MaxLength="50" />
-          <Property Name="CDSID" Type="nchar" MaxLength="25" />
-          <Property Name="WMComment" Type="nchar" MaxLength="255" />
-          <Property Name="TimerFault" Type="nchar" MaxLength="50" />
+          <Property Name="dateTime" Type="datetime" />
+          <Property Name="timerName" Type="nchar" MaxLength="15" />
+          <Property Name="fault" Type="varchar" MaxLength="64" />
+          <Property Name="timerfault" Type="varchar" MaxLength="64" />
+          <Property Name="Start" Type="datetime" />
+          <Property Name="end" Type="datetime" />
+          <Property Name="downtime" Type="int" />
+          <Property Name="interventionTime" Type="datetime" />
+          <Property Name="parameter" Type="varchar" MaxLength="81" />
+          <Property Name="oldValue" Type="varchar" MaxLength="81" />
+          <Property Name="newValue" Type="varchar" MaxLength="81" />
+          <Property Name="username" Type="varchar" MaxLength="256" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'GADATA.WELDING.TimerIpAdresses' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -1781,27 +1776,22 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
     [ULRapportering].[loose?] AS [loose?]
     FROM [UL].[ULRapportering] AS [ULRapportering]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="TimerBreakdownDatachange" EntityType="Self.TimerBreakdownDatachange" store:Type="Views" store:Schema="WELDING">
+          <EntitySet Name="TimerBreakdowns_WMActions" EntityType="Self.TimerBreakdowns_WMActions" store:Type="Views" store:Schema="WELDING">
             <DefiningQuery>SELECT 
-    [TimerBreakdownDatachange].[id] AS [id], 
-    [TimerBreakdownDatachange].[Name] AS [Name], 
-    [TimerBreakdownDatachange].[location] AS [location], 
-    [TimerBreakdownDatachange].[Expr1] AS [Expr1], 
-    [TimerBreakdownDatachange].[errorstarttime] AS [errorstarttime], 
-    [TimerBreakdownDatachange].[errorEndTime] AS [errorEndTime], 
-    [TimerBreakdownDatachange].[BreakdownTime] AS [BreakdownTime], 
-    [TimerBreakdownDatachange].[Vyear] AS [Vyear], 
-    [TimerBreakdownDatachange].[Vweek] AS [Vweek], 
-    [TimerBreakdownDatachange].[Vday] AS [Vday], 
-    [TimerBreakdownDatachange].[Shift] AS [Shift], 
-    [TimerBreakdownDatachange].[DataChangeTime] AS [DataChangeTime], 
-    [TimerBreakdownDatachange].[Parameter] AS [Parameter], 
-    [TimerBreakdownDatachange].[OldValue] AS [OldValue], 
-    [TimerBreakdownDatachange].[NewValue] AS [NewValue], 
-    [TimerBreakdownDatachange].[CDSID] AS [CDSID], 
-    [TimerBreakdownDatachange].[WMComment] AS [WMComment], 
-    [TimerBreakdownDatachange].[TimerFault] AS [TimerFault]
-    FROM [WELDING].[TimerBreakdownDatachange] AS [TimerBreakdownDatachange]</DefiningQuery>
+    [TimerBreakdowns_WMActions].[id] AS [id], 
+    [TimerBreakdowns_WMActions].[dateTime] AS [dateTime], 
+    [TimerBreakdowns_WMActions].[timerName] AS [timerName], 
+    [TimerBreakdowns_WMActions].[fault] AS [fault], 
+    [TimerBreakdowns_WMActions].[timerfault] AS [timerfault], 
+    [TimerBreakdowns_WMActions].[Start] AS [Start], 
+    [TimerBreakdowns_WMActions].[end] AS [end], 
+    [TimerBreakdowns_WMActions].[downtime] AS [downtime], 
+    [TimerBreakdowns_WMActions].[interventionTime] AS [interventionTime], 
+    [TimerBreakdowns_WMActions].[parameter] AS [parameter], 
+    [TimerBreakdowns_WMActions].[oldValue] AS [oldValue], 
+    [TimerBreakdowns_WMActions].[newValue] AS [newValue], 
+    [TimerBreakdowns_WMActions].[username] AS [username]
+    FROM [WELDING].[TimerBreakdowns_WMActions] AS [TimerBreakdowns_WMActions]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="TimerIpAdresses" EntityType="Self.TimerIpAdresses" store:Type="Views" store:Schema="WELDING">
             <DefiningQuery>SELECT 
@@ -2011,7 +2001,6 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
           <EntitySet Name="LastWelds" EntityType="GADATAModelWelding.LastWelds" />
           <EntitySet Name="QISViewer" EntityType="GADATAModelWelding.QISViewer" />
           <EntitySet Name="TimerBreakdowns_busy" EntityType="GADATAModelWelding.TimerBreakdowns_busy" />
-          <EntitySet Name="TimerBreakdownDatachange" EntityType="GADATAModelWelding.TimerBreakdownDatachange" />
           <EntitySet Name="TDTResults" EntityType="GADATAModelWelding.TDTResults" />
           <EntitySet Name="ToDoList" EntityType="GADATAModelWelding.ToDoList" />
           <EntitySet Name="ToDoList_Remark" EntityType="GADATAModelWelding.ToDoList_Remark" />
@@ -2187,6 +2176,7 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
             <End Role="StoringsCause" EntitySet="StoringsCause" />
             <End Role="StoringsIngave_new" EntitySet="StoringsIngave_new" />
           </AssociationSet>
+          <EntitySet Name="TimerBreakdowns_WMActions" EntityType="GADATAModelWelding.TimerBreakdowns_WMActions" />
           </EntityContainer>
         <EntityType Name="rt_AutoWorkFlowULPlans">
           <Key>
@@ -2349,29 +2339,6 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
           <Property Name="C_timestamp" Type="DateTime" Precision="3" />
           <Property Name="BreakdownTime" Type="Int32" />
           <Property Name="id" Type="Int32" Nullable="false" />
-        </EntityType>
-        <EntityType Name="TimerBreakdownDatachange">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
-          <Property Name="location" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
-          <Property Name="Expr1" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
-          <Property Name="errorstarttime" Type="DateTime" Precision="3" />
-          <Property Name="errorEndTime" Type="DateTime" Precision="3" />
-          <Property Name="BreakdownTime" Type="Time" Precision="7" />
-          <Property Name="Vyear" Type="Int32" />
-          <Property Name="Vweek" Type="Int32" />
-          <Property Name="Vday" Type="Int32" />
-          <Property Name="Shift" Type="Int32" />
-          <Property Name="DataChangeTime" Type="DateTime" Precision="3" />
-          <Property Name="Parameter" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
-          <Property Name="OldValue" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
-          <Property Name="NewValue" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
-          <Property Name="CDSID" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
-          <Property Name="WMComment" Type="String" MaxLength="255" FixedLength="true" Unicode="true" />
-          <Property Name="TimerFault" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
         </EntityType>
         <EntityType Name="TDTResults">
           <Key>
@@ -3657,6 +3624,24 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="TimerBreakdowns_WMActions">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="dateTime" Type="DateTime" Precision="3" />
+          <Property Name="timerName" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="fault" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="timerfault" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="Start" Type="DateTime" Precision="3" />
+          <Property Name="end" Type="DateTime" Precision="3" />
+          <Property Name="downtime" Type="Int32" />
+          <Property Name="interventionTime" Type="DateTime" Precision="3" />
+          <Property Name="parameter" Type="String" MaxLength="81" FixedLength="false" Unicode="false" />
+          <Property Name="oldValue" Type="String" MaxLength="81" FixedLength="false" Unicode="false" />
+          <Property Name="newValue" Type="String" MaxLength="81" FixedLength="false" Unicode="false" />
+          <Property Name="username" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3811,30 +3796,6 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
                 <ScalarProperty Name="Fault" ColumnName="Fault" />
                 <ScalarProperty Name="TimerName" ColumnName="TimerName" />
                 <ScalarProperty Name="NPT" ColumnName="NPT" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TimerBreakdownDatachange">
-            <EntityTypeMapping TypeName="GADATAModelWelding.TimerBreakdownDatachange">
-              <MappingFragment StoreEntitySet="TimerBreakdownDatachange">
-                <ScalarProperty Name="TimerFault" ColumnName="TimerFault" />
-                <ScalarProperty Name="WMComment" ColumnName="WMComment" />
-                <ScalarProperty Name="CDSID" ColumnName="CDSID" />
-                <ScalarProperty Name="NewValue" ColumnName="NewValue" />
-                <ScalarProperty Name="OldValue" ColumnName="OldValue" />
-                <ScalarProperty Name="Parameter" ColumnName="Parameter" />
-                <ScalarProperty Name="DataChangeTime" ColumnName="DataChangeTime" />
-                <ScalarProperty Name="Shift" ColumnName="Shift" />
-                <ScalarProperty Name="Vday" ColumnName="Vday" />
-                <ScalarProperty Name="Vweek" ColumnName="Vweek" />
-                <ScalarProperty Name="Vyear" ColumnName="Vyear" />
-                <ScalarProperty Name="BreakdownTime" ColumnName="BreakdownTime" />
-                <ScalarProperty Name="errorEndTime" ColumnName="errorEndTime" />
-                <ScalarProperty Name="errorstarttime" ColumnName="errorstarttime" />
-                <ScalarProperty Name="Expr1" ColumnName="Expr1" />
-                <ScalarProperty Name="location" ColumnName="location" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -4698,6 +4659,25 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
                 <ScalarProperty Name="Nameid" ColumnName="Nameid" />
                 <ScalarProperty Name="Causeid" ColumnName="Causeid" />
                 <ScalarProperty Name="userid" ColumnName="userid" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TimerBreakdowns_WMActions">
+            <EntityTypeMapping TypeName="GADATAModelWelding.TimerBreakdowns_WMActions">
+              <MappingFragment StoreEntitySet="TimerBreakdowns_WMActions">
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="newValue" ColumnName="newValue" />
+                <ScalarProperty Name="oldValue" ColumnName="oldValue" />
+                <ScalarProperty Name="parameter" ColumnName="parameter" />
+                <ScalarProperty Name="interventionTime" ColumnName="interventionTime" />
+                <ScalarProperty Name="downtime" ColumnName="downtime" />
+                <ScalarProperty Name="end" ColumnName="end" />
+                <ScalarProperty Name="Start" ColumnName="Start" />
+                <ScalarProperty Name="timerfault" ColumnName="timerfault" />
+                <ScalarProperty Name="fault" ColumnName="fault" />
+                <ScalarProperty Name="timerName" ColumnName="timerName" />
+                <ScalarProperty Name="dateTime" ColumnName="dateTime" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
