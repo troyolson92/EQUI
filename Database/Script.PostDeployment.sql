@@ -9,7 +9,8 @@ Post-Deployment Script Template
                SELECT * FROM [$(TableName)]					
 --------------------------------------------------------------------------------------
 */
-print 'Start post deployement script'
+print 'Start post deployment script'
+/*
 :r .\Ngac\Data\c_service_setup.sql
 :r .\Ngac\Data\c_controller_class.sql
 :r .\Ngac\Data\c_csv_log.sql
@@ -19,7 +20,7 @@ print 'Start post deployement script'
 :r .\Ngac\Data\c_variable_search.sql
 --contains robots from GHENT line 336061 336062 (example and test robots)
 :r .\Ngac\Data\c_controller.sql
-
+*/
 :r .\Volvo\Data\c_userRoles.sql
 
 :r .\EqUi\Data\c_areas.sql
@@ -30,8 +31,5 @@ print 'Start post deployement script'
 :r .\Alerts\Data\c_smsSystem.sql
 :r .\Alerts\Data\c_triggers.sql 
 
---users are by default disbaled. fix this 
-print 'Enable users'
-GRANT CONNECT TO [EqUiAdmin]
-GRANT CONNECT TO [VASC_a]
-print 'post deployement done' 
+
+print 'post deployment done' 

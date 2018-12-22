@@ -69,8 +69,8 @@ SELECT
 ,rt.Max_Wear_Move
 ,rt.Dress_Reason
 ,rt.ErrorType
-,[NGAC].[DistanceBetweenPoints]([GunTCP_X],[GunTCP_Y],[GunTCP_Z],[NomTCP_X],[NomTCP_Y],[NomTCP_Z]) as 'DeltaNom'
-,lead([NGAC].[DistanceBetweenPoints]([GunTCP_X],[GunTCP_Y],[GunTCP_Z],[NomTCP_X],[NomTCP_Y],[NomTCP_Z])) OVER (PARTITION BY c.controller_name, rt.[Tool_Nr]  ORDER BY rt.[Date Time] desc) as 'DeltaNomBeforeChange'
+,Equi.[DistanceBetweenPoints]([GunTCP_X],[GunTCP_Y],[GunTCP_Z],[NomTCP_X],[NomTCP_Y],[NomTCP_Z]) as 'DeltaNom'
+,lead(Equi.[DistanceBetweenPoints]([GunTCP_X],[GunTCP_Y],[GunTCP_Z],[NomTCP_X],[NomTCP_Y],[NomTCP_Z])) OVER (PARTITION BY c.controller_name, rt.[Tool_Nr]  ORDER BY rt.[Date Time] desc) as 'DeltaNomBeforeChange'
 ,lead(rt.Wear_Fixed) OVER (PARTITION BY c.controller_name, rt.[Tool_Nr]  ORDER BY rt.[Date Time] desc) as 'FixedWearBeforeChange'
 ,lead(rt.Wear_Move) OVER (PARTITION BY c.controller_name, rt.[Tool_Nr]  ORDER BY rt.[Date Time] desc) as 'MoveWearBeforeChange'
 ,lead(rt.Current_TipWear) OVER (PARTITION BY c.controller_name, rt.[Tool_Nr]  ORDER BY rt.[Date Time] desc) as 'WearBeforeChange'

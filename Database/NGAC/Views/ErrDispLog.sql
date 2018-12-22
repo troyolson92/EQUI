@@ -8,6 +8,8 @@
 
 
 
+
+
 CREATE VIEW [NGAC].[ErrDispLog]
 AS
 select 
@@ -16,18 +18,23 @@ select
 , 'ErrDispLog'	   AS 'Logtype'
 , rt.[Date Time]        AS 'timestamp'
 , rt.[AlarmNo]     AS 'Logcode'
-, [NGAC].[fn_GetSeverity](rt.[Txt 1])   AS 'Severity'
+, CASE 
+     WHEN rt.[Txt 1] like  '%ERROR%' THEN 3
+	 WHEN rt.[Txt 1] like '%WARNING%' THEN 2
+     WHEN rt.[Txt 1] like '%INFO%' THEN 1
+   ELSE 0
+   END  AS 'Severity'
 , [Txt 2]  AS 'Logtext'
-,       NGAC.[AddifSomething]([Txt 2]) + 
-		NGAC.[AddifSomething]([Txt 3]) + 
-		NGAC.[AddifSomething]([Txt 4]) + 
-		NGAC.[AddifSomething]([Txt 5]) + 
-		NGAC.[AddifSomething]([Txt 6]) + 
-		NGAC.[AddifSomething]([Txt 7]) + 
-		NGAC.[AddifSomething]([Txt 8]) + 
-		NGAC.[AddifSomething]([Txt 9]) + 
-		NGAC.[AddifSomething]([Txt 10]) + 
-		NGAC.[AddifSomething]([Txt 11]) + 
+,       EqUi.[AddifSomething]([Txt 2]) + 
+		EqUi.[AddifSomething]([Txt 3]) + 
+		EqUi.[AddifSomething]([Txt 4]) + 
+		EqUi.[AddifSomething]([Txt 5]) + 
+		EqUi.[AddifSomething]([Txt 6]) + 
+		EqUi.[AddifSomething]([Txt 7]) + 
+		EqUi.[AddifSomething]([Txt 8]) + 
+		EqUi.[AddifSomething]([Txt 9]) + 
+		EqUi.[AddifSomething]([Txt 10]) + 
+		EqUi.[AddifSomething]([Txt 11]) + 
 		+'Response: ' + [Action]   AS 'FullLogtext'
 , NULL     AS 'Response'
 , NULL     AS 'Downtime'

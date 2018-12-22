@@ -268,13 +268,13 @@
     <Build Include="WELDING2\Tables\rt_spottable.sql" />
     <Build Include="WELDING2\Tables\c_user.sql" />
     <Build Include="WELDING2\Tables\c_bosch_param.sql" />
-    <Build Include="NGAC\Functions\TrimX.sql" />
-    <Build Include="NGAC\Functions\TrimEmptylines.sql" />
-    <Build Include="NGAC\Functions\RTrimX.sql" />
-    <Build Include="NGAC\Functions\LTrimX.sql" />
-    <Build Include="NGAC\Functions\fn_GetSeverity.sql" />
-    <Build Include="NGAC\Functions\DistanceBetweenPoints.sql" />
-    <Build Include="NGAC\Functions\AddifSomething.sql" />
+    <Build Include="EqUi\Functions\AddifSomething.sql" />
+    <Build Include="EqUi\Functions\DistanceBetweenPoints.sql" />
+    <Build Include="EqUi\Functions\fn_GetNumberOfbits.sql" />
+    <Build Include="EqUi\Functions\LTrimX.sql" />
+    <Build Include="EqUi\Functions\TrimX.sql" />
+    <Build Include="EqUi\Functions\RTrimX.sql" />
+    <Build Include="EqUi\Functions\TrimEmptylines.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="GADATAprod.publish.xml" />
@@ -289,6 +289,7 @@
     <None Include="NGAC\Data\c_variable.sql" />
     <None Include="NGAC\Data\c_variable_search.sql" />
     <None Include="TADATAprod.publish.xml" />
+    <None Include="TestDb.publish.xml" />
   </ItemGroup>
   <ItemGroup>
     <SqlCmdVariable Include="DB_C_NAME">

@@ -6,7 +6,7 @@ BEGIN
 
 --precalculate 'clean' discription text 
 UPDATE NGAC.L_description
-SET CleanDescription = NGAC.TrimX(NGAC.TrimEmptylines(L_description.[Description]))  
+SET CleanDescription = equi.TrimX(equi.TrimEmptylines(L_description.[Description]))  
 FROM NGAC.L_description 
 WHERE 
 --only new ones
@@ -23,7 +23,7 @@ AND @Update = 1
 
 --precalculate 'clean' title text 
 UPDATE NGAC.L_error
-SET CleanTitle = NGAC.TrimX(NGAC.TrimEmptylines(L_error.Title))  
+SET CleanTitle = equi.TrimX(equi.TrimEmptylines(L_error.Title))  
 FROM NGAC.L_error 
 WHERE 
 --only new ones

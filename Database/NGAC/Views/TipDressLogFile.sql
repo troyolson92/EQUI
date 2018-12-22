@@ -5,6 +5,7 @@
 
 
 
+
 CREATE VIEW [NGAC].[TipDressLogFile]
 AS
 select 
@@ -63,8 +64,8 @@ select
       ,rt.[FxSens_FlPinPhysActVal]
       ,rt.[FxSens_FlPinPhysSetupVal]
       ,rt.[Internal_Arg]
-,[NGAC].[DistanceBetweenPoints]([GunTCP_X],[GunTCP_Y],[GunTCP_Z],[GunRefTCP_X],[GunRefTCP_Y],[GunRefTCP_Z]) as 'DeltaRef'
-,[NGAC].[DistanceBetweenPoints]([GunTCP_X],[GunTCP_Y],[GunTCP_Z],[NomTCP_X],[NomTCP_Y],[NomTCP_Z]) as 'DeltaNom'
+,Equi.[DistanceBetweenPoints]([GunTCP_X],[GunTCP_Y],[GunTCP_Z],[GunRefTCP_X],[GunRefTCP_Y],[GunRefTCP_Z]) as 'DeltaRef'
+,Equi.[DistanceBetweenPoints]([GunTCP_X],[GunTCP_Y],[GunTCP_Z],[NomTCP_X],[NomTCP_Y],[NomTCP_Z]) as 'DeltaNom'
 ,rt._timestamp
 from NGAC.rt_TipDressLogFile as rt with(nolock)
 left join NGAC.rt_csv_file as rt_csv with(nolock) on rt.rt_csv_file_id = rt_csv.id
