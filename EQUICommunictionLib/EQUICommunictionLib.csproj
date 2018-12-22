@@ -79,7 +79,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConnectionManager.cs" />
-    <Compile Include="Debugger.cs" />
     <Compile Include="DSNmngr.cs" />
     <Compile Include="OracleComm.cs" />
     <Compile Include="SqlComm.cs" />
