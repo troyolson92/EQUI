@@ -118,8 +118,6 @@ namespace EqUiWebUi
             var routeData = new RouteData();
             var action = "Index";
 
-            log.Error("Application error for: " + httpContext.User.Identity.Name, ex);
-
             if (ex is HttpException)
             {
                 var httpEx = ex as HttpException;
@@ -138,6 +136,11 @@ namespace EqUiWebUi
                         action = "InternalServerError";
                         break;
                 }
+                log.Error($"HttpException  code:{httpEx.GetHttpCode()} for:" + httpContext.User.Identity.Name, ex);
+            }
+            else
+            {
+                log.Error("Application error for:" + httpContext.User.Identity.Name, ex);
             }
 
             httpContext.ClearError();
