@@ -64,7 +64,8 @@
                 $("#placeholderPartial").load(url);
             },
             reloadFailed: function (result) {
-                $('#placeholderPartial').html("Error while loading!!!");
+                console.log(result);
+                $('#placeholderPartial').html($("#Error", result.responseText).html());
             }
         });
     </script>

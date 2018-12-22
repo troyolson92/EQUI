@@ -90,7 +90,10 @@
 
 
 
+
+
+
+
 GO
-GRANT EXECUTE
-    ON SCHEMA::[EqUi] TO [db_accesEquiReadonly];
+
 

@@ -1,13 +1,12 @@
 ﻿<div class="card">
-    <div class="card-header bg-warning">
+    <div class="card-header bg-dark">
         <h5 class="card-title text-white">
-            Screen management
+            Kiosk management
             <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
         </h5>
     </div>
     <div class="card-body">
-        <p><a href="~/user_management/UserScreens/Index" class="btn btn-primary btn-sm">Screens &raquo;</a>Beheer van schermen. (sommige gebruikers zoals de digiborden hebben voorgedefineerde schermen)</p>
-        <p><a href="~/user_management/UserScreens/Screenmaster" class="btn btn-danger btn-sm">ScreenMaster &raquo;</a>Commandos sturen naar schermen</p>
-        <p><a href="file:////gnlsnm0101.gen.volvocars.net/proj/6308-SHR-VCC22700/LegancyTools/DEPLOYMENTBASE/EqUiDigibordLauncher" class="btn btn-danger btn-sm">DigiLauncher &raquo;</a>config tool om kiosk op te starten.</p>
+        @MyHtmlHelpers.EquiLink("/user_management/UserScreens/Index", "fas fa-desktop", "kiosks", helperText: "Manage all kiosk screens")
+        @MyHtmlHelpers.EquiLink("/user_management/UserScreens/Screenmaster", "fab fa-rocketchat", "Screenmaster", helperText: "Send messages or url to all kiosk screens")
     </div>
 </div>

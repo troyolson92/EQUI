@@ -91,13 +91,13 @@
                         reload: true, // Grid reload indicator
                         reloadFailed: function (result) {
                             console.log(result);
-                            $("#TipwearBeforeChangeGrid").html("<div class='alert alert-danger'>Error while loading!! </div>");
+                            $("#TipwearBeforeChangeGrid").html($("#Error", result.responseText).html());
                         }
                 });
             },
             reloadFailed: function (result) {
                 console.log(result);
-                $("#TipLifeExpectationsGrid").html("<div class='alert alert-danger'>Error while loading!! </div>");
+                $("#TipLifeExpectationsGrid").html($("#Error", result.responseText).html());
             }
         });
 
@@ -113,7 +113,7 @@
             reload: true, // Grid reload indicator
             reloadFailed: function (result) {
                 console.log(result);
-                $("#TipDressDataGrid").html("<div class='alert alert-danger'>Error while loading!! </div>");
+                $("#TipDressDataGrid").html($("#Error", result.responseText).html());
             }
         });
 

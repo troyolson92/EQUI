@@ -97,6 +97,7 @@
     <Folder Include="Volvo\Data" />
     <Folder Include="WELDING2\" />
     <Folder Include="WELDING2\Tables\" />
+    <Folder Include="EqUi\Functions\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Alerts\Tables\c_CPT600.sql" />
@@ -212,7 +213,6 @@
     <Build Include="NGAC\Views\TipwearBeforeChange.sql" />
     <Build Include="NGAC\Views\TipMonitor.sql" />
     <Build Include="NGAC\Views\TipLifeExpectations.sql" />
-    <Build Include="NGAC\Functions\DistanceBetweenPoints.sql" />
     <Build Include="NGAC\Stored Procedures\sp_CalcTipWearBeforeChange.sql" />
     <Build Include="Alerts\Views\Alerts.sql" />
     <Build Include="NGAC\Views\TipDressLogFile.sql" />
@@ -223,10 +223,6 @@
     <Build Include="NGAC\Stored Procedures\sp_update_cleanLogteksts.sql" />
     <Build Include="NGAC\Stored Procedures\sp_LinkAssets.sql" />
     <Build Include="Security\UserAndRoles.sql" />
-    <Build Include="NGAC\Functions\TrimX.sql" />
-    <Build Include="NGAC\Functions\TrimEmptylines.sql" />
-    <Build Include="NGAC\Functions\RTrimX.sql" />
-    <Build Include="NGAC\Functions\LTrimX.sql" />
     <Build Include="NGAC\Views\Supervisie.sql" />
     <Build Include="NGAC\Views\ActiveState.sql" />
     <Build Include="NGAC\Views\ControllerEventLog.sql" />
@@ -247,8 +243,6 @@
     <None Include="EqUi\Data\c_areas.sql" />
     <Build Include="Security\VCCNET_SDEBEUL.sql" />
     <Build Include="NGAC\Views\ErrDispLog.sql" />
-    <Build Include="NGAC\Functions\fn_GetSeverity.sql" />
-    <Build Include="NGAC\Functions\AddifSomething.sql" />
     <Build Include="EqUi\Tables\L_pannel.sql" />
     <Build Include="EqUi\Tables\L_link.sql" />
     <Build Include="EqUi\Tables\c_schedule.sql" />
@@ -285,6 +279,13 @@
     <Build Include="WELDING2\Tables\c_user.sql" />
     <Build Include="WELDING2\Tables\c_bosch_param.sql" />
     <Build Include="Security\db_accesEquiReadonly.sql" />
+    <Build Include="NGAC\Functions\TrimX.sql" />
+    <Build Include="NGAC\Functions\TrimEmptylines.sql" />
+    <Build Include="NGAC\Functions\RTrimX.sql" />
+    <Build Include="NGAC\Functions\LTrimX.sql" />
+    <Build Include="NGAC\Functions\fn_GetSeverity.sql" />
+    <Build Include="NGAC\Functions\DistanceBetweenPoints.sql" />
+    <Build Include="NGAC\Functions\AddifSomething.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="GADATAprod.publish.xml" />

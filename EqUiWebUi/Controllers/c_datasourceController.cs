@@ -32,7 +32,7 @@ namespace EqUiWebUi.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(c_datasource c_datasource)
+        public ActionResult Create([Bind] c_datasource c_datasource)
         {
             if (ModelState.IsValid)
             {

@@ -28,7 +28,7 @@
             reload: true, // Grid reload indicator
             reloadFailed: function (result) {
                 console.log(result);
-                $("#TipDressDataGrid").html("<div class='alert alert-danger'>Error while loading!! </div>");
+                $("#TipDressDataGrid").html($("#Error", result.responseText).html());
             }
         });
     </script>

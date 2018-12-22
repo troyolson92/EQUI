@@ -31,7 +31,8 @@
             //
             },
             reloadFailed: function (result) {
-                $('#l_controlLimitsGrid').html("Error while loading!!!");
+                console.log(result);
+                $('#l_controlLimitsGrid').html($("#Error", result.responseText).html());
             }
             });
     </script>

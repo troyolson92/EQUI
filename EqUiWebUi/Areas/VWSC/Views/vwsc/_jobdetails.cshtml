@@ -24,7 +24,7 @@
         reload: true, // Grid reload indicator
         reloadFailed: function (result) {
                 console.log(result);
-            $('[data-name="breakdownGrid"]').html("<div class='alert alert-danger'>Error while loading!! </div>");
+            $('[data-name="breakdownGrid"]').html($("#Error", result.responseText).html());
             }
     });
 
@@ -40,7 +40,7 @@
         reload: true, // Grid reload indicator
         reloadFailed: function (result) {
                 console.log(result);
-            $('[data-name="weldFaultGrid"]').html("<div class='alert alert-danger'>Error while loading!! </div>");
+            $('[data-name="weldFaultGrid"]').html($("#Error", result.responseText).html());
             }
     });
 
@@ -56,7 +56,7 @@
         reload: true, // Grid reload indicator
         reloadFailed: function (result) {
                 console.log(result);
-            $('[data-name="weldMeasureGrid"]').html("<div class='alert alert-danger'>Error while loading!! </div>");
+            $('[data-name="weldMeasureGrid"]').html($("#Error", result.responseText).html());
             }
     });
 

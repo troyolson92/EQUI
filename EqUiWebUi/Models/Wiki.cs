@@ -26,6 +26,7 @@ namespace EqUiWebUi.Models
         public string Culture { get; set; }
         public string wiki1 { get; set; }
         public string searchtags { get; set; }
+        public string Comments { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<L_link> L_link { get; set; }

@@ -18,8 +18,8 @@
 
 
 
+
+
 GO
-CREATE NONCLUSTERED INDEX [idx_subindex1]
-    ON [WELDING2].[rt_paramvalues]([timerId] ASC, [subindex] ASC)
-    INCLUDE([value], [c_bosch_param_id]);
+
 

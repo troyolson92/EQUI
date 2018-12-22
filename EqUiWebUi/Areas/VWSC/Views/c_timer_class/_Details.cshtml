@@ -71,7 +71,7 @@
         requestType: 'get', // Ajax grid request type
         reload: true,
         reloadFailed: function (result) {
-            $('[data-name="c_timerGrid"]').html("Error while loading!!!");
+            $('[data-name="c_timerGrid"]').html($("#Error", result.responseText).html());
         }
     });
 
@@ -81,7 +81,7 @@
         requestType: 'get', // Ajax grid request type
         reload: true,
         reloadFailed: function (result) {
-            $('[data-name="c_bosch_viewGrid"]').html("Error while loading!!!");
+            $('[data-name="c_bosch_viewGrid"]').html($("#Error", result.responseText).html());
         }
     });
 
@@ -91,7 +91,7 @@
         requestType: 'get', // Ajax grid request type
         reload: true,
         reloadFailed: function (result) {
-            $('[data-name="c_errorGrid"]').html("Error while loading!!!");
+            $('[data-name="c_errorGrid"]').html($("#Error", result.responseText).html());
         }
     });
 </script>

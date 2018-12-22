@@ -21,7 +21,7 @@
         requestType: 'get', // Ajax grid request type
         reload: true,
         reloadFailed: function (result) {
-            $('[data-name="c_service_setupGrid"]').html("Error while loading!!!");
+            $('[data-name="c_service_setupGrid"]').html($("#Error", result.responseText).html());
         }
     });
 </script>

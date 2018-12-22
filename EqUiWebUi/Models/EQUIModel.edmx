@@ -173,6 +173,7 @@
           <Property Name="Culture" Type="varchar" MaxLength="50" />
           <Property Name="wiki" Type="varchar(max)" />
           <Property Name="searchtags" Type="varchar(max)" />
+          <Property Name="Comments" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="c_Classification">
           <Key>
@@ -647,6 +648,7 @@
           <Property Name="wiki1" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="searchtags" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="L_link" Relationship="GADATAModelEQUI.FK_L_link_Wiki" FromRole="Wiki" ToRole="L_link" />
+          <Property Name="Comments" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="ASSETS">
           <Key>
@@ -932,6 +934,7 @@
           <EntitySetMapping Name="Wiki">
             <EntityTypeMapping TypeName="GADATAModelEQUI.Wiki">
               <MappingFragment StoreEntitySet="Wiki">
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
                 <ScalarProperty Name="searchtags" ColumnName="searchtags" />
                 <ScalarProperty Name="wiki1" ColumnName="wiki" />
                 <ScalarProperty Name="Culture" ColumnName="Culture" />
@@ -1076,6 +1079,7 @@
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="SynchronizePropertyFacets" Value="True" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->
