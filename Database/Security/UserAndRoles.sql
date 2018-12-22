@@ -1,4 +1,4 @@
-﻿--do passwords will not match if you autocreate on other server! set op logins by hand!
+﻿--do passwords will not match if you auto create on other server! set op logins by hand!
 
 CREATE LOGIN [VASC_a] WITH PASSWORD=N'JweDpPYdey5/9ke2D/IYUuTzR2KqfUB4I23iL+2GV1o=', DEFAULT_DATABASE=[$(DatabaseName)], DEFAULT_LANGUAGE=[us_english], CHECK_EXPIRATION=OFF, CHECK_POLICY=OFF
 GO
@@ -8,13 +8,12 @@ CREATE LOGIN [EqUiAdmin] WITH PASSWORD=N'akpC7iTebRcNCl/n/xVVP7g9IMn99R5idbGD11i
 GO
 CREATE USER [EqUiAdmin] FOR LOGIN [EqUiAdmin];
 GO
+--CREATE USER [VCCNET\BPPEQDB1] FOR LOGIN [VCCNET\BPPEQDB1] WITH DEFAULT_SCHEMA = [EqUi];
+--GO
+
+--admin access role
 CREATE ROLE [db_accessEquiAdmin]
     AUTHORIZATION [dbo];
-
-
-
-
-
 GO
 GRANT SELECT TO [db_accessEquiAdmin];
 GO
@@ -31,12 +30,17 @@ GO
 ALTER ROLE [db_accessEquiAdmin] ADD MEMBER [EqUiAdmin];
 GO
 ALTER ROLE [db_accessEquiAdmin] ADD MEMBER [VASC_a];
-
----GO
---ALTER ROLE [db_accessEquiAdmin] ADD MEMBER [VCCNET\BPPEQDB1];
-
-
-
 GO
-ALTER ROLE [db_accessEquiAdmin] ADD MEMBER [VCCNET\BPPEQDB1];
+--ALTER ROLE [db_accessEquiAdmin] ADD MEMBER [VCCNET\BPPEQDB1];
+--GO
+
+--Read only role
+CREATE ROLE [db_accesEquiReadonly]
+    AUTHORIZATION [dbo];
+GO
+GRANT SELECT TO [db_accesEquiReadonly];
+GO
+GRANT EXECUTE  ON SCHEMA ::[EqUi] TO [db_accessEquiAdmin];
+
+
 

@@ -137,10 +137,7 @@
     <Build Include="Volvo\Tables\c_userRoles.sql" />
     <Build Include="Volvo\Tables\L_users.sql" />
     <Build Include="Volvo\Tables\h_usersPermisions.sql" />
-    <Build Include="Security\Alerts.sql" />
-    <Build Include="Security\EqUi.sql" />
-    <Build Include="Security\HangFire.sql" />
-    <Build Include="Security\Volvo.sql" />
+    <Build Include="Security\CreateSchemas.sql" />
     <Build Include="Volvo\Tables\L_Screens.sql" />
     <Build Include="PJV\Tables\SummaryResult.sql" />
     <Build Include="PJV\Tables\RobotRoutine.sql" />
@@ -201,8 +198,6 @@
     <Build Include="NGAC\Tables\XY_L_causes.sql" />
     <Build Include="NGAC\Tables\XY_L_actions.sql" />
     <Build Include="NGAC\Tables\XY_h_alarm.sql" />
-    <Build Include="Security\PJV.sql" />
-    <Build Include="Security\NGAC.sql" />
     <Build Include="NGAC\Tables\rtu_SpeedOvr.sql" />
     <Build Include="NGAC\Tables\rt_TipDressLogFile.sql" />
     <Build Include="NGAC\Tables\rt_TCP_LOG.sql" />
@@ -219,7 +214,6 @@
     <Build Include="NGAC\Tables\ABBWearComponent.sql" />
     <Build Include="MAXIMO\Tables\WORKORDERS.sql" />
     <Build Include="EqUi\Stored Procedures\sp_LinkAssets.sql" />
-    <Build Include="Security\MAXIMO.sql" />
     <Build Include="NGAC\Stored Procedures\sp_update_cleanLogteksts.sql" />
     <Build Include="NGAC\Stored Procedures\sp_LinkAssets.sql" />
     <Build Include="Security\UserAndRoles.sql" />
@@ -241,7 +235,6 @@
     <None Include="EqUi\Data\c_logClassSystem.sql" />
     <None Include="Volvo\Data\c_userRoles.sql" />
     <None Include="EqUi\Data\c_areas.sql" />
-    <Build Include="Security\VCCNET_SDEBEUL.sql" />
     <Build Include="NGAC\Views\ErrDispLog.sql" />
     <Build Include="EqUi\Tables\L_pannel.sql" />
     <Build Include="EqUi\Tables\L_link.sql" />
@@ -267,18 +260,14 @@
     <Build Include="WELDING2\Tables\c_timer.sql" />
     <Build Include="WELDING2\Tables\c_NPT.sql" />
     <Build Include="WELDING2\Tables\rt_paramvalues.sql" />
-    <Build Include="Security\VCCNET_BPPEQDB1.sql" />
-    <Build Include="Security\WELDING2.sql" />
     <Build Include="EqUi\Tables\L_housekeeping.sql" />
     <Build Include="EqUi\Tables\c_housekeeping.sql" />
     <Build Include="EqUi\Views\GeoAssets.sql" />
     <Build Include="Alerts\Views\Alerts_Supervisie_1.sql" />
-    <Build Include="Security\RoleMemberships.sql" />
     <Build Include="WELDING2\Tables\rt_user.sql" />
     <Build Include="WELDING2\Tables\rt_spottable.sql" />
     <Build Include="WELDING2\Tables\c_user.sql" />
     <Build Include="WELDING2\Tables\c_bosch_param.sql" />
-    <Build Include="Security\db_accesEquiReadonly.sql" />
     <Build Include="NGAC\Functions\TrimX.sql" />
     <Build Include="NGAC\Functions\TrimEmptylines.sql" />
     <Build Include="NGAC\Functions\RTrimX.sql" />
