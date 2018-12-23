@@ -1,227 +1,231 @@
 ﻿@model EqUiWebUi.Areas.Alert.Models.ChartSettings
-<div class="card">
-    <div class="card-header bg-light">
-        <h6 class="card-title">
-            Controlchart for alarmobject:
-            <strong>@Model.alarmobject.Trim()</strong> c_trigger_id:
-            <strong>@Model.c_trigger_id</strong>
-            <a class="fas fa-wrench text-black-50" href="#" data-toggle="popover" data-placement="bottom" id="ControlChartOptionsPopover"></a>
-            <a class="far fa-calendar-alt text-black-50" id="ControlChartDatepicker" href="#"></a>
-            <span class="clickable float-right text-black-50"><i class="fas fa-chevron-circle-up fa-1"></i></span>
-        </h6>
-    </div>
+<div id="ChartID@(Model.c_trigger_id)" >
 
-    <div class="card-body">
-        <div id="controlchartContainer" style="position:relative">
-            <canvas id='controlchartCanvas'></canvas>
-            <canvas id='controlchartOptCanvas'></canvas>
+    <div class="card">
+        <div class="card-header bg-light">
+            <h6 class="card-title">
+                Control chart for alarmobject:
+                <strong>@Model.alarmobject.Trim()</strong> c_trigger_id:
+                <strong>@Model.c_trigger_id</strong>
+                <a class="fas fa-wrench text-black-50 ControlChartOptionsPopover" href="#" data-toggle="popover" data-placement="bottom"></a>
+                <a class="far fa-calendar-alt text-black-50 ControlChartDatepicker" href="#"></a>
+                <span class="clickable float-right text-black-50"><i class="fas fa-chevron-circle-up fa-1"></i></span>
+            </h6>
+        </div>
+
+        <div class="card-body">
+            <div class="controlchartContainer" style="position:relative"></div>
         </div>
     </div>
-</div>
 
 
-@*popover content*@
-<div class="d-none" id="ControlChartOptionsPopoverContent">
-    <div class="panel panel-body">
-        <div class="form-group">
-            <label for="ControlchartoptDataDropdown">Show OptDataset</label>
-            <select class="form-control" id="ControlchartoptDataDropdown">
-                <option value="0" selected="selected">NoOptData</option>
-                @if (Model.optDataLabels != null)
-                {
-                    for (int i = 1; i <= Model.optDataLabels.Count; i++)
+    @*popover content*@
+    <div class="d-none ControlChartOptionsPopoverContent">
+        <div class="panel panel-body">
+            <div class="form-group">
+                <label for="ControlchartoptDataDropdown">Show OptDataset</label>
+                <select class="form-control ControlchartoptDataDropdown" id="ChartID@(Model.c_trigger_id)ControlchartoptDataDropdown">
+                    <option value="0" selected="selected">NoOptData</option>
+                    @if (Model.optDataLabels != null)
                     {
-                        <option value="@i">@Model.optDataLabels[i-1].ToString()</option>
+                        for (int i = 1; i <= Model.optDataLabels.Count; i++)
+                        {
+                            <option value="@i">@Model.optDataLabels[i - 1].ToString()</option>
+                        }
                     }
-                }
-            </select>
+                </select>
+            </div>
         </div>
     </div>
-</div>
 
+</div>
 
 <!--ControlChartScripts-->
 @*https://dima117.github.io/Chart.Scatter/*@
 <script src="~/Scripts/Chart.Core.js"></script>
 <script src="~/Scripts/Chart.Scatter.js"></script>
 <script>
-    //global vars
-    var ControlChart;
-    var ControlChartOpt;
-    var ControlchartendDate = moment('@Model.startdate.ToString("o")');
-    var ControlchartstartDate = moment('@Model.enddate.ToString("o")');
-    var ControlchartoptDatanum = 0;
+    //Self-Executing Anonymous Functions because this partial might be rendered multiple times on same page.
+    (function () {
+        //global vars
+        var ControlChart;
+        var ControlChartOpt;
+        var ControlchartendDate = moment('@Model.startdate.ToString("o")');
+        var ControlchartstartDate = moment('@Model.enddate.ToString("o")');
+        var ControlchartoptDatanum = 0;
 
-    //setting up datetimePicker
-    function setgetcontrolchartDaterangepicker() {
-        $('#ControlChartDatepicker').daterangepicker({
-            "showWeekNumbers": true,
-            "showISOWeekNumbers": true,
-            "ranges": {
-                'Last 48 Hours': [moment().subtract(2, 'days'), moment()],
-                'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-                'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-                'Last 100 Days': [moment().subtract(100, 'days'), moment()],
-                'Last Year': [moment().subtract(365, 'days'), moment()],
-                'Last 5Year': [moment().subtract(365 * 5, 'days'), moment()]
-            },
-            "startDate": ControlchartstartDate,
-            "endDate": ControlchartendDate,
+     //setting up datetimePicker
+        function setgetcontrolchartDaterangepicker() {
+            $('#ChartID@(Model.c_trigger_id)').find('.ControlChartDatepicker').daterangepicker({
+                "showWeekNumbers": true,
+                "showISOWeekNumbers": true,
+                "ranges": {
+                    'Last 48 Hours': [moment().subtract(2, 'days'), moment()],
+                    'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                    'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                    'Last 100 Days': [moment().subtract(100, 'days'), moment()],
+                    'Last Year': [moment().subtract(365, 'days'), moment()],
+                    'Last 5Year': [moment().subtract(365 * 5, 'days'), moment()]
+                },
+                "startDate": ControlchartstartDate,
+                "endDate": ControlchartendDate,
 
-        }, function (end, start, label) {
-            console.log("New Control chart end date range selected: " + start.format('YYYY-MM-DD') + " to " + end.format('YYYY-MM-DD') + " (predefined range: " + label + ")");
-            ControlchartstartDate = start;
-            ControlchartendDate = end;
-            //update
-            getcontrolchartData();
-        });
-    };
-
-    //enable popover for settings.
-    $("#ControlChartOptionsPopover").popover({
-        html: true,
-        content: function () {
-            return $('#ControlChartOptionsPopoverContent').html();
-        },
-    });
-    //listen to popover events.
-    $(document).on("change", "#ControlchartoptDataDropdown", function () {
-        if (ControlchartoptDatanum != this.value) {
-            ControlchartoptDatanum = this.value;
-            getcontrolchartData();
-        };
-    });
-
-    //get chart data
-    function getcontrolchartData() {
-        //hide popover
-        $('.popover').popover('hide');
-        //spinner
-        $("#controlchartContainer").html("<div class='card-body'><i class='fa fa-spinner fa-pulse fa-2x fa-fw'></i><span class='sr-only'></span>Loading....</div>");
-        //make ajax request
-        $.ajax({
-            type: 'GET',
-            url: '/ControlChart/_getData',
-            data: {
-                chartname: '@Model.chartname',
-                scaleLabel: '@Html.Raw(Model.scaleLabel)',
-                startdate: moment(ControlchartendDate).toISOString(),
-                enddate: moment(ControlchartstartDate).toISOString(),
-                alarmobject: '@Model.alarmobject',
-                optDatanum: ControlchartoptDatanum,
-                c_trigger_id: @Model.c_trigger_id
-            },
-            success: function (result) {
-                console && console.log("request controlchart data succeeded");
-                $("#controlchartContainer").html(""); //hide spinner
-                buildControlchart(result);
-            },
-            error: function (result) {
-                console.log(result);
-                if (result.statusText !== null) {
-                    $.toaster({ title: 'JQTriggerBtn', priority: 'danger', message: result.statusText });
-                }
-                else {
-                    $.toaster({ title: 'JQTriggerBtn', priority: 'danger', message: 'Whatever you did failed!' });
-                }
-                $("#controlchartContainer").html('<div>Request failed!!</div>');
-            }
-        });
-    };
-
-    //build the chart Calls when ajax request ends
-    function buildControlchart(dataPayload) {
-        console.log(dataPayload);
-        //destroy chart if exists
-        if (ControlChart) {
-            ControlChart.destroy();
-        }
-        if (ControlChartOpt) {
-            ControlChartOpt.destroy();
-        }
-        //clear the cancas just to be sure
-        $("#controlchartCanvas").remove();
-        $("#controlchartOptCanvas").remove();
-
-        //add the new canvas
-        $("#controlchartContainer").append('<canvas id="controlchartCanvas" height="300"></canvas>');
-        //build the chart
-        var ctxcontrolChart = document.getElementById("controlchartCanvas").getContext("2d");
-        //for opt chart 
-        if (ControlchartoptDatanum != 0) {
-
-            $("#controlchartContainer").append('<canvas id="controlchartOptCanvas"></canvas>');
-            var ctxcontrolChartOpt = document.getElementById("controlchartOptCanvas").getContext("2d");
-        }
-        //chart options
-        var options =
-            {
-
-                // Boolean - Whether the line is curved between points
-                bezierCurve: false, //looks bad with control limtit changes
-                // Number - Tension of the bezier curve between points
-                bezierCurveTension: 0.2,
-                showTooltips: true,
-                scaleShowHorizontalLines: true,
-                scaleShowLabels: true,
-                scaleLabel: dataPayload[0].scaleLabel,
-                // String - scale type: "number" or "date"
-                scaleType: "date",
-                // Boolean - Whether to use UTC dates instead local
-                useUtc: true,
-                // String - short date format (used for scale labels)
-                scaleDateFormat: "mm-dd",
-                // String - short time format (used for scale labels)
-                scaleTimeFormat: "HH:MM",
-                // String - full date format (used for point labels)
-                scaleDateTimeFormat: "yy-mm-dd HH:MM:ss",
-                //for resize
-                maintainAspectRatio: false,
-                responsive: true
+            }, function (end, start, label) {
+                console.log("New Control chart end date range selected: " + start.format('YYYY-MM-DD') + " to " + end.format('YYYY-MM-DD') + " (predefined range: " + label + ")");
+                ControlchartstartDate = start;
+                ControlchartendDate = end;
+                //update
+                getcontrolchartData();
+            });
         };
 
-        //dataset
-        var data = [
-            {
-                label: 'value',
-                strokeColor: '#007ACC',
-                pointColor: '#007ACC',
-                pointStrokeColor: '#fff',
-                data: dataPayload[1]
-            },
-            {
-                label: 'UCL',
-                strokeColor: '#F16220',
-                data: dataPayload[2]
-            },
-            {
-                label: 'LCL',
-                strokeColor: '#F16220',
-                data: dataPayload[3]
+        //enable popover for settings.
+        $('#ChartID@(Model.c_trigger_id)').find(".ControlChartOptionsPopover").popover({
+            html: true,
+            content: function () {
+                return  $('#ChartID@(Model.c_trigger_id)').find('.ControlChartOptionsPopoverContent').html();
             }
-        ];
+            });
 
-        var dataOpt = [
-            {
-                label: $("#ControlchartoptDataDropdown>option:selected").html(),
-                strokeColor: '#6f42c1',
-                data: dataPayload[4]
+        //listen to popover events.
+        $(document).on("change", "#ChartID@(Model.c_trigger_id)ControlchartoptDataDropdown", function () {
+            if (ControlchartoptDatanum != this.value) {
+                ControlchartoptDatanum = this.value;
+                getcontrolchartData();
+            };
+        });
+
+        //get chart data
+        function getcontrolchartData() {
+            //hide popover
+            $('#ChartID@(Model.c_trigger_id)').find('.popover').popover('hide');
+            //spinner  
+            $('#ChartID@(Model.c_trigger_id)').find('.controlchartContainer').html("<div class='card-body'><i class='fa fa-spinner fa-pulse fa-2x fa-fw'></i><span class='sr-only'></span>Loading....</div>");
+            //make ajax request
+            $.ajax({
+                type: 'GET',
+                url: '/ControlChart/_getData',
+                data: {
+                    chartname: '@Model.chartname',
+                    scaleLabel: '@Html.Raw(Model.scaleLabel)',
+                    startdate: moment(ControlchartendDate).toISOString(),
+                    enddate: moment(ControlchartstartDate).toISOString(),
+                    alarmobject: '@Model.alarmobject',
+                    optDatanum: ControlchartoptDatanum,
+                    c_trigger_id: @Model.c_trigger_id
+                },
+                success: function (result) {
+                    console && console.log("request control chart data succeeded");
+                    $('#ChartID@(Model.c_trigger_id)').find('.controlchartContainer').html(""); //hide spinner
+                    buildControlchart(result);
+                },
+                error: function (result) {
+                    console.log(result);
+                    if (result.statusText !== null) {
+                        $.toaster({ title: 'JQTriggerBtn', priority: 'danger', message: result.statusText });
+                    }
+                    else {
+                        $.toaster({ title: 'JQTriggerBtn', priority: 'danger', message: 'Whatever you did failed!' });
+                    }
+                    $('#ChartID@(Model.c_trigger_id)').find('.controlchartContainer').html('<div>Request failed!!</div>');
+                }
+            });
+        };
+
+        //build the chart Calls when ajax request ends
+        function buildControlchart(dataPayload) {
+            //destroy chart if exists
+            if (ControlChart) {
+                ControlChart.destroy();
             }
-        ];
+            if (ControlChartOpt) {
+                ControlChartOpt.destroy();
+            }
+            //clear the canvas just to be sure
+            $('#ChartID@(Model.c_trigger_id)').find('.controlchartCanvas').remove();
+            $('#ChartID@(Model.c_trigger_id)').find('.controlchartOptCanvas').remove();
 
-        //build
-        ControlChart = new Chart(ctxcontrolChart).Scatter(data, options);
-        if (ControlchartoptDatanum != 0) {
-            ControlChartOpt = new Chart(ctxcontrolChartOpt).Scatter(dataOpt, options);
+            //add the new canvas
+            $('#ChartID@(Model.c_trigger_id)').find('.controlchartContainer').append('<canvas class="controlchartCanvas" height="300"></canvas>');
+            //build the chart
+            var ctxcontrolChart =  $('#ChartID@(Model.c_trigger_id)').find('.controlchartCanvas')[0].getContext("2d");
+            //for opt chart 
+            if (ControlchartoptDatanum != 0) {
+
+                $('#ChartID@(Model.c_trigger_id)').find('.controlchartContainer').append('<canvas class="controlchartOptCanvas"></canvas>');
+                var ctxcontrolChartOpt = $('#ChartID@(Model.c_trigger_id)').find('.controlchartOptCanvas')[0].getContext("2d"); 
+            }
+            //chart options
+            var options =
+                {
+
+                    // Boolean - Whether the line is curved between points
+                    bezierCurve: false, //looks bad with control limtit changes
+                    // Number - Tension of the bezier curve between points
+                    bezierCurveTension: 0.2,
+                    showTooltips: true,
+                    scaleShowHorizontalLines: true,
+                    scaleShowLabels: true,
+                    scaleLabel: dataPayload[0].scaleLabel,
+                    // String - scale type: "number" or "date"
+                    scaleType: "date",
+                    // Boolean - Whether to use UTC dates instead local
+                    useUtc: true,
+                    // String - short date format (used for scale labels)
+                    scaleDateFormat: "mm-dd",
+                    // String - short time format (used for scale labels)
+                    scaleTimeFormat: "HH:MM",
+                    // String - full date format (used for point labels)
+                    scaleDateTimeFormat: "yy-mm-dd HH:MM:ss",
+                    //for resize
+                    maintainAspectRatio: false,
+                    responsive: true
+            };
+
+            //dataset
+            var data = [
+                {
+                    label: 'value',
+                    strokeColor: '#007ACC',
+                    pointColor: '#007ACC',
+                    pointStrokeColor: '#fff',
+                    data: dataPayload[1]
+                },
+                {
+                    label: 'UCL',
+                    strokeColor: '#F16220',
+                    data: dataPayload[2]
+                },
+                {
+                    label: 'LCL',
+                    strokeColor: '#F16220',
+                    data: dataPayload[3]
+                }
+            ];
+
+            var dataOpt = [
+                {
+                    label: $("#ControlchartoptDataDropdown>option:selected").html(),
+                    strokeColor: '#6f42c1',
+                    data: dataPayload[4]
+                }
+            ];
+
+            //build
+            ControlChart = new Chart(ctxcontrolChart).Scatter(data, options);
+            if (ControlchartoptDatanum != 0) {
+                ControlChartOpt = new Chart(ctxcontrolChartOpt).Scatter(dataOpt, options);
+            }
+            //init daterangepicker
+            setgetcontrolchartDaterangepicker();
         }
-        //init daterangepicker
-        setgetcontrolchartDaterangepicker();
-    }
 
-    //init on doc loaded done
-    $(document).ready(function () {
-        getcontrolchartData();
-    });
+        //init on doc loaded done
+        $(document).ready(function () {
+            getcontrolchartData();
+        });
+
+    })();
 </script>
 
 

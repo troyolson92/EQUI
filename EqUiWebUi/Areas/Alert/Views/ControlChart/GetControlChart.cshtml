@@ -3,11 +3,25 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>ControlChart</h2>
+<h2>ControlChart 1</h2>
 
 @Html.Action("_GetControlChart",new {
     chartname = "testchart",
-    alarmobject = "35200R01_gun1",
-    c_trigger_id = 4
-    //daterange should be added it is no longer set in the javascript
+    alarmobject = "338020R01_Tool1",
+    c_trigger_id = 20, //21 20
+    startdate = System.DateTime.Now.AddDays(-30),
+    enddate = System.DateTime.Now
 })
+
+<hr />
+<h2>ControlChart 2</h2>
+
+@Html.Action("_GetControlChart",new {
+    chartname = "testchart",
+    alarmobject = "338020R01_Tool1",
+    c_trigger_id = 21, //21 20
+    startdate = System.DateTime.Now.AddDays(-30),
+    enddate = System.DateTime.Now
+})
+
+
