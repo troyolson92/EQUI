@@ -36,7 +36,7 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
                 data = new List<TipMonitor>();
                 if (Debugger.IsAttached)
                 {
-                    log.Warn("Loading tipstatus in method (debug mode)");
+                    log.Warn("Loading tip status in method (debug mode)");
                     //in debug mode get the data here
                     GADATAEntitiesTiplife gADATAEntities = new GADATAEntitiesTiplife();
                     DataBuffer.Tipstatus = (from tipstatus in gADATAEntities.TipMonitor
@@ -62,6 +62,14 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
             ViewBag.location = location;
             ViewBag.tool_nr = tool_nr;
             return PartialView();
+        }
+
+        [HttpGet]
+        public ActionResult WeldgunTool(string location ="", int tool_nr = 0)
+        {
+            ViewBag.location = location;
+            ViewBag.tool_nr = tool_nr;
+            return View();
         }
 
         //------------------------------------Tabel met elektrode wissels.-------------------------------------------------

@@ -1,9 +1,10 @@
 ﻿@model EqUiWebUi.Areas.Alert.Models.ChartSettings
-<div id="ChartID@(Model.c_trigger_id)" >
+<div id="ChartID@(Model.c_trigger_id)">
 
     <div class="card">
         <div class="card-header bg-light">
             <h6 class="card-title">
+                <a class="fas fa-sync-alt text-black-50 ControlChartRefresh" href="#"></a>
                 Control chart for alarmobject:
                 <strong>@Model.alarmobject.Trim()</strong> c_trigger_id:
                 <strong>@Model.c_trigger_id</strong>
@@ -17,7 +18,6 @@
             <div class="controlchartContainer" style="position:relative"></div>
         </div>
     </div>
-
 
     @*popover content*@
     <div class="d-none ControlChartOptionsPopoverContent">
@@ -38,6 +38,10 @@
         </div>
     </div>
 
+    @*hidden field*@
+    <input type="hidden" name="ControlchartendDate" value="">
+    <input type="hidden" name="ControlchartstartDate" value="">
+    <input type="hidden" name="ControlchartoptDatanum" value="">
 </div>
 
 <!--ControlChartScripts-->
@@ -50,9 +54,9 @@
         //global vars
         var ControlChart;
         var ControlChartOpt;
-        var ControlchartendDate = moment('@Model.startdate.ToString("o")');
-        var ControlchartstartDate = moment('@Model.enddate.ToString("o")');
-        var ControlchartoptDatanum = 0;
+        $('#ChartID@(Model.c_trigger_id)').find("input[name=ControlchartendDate]").val(moment('@Model.startdate.ToString("o")'));
+        $('#ChartID@(Model.c_trigger_id)').find("input[name=ControlchartstartDate]").val(moment('@Model.enddate.ToString("o")'));
+        $('#ChartID@(Model.c_trigger_id)').find("input[name=ControlchartoptDatanum]").val(0);
 
      //setting up datetimePicker
         function setgetcontrolchartDaterangepicker() {
@@ -67,14 +71,14 @@
                     'Last Year': [moment().subtract(365, 'days'), moment()],
                     'Last 5Year': [moment().subtract(365 * 5, 'days'), moment()]
                 },
-                "startDate": ControlchartstartDate,
-                "endDate": ControlchartendDate,
+                "startDate": moment($('#ChartID@(Model.c_trigger_id)').find("input[name=ControlchartendDate]").val()),
+                "endDate": moment($('#ChartID@(Model.c_trigger_id)').find("input[name=ControlchartstartDate]").val())
 
             }, function (end, start, label) {
                 console.log("New Control chart end date range selected: " + start.format('YYYY-MM-DD') + " to " + end.format('YYYY-MM-DD') + " (predefined range: " + label + ")");
-                ControlchartstartDate = start;
-                ControlchartendDate = end;
-                //update
+                $('#ChartID@(Model.c_trigger_id)').find("input[name=ControlchartendDate]").val(end);
+                $('#ChartID@(Model.c_trigger_id)').find("input[name=ControlchartstartDate]").val(start);
+                //update the chart
                 getcontrolchartData();
             });
         };
@@ -89,10 +93,15 @@
 
         //listen to popover events.
         $(document).on("change", "#ChartID@(Model.c_trigger_id)ControlchartoptDataDropdown", function () {
-            if (ControlchartoptDatanum != this.value) {
-                ControlchartoptDatanum = this.value;
+            if ($('#ChartID@(Model.c_trigger_id)').find("input[name=ControlchartoptDatanum]").val() != this.value) {
+                $('#ChartID@(Model.c_trigger_id)').find("input[name=ControlchartoptDatanum]").val(this.value);
                 getcontrolchartData();
             };
+        });
+
+        //listen to refresh click event
+        $('#ChartID@(Model.c_trigger_id)').find('.ControlChartRefresh').click(function () {
+            getcontrolchartData();
         });
 
         //get chart data
@@ -108,10 +117,10 @@
                 data: {
                     chartname: '@Model.chartname',
                     scaleLabel: '@Html.Raw(Model.scaleLabel)',
-                    startdate: moment(ControlchartendDate).toISOString(),
-                    enddate: moment(ControlchartstartDate).toISOString(),
+                    startdate: moment($('#ChartID@(Model.c_trigger_id)').find("input[name=ControlchartendDate]").val()).toISOString(),
+                    enddate: moment($('#ChartID@(Model.c_trigger_id)').find("input[name=ControlchartstartDate]").val()).toISOString(),
                     alarmobject: '@Model.alarmobject',
-                    optDatanum: ControlchartoptDatanum,
+                    optDatanum: $('#ChartID@(Model.c_trigger_id)').find("input[name=ControlchartoptDatanum]").val(),
                     c_trigger_id: @Model.c_trigger_id
                 },
                 success: function (result) {
@@ -150,7 +159,7 @@
             //build the chart
             var ctxcontrolChart =  $('#ChartID@(Model.c_trigger_id)').find('.controlchartCanvas')[0].getContext("2d");
             //for opt chart 
-            if (ControlchartoptDatanum != 0) {
+            if ($('#ChartID@(Model.c_trigger_id)').find("input[name=ControlchartoptDatanum]").val() != 0) {
 
                 $('#ChartID@(Model.c_trigger_id)').find('.controlchartContainer').append('<canvas class="controlchartOptCanvas"></canvas>');
                 var ctxcontrolChartOpt = $('#ChartID@(Model.c_trigger_id)').find('.controlchartOptCanvas')[0].getContext("2d"); 
@@ -213,7 +222,7 @@
 
             //build
             ControlChart = new Chart(ctxcontrolChart).Scatter(data, options);
-            if (ControlchartoptDatanum != 0) {
+            if ($('#ChartID@(Model.c_trigger_id)').find("input[name=ControlchartoptDatanum]").val() != 0) {
                 ControlChartOpt = new Chart(ctxcontrolChartOpt).Scatter(dataOpt, options);
             }
             //init daterangepicker

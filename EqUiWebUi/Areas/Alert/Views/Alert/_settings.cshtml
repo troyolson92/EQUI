@@ -6,7 +6,7 @@
         </h5>
     </div>
     <div class="card-body">
-        @MyHtmlHelpers.EquiLink("Alert/c_triggers/index", "fas fa-bell", "Alert setup", helperText: "Manage alert triggers")
+        @MyHtmlHelpers.EquiLink("/Alert/c_triggers/index", "fas fa-bell", "Alert setup", helperText: "Manage alert triggers")
         <p>@MyFilters.IconActionLink("/Alert/c_SMSsystem/index", "fas fa-object-group", "SMS groups", "List of sms groups")</p>
         <p>@MyFilters.IconActionLink("/Alert/c_SMSconfig/index", "fas fa-cogs", "SMS group config", "Join between SMSsystem and CPT600 (each system can send to one or more CPT600 profiles)")</p>
         <p>@MyFilters.IconActionLink("/Alert/c_CPT600/index", "fas fa-phone", "CPT600", "List of CPT600 profiles (with location asset root and sms counters) This connects us to the VD that sends the SMS")</p>

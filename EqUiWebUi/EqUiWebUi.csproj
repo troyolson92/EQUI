@@ -182,6 +182,7 @@
     <Folder Include="Areas\PlcSupervisie\Models\" />
     <Folder Include="Areas\STW040\Models\" />
     <Folder Include="Areas\STW040\Views\Shared\" />
+    <Folder Include="Areas\Tiplife\Views\Weldgun\" />
     <Folder Include="Areas\VASC\Views\Shared\" />
     <Folder Include="Areas\VCSC\Controllers\" />
     <Folder Include="Areas\VCSC\Models\" />
@@ -2006,6 +2007,7 @@
     <Content Include="Areas\Welding\Views\Ultralog\GetControlPlan.cshtml" />
     <Content Include="Areas\Welding\Views\Ultralog\_GetControlPlanPicture.cshtml" />
     <Content Include="Areas\Welding\Views\Ultralog\ListControlPlans.cshtml" />
+    <Content Include="Areas\Tiplife\Views\NgacElectrode\WeldgunTool.cshtml" />
     <None Include="Properties\PublishProfiles\gensvw1178-DEV-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gotsvw11292-PRODUCTION-VCTA.pubxml" />
