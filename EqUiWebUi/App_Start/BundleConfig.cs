@@ -16,7 +16,6 @@ namespace EqUiWebUi
                          "~/Scripts/respond.js",
                          "~/Scripts/jquery.bootstrap-autohidingnavbar.js", //https://github.com/istvan-ujjmeszaros/bootstrap-autohidingnavbar 
                          "~/Scripts/moment.js", //https://github.com/moment/moment/
-                         "~/Scripts/spin.js", //https://github.com/fgnass/spin.js/
                          "~/Scripts/daterangepicker.js" //https://github.com/dangrossman/bootstrap-daterangepicker
                             ));
 

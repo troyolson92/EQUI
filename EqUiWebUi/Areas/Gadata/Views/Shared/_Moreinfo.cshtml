@@ -21,12 +21,12 @@
 </div>
 
 <div class="card-body">
+    @*Render error trend chart*@
     @Html.Partial("../Chart/_getErrorTrend", Model)
 
     <hr />
 
-    @*if the logtype is an alert it is redirected to the alert area.
-        all other logtypes are run via equi.GetErrorInfoData*@
+    @*if the log type is an alert it is redirected to the alert area. all other log types are run via equi.GetErrorInfoData*@
     @if (Model.logtype == "ALERT")
     {
         <div class="card">
@@ -49,6 +49,7 @@
 
     <hr />
 
+    @*Render maximo workorders on location*@
     @Html.Action("_workordersOnLocation", "Workorder", new { area = "Maximo_ui", location = Model.location })
 </div>
 

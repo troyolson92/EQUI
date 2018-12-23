@@ -2,7 +2,7 @@
 
 @{
     <hr />
-    //calc a logical start and enddate based on the alert.
+    //calc a logical start and end date based on the alert.
     System.DateTime _startdate = Model.C_timestamp.AddDays(-30); //take 30 days of data before start of alert
     System.DateTime _enddate = System.DateTime.Now; //default enddate is now
                                                     //if alert not open take the end days 2 days past the closing of the alert
