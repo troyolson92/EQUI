@@ -67,8 +67,41 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
         [HttpGet]
         public ActionResult WeldgunTool(string location ="", int tool_nr = 0)
         {
-            ViewBag.location = location;
-            ViewBag.tool_nr = tool_nr;
+            //get location valid for user profile
+            Areas.Welding.Models.GADATAEntitiesWelding db = new Areas.Welding.Models.GADATAEntitiesWelding();
+            string LocationRoot = CurrentUser.Getuser.LocationRoot;
+            if (location != "")//if location is passing only show that one
+            {
+                ViewBag.Locations = new SelectList(db.c_timer.Where(c => c.Robot.Contains(location)).OrderBy(c => c.Name), "Name", "Robot");
+            }
+            else if (LocationRoot != "") //else if user has profile filter apply it
+            {
+                ViewBag.Locations = new SelectList(db.c_timer.Where(c => (c.LocationTree ?? "").Contains(LocationRoot)).OrderBy(c => c.Name), "Name", "Robot");
+            }
+            else //show all 
+            {
+                ViewBag.Locations = new SelectList(db.c_timer.OrderBy(c => c.Name), "Name", "Robot");
+            }
+            //pass tool number select list 
+            if (tool_nr != 0)
+            {
+                ViewBag.tool_nr = new SelectList(new List<SelectListItem>
+                                        {
+                                            new SelectListItem { Selected = true,  Text = $"Tool{tool_nr.ToString()}", Value = tool_nr.ToString()},
+                                        }, "Text", "Value");
+            }
+            else //pass all options
+            {
+                ViewBag.tool_nr = new SelectList(new List<SelectListItem>
+                                        {
+                                            new SelectListItem { Selected = true,  Text = "Tool1", Value = "1"},
+                                            new SelectListItem { Selected = false, Text = "Tool2", Value = "2"},
+                                            new SelectListItem { Selected = false, Text = "Tool3", Value = "3"},
+                                            new SelectListItem { Selected = false, Text = "Tool4", Value = "4"},
+                                            new SelectListItem { Selected = false, Text = "Tool5", Value = "5"},
+                                        }, "Text", "Value");
+            }
+            //
             return View();
         }
 

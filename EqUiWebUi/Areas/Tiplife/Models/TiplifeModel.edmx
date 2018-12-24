@@ -6,8 +6,6 @@
     <edmx:StorageModels>
     <Schema Namespace="GADATAModelTiplife.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <!--Errors Found During Generation:
-warning 6002: The table/view 'GADATA.NGAC.TipDressCycleTimeREMO' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <!--Errors Found During Generation:
 warning 6002: The table/view 'GADATA.NGAC.TipDressLogFile' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="TipDressLogFile">
           <Key>
@@ -104,11 +102,12 @@ warning 6002: The table/view 'GADATA.NGAC.TipMonitor' does not have a primary ke
           <Key>
             
             
+            
             <PropertyRef Name="id" />
             
           </Key>
           <Property Name="Robot" Type="varchar" MaxLength="30" Nullable="false" />
-          <Property Name="Tool_Nr" Type="smallint" />
+          <Property Name="Tool_Nr" Type="smallint" Nullable="false" />
           <Property Name="Date time" Type="datetime" Nullable="false" />
           <Property Name="nDress" Type="smallint" />
           <Property Name="nWelds" Type="smallint" />
@@ -219,6 +218,7 @@ warning 6002: The table/view 'GADATA.NGAC.TipwearLast' does not have a primary k
           <Property Name="DeltaNom" Type="float" />
           <Property Name="_timestamp" Type="datetime" />
           <Property Name="rnDesc" Type="bigint" />
+          <Property Name="PrevDress_Num" Type="smallint" />
           <Property Name="avgESTnSpotsFixedWearBefore100" Type="float" />
           <Property Name="avgESTnSpotsMoveWearBefore100" Type="float" />
           <Property Name="maxWearInCalc" Type="float" />
@@ -234,6 +234,8 @@ warning 6002: The table/view 'GADATA.NGAC.TipwearLast' does not have a primary k
           <Property Name="Last%FixedWearBeforeChange" Type="float" />
           <Property Name="Last%MovWearBeforeChange" Type="float" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.Volvo.Robots' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityContainer Name="GADATAModelTiplifeStoreContainer">
           <EntitySet Name="TipDressLogFile" EntityType="Self.TipDressLogFile" store:Type="Views" store:Schema="NGAC">
             <DefiningQuery>SELECT 
@@ -424,6 +426,7 @@ warning 6002: The table/view 'GADATA.NGAC.TipwearLast' does not have a primary k
     [TipwearLast].[DeltaNom] AS [DeltaNom], 
     [TipwearLast].[_timestamp] AS [_timestamp], 
     [TipwearLast].[rnDesc] AS [rnDesc], 
+    [TipwearLast].[PrevDress_Num] AS [PrevDress_Num], 
     [TipwearLast].[avgESTnSpotsFixedWearBefore100] AS [avgESTnSpotsFixedWearBefore100], 
     [TipwearLast].[avgESTnSpotsMoveWearBefore100] AS [avgESTnSpotsMoveWearBefore100], 
     [TipwearLast].[maxWearInCalc] AS [maxWearInCalc], 
@@ -612,6 +615,7 @@ warning 6002: The table/view 'GADATA.NGAC.TipwearLast' does not have a primary k
           <Property Name="Last_FixedWearBeforeChange" Type="Double" />
           <Property Name="Last_MovWearBeforeChange" Type="Double" />
           <Property Name="c_controller_id" Type="Int32" />
+          <Property Name="PrevDress_Num" Type="Int16" />
         </EntityType>
         <EntityContainer Name="GADATAEntitiesTiplife" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="TipDressLogFile" EntityType="Self.TipDressLogFile" />
@@ -647,7 +651,7 @@ warning 6002: The table/view 'GADATA.NGAC.TipwearLast' does not have a primary k
             <PropertyRef Name="id" />
           </Key>
           <Property Name="Robot" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Tool_Nr" Type="Int16" />
+          <Property Name="Tool_Nr" Type="Int16" Nullable="false" />
           <Property Name="Date_time" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="nDress" Type="Int16" />
           <Property Name="nWelds" Type="Int16" />
@@ -763,6 +767,7 @@ warning 6002: The table/view 'GADATA.NGAC.TipwearLast' does not have a primary k
           <EntitySetMapping Name="TipwearLast">
             <EntityTypeMapping TypeName="GADATAModelTiplife.TipwearLast">
               <MappingFragment StoreEntitySet="TipwearLast">
+                <ScalarProperty Name="PrevDress_Num" ColumnName="PrevDress_Num" />
                 <ScalarProperty Name="c_controller_id" ColumnName="c_controller_id" />
                 <ScalarProperty Name="Last_MovWearBeforeChange" ColumnName="Last%MovWearBeforeChange" />
                 <ScalarProperty Name="Last_FixedWearBeforeChange" ColumnName="Last%FixedWearBeforeChange" />

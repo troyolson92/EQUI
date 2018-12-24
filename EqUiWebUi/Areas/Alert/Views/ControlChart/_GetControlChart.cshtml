@@ -143,52 +143,31 @@
 
         //build the chart Calls when ajax request ends
         function buildControlchart(dataPayload) {
-            //destroy chart if exists
-            if (ControlChart) {
-                ControlChart.destroy();
-            }
-            if (ControlChartOpt) {
-                ControlChartOpt.destroy();
-            }
-            //clear the canvas just to be sure
-            $('#ChartID@(Model.c_trigger_id)').find('.controlchartCanvas').remove();
-            $('#ChartID@(Model.c_trigger_id)').find('.controlchartOptCanvas').remove();
-
-            //add the new canvas
-            $('#ChartID@(Model.c_trigger_id)').find('.controlchartContainer').append('<canvas class="controlchartCanvas" height="300"></canvas>');
-            //build the chart
-            var ctxcontrolChart =  $('#ChartID@(Model.c_trigger_id)').find('.controlchartCanvas')[0].getContext("2d");
-            //for opt chart 
-            if ($('#ChartID@(Model.c_trigger_id)').find("input[name=ControlchartoptDatanum]").val() != 0) {
-
-                $('#ChartID@(Model.c_trigger_id)').find('.controlchartContainer').append('<canvas class="controlchartOptCanvas"></canvas>');
-                var ctxcontrolChartOpt = $('#ChartID@(Model.c_trigger_id)').find('.controlchartOptCanvas')[0].getContext("2d"); 
-            }
             //chart options
             var options =
-                {
+            {
 
-                    // Boolean - Whether the line is curved between points
-                    bezierCurve: false, //looks bad with control limtit changes
-                    // Number - Tension of the bezier curve between points
-                    bezierCurveTension: 0.2,
-                    showTooltips: true,
-                    scaleShowHorizontalLines: true,
-                    scaleShowLabels: true,
-                    scaleLabel: dataPayload[0].scaleLabel,
-                    // String - scale type: "number" or "date"
-                    scaleType: "date",
-                    // Boolean - Whether to use UTC dates instead local
-                    useUtc: true,
-                    // String - short date format (used for scale labels)
-                    scaleDateFormat: "mm-dd",
-                    // String - short time format (used for scale labels)
-                    scaleTimeFormat: "HH:MM",
-                    // String - full date format (used for point labels)
-                    scaleDateTimeFormat: "yy-mm-dd HH:MM:ss",
-                    //for resize
-                    maintainAspectRatio: false,
-                    responsive: true
+                // Boolean - Whether the line is curved between points
+                bezierCurve: false, //looks bad with control limtit changes
+                // Number - Tension of the bezier curve between points
+                bezierCurveTension: 0.2,
+                showTooltips: true,
+                scaleShowHorizontalLines: true,
+                scaleShowLabels: true,
+                scaleLabel: dataPayload[0].scaleLabel,
+                // String - scale type: "number" or "date"
+                scaleType: "date",
+                // Boolean - Whether to use UTC dates instead local
+                useUtc: true,
+                // String - short date format (used for scale labels)
+                scaleDateFormat: "mm-dd",
+                // String - short time format (used for scale labels)
+                scaleTimeFormat: "HH:MM",
+                // String - full date format (used for point labels)
+                scaleDateTimeFormat: "yy-mm-dd HH:MM:ss",
+                //for resize
+                maintainAspectRatio: false,
+                responsive: true
             };
 
             //dataset
@@ -219,12 +198,31 @@
                     data: dataPayload[4]
                 }
             ];
+            //destroy chart if exists
+            if (ControlChart) {
+                ControlChart.destroy();
+            }
+            if (ControlChartOpt) {
+                ControlChartOpt.destroy();
+            }
+            //clear the canvas just to be sure
+            $('#ChartID@(Model.c_trigger_id)').find('.controlchartCanvas').remove();
+            $('#ChartID@(Model.c_trigger_id)').find('.controlchartOptCanvas').remove();
 
-            //build
+            //add the new canvas
+            $('#ChartID@(Model.c_trigger_id)').find('.controlchartContainer').append('<canvas class="controlchartCanvas" height="300"></canvas>');
+            //build the chart
+            var ctxcontrolChart = $('#ChartID@(Model.c_trigger_id)').find('.controlchartCanvas')[0].getContext("2d");
             ControlChart = new Chart(ctxcontrolChart).Scatter(data, options);
+
+            //for opt chart 
             if ($('#ChartID@(Model.c_trigger_id)').find("input[name=ControlchartoptDatanum]").val() != 0) {
+
+                $('#ChartID@(Model.c_trigger_id)').find('.controlchartContainer').append('<canvas class="controlchartOptCanvas"></canvas>');
+                var ctxcontrolChartOpt = $('#ChartID@(Model.c_trigger_id)').find('.controlchartOptCanvas')[0].getContext("2d"); 
                 ControlChartOpt = new Chart(ctxcontrolChartOpt).Scatter(dataOpt, options);
             }
+
             //init daterangepicker
             setgetcontrolchartDaterangepicker();
         }

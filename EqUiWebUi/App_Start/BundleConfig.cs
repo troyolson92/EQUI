@@ -10,19 +10,21 @@ namespace EqUiWebUi
         {
             //loads before content
             bundles.Add(new ScriptBundle("~/bundles/mainjavabundel").Include(
-                         "~/Scripts/jquery-{version}.js",
+                         "~/node_modules/jquery/dist/jquery.js",
                          "~/Scripts/umd/popper.min.js", //popper BEFORE bootstrap 
                          "~/Scripts/bootstrap.min.js", //bootstrap
                          "~/Scripts/respond.js",
                          "~/Scripts/jquery.bootstrap-autohidingnavbar.js", //https://github.com/istvan-ujjmeszaros/bootstrap-autohidingnavbar 
                          "~/Scripts/moment.js", //https://github.com/moment/moment/
-                         "~/Scripts/daterangepicker.js" //https://github.com/dangrossman/bootstrap-daterangepicker
+                         "~/node_modules/daterangepicker/daterangepicker.js", //https://github.com/dangrossman/bootstrap-daterangepicker
+                         "~/node_modules/bootstrap-select/dist/js/bootstrap-select.js" //https://developer.snapappointments.com/bootstrap-select/
                             ));
 
-            //loads afther content
+            //loads after content
             bundles.Add(new ScriptBundle("~/bundles/MyScripts").Include(
                          "~/Scripts/MyScripts/tablehelper.js",
                          "~/Scripts/MyScripts/Interface.js",
+
                          "~/Scripts/MvcGrid/mvc-grid.js", //https://github.com/NonFactors/MVC5.Grid
                          "~/Scripts/printThis.js", //https://github.com/jasonday/printThis
                          "~/Scripts/jquery.toaster.js" //https://github.com/scottoffen/jquery.toaster/wiki
@@ -39,11 +41,14 @@ namespace EqUiWebUi
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/Bootstrap.css",
                       "~/Content/MvcGrid/mvc-grid.css", //style for mvc grids
-                      "~/Content/daterangepicker.css", //style for datarange pickers
+                      "~/node_modules/daterangepicker/daterangepicker.css", //style for date range pickers
                       "~/Content/fontawesome-all.css",  //for or icons https://fontawesome.com
-                      "~/Content/TableRowStyles.css", //custom table row sytles and animations
+
+                      "~/Content/TableRowStyles.css", //custom table row styles and animations
                       "~/Content/CustomHyperlinkBoxes.css", //custom CustomHyperlinkBoxes
-                      "~/Content/CustomStyleTweeks.css" //custom style tweeks
+                      "~/Content/CustomStyleTweeks.css", //custom style tweaks
+                      
+                      "~/node_modules/bootstrap-select/dist/css/bootstrap-select.css"
                       ));
         }
     }

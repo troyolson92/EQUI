@@ -11,310 +11,313 @@
 {
     @Html.AntiForgeryToken()
 
-<div class="form-horizontal">
-    <h4>c_controller_class</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model.id)
+    <div class="form-horizontal">
+        <h4>c_controller_class</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.id)
 
 
-    <div class="card">
-        <div class="card-header bg-primary">
-            <h4 class="card-title">Main settings</h4>
-        </div>
-        <div class="card-body">
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-4" })
-                <div class="col-md-8">
-                    @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
-                </div>
+        <div class="card">
+            <div class="card-header bg-primary">
+                <h4 class="card-title">Main settings</h4>
             </div>
+            <div class="card-body">
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.doConnect, htmlAttributes: new { @class = "control-label col-md-4" })
-                <div class="col-md-8">
-                    <div class="checkbox">
-                        @Html.EditorFor(model => model.doConnect, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.doConnect, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.doConnect, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        <div class="checkbox">
+                            @Html.EditorFor(model => model.doConnect, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.doConnect, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.handleHSocket, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        <div class="checkbox">
+                            @Html.EditorFor(model => model.handleHSocket, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.handleHSocket, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Username, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.setClock, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.setClock, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.setClock, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.handleHSocket, htmlAttributes: new { @class = "control-label col-md-4" })
-                <div class="col-md-8">
-                    <div class="checkbox">
-                        @Html.EditorFor(model => model.handleHSocket, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.handleHSocket, "", new { @class = "text-danger" })
+
+        <div class="card">
+            <div class="card-header bg-primary">
+                <h4 class="card-title">controller events</h4>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-info">
+                    If insert or update is active this data is send to:
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.evStateChange, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.ListBoxFor(model => model._evStateChange, EqUiWebUi.Areas.VASC.Models.VASCenums.SQL_Action_SelectList, new { @class = "form-control bsMultiselect", multiple = "multiple" })
+                        @Html.ValidationMessageFor(model => model.evStateChange, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.evOperatingModeChange, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.ListBoxFor(model => model._evOperatingModeChange, EqUiWebUi.Areas.VASC.Models.VASCenums.SQL_Action_SelectList, new { @class = "form-control bsMultiselect", multiple = "multiple" })
+                        @Html.ValidationMessageFor(model => model.evOperatingModeChange, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.evConnectionChange, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.ListBoxFor(model => model._evConnectionChange, EqUiWebUi.Areas.VASC.Models.VASCenums.SQL_Action_SelectList, new { @class = "form-control bsMultiselect", multiple = "multiple" })
+                        @Html.ValidationMessageFor(model => model.evConnectionChange, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.evExecutionStatus, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.ListBoxFor(model => model._evExecutionStatus, EqUiWebUi.Areas.VASC.Models.VASCenums.SQL_Action_SelectList, new { @class = "form-control bsMultiselect", multiple = "multiple" })
+                        @Html.ValidationMessageFor(model => model.evExecutionStatus, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.evExecutionStatusTRob1, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.ListBoxFor(model => model._evExecutionStatusTRob1, EqUiWebUi.Areas.VASC.Models.VASCenums.SQL_Action_SelectList, new { @class = "form-control bsMultiselect", multiple = "multiple" })
+                        @Html.ValidationMessageFor(model => model.evExecutionStatusTRob1, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.evBackupCompleted, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.ListBoxFor(model => model._evBackupCompleted, EqUiWebUi.Areas.VASC.Models.VASCenums.SQL_Action_SelectList, new { @class = "form-control bsMultiselect", multiple = "multiple" })
+                        @Html.ValidationMessageFor(model => model.evBackupCompleted, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.evDataResolveChange, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.ListBoxFor(model => model._evDataResolveChange, EqUiWebUi.Areas.VASC.Models.VASCenums.SQL_Action_SelectList, new { @class = "form-control bsMultiselect", multiple = "multiple" })
+                        @Html.ValidationMessageFor(model => model.evDataResolveChange, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.evExecutionCycleChange, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.ListBoxFor(model => model._evExecutionCycleChange, EqUiWebUi.Areas.VASC.Models.VASCenums.SQL_Action_SelectList, new { @class = "form-control bsMultiselect", multiple = "multiple" })
+                        @Html.ValidationMessageFor(model => model.evExecutionCycleChange, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.evTaskEnabledChange, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.ListBoxFor(model => model._evTaskEnabledChange, EqUiWebUi.Areas.VASC.Models.VASCenums.SQL_Action_SelectList, new { @class = "form-control bsMultiselect", multiple = "multiple" })
+                        @Html.ValidationMessageFor(model => model.evTaskEnabledChange, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.evMasterChange, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.ListBoxFor(model => model._evMasterChange, EqUiWebUi.Areas.VASC.Models.VASCenums.SQL_Action_SelectList, new { @class = "form-control bsMultiselect", multiple = "multiple" })
+                        @Html.ValidationMessageFor(model => model.evMasterChange, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.evMotionPointerTRob1Change, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.ListBoxFor(model => model._evMotionPointerTRob1Change, EqUiWebUi.Areas.VASC.Models.VASCenums.SQL_Action_SelectList, new { @class = "form-control bsMultiselect", multiple = "multiple" })
+                        @Html.ValidationMessageFor(model => model.evMotionPointerTRob1Change, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.evProgramPointerTRob1Change, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.ListBoxFor(model => model._evProgramPointerTrob1Change, EqUiWebUi.Areas.VASC.Models.VASCenums.SQL_Action_SelectList, new { @class = "form-control bsMultiselect", multiple = "multiple" })
+                        @Html.ValidationMessageFor(model => model.evProgramPointerTRob1Change, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.evMotionPointerTRob1ManualChange, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.ListBoxFor(model => model._evMotionPointerTrob1ManualChange, EqUiWebUi.Areas.VASC.Models.VASCenums.SQL_Action_SelectList, new { @class = "form-control bsMultiselect", multiple = "multiple" })
+                        @Html.ValidationMessageFor(model => model.evMotionPointerTRob1ManualChange, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.evProgramPointerTRob1ManualChange, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.ListBoxFor(model => model._evProgramPointerTrob1ManualChange, EqUiWebUi.Areas.VASC.Models.VASCenums.SQL_Action_SelectList, new { @class = "form-control bsMultiselect", multiple = "multiple" })
+                        @Html.ValidationMessageFor(model => model.evProgramPointerTRob1ManualChange, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.Username, htmlAttributes: new { @class = "control-label col-md-4" })
-                <div class="col-md-8">
-                    @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+        <div class="card">
+            <div class="card-header bg-primary">
+                <h4 class="card-title">Sub system masks </h4>
+            </div>
+            <div class="alert-info">
+            </div>
+            <div class="card-body">
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.cVariableMask, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.ListBoxFor(model => model._cVariableMask, EqUiWebUi.Areas.VASC.Models.VASCenums.Enable_bit_MASK_SelectList, new { @class = "form-control bsMultiselect", multiple = "multiple" })
+                        @Html.ValidationMessageFor(model => model.cVariableMask, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.cVariableSearchMask, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.ListBoxFor(model => model._cVariableSearchMask, EqUiWebUi.Areas.VASC.Models.VASCenums.Enable_bit_MASK_SelectList, new { @class = "form-control bsMultiselect", multiple = "multiple" })
+                        @Html.ValidationMessageFor(model => model.cVariableSearchMask, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.cDeviceInfoMask, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.ListBoxFor(model => model._cDeviceInfoMask, EqUiWebUi.Areas.VASC.Models.VASCenums.Enable_bit_MASK_SelectList, new { @class = "form-control bsMultiselect", multiple = "multiple" })
+                        @Html.ValidationMessageFor(model => model.cDeviceInfoMask, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.cCSVLogMask, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.ListBoxFor(model => model._cCSVLogMask, EqUiWebUi.Areas.VASC.Models.VASCenums.Enable_bit_MASK_SelectList, new { @class = "form-control bsMultiselect", multiple = "multiple" })
+                        @Html.ValidationMessageFor(model => model.cCSVLogMask, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.cJobMask, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.ListBoxFor(model => model._cJobMask, EqUiWebUi.Areas.VASC.Models.VASCenums.Enable_bit_MASK_SelectList, new { @class = "form-control bsMultiselect", multiple = "multiple" })
+                        @Html.ValidationMessageFor(model => model.cJobMask, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.cErrorMask, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.ListBoxFor(model => model._cErrorMask, EqUiWebUi.Areas.VASC.Models.VASCenums.Enable_bit_MASK_SelectList, new { @class = "form-control bsMultiselect", multiple = "multiple" })
+                        @Html.ValidationMessageFor(model => model.cErrorMask, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header bg-primary">
+                <h4 class="card-title">other stuff </h4>
+            </div>
+            <div class="alert-info">
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.logCategoryMask, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.logCategoryMask, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.logCategoryMask, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.evLogMessageAction, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.evLogMessageAction, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.evLogMessageAction, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.cPJVEventMask, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.ListBoxFor(model => model._cPJVEventMask, EqUiWebUi.Areas.VASC.Models.VASCenums.Enable_bit_MASK_SelectList, new { @class = "form-control bsMultiselect", multiple = "multiple" })
+                        @Html.ValidationMessageFor(model => model.cPJVEventMask, "", new { @class = "text-danger" })
+                    </div>
                 </div>
             </div>
+        </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-4" })
-                <div class="col-md-8">
-                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-                </div>
-            </div>
+        <hr />
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.setClock, htmlAttributes: new { @class = "control-label col-md-4" })
-                <div class="col-md-8">
-                    @Html.EditorFor(model => model.setClock, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.setClock, "", new { @class = "text-danger" })
-                </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-8">
+                <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </div>
     </div>
 
+}
 
-    <div class="card">
-        <div class="card-header bg-primary">
-            <h4 class="card-title">controller events</h4>
-        </div>
-        <div class="card-body">
-            <div class="alert alert-info">
-                If insert or update is active this data is send to:
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.evStateChange, htmlAttributes: new { @class = "control-label col-md-4" })
-                <div class="col-md-8">
-                    @Html.ListBoxFor(model => model._evStateChange, EqUiWebUi.Areas.VASC.Models.VASCenums.SQL_Action_SelectList, new { @class = "form-control bsMultiselect", multiple = "multiple" })
-                    @Html.ValidationMessageFor(model => model.evStateChange, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.evOperatingModeChange, htmlAttributes: new { @class = "control-label col-md-4" })
-                <div class="col-md-8">
-                    @Html.ListBoxFor(model => model._evOperatingModeChange, EqUiWebUi.Areas.VASC.Models.VASCenums.SQL_Action_SelectList, new { @class = "form-control bsMultiselect", multiple = "multiple" })
-                    @Html.ValidationMessageFor(model => model.evOperatingModeChange, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.evConnectionChange, htmlAttributes: new { @class = "control-label col-md-4" })
-                <div class="col-md-8">
-                    @Html.ListBoxFor(model => model._evConnectionChange, EqUiWebUi.Areas.VASC.Models.VASCenums.SQL_Action_SelectList, new { @class = "form-control bsMultiselect", multiple = "multiple" })
-                    @Html.ValidationMessageFor(model => model.evConnectionChange, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.evExecutionStatus, htmlAttributes: new { @class = "control-label col-md-4" })
-                <div class="col-md-8">
-                    @Html.ListBoxFor(model => model._evExecutionStatus, EqUiWebUi.Areas.VASC.Models.VASCenums.SQL_Action_SelectList, new { @class = "form-control bsMultiselect", multiple = "multiple" })
-                    @Html.ValidationMessageFor(model => model.evExecutionStatus, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.evExecutionStatusTRob1, htmlAttributes: new { @class = "control-label col-md-4" })
-                <div class="col-md-8">
-                    @Html.ListBoxFor(model => model._evExecutionStatusTRob1, EqUiWebUi.Areas.VASC.Models.VASCenums.SQL_Action_SelectList, new { @class = "form-control bsMultiselect", multiple = "multiple" })
-                    @Html.ValidationMessageFor(model => model.evExecutionStatusTRob1, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.evBackupCompleted, htmlAttributes: new { @class = "control-label col-md-4" })
-                <div class="col-md-8">
-                    @Html.ListBoxFor(model => model._evBackupCompleted, EqUiWebUi.Areas.VASC.Models.VASCenums.SQL_Action_SelectList, new { @class = "form-control bsMultiselect", multiple = "multiple" })
-                    @Html.ValidationMessageFor(model => model.evBackupCompleted, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.evDataResolveChange, htmlAttributes: new { @class = "control-label col-md-4" })
-                <div class="col-md-8">
-                    @Html.ListBoxFor(model => model._evDataResolveChange, EqUiWebUi.Areas.VASC.Models.VASCenums.SQL_Action_SelectList, new { @class = "form-control bsMultiselect", multiple = "multiple" })
-                    @Html.ValidationMessageFor(model => model.evDataResolveChange, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.evExecutionCycleChange, htmlAttributes: new { @class = "control-label col-md-4" })
-                <div class="col-md-8">
-                    @Html.ListBoxFor(model => model._evExecutionCycleChange, EqUiWebUi.Areas.VASC.Models.VASCenums.SQL_Action_SelectList, new { @class = "form-control bsMultiselect", multiple = "multiple" })
-                    @Html.ValidationMessageFor(model => model.evExecutionCycleChange, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.evTaskEnabledChange, htmlAttributes: new { @class = "control-label col-md-4" })
-                <div class="col-md-8">
-                    @Html.ListBoxFor(model => model._evTaskEnabledChange, EqUiWebUi.Areas.VASC.Models.VASCenums.SQL_Action_SelectList, new { @class = "form-control bsMultiselect", multiple = "multiple" })
-                    @Html.ValidationMessageFor(model => model.evTaskEnabledChange, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.evMasterChange, htmlAttributes: new { @class = "control-label col-md-4" })
-                <div class="col-md-8">
-                    @Html.ListBoxFor(model => model._evMasterChange, EqUiWebUi.Areas.VASC.Models.VASCenums.SQL_Action_SelectList, new { @class = "form-control bsMultiselect", multiple = "multiple" })
-                    @Html.ValidationMessageFor(model => model.evMasterChange, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.evMotionPointerTRob1Change, htmlAttributes: new { @class = "control-label col-md-4" })
-                <div class="col-md-8">
-                    @Html.ListBoxFor(model => model._evMotionPointerTRob1Change, EqUiWebUi.Areas.VASC.Models.VASCenums.SQL_Action_SelectList, new { @class = "form-control bsMultiselect", multiple = "multiple" })
-                    @Html.ValidationMessageFor(model => model.evMotionPointerTRob1Change, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.evProgramPointerTRob1Change, htmlAttributes: new { @class = "control-label col-md-4" })
-                <div class="col-md-8">
-                    @Html.ListBoxFor(model => model._evProgramPointerTrob1Change, EqUiWebUi.Areas.VASC.Models.VASCenums.SQL_Action_SelectList, new { @class = "form-control bsMultiselect", multiple = "multiple" })
-                    @Html.ValidationMessageFor(model => model.evProgramPointerTRob1Change, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.evMotionPointerTRob1ManualChange, htmlAttributes: new { @class = "control-label col-md-4" })
-                <div class="col-md-8">
-                    @Html.ListBoxFor(model => model._evMotionPointerTrob1ManualChange, EqUiWebUi.Areas.VASC.Models.VASCenums.SQL_Action_SelectList, new { @class = "form-control bsMultiselect", multiple = "multiple" })
-                    @Html.ValidationMessageFor(model => model.evMotionPointerTRob1ManualChange, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.evProgramPointerTRob1ManualChange, htmlAttributes: new { @class = "control-label col-md-4" })
-                <div class="col-md-8">
-                    @Html.ListBoxFor(model => model._evProgramPointerTrob1ManualChange, EqUiWebUi.Areas.VASC.Models.VASCenums.SQL_Action_SelectList, new { @class = "form-control bsMultiselect", multiple = "multiple" })
-                    @Html.ValidationMessageFor(model => model.evProgramPointerTRob1ManualChange, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="card">
-        <div class="card-header bg-primary">
-            <h4 class="card-title">Sub system masks </h4>
-        </div>
-        <div class="alert-info">
-        </div>
-        <div class="card-body">
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.cVariableMask, htmlAttributes: new { @class = "control-label col-md-4" })
-                <div class="col-md-8">
-                    @Html.ListBoxFor(model => model._cVariableMask, EqUiWebUi.Areas.VASC.Models.VASCenums.Enable_bit_MASK_SelectList, new { @class = "form-control bsMultiselect", multiple = "multiple" })
-                    @Html.ValidationMessageFor(model => model.cVariableMask, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.cVariableSearchMask, htmlAttributes: new { @class = "control-label col-md-4" })
-                <div class="col-md-8">
-                    @Html.ListBoxFor(model => model._cVariableSearchMask, EqUiWebUi.Areas.VASC.Models.VASCenums.Enable_bit_MASK_SelectList, new { @class = "form-control bsMultiselect", multiple = "multiple" })
-                    @Html.ValidationMessageFor(model => model.cVariableSearchMask, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.cDeviceInfoMask, htmlAttributes: new { @class = "control-label col-md-4" })
-                <div class="col-md-8">
-                    @Html.ListBoxFor(model => model._cDeviceInfoMask, EqUiWebUi.Areas.VASC.Models.VASCenums.Enable_bit_MASK_SelectList, new { @class = "form-control bsMultiselect", multiple = "multiple" })
-                    @Html.ValidationMessageFor(model => model.cDeviceInfoMask, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.cCSVLogMask, htmlAttributes: new { @class = "control-label col-md-4" })
-                <div class="col-md-8">
-                    @Html.ListBoxFor(model => model._cCSVLogMask, EqUiWebUi.Areas.VASC.Models.VASCenums.Enable_bit_MASK_SelectList, new { @class = "form-control bsMultiselect", multiple = "multiple" })
-                    @Html.ValidationMessageFor(model => model.cCSVLogMask, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.cJobMask, htmlAttributes: new { @class = "control-label col-md-4" })
-                <div class="col-md-8">
-                    @Html.ListBoxFor(model => model._cJobMask, EqUiWebUi.Areas.VASC.Models.VASCenums.Enable_bit_MASK_SelectList, new { @class = "form-control bsMultiselect", multiple = "multiple" })
-                    @Html.ValidationMessageFor(model => model.cJobMask, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.cErrorMask, htmlAttributes: new { @class = "control-label col-md-4" })
-                <div class="col-md-8">
-                    @Html.ListBoxFor(model => model._cErrorMask, EqUiWebUi.Areas.VASC.Models.VASCenums.Enable_bit_MASK_SelectList, new { @class = "form-control bsMultiselect", multiple = "multiple" })
-                    @Html.ValidationMessageFor(model => model.cErrorMask, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-    <div class="card">
-        <div class="card-header bg-primary">
-            <h4 class="card-title">other stuff </h4>
-        </div>
-        <div class="alert-info">
-        </div>
-        <div class="card-body">
-            <div class="form-group">
-                @Html.LabelFor(model => model.logCategoryMask, htmlAttributes: new { @class = "control-label col-md-4" })
-                <div class="col-md-8">
-                    @Html.EditorFor(model => model.logCategoryMask, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.logCategoryMask, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.evLogMessageAction, htmlAttributes: new { @class = "control-label col-md-4" })
-                <div class="col-md-8">
-                    @Html.EditorFor(model => model.evLogMessageAction, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.evLogMessageAction, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.cPJVEventMask, htmlAttributes: new { @class = "control-label col-md-4" })
-                <div class="col-md-8">
-                    @Html.ListBoxFor(model => model._cPJVEventMask, EqUiWebUi.Areas.VASC.Models.VASCenums.Enable_bit_MASK_SelectList, new { @class = "form-control bsMultiselect", multiple = "multiple" })
-                    @Html.ValidationMessageFor(model => model.cPJVEventMask, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <hr />
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-8">
-            <input type="submit" value="Save" class="btn btn-default" />
-        </div>
-    </div>
+<p>
+    @Html.ActionLink("DELETE record", "Delete", new { id = Model.id })
+</p>
+<div>
+    @Html.ActionLink("Back to List", "Index")
 </div>
 
-        }
+<!--Edit script-->
+@section scripts{
+    @*http://davidstutz.de/bootstrap-multiselect/* NEED TO BE REPLACED By https://silviomoreto.github.io/bootstrap-select/*@
 
-        <p>
-            @Html.ActionLink("DELETE record", "Delete", new { id = Model.id })
-        </p>
-        <div>
-            @Html.ActionLink("Back to List", "Index")
-        </div>
 
-        <!--Edit script-->
-        @section scripts{
-            @*http://davidstutz.de/bootstrap-multiselect/*@
+
             <script src="~/Scripts/bootstrap-multiselect.js"></script>
             <link href="~/Content/bootstrap-multiselect.css" rel="stylesheet" />
             <script>

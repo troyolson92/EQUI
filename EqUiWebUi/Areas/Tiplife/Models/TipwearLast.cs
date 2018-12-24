@@ -87,5 +87,6 @@ namespace EqUiWebUi.Areas.Tiplife.Models
         public Nullable<double> Last_FixedWearBeforeChange { get; set; }
         public Nullable<double> Last_MovWearBeforeChange { get; set; }
         public Nullable<int> c_controller_id { get; set; }
+        public Nullable<short> PrevDress_Num { get; set; }
     }
 }

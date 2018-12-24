@@ -15,7 +15,7 @@ namespace EqUiWebUi.Areas.Tiplife.Models
     public partial class TipMonitor
     {
         public string Robot { get; set; }
-        public Nullable<short> Tool_Nr { get; set; }
+        public short Tool_Nr { get; set; }
         public System.DateTime Date_time { get; set; }
         public Nullable<short> nDress { get; set; }
         public Nullable<short> nWelds { get; set; }

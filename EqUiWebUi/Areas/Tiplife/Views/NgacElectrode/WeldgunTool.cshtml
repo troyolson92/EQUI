@@ -4,6 +4,11 @@
 }
 
 <h2>WeldgunTool</h2>
+Location: @Html.DropDownList("Locations", null, htmlAttributes: new { @class = "selectpicker", @data_live_search = "true" })
+Tool_nr: @Html.DropDownList("tool_nr", null, htmlAttributes: new { @class = "selectpicker"})
+<button class="btn btn-primary btn-sm" id="btn_getData">Load data</button>
+<hr />
+
 <div class="card">
     <div class="card-header bg-light">
         <h6 class="card-title">
@@ -39,25 +44,27 @@
 <!--WeldgunToolScripts-->
 <script>
     $('#Datepicker').daterangepicker({
-    "showWeekNumbers": true,
-    "showISOWeekNumbers": true,
-    "ranges": {
-        'Last 48 Hours': [moment().subtract(2, 'days'), moment()],
-        'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-        'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-        'Last 100 Days': [moment().subtract(100, 'days'), moment()],
-        'Last Year': [moment().subtract(365, 'days'), moment()],
-        'Last 5Year': [moment().subtract(365 * 5, 'days'), moment()]
-    },
-    "startDate": moment(),
-    "endDate": moment().subtract(29, 'days'),
+        "showWeekNumbers": true,
+        "showISOWeekNumbers": true,
+        "ranges": {
+            'Last 48 Hours': [moment().subtract(2, 'days'), moment()],
+            'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+            'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+            'Last 100 Days': [moment().subtract(100, 'days'), moment()],
+            'Last Year': [moment().subtract(365, 'days'), moment()],
+            'Last 5Year': [moment().subtract(365 * 5, 'days'), moment()]
+        },
+        "startDate": moment(),
+        "endDate": moment().subtract(29, 'days'),
 
-}, function (end, start, label) {
-    console.log("New date WeldgunTool range selected: " + start.format('YYYY-MM-DD') + " to " + end.format('YYYY-MM-DD') + " (predefined range: " + label + ")");
-    //set all dateranges for all charts
-    $("input[name=ControlchartendDate]").val(end);
-    $("input[name=ControlchartstartDate]").val(start);
-    //trigger refresh on all charts
-    $(".ControlChartRefresh").trigger("click");
-});
+    }, function (end, start, label) {
+        console.log("New date WeldgunTool range selected: " + start.format('YYYY-MM-DD') + " to " + end.format('YYYY-MM-DD') + " (predefined range: " + label + ")");
+        //set all dateranges for all charts
+        $("input[name=ControlchartendDate]").val(end);
+        $("input[name=ControlchartstartDate]").val(start);
+        //trigger refresh on all charts
+        $(".ControlChartRefresh").trigger("click");
+    });
+
+    $('.selectpicker').selectpicker();
 </script>
