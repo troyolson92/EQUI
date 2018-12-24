@@ -22,7 +22,7 @@
 
 <div class="card-body">
     @*Render error trend chart*@
-    @Html.Partial("../Chart/_getErrorTrend", Model)
+    @Html.Action("_getErrorTrend","Chart", new { area = "", Model })
 
     <hr />
 

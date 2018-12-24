@@ -18,29 +18,38 @@ namespace EqUiWebUi.Controllers
             return View();
         }
 
-        //standalone view to get error trend 
+        /// <summary>
+        /// standalone view to get error trend  Gets used in VSTO!
+        /// </summary>
+        /// <param name="logInfo"></param>
+        /// <returns></returns>
         [HttpGet]
-        public ActionResult GetErrorTrend(string location, string errornum, int? refid, string logtype, string logtext)
+        public ActionResult GetErrorTrend(LogInfo logInfo)
         {
-            LogInfo logInfo = new LogInfo();
-            logInfo.location = location;
-            logInfo.errornum = errornum;
-            logInfo.refid = refid.GetValueOrDefault(0);
-            logInfo.logtype = logtype;
-            logInfo.logtext = logtext;
             return View(logInfo);
         }
 
-        //partial view to get error trend.
+        /// <summary>
+        /// partial view to get error trend. Get called by "gadata\_moreinfo" modal
+        /// </summary>
+        /// <param name="logInfo"></param>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult _getErrorTrend(LogInfo logInfo)
         {
-            return PartialView();
+            return PartialView(logInfo);
         }
 
-        //get data for the chart => returns j son result
+        /// <summary>
+        /// get data for the ErrorTrendchart => returns j son result
+        /// </summary>
+        /// <param name="logInfo"></param>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        /// <param name="grouptType"></param>
+        /// <returns></returns>
         [HttpGet]
-        public JsonResult _getData(string location ,string  errornum ,string logtekst ,string logtype, int refid, DateTime startDate, DateTime endDate, grouptType grouptType = grouptType.Hour)
+        public JsonResult _getData(LogInfo logInfo, DateTime startDate, DateTime endDate, grouptType grouptType = grouptType.Hour)
         {
             ConnectionManager connectionManager = new ConnectionManager();
 
@@ -55,8 +64,7 @@ namespace EqUiWebUi.Controllers
             }
 
             //get the data
-            string qry = string.Format(@"EXEC [EqUi].[GetErrorTrentData] @Location = '{0}' ,@ERRORNUM = '{1}' ,@Logtext = '{2}' ,@logType = '{3}' ,@refID={4}"
-            , location, errornum, logtekst, logtype, refid);
+            string qry = $"EXEC [EqUi].[GetErrorTrentData] @Location = '{logInfo.location}' ,@ERRORNUM = '{logInfo.errornum}' ,@Logtext = '{logInfo.logtext}' ,@logType = '{logInfo.logtype}' ,@refID={logInfo.refid}";
             DataTable dt = connectionManager.RunQuery(qry);
 
             //if group mode auto (0) find out best grouping mode based on set timespan.
@@ -108,13 +116,13 @@ namespace EqUiWebUi.Controllers
             return Json(data, JsonRequestBehavior.AllowGet);            
         }
 
-        //helps to group a datatable collum list
+        //helps to group a data table column list
         public enum grouptType {auto, Hour, Day, Week, Month };
         //generate 'timestamps' that have no data. to help complete missing graph data
         //data from inDt is also filter using the startDate and endDate!
         public object completeDataAndGroupByHour(DataTable inDt, string groupcol, DateTime startDate, DateTime endDate)
         {
-            //we need to calculate all missing data in the lowester display format we whant (hours)
+            //we need to calculate all missing data in the lowest display format we want (hours)
 
             //calculate how many days we have to traverse.
             int hours = System.Convert.ToInt32(System.Math.Ceiling((startDate - endDate).TotalHours));
@@ -173,7 +181,7 @@ namespace EqUiWebUi.Controllers
         }
         public object completeDataAndGroupByDay(DataTable inDt, string groupcol, DateTime startDate, DateTime endDate)
         {
-            //we need to calculate all missing data in the lowester display format we whant (days)
+            //we need to calculate all missing data in the lowest display format we want (days)
 
             //calculate how many days we have to traverse.
             int days = System.Convert.ToInt32(System.Math.Ceiling((startDate - endDate).TotalDays));
@@ -231,7 +239,7 @@ namespace EqUiWebUi.Controllers
         }
         public object completeDataAndGroupByWeek(DataTable inDt, string groupcol, DateTime startDate, DateTime endDate)
         {
-            //we need to calculate all missing data in the lowester display format we whant (Weeks)
+            //we need to calculate all missing data in the lowest display format we want (Weeks)
 
             //calculate how many days we have to traverse.
             int days = System.Convert.ToInt32(System.Math.Ceiling((startDate - endDate).TotalDays));
@@ -308,7 +316,7 @@ namespace EqUiWebUi.Controllers
         }
         public object completeDataAndGroupByMonth(DataTable inDt, string groupcol, DateTime startDate, DateTime endDate)
         {
-            //we need to calculate all missing data in the lowester display format we whant (Months)
+            //we need to calculate all missing data in the lowest display format we want (Months)
 
             //calculate how many days we have to traverse.
             int days = System.Convert.ToInt32(System.Math.Ceiling((startDate - endDate).TotalDays));

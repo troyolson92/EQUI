@@ -4,11 +4,12 @@
     <div class="card">
         <div class="card-header bg-light">
             <h6 class="card-title">
-                Trend for location:
-                <strong>@Model.location.Trim()</strong> logcode:
-                <strong>@Model.errornum</strong> logtext:
-                <strong>@Model.logtext.Trim()</strong>
-                <a class="fas fa-wrench text-black-50 ErrorTrentCharOptionsPopover" href="#" data-toggle="popover" data-placement="bottom"></a>
+                <a class="fas fa-sync-alt text-black-50 ErrorTrentChartRefresh" href="#"></a>
+                Trend for
+                location: <strong>@Model.location.Trim()</strong>
+                logcode: <strong>@Model.errornum</strong>
+                logtext: <strong>@Model.logtext.Trim()</strong>
+                <a class="fas fa-wrench text-black-50 ErrorTrentChartOptionsPopoverChart" href="#" data-toggle="popover" data-placement="bottom"></a>
                 <a class="far fa-calendar-alt text-black-50 ErrorTrentChartDatepicker" href="#"></a>
                 <span class="clickable float-right text-black-50"><i class="fas fa-chevron-circle-up fa-1"></i></span>
             </h6>
@@ -20,7 +21,7 @@
     </div>
 
     @*popover content*@
-    <div class="d-none ErrorTrentCharOptionsPopoverContent">
+    <div class="d-none ErrorTrentChartOptionsPopoverChartContent">
         <div class="panel panel-body">
             <div class="row">
                 <div class=" col-3">
@@ -40,6 +41,11 @@
         </div>
     </div>
 
+    @*hidden field*@
+    <input type="hidden" name="ErrorTrentChartEndDate" value="">
+    <input type="hidden" name="ErrorTrentCharttStartDate" value="">
+    <input type="hidden" name="ErrorTrentChartGroupmode" value="">
+
 </div>
 
 <!--TendChartScripts-->
@@ -49,10 +55,10 @@
 //Self-Executing Anonymous Functions because this partial might be rendered multiple times on same page.
     (function () {
         //global vars
-        var groupmode = 0;
-        var endDate = moment().subtract(29, 'days');
-        var startDate = moment();
         var ErrorTrendChart;
+        $('#ChartID@(Model.refid)').find("input[name=ErrorTrentChartEndDate]").val(moment().subtract(29, 'days'));
+        $('#ChartID@(Model.refid)').find("input[name=ErrorTrentCharttStartDate]").val(moment());
+        $('#ChartID@(Model.refid)').find("input[name=ErrorTrentChartGroupmode]").val(0);
 
        //setting up datetimePicker
         $('#ChartID@(Model.refid)').find('.ErrorTrentChartDatepicker').daterangepicker({
@@ -66,49 +72,51 @@
                 'Last Year': [moment().subtract(365, 'days'), moment()],
                 'Last 5Year': [moment().subtract(365 * 5, 'days'), moment()]
             },
-            "startDate": startDate,
-            "endDate": endDate,
+            "startDate": moment($('#ChartID@(Model.refid)').find("input[name=ErrorTrentCharttStartDate]").val()),
+            "endDate": moment($('#ChartID@(Model.refid)').find("input[name=ErrorTrentChartEndDate]").val())
 
         }, function (end, start, label) {
             console.log("New date range selected: " + start.format('YYYY-MM-DD') + " to " + end.format('YYYY-MM-DD') + " (predefined range: " + label + ")");
-            startDate = start;
-            endDate = end;
-            refreshChart();
+            $('#ChartID@(Model.refid)').find("input[name=ErrorTrentChartEndDate]").val(end);
+            $('#ChartID@(Model.refid)').find("input[name=ErrorTrentCharttStartDate]").val(start);
+            getChartData();
         });
 
         //enable popover for settings.
-        $('#ChartID@(Model.refid)').find(".ErrorTrentCharOptionsPopover").popover({
+        $('#ChartID@(Model.refid)').find(".ErrorTrentChartOptionsPopoverChart").popover({
             html: true,
             content: function () {
-                return $('#ChartID@(Model.refid)').find('.ErrorTrentCharOptionsPopoverContent').html();
+                return $('#ChartID@(Model.refid)').find('.ErrorTrentChartOptionsPopoverChartContent').html();
             }
         });
 
         //get chart data
-        function getChartData(_location, _errornum, _logtekst, _logtype, _refId, _startDate, _endDate, _groupType) {
+        function getChartData() {
+            $('#ChartID@(Model.refid)').find('.gaphContainer').html("<div class='card-body'><i class='fa fa-spinner fa-pulse fa-2x fa-fw'></i><span class='sr-only'></span>Loading....</div>");
             //make ajax request
             $.ajax({
                 type: 'GET',
-                url: "/chart/_getData" +
-                    "?location=" + _location
-                    + "&errornum=" + _errornum
-                    + "&logtekst=" + _logtekst
-                    + "&logtype=" + _logtype
-                    + "&refId=" + _refId
-                    + "&startDate=" + _startDate
-                    + "&endDate=" + _endDate
-                    + "&grouptType=" + _groupType,
-                success: function (returnPayload) {
-                    console && console.log("request tend chart data succeeded");
-                    buildchart(returnPayload, "TrendchartName");
+                url: "/chart/_getData",
+                data: {
+                    "location" : "@Model.location",
+                    "errornum" : "@Model.errornum",
+                    "logtext" : "@Model.logtext.Replace("\n", " ").Replace("\r", " ").Replace("\t", " ")",
+                    "logtype" : "@Model.logtype",
+                    "refId": @Model.refid,
+                    "startDate": moment($('#ChartID@(Model.refid)').find("input[name=ErrorTrentCharttStartDate]").val()).toISOString(),
+                    "endDate": moment($('#ChartID@(Model.refid)').find("input[name=ErrorTrentChartEndDate]").val()).toISOString(),
+                    "grouptType" : $('#ChartID@(Model.refid)').find("input[name=ErrorTrentChartGroupmode]").val()
                 },
-                error: function (xhr, ajaxOptions, thrownError) {
+                success: function (result) {
+                    console && console.log("request tend chart data succeeded");
+                    buildchart(result, "TrendchartName");
+                },
+                error: function (result) {
                     console && console.log("request trend chart data failed!!");
-                     $('#ChartID@(Model.refid)').find('.gaphContainer').html('<div>Request failed!!</div>');
+                    $('#ChartID@(Model.refid)').find('.gaphContainer').html($("#Error", result.responseText).html());
                 },
                 dataType: "json",
                 contentType: "application/json",
-                processData: false,
                 async: true
             });
         };
@@ -179,7 +187,7 @@
             };
             //destroy chart if exists
             if (ErrorTrendChart) {
-                ErrorTrendChart.destroy();
+               ErrorTrendChart.destroy();
             }
             //clear the canvas just to be sure
             $('#ChartID@(Model.refid)').find(".graphCanvas").remove();
@@ -192,51 +200,51 @@
             ErrorTrendChart = new Chart(ctx, config);
         }
 
-        //refresh the chart
-        function refreshChart() {
-            $('#ChartID@(Model.refid)').find('.gaphContainer').html("<div class='card-body'><i class='fa fa-spinner fa-pulse fa-2x fa-fw'></i><span class='sr-only'></span>Loading....</div>");
-            getChartData("@Model.location", "@Model.errornum", "@Model.logtext.Replace("\n"," ").Replace("\r", " ").Replace("\t", " ")", "@Model.logtype",@Model.refid, moment(startDate).toISOString(), moment(endDate).toISOString(), groupmode);
-        };
+        //listen to refresh click event
+        $('#ChartID@(Model.refid)').find('.ErrorTrentChartRefresh').click(function () {
+            getChartData();
+        });
+
 
         //setting up group mode events
         $(document).on("click", "#btnGroupingAuto", function () {
             $("#btnGrouping").find(".active").removeClass("active");
             $("#btnGroupingAuto").addClass("active");
             groupmode = 0;
-            refreshChart();
+            getChartData();
         });
 
         $(document).on("click", "#btnGroupingHour", function () {
             $("#btnGrouping").find(".active").removeClass("active");
             $("#btnGroupingHour").addClass("active");
             groupmode = 1;
-            refreshChart();
+            getChartData();
         });
 
         $(document).on("click", "#btnGroupingDay", function () {
             $("#btnGrouping").find(".active").removeClass("active");
             $("#btnGroupingDay").addClass("active");
             groupmode = 2;
-            refreshChart();
+            getChartData();
         });
 
         $(document).on("click", "#btnGroupingWeek", function () {
             $("#btnGrouping").find(".active").removeClass("active");
             $("#btnGroupingWeek").addClass("active");
             groupmode = 3;
-            refreshChart();
+            getChartData();
         });
 
         $(document).on("click", "#btnGroupingMonth", function () {
             $("#btnGrouping").find(".active").removeClass("active");
             $("#btnGroupingMonth").addClass("active");
             groupmode = 4;
-            refreshChart();
+            getChartData();
         });
 
         //init on doc loaded done
         $(document).ready(function () {
-            refreshChart();
+            getChartData();
         });
     })();
 </script>
