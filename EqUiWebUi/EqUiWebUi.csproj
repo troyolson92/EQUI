@@ -982,7 +982,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\DummyFile.txt" />
-    <Content Include="Areas\Alert\c_triggerBackup.txt" />
     <Content Include="Areas\Alert\Models\AlertModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>AlertModel.edmx</DependentUpon>
