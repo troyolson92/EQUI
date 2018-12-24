@@ -21,19 +21,26 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             return View();
         }
 
-        //testControlchart
+        /// <summary>
+        /// Test view to check _GetControlChart
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult GetControlChart()
         {
             return View();
         }
 
-        //partial viaw to get control chart.
-        [HttpGet]
+        /// <summary>
+        /// Partial view that renders a control chart
+        /// </summary>
+        /// <param name="chartSettings"></param>
+        /// <returns></returns>
         public ActionResult _GetControlChart(ChartSettings chartSettings)
         {
             //get opt data labels 
             c_triggers trigger = db.c_triggers.Find(chartSettings.c_trigger_id);
+            chartSettings.chartname = trigger.alertType;
             if (trigger.OptValueLabels != null)
             {
                 chartSettings.optDataLabels = trigger.OptValueLabels.Split(';').ToList();
@@ -42,10 +49,15 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             return PartialView(chartSettings);
         }
 
-        //helper to convert date
+        /// <summary>
+        /// helper to convert date to unix type date
+        /// </summary>
         private static readonly DateTime UnixEpoch = new DateTime(1970, 1, 1);
 
-        //helper so set point size of out of control limit
+        /// <summary>
+        /// helper so set point size of out of control limit
+        /// <param name="l_DummyControlchartResult"></param>
+        /// <returns></returns>
         private Double SetPointSize(l_dummyControlchartResult l_DummyControlchartResult)
         {
             if (l_DummyControlchartResult.value > l_DummyControlchartResult.UpperLimit || l_DummyControlchartResult.value < l_DummyControlchartResult.LowerLimit)
@@ -58,6 +70,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             }
 
         }
+        
         //get data for the chart => returns json result
         /*
         DECLARE @c_trigger_id as int 
@@ -66,7 +79,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
         set @c_trigger_id = 22
         set @alarmobject = '35200R01_gun1'
         set @optDatanum = 0
-*/
+        */
         [HttpGet]
         public JsonResult _getData(ChartSettings chartSettings)
         {

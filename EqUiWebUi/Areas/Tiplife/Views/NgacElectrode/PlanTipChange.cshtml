@@ -8,15 +8,11 @@
         </div>
 
         <div class="card-body">
-            @*plan false
-                gebruiker geeft in het formulier waar en met welke voorwaardes hij elektrodes wil wisselen*@
 
             <div class="card">
-
                 <div class="card-header bg-dark">
                     <h4 class="text-white">Plan het onderhoud</h4>
                 </div>
-
                 <div class="card-body">
 
                     <div class="row">
@@ -65,17 +61,12 @@
                     <button class="btn-sm btn-primary" id="loadLocations">Zoek</button>
                 </div>
             </div>
-            @****************************************************************************************************************************@
 
-            @*DO Hier word de lijst getoond met waar er moet gewisselde worden*@
             <div class="card" id="tipsToChangeContainer" style="display:none">
 
                 <div class="card-header bg-dark">
                     <div class="row">
                         <h4 class="col-md-6 text-white">Deze robots moeten gewisseld worden.</h4>
-                        <div class="col-md-3 pull-right">
-                            <input class="form-control input-sm"  id="changeStartlistDatepicker" />    
-                        </div>
                     </div>
                 </div>
 
@@ -84,35 +75,10 @@
                 </div>
 
                 <div class="panel-footer">
-                    <button class="btn-sm btn-primary" id="loadverification">Verificatie</button>
                     <button class="btn-sm btn-success" id="printTipsToChange" style="float:right">Print &raquo;</button>
                 </div>
             </div>
-            @****************************************************************************************************************************@
 
-            @*CHECK Hier moet een soort van bevestiging komen. user moet elke keer op refresh duwen en crossmatch met lijst van hierboven
-                gebruik refernetie timestime van hierboven.*@
-            <div class="card" id="tipsChangedContainer" style="display:none">
-
-                <div class="card-header bg-dark">
-                    <div class="row">
-                        <h4 class="col-md-6 text-white">Deze wissels NIET zijn gedetecteerd.</h4>
-                        <div class="col-md-3" style="float:right">
-                            <input class="form-control input-sm" id="changeDonelistDatepicker" />
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card-body" id="tipsChangedcontainer" style="position:relative">
-                    <div id="tipsChanged" style="display:none">result wil be here</div>
-                </div>
-
-                <div class="panel-footer">
-                    <button class="btn-sm btn-primary" id="RefreshVerification">Refresh</button>
-                </div>
-            </div>
-            @****************************************************************************************************************************@
-        </div>
 
     </div>
 
@@ -120,113 +86,38 @@
 
 <script type="text/javascript">
 //loading of first container and table "tips to change"
-    var urlTipsToChange = '@Url.Action("_TipsToChange")';
     $('#loadLocations').click(function () {
         //disable button
         $('#loadLocations').attr("disabled", true);
         //clear table if its there
         $("#tipsToChange").empty();
-        //setting up datetimePicker
-        var startDate = moment();
-        $('#changeStartlistDatepicker').daterangepicker({
-            "showWeekNumbers": true,
-            "showISOWeekNumbers": true,
-            "startDate": startDate,
-            "timePicker" : true,
-            "timePicker24Hour": true,
-            "singleDatePicker": true,
-            locale: {
-                format: 'DD/MM/YYYY HH:mm'
-            }
-
-        }, function (end, start, label) {
-            startDate = start;
-        });
 
         //first fade in the container (will only fade in on first run)
         $("#tipsToChangeContainer").fadeIn();
         //load partial
-            var locationfilter = $('#location').val();
-            var minwear = $('#minwear').val();
-            var minparts = $('#minparts').val();
-            var maxdress = $('#maxdress').val();
-            $("#tipsToChange").load(urlTipsToChange,
-                {
-                    locationFilter: locationfilter,
-                    minWear: minwear,
-                    minParts: minparts,
-                    maxDress: maxdress
-                },
-                //this runs when load done
-                function () {
-                    //fade in the result table
-                    $('#tipsToChange').fadeIn(1000,function () {
-                    });
-                    //enable button
-                    $('#loadLocations').removeAttr("disabled");
-                }
-            );
-    })
-
-//loading of second container and table "change check"
-    var urlTipsChanged = '@Url.Action("_TipsChanged")';
-    $('#loadverification, #RefreshVerification').click(function () {
-        //disable buttons
-        $('#loadverification').attr("disabled", true);
-        //clear table if its there
-        $("#tipsChanged").empty();
-        //set timestamp
-        //setting up datetimePicker
-        var EndDate = moment();
-        $('#changeDonelistDatepicker').daterangepicker({
-            "showWeekNumbers": true,
-            "showISOWeekNumbers": true,
-            "startDate": EndDate,
-            "timePicker": true,
-            "timePicker24Hour": true,
-            "singleDatePicker": true,
-            locale: {
-                format: 'DD/MM/YYYY HH:mm'
+        $("#tipsToChange").load('@Url.Action("_TipsToChange")',
+            {
+                locationFilter: $('#location').val(),
+                minWear: $('#minwear').val(),
+                minParts: $('#minparts').val(),
+                maxDress: $('#maxdress').val()
+            },
+            //this runs when load done
+            function () {
+                //fade in the result table
+                $('#tipsToChange').fadeIn(1000,function () {
+                });
+                //enable button
+                $('#loadLocations').removeAttr("disabled");
             }
-
-        }, function (end, start, label) {
-            EndDate = start;
-        });
-        //first fade in the container (will only fade in on first run)
-        $("#tipsChangedContainer").fadeIn();
-        //load partial
-            var locationfilter = $('#location').val();
-            var minwear = $('#minwear').val();
-            var minparts = $('#minparts').val();
-            var maxdress = $('#maxdress').val();
-            var reportTimestamp = $("#changelistDatepicker").val();
-            $("#tipsChanged").load(urlTipsChanged,
-                {
-                    locationFilter: locationfilter,
-                    minWear: minwear,
-                    minParts: minparts,
-                    maxDress: maxdress
-                },
-                //this runs when load done
-                function () {
-                    //fade in the result table
-                    $('#tipsChanged').fadeIn(1000,function () {
-                    });
-                    //enable button
-                    $('#loadverification').removeAttr("disabled");
-                    console.log("hit1");
-                }
-            );
+        );
     })
-</script>
 
-
-@*print.js*@
-<script type="text/javascript">
-        $('#printTipsToChange').click(function () {
-            console.log("print started");
-            $('#tipsToChangeContainer').printThis({
-                header: "<h1>Tipchange plan</h1>"
-            });
+    ///enable printing
+    $('#printTipsToChange').click(function () {
+        console.log("print started");
+        $('#tipsToChangeContainer').printThis({
+            header: "<h1>Tipchange plan</h1>"
         });
+    });
 </script>

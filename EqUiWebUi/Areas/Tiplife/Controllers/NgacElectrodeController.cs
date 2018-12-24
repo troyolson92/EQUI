@@ -13,18 +13,26 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         // GET: Tiplife/NgacElectrode
+        [HttpGet]
         public ActionResult Index()
         {
             return View();
         }
 
-        //------------------------------------huidige tip status voor al de robots-------------------------------------------------
+        /// <summary>
+        /// Page show current status for all electrode gets refresh by singalR
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult CurrentTipstatus()
         {
             return View();
         }
 
+        /// <summary>
+        /// Partial view that gets loaded in CurrentTipstatus (grid)
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult _TipStatus()
         {
@@ -55,8 +63,13 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
             //
             return PartialView(data);
         }
-        //------------------------------------Tiplife info partial.--------------------------------------------------------
-        [HttpGet]
+
+        /// <summary>
+        /// Partial view that gets loaded in CurrentTipstatus when users clicks row. Show all kind of extra info about electrode
+        /// </summary>
+        /// <param name="location"></param>
+        /// <param name="tool_nr"></param>
+        /// <returns></returns>
         public ActionResult _Tipinfo(string location, int tool_nr)
         {
             ViewBag.location = location;
@@ -64,8 +77,148 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
             return PartialView();
         }
 
+        /// <summary>
+        /// Page show all tip dresses
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
-        public ActionResult WeldgunTool(string location ="", int tool_nr = 0)
+        public ActionResult TipDressData()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// Partial view that is loaded in TipDressData contains grid
+        /// </summary>
+        /// <param name="daysback"></param>
+        /// <param name="location"></param>
+        /// <param name="tool_nr"></param>
+        /// <returns></returns>
+        public ActionResult _TipDressDataGrid(int daysback = 360, string location = "", int tool_nr = 1)
+        {
+            var startdate = DateTime.Now.Date.AddDays(daysback * -1);
+            GADATAEntitiesTiplife gADATAEntities = new GADATAEntitiesTiplife();
+            string LocationRoot = CurrentUser.Getuser.LocationRoot;
+            IQueryable<TipDressLogFile> data = from t in gADATAEntities.TipDressLogFile
+                                               where t.Date_Time > startdate
+                                               && (t.LocationTree ?? "").Contains(LocationRoot)
+                                               && (t.controller_name.Contains(location) && t.Tool_Nr == tool_nr)
+                                               select t;
+            return PartialView(data);
+        }
+
+        /// <summary>
+        /// Page shows all tip changes
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult TipwearBeforeChange()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// Partial view that is loaded in TipwearBeforeChange contains grid
+        /// </summary>
+        /// <param name="daysback"></param>
+        /// <param name="location"></param>
+        /// <param name="tool_nr"></param>
+        /// <returns></returns>
+        public ActionResult _TipwearBeforeChangeGrid(int daysback = 360, string location = "", int tool_nr = 1)
+        {
+            var startdate = DateTime.Now.Date.AddDays(daysback * -1);
+            GADATAEntitiesTiplife gADATAEntities = new GADATAEntitiesTiplife();
+            string LocationRoot = CurrentUser.Getuser.LocationRoot;
+            IQueryable<TipwearBeforeChange> data = from t in gADATAEntities.TipwearBeforeChange
+                                                   where t.TipchangeTimestamp > startdate
+                                                   && (t.LocationTree ?? "").Contains(LocationRoot)
+                                                   && (t.controller_name.Contains(location) && t.Tool_Nr == tool_nr)
+                                                   select t;
+            return PartialView(data);
+        }
+
+        /// <summary>
+        /// Page show TipLifeExpectations for each electrode
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult TipLifeExpectations()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// Partial view that is loaded in TipLifeExpectations contains grid 
+        /// </summary>
+        /// <param name="location"></param>
+        /// <param name="tool_nr"></param>
+        /// <returns></returns>
+        public ActionResult _TipLifeExpectationsGrid(string location = "", int tool_nr = 1)
+        {
+            GADATAEntitiesTiplife gADATAEntities = new GADATAEntitiesTiplife();
+            string LocationRoot = CurrentUser.Getuser.LocationRoot;
+            IQueryable<TipLifeExpectations> data = from t in gADATAEntities.TipLifeExpectations
+                                                   where (t.LocationTree ?? "").Contains(LocationRoot)
+                                                   && (t.controller_name.Contains(location) && t.Tool_Nr == tool_nr)
+                                                   select t;
+            return PartialView(data);
+        }
+
+        /// <summary>
+        /// Main page to plan electrode changes. User can set cars to build / Max electrode life and gets returned list of electrodes that needs to be changes.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult PlanTipChange()
+        {
+            user_management.Controllers.AreaFiltersController areaFiltersController = new user_management.Controllers.AreaFiltersController();
+            string LocationRoot = CurrentUser.Getuser.LocationRoot;
+            ViewBag.selectlist = areaFiltersController.getAreaSelectList(LocationRoot);
+            return View();
+        }
+
+        /// <summary>
+        /// Partial view that show witch electrode need to be changed (grid)
+        /// </summary>
+        /// <param name="locationFilter"></param>
+        /// <param name="minWear"></param>
+        /// <param name="minParts"></param>
+        /// <param name="maxDress"></param>
+        /// <returns></returns>
+        public ActionResult _TipsToChange(string locationFilter, int minWear = 0, int minParts = 0, int maxDress = 1000)
+        {
+            GADATAEntitiesTiplife gADATAEntities = new GADATAEntitiesTiplife();
+            string LocationRoot = CurrentUser.Getuser.LocationRoot;
+            IEnumerable<TipMonitor> data = from tipMonitor in DataBuffer.Tipstatus
+                                          where
+                                          (tipMonitor.pWear > minWear
+                                           || tipMonitor.nRcars.GetValueOrDefault(1000) < minParts //if no Rcars value available ignore! 
+                                           || tipMonitor.nDress > maxDress
+                                           || (tipMonitor.Status != "" && tipMonitor.Status != "NWIC")  //do not push for no wear in clac 
+                                          )
+                                          && tipMonitor.LocationTree.Contains(locationFilter) //apply dropdown filter
+                                          && tipMonitor.LocationTree.Contains(LocationRoot) //apply user filter
+                                          orderby tipMonitor.nRcars ascending
+                                          select tipMonitor;
+            log.Info($"Plantipchange for: {locationFilter} Filters: minwear: {minWear} minparts: {minParts} maxDress: {maxDress}  |resultCount: {data.Count()}");
+            //debug added to store result in log and see if they follow the plan.
+            List<TipMonitor> results = data.ToList();
+            foreach (TipMonitor result in results )
+            {
+                log.Info($"PlantipchangeResult for: {result.Robot} wear: {result.pWear} parts: {result.nRcars} dresses: {result.nDress} status: {result.Status}");
+            }
+
+            return PartialView(data);
+        }
+
+        /// <summary>
+        /// Main interface page for welgunTool (allows user to select a location and tool number)
+        /// </summary>
+        /// <param name="location"></param>
+        /// <param name="tool_nr"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult WeldgunTool(string location = "", int tool_nr = 0)
         {
             //get location valid for user profile
             Areas.Welding.Models.GADATAEntitiesWelding db = new Areas.Welding.Models.GADATAEntitiesWelding();
@@ -105,117 +258,32 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
             return View();
         }
 
-        //------------------------------------Tabel met elektrode wissels.-------------------------------------------------
-        [HttpGet]
-        public ActionResult TipwearBeforeChange()
+        /// <summary>
+        /// Partial view that gets loading into WeldgunTool (all chars are rendered in this page)
+        /// </summary>
+        /// <param name="location"></param>
+        /// <param name="tool_nr"></param>
+        /// <returns></returns>
+        public ActionResult _WeldgunTool(string location, int tool_nr)
         {
-            return View();
-        }
-        [HttpGet]
-        public ActionResult _TipwearBeforeChangeGrid(int daysback = 360, string location = "", int tool_nr = 1)
-        {
-            var startdate = DateTime.Now.Date.AddDays(daysback * -1);
-            GADATAEntitiesTiplife gADATAEntities = new GADATAEntitiesTiplife();
-            string LocationRoot = CurrentUser.Getuser.LocationRoot;
-            IQueryable<TipwearBeforeChange> data = from t in gADATAEntities.TipwearBeforeChange
-                                                   where t.TipchangeTimestamp > startdate
-                                                   && (t.LocationTree ?? "").Contains(LocationRoot)
-                                                   && (t.controller_name.Contains(location) && t.Tool_Nr == tool_nr)
-                                                   select t;
-            return PartialView(data);
+            ViewBag.location = location;
+            ViewBag.tool_nr = tool_nr;
+            //IF NGAC location add 'real wear VS measured wear scatter chart'
+
+            //Add midair scatter chart always
+
+            //get a list of all control charts that need to be rendered to this location / tool_nr combination
+            //Make the match on start with location and EndsWith tool_nr. This is a leap of fate and all has to do with how the users sets up the alerts.
+            //examples of alarm objects. 81030R26_gun1 /361010R01_Tool1
+            //this is a mess and should be fixed in Alert system. (tricky)
+            Areas.Alert.Models.GADATA_AlertModel db = new Alert.Models.GADATA_AlertModel();
+            ViewBag.controlLimits =  db.l_controlLimits.Where(l => l.alarmobject.Trim().ToUpper().StartsWith(location.Trim().ToUpper())
+                                                                && l.alarmobject.Trim().EndsWith(tool_nr.ToString())
+                                                                ).ToList();
+
+            return PartialView();
         }
 
-        //------------------------------------tabel met ruwe tipdress data.-------------------------------------------------
-        [HttpGet]
-        public ActionResult TipDressData(int daysback = 360)
-        {
-            return View();
-        }
-        public ActionResult _TipDressDataGrid(int daysback = 360, string location = "", int tool_nr = 1)
-        {
-            var startdate = DateTime.Now.Date.AddDays(daysback * -1);
-            GADATAEntitiesTiplife gADATAEntities = new GADATAEntitiesTiplife();
-            string LocationRoot = CurrentUser.Getuser.LocationRoot;
-            IQueryable<TipDressLogFile> data = from t in gADATAEntities.TipDressLogFile
-                                               where t.Date_Time > startdate
-                                               && (t.LocationTree ?? "").Contains(LocationRoot)
-                                               && (t.controller_name.Contains(location) && t.Tool_Nr == tool_nr) 
-                                               select t;
-            return PartialView(data);
-        }
-
-        //------------------------------------tabel met TipLifeExpectations-------------------------------------------------
-        [HttpGet]
-        public ActionResult TipLifeExpectations()
-        {
-            return View();
-        }
-        [HttpGet]
-        public ActionResult _TipLifeExpectationsGrid(string location = "", int tool_nr = 1)
-        {
-            GADATAEntitiesTiplife gADATAEntities = new GADATAEntitiesTiplife();
-            string LocationRoot = CurrentUser.Getuser.LocationRoot;
-            IQueryable<TipLifeExpectations> data = from t in gADATAEntities.TipLifeExpectations
-                                                   where (t.LocationTree ?? "").Contains(LocationRoot)
-                                                   && (t.controller_name.Contains(location) && t.Tool_Nr == tool_nr)
-                                                   select t;
-            return PartialView(data);
-        }
-
-        //----------------------------------onderhouds plannings tools------------------------------------------------------
-        [HttpGet]
-        public ActionResult PlanTipChange()
-        {
-            user_management.Controllers.AreaFiltersController areaFiltersController = new user_management.Controllers.AreaFiltersController();
-            string LocationRoot = CurrentUser.Getuser.LocationRoot;
-            ViewBag.selectlist = areaFiltersController.getAreaSelectList(LocationRoot);
-            return View();
-        }
-
-        //get filterd list of wich need to be change
-        public ActionResult _TipsToChange(string locationFilter, int minWear = 0, int minParts = 0, int maxDress = 1000)
-        {
-            GADATAEntitiesTiplife gADATAEntities = new GADATAEntitiesTiplife();
-            string LocationRoot = CurrentUser.Getuser.LocationRoot;
-            IEnumerable<TipMonitor> data = from tipMonitor in DataBuffer.Tipstatus
-                                          where
-                                          (tipMonitor.pWear > minWear
-                                           || tipMonitor.nRcars.GetValueOrDefault(1000) < minParts //if no Rcars value available ignore! 
-                                           || tipMonitor.nDress > maxDress
-                                           || (tipMonitor.Status != "" && tipMonitor.Status != "NWIC")  //do not push for no wear in clac 
-                                          )
-                                          && tipMonitor.LocationTree.Contains(locationFilter) //apply dropdown filter
-                                          && tipMonitor.LocationTree.Contains(LocationRoot) //apply user filter
-                                          orderby tipMonitor.nRcars ascending
-                                          select tipMonitor;
-            log.Info($"Plantipchange for: {locationFilter} Filters: minwear: {minWear} minparts: {minParts} maxDress: {maxDress}  |resultCount: {data.Count()}");
-            //debug added to store result in log and see if they follow the plan.
-            List<TipMonitor> results = data.ToList();
-            foreach (TipMonitor result in results )
-            {
-                log.Info($"PlantipchangeResult for: {result.Robot} wear: {result.pWear} parts: {result.nRcars} dresses: {result.nDress} status: {result.Status}");
-            }
-
-            return PartialView(data);
-        }
-        //get filterd list of wich need to be change
-        public ActionResult _TipsChanged(string locationFilter, int minWear = 0, int minParts = 0, int maxDress = 1000)
-        {
-            GADATAEntitiesTiplife gADATAEntities = new GADATAEntitiesTiplife();
-            string LocationRoot = CurrentUser.Getuser.LocationRoot;
-            IEnumerable<TipMonitor> data = from tipMonitor in DataBuffer.Tipstatus
-                                           where
-                                           (tipMonitor.pWear > minWear
-                                            || tipMonitor.nRcars.GetValueOrDefault(1000) < minParts //if no Rcars value available ignore! 
-                                            || tipMonitor.nDress > maxDress
-                                            || (tipMonitor.Status != "" && tipMonitor.Status != "NWIC")  //do not push for no wear in clac 
-                                           )
-                                          && tipMonitor.LocationTree.Contains(locationFilter) //apply dropdown filter
-                                          && tipMonitor.LocationTree.Contains(LocationRoot) //apply user filter
-                                           orderby tipMonitor.nRcars ascending
-                                           select tipMonitor;
-            return PartialView(data);
-        }
 
     }
 }

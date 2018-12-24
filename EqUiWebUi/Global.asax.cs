@@ -136,11 +136,11 @@ namespace EqUiWebUi
                         action = "InternalServerError";
                         break;
                 }
-                log.Error($"HttpException  code:{httpEx.GetHttpCode()} for:" + httpContext.User.Identity.Name, ex);
+                log.Error($"HttpException  code:{httpEx.GetHttpCode()} for: {httpContext.User.Identity.Name}", ex);
             }
             else
             {
-                log.Error("Application error for:" + httpContext.User.Identity.Name, ex);
+                log.Error($"Application error for: {httpContext.User.Identity.Name}", ex);
             }
 
             httpContext.ClearError();

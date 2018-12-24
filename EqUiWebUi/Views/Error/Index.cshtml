@@ -25,6 +25,16 @@
                             @Model.Exception.InnerException.Message.ToString()
                         </small>
                     </div>
+                    if (Model.Exception.InnerException.InnerException != null)
+                    {
+                        //need to find proper way to loop all of them.
+                        <div>
+                            InnerException2:
+                            <small>
+                                @Model.Exception.InnerException.InnerException.Message.ToString()
+                            </small>
+                        </div>
+                    }
                 }
             </div>
 

@@ -1205,7 +1205,6 @@
     <Content Include="Areas\Tiplife\Models\TiplifeModel.edmx.diagram">
       <DependentUpon>TiplifeModel.edmx</DependentUpon>
     </Content>
-    <Content Include="Areas\Tiplife\Views\NgacElectrode\_TipsChanged.cshtml" />
     <Content Include="Areas\Tiplife\Views\NgacElectrode\_TipStatus.cshtml" />
     <Content Include="Areas\Tiplife\Views\NgacElectrode\_TipsToChange.cshtml" />
     <Content Include="Areas\Tiplife\Views\NgacElectrode\CurrentTipstatus.cshtml" />
@@ -2264,6 +2263,7 @@
     <Content Include="node_modules\daterangepicker\example\browserify\README.md" />
     <Content Include="node_modules\daterangepicker\package.json" />
     <Content Include="node_modules\daterangepicker\README.md" />
+    <Content Include="Areas\Tiplife\Views\NgacElectrode\_WeldgunTool.cshtml" />
     <None Include="Properties\PublishProfiles\gensvw1178-DEV-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gotsvw11292-PRODUCTION-VCTA.pubxml" />
