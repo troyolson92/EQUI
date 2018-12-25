@@ -286,6 +286,7 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
             Areas.Alert.Models.GADATA_AlertModel db = new Alert.Models.GADATA_AlertModel();
             ViewBag.controlLimits =  db.l_controlLimits.Where(l => l.alarmobject.Trim().ToUpper().StartsWith(location.Trim().ToUpper())
                                                                 && l.alarmobject.Trim().EndsWith(tool_nr.ToString())
+                                                                && l.isdead == false //only active control limits
                                                                 ).ToList();
 
             return PartialView();
