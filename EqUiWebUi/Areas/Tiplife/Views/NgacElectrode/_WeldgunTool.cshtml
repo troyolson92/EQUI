@@ -1,26 +1,37 @@
-﻿
-<div class="card">
+﻿<div class="card">
     <div class="card-header bg-light">
         <h6 class="card-title">
-            WeldgunTool for 
-            location: <strong>@ViewBag.location</strong> 
+            WeldgunTool for
+            location: <strong>@ViewBag.location</strong>
             Tool_id: <strong>@ViewBag.tool_nr</strong>
             <a class="far fa-calendar-alt text-black-50" href="#" id="Datepicker"></a>
         </h6>
     </div>
 
     <div class="card-body">
+        @*render ngac virtual chart*@
+        @if (ViewBag.NgacDummyAlarmobject != null)
+        {
+            @Html.Action("_GetControlChart","ControlChart", new { Area = "Alert",
+                   chartname = "Dummyalert",
+                   alarmobject = ViewBag.NgacDummyAlarmobject,
+                   c_trigger_id = ViewBag.NgacDummyTriggerId,
+                   startdate = ViewBag.daysback,
+                   enddate = System.DateTime.Now
+               })
+            <hr />
+        }
 
-        @*render all control charts*@
+        @*render all real control charts (have real control limits)*@
         @foreach (EqUiWebUi.Areas.Alert.Models.l_controlLimits limit in ViewBag.controlLimits)
         {
             @Html.Action("_GetControlChart","ControlChart", new { Area = "Alert",
-                chartname = "GunAlert",
-                alarmobject = limit.alarmobject,
-                c_trigger_id = limit.c_trigger_id,
-                startdate = System.DateTime.Now.AddDays(-30),
-                enddate = System.DateTime.Now
-            })
+               chartname = "RealAlert",
+               alarmobject = limit.alarmobject,
+               c_trigger_id = limit.c_trigger_id,
+               startdate = ViewBag.daysback,
+               enddate = System.DateTime.Now
+           })
             <hr />
         }
     </div>

@@ -268,9 +268,16 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
         {
             ViewBag.location = location;
             ViewBag.tool_nr = tool_nr;
-            //IF NGAC location add 'real wear VS measured wear scatter chart'
-
-            //Add midair scatter chart always
+            ViewBag.daysback = System.DateTime.Now.AddDays(-30);
+            //IF NGAC location add 'real wear VS measured wear scatter chart' ID:43
+            //This is a hack on the control chart system. Need to look if I can implement this in a clean way.
+            Areas.VASC.Models.GADATAEntitiesVASC gADATAEntitiesVASC = new VASC.Models.GADATAEntitiesVASC();
+            if(gADATAEntitiesVASC.c_controller.Where(c => c.controller_name == location).Count() !=0)
+            {
+                ViewBag.NgacDummyAlarmobject = $"{location.Trim()}_gun{tool_nr}";
+                ViewBag.NgacDummyTriggerId = 43;
+            }
+            //Add midair scatter chart always (all weld gun tools should have a midair)
 
             //get a list of all control charts that need to be rendered to this location / tool_nr combination
             //Make the match on start with location and EndsWith tool_nr. This is a leap of fate and all has to do with how the users sets up the alerts.
