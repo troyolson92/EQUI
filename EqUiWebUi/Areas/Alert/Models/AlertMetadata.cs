@@ -120,12 +120,31 @@ namespace EqUiWebUi.Areas.Alert.Models
     {
         public string chartname { get; set; }
         public string scaleLabel { get; set; }
+        public string ValueLabel { get; set; }
+        public string RefValueLabel { get; set; }
         public DateTime startdate { get; set; }
         public DateTime enddate { get; set; }
         public string alarmobject { get; set; }
         public int c_trigger_id { get; set; }
         public int optDatanum { get; set; } //from 0-5 0=no opt data 1-5 op data set 
         public List<string> optDataLabels { get; set; }
+    }
+
+    public partial class ControlchartResult
+    {
+        public int id { get; set; }
+        public string alarmobject { get; set; }
+        public System.DateTime timestamp { get; set; }
+        public double value { get; set; }
+        public Nullable<double> UpperLimit { get; set; }
+        public Nullable<double> LowerLimit { get; set; }
+        public Nullable<int> l_controlLimits_id { get; set; }
+        public string Comment { get; set; }
+        public Nullable<System.DateTime> CreateDate { get; set; }
+        public Nullable<double> OptValue { get; set; } //opt value gets rendered in an extra chart
+        public Nullable<double> RefValue { get; set; } //Ref value gets rendered in the same chart / same axis.
+
+        public virtual l_controlLimits l_controlLimits { get; set; }
     }
 
     public class AlertResult

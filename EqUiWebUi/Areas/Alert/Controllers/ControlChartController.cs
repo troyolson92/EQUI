@@ -86,14 +86,33 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             ConnectionManager connectionManager = new ConnectionManager();
             c_triggers c_Trigger = db.c_triggers.Where(c => c.id == chartSettings.c_trigger_id).First();
 
-            //update the scale label 
+            //update chart settings with the Y scale label 
             if (c_Trigger.controlChartYlabel != null)
             {
-                chartSettings.scaleLabel = c_Trigger.controlChartYlabel;
+                chartSettings.scaleLabel = c_Trigger.controlChartYlabel; 
             }
             else
             {
                 chartSettings.scaleLabel = "<%=value%>";
+            }
+            //update chart settings with data labels
+            if(c_Trigger.ValueLabels != null)
+            {
+                //if ValueLabels contains ; this is means there is an RefValue dataset that needs to be handled
+                if(c_Trigger.ValueLabels.Contains(';'))
+                {
+                    chartSettings.ValueLabel = c_Trigger.ValueLabels.Split(';')[0];
+                    chartSettings.RefValueLabel = c_Trigger.ValueLabels.Split(';')[1];
+                }
+                else
+                {
+                    chartSettings.ValueLabel = c_Trigger.ValueLabels;
+                    chartSettings.RefValueLabel = null; //don't plot data!
+                }
+            }
+            else
+            {
+                chartSettings.ValueLabel = "Value";
             }
 
             //get data
@@ -218,8 +237,8 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             data.Add(ValueData);
             data.Add(UCLData);
             data.Add(LCLData);
-            data.Add(OptValueData);
             data.Add(RefValueData);
+            data.Add(OptValueData);
             //
             return Json(data, JsonRequestBehavior.AllowGet);
         }

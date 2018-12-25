@@ -164,10 +164,10 @@
                 responsive: true
             };
 
-            //dataset
+            //dataset (main value)
             var data = [
                 {
-                    label: 'value',
+                    label: dataPayload[0].ValueLabel,
                     strokeColor: '#007ACC',
                     pointColor: '#007ACC',
                     pointStrokeColor: '#fff',
@@ -185,13 +185,26 @@
                 }
             ];
 
+            //add refValue dataset is present
+            if (dataPayload[0].RefValueLabel != null) {
+                var dataRef = 
+                    {
+                        label: dataPayload[0].RefValueLabel,
+                        strokeColor: '#6f42c1',
+                        data: dataPayload[4]
+                    };
+                data.push(dataRef);
+            }
+
+            //for Optdata chart
             var dataOpt = [
                 {
                     label: $("#ControlchartoptDataDropdown>option:selected").html(),
                     strokeColor: '#6f42c1',
-                    data: dataPayload[4]
+                    data: dataPayload[5]
                 }
             ];
+
             //destroy chart if exists
             if (ControlChart) {
                 ControlChart.destroy();

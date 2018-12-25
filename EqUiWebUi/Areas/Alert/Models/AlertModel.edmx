@@ -74,6 +74,7 @@
           <Property Name="isDebugmode" Type="bit" Nullable="false" />
           <Property Name="c_datasource_id" Type="int" Nullable="false" />
           <Property Name="controlChartYlabel" Type="varchar(max)" />
+          <Property Name="ValueLabels" Type="varchar(max)" />
           <Property Name="OptValueLabels" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="h_alert">
@@ -693,6 +694,7 @@
           <NavigationProperty Name="c_schedule" Relationship="AlertModel.FK_c_triggers_c_schedule" FromRole="c_triggers" ToRole="c_schedule" />
           <Property Name="continueOnJobFailure" Type="Boolean" Nullable="false" />
           <Property Name="alertGroup" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ValueLabels" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_c_triggers_c_smsSystem">
           <End Type="AlertModel.c_smsSystem" Role="c_smsSystem" Multiplicity="0..1" />
@@ -1005,6 +1007,7 @@
           <EntitySetMapping Name="c_triggers">
             <EntityTypeMapping TypeName="AlertModel.c_triggers">
               <MappingFragment StoreEntitySet="c_triggers">
+                <ScalarProperty Name="ValueLabels" ColumnName="ValueLabels" />
                 <ScalarProperty Name="alertGroup" ColumnName="alertGroup" />
                 <ScalarProperty Name="continueOnJobFailure" ColumnName="continueOnJobFailure" />
                 <ScalarProperty Name="OptValueLabels" ColumnName="OptValueLabels" />
