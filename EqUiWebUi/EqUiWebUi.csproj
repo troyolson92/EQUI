@@ -182,7 +182,6 @@
     <Folder Include="Areas\PlcSupervisie\Models\" />
     <Folder Include="Areas\STW040\Models\" />
     <Folder Include="Areas\STW040\Views\Shared\" />
-    <Folder Include="Areas\Tiplife\Views\Weldgun\" />
     <Folder Include="Areas\VASC\Views\Shared\" />
     <Folder Include="Areas\VCSC\Controllers\" />
     <Folder Include="Areas\VCSC\Models\" />
@@ -228,6 +227,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AlertModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Areas\Alert\Models\ControlChartMetadata.cs" />
     <Compile Include="Areas\Alert\Models\c_CPT600.cs">
       <DependentUpon>AlertModel.tt</DependentUpon>
     </Compile>
@@ -253,9 +253,6 @@
       <DependentUpon>AlertModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Alert\Models\l_controlLimits.cs">
-      <DependentUpon>AlertModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\Alert\Models\l_dummyControlchartResult.cs">
       <DependentUpon>AlertModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Alert\Models\L_users.cs">

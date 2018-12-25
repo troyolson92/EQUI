@@ -14,12 +14,6 @@ namespace EqUiWebUi.Areas.Alert.Models
     
     public partial class l_controlLimits
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public l_controlLimits()
-        {
-            this.l_dummyControlchartResult = new HashSet<l_dummyControlchartResult>();
-        }
-    
         public int id { get; set; }
         public int c_trigger_id { get; set; }
         public bool isdead { get; set; }
@@ -37,7 +31,5 @@ namespace EqUiWebUi.Areas.Alert.Models
         public virtual L_users L_CreateUser { get; set; }
         public virtual L_users L_ChangeUser { get; set; }
         public virtual l_variants l_variants { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<l_dummyControlchartResult> l_dummyControlchartResult { get; set; }
     }
 }

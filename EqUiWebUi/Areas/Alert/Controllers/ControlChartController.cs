@@ -56,11 +56,11 @@ namespace EqUiWebUi.Areas.Alert.Controllers
 
         /// <summary>
         /// helper so set point size of out of control limit
-        /// <param name="l_DummyControlchartResult"></param>
+        /// <param name="controlchartResult"></param>
         /// <returns></returns>
-        private Double SetPointSize(l_dummyControlchartResult l_DummyControlchartResult)
+        private Double SetPointSize(ControlchartResult controlchartResult)
         {
-            if (l_DummyControlchartResult.value > l_DummyControlchartResult.UpperLimit || l_DummyControlchartResult.value < l_DummyControlchartResult.LowerLimit)
+            if (controlchartResult.value > controlchartResult.UpperLimit || controlchartResult.value < controlchartResult.LowerLimit)
             {
                 return 1.5;
             }
@@ -86,7 +86,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             ConnectionManager connectionManager = new ConnectionManager();
             c_triggers c_Trigger = db.c_triggers.Where(c => c.id == chartSettings.c_trigger_id).First();
 
-            //update the scalelabel 
+            //update the scale label 
             if (c_Trigger.controlChartYlabel != null)
             {
                 chartSettings.scaleLabel = c_Trigger.controlChartYlabel;
@@ -97,35 +97,37 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             }
 
             //get data
-            List<l_dummyControlchartResult> result = new List<l_dummyControlchartResult>();
-            try
-            {
-                //Query to get value data
-                IQueryable<l_dummyControlchartResult> Qresult = db.l_dummyControlchartResult.SqlQuery(c_Trigger.controlChartSqlStatement,
-                                  new SqlParameter("@c_trigger_id", chartSettings.c_trigger_id),
-                                  new SqlParameter("@alarmobject", chartSettings.alarmobject),
-                                  new SqlParameter("@optDatanum", chartSettings.optDatanum)
-                 ).Where(l => l.timestamp > chartSettings.startdate && l.timestamp < chartSettings.enddate).AsQueryable();
-                 result = Qresult.ToList();
-            }
-            catch (Exception ex)
-            {
-                Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                Response.StatusDescription = ex.Message;
-                return Json(null, JsonRequestBehavior.AllowGet);
-            }
+            List<ControlchartResult> ChartData = new List<ControlchartResult>();
+            //set db timeout to 10 seconds
+            db.Database.CommandTimeout = 10;
+            //Query to get value data
+            ChartData = db.Database.SqlQuery<ControlchartResult>(c_Trigger.controlChartSqlStatement,
+                                new SqlParameter("@c_trigger_id", chartSettings.c_trigger_id),
+                                new SqlParameter("@alarmobject", chartSettings.alarmobject),
+                                new SqlParameter("@optDatanum", chartSettings.optDatanum)
+                                ).Where(l => l.timestamp > chartSettings.startdate && l.timestamp < chartSettings.enddate).ToList();
 
-            object ValueData = from e in result
-                              select new
+            //main chart value 
+            object ValueData = from e in ChartData
+                               select new
                               {
                                 x = ((e.timestamp - UnixEpoch).Ticks / TimeSpan.TicksPerMillisecond),
                                 y = Math.Round(e.value,3),
                                 r = SetPointSize(e)
                               };
 
-            //get optional datasets
-            object OptValueData = from e in result
+            //main chart REF value 
+            object RefValueData = from e in ChartData
                                select new
+                               {
+                                   x = ((e.timestamp - UnixEpoch).Ticks / TimeSpan.TicksPerMillisecond),
+                                   y = Math.Round(e.RefValue.GetValueOrDefault(), 3),
+                                   r = 0.7
+                               };
+
+            //get optional datasets (this gets rendered in an extra chart below the main one
+            object OptValueData = from e in ChartData
+                                  select new
                                {
                                    x = ((e.timestamp - UnixEpoch).Ticks / TimeSpan.TicksPerMillisecond),
                                    y = Math.Round(e.OptValue.GetValueOrDefault(), 3),
@@ -133,7 +135,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                                };
   
 
-            //get the control limits seperate. (else a point is returned for each record and the rendering looks bad.
+            //get the control limits separate. (else a point is returned for each record and the rendering looks bad.
             double controllimitPointSize = 0.6;
 
             List<l_controlLimits> limits = db.l_controlLimits.Where(l =>
@@ -141,17 +143,17 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                     && l.alarmobject == chartSettings.alarmobject
                     &&
                     (
-                    (l.CreateDate > chartSettings.startdate && l.CreateDate < chartSettings.enddate) //allows control limits CREATEd in the daterange to be in.
-                    || (l.ChangeDate > chartSettings.startdate && l.ChangeDate < chartSettings.enddate) //allows control limts CLOSED in the daterange to be in.
+                    (l.CreateDate > chartSettings.startdate && l.CreateDate < chartSettings.enddate) //allows control limits CREATEd in the date range to be in.
+                    || (l.ChangeDate > chartSettings.startdate && l.ChangeDate < chartSettings.enddate) //allows control limits CLOSED in the date range to be in.
                     || l.isdead == false//allows the active control limit to always in 
                     )
                     ).ToList();
 
-            //adjest the dead control limits to fit in the 'view' windowd.
+            //adjust the dead control limits to fit in the 'view' window.
             List<l_controlLimits> oldLimits = limits.Where(l => l.isdead == true).ToList();
             foreach (l_controlLimits oldlimit in oldLimits)
             {
-                if (oldlimit.CreateDate < chartSettings.startdate) //if created before viewwindows set startdate to start of window.
+                if (oldlimit.CreateDate < chartSettings.startdate) //if created before view windows set start date to start of window.
                 {
                     oldlimit.CreateDate = chartSettings.startdate;
                 }
@@ -163,23 +165,23 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             {
                //do nothing.
             }
-            else if (activeLimit.CreateDate > chartSettings.enddate)//if the active limit is newer than the daterange. => Drop it.
+            else if (activeLimit.CreateDate > chartSettings.enddate)//if the active limit is newer than the date range. => Drop it.
             {
                 limits.Remove(activeLimit);
             }
-            else if (activeLimit.CreateDate < chartSettings.startdate) //active limit was created before the datarange. => Set create date to start of daterange and set the changedate to the end of the daterange.
+            else if (activeLimit.CreateDate < chartSettings.startdate) //active limit was created before the data range. => Set create date to start of date range and set the change date to the end of the date range.
             {
                 activeLimit.CreateDate = chartSettings.startdate;
                 activeLimit.ChangeDate = chartSettings.enddate;
             }
-            else //active limit was created in the daterange. => set the changedate to the end of the daterange.
+            else //active limit was created in the date range. => set the change date to the end of the date range.
             {
                 activeLimit.ChangeDate = chartSettings.enddate;
             }
 
             //build the control limit data objects.
             object UCLData = (from e in limits
-                              select new //startpoints
+                              select new //start points
                               {
                                   x = ((e.CreateDate.AddSeconds(300) - UnixEpoch).Ticks / TimeSpan.TicksPerMillisecond),
                                   y = Math.Round(e.UpperLimit.GetValueOrDefault(), 3),
@@ -196,7 +198,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
                                         })).OrderBy(e => e.x);
 
             object LCLData = (from e in limits
-                              select new //startpoints
+                              select new //start points
                               {
                                   x = ((e.CreateDate.AddSeconds(300) - UnixEpoch).Ticks / TimeSpan.TicksPerMillisecond),
                                   y = Math.Round(e.LowerLimit.GetValueOrDefault(), 3),
@@ -217,6 +219,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             data.Add(UCLData);
             data.Add(LCLData);
             data.Add(OptValueData);
+            data.Add(RefValueData);
             //
             return Json(data, JsonRequestBehavior.AllowGet);
         }

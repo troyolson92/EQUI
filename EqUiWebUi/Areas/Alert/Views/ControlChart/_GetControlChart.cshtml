@@ -130,13 +130,7 @@
                 },
                 error: function (result) {
                     console.log(result);
-                    if (result.statusText !== null) {
-                        $.toaster({ title: 'JQTriggerBtn', priority: 'danger', message: result.statusText });
-                    }
-                    else {
-                        $.toaster({ title: 'JQTriggerBtn', priority: 'danger', message: 'Whatever you did failed!' });
-                    }
-                    $('#ChartID@(Model.c_trigger_id)').find('.controlchartContainer').html('<div>Request failed!!</div>');
+                    $('#ChartID@(Model.c_trigger_id)').find('.controlchartContainer').html($("#Error", result.responseText).html());
                 }
             });
         };

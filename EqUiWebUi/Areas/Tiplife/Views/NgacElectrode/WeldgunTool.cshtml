@@ -19,7 +19,6 @@ Tool_nr: @Html.DropDownList("tool_nr", null, htmlAttributes: new { @class = "sel
                 tool_nr: $('#tool_nr').find(":selected").text()
             },
             function (result) {
-                console.log(result);
                 $('#welgunToolPlaceholder').html($("#Error", result).html());
             });
     });
