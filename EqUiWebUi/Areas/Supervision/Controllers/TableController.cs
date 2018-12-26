@@ -209,7 +209,6 @@ namespace EqUiWebUi.Areas.Supervision.Controllers
         }
 
         //full view for loginfo----------------------------------------------------------------------------------------------------------------------
-        //called by vsto plugin
         [HttpGet]
         public ActionResult Loginfo(LogInfo logInfo)
         {

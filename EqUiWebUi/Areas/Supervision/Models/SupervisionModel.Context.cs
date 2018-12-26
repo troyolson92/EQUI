@@ -13,10 +13,10 @@ namespace EqUiWebUi.Areas.Supervision.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class GADATAEntities2 : DbContext
+    public partial class SupervisionEntities : DbContext
     {
-        public GADATAEntities2()
-            : base("name=GADATAEntities2")
+        public SupervisionEntities()
+            : base("name=SupervisionEntities")
         {
         }
     
@@ -25,11 +25,12 @@ namespace EqUiWebUi.Areas.Supervision.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Alerts_Supervisie> Alerts_Supervisie { get; set; }
         public virtual DbSet<C3G_Supervisie> C3G_Supervisie { get; set; }
         public virtual DbSet<C4G_Supervisie> C4G_Supervisie { get; set; }
-        public virtual DbSet<S4C_Supervisie> S4C_Supervisie { get; set; }
-        public virtual DbSet<STO_Supervisie> STO_Supervisie { get; set; }
+        public virtual DbSet<NGAC_Supervisie> NGAC_Supervisie { get; set; }
         public virtual DbSet<Timeline> Timeline { get; set; }
-        public virtual DbSet<Alerts_Supervisie> Alerts_Supervisie { get; set; }
+        public virtual DbSet<STO_Supervisie> STO_Supervisie { get; set; }
+        public virtual DbSet<S4C_Supervisie> S4C_Supervisie { get; set; }
     }
 }

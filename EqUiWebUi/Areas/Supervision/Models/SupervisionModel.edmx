@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="GADATAModel1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="SupervisionModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <!--Errors Found During Generation:
 warning 6002: The table/view 'GADATA.Alerts.Alerts_Supervisie' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Alerts_Supervisie">
@@ -45,7 +45,7 @@ warning 6002: The table/view 'GADATA.Alerts.Alerts_Supervisie' does not have a p
 warning 6002: The table/view 'GADATA.C3G.C3G_Supervisie' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="C3G_Supervisie">
           <Key>
-            
+            <PropertyRef Name="Subgroup" />
             <PropertyRef Name="Logtype" />
             <PropertyRef Name="refId" />
           </Key>
@@ -72,7 +72,7 @@ warning 6002: The table/view 'GADATA.C3G.C3G_Supervisie' does not have a primary
 warning 6002: The table/view 'GADATA.C4G.C4G_Supervisie' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="C4G_Supervisie">
           <Key>
-            
+            <PropertyRef Name="Subgroup" />
             <PropertyRef Name="Logtype" />
             <PropertyRef Name="refId" />
           </Key>
@@ -96,10 +96,36 @@ warning 6002: The table/view 'GADATA.C4G.C4G_Supervisie' does not have a primary
           <Property Name="shift" Type="varchar" MaxLength="2" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.NGAC.NGAC_Supervisie' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="NGAC_Supervisie">
+          <Key>
+            <PropertyRef Name="Logtype" />
+            <PropertyRef Name="refId" />
+          </Key>
+          <Property Name="Location" Type="varchar" MaxLength="30" />
+          <Property Name="logtext" Type="varchar(max)" />
+          <Property Name="RT" Type="int" />
+          <Property Name="DT" Type="int" />
+          <Property Name="time" Type="char" MaxLength="19" />
+          <Property Name="Classification" Type="varchar" MaxLength="50" />
+          <Property Name="Subgroup" Type="varchar" MaxLength="50" />
+          <Property Name="Severity" Type="varchar(max)" />
+          <Property Name="Logcode" Type="varchar(max)" />
+          <Property Name="Logtype" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="refId" Type="int" Nullable="false" />
+          <Property Name="timestamp" Type="datetime" />
+          <Property Name="LocationTree" Type="varchar(max)" />
+          <Property Name="ClassTree" Type="varchar(max)" />
+          <Property Name="Vyear" Type="int" />
+          <Property Name="Vweek" Type="int" />
+          <Property Name="Vday" Type="int" />
+          <Property Name="shift" Type="varchar" MaxLength="2" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'GADATA.S4C.S4C_Supervisie' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="S4C_Supervisie">
           <Key>
-            
+            <PropertyRef Name="Subgroup" />
             <PropertyRef Name="Logtype" />
             <PropertyRef Name="refId" />
           </Key>
@@ -126,13 +152,12 @@ warning 6002: The table/view 'GADATA.S4C.S4C_Supervisie' does not have a primary
 warning 6002: The table/view 'GADATA.STO.STO_Supervisie' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="STO_Supervisie">
           <Key>
-            
+            <PropertyRef Name="Subgroup" />
             <PropertyRef Name="Logtype" />
             <PropertyRef Name="refId" />
-            <PropertyRef Name="logtext" />
           </Key>
           <Property Name="Location" Type="varchar(max)" />
-          <Property Name="logtext" Type="varchar(max)" Nullable="false" />
+          <Property Name="logtext" Type="varchar(max)" />
           <Property Name="RT" Type="int" />
           <Property Name="DT" Type="int" />
           <Property Name="time" Type="char" MaxLength="19" />
@@ -154,13 +179,13 @@ warning 6002: The table/view 'GADATA.STO.STO_Supervisie' does not have a primary
 warning 6002: The table/view 'GADATA.Volvo.Timeline' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Timeline">
           <Key>
-            
-            
-            
-            
-            
-            
-            
+            <PropertyRef Name="Location" />
+            <PropertyRef Name="Robotname" />
+            <PropertyRef Name="Type" />
+            <PropertyRef Name="Errortype" />
+            <PropertyRef Name="Ploeg" />
+            <PropertyRef Name="Object" />
+            <PropertyRef Name="Subgroup" />
             <PropertyRef Name="id" />
           </Key>
           <Property Name="Location" Type="varchar" MaxLength="8" Nullable="false" />
@@ -181,7 +206,7 @@ warning 6002: The table/view 'GADATA.Volvo.Timeline' does not have a primary key
           <Property Name="Subgroup" Type="varchar" MaxLength="8" Nullable="false" />
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
-        <EntityContainer Name="GADATAModel1StoreContainer">
+        <EntityContainer Name="SupervisionModelStoreContainer">
           <EntitySet Name="Alerts_Supervisie" EntityType="Self.Alerts_Supervisie" store:Type="Views" store:Schema="Alerts">
             <DefiningQuery>SELECT 
     [Alerts_Supervisie].[Location] AS [Location], 
@@ -253,6 +278,28 @@ warning 6002: The table/view 'GADATA.Volvo.Timeline' does not have a primary key
     [C4G_Supervisie].[shift] AS [shift]
     FROM [C4G].[C4G_Supervisie] AS [C4G_Supervisie]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="NGAC_Supervisie" EntityType="Self.NGAC_Supervisie" store:Type="Views" store:Schema="NGAC">
+            <DefiningQuery>SELECT 
+    [NGAC_Supervisie].[Location] AS [Location], 
+    [NGAC_Supervisie].[logtext] AS [logtext], 
+    [NGAC_Supervisie].[RT] AS [RT], 
+    [NGAC_Supervisie].[DT] AS [DT], 
+    [NGAC_Supervisie].[time] AS [time], 
+    [NGAC_Supervisie].[Classification] AS [Classification], 
+    [NGAC_Supervisie].[Subgroup] AS [Subgroup], 
+    [NGAC_Supervisie].[Severity] AS [Severity], 
+    [NGAC_Supervisie].[Logcode] AS [Logcode], 
+    [NGAC_Supervisie].[Logtype] AS [Logtype], 
+    [NGAC_Supervisie].[refId] AS [refId], 
+    [NGAC_Supervisie].[timestamp] AS [timestamp], 
+    [NGAC_Supervisie].[LocationTree] AS [LocationTree], 
+    [NGAC_Supervisie].[ClassTree] AS [ClassTree], 
+    [NGAC_Supervisie].[Vyear] AS [Vyear], 
+    [NGAC_Supervisie].[Vweek] AS [Vweek], 
+    [NGAC_Supervisie].[Vday] AS [Vday], 
+    [NGAC_Supervisie].[shift] AS [shift]
+    FROM [NGAC].[NGAC_Supervisie] AS [NGAC_Supervisie]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="S4C_Supervisie" EntityType="Self.S4C_Supervisie" store:Type="Views" store:Schema="S4C">
             <DefiningQuery>SELECT 
     [S4C_Supervisie].[Location] AS [Location], 
@@ -322,19 +369,46 @@ warning 6002: The table/view 'GADATA.Volvo.Timeline' does not have a primary key
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="GADATAModel1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="GADATAEntities2" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="C3G_Supervisie" EntityType="GADATAModel1.C3G_Supervisie" />
-          <EntitySet Name="C4G_Supervisie" EntityType="GADATAModel1.C4G_Supervisie" />
-          <EntitySet Name="S4C_Supervisie" EntityType="GADATAModel1.S4C_Supervisie" />
-          <EntitySet Name="STO_Supervisie" EntityType="GADATAModel1.STO_Supervisie" />
-          <EntitySet Name="Timeline" EntityType="GADATAModel1.Timeline" />
-          <EntitySet Name="Alerts_Supervisie" EntityType="GADATAModel1.Alerts_Supervisie" />
-        </EntityContainer>
+      <Schema Namespace="SupervisionModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Alerts_Supervisie">
+          <Key>
+            <PropertyRef Name="Location" />
+            <PropertyRef Name="AssetID" />
+            <PropertyRef Name="Logtype" />
+            <PropertyRef Name="timestamp" />
+            <PropertyRef Name="refId" />
+            <PropertyRef Name="controller_name" />
+            <PropertyRef Name="controller_type" />
+          </Key>
+          <Property Name="Location" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AssetID" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Logtype" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="timestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Logcode" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Severity" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Logtext" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="FullLogtext" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Response" Type="Int32" />
+          <Property Name="Downtime" Type="Int32" />
+          <Property Name="Classification" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Subgroup" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Category" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="refId" Type="Int32" Nullable="false" />
+          <Property Name="LocationTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ClassTree" Type="Int32" />
+          <Property Name="controller_name" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="controller_type" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Vyear" Type="Int32" />
+          <Property Name="Vweek" Type="Int32" />
+          <Property Name="Vday" Type="Int32" />
+          <Property Name="shift" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="animation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
         <EntityType Name="C3G_Supervisie">
           <Key>
-            <PropertyRef Name="refId" />
+            <PropertyRef Name="Subgroup" />
             <PropertyRef Name="Logtype" />
+            <PropertyRef Name="refId" />
           </Key>
           <Property Name="Location" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="logtext" Type="String" MaxLength="298" FixedLength="false" Unicode="false" />
@@ -342,10 +416,10 @@ warning 6002: The table/view 'GADATA.Volvo.Timeline' does not have a primary key
           <Property Name="DT" Type="Int32" />
           <Property Name="time" Type="String" MaxLength="19" FixedLength="true" Unicode="false" />
           <Property Name="Classification" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Subgroup" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Subgroup" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Severity" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Logcode" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Logtype" Type="String" Nullable="false" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="Logtype" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="refId" Type="Int32" Nullable="false" />
           <Property Name="timestamp" Type="DateTime" Precision="3" />
           <Property Name="LocationTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
@@ -357,6 +431,7 @@ warning 6002: The table/view 'GADATA.Volvo.Timeline' does not have a primary key
         </EntityType>
         <EntityType Name="C4G_Supervisie">
           <Key>
+            <PropertyRef Name="Subgroup" />
             <PropertyRef Name="Logtype" />
             <PropertyRef Name="refId" />
           </Key>
@@ -366,10 +441,97 @@ warning 6002: The table/view 'GADATA.Volvo.Timeline' does not have a primary key
           <Property Name="DT" Type="Int32" />
           <Property Name="time" Type="String" MaxLength="19" FixedLength="true" Unicode="false" />
           <Property Name="Classification" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Subgroup" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Subgroup" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Severity" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Logcode" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Logtype" Type="String" Nullable="false" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="Logtype" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="refId" Type="Int32" Nullable="false" />
+          <Property Name="timestamp" Type="DateTime" Precision="3" />
+          <Property Name="LocationTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ClassTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Vyear" Type="Int32" />
+          <Property Name="Vweek" Type="Int32" />
+          <Property Name="Vday" Type="Int32" />
+          <Property Name="shift" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="NGAC_Supervisie">
+          <Key>
+            <PropertyRef Name="Logtype" />
+            <PropertyRef Name="refId" />
+          </Key>
+          <Property Name="Location" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="logtext" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="RT" Type="Int32" />
+          <Property Name="DT" Type="Int32" />
+          <Property Name="time" Type="String" MaxLength="19" FixedLength="true" Unicode="false" />
+          <Property Name="Classification" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Subgroup" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Severity" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Logcode" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Logtype" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="refId" Type="Int32" Nullable="false" />
+          <Property Name="timestamp" Type="DateTime" Precision="3" />
+          <Property Name="LocationTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ClassTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Vyear" Type="Int32" />
+          <Property Name="Vweek" Type="Int32" />
+          <Property Name="Vday" Type="Int32" />
+          <Property Name="shift" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Timeline">
+          <Key>
+            <PropertyRef Name="Location" />
+            <PropertyRef Name="Robotname" />
+            <PropertyRef Name="Type" />
+            <PropertyRef Name="Errortype" />
+            <PropertyRef Name="Ploeg" />
+            <PropertyRef Name="Object" />
+            <PropertyRef Name="Subgroup" />
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="Location" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Robotname" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Type" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Errortype" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Timestamp" Type="DateTime" Precision="3" />
+          <Property Name="Logcode" Type="Int32" />
+          <Property Name="Severity" Type="Int32" />
+          <Property Name="Logtekst" Type="String" MaxLength="59" FixedLength="false" Unicode="false" />
+          <Property Name="DOWNTIME" Type="Int32" />
+          <Property Name="Year" Type="Int32" />
+          <Property Name="Week" Type="Int32" />
+          <Property Name="day" Type="Int32" />
+          <Property Name="Shift" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="Ploeg" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Object" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Subgroup" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityContainer Name="SupervisionEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Alerts_Supervisie" EntityType="Self.Alerts_Supervisie" />
+          <EntitySet Name="C3G_Supervisie" EntityType="Self.C3G_Supervisie" />
+          <EntitySet Name="C4G_Supervisie" EntityType="Self.C4G_Supervisie" />
+          <EntitySet Name="NGAC_Supervisie" EntityType="Self.NGAC_Supervisie" />
+          <EntitySet Name="Timeline" EntityType="Self.Timeline" />
+          <EntitySet Name="STO_Supervisie" EntityType="SupervisionModel.STO_Supervisie" />
+          <EntitySet Name="S4C_Supervisie" EntityType="SupervisionModel.S4C_Supervisie" />
+        </EntityContainer>
+        <EntityType Name="STO_Supervisie">
+          <Key>
+            <PropertyRef Name="Subgroup" />
+            <PropertyRef Name="Logtype" />
+            <PropertyRef Name="refId" />
+          </Key>
+          <Property Name="Location" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="logtext" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="RT" Type="Int32" />
+          <Property Name="DT" Type="Int32" />
+          <Property Name="time" Type="String" MaxLength="19" FixedLength="true" Unicode="false" />
+          <Property Name="Classification" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Subgroup" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Severity" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="Logcode" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Logtype" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
           <Property Name="refId" Type="Int32" Nullable="false" />
           <Property Name="timestamp" Type="DateTime" Precision="3" />
           <Property Name="LocationTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
@@ -381,6 +543,7 @@ warning 6002: The table/view 'GADATA.Volvo.Timeline' does not have a primary key
         </EntityType>
         <EntityType Name="S4C_Supervisie">
           <Key>
+            <PropertyRef Name="Subgroup" />
             <PropertyRef Name="Logtype" />
             <PropertyRef Name="refId" />
           </Key>
@@ -403,167 +566,138 @@ warning 6002: The table/view 'GADATA.Volvo.Timeline' does not have a primary key
           <Property Name="Vday" Type="Int32" />
           <Property Name="shift" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="STO_Supervisie">
-          <Key>
-            <PropertyRef Name="logtext" />
-            <PropertyRef Name="Logtype" />
-            <PropertyRef Name="refId" />
-          </Key>
-          <Property Name="Location" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="logtext" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="RT" Type="Int32" />
-          <Property Name="DT" Type="Int32" />
-          <Property Name="time" Type="String" MaxLength="19" FixedLength="true" Unicode="false" />
-          <Property Name="Classification" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Subgroup" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Severity" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="Logcode" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Logtype" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
-          <Property Name="refId" Type="Int32" Nullable="false" />
-          <Property Name="timestamp" Type="DateTime" Precision="3" />
-          <Property Name="LocationTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="ClassTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Vyear" Type="Int32" />
-          <Property Name="Vweek" Type="Int32" />
-          <Property Name="Vday" Type="Int32" />
-          <Property Name="shift" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="Timeline">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="Location" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
-          <Property Name="Robotname" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
-          <Property Name="Type" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
-          <Property Name="Errortype" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
-          <Property Name="Timestamp" Type="DateTime" Precision="3" />
-          <Property Name="Logcode" Type="Int32" />
-          <Property Name="Severity" Type="Int32" />
-          <Property Name="Logtekst" Type="String" MaxLength="59" FixedLength="false" Unicode="false" />
-          <Property Name="DOWNTIME" Type="Int32" />
-          <Property Name="Year" Type="Int32" />
-          <Property Name="Week" Type="Int32" />
-          <Property Name="day" Type="Int32" />
-          <Property Name="Shift" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
-          <Property Name="Ploeg" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
-          <Property Name="Object" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
-          <Property Name="Subgroup" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-        </EntityType>
-        <EntityType Name="Alerts_Supervisie">
-          <Key>
-            <PropertyRef Name="Location" />
-            <PropertyRef Name="AssetID" />
-            <PropertyRef Name="Logtype" />
-            <PropertyRef Name="timestamp" />
-            <PropertyRef Name="refId" />
-            <PropertyRef Name="controller_name" />
-            <PropertyRef Name="controller_type" />
-          </Key>
-          <Property Name="Location" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="AssetID" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="Logtype" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
-          <Property Name="timestamp" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Logcode" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Severity" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Logtext" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="FullLogtext" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Response" Type="Int32" />
-          <Property Name="Downtime" Type="Int32" />
-          <Property Name="Classification" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Subgroup" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Category" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="refId" Type="Int32" Nullable="false" />
-          <Property Name="LocationTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="ClassTree" Type="Int32" />
-          <Property Name="controller_name" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="false" />
-          <Property Name="controller_type" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
-          <Property Name="Vyear" Type="Int32" />
-          <Property Name="Vweek" Type="Int32" />
-          <Property Name="Vday" Type="Int32" />
-          <Property Name="shift" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
-          <Property Name="animation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="GADATAModel1StoreContainer" CdmEntityContainer="GADATAEntities2">
-          <EntitySetMapping Name="C3G_Supervisie">
-            <EntityTypeMapping TypeName="GADATAModel1.C3G_Supervisie">
-              <MappingFragment StoreEntitySet="C3G_Supervisie">
-                <ScalarProperty Name="shift" ColumnName="shift" />
-                <ScalarProperty Name="Vday" ColumnName="Vday" />
-                <ScalarProperty Name="Vweek" ColumnName="Vweek" />
-                <ScalarProperty Name="Vyear" ColumnName="Vyear" />
-                <ScalarProperty Name="ClassTree" ColumnName="ClassTree" />
-                <ScalarProperty Name="LocationTree" ColumnName="LocationTree" />
-                <ScalarProperty Name="timestamp" ColumnName="timestamp" />
-                <ScalarProperty Name="refId" ColumnName="refId" />
+        <EntityContainerMapping StorageEntityContainer="SupervisionModelStoreContainer" CdmEntityContainer="SupervisionEntities">
+          <EntitySetMapping Name="Alerts_Supervisie">
+            <EntityTypeMapping TypeName="SupervisionModel.Alerts_Supervisie">
+              <MappingFragment StoreEntitySet="Alerts_Supervisie">
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="AssetID" ColumnName="AssetID" />
                 <ScalarProperty Name="Logtype" ColumnName="Logtype" />
+                <ScalarProperty Name="timestamp" ColumnName="timestamp" />
                 <ScalarProperty Name="Logcode" ColumnName="Logcode" />
                 <ScalarProperty Name="Severity" ColumnName="Severity" />
-                <ScalarProperty Name="Subgroup" ColumnName="Subgroup" />
+                <ScalarProperty Name="Logtext" ColumnName="Logtext" />
+                <ScalarProperty Name="FullLogtext" ColumnName="FullLogtext" />
+                <ScalarProperty Name="Response" ColumnName="Response" />
+                <ScalarProperty Name="Downtime" ColumnName="Downtime" />
                 <ScalarProperty Name="Classification" ColumnName="Classification" />
-                <ScalarProperty Name="time" ColumnName="time" />
-                <ScalarProperty Name="DT" ColumnName="DT" />
-                <ScalarProperty Name="RT" ColumnName="RT" />
-                <ScalarProperty Name="logtext" ColumnName="logtext" />
+                <ScalarProperty Name="Subgroup" ColumnName="Subgroup" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="refId" ColumnName="refId" />
+                <ScalarProperty Name="LocationTree" ColumnName="LocationTree" />
+                <ScalarProperty Name="ClassTree" ColumnName="ClassTree" />
+                <ScalarProperty Name="controller_name" ColumnName="controller_name" />
+                <ScalarProperty Name="controller_type" ColumnName="controller_type" />
+                <ScalarProperty Name="Vyear" ColumnName="Vyear" />
+                <ScalarProperty Name="Vweek" ColumnName="Vweek" />
+                <ScalarProperty Name="Vday" ColumnName="Vday" />
+                <ScalarProperty Name="shift" ColumnName="shift" />
+                <ScalarProperty Name="animation" ColumnName="animation" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="C3G_Supervisie">
+            <EntityTypeMapping TypeName="SupervisionModel.C3G_Supervisie">
+              <MappingFragment StoreEntitySet="C3G_Supervisie">
                 <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="logtext" ColumnName="logtext" />
+                <ScalarProperty Name="RT" ColumnName="RT" />
+                <ScalarProperty Name="DT" ColumnName="DT" />
+                <ScalarProperty Name="time" ColumnName="time" />
+                <ScalarProperty Name="Classification" ColumnName="Classification" />
+                <ScalarProperty Name="Subgroup" ColumnName="Subgroup" />
+                <ScalarProperty Name="Severity" ColumnName="Severity" />
+                <ScalarProperty Name="Logcode" ColumnName="Logcode" />
+                <ScalarProperty Name="Logtype" ColumnName="Logtype" />
+                <ScalarProperty Name="refId" ColumnName="refId" />
+                <ScalarProperty Name="timestamp" ColumnName="timestamp" />
+                <ScalarProperty Name="LocationTree" ColumnName="LocationTree" />
+                <ScalarProperty Name="ClassTree" ColumnName="ClassTree" />
+                <ScalarProperty Name="Vyear" ColumnName="Vyear" />
+                <ScalarProperty Name="Vweek" ColumnName="Vweek" />
+                <ScalarProperty Name="Vday" ColumnName="Vday" />
+                <ScalarProperty Name="shift" ColumnName="shift" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="C4G_Supervisie">
-            <EntityTypeMapping TypeName="GADATAModel1.C4G_Supervisie">
+            <EntityTypeMapping TypeName="SupervisionModel.C4G_Supervisie">
               <MappingFragment StoreEntitySet="C4G_Supervisie">
-                <ScalarProperty Name="shift" ColumnName="shift" />
-                <ScalarProperty Name="Vday" ColumnName="Vday" />
-                <ScalarProperty Name="Vweek" ColumnName="Vweek" />
-                <ScalarProperty Name="Vyear" ColumnName="Vyear" />
-                <ScalarProperty Name="ClassTree" ColumnName="ClassTree" />
-                <ScalarProperty Name="LocationTree" ColumnName="LocationTree" />
-                <ScalarProperty Name="timestamp" ColumnName="timestamp" />
-                <ScalarProperty Name="refId" ColumnName="refId" />
-                <ScalarProperty Name="Logtype" ColumnName="Logtype" />
-                <ScalarProperty Name="Logcode" ColumnName="Logcode" />
-                <ScalarProperty Name="Severity" ColumnName="Severity" />
-                <ScalarProperty Name="Subgroup" ColumnName="Subgroup" />
-                <ScalarProperty Name="Classification" ColumnName="Classification" />
-                <ScalarProperty Name="time" ColumnName="time" />
-                <ScalarProperty Name="DT" ColumnName="DT" />
-                <ScalarProperty Name="RT" ColumnName="RT" />
-                <ScalarProperty Name="logtext" ColumnName="logtext" />
                 <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="logtext" ColumnName="logtext" />
+                <ScalarProperty Name="RT" ColumnName="RT" />
+                <ScalarProperty Name="DT" ColumnName="DT" />
+                <ScalarProperty Name="time" ColumnName="time" />
+                <ScalarProperty Name="Classification" ColumnName="Classification" />
+                <ScalarProperty Name="Subgroup" ColumnName="Subgroup" />
+                <ScalarProperty Name="Severity" ColumnName="Severity" />
+                <ScalarProperty Name="Logcode" ColumnName="Logcode" />
+                <ScalarProperty Name="Logtype" ColumnName="Logtype" />
+                <ScalarProperty Name="refId" ColumnName="refId" />
+                <ScalarProperty Name="timestamp" ColumnName="timestamp" />
+                <ScalarProperty Name="LocationTree" ColumnName="LocationTree" />
+                <ScalarProperty Name="ClassTree" ColumnName="ClassTree" />
+                <ScalarProperty Name="Vyear" ColumnName="Vyear" />
+                <ScalarProperty Name="Vweek" ColumnName="Vweek" />
+                <ScalarProperty Name="Vday" ColumnName="Vday" />
+                <ScalarProperty Name="shift" ColumnName="shift" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="S4C_Supervisie">
-            <EntityTypeMapping TypeName="GADATAModel1.S4C_Supervisie">
-              <MappingFragment StoreEntitySet="S4C_Supervisie">
-                <ScalarProperty Name="shift" ColumnName="shift" />
-                <ScalarProperty Name="Vday" ColumnName="Vday" />
-                <ScalarProperty Name="Vweek" ColumnName="Vweek" />
-                <ScalarProperty Name="Vyear" ColumnName="Vyear" />
-                <ScalarProperty Name="ClassTree" ColumnName="ClassTree" />
-                <ScalarProperty Name="LocationTree" ColumnName="LocationTree" />
-                <ScalarProperty Name="timestamp" ColumnName="timestamp" />
-                <ScalarProperty Name="refId" ColumnName="refId" />
+          <EntitySetMapping Name="NGAC_Supervisie">
+            <EntityTypeMapping TypeName="SupervisionModel.NGAC_Supervisie">
+              <MappingFragment StoreEntitySet="NGAC_Supervisie">
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="logtext" ColumnName="logtext" />
+                <ScalarProperty Name="RT" ColumnName="RT" />
+                <ScalarProperty Name="DT" ColumnName="DT" />
+                <ScalarProperty Name="time" ColumnName="time" />
+                <ScalarProperty Name="Classification" ColumnName="Classification" />
+                <ScalarProperty Name="Subgroup" ColumnName="Subgroup" />
+                <ScalarProperty Name="Severity" ColumnName="Severity" />
+                <ScalarProperty Name="Logcode" ColumnName="Logcode" />
                 <ScalarProperty Name="Logtype" ColumnName="Logtype" />
+                <ScalarProperty Name="refId" ColumnName="refId" />
+                <ScalarProperty Name="timestamp" ColumnName="timestamp" />
+                <ScalarProperty Name="LocationTree" ColumnName="LocationTree" />
+                <ScalarProperty Name="ClassTree" ColumnName="ClassTree" />
+                <ScalarProperty Name="Vyear" ColumnName="Vyear" />
+                <ScalarProperty Name="Vweek" ColumnName="Vweek" />
+                <ScalarProperty Name="Vday" ColumnName="Vday" />
+                <ScalarProperty Name="shift" ColumnName="shift" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Timeline">
+            <EntityTypeMapping TypeName="SupervisionModel.Timeline">
+              <MappingFragment StoreEntitySet="Timeline">
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="Robotname" ColumnName="Robotname" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Errortype" ColumnName="Errortype" />
+                <ScalarProperty Name="Timestamp" ColumnName="Timestamp" />
                 <ScalarProperty Name="Logcode" ColumnName="Logcode" />
                 <ScalarProperty Name="Severity" ColumnName="Severity" />
+                <ScalarProperty Name="Logtekst" ColumnName="Logtekst" />
+                <ScalarProperty Name="DOWNTIME" ColumnName="DOWNTIME" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Week" ColumnName="Week" />
+                <ScalarProperty Name="day" ColumnName="day" />
+                <ScalarProperty Name="Shift" ColumnName="Shift" />
+                <ScalarProperty Name="Ploeg" ColumnName="Ploeg" />
+                <ScalarProperty Name="Object" ColumnName="Object" />
                 <ScalarProperty Name="Subgroup" ColumnName="Subgroup" />
-                <ScalarProperty Name="Classification" ColumnName="Classification" />
-                <ScalarProperty Name="time" ColumnName="time" />
-                <ScalarProperty Name="DT" ColumnName="DT" />
-                <ScalarProperty Name="RT" ColumnName="RT" />
-                <ScalarProperty Name="logtext" ColumnName="logtext" />
-                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="STO_Supervisie">
-            <EntityTypeMapping TypeName="GADATAModel1.STO_Supervisie">
+            <EntityTypeMapping TypeName="SupervisionModel.STO_Supervisie">
               <MappingFragment StoreEntitySet="STO_Supervisie">
                 <ScalarProperty Name="shift" ColumnName="shift" />
                 <ScalarProperty Name="Vday" ColumnName="Vday" />
@@ -586,54 +720,26 @@ warning 6002: The table/view 'GADATA.Volvo.Timeline' does not have a primary key
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Timeline">
-            <EntityTypeMapping TypeName="GADATAModel1.Timeline">
-              <MappingFragment StoreEntitySet="Timeline">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="Subgroup" ColumnName="Subgroup" />
-                <ScalarProperty Name="Object" ColumnName="Object" />
-                <ScalarProperty Name="Ploeg" ColumnName="Ploeg" />
-                <ScalarProperty Name="Shift" ColumnName="Shift" />
-                <ScalarProperty Name="day" ColumnName="day" />
-                <ScalarProperty Name="Week" ColumnName="Week" />
-                <ScalarProperty Name="Year" ColumnName="Year" />
-                <ScalarProperty Name="DOWNTIME" ColumnName="DOWNTIME" />
-                <ScalarProperty Name="Logtekst" ColumnName="Logtekst" />
-                <ScalarProperty Name="Severity" ColumnName="Severity" />
-                <ScalarProperty Name="Logcode" ColumnName="Logcode" />
-                <ScalarProperty Name="Timestamp" ColumnName="Timestamp" />
-                <ScalarProperty Name="Errortype" ColumnName="Errortype" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="Robotname" ColumnName="Robotname" />
-                <ScalarProperty Name="Location" ColumnName="Location" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Alerts_Supervisie">
-            <EntityTypeMapping TypeName="GADATAModel1.Alerts_Supervisie">
-              <MappingFragment StoreEntitySet="Alerts_Supervisie">
-                <ScalarProperty Name="animation" ColumnName="animation" />
+          <EntitySetMapping Name="S4C_Supervisie">
+            <EntityTypeMapping TypeName="SupervisionModel.S4C_Supervisie">
+              <MappingFragment StoreEntitySet="S4C_Supervisie">
                 <ScalarProperty Name="shift" ColumnName="shift" />
                 <ScalarProperty Name="Vday" ColumnName="Vday" />
                 <ScalarProperty Name="Vweek" ColumnName="Vweek" />
                 <ScalarProperty Name="Vyear" ColumnName="Vyear" />
-                <ScalarProperty Name="controller_type" ColumnName="controller_type" />
-                <ScalarProperty Name="controller_name" ColumnName="controller_name" />
                 <ScalarProperty Name="ClassTree" ColumnName="ClassTree" />
                 <ScalarProperty Name="LocationTree" ColumnName="LocationTree" />
+                <ScalarProperty Name="timestamp" ColumnName="timestamp" />
                 <ScalarProperty Name="refId" ColumnName="refId" />
-                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="Logtype" ColumnName="Logtype" />
+                <ScalarProperty Name="Logcode" ColumnName="Logcode" />
+                <ScalarProperty Name="Severity" ColumnName="Severity" />
                 <ScalarProperty Name="Subgroup" ColumnName="Subgroup" />
                 <ScalarProperty Name="Classification" ColumnName="Classification" />
-                <ScalarProperty Name="Downtime" ColumnName="Downtime" />
-                <ScalarProperty Name="Response" ColumnName="Response" />
-                <ScalarProperty Name="FullLogtext" ColumnName="FullLogtext" />
-                <ScalarProperty Name="Logtext" ColumnName="Logtext" />
-                <ScalarProperty Name="Severity" ColumnName="Severity" />
-                <ScalarProperty Name="Logcode" ColumnName="Logcode" />
-                <ScalarProperty Name="timestamp" ColumnName="timestamp" />
-                <ScalarProperty Name="Logtype" ColumnName="Logtype" />
-                <ScalarProperty Name="AssetID" ColumnName="AssetID" />
+                <ScalarProperty Name="time" ColumnName="time" />
+                <ScalarProperty Name="DT" ColumnName="DT" />
+                <ScalarProperty Name="RT" ColumnName="RT" />
+                <ScalarProperty Name="logtext" ColumnName="logtext" />
                 <ScalarProperty Name="Location" ColumnName="Location" />
               </MappingFragment>
             </EntityTypeMapping>

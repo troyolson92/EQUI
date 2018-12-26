@@ -294,7 +294,7 @@ namespace ExcelAddInEquipmentDatabase
         {
             try
             {
-                string urlSkelation = @"http:\\gensvw1178.gen.volvocars.net\gadata\table\Moreinfo?location={0}&errornum={1}&refid={2}&logtype={3}&logtext={4}";
+                string urlSkelation = @"http:\\gensvw1178.gen.volvocars.net\supervision\table\Moreinfo?location={0}&errornum={1}&refid={2}&logtype={3}&logtext={4}";
                 string url = string.Format(urlSkelation
                     , Uri.EscapeDataString(location)
                     , Uri.EscapeDataString(errornum)

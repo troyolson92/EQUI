@@ -135,8 +135,8 @@ namespace EqUiWebUi.Areas.PlcSupervisie
 
                 //update supervisie databuffer
                 //context.WriteLine("Supervisie dataC3G"); 
-                Supervision.Models.GADATAEntities2 GADATAEntities2 = new Supervision.Models.GADATAEntities2();
-                EqUiWebUi.Areas.Supervision.DataBuffer.dataSTO = GADATAEntities2.STO_Supervisie.Select(x => new EqUiWebUi.Areas.Supervision.SupervisieDummy() {
+                Supervision.Models.SupervisionEntities SupervisionEntities = new Supervision.Models.SupervisionEntities();
+                EqUiWebUi.Areas.Supervision.DataBuffer.dataSTO = SupervisionEntities.STO_Supervisie.Select(x => new EqUiWebUi.Areas.Supervision.SupervisieDummy() {
                      Location= x.Location
                     ,logtext = x.logtext
                     ,RT = x.RT

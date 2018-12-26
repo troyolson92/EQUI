@@ -116,8 +116,8 @@ namespace EqUiWebUi.Areas.Supervision
             int NumDefaultHours = Convert.ToInt32(ConfigurationManager.AppSettings["DatabufferNumDefaultHours"]) * -1;
             DateTime now = System.DateTime.Now;
             //get timeline
-            Supervision.Models.GADATAEntities2 gADATAEntities2 = new Models.GADATAEntities2();
-            data = gADATAEntities2.Timeline.Select(
+            Supervision.Models.SupervisionEntities SupervisionEntities = new Models.SupervisionEntities();
+            data = SupervisionEntities.Timeline.Select(
                 x => new EqUiWebUi.Areas.Supervision.SupervisieDummy() {
                   Location = x.Location
                 , logtext = x.Logtekst
@@ -154,7 +154,7 @@ namespace EqUiWebUi.Areas.Supervision
             }
 
          //Get Alert data
-            DataBuffer.dataALERT  = gADATAEntities2.Alerts_Supervisie.Select(
+            DataBuffer.dataALERT  = SupervisionEntities.Alerts_Supervisie.Select(
                 x => new EqUiWebUi.Areas.Supervision.SupervisieDummy() {
                  Location= x.Location
                 ,logtext = x.Logtext
@@ -209,8 +209,8 @@ namespace EqUiWebUi.Areas.Supervision
                 classificationController.RunRule(c_LogClassRule, overrideManualSet: false, Clear: false, UPDATE: false);
                 context.WriteLine("S4C runRule done");
                 //get supervision data
-                Supervision.Models.GADATAEntities2 GADATAEntities2 = new Supervision.Models.GADATAEntities2();
-                    DataBuffer.dataS4C = GADATAEntities2.S4C_Supervisie.Select(x => new EqUiWebUi.Areas.Supervision.SupervisieDummy() {
+                Supervision.Models.SupervisionEntities Supervision = new Supervision.Models.SupervisionEntities();
+                    DataBuffer.dataS4C = Supervision.S4C_Supervisie.Select(x => new EqUiWebUi.Areas.Supervision.SupervisieDummy() {
                      Location= x.Location
                     ,logtext = x.logtext
                     ,RT = x.RT
@@ -285,8 +285,8 @@ namespace EqUiWebUi.Areas.Supervision
             
             //update supervisie databuffer
             context.WriteLine("Supervisie dataC3G");
-            Supervision.Models.GADATAEntities2 GADATAEntities2 = new Supervision.Models.GADATAEntities2();
-            DataBuffer.dataC3G = GADATAEntities2.C3G_Supervisie.Select(x => new EqUiWebUi.Areas.Supervision.SupervisieDummy() {
+            Supervision.Models.SupervisionEntities SupervisionEntities = new Supervision.Models.SupervisionEntities();
+            DataBuffer.dataC3G = SupervisionEntities.C3G_Supervisie.Select(x => new EqUiWebUi.Areas.Supervision.SupervisieDummy() {
                  Location= x.Location
                 ,logtext = x.logtext
                 ,RT = x.RT
@@ -340,8 +340,8 @@ namespace EqUiWebUi.Areas.Supervision
             context.WriteLine("runRule done");
             //update supervisie databuffer
             context.WriteLine("Supervisie dataC4G");
-            Supervision.Models.GADATAEntities2 GADATAEntities2 = new Supervision.Models.GADATAEntities2();
-            DataBuffer.dataC4G = GADATAEntities2.C4G_Supervisie.Select(x => new EqUiWebUi.Areas.Supervision.SupervisieDummy() {
+            Supervision.Models.SupervisionEntities SupervisionEntities = new Supervision.Models.SupervisionEntities();
+            DataBuffer.dataC4G = SupervisionEntities.C4G_Supervisie.Select(x => new EqUiWebUi.Areas.Supervision.SupervisieDummy() {
                  Location= x.Location
                 ,logtext = x.logtext
                 ,RT = x.RT
