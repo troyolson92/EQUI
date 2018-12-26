@@ -182,6 +182,9 @@
     <Folder Include="Areas\PlcSupervisie\Models\" />
     <Folder Include="Areas\STW040\Models\" />
     <Folder Include="Areas\STW040\Views\Shared\" />
+    <Folder Include="Areas\Supervision\Controllers\" />
+    <Folder Include="Areas\Supervision\Models\" />
+    <Folder Include="Areas\Supervision\Views\Shared\" />
     <Folder Include="Areas\VASC\Views\Shared\" />
     <Folder Include="Areas\VCSC\Controllers\" />
     <Folder Include="Areas\VCSC\Models\" />
@@ -372,6 +375,7 @@
     <Compile Include="Areas\STW040\BackgroundWork.cs" />
     <Compile Include="Areas\STW040\Controllers\STW040Controller.cs" />
     <Compile Include="Areas\STW040\STW040AreaRegistration.cs" />
+    <Compile Include="Areas\Supervision\SupervisionAreaRegistration.cs" />
     <Compile Include="Areas\Tiplife\Backgroundwork.cs" />
     <Compile Include="Areas\Tiplife\Controllers\NgacElectrodeController.cs" />
     <Compile Include="Areas\Tiplife\Models\TipDressLogFile.cs">
@@ -1167,11 +1171,11 @@
     <Content Include="Areas\Alert\Views\Alert\_Details.cshtml" />
     <Content Include="Areas\Gadata\Views\web.config" />
     <Content Include="Areas\Gadata\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\Gadata\Views\Table\_ploegRapport.cshtml" />
-    <Content Include="Areas\Gadata\Views\Table\PloegRapportWebgrid.cshtml" />
+    <Content Include="Areas\Gadata\Views\Table\_ploegRapportGrid.cshtml" />
+    <Content Include="Areas\Gadata\Views\Table\PloegRapport.cshtml" />
     <Content Include="Areas\Gadata\Views\Shared\_Moreinfo.cshtml" />
-    <Content Include="Areas\Gadata\Views\Table\_supervisie.cshtml" />
-    <Content Include="Areas\Gadata\Views\Table\SupervisieWebgrid.cshtml" />
+    <Content Include="Areas\Gadata\Views\Table\_supervisieGrid.cshtml" />
+    <Content Include="Areas\Gadata\Views\Table\Supervisie.cshtml" />
     <Content Include="Areas\Gadata\Views\Table\MoreInfo.cshtml" />
     <Content Include="Areas\Gadata\Views\Table\_loginfo.cshtml" />
     <Content Include="Areas\Gadata\Views\Table\Loginfo.cshtml" />
@@ -2260,6 +2264,7 @@
     <Content Include="node_modules\daterangepicker\package.json" />
     <Content Include="node_modules\daterangepicker\README.md" />
     <Content Include="Areas\Tiplife\Views\NgacElectrode\_WeldgunTool.cshtml" />
+    <Content Include="Areas\Supervision\Views\web.config" />
     <None Include="Properties\PublishProfiles\gensvw1178-DEV-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gotsvw11292-PRODUCTION-VCTA.pubxml" />

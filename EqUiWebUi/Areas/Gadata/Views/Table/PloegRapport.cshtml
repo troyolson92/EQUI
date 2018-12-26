@@ -2,29 +2,40 @@
 @{
     ViewBag.Title = "PloegRapport";
 }
-
-<div id="PloegRapportGridSpincontainer" style="position:relative">
-    <div data-name="PloegRapportGrid" class="mvc-grid"></div>
-</div>
-
-@*box to change ploegrapport settings*@
-<small class="form-text text-muted">PloegRapportSettings</small>
-<div class="input-group input-group-sm col-2">
-    <div class="input-group-prepend">
-        <span class="input-group-text">minSumOfDownTime</span>
+<div class="card">
+    <div class="card-header bg-dark text-white">
+        <h4>
+            PloegRapport
+            <a class="fas fa-wrench text-white" id="OptionsPopover" href="#" data-toggle="popover" data-placement="bottom"></a>
+        </h4>
     </div>
-    <input type="number" class="form-control" id="minSumOfDownTime" value=@ViewBag.minSumOfDownTime>
-    <div class="input-group-append">
-        <span class="btn btn-primary" id="btnSet">Set</span>
+    <div id="PloegRapportGridSpincontainer" style="position:relative">
+        <div data-name="PloegRapportGrid" class="mvc-grid"></div>
     </div>
 </div>
-<div class="input-group input-group-sm mb-3 col-2">
-    <div class="input-group-prepend">
-        <span class="input-group-text">minCountOfDownTime</span>
-    </div>
-    <input type="number" class="form-control" id="minCountOfDownTime" value=@ViewBag.minCountOfDownTime>
-    <div class="input-group-append">
-        <span class="btn btn-primary" id="btnSet">Set</span>
+
+@*popover content*@
+<div class="d-none" id="OptionsPopoverContent">
+    <div class="panel panel-body">
+        <small class="form-text text-muted">PloegRapportSettings</small>
+        <div class="input-group input-group-sm col-2">
+            <div class="input-group-prepend">
+                <span class="input-group-text">minSumOfDownTime</span>
+            </div>
+            <input type="number" class="form-control" id="minSumOfDownTime" value=@ViewBag.minSumOfDownTime>
+            <div class="input-group-append">
+                <span class="btn btn-primary" id="btnSet">Set</span>
+            </div>
+        </div>
+        <div class="input-group input-group-sm mb-3 col-2">
+            <div class="input-group-prepend">
+                <span class="input-group-text">minCountOfDownTime</span>
+            </div>
+            <input type="number" class="form-control" id="minCountOfDownTime" value=@ViewBag.minCountOfDownTime>
+            <div class="input-group-append">
+                <span class="btn btn-primary" id="btnSet">Set</span>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -43,20 +54,21 @@
         var supervisieIsExpanded = false;
         //helper function to load info modal
         function LoadMoreInfo(data) {
-                    var urlMoreInfo = '@Url.Action("_Moreinfo","Table")?location=' + encodeURIComponent(data["location"])
-                        + '&errornum=' + encodeURIComponent(data["logcode"])
-                        + '&refid=' + encodeURIComponent(data["ref-id"])
-                        + '&logtype=' + encodeURIComponent(data["logtype"])
-                        + '&logtext=' + encodeURIComponent(data["logtext"])
-                    //launch modal
-                    $('#MyModal').removeData('bs.modal');
-                    $('#MyModal').modal({ show: true });
-                    $('#MyModal').load(urlMoreInfo, function (result) { });
+            //launch modal
+            $('#MyModal').removeData('bs.modal');
+            $('#MyModal').modal({ show: true });
+            $('#MyModal').load('@Url.Action("_Moreinfo", "Table")', {
+                location: encodeURIComponent(data["location"]),
+                errornum: encodeURIComponent(data["logcode"]),
+                refid: encodeURIComponent(data["ref-id"]),
+                logtype: encodeURIComponent(data["logtype"]),
+                logtext: encodeURIComponent(data["logtext"])
+            }, function (result) { });
         }
 
     //render grid and subscrible to row clicked events
         $('[data-name="PloegRapportGrid"]').mvcgrid({
-            sourceUrl: '@Url.Action("_ploegRapport")', // Grid source url string
+            sourceUrl: '@Url.Action("_ploegRapportGrid")', // Grid source url string
             requestType: 'get', // Ajax grid request type
             reload: true, // Grid reload indicator
             data: {
@@ -111,6 +123,14 @@
         //on modal close
         $('#MyModal').on('hidden.bs.modal', function (e) {
             $('#MyModal').html("<div class='card-body'><i class='fa fa-spinner fa-pulse fa-4x fa-fw text-white' ></i ><span class='sr-only'>Loading...</span></div >");
+        });
+
+        //enable popover for settings.
+        $('#OptionsPopover').popover({
+            html: true,
+            content: function () {
+                return $('#OptionsPopoverContent').html();
+            }
         });
 
         //function to change ploegrapport parameters.

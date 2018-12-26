@@ -22,7 +22,7 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
 
         //------------------------------------PloegRapport-------------------------------------------------
         [HttpGet]
-        public ActionResult PloegRapportWebgrid(int minSumOfDownTime = 20, int minCountOfDownTime = 4, bool ApplyResponsibleArea = false)
+        public ActionResult PloegRapport(int minSumOfDownTime = 20, int minCountOfDownTime = 4, bool ApplyResponsibleArea = false)
         {
             ViewBag.minSumOfDownTime = minSumOfDownTime;
             ViewBag.minCountOfDownTime = minCountOfDownTime;
@@ -31,7 +31,7 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
         }
 
         [HttpGet]
-        public ActionResult _ploegRapport(int minSumOfDownTime = 20, int minCountOfDownTime = 4, bool ApplyResponsibleArea = false)
+        public ActionResult _ploegRapportGrid(int minSumOfDownTime = 20, int minCountOfDownTime = 4, bool ApplyResponsibleArea = false)
         {
             var data = DataBuffer.Supervisie;
             //in case still null trow error return empty result 
@@ -123,14 +123,14 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
 
         //------------------------------------Supervisie-------------------------------------------------
         [HttpGet]
-        public ActionResult SupervisieWebgrid(bool ApplyResponsibleArea = false)
+        public ActionResult Supervisie(bool ApplyResponsibleArea = false)
         {
             ViewBag.ApplyResponsibleArea = ApplyResponsibleArea;
             return View();
         }
 
         [HttpGet]
-        public ActionResult _supervisie(string locationRootFilter = "", bool ApplyResponsibleArea = false)
+        public ActionResult _supervisieGrid(string locationRootFilter = "", bool ApplyResponsibleArea = false)
         {
             // 
             var data = DataBuffer.Supervisie;
@@ -203,7 +203,6 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
         //Partial view for more info modal with model-------------------------------------------------------------------------------------------------
         //contains _getErrorTrend _loginfo 
         //called for the info modals in the site
-        [HttpGet]
         public ActionResult _Moreinfo(LogInfo logInfo)
         {
             return PartialView(logInfo);
@@ -218,16 +217,15 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
         }
 
         //partial view for loginfo 
-        [HttpGet]
         public ActionResult _loginfo(LogInfo logInfo)
         {
-            //query all instances of the logtype via equi.getErrorInfoData 
+            //query all instances of the log type via equi.getErrorInfoData 
             ConnectionManager connectionManager = new ConnectionManager();
             string qry = string.Format(
             @"EXEC [EqUi].[GetErrorInfoData] @Location  = '{0}' ,@ERRORNUM = '{1}' ,@Refid = {2} ,@logtype ='{3}'"
             , logInfo.location, logInfo.errornum, logInfo.refid, logInfo.logtype);
             DataTable dt = connectionManager.RunQuery(qry);
-            //build an html respone with the log info.
+            //build an html response with the log info.
             StringBuilder sb = new StringBuilder();
             //check if the result was valid 
             if (dt.Rows.Count != 0)

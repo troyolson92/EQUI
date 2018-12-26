@@ -1,17 +1,14 @@
 ﻿@*set title*@
 @{
-    ViewBag.Title = "CurrentTipstatus";
+    ViewBag.Title = "Current electrode status";
 }
 <div class="card">
-    <div class="card-header bg-primary row">
-          
-        <h4 class="col-8">CurrentTipstatus</h4>
-        <a href="@Url.Action("PlanTipChange")" class="btn btn-warning btn-md col-4">Plan tipchange &raquo;</a>
+    <div class="card-header bg-dark text-white row">        
+        <h4 class="col-8">Current electrode status</h4>
+        @MyFilters.IconActionLink(Url.Action("PlanTipChange"),"fab fa-stack-exchange","Plan electrode change", "Go to electrode change planning tool",classes:"")
     </div>
 
-    <div class="card-body">
-        <div class="mvc-grid" data-name="TipStatusGrid"></div>
-    </div>
+    <div class="mvc-grid" data-name="TipStatusGrid"></div>
 </div>
 
 @*render popuover modal*@

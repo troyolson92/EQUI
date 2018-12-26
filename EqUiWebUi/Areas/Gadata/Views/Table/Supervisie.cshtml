@@ -4,10 +4,17 @@
 @{
     ViewBag.Title = "Supervisie";
 }
-
-<div id="SupervisieGridSpincontainer" style="position:relative">
-    <div data-name="SupervisieGrid" class="mvc-grid"></div>
+<div class="card">
+    <div class="card-header bg-dark text-white">
+        <h4>
+            Supervisie
+        </h4>
+    </div>
+    <div id="SupervisieGridSpincontainer" style="position:relative">
+        <div data-name="SupervisieGrid" class="mvc-grid"></div>
+    </div>
 </div>
+
 
 @*render popuover modal*@
 <div id="MyModal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -19,22 +26,23 @@
     <script type="text/javascript">
     //render grid and subscrible to row clicked events
         $('[data-name="SupervisieGrid"]').mvcgrid({
-        sourceUrl: '@Url.Action("_supervisie")', // Grid source url string
+        sourceUrl: '@Url.Action("_supervisieGrid")', // Grid source url string
         data: {
             ApplyResponsibleArea: @ViewBag.ApplyResponsibleArea.ToString().ToLower()
         },
         requestType: 'get', // Ajax grid request type
         reload: true, // Grid reload indicator
         rowClicked: function (row, data, e) {
-            var urlMoreInfo = '@Url.Action("_Moreinfo", "Table")?location=' + encodeURIComponent(data["location"])
-                + '&errornum=' + encodeURIComponent(data["logcode"])
-                + '&refid=' + encodeURIComponent(data["ref-id"])
-                + '&logtype=' + encodeURIComponent(data["logtype"])
-                + '&logtext=' + encodeURIComponent(data["logtext"]);
                 //launch modal
                 $('#MyModal').removeData('bs.modal');
                 $('#MyModal').modal({ show: true });
-                $('#MyModal').load(urlMoreInfo, function (result) {});
+                $('#MyModal').load('@Url.Action("_Moreinfo", "Table")', {
+                    location: encodeURIComponent(data["location"]),
+                    errornum: encodeURIComponent(data["logcode"]),
+                    refid: encodeURIComponent(data["ref-id"]),
+                    logtype: encodeURIComponent(data["logtype"]),
+                    logtext: encodeURIComponent(data["logtext"])
+                }, function (result) { });
         },
         reloadFailed: function (result) {
             console.log(result);
