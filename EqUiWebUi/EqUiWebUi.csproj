@@ -182,6 +182,7 @@
     <Folder Include="Areas\PlcSupervisie\Models\" />
     <Folder Include="Areas\STW040\Models\" />
     <Folder Include="Areas\STW040\Views\Shared\" />
+    <Folder Include="Areas\Supervision\Views\Shared\" />
     <Folder Include="Areas\VASC\Views\Shared\" />
     <Folder Include="Areas\VCSC\Controllers\" />
     <Folder Include="Areas\VCSC\Models\" />
@@ -526,9 +527,6 @@
     </Compile>
     <Compile Include="Areas\VASC\Models\l_operationMetadata.cs" />
     <Compile Include="Areas\VASC\Models\L_type.cs">
-      <DependentUpon>VASC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\VASC\Models\NGAC_Supervisie.cs">
       <DependentUpon>VASC.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\VASC\Models\rt_active_info.cs">
@@ -2255,7 +2253,7 @@
     <Content Include="Areas\Supervision\Views\Table\PloegRapport.cshtml" />
     <Content Include="Areas\Supervision\Views\Table\Supervisie.cshtml" />
     <Content Include="Areas\Supervision\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\Supervision\Views\Shared\_Moreinfo.cshtml" />
+    <Content Include="Areas\Supervision\Views\Table\_Moreinfo.cshtml" />
     <EntityDeploy Include="Areas\Supervision\Models\SupervisionModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>SupervisionModel.Designer.cs</LastGenOutput>
@@ -2263,6 +2261,7 @@
     <Content Include="Areas\Supervision\Models\SupervisionModel.edmx.diagram">
       <DependentUpon>SupervisionModel.edmx</DependentUpon>
     </Content>
+    <Content Include="Areas\Supervision\Views\Table\Index.cshtml" />
     <None Include="Properties\PublishProfiles\gensvw1178-DEV-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gotsvw11292-PRODUCTION-VCTA.pubxml" />

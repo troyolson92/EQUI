@@ -34,7 +34,6 @@ namespace EqUiWebUi.Controllers
         /// </summary>
         /// <param name="logInfo"></param>
         /// <returns></returns>
-        [HttpGet]
         public ActionResult _getErrorTrend(LogInfo logInfo)
         {
             return PartialView(logInfo);

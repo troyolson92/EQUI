@@ -397,9 +397,9 @@ namespace EqUiWebUi.Areas.Supervision
 
                 //update supervisie databuffer
                 context.WriteLine("Supervisie dataVASC");
-                VASC.Models.GADATAEntitiesVASC gADATAEntitiesVASC = new VASC.Models.GADATAEntitiesVASC();
-                gADATAEntitiesVASC.Database.CommandTimeout = 45; // default 30 
-                DataBuffer.dataVASC = gADATAEntitiesVASC.NGAC_Supervisie.Select(x => new EqUiWebUi.Areas.Supervision.SupervisieDummy() {
+                Supervision.Models.SupervisionEntities SupervisionEntities = new Supervision.Models.SupervisionEntities();
+                SupervisionEntities.Database.CommandTimeout = 60; // default 30 
+                DataBuffer.dataVASC = SupervisionEntities.NGAC_Supervisie.Select(x => new EqUiWebUi.Areas.Supervision.SupervisieDummy() {
                      Location= x.Location
                     ,logtext = x.logtext
                     ,RT = x.RT

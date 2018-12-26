@@ -13,14 +13,20 @@ namespace EqUiWebUi.Areas.Supervision.Controllers
     {
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        // GET: Gadata/Tabel
+        // GET: Gadata/Table
         public ActionResult Index()
         {
-            return new HttpNotFoundResult("Woeps there seems to be nothing here");
+            return View();
         }
 
-
         //------------------------------------PloegRapport-------------------------------------------------
+        /// <summary>
+        /// PloegRapport groups supervision records per shift using some filter parameters
+        /// </summary>
+        /// <param name="minSumOfDownTime"></param>
+        /// <param name="minCountOfDownTime"></param>
+        /// <param name="ApplyResponsibleArea"></param>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult PloegRapport(int minSumOfDownTime = 20, int minCountOfDownTime = 4, bool ApplyResponsibleArea = false)
         {
@@ -30,7 +36,13 @@ namespace EqUiWebUi.Areas.Supervision.Controllers
             return View();
         }
 
-        [HttpGet]
+        /// <summary>
+        /// Grid component for PloegRapport
+        /// </summary>
+        /// <param name="minSumOfDownTime"></param>
+        /// <param name="minCountOfDownTime"></param>
+        /// <param name="ApplyResponsibleArea"></param>
+        /// <returns></returns>
         public ActionResult _ploegRapportGrid(int minSumOfDownTime = 20, int minCountOfDownTime = 4, bool ApplyResponsibleArea = false)
         {
             var data = DataBuffer.Supervisie;
@@ -119,9 +131,14 @@ namespace EqUiWebUi.Areas.Supervision.Controllers
             //
             return PartialView(Ploegrap);
         }
-        //
+
 
         //------------------------------------Supervisie-------------------------------------------------
+        /// <summary>
+        /// Supervision 
+        /// </summary>
+        /// <param name="ApplyResponsibleArea"></param>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult Supervisie(bool ApplyResponsibleArea = false)
         {
@@ -129,7 +146,12 @@ namespace EqUiWebUi.Areas.Supervision.Controllers
             return View();
         }
 
-        [HttpGet]
+        /// <summary>
+        /// Grid component for Supervisie
+        /// </summary>
+        /// <param name="locationRootFilter"></param>
+        /// <param name="ApplyResponsibleArea"></param>
+        /// <returns></returns>
         public ActionResult _supervisieGrid(string locationRootFilter = "", bool ApplyResponsibleArea = false)
         {
             // 
@@ -182,40 +204,48 @@ namespace EqUiWebUi.Areas.Supervision.Controllers
             //
             return PartialView(data);;
         }
-        //-------------------------------------------------------------------------------------------------
 
-
-        //full view for more info ---------------------------------------------------------------------------------------------------------------------
-        //contains _getErrorTrend _loginfo 
-        //called by vsto plugin
+        //------------------------------------Extra ifno pages-------------------------------------------------
+        /// <summary>
+        /// Full view that calls partial view _Moreinfo
+        /// Gets called by VSTO plug in!
+        /// </summary>
+        /// <param name="logInfo"></param>
+        /// <returns></returns>
         [HttpGet]
-        public ActionResult MoreInfo(string location, string errornum, int? refid, string logtype, string logtext)
+        public ActionResult MoreInfo(LogInfo logInfo)
         {
-            LogInfo logInfo = new LogInfo();
-            logInfo.location = location;
-            logInfo.errornum = errornum;
-            logInfo.refid = refid.GetValueOrDefault(0);
-            logInfo.logtype = logtype;
-            logInfo.logtext = logtext;
             return View(logInfo);
         }
 
-        //Partial view for more info modal with model-------------------------------------------------------------------------------------------------
-        //contains _getErrorTrend _loginfo 
-        //called for the info modals in the site
+        /// <summary>
+        /// Partial view that contains more info about ... contains a trend chart / loginfo / maximo partial
+        /// called by modals in Supervisie and PloegRapport
+        /// </summary>
+        /// <param name="logInfo"></param>
+        /// <returns></returns>
         public ActionResult _Moreinfo(LogInfo logInfo)
         {
             return PartialView(logInfo);
         }
 
-        //full view for loginfo----------------------------------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Full view that calls partial _loginfo
+        /// </summary>
+        /// <param name="logInfo"></param>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult Loginfo(LogInfo logInfo)
         {
             return View(logInfo);
         }
 
-        //partial view for loginfo 
+        /// <summary>
+        /// Partial view containing more info about a log record.
+        /// Called by _Moreinfo
+        /// </summary>
+        /// <param name="logInfo"></param>
+        /// <returns></returns>
         public ActionResult _loginfo(LogInfo logInfo)
         {
             //query all instances of the log type via equi.getErrorInfoData 

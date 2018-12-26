@@ -60,9 +60,6 @@
         <AssociationConnector Association="GADATAModelVASC.FK_rt_job_breakdown_h_alarm" />
         <AssociationConnector Association="GADATAModelVASC.FK_rt_job_breakdown_rt_alarm" />
       </Diagram>
-      <Diagram DiagramId="be53d3a809e042c28ebebb95f664d499" Name="VASCfrontEnd" >
-        <EntityTypeShape EntityType="GADATAModelVASC.NGAC_Supervisie" Width="1.5" PointX="3.375" PointY="0.75" />
-      </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

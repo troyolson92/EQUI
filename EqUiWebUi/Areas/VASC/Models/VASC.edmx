@@ -427,32 +427,6 @@
 warning 6002: The table/view 'GADATA.NGAC.Bodytracking' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <!--Errors Found During Generation:
 warning 6002: The table/view 'GADATA.NGAC.NGAC_Supervisie' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="NGAC_Supervisie">
-          <Key>
-            
-            
-            <PropertyRef Name="refId" />
-            <PropertyRef Name="Logtype" />
-          </Key>
-          <Property Name="Location" Type="varchar" MaxLength="30" />
-          <Property Name="logtext" Type="varchar(max)" />
-          <Property Name="RT" Type="int" />
-          <Property Name="DT" Type="int" />
-          <Property Name="time" Type="char" MaxLength="19" />
-          <Property Name="Classification" Type="varchar" MaxLength="50" />
-          <Property Name="Subgroup" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Severity" Type="varchar(max)" />
-          <Property Name="Logcode" Type="varchar(max)" />
-          <Property Name="Logtype" Type="varchar" MaxLength="15" Nullable="false" />
-          <Property Name="refId" Type="int" Nullable="false" />
-          <Property Name="timestamp" Type="datetime" />
-          <Property Name="LocationTree" Type="varchar(max)" />
-          <Property Name="ClassTree" Type="varchar(max)" />
-          <Property Name="Vyear" Type="int" />
-          <Property Name="Vweek" Type="int" />
-          <Property Name="Vday" Type="int" />
-          <Property Name="shift" Type="varchar" MaxLength="2" />
-        </EntityType>
         <Association Name="FK_c_controller_c_controller_class">
           <End Role="c_controller_class" Type="Self.c_controller_class" Multiplicity="1" />
           <End Role="c_controller" Type="Self.c_controller" Multiplicity="*" />
@@ -794,28 +768,6 @@ warning 6002: The table/view 'GADATA.NGAC.NGAC_Supervisie' does not have a prima
           <EntitySet Name="rt_job_breakdown" EntityType="Self.rt_job_breakdown" Schema="NGAC" store:Type="Tables" />
           <EntitySet Name="rt_search_value" EntityType="Self.rt_search_value" Schema="NGAC" store:Type="Tables" />
           <EntitySet Name="rt_value" EntityType="Self.rt_value" Schema="NGAC" store:Type="Tables" />
-          <EntitySet Name="NGAC_Supervisie" EntityType="Self.NGAC_Supervisie" store:Type="Views" store:Schema="NGAC">
-            <DefiningQuery>SELECT 
-    [NGAC_Supervisie].[Location] AS [Location], 
-    [NGAC_Supervisie].[logtext] AS [logtext], 
-    [NGAC_Supervisie].[RT] AS [RT], 
-    [NGAC_Supervisie].[DT] AS [DT], 
-    [NGAC_Supervisie].[time] AS [time], 
-    [NGAC_Supervisie].[Classification] AS [Classification], 
-    [NGAC_Supervisie].[Subgroup] AS [Subgroup], 
-    [NGAC_Supervisie].[Severity] AS [Severity], 
-    [NGAC_Supervisie].[Logcode] AS [Logcode], 
-    [NGAC_Supervisie].[Logtype] AS [Logtype], 
-    [NGAC_Supervisie].[refId] AS [refId], 
-    [NGAC_Supervisie].[timestamp] AS [timestamp], 
-    [NGAC_Supervisie].[LocationTree] AS [LocationTree], 
-    [NGAC_Supervisie].[ClassTree] AS [ClassTree], 
-    [NGAC_Supervisie].[Vyear] AS [Vyear], 
-    [NGAC_Supervisie].[Vweek] AS [Vweek], 
-    [NGAC_Supervisie].[Vday] AS [Vday], 
-    [NGAC_Supervisie].[shift] AS [shift]
-    FROM [NGAC].[NGAC_Supervisie] AS [NGAC_Supervisie]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="FK_c_controller_c_controller_class" Association="Self.FK_c_controller_c_controller_class">
             <End Role="c_controller_class" EntitySet="c_controller_class" />
             <End Role="c_controller" EntitySet="c_controller" />
@@ -1118,7 +1070,6 @@ warning 6002: The table/view 'GADATA.NGAC.NGAC_Supervisie' does not have a prima
             <End Role="rt_alarm" EntitySet="rt_alarm" />
             <End Role="rt_job_breakdown" EntitySet="rt_job_breakdown" />
           </AssociationSet>
-          <EntitySet Name="NGAC_Supervisie" EntityType="GADATAModelVASC.NGAC_Supervisie" />
         </EntityContainer>
         <EntityType Name="c_error">
           <Key>
@@ -1842,30 +1793,6 @@ warning 6002: The table/view 'GADATA.NGAC.NGAC_Supervisie' does not have a prima
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="NGAC_Supervisie">
-          <Key>
-            <PropertyRef Name="refId" />
-            <PropertyRef Name="Logtype" />
-          </Key>
-          <Property Name="Location" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="logtext" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="RT" Type="Int32" />
-          <Property Name="DT" Type="Int32" />
-          <Property Name="time" Type="String" MaxLength="19" FixedLength="true" Unicode="false" />
-          <Property Name="Classification" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Subgroup" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Severity" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Logcode" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Logtype" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="refId" Type="Int32" Nullable="false" />
-          <Property Name="timestamp" Type="DateTime" Precision="3" />
-          <Property Name="LocationTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="ClassTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Vyear" Type="Int32" />
-          <Property Name="Vweek" Type="Int32" />
-          <Property Name="Vday" Type="Int32" />
-          <Property Name="shift" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2315,30 +2242,6 @@ warning 6002: The table/view 'GADATA.NGAC.NGAC_Supervisie' does not have a prima
                 <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
                 <ScalarProperty Name="Category" ColumnName="Category" />
                 <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="NGAC_Supervisie">
-            <EntityTypeMapping TypeName="GADATAModelVASC.NGAC_Supervisie">
-              <MappingFragment StoreEntitySet="NGAC_Supervisie">
-                <ScalarProperty Name="shift" ColumnName="shift" />
-                <ScalarProperty Name="Vday" ColumnName="Vday" />
-                <ScalarProperty Name="Vweek" ColumnName="Vweek" />
-                <ScalarProperty Name="Vyear" ColumnName="Vyear" />
-                <ScalarProperty Name="ClassTree" ColumnName="ClassTree" />
-                <ScalarProperty Name="LocationTree" ColumnName="LocationTree" />
-                <ScalarProperty Name="timestamp" ColumnName="timestamp" />
-                <ScalarProperty Name="refId" ColumnName="refId" />
-                <ScalarProperty Name="Logtype" ColumnName="Logtype" />
-                <ScalarProperty Name="Logcode" ColumnName="Logcode" />
-                <ScalarProperty Name="Severity" ColumnName="Severity" />
-                <ScalarProperty Name="Subgroup" ColumnName="Subgroup" />
-                <ScalarProperty Name="Classification" ColumnName="Classification" />
-                <ScalarProperty Name="time" ColumnName="time" />
-                <ScalarProperty Name="DT" ColumnName="DT" />
-                <ScalarProperty Name="RT" ColumnName="RT" />
-                <ScalarProperty Name="logtext" ColumnName="logtext" />
-                <ScalarProperty Name="Location" ColumnName="Location" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
