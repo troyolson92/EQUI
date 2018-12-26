@@ -22,6 +22,12 @@ namespace EqUiWebUi.Areas.HangfireArea.Controllers
             return View(db.c_schedule.ToList());
         }
 
+        public ActionResult _JobList(int? c_schedule_id)
+        {
+            ViewBag.c_schedule_id = c_schedule_id;
+            return PartialView();
+        }
+
         // GET: HangfireArea/c_schedule/Edit/5
         public ActionResult Edit(int? id)
         {

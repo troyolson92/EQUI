@@ -1,0 +1,13 @@
+﻿
+<div class="badge badge-primary">C_job (Sql commands)</div>
+@Html.Action("_List", "c_job", new { c_schedule_id = ViewBag.c_schedule_id })
+<hr />
+
+
+<div class="badge badge-primary">c_triggers (Alerts)</div>
+@Html.Action("_List", "c_triggers", new { Area = "Alert", c_schedule_id = ViewBag.c_schedule_id })
+<hr />
+
+<div class="badge badge-primary">c_housekeeping (table cleanup)</div>
+@Html.Action("_List", "c_housekeeping", new { Area = "", c_schedule_id = ViewBag.c_schedule_id })
+<hr />

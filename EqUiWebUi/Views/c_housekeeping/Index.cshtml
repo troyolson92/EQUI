@@ -1,4 +1,4 @@
-﻿@model IQueryable<EqUiWebUi.Models.c_housekeeping>
+﻿
 
 @{
     ViewBag.Title = "Index c_housekeeping";
@@ -9,27 +9,7 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-@Html.Grid(Model).Named("c_housekeepingGrid").Build(columns =>
-{
-    columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Asc);
-    columns.Add(c => c.c_schedule.name).Titled("scheduleName");
-    columns.Add(c => c.Name).Titled("Name");
-    columns.Add(c => "<p id=" + c.id + " class='editTestCollum1'>" + c.Name).Encoded(false).Titled("NameEdit1");
-    columns.Add(c => "<p id=" + c.id + " class='editTestCollum2'>" + c.Name).Encoded(false).Titled("NameEdit2");
-    columns.Add(c => c.SchemaName).Titled("SchemaName");
-    columns.Add(c => c.TableName).Titled("TableName");
-    columns.Add(c => c.nDaysKeepHistory).Titled("KeepDays");
-    columns.Add(c => c)
-                    .Titled("")
-                    .Encoded(false)
-                    .RenderedAs(c => MyFilters.IconActionLink(Url.Action("Edit", new { id = c.id }), "fas fa-pencil-alt", "", "Edit this") + " | " +
-                                 MyFilters.IconActionLink(Url.Action("Delete", new { id = c.id }), "fas fa-trash-alt", "", "Delete this")
-                    ).Filterable(false);
-}).Filterable().Sortable().Pageable(pager =>
-{
-    pager.RowsPerPage = 10;
-}).Empty("Did not find anything").Css("table-hover")
-
+@Html.Action("_List")
 
 
 @section scripts{
@@ -41,9 +21,6 @@
         //subscribe to row clicked events
         $('[data-name="c_housekeepingGrid"]').mvcgrid({
             rowClicked: function (row, data, e) {
-                return;
-
-
                 //if row already has this clase close the modal
                 if ($(row).hasClass("bg-info")) {
                     $("#placeholder").remove();
@@ -59,7 +36,7 @@
                 //animation
                 $("#placeholderPartial").html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
                 //load url in placeholder
-                var url = "@Url.Action("_L_housekeeping")?id=" + data["id"];
+                var url = "@Url.Action("_L_housekeeping")?c_houseKeeping_id=" + data["id"];
                 $("#placeholderPartial").load(url);
             }
         });

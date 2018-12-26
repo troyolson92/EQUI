@@ -176,7 +176,6 @@
     <Folder Include="Areas\CycleTime\Models\" />
     <Folder Include="Areas\CycleTime\Views\Shared\" />
     <Folder Include="Areas\HangfireArea\Models\" />
-    <Folder Include="Areas\HangfireArea\Views\Shared\" />
     <Folder Include="Areas\Maximo_ui\Views\Shared\" />
     <Folder Include="Areas\PJV\Views\Shared\" />
     <Folder Include="Areas\PlcSupervisie\Models\" />
@@ -2264,6 +2263,11 @@
     <Content Include="Areas\Supervision\Views\Table\Index.cshtml" />
     <Content Include="Areas\Supervision\Views\Table\_Legend.cshtml" />
     <Content Include="Areas\Alert\Views\c_triggers\_Legend.cshtml" />
+    <Content Include="Areas\HangfireArea\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\HangfireArea\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\HangfireArea\Views\c_schedule\_JobList.cshtml" />
+    <Content Include="Areas\HangfireArea\Views\c_job\_List.cshtml" />
+    <Content Include="Areas\Alert\Views\c_triggers\_List.cshtml" />
     <None Include="Properties\PublishProfiles\gensvw1178-DEV-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gotsvw11292-PRODUCTION-VCTA.pubxml" />
@@ -2388,6 +2392,7 @@
     <Content Include="Views\c_housekeeping\Index.cshtml" />
     <Content Include="Views\c_housekeeping\_L_housekeeping.cshtml" />
     <Content Include="Views\c_housekeeping\Details.cshtml" />
+    <Content Include="Views\c_housekeeping\_List.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

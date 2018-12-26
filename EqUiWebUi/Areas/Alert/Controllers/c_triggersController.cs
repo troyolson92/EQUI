@@ -19,10 +19,22 @@ namespace EqUiWebUi.Areas.Alert.Controllers
         private GADATA_AlertModel db = new GADATA_AlertModel();
 
         // GET: Alert/c_triggers
-        public async Task<ActionResult> Index()
+        public ActionResult Index()
         {
-            var c_triggers = db.c_triggers.Include(c => c.c_smsSystem).Include(c => c.c_state);
-            return View(await c_triggers.ToListAsync());
+            return View();
+        }
+
+        //gird for Index
+        public ActionResult _List(int? c_schedule_id)
+        {
+            if (c_schedule_id.HasValue)
+            {
+                return PartialView(db.c_triggers.Where(c => c.c_schedule_id == c_schedule_id).Include(c => c.c_smsSystem).Include(c => c.c_state).AsQueryable());
+            }
+            else
+            {
+                return PartialView(db.c_triggers.Include(c => c.c_smsSystem).Include(c => c.c_state).AsQueryable());
+            }
         }
 
         /// <summary>

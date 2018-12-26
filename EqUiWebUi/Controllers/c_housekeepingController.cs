@@ -16,15 +16,26 @@ namespace EqUiWebUi.Controllers
         // GET: c_housekeeping
         public ActionResult Index()
         {
-            IQueryable<c_housekeeping> c_housekeeping = db.c_housekeeping.Include(c => c.c_datasource).Include(c => c.c_schedule).AsQueryable();
-            return View(c_housekeeping);
+            return View();
+        }
+
+        //gird for Index
+        public ActionResult _List(int? c_schedule_id)
+        {
+            if (c_schedule_id.HasValue)
+            {
+                return PartialView(db.c_housekeeping.Where(c => c.c_schedule_id == c_schedule_id).Include(c => c.c_datasource).AsQueryable());
+            }
+            else
+            {
+                return PartialView(db.c_housekeeping.Include(c => c.c_datasource).AsQueryable());
+            }
         }
 
         // GET: _l_housekeeping
         public ActionResult _L_housekeeping(int? c_houseKeeping_id)
         {
-            IQueryable<L_housekeeping> data = db.L_housekeeping.Include(c => c.c_housekeeping).Where(c => c.c_housekeeping_id == c_houseKeeping_id || c_houseKeeping_id == null).AsQueryable();
-            return PartialView(data);
+            return PartialView(db.L_housekeeping.Include(c => c.c_housekeeping).Where(c => c.c_housekeeping_id == c_houseKeeping_id || c_houseKeeping_id == null).AsQueryable());
         }
 
         // GET: c_housekeeping/Details/5

@@ -18,8 +18,20 @@ namespace EqUiWebUi.Areas.HangfireArea.Controllers
         // GET: HangfireArea/c_job
         public ActionResult Index()
         {
-            var c_job = db.c_job.Include(c => c.c_datasource).Include(c => c.c_schedule);
-            return View(c_job.ToList());
+            return View();
+        }
+
+        //gird for Index
+        public ActionResult _List(int? c_schedule_id)
+        {
+            if (c_schedule_id.HasValue)
+            {
+                return PartialView(db.c_job.Where(c => c.c_schedule_id == c_schedule_id).Include(c => c.c_datasource).Include(c => c.c_schedule).AsQueryable());
+            }
+            else
+            {
+                return PartialView(db.c_job.Include(c => c.c_datasource).Include(c => c.c_schedule).AsQueryable());
+            }     
         }
 
         // GET: HangfireArea/c_job/Edit/5

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<EqUiWebUi.Models.c_job>
+﻿
 
 @{
     ViewBag.Title = "Index";
@@ -10,26 +10,8 @@
 <p>
     @Html.ActionLink("Create New", "Edit", new { id = -1 })
 </p>
-@Html.Grid(Model).Named("c_job").Build(columns =>
-{
-    columns.Add(c => c.id).Titled("ID").InitialSort(GridSortOrder.Asc).Css("d-none d-lg-table-cell");
-    columns.Add(c => c.enabled).Titled("enabled");
-    columns.Add(c => c.name).Titled("name");
-    columns.Add(c => c.description).Titled("description");
-    columns.Add(c => c.c_datasource.Name).Titled("datasource");
-    columns.Add(c => c.c_schedule.name).Titled("schedule");
-    columns.Add(c => c.ordinal).Titled("ordinal");
-    columns.Add(c => c.interval).Titled("interval");
-    columns.Add(c => c.maxRuntime).Titled("maxRuntime");
-    columns.Add(c => c.warnRuntime).Titled("warnRuntime");
-    columns.Add(c => c.continueOnJobFailure).Titled("contOnJobFail");
-    columns.Add(c => c.id)
-                .Titled("")
-                .Encoded(false)
-                .RenderedAs(c => @Html.ActionLink("Edit", "Edit", new { id = c.id }) + " | " +
-                                 @Html.ActionLink("Delete", "Delete", new { id = c.id })
-                ).Filterable(false);
-}).Filterable().Sortable().Empty("Did not find anything").Css("table-hover")
+
+@Html.Action("_List")
 
 @section scripts{
     <script>

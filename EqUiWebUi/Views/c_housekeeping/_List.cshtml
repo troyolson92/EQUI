@@ -1,0 +1,21 @@
+﻿@model IQueryable<EqUiWebUi.Models.c_housekeeping>
+@Html.Grid(Model).Named("c_housekeepingGrid").Build(columns =>
+{
+    columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Asc);
+    columns.Add(c => c.c_schedule.name).Titled("scheduleName");
+    columns.Add(c => c.Name).Titled("Name");
+    columns.Add(c => "<p id=" + c.id + " class='editTestCollum1'>" + c.Name).Encoded(false).Titled("NameEdit1");
+    columns.Add(c => "<p id=" + c.id + " class='editTestCollum2'>" + c.Name).Encoded(false).Titled("NameEdit2");
+    columns.Add(c => c.SchemaName).Titled("SchemaName");
+    columns.Add(c => c.TableName).Titled("TableName");
+    columns.Add(c => c.nDaysKeepHistory).Titled("KeepDays");
+    columns.Add(c => c)
+                    .Titled("")
+                    .Encoded(false)
+                    .RenderedAs(c => MyFilters.IconActionLink(Url.Action("Edit", new { id = c.id }), "fas fa-pencil-alt", "", "Edit this") + " | " +
+                                 MyFilters.IconActionLink(Url.Action("Delete", new { id = c.id }), "fas fa-trash-alt", "", "Delete this")
+                    ).Filterable(false);
+}).Filterable().Sortable().Pageable(pager =>
+{
+    pager.RowsPerPage = 10;
+}).Empty("Did not find anything").Css("table-hover")
