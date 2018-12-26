@@ -29,7 +29,7 @@ namespace EqUiWebUi.Areas.HangfireArea.Controllers
             Areas.Maximo_ui.Backgroundwork backgroundworkMaximo = new Areas.Maximo_ui.Backgroundwork();
             backgroundworkMaximo.configHangfireJobs();
             //gadata jobs 
-            Areas.Gadata.BackgroundWork backgroundWorkGADATA = new Areas.Gadata.BackgroundWork();
+            Areas.Supervision.BackgroundWork backgroundWorkGADATA = new Areas.Supervision.BackgroundWork();
             backgroundWorkGADATA.configHangfireJobs();
             //tiplife jobs 
             Areas.Tiplife.Backgroundwork backgroundworkTiplife = new Tiplife.Backgroundwork();

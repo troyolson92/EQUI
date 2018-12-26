@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.Web;
 using Microsoft.AspNet.SignalR;
 
-namespace EqUiWebUi.Areas.Gadata
+namespace EqUiWebUi.Areas.Supervision
 {
     public class DataRefreshHub : Hub
     {

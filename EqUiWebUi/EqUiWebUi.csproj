@@ -182,9 +182,6 @@
     <Folder Include="Areas\PlcSupervisie\Models\" />
     <Folder Include="Areas\STW040\Models\" />
     <Folder Include="Areas\STW040\Views\Shared\" />
-    <Folder Include="Areas\Supervision\Controllers\" />
-    <Folder Include="Areas\Supervision\Models\" />
-    <Folder Include="Areas\Supervision\Views\Shared\" />
     <Folder Include="Areas\VASC\Views\Shared\" />
     <Folder Include="Areas\VCSC\Controllers\" />
     <Folder Include="Areas\VCSC\Models\" />
@@ -267,43 +264,6 @@
     <Compile Include="Areas\CycleTime\BackgroundWork.cs" />
     <Compile Include="Areas\CycleTime\Controllers\CycleTimeUiController.cs" />
     <Compile Include="Areas\CycleTime\CycleTimeAreaRegistration.cs" />
-    <Compile Include="Areas\Gadata\BackgroundWork.cs" />
-    <Compile Include="Areas\Gadata\Controllers\TableController.cs" />
-    <Compile Include="Areas\Gadata\GadataAreaRegistration.cs" />
-    <Compile Include="Areas\Gadata\DataRefreshHub.cs" />
-    <Compile Include="Areas\Gadata\Models\Alerts_Supervisie.cs">
-      <DependentUpon>Gadata.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\Gadata\Models\C3G_Supervisie.cs">
-      <DependentUpon>Gadata.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\Gadata\Models\C4G_Supervisie.cs">
-      <DependentUpon>Gadata.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\Gadata\Models\Gadata.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Gadata.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\Gadata\Models\Gadata.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Gadata.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\Gadata\Models\Gadata.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Gadata.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\Gadata\Models\S4C_Supervisie.cs">
-      <DependentUpon>Gadata.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\Gadata\Models\STO_Supervisie.cs">
-      <DependentUpon>Gadata.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\Gadata\Models\Timeline.cs">
-      <DependentUpon>Gadata.tt</DependentUpon>
-    </Compile>
     <Compile Include="Areas\HangfireArea\Controllers\c_jobController.cs" />
     <Compile Include="Areas\HangfireArea\Controllers\c_scheduleController.cs" />
     <Compile Include="Areas\HangfireArea\Controllers\JobController.cs" />
@@ -375,6 +335,42 @@
     <Compile Include="Areas\STW040\BackgroundWork.cs" />
     <Compile Include="Areas\STW040\Controllers\STW040Controller.cs" />
     <Compile Include="Areas\STW040\STW040AreaRegistration.cs" />
+    <Compile Include="Areas\Supervision\BackgroundWork.cs" />
+    <Compile Include="Areas\Supervision\Controllers\TableController.cs" />
+    <Compile Include="Areas\Supervision\DataRefreshHub.cs" />
+    <Compile Include="Areas\Supervision\Models\Alerts_Supervisie.cs">
+      <DependentUpon>Gadata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Supervision\Models\C3G_Supervisie.cs">
+      <DependentUpon>Gadata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Supervision\Models\C4G_Supervisie.cs">
+      <DependentUpon>Gadata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Supervision\Models\Gadata.Context.cs">
+      <DependentUpon>Gadata.Context.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Areas\Supervision\Models\Gadata.cs">
+      <DependentUpon>Gadata.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Areas\Supervision\Models\Gadata.Designer.cs">
+      <DependentUpon>Gadata.edmx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Areas\Supervision\Models\S4C_Supervisie.cs">
+      <DependentUpon>Gadata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Supervision\Models\STO_Supervisie.cs">
+      <DependentUpon>Gadata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Supervision\Models\Timeline.cs">
+      <DependentUpon>Gadata.tt</DependentUpon>
+    </Compile>
     <Compile Include="Areas\Supervision\SupervisionAreaRegistration.cs" />
     <Compile Include="Areas\Tiplife\Backgroundwork.cs" />
     <Compile Include="Areas\Tiplife\Controllers\NgacElectrodeController.cs" />
@@ -992,16 +988,6 @@
       <DependentUpon>AlertModel.edmx</DependentUpon>
       <LastGenOutput>AlertModel.cs</LastGenOutput>
     </Content>
-    <Content Include="Areas\Gadata\Models\Gadata.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Gadata.edmx</DependentUpon>
-      <LastGenOutput>Gadata.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Areas\Gadata\Models\Gadata.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Gadata.edmx</DependentUpon>
-      <LastGenOutput>Gadata.cs</LastGenOutput>
-    </Content>
     <Content Include="Areas\PJV\Models\PJV.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>PJV.edmx</DependentUpon>
@@ -1011,6 +997,16 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>PJV.edmx</DependentUpon>
       <LastGenOutput>PJV.cs</LastGenOutput>
+    </Content>
+    <Content Include="Areas\Supervision\Models\Gadata.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Gadata.edmx</DependentUpon>
+      <LastGenOutput>Gadata.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Areas\Supervision\Models\Gadata.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Gadata.edmx</DependentUpon>
+      <LastGenOutput>Gadata.cs</LastGenOutput>
     </Content>
     <Content Include="Areas\Tiplife\Models\TiplifeModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -1169,23 +1165,6 @@
     <Content Include="Areas\Alert\Views\c_smsSystem\Edit.cshtml" />
     <Content Include="Areas\Alert\Views\c_smsSystem\Index.cshtml" />
     <Content Include="Areas\Alert\Views\Alert\_Details.cshtml" />
-    <Content Include="Areas\Gadata\Views\web.config" />
-    <Content Include="Areas\Gadata\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\Gadata\Views\Table\_ploegRapportGrid.cshtml" />
-    <Content Include="Areas\Gadata\Views\Table\PloegRapport.cshtml" />
-    <Content Include="Areas\Gadata\Views\Shared\_Moreinfo.cshtml" />
-    <Content Include="Areas\Gadata\Views\Table\_supervisieGrid.cshtml" />
-    <Content Include="Areas\Gadata\Views\Table\Supervisie.cshtml" />
-    <Content Include="Areas\Gadata\Views\Table\MoreInfo.cshtml" />
-    <Content Include="Areas\Gadata\Views\Table\_loginfo.cshtml" />
-    <Content Include="Areas\Gadata\Views\Table\Loginfo.cshtml" />
-    <EntityDeploy Include="Areas\Gadata\Models\Gadata.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Gadata.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Areas\Gadata\Models\Gadata.edmx.diagram">
-      <DependentUpon>Gadata.edmx</DependentUpon>
-    </Content>
     <Content Include="Areas\Alert\Views\Alert\AASPOTIndex.cshtml" />
     <Content Include="Areas\Alert\Views\Alert\Index.cshtml" />
     <Content Include="Areas\HangfireArea\Views\web.config" />
@@ -2265,6 +2244,22 @@
     <Content Include="node_modules\daterangepicker\README.md" />
     <Content Include="Areas\Tiplife\Views\NgacElectrode\_WeldgunTool.cshtml" />
     <Content Include="Areas\Supervision\Views\web.config" />
+    <Content Include="Areas\Supervision\Views\Table\_loginfo.cshtml" />
+    <Content Include="Areas\Supervision\Views\Table\_ploegRapportGrid.cshtml" />
+    <Content Include="Areas\Supervision\Views\Table\_supervisieGrid.cshtml" />
+    <Content Include="Areas\Supervision\Views\Table\Loginfo.cshtml" />
+    <Content Include="Areas\Supervision\Views\Table\MoreInfo.cshtml" />
+    <Content Include="Areas\Supervision\Views\Table\PloegRapport.cshtml" />
+    <Content Include="Areas\Supervision\Views\Table\Supervisie.cshtml" />
+    <Content Include="Areas\Supervision\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Supervision\Views\Shared\_Moreinfo.cshtml" />
+    <EntityDeploy Include="Areas\Supervision\Models\Gadata.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Gadata.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Areas\Supervision\Models\Gadata.edmx.diagram">
+      <DependentUpon>Gadata.edmx</DependentUpon>
+    </Content>
     <None Include="Properties\PublishProfiles\gensvw1178-DEV-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gotsvw11292-PRODUCTION-VCTA.pubxml" />
@@ -2316,7 +2311,6 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />

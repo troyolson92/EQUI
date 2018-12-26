@@ -7,12 +7,12 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace EqUiWebUi.Areas.Gadata.Models
+namespace EqUiWebUi.Areas.Supervision.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class S4C_Supervisie
+    public partial class C3G_Supervisie
     {
         public string Location { get; set; }
         public string logtext { get; set; }

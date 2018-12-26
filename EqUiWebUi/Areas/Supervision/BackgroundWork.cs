@@ -9,20 +9,20 @@ using Hangfire.Server;
 using Hangfire.Console;
 using System.Configuration;
 
-namespace EqUiWebUi.Areas.Gadata
+namespace EqUiWebUi.Areas.Supervision
 {
     //databuffer for supervisie system
     public static class DataBuffer
     {
         //
-        public static List<EqUiWebUi.Areas.Gadata.SupervisieDummy> Supervisie { get; set; }
-        public static List<EqUiWebUi.Areas.Gadata.SupervisieDummy> dataALERT { get; set; }
-        public static List<EqUiWebUi.Areas.Gadata.SupervisieDummy> dataVASC { get; set; }
+        public static List<EqUiWebUi.Areas.Supervision.SupervisieDummy> Supervisie { get; set; }
+        public static List<EqUiWebUi.Areas.Supervision.SupervisieDummy> dataALERT { get; set; }
+        public static List<EqUiWebUi.Areas.Supervision.SupervisieDummy> dataVASC { get; set; }
         public static bool _isRunningUpdateNGAC;
-        public static List<EqUiWebUi.Areas.Gadata.SupervisieDummy> dataC3G { get; set; }
-        public static List<EqUiWebUi.Areas.Gadata.SupervisieDummy> dataC4G { get; set; }
-        public static List<EqUiWebUi.Areas.Gadata.SupervisieDummy> dataS4C { get; set; }
-        public static List<EqUiWebUi.Areas.Gadata.SupervisieDummy> dataSTO { get; set; }
+        public static List<EqUiWebUi.Areas.Supervision.SupervisieDummy> dataC3G { get; set; }
+        public static List<EqUiWebUi.Areas.Supervision.SupervisieDummy> dataC4G { get; set; }
+        public static List<EqUiWebUi.Areas.Supervision.SupervisieDummy> dataS4C { get; set; }
+        public static List<EqUiWebUi.Areas.Supervision.SupervisieDummy> dataSTO { get; set; }
         public static bool _isRunningNormalizeSTO;
         public static bool _isRunningUpdateSTO;
         public static DateTime SupervisieLastDt { get; set; }
@@ -77,7 +77,7 @@ namespace EqUiWebUi.Areas.Gadata
 
             public void configHangfireJobs()
             {
-                if (EqUiWebUi.MyBooleanExtensions.IsAreaEnabled("Gadata"))
+                if (EqUiWebUi.MyBooleanExtensions.IsAreaEnabled("Supervision"))
                 {
                     BackgroundWork backgroundwork = new BackgroundWork();
                     //set job to refresh every minute
@@ -90,7 +90,7 @@ namespace EqUiWebUi.Areas.Gadata
                 }
                 else
                 {
-                    log.Warn("Gadata area is disabled removing hangfire jobs");
+                    log.Warn("Supervision area is disabled removing hangfire jobs");
                     RecurringJob.RemoveIfExists("BT_Supervis");
                     RecurringJob.RemoveIfExists("norm_C3G");
                     RecurringJob.RemoveIfExists("norm_C4G");
@@ -103,12 +103,12 @@ namespace EqUiWebUi.Areas.Gadata
     [AutomaticRetry(Attempts = 0)]
     public void UpdateSupervisie(PerformContext context)
     {
-        List<EqUiWebUi.Areas.Gadata.SupervisieDummy> data = new List<EqUiWebUi.Areas.Gadata.SupervisieDummy>();  
+        List<EqUiWebUi.Areas.Supervision.SupervisieDummy> data = new List<EqUiWebUi.Areas.Supervision.SupervisieDummy>();  
         //init external buffers if null
-        if (DataBuffer.dataC3G == null) DataBuffer.dataC3G = new List<EqUiWebUi.Areas.Gadata.SupervisieDummy>();
-        if (DataBuffer.dataC4G == null) DataBuffer.dataC4G = new List<EqUiWebUi.Areas.Gadata.SupervisieDummy>();
-        if (DataBuffer.dataVASC == null) DataBuffer.dataVASC = new List<EqUiWebUi.Areas.Gadata.SupervisieDummy>();
-        if (DataBuffer.dataSTO == null) DataBuffer.dataSTO = new List<EqUiWebUi.Areas.Gadata.SupervisieDummy>();
+        if (DataBuffer.dataC3G == null) DataBuffer.dataC3G = new List<EqUiWebUi.Areas.Supervision.SupervisieDummy>();
+        if (DataBuffer.dataC4G == null) DataBuffer.dataC4G = new List<EqUiWebUi.Areas.Supervision.SupervisieDummy>();
+        if (DataBuffer.dataVASC == null) DataBuffer.dataVASC = new List<EqUiWebUi.Areas.Supervision.SupervisieDummy>();
+        if (DataBuffer.dataSTO == null) DataBuffer.dataSTO = new List<EqUiWebUi.Areas.Supervision.SupervisieDummy>();
 
             //number of shifts to load in memory (when set to 9 NGAc started timeing out)
             int NumShifts = Convert.ToInt32(ConfigurationManager.AppSettings["DatabufferNumShifts"]);
@@ -116,9 +116,9 @@ namespace EqUiWebUi.Areas.Gadata
             int NumDefaultHours = Convert.ToInt32(ConfigurationManager.AppSettings["DatabufferNumDefaultHours"]) * -1;
             DateTime now = System.DateTime.Now;
             //get timeline
-            Gadata.Models.GADATAEntities2 gADATAEntities2 = new Models.GADATAEntities2();
+            Supervision.Models.GADATAEntities2 gADATAEntities2 = new Models.GADATAEntities2();
             data = gADATAEntities2.Timeline.Select(
-                x => new EqUiWebUi.Areas.Gadata.SupervisieDummy() {
+                x => new EqUiWebUi.Areas.Supervision.SupervisieDummy() {
                   Location = x.Location
                 , logtext = x.Logtekst
                 , RT = null
@@ -155,7 +155,7 @@ namespace EqUiWebUi.Areas.Gadata
 
          //Get Alert data
             DataBuffer.dataALERT  = gADATAEntities2.Alerts_Supervisie.Select(
-                x => new EqUiWebUi.Areas.Gadata.SupervisieDummy() {
+                x => new EqUiWebUi.Areas.Supervision.SupervisieDummy() {
                  Location= x.Location
                 ,logtext = x.Logtext
                 ,RT = x.Response
@@ -209,8 +209,8 @@ namespace EqUiWebUi.Areas.Gadata
                 classificationController.RunRule(c_LogClassRule, overrideManualSet: false, Clear: false, UPDATE: false);
                 context.WriteLine("S4C runRule done");
                 //get supervision data
-                Gadata.Models.GADATAEntities2 GADATAEntities2 = new Gadata.Models.GADATAEntities2();
-                    DataBuffer.dataS4C = GADATAEntities2.S4C_Supervisie.Select(x => new EqUiWebUi.Areas.Gadata.SupervisieDummy() {
+                Supervision.Models.GADATAEntities2 GADATAEntities2 = new Supervision.Models.GADATAEntities2();
+                    DataBuffer.dataS4C = GADATAEntities2.S4C_Supervisie.Select(x => new EqUiWebUi.Areas.Supervision.SupervisieDummy() {
                      Location= x.Location
                     ,logtext = x.logtext
                     ,RT = x.RT
@@ -284,9 +284,9 @@ namespace EqUiWebUi.Areas.Gadata
             context.WriteLine("runRule done");
             
             //update supervisie databuffer
-            context.WriteLine("Supervisie dataC3G"); 
-            Gadata.Models.GADATAEntities2 GADATAEntities2 = new Gadata.Models.GADATAEntities2();
-            DataBuffer.dataC3G = GADATAEntities2.C3G_Supervisie.Select(x => new EqUiWebUi.Areas.Gadata.SupervisieDummy() {
+            context.WriteLine("Supervisie dataC3G");
+            Supervision.Models.GADATAEntities2 GADATAEntities2 = new Supervision.Models.GADATAEntities2();
+            DataBuffer.dataC3G = GADATAEntities2.C3G_Supervisie.Select(x => new EqUiWebUi.Areas.Supervision.SupervisieDummy() {
                  Location= x.Location
                 ,logtext = x.logtext
                 ,RT = x.RT
@@ -340,8 +340,8 @@ namespace EqUiWebUi.Areas.Gadata
             context.WriteLine("runRule done");
             //update supervisie databuffer
             context.WriteLine("Supervisie dataC4G");
-            Gadata.Models.GADATAEntities2 GADATAEntities2 = new Gadata.Models.GADATAEntities2();
-            DataBuffer.dataC4G = GADATAEntities2.C4G_Supervisie.Select(x => new EqUiWebUi.Areas.Gadata.SupervisieDummy() {
+            Supervision.Models.GADATAEntities2 GADATAEntities2 = new Supervision.Models.GADATAEntities2();
+            DataBuffer.dataC4G = GADATAEntities2.C4G_Supervisie.Select(x => new EqUiWebUi.Areas.Supervision.SupervisieDummy() {
                  Location= x.Location
                 ,logtext = x.logtext
                 ,RT = x.RT
@@ -399,7 +399,7 @@ namespace EqUiWebUi.Areas.Gadata
                 context.WriteLine("Supervisie dataVASC");
                 VASC.Models.GADATAEntitiesVASC gADATAEntitiesVASC = new VASC.Models.GADATAEntitiesVASC();
                 gADATAEntitiesVASC.Database.CommandTimeout = 45; // default 30 
-                DataBuffer.dataVASC = gADATAEntitiesVASC.NGAC_Supervisie.Select(x => new EqUiWebUi.Areas.Gadata.SupervisieDummy() {
+                DataBuffer.dataVASC = gADATAEntitiesVASC.NGAC_Supervisie.Select(x => new EqUiWebUi.Areas.Supervision.SupervisieDummy() {
                      Location= x.Location
                     ,logtext = x.logtext
                     ,RT = x.RT

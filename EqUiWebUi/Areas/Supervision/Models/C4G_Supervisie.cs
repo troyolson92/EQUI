@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace EqUiWebUi.Areas.Gadata.Models
+namespace EqUiWebUi.Areas.Supervision.Models
 {
     using System;
     using System.Collections.Generic;

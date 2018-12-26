@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Web.Mvc;
 
-namespace EqUiWebUi.Areas.Gadata.Controllers
+namespace EqUiWebUi.Areas.Supervision.Controllers
 {
     public class TableController : Controller
     {
@@ -37,7 +37,7 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
             //in case still null trow error return empty result 
             if (data == null)
             {
-                data = new List<EqUiWebUi.Areas.Gadata.SupervisieDummy>();
+                data = new List<EqUiWebUi.Areas.Supervision.SupervisieDummy>();
             }
 
             //apply user filters
@@ -92,7 +92,7 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
                     ,s.Vweek
                     ,s.Vday
                     ,s.shift
-                }).Select (p => new  EqUiWebUi.Areas.Gadata.PloegRaport_dummy() {
+                }).Select (p => new  EqUiWebUi.Areas.Supervision.PloegRaport_dummy() {
                      Location= p.Key.Location
                     ,logtext = p.First().logtext
                     ,Response_min_ = p.Sum (x => x.RT)
@@ -137,7 +137,7 @@ namespace EqUiWebUi.Areas.Gadata.Controllers
             //in case still null trow error return empty result 
             if (data == null)
             {
-                data = new List<EqUiWebUi.Areas.Gadata.SupervisieDummy>();
+                data = new List<EqUiWebUi.Areas.Supervision.SupervisieDummy>();
             }
             //apply user filters
             string LocationRoot = CurrentUser.Getuser.LocationRoot;

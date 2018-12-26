@@ -94,20 +94,20 @@ namespace EqUiWebUi.Areas.PlcSupervisie
         {
             try
             {
-                if (EqUiWebUi.Areas.Gadata.DataBuffer._isRunningNormalizeSTO)
+                if (EqUiWebUi.Areas.Supervision.DataBuffer._isRunningNormalizeSTO)
                 {
                     log.Error("job was already running CANCEL job");
                     context.WriteLine("job was already running CANCEL job");
                     return;
                 }
-                EqUiWebUi.Areas.Gadata.DataBuffer._isRunningNormalizeSTO = true;
+                EqUiWebUi.Areas.Supervision.DataBuffer._isRunningNormalizeSTO = true;
 
                 ConnectionManager connectionManager = new ConnectionManager();
                 connectionManager.RunCommand("EXEC STO.[sp_update_L]", enblExeptions: true);
             }
             finally
             {
-                EqUiWebUi.Areas.Gadata.DataBuffer._isRunningNormalizeSTO = false;
+                EqUiWebUi.Areas.Supervision.DataBuffer._isRunningNormalizeSTO = false;
             }
         }
 
@@ -117,13 +117,13 @@ namespace EqUiWebUi.Areas.PlcSupervisie
         {
             try
             {
-                if (EqUiWebUi.Areas.Gadata.DataBuffer._isRunningUpdateSTO)
+                if (EqUiWebUi.Areas.Supervision.DataBuffer._isRunningUpdateSTO)
                 {
                     log.Error("job was already running CANCEL job");
                     context.WriteLine("job was already running CANCEL job");
                     return;
                 }
-                EqUiWebUi.Areas.Gadata.DataBuffer._isRunningUpdateSTO = true;
+                EqUiWebUi.Areas.Supervision.DataBuffer._isRunningUpdateSTO = true;
 
                 //stupid that I need to spin up all these classes to get it to run... (temp solution)
                 EqUiWebUi.Controllers.ClassificationController classificationController = new EqUiWebUi.Controllers.ClassificationController();
@@ -135,8 +135,8 @@ namespace EqUiWebUi.Areas.PlcSupervisie
 
                 //update supervisie databuffer
                 //context.WriteLine("Supervisie dataC3G"); 
-                Gadata.Models.GADATAEntities2 GADATAEntities2 = new Gadata.Models.GADATAEntities2();
-                EqUiWebUi.Areas.Gadata.DataBuffer.dataSTO = GADATAEntities2.STO_Supervisie.Select(x => new EqUiWebUi.Areas.Gadata.SupervisieDummy() {
+                Supervision.Models.GADATAEntities2 GADATAEntities2 = new Supervision.Models.GADATAEntities2();
+                EqUiWebUi.Areas.Supervision.DataBuffer.dataSTO = GADATAEntities2.STO_Supervisie.Select(x => new EqUiWebUi.Areas.Supervision.SupervisieDummy() {
                      Location= x.Location
                     ,logtext = x.logtext
                     ,RT = x.RT
@@ -155,12 +155,12 @@ namespace EqUiWebUi.Areas.PlcSupervisie
                     ,Vday = x.Vday
                     ,shift = x.shift
                     ,animation = x.Logtype
-                }).Where(x => x.timestamp > EqUiWebUi.Areas.Gadata.DataBuffer.EndDate).ToList();
+                }).Where(x => x.timestamp > EqUiWebUi.Areas.Supervision.DataBuffer.EndDate).ToList();
                 //context.WriteLine(DataBuffer.dataC3G.Count());
             }
             finally
             {
-                EqUiWebUi.Areas.Gadata.DataBuffer._isRunningUpdateSTO = false;
+                EqUiWebUi.Areas.Supervision.DataBuffer._isRunningUpdateSTO = false;
             }
         }
     }

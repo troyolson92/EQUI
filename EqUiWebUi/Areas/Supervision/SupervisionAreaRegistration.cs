@@ -13,7 +13,7 @@ namespace EqUiWebUi.Areas.Supervision
         }
 
         public override void RegisterArea(AreaRegistrationContext context) 
-        {
+        {      
             context.MapRoute(
                 "Supervision_default",
                 "Supervision/{controller}/{action}/{id}",

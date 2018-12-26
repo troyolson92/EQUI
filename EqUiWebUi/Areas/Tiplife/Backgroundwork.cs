@@ -67,7 +67,7 @@ namespace EqUiWebUi.Areas.Tiplife
                     DataBuffer.TipstatusLastDt = maxDate;
                     context.WriteLine(string.Format("Buffer table updated ({0} rows)", data.Count));
                     //notify clients
-                    var SignalRcontext = Microsoft.AspNet.SignalR.GlobalHost.ConnectionManager.GetHubContext<Areas.Gadata.DataRefreshHub>();
+                    var SignalRcontext = Microsoft.AspNet.SignalR.GlobalHost.ConnectionManager.GetHubContext<Areas.Supervision.DataRefreshHub>();
                     SignalRcontext.Clients.Group("TipstatusGrid").newData();
                 }
                 else
