@@ -17,23 +17,26 @@
 @*popover content*@
 <div class="d-none" id="OptionsPopoverContent">
     <div class="panel panel-body">
-        <small class="form-text text-muted">PloegRapportSettings</small>
-        <div class="input-group input-group-sm col-2">
+
+        <div class="input-group input-group-sm ">
             <div class="input-group-prepend">
                 <span class="input-group-text">minSumOfDownTime</span>
             </div>
-            <input type="number" class="form-control" id="minSumOfDownTime" value=@ViewBag.minSumOfDownTime>
+            <input type="number" class="form-control col-2" id="minSumOfDownTime" value=@ViewBag.minSumOfDownTime>
             <div class="input-group-append">
-                <span class="btn btn-primary" id="btnSet">Set</span>
+                <span class="btn btn-primary Optionsbtn">Set</span>
             </div>
         </div>
-        <div class="input-group input-group-sm mb-3 col-2">
+
+        <br />
+        
+        <div class="input-group input-group-sm ">
             <div class="input-group-prepend">
                 <span class="input-group-text">minCountOfDownTime</span>
             </div>
-            <input type="number" class="form-control" id="minCountOfDownTime" value=@ViewBag.minCountOfDownTime>
+            <input type="number" class="form-control col-2" id="minCountOfDownTime" value=@ViewBag.minCountOfDownTime>
             <div class="input-group-append">
-                <span class="btn btn-primary" id="btnSet">Set</span>
+                <span class="btn btn-primary Optionsbtn">Set</span>
             </div>
         </div>
     </div>
@@ -69,7 +72,6 @@
     //render grid and subscrible to row clicked events
         $('[data-name="PloegRapportGrid"]').mvcgrid({
             sourceUrl: '@Url.Action("_ploegRapportGrid")', // Grid source url string
-            requestType: 'get', // Ajax grid request type
             reload: true, // Grid reload indicator
             data: {
                 minSumOfDownTime: $('#minSumOfDownTime').val(),
@@ -100,7 +102,7 @@
                     $('[data-name="SupervisieGrid"]').html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
                     //load supervisiegird in placeholder
                     $('[data-name="SupervisieGrid"]').mvcgrid({
-                            sourceUrl: '@Url.Action("_supervisie")', // Grid source url string
+                            sourceUrl: '@Url.Action("_supervisieGrid")', // Grid source url string
                             requestType: 'get', // Ajax grid request type
                             data: { locationRootFilter: data["location-tree"]},
                             reload: true, // Grid reload indicator
@@ -133,14 +135,17 @@
             }
         });
 
-        //function to change ploegrapport parameters.
-        $("#btnSet").click(function () {
+        //listen to click on option buttons
+        $(document).on("click", ".Optionsbtn", function () {
+            console.log($('[data-name="PloegRapportGrid"]'));
+            $('#minSumOfDownTime').val($('.popover-body').find('#minSumOfDownTime').val());
+            $('#minCountOfDownTime').val($('.popover-body').find('#minCountOfDownTime').val()); 
             $('[data-name="PloegRapportGrid"]').mvcgrid({
-                reload: true, // Grid reload indicator
+                reload: true,
                 data: {
-                    minSumOfDownTime: $('#minSumOfDownTime').val(),
-                    minCountOfDownTime: $('#minCountOfDownTime').val(),
-                    ApplyResponsibleArea: @ViewBag.ApplyResponsibleArea.ToString().ToLower()
+                        minSumOfDownTime: $('#minSumOfDownTime').val(),
+                        minCountOfDownTime: $('#minCountOfDownTime').val(),
+                        ApplyResponsibleArea: @ViewBag.ApplyResponsibleArea.ToString().ToLower()
                 }
             });
         });
