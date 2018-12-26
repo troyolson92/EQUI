@@ -1,0 +1,19 @@
+﻿@model List<EqUiWebUi.Areas.Alert.Models.c_triggers>
+<div>
+    <h6>Active alerts can have the following animations</h6>
+    <table style="width:100%">
+        <tr>
+            <th>Alert type</th>
+            <th>RowStyle</th>
+            <th>Description</th>
+        </tr>
+        @foreach (EqUiWebUi.Areas.Alert.Models.c_triggers trigger in Model)
+        {
+            <tr>
+                <td>@trigger.alertType</td>
+                <td class="@trigger.Animation"></td>
+                <td>@trigger.discription</td>
+            </tr>
+        }
+    </table>
+</div>

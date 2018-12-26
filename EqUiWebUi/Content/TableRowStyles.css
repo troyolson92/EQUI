@@ -1,39 +1,13 @@
-﻿
-/*Status styles*/
-.TableStatusWGK {
-    background-color: #d606ff;
-}
-
-.TableStatusCOMP {
-    background-color: #49d112;
-}
-
-/*logtype styles */
-.TableLogtypeSHIFTBOOK {
-    background-color: #d6d613;
-}
-
-.TableLogtypeWARNING {
-    background-color: #127bf1;
-}
-
-.TableLogtypeLIVE {
-    background-color: #f21a1a;
-}
-
-.TableLogtypeBREAKDOWN {
+﻿/*static colors*/
+.TableLogtypeDarkYellow {
     background-color: #f2af13;
 }
 
-.TableLogtypeSTO {
-    background-color: #f2af13
-}
-
-.TableLogtypeTIMELINE {
+.TableLogtypeLightGreen {
     background-color: #16dd76;
 }
 
-.TableLogtypeAlert {
+.TableLogtypeOrange {
     background-color: rgba(243, 124, 9, 0.87);
 }
 
@@ -49,11 +23,14 @@
     background-color: #d6d613;
 }
 
+.TableStatusPurple {
+    background-color: #d606ff;
+}
+
 /*animations (Alerts)*/
 .ani_BlinkPink {
     background-color: #d851ff; /*set the background color in here so if the browser does not support animation we still have style*/
     -webkit-animation: blinkPink 1s 0.5s infinite alternate linear; /*chrome*/
-    animation: blinkPink 1s 0.5s infinite alternate linear; /*IE 10+ (not working for me)*/
 }
 
 @-webkit-keyframes blinkPink {
@@ -66,6 +43,7 @@
     }
 }
 
+/**/
 
 .ani_PulseGreen {
     background-color: #49d112;
@@ -94,15 +72,7 @@
     -webkit-animation: PulseGreen 3s;
 }
 
-@-webkit-keyframes PulseGreen {
-    0% {
-        background-color: #49d112;
-    }
-
-    100% {
-        background-color: transparent;
-    }
-}
+/**/
 
 .ani_PulseRed {
     background-color: #f21a1a;
@@ -119,6 +89,8 @@
     }
 }
 
+/**/
+
 .ani_PulseRedFast {
     background-color: #f60c0c;
     -webkit-animation: PulseRedFast 0.6s infinite;
@@ -133,6 +105,8 @@
         background-color: transparent;
     }
 }
+
+/**/
 
 .ani_PulseRedRepeat {
     background-color: #f21a1a;
@@ -149,6 +123,7 @@
     }
 }
 
+/**/
 
 .ani_PulseBlueOnce {
     -webkit-animation: PulseBlue 3s;
@@ -164,6 +139,8 @@
     }
 }
 
+/**/
+
 .ani_PulseBlueRepeat {
     -webkit-animation: PulseBlue 2s infinite;
 }
@@ -178,3 +155,4 @@
     }
 }
 
+/**/

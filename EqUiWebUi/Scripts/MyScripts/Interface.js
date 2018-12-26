@@ -11,16 +11,11 @@ function initInterface() {
         placement: "left",
         html: true,
         content: function () {
-            var output = '';
-            $.ajax(
-                {
+                return $.ajax({
                     url: '/user_management/user/_Details',
-                    async: false,
-                    success: function (response) {
-                        output = response;
-                    }
-                });
-            return output;
+                    dataType: 'html',
+                    async: false
+                }).responseText;
         }
     });
     //hide popovers on body click

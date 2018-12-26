@@ -1,0 +1,41 @@
+﻿<div>
+    <h4>Legend for supervision system</h4>
+    <hr />
+    <h6>Primairy styles</h6>
+    <table style="width:100%">
+        <tr>
+            <th>Logtype</th>
+            <th>RowStyle</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>LIVE</td>
+            <td class="@MyRowStyling.getRowStyleLogtype("LIVE")"></td>
+            <td>marks a breakdown that is ongoing </td>
+        </tr>
+        <tr>
+            <td>BREAKDOWN</td>
+            <td class="@MyRowStyling.getRowStyleLogtype("BREAKDOWN")"></td>
+            <td>marks a breakdown (robot) that has been resolved</td>
+        </tr>
+        <tr>
+            <td>STOerror</td>
+            <td class="@MyRowStyling.getRowStyleLogtype("STOerror")"></td>
+            <td>marks a breakdown (plc) that has been resolved</td>
+        </tr>
+        <tr>
+            <td>TIMELINE</td>
+            <td class="@MyRowStyling.getRowStyleLogtype("TIMELINE")"></td>
+            <td>marks begin of each new production shift</td>
+        </tr>
+        <tr>
+            <td>ALERT</td>
+            <td class="@MyRowStyling.getRowStyleLogtype("ALERT")"></td>
+            <td>marks a alert that has been resolved (see below for active alerts)</td>
+        </tr>
+    </table>
+
+    <hr />
+    @*Get list with animation types for alerts*@
+    @Html.Action("_Legend", "c_triggers", new {Area ="Alert" })
+</div>

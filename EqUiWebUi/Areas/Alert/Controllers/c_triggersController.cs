@@ -25,6 +25,17 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             return View(await c_triggers.ToListAsync());
         }
 
+        /// <summary>
+        /// Legend partial view for alert triggers
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult _Legend()
+        {
+            //get list of all alerts that have an animation and can be in a report.
+            List<c_triggers> triggers = db.c_triggers.Where(c => c.isInReport && c.enabled && c.Animation.Length > 1).OrderBy(c => c.Animation).ToList();
+            return PartialView(triggers);
+        }
+
         //run the alert trigger in debug mode (manual triggered no hang-fire)
         [Authorize(Roles = "Administrator, AlertMaster, AlertPowerUser")]
         public void RunAlertTrigger(int triggerID)

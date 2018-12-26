@@ -7,6 +7,7 @@
         <h4>
             PloegRapport
             <a class="fas fa-wrench text-white" id="OptionsPopover" href="#" data-toggle="popover" data-placement="bottom"></a>
+            <a class="fas fa-info-circle text-white" id="LegendPopover" href="#" data-container="body" data-toggle="popover"  data-placement="bottom"></a>
         </h4>
     </div>
     <div id="PloegRapportGridSpincontainer" style="position:relative">
@@ -28,7 +29,7 @@
             </div>
         </div>
 
-        <br />
+        <p>OR</p>
         
         <div class="input-group input-group-sm ">
             <div class="input-group-prepend">
@@ -137,7 +138,6 @@
 
         //listen to click on option buttons
         $(document).on("click", ".Optionsbtn", function () {
-            console.log($('[data-name="PloegRapportGrid"]'));
             $('#minSumOfDownTime').val($('.popover-body').find('#minSumOfDownTime').val());
             $('#minCountOfDownTime').val($('.popover-body').find('#minCountOfDownTime').val()); 
             $('[data-name="PloegRapportGrid"]').mvcgrid({
@@ -148,6 +148,18 @@
                         ApplyResponsibleArea: @ViewBag.ApplyResponsibleArea.ToString().ToLower()
                 }
             });
+        });
+
+        //enable popover for legend
+        $("#LegendPopover").popover({
+            html: true,
+            content: function () {
+                return $.ajax({
+                    url: '@Url.Action("_legend")',
+                    dataType: 'html',
+                    async: false
+                }).responseText;
+            }
         });
 
         //full with screen

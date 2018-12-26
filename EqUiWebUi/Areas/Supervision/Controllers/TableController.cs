@@ -133,7 +133,7 @@ namespace EqUiWebUi.Areas.Supervision.Controllers
         }
 
 
-        //------------------------------------Supervisie-------------------------------------------------
+        //------------------------------------Supervision-------------------------------------------------
         /// <summary>
         /// Supervision 
         /// </summary>
@@ -147,7 +147,7 @@ namespace EqUiWebUi.Areas.Supervision.Controllers
         }
 
         /// <summary>
-        /// Grid component for Supervisie
+        /// Grid component for Supervision
         /// </summary>
         /// <param name="locationRootFilter"></param>
         /// <param name="ApplyResponsibleArea"></param>
@@ -205,7 +205,16 @@ namespace EqUiWebUi.Areas.Supervision.Controllers
             return PartialView(data);;
         }
 
-        //------------------------------------Extra ifno pages-------------------------------------------------
+        /// <summary>
+        /// Legend partial view for supervision and ploegrapport
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult _Legend()
+        {
+            return PartialView();
+        }
+
+        //------------------------------------Extra info pages-------------------------------------------------
         /// <summary>
         /// Full view that calls partial view _Moreinfo
         /// Gets called by VSTO plug in!
@@ -220,7 +229,7 @@ namespace EqUiWebUi.Areas.Supervision.Controllers
 
         /// <summary>
         /// Partial view that contains more info about ... contains a trend chart / loginfo / maximo partial
-        /// called by modals in Supervisie and PloegRapport
+        /// called by modal in Supervision and PloegRapport
         /// </summary>
         /// <param name="logInfo"></param>
         /// <returns></returns>

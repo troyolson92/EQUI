@@ -2262,6 +2262,8 @@
       <DependentUpon>SupervisionModel.edmx</DependentUpon>
     </Content>
     <Content Include="Areas\Supervision\Views\Table\Index.cshtml" />
+    <Content Include="Areas\Supervision\Views\Table\_Legend.cshtml" />
+    <Content Include="Areas\Alert\Views\c_triggers\_Legend.cshtml" />
     <None Include="Properties\PublishProfiles\gensvw1178-DEV-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gotsvw11292-PRODUCTION-VCTA.pubxml" />

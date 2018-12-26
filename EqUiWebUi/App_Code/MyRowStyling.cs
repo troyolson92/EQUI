@@ -10,49 +10,40 @@ namespace EqUiWebUi
             switch (status)
             {
                 case "WGK":
-                    return "TableStatusWGK";
+                    return "TableStatusPurple";
 
                 case "COMP":
-                    return "TableStatusCOMP";
+                    return "TableLogtypeGreen";
 
                 default:
                     return "";
             }
         }
 
-        //returns a Css style based on logtype
+        //returns a Css style based on log type (used in supervision)
         public static string getRowStyleLogtype(string logtype)
         {
             switch (logtype)
             {
-                case "SHIFTBOOK":
-                    return "TableLogtypeSHIFTBOOK";
-
-                case "WARNING":
-                    return "TableLogtypeWARNING";
-
                 case "LIVE":
-                    return "TableLogtypeLIVE";
+                    return "TableLogtypeRed"; //marks a breakdown that is ongoing 
 
                 case "BREAKDOWN":
-                    return "TableLogtypeBREAKDOWN";
-
                 case "STOerror":
-                    return "TableLogtypeSTO";
+                    return "TableLogtypeDarkYellow"; //marks a breakdown that has been resolved
 
                 case "TIMELINE":
-                    return "TableLogtypeTIMELINE";
+                    return "TableLogtypeLightGreen"; //marks begin of each new production shift
 
-                case "ALERT":
-                    return "TableLogtypeAlert";
+                case "ALERT": //COMPLETED ALERT! alert that has been resolved 
+                    return "TableLogtypeOrange";
 
                 default:
-                    return logtype; //this is used for alerts the pass the animation direcly (when alert is active else they just pass "ALERT"
+                    return logtype; //this is used for alerts the pass the animation directly (when alert is active else they just pass "ALERT"
             }
         }
 
-        //tiplife tool
-        //returns a Css style based on value
+        //returns a Css style based on value (used in tiplife)
         public static string getRowStyleByWearValue(double? pWear, int? nDress, double? nRparts, string Status)
         {
             if (pWear.GetValueOrDefault(0) > 98 || nDress.GetValueOrDefault(0) > 210) //severe tiplife
@@ -73,7 +64,7 @@ namespace EqUiWebUi
             }
         }
 
-        //tip life tool
+        //tip life tool WTF is this function doing here SAM?  has nothing to do with rowstyling
         //to calculate the wear
         public static double getPwear(EqUiWebUi.Areas.Tiplife.Models.TipDressLogFile tipDressLogFile)
         {
