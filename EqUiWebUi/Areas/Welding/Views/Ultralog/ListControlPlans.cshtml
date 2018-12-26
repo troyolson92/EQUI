@@ -12,7 +12,7 @@
                     .Titled("")
                     .Encoded(false)
                     .RenderedAs(c =>
-                    MyFilters.IconActionLink(Url.Action("GetControlPlan", new { PlanName = c }), "fas fa-clipboard-list ", "", "Go to control plan").ToHtmlString() 
+                    MyHtmlHelpers.IconActionLink(Url.Action("GetControlPlan", new { PlanName = c }), "fas fa-clipboard-list ", "", "Go to control plan").ToHtmlString() 
                     ).Filterable(false);
 }).Filterable().Sortable().Pageable(pager =>
 {

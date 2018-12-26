@@ -56,6 +56,24 @@
 
 }
 
+@*helper to create action link with an icon*@
+@helper IconActionLink(string url, string icon, string linkText, string helperText, string classes = "", bool enabeld = true)
+{
+    if (enabeld)
+    {
+        <a href="@url" class="@classes" data-toggle="tooltip" title="@helperText">
+            <i class="@icon"></i>
+            <span>
+                <strong>@linkText</strong>
+            </span>
+        </a>
+    }
+    else
+    {
+        <div></div>
+    }
+}
+
 @*help to render a link panel from the database*@
 @helper EquiRenderPanel(string pannelName)
 {

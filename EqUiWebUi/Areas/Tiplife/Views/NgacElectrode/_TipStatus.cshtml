@@ -26,7 +26,7 @@
                      .Encoded(false)
                      .Filterable(false)
                      .Sortable(false)
-                     .RenderedAs(c => MyEquiToolkit.SbcuTool(c.Robot, "1")); //need to add the toolnumber in die model
+                     .RenderedAs(c => MyHtmlHelpers.IconActionLink(Url.Action("WeldgunTool", "NgacElectrode", new { Area = "Tiplife", location = c.Robot, tool_nr = c.Tool_Nr }), "fas fa-chart-line", "", "Launch WeldgunTool").ToHtmlString()); 
 }).Sortable().Pageable(pager =>
 {
     pager.RowsPerPage = 20;

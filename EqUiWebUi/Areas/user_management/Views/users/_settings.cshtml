@@ -8,9 +8,9 @@
     </div>
     <div class="card-body">
         @MyHtmlHelpers.EquiLink("/user_management/users/Index", "fas fa-users", "Users", helperText: "List all users")
-        <p>@MyFilters.IconActionLink("/user_management/usersPermisions/Index", "fas fa-users-cog", "User grants", "administrator page that show all site permissions")</p>
+        <p>@MyHtmlHelpers.IconActionLink("/user_management/usersPermisions/Index", "fas fa-users-cog", "User grants", "administrator page that show all site permissions")</p>
         <p>
-            @MyFilters.IconActionLink("/user_management/users/ListSessions", "fas fa-th-list", "Sessions", "List active session tokens")
+            @MyHtmlHelpers.IconActionLink("/user_management/users/ListSessions", "fas fa-th-list", "Sessions", "List active session tokens")
             <span class="badge badge-warning">Active sessions: @ViewBag.ActiveSessions</span>
         </p>
     </div>

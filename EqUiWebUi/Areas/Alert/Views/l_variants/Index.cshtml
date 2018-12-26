@@ -21,7 +21,7 @@
     columns.Add(c => c)
                         .Titled("ControlLimit")
                         .Encoded(false)
-                        .RenderedAs(c => MyFilters.IconActionLink(Url.Action("Edit","L_controlLimits", new { l_variants_id = c.id, }), "glyphicon glyphicon-pencil", "", "Edit this controllimit group")
+                        .RenderedAs(c => MyHtmlHelpers.IconActionLink(Url.Action("Edit","L_controlLimits", new { l_variants_id = c.id, }), "glyphicon glyphicon-pencil", "", "Edit this controllimit group")
                         ).Filterable(false);
     //add edit button for variantgroup
     columns.Add(c => c)

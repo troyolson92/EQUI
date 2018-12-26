@@ -17,7 +17,7 @@
     columns.Add(c => c)
                .Titled("Job")
                .Encoded(false)
-               .RenderedAs(c => MyFilters.IconActionLink(Url.Action("rtJob", "Breakdown", new { Area = "VASC", jobID = c.id }), "fas fa-info-circle", "", "show vasc job details")
+               .RenderedAs(c => MyHtmlHelpers.IconActionLink(Url.Action("rtJob", "Breakdown", new { Area = "VASC", jobID = c.id }), "fas fa-info-circle", "", "show vasc job details")
                ).Filterable(false);
 }).Filterable().Sortable().Pageable(pager =>
 {

@@ -42,11 +42,10 @@
                         .Titled("")
                         .Encoded(false)
                         .RenderedAs(c =>
-                        MyFilters.IconActionLink(Url.Action("Listalerts", new { Location = c.location }), "fas fa-filter", "", "Filter alerts for this location").ToHtmlString() +     //add filterbutton
-                        MyFilters.IconActionLink(Url.Action("Edit", new { id = c.id }), "fas fa-pencil-alt", "", "Edit this alert").ToHtmlString() +    //add edit button
-                        (c.info.Contains("gun") ? MyEquiToolkit.SbcuTool(c.location, c.info.Replace(":", "").Substring(c.info.IndexOf("gun"), 5).Replace("gun", "")).ToHtmlString() : "")  //launch sbcu tool (if needed)
+                        MyHtmlHelpers.IconActionLink(Url.Action("Listalerts", new { Location = c.location }), "fas fa-filter", "", "Filter alerts for this location").ToHtmlString() +     //add filterbutton
+                        MyHtmlHelpers.IconActionLink(Url.Action("Edit", new { id = c.id }), "fas fa-pencil-alt", "", "Edit this alert").ToHtmlString() +    //add edit button
+                        (c.info.Contains("gun") ? MyHtmlHelpers.IconActionLink(Url.Action("WeldgunTool", "NgacElectrode", new {Area= "Tiplife", location = c.location, tool_nr = c.info.Replace(":", "").Substring(c.info.IndexOf("gun"), 5).Replace("gun", "") }), "fas fa-chart-line", "", "Launch WeldgunTool").ToHtmlString() : "")  //launch WeldgunTool tool (if needed)
                         ).Filterable(false);
-
 }).Filterable().Sortable().Pageable(pager =>
 {
     pager.RowsPerPage = 20;

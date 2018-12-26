@@ -21,9 +21,9 @@
                         .Titled("")
                         .Encoded(false)
                         .RenderedAs(c =>
-                        MyFilters.IconActionLink(Url.Action("Edit","Alert", new { id = c.id }), "fas fa-pencil-alt", "", "Edit this alert").ToHtmlString() + //add edit button (alert controller)
-                        MyFilters.IconActionLink(Url.Action("Edit", new { id = c.id }), "fas fa-pencil-alt text-danger", "", "Edit this alert in admin mode").ToHtmlString() + //add edit button ADMIN
-                        MyFilters.IconActionLink(Url.Action("Delete", new { id = c.id }), "fas fa-trash-alt text-danger", "", "Delete this alert").ToHtmlString() //add edit button ADMIN
+                        MyHtmlHelpers.IconActionLink(Url.Action("Edit","Alert", new { id = c.id }), "fas fa-pencil-alt", "", "Edit this alert").ToHtmlString() + //add edit button (alert controller)
+                        MyHtmlHelpers.IconActionLink(Url.Action("Edit", new { id = c.id }), "fas fa-pencil-alt text-danger", "", "Edit this alert in admin mode").ToHtmlString() + //add edit button ADMIN
+                        MyHtmlHelpers.IconActionLink(Url.Action("Delete", new { id = c.id }), "fas fa-trash-alt text-danger", "", "Delete this alert").ToHtmlString() //add edit button ADMIN
                         ).Filterable(false);
 }).Filterable().Sortable().Pageable(pager =>
 {

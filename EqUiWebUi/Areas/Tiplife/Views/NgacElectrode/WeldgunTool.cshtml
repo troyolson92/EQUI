@@ -22,4 +22,12 @@ Tool_nr: @Html.DropDownList("tool_nr", null, htmlAttributes: new { @class = "sel
                 $('#welgunToolPlaceholder').html($("#Error", result).html());
             });
     });
+
 </script>
+
+@if (ViewBag.autoload == true)
+{
+    <script>
+        $('#btn_getData').click()
+    </script>
+}

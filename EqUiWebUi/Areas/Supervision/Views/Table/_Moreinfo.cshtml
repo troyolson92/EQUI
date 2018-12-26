@@ -33,7 +33,7 @@
             <div class="card-header bg-warning">
                 <h6 class="card-title">
                     Details for Alert: <strong>@Model.refid</strong> Info: <strong>@Model.logtext.Trim()</strong>
-                    @MyFilters.IconActionLink(Url.Action("Edit", "Alert", new { area = "Alert", id = Model.refid }), "far fa-edit text-black-50", "", "Edit this alert")
+                    @MyHtmlHelpers.IconActionLink(Url.Action("Edit", "Alert", new { area = "Alert", id = Model.refid }), "far fa-edit text-black-50", "", "Edit this alert")
                     <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1 text-black-50"></i></span>
                 </h6>
             </div>

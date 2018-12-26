@@ -1085,8 +1085,6 @@
       <LastGenOutput>EQUIModel.cs</LastGenOutput>
     </Content>
     <Content Include="App_Code\MyFilters.cshtml" />
-    <Content Include="App_Code\MyModals.cshtml" />
-    <Content Include="App_Code\MyEquiToolkit.cshtml" />
     <Content Include="Areas\user_management\Views\web.config" />
     <Content Include="Areas\user_management\Views\_ViewStart.cshtml" />
     <EntityDeploy Include="Areas\user_management\Models\user_management.edmx">

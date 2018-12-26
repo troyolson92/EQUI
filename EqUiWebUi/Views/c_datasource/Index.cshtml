@@ -15,10 +15,10 @@ columns.Add(c => c.isAlertSource).Titled("isAlertSource");
 columns.Add(c => c)
                 .Titled("")
                 .Encoded(false)
-                .RenderedAs(c => MyFilters.IconActionLink(Url.Action("Edit", new { id = c.Id }), "fas fa-pencil-alt", "", "Edit this") + " | " +
-                             MyFilters.IconActionLink(Url.Action("Delete", new { id = c.Id }), "fas fa-trash-alt", "", "Delete this") + " | " +
-                             MyFilters.IconActionLink(Url.Action("RunDbTest", new {id = c.Id, ChangePassword = false }), "fas fa-stethoscope", "", "check connection", classes: "JQresultTriggerBtn") + " | " +
-                             MyFilters.IconActionLink(Url.Action("RunDbTest", new {id = c.Id, ChangePassword = true }), "fas fa-key", "", "change password (rotate list)", classes: "JQresultTriggerBtn")
+                .RenderedAs(c => MyHtmlHelpers.IconActionLink(Url.Action("Edit", new { id = c.Id }), "fas fa-pencil-alt", "", "Edit this") + " | " +
+                             MyHtmlHelpers.IconActionLink(Url.Action("Delete", new { id = c.Id }), "fas fa-trash-alt", "", "Delete this") + " | " +
+                             MyHtmlHelpers.IconActionLink(Url.Action("RunDbTest", new {id = c.Id, ChangePassword = false }), "fas fa-stethoscope", "", "check connection", classes: "JQresultTriggerBtn") + " | " +
+                             MyHtmlHelpers.IconActionLink(Url.Action("RunDbTest", new {id = c.Id, ChangePassword = true }), "fas fa-key", "", "change password (rotate list)", classes: "JQresultTriggerBtn")
                     ).Filterable(false);
 }).Filterable().Sortable().Pageable(pager =>
 {
@@ -28,7 +28,7 @@ columns.Add(c => c)
 }).Empty("Did not find anything").Css("table-hover")
 
 <hr />
-<p>@MyFilters.IconActionLink("/c_datasource/RunDbTest", "fas fa-stethoscope", "Run all database tests", "Test all databases in equi.c_datasources (login/select system date)", classes: "JQresultTriggerBtn")</p>
+<p>@MyHtmlHelpers.IconActionLink("/c_datasource/RunDbTest", "fas fa-stethoscope", "Run all database tests", "Test all databases in equi.c_datasources (login/select system date)", classes: "JQresultTriggerBtn")</p>
 
 
 @section scripts{

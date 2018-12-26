@@ -7,10 +7,10 @@
     </div>
     <div class="card-body">
         @MyHtmlHelpers.EquiLink("/Hangfire", "fas fa-server", "Hangfire dashbord", helperText: "Hangfire is a jobmanager for running background processes")
-        <p>@MyFilters.IconActionLink("/HangfireArea/job/ConfiureBackgroundJobs", "fas fa-power-off", "Reset hangfire configuration", "Resets the hangfire reocurring job configuration (don't touch it!)", classes: "text-danger JQresultTriggerBtn")</p>
+        <p>@MyHtmlHelpers.IconActionLink("/HangfireArea/job/ConfiureBackgroundJobs", "fas fa-power-off", "Reset hangfire configuration", "Resets the hangfire reocurring job configuration (don't touch it!)", classes: "text-danger JQresultTriggerBtn")</p>
         @MyHtmlHelpers.EquiLink("/HangfireArea/c_schedule/index", "fas fa-calendar-plus", "Hangfire schedules", helperText: "Setup hangfire reocurring jobs to perform tasks ie: alerts, houskeeping, background job")
-        <p>@MyFilters.IconActionLink("/HangfireArea/c_job/index", "fas fa-list-ul", "List all background jobs", "sql commands that need to be run from time to time")</p>
-        <p>@MyFilters.IconActionLink("/c_housekeeping/index", "fas fa-broom", "List all housekeeping jobs", "cleaning of datatables")</p>
-        <p>@MyFilters.IconActionLink("/Alert/c_triggers/index", "fas fa-bell", "List all alert jobs", "alert triggers")</p>
+        <p>@MyHtmlHelpers.IconActionLink("/HangfireArea/c_job/index", "fas fa-list-ul", "List all background jobs", "sql commands that need to be run from time to time")</p>
+        <p>@MyHtmlHelpers.IconActionLink("/c_housekeeping/index", "fas fa-broom", "List all housekeeping jobs", "cleaning of datatables")</p>
+        <p>@MyHtmlHelpers.IconActionLink("/Alert/c_triggers/index", "fas fa-bell", "List all alert jobs", "alert triggers")</p>
     </div>
 </div>
