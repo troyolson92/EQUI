@@ -90,7 +90,6 @@ else
                         <p></p>
 
                         <div class="col-md-10">
-                            <button id="checkstatement" type="button" class="btn-sm btn-primary">Checkstatement</button>
                             <button id="Runstatement" type="button" class="btn-sm btn-primary">Runstatement</button>
                         </div>
                     </div>
@@ -291,12 +290,6 @@ else
                         </div>
                         @Html.ValidationMessageFor(model => model.controlChartSqlStatement, "", new { @class = "text-danger" })
                         @Html.HelpTextFor(model => model.controlChartSqlStatement)
-
-                        <p></p>
-
-                        <div class="col-md-10">
-                            <button id="checkcontrolChartSqlStatement" type="button" class="btn-sm btn-primary">Check controlChart Statement</button>
-                        </div>
                     </div>
                 </div>
 
@@ -391,21 +384,6 @@ else
                     , function (result) { }
                 );
         });
-        //on checkstatement show the user if all mandatory columns are there
-        var mandatorytriggerColumns = new Array();
-        mandatorytriggerColumns[0] = "timestamp";
-        mandatorytriggerColumns[1] = "item2";
-        mandatorytriggerColumns[2] = "item3";
-        $('#checkstatement').click(function () {
-            //launch modal
-            $('#MyModal').removeData('bs.modal');
-            $('#MyModal').modal({ show: true });
-            $('#MyModal').load('@Url.Action("_CheckStatement", "Dynamic", new { area = "" })'
-                , { qry: sqlStatementCodeMirror.getValue(), db: $('#c_datasource_id').val() }
-                , function (result) { }
-            );
-        });
-
 
          //on Runstatement show the user the result from the alert sql statement
         $('#checkcontrollimitSqlStatement').click(function () {

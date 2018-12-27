@@ -980,7 +980,6 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MyExtenstions.cs" />
-    <Compile Include="WebGridHelpers.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\DummyFile.txt" />
