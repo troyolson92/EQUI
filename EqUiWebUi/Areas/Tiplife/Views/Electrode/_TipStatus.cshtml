@@ -20,13 +20,13 @@
                  .Encoded(false)
                  .Filterable(false)
                  .Sortable(false)
-                 .RenderedAs(c => TiplifeHtmlHelpers.TipMonitorIcon(c.Status, c.RobotWear));
+                 .RenderedAs(c => TiplifeHelpers.TipMonitorIcon(c.Status, c.RobotWear));
     //launch sbcu tool
     columns.Add()
                      .Encoded(false)
                      .Filterable(false)
                      .Sortable(false)
-                     .RenderedAs(c => MyHtmlHelpers.IconActionLink(Url.Action("WeldgunTool", "NgacElectrode", new { Area = "Tiplife", location = c.Robot, tool_nr = c.Tool_Nr }), "fas fa-chart-line", "", "Launch WeldgunTool").ToHtmlString());
+                     .RenderedAs(c => MyHtmlHelpers.IconActionLink(Url.Action("WeldgunTool", new {location = c.Robot, tool_nr = c.Tool_Nr }), "fas fa-chart-line", "", "Launch WeldgunTool").ToHtmlString());
 }).Sortable().Pageable(pager =>
 {
     pager.RowsPerPage = 20;

@@ -34,15 +34,12 @@
             reload: true, // Grid reload indicator
             rowClicked: function (row, data, e) {
                 //ignore clicks not on td
-                console.log(e.target.tagName);
                 if (e.target.tagName.toUpperCase() != 'TD') {
                     return;
                 }
                 $('#MyModal').removeData('bs.modal');
                 $('#MyModal').modal({ show: true });
-                var urlTipinfo = '@Url.Action("_Tipinfo")?location=' + encodeURIComponent(data["robot"]) + '&tool_nr=' + encodeURIComponent(data["tool_-nr"]);
-
-                $('#MyModal').load(urlTipinfo, function (result) { });
+                $('#MyModal').load('@Url.Action("_Tipinfo","NgacElectrode")', { location: encodeURIComponent(data["robot"]), tool_nr : encodeURIComponent(data["tool_-nr"])}, function (result) { });
             },
             reloadFailed: function (result) {
                 $('[data-name="TipStatusGrid"]').html($("#Error", result.responseText).html());

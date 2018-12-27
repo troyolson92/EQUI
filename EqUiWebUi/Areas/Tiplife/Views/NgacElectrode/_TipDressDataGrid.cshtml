@@ -9,7 +9,7 @@
     columns.Add(c => c.Dress_Num).Titled("#Dress");
     columns.Add(c => c.Wear_Fixed).Titled("(mm)Wear_Fixed");
     columns.Add(c => c.Wear_Move).Titled("(mm)Wear_Move");
-    columns.Add().Titled("Pwear").RenderedAs(c => MyRowStyling.getPwear(c)); 
+    columns.Add().Titled("Pwear").RenderedAs(c => EqUiWebUi.Areas.Tiplife.TiplifeHelpers.getPwear(c)); 
     columns.Add(c => c.ErrorType).Titled("Error");
 }).Sortable().Filterable().Pageable(pager =>
 {
