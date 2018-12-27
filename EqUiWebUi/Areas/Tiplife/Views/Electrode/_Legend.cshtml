@@ -3,14 +3,49 @@
     <h6>Electrode status animations</h6>
     <table style="width:100%">
         <tr>
-            <th>Electrode Status</th>
-            <th>RowStyle</th>
+            <th>Type</th>
+            <th>animation</th>
             <th>Description</th>
         </tr>
         <tr>
-            <td>NWIC</td>
-            <td class=""></td>
-            <td>No wear in calc</td>
+            <td>mild warning</td>
+            <td class="@EqUiWebUi.Areas.Tiplife.TiplifeHelpers.getRowStyleByWearValue(pWear:91, nDress:0, nRparts:0, Status:"")"></td>
+            <td>Wear > 90% Or Dresses > 200</td>
+        </tr>
+        <tr>
+            <td>Severe warning</td>
+            <td class="@EqUiWebUi.Areas.Tiplife.TiplifeHelpers.getRowStyleByWearValue(pWear:99, nDress:0, nRparts:0, Status:"")"></td>
+            <td>Wear > 98% Or Dresses > 210</td>
+        </tr>
+        <tr>
+            <td>check status</td>
+            <td class="@EqUiWebUi.Areas.Tiplife.TiplifeHelpers.getRowStyleByWearValue(pWear:0, nDress:0, nRparts:0, Status:"XXX")"></td>
+            <td>Status check or data fault check "Status icon" bellow</td>
+        </tr>
+    </table>
+
+    <hr />
+    <h6>Status icon</h6>
+    <table style="width:100%">
+        <tr>
+            <th>Icon</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>@TiplifeHtmlHelpers.TipMonitorIcon("ND", 0)</td>
+            <td>No data from robot for 48hours check electrode by hand!</td>
+        </tr>
+        <tr>
+            <td>@TiplifeHtmlHelpers.TipMonitorIcon("NTCD", 0)</td>
+            <td>No change detected but wait to re-change electrode! (wait for wear > 1mm)</td>
+        </tr>
+        <tr>
+            <td>@TiplifeHtmlHelpers.TipMonitorIcon("NTCD", 1)</td>
+            <td>No change detected you can now try to change the electrode again</td>
+        </tr>
+        <tr>
+            <td>@TiplifeHtmlHelpers.TipMonitorIcon("", 0)</td>
+            <td>Everything is OK</td>
         </tr>
     </table>
 </div>

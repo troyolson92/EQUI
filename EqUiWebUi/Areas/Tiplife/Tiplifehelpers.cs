@@ -8,12 +8,12 @@ namespace EqUiWebUi.Areas.Tiplife
         public static string getRowStyleByWearValue(double? pWear, int? nDress, double? nRparts, string Status)
         {
             if (pWear.GetValueOrDefault(0) > 98 || nDress.GetValueOrDefault(0) > 210) //severe tiplife
-            {
-                return "ani_PulseRed";
+            {     
+                return "ani_PulseRedFast";
             }
             else if (pWear.GetValueOrDefault(0) > 90 || nDress.GetValueOrDefault(0) > 200) //mild tiplife
             {
-                return "ani_PulseRedFast";
+                return "ani_PulseRed";
             }
             else if (Status != "") //data error
             {
