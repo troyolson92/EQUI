@@ -182,6 +182,7 @@
     <Folder Include="Areas\STW040\Models\" />
     <Folder Include="Areas\STW040\Views\Shared\" />
     <Folder Include="Areas\Supervision\Views\Shared\" />
+    <Folder Include="Areas\Tiplife\Views\ComauElectrode\" />
     <Folder Include="Areas\VASC\Views\Shared\" />
     <Folder Include="Areas\VCSC\Controllers\" />
     <Folder Include="Areas\VCSC\Models\" />
@@ -190,13 +191,13 @@
     <Folder Include="Areas\Welding\Views\ARO\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Code\MyRowStyling.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Alert\AlertAreaRegistration.cs" />
     <Compile Include="Areas\Alert\AlertEngine.cs" />
+    <Compile Include="Areas\Alert\AlertHelpers.cs" />
     <Compile Include="Areas\Alert\Controllers\AlertController.cs" />
     <Compile Include="Areas\Alert\Controllers\ControlChartController.cs" />
     <Compile Include="Areas\Alert\Controllers\c_CPT600Controller.cs" />
@@ -375,7 +376,10 @@
       <DependentUpon>SupervisionModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Supervision\SupervisionAreaRegistration.cs" />
+    <Compile Include="Areas\Supervision\SupervisionHelpers.cs" />
     <Compile Include="Areas\Tiplife\Backgroundwork.cs" />
+    <Compile Include="Areas\Tiplife\Controllers\ComauElectrodeController.cs" />
+    <Compile Include="Areas\Tiplife\Controllers\ElectrodeController.cs" />
     <Compile Include="Areas\Tiplife\Controllers\NgacElectrodeController.cs" />
     <Compile Include="Areas\Tiplife\Models\TipDressLogFile.cs">
       <DependentUpon>TiplifeModel.tt</DependentUpon>
@@ -408,6 +412,7 @@
       <DependentUpon>TiplifeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Tiplife\TiplifeAreaRegistration.cs" />
+    <Compile Include="Areas\Tiplife\TiplifeHelpers.cs" />
     <Compile Include="Areas\user_management\Controllers\AreaFiltersController.cs" />
     <Compile Include="Areas\user_management\Controllers\c_ownershipController.cs" />
     <Compile Include="Areas\user_management\Controllers\userController.cs" />
@@ -880,6 +885,7 @@
     </Compile>
     <Compile Include="Areas\Welding\WeldingAreaRegistration.cs" />
     <Compile Include="Areas\Welding\Controllers\WeldingController.cs" />
+    <Compile Include="Areas\Welding\WeldingHelpers.cs" />
     <Compile Include="Controllers\AssetsController.cs" />
     <Compile Include="Controllers\ChartController.cs" />
     <Compile Include="Controllers\ClassificationController.cs" />
@@ -1182,11 +1188,11 @@
     <Content Include="Areas\Tiplife\Models\TiplifeModel.edmx.diagram">
       <DependentUpon>TiplifeModel.edmx</DependentUpon>
     </Content>
-    <Content Include="Areas\Tiplife\Views\NgacElectrode\_TipStatus.cshtml" />
-    <Content Include="Areas\Tiplife\Views\NgacElectrode\_TipsToChange.cshtml" />
-    <Content Include="Areas\Tiplife\Views\NgacElectrode\CurrentTipstatus.cshtml" />
+    <Content Include="Areas\Tiplife\Views\Electrode\_TipStatus.cshtml" />
+    <Content Include="Areas\Tiplife\Views\Electrode\_TipsToChange.cshtml" />
+    <Content Include="Areas\Tiplife\Views\Electrode\CurrentTipstatus.cshtml" />
     <Content Include="Areas\Tiplife\Views\NgacElectrode\Index.cshtml" />
-    <Content Include="Areas\Tiplife\Views\NgacElectrode\PlanTipChange.cshtml" />
+    <Content Include="Areas\Tiplife\Views\Electrode\PlanTipChange.cshtml" />
     <Content Include="Areas\Tiplife\Views\NgacElectrode\TipwearBeforeChange.cshtml" />
     <Content Include="Areas\Tiplife\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Tiplife\Views\NgacElectrode\TipDressData.cshtml" />
@@ -2210,7 +2216,7 @@
     <Content Include="Areas\Welding\Views\Ultralog\GetControlPlan.cshtml" />
     <Content Include="Areas\Welding\Views\Ultralog\_GetControlPlanPicture.cshtml" />
     <Content Include="Areas\Welding\Views\Ultralog\ListControlPlans.cshtml" />
-    <Content Include="Areas\Tiplife\Views\NgacElectrode\WeldgunTool.cshtml" />
+    <Content Include="Areas\Tiplife\Views\Electrode\WeldgunTool.cshtml" />
     <Content Include="node_modules\bootstrap-select\.github\ISSUE_TEMPLATE.md" />
     <Content Include="node_modules\bootstrap-select\.github\move.yml" />
     <Content Include="node_modules\bootstrap-select\bower.json" />
@@ -2240,7 +2246,7 @@
     <Content Include="node_modules\daterangepicker\example\browserify\README.md" />
     <Content Include="node_modules\daterangepicker\package.json" />
     <Content Include="node_modules\daterangepicker\README.md" />
-    <Content Include="Areas\Tiplife\Views\NgacElectrode\_WeldgunTool.cshtml" />
+    <Content Include="Areas\Tiplife\Views\Electrode\_WeldgunTool.cshtml" />
     <Content Include="Areas\Supervision\Views\web.config" />
     <Content Include="Areas\Supervision\Views\Table\_loginfo.cshtml" />
     <Content Include="Areas\Supervision\Views\Table\_ploegRapportGrid.cshtml" />
@@ -2267,6 +2273,7 @@
     <Content Include="Areas\HangfireArea\Views\c_job\_List.cshtml" />
     <Content Include="Areas\Alert\Views\c_triggers\_List.cshtml" />
     <Content Include="Areas\Alert\Views\Alert\_Legend.cshtml" />
+    <Content Include="App_Code\TiplifeHtmlHelpers.cshtml" />
     <None Include="Properties\PublishProfiles\gensvw1178-DEV-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gotsvw11292-PRODUCTION-VCTA.pubxml" />
