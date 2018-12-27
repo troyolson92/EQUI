@@ -1,5 +1,4 @@
 ﻿using EQUICommunictionLib;
-using EqUiWebUi.WebGridHelpers;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -123,16 +122,22 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
             }        
             ViewBag.LongDescription = LONGDESCRIPTION;
             ViewBag.FailureRemark = FAILUREREMARK;
-            //parsing data tables using the dynamic system
-            WebGridHelpers.WebGridHelper webGridHelper = new WebGridHelper();
-            ViewBag.LABORColumns = webGridHelper.getDatatabelCollumns(LABOR);
-            List<dynamic> LABORdata = webGridHelper.datatableToDynamic(LABOR);
-            DefaultModel LABORmodel = new WebGridHelpers.DefaultModel();
-            LABORmodel.PageSize = 5;
-            LABORmodel.Data = LABORdata;
+
+            //make labor into a list object
+            List<Models.Labor> LaborList = new List<Models.Labor>();
+            foreach (DataRow row in LABOR.Rows)
+            {
+                Models.Labor labor = new Models.Labor();
+                labor.DisplayName = row.Field<string>("DISPLAYNAME");
+                labor.Craft = row.Field<string>("CRAFT");
+                labor.Supervisor = row.Field<string>("SUPERVISOR");
+                labor.EnterDate = row.Field<DateTime>("ENTERDATE");
+                labor.REGULARHRS = row.Field<decimal>("REGULARHRS");
+                LaborList.Add(labor);
+            }
             //
             ViewBag.RealtimeConn = RealtimeConn;
-            return PartialView(LABORmodel);
+            return PartialView(LaborList);
         }
 
 

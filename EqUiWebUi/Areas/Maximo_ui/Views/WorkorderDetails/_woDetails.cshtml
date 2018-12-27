@@ -1,4 +1,4 @@
-﻿@model EqUiWebUi.WebGridHelpers.DefaultModel
+﻿@model  List<EqUiWebUi.Areas.Maximo_ui.Models.Labor>
 @{
     ViewBag.Title = "_woDetails";
 }
@@ -40,33 +40,20 @@
     </div>
 </div>
 
-<div class="card @(Model.Data.Count() != 0 ? "d-block":"d-none")">
+<div class="card @(Model.Count() != 0 ? "d-block":"d-none")">
     <div class="card-header bg-light">
         <h6 class="card-title">
             Labor
         </h6>
     </div>
-    <div class="card-body">
-        @{
-            WebGrid grid = new WebGrid(null, rowsPerPage: @Model.PageSize);
-            grid.Bind(Model.Data, autoSortAndPage: true, rowCount: @Model.PageSize);
-        }
-
-        @grid.GetHtml(
-            htmlAttributes: new { id = "gridMapping", style = "font-size: 12px" },
-            tableStyle: "table table-striped grid-table",
-            headerStyle: "grid-header-title",
-            footerStyle: "grid-footer",
-            alternatingRowStyle: "webgrid-alternating-row",
-            selectedRowStyle: "grid-row grid-row-selected",
-            rowStyle: "grid-row",
-            mode: WebGridPagerModes.All,
-            firstText: "<< First",
-            previousText: "< Prev",
-            nextText: "Next >",
-            lastText: "Last >>",
-            columns: ViewBag.LABORColumns
-           )
+    <div>
+        @Html.Grid(Model).Named("Labor").Build(columns =>
+        {
+            columns.Add(c => c.DisplayName).Titled("Name");
+            columns.Add(c => c.Craft).Titled("Craft");
+            columns.Add(c => c.Supervisor).Titled("Supervisor");
+            columns.Add(c => c.REGULARHRS).Titled("REGULARHRS");
+        })
     </div>
 </div>
 

@@ -41,4 +41,14 @@ namespace EqUiWebUi.Areas.Maximo_ui.Models
         public string ANCESTOR { get; set; }
         public string OWNERGROUP { get; set; }
     }
+
+    //partial class for labor 
+    public partial class Labor
+    {
+        public string DisplayName { get; set; }
+        public string Craft { get; set; }
+        public string Supervisor{ get; set; }
+        public DateTime EnterDate { get; set; }  
+        public decimal REGULARHRS { get; set; }
+    }
 }

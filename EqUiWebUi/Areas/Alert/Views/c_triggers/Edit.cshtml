@@ -24,7 +24,7 @@ else
         @Html.HiddenFor(model => model.id)
 
         <div class="card">
-            <div class="card-header bg-danger">
+            <div class="card-header bg-dark">
                 <h5 class="card-title text-white">
                     Basics
                     <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
@@ -80,7 +80,7 @@ else
 
                 <div class="form-group">
                     @Html.LabelFor(model => model.sqlStatement, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
+                    <div class="col-md-12">
                         <div class="panel" style="border:ridge">
                             <textarea id="sqlStatement" name="sqlStatement">@Model.sqlStatement</textarea>
                         </div>
@@ -199,7 +199,7 @@ else
         <hr />
 
         <div class="card">
-            <div class="card-header bg-warning">
+            <div class="card-header bg-dark">
                 <h5 class="card-title text-white">
                     SMS
                     <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-rotate-180 fa-1"></i></span>
@@ -247,7 +247,7 @@ else
         <hr />
 
         <div class="card">
-            <div class="card-header bg-warning">
+            <div class="card-header bg-dark">
                 <h5 class="card-title text-white">
                     Control limits
                     <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-rotate-180 fa-1"></i></span>
@@ -268,7 +268,7 @@ else
 
                 <div class="form-group">
                     @Html.LabelFor(model => model.controllimitSqlStatement, htmlAttributes: new { @class = "control-label col-md-4" })
-                    <div class="col-md-10">
+                    <div class="col-md-12">
                         <div class="panel" style="border:ridge">
                             <textarea id="controllimitSqlStatement" name="controllimitSqlStatement">@Model.controllimitSqlStatement</textarea>
                         </div>
@@ -285,7 +285,7 @@ else
 
                 <div class="form-group">
                     @Html.LabelFor(model => model.controlChartSqlStatement, htmlAttributes: new { @class = "control-label col-md-4" })
-                    <div class="col-md-10">
+                    <div class="col-md-12">
                         <div class="panel" style="border:ridge">
                             <textarea id="controlChartSqlStatement" name="controlChartSqlStatement">@Model.controlChartSqlStatement</textarea>
                         </div>
@@ -345,8 +345,10 @@ else
 </div>
 
 @*render popuover modal*@
-<div id="MyModal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class='card-body'><i class='fa fa-spinner fa-pulse fa-4x fa-fw text-white'></i><span class='sr-only'>Loading...</span></div>
+<div id="MyModal" class="modal" style="padding: 20px;" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class='card-body'>
+         <i class='fa fa-spinner fa-pulse fa-4x fa-fw text-white'></i><span class='sr-only'>Loading...</span>
+    </div>
 </div>
 
 

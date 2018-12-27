@@ -1076,7 +1076,6 @@
     <Content Include="Content\jquery-cron.css" />
     <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\MvcGrid\mvc-grid.css" />
-    <Content Include="Content\Site.css" />
     <Content Include="Content\summernote-bs4.css" />
     <Content Include="Content\TableRowStyles.css" />
     <Content Include="Global.asax" />
@@ -2331,13 +2330,11 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Dynamic\DynamicWebgrid.cshtml" />
     <Content Include="Views\Tableau\Index.cshtml" />
     <Content Include="Views\Tableau\EmbeddedDesktop.cshtml" />
     <Content Include="Views\Tableau\Embedded4K.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Error\Index.cshtml" />
-    <Content Include="Views\Dynamic\DynamicDatatable.cshtml" />
     <Content Include="Views\Home\Rendersite.cshtml" />
     <Content Include="Views\Chart\Index.cshtml" />
     <Content Include="Views\Chart\_getErrorTrend.cshtml" />
@@ -2346,7 +2343,6 @@
     <Content Include="Views\Chart\GetErrorTrend.cshtml" />
     <Content Include="Views\Tableau\Test.cshtml" />
     <Content Include="Views\Dynamic\_dynamicWebgridRunQueryAgainstDB.cshtml" />
-    <Content Include="Views\Dynamic\_CheckStatement.cshtml" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\umd\popper.min.js.map" />
