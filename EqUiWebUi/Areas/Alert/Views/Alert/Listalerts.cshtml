@@ -57,7 +57,7 @@
         pager.RowsPerPage = 20;
         pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 20, "20" }, { 40, "40" }, { 80, "80" }, { 100, "100" } };
         pager.ShowPageSizes = true;
-    }).Empty("Did not find anything").Css("table-hover").RowCss(row => MyRowStyling.getRowStyleStatus(row.c_state.state))
+    }).Empty("Did not find anything").Css("table-hover").RowCss(row => EqUiWebUi.Areas.Alert.AlertHelpers.getRowStyleStatus(row.c_state.state))
 </div>
 
 @section scripts{

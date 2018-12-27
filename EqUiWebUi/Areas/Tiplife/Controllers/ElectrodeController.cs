@@ -66,6 +66,15 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
             return PartialView(data);
         }
 
+        /// <summary>
+        /// Legend partial view for alert status
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult _Legend()
+        {
+            return PartialView();
+        }
+
 
         /// <summary>
         /// Main page to plan electrode changes. User can set cars to build / Max electrode life and gets returned list of electrodes that needs to be changes.

@@ -29,7 +29,6 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
         }
 
         //standard details partial about 1 work order (long text, failure, labor)
-        [HttpGet]
         public ActionResult _woDetails(string wonum, bool RealtimeConn = false, bool RenderSubwo = true)
         {
             //check if user is allowed to user realtimeConn
@@ -147,7 +146,6 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
         }
 
         //partial that gets details of all the children of the given work order.
-        [HttpGet]
         public ActionResult _SubWoDetails(string parentwonum, bool RealtimeConn = false)
         {
             //check if user is allowed to user realtimeConn

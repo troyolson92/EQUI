@@ -11,7 +11,7 @@
                          .Encoded(false)
                          .Filterable(false)
                          .Sortable(false)
-                         .RenderedAs(c => TiplifeHelpers.TipMonitorIcon(c.Status, c.RobotWear));
+                         .RenderedAs(c => TiplifeHtmlHelpers.TipMonitorIcon(c.Status, c.RobotWear));
 }).Empty("Did not find anything").Css("table-hover")
 
 @*subscrible this table to events*@

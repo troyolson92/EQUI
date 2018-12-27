@@ -4,7 +4,9 @@
 }
 <div class="card">
     <div class="card-header bg-dark text-white row">        
-        <h4 class="col-8">Current electrode status</h4>
+        <h4 class="col-8">Current electrode status
+            <a class="fas fa-info-circle text-white" id="LegendPopover" href="#" data-container="body" data-toggle="popover" data-placement="bottom"></a>
+        </h4>
         @MyHtmlHelpers.IconActionLink(Url.Action("PlanTipChange"),"fab fa-stack-exchange","Plan electrode change", "Go to electrode change planning tool",classes:"")
     </div>
 
@@ -43,6 +45,18 @@
             },
             reloadFailed: function (result) {
                 $('[data-name="TipStatusGrid"]').html($("#Error", result.responseText).html());
+            }
+        });
+
+         //enable popover for legend
+        $("#LegendPopover").popover({
+            html: true,
+            content: function () {
+                return $.ajax({
+                    url: '@Url.Action("_legend")',
+                    dataType: 'html',
+                    async: false
+                }).responseText;
             }
         });
 
