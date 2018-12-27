@@ -1,0 +1,34 @@
+﻿<div>
+    <h6>Alert status animations</h6>
+    <table style="width:100%">
+        <tr>
+            <th>Alert Status</th>
+            <th>RowStyle</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>WGK</td>
+            <td class="@MyRowStyling.getRowStyleStatus("WGK")"></td>
+            <td>Alert is active and waiting for user action</td>
+        </tr>
+        <tr>
+            <td>OKREQ</td>
+            <td class="@MyRowStyling.getRowStyleStatus("OKREQ")"></td>
+            <td>Alert is active and has been accepted by user action</td>
+        <tr>
+            <td>COMP</td>
+            <td class="@MyRowStyling.getRowStyleStatus("COMP")"></td>
+            <td>Alert is no longer active and completed (set by user)</td>
+        </tr>
+        <tr>
+            <td>TECHCOMP</td>
+            <td class="@MyRowStyling.getRowStyleStatus("TECHCOMP")"></td>
+            <td>Alert is no longer active and completed (set by server)</td>
+        </tr>
+    </table>
+    <hr />
+    <h6>Quick links</h6>
+    @MyHtmlHelpers.IconActionLink(Url.Action("Index", "L_controlLimits"), "fas fa-filter", "Go to control limits list", "Page with all control chart limits for the alert system")
+
+</div>
+

@@ -58,8 +58,7 @@
                 //animation
                 $("#placeholderPartial").html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
                 //load url in placeholder
-                var url = "@Url.Action("_jobdetails")?id=" + data["id"];
-                $("#placeholderPartial").load(url);
+                $("#placeholderPartial").load("@Url.Action("_jobdetails")", { id: data["id"]);
             }
         });
 

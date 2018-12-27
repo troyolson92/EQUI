@@ -8,6 +8,11 @@ Location: @Html.DropDownList("Locations", null, htmlAttributes: new { @class = "
 Tool_nr: @Html.DropDownList("tool_nr", null, htmlAttributes: new { @class = "selectpicker" })
 <button class="btn btn-primary btn-sm" id="btn_getData">Load data</button>
 <hr />
+<div class="alert alert-warning">
+    Oude tool is nog beschikbaar via "Toolkit" in de taskbar.
+    Gelieve deze nieuwe tool te gebruiken oude gaat binnenkort definitief weg.
+</div>
+<hr />
 <div id="welgunToolPlaceholder"></div>
 <!--WeldgunToolScripts-->
 <script>

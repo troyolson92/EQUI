@@ -2266,6 +2266,7 @@
     <Content Include="Areas\HangfireArea\Views\c_schedule\_JobList.cshtml" />
     <Content Include="Areas\HangfireArea\Views\c_job\_List.cshtml" />
     <Content Include="Areas\Alert\Views\c_triggers\_List.cshtml" />
+    <Content Include="Areas\Alert\Views\Alert\_Legend.cshtml" />
     <None Include="Properties\PublishProfiles\gensvw1178-DEV-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gotsvw11292-PRODUCTION-VCTA.pubxml" />

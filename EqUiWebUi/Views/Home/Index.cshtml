@@ -30,7 +30,7 @@
     <div class="card-body">
         @MyHtmlHelpers.EquiLink("/Supervision/Table/PloegRapport", "far fa-list-alt", EqUiWebUi.defaultArea.ShiftReport, helperText: EqUiWebUi.defaultArea.ShiftReportDescription, helpurl: @Url.Action("ShowWiki", "Wikis", new { area = "", id = 1 }, null))
         @MyHtmlHelpers.EquiLink("/Supervision/Table/Supervisie", "far fa-list-alt", EqUiWebUi.defaultArea.Supervision, helperText: EqUiWebUi.defaultArea.SupervisionDescription, helpurl: @Url.Action("ShowWiki", "Wikis", new { area = "", id = 2 }, null))
-        @MyHtmlHelpers.EquiLink("/Alert/Alert/Index", "fas fa-bell", EqUiWebUi.defaultArea.Alerts, helperText: EqUiWebUi.defaultArea.AlertsDescription, iconClasses: "bg-warning", helpurl: @Url.Action("ShowWiki", "Wikis", new { area = "", id = 3 }, null))
+        @MyHtmlHelpers.EquiLink("/Alert/Alert/Listalerts", "fas fa-bell", EqUiWebUi.defaultArea.Alerts, helperText: EqUiWebUi.defaultArea.AlertsDescription, iconClasses: "bg-warning", helpurl: @Url.Action("ShowWiki", "Wikis", new { area = "", id = 3 }, null))
         @MyHtmlHelpers.EquiLink("https://volvocars.plantview.se/?v=ps&t=p:default,c:projectselector,m:t&ps=ps1&ps1=q:vcg", "fas fa-industry", "Plantview", helperText: "3d scans of all volvo plants")
         @if (EqUiWebUi.MyBooleanExtensions.IsAreaEnabled("Maximo_ui"))
         {

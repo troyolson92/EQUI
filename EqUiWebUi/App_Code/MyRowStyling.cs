@@ -10,10 +10,14 @@ namespace EqUiWebUi
             switch (status)
             {
                 case "WGK":
-                    return "TableStatusPurple";
+                    return "TableLogtypeRed";
+
+                case "OKREQ":
+                    return "TableLogtypeDarkYellow";
 
                 case "COMP":
-                    return "TableLogtypeGreen";
+                case "TECHCOMP":
+                    return "TableLogtypeLightBlue";
 
                 default:
                     return "";
@@ -36,7 +40,7 @@ namespace EqUiWebUi
                     return "TableLogtypeLightGreen"; //marks begin of each new production shift
 
                 case "ALERT": //COMPLETED ALERT! alert that has been resolved 
-                    return "TableLogtypeOrange";
+                    return "TableLogtypeLightBlue";
 
                 default:
                     return logtype; //this is used for alerts the pass the animation directly (when alert is active else they just pass "ALERT"

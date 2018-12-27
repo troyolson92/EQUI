@@ -94,6 +94,16 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             return View(h_alert);
         }
 
+
+        /// <summary>
+        /// Legend partial view for alert status
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult _Legend()
+        {
+            return PartialView();
+        }
+
         //specific Alert interface for AASPOT
         //Get AASPOTIndex
         public ActionResult AASPOTIndex()

@@ -1,58 +1,64 @@
 ﻿@model IQueryable<EqUiWebUi.Areas.Alert.Models.h_alert>
 
 @{
-    ViewBag.Title = "Index of alerts";
+    ViewBag.Title = "Alerts";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index of alerts</h2>
-@if (ViewBag.alertGroup != "")
-{
-<span class="badge badge-pill badge-warning">Filter on alert group: @ViewBag.alertGroup</span>
-}
-@if (ViewBag.ActiveAlertOnly)
-{
-<span class="badge badge-pill badge-warning">Only Active alerts are shown!</span>
-}
-@if (ViewBag.ApplyResponsibleArea)
-{
-<span class="badge badge-pill badge-warning">Filter by ApplyResponsibleArea</span>
-}
+<div class="card">
+    <div class="card-header bg-dark text-white row">
+        <h4 class="col-8">
+            Alerts
+            <a class="fas fa-info-circle text-white" id="LegendPopover" href="#" data-container="body" data-toggle="popover" data-placement="bottom"></a>
+            @if (ViewBag.alertGroup != "")
+            {
+                <span class="badge badge-pill badge-warning">Filter on alert group: @ViewBag.alertGroup</span>
+            }
+            @if (ViewBag.ActiveAlertOnly)
+            {
+                <span class="badge badge-pill badge-warning">Only Active alerts are shown!</span>
+            }
+            @if (ViewBag.ApplyResponsibleArea)
+            {
+                <span class="badge badge-pill badge-warning">Filter by ApplyResponsibleArea</span>
+            }
+        </h4>
+    </div>
 
-@if (ViewBag.LocationFilter != null)
-{<span class="badge badge-warning">
-    <h3>Filtered on location: @ViewBag.LocationFilter</h3>
-    <h6 class="fa-pull-left">This location has @ViewBag.AlertCount alerts in his history</h6>
-</span>
-}
+    @if (ViewBag.LocationFilter != null)
+    {  <div class="badge badge-warning">
+            <h4>Filtered on location: @ViewBag.LocationFilter</h4>
+            <h6>This location has @ViewBag.AlertCount alerts in his history</h6>
+        </div>
+    }
 
-@Html.Grid(Model).Named("h_alert").Build(columns =>
-{
-    columns.Add(c => c.id).Titled("id").Css("d-none");
-    columns.Add(c => c.c_triggers.alertGroup).Titled("Group").Filterable(true);
-    columns.Add(c => c.c_triggers.alertType).Titled("Type").Filterable(true);
-    columns.Add(c => c.location).Titled("location").Filterable(true).MultiFilterable(true);
-    columns.Add(c => c.lastTriggerd).Titled("timestamp").Formatted("{0:dd-MM-yyyy HH:mm}").InitialSort(GridSortOrder.Desc);
-    columns.Add(c => c.info).Titled("info");
-    columns.Add(c => c.ChangedUser.username.Replace(@"VCCNET\", "")).Titled("ChangedUser");
-    columns.Add(c => c.triggerCount).Titled("TC").Filterable(true);
-    columns.Add(c => "<p id=" + c.id + " class='setalertState btn btn-primary'>" + c.c_state.state).Encoded(false).Titled("State").Filterable(true);
-    //tools
-    columns.Add(c => c)
-                        .Titled("")
-                        .Encoded(false)
-                        .RenderedAs(c =>
-                        MyHtmlHelpers.IconActionLink(Url.Action("Listalerts", new { Location = c.location }), "fas fa-filter", "", "Filter alerts for this location").ToHtmlString() +     //add filterbutton
-                        MyHtmlHelpers.IconActionLink(Url.Action("Edit", new { id = c.id }), "fas fa-pencil-alt", "", "Edit this alert").ToHtmlString() +    //add edit button
-                        (c.info.Contains("gun") ? MyHtmlHelpers.IconActionLink(Url.Action("WeldgunTool", "NgacElectrode", new {Area= "Tiplife", location = c.location, tool_nr = c.info.Replace(":", "").Substring(c.info.IndexOf("gun"), 5).Replace("gun", "") }), "fas fa-chart-line", "", "Launch WeldgunTool").ToHtmlString() : "")  //launch WeldgunTool tool (if needed)
-                        ).Filterable(false);
-}).Filterable().Sortable().Pageable(pager =>
-{
-    pager.RowsPerPage = 20;
-    pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 20, "20" }, { 40, "40" }, { 80, "80" }, { 100, "100" } };
-    pager.ShowPageSizes = true;
-}).Empty("Did not find anything").Css("table-hover").RowCss(row => MyRowStyling.getRowStyleStatus(row.c_state.state))
-
+    @Html.Grid(Model).Named("h_alert").Build(columns =>
+    {
+        columns.Add(c => c.id).Titled("id").Css("d-none");
+        columns.Add(c => c.c_triggers.alertGroup).Titled("Group").Filterable(true);
+        columns.Add(c => c.c_triggers.alertType).Titled("Type").Filterable(true);
+        columns.Add(c => c.location).Titled("location").Filterable(true).MultiFilterable(true);
+        columns.Add(c => c.lastTriggerd).Titled("timestamp").Formatted("{0:dd-MM-yyyy HH:mm}").InitialSort(GridSortOrder.Desc);
+        columns.Add(c => c.info).Titled("info");
+        columns.Add(c => c.ChangedUser.username.Replace(@"VCCNET\", "")).Titled("ChangedUser");
+        columns.Add(c => c.triggerCount).Titled("TC").Filterable(true);
+        columns.Add(c => "<p id=" + c.id + " class='setalertState btn btn-primary'>" + c.c_state.state).Encoded(false).Titled("State").Filterable(true);
+        //tools
+        columns.Add(c => c)
+                            .Titled("")
+                            .Encoded(false)
+                            .RenderedAs(c =>
+                            MyHtmlHelpers.IconActionLink(Url.Action("Listalerts", new { Location = c.location }), "fas fa-filter", "", "Filter alerts for this location").ToHtmlString() +     //add filterbutton
+                            MyHtmlHelpers.IconActionLink(Url.Action("Edit", new { id = c.id }), "fas fa-pencil-alt", "", "Edit this alert").ToHtmlString() +    //add edit button
+                            (c.info.Contains("gun") ? MyHtmlHelpers.IconActionLink(Url.Action("WeldgunTool", "NgacElectrode", new {Area= "Tiplife", location = c.location, tool_nr = c.info.Replace(":", "").Substring(c.info.IndexOf("gun"), 5).Replace("gun", "") }), "fas fa-chart-line", "", "Launch WeldgunTool").ToHtmlString() : "")  //launch WeldgunTool tool (if needed)
+                            ).Filterable(false);
+    }).Filterable().Sortable().Pageable(pager =>
+    {
+        pager.RowsPerPage = 20;
+        pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 20, "20" }, { 40, "40" }, { 80, "80" }, { 100, "100" } };
+        pager.ShowPageSizes = true;
+    }).Empty("Did not find anything").Css("table-hover").RowCss(row => MyRowStyling.getRowStyleStatus(row.c_state.state))
+</div>
 
 @section scripts{
     <script src="~/node_modules/jquery-jeditable/dist/jquery.jeditable.min.js"></script>
@@ -65,7 +71,6 @@
         $('[data-name="h_alert"]').mvcgrid({
             rowClicked: function (row, data, e) {
                 //ignore clicks not on td
-                console.log(e.target.tagName);
                 if (e.target.tagName.toUpperCase() != 'TD') {
                     return;
                 }
@@ -84,22 +89,32 @@
                 //animation
                 $("#placeholderPartial").html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
                 //load url in placeholder
-                var url = "@Url.Action("_Details")?AddTrendChart=true&id=" + data["id"];
-                $("#placeholderPartial").load(url);
+                $("#placeholderPartial").load('@Url.Action("_Details")', { AddTrendChart: true, id: data["id"]});
             }
         });
 
         //simulate click on first row so that the details load automatic IF ROWCOUNT == 1
         if ($('[data-name="h_alert"]>table>tbody>tr').length == 1) {
-
             $('[data-name="h_alert"]>table>tbody>tr>td:first').trigger('click');
         }
 
-        //handle inline set state
+        //enable popover for legend
+        $("#LegendPopover").popover({
+            html: true,
+            content: function () {
+                return $.ajax({
+                    url: '@Url.Action("_legend")',
+                    dataType: 'html',
+                    async: false
+                }).responseText;
+            }
+        });
+
+        //handle in-line set state
         $('.setalertState').editable('@Url.Action("SetState")', {
             data   : '@(Html.EnumToMvcHtmlString<EqUiWebUi.Areas.Alert.Models.alertState>())',
             type: 'select',
-            showfn: function (elem) { }, //trigger select open from here .
+         
             onerror: function (settings, self, xhr) {
                 $.toaster({ title: 'setalertState', priority: 'danger', message: 'Error with status code: ' + xhr.status });
             },
