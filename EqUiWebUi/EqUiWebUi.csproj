@@ -2362,9 +2362,9 @@
     <Content Include="Views\c_LogClassRules\Index.cshtml" />
     <Content Include="Views\c_LogClassRules\_GetLogClassRulesGrid.cshtml" />
     <Content Include="Views\Classification\_logSearchResult.cshtml" />
-    <Content Include="Views\c_logClassSystem\Delete.cshtml" />
-    <Content Include="Views\c_logClassSystem\Edit.cshtml" />
-    <Content Include="Views\c_logClassSystem\Index.cshtml" />
+    <Content Include="Views\c_LogClassSystem\Delete.cshtml" />
+    <Content Include="Views\c_LogClassSystem\Edit.cshtml" />
+    <Content Include="Views\c_LogClassSystem\Index.cshtml" />
     <Content Include="Views\Home\Close.cshtml" />
     <Content Include="Views\Home\TestPage.cshtml" />
     <Content Include="Views\Wikis\Delete.cshtml" />
@@ -2383,19 +2383,19 @@
     <Content Include="Views\c_Subgroup\Edit.cshtml" />
     <Content Include="Views\c_Subgroup\Index.cshtml" />
     <Content Include="Views\Assets\Index.cshtml" />
-    <Content Include="Views\c_datasource\Create.cshtml" />
-    <Content Include="Views\c_datasource\Delete.cshtml" />
-    <Content Include="Views\c_datasource\Edit.cshtml" />
-    <Content Include="Views\c_datasource\Index.cshtml" />
+    <Content Include="Views\c_Datasource\Create.cshtml" />
+    <Content Include="Views\c_Datasource\Delete.cshtml" />
+    <Content Include="Views\c_Datasource\Edit.cshtml" />
+    <Content Include="Views\c_Datasource\Index.cshtml" />
     <Content Include="Views\Shared\MvcGrid\_Pager.cshtml" />
     <Content Include="Views\Shared\MvcGrid\_Grid.cshtml" />
-    <Content Include="Views\c_housekeeping\Create.cshtml" />
-    <Content Include="Views\c_housekeeping\Delete.cshtml" />
-    <Content Include="Views\c_housekeeping\Edit.cshtml" />
-    <Content Include="Views\c_housekeeping\Index.cshtml" />
-    <Content Include="Views\c_housekeeping\_L_housekeeping.cshtml" />
-    <Content Include="Views\c_housekeeping\Details.cshtml" />
-    <Content Include="Views\c_housekeeping\_List.cshtml" />
+    <Content Include="Views\c_Housekeeping\Create.cshtml" />
+    <Content Include="Views\c_Housekeeping\Delete.cshtml" />
+    <Content Include="Views\c_Housekeeping\Edit.cshtml" />
+    <Content Include="Views\c_Housekeeping\Index.cshtml" />
+    <Content Include="Views\c_Housekeeping\_L_housekeeping.cshtml" />
+    <Content Include="Views\c_Housekeeping\Details.cshtml" />
+    <Content Include="Views\c_Housekeeping\_List.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
