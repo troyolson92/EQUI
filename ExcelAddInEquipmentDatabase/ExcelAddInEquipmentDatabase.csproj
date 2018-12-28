@@ -160,6 +160,9 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net40\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
       <HintPath>..\packages\MetroModernUI.1.4.0.0\lib\net\MetroFramework.dll</HintPath>
     </Reference>
@@ -232,21 +235,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>applData.xsd</DependentUpon>
     </Compile>
-    <Compile Include="ClickOnce.cs" />
     <Compile Include="c_userRoles.cs">
       <DependentUpon>UserManagment.tt</DependentUpon>
     </Compile>
-    <Compile Include="Forms\ConnectionManger.cs">
+    <Compile Include="Forms\ExcelConnectionManager.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\ConnectionManger.Designer.cs">
-      <DependentUpon>ConnectionManger.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\EquiBrowser.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\EquiBrowser.Designer.cs">
-      <DependentUpon>EquiBrowser.cs</DependentUpon>
+    <Compile Include="Forms\ExcelConnectionManager.Designer.cs">
+      <DependentUpon>ExcelConnectionManager.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\MXxQueryEdit.cs">
       <SubType>Form</SubType>
@@ -321,9 +317,6 @@
       <DependentUpon>UserManagment.edmx</DependentUpon>
     </Compile>
     <Compile Include="WorksheetFeatures.cs" />
-    <EmbeddedResource Include="Forms\EquiBrowser.resx">
-      <DependentUpon>EquiBrowser.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\MXxQueryEdit.resx">
       <DependentUpon>MXxQueryEdit.cs</DependentUpon>
     </EmbeddedResource>
@@ -348,8 +341,8 @@
     <None Include="applData.xss">
       <DependentUpon>applData.xsd</DependentUpon>
     </None>
-    <EmbeddedResource Include="Forms\ConnectionManger.resx">
-      <DependentUpon>ConnectionManger.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\ExcelConnectionManager.resx">
+      <DependentUpon>ExcelConnectionManager.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\dtPicker.resx">
       <DependentUpon>dtPicker.cs</DependentUpon>
@@ -380,7 +373,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Settings.cs" />
     <Compile Include="ThisAddIn.cs">
       <SubType>Code</SubType>
     </Compile>

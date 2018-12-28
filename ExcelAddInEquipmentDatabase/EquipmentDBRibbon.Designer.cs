@@ -53,14 +53,11 @@
             this.btn_nDays = this.Factory.CreateRibbonButton();
             this.g_config = this.Factory.CreateRibbonGroup();
             this.btn_help = this.Factory.CreateRibbonButton();
-            this.dd_User = this.Factory.CreateRibbonDropDown();
+            this.btn_ConnectionManager = this.Factory.CreateRibbonButton();
             this.gall_templates = this.Factory.CreateRibbonGallery();
             this.separator3 = this.Factory.CreateRibbonSeparator();
-            this.tbtn_Autorefresh = this.Factory.CreateRibbonToggleButton();
             this.tgbtn_Wrap = this.Factory.CreateRibbonToggleButton();
             this.tbtn_StopRightClick = this.Factory.CreateRibbonToggleButton();
-            this.separator4 = this.Factory.CreateRibbonSeparator();
-            this.btn_ConnectionManager = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
             this.rib2.SuspendLayout();
             this.group2.SuspendLayout();
@@ -220,14 +217,11 @@
             // g_config
             // 
             this.g_config.Items.Add(this.btn_help);
-            this.g_config.Items.Add(this.dd_User);
+            this.g_config.Items.Add(this.btn_ConnectionManager);
             this.g_config.Items.Add(this.gall_templates);
             this.g_config.Items.Add(this.separator3);
-            this.g_config.Items.Add(this.tbtn_Autorefresh);
             this.g_config.Items.Add(this.tgbtn_Wrap);
             this.g_config.Items.Add(this.tbtn_StopRightClick);
-            this.g_config.Items.Add(this.separator4);
-            this.g_config.Items.Add(this.btn_ConnectionManager);
             this.g_config.Label = "Configuration";
             this.g_config.Name = "g_config";
             // 
@@ -240,14 +234,14 @@
             this.btn_help.SuperTip = "Show the help file";
             this.btn_help.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_help_Click);
             // 
-            // dd_User
+            // btn_ConnectionManager
             // 
-            this.dd_User.Label = " ";
-            this.dd_User.Name = "dd_User";
-            this.dd_User.OfficeImageId = "ContactPictureMenu";
-            this.dd_User.ShowImage = true;
-            this.dd_User.SuperTip = "Current user. Administrator can inpersonate an other user for debugging";
-            this.dd_User.SelectionChanged += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.dd_User_SelectionChanged);
+            this.btn_ConnectionManager.Label = "MngConnections";
+            this.btn_ConnectionManager.Name = "btn_ConnectionManager";
+            this.btn_ConnectionManager.OfficeImageId = "AdpDiagramAddRelatedTables";
+            this.btn_ConnectionManager.ShowImage = true;
+            this.btn_ConnectionManager.SuperTip = "And change and manager connections";
+            this.btn_ConnectionManager.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_ConnectionManager_Click);
             // 
             // gall_templates
             // 
@@ -261,14 +255,6 @@
             // separator3
             // 
             this.separator3.Name = "separator3";
-            // 
-            // tbtn_Autorefresh
-            // 
-            this.tbtn_Autorefresh.Label = "AutoRefresh";
-            this.tbtn_Autorefresh.Name = "tbtn_Autorefresh";
-            this.tbtn_Autorefresh.OfficeImageId = "RecurrenceEdit";
-            this.tbtn_Autorefresh.ShowImage = true;
-            this.tbtn_Autorefresh.SuperTip = "enables automatic refresh every minute";
             // 
             // tgbtn_Wrap
             // 
@@ -287,19 +273,6 @@
             this.tbtn_StopRightClick.ShowImage = true;
             this.tbtn_StopRightClick.SuperTip = "Stops the plugin from overwring the context menu on right click";
             this.tbtn_StopRightClick.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.tbtn_StopRightClick_Click);
-            // 
-            // separator4
-            // 
-            this.separator4.Name = "separator4";
-            // 
-            // btn_ConnectionManager
-            // 
-            this.btn_ConnectionManager.Label = "MngConnections";
-            this.btn_ConnectionManager.Name = "btn_ConnectionManager";
-            this.btn_ConnectionManager.OfficeImageId = "AdpDiagramAddRelatedTables";
-            this.btn_ConnectionManager.ShowImage = true;
-            this.btn_ConnectionManager.SuperTip = "And change and manager connections";
-            this.btn_ConnectionManager.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_ConnectionManager_Click);
             // 
             // EquipmentDBRibbon
             // 
@@ -342,15 +315,12 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonDropDown dd_activeConnection;
         internal Microsoft.Office.Tools.Ribbon.RibbonDropDown dd_ParameterSets;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_help;
-        internal Microsoft.Office.Tools.Ribbon.RibbonToggleButton tbtn_Autorefresh;
-        internal Microsoft.Office.Tools.Ribbon.RibbonDropDown dd_User;
         internal Microsoft.Office.Tools.Ribbon.RibbonToggleButton tbtn_StopRightClick;
         internal Microsoft.Office.Tools.Ribbon.RibbonSeparator separator3;
         internal Microsoft.Office.Tools.Ribbon.RibbonToggleButton tbn_3;
         internal Microsoft.Office.Tools.Ribbon.RibbonGallery gall_templates;
         internal Microsoft.Office.Tools.Ribbon.RibbonToggleButton btn_EditProcedure;
         internal Microsoft.Office.Tools.Ribbon.RibbonToggleButton tgbtn_Wrap;
-        internal Microsoft.Office.Tools.Ribbon.RibbonSeparator separator4;
     }
 
     partial class ThisRibbonCollection

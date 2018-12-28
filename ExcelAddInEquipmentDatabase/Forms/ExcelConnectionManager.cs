@@ -14,7 +14,7 @@ using EQUICommunictionLib;
 
 namespace ExcelAddInEquipmentDatabase
 {
-    public partial class ConnectionManger : Form
+    public partial class ExcelConnectionManager : Form
     {
         //debugger
         myDebugger Debugger = new myDebugger();
@@ -24,8 +24,6 @@ namespace ExcelAddInEquipmentDatabase
         OracleQuery lOracleQuery = new OracleQuery();
         //Query edit box instance
         Forms.MXxQueryEdit QEdit;
-
-
 
         public string DsnMX7 { get { return "MX7"; } }
         public string DsnGADATA { get { return "GADATA"; } }
@@ -39,7 +37,7 @@ namespace ExcelAddInEquipmentDatabase
         }
 
 
-        public ConnectionManger()
+        public ExcelConnectionManager()
         {
             InitializeComponent();
             //lv init 

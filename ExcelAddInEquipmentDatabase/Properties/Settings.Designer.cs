@@ -12,7 +12,7 @@ namespace ExcelAddInEquipmentDatabase.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.5.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.9.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -45,27 +45,21 @@ namespace ExcelAddInEquipmentDatabase.Properties {
             }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool IsPowerUser {
+        [global::System.Configuration.DefaultSettingValueAttribute("https://sway.com/csCS9cdjEpcpPhw0?ref=Link")]
+        public string Helpfile {
             get {
-                return ((bool)(this["IsPowerUser"]));
-            }
-            set {
-                this["IsPowerUser"] = value;
+                return ((string)(this["Helpfile"]));
             }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool IsRobotgroup {
+        [global::System.Configuration.DefaultSettingValueAttribute("http:\\\\gensvw1178.gen.volvocars.net")]
+        public string EquiBasepath {
             get {
-                return ((bool)(this["IsRobotgroup"]));
-            }
-            set {
-                this["IsRobotgroup"] = value;
+                return ((string)(this["EquiBasepath"]));
             }
         }
     }

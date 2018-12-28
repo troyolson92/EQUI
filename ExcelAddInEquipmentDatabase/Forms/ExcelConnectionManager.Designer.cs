@@ -1,6 +1,6 @@
 ﻿namespace ExcelAddInEquipmentDatabase
 {
-    partial class ConnectionManger
+    partial class ExcelConnectionManager
     {
         /// <summary>
         /// Required designer variable.

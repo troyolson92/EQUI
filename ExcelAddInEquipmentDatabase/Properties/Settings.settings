@@ -17,11 +17,11 @@
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
       <Value Profile="(Default)">Data Source=sqla001.gen.volvocars.net;Initial Catalog=GADATA;Persist Security Info=True;User ID=EqUiAdmin;Password=EqUiAdmin</Value>
     </Setting>
-    <Setting Name="IsPowerUser" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+    <Setting Name="Helpfile" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">https://sway.com/csCS9cdjEpcpPhw0?ref=Link</Value>
     </Setting>
-    <Setting Name="IsRobotgroup" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+    <Setting Name="EquiBasepath" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">http:\\gensvw1178.gen.volvocars.net</Value>
     </Setting>
   </Settings>
 </SettingsFile>

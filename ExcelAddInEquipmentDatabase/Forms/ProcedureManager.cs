@@ -17,8 +17,8 @@ namespace ExcelAddInEquipmentDatabase.Forms
 
     public partial class ProcedureManager : UserControl
     {
-        //debugger
-        myDebugger Debugger = new myDebugger();
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         //connection to database
         ConnectionManager connectionManager = new ConnectionManager();
         //connection to GADATA maximo querys 
@@ -28,8 +28,6 @@ namespace ExcelAddInEquipmentDatabase.Forms
 
         public string DsnMX7 { get { return "MX7"; } }
         public string DsnGADATA { get { return "GADATA"; } }
-
-
 
         #region parameters to the ribbon
         Forms.uc_Datebox _startDate = new Forms.uc_Datebox();
@@ -91,10 +89,6 @@ namespace ExcelAddInEquipmentDatabase.Forms
             InitializeComponent();
             //
             
-            if (Properties.Settings.Default.IsPowerUser) 
-            { Btn_saveSet.Visible = true; }
-            else 
-            { Btn_saveSet.Visible = false; }
             //
             if (activeconnection == DsnMX7) //CREATE NEW MX7connections
             {
@@ -374,14 +368,14 @@ namespace ExcelAddInEquipmentDatabase.Forms
                             break;
 
                         default:
-                            Debugger.Message(string.Format("Type not handeld: pName:{0} pSqlDbType: {1}", p.ParameterName, p.SqlDbType));
+                            log.Error($"Type not handeld: pName:{p.ParameterName} pSqlDbType: {p.SqlDbType}");
                             break;
                     }
 
                 }
-                catch (Exception e)
+                catch (Exception ex)
                 {
-                    Debugger.Exeption(e);
+                    log.Error(ex);
                 }
             }
         }
@@ -595,14 +589,14 @@ namespace ExcelAddInEquipmentDatabase.Forms
                             break;
 
                         default:
-                            Debugger.Message(string.Format("Type not handeld: pName:{0} pDftValue: {1}", p.ParameterName, p.Defaultvalue));
+                            log.Error($"Type not handeld: pName:{p.ParameterName} pDftValue: {p.Defaultvalue}");
                             break;
                     }
 
                 }
-                catch (Exception e)
+                catch (Exception ex)
                 {
-                    Debugger.Exeption(e);
+                    log.Error(ex);
                 }
             }
         }
@@ -680,7 +674,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
         {
             if (cb_ParmSetNames.Text.Length < 5)
             {
-                Debugger.Message("The name is to short");
+                DialogResult result = MessageBox.Show("The name is to short", "Warning", MessageBoxButtons.OK);
             }
             else
             {
@@ -1006,7 +1000,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
         }
         public string get_ODBCconnString_from_activeconnection()
         {
-            using (ConnectionManger connMngr = new ConnectionManger())
+            using (ExcelConnectionManager connMngr = new ExcelConnectionManager())
             {
                 Excel.WorkbookConnection connection = connMngr.Get_Connection(lname);
                 connMngr.Dispose();
@@ -1017,7 +1011,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
         {
             get
             {
-                using (ConnectionManger connMngr = new ConnectionManger())
+                using (ExcelConnectionManager connMngr = new ExcelConnectionManager())
                 {
                     Excel.WorkbookConnection connection = connMngr.Get_Connection(lname);
                     connMngr.Dispose();
@@ -1026,7 +1020,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
             }
             set
             {
-                using (ConnectionManger connMngr = new ConnectionManger())
+                using (ExcelConnectionManager connMngr = new ExcelConnectionManager())
                 {
                     Excel.WorkbookConnection connection = connMngr.Get_Connection(lname);
                     if (connection.ODBCConnection.Refreshing) { connection.ODBCConnection.CancelRefresh(); }
