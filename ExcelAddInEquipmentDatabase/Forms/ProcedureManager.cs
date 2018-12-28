@@ -87,9 +87,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
         public ProcedureManager(string activeconnection)
         {
             InitializeComponent();
-            //
-            
-            //
+
             if (activeconnection == DsnMX7) //CREATE NEW MX7connections
             {
                 assets.Name = "_assets".ToUpper();
@@ -133,8 +131,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
             }
             else
             {
-                //SDEBEUL 18w4d5 uit dienst gezet omdat dit irritant voor Freidant.
-                //Debugger.Message(string.Format("Unable to read connection DSN must be {0} or {1}",lGadataComm.DsnGADATA,lMaximoComm.DsnMX7));
+                log.Error($"Unable to read connection {activeconnection} DSN is not known");
             }
         }
 
@@ -145,10 +142,6 @@ namespace ExcelAddInEquipmentDatabase.Forms
             catch { }
             try { if (DateTime.ParseExact(sValue, "yyyy-MM-dd", CultureInfo.InvariantCulture) != null) return TypeCode.DateTime; }
             catch { }
-            //try { if (int.Parse(sValue.Trim(), CultureInfo.InvariantCulture) > -1) return TypeCode.Int32; }
-            //catch { }
-            //try { if (bool.Parse(sValue.Trim()) != null) return TypeCode.Boolean; }
-            //catch { }
             return TypeCode.String;
         }
 
@@ -176,7 +169,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
                             DateTime dtSelectedTimestamp = Convert.ToDateTime("1900-01-01 00:00:00");
                             if (Query.Contains(p.ParameterName)) dtSelectedTimestamp = Convert.ToDateTime(Query.Substring(Query.IndexOf(p.ParameterName) + p.ParameterName.Length).Split('\'')[1]);
 
-                            if (p.ParameterName == _startDate.Name) //handel default ribbon controls. "@startdate"
+                            if (p.ParameterName == _startDate.Name) //handle default ribbon controls. "@startdate"
                             {
                                 _startDate.Name = p.ParameterName;
                                 _startDate.label = p.ParameterName;
@@ -191,7 +184,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
                                 }
                                 flowLayoutPanel1.Controls.Add(_startDate);
                             }
-                            else if (p.ParameterName == _endDate.Name) //handel default ribbon controls. "@enddate"
+                            else if (p.ParameterName == _endDate.Name) //handle default ribbon controls. "@enddate"
                             {
                                 _endDate.Name = p.ParameterName;
                                 _endDate.label = p.ParameterName;
@@ -207,7 +200,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
                                 flowLayoutPanel1.Controls.Add(_endDate);
                             }
                             else
-                            { //in case of an other timestamp create a datetimepicker for it
+                            { //in case of an other timestamps create a datetime picker for it
                                 Forms.uc_Datebox nDateb = new Forms.uc_Datebox
                                 {
                                     Name = p.ParameterName,
@@ -226,7 +219,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
                             }
                             break;
 
-                        case SqlDbType.Bit: //create checkboxes for bits
+                        case SqlDbType.Bit: //create check boxes for bits
                             Forms.uc_Checkbox nCheckb = new Forms.uc_Checkbox
                             {
                                 Name = p.ParameterName,
@@ -250,8 +243,8 @@ namespace ExcelAddInEquipmentDatabase.Forms
                             flowLayoutPanel1.Controls.Add(nCheckb);
                             break;
 
-                        case SqlDbType.Int: // in case of bit create a editbox for it
-                            if (p.ParameterName == _daysBack.Name)  //handel default ribbon controls. @daysback
+                        case SqlDbType.Int: // in case of bit create a edit box for it
+                            if (p.ParameterName == _daysBack.Name)  //handle default ribbon controls. @daysback
                             {
                                 _daysBack.Name = p.ParameterName;
                                 _daysBack.label = p.ParameterName;
@@ -293,12 +286,12 @@ namespace ExcelAddInEquipmentDatabase.Forms
                             }
                             break;
 
-                        case SqlDbType.VarChar: // in case of bit create a editbox for it
-                            //get current value from querystring
+                        case SqlDbType.VarChar: // in case of bit create a edit box for it
+                            //get current value from query string
                             string sInput = "";
                             if (Query.Contains(p.ParameterName)) sInput = Query.Substring(Query.IndexOf(p.ParameterName) + p.ParameterName.Length).Split('\'')[1];
 
-                            if (p.ParameterName == _assets.Name) //handel default ribbon controls. @Assets
+                            if (p.ParameterName == _assets.Name) //handle default ribbon controls. @Assets
                             {
                                 _assets.Name = p.ParameterName;
                                 _assets.label = p.ParameterName;
@@ -314,7 +307,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
                                 }
                                 flowLayoutPanel1.Controls.Add(_assets);
                             }
-                            else if (p.ParameterName == _locations.Name) //handel default ribbon controls. @Locations
+                            else if (p.ParameterName == _locations.Name) //handle default ribbon controls. @Locations
                             {
                                 _locations.Name = p.ParameterName;
                                 _locations.label = p.ParameterName;
@@ -330,7 +323,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
                                 }
                                 flowLayoutPanel1.Controls.Add(_locations);
                             }
-                            else if (p.ParameterName == _lochierarchy.Name)  //handel default ribbon controls. @Lochierarchy
+                            else if (p.ParameterName == _lochierarchy.Name)  //handle default ribbon controls. @Lochierarchy
                             {
                                 _lochierarchy.Name = p.ParameterName;
                                 _lochierarchy.label = p.ParameterName;
@@ -368,7 +361,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
                             break;
 
                         default:
-                            log.Error($"Type not handeld: pName:{p.ParameterName} pSqlDbType: {p.SqlDbType}");
+                            log.Error($"Type not handled: pName:{p.ParameterName} pSqlDbType: {p.SqlDbType}");
                             break;
                     }
 
@@ -389,7 +382,6 @@ namespace ExcelAddInEquipmentDatabase.Forms
                 if (control is Forms.uc_Datebox)
                 {
                     Forms.uc_Datebox nDateb = control as Forms.uc_Datebox;
-                    //Debug.WriteLine("name: {0}  enbled: {1}  value: {2}", nDateb.Name, nDateb.active, nDateb.input.ToString("yyyy-MM-dd hh:mm:ss"));
                     if (nDateb.active)
                     {
                         sbQuery.Append(string.Format(" {0} = '{1}' ,", nDateb.Name, nDateb.input.ToString("yyyy-MM-dd HH:mm:ss")));
@@ -398,7 +390,6 @@ namespace ExcelAddInEquipmentDatabase.Forms
                 else if (control is Forms.uc_Checkbox)
                 {
                     Forms.uc_Checkbox nCheckb = control as Forms.uc_Checkbox;
-                    //Debug.WriteLine("name: {0}  enbled: {1}  value: {2}", nCheckb.Name, nCheckb.active, nCheckb.input);
                     if (nCheckb.active)
                     {
                         sbQuery.Append(string.Format(" {0} = {1} ,", nCheckb.Name, nCheckb.input));
@@ -407,7 +398,6 @@ namespace ExcelAddInEquipmentDatabase.Forms
                 else if (control is Forms.uc_Inputbox)
                 {
                     Forms.uc_Inputbox nInputb = control as Forms.uc_Inputbox;
-                    //Debug.WriteLine("name: {0}  enbled: {1}  value: {2}", nInputb.Name, nInputb.active, nInputb.input);
                     if (nInputb.active)
                     {
                         if (nInputb.intOnly == true) // integer box 
@@ -422,7 +412,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
                 }
             }
             string Query = sbQuery.ToString();
-            //because I add a "," afther each parm and the last should not have one
+            //because I add a "," after each pram and the last should not have one
             if (Query.Trim().EndsWith(","))
             {
                 lActConn.Query = Query.TrimEnd(',');
@@ -450,17 +440,16 @@ namespace ExcelAddInEquipmentDatabase.Forms
             {
                 try
                 {
-                    //need to find out the datetype 
+                    //need to find out the date type 
                     TypeCode pType = guess_typecode(p.Defaultvalue);
                     // Debugger.Exeption("P:{0} dft:{1} detected:{2}", p.ParameterName, p.Defaultvalue, pType.ToString());
                     switch (pType)
                     {
-                        case TypeCode.DateTime:  //create datetime pickers 
+                        case TypeCode.DateTime:  //create date time pickers 
                             //get dt value from Query string 
                             DateTime dtSelectedTimestamp = Convert.ToDateTime(p.Defaultvalue);
-                            //if (Query.Contains(p.ParameterName)) dtSelectedTimestamp = Convert.ToDateTime(Query.Substring(Query.IndexOf(p.ParameterName) + p.ParameterName.Length).Split('\'')[1]);
 
-                            if (p.ParameterName == _startDate.Name) //handel default ribbon controls. "@startdate"
+                            if (p.ParameterName == _startDate.Name) //handle default ribbon controls. "@startdate"
                             {
                                 _startDate.Name = p.ParameterName;
                                 _startDate.label = p.ParameterName;
@@ -469,7 +458,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
                                 _startDate.input = dtSelectedTimestamp;
                                 flowLayoutPanel1.Controls.Add(_startDate);
                             }
-                            else if (p.ParameterName == _endDate.Name) //handel default ribbon controls. "@enddate"
+                            else if (p.ParameterName == _endDate.Name) //handle default ribbon controls. "@enddate"
                             {
                                 _endDate.Name = p.ParameterName;
                                 _endDate.label = p.ParameterName;
@@ -479,7 +468,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
                                 flowLayoutPanel1.Controls.Add(_endDate);
                             }
                             else
-                            { //in case of an other timestamp create a datetimepicker for it
+                            { //in case of an other timestamps create a datetime picker for it
                                 Forms.uc_Datebox nDateb = new Forms.uc_Datebox
                                 {
                                     Name = p.ParameterName,
@@ -492,7 +481,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
                             }
                             break;
 
-                        case TypeCode.Boolean: //create checkboxes for bits
+                        case TypeCode.Boolean: //create check boxes for bits
                             Forms.uc_Checkbox nCheckb = new Forms.uc_Checkbox
                             {
                                 Name = p.ParameterName,
@@ -528,12 +517,11 @@ namespace ExcelAddInEquipmentDatabase.Forms
                             flowLayoutPanel1.Controls.Add(nInputbInt);
                             break;
 
-                        case TypeCode.String: // in case of varchar create a editbox for it
-                            //get current value from querystring
+                        case TypeCode.String: // in case of varchar create a edit box for it
+                            //get current value from query string
                             string sInput = p.Defaultvalue;
-                            //if (Query.Contains(p.ParameterName)) sInput = Query.Substring(Query.IndexOf(p.ParameterName) + p.ParameterName.Length).Split('\'')[1];
 
-                            if (p.ParameterName == _assets.Name) //handel default ribbon controls. @Assets
+                            if (p.ParameterName == _assets.Name) //handle default ribbon controls. @Assets
                             {
                                 _assets.Name = p.ParameterName;
                                 _assets.label = p.ParameterName;
@@ -543,7 +531,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
                                 _assets.input = sInput;
                                 flowLayoutPanel1.Controls.Add(_assets);
                             }
-                            else if (p.ParameterName == _locations.Name) //handel default ribbon controls. @Locations
+                            else if (p.ParameterName == _locations.Name) //handle default ribbon controls. @Locations
                             {
                                 _locations.Name = p.ParameterName;
                                 _locations.label = p.ParameterName;
@@ -553,7 +541,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
                                 _locations.input = sInput;
                                 flowLayoutPanel1.Controls.Add(_locations);
                             }
-                            else if (p.ParameterName == _lochierarchy.Name)  //handel default ribbon controls. @Lochierarchy
+                            else if (p.ParameterName == _lochierarchy.Name)  //handle default ribbon controls. @Lochierarchy
                             {
                                 _lochierarchy.Name = p.ParameterName;
                                 _lochierarchy.label = p.ParameterName;
@@ -563,7 +551,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
                                 _lochierarchy.input = sInput;
                                 flowLayoutPanel1.Controls.Add(_lochierarchy);
                             }
-                            else if (p.ParameterName == _daysBack.Name)  //handel default ribbon controls. @daysback
+                            else if (p.ParameterName == _daysBack.Name)  //handle default ribbon controls. @daysback
                             {
                                 _daysBack.Name = p.ParameterName;
                                 _daysBack.label = p.ParameterName;
@@ -589,7 +577,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
                             break;
 
                         default:
-                            log.Error($"Type not handeld: pName:{p.ParameterName} pDftValue: {p.Defaultvalue}");
+                            log.Error($"Type not handled: pName:{p.ParameterName} pDftValue: {p.Defaultvalue}");
                             break;
                     }
 
@@ -608,8 +596,6 @@ namespace ExcelAddInEquipmentDatabase.Forms
         public string MX7_BuildQuery_ProcMngrToActiveConnection(String QueryTemplate)
         {
             System.Text.StringBuilder sbQuery = new System.Text.StringBuilder();
-            //gives issue when users uses nested querys 
-            //sbQuery.Append("SELECT ").Append(QueryTemplate.Split(new string[] { "SELECT" }, StringSplitOptions.None)[1]);
             sbQuery.Append("SELECT ").Append(QueryTemplate.Substring(QueryTemplate.IndexOf("SELECT") + 6));
 
             foreach (var control in flowLayoutPanel1.Controls)
@@ -707,7 +693,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
         /*
          *Parameters sets or values for Query parameters that the user can store in the GADATA db 
          *they can be shared and managed.
-         *It is a way of not having to manualy parameters a Query each time.
+         *It is a way of not having to manually parameters a Query each time.
          *ie: you can make a parameter set to get all the gripper data in a specific area for the last week
          */
         #region ParmSets

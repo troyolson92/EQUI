@@ -51,7 +51,7 @@ namespace EqUiWebUi.Areas.Welding.Controllers
                 Left join WELDING2.rt_spottable on rt_spottable.SpotName = T_PointsList.[Name] and rt_spottable.isDead = 0
                 Left join WELDING2.c_timer on c_timer.id = rt_spottable.[timerId]
                 WHERE T_PlansList.[Name] = 'V316_331060_LHD'";
-            return View();
+            return View(qry);
         }
 
         /// <summary>

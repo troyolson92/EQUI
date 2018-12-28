@@ -191,7 +191,7 @@
             this.btn_StartDate.Name = "btn_StartDate";
             this.btn_StartDate.OfficeImageId = "FillRight";
             this.btn_StartDate.ShowImage = true;
-            this.btn_StartDate.SuperTip = "Sets the datetime starting point of the query. ";
+            this.btn_StartDate.SuperTip = "Sets the date time starting point of the query. ";
             this.btn_StartDate.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_StartDate_Click);
             // 
             // btn_EndDate
@@ -201,7 +201,7 @@
             this.btn_EndDate.Name = "btn_EndDate";
             this.btn_EndDate.OfficeImageId = "FillLeft";
             this.btn_EndDate.ShowImage = true;
-            this.btn_EndDate.SuperTip = "Sets the datetime ending point of the query. ";
+            this.btn_EndDate.SuperTip = "Sets the date time ending point of the query. ";
             this.btn_EndDate.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_EndDate_Click);
             // 
             // btn_nDays
@@ -211,7 +211,7 @@
             this.btn_nDays.Name = "btn_nDays";
             this.btn_nDays.OfficeImageId = "TableExportTableToSharePointList";
             this.btn_nDays.ShowImage = true;
-            this.btn_nDays.SuperTip = "Sets the Enddate to now and the startdate to now - x days";
+            this.btn_nDays.SuperTip = "Sets the end date to now and the start date to now - x days";
             this.btn_nDays.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_nDays_Click);
             // 
             // g_config
@@ -249,7 +249,7 @@
             this.gall_templates.Name = "gall_templates";
             this.gall_templates.OfficeImageId = "ReviewCompareMenu";
             this.gall_templates.ShowImage = true;
-            this.gall_templates.SuperTip = "A list of templates for the most commen connections";
+            this.gall_templates.SuperTip = "A list of templates for the most common connections";
             this.gall_templates.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.gall_templates_Click);
             // 
             // separator3
@@ -263,7 +263,7 @@
             this.tgbtn_Wrap.OfficeImageId = "TextWrappingInLineWithText";
             this.tgbtn_Wrap.ShowImage = true;
             this.tgbtn_Wrap.SuperTip = "Wraps the text for ";
-            this.tgbtn_Wrap.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.tgbtn_Wrap_Click);
+            this.tgbtn_Wrap.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.tbtn_Wrap_Click);
             // 
             // tbtn_StopRightClick
             // 
@@ -271,7 +271,7 @@
             this.tbtn_StopRightClick.Name = "tbtn_StopRightClick";
             this.tbtn_StopRightClick.OfficeImageId = "InkDeleteAllInk";
             this.tbtn_StopRightClick.ShowImage = true;
-            this.tbtn_StopRightClick.SuperTip = "Stops the plugin from overwring the context menu on right click";
+            this.tbtn_StopRightClick.SuperTip = "Stops the plug in from overwriting the context menu on right click";
             this.tbtn_StopRightClick.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.tbtn_StopRightClick_Click);
             // 
             // EquipmentDBRibbon

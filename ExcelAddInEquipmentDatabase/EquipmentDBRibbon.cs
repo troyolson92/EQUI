@@ -21,31 +21,26 @@ namespace ExcelAddInEquipmentDatabase
 
         //connection to databases
         ConnectionManager ConnectionManager = new ConnectionManager();
-        //connection to GADATA for maximo querys
+        //connection to GADATA for maximo query
         OracleQuery lMaximoQuery = new OracleQuery();
-        //local worsksheet function instance
+        //local worksheet function instance
         WorksheetFeatures lWorksheetFeatures = new WorksheetFeatures();
         //procedure manager instance 
+        List<Forms.ProcedureManager> ProcMngrs;
         Forms.ProcedureManager ProcMngr;
         Microsoft.Office.Tools.CustomTaskPane ProcedureMangerTaskPane;
         //connection manager instance
         ExcelConnectionManager ExcelConnectionManager;
-        //intance of datetimepickers;
+        //instance of date time pickers;
         dtPicker StartDatePicker;
         dtPicker EndDatePicker;
-        //if user trigger a refresh (because i'm an idiot and did not find a refresh finished event)
+        //Refresh busy
         bool TriggerRefresh = false;
-
-        public string DsnMX7 { get { return "MX7"; } }
-        public string DsnGADATA { get { return "GADATA"; } }
 
         private void EquipmentDBRibbon_Load(object sender, RibbonUIEventArgs e)
         {
-            log.Info("plugin load started");
             //set build version
-            Assembly _assembly = Assembly.GetExecutingAssembly();
-            FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(_assembly.Location);
-            g_config.Label = string.Format("V:{0}", fvi.ProductVersion, "");
+            g_config.Label = $"V:{FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).ProductVersion}";
 
             //check if user is power user
             RoleProvider roleProvider = new RoleProvider();
@@ -58,13 +53,6 @@ namespace ExcelAddInEquipmentDatabase
             {
                 btn_ConnectionManager.Enabled = false;
             }
-
-            //force the DSN connection to the host system
-            ODBCManager.CreateDSN(DsnGADATA, "odbc link to sql001.gen.volvocars.net", "sqla001.gen.volvocars.net", "SQL Server", @"C:\windows\system32\SQLSRV32.dll", false, DsnGADATA);
-            ODBCManager.CreateDSN(DsnMX7, "odbc link MAXIMO7", "dpmxarct", "MAXIMO7 ODBC for oracle", @"C:\windows\system32\msorcl32.dll", true, "MAXIMO");
-
-            //find connections in wb
-            dd_connections_update();
 
             //fill with templates
             gall_templates.Items.Clear();
@@ -87,10 +75,35 @@ namespace ExcelAddInEquipmentDatabase
             Globals.ThisAddIn.Application.WorkbookActivate += Application_WorkbookActivate;
             //subscribe to sheet change event.
             Globals.ThisAddIn.Application.SheetActivate += Application_SheetActivate;
-            //subscribe to before right click for context menus.
-            Globals.ThisAddIn.Application.SheetBeforeRightClick += lWorksheetFeatures.Application_SheetBeforeRightClick;
             //subscribe to refresh finished 
             Globals.ThisAddIn.Application.AfterCalculate += Application_AfterCalculate;
+            //subscribe to before right click for context menus.
+            Globals.ThisAddIn.Application.SheetBeforeRightClick += lWorksheetFeatures.Application_SheetBeforeRightClick;
+
+            //force the DSN connection to the host system
+            ODBCManager.CreateDSN("GADATA", "odbc link to Equi database", "sqla001.gen.volvocars.net", "SQL Server", @"C:\windows\system32\SQLSRV32.dll", false, "GADATA");
+            ODBCManager.CreateDSN("MAXIMO", "odbc link MAXIMO reporting database", "dpmxarct", "ODBC for oracle", @"C:\windows\system32\msorcl32.dll", true, "MAXIMO");
+            //find connections in wb
+            dd_connections_update();
+        }
+
+
+        /// <summary>
+        /// When a workbook gets focus load connection
+        /// </summary>
+        /// <param name="Wb"></param>
+        void Application_WorkbookActivate(Excel.Workbook Wb)
+        {
+            Set_activeconnection();
+        }
+
+        /// <summary>
+        /// when sheet changes load connection
+        /// </summary>
+        /// <param name="Sh"></param>
+        void Application_SheetActivate(object Sh)
+        {
+            Set_activeconnection();
         }
 
         /// <summary>
@@ -105,16 +118,6 @@ namespace ExcelAddInEquipmentDatabase
             TriggerRefresh = false;
         }
 
-
-        void Application_WorkbookActivate(Excel.Workbook Wb)
-        {
-            Set_activeconnection();
-        }
-
-        void Application_SheetActivate(object Sh)
-        {
-            Set_activeconnection();
-        }
 
         //returns the connection name of the active sheet 
         private String activeSheet_connection()
@@ -141,10 +144,7 @@ namespace ExcelAddInEquipmentDatabase
             }
             return null;
         }
-        /*  If the active connection changes than create a new instance of the procmngr
-         *  =>Only when its a real connection (not refreshall mode)
-         *  =>also load the "available" parameters from procmager back into the ribbon 
-         */
+
         private void Set_activeconnection()
         {
             dd_connections_update();
@@ -192,7 +192,6 @@ namespace ExcelAddInEquipmentDatabase
         {
             set_RibonToProcedureManager();
         }
-
 
         public void dd_connections_update()
         {
@@ -257,146 +256,9 @@ namespace ExcelAddInEquipmentDatabase
             btn_nDays.Enabled = ProcMngr.daysBack.active;
         }
 
-
-        private void cb_Lochierarchy_itemsload(object sender, RibbonControlEventArgs e)
-        {
-            cb_Lochierarchy.Items.Clear();
-            try
-            {
-                List<string> result = new List<string>() { "A", "B" };
-                foreach (string thing in result)
-                {
-                    RibbonDropDownItem item = Globals.Factory.GetRibbonFactory().CreateRibbonDropDownItem();
-                    item.Label = thing;
-                    cb_Lochierarchy.Items.Add(item);
-                }
-            }
-            catch (Exception ex)
-            {
-                cb_Lochierarchy.Text = "%";
-            }
-        }
-        private void cb_assets_itemsload(object sender, RibbonControlEventArgs e)
-        {
-            cb_assets.Items.Clear();
-            try
-            {
-                List<string> result = new List<string>() { "e", "F" };
-                foreach (string thing in result)
-                {
-                    RibbonDropDownItem item = Globals.Factory.GetRibbonFactory().CreateRibbonDropDownItem();
-                    if (cb_assets.Items.Count() > 500)
-                    {
-                        item.Label = "More items not loading...";
-                        cb_assets.Items.Add(item);
-                        break;
-                    }
-                    item.Label = thing;
-                    cb_assets.Items.Add(item);
-
-                }
-            }
-            catch (Exception ex)
-            {
-                cb_locations.Text = "%";
-            }
-        }
-        private void cb_locations_itemsload(object sender, RibbonControlEventArgs e)
-        {
-            cb_locations.Items.Clear();
-            try
-            {
-                List<string> result = new List<string>() { "c", "D" };
-                foreach (string thing in result)
-                {
-                    RibbonDropDownItem item = Globals.Factory.GetRibbonFactory().CreateRibbonDropDownItem();
-                    item.Label = thing;
-                    cb_locations.Items.Add(item);
-                }
-            }
-            catch (Exception ex)
-            {
-                cb_locations.Text = "%";
-            }
-        }
-
-        //handel feedback from filter controls
-        private void btn_StartDate_Click(object sender, RibbonControlEventArgs e)
-        {
-            if (StartDatePicker == null) StartDatePicker = new dtPicker(ProcMngr.startDate);
-            StartDatePicker.Show();
-        }
-
-        private void btn_EndDate_Click(object sender, RibbonControlEventArgs e)
-        {
-            if (EndDatePicker == null) EndDatePicker = new dtPicker(ProcMngr.endDate);
-            EndDatePicker.Show();
-        }
-
-        private void btn_nDays_Click(object sender, RibbonControlEventArgs e)
-        {
-            string input = Microsoft.VisualBasic.Interaction.InputBox("Enter number of days of data to get", "Number of days back", "10", -1, -1);
-            if (Microsoft.VisualBasic.Information.IsNumeric(input))
-            {
-                ProcMngr.daysBack.input = input;
-                ProcMngr.startDate.input = DateTime.Now.AddDays(Convert.ToInt32(input) * -1);
-                ProcMngr.endDate.input = DateTime.Now;
-            }
-            else
-            {
-                DialogResult result = MessageBox.Show($"Please try it again '{input}' not a valid number", "User input error", MessageBoxButtons.OK);
-                ProcMngr.daysBack.input = "10";
-            }
-        }
-
-        private void gall_templates_Click(object sender, RibbonControlEventArgs e)
-        {
-            try
-            {
-                Globals.ThisAddIn.Application.Workbooks.Open(gall_templates.SelectedItem.Tag, Type.Missing, true);
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex);
-            }
-        }
-
-        private void cb_Lochierarchy_TextChanged(object sender, RibbonControlEventArgs e)
-        {
-            ProcMngr.lochierarchy.input = cb_Lochierarchy.Text;
-        }
-        private void cb_locations_TextChanged(object sender, RibbonControlEventArgs e)
-        {
-            ProcMngr.locations.input = cb_locations.Text;
-        }
-        private void cb_assets_TextChanged(object sender, RibbonControlEventArgs e)
-        {
-            ProcMngr.assets.input = cb_assets.Text;
-        }
-
-        //keeps the collection of connections up to date
-        private void dd_activeConnection_SelectionChanged(object sender, RibbonControlEventArgs e)
-        {
-            sync_with_activeconnection();
-        }
-
-        //show connection manger of valid connection is selected
-        private void btn_EditProcedure_Click(object sender, RibbonControlEventArgs e)
-        {
-            if (dd_activeConnection.SelectedItem.Label == "RefreshAll") //this is not a connection to van not be edited
-            {
-                DialogResult result = MessageBox.Show("Please select an other connection. 'RefreshAll' is not a connection", "Warning", MessageBoxButtons.OK);
-                btn_EditProcedure.Checked = false;
-            }
-            else
-            {
-                ProcedureMangerTaskPane.Visible = btn_EditProcedure.Checked;
-            }
-        }
-        //refresh the active connection or refresh all connections if needed
         private void btn_Query_Click(object sender, RibbonControlEventArgs e)
         {
-            if (ProcMngr == null) return; 
+            if (ProcMngr == null) return;
             //format date time to make days back work better 
             if (ProcMngr.daysBack.active) // added to make dateRange selection possible.
             {
@@ -427,12 +289,12 @@ namespace ExcelAddInEquipmentDatabase
                         SetWrapText(false);
                         TriggerRefresh = true;
                         //connects the ribbon filter controls with the procMngr
-                        if (ProcMngr.activeSystem == DsnMX7) //MX7connections
+                        if (ProcMngr.activeSystem == "MAXIMO") //MX7connections
                         {
-                            ProcMngr.MX7_ProcMngrToActiveConnection(lMaximoQuery.oracle_get_QueryTemplate_from_GADATA(connection.Name, DsnMX7));
+                            ProcMngr.MX7_ProcMngrToActiveConnection(lMaximoQuery.oracle_get_QueryTemplate_from_GADATA(connection.Name, "MAXIMO"));
                             connection.Refresh();
                         }
-                        else if (ProcMngr.activeSystem == DsnGADATA) //GADATAconnections
+                        else if (ProcMngr.activeSystem == "GADATA") //GADATAconnections
                         {
                             ProcMngr.GADATA_ProcMngrToActiveConnection();
                             connection.Refresh();
@@ -442,18 +304,22 @@ namespace ExcelAddInEquipmentDatabase
             }
 
         }
-
-        private void btn_ConnectionManager_Click(object sender, RibbonControlEventArgs e)
+        private void dd_activeConnection_SelectionChanged(object sender, RibbonControlEventArgs e)
         {
-            if (ExcelConnectionManager != null) ExcelConnectionManager.Dispose();
-            ExcelConnectionManager = new ExcelConnectionManager();
-            ExcelConnectionManager.Show();
-            ExcelConnectionManager.Disposed += ConnMng_Disposed;
+            sync_with_activeconnection();
         }
 
-        void ConnMng_Disposed(object sender, EventArgs e)
+        private void btn_EditProcedure_Click(object sender, RibbonControlEventArgs e)
         {
-            Set_activeconnection();
+            if (dd_activeConnection.SelectedItem.Label == "RefreshAll") //this is not a connection to van not be edited
+            {
+                DialogResult result = MessageBox.Show("Please select an other connection. 'RefreshAll' is not a connection", "Warning", MessageBoxButtons.OK);
+                btn_EditProcedure.Checked = false;
+            }
+            else
+            {
+                ProcedureMangerTaskPane.Visible = btn_EditProcedure.Checked;
+            }
         }
 
         private void dd_ParameterSets_SelectionChanged(object sender, RibbonControlEventArgs e)
@@ -461,6 +327,149 @@ namespace ExcelAddInEquipmentDatabase
             ProcMngr.Load_ParmsSet(dd_ParameterSets.SelectedItem.Label);
             //loads the available parameters back into the ribbon
             set_RibonToProcedureManager();
+        }
+
+        /// <summary>
+        /// Load dropdown boxes
+        /// </summary>
+        private void cb_Lochierarchy_itemsload(object sender, RibbonControlEventArgs e)
+        {
+            cb_Lochierarchy.Items.Clear();
+            try
+            {
+                List<string> result = new List<string>() { "A", "B" };
+                foreach (string thing in result)
+                {
+                    RibbonDropDownItem item = Globals.Factory.GetRibbonFactory().CreateRibbonDropDownItem();
+                    item.Label = thing;
+                    cb_Lochierarchy.Items.Add(item);
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+                cb_Lochierarchy.Text = "%";
+            }
+        }
+
+        private void cb_assets_itemsload(object sender, RibbonControlEventArgs e)
+        {
+            cb_assets.Items.Clear();
+            try
+            {
+                List<string> result = new List<string>() { "e", "F" };
+                foreach (string thing in result)
+                {
+                    RibbonDropDownItem item = Globals.Factory.GetRibbonFactory().CreateRibbonDropDownItem();
+                    if (cb_assets.Items.Count() > 500)
+                    {
+                        item.Label = "More items not loading...";
+                        cb_assets.Items.Add(item);
+                        break;
+                    }
+                    item.Label = thing;
+                    cb_assets.Items.Add(item);
+
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+                cb_locations.Text = "%";
+            }
+        }
+
+        private void cb_locations_itemsload(object sender, RibbonControlEventArgs e)
+        {
+            cb_locations.Items.Clear();
+            try
+            {
+                List<string> result = new List<string>() { "c", "D" };
+                foreach (string thing in result)
+                {
+                    RibbonDropDownItem item = Globals.Factory.GetRibbonFactory().CreateRibbonDropDownItem();
+                    item.Label = thing;
+                    cb_locations.Items.Add(item);
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+                cb_locations.Text = "%";
+            }
+        }
+
+        /// <summary>
+        /// update procedure manager when ribbon text changes
+        /// </summary>
+        private void cb_Lochierarchy_TextChanged(object sender, RibbonControlEventArgs e)
+        {
+            ProcMngr.lochierarchy.input = cb_Lochierarchy.Text;
+        }
+
+        private void cb_locations_TextChanged(object sender, RibbonControlEventArgs e)
+        {
+            ProcMngr.locations.input = cb_locations.Text;
+        }
+
+        private void cb_assets_TextChanged(object sender, RibbonControlEventArgs e)
+        {
+            ProcMngr.assets.input = cb_assets.Text;
+        }
+
+        /// <summary>
+        /// handle date picker and days back ribbon controls
+        /// </summary>
+        private void btn_StartDate_Click(object sender, RibbonControlEventArgs e)
+        {
+            if (StartDatePicker == null) StartDatePicker = new dtPicker(ProcMngr.startDate);
+            StartDatePicker.Show();
+        }
+
+        private void btn_EndDate_Click(object sender, RibbonControlEventArgs e)
+        {
+            if (EndDatePicker == null) EndDatePicker = new dtPicker(ProcMngr.endDate);
+            EndDatePicker.Show();
+        }
+
+        private void btn_nDays_Click(object sender, RibbonControlEventArgs e)
+        {
+            string input = Microsoft.VisualBasic.Interaction.InputBox("Enter number of days of data to get", "Number of days back", "10", -1, -1);
+            if (Microsoft.VisualBasic.Information.IsNumeric(input))
+            {
+                ProcMngr.daysBack.input = input;
+                ProcMngr.startDate.input = DateTime.Now.AddDays(Convert.ToInt32(input) * -1);
+                ProcMngr.endDate.input = DateTime.Now;
+            }
+            else
+            {
+                DialogResult result = MessageBox.Show($"Please try it again '{input}' not a valid number", "User input error", MessageBoxButtons.OK);
+                ProcMngr.daysBack.input = "10";
+            }
+        }
+
+        /// <summary>
+        /// Handle ribbon optional buttons
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void gall_templates_Click(object sender, RibbonControlEventArgs e)
+        {
+            try
+            {
+                Globals.ThisAddIn.Application.Workbooks.Open(gall_templates.SelectedItem.Tag, Type.Missing, true);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+            }
+        }
+
+        private void btn_ConnectionManager_Click(object sender, RibbonControlEventArgs e)
+        {
+            if (ExcelConnectionManager != null) ExcelConnectionManager.Dispose();
+            ExcelConnectionManager = new ExcelConnectionManager();
+            ExcelConnectionManager.Show();
         }
 
         private void btn_help_Click(object sender, RibbonControlEventArgs e)
@@ -495,7 +504,7 @@ namespace ExcelAddInEquipmentDatabase
             }
         }
 
-        private void tgbtn_Wrap_Click(object sender, RibbonControlEventArgs e)
+        private void tbtn_Wrap_Click(object sender, RibbonControlEventArgs e)
         {
             SetWrapText(tgbtn_Wrap.Checked);
         }
