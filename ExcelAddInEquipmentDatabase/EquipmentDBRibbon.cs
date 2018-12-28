@@ -41,7 +41,7 @@ namespace ExcelAddInEquipmentDatabase
 
         private void EquipmentDBRibbon_Load(object sender, RibbonUIEventArgs e)
         {
-
+            log.Info("plugin load started");
             //set build version
             Assembly _assembly = Assembly.GetExecutingAssembly();
             FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(_assembly.Location);

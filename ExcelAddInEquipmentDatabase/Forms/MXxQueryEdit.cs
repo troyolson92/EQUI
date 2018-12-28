@@ -13,8 +13,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
 {
     public partial class MXxQueryEdit : Form
     {
-        //debugger
-        myDebugger Debugger = new myDebugger();
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         string lTargetSystem;
 
@@ -60,7 +59,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
             }
             catch (Exception ex)
             {
-               Debugger.Exeption(ex);
+                log.Error(ex);
                 MessageBox.Show(ex.Message, "OEPS", MessageBoxButtons.OK);
             }
 
@@ -97,7 +96,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
             }
             catch (Exception ex)
             {
-               Debugger.Exeption(ex);
+                log.Error(ex);
                 MessageBox.Show(ex.Message, "OEPS", MessageBoxButtons.OK);
             }
         }

@@ -16,8 +16,8 @@ namespace ExcelAddInEquipmentDatabase
 {
     public partial class ExcelConnectionManager : Form
     {
-        //debugger
-        myDebugger Debugger = new myDebugger();
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         //connection to database
         ConnectionManager connectionManager = new ConnectionManager();
         // to GADATA for maximo querys
@@ -95,9 +95,9 @@ namespace ExcelAddInEquipmentDatabase
                     }
                 }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-               Debugger.Exeption(e);
+                log.Error(ex);
             }
         }
 
@@ -132,9 +132,9 @@ namespace ExcelAddInEquipmentDatabase
                             break;
                     }
                 }
-                catch (Exception e )
+                catch (Exception ex )
                 {
-                 Debugger.Exeption(e);
+                    log.Error(ex);
                 }
             }
 
@@ -158,7 +158,7 @@ namespace ExcelAddInEquipmentDatabase
                 }
                 catch (Exception ex)
                 {
-                   Debugger.Exeption(ex);
+                    log.Error(ex);
                 }
             }
             Lb_get_connections();
