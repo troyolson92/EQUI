@@ -26,7 +26,6 @@ namespace ExcelAddInEquipmentDatabase
         //local worksheet function instance
         WorksheetFeatures lWorksheetFeatures = new WorksheetFeatures();
         //procedure manager instance 
-        List<Forms.ProcedureManager> ProcMngrs;
         Forms.ProcedureManager ProcMngr;
         Microsoft.Office.Tools.CustomTaskPane ProcedureMangerTaskPane;
         //connection manager instance
