@@ -38,6 +38,9 @@ namespace ExcelAddInEquipmentDatabase
 
         private void EquipmentDBRibbon_Load(object sender, RibbonUIEventArgs e)
         {
+            log4net.Config.XmlConfigurator.Configure();
+            log.Info("VstoEquiLoaded");
+
             //set build version
             g_config.Label = $"V:{FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).ProductVersion}";
 
