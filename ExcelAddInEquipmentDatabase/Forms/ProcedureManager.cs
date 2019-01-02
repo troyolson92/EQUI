@@ -21,8 +21,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
 
         //connection to database
         ConnectionManager connectionManager = new ConnectionManager();
-        //connection to GADATA maximo querys 
-        OracleQuery lMaximoQuery = new OracleQuery();
+        EquiEntities db = new EquiEntities();
         //active connection in active workbook
         ActiveConnection lActConn = new ActiveConnection();
 
@@ -113,7 +112,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
                 //
                 lActConn.System = DsnMX7;
                 lActConn.ProcedureName = lActConn.Name; //maximo system dont have a stored proc name so we take the name of the Query template
-                MX7_ActiveConnectionToProcMngr(lMaximoQuery.oracle_get_QueryParms_from_GADATA(activeconnection, DsnMX7), lMaximoQuery.oracle_get_QueryTemplate_from_GADATA(activeconnection, DsnMX7));
+                MX7_ActiveConnectionToProcMngr(oracle_get_QueryParms_from_GADATA(activeconnection, DsnMX7), db.QUERYS.Where(c => c.NAME == activeconnection && c.SYSTEM == DsnMX7).First().QUERY.Trim().TrimEnd(';').ToUpper());
             }
             else if (lActConn.ODBCconnString.Contains(DsnGADATA)) //existing GADATAconnections
             {
@@ -788,127 +787,52 @@ namespace ExcelAddInEquipmentDatabase.Forms
 
         public void GADATA_delete_ParmSet(string System, string Procname, string Setname)
         {
-            using (applDataTableAdapters.QUERYParametersTableAdapter adapter = new applDataTableAdapters.QUERYParametersTableAdapter())
-            {
-                adapter.DeleteSet(System, Procname, Setname);
-            }
+            //using (applDataTableAdapters.QUERYParametersTableAdapter adapter = new applDataTableAdapters.QUERYParametersTableAdapter())
+            //{
+            //    adapter.DeleteSet(System, Procname, Setname);
+            //}
         }
 
         public void GADATA_insert_ParmSet(string System, string Procname, string Setname, string Parm, string Value)
         {
 
-            using (applDataTableAdapters.QUERYParametersTableAdapter adapter = new applDataTableAdapters.QUERYParametersTableAdapter())
-            {
-                adapter.Insert(System, Procname, Setname, "", Parm, Value);
-            }
+            //using (applDataTableAdapters.QUERYParametersTableAdapter adapter = new applDataTableAdapters.QUERYParametersTableAdapter())
+            //{
+            //    adapter.Insert(System, Procname, Setname, "", Parm, Value);
+            //}
         }
 
         public string GADATA_Select_ParmSet_value(string System, string Procname, string Setname, string Parm)
         {
-            using (applDataTableAdapters.QUERYParametersTableAdapter adapter = new applDataTableAdapters.QUERYParametersTableAdapter())
-            {
-                applData.QUERYParametersDataTable lDT = new applData.QUERYParametersDataTable();
-                adapter.Fill(lDT, System, Procname, Setname, Parm);
-                if (lDT.Count() == 0) return null;
-                return (from a in lDT select a.Value).First();
-            }
+            //using (applDataTableAdapters.QUERYParametersTableAdapter adapter = new applDataTableAdapters.QUERYParametersTableAdapter())
+            //{
+            //    applData.QUERYParametersDataTable lDT = new applData.QUERYParametersDataTable();
+            //    adapter.Fill(lDT, System, Procname, Setname, Parm);
+            //    if (lDT.Count() == 0) return null;
+            //    return (from a in lDT select a.Value).First();
+            //}
+            return "";
         }
 
         public List<string> GADATA_Select_ParmSet_list(string System, string Procname)
         {
-            using (applDataTableAdapters.QUERYParametersTableAdapter adapter = new applDataTableAdapters.QUERYParametersTableAdapter())
-            {
-                applData.QUERYParametersDataTable lDT = new applData.QUERYParametersDataTable();
-                adapter.FillByProcname(lDT, System, Procname);
-                if (lDT.Count() == 0) return new List<string>();
-                return (from a in lDT select a.SETNAME).Distinct().ToList();
-            }
+            //using (applDataTableAdapters.QUERYParametersTableAdapter adapter = new applDataTableAdapters.QUERYParametersTableAdapter())
+            //{
+            //    applData.QUERYParametersDataTable lDT = new applData.QUERYParametersDataTable();
+            //    adapter.FillByProcname(lDT, System, Procname);
+            //    if (lDT.Count() == 0) return new List<string>();
+            //    return (from a in lDT select a.SETNAME).Distinct().ToList();
+            //}
+            return new List<string>();
         }
 
-        //Parm set calls to gadata for MAXIMO
-        //maximo comm TO GADATA
-
-        public void oracle_update_Query_to_GADATA(string System, string Queryname, string QueryDiscription, string Query)
-        {
-            using (applData.QUERYSDataTable lQUERYS = new applData.QUERYSDataTable())
-            {
-                using (applDataTableAdapters.QUERYSTableAdapter adapter = new applDataTableAdapters.QUERYSTableAdapter())
-                {
-                    var ds = from a in lQUERYS
-                             where a.SYSTEM == System && a.NAME == Queryname
-                             select a;
-                    //adapter.Update()
-
-                }
-            }
-        }
-
-        public void oracle_delete_Query_GADATA(string System, string Queryname)
-        {
-            using (applDataTableAdapters.QUERYSTableAdapter adapter = new applDataTableAdapters.QUERYSTableAdapter())
-            {
-                adapter.Delete(System, Queryname);
-            }
-        }
-
-        public void oracle_send_new_Query_to_GADATA(string System, string Queryname, string QueryDiscription, string Query)
-        {
-
-            using (applDataTableAdapters.QUERYSTableAdapter adapter = new applDataTableAdapters.QUERYSTableAdapter())
-            {
-                adapter.Insert(System, Queryname, QueryDiscription, Query);
-            }
-        }
-
-        public string oracle_get_QueryTemplate_from_GADATA(string QueryName, string System)
-        {
-            string Query;
-            using (applData.QUERYSDataTable lQUERYS = new applData.QUERYSDataTable())
-            {
-                using (applDataTableAdapters.QUERYSTableAdapter adapter = new applDataTableAdapters.QUERYSTableAdapter())
-                {
-                    adapter.Fill(lQUERYS);
-                }
-                Query = (from a in lQUERYS
-                         where a.SYSTEM == System && a.NAME == QueryName
-                         select a.QUERY).First().ToString();
-            }
-            return Query.Trim().TrimEnd(';').ToUpper();
-        }
-
-        public string oracle_get_QueryDiscription_from_GADATA(string QueryName, string System)
-        {
-            string Disciption;
-            using (applData.QUERYSDataTable lQUERYS = new applData.QUERYSDataTable())
-            {
-                using (applDataTableAdapters.QUERYSTableAdapter adapter = new applDataTableAdapters.QUERYSTableAdapter())
-                {
-                    adapter.Fill(lQUERYS);
-                }
-                Disciption = (from a in lQUERYS
-                              where a.SYSTEM == System && a.NAME == QueryName
-                              select a.DISCRIPTION).First().ToString();
-            }
-            return Disciption.Trim();
-        }
-
+        //this is not used?
         public List<OracleQueryParm> oracle_get_QueryParms_from_GADATA(string QueryName, string System)
         {
-            string Query;
-            using (applData.QUERYSDataTable lQUERYS = new applData.QUERYSDataTable())
-            {
-                using (applDataTableAdapters.QUERYSTableAdapter adapter = new applDataTableAdapters.QUERYSTableAdapter())
-                {
-                    adapter.Fill(lQUERYS);
-                }
-                Query = (from a in lQUERYS
-                         where a.SYSTEM == System && a.NAME == QueryName
-                         select a.QUERY).First().ToString();
-            }
+            string Query = db.QUERYS.Where(c => c.NAME == QueryName && c.SYSTEM == System).First().QUERY;
             //gets part of the query containing the params
             List<string> ParmLines = Query.ToUpper().Split(new string[] { "SELECT" }, StringSplitOptions.None)[0].Trim()
                                                     .Split(new string[] { "DEFINE" }, StringSplitOptions.None).ToList();
-
             List<OracleQueryParm> _parmList = new List<OracleQueryParm>();
             foreach (string parm in ParmLines)
             {

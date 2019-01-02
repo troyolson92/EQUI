@@ -53,7 +53,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
             try
             {
                 OracleQuery lMaximoQuery = new OracleQuery();
-                lMaximoQuery.oracle_delete_Query_GADATA(lTargetSystem, QueryName);
+            //  lMaximoQuery.oracle_delete_Query_GADATA(lTargetSystem, QueryName);
                 Close();
                 Dispose();
             }
@@ -84,13 +84,13 @@ namespace ExcelAddInEquipmentDatabase.Forms
                 OracleQuery lMaximoQuery = new OracleQuery();
                 try
                 { // I know this is stupid but to use UPDATE command i need the build a dataset and AARG 
-                    lMaximoQuery.oracle_delete_Query_GADATA(lTargetSystem, QueryName);
+                 // lMaximoQuery.oracle_delete_Query_GADATA(lTargetSystem, QueryName);
                 }
                 catch
                 {
                     //
                 }
-                lMaximoQuery.oracle_send_new_Query_to_GADATA(lTargetSystem, QueryName, QueryDiscription, Query);
+           //   lMaximoQuery.oracle_send_new_Query_to_GADATA(lTargetSystem, QueryName, QueryDiscription, Query);
                 Close();
                 Dispose();
             }
