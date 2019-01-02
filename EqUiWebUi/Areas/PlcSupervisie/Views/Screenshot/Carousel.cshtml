@@ -1,36 +1,46 @@
-﻿<div id="myCarousel" class="carousel slide" data-ride="carousel">
-    <div class="carousel-inner" role="listbox">
-        <div class="carousel-item active">
-            <img class="d-block img-fluid" src="http://webapps.gen.volvocars.net/applications/eng/equipment/SuperVisieCma/VCG_CMA40_GA3SUPERVNCW01__00_Overview_UnderBody_CMA.Pd_.jpg" alt="Overview">
-        </div>
-        <div class="carousel-item">
-            <img class="d-block img-fluid" src="http://webapps.gen.volvocars.net/applications/eng/equipment/SuperVisieCma/VCG_CMA40_GA3SUPERVNCW01__01_UnderBody_1.Pd_.jpg" alt="2 slide">
-        </div>
-        <div class="carousel-item">
-            <img class="d-block img-fluid" src="http://webapps.gen.volvocars.net/applications/eng/equipment/SuperVisieCma/VCG_CMA40_GA3SUPERVNCW01__02_UnderBody_2.Pd_.jpg" alt="3 slide">
-        </div>
-        <div class="carousel-item">
-            <img class="d-block img-fluid" src="http://webapps.gen.volvocars.net/applications/eng/equipment/SuperVisieCma/VCG_CMA40_GA3SUPERVNCW01__03_UnderBody_3.Pd_.jpg" alt="4 slide">
-        </div>
-        <div class="carousel-item">
-            <img class="d-block img-fluid" src="http://webapps.gen.volvocars.net/applications/eng/equipment/SuperVisieCma/VCG_CMA40_GA3SUPERVNCW01__04_Conveyors.Pd_.jpg" alt="5 slide">
-        </div>
-        <div class="carousel-item">
-            <img class="d-block img-fluid" src="http://webapps.gen.volvocars.net/applications/eng/equipment/SuperVisieCma/VCG_CMA40_GA3SUPERVNCW01__07_Conveyors.Pd_.jpg" alt="6 slide">
-        </div>
-        <div class="carousel-item">
-            <img class="d-block img-fluid" src="http://webapps.gen.volvocars.net/applications/eng/equipment/supervisiep1/bop.jpg" alt="7 slide">
-        </div>
+﻿<div class="card">
+    <div class="card-header bg-dark text-white">
+        <h4>
+            PLC overview: <strong></strong>
+            <a class="fas fa-info-circle text-white" id="LegendPopover" href="#" data-container="body" data-toggle="popover" data-placement="bottom"></a>
+        </h4>
     </div>
-    <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
-        <span class="fas fa-caret-left fa-6x" style="color:tomato" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-    </a>
-    <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
-        <span class="fas fa-caret-right fa-6x" style="color:tomato" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-    </a>
+    @*render the viz*@
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner" role="listbox">
+            <div class="carousel-item active">
+                <img class="d-block img-fluid" src="http://webapps.gen.volvocars.net/applications/eng/equipment/SuperVisieCma/VCG_CMA40_GA3SUPERVNCW01__00_Overview_UnderBody_CMA.Pd_.jpg" alt="Overview">
+            </div>
+            <div class="carousel-item">
+                <img class="d-block img-fluid" src="http://webapps.gen.volvocars.net/applications/eng/equipment/SuperVisieCma/VCG_CMA40_GA3SUPERVNCW01__01_UnderBody_1.Pd_.jpg" alt="2 slide">
+            </div>
+            <div class="carousel-item">
+                <img class="d-block img-fluid" src="http://webapps.gen.volvocars.net/applications/eng/equipment/SuperVisieCma/VCG_CMA40_GA3SUPERVNCW01__02_UnderBody_2.Pd_.jpg" alt="3 slide">
+            </div>
+            <div class="carousel-item">
+                <img class="d-block img-fluid" src="http://webapps.gen.volvocars.net/applications/eng/equipment/SuperVisieCma/VCG_CMA40_GA3SUPERVNCW01__03_UnderBody_3.Pd_.jpg" alt="4 slide">
+            </div>
+            <div class="carousel-item">
+                <img class="d-block img-fluid" src="http://webapps.gen.volvocars.net/applications/eng/equipment/SuperVisieCma/VCG_CMA40_GA3SUPERVNCW01__04_Conveyors.Pd_.jpg" alt="5 slide">
+            </div>
+            <div class="carousel-item">
+                <img class="d-block img-fluid" src="http://webapps.gen.volvocars.net/applications/eng/equipment/SuperVisieCma/VCG_CMA40_GA3SUPERVNCW01__07_Conveyors.Pd_.jpg" alt="6 slide">
+            </div>
+            <div class="carousel-item">
+                <img class="d-block img-fluid" src="http://webapps.gen.volvocars.net/applications/eng/equipment/supervisiep1/bop.jpg" alt="7 slide">
+            </div>
+        </div>
+        <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+            <span class="fas fa-caret-left fa-6x" style="color:tomato" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+            <span class="fas fa-caret-right fa-6x" style="color:tomato" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
 </div>
+
 
 <!--carousel script-->
     <script>

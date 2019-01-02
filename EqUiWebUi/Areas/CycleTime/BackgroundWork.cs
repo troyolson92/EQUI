@@ -19,7 +19,7 @@ namespace EqUiWebUi.Areas.CycleTime
             {
                 BackgroundWork backgroundwork = new BackgroundWork();
                 //set job to refresh every minute
-                RecurringJob.AddOrUpdate("CycleTime", () => backgroundwork.GetP4CycleTime(null), Cron.Hourly);
+                //RecurringJob.AddOrUpdate("CycleTime", () => backgroundwork.GetP4CycleTime(null), Cron.Hourly);
             }
             else
             {
