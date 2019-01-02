@@ -1,4 +1,9 @@
 ﻿@model IQueryable<EqUiWebUi.Models.ASSETS>
+@{
+    ViewBag.Title = "Assets";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
 @Html.Grid(Model).Named("ASSETSGrid").Build(columns =>
 {
     columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Asc);
@@ -16,7 +21,7 @@
     columns.Add(c => c.ResponsibleTechnicianTeam).Titled("ResponsibleTechnicianTeam");
 }).Filterable().Sortable().Pageable(pager =>
 {
-    pager.RowsPerPage = 30;
+    pager.RowsPerPage = 20;
     pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 20, "20" }, { 40, "40" }, { 80, "80" }, { 100, "100" } };
     pager.ShowPageSizes = true;
 }).Empty("Did not find anything").Css("table-hover")
@@ -24,7 +29,7 @@
 @section scripts{
     <script>
         //full with screen
-    $("#allcontent").removeClass("body-content");
-    $("#allcontent").removeClass("container");
+        $("#allcontent").removeClass("body-content");
+        $("#allcontent").removeClass("container");
     </script>
-    }
+}
