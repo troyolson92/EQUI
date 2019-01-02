@@ -113,8 +113,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
                 //
                 lActConn.System = DsnMX7;
                 lActConn.ProcedureName = lActConn.Name; //maximo system dont have a stored proc name so we take the name of the Query template
-                MX7_ActiveConnectionToProcMngr(lMaximoQuery.oracle_get_QueryParms_from_GADATA(activeconnection, DsnMX7)
-                    , lMaximoQuery.oracle_get_QueryTemplate_from_GADATA(activeconnection, DsnMX7));
+                MX7_ActiveConnectionToProcMngr(lMaximoQuery.oracle_get_QueryParms_from_GADATA(activeconnection, DsnMX7), lMaximoQuery.oracle_get_QueryTemplate_from_GADATA(activeconnection, DsnMX7));
             }
             else if (lActConn.ODBCconnString.Contains(DsnGADATA)) //existing GADATAconnections
             {
@@ -376,7 +375,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
         public void GADATA_ProcMngrToActiveConnection()
         {
             System.Text.StringBuilder sbQuery = new System.Text.StringBuilder();
-            sbQuery.Append("USE GADATA EXEC ").Append(lActConn.ProcedureName).Append(" ");
+            sbQuery.Append("EXEC ").Append(lActConn.ProcedureName).Append(" ");
             foreach (var control in flowLayoutPanel1.Controls)
             {
                 if (control is Forms.uc_Datebox)

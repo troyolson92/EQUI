@@ -4,7 +4,43 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="GADATAUserModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="EquiModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="c_datasource">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="varchar(max)" />
+          <Property Name="Type" Type="int" Nullable="false" />
+          <Property Name="ConnectionString" Type="varchar(max)" Nullable="false" />
+          <Property Name="isAlertSource" Type="bit" Nullable="false" />
+          <Property Name="PwList" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="QUERYParameters">
+          <Key>
+            <PropertyRef Name="SYSTEM" />
+            <PropertyRef Name="NAME" />
+            <PropertyRef Name="SETNAME" />
+            <PropertyRef Name="Parameter" />
+          </Key>
+          <Property Name="SYSTEM" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="NAME" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="SETNAME" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DISCRIPTION" Type="varchar(max)" />
+          <Property Name="Parameter" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Value" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="QUERYS">
+          <Key>
+            <PropertyRef Name="SYSTEM" />
+            <PropertyRef Name="NAME" />
+          </Key>
+          <Property Name="SYSTEM" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="NAME" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DISCRIPTION" Type="varchar(max)" />
+          <Property Name="QUERY" Type="varchar(max)" />
+        </EntityType>
         <EntityType Name="c_userRoles">
           <Key>
             <PropertyRef Name="Role" />
@@ -32,6 +68,11 @@
           <Property Name="AssetRoot" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Locked" Type="bit" Nullable="false" />
           <Property Name="Blocked" Type="bit" Nullable="false" />
+          <Property Name="SessionId" Type="varchar" MaxLength="200" />
+          <Property Name="Comment" Type="varchar(max)" />
+          <Property Name="ResponsibleArea" Type="varchar" MaxLength="50" />
+          <Property Name="Team" Type="varchar" MaxLength="50" />
+          <Property Name="Culture" Type="varchar" MaxLength="50" />
         </EntityType>
         <Association Name="FK_h_usersPermisions_c_userRoles">
           <End Role="c_userRoles" Type="Self.c_userRoles" Multiplicity="1" />
@@ -69,7 +110,10 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="GADATAUserModelStoreContainer">
+        <EntityContainer Name="EquiModelStoreContainer">
+          <EntitySet Name="c_datasource" EntityType="Self.c_datasource" Schema="EqUi" store:Type="Tables" />
+          <EntitySet Name="QUERYParameters" EntityType="Self.QUERYParameters" Schema="EqUi" store:Type="Tables" />
+          <EntitySet Name="QUERYS" EntityType="Self.QUERYS" Schema="EqUi" store:Type="Tables" />
           <EntitySet Name="c_userRoles" EntityType="Self.c_userRoles" Schema="Volvo" store:Type="Tables" />
           <EntitySet Name="h_usersPermisions" EntityType="Self.h_usersPermisions" Schema="Volvo" store:Type="Tables" />
           <EntitySet Name="L_users" EntityType="Self.L_users" Schema="Volvo" store:Type="Tables" />
@@ -86,11 +130,22 @@
             <End Role="h_usersPermisions" EntitySet="h_usersPermisions" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="GADATAUserModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="EquiModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="c_datasource">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Type" Type="Int32" Nullable="false" />
+          <Property Name="ConnectionString" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="isAlertSource" Type="Boolean" Nullable="false" />
+          <Property Name="PwList" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
         <EntityType Name="c_userRoles">
           <Key>
             <PropertyRef Name="Role" />
@@ -110,7 +165,6 @@
           <Property Name="GrantedAt" Type="DateTime" Precision="3" />
           <NavigationProperty Name="c_userRoles" Relationship="Self.FK_h_usersPermisions_c_userRoles" FromRole="h_usersPermisions" ToRole="c_userRoles" />
           <NavigationProperty Name="L_users" Relationship="Self.FK_h_usersPermisions_L_users" FromRole="h_usersPermisions" ToRole="L_users" />
-          <NavigationProperty Name="L_users1" Relationship="Self.FK_h_usersPermisions_L_users1" FromRole="h_usersPermisions" ToRole="L_users" />
         </EntityType>
         <EntityType Name="L_users">
           <Key>
@@ -122,8 +176,12 @@
           <Property Name="AssetRoot" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Locked" Type="Boolean" Nullable="false" />
           <Property Name="Blocked" Type="Boolean" Nullable="false" />
+          <Property Name="SessionId" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ResponsibleArea" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Team" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Culture" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="h_usersPermisions" Relationship="Self.FK_h_usersPermisions_L_users" FromRole="L_users" ToRole="h_usersPermisions" />
-          <NavigationProperty Name="h_usersPermisions1" Relationship="Self.FK_h_usersPermisions_L_users1" FromRole="L_users" ToRole="h_usersPermisions" />
         </EntityType>
         <Association Name="FK_h_usersPermisions_c_userRoles">
           <End Role="c_userRoles" Type="Self.c_userRoles" Multiplicity="1" />
@@ -149,19 +207,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_h_usersPermisions_L_users1">
-          <End Role="L_users" Type="Self.L_users" Multiplicity="1" />
-          <End Role="h_usersPermisions" Type="Self.h_usersPermisions" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="L_users">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="h_usersPermisions">
-              <PropertyRef Name="GrantedBy" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityContainer Name="GADATAUserRoleProvider" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="EquiEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="c_datasource" EntityType="Self.c_datasource" />
           <EntitySet Name="c_userRoles" EntityType="Self.c_userRoles" />
           <EntitySet Name="h_usersPermisions" EntityType="Self.h_usersPermisions" />
           <EntitySet Name="L_users" EntityType="Self.L_users" />
@@ -173,19 +220,70 @@
             <End Role="L_users" EntitySet="L_users" />
             <End Role="h_usersPermisions" EntitySet="h_usersPermisions" />
           </AssociationSet>
-          <AssociationSet Name="FK_h_usersPermisions_L_users1" Association="Self.FK_h_usersPermisions_L_users1">
+          <AssociationSet Name="FK_h_usersPermisions_L_users1" Association="EquiModel.FK_h_usersPermisions_L_users1">
             <End Role="L_users" EntitySet="L_users" />
             <End Role="h_usersPermisions" EntitySet="h_usersPermisions" />
           </AssociationSet>
+          <EntitySet Name="QUERYParameters" EntityType="EquiModel.QUERYParameters" />
+          <EntitySet Name="QUERYS" EntityType="EquiModel.QUERYS" />
         </EntityContainer>
+        <Association Name="FK_h_usersPermisions_L_users1">
+          <End Type="EquiModel.L_users" Role="L_users" Multiplicity="1" />
+          <End Type="EquiModel.h_usersPermisions" Role="h_usersPermisions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="L_users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="h_usersPermisions">
+              <PropertyRef Name="GrantedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="QUERYParameters">
+          <Key>
+            <PropertyRef Name="SYSTEM" />
+            <PropertyRef Name="NAME" />
+            <PropertyRef Name="SETNAME" />
+            <PropertyRef Name="Parameter" />
+          </Key>
+          <Property Name="SYSTEM" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="NAME" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SETNAME" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DISCRIPTION" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Parameter" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Value" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="QUERYS">
+          <Key>
+            <PropertyRef Name="SYSTEM" />
+            <PropertyRef Name="NAME" />
+          </Key>
+          <Property Name="SYSTEM" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="NAME" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DISCRIPTION" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="QUERY" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="GADATAUserModelStoreContainer" CdmEntityContainer="GADATAUserRoleProvider">
+        <EntityContainerMapping StorageEntityContainer="EquiModelStoreContainer" CdmEntityContainer="EquiEntities">
+          <EntitySetMapping Name="c_datasource">
+            <EntityTypeMapping TypeName="EquiModel.c_datasource">
+              <MappingFragment StoreEntitySet="c_datasource">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="ConnectionString" ColumnName="ConnectionString" />
+                <ScalarProperty Name="isAlertSource" ColumnName="isAlertSource" />
+                <ScalarProperty Name="PwList" ColumnName="PwList" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="c_userRoles">
-            <EntityTypeMapping TypeName="GADATAUserModel.c_userRoles">
+            <EntityTypeMapping TypeName="EquiModel.c_userRoles">
               <MappingFragment StoreEntitySet="c_userRoles">
                 <ScalarProperty Name="Role" ColumnName="Role" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
@@ -193,7 +291,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="h_usersPermisions">
-            <EntityTypeMapping TypeName="GADATAUserModel.h_usersPermisions">
+            <EntityTypeMapping TypeName="EquiModel.h_usersPermisions">
               <MappingFragment StoreEntitySet="h_usersPermisions">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="user_id" ColumnName="user_id" />
@@ -204,7 +302,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="L_users">
-            <EntityTypeMapping TypeName="GADATAUserModel.L_users">
+            <EntityTypeMapping TypeName="EquiModel.L_users">
               <MappingFragment StoreEntitySet="L_users">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="username" ColumnName="username" />
@@ -212,6 +310,33 @@
                 <ScalarProperty Name="AssetRoot" ColumnName="AssetRoot" />
                 <ScalarProperty Name="Locked" ColumnName="Locked" />
                 <ScalarProperty Name="Blocked" ColumnName="Blocked" />
+                <ScalarProperty Name="SessionId" ColumnName="SessionId" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="ResponsibleArea" ColumnName="ResponsibleArea" />
+                <ScalarProperty Name="Team" ColumnName="Team" />
+                <ScalarProperty Name="Culture" ColumnName="Culture" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QUERYParameters">
+            <EntityTypeMapping TypeName="EquiModel.QUERYParameters">
+              <MappingFragment StoreEntitySet="QUERYParameters">
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Parameter" ColumnName="Parameter" />
+                <ScalarProperty Name="DISCRIPTION" ColumnName="DISCRIPTION" />
+                <ScalarProperty Name="SETNAME" ColumnName="SETNAME" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+                <ScalarProperty Name="SYSTEM" ColumnName="SYSTEM" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QUERYS">
+            <EntityTypeMapping TypeName="EquiModel.QUERYS">
+              <MappingFragment StoreEntitySet="QUERYS">
+                <ScalarProperty Name="QUERY" ColumnName="QUERY" />
+                <ScalarProperty Name="DISCRIPTION" ColumnName="DISCRIPTION" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+                <ScalarProperty Name="SYSTEM" ColumnName="SYSTEM" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

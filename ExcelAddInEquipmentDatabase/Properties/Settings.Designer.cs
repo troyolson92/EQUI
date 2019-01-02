@@ -62,5 +62,15 @@ namespace ExcelAddInEquipmentDatabase.Properties {
                 return ((string)(this["EquiBasepath"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("\\\\gnlsnm0101.gen.volvocars.net\\PROJ\\6308-SHR-VCC22700\\VSTO\\DEPLOYMENTBASE\\Templat" +
+            "es")]
+        public string TemplateBasepath {
+            get {
+                return ((string)(this["TemplateBasepath"]));
+            }
+        }
     }
 }

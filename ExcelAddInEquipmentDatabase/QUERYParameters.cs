@@ -12,15 +12,13 @@ namespace ExcelAddInEquipmentDatabase
     using System;
     using System.Collections.Generic;
     
-    public partial class h_usersPermisions
+    public partial class QUERYParameters
     {
-        public int id { get; set; }
-        public int user_id { get; set; }
-        public string Role { get; set; }
-        public int GrantedBy { get; set; }
-        public Nullable<System.DateTime> GrantedAt { get; set; }
-    
-        public virtual c_userRoles c_userRoles { get; set; }
-        public virtual L_users L_users { get; set; }
+        public string SYSTEM { get; set; }
+        public string NAME { get; set; }
+        public string SETNAME { get; set; }
+        public string DISCRIPTION { get; set; }
+        public string Parameter { get; set; }
+        public string Value { get; set; }
     }
 }

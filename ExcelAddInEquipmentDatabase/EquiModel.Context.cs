@@ -13,10 +13,10 @@ namespace ExcelAddInEquipmentDatabase
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class GADATAUserRoleProvider : DbContext
+    public partial class EquiEntities : DbContext
     {
-        public GADATAUserRoleProvider()
-            : base("name=GADATAUserRoleProvider")
+        public EquiEntities()
+            : base("name=EquiEntities")
         {
         }
     
@@ -25,8 +25,11 @@ namespace ExcelAddInEquipmentDatabase
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<c_datasource> c_datasource { get; set; }
         public virtual DbSet<c_userRoles> c_userRoles { get; set; }
         public virtual DbSet<h_usersPermisions> h_usersPermisions { get; set; }
         public virtual DbSet<L_users> L_users { get; set; }
+        public virtual DbSet<QUERYParameters> QUERYParameters { get; set; }
+        public virtual DbSet<QUERYS> QUERYS { get; set; }
     }
 }

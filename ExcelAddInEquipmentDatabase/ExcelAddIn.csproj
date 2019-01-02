@@ -226,8 +226,26 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>applData.xsd</DependentUpon>
     </Compile>
+    <Compile Include="c_datasource.cs">
+      <DependentUpon>EquiModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="c_userRoles.cs">
-      <DependentUpon>UserManagment.tt</DependentUpon>
+      <DependentUpon>EquiModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EquiModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EquiModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EquiModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EquiModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EquiModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EquiModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Forms\ExcelConnectionManager.cs">
       <SubType>Form</SubType>
@@ -278,34 +296,25 @@
       <DependentUpon>uc_Inputbox.cs</DependentUpon>
     </Compile>
     <Compile Include="h_usersPermisions.cs">
-      <DependentUpon>UserManagment.tt</DependentUpon>
+      <DependentUpon>EquiModel.tt</DependentUpon>
     </Compile>
     <Compile Include="L_users.cs">
-      <DependentUpon>UserManagment.tt</DependentUpon>
+      <DependentUpon>EquiModel.tt</DependentUpon>
     </Compile>
     <Compile Include="MaximoQuery.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="QUERYParameters.cs">
+      <DependentUpon>EquiModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="QUERYS.cs">
+      <DependentUpon>EquiModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Ribbon.cs">
       <XmlRibbon>true</XmlRibbon>
     </Compile>
     <Compile Include="RoleProvider.cs" />
-    <Compile Include="UserManagment.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>UserManagment.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="UserManagment.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>UserManagment.tt</DependentUpon>
-    </Compile>
-    <Compile Include="UserManagment.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>UserManagment.edmx</DependentUpon>
-    </Compile>
     <Compile Include="WorksheetFeatures.cs" />
     <EmbeddedResource Include="Forms\MXxQueryEdit.resx">
       <DependentUpon>MXxQueryEdit.cs</DependentUpon>
@@ -353,6 +362,13 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EntityDeploy Include="EquiModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>EquiModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="EquiModel.edmx.diagram">
+      <DependentUpon>EquiModel.edmx</DependentUpon>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -373,28 +389,21 @@
       <DependentUpon>ThisAddIn.Designer.xml</DependentUpon>
     </Compile>
     <AppDesigner Include="Properties\" />
-    <EntityDeploy Include="UserManagment.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>UserManagment.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="UserManagment.edmx.diagram">
-      <DependentUpon>UserManagment.edmx</DependentUpon>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="UserManagment.Context.tt">
+    <Content Include="EquiModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>UserManagment.Context.cs</LastGenOutput>
-      <DependentUpon>UserManagment.edmx</DependentUpon>
+      <DependentUpon>EquiModel.edmx</DependentUpon>
+      <LastGenOutput>EquiModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="UserManagment.tt">
+    <Content Include="EquiModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>UserManagment.edmx</DependentUpon>
-      <LastGenOutput>UserManagment.cs</LastGenOutput>
+      <DependentUpon>EquiModel.edmx</DependentUpon>
+      <LastGenOutput>EquiModel.cs</LastGenOutput>
     </Content>
     <EmbeddedResource Include="Ribbon.xml" />
   </ItemGroup>

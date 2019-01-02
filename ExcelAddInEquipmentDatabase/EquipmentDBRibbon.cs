@@ -21,8 +21,7 @@ namespace ExcelAddInEquipmentDatabase
 
         //connection to databases
         ConnectionManager ConnectionManager = new ConnectionManager();
-        //connection to GADATA for maximo query
-        OracleQuery lMaximoQuery = new OracleQuery();
+        EquiEntities db = new EquiEntities();
         //local worksheet function instance
         WorksheetFeatures lWorksheetFeatures = new WorksheetFeatures();
         //procedure manager instance 
@@ -58,19 +57,18 @@ namespace ExcelAddInEquipmentDatabase
 
             //fill with templates
             gall_templates.Items.Clear();
-            List<string> Files = new List<string>(new string[]
+            DirectoryInfo d = new DirectoryInfo(Properties.Settings.Default.TemplateBasepath);//Assuming Test is your Folder
+            FileInfo[] Files = d.GetFiles("*.xls*"); //Getting Text files
+            foreach (FileInfo file in Files)
             {
-               @"\\gnlsnm0101.gen.volvocars.net\proj\6308-SHR-VCC22700\VSTO\Templates\EqDbGADATATemplate.xlsx"
-              ,@"\\gnlsnm0101.gen.volvocars.net\proj\6308-SHR-VCC22700\VSTO\Templates\EqDbGBDATATemplate.xlsx"
-              ,@"\\gnlsnm0101.gen.volvocars.net\proj\6308-SHR-VCC22700\VSTO\Templates\StandAloneTemplate.xlsm"
-            });
-            foreach (string file in Files)
-            {
-                RibbonDropDownItem galleryItem = Globals.Factory.GetRibbonFactory().CreateRibbonDropDownItem();
-                galleryItem.Tag = file;
-                galleryItem.Label = Path.GetFileName(file);
-                galleryItem.ScreenTip = "These templates will get you started.";
-                gall_templates.Items.Add(galleryItem);
+                if (!file.Name.Contains('$'))
+                {
+                    RibbonDropDownItem galleryItem = Globals.Factory.GetRibbonFactory().CreateRibbonDropDownItem();
+                    galleryItem.Tag = file.FullName;
+                    galleryItem.Label = file.Name;
+                    galleryItem.ScreenTip = "These templates will get you started.";
+                    gall_templates.Items.Add(galleryItem);
+                }
             }
 
             //subscribe to workbook open event
@@ -84,7 +82,7 @@ namespace ExcelAddInEquipmentDatabase
 
             //force the DSN connection to the host system
             ODBCManager.CreateDSN("GADATA", "odbc link to Equi database", "sqla001.gen.volvocars.net", "SQL Server", @"C:\windows\system32\SQLSRV32.dll", false, "GADATA");
-            ODBCManager.CreateDSN("MAXIMO", "odbc link MAXIMO reporting database", "dpmxarct", "ODBC for oracle", @"C:\windows\system32\msorcl32.dll", true, "MAXIMO");
+            ODBCManager.CreateDSN("MAXIMO", "odbc link MAXIMO reporting database", "dpmxarct", "ODBC for oracle", @"C:\windows\system32\msorcl32.dll", false, "MAXIMO");
             //find connections in wb
             dd_connections_update();
         }
@@ -293,7 +291,7 @@ namespace ExcelAddInEquipmentDatabase
                         //connects the ribbon filter controls with the procMngr
                         if (ProcMngr.activeSystem == "MAXIMO") //MX7connections
                         {
-                            ProcMngr.MX7_ProcMngrToActiveConnection(lMaximoQuery.oracle_get_QueryTemplate_from_GADATA(connection.Name, "MAXIMO"));
+                            ProcMngr.MX7_ProcMngrToActiveConnection(db.QUERYS.Where(c => c.NAME == connection.Name && c.SYSTEM == "MAXIMO").First().QUERY);
                             connection.Refresh();
                         }
                         else if (ProcMngr.activeSystem == "GADATA") //GADATAconnections

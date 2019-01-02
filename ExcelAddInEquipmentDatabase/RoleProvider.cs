@@ -10,7 +10,7 @@ namespace ExcelAddInEquipmentDatabase
 
             public  string[] GetRolesForUser(string username)
             {
-                using (GADATAUserRoleProvider db = new GADATAUserRoleProvider())
+                using (EquiEntities db = new EquiEntities())
                 {
                     var roles = from perm in db.h_usersPermisions
                                 where perm.L_users.username == username
@@ -26,7 +26,7 @@ namespace ExcelAddInEquipmentDatabase
             public  bool IsUserInRole(string username, string roleName)
             {
 
-                using (GADATAUserRoleProvider db = new GADATAUserRoleProvider())
+                using (EquiEntities db = new EquiEntities())
                 {
                     var roles = from perm in db.h_usersPermisions
                                 where perm.L_users.username == username

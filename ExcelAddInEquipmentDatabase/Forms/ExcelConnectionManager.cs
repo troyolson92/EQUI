@@ -20,8 +20,7 @@ namespace ExcelAddInEquipmentDatabase
 
         //connection to database
         ConnectionManager connectionManager = new ConnectionManager();
-        // to GADATA for maximo querys
-        OracleQuery lOracleQuery = new OracleQuery();
+        EquiEntities db = new EquiEntities();
         //Query edit box instance
         Forms.MXxQueryEdit QEdit;
 
@@ -29,11 +28,11 @@ namespace ExcelAddInEquipmentDatabase
         public string DsnGADATA { get { return "GADATA"; } }
         public string GADATAconnectionString
         {
-            get { return @"ODBC;DSN=" + DsnGADATA + ";Description= GADATA;UID=EqUi;PWD=EqUi;APP=SQLFront;WSID=GNL1004ZCBQC2\\EQUI;DATABASE=GADATA"; }
+            get { return $"ODBC;DSN={DsnGADATA}; UID=EqUi; PWD=EqUi"; }
         }
         public string MX7connectionString
         {
-            get { return @"ODBC;DSN=" + DsnMX7 + ";Description= MAXIMO7;UID=ARCTVCG;PWD=vcg$tokfeb2017;"; }
+            get { return $"ODBC;DSN={DsnMX7}; UID=ARCTVCG; PWD=vcg$tokfeb2017"; }
         }
 
 
@@ -185,8 +184,7 @@ namespace ExcelAddInEquipmentDatabase
         {
             if (cb_GADTA_procedures.Text != "")
             {
-               // lGadataComm.Make_DSN();
-                string Query = "use gadata EXEC " + cb_GADTA_procedures.Text.Trim();
+                string Query = "EXEC " + cb_GADTA_procedures.Text.Trim();
                 string ODBCconn = GADATAconnectionString; 
                 string ConnectionName = cb_GADTA_procedures.Text.Split('.')[2].Trim();
                 Create_ODBC_connection(Query, ODBCconn, ConnectionName);
@@ -215,29 +213,32 @@ namespace ExcelAddInEquipmentDatabase
         //Maximo7 link
         private void Tp_MX7_Enter(object sender, EventArgs e)
         {
-            using (applData.QUERYSDataTable lQUERYS = new applData.QUERYSDataTable())
-            {
-                using (applDataTableAdapters.QUERYSTableAdapter adapter = new applDataTableAdapters.QUERYSTableAdapter())
-                {
-                    adapter.Fill(lQUERYS);
-                }
-                var data = from a in lQUERYS
-                           where a.SYSTEM == DsnMX7
-                           orderby a.NAME descending
-                           select a.NAME;
-                cb_MX7_QueryNames.DataSource = data.Distinct().ToList();
-            }
+            cb_MX7_QueryNames.DataSource = db.QUERYS.Where(c => c.SYSTEM == DsnMX7).Select(c => c.NAME).ToList();
         }
 
         private void Btn_MX7_create_Click(object sender, EventArgs e)
         {
-            string Query;
+            string Query = db.QUERYS.Where(c => c.NAME == cb_MX7_QueryNames.Text && c.SYSTEM == DsnMX7).First().QUERY;
             using (Forms.ProcedureManager  ProcMngr = new Forms.ProcedureManager(DsnMX7))
-          {
-              ProcMngr.MX7_ActiveConnectionToProcMngr(lOracleQuery.oracle_get_QueryParms_from_GADATA(cb_MX7_QueryNames.Text, DsnMX7), "It does not exist");
-              Query = ProcMngr.MX7_BuildQuery_ProcMngrToActiveConnection(lOracleQuery.oracle_get_QueryTemplate_from_GADATA(cb_MX7_QueryNames.Text, DsnMX7));
-          }
-           // lMaximoComm.Make_DSN(lMaximoComm.SystemMX7);
+            {           
+                //gets part of the query containing the params
+                List<string> ParmLines = Query.ToUpper().Split(new string[] { "SELECT" }, StringSplitOptions.None)[0].Trim().Split(new string[] { "DEFINE" }, StringSplitOptions.None).ToList();
+                List<OracleQueryParm> ParmList = new List<OracleQueryParm>();
+                foreach (string parm in ParmLines)
+                {
+                    if (parm.Contains("="))
+                    {
+                        string ParmName = parm.Split('=')[0].Trim();
+                        string ParmValue = parm.Split('=')[1].Trim().Split('\'')[1];
+                        ParmList.Add(new OracleQueryParm { ParameterName = ParmName, Defaultvalue = ParmValue });
+                    }
+                }
+              ProcMngr.MX7_ActiveConnectionToProcMngr(ParmList, "It does not exist");
+
+                //Get query part
+              Query = ProcMngr.MX7_BuildQuery_ProcMngrToActiveConnection(Query.Trim().TrimEnd(';').ToUpper());
+            }
+
             string ODBCconn = MX7connectionString;
             string ConnectionName = cb_MX7_QueryNames.Text;
             Create_ODBC_connection(Query, ODBCconn, ConnectionName);
@@ -247,18 +248,22 @@ namespace ExcelAddInEquipmentDatabase
 
         private void Cb_MX7_QueryNames_SelectedIndexChanged(object sender, EventArgs e)
         {
-            using (applData.QUERYSDataTable lQUERYS = new applData.QUERYSDataTable())
-            {
-                using (applDataTableAdapters.QUERYSTableAdapter adapter = new applDataTableAdapters.QUERYSTableAdapter())
-                {
-                    adapter.Fill(lQUERYS);
-                }
-                lbl_MX7_procDiscription.Text = (from a in lQUERYS
-                                                where a.SYSTEM == DsnMX7 && a.NAME == cb_MX7_QueryNames.Text
-                                                select a.DISCRIPTION).First().ToString();
-            }
+            QUERYS query = db.QUERYS.Where(c => c.NAME == cb_MX7_QueryNames.Text && c.SYSTEM == DsnMX7).First();
+            lbl_MX7_procDiscription.Text = query.DISCRIPTION;
+
             lv_MX7_procParms.Items.Clear();
-            foreach (OracleQueryParm Parm in lOracleQuery.oracle_get_QueryParms_from_GADATA(cb_MX7_QueryNames.Text, DsnMX7))
+            List<string> ParmLines = query.QUERY.ToUpper().Split(new string[] { "SELECT" }, StringSplitOptions.None)[0].Trim().Split(new string[] { "DEFINE" }, StringSplitOptions.None).ToList();
+            List<OracleQueryParm> ParmList = new List<OracleQueryParm>();
+            foreach (string parm in ParmLines)
+            {
+                if (parm.Contains("="))
+                {
+                    string ParmName = parm.Split('=')[0].Trim();
+                    string ParmValue = parm.Split('=')[1].Trim().Split('\'')[1];
+                    ParmList.Add(new OracleQueryParm { ParameterName = ParmName, Defaultvalue = ParmValue });
+                }
+            }
+            foreach (OracleQueryParm Parm in ParmList)
             {
                 ListViewItem item = new ListViewItem(Parm.ParameterName);
                 item.SubItems.Add(Parm.Defaultvalue);
@@ -279,12 +284,13 @@ namespace ExcelAddInEquipmentDatabase
         private void Btn_MX7_edit_Click(object sender, EventArgs e)
         {
             if (QEdit != null) QEdit.Dispose();
+            QUERYS query = db.QUERYS.Where(c => c.NAME == cb_MX7_QueryNames.Text && c.SYSTEM == DsnMX7).First();
             QEdit = new Forms.MXxQueryEdit
             {
                 TargetSystem = DsnMX7,
                 QueryName = cb_MX7_QueryNames.Text,
                 QueryDiscription = lbl_MX7_procDiscription.Text,
-                Query = lOracleQuery.oracle_get_QueryTemplate_from_GADATA(cb_MX7_QueryNames.Text, DsnMX7)
+                Query = query.QUERY
             };
             QEdit.Show();
         }
