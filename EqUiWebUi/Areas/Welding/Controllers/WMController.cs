@@ -151,6 +151,14 @@ namespace EqUiWebUi.Areas.Welding.Controllers
             return View(data);
         }
 
+        public ActionResult _Parameters()
+        {
+
+            IQueryable<ParameterOptimalisation> data = db.ParameterOptimalisation.AsQueryable();
+            return View(data);
+        }
+
+
         //test met proc oproepen zonder view 
         public JsonResult TestProc(int id)
         {

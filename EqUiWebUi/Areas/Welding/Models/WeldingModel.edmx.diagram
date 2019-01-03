@@ -28,6 +28,7 @@
         <EntityTypeShape EntityType="GADATAModelWelding.DoubleSpotCheck" Width="1.5" PointX="11.875" PointY="2.5" />
         <EntityTypeShape EntityType="GADATAModelWelding.ComparePitchV316" Width="1.5" PointX="1.5" PointY="0.5" />
         <EntityTypeShape EntityType="GADATAModelWelding.TimerBreakdowns_WMActions" Width="1.5" PointX="15.5" PointY="1" />
+        <EntityTypeShape EntityType="GADATAModelWelding.ParameterOptimalisation" Width="1.5" PointX="15.5" PointY="4.75" />
       </Diagram>
       <Diagram DiagramId="4894cb9c299b4076bc2e6a2d9089b8ea" Name="Teardown" ZoomLevel="55" >
         <EntityTypeShape EntityType="GADATAModelWelding.c_faultcode" Width="1.5" PointX="6" PointY="1" />

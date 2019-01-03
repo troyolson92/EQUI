@@ -1032,6 +1032,67 @@ warning 6002: The table/view 'GADATA.WELDING2.ConnectionState' does not have a p
           <Property Name="onlineInBos6000" Type="bit" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.WELDING2.ParameterOptimalisation' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ParameterOptimalisation">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="plateID" />
+            <PropertyRef Name="UpdateTime" />
+            <PropertyRef Name="Program" />
+            <PropertyRef Name="Plateinfo" />
+            <PropertyRef Name="thicknessplate1" />
+            <PropertyRef Name="thicknessplate2" />
+            <PropertyRef Name="thicknessplate3" />
+            <PropertyRef Name="thicknessplate4" />
+            <PropertyRef Name="totalThicknessDB" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="plateID" Type="int" Nullable="false" />
+          <Property Name="UpdateTime" Type="datetime" Nullable="false" />
+          <Property Name="NPT" Type="nchar" MaxLength="15" />
+          <Property Name="TimerName" Type="nchar" MaxLength="15" />
+          <Property Name="spotname" Type="int" />
+          <Property Name="Program" Type="int" Nullable="false" />
+          <Property Name="pressure" Type="varchar" MaxLength="1024" />
+          <Property Name="Squeeze" Type="varchar" MaxLength="1024" />
+          <Property Name="KA1" Type="varchar" MaxLength="1024" />
+          <Property Name="Weld1" Type="varchar" MaxLength="1024" />
+          <Property Name="Cool_1" Type="varchar" MaxLength="1024" />
+          <Property Name="KA2" Type="varchar" MaxLength="1024" />
+          <Property Name="Weld2" Type="varchar" MaxLength="1024" />
+          <Property Name="Cool_2" Type="varchar" MaxLength="1024" />
+          <Property Name="KA3" Type="varchar" MaxLength="1024" />
+          <Property Name="Weld3" Type="varchar" MaxLength="1024" />
+          <Property Name="Hold" Type="varchar" MaxLength="1024" />
+          <Property Name="pressureProfile?" Type="varchar" MaxLength="1024" />
+          <Property Name="Plateinfo" Type="varchar" MaxLength="18" Nullable="false" />
+          <Property Name="thicknessplate1" Type="real" Nullable="false" />
+          <Property Name="Materialplate1" Type="nchar" MaxLength="50" />
+          <Property Name="CoatingPlate1" Type="nchar" MaxLength="50" />
+          <Property Name="thicknessplate2" Type="real" Nullable="false" />
+          <Property Name="Materialplate2" Type="nchar" MaxLength="50" />
+          <Property Name="CoatingPlate2" Type="nchar" MaxLength="50" />
+          <Property Name="thicknessplate3" Type="real" Nullable="false" />
+          <Property Name="Materialplate3" Type="nchar" MaxLength="50" />
+          <Property Name="CoatingPlate3" Type="nchar" MaxLength="50" />
+          <Property Name="thicknessplate4" Type="real" Nullable="false" />
+          <Property Name="Materialplate4" Type="nchar" MaxLength="50" />
+          <Property Name="CoatingPlate4" Type="nchar" MaxLength="50" />
+          <Property Name="totalThicknessDB" Type="real" Nullable="false" />
+          <Property Name="ULinfo" Type="varchar" MaxLength="21" />
+          <Property Name="spot" Type="char" MaxLength="50" />
+          <Property Name="avgMeasuredThickness" Type="float" />
+          <Property Name="TotalThicknessUL" Type="float" />
+          <Property Name="WeldDatainfo" Type="varchar" MaxLength="21" />
+          <Property Name="lastWeldShift" Type="datetime" />
+          <Property Name="number" Type="varchar" MaxLength="50" />
+          <Property Name="nbrWelds" Type="int" />
+          <Property Name="SpatterCount" Type="int" />
+          <Property Name="ReweldCount" Type="int" />
+          <Property Name="AVGpsf" Type="float" />
+          <Property Name="Avg_resistance" Type="float" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="TimerBreakdowns_busy">
           <Key>
@@ -1820,6 +1881,55 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
     [ConnectionState].[onlineInBos6000] AS [onlineInBos6000]
     FROM [WELDING2].[ConnectionState] AS [ConnectionState]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="ParameterOptimalisation" EntityType="Self.ParameterOptimalisation" store:Type="Views" store:Schema="WELDING2">
+            <DefiningQuery>SELECT 
+    [ParameterOptimalisation].[id] AS [id], 
+    [ParameterOptimalisation].[plateID] AS [plateID], 
+    [ParameterOptimalisation].[UpdateTime] AS [UpdateTime], 
+    [ParameterOptimalisation].[NPT] AS [NPT], 
+    [ParameterOptimalisation].[TimerName] AS [TimerName], 
+    [ParameterOptimalisation].[spotname] AS [spotname], 
+    [ParameterOptimalisation].[Program] AS [Program], 
+    [ParameterOptimalisation].[pressure] AS [pressure], 
+    [ParameterOptimalisation].[Squeeze] AS [Squeeze], 
+    [ParameterOptimalisation].[KA1] AS [KA1], 
+    [ParameterOptimalisation].[Weld1] AS [Weld1], 
+    [ParameterOptimalisation].[Cool_1] AS [Cool_1], 
+    [ParameterOptimalisation].[KA2] AS [KA2], 
+    [ParameterOptimalisation].[Weld2] AS [Weld2], 
+    [ParameterOptimalisation].[Cool_2] AS [Cool_2], 
+    [ParameterOptimalisation].[KA3] AS [KA3], 
+    [ParameterOptimalisation].[Weld3] AS [Weld3], 
+    [ParameterOptimalisation].[Hold] AS [Hold], 
+    [ParameterOptimalisation].[pressureProfile?] AS [pressureProfile?], 
+    [ParameterOptimalisation].[Plateinfo] AS [Plateinfo], 
+    [ParameterOptimalisation].[thicknessplate1] AS [thicknessplate1], 
+    [ParameterOptimalisation].[Materialplate1] AS [Materialplate1], 
+    [ParameterOptimalisation].[CoatingPlate1] AS [CoatingPlate1], 
+    [ParameterOptimalisation].[thicknessplate2] AS [thicknessplate2], 
+    [ParameterOptimalisation].[Materialplate2] AS [Materialplate2], 
+    [ParameterOptimalisation].[CoatingPlate2] AS [CoatingPlate2], 
+    [ParameterOptimalisation].[thicknessplate3] AS [thicknessplate3], 
+    [ParameterOptimalisation].[Materialplate3] AS [Materialplate3], 
+    [ParameterOptimalisation].[CoatingPlate3] AS [CoatingPlate3], 
+    [ParameterOptimalisation].[thicknessplate4] AS [thicknessplate4], 
+    [ParameterOptimalisation].[Materialplate4] AS [Materialplate4], 
+    [ParameterOptimalisation].[CoatingPlate4] AS [CoatingPlate4], 
+    [ParameterOptimalisation].[totalThicknessDB] AS [totalThicknessDB], 
+    [ParameterOptimalisation].[ULinfo] AS [ULinfo], 
+    [ParameterOptimalisation].[spot] AS [spot], 
+    [ParameterOptimalisation].[avgMeasuredThickness] AS [avgMeasuredThickness], 
+    [ParameterOptimalisation].[TotalThicknessUL] AS [TotalThicknessUL], 
+    [ParameterOptimalisation].[WeldDatainfo] AS [WeldDatainfo], 
+    [ParameterOptimalisation].[lastWeldShift] AS [lastWeldShift], 
+    [ParameterOptimalisation].[number] AS [number], 
+    [ParameterOptimalisation].[nbrWelds] AS [nbrWelds], 
+    [ParameterOptimalisation].[SpatterCount] AS [SpatterCount], 
+    [ParameterOptimalisation].[ReweldCount] AS [ReweldCount], 
+    [ParameterOptimalisation].[AVGpsf] AS [AVGpsf], 
+    [ParameterOptimalisation].[Avg_resistance] AS [Avg_resistance]
+    FROM [WELDING2].[ParameterOptimalisation] AS [ParameterOptimalisation]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="TimerBreakdowns_busy" EntityType="Self.TimerBreakdowns_busy" store:Type="Views" store:Schema="WELDING2">
             <DefiningQuery>SELECT 
     [TimerBreakdowns_busy].[NPT] AS [NPT], 
@@ -2177,6 +2287,7 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
             <End Role="StoringsIngave_new" EntitySet="StoringsIngave_new" />
           </AssociationSet>
           <EntitySet Name="TimerBreakdowns_WMActions" EntityType="GADATAModelWelding.TimerBreakdowns_WMActions" />
+          <EntitySet Name="ParameterOptimalisation" EntityType="GADATAModelWelding.ParameterOptimalisation" />
           </EntityContainer>
         <EntityType Name="rt_AutoWorkFlowULPlans">
           <Key>
@@ -3642,6 +3753,65 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
           <Property Name="newValue" Type="String" MaxLength="81" FixedLength="false" Unicode="false" />
           <Property Name="username" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="ParameterOptimalisation">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="plateID" />
+            <PropertyRef Name="UpdateTime" />
+            <PropertyRef Name="Program" />
+            <PropertyRef Name="Plateinfo" />
+            <PropertyRef Name="thicknessplate1" />
+            <PropertyRef Name="thicknessplate2" />
+            <PropertyRef Name="thicknessplate3" />
+            <PropertyRef Name="thicknessplate4" />
+            <PropertyRef Name="totalThicknessDB" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="plateID" Type="Int32" Nullable="false" />
+          <Property Name="UpdateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="NPT" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="TimerName" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="spotname" Type="Int32" />
+          <Property Name="Program" Type="Int32" Nullable="false" />
+          <Property Name="pressure" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" />
+          <Property Name="Squeeze" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" />
+          <Property Name="KA1" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" />
+          <Property Name="Weld1" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" />
+          <Property Name="Cool_1" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" />
+          <Property Name="KA2" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" />
+          <Property Name="Weld2" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" />
+          <Property Name="Cool_2" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" />
+          <Property Name="KA3" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" />
+          <Property Name="Weld3" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" />
+          <Property Name="Hold" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" />
+          <Property Name="pressureProfile_" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" />
+          <Property Name="Plateinfo" Type="String" Nullable="false" MaxLength="18" FixedLength="false" Unicode="false" />
+          <Property Name="thicknessplate1" Type="Single" Nullable="false" />
+          <Property Name="Materialplate1" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="CoatingPlate1" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="thicknessplate2" Type="Single" Nullable="false" />
+          <Property Name="Materialplate2" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="CoatingPlate2" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="thicknessplate3" Type="Single" Nullable="false" />
+          <Property Name="Materialplate3" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="CoatingPlate3" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="thicknessplate4" Type="Single" Nullable="false" />
+          <Property Name="Materialplate4" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="CoatingPlate4" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="totalThicknessDB" Type="Single" Nullable="false" />
+          <Property Name="ULinfo" Type="String" MaxLength="21" FixedLength="false" Unicode="false" />
+          <Property Name="spot" Type="String" MaxLength="50" FixedLength="true" Unicode="false" />
+          <Property Name="avgMeasuredThickness" Type="Double" />
+          <Property Name="TotalThicknessUL" Type="Double" />
+          <Property Name="WeldDatainfo" Type="String" MaxLength="21" FixedLength="false" Unicode="false" />
+          <Property Name="lastWeldShift" Type="DateTime" Precision="3" />
+          <Property Name="number" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="nbrWelds" Type="Int32" />
+          <Property Name="SpatterCount" Type="Int32" />
+          <Property Name="ReweldCount" Type="Int32" />
+          <Property Name="AVGpsf" Type="Double" />
+          <Property Name="Avg_resistance" Type="Double" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4678,6 +4848,57 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
                 <ScalarProperty Name="fault" ColumnName="fault" />
                 <ScalarProperty Name="timerName" ColumnName="timerName" />
                 <ScalarProperty Name="dateTime" ColumnName="dateTime" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ParameterOptimalisation">
+            <EntityTypeMapping TypeName="GADATAModelWelding.ParameterOptimalisation">
+              <MappingFragment StoreEntitySet="ParameterOptimalisation">
+                <ScalarProperty Name="Avg_resistance" ColumnName="Avg_resistance" />
+                <ScalarProperty Name="AVGpsf" ColumnName="AVGpsf" />
+                <ScalarProperty Name="ReweldCount" ColumnName="ReweldCount" />
+                <ScalarProperty Name="SpatterCount" ColumnName="SpatterCount" />
+                <ScalarProperty Name="nbrWelds" ColumnName="nbrWelds" />
+                <ScalarProperty Name="number" ColumnName="number" />
+                <ScalarProperty Name="lastWeldShift" ColumnName="lastWeldShift" />
+                <ScalarProperty Name="WeldDatainfo" ColumnName="WeldDatainfo" />
+                <ScalarProperty Name="TotalThicknessUL" ColumnName="TotalThicknessUL" />
+                <ScalarProperty Name="avgMeasuredThickness" ColumnName="avgMeasuredThickness" />
+                <ScalarProperty Name="spot" ColumnName="spot" />
+                <ScalarProperty Name="ULinfo" ColumnName="ULinfo" />
+                <ScalarProperty Name="totalThicknessDB" ColumnName="totalThicknessDB" />
+                <ScalarProperty Name="CoatingPlate4" ColumnName="CoatingPlate4" />
+                <ScalarProperty Name="Materialplate4" ColumnName="Materialplate4" />
+                <ScalarProperty Name="thicknessplate4" ColumnName="thicknessplate4" />
+                <ScalarProperty Name="CoatingPlate3" ColumnName="CoatingPlate3" />
+                <ScalarProperty Name="Materialplate3" ColumnName="Materialplate3" />
+                <ScalarProperty Name="thicknessplate3" ColumnName="thicknessplate3" />
+                <ScalarProperty Name="CoatingPlate2" ColumnName="CoatingPlate2" />
+                <ScalarProperty Name="Materialplate2" ColumnName="Materialplate2" />
+                <ScalarProperty Name="thicknessplate2" ColumnName="thicknessplate2" />
+                <ScalarProperty Name="CoatingPlate1" ColumnName="CoatingPlate1" />
+                <ScalarProperty Name="Materialplate1" ColumnName="Materialplate1" />
+                <ScalarProperty Name="thicknessplate1" ColumnName="thicknessplate1" />
+                <ScalarProperty Name="Plateinfo" ColumnName="Plateinfo" />
+                <ScalarProperty Name="pressureProfile_" ColumnName="pressureProfile?" />
+                <ScalarProperty Name="Hold" ColumnName="Hold" />
+                <ScalarProperty Name="Weld3" ColumnName="Weld3" />
+                <ScalarProperty Name="KA3" ColumnName="KA3" />
+                <ScalarProperty Name="Cool_2" ColumnName="Cool_2" />
+                <ScalarProperty Name="Weld2" ColumnName="Weld2" />
+                <ScalarProperty Name="KA2" ColumnName="KA2" />
+                <ScalarProperty Name="Cool_1" ColumnName="Cool_1" />
+                <ScalarProperty Name="Weld1" ColumnName="Weld1" />
+                <ScalarProperty Name="KA1" ColumnName="KA1" />
+                <ScalarProperty Name="Squeeze" ColumnName="Squeeze" />
+                <ScalarProperty Name="pressure" ColumnName="pressure" />
+                <ScalarProperty Name="Program" ColumnName="Program" />
+                <ScalarProperty Name="spotname" ColumnName="spotname" />
+                <ScalarProperty Name="TimerName" ColumnName="TimerName" />
+                <ScalarProperty Name="NPT" ColumnName="NPT" />
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+                <ScalarProperty Name="plateID" ColumnName="plateID" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
