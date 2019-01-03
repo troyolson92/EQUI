@@ -25,29 +25,7 @@ namespace ExcelAddInEquipmentDatabase.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=sqla001.gen.volvocars.net;Persist Security Info=True;User ID=EqUiAdmi" +
-            "n;Password=EqUiAdmin")]
-        public string GadataConnRW {
-            get {
-                return ((string)(this["GadataConnRW"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=sqla001.gen.volvocars.net;Initial Catalog=GADATA;Persist Security Inf" +
-            "o=True;User ID=EqUiAdmin;Password=EqUiAdmin")]
-        public string GADATAConnectionString {
-            get {
-                return ((string)(this["GADATAConnectionString"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://sway.com/csCS9cdjEpcpPhw0?ref=Link")]
+        [global::System.Configuration.DefaultSettingValueAttribute("https:\\\\sway.com\\csCS9cdjEpcpPhw0?ref=Link")]
         public string Helpfile {
             get {
                 return ((string)(this["Helpfile"]));
