@@ -759,6 +759,9 @@
     <Compile Include="Areas\Welding\Models\L_operation.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Areas\Welding\Models\ParameterOptimalisation.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Areas\Welding\Models\QISViewer.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
@@ -2187,7 +2190,6 @@
     <Content Include="Areas\Welding\Views\WM\_rt_job1.cshtml" />
     <Content Include="Areas\Welding\Views\Welding\_alertsAASPOT.cshtml" />
     <Content Include="Areas\Welding\Views\Welding\_AlertsUserRapport.cshtml" />
-    <Content Include="Areas\Welding\Views\spatters\Index.cshtml" />
     <Content Include="Areas\Welding\Views\Spatter\Index.cshtml" />
     <Content Include="Areas\Welding\Views\Spatter\_SpikesV316.cshtml" />
     <Content Include="Areas\Welding\Views\WM\_TimerIpAdresses.cshtml" />
@@ -2274,6 +2276,7 @@
     <Content Include="App_Code\TiplifeHtmlHelpers.cshtml" />
     <Content Include="Areas\Tiplife\Views\Electrode\Index.cshtml" />
     <Content Include="Areas\Tiplife\Views\Electrode\_Legend.cshtml" />
+    <Content Include="Areas\Welding\Views\WM\_Parameters.cshtml" />
     <None Include="Properties\PublishProfiles\gensvw1178-DEV-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gotsvw11292-PRODUCTION-VCTA.pubxml" />
