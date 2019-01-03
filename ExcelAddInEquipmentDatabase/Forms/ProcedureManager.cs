@@ -112,7 +112,8 @@ namespace ExcelAddInEquipmentDatabase.Forms
                 //
                 lActConn.System = DsnMX7;
                 lActConn.ProcedureName = lActConn.Name; //maximo system dont have a stored proc name so we take the name of the Query template
-                MX7_ActiveConnectionToProcMngr(oracle_get_QueryParms_from_GADATA(activeconnection, DsnMX7), db.QUERYS.Where(c => c.NAME == activeconnection && c.SYSTEM == DsnMX7).First().QUERY.Trim().TrimEnd(';').ToUpper());
+                QUERYS Qyr = db.QUERYS.Where(c => c.NAME == activeconnection && c.SYSTEM == DsnMX7).First();
+                MX7_ActiveConnectionToProcMngr(Qyr.OracleQueryParms, Qyr.QueryBody);
             }
             else if (lActConn.ODBCconnString.Contains(DsnGADATA)) //existing GADATAconnections
             {
@@ -601,19 +602,16 @@ namespace ExcelAddInEquipmentDatabase.Forms
                 if (control is Forms.uc_Datebox)
                 {
                     Forms.uc_Datebox nDateb = control as Forms.uc_Datebox;
-                    //        Debugger.Exeption("name: {0}  enbled: {1}  value: {2}", nDateb.Name, nDateb.active, nDateb.input.ToString("yyyy-MM-dd hh:mm:ss"));
                     sbQuery.Replace("&" + nDateb.Name, nDateb.input.ToString("yyyy-MM-dd hh:mm:ss"));
                 }
                 else if (control is Forms.uc_Checkbox)
                 {
                     Forms.uc_Checkbox nCheckb = control as Forms.uc_Checkbox;
-                    //       Debugger.Exeption("name: {0}  enbled: {1}  value: {2}", nCheckb.Name, nCheckb.active, nCheckb.input);
                     sbQuery.Replace("&" + nCheckb.Name, nCheckb.input.ToString());
                 }
                 else if (control is Forms.uc_Inputbox)
                 {
                     Forms.uc_Inputbox nInputb = control as Forms.uc_Inputbox;
-                    //        Debugger.Exeption("name: {0}  enbled: {1}  value: {2}", nInputb.Name, nInputb.active, nInputb.input);
                     if (nInputb.intOnly == true) // integer box 
                     {
                         sbQuery.Replace("&" + nInputb.Name, nInputb.input);
@@ -826,26 +824,6 @@ namespace ExcelAddInEquipmentDatabase.Forms
             return new List<string>();
         }
 
-        //this is not used?
-        public List<OracleQueryParm> oracle_get_QueryParms_from_GADATA(string QueryName, string System)
-        {
-            string Query = db.QUERYS.Where(c => c.NAME == QueryName && c.SYSTEM == System).First().QUERY;
-            //gets part of the query containing the params
-            List<string> ParmLines = Query.ToUpper().Split(new string[] { "SELECT" }, StringSplitOptions.None)[0].Trim()
-                                                    .Split(new string[] { "DEFINE" }, StringSplitOptions.None).ToList();
-            List<OracleQueryParm> _parmList = new List<OracleQueryParm>();
-            foreach (string parm in ParmLines)
-            {
-                if (parm.Contains("="))
-                {
-                    string ParmName = parm.Split('=')[0].Trim();
-                    string ParmValue = parm.Split('=')[1].Trim().Split('\'')[1];
-                    _parmList.Add(new OracleQueryParm { ParameterName = ParmName, Defaultvalue = ParmValue });
-                }
-            }
-            return _parmList;
-        }
-
         #endregion
 
 
@@ -864,7 +842,6 @@ namespace ExcelAddInEquipmentDatabase.Forms
                 }
             }
             return biggest;
-
         }
     }
 

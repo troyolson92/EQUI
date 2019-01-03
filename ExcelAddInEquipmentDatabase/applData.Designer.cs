@@ -24,11 +24,7 @@ namespace ExcelAddInEquipmentDatabase {
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.DataSet")]
     public partial class applData : global::System.Data.DataSet {
         
-        private StoredProceduresDataTable tableStoredProcedures;
-        
-        private stoC_LogClassRulesDataTable tablestoC_LogClassRules;
-        
-        private stoL_errorDataTable tablestoL_error;
+        private StoredProceduresxxxDataTable tableStoredProceduresxxx;
         
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         
@@ -58,14 +54,8 @@ namespace ExcelAddInEquipmentDatabase {
             if ((this.DetermineSchemaSerializationMode(info, context) == global::System.Data.SchemaSerializationMode.IncludeSchema)) {
                 global::System.Data.DataSet ds = new global::System.Data.DataSet();
                 ds.ReadXmlSchema(new global::System.Xml.XmlTextReader(new global::System.IO.StringReader(strSchema)));
-                if ((ds.Tables["StoredProcedures"] != null)) {
-                    base.Tables.Add(new StoredProceduresDataTable(ds.Tables["StoredProcedures"]));
-                }
-                if ((ds.Tables["stoC_LogClassRules"] != null)) {
-                    base.Tables.Add(new stoC_LogClassRulesDataTable(ds.Tables["stoC_LogClassRules"]));
-                }
-                if ((ds.Tables["stoL_error"] != null)) {
-                    base.Tables.Add(new stoL_errorDataTable(ds.Tables["stoL_error"]));
+                if ((ds.Tables["StoredProceduresxxx"] != null)) {
+                    base.Tables.Add(new StoredProceduresxxxDataTable(ds.Tables["StoredProceduresxxx"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -89,29 +79,9 @@ namespace ExcelAddInEquipmentDatabase {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Browsable(false)]
         [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public StoredProceduresDataTable StoredProcedures {
+        public StoredProceduresxxxDataTable StoredProceduresxxx {
             get {
-                return this.tableStoredProcedures;
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        [global::System.ComponentModel.Browsable(false)]
-        [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public stoC_LogClassRulesDataTable stoC_LogClassRules {
-            get {
-                return this.tablestoC_LogClassRules;
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        [global::System.ComponentModel.Browsable(false)]
-        [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public stoL_errorDataTable stoL_error {
-            get {
-                return this.tablestoL_error;
+                return this.tableStoredProceduresxxx;
             }
         }
         
@@ -182,14 +152,8 @@ namespace ExcelAddInEquipmentDatabase {
                 this.Reset();
                 global::System.Data.DataSet ds = new global::System.Data.DataSet();
                 ds.ReadXml(reader);
-                if ((ds.Tables["StoredProcedures"] != null)) {
-                    base.Tables.Add(new StoredProceduresDataTable(ds.Tables["StoredProcedures"]));
-                }
-                if ((ds.Tables["stoC_LogClassRules"] != null)) {
-                    base.Tables.Add(new stoC_LogClassRulesDataTable(ds.Tables["stoC_LogClassRules"]));
-                }
-                if ((ds.Tables["stoL_error"] != null)) {
-                    base.Tables.Add(new stoL_errorDataTable(ds.Tables["stoL_error"]));
+                if ((ds.Tables["StoredProceduresxxx"] != null)) {
+                    base.Tables.Add(new StoredProceduresxxxDataTable(ds.Tables["StoredProceduresxxx"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -224,22 +188,10 @@ namespace ExcelAddInEquipmentDatabase {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         internal void InitVars(bool initTable) {
-            this.tableStoredProcedures = ((StoredProceduresDataTable)(base.Tables["StoredProcedures"]));
+            this.tableStoredProceduresxxx = ((StoredProceduresxxxDataTable)(base.Tables["StoredProceduresxxx"]));
             if ((initTable == true)) {
-                if ((this.tableStoredProcedures != null)) {
-                    this.tableStoredProcedures.InitVars();
-                }
-            }
-            this.tablestoC_LogClassRules = ((stoC_LogClassRulesDataTable)(base.Tables["stoC_LogClassRules"]));
-            if ((initTable == true)) {
-                if ((this.tablestoC_LogClassRules != null)) {
-                    this.tablestoC_LogClassRules.InitVars();
-                }
-            }
-            this.tablestoL_error = ((stoL_errorDataTable)(base.Tables["stoL_error"]));
-            if ((initTable == true)) {
-                if ((this.tablestoL_error != null)) {
-                    this.tablestoL_error.InitVars();
+                if ((this.tableStoredProceduresxxx != null)) {
+                    this.tableStoredProceduresxxx.InitVars();
                 }
             }
         }
@@ -252,29 +204,13 @@ namespace ExcelAddInEquipmentDatabase {
             this.Namespace = "http://tempuri.org/applData.xsd";
             this.EnforceConstraints = true;
             this.SchemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
-            this.tableStoredProcedures = new StoredProceduresDataTable();
-            base.Tables.Add(this.tableStoredProcedures);
-            this.tablestoC_LogClassRules = new stoC_LogClassRulesDataTable();
-            base.Tables.Add(this.tablestoC_LogClassRules);
-            this.tablestoL_error = new stoL_errorDataTable();
-            base.Tables.Add(this.tablestoL_error);
+            this.tableStoredProceduresxxx = new StoredProceduresxxxDataTable();
+            base.Tables.Add(this.tableStoredProceduresxxx);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        private bool ShouldSerializeStoredProcedures() {
-            return false;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        private bool ShouldSerializestoC_LogClassRules() {
-            return false;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        private bool ShouldSerializestoL_error() {
+        private bool ShouldSerializeStoredProceduresxxx() {
             return false;
         }
         
@@ -334,20 +270,14 @@ namespace ExcelAddInEquipmentDatabase {
         }
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        public delegate void StoredProceduresRowChangeEventHandler(object sender, StoredProceduresRowChangeEvent e);
-        
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        public delegate void stoC_LogClassRulesRowChangeEventHandler(object sender, stoC_LogClassRulesRowChangeEvent e);
-        
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        public delegate void stoL_errorRowChangeEventHandler(object sender, stoL_errorRowChangeEvent e);
+        public delegate void StoredProceduresxxxRowChangeEventHandler(object sender, StoredProceduresxxxRowChangeEvent e);
         
         /// <summary>
         ///Represents the strongly named DataTable class.
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class StoredProceduresDataTable : global::System.Data.TypedTableBase<StoredProceduresRow> {
+        public partial class StoredProceduresxxxDataTable : global::System.Data.TypedTableBase<StoredProceduresxxxRow> {
             
             private global::System.Data.DataColumn columnSPECIFIC_CATALOG;
             
@@ -453,8 +383,8 @@ namespace ExcelAddInEquipmentDatabase {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public StoredProceduresDataTable() {
-                this.TableName = "StoredProcedures";
+            public StoredProceduresxxxDataTable() {
+                this.TableName = "StoredProceduresxxx";
                 this.BeginInit();
                 this.InitClass();
                 this.EndInit();
@@ -462,7 +392,7 @@ namespace ExcelAddInEquipmentDatabase {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            internal StoredProceduresDataTable(global::System.Data.DataTable table) {
+            internal StoredProceduresxxxDataTable(global::System.Data.DataTable table) {
                 this.TableName = table.TableName;
                 if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
                     this.CaseSensitive = table.CaseSensitive;
@@ -479,7 +409,7 @@ namespace ExcelAddInEquipmentDatabase {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            protected StoredProceduresDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+            protected StoredProceduresxxxDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                     base(info, context) {
                 this.InitVars();
             }
@@ -903,33 +833,33 @@ namespace ExcelAddInEquipmentDatabase {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public StoredProceduresRow this[int index] {
+            public StoredProceduresxxxRow this[int index] {
                 get {
-                    return ((StoredProceduresRow)(this.Rows[index]));
+                    return ((StoredProceduresxxxRow)(this.Rows[index]));
                 }
             }
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public event StoredProceduresRowChangeEventHandler StoredProceduresRowChanging;
+            public event StoredProceduresxxxRowChangeEventHandler StoredProceduresxxxRowChanging;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public event StoredProceduresRowChangeEventHandler StoredProceduresRowChanged;
+            public event StoredProceduresxxxRowChangeEventHandler StoredProceduresxxxRowChanged;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public event StoredProceduresRowChangeEventHandler StoredProceduresRowDeleting;
+            public event StoredProceduresxxxRowChangeEventHandler StoredProceduresxxxRowDeleting;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public event StoredProceduresRowChangeEventHandler StoredProceduresRowDeleted;
+            public event StoredProceduresxxxRowChangeEventHandler StoredProceduresxxxRowDeleted;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void AddStoredProceduresRow(StoredProceduresRow row) {
+            public void AddStoredProceduresxxxRow(StoredProceduresxxxRow row) {
                 this.Rows.Add(row);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public StoredProceduresRow AddStoredProceduresRow(
+            public StoredProceduresxxxRow AddStoredProceduresxxxRow(
                         string SPECIFIC_CATALOG, 
                         string SPECIFIC_SCHEMA, 
                         string SPECIFIC_NAME, 
@@ -981,7 +911,7 @@ namespace ExcelAddInEquipmentDatabase {
                         string IS_IMPLICITLY_INVOCABLE, 
                         System.DateTime CREATED, 
                         System.DateTime LAST_ALTERED) {
-                StoredProceduresRow rowStoredProceduresRow = ((StoredProceduresRow)(this.NewRow()));
+                StoredProceduresxxxRow rowStoredProceduresxxxRow = ((StoredProceduresxxxRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         SPECIFIC_CATALOG,
                         SPECIFIC_SCHEMA,
@@ -1034,15 +964,15 @@ namespace ExcelAddInEquipmentDatabase {
                         IS_IMPLICITLY_INVOCABLE,
                         CREATED,
                         LAST_ALTERED};
-                rowStoredProceduresRow.ItemArray = columnValuesArray;
-                this.Rows.Add(rowStoredProceduresRow);
-                return rowStoredProceduresRow;
+                rowStoredProceduresxxxRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowStoredProceduresxxxRow);
+                return rowStoredProceduresxxxRow;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public override global::System.Data.DataTable Clone() {
-                StoredProceduresDataTable cln = ((StoredProceduresDataTable)(base.Clone()));
+                StoredProceduresxxxDataTable cln = ((StoredProceduresxxxDataTable)(base.Clone()));
                 cln.InitVars();
                 return cln;
             }
@@ -1050,7 +980,7 @@ namespace ExcelAddInEquipmentDatabase {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             protected override global::System.Data.DataTable CreateInstance() {
-                return new StoredProceduresDataTable();
+                return new StoredProceduresxxxDataTable();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1309,28 +1239,28 @@ namespace ExcelAddInEquipmentDatabase {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public StoredProceduresRow NewStoredProceduresRow() {
-                return ((StoredProceduresRow)(this.NewRow()));
+            public StoredProceduresxxxRow NewStoredProceduresxxxRow() {
+                return ((StoredProceduresxxxRow)(this.NewRow()));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
-                return new StoredProceduresRow(builder);
+                return new StoredProceduresxxxRow(builder);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             protected override global::System.Type GetRowType() {
-                return typeof(StoredProceduresRow);
+                return typeof(StoredProceduresxxxRow);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanged(e);
-                if ((this.StoredProceduresRowChanged != null)) {
-                    this.StoredProceduresRowChanged(this, new StoredProceduresRowChangeEvent(((StoredProceduresRow)(e.Row)), e.Action));
+                if ((this.StoredProceduresxxxRowChanged != null)) {
+                    this.StoredProceduresxxxRowChanged(this, new StoredProceduresxxxRowChangeEvent(((StoredProceduresxxxRow)(e.Row)), e.Action));
                 }
             }
             
@@ -1338,8 +1268,8 @@ namespace ExcelAddInEquipmentDatabase {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanging(e);
-                if ((this.StoredProceduresRowChanging != null)) {
-                    this.StoredProceduresRowChanging(this, new StoredProceduresRowChangeEvent(((StoredProceduresRow)(e.Row)), e.Action));
+                if ((this.StoredProceduresxxxRowChanging != null)) {
+                    this.StoredProceduresxxxRowChanging(this, new StoredProceduresxxxRowChangeEvent(((StoredProceduresxxxRow)(e.Row)), e.Action));
                 }
             }
             
@@ -1347,8 +1277,8 @@ namespace ExcelAddInEquipmentDatabase {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleted(e);
-                if ((this.StoredProceduresRowDeleted != null)) {
-                    this.StoredProceduresRowDeleted(this, new StoredProceduresRowChangeEvent(((StoredProceduresRow)(e.Row)), e.Action));
+                if ((this.StoredProceduresxxxRowDeleted != null)) {
+                    this.StoredProceduresxxxRowDeleted(this, new StoredProceduresxxxRowChangeEvent(((StoredProceduresxxxRow)(e.Row)), e.Action));
                 }
             }
             
@@ -1356,14 +1286,14 @@ namespace ExcelAddInEquipmentDatabase {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleting(e);
-                if ((this.StoredProceduresRowDeleting != null)) {
-                    this.StoredProceduresRowDeleting(this, new StoredProceduresRowChangeEvent(((StoredProceduresRow)(e.Row)), e.Action));
+                if ((this.StoredProceduresxxxRowDeleting != null)) {
+                    this.StoredProceduresxxxRowDeleting(this, new StoredProceduresxxxRowChangeEvent(((StoredProceduresxxxRow)(e.Row)), e.Action));
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void RemoveStoredProceduresRow(StoredProceduresRow row) {
+            public void RemoveStoredProceduresxxxRow(StoredProceduresxxxRow row) {
                 this.Rows.Remove(row);
             }
             
@@ -1390,699 +1320,7 @@ namespace ExcelAddInEquipmentDatabase {
                 type.Attributes.Add(attribute1);
                 global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
                 attribute2.Name = "tableTypeName";
-                attribute2.FixedValue = "StoredProceduresDataTable";
-                type.Attributes.Add(attribute2);
-                type.Particle = sequence;
-                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
-                if (xs.Contains(dsSchema.TargetNamespace)) {
-                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
-                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
-                    try {
-                        global::System.Xml.Schema.XmlSchema schema = null;
-                        dsSchema.Write(s1);
-                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
-                            schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
-                            s2.SetLength(0);
-                            schema.Write(s2);
-                            if ((s1.Length == s2.Length)) {
-                                s1.Position = 0;
-                                s2.Position = 0;
-                                for (; ((s1.Position != s1.Length) 
-                                            && (s1.ReadByte() == s2.ReadByte())); ) {
-                                    ;
-                                }
-                                if ((s1.Position == s1.Length)) {
-                                    return type;
-                                }
-                            }
-                        }
-                    }
-                    finally {
-                        if ((s1 != null)) {
-                            s1.Close();
-                        }
-                        if ((s2 != null)) {
-                            s2.Close();
-                        }
-                    }
-                }
-                xs.Add(dsSchema);
-                return type;
-            }
-        }
-        
-        /// <summary>
-        ///Represents the strongly named DataTable class.
-        ///</summary>
-        [global::System.Serializable()]
-        [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class stoC_LogClassRulesDataTable : global::System.Data.TypedTableBase<stoC_LogClassRulesRow> {
-            
-            private global::System.Data.DataColumn columnid;
-            
-            private global::System.Data.DataColumn columnErr_start;
-            
-            private global::System.Data.DataColumn columnErr_end;
-            
-            private global::System.Data.DataColumn columnErr_text;
-            
-            private global::System.Data.DataColumn columnI_comment;
-            
-            private global::System.Data.DataColumn columnc_ClassificationId;
-            
-            private global::System.Data.DataColumn columnc_SubgroupId;
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public stoC_LogClassRulesDataTable() {
-                this.TableName = "stoC_LogClassRules";
-                this.BeginInit();
-                this.InitClass();
-                this.EndInit();
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            internal stoC_LogClassRulesDataTable(global::System.Data.DataTable table) {
-                this.TableName = table.TableName;
-                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
-                    this.CaseSensitive = table.CaseSensitive;
-                }
-                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
-                    this.Locale = table.Locale;
-                }
-                if ((table.Namespace != table.DataSet.Namespace)) {
-                    this.Namespace = table.Namespace;
-                }
-                this.Prefix = table.Prefix;
-                this.MinimumCapacity = table.MinimumCapacity;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            protected stoC_LogClassRulesDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
-                    base(info, context) {
-                this.InitVars();
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn idColumn {
-                get {
-                    return this.columnid;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn Err_startColumn {
-                get {
-                    return this.columnErr_start;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn Err_endColumn {
-                get {
-                    return this.columnErr_end;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn Err_textColumn {
-                get {
-                    return this.columnErr_text;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn I_commentColumn {
-                get {
-                    return this.columnI_comment;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn c_ClassificationIdColumn {
-                get {
-                    return this.columnc_ClassificationId;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn c_SubgroupIdColumn {
-                get {
-                    return this.columnc_SubgroupId;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            [global::System.ComponentModel.Browsable(false)]
-            public int Count {
-                get {
-                    return this.Rows.Count;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public stoC_LogClassRulesRow this[int index] {
-                get {
-                    return ((stoC_LogClassRulesRow)(this.Rows[index]));
-                }
-            }
-            
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public event stoC_LogClassRulesRowChangeEventHandler stoC_LogClassRulesRowChanging;
-            
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public event stoC_LogClassRulesRowChangeEventHandler stoC_LogClassRulesRowChanged;
-            
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public event stoC_LogClassRulesRowChangeEventHandler stoC_LogClassRulesRowDeleting;
-            
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public event stoC_LogClassRulesRowChangeEventHandler stoC_LogClassRulesRowDeleted;
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void AddstoC_LogClassRulesRow(stoC_LogClassRulesRow row) {
-                this.Rows.Add(row);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public stoC_LogClassRulesRow AddstoC_LogClassRulesRow(int Err_start, int Err_end, string Err_text, string I_comment, int c_ClassificationId, int c_SubgroupId) {
-                stoC_LogClassRulesRow rowstoC_LogClassRulesRow = ((stoC_LogClassRulesRow)(this.NewRow()));
-                object[] columnValuesArray = new object[] {
-                        null,
-                        Err_start,
-                        Err_end,
-                        Err_text,
-                        I_comment,
-                        c_ClassificationId,
-                        c_SubgroupId};
-                rowstoC_LogClassRulesRow.ItemArray = columnValuesArray;
-                this.Rows.Add(rowstoC_LogClassRulesRow);
-                return rowstoC_LogClassRulesRow;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public override global::System.Data.DataTable Clone() {
-                stoC_LogClassRulesDataTable cln = ((stoC_LogClassRulesDataTable)(base.Clone()));
-                cln.InitVars();
-                return cln;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            protected override global::System.Data.DataTable CreateInstance() {
-                return new stoC_LogClassRulesDataTable();
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            internal void InitVars() {
-                this.columnid = base.Columns["id"];
-                this.columnErr_start = base.Columns["Err_start"];
-                this.columnErr_end = base.Columns["Err_end"];
-                this.columnErr_text = base.Columns["Err_text"];
-                this.columnI_comment = base.Columns["I_comment"];
-                this.columnc_ClassificationId = base.Columns["c_ClassificationId"];
-                this.columnc_SubgroupId = base.Columns["c_SubgroupId"];
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            private void InitClass() {
-                this.columnid = new global::System.Data.DataColumn("id", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnid);
-                this.columnErr_start = new global::System.Data.DataColumn("Err_start", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnErr_start);
-                this.columnErr_end = new global::System.Data.DataColumn("Err_end", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnErr_end);
-                this.columnErr_text = new global::System.Data.DataColumn("Err_text", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnErr_text);
-                this.columnI_comment = new global::System.Data.DataColumn("I_comment", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnI_comment);
-                this.columnc_ClassificationId = new global::System.Data.DataColumn("c_ClassificationId", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnc_ClassificationId);
-                this.columnc_SubgroupId = new global::System.Data.DataColumn("c_SubgroupId", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnc_SubgroupId);
-                this.Constraints.Add(new global::System.Data.UniqueConstraint("stoC_LogClassRulesKey1", new global::System.Data.DataColumn[] {
-                                this.columnid}, false));
-                this.columnid.AutoIncrement = true;
-                this.columnid.AutoIncrementSeed = -1;
-                this.columnid.AutoIncrementStep = -1;
-                this.columnid.AllowDBNull = false;
-                this.columnid.ReadOnly = true;
-                this.columnid.Unique = true;
-                this.columnErr_text.MaxLength = 255;
-                this.columnI_comment.MaxLength = 255;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public stoC_LogClassRulesRow NewstoC_LogClassRulesRow() {
-                return ((stoC_LogClassRulesRow)(this.NewRow()));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
-                return new stoC_LogClassRulesRow(builder);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            protected override global::System.Type GetRowType() {
-                return typeof(stoC_LogClassRulesRow);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
-                base.OnRowChanged(e);
-                if ((this.stoC_LogClassRulesRowChanged != null)) {
-                    this.stoC_LogClassRulesRowChanged(this, new stoC_LogClassRulesRowChangeEvent(((stoC_LogClassRulesRow)(e.Row)), e.Action));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
-                base.OnRowChanging(e);
-                if ((this.stoC_LogClassRulesRowChanging != null)) {
-                    this.stoC_LogClassRulesRowChanging(this, new stoC_LogClassRulesRowChangeEvent(((stoC_LogClassRulesRow)(e.Row)), e.Action));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
-                base.OnRowDeleted(e);
-                if ((this.stoC_LogClassRulesRowDeleted != null)) {
-                    this.stoC_LogClassRulesRowDeleted(this, new stoC_LogClassRulesRowChangeEvent(((stoC_LogClassRulesRow)(e.Row)), e.Action));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
-                base.OnRowDeleting(e);
-                if ((this.stoC_LogClassRulesRowDeleting != null)) {
-                    this.stoC_LogClassRulesRowDeleting(this, new stoC_LogClassRulesRowChangeEvent(((stoC_LogClassRulesRow)(e.Row)), e.Action));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void RemovestoC_LogClassRulesRow(stoC_LogClassRulesRow row) {
-                this.Rows.Remove(row);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
-                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
-                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
-                applData ds = new applData();
-                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
-                any1.Namespace = "http://www.w3.org/2001/XMLSchema";
-                any1.MinOccurs = new decimal(0);
-                any1.MaxOccurs = decimal.MaxValue;
-                any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
-                sequence.Items.Add(any1);
-                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
-                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
-                any2.MinOccurs = new decimal(1);
-                any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
-                sequence.Items.Add(any2);
-                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
-                attribute1.Name = "namespace";
-                attribute1.FixedValue = ds.Namespace;
-                type.Attributes.Add(attribute1);
-                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
-                attribute2.Name = "tableTypeName";
-                attribute2.FixedValue = "stoC_LogClassRulesDataTable";
-                type.Attributes.Add(attribute2);
-                type.Particle = sequence;
-                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
-                if (xs.Contains(dsSchema.TargetNamespace)) {
-                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
-                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
-                    try {
-                        global::System.Xml.Schema.XmlSchema schema = null;
-                        dsSchema.Write(s1);
-                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
-                            schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
-                            s2.SetLength(0);
-                            schema.Write(s2);
-                            if ((s1.Length == s2.Length)) {
-                                s1.Position = 0;
-                                s2.Position = 0;
-                                for (; ((s1.Position != s1.Length) 
-                                            && (s1.ReadByte() == s2.ReadByte())); ) {
-                                    ;
-                                }
-                                if ((s1.Position == s1.Length)) {
-                                    return type;
-                                }
-                            }
-                        }
-                    }
-                    finally {
-                        if ((s1 != null)) {
-                            s1.Close();
-                        }
-                        if ((s2 != null)) {
-                            s2.Close();
-                        }
-                    }
-                }
-                xs.Add(dsSchema);
-                return type;
-            }
-        }
-        
-        /// <summary>
-        ///Represents the strongly named DataTable class.
-        ///</summary>
-        [global::System.Serializable()]
-        [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class stoL_errorDataTable : global::System.Data.TypedTableBase<stoL_errorRow> {
-            
-            private global::System.Data.DataColumn columnid;
-            
-            private global::System.Data.DataColumn columnSUBOBJECT;
-            
-            private global::System.Data.DataColumn columnALARMSEVERITY;
-            
-            private global::System.Data.DataColumn columnALARMCOMMENT;
-            
-            private global::System.Data.DataColumn columnClassification;
-            
-            private global::System.Data.DataColumn columnsubgroup;
-            
-            private global::System.Data.DataColumn columnc_RuleId;
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public stoL_errorDataTable() {
-                this.TableName = "stoL_error";
-                this.BeginInit();
-                this.InitClass();
-                this.EndInit();
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            internal stoL_errorDataTable(global::System.Data.DataTable table) {
-                this.TableName = table.TableName;
-                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
-                    this.CaseSensitive = table.CaseSensitive;
-                }
-                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
-                    this.Locale = table.Locale;
-                }
-                if ((table.Namespace != table.DataSet.Namespace)) {
-                    this.Namespace = table.Namespace;
-                }
-                this.Prefix = table.Prefix;
-                this.MinimumCapacity = table.MinimumCapacity;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            protected stoL_errorDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
-                    base(info, context) {
-                this.InitVars();
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn idColumn {
-                get {
-                    return this.columnid;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn SUBOBJECTColumn {
-                get {
-                    return this.columnSUBOBJECT;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn ALARMSEVERITYColumn {
-                get {
-                    return this.columnALARMSEVERITY;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn ALARMCOMMENTColumn {
-                get {
-                    return this.columnALARMCOMMENT;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn ClassificationColumn {
-                get {
-                    return this.columnClassification;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn subgroupColumn {
-                get {
-                    return this.columnsubgroup;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn c_RuleIdColumn {
-                get {
-                    return this.columnc_RuleId;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            [global::System.ComponentModel.Browsable(false)]
-            public int Count {
-                get {
-                    return this.Rows.Count;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public stoL_errorRow this[int index] {
-                get {
-                    return ((stoL_errorRow)(this.Rows[index]));
-                }
-            }
-            
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public event stoL_errorRowChangeEventHandler stoL_errorRowChanging;
-            
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public event stoL_errorRowChangeEventHandler stoL_errorRowChanged;
-            
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public event stoL_errorRowChangeEventHandler stoL_errorRowDeleting;
-            
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public event stoL_errorRowChangeEventHandler stoL_errorRowDeleted;
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void AddstoL_errorRow(stoL_errorRow row) {
-                this.Rows.Add(row);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public stoL_errorRow AddstoL_errorRow(string SUBOBJECT, string ALARMSEVERITY, string ALARMCOMMENT, string Classification, string subgroup, int c_RuleId) {
-                stoL_errorRow rowstoL_errorRow = ((stoL_errorRow)(this.NewRow()));
-                object[] columnValuesArray = new object[] {
-                        null,
-                        SUBOBJECT,
-                        ALARMSEVERITY,
-                        ALARMCOMMENT,
-                        Classification,
-                        subgroup,
-                        c_RuleId};
-                rowstoL_errorRow.ItemArray = columnValuesArray;
-                this.Rows.Add(rowstoL_errorRow);
-                return rowstoL_errorRow;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public stoL_errorRow FindByid(int id) {
-                return ((stoL_errorRow)(this.Rows.Find(new object[] {
-                            id})));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public override global::System.Data.DataTable Clone() {
-                stoL_errorDataTable cln = ((stoL_errorDataTable)(base.Clone()));
-                cln.InitVars();
-                return cln;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            protected override global::System.Data.DataTable CreateInstance() {
-                return new stoL_errorDataTable();
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            internal void InitVars() {
-                this.columnid = base.Columns["id"];
-                this.columnSUBOBJECT = base.Columns["SUBOBJECT"];
-                this.columnALARMSEVERITY = base.Columns["ALARMSEVERITY"];
-                this.columnALARMCOMMENT = base.Columns["ALARMCOMMENT"];
-                this.columnClassification = base.Columns["Classification"];
-                this.columnsubgroup = base.Columns["subgroup"];
-                this.columnc_RuleId = base.Columns["c_RuleId"];
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            private void InitClass() {
-                this.columnid = new global::System.Data.DataColumn("id", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnid);
-                this.columnSUBOBJECT = new global::System.Data.DataColumn("SUBOBJECT", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnSUBOBJECT);
-                this.columnALARMSEVERITY = new global::System.Data.DataColumn("ALARMSEVERITY", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnALARMSEVERITY);
-                this.columnALARMCOMMENT = new global::System.Data.DataColumn("ALARMCOMMENT", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnALARMCOMMENT);
-                this.columnClassification = new global::System.Data.DataColumn("Classification", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnClassification);
-                this.columnsubgroup = new global::System.Data.DataColumn("subgroup", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnsubgroup);
-                this.columnc_RuleId = new global::System.Data.DataColumn("c_RuleId", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnc_RuleId);
-                this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
-                                this.columnid}, true));
-                this.columnid.AutoIncrement = true;
-                this.columnid.AutoIncrementSeed = -1;
-                this.columnid.AutoIncrementStep = -1;
-                this.columnid.AllowDBNull = false;
-                this.columnid.ReadOnly = true;
-                this.columnid.Unique = true;
-                this.columnSUBOBJECT.MaxLength = 50;
-                this.columnALARMSEVERITY.MaxLength = 1;
-                this.columnALARMCOMMENT.MaxLength = 2147483647;
-                this.columnClassification.MaxLength = 50;
-                this.columnsubgroup.MaxLength = 50;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public stoL_errorRow NewstoL_errorRow() {
-                return ((stoL_errorRow)(this.NewRow()));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
-                return new stoL_errorRow(builder);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            protected override global::System.Type GetRowType() {
-                return typeof(stoL_errorRow);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
-                base.OnRowChanged(e);
-                if ((this.stoL_errorRowChanged != null)) {
-                    this.stoL_errorRowChanged(this, new stoL_errorRowChangeEvent(((stoL_errorRow)(e.Row)), e.Action));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
-                base.OnRowChanging(e);
-                if ((this.stoL_errorRowChanging != null)) {
-                    this.stoL_errorRowChanging(this, new stoL_errorRowChangeEvent(((stoL_errorRow)(e.Row)), e.Action));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
-                base.OnRowDeleted(e);
-                if ((this.stoL_errorRowDeleted != null)) {
-                    this.stoL_errorRowDeleted(this, new stoL_errorRowChangeEvent(((stoL_errorRow)(e.Row)), e.Action));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
-                base.OnRowDeleting(e);
-                if ((this.stoL_errorRowDeleting != null)) {
-                    this.stoL_errorRowDeleting(this, new stoL_errorRowChangeEvent(((stoL_errorRow)(e.Row)), e.Action));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void RemovestoL_errorRow(stoL_errorRow row) {
-                this.Rows.Remove(row);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
-                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
-                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
-                applData ds = new applData();
-                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
-                any1.Namespace = "http://www.w3.org/2001/XMLSchema";
-                any1.MinOccurs = new decimal(0);
-                any1.MaxOccurs = decimal.MaxValue;
-                any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
-                sequence.Items.Add(any1);
-                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
-                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
-                any2.MinOccurs = new decimal(1);
-                any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
-                sequence.Items.Add(any2);
-                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
-                attribute1.Name = "namespace";
-                attribute1.FixedValue = ds.Namespace;
-                type.Attributes.Add(attribute1);
-                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
-                attribute2.Name = "tableTypeName";
-                attribute2.FixedValue = "stoL_errorDataTable";
+                attribute2.FixedValue = "StoredProceduresxxxDataTable";
                 type.Attributes.Add(attribute2);
                 type.Particle = sequence;
                 global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
@@ -2126,15 +1364,15 @@ namespace ExcelAddInEquipmentDatabase {
         /// <summary>
         ///Represents strongly named DataRow class.
         ///</summary>
-        public partial class StoredProceduresRow : global::System.Data.DataRow {
+        public partial class StoredProceduresxxxRow : global::System.Data.DataRow {
             
-            private StoredProceduresDataTable tableStoredProcedures;
+            private StoredProceduresxxxDataTable tableStoredProceduresxxx;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            internal StoredProceduresRow(global::System.Data.DataRowBuilder rb) : 
+            internal StoredProceduresxxxRow(global::System.Data.DataRowBuilder rb) : 
                     base(rb) {
-                this.tableStoredProcedures = ((StoredProceduresDataTable)(this.Table));
+                this.tableStoredProceduresxxx = ((StoredProceduresxxxDataTable)(this.Table));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2142,14 +1380,15 @@ namespace ExcelAddInEquipmentDatabase {
             public string SPECIFIC_CATALOG {
                 get {
                     try {
-                        return ((string)(this[this.tableStoredProcedures.SPECIFIC_CATALOGColumn]));
+                        return ((string)(this[this.tableStoredProceduresxxx.SPECIFIC_CATALOGColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'SPECIFIC_CATALOG\' in table \'StoredProcedures\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'SPECIFIC_CATALOG\' in table \'StoredProceduresxxx\' is DBNull." +
+                                "", e);
                     }
                 }
                 set {
-                    this[this.tableStoredProcedures.SPECIFIC_CATALOGColumn] = value;
+                    this[this.tableStoredProceduresxxx.SPECIFIC_CATALOGColumn] = value;
                 }
             }
             
@@ -2158,14 +1397,14 @@ namespace ExcelAddInEquipmentDatabase {
             public string SPECIFIC_SCHEMA {
                 get {
                     try {
-                        return ((string)(this[this.tableStoredProcedures.SPECIFIC_SCHEMAColumn]));
+                        return ((string)(this[this.tableStoredProceduresxxx.SPECIFIC_SCHEMAColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'SPECIFIC_SCHEMA\' in table \'StoredProcedures\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'SPECIFIC_SCHEMA\' in table \'StoredProceduresxxx\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableStoredProcedures.SPECIFIC_SCHEMAColumn] = value;
+                    this[this.tableStoredProceduresxxx.SPECIFIC_SCHEMAColumn] = value;
                 }
             }
             
@@ -2173,10 +1412,10 @@ namespace ExcelAddInEquipmentDatabase {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public string SPECIFIC_NAME {
                 get {
-                    return ((string)(this[this.tableStoredProcedures.SPECIFIC_NAMEColumn]));
+                    return ((string)(this[this.tableStoredProceduresxxx.SPECIFIC_NAMEColumn]));
                 }
                 set {
-                    this[this.tableStoredProcedures.SPECIFIC_NAMEColumn] = value;
+                    this[this.tableStoredProceduresxxx.SPECIFIC_NAMEColumn] = value;
                 }
             }
             
@@ -2185,14 +1424,14 @@ namespace ExcelAddInEquipmentDatabase {
             public string ROUTINE_CATALOG {
                 get {
                     try {
-                        return ((string)(this[this.tableStoredProcedures.ROUTINE_CATALOGColumn]));
+                        return ((string)(this[this.tableStoredProceduresxxx.ROUTINE_CATALOGColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'ROUTINE_CATALOG\' in table \'StoredProcedures\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'ROUTINE_CATALOG\' in table \'StoredProceduresxxx\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableStoredProcedures.ROUTINE_CATALOGColumn] = value;
+                    this[this.tableStoredProceduresxxx.ROUTINE_CATALOGColumn] = value;
                 }
             }
             
@@ -2201,14 +1440,14 @@ namespace ExcelAddInEquipmentDatabase {
             public string ROUTINE_SCHEMA {
                 get {
                     try {
-                        return ((string)(this[this.tableStoredProcedures.ROUTINE_SCHEMAColumn]));
+                        return ((string)(this[this.tableStoredProceduresxxx.ROUTINE_SCHEMAColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'ROUTINE_SCHEMA\' in table \'StoredProcedures\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'ROUTINE_SCHEMA\' in table \'StoredProceduresxxx\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableStoredProcedures.ROUTINE_SCHEMAColumn] = value;
+                    this[this.tableStoredProceduresxxx.ROUTINE_SCHEMAColumn] = value;
                 }
             }
             
@@ -2216,10 +1455,10 @@ namespace ExcelAddInEquipmentDatabase {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public string ROUTINE_NAME {
                 get {
-                    return ((string)(this[this.tableStoredProcedures.ROUTINE_NAMEColumn]));
+                    return ((string)(this[this.tableStoredProceduresxxx.ROUTINE_NAMEColumn]));
                 }
                 set {
-                    this[this.tableStoredProcedures.ROUTINE_NAMEColumn] = value;
+                    this[this.tableStoredProceduresxxx.ROUTINE_NAMEColumn] = value;
                 }
             }
             
@@ -2228,14 +1467,14 @@ namespace ExcelAddInEquipmentDatabase {
             public string ROUTINE_TYPE {
                 get {
                     try {
-                        return ((string)(this[this.tableStoredProcedures.ROUTINE_TYPEColumn]));
+                        return ((string)(this[this.tableStoredProceduresxxx.ROUTINE_TYPEColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'ROUTINE_TYPE\' in table \'StoredProcedures\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'ROUTINE_TYPE\' in table \'StoredProceduresxxx\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableStoredProcedures.ROUTINE_TYPEColumn] = value;
+                    this[this.tableStoredProceduresxxx.ROUTINE_TYPEColumn] = value;
                 }
             }
             
@@ -2244,14 +1483,14 @@ namespace ExcelAddInEquipmentDatabase {
             public string MODULE_CATALOG {
                 get {
                     try {
-                        return ((string)(this[this.tableStoredProcedures.MODULE_CATALOGColumn]));
+                        return ((string)(this[this.tableStoredProceduresxxx.MODULE_CATALOGColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'MODULE_CATALOG\' in table \'StoredProcedures\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'MODULE_CATALOG\' in table \'StoredProceduresxxx\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableStoredProcedures.MODULE_CATALOGColumn] = value;
+                    this[this.tableStoredProceduresxxx.MODULE_CATALOGColumn] = value;
                 }
             }
             
@@ -2260,14 +1499,14 @@ namespace ExcelAddInEquipmentDatabase {
             public string MODULE_SCHEMA {
                 get {
                     try {
-                        return ((string)(this[this.tableStoredProcedures.MODULE_SCHEMAColumn]));
+                        return ((string)(this[this.tableStoredProceduresxxx.MODULE_SCHEMAColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'MODULE_SCHEMA\' in table \'StoredProcedures\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'MODULE_SCHEMA\' in table \'StoredProceduresxxx\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableStoredProcedures.MODULE_SCHEMAColumn] = value;
+                    this[this.tableStoredProceduresxxx.MODULE_SCHEMAColumn] = value;
                 }
             }
             
@@ -2276,14 +1515,14 @@ namespace ExcelAddInEquipmentDatabase {
             public string MODULE_NAME {
                 get {
                     try {
-                        return ((string)(this[this.tableStoredProcedures.MODULE_NAMEColumn]));
+                        return ((string)(this[this.tableStoredProceduresxxx.MODULE_NAMEColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'MODULE_NAME\' in table \'StoredProcedures\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'MODULE_NAME\' in table \'StoredProceduresxxx\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableStoredProcedures.MODULE_NAMEColumn] = value;
+                    this[this.tableStoredProceduresxxx.MODULE_NAMEColumn] = value;
                 }
             }
             
@@ -2292,14 +1531,14 @@ namespace ExcelAddInEquipmentDatabase {
             public string UDT_CATALOG {
                 get {
                     try {
-                        return ((string)(this[this.tableStoredProcedures.UDT_CATALOGColumn]));
+                        return ((string)(this[this.tableStoredProceduresxxx.UDT_CATALOGColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'UDT_CATALOG\' in table \'StoredProcedures\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'UDT_CATALOG\' in table \'StoredProceduresxxx\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableStoredProcedures.UDT_CATALOGColumn] = value;
+                    this[this.tableStoredProceduresxxx.UDT_CATALOGColumn] = value;
                 }
             }
             
@@ -2308,14 +1547,14 @@ namespace ExcelAddInEquipmentDatabase {
             public string UDT_SCHEMA {
                 get {
                     try {
-                        return ((string)(this[this.tableStoredProcedures.UDT_SCHEMAColumn]));
+                        return ((string)(this[this.tableStoredProceduresxxx.UDT_SCHEMAColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'UDT_SCHEMA\' in table \'StoredProcedures\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'UDT_SCHEMA\' in table \'StoredProceduresxxx\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableStoredProcedures.UDT_SCHEMAColumn] = value;
+                    this[this.tableStoredProceduresxxx.UDT_SCHEMAColumn] = value;
                 }
             }
             
@@ -2324,14 +1563,14 @@ namespace ExcelAddInEquipmentDatabase {
             public string UDT_NAME {
                 get {
                     try {
-                        return ((string)(this[this.tableStoredProcedures.UDT_NAMEColumn]));
+                        return ((string)(this[this.tableStoredProceduresxxx.UDT_NAMEColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'UDT_NAME\' in table \'StoredProcedures\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'UDT_NAME\' in table \'StoredProceduresxxx\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableStoredProcedures.UDT_NAMEColumn] = value;
+                    this[this.tableStoredProceduresxxx.UDT_NAMEColumn] = value;
                 }
             }
             
@@ -2340,14 +1579,14 @@ namespace ExcelAddInEquipmentDatabase {
             public string DATA_TYPE {
                 get {
                     try {
-                        return ((string)(this[this.tableStoredProcedures.DATA_TYPEColumn]));
+                        return ((string)(this[this.tableStoredProceduresxxx.DATA_TYPEColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'DATA_TYPE\' in table \'StoredProcedures\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'DATA_TYPE\' in table \'StoredProceduresxxx\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableStoredProcedures.DATA_TYPEColumn] = value;
+                    this[this.tableStoredProceduresxxx.DATA_TYPEColumn] = value;
                 }
             }
             
@@ -2356,15 +1595,15 @@ namespace ExcelAddInEquipmentDatabase {
             public int CHARACTER_MAXIMUM_LENGTH {
                 get {
                     try {
-                        return ((int)(this[this.tableStoredProcedures.CHARACTER_MAXIMUM_LENGTHColumn]));
+                        return ((int)(this[this.tableStoredProceduresxxx.CHARACTER_MAXIMUM_LENGTHColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'CHARACTER_MAXIMUM_LENGTH\' in table \'StoredProcedures\' is DB" +
-                                "Null.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'CHARACTER_MAXIMUM_LENGTH\' in table \'StoredProceduresxxx\' is" +
+                                " DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableStoredProcedures.CHARACTER_MAXIMUM_LENGTHColumn] = value;
+                    this[this.tableStoredProceduresxxx.CHARACTER_MAXIMUM_LENGTHColumn] = value;
                 }
             }
             
@@ -2373,15 +1612,15 @@ namespace ExcelAddInEquipmentDatabase {
             public int CHARACTER_OCTET_LENGTH {
                 get {
                     try {
-                        return ((int)(this[this.tableStoredProcedures.CHARACTER_OCTET_LENGTHColumn]));
+                        return ((int)(this[this.tableStoredProceduresxxx.CHARACTER_OCTET_LENGTHColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'CHARACTER_OCTET_LENGTH\' in table \'StoredProcedures\' is DBNu" +
-                                "ll.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'CHARACTER_OCTET_LENGTH\' in table \'StoredProceduresxxx\' is D" +
+                                "BNull.", e);
                     }
                 }
                 set {
-                    this[this.tableStoredProcedures.CHARACTER_OCTET_LENGTHColumn] = value;
+                    this[this.tableStoredProceduresxxx.CHARACTER_OCTET_LENGTHColumn] = value;
                 }
             }
             
@@ -2390,14 +1629,15 @@ namespace ExcelAddInEquipmentDatabase {
             public string COLLATION_CATALOG {
                 get {
                     try {
-                        return ((string)(this[this.tableStoredProcedures.COLLATION_CATALOGColumn]));
+                        return ((string)(this[this.tableStoredProceduresxxx.COLLATION_CATALOGColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'COLLATION_CATALOG\' in table \'StoredProcedures\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'COLLATION_CATALOG\' in table \'StoredProceduresxxx\' is DBNull" +
+                                ".", e);
                     }
                 }
                 set {
-                    this[this.tableStoredProcedures.COLLATION_CATALOGColumn] = value;
+                    this[this.tableStoredProceduresxxx.COLLATION_CATALOGColumn] = value;
                 }
             }
             
@@ -2406,14 +1646,15 @@ namespace ExcelAddInEquipmentDatabase {
             public string COLLATION_SCHEMA {
                 get {
                     try {
-                        return ((string)(this[this.tableStoredProcedures.COLLATION_SCHEMAColumn]));
+                        return ((string)(this[this.tableStoredProceduresxxx.COLLATION_SCHEMAColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'COLLATION_SCHEMA\' in table \'StoredProcedures\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'COLLATION_SCHEMA\' in table \'StoredProceduresxxx\' is DBNull." +
+                                "", e);
                     }
                 }
                 set {
-                    this[this.tableStoredProcedures.COLLATION_SCHEMAColumn] = value;
+                    this[this.tableStoredProceduresxxx.COLLATION_SCHEMAColumn] = value;
                 }
             }
             
@@ -2422,14 +1663,14 @@ namespace ExcelAddInEquipmentDatabase {
             public string COLLATION_NAME {
                 get {
                     try {
-                        return ((string)(this[this.tableStoredProcedures.COLLATION_NAMEColumn]));
+                        return ((string)(this[this.tableStoredProceduresxxx.COLLATION_NAMEColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'COLLATION_NAME\' in table \'StoredProcedures\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'COLLATION_NAME\' in table \'StoredProceduresxxx\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableStoredProcedures.COLLATION_NAMEColumn] = value;
+                    this[this.tableStoredProceduresxxx.COLLATION_NAMEColumn] = value;
                 }
             }
             
@@ -2438,15 +1679,15 @@ namespace ExcelAddInEquipmentDatabase {
             public string CHARACTER_SET_CATALOG {
                 get {
                     try {
-                        return ((string)(this[this.tableStoredProcedures.CHARACTER_SET_CATALOGColumn]));
+                        return ((string)(this[this.tableStoredProceduresxxx.CHARACTER_SET_CATALOGColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'CHARACTER_SET_CATALOG\' in table \'StoredProcedures\' is DBNul" +
-                                "l.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'CHARACTER_SET_CATALOG\' in table \'StoredProceduresxxx\' is DB" +
+                                "Null.", e);
                     }
                 }
                 set {
-                    this[this.tableStoredProcedures.CHARACTER_SET_CATALOGColumn] = value;
+                    this[this.tableStoredProceduresxxx.CHARACTER_SET_CATALOGColumn] = value;
                 }
             }
             
@@ -2455,15 +1696,15 @@ namespace ExcelAddInEquipmentDatabase {
             public string CHARACTER_SET_SCHEMA {
                 get {
                     try {
-                        return ((string)(this[this.tableStoredProcedures.CHARACTER_SET_SCHEMAColumn]));
+                        return ((string)(this[this.tableStoredProceduresxxx.CHARACTER_SET_SCHEMAColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'CHARACTER_SET_SCHEMA\' in table \'StoredProcedures\' is DBNull" +
-                                ".", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'CHARACTER_SET_SCHEMA\' in table \'StoredProceduresxxx\' is DBN" +
+                                "ull.", e);
                     }
                 }
                 set {
-                    this[this.tableStoredProcedures.CHARACTER_SET_SCHEMAColumn] = value;
+                    this[this.tableStoredProceduresxxx.CHARACTER_SET_SCHEMAColumn] = value;
                 }
             }
             
@@ -2472,14 +1713,15 @@ namespace ExcelAddInEquipmentDatabase {
             public string CHARACTER_SET_NAME {
                 get {
                     try {
-                        return ((string)(this[this.tableStoredProcedures.CHARACTER_SET_NAMEColumn]));
+                        return ((string)(this[this.tableStoredProceduresxxx.CHARACTER_SET_NAMEColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'CHARACTER_SET_NAME\' in table \'StoredProcedures\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'CHARACTER_SET_NAME\' in table \'StoredProceduresxxx\' is DBNul" +
+                                "l.", e);
                     }
                 }
                 set {
-                    this[this.tableStoredProcedures.CHARACTER_SET_NAMEColumn] = value;
+                    this[this.tableStoredProceduresxxx.CHARACTER_SET_NAMEColumn] = value;
                 }
             }
             
@@ -2488,14 +1730,15 @@ namespace ExcelAddInEquipmentDatabase {
             public byte NUMERIC_PRECISION {
                 get {
                     try {
-                        return ((byte)(this[this.tableStoredProcedures.NUMERIC_PRECISIONColumn]));
+                        return ((byte)(this[this.tableStoredProceduresxxx.NUMERIC_PRECISIONColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'NUMERIC_PRECISION\' in table \'StoredProcedures\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'NUMERIC_PRECISION\' in table \'StoredProceduresxxx\' is DBNull" +
+                                ".", e);
                     }
                 }
                 set {
-                    this[this.tableStoredProcedures.NUMERIC_PRECISIONColumn] = value;
+                    this[this.tableStoredProceduresxxx.NUMERIC_PRECISIONColumn] = value;
                 }
             }
             
@@ -2504,15 +1747,15 @@ namespace ExcelAddInEquipmentDatabase {
             public short NUMERIC_PRECISION_RADIX {
                 get {
                     try {
-                        return ((short)(this[this.tableStoredProcedures.NUMERIC_PRECISION_RADIXColumn]));
+                        return ((short)(this[this.tableStoredProceduresxxx.NUMERIC_PRECISION_RADIXColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'NUMERIC_PRECISION_RADIX\' in table \'StoredProcedures\' is DBN" +
-                                "ull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'NUMERIC_PRECISION_RADIX\' in table \'StoredProceduresxxx\' is " +
+                                "DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableStoredProcedures.NUMERIC_PRECISION_RADIXColumn] = value;
+                    this[this.tableStoredProceduresxxx.NUMERIC_PRECISION_RADIXColumn] = value;
                 }
             }
             
@@ -2521,14 +1764,14 @@ namespace ExcelAddInEquipmentDatabase {
             public int NUMERIC_SCALE {
                 get {
                     try {
-                        return ((int)(this[this.tableStoredProcedures.NUMERIC_SCALEColumn]));
+                        return ((int)(this[this.tableStoredProceduresxxx.NUMERIC_SCALEColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'NUMERIC_SCALE\' in table \'StoredProcedures\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'NUMERIC_SCALE\' in table \'StoredProceduresxxx\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableStoredProcedures.NUMERIC_SCALEColumn] = value;
+                    this[this.tableStoredProceduresxxx.NUMERIC_SCALEColumn] = value;
                 }
             }
             
@@ -2537,14 +1780,15 @@ namespace ExcelAddInEquipmentDatabase {
             public short DATETIME_PRECISION {
                 get {
                     try {
-                        return ((short)(this[this.tableStoredProcedures.DATETIME_PRECISIONColumn]));
+                        return ((short)(this[this.tableStoredProceduresxxx.DATETIME_PRECISIONColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'DATETIME_PRECISION\' in table \'StoredProcedures\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'DATETIME_PRECISION\' in table \'StoredProceduresxxx\' is DBNul" +
+                                "l.", e);
                     }
                 }
                 set {
-                    this[this.tableStoredProcedures.DATETIME_PRECISIONColumn] = value;
+                    this[this.tableStoredProceduresxxx.DATETIME_PRECISIONColumn] = value;
                 }
             }
             
@@ -2553,14 +1797,14 @@ namespace ExcelAddInEquipmentDatabase {
             public string INTERVAL_TYPE {
                 get {
                     try {
-                        return ((string)(this[this.tableStoredProcedures.INTERVAL_TYPEColumn]));
+                        return ((string)(this[this.tableStoredProceduresxxx.INTERVAL_TYPEColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'INTERVAL_TYPE\' in table \'StoredProcedures\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'INTERVAL_TYPE\' in table \'StoredProceduresxxx\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableStoredProcedures.INTERVAL_TYPEColumn] = value;
+                    this[this.tableStoredProceduresxxx.INTERVAL_TYPEColumn] = value;
                 }
             }
             
@@ -2569,14 +1813,15 @@ namespace ExcelAddInEquipmentDatabase {
             public short INTERVAL_PRECISION {
                 get {
                     try {
-                        return ((short)(this[this.tableStoredProcedures.INTERVAL_PRECISIONColumn]));
+                        return ((short)(this[this.tableStoredProceduresxxx.INTERVAL_PRECISIONColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'INTERVAL_PRECISION\' in table \'StoredProcedures\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'INTERVAL_PRECISION\' in table \'StoredProceduresxxx\' is DBNul" +
+                                "l.", e);
                     }
                 }
                 set {
-                    this[this.tableStoredProcedures.INTERVAL_PRECISIONColumn] = value;
+                    this[this.tableStoredProceduresxxx.INTERVAL_PRECISIONColumn] = value;
                 }
             }
             
@@ -2585,14 +1830,15 @@ namespace ExcelAddInEquipmentDatabase {
             public string TYPE_UDT_CATALOG {
                 get {
                     try {
-                        return ((string)(this[this.tableStoredProcedures.TYPE_UDT_CATALOGColumn]));
+                        return ((string)(this[this.tableStoredProceduresxxx.TYPE_UDT_CATALOGColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'TYPE_UDT_CATALOG\' in table \'StoredProcedures\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'TYPE_UDT_CATALOG\' in table \'StoredProceduresxxx\' is DBNull." +
+                                "", e);
                     }
                 }
                 set {
-                    this[this.tableStoredProcedures.TYPE_UDT_CATALOGColumn] = value;
+                    this[this.tableStoredProceduresxxx.TYPE_UDT_CATALOGColumn] = value;
                 }
             }
             
@@ -2601,14 +1847,14 @@ namespace ExcelAddInEquipmentDatabase {
             public string TYPE_UDT_SCHEMA {
                 get {
                     try {
-                        return ((string)(this[this.tableStoredProcedures.TYPE_UDT_SCHEMAColumn]));
+                        return ((string)(this[this.tableStoredProceduresxxx.TYPE_UDT_SCHEMAColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'TYPE_UDT_SCHEMA\' in table \'StoredProcedures\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'TYPE_UDT_SCHEMA\' in table \'StoredProceduresxxx\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableStoredProcedures.TYPE_UDT_SCHEMAColumn] = value;
+                    this[this.tableStoredProceduresxxx.TYPE_UDT_SCHEMAColumn] = value;
                 }
             }
             
@@ -2617,14 +1863,14 @@ namespace ExcelAddInEquipmentDatabase {
             public string TYPE_UDT_NAME {
                 get {
                     try {
-                        return ((string)(this[this.tableStoredProcedures.TYPE_UDT_NAMEColumn]));
+                        return ((string)(this[this.tableStoredProceduresxxx.TYPE_UDT_NAMEColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'TYPE_UDT_NAME\' in table \'StoredProcedures\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'TYPE_UDT_NAME\' in table \'StoredProceduresxxx\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableStoredProcedures.TYPE_UDT_NAMEColumn] = value;
+                    this[this.tableStoredProceduresxxx.TYPE_UDT_NAMEColumn] = value;
                 }
             }
             
@@ -2633,14 +1879,14 @@ namespace ExcelAddInEquipmentDatabase {
             public string SCOPE_CATALOG {
                 get {
                     try {
-                        return ((string)(this[this.tableStoredProcedures.SCOPE_CATALOGColumn]));
+                        return ((string)(this[this.tableStoredProceduresxxx.SCOPE_CATALOGColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'SCOPE_CATALOG\' in table \'StoredProcedures\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'SCOPE_CATALOG\' in table \'StoredProceduresxxx\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableStoredProcedures.SCOPE_CATALOGColumn] = value;
+                    this[this.tableStoredProceduresxxx.SCOPE_CATALOGColumn] = value;
                 }
             }
             
@@ -2649,14 +1895,14 @@ namespace ExcelAddInEquipmentDatabase {
             public string SCOPE_SCHEMA {
                 get {
                     try {
-                        return ((string)(this[this.tableStoredProcedures.SCOPE_SCHEMAColumn]));
+                        return ((string)(this[this.tableStoredProceduresxxx.SCOPE_SCHEMAColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'SCOPE_SCHEMA\' in table \'StoredProcedures\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'SCOPE_SCHEMA\' in table \'StoredProceduresxxx\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableStoredProcedures.SCOPE_SCHEMAColumn] = value;
+                    this[this.tableStoredProceduresxxx.SCOPE_SCHEMAColumn] = value;
                 }
             }
             
@@ -2665,14 +1911,14 @@ namespace ExcelAddInEquipmentDatabase {
             public string SCOPE_NAME {
                 get {
                     try {
-                        return ((string)(this[this.tableStoredProcedures.SCOPE_NAMEColumn]));
+                        return ((string)(this[this.tableStoredProceduresxxx.SCOPE_NAMEColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'SCOPE_NAME\' in table \'StoredProcedures\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'SCOPE_NAME\' in table \'StoredProceduresxxx\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableStoredProcedures.SCOPE_NAMEColumn] = value;
+                    this[this.tableStoredProceduresxxx.SCOPE_NAMEColumn] = value;
                 }
             }
             
@@ -2681,15 +1927,15 @@ namespace ExcelAddInEquipmentDatabase {
             public long MAXIMUM_CARDINALITY {
                 get {
                     try {
-                        return ((long)(this[this.tableStoredProcedures.MAXIMUM_CARDINALITYColumn]));
+                        return ((long)(this[this.tableStoredProceduresxxx.MAXIMUM_CARDINALITYColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'MAXIMUM_CARDINALITY\' in table \'StoredProcedures\' is DBNull." +
-                                "", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'MAXIMUM_CARDINALITY\' in table \'StoredProceduresxxx\' is DBNu" +
+                                "ll.", e);
                     }
                 }
                 set {
-                    this[this.tableStoredProcedures.MAXIMUM_CARDINALITYColumn] = value;
+                    this[this.tableStoredProceduresxxx.MAXIMUM_CARDINALITYColumn] = value;
                 }
             }
             
@@ -2698,14 +1944,14 @@ namespace ExcelAddInEquipmentDatabase {
             public string DTD_IDENTIFIER {
                 get {
                     try {
-                        return ((string)(this[this.tableStoredProcedures.DTD_IDENTIFIERColumn]));
+                        return ((string)(this[this.tableStoredProceduresxxx.DTD_IDENTIFIERColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'DTD_IDENTIFIER\' in table \'StoredProcedures\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'DTD_IDENTIFIER\' in table \'StoredProceduresxxx\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableStoredProcedures.DTD_IDENTIFIERColumn] = value;
+                    this[this.tableStoredProceduresxxx.DTD_IDENTIFIERColumn] = value;
                 }
             }
             
@@ -2714,14 +1960,14 @@ namespace ExcelAddInEquipmentDatabase {
             public string ROUTINE_BODY {
                 get {
                     try {
-                        return ((string)(this[this.tableStoredProcedures.ROUTINE_BODYColumn]));
+                        return ((string)(this[this.tableStoredProceduresxxx.ROUTINE_BODYColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'ROUTINE_BODY\' in table \'StoredProcedures\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'ROUTINE_BODY\' in table \'StoredProceduresxxx\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableStoredProcedures.ROUTINE_BODYColumn] = value;
+                    this[this.tableStoredProceduresxxx.ROUTINE_BODYColumn] = value;
                 }
             }
             
@@ -2730,14 +1976,15 @@ namespace ExcelAddInEquipmentDatabase {
             public string ROUTINE_DEFINITION {
                 get {
                     try {
-                        return ((string)(this[this.tableStoredProcedures.ROUTINE_DEFINITIONColumn]));
+                        return ((string)(this[this.tableStoredProceduresxxx.ROUTINE_DEFINITIONColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'ROUTINE_DEFINITION\' in table \'StoredProcedures\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'ROUTINE_DEFINITION\' in table \'StoredProceduresxxx\' is DBNul" +
+                                "l.", e);
                     }
                 }
                 set {
-                    this[this.tableStoredProcedures.ROUTINE_DEFINITIONColumn] = value;
+                    this[this.tableStoredProceduresxxx.ROUTINE_DEFINITIONColumn] = value;
                 }
             }
             
@@ -2746,14 +1993,14 @@ namespace ExcelAddInEquipmentDatabase {
             public string EXTERNAL_NAME {
                 get {
                     try {
-                        return ((string)(this[this.tableStoredProcedures.EXTERNAL_NAMEColumn]));
+                        return ((string)(this[this.tableStoredProceduresxxx.EXTERNAL_NAMEColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'EXTERNAL_NAME\' in table \'StoredProcedures\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'EXTERNAL_NAME\' in table \'StoredProceduresxxx\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableStoredProcedures.EXTERNAL_NAMEColumn] = value;
+                    this[this.tableStoredProceduresxxx.EXTERNAL_NAMEColumn] = value;
                 }
             }
             
@@ -2762,14 +2009,15 @@ namespace ExcelAddInEquipmentDatabase {
             public string EXTERNAL_LANGUAGE {
                 get {
                     try {
-                        return ((string)(this[this.tableStoredProcedures.EXTERNAL_LANGUAGEColumn]));
+                        return ((string)(this[this.tableStoredProceduresxxx.EXTERNAL_LANGUAGEColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'EXTERNAL_LANGUAGE\' in table \'StoredProcedures\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'EXTERNAL_LANGUAGE\' in table \'StoredProceduresxxx\' is DBNull" +
+                                ".", e);
                     }
                 }
                 set {
-                    this[this.tableStoredProcedures.EXTERNAL_LANGUAGEColumn] = value;
+                    this[this.tableStoredProceduresxxx.EXTERNAL_LANGUAGEColumn] = value;
                 }
             }
             
@@ -2778,14 +2026,14 @@ namespace ExcelAddInEquipmentDatabase {
             public string PARAMETER_STYLE {
                 get {
                     try {
-                        return ((string)(this[this.tableStoredProcedures.PARAMETER_STYLEColumn]));
+                        return ((string)(this[this.tableStoredProceduresxxx.PARAMETER_STYLEColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'PARAMETER_STYLE\' in table \'StoredProcedures\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'PARAMETER_STYLE\' in table \'StoredProceduresxxx\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableStoredProcedures.PARAMETER_STYLEColumn] = value;
+                    this[this.tableStoredProceduresxxx.PARAMETER_STYLEColumn] = value;
                 }
             }
             
@@ -2794,14 +2042,15 @@ namespace ExcelAddInEquipmentDatabase {
             public string IS_DETERMINISTIC {
                 get {
                     try {
-                        return ((string)(this[this.tableStoredProcedures.IS_DETERMINISTICColumn]));
+                        return ((string)(this[this.tableStoredProceduresxxx.IS_DETERMINISTICColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'IS_DETERMINISTIC\' in table \'StoredProcedures\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'IS_DETERMINISTIC\' in table \'StoredProceduresxxx\' is DBNull." +
+                                "", e);
                     }
                 }
                 set {
-                    this[this.tableStoredProcedures.IS_DETERMINISTICColumn] = value;
+                    this[this.tableStoredProceduresxxx.IS_DETERMINISTICColumn] = value;
                 }
             }
             
@@ -2810,14 +2059,14 @@ namespace ExcelAddInEquipmentDatabase {
             public string SQL_DATA_ACCESS {
                 get {
                     try {
-                        return ((string)(this[this.tableStoredProcedures.SQL_DATA_ACCESSColumn]));
+                        return ((string)(this[this.tableStoredProceduresxxx.SQL_DATA_ACCESSColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'SQL_DATA_ACCESS\' in table \'StoredProcedures\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'SQL_DATA_ACCESS\' in table \'StoredProceduresxxx\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableStoredProcedures.SQL_DATA_ACCESSColumn] = value;
+                    this[this.tableStoredProceduresxxx.SQL_DATA_ACCESSColumn] = value;
                 }
             }
             
@@ -2826,14 +2075,14 @@ namespace ExcelAddInEquipmentDatabase {
             public string IS_NULL_CALL {
                 get {
                     try {
-                        return ((string)(this[this.tableStoredProcedures.IS_NULL_CALLColumn]));
+                        return ((string)(this[this.tableStoredProceduresxxx.IS_NULL_CALLColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'IS_NULL_CALL\' in table \'StoredProcedures\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'IS_NULL_CALL\' in table \'StoredProceduresxxx\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableStoredProcedures.IS_NULL_CALLColumn] = value;
+                    this[this.tableStoredProceduresxxx.IS_NULL_CALLColumn] = value;
                 }
             }
             
@@ -2842,14 +2091,14 @@ namespace ExcelAddInEquipmentDatabase {
             public string SQL_PATH {
                 get {
                     try {
-                        return ((string)(this[this.tableStoredProcedures.SQL_PATHColumn]));
+                        return ((string)(this[this.tableStoredProceduresxxx.SQL_PATHColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'SQL_PATH\' in table \'StoredProcedures\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'SQL_PATH\' in table \'StoredProceduresxxx\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableStoredProcedures.SQL_PATHColumn] = value;
+                    this[this.tableStoredProceduresxxx.SQL_PATHColumn] = value;
                 }
             }
             
@@ -2858,15 +2107,15 @@ namespace ExcelAddInEquipmentDatabase {
             public string SCHEMA_LEVEL_ROUTINE {
                 get {
                     try {
-                        return ((string)(this[this.tableStoredProcedures.SCHEMA_LEVEL_ROUTINEColumn]));
+                        return ((string)(this[this.tableStoredProceduresxxx.SCHEMA_LEVEL_ROUTINEColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'SCHEMA_LEVEL_ROUTINE\' in table \'StoredProcedures\' is DBNull" +
-                                ".", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'SCHEMA_LEVEL_ROUTINE\' in table \'StoredProceduresxxx\' is DBN" +
+                                "ull.", e);
                     }
                 }
                 set {
-                    this[this.tableStoredProcedures.SCHEMA_LEVEL_ROUTINEColumn] = value;
+                    this[this.tableStoredProceduresxxx.SCHEMA_LEVEL_ROUTINEColumn] = value;
                 }
             }
             
@@ -2875,15 +2124,15 @@ namespace ExcelAddInEquipmentDatabase {
             public short MAX_DYNAMIC_RESULT_SETS {
                 get {
                     try {
-                        return ((short)(this[this.tableStoredProcedures.MAX_DYNAMIC_RESULT_SETSColumn]));
+                        return ((short)(this[this.tableStoredProceduresxxx.MAX_DYNAMIC_RESULT_SETSColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'MAX_DYNAMIC_RESULT_SETS\' in table \'StoredProcedures\' is DBN" +
-                                "ull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'MAX_DYNAMIC_RESULT_SETS\' in table \'StoredProceduresxxx\' is " +
+                                "DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableStoredProcedures.MAX_DYNAMIC_RESULT_SETSColumn] = value;
+                    this[this.tableStoredProceduresxxx.MAX_DYNAMIC_RESULT_SETSColumn] = value;
                 }
             }
             
@@ -2892,15 +2141,15 @@ namespace ExcelAddInEquipmentDatabase {
             public string IS_USER_DEFINED_CAST {
                 get {
                     try {
-                        return ((string)(this[this.tableStoredProcedures.IS_USER_DEFINED_CASTColumn]));
+                        return ((string)(this[this.tableStoredProceduresxxx.IS_USER_DEFINED_CASTColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'IS_USER_DEFINED_CAST\' in table \'StoredProcedures\' is DBNull" +
-                                ".", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'IS_USER_DEFINED_CAST\' in table \'StoredProceduresxxx\' is DBN" +
+                                "ull.", e);
                     }
                 }
                 set {
-                    this[this.tableStoredProcedures.IS_USER_DEFINED_CASTColumn] = value;
+                    this[this.tableStoredProceduresxxx.IS_USER_DEFINED_CASTColumn] = value;
                 }
             }
             
@@ -2909,15 +2158,15 @@ namespace ExcelAddInEquipmentDatabase {
             public string IS_IMPLICITLY_INVOCABLE {
                 get {
                     try {
-                        return ((string)(this[this.tableStoredProcedures.IS_IMPLICITLY_INVOCABLEColumn]));
+                        return ((string)(this[this.tableStoredProceduresxxx.IS_IMPLICITLY_INVOCABLEColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'IS_IMPLICITLY_INVOCABLE\' in table \'StoredProcedures\' is DBN" +
-                                "ull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'IS_IMPLICITLY_INVOCABLE\' in table \'StoredProceduresxxx\' is " +
+                                "DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableStoredProcedures.IS_IMPLICITLY_INVOCABLEColumn] = value;
+                    this[this.tableStoredProceduresxxx.IS_IMPLICITLY_INVOCABLEColumn] = value;
                 }
             }
             
@@ -2925,10 +2174,10 @@ namespace ExcelAddInEquipmentDatabase {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public System.DateTime CREATED {
                 get {
-                    return ((global::System.DateTime)(this[this.tableStoredProcedures.CREATEDColumn]));
+                    return ((global::System.DateTime)(this[this.tableStoredProceduresxxx.CREATEDColumn]));
                 }
                 set {
-                    this[this.tableStoredProcedures.CREATEDColumn] = value;
+                    this[this.tableStoredProceduresxxx.CREATEDColumn] = value;
                 }
             }
             
@@ -2936,964 +2185,575 @@ namespace ExcelAddInEquipmentDatabase {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public System.DateTime LAST_ALTERED {
                 get {
-                    return ((global::System.DateTime)(this[this.tableStoredProcedures.LAST_ALTEREDColumn]));
+                    return ((global::System.DateTime)(this[this.tableStoredProceduresxxx.LAST_ALTEREDColumn]));
                 }
                 set {
-                    this[this.tableStoredProcedures.LAST_ALTEREDColumn] = value;
+                    this[this.tableStoredProceduresxxx.LAST_ALTEREDColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsSPECIFIC_CATALOGNull() {
-                return this.IsNull(this.tableStoredProcedures.SPECIFIC_CATALOGColumn);
+                return this.IsNull(this.tableStoredProceduresxxx.SPECIFIC_CATALOGColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetSPECIFIC_CATALOGNull() {
-                this[this.tableStoredProcedures.SPECIFIC_CATALOGColumn] = global::System.Convert.DBNull;
+                this[this.tableStoredProceduresxxx.SPECIFIC_CATALOGColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsSPECIFIC_SCHEMANull() {
-                return this.IsNull(this.tableStoredProcedures.SPECIFIC_SCHEMAColumn);
+                return this.IsNull(this.tableStoredProceduresxxx.SPECIFIC_SCHEMAColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetSPECIFIC_SCHEMANull() {
-                this[this.tableStoredProcedures.SPECIFIC_SCHEMAColumn] = global::System.Convert.DBNull;
+                this[this.tableStoredProceduresxxx.SPECIFIC_SCHEMAColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsROUTINE_CATALOGNull() {
-                return this.IsNull(this.tableStoredProcedures.ROUTINE_CATALOGColumn);
+                return this.IsNull(this.tableStoredProceduresxxx.ROUTINE_CATALOGColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetROUTINE_CATALOGNull() {
-                this[this.tableStoredProcedures.ROUTINE_CATALOGColumn] = global::System.Convert.DBNull;
+                this[this.tableStoredProceduresxxx.ROUTINE_CATALOGColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsROUTINE_SCHEMANull() {
-                return this.IsNull(this.tableStoredProcedures.ROUTINE_SCHEMAColumn);
+                return this.IsNull(this.tableStoredProceduresxxx.ROUTINE_SCHEMAColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetROUTINE_SCHEMANull() {
-                this[this.tableStoredProcedures.ROUTINE_SCHEMAColumn] = global::System.Convert.DBNull;
+                this[this.tableStoredProceduresxxx.ROUTINE_SCHEMAColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsROUTINE_TYPENull() {
-                return this.IsNull(this.tableStoredProcedures.ROUTINE_TYPEColumn);
+                return this.IsNull(this.tableStoredProceduresxxx.ROUTINE_TYPEColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetROUTINE_TYPENull() {
-                this[this.tableStoredProcedures.ROUTINE_TYPEColumn] = global::System.Convert.DBNull;
+                this[this.tableStoredProceduresxxx.ROUTINE_TYPEColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsMODULE_CATALOGNull() {
-                return this.IsNull(this.tableStoredProcedures.MODULE_CATALOGColumn);
+                return this.IsNull(this.tableStoredProceduresxxx.MODULE_CATALOGColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetMODULE_CATALOGNull() {
-                this[this.tableStoredProcedures.MODULE_CATALOGColumn] = global::System.Convert.DBNull;
+                this[this.tableStoredProceduresxxx.MODULE_CATALOGColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsMODULE_SCHEMANull() {
-                return this.IsNull(this.tableStoredProcedures.MODULE_SCHEMAColumn);
+                return this.IsNull(this.tableStoredProceduresxxx.MODULE_SCHEMAColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetMODULE_SCHEMANull() {
-                this[this.tableStoredProcedures.MODULE_SCHEMAColumn] = global::System.Convert.DBNull;
+                this[this.tableStoredProceduresxxx.MODULE_SCHEMAColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsMODULE_NAMENull() {
-                return this.IsNull(this.tableStoredProcedures.MODULE_NAMEColumn);
+                return this.IsNull(this.tableStoredProceduresxxx.MODULE_NAMEColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetMODULE_NAMENull() {
-                this[this.tableStoredProcedures.MODULE_NAMEColumn] = global::System.Convert.DBNull;
+                this[this.tableStoredProceduresxxx.MODULE_NAMEColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsUDT_CATALOGNull() {
-                return this.IsNull(this.tableStoredProcedures.UDT_CATALOGColumn);
+                return this.IsNull(this.tableStoredProceduresxxx.UDT_CATALOGColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetUDT_CATALOGNull() {
-                this[this.tableStoredProcedures.UDT_CATALOGColumn] = global::System.Convert.DBNull;
+                this[this.tableStoredProceduresxxx.UDT_CATALOGColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsUDT_SCHEMANull() {
-                return this.IsNull(this.tableStoredProcedures.UDT_SCHEMAColumn);
+                return this.IsNull(this.tableStoredProceduresxxx.UDT_SCHEMAColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetUDT_SCHEMANull() {
-                this[this.tableStoredProcedures.UDT_SCHEMAColumn] = global::System.Convert.DBNull;
+                this[this.tableStoredProceduresxxx.UDT_SCHEMAColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsUDT_NAMENull() {
-                return this.IsNull(this.tableStoredProcedures.UDT_NAMEColumn);
+                return this.IsNull(this.tableStoredProceduresxxx.UDT_NAMEColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetUDT_NAMENull() {
-                this[this.tableStoredProcedures.UDT_NAMEColumn] = global::System.Convert.DBNull;
+                this[this.tableStoredProceduresxxx.UDT_NAMEColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsDATA_TYPENull() {
-                return this.IsNull(this.tableStoredProcedures.DATA_TYPEColumn);
+                return this.IsNull(this.tableStoredProceduresxxx.DATA_TYPEColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetDATA_TYPENull() {
-                this[this.tableStoredProcedures.DATA_TYPEColumn] = global::System.Convert.DBNull;
+                this[this.tableStoredProceduresxxx.DATA_TYPEColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsCHARACTER_MAXIMUM_LENGTHNull() {
-                return this.IsNull(this.tableStoredProcedures.CHARACTER_MAXIMUM_LENGTHColumn);
+                return this.IsNull(this.tableStoredProceduresxxx.CHARACTER_MAXIMUM_LENGTHColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetCHARACTER_MAXIMUM_LENGTHNull() {
-                this[this.tableStoredProcedures.CHARACTER_MAXIMUM_LENGTHColumn] = global::System.Convert.DBNull;
+                this[this.tableStoredProceduresxxx.CHARACTER_MAXIMUM_LENGTHColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsCHARACTER_OCTET_LENGTHNull() {
-                return this.IsNull(this.tableStoredProcedures.CHARACTER_OCTET_LENGTHColumn);
+                return this.IsNull(this.tableStoredProceduresxxx.CHARACTER_OCTET_LENGTHColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetCHARACTER_OCTET_LENGTHNull() {
-                this[this.tableStoredProcedures.CHARACTER_OCTET_LENGTHColumn] = global::System.Convert.DBNull;
+                this[this.tableStoredProceduresxxx.CHARACTER_OCTET_LENGTHColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsCOLLATION_CATALOGNull() {
-                return this.IsNull(this.tableStoredProcedures.COLLATION_CATALOGColumn);
+                return this.IsNull(this.tableStoredProceduresxxx.COLLATION_CATALOGColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetCOLLATION_CATALOGNull() {
-                this[this.tableStoredProcedures.COLLATION_CATALOGColumn] = global::System.Convert.DBNull;
+                this[this.tableStoredProceduresxxx.COLLATION_CATALOGColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsCOLLATION_SCHEMANull() {
-                return this.IsNull(this.tableStoredProcedures.COLLATION_SCHEMAColumn);
+                return this.IsNull(this.tableStoredProceduresxxx.COLLATION_SCHEMAColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetCOLLATION_SCHEMANull() {
-                this[this.tableStoredProcedures.COLLATION_SCHEMAColumn] = global::System.Convert.DBNull;
+                this[this.tableStoredProceduresxxx.COLLATION_SCHEMAColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsCOLLATION_NAMENull() {
-                return this.IsNull(this.tableStoredProcedures.COLLATION_NAMEColumn);
+                return this.IsNull(this.tableStoredProceduresxxx.COLLATION_NAMEColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetCOLLATION_NAMENull() {
-                this[this.tableStoredProcedures.COLLATION_NAMEColumn] = global::System.Convert.DBNull;
+                this[this.tableStoredProceduresxxx.COLLATION_NAMEColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsCHARACTER_SET_CATALOGNull() {
-                return this.IsNull(this.tableStoredProcedures.CHARACTER_SET_CATALOGColumn);
+                return this.IsNull(this.tableStoredProceduresxxx.CHARACTER_SET_CATALOGColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetCHARACTER_SET_CATALOGNull() {
-                this[this.tableStoredProcedures.CHARACTER_SET_CATALOGColumn] = global::System.Convert.DBNull;
+                this[this.tableStoredProceduresxxx.CHARACTER_SET_CATALOGColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsCHARACTER_SET_SCHEMANull() {
-                return this.IsNull(this.tableStoredProcedures.CHARACTER_SET_SCHEMAColumn);
+                return this.IsNull(this.tableStoredProceduresxxx.CHARACTER_SET_SCHEMAColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetCHARACTER_SET_SCHEMANull() {
-                this[this.tableStoredProcedures.CHARACTER_SET_SCHEMAColumn] = global::System.Convert.DBNull;
+                this[this.tableStoredProceduresxxx.CHARACTER_SET_SCHEMAColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsCHARACTER_SET_NAMENull() {
-                return this.IsNull(this.tableStoredProcedures.CHARACTER_SET_NAMEColumn);
+                return this.IsNull(this.tableStoredProceduresxxx.CHARACTER_SET_NAMEColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetCHARACTER_SET_NAMENull() {
-                this[this.tableStoredProcedures.CHARACTER_SET_NAMEColumn] = global::System.Convert.DBNull;
+                this[this.tableStoredProceduresxxx.CHARACTER_SET_NAMEColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsNUMERIC_PRECISIONNull() {
-                return this.IsNull(this.tableStoredProcedures.NUMERIC_PRECISIONColumn);
+                return this.IsNull(this.tableStoredProceduresxxx.NUMERIC_PRECISIONColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetNUMERIC_PRECISIONNull() {
-                this[this.tableStoredProcedures.NUMERIC_PRECISIONColumn] = global::System.Convert.DBNull;
+                this[this.tableStoredProceduresxxx.NUMERIC_PRECISIONColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsNUMERIC_PRECISION_RADIXNull() {
-                return this.IsNull(this.tableStoredProcedures.NUMERIC_PRECISION_RADIXColumn);
+                return this.IsNull(this.tableStoredProceduresxxx.NUMERIC_PRECISION_RADIXColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetNUMERIC_PRECISION_RADIXNull() {
-                this[this.tableStoredProcedures.NUMERIC_PRECISION_RADIXColumn] = global::System.Convert.DBNull;
+                this[this.tableStoredProceduresxxx.NUMERIC_PRECISION_RADIXColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsNUMERIC_SCALENull() {
-                return this.IsNull(this.tableStoredProcedures.NUMERIC_SCALEColumn);
+                return this.IsNull(this.tableStoredProceduresxxx.NUMERIC_SCALEColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetNUMERIC_SCALENull() {
-                this[this.tableStoredProcedures.NUMERIC_SCALEColumn] = global::System.Convert.DBNull;
+                this[this.tableStoredProceduresxxx.NUMERIC_SCALEColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsDATETIME_PRECISIONNull() {
-                return this.IsNull(this.tableStoredProcedures.DATETIME_PRECISIONColumn);
+                return this.IsNull(this.tableStoredProceduresxxx.DATETIME_PRECISIONColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetDATETIME_PRECISIONNull() {
-                this[this.tableStoredProcedures.DATETIME_PRECISIONColumn] = global::System.Convert.DBNull;
+                this[this.tableStoredProceduresxxx.DATETIME_PRECISIONColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsINTERVAL_TYPENull() {
-                return this.IsNull(this.tableStoredProcedures.INTERVAL_TYPEColumn);
+                return this.IsNull(this.tableStoredProceduresxxx.INTERVAL_TYPEColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetINTERVAL_TYPENull() {
-                this[this.tableStoredProcedures.INTERVAL_TYPEColumn] = global::System.Convert.DBNull;
+                this[this.tableStoredProceduresxxx.INTERVAL_TYPEColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsINTERVAL_PRECISIONNull() {
-                return this.IsNull(this.tableStoredProcedures.INTERVAL_PRECISIONColumn);
+                return this.IsNull(this.tableStoredProceduresxxx.INTERVAL_PRECISIONColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetINTERVAL_PRECISIONNull() {
-                this[this.tableStoredProcedures.INTERVAL_PRECISIONColumn] = global::System.Convert.DBNull;
+                this[this.tableStoredProceduresxxx.INTERVAL_PRECISIONColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsTYPE_UDT_CATALOGNull() {
-                return this.IsNull(this.tableStoredProcedures.TYPE_UDT_CATALOGColumn);
+                return this.IsNull(this.tableStoredProceduresxxx.TYPE_UDT_CATALOGColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetTYPE_UDT_CATALOGNull() {
-                this[this.tableStoredProcedures.TYPE_UDT_CATALOGColumn] = global::System.Convert.DBNull;
+                this[this.tableStoredProceduresxxx.TYPE_UDT_CATALOGColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsTYPE_UDT_SCHEMANull() {
-                return this.IsNull(this.tableStoredProcedures.TYPE_UDT_SCHEMAColumn);
+                return this.IsNull(this.tableStoredProceduresxxx.TYPE_UDT_SCHEMAColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetTYPE_UDT_SCHEMANull() {
-                this[this.tableStoredProcedures.TYPE_UDT_SCHEMAColumn] = global::System.Convert.DBNull;
+                this[this.tableStoredProceduresxxx.TYPE_UDT_SCHEMAColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsTYPE_UDT_NAMENull() {
-                return this.IsNull(this.tableStoredProcedures.TYPE_UDT_NAMEColumn);
+                return this.IsNull(this.tableStoredProceduresxxx.TYPE_UDT_NAMEColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetTYPE_UDT_NAMENull() {
-                this[this.tableStoredProcedures.TYPE_UDT_NAMEColumn] = global::System.Convert.DBNull;
+                this[this.tableStoredProceduresxxx.TYPE_UDT_NAMEColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsSCOPE_CATALOGNull() {
-                return this.IsNull(this.tableStoredProcedures.SCOPE_CATALOGColumn);
+                return this.IsNull(this.tableStoredProceduresxxx.SCOPE_CATALOGColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetSCOPE_CATALOGNull() {
-                this[this.tableStoredProcedures.SCOPE_CATALOGColumn] = global::System.Convert.DBNull;
+                this[this.tableStoredProceduresxxx.SCOPE_CATALOGColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsSCOPE_SCHEMANull() {
-                return this.IsNull(this.tableStoredProcedures.SCOPE_SCHEMAColumn);
+                return this.IsNull(this.tableStoredProceduresxxx.SCOPE_SCHEMAColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetSCOPE_SCHEMANull() {
-                this[this.tableStoredProcedures.SCOPE_SCHEMAColumn] = global::System.Convert.DBNull;
+                this[this.tableStoredProceduresxxx.SCOPE_SCHEMAColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsSCOPE_NAMENull() {
-                return this.IsNull(this.tableStoredProcedures.SCOPE_NAMEColumn);
+                return this.IsNull(this.tableStoredProceduresxxx.SCOPE_NAMEColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetSCOPE_NAMENull() {
-                this[this.tableStoredProcedures.SCOPE_NAMEColumn] = global::System.Convert.DBNull;
+                this[this.tableStoredProceduresxxx.SCOPE_NAMEColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsMAXIMUM_CARDINALITYNull() {
-                return this.IsNull(this.tableStoredProcedures.MAXIMUM_CARDINALITYColumn);
+                return this.IsNull(this.tableStoredProceduresxxx.MAXIMUM_CARDINALITYColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetMAXIMUM_CARDINALITYNull() {
-                this[this.tableStoredProcedures.MAXIMUM_CARDINALITYColumn] = global::System.Convert.DBNull;
+                this[this.tableStoredProceduresxxx.MAXIMUM_CARDINALITYColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsDTD_IDENTIFIERNull() {
-                return this.IsNull(this.tableStoredProcedures.DTD_IDENTIFIERColumn);
+                return this.IsNull(this.tableStoredProceduresxxx.DTD_IDENTIFIERColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetDTD_IDENTIFIERNull() {
-                this[this.tableStoredProcedures.DTD_IDENTIFIERColumn] = global::System.Convert.DBNull;
+                this[this.tableStoredProceduresxxx.DTD_IDENTIFIERColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsROUTINE_BODYNull() {
-                return this.IsNull(this.tableStoredProcedures.ROUTINE_BODYColumn);
+                return this.IsNull(this.tableStoredProceduresxxx.ROUTINE_BODYColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetROUTINE_BODYNull() {
-                this[this.tableStoredProcedures.ROUTINE_BODYColumn] = global::System.Convert.DBNull;
+                this[this.tableStoredProceduresxxx.ROUTINE_BODYColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsROUTINE_DEFINITIONNull() {
-                return this.IsNull(this.tableStoredProcedures.ROUTINE_DEFINITIONColumn);
+                return this.IsNull(this.tableStoredProceduresxxx.ROUTINE_DEFINITIONColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetROUTINE_DEFINITIONNull() {
-                this[this.tableStoredProcedures.ROUTINE_DEFINITIONColumn] = global::System.Convert.DBNull;
+                this[this.tableStoredProceduresxxx.ROUTINE_DEFINITIONColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsEXTERNAL_NAMENull() {
-                return this.IsNull(this.tableStoredProcedures.EXTERNAL_NAMEColumn);
+                return this.IsNull(this.tableStoredProceduresxxx.EXTERNAL_NAMEColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetEXTERNAL_NAMENull() {
-                this[this.tableStoredProcedures.EXTERNAL_NAMEColumn] = global::System.Convert.DBNull;
+                this[this.tableStoredProceduresxxx.EXTERNAL_NAMEColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsEXTERNAL_LANGUAGENull() {
-                return this.IsNull(this.tableStoredProcedures.EXTERNAL_LANGUAGEColumn);
+                return this.IsNull(this.tableStoredProceduresxxx.EXTERNAL_LANGUAGEColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetEXTERNAL_LANGUAGENull() {
-                this[this.tableStoredProcedures.EXTERNAL_LANGUAGEColumn] = global::System.Convert.DBNull;
+                this[this.tableStoredProceduresxxx.EXTERNAL_LANGUAGEColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsPARAMETER_STYLENull() {
-                return this.IsNull(this.tableStoredProcedures.PARAMETER_STYLEColumn);
+                return this.IsNull(this.tableStoredProceduresxxx.PARAMETER_STYLEColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetPARAMETER_STYLENull() {
-                this[this.tableStoredProcedures.PARAMETER_STYLEColumn] = global::System.Convert.DBNull;
+                this[this.tableStoredProceduresxxx.PARAMETER_STYLEColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsIS_DETERMINISTICNull() {
-                return this.IsNull(this.tableStoredProcedures.IS_DETERMINISTICColumn);
+                return this.IsNull(this.tableStoredProceduresxxx.IS_DETERMINISTICColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetIS_DETERMINISTICNull() {
-                this[this.tableStoredProcedures.IS_DETERMINISTICColumn] = global::System.Convert.DBNull;
+                this[this.tableStoredProceduresxxx.IS_DETERMINISTICColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsSQL_DATA_ACCESSNull() {
-                return this.IsNull(this.tableStoredProcedures.SQL_DATA_ACCESSColumn);
+                return this.IsNull(this.tableStoredProceduresxxx.SQL_DATA_ACCESSColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetSQL_DATA_ACCESSNull() {
-                this[this.tableStoredProcedures.SQL_DATA_ACCESSColumn] = global::System.Convert.DBNull;
+                this[this.tableStoredProceduresxxx.SQL_DATA_ACCESSColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsIS_NULL_CALLNull() {
-                return this.IsNull(this.tableStoredProcedures.IS_NULL_CALLColumn);
+                return this.IsNull(this.tableStoredProceduresxxx.IS_NULL_CALLColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetIS_NULL_CALLNull() {
-                this[this.tableStoredProcedures.IS_NULL_CALLColumn] = global::System.Convert.DBNull;
+                this[this.tableStoredProceduresxxx.IS_NULL_CALLColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsSQL_PATHNull() {
-                return this.IsNull(this.tableStoredProcedures.SQL_PATHColumn);
+                return this.IsNull(this.tableStoredProceduresxxx.SQL_PATHColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetSQL_PATHNull() {
-                this[this.tableStoredProcedures.SQL_PATHColumn] = global::System.Convert.DBNull;
+                this[this.tableStoredProceduresxxx.SQL_PATHColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsSCHEMA_LEVEL_ROUTINENull() {
-                return this.IsNull(this.tableStoredProcedures.SCHEMA_LEVEL_ROUTINEColumn);
+                return this.IsNull(this.tableStoredProceduresxxx.SCHEMA_LEVEL_ROUTINEColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetSCHEMA_LEVEL_ROUTINENull() {
-                this[this.tableStoredProcedures.SCHEMA_LEVEL_ROUTINEColumn] = global::System.Convert.DBNull;
+                this[this.tableStoredProceduresxxx.SCHEMA_LEVEL_ROUTINEColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsMAX_DYNAMIC_RESULT_SETSNull() {
-                return this.IsNull(this.tableStoredProcedures.MAX_DYNAMIC_RESULT_SETSColumn);
+                return this.IsNull(this.tableStoredProceduresxxx.MAX_DYNAMIC_RESULT_SETSColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetMAX_DYNAMIC_RESULT_SETSNull() {
-                this[this.tableStoredProcedures.MAX_DYNAMIC_RESULT_SETSColumn] = global::System.Convert.DBNull;
+                this[this.tableStoredProceduresxxx.MAX_DYNAMIC_RESULT_SETSColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsIS_USER_DEFINED_CASTNull() {
-                return this.IsNull(this.tableStoredProcedures.IS_USER_DEFINED_CASTColumn);
+                return this.IsNull(this.tableStoredProceduresxxx.IS_USER_DEFINED_CASTColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetIS_USER_DEFINED_CASTNull() {
-                this[this.tableStoredProcedures.IS_USER_DEFINED_CASTColumn] = global::System.Convert.DBNull;
+                this[this.tableStoredProceduresxxx.IS_USER_DEFINED_CASTColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsIS_IMPLICITLY_INVOCABLENull() {
-                return this.IsNull(this.tableStoredProcedures.IS_IMPLICITLY_INVOCABLEColumn);
+                return this.IsNull(this.tableStoredProceduresxxx.IS_IMPLICITLY_INVOCABLEColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetIS_IMPLICITLY_INVOCABLENull() {
-                this[this.tableStoredProcedures.IS_IMPLICITLY_INVOCABLEColumn] = global::System.Convert.DBNull;
-            }
-        }
-        
-        /// <summary>
-        ///Represents strongly named DataRow class.
-        ///</summary>
-        public partial class stoC_LogClassRulesRow : global::System.Data.DataRow {
-            
-            private stoC_LogClassRulesDataTable tablestoC_LogClassRules;
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            internal stoC_LogClassRulesRow(global::System.Data.DataRowBuilder rb) : 
-                    base(rb) {
-                this.tablestoC_LogClassRules = ((stoC_LogClassRulesDataTable)(this.Table));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public int id {
-                get {
-                    return ((int)(this[this.tablestoC_LogClassRules.idColumn]));
-                }
-                set {
-                    this[this.tablestoC_LogClassRules.idColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public int Err_start {
-                get {
-                    try {
-                        return ((int)(this[this.tablestoC_LogClassRules.Err_startColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Err_start\' in table \'stoC_LogClassRules\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablestoC_LogClassRules.Err_startColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public int Err_end {
-                get {
-                    try {
-                        return ((int)(this[this.tablestoC_LogClassRules.Err_endColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Err_end\' in table \'stoC_LogClassRules\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablestoC_LogClassRules.Err_endColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public string Err_text {
-                get {
-                    try {
-                        return ((string)(this[this.tablestoC_LogClassRules.Err_textColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Err_text\' in table \'stoC_LogClassRules\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablestoC_LogClassRules.Err_textColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public string I_comment {
-                get {
-                    try {
-                        return ((string)(this[this.tablestoC_LogClassRules.I_commentColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'I_comment\' in table \'stoC_LogClassRules\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablestoC_LogClassRules.I_commentColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public int c_ClassificationId {
-                get {
-                    try {
-                        return ((int)(this[this.tablestoC_LogClassRules.c_ClassificationIdColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'c_ClassificationId\' in table \'stoC_LogClassRules\' is DBNull" +
-                                ".", e);
-                    }
-                }
-                set {
-                    this[this.tablestoC_LogClassRules.c_ClassificationIdColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public int c_SubgroupId {
-                get {
-                    try {
-                        return ((int)(this[this.tablestoC_LogClassRules.c_SubgroupIdColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'c_SubgroupId\' in table \'stoC_LogClassRules\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablestoC_LogClassRules.c_SubgroupIdColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IsErr_startNull() {
-                return this.IsNull(this.tablestoC_LogClassRules.Err_startColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetErr_startNull() {
-                this[this.tablestoC_LogClassRules.Err_startColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IsErr_endNull() {
-                return this.IsNull(this.tablestoC_LogClassRules.Err_endColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetErr_endNull() {
-                this[this.tablestoC_LogClassRules.Err_endColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IsErr_textNull() {
-                return this.IsNull(this.tablestoC_LogClassRules.Err_textColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetErr_textNull() {
-                this[this.tablestoC_LogClassRules.Err_textColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IsI_commentNull() {
-                return this.IsNull(this.tablestoC_LogClassRules.I_commentColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetI_commentNull() {
-                this[this.tablestoC_LogClassRules.I_commentColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool Isc_ClassificationIdNull() {
-                return this.IsNull(this.tablestoC_LogClassRules.c_ClassificationIdColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void Setc_ClassificationIdNull() {
-                this[this.tablestoC_LogClassRules.c_ClassificationIdColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool Isc_SubgroupIdNull() {
-                return this.IsNull(this.tablestoC_LogClassRules.c_SubgroupIdColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void Setc_SubgroupIdNull() {
-                this[this.tablestoC_LogClassRules.c_SubgroupIdColumn] = global::System.Convert.DBNull;
-            }
-        }
-        
-        /// <summary>
-        ///Represents strongly named DataRow class.
-        ///</summary>
-        public partial class stoL_errorRow : global::System.Data.DataRow {
-            
-            private stoL_errorDataTable tablestoL_error;
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            internal stoL_errorRow(global::System.Data.DataRowBuilder rb) : 
-                    base(rb) {
-                this.tablestoL_error = ((stoL_errorDataTable)(this.Table));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public int id {
-                get {
-                    return ((int)(this[this.tablestoL_error.idColumn]));
-                }
-                set {
-                    this[this.tablestoL_error.idColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public string SUBOBJECT {
-                get {
-                    try {
-                        return ((string)(this[this.tablestoL_error.SUBOBJECTColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'SUBOBJECT\' in table \'stoL_error\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablestoL_error.SUBOBJECTColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public string ALARMSEVERITY {
-                get {
-                    try {
-                        return ((string)(this[this.tablestoL_error.ALARMSEVERITYColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'ALARMSEVERITY\' in table \'stoL_error\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablestoL_error.ALARMSEVERITYColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public string ALARMCOMMENT {
-                get {
-                    try {
-                        return ((string)(this[this.tablestoL_error.ALARMCOMMENTColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'ALARMCOMMENT\' in table \'stoL_error\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablestoL_error.ALARMCOMMENTColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public string Classification {
-                get {
-                    try {
-                        return ((string)(this[this.tablestoL_error.ClassificationColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Classification\' in table \'stoL_error\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablestoL_error.ClassificationColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public string subgroup {
-                get {
-                    try {
-                        return ((string)(this[this.tablestoL_error.subgroupColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'subgroup\' in table \'stoL_error\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablestoL_error.subgroupColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public int c_RuleId {
-                get {
-                    try {
-                        return ((int)(this[this.tablestoL_error.c_RuleIdColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'c_RuleId\' in table \'stoL_error\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablestoL_error.c_RuleIdColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IsSUBOBJECTNull() {
-                return this.IsNull(this.tablestoL_error.SUBOBJECTColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetSUBOBJECTNull() {
-                this[this.tablestoL_error.SUBOBJECTColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IsALARMSEVERITYNull() {
-                return this.IsNull(this.tablestoL_error.ALARMSEVERITYColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetALARMSEVERITYNull() {
-                this[this.tablestoL_error.ALARMSEVERITYColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IsALARMCOMMENTNull() {
-                return this.IsNull(this.tablestoL_error.ALARMCOMMENTColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetALARMCOMMENTNull() {
-                this[this.tablestoL_error.ALARMCOMMENTColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IsClassificationNull() {
-                return this.IsNull(this.tablestoL_error.ClassificationColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetClassificationNull() {
-                this[this.tablestoL_error.ClassificationColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IssubgroupNull() {
-                return this.IsNull(this.tablestoL_error.subgroupColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetsubgroupNull() {
-                this[this.tablestoL_error.subgroupColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool Isc_RuleIdNull() {
-                return this.IsNull(this.tablestoL_error.c_RuleIdColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void Setc_RuleIdNull() {
-                this[this.tablestoL_error.c_RuleIdColumn] = global::System.Convert.DBNull;
+                this[this.tableStoredProceduresxxx.IS_IMPLICITLY_INVOCABLEColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -3901,90 +2761,22 @@ namespace ExcelAddInEquipmentDatabase {
         ///Row event argument class
         ///</summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        public class StoredProceduresRowChangeEvent : global::System.EventArgs {
+        public class StoredProceduresxxxRowChangeEvent : global::System.EventArgs {
             
-            private StoredProceduresRow eventRow;
+            private StoredProceduresxxxRow eventRow;
             
             private global::System.Data.DataRowAction eventAction;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public StoredProceduresRowChangeEvent(StoredProceduresRow row, global::System.Data.DataRowAction action) {
+            public StoredProceduresxxxRowChangeEvent(StoredProceduresxxxRow row, global::System.Data.DataRowAction action) {
                 this.eventRow = row;
                 this.eventAction = action;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public StoredProceduresRow Row {
-                get {
-                    return this.eventRow;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataRowAction Action {
-                get {
-                    return this.eventAction;
-                }
-            }
-        }
-        
-        /// <summary>
-        ///Row event argument class
-        ///</summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        public class stoC_LogClassRulesRowChangeEvent : global::System.EventArgs {
-            
-            private stoC_LogClassRulesRow eventRow;
-            
-            private global::System.Data.DataRowAction eventAction;
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public stoC_LogClassRulesRowChangeEvent(stoC_LogClassRulesRow row, global::System.Data.DataRowAction action) {
-                this.eventRow = row;
-                this.eventAction = action;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public stoC_LogClassRulesRow Row {
-                get {
-                    return this.eventRow;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataRowAction Action {
-                get {
-                    return this.eventAction;
-                }
-            }
-        }
-        
-        /// <summary>
-        ///Row event argument class
-        ///</summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        public class stoL_errorRowChangeEvent : global::System.EventArgs {
-            
-            private stoL_errorRow eventRow;
-            
-            private global::System.Data.DataRowAction eventAction;
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public stoL_errorRowChangeEvent(stoL_errorRow row, global::System.Data.DataRowAction action) {
-                this.eventRow = row;
-                this.eventAction = action;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public stoL_errorRow Row {
+            public StoredProceduresxxxRow Row {
                 get {
                     return this.eventRow;
                 }
@@ -4012,7 +2804,7 @@ namespace ExcelAddInEquipmentDatabase.applDataTableAdapters {
     [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
         ", Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-    public partial class StoredProceduresTableAdapter : global::System.ComponentModel.Component {
+    public partial class StoredProceduresxxxTableAdapter : global::System.ComponentModel.Component {
         
         private global::System.Data.SqlClient.SqlDataAdapter _adapter;
         
@@ -4026,7 +2818,7 @@ namespace ExcelAddInEquipmentDatabase.applDataTableAdapters {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        public StoredProceduresTableAdapter() {
+        public StoredProceduresxxxTableAdapter() {
             this.ClearBeforeFill = true;
         }
         
@@ -4123,7 +2915,7 @@ namespace ExcelAddInEquipmentDatabase.applDataTableAdapters {
             this._adapter = new global::System.Data.SqlClient.SqlDataAdapter();
             global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
             tableMapping.SourceTable = "Table";
-            tableMapping.DataSetTable = "StoredProcedures";
+            tableMapping.DataSetTable = "StoredProceduresxxx";
             tableMapping.ColumnMappings.Add("SPECIFIC_CATALOG", "SPECIFIC_CATALOG");
             tableMapping.ColumnMappings.Add("SPECIFIC_SCHEMA", "SPECIFIC_SCHEMA");
             tableMapping.ColumnMappings.Add("SPECIFIC_NAME", "SPECIFIC_NAME");
@@ -4200,7 +2992,7 @@ namespace ExcelAddInEquipmentDatabase.applDataTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(applData.StoredProceduresDataTable dataTable) {
+        public virtual int Fill(applData.StoredProceduresxxxDataTable dataTable) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
@@ -4213,577 +3005,11 @@ namespace ExcelAddInEquipmentDatabase.applDataTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual applData.StoredProceduresDataTable GetData() {
+        public virtual applData.StoredProceduresxxxDataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            applData.StoredProceduresDataTable dataTable = new applData.StoredProceduresDataTable();
+            applData.StoredProceduresxxxDataTable dataTable = new applData.StoredProceduresxxxDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
-        }
-    }
-    
-    /// <summary>
-    ///Represents the connection and commands used to retrieve and save data.
-    ///</summary>
-    [global::System.ComponentModel.DesignerCategoryAttribute("code")]
-    [global::System.ComponentModel.ToolboxItem(true)]
-    [global::System.ComponentModel.DataObjectAttribute(true)]
-    [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
-        ", Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
-    [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-    public partial class stoC_LogClassRulesTableAdapter : global::System.ComponentModel.Component {
-        
-        private global::System.Data.SqlClient.SqlDataAdapter _adapter;
-        
-        private global::System.Data.SqlClient.SqlConnection _connection;
-        
-        private global::System.Data.SqlClient.SqlTransaction _transaction;
-        
-        private global::System.Data.SqlClient.SqlCommand[] _commandCollection;
-        
-        private bool _clearBeforeFill;
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        public stoC_LogClassRulesTableAdapter() {
-            this.ClearBeforeFill = true;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        protected internal global::System.Data.SqlClient.SqlDataAdapter Adapter {
-            get {
-                if ((this._adapter == null)) {
-                    this.InitAdapter();
-                }
-                return this._adapter;
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        internal global::System.Data.SqlClient.SqlConnection Connection {
-            get {
-                if ((this._connection == null)) {
-                    this.InitConnection();
-                }
-                return this._connection;
-            }
-            set {
-                this._connection = value;
-                if ((this.Adapter.InsertCommand != null)) {
-                    this.Adapter.InsertCommand.Connection = value;
-                }
-                if ((this.Adapter.DeleteCommand != null)) {
-                    this.Adapter.DeleteCommand.Connection = value;
-                }
-                if ((this.Adapter.UpdateCommand != null)) {
-                    this.Adapter.UpdateCommand.Connection = value;
-                }
-                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
-                    if ((this.CommandCollection[i] != null)) {
-                        ((global::System.Data.SqlClient.SqlCommand)(this.CommandCollection[i])).Connection = value;
-                    }
-                }
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        internal global::System.Data.SqlClient.SqlTransaction Transaction {
-            get {
-                return this._transaction;
-            }
-            set {
-                this._transaction = value;
-                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
-                    this.CommandCollection[i].Transaction = this._transaction;
-                }
-                if (((this.Adapter != null) 
-                            && (this.Adapter.DeleteCommand != null))) {
-                    this.Adapter.DeleteCommand.Transaction = this._transaction;
-                }
-                if (((this.Adapter != null) 
-                            && (this.Adapter.InsertCommand != null))) {
-                    this.Adapter.InsertCommand.Transaction = this._transaction;
-                }
-                if (((this.Adapter != null) 
-                            && (this.Adapter.UpdateCommand != null))) {
-                    this.Adapter.UpdateCommand.Transaction = this._transaction;
-                }
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        protected global::System.Data.SqlClient.SqlCommand[] CommandCollection {
-            get {
-                if ((this._commandCollection == null)) {
-                    this.InitCommandCollection();
-                }
-                return this._commandCollection;
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        public bool ClearBeforeFill {
-            get {
-                return this._clearBeforeFill;
-            }
-            set {
-                this._clearBeforeFill = value;
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        private void InitAdapter() {
-            this._adapter = new global::System.Data.SqlClient.SqlDataAdapter();
-            global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
-            tableMapping.SourceTable = "Table";
-            tableMapping.DataSetTable = "stoC_LogClassRules";
-            tableMapping.ColumnMappings.Add("id", "id");
-            tableMapping.ColumnMappings.Add("Err_start", "Err_start");
-            tableMapping.ColumnMappings.Add("Err_end", "Err_end");
-            tableMapping.ColumnMappings.Add("Err_text", "Err_text");
-            tableMapping.ColumnMappings.Add("I_comment", "I_comment");
-            tableMapping.ColumnMappings.Add("c_ClassificationId", "c_ClassificationId");
-            tableMapping.ColumnMappings.Add("c_SubgroupId", "c_SubgroupId");
-            this._adapter.TableMappings.Add(tableMapping);
-            this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
-            this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = "INSERT INTO [STO].[c_LogClassRules] ([Err_start], [Err_end], [Err_text], [I_comme" +
-                "nt], [c_ClassificationId], [c_SubgroupId]) VALUES (@Err_start, @Err_end, @Err_te" +
-                "xt, @I_comment, @c_ClassificationId, @c_SubgroupId)";
-            this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Err_start", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Err_start", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Err_end", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Err_end", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Err_text", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Err_text", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@I_comment", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "I_comment", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@c_ClassificationId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "c_ClassificationId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@c_SubgroupId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "c_SubgroupId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        private void InitConnection() {
-            this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = global::ExcelAddInEquipmentDatabase.Properties.Settings.Default.GADATAConnectionString;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        private void InitCommandCollection() {
-            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[2];
-            this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
-            this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT * FROM STO.c_LogClassRules\r\nWHERE c_ClassificationID = @c_ClassificationID" +
-                " \r\nAND c_SubgroupId = @c_SubgroupId ";
-            this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
-            this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@c_ClassificationID", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "c_ClassificationId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@c_SubgroupId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "c_SubgroupId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
-            this._commandCollection[1].Connection = this.Connection;
-            this._commandCollection[1].CommandText = "DELETE FROM [STO].[c_LogClassRules] WHERE (([id] = @Original_id) )";
-            this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
-            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(applData.stoC_LogClassRulesDataTable dataTable, global::System.Nullable<int> c_ClassificationID, global::System.Nullable<int> c_SubgroupId) {
-            this.Adapter.SelectCommand = this.CommandCollection[0];
-            if ((c_ClassificationID.HasValue == true)) {
-                this.Adapter.SelectCommand.Parameters[0].Value = ((int)(c_ClassificationID.Value));
-            }
-            else {
-                this.Adapter.SelectCommand.Parameters[0].Value = global::System.DBNull.Value;
-            }
-            if ((c_SubgroupId.HasValue == true)) {
-                this.Adapter.SelectCommand.Parameters[1].Value = ((int)(c_SubgroupId.Value));
-            }
-            else {
-                this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
-            }
-            if ((this.ClearBeforeFill == true)) {
-                dataTable.Clear();
-            }
-            int returnValue = this.Adapter.Fill(dataTable);
-            return returnValue;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual applData.stoC_LogClassRulesDataTable GetData(global::System.Nullable<int> c_ClassificationID, global::System.Nullable<int> c_SubgroupId) {
-            this.Adapter.SelectCommand = this.CommandCollection[0];
-            if ((c_ClassificationID.HasValue == true)) {
-                this.Adapter.SelectCommand.Parameters[0].Value = ((int)(c_ClassificationID.Value));
-            }
-            else {
-                this.Adapter.SelectCommand.Parameters[0].Value = global::System.DBNull.Value;
-            }
-            if ((c_SubgroupId.HasValue == true)) {
-                this.Adapter.SelectCommand.Parameters[1].Value = ((int)(c_SubgroupId.Value));
-            }
-            else {
-                this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
-            }
-            applData.stoC_LogClassRulesDataTable dataTable = new applData.stoC_LogClassRulesDataTable();
-            this.Adapter.Fill(dataTable);
-            return dataTable;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(applData.stoC_LogClassRulesDataTable dataTable) {
-            return this.Adapter.Update(dataTable);
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(applData dataSet) {
-            return this.Adapter.Update(dataSet, "stoC_LogClassRules");
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(global::System.Data.DataRow dataRow) {
-            return this.Adapter.Update(new global::System.Data.DataRow[] {
-                        dataRow});
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(global::System.Data.DataRow[] dataRows) {
-            return this.Adapter.Update(dataRows);
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(global::System.Nullable<int> Err_start, global::System.Nullable<int> Err_end, string Err_text, string I_comment, global::System.Nullable<int> c_ClassificationId, global::System.Nullable<int> c_SubgroupId) {
-            if ((Err_start.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[0].Value = ((int)(Err_start.Value));
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[0].Value = global::System.DBNull.Value;
-            }
-            if ((Err_end.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[1].Value = ((int)(Err_end.Value));
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[1].Value = global::System.DBNull.Value;
-            }
-            if ((Err_text == null)) {
-                this.Adapter.InsertCommand.Parameters[2].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[2].Value = ((string)(Err_text));
-            }
-            if ((I_comment == null)) {
-                this.Adapter.InsertCommand.Parameters[3].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[3].Value = ((string)(I_comment));
-            }
-            if ((c_ClassificationId.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[4].Value = ((int)(c_ClassificationId.Value));
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[4].Value = global::System.DBNull.Value;
-            }
-            if ((c_SubgroupId.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[5].Value = ((int)(c_SubgroupId.Value));
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[5].Value = global::System.DBNull.Value;
-            }
-            global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
-            if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
-                        != global::System.Data.ConnectionState.Open)) {
-                this.Adapter.InsertCommand.Connection.Open();
-            }
-            try {
-                int returnValue = this.Adapter.InsertCommand.ExecuteNonQuery();
-                return returnValue;
-            }
-            finally {
-                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
-                    this.Adapter.InsertCommand.Connection.Close();
-                }
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, false)]
-        public virtual int DeleteQuery(int Original_id) {
-            global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[1];
-            command.Parameters[0].Value = ((int)(Original_id));
-            global::System.Data.ConnectionState previousConnectionState = command.Connection.State;
-            if (((command.Connection.State & global::System.Data.ConnectionState.Open) 
-                        != global::System.Data.ConnectionState.Open)) {
-                command.Connection.Open();
-            }
-            int returnValue;
-            try {
-                returnValue = command.ExecuteNonQuery();
-            }
-            finally {
-                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
-                    command.Connection.Close();
-                }
-            }
-            return returnValue;
-        }
-    }
-    
-    /// <summary>
-    ///Represents the connection and commands used to retrieve and save data.
-    ///</summary>
-    [global::System.ComponentModel.DesignerCategoryAttribute("code")]
-    [global::System.ComponentModel.ToolboxItem(true)]
-    [global::System.ComponentModel.DataObjectAttribute(true)]
-    [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
-        ", Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
-    [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-    public partial class stoL_errorTableAdapter : global::System.ComponentModel.Component {
-        
-        private global::System.Data.SqlClient.SqlDataAdapter _adapter;
-        
-        private global::System.Data.SqlClient.SqlConnection _connection;
-        
-        private global::System.Data.SqlClient.SqlTransaction _transaction;
-        
-        private global::System.Data.SqlClient.SqlCommand[] _commandCollection;
-        
-        private bool _clearBeforeFill;
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        public stoL_errorTableAdapter() {
-            this.ClearBeforeFill = true;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        protected internal global::System.Data.SqlClient.SqlDataAdapter Adapter {
-            get {
-                if ((this._adapter == null)) {
-                    this.InitAdapter();
-                }
-                return this._adapter;
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        internal global::System.Data.SqlClient.SqlConnection Connection {
-            get {
-                if ((this._connection == null)) {
-                    this.InitConnection();
-                }
-                return this._connection;
-            }
-            set {
-                this._connection = value;
-                if ((this.Adapter.InsertCommand != null)) {
-                    this.Adapter.InsertCommand.Connection = value;
-                }
-                if ((this.Adapter.DeleteCommand != null)) {
-                    this.Adapter.DeleteCommand.Connection = value;
-                }
-                if ((this.Adapter.UpdateCommand != null)) {
-                    this.Adapter.UpdateCommand.Connection = value;
-                }
-                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
-                    if ((this.CommandCollection[i] != null)) {
-                        ((global::System.Data.SqlClient.SqlCommand)(this.CommandCollection[i])).Connection = value;
-                    }
-                }
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        internal global::System.Data.SqlClient.SqlTransaction Transaction {
-            get {
-                return this._transaction;
-            }
-            set {
-                this._transaction = value;
-                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
-                    this.CommandCollection[i].Transaction = this._transaction;
-                }
-                if (((this.Adapter != null) 
-                            && (this.Adapter.DeleteCommand != null))) {
-                    this.Adapter.DeleteCommand.Transaction = this._transaction;
-                }
-                if (((this.Adapter != null) 
-                            && (this.Adapter.InsertCommand != null))) {
-                    this.Adapter.InsertCommand.Transaction = this._transaction;
-                }
-                if (((this.Adapter != null) 
-                            && (this.Adapter.UpdateCommand != null))) {
-                    this.Adapter.UpdateCommand.Transaction = this._transaction;
-                }
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        protected global::System.Data.SqlClient.SqlCommand[] CommandCollection {
-            get {
-                if ((this._commandCollection == null)) {
-                    this.InitCommandCollection();
-                }
-                return this._commandCollection;
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        public bool ClearBeforeFill {
-            get {
-                return this._clearBeforeFill;
-            }
-            set {
-                this._clearBeforeFill = value;
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        private void InitAdapter() {
-            this._adapter = new global::System.Data.SqlClient.SqlDataAdapter();
-            global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
-            tableMapping.SourceTable = "Table";
-            tableMapping.DataSetTable = "stoL_error";
-            tableMapping.ColumnMappings.Add("id", "id");
-            tableMapping.ColumnMappings.Add("SUBOBJECT", "SUBOBJECT");
-            tableMapping.ColumnMappings.Add("ALARMSEVERITY", "ALARMSEVERITY");
-            tableMapping.ColumnMappings.Add("ALARMCOMMENT", "ALARMCOMMENT");
-            tableMapping.ColumnMappings.Add("Classification", "Classification");
-            tableMapping.ColumnMappings.Add("subgroup", "subgroup");
-            tableMapping.ColumnMappings.Add("c_RuleId", "c_RuleId");
-            this._adapter.TableMappings.Add(tableMapping);
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        private void InitConnection() {
-            this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = global::ExcelAddInEquipmentDatabase.Properties.Settings.Default.GADATAConnectionString;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        private void InitCommandCollection() {
-            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[2];
-            this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
-            this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = @"Select 
- l.id
-,l.SUBOBJECT
-,l.ALARMSEVERITY
-,l.ALARMCOMMENT
-,c.Classification
-,S.subgroup
-,l.c_RuleId 
-from gadata.STO.l_error as l 
-left join gadata.volvo.c_Classification as c on c.id = l.c_classificationId
-left join gadata.volvo.c_subgroup as s on s.id = l.c_subgroupId
-Where
-SUBOBJECT like @error_text 
-
-l.SUBOBJECTlike @error_text";
-            this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
-            this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@error_text", global::System.Data.SqlDbType.VarChar, 2147483647, global::System.Data.ParameterDirection.Input, 0, 0, "ALARMCOMMENT", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
-            this._commandCollection[1].Connection = this.Connection;
-            this._commandCollection[1].CommandText = @"UPDATE GADATA.STO.L_error
-set l_error.c_classificationId = (select top 1 id from [GADATA].[Volvo].[c_Classification] where id = @classificationId)
-  , l_error.c_subgroupId=  (select top 1 id from [GADATA].[Volvo].[c_subgroup] where id = @subgroupId)
-  , l_error.c_ruleid = -1
-from GADATA.STO.L_error as l 
-where l.id = @error_id
-";
-            this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
-            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@error_id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@classificationId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@subgroupId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(applData.stoL_errorDataTable dataTable, string error_text) {
-            this.Adapter.SelectCommand = this.CommandCollection[0];
-            if ((error_text == null)) {
-                this.Adapter.SelectCommand.Parameters[0].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.SelectCommand.Parameters[0].Value = ((string)(error_text));
-            }
-            if ((this.ClearBeforeFill == true)) {
-                dataTable.Clear();
-            }
-            int returnValue = this.Adapter.Fill(dataTable);
-            return returnValue;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual applData.stoL_errorDataTable GetData(string error_text) {
-            this.Adapter.SelectCommand = this.CommandCollection[0];
-            if ((error_text == null)) {
-                this.Adapter.SelectCommand.Parameters[0].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.SelectCommand.Parameters[0].Value = ((string)(error_text));
-            }
-            applData.stoL_errorDataTable dataTable = new applData.stoL_errorDataTable();
-            this.Adapter.Fill(dataTable);
-            return dataTable;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, false)]
-        public virtual int UpdateQuery(int error_id, int classificationId, int subgroupId) {
-            global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[1];
-            command.Parameters[0].Value = ((int)(error_id));
-            command.Parameters[1].Value = ((int)(classificationId));
-            command.Parameters[2].Value = ((int)(subgroupId));
-            global::System.Data.ConnectionState previousConnectionState = command.Connection.State;
-            if (((command.Connection.State & global::System.Data.ConnectionState.Open) 
-                        != global::System.Data.ConnectionState.Open)) {
-                command.Connection.Open();
-            }
-            int returnValue;
-            try {
-                returnValue = command.ExecuteNonQuery();
-            }
-            finally {
-                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
-                    command.Connection.Close();
-                }
-            }
-            return returnValue;
         }
     }
     
@@ -4799,8 +3025,6 @@ where l.id = @error_id
         
         private UpdateOrderOption _updateOrder;
         
-        private stoC_LogClassRulesTableAdapter _stoC_LogClassRulesTableAdapter;
-        
         private bool _backupDataSetBeforeUpdate;
         
         private global::System.Data.IDbConnection _connection;
@@ -4813,20 +3037,6 @@ where l.id = @error_id
             }
             set {
                 this._updateOrder = value;
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        [global::System.ComponentModel.EditorAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterManagerPropertyEditor, Microso" +
-            "ft.VSDesigner, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3" +
-            "a", "System.Drawing.Design.UITypeEditor")]
-        public stoC_LogClassRulesTableAdapter stoC_LogClassRulesTableAdapter {
-            get {
-                return this._stoC_LogClassRulesTableAdapter;
-            }
-            set {
-                this._stoC_LogClassRulesTableAdapter = value;
             }
         }
         
@@ -4849,10 +3059,6 @@ where l.id = @error_id
                 if ((this._connection != null)) {
                     return this._connection;
                 }
-                if (((this._stoC_LogClassRulesTableAdapter != null) 
-                            && (this._stoC_LogClassRulesTableAdapter.Connection != null))) {
-                    return this._stoC_LogClassRulesTableAdapter.Connection;
-                }
                 return null;
             }
             set {
@@ -4866,9 +3072,6 @@ where l.id = @error_id
         public int TableAdapterInstanceCount {
             get {
                 int count = 0;
-                if ((this._stoC_LogClassRulesTableAdapter != null)) {
-                    count = (count + 1);
-                }
                 return count;
             }
         }
@@ -4880,15 +3083,6 @@ where l.id = @error_id
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         private int UpdateUpdatedRows(applData dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
             int result = 0;
-            if ((this._stoC_LogClassRulesTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.stoC_LogClassRules.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
-                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
-                if (((updatedRows != null) 
-                            && (0 < updatedRows.Length))) {
-                    result = (result + this._stoC_LogClassRulesTableAdapter.Update(updatedRows));
-                    allChangedRows.AddRange(updatedRows);
-                }
-            }
             return result;
         }
         
@@ -4899,14 +3093,6 @@ where l.id = @error_id
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         private int UpdateInsertedRows(applData dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
             int result = 0;
-            if ((this._stoC_LogClassRulesTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.stoC_LogClassRules.Select(null, null, global::System.Data.DataViewRowState.Added);
-                if (((addedRows != null) 
-                            && (0 < addedRows.Length))) {
-                    result = (result + this._stoC_LogClassRulesTableAdapter.Update(addedRows));
-                    allAddedRows.AddRange(addedRows);
-                }
-            }
             return result;
         }
         
@@ -4917,14 +3103,6 @@ where l.id = @error_id
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         private int UpdateDeletedRows(applData dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows) {
             int result = 0;
-            if ((this._stoC_LogClassRulesTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.stoC_LogClassRules.Select(null, null, global::System.Data.DataViewRowState.Deleted);
-                if (((deletedRows != null) 
-                            && (0 < deletedRows.Length))) {
-                    result = (result + this._stoC_LogClassRulesTableAdapter.Update(deletedRows));
-                    allChangedRows.AddRange(deletedRows);
-                }
-            }
             return result;
         }
         
@@ -4964,11 +3142,6 @@ where l.id = @error_id
             if ((dataSet.HasChanges() == false)) {
                 return 0;
             }
-            if (((this._stoC_LogClassRulesTableAdapter != null) 
-                        && (this.MatchTableAdapterConnection(this._stoC_LogClassRulesTableAdapter.Connection) == false))) {
-                throw new global::System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s" +
-                        "tring.");
-            }
             global::System.Data.IDbConnection workConnection = this.Connection;
             if ((workConnection == null)) {
                 throw new global::System.ApplicationException("TableAdapterManager contains no connection information. Set each TableAdapterMana" +
@@ -5001,15 +3174,6 @@ where l.id = @error_id
             try {
                 // ---- Prepare for update -----------
                 //
-                if ((this._stoC_LogClassRulesTableAdapter != null)) {
-                    revertConnections.Add(this._stoC_LogClassRulesTableAdapter, this._stoC_LogClassRulesTableAdapter.Connection);
-                    this._stoC_LogClassRulesTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(workConnection));
-                    this._stoC_LogClassRulesTableAdapter.Transaction = ((global::System.Data.SqlClient.SqlTransaction)(workTransaction));
-                    if (this._stoC_LogClassRulesTableAdapter.Adapter.AcceptChangesDuringUpdate) {
-                        this._stoC_LogClassRulesTableAdapter.Adapter.AcceptChangesDuringUpdate = false;
-                        adaptersWithAcceptChangesDuringUpdate.Add(this._stoC_LogClassRulesTableAdapter.Adapter);
-                    }
-                }
                 // 
                 //---- Perform updates -----------
                 //
@@ -5067,10 +3231,6 @@ where l.id = @error_id
             finally {
                 if (workConnOpened) {
                     workConnection.Close();
-                }
-                if ((this._stoC_LogClassRulesTableAdapter != null)) {
-                    this._stoC_LogClassRulesTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(revertConnections[this._stoC_LogClassRulesTableAdapter]));
-                    this._stoC_LogClassRulesTableAdapter.Transaction = null;
                 }
                 if ((0 < adaptersWithAcceptChangesDuringUpdate.Count)) {
                     global::System.Data.Common.DataAdapter[] adapters = new System.Data.Common.DataAdapter[adaptersWithAcceptChangesDuringUpdate.Count];

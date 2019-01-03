@@ -113,6 +113,7 @@ namespace ExcelAddInEquipmentDatabase
             }
             return null;
         }
+
         private void Lb_get_connections()
         {
             lb_connections.Items.Clear();
@@ -193,6 +194,7 @@ namespace ExcelAddInEquipmentDatabase
             this.Hide();
             this.Dispose();
         }
+
         private void Lb_GADATA_get_SpParams(SqlCommand cmd)
         {
             lv_GADATA_procParms.Items.Clear();
@@ -217,53 +219,24 @@ namespace ExcelAddInEquipmentDatabase
         }
 
         private void Btn_MX7_create_Click(object sender, EventArgs e)
-        {
-            string Query = db.QUERYS.Where(c => c.NAME == cb_MX7_QueryNames.Text && c.SYSTEM == DsnMX7).First().QUERY;
+        {        
             using (Forms.ProcedureManager  ProcMngr = new Forms.ProcedureManager(DsnMX7))
-            {           
-                //gets part of the query containing the params
-                List<string> ParmLines = Query.ToUpper().Split(new string[] { "SELECT" }, StringSplitOptions.None)[0].Trim().Split(new string[] { "DEFINE" }, StringSplitOptions.None).ToList();
-                List<OracleQueryParm> ParmList = new List<OracleQueryParm>();
-                foreach (string parm in ParmLines)
-                {
-                    if (parm.Contains("="))
-                    {
-                        string ParmName = parm.Split('=')[0].Trim();
-                        string ParmValue = parm.Split('=')[1].Trim().Split('\'')[1];
-                        ParmList.Add(new OracleQueryParm { ParameterName = ParmName, Defaultvalue = ParmValue });
-                    }
-                }
-              ProcMngr.MX7_ActiveConnectionToProcMngr(ParmList, "It does not exist");
-
-                //Get query part
-              Query = ProcMngr.MX7_BuildQuery_ProcMngrToActiveConnection(Query.Trim().TrimEnd(';').ToUpper());
+            {
+                QUERYS Qry = db.QUERYS.Where(c => c.NAME == cb_MX7_QueryNames.Text && c.SYSTEM == DsnMX7).First();
+                ProcMngr.MX7_ActiveConnectionToProcMngr(Qry.OracleQueryParms, "It does not exist");
+                Create_ODBC_connection(ProcMngr.MX7_BuildQuery_ProcMngrToActiveConnection(Qry.QueryBody), MX7connectionString, cb_MX7_QueryNames.Text);
             }
-
-            string ODBCconn = MX7connectionString;
-            string ConnectionName = cb_MX7_QueryNames.Text;
-            Create_ODBC_connection(Query, ODBCconn, ConnectionName);
             this.Hide();
             this.Dispose();
         }
 
         private void Cb_MX7_QueryNames_SelectedIndexChanged(object sender, EventArgs e)
         {
-            QUERYS query = db.QUERYS.Where(c => c.NAME == cb_MX7_QueryNames.Text && c.SYSTEM == DsnMX7).First();
-            lbl_MX7_procDiscription.Text = query.DISCRIPTION;
+            QUERYS Qry = db.QUERYS.Where(c => c.NAME == cb_MX7_QueryNames.Text && c.SYSTEM == DsnMX7).First();
+            lbl_MX7_procDiscription.Text = Qry.DISCRIPTION;
 
             lv_MX7_procParms.Items.Clear();
-            List<string> ParmLines = query.QUERY.ToUpper().Split(new string[] { "SELECT" }, StringSplitOptions.None)[0].Trim().Split(new string[] { "DEFINE" }, StringSplitOptions.None).ToList();
-            List<OracleQueryParm> ParmList = new List<OracleQueryParm>();
-            foreach (string parm in ParmLines)
-            {
-                if (parm.Contains("="))
-                {
-                    string ParmName = parm.Split('=')[0].Trim();
-                    string ParmValue = parm.Split('=')[1].Trim().Split('\'')[1];
-                    ParmList.Add(new OracleQueryParm { ParameterName = ParmName, Defaultvalue = ParmValue });
-                }
-            }
-            foreach (OracleQueryParm Parm in ParmList)
+            foreach (OracleQueryParm Parm in Qry.OracleQueryParms)
             {
                 ListViewItem item = new ListViewItem(Parm.ParameterName);
                 item.SubItems.Add(Parm.Defaultvalue);
@@ -284,13 +257,13 @@ namespace ExcelAddInEquipmentDatabase
         private void Btn_MX7_edit_Click(object sender, EventArgs e)
         {
             if (QEdit != null) QEdit.Dispose();
-            QUERYS query = db.QUERYS.Where(c => c.NAME == cb_MX7_QueryNames.Text && c.SYSTEM == DsnMX7).First();
+            QUERYS Qry = db.QUERYS.Where(c => c.NAME == cb_MX7_QueryNames.Text && c.SYSTEM == DsnMX7).First();
             QEdit = new Forms.MXxQueryEdit
             {
                 TargetSystem = DsnMX7,
                 QueryName = cb_MX7_QueryNames.Text,
                 QueryDiscription = lbl_MX7_procDiscription.Text,
-                Query = query.QUERY
+                Query = Qry.QUERY
             };
             QEdit.Show();
         }

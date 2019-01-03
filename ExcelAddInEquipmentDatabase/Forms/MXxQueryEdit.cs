@@ -42,9 +42,6 @@ namespace ExcelAddInEquipmentDatabase.Forms
 
         private void MXxQueryEdit_Load(object sender, EventArgs e)
         {
-           /* var _point = new System.Drawing.Point(Cursor.Position.X, Cursor.Position.Y);
-            Top = _point.Y;
-            Left = _point.X - this.Size.Width;*/
             BringToFront();
         }
 
@@ -52,7 +49,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
         {
             try
             {
-                OracleQuery lMaximoQuery = new OracleQuery();
+
             //  lMaximoQuery.oracle_delete_Query_GADATA(lTargetSystem, QueryName);
                 Close();
                 Dispose();
@@ -81,7 +78,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
 
             try
             {
-                OracleQuery lMaximoQuery = new OracleQuery();
+
                 try
                 { // I know this is stupid but to use UPDATE command i need the build a dataset and AARG 
                  // lMaximoQuery.oracle_delete_Query_GADATA(lTargetSystem, QueryName);

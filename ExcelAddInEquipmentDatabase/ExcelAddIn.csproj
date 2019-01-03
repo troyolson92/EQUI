@@ -247,6 +247,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EquiModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="EquiModelMetaData.cs" />
     <Compile Include="Forms\ExcelConnectionManager.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -301,7 +302,6 @@
     <Compile Include="L_users.cs">
       <DependentUpon>EquiModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="MaximoQuery.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
