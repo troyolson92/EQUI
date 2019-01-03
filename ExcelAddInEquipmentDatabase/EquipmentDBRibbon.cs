@@ -11,6 +11,7 @@ using System.Text.RegularExpressions;
 using System.IO;
 using EQUICommunictionLib;
 using log4net.Appender;
+using System.Configuration;
 
 namespace ExcelAddInEquipmentDatabase
 {
@@ -58,8 +59,7 @@ namespace ExcelAddInEquipmentDatabase
             //fill with templates
             gall_templates.Items.Clear();
             DirectoryInfo d = new DirectoryInfo(Properties.Settings.Default.TemplateBasepath);//Assuming Test is your Folder
-            FileInfo[] Files = d.GetFiles("*.xls*"); //Getting Text files
-            foreach (FileInfo file in Files)
+            foreach (FileInfo file in d.GetFiles("*.xls*"))
             {
                 if (!file.Name.Contains('$'))
                 {
@@ -81,8 +81,15 @@ namespace ExcelAddInEquipmentDatabase
             Globals.ThisAddIn.Application.SheetBeforeRightClick += lWorksheetFeatures.Application_SheetBeforeRightClick;
 
             //force the DSN connection to the host system
-            ODBCManager.CreateDSN("GADATA", "odbc link to Equi database", "sqla001.gen.volvocars.net", "SQL Server", @"C:\windows\system32\SQLSRV32.dll", false, "GADATA");
-            ODBCManager.CreateDSN("MAXIMO", "odbc link MAXIMO reporting database", "dpmxarct", "ODBC for oracle", @"C:\windows\system32\msorcl32.dll", false, "MAXIMO");
+            System.Data.SqlClient.SqlConnectionStringBuilder sqlconnection = new System.Data.SqlClient.SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["EQUIConnectionString"].ConnectionString);
+            ODBCManager.CreateDSN(DsnNames.DsnGADATA, "Equi database", sqlconnection["Server"].ToString(), "SQL Server", AppDomain.CurrentDomain.BaseDirectory + @"\Drivers\SqlServer\SQLSRV32.dll", false, DsnNames.DsnGADATA);
+
+
+      //There is an issue with deploying the oracle driver. 
+
+
+            //    ODBCManager.CreateDSN("MAXIMO", "MAXIMO reporting database", "dpmxarct", "ODBC for oracle", AppDomain.CurrentDomain.BaseDirectory + @"\Drivers\Oracle\msorcl32.dll", false, "MAXIMO");
+            ODBCManager.CreateDSN(DsnNames.DsnMX7, "MAXIMO reporting database", "dpmxarct", "ODBC for oracle", @"C:\Windows\System32\msorcl32.dll", false, DsnNames.DsnMX7);
             //find connections in wb
             dd_connections_update();
         }
@@ -289,12 +296,12 @@ namespace ExcelAddInEquipmentDatabase
                         SetWrapText(false);
                         TriggerRefresh = true;
                         //connects the ribbon filter controls with the procMngr
-                        if (ProcMngr.activeSystem == "MAXIMO") //MX7connections
+                        if (ProcMngr.activeSystem == DsnNames.DsnMX7) //MX7connections
                         {
-                            ProcMngr.MX7_ProcMngrToActiveConnection(db.QUERYS.Where(c => c.NAME == connection.Name && c.SYSTEM == "MAXIMO").First().QUERY);
+                            ProcMngr.MX7_ProcMngrToActiveConnection(db.QUERYS.Where(c => c.NAME == connection.Name && c.SYSTEM == DsnNames.DsnMX7).First().QUERY);
                             connection.Refresh();
                         }
-                        else if (ProcMngr.activeSystem == "GADATA") //GADATAconnections
+                        else if (ProcMngr.activeSystem == DsnNames.DsnGADATA) //GADATAconnections
                         {
                             ProcMngr.GADATA_ProcMngrToActiveConnection();
                             connection.Refresh();

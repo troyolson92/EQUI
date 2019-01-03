@@ -48,4 +48,10 @@ namespace ExcelAddInEquipmentDatabase
         public string ParameterName { get; set; }
         public string Defaultvalue { get; set; }
     }
+
+    public static class DsnNames
+    {
+        public static string DsnMX7 { get { return "MX7"; } }
+        public static string DsnGADATA { get { return "GADATA"; } }
+    }
 }
