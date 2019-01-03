@@ -72,5 +72,14 @@ namespace ExcelAddInEquipmentDatabase.Properties {
                 return ((string)(this["TemplateBasepath"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Equi")]
+        public string TemplateShema {
+            get {
+                return ((string)(this["TemplateShema"]));
+            }
+        }
     }
 }

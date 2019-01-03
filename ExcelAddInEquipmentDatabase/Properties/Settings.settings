@@ -26,5 +26,8 @@
     <Setting Name="TemplateBasepath" Type="System.String" Scope="Application">
       <Value Profile="(Default)">\\gnlsnm0101.gen.volvocars.net\PROJ\6308-SHR-VCC22700\VSTO\DEPLOYMENTBASE\Templates</Value>
     </Setting>
+    <Setting Name="TemplateShema" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Equi</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

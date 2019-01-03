@@ -218,14 +218,6 @@
     can be found.
   -->
   <ItemGroup>
-    <Compile Include="applData.cs">
-      <DependentUpon>applData.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="applData.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>applData.xsd</DependentUpon>
-    </Compile>
     <Compile Include="c_datasource.cs">
       <DependentUpon>EquiModel.tt</DependentUpon>
     </Compile>
@@ -329,17 +321,6 @@
       <DependentUpon>uc_Checkbox.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
-    <None Include="applData.xsc">
-      <DependentUpon>applData.xsd</DependentUpon>
-    </None>
-    <None Include="applData.xsd">
-      <SubType>Designer</SubType>
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>applData.Designer.cs</LastGenOutput>
-    </None>
-    <None Include="applData.xss">
-      <DependentUpon>applData.xsd</DependentUpon>
-    </None>
     <EmbeddedResource Include="Forms\ExcelConnectionManager.resx">
       <DependentUpon>ExcelConnectionManager.cs</DependentUpon>
     </EmbeddedResource>

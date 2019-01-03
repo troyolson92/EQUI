@@ -10,7 +10,7 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using System.IO;
 using EQUICommunictionLib;
-
+using log4net.Appender;
 
 namespace ExcelAddInEquipmentDatabase
 {
@@ -517,6 +517,28 @@ namespace ExcelAddInEquipmentDatabase
                 Sheet.get_Range(oListobject.Name).Cells.VerticalAlignment = Microsoft.Office.Interop.Excel.XlVAlign.xlVAlignTop;
                 Sheet.get_Range(oListobject.Name).Columns.WrapText = state;
                 if (state) Sheet.get_Range(oListobject.Name).EntireColumn.AutoFit();
+            }
+
+        }
+
+        private void btn_logfile_Click(object sender, RibbonControlEventArgs e)
+        {
+            string logfile = log4net.LogManager.GetRepository()
+                                .GetAppenders()
+                                .OfType<FileAppender>()
+                                .FirstOrDefault().File;
+            try
+            {
+                Process process = new Process();
+                ProcessStartInfo startInfo = new ProcessStartInfo();
+                process.StartInfo = startInfo;
+                startInfo.FileName = logfile;
+                process.Start();
+            }
+            catch (Exception ex)
+            {
+                DialogResult result = MessageBox.Show($"Was not able to open the log file. File should be on <{logfile}>", "File not found", MessageBoxButtons.OK);
+                log.Error(ex);
             }
 
         }

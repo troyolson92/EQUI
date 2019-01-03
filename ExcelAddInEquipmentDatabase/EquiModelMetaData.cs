@@ -10,7 +10,7 @@ namespace ExcelAddInEquipmentDatabase
     {
     }
 
-    //QUERYS metadata
+    //QUERYS meta data
     [MetadataType(typeof(QUERYS))]
     public partial class QUERYS
     {

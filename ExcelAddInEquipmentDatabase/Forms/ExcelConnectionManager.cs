@@ -39,12 +39,10 @@ namespace ExcelAddInEquipmentDatabase
         public ExcelConnectionManager()
         {
             InitializeComponent();
-            //lv init 
             lv_GADATA_procParms.Columns.Add("ParmName", -2, HorizontalAlignment.Left);
             lv_GADATA_procParms.Columns.Add("DefaultValue", -2, HorizontalAlignment.Left);
             lv_MX7_procParms.Columns.Add("ParmName", -2, HorizontalAlignment.Left);
             lv_MX7_procParms.Columns.Add("DefaultValue", -2, HorizontalAlignment.Left);
-            //
             Lb_get_connections();
         }
 
@@ -167,18 +165,7 @@ namespace ExcelAddInEquipmentDatabase
         #region GADATA
         private void Tp_GADATA_Enter(object sender, EventArgs e)
         {
-            using (applData.StoredProceduresDataTable lPROCEDURES = new applData.StoredProceduresDataTable())
-            {
-                using (applDataTableAdapters.StoredProceduresTableAdapter adapter = new applDataTableAdapters.StoredProceduresTableAdapter())
-                {
-                    adapter.Fill(lPROCEDURES);
-                }
-                var data = from a in lPROCEDURES
-                           orderby a.ROUTINE_NAME descending
-                           select a.SPECIFIC_CATALOG + '.' + a.SPECIFIC_SCHEMA + '.' + a.ROUTINE_NAME;
-
-                cb_GADTA_procedures.DataSource = data.Distinct().ToList();
-            }
+           cb_GADTA_procedures.DataSource = db.Database.SqlQuery<string>($"select SPECIFIC_CATALOG + '.' + SPECIFIC_SCHEMA + '.' + ROUTINE_NAME  from information_schema.routines where routine_type = 'PROCEDURE' AND SPECIFIC_SCHEMA = '{Properties.Settings.Default.TemplateShema.ToString()}'").ToList();
         }
 
         private void Btn_GADATA_Create_Click(object sender, EventArgs e)

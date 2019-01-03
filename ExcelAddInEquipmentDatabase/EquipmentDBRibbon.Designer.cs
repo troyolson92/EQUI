@@ -58,6 +58,7 @@
             this.separator3 = this.Factory.CreateRibbonSeparator();
             this.tgbtn_Wrap = this.Factory.CreateRibbonToggleButton();
             this.tbtn_StopRightClick = this.Factory.CreateRibbonToggleButton();
+            this.btn_logfile = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
             this.rib2.SuspendLayout();
             this.group2.SuspendLayout();
@@ -222,6 +223,7 @@
             this.g_config.Items.Add(this.separator3);
             this.g_config.Items.Add(this.tgbtn_Wrap);
             this.g_config.Items.Add(this.tbtn_StopRightClick);
+            this.g_config.Items.Add(this.btn_logfile);
             this.g_config.Label = "Configuration";
             this.g_config.Name = "g_config";
             // 
@@ -274,6 +276,14 @@
             this.tbtn_StopRightClick.SuperTip = "Stops the plug in from overwriting the context menu on right click";
             this.tbtn_StopRightClick.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.tbtn_StopRightClick_Click);
             // 
+            // btn_logfile
+            // 
+            this.btn_logfile.Label = "Debuglog";
+            this.btn_logfile.Name = "btn_logfile";
+            this.btn_logfile.OfficeImageId = "ScriptDebugger";
+            this.btn_logfile.ShowImage = true;
+            this.btn_logfile.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_logfile_Click);
+            // 
             // EquipmentDBRibbon
             // 
             this.Name = "EquipmentDBRibbon";
@@ -321,6 +331,7 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonGallery gall_templates;
         internal Microsoft.Office.Tools.Ribbon.RibbonToggleButton btn_EditProcedure;
         internal Microsoft.Office.Tools.Ribbon.RibbonToggleButton tgbtn_Wrap;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_logfile;
     }
 
     partial class ThisRibbonCollection
