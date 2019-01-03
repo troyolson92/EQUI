@@ -25,9 +25,6 @@ namespace ExcelAddInEquipmentDatabase.Forms
         //active connection in active workbook
         ActiveConnection lActConn = new ActiveConnection();
 
-        public string DsnMX7 { get { return "MX7"; } }
-        public string DsnGADATA { get { return "GADATA"; } }
-
         #region parameters to the ribbon
         Forms.uc_Datebox _startDate = new Forms.uc_Datebox();
         Forms.uc_Datebox _endDate = new Forms.uc_Datebox();
@@ -87,7 +84,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
         {
             InitializeComponent();
 
-            if (activeconnection == DsnMX7) //CREATE NEW MX7connections
+            if (activeconnection == DsnNames.DsnMX7) //CREATE NEW MX7connections
             {
                 assets.Name = "_assets".ToUpper();
                 lochierarchy.Name = "_lochierarchy".ToUpper();
@@ -101,7 +98,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
             lActConn.Name = activeconnection;
             lActConn.ODBCconnString = lActConn.get_ODBCconnString_from_activeconnection();
             //
-            if (lActConn.ODBCconnString.Contains(DsnMX7)) //existing MAXIMO7 connection
+            if (lActConn.ODBCconnString.Contains(DsnNames.DsnMX7)) //existing MAXIMO7 connection
             {
                 assets.Name = "_assets".ToUpper();
                 lochierarchy.Name = "_lochierarchy".ToUpper();
@@ -110,12 +107,12 @@ namespace ExcelAddInEquipmentDatabase.Forms
                 endDate.Name = "_EndDate".ToUpper();
                 daysBack.Name = "_nDays".ToUpper();
                 //
-                lActConn.System = DsnMX7;
+                lActConn.System = DsnNames.DsnMX7;
                 lActConn.ProcedureName = lActConn.Name; //maximo system dont have a stored proc name so we take the name of the Query template
-                QUERYS Qyr = db.QUERYS.Where(c => c.NAME == activeconnection && c.SYSTEM == DsnMX7).First();
+                QUERYS Qyr = db.QUERYS.Where(c => c.NAME == activeconnection && c.SYSTEM == DsnNames.DsnMX7).First();
                 MX7_ActiveConnectionToProcMngr(Qyr.OracleQueryParms, Qyr.QueryBody);
             }
-            else if (lActConn.ODBCconnString.Contains(DsnGADATA)) //existing GADATAconnections
+            else if (lActConn.ODBCconnString.Contains(DsnNames.DsnGADATA)) //existing GADATAconnections
             {
                 assets.Name = "@assets";
                 lochierarchy.Name = "@lochierarchy";
@@ -124,7 +121,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
                 endDate.Name = "@EndDate";
                 daysBack.Name = "@daysBack";
                 //
-                lActConn.System = DsnGADATA;
+                lActConn.System = DsnNames.DsnGADATA;
                 lActConn.ProcedureName = lActConn.get_storedProcedureFromQuery(lActConn.Query);
                 GADATA_ActiveConnectionToProcMngr(connectionManager.GetSpParms(lActConn.ProcedureName), lActConn.Query);
             }

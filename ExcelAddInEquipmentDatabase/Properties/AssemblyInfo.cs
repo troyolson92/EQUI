@@ -8,11 +8,11 @@ using System.Resources;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("ExcelAddInEquipmentDatabase")]
-[assembly: AssemblyDescription("VSTO pluging for GADATA, Maximo and STO connection")]
+[assembly: AssemblyDescription("VSTO pluging for Equi")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("VCG AAOSR")]
 [assembly: AssemblyProduct("ExcelAddInEquipmentDatabase")]
-[assembly: AssemblyCopyright("VOLVO CARS GENT © SDEBEUL 2017")]
+[assembly: AssemblyCopyright("VOLVO CARS GENT © SDEBEUL")]
 [assembly: AssemblyTrademark("SDEBEUL")]
 [assembly: AssemblyCulture("")]
 
@@ -34,7 +34,7 @@ using System.Resources;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("3.3.2.0")]
-[assembly: AssemblyFileVersion("3.3.2.0")]
+[assembly: AssemblyVersion("3.4.0.0")]
+[assembly: AssemblyFileVersion("3.4.0.0")]
 
 [assembly: NeutralResourcesLanguageAttribute("en")]

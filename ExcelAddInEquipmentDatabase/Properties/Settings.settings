@@ -2,23 +2,8 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="ExcelAddInEquipmentDatabase.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="GadataConnRW" Type="(Connection string)" Scope="Application">
-      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
-&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;ConnectionString&gt;Data Source=sqla001.gen.volvocars.net;Persist Security Info=True;User ID=EqUiAdmin;Password=EqUiAdmin&lt;/ConnectionString&gt;
-&lt;/SerializableConnectionString&gt;</DesignTimeValue>
-      <Value Profile="(Default)">Data Source=sqla001.gen.volvocars.net;Persist Security Info=True;User ID=EqUiAdmin;Password=EqUiAdmin</Value>
-    </Setting>
-    <Setting Name="GADATAConnectionString" Type="(Connection string)" Scope="Application">
-      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
-&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;ConnectionString&gt;Data Source=sqla001.gen.volvocars.net;Initial Catalog=GADATA;Persist Security Info=True;User ID=EqUiAdmin;Password=EqUiAdmin&lt;/ConnectionString&gt;
-  &lt;ProviderName&gt;System.Data.SqlClient&lt;/ProviderName&gt;
-&lt;/SerializableConnectionString&gt;</DesignTimeValue>
-      <Value Profile="(Default)">Data Source=sqla001.gen.volvocars.net;Initial Catalog=GADATA;Persist Security Info=True;User ID=EqUiAdmin;Password=EqUiAdmin</Value>
-    </Setting>
     <Setting Name="Helpfile" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">https://sway.com/csCS9cdjEpcpPhw0?ref=Link</Value>
+      <Value Profile="(Default)">https:\\sway.com\csCS9cdjEpcpPhw0?ref=Link</Value>
     </Setting>
     <Setting Name="EquiBasepath" Type="System.String" Scope="Application">
       <Value Profile="(Default)">http:\\gensvw1178.gen.volvocars.net</Value>

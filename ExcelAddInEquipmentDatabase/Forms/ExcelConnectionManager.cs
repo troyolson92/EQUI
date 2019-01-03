@@ -11,6 +11,7 @@ using System.Diagnostics;
 using System.Data.SqlClient;
 using Microsoft.VisualBasic;
 using EQUICommunictionLib;
+using System.Configuration;
 
 namespace ExcelAddInEquipmentDatabase
 {
@@ -24,17 +25,17 @@ namespace ExcelAddInEquipmentDatabase
         //Query edit box instance
         Forms.MXxQueryEdit QEdit;
 
-        public string DsnMX7 { get { return "MX7"; } }
-        public string DsnGADATA { get { return "GADATA"; } }
-        public string GADATAconnectionString
+        public string EquiODBCconnectionString
         {
-            get { return $"ODBC;DSN={DsnGADATA}; UID=EqUi; PWD=EqUi"; }
+            get {
+                System.Data.SqlClient.SqlConnectionStringBuilder sqlconnection = new System.Data.SqlClient.SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["EQUIConnectionString"].ConnectionString);
+                return $"ODBC;DSN={DsnNames.DsnGADATA}; UID={sqlconnection.UserID}; PWD={sqlconnection.Password}";
+            }
         }
-        public string MX7connectionString
+        public string MX7ODBCconnectionString
         {
-            get { return $"ODBC;DSN={DsnMX7}; UID=ARCTVCG; PWD=vcg$tokfeb2017"; }
+            get { return $"ODBC;DSN={DsnNames.DsnMX7}; UID=ARCTVCG; PWD=vcg$tokfeb2017"; }
         }
-
 
         public ExcelConnectionManager()
         {
@@ -172,10 +173,7 @@ namespace ExcelAddInEquipmentDatabase
         {
             if (cb_GADTA_procedures.Text != "")
             {
-                string Query = "EXEC " + cb_GADTA_procedures.Text.Trim();
-                string ODBCconn = GADATAconnectionString; 
-                string ConnectionName = cb_GADTA_procedures.Text.Split('.')[2].Trim();
-                Create_ODBC_connection(Query, ODBCconn, ConnectionName);
+                Create_ODBC_connection("EXEC " + cb_GADTA_procedures.Text.Trim(), EquiODBCconnectionString, cb_GADTA_procedures.Text.Split('.')[2].Trim());
             }
             Lb_get_connections();
             this.Hide();
@@ -202,16 +200,16 @@ namespace ExcelAddInEquipmentDatabase
         //Maximo7 link
         private void Tp_MX7_Enter(object sender, EventArgs e)
         {
-            cb_MX7_QueryNames.DataSource = db.QUERYS.Where(c => c.SYSTEM == DsnMX7).Select(c => c.NAME).ToList();
+            cb_MX7_QueryNames.DataSource = db.QUERYS.Where(c => c.SYSTEM == DsnNames.DsnMX7).Select(c => c.NAME).ToList();
         }
 
         private void Btn_MX7_create_Click(object sender, EventArgs e)
         {        
-            using (Forms.ProcedureManager  ProcMngr = new Forms.ProcedureManager(DsnMX7))
+            using (Forms.ProcedureManager  ProcMngr = new Forms.ProcedureManager(DsnNames.DsnMX7))
             {
-                QUERYS Qry = db.QUERYS.Where(c => c.NAME == cb_MX7_QueryNames.Text && c.SYSTEM == DsnMX7).First();
+                QUERYS Qry = db.QUERYS.Where(c => c.NAME == cb_MX7_QueryNames.Text && c.SYSTEM == DsnNames.DsnMX7).First();
                 ProcMngr.MX7_ActiveConnectionToProcMngr(Qry.OracleQueryParms, "It does not exist");
-                Create_ODBC_connection(ProcMngr.MX7_BuildQuery_ProcMngrToActiveConnection(Qry.QueryBody), MX7connectionString, cb_MX7_QueryNames.Text);
+                Create_ODBC_connection(ProcMngr.MX7_BuildQuery_ProcMngrToActiveConnection(Qry.QueryBody), MX7ODBCconnectionString, cb_MX7_QueryNames.Text);
             }
             this.Hide();
             this.Dispose();
@@ -219,7 +217,7 @@ namespace ExcelAddInEquipmentDatabase
 
         private void Cb_MX7_QueryNames_SelectedIndexChanged(object sender, EventArgs e)
         {
-            QUERYS Qry = db.QUERYS.Where(c => c.NAME == cb_MX7_QueryNames.Text && c.SYSTEM == DsnMX7).First();
+            QUERYS Qry = db.QUERYS.Where(c => c.NAME == cb_MX7_QueryNames.Text && c.SYSTEM == DsnNames.DsnMX7).First();
             lbl_MX7_procDiscription.Text = Qry.DISCRIPTION;
 
             lv_MX7_procParms.Items.Clear();
@@ -236,7 +234,7 @@ namespace ExcelAddInEquipmentDatabase
             if (QEdit != null) QEdit.Dispose();
             QEdit = new Forms.MXxQueryEdit
             {
-                TargetSystem = DsnMX7
+                TargetSystem = DsnNames.DsnMX7
             };
             QEdit.Show();
         }
@@ -244,10 +242,10 @@ namespace ExcelAddInEquipmentDatabase
         private void Btn_MX7_edit_Click(object sender, EventArgs e)
         {
             if (QEdit != null) QEdit.Dispose();
-            QUERYS Qry = db.QUERYS.Where(c => c.NAME == cb_MX7_QueryNames.Text && c.SYSTEM == DsnMX7).First();
+            QUERYS Qry = db.QUERYS.Where(c => c.NAME == cb_MX7_QueryNames.Text && c.SYSTEM == DsnNames.DsnMX7).First();
             QEdit = new Forms.MXxQueryEdit
             {
-                TargetSystem = DsnMX7,
+                TargetSystem = DsnNames.DsnMX7,
                 QueryName = cb_MX7_QueryNames.Text,
                 QueryDiscription = lbl_MX7_procDiscription.Text,
                 Query = Qry.QUERY
