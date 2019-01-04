@@ -187,7 +187,7 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
             {
                 ViewBag.ElectrodeNo = new SelectList(new List<SelectListItem>
                                         {
-                                            new SelectListItem { Selected = true,  Text = "Same as tool_nr", Value = 0.ToString()},
+                                            new SelectListItem { Selected = true,  Text = "ElectrodeNo = tool_nr", Value = 0.ToString()},
                                             new SelectListItem { Selected = false, Text = "ElectrodeNo1", Value = "1"},
                                             new SelectListItem { Selected = false, Text = "ElectrodeNo2", Value = "2"},
                                             new SelectListItem { Selected = false, Text = "ElectrodeNo3", Value = "3"},

@@ -119,7 +119,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             //get data
             List<ControlchartResult> ChartData = new List<ControlchartResult>();
             //set db timeout to 10 seconds
-            db.Database.CommandTimeout = 10;
+            db.Database.CommandTimeout = 15;
             //Query to get value data
             ChartData =  db.Database.SqlQuery<ControlchartResult>(c_Trigger.controlChartSqlStatement,
                                 new SqlParameter("@c_trigger_id", chartSettings.c_trigger_id),
