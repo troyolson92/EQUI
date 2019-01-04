@@ -3,29 +3,22 @@
     <div class="card-header">
 
         <div class="alert alert-info">
-            <h4>Tipinfo</h4>
-            <div class="row">
-                <div class="col-sm-11">
-                   <strong>location:</strong>@ViewBag.location (tool_nr: @ViewBag.tool_nr)
-                </div>
-
-                <div class="col-sm-1">
-                    <a class="far fa-window-close fa-3x clickable text-black-50" data-dismiss="modal"></a>
-                </div>
-
-            </div>
+            <h4>
+                Tipinfo for location: <strong>@ViewBag.location</strong> tool_nr:  <strong>@ViewBag.tool_nr</strong>
+                <a class="far fa-window-close fa-2x clickable text-black-50 float-right" data-dismiss="modal"></a>
+            </h4>
         </div>
     </div>
 
     <div class="card-body">
 
         <div class="card">
-            <div class="card-header bg-primary">
-                <h4>TipLifeExpectations</h4>
+            <div class="card-header bg-dark">
+                <h4 class="card-title text-white">TipLifeExpectations</h4>
             </div>
 
             <div class="card-body">
-                <div id="TipLifeExpectationsGrid" class="mvc-grid"></div>
+                <div data-name="TipLifeExpectationsGrid" class="mvc-grid"></div>
             </div>
 
         </div>
@@ -33,8 +26,21 @@
         <hr />
 
         <div class="card">
-            <div class="card-header bg-primary">
-                <h4>Control limits</h4>
+            <div class="card-header bg-dark">
+                <h4 class="card-title text-white">TipwearBeforeChange</h4>
+            </div>
+
+            <div class="card-body">
+                <div data-name="TipwearBeforeChangeGrid" class="mvc-grid"></div>
+            </div>
+
+        </div>
+
+        <hr />
+
+        <div class="card">
+            <div class="card-header bg-dark">
+                <h4 class="card-title text-white">Control limits</h4>
             </div>
 
             <div class="card-body">
@@ -46,12 +52,12 @@
         <hr />
 
         <div class="card">
-            <div class="card-header bg-primary">
-                <h4>TipDresslogfile</h4>
+            <div class="card-header bg-dark">
+                <h4 class="card-title text-white">TipDresslogfile</h4>
             </div>
 
             <div class="card-body">
-                <div id="TipDressDataGrid" class="mvc-grid"></div>
+                <div data-name="TipDressDataGrid" class="mvc-grid"></div>
             </div>
 
         </div>
@@ -60,8 +66,8 @@
 <!--sctips for Tipinfo-->
     <script type="text/javascript">
         //load tiplifeexpectations
-        $('#TipLifeExpectationsGrid').html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
-        $('#TipLifeExpectationsGrid').mvcgrid({
+        $('[data-name= "TipLifeExpectationsGrid"]').html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
+        $('[data-name= "TipLifeExpectationsGrid"]').mvcgrid({
             sourceUrl: '@Url.Action("_TipLifeExpectationsGrid", new { location = ViewBag.location, tool_nr = ViewBag.tool_nr })', // Grid source url string
             requestType: 'get', // Ajax grid request type
             reload: true, // Grid reload indicator
@@ -81,23 +87,34 @@
                 $(row).addClass("bg-info");
                 $("#placeholder").remove(); //clear placeholder is exists
                 //add new placeholder afhter selected row
-                $(row).after('<tr id="placeholder"><td colspan="1000"><div class="card bg-info"><div id="TipwearBeforeChangeGrid" class="mvc-grid card-body"></div></div></td></tr>');
+                $(row).after('<tr id="placeholder"><td colspan="1000"><div class="card border-info"><div data-name="TipwearBeforeChangeGrid" class="mvc-grid card-body"></div></div></td></tr>');
                 //animation
-                $("#TipwearBeforeChangeGrid").html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
-                    //load supervisiegird in placeholder
-                $('#TipwearBeforeChangeGrid').mvcgrid({
+                $('[data-name= "TipwearBeforeChangeGrid"]').html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
+                $('[data-name= "TipwearBeforeChangeGrid"]').mvcgrid({
                         sourceUrl: '@Url.Action("_TipwearBeforeChangeGrid", new { location = ViewBag.location, tool_nr = ViewBag.tool_nr })', // Grid source url string
                         requestType: 'get', // Ajax grid request type
                         reload: true, // Grid reload indicator
                         reloadFailed: function (result) {
                             console.log(result);
-                            $("#TipwearBeforeChangeGrid").html($("#Error", result.responseText).html());
+                            $('[data-name= "TipwearBeforeChangeGrid"]').html($("#Error", result.responseText).html());
                         }
                 });
             },
             reloadFailed: function (result) {
                 console.log(result);
-                $("#TipLifeExpectationsGrid").html($("#Error", result.responseText).html());
+                $('[data-name= "TipLifeExpectationsGrid"]').html($("#Error", result.responseText).html());
+            }
+        });
+
+        //load tipdress data grid 
+        $('[data-name= "TipwearBeforeChangeGrid"]').html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
+        $('[data-name= "TipwearBeforeChangeGrid"]').mvcgrid({
+            sourceUrl: '@Url.Action("_TipwearBeforeChangeGrid", new { location = ViewBag.location, tool_nr = ViewBag.tool_nr })', // Grid source url string
+            requestType: 'get', // Ajax grid request type
+            reload: true, // Grid reload indicator
+            reloadFailed: function (result) {
+                console.log(result);
+                $('[data-name= "TipwearBeforeChangeGrid"]').html($("#Error", result.responseText).html());
             }
         });
 
@@ -106,14 +123,14 @@
         $("#controllimitPlaceholder").load("@Url.Action("_List", "L_controlLimits", new {Area = "Alert", alarmobject = ViewBag.location + "_tool" + ViewBag.tool_nr,  showIsDead = ViewBag.showIsDead })");
 
         //load tipdress data grid 
-        $('#TipDressDataGrid').html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
-        $('#TipDressDataGrid').mvcgrid({
+        $('[data-name= "TipDressDataGrid"]').html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
+        $('[data-name= "TipDressDataGrid"]').mvcgrid({
             sourceUrl: '@Url.Action("_TipDressDataGrid", new { location = ViewBag.location, tool_nr = ViewBag.tool_nr })', // Grid source url string
             requestType: 'get', // Ajax grid request type
             reload: true, // Grid reload indicator
             reloadFailed: function (result) {
                 console.log(result);
-                $("#TipDressDataGrid").html($("#Error", result.responseText).html());
+                $('[data-name= "TipDressDataGrid"]').html($("#Error", result.responseText).html());
             }
         });
 
