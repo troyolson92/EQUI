@@ -91,6 +91,8 @@ namespace EqUiWebUi.Areas.Welding.Models
         public virtual DbSet<StoringsIngave_new> StoringsIngave_new { get; set; }
         public virtual DbSet<TimerBreakdowns_WMActions> TimerBreakdowns_WMActions { get; set; }
         public virtual DbSet<ParameterOptimalisation> ParameterOptimalisation { get; set; }
+        public virtual DbSet<WeldingGun> WeldingGun { get; set; }
+        public virtual DbSet<WeldingGunVariant> WeldingGunVariant { get; set; }
     
         public virtual ObjectResult<Lastwelds_Result> Lastwelds(string timer, Nullable<int> spot)
         {

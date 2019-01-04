@@ -76,6 +76,29 @@ warning 6002: The table/view 'GADATA.dbo.UltralogInspections' does not have a pr
           <Property Name="Achternaam" Type="nchar" MaxLength="50" />
           <Property Name="object" Type="nchar" MaxLength="10" />
         </EntityType>
+        <EntityType Name="WeldingGun">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="15" />
+          <Property Name="ElectrodeNbr" Type="tinyint" />
+          <Property Name="VariantID" Type="int" />
+          <Property Name="TimerID" Type="int" />
+          <Property Name="RobotType" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="WeldingGunVariant">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="13" />
+          <Property Name="X" Type="real" />
+          <Property Name="Y" Type="real" />
+          <Property Name="Z" Type="real" />
+          <Property Name="Remark1" Type="ntext" />
+          <Property Name="Remark2" Type="ntext" />
+        </EntityType>
         <EntityType Name="ToDoList">
           <Key>
             <PropertyRef Name="id" />
@@ -378,6 +401,9 @@ warning 6002: The table/view 'GADATA.UL.ULplan_start' does not have a primary ke
           <Property Name="EnergyActual" Type="smallint" />
           <Property Name="WeldTimeActual" Type="smallint" />
           <Property Name="Iactual2" Type="real" />
+          <Property Name="UpperTolBand" Type="real" />
+          <Property Name="LowerTolBand" Type="real" />
+          <Property Name="LowerCondBand" Type="real" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'GADATA.WELDING2.h_Nut_Bolt_Measure' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -1510,10 +1536,24 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_WeldingGun_WeldingGunVariant">
+          <End Role="WeldingGunVariant" Type="Self.WeldingGunVariant" Multiplicity="0..1" />
+          <End Role="WeldingGun" Type="Self.WeldingGun" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WeldingGunVariant">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="WeldingGun">
+              <PropertyRef Name="VariantID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="GADATAModelWeldingStoreContainer">
           <EntitySet Name="Inspectionplan" EntityType="Self.Inspectionplan" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UltralogStations" EntityType="Self.UltralogStations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WeldingGun" EntityType="Self.WeldingGun" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WeldingGunVariant" EntityType="Self.WeldingGunVariant" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ToDoList" EntityType="Self.ToDoList" Schema="LAUNCH" store:Type="Tables" />
           <EntitySet Name="ToDoList_Remark" EntityType="Self.ToDoList_Remark" Schema="LAUNCH" store:Type="Tables" />
           <EntitySet Name="c_faultcode" EntityType="Self.c_faultcode" Schema="TDT" store:Type="Tables" />
@@ -2090,6 +2130,10 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
             <End Role="Users" EntitySet="Users" />
             <End Role="UltralogInspections" EntitySet="UltralogInspections" />
           </AssociationSet>
+          <AssociationSet Name="FK_WeldingGun_WeldingGunVariant" Association="Self.FK_WeldingGun_WeldingGunVariant">
+            <End Role="WeldingGunVariant" EntitySet="WeldingGunVariant" />
+            <End Role="WeldingGun" EntitySet="WeldingGun" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -2288,6 +2332,12 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
           </AssociationSet>
           <EntitySet Name="TimerBreakdowns_WMActions" EntityType="GADATAModelWelding.TimerBreakdowns_WMActions" />
           <EntitySet Name="ParameterOptimalisation" EntityType="GADATAModelWelding.ParameterOptimalisation" />
+          <EntitySet Name="WeldingGun" EntityType="GADATAModelWelding.WeldingGun" />
+          <EntitySet Name="WeldingGunVariant" EntityType="GADATAModelWelding.WeldingGunVariant" />
+          <AssociationSet Name="FK_WeldingGun_WeldingGunVariant" Association="GADATAModelWelding.FK_WeldingGun_WeldingGunVariant">
+            <End Role="WeldingGunVariant" EntitySet="WeldingGunVariant" />
+            <End Role="WeldingGun" EntitySet="WeldingGun" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="rt_AutoWorkFlowULPlans">
           <Key>
@@ -2902,6 +2952,9 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
           <Property Name="EnergyActual" Type="Int16" />
           <Property Name="WeldTimeActual" Type="Int16" />
           <Property Name="Iactual2" Type="Single" />
+          <Property Name="UpperTolBand" Type="Single" />
+          <Property Name="LowerTolBand" Type="Single" />
+          <Property Name="LowerCondBand" Type="Single" />
         </EntityType>
         <EntityType Name="h_weldmeasure">
           <Key>
@@ -3812,6 +3865,43 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
           <Property Name="AVGpsf" Type="Double" />
           <Property Name="Avg_resistance" Type="Double" />
         </EntityType>
+        <EntityType Name="WeldingGun">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="ElectrodeNbr" Type="Byte" />
+          <Property Name="VariantID" Type="Int32" />
+          <Property Name="TimerID" Type="Int32" />
+          <Property Name="RobotType" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="WeldingGunVariant" Relationship="GADATAModelWelding.FK_WeldingGun_WeldingGunVariant" FromRole="WeldingGun" ToRole="WeldingGunVariant" />
+        </EntityType>
+        <EntityType Name="WeldingGunVariant">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="13" FixedLength="true" Unicode="true" />
+          <Property Name="X" Type="Single" />
+          <Property Name="Y" Type="Single" />
+          <Property Name="Z" Type="Single" />
+          <Property Name="Remark1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Remark2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="WeldingGun" Relationship="GADATAModelWelding.FK_WeldingGun_WeldingGunVariant" FromRole="WeldingGunVariant" ToRole="WeldingGun" />
+        </EntityType>
+        <Association Name="FK_WeldingGun_WeldingGunVariant">
+          <End Type="GADATAModelWelding.WeldingGunVariant" Role="WeldingGunVariant" Multiplicity="0..1" />
+          <End Type="GADATAModelWelding.WeldingGun" Role="WeldingGun" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WeldingGunVariant">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="WeldingGun">
+              <PropertyRef Name="VariantID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4298,6 +4388,9 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
           <EntitySetMapping Name="h_Midair">
             <EntityTypeMapping TypeName="GADATAModelWelding.h_Midair">
               <MappingFragment StoreEntitySet="h_Midair">
+                <ScalarProperty Name="LowerCondBand" ColumnName="LowerCondBand" />
+                <ScalarProperty Name="LowerTolBand" ColumnName="LowerTolBand" />
+                <ScalarProperty Name="UpperTolBand" ColumnName="UpperTolBand" />
                 <ScalarProperty Name="Iactual2" ColumnName="Iactual2" />
                 <ScalarProperty Name="WeldTimeActual" ColumnName="WeldTimeActual" />
                 <ScalarProperty Name="EnergyActual" ColumnName="EnergyActual" />
@@ -4900,6 +4993,31 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
                 <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
                 <ScalarProperty Name="plateID" ColumnName="plateID" />
                 <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WeldingGun">
+            <EntityTypeMapping TypeName="GADATAModelWelding.WeldingGun">
+              <MappingFragment StoreEntitySet="WeldingGun">
+                <ScalarProperty Name="RobotType" ColumnName="RobotType" />
+                <ScalarProperty Name="TimerID" ColumnName="TimerID" />
+                <ScalarProperty Name="VariantID" ColumnName="VariantID" />
+                <ScalarProperty Name="ElectrodeNbr" ColumnName="ElectrodeNbr" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WeldingGunVariant">
+            <EntityTypeMapping TypeName="GADATAModelWelding.WeldingGunVariant">
+              <MappingFragment StoreEntitySet="WeldingGunVariant">
+                <ScalarProperty Name="Remark2" ColumnName="Remark2" />
+                <ScalarProperty Name="Remark1" ColumnName="Remark1" />
+                <ScalarProperty Name="Z" ColumnName="Z" />
+                <ScalarProperty Name="Y" ColumnName="Y" />
+                <ScalarProperty Name="X" ColumnName="X" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

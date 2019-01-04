@@ -109,6 +109,11 @@
         <AssociationConnector Association="GADATAModelWelding.FK_StoringsIngave_new_StoringName" />
         <AssociationConnector Association="GADATAModelWelding.FK_StoringsIngave_new_StoringsCause" />
       </Diagram>
+      <Diagram DiagramId="5c217cc0d8d547d184a2bc344a71c663" Name="ARO" >
+        <EntityTypeShape EntityType="GADATAModelWelding.WeldingGun" Width="1.5" PointX="0.5" PointY="0.5" FillColor="Red" />
+        <EntityTypeShape EntityType="GADATAModelWelding.WeldingGunVariant" Width="1.5" PointX="3.125" PointY="1.5" FillColor="Red" />
+        <AssociationConnector Association="GADATAModelWelding.FK_WeldingGun_WeldingGunVariant" />
+      </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

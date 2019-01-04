@@ -188,7 +188,6 @@
     <Folder Include="Areas\VCSC\Models\" />
     <Folder Include="Areas\VCSC\Views\Shared\" />
     <Folder Include="Areas\VWSC\Views\Shared\" />
-    <Folder Include="Areas\Welding\Views\ARO\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -664,6 +663,7 @@
     <Compile Include="Areas\Welding\Controllers\AROController.cs" />
     <Compile Include="Areas\Welding\Controllers\DMLControllers\StoringsIngaveController.cs" />
     <Compile Include="Areas\Welding\Controllers\DMLControllers\ULplan_startController.cs" />
+    <Compile Include="Areas\Welding\Controllers\DMLControllers\WeldingGunsController.cs" />
     <Compile Include="Areas\Welding\Controllers\LaunchController.cs" />
     <Compile Include="Areas\Welding\Controllers\QteamController.cs" />
     <Compile Include="Areas\Welding\Controllers\SpatterController.cs" />
@@ -866,6 +866,12 @@
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Welding\Models\WeldFaultProtocol.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Welding\Models\WeldingGun.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Welding\Models\WeldingGunVariant.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Welding\Models\WeldingModel.Context.cs">
@@ -2277,6 +2283,12 @@
     <Content Include="Areas\Tiplife\Views\Electrode\Index.cshtml" />
     <Content Include="Areas\Tiplife\Views\Electrode\_Legend.cshtml" />
     <Content Include="Areas\Welding\Views\WM\_Parameters.cshtml" />
+    <Content Include="Areas\Welding\Views\ARO\Index.cshtml" />
+    <Content Include="Areas\Welding\Views\WeldingGuns\Create.cshtml" />
+    <Content Include="Areas\Welding\Views\WeldingGuns\Delete.cshtml" />
+    <Content Include="Areas\Welding\Views\WeldingGuns\Details.cshtml" />
+    <Content Include="Areas\Welding\Views\WeldingGuns\Edit.cshtml" />
+    <Content Include="Areas\Welding\Views\WeldingGuns\Index.cshtml" />
     <None Include="Properties\PublishProfiles\gensvw1178-DEV-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gotsvw11292-PRODUCTION-VCTA.pubxml" />
@@ -2414,12 +2426,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EQUICommunictionLib\EQUICommunictionLib.csproj">
-      <Project>{090979a1-2c7b-4c89-a921-f36a936412f2}</Project>
-      <Name>EQUICommunictionLib</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -2441,6 +2447,12 @@
       <LastGenOutput>defaultArea.Designer.cs</LastGenOutput>
       <CustomToolNamespace>EqUiWebUi</CustomToolNamespace>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EQUICommunictionLib\EQUICommunictionLib.csproj">
+      <Project>{090979a1-2c7b-4c89-a921-f36a936412f2}</Project>
+      <Name>EQUICommunictionLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

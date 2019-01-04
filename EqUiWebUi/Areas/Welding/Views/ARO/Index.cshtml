@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewBag.Title = "Index ARO Technicians";
+}
+
+<div class="jumbotron">
+    <h1>WELCOME op de ARO pagina</h1>
+</div>
+
+<p></p>
+
+<div class="card">
+    <div class="card-header bg-dark">
+        <h5 class="card-title text-white">
+           default
+            <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
+        </h5>
+    </div>
+
+    <p></p>
+
+    @MyHtmlHelpers.EquiLink("/Welding/ARO/index", "fas fa-tachometer-alt", "default", helperText: " default")
+
+</div>
+<p></p>
+
+
+
+    @*This card is default collapsed see fa-rotate-180 and display:none*@
+    <div class="card">
+        <div class="card-header bg-danger">
+            <h5 class="card-title text-white">
+                ARO Config
+                <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-rotate-180 fa-1"></i></span>
+            </h5>
+        </div>
+        <div class="card-body" style="display:none">
+
+            <p>
+                <a href="~/Welding/WeldingGuns/Index" class="btn btn-primary btn-sm">Beheer lastangen GA&raquo;</a>
+                Beheer van alle lastangen GA in de database
+            </p>
+
+
+
+
+        </div>
+
+    </div>
+</div>
+
+
+</div>
+<p></p>
+
+
+
