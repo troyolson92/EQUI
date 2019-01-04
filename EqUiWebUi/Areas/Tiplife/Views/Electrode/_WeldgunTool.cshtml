@@ -4,12 +4,13 @@
             WeldgunTool for
             location: <strong>@ViewBag.location</strong>
             Tool_id: <strong>@ViewBag.tool_nr</strong>
+            ElectrodeNo: <strong>@ViewBag.ElectrodeNo</strong>
             <a class="far fa-calendar-alt text-black-50" href="#" id="Datepicker"></a>
         </h6>
     </div>
 
     <div class="card-body">
-        @*render ngac virtual chart*@
+        @*render ngac Nom/Ref wear virtual chart*@
         @if (ViewBag.NgacDummyAlarmobject != null)
         {
             @Html.Action("_GetControlChart","ControlChart", new { Area = "Alert",
@@ -21,6 +22,17 @@
                })
             <hr />
         }
+
+        @*render midair virtual chart*@
+        @Html.Action("_GetControlChart","ControlChart", new { Area = "Alert",
+                chartname = "Dummyalert",
+                alarmobject = ViewBag.MidAirDummyAlarmobject,
+                c_trigger_id = ViewBag.MidAircDummyTriggerId,
+                startdate = ViewBag.daysback,
+                enddate = System.DateTime.Now
+            })
+        <hr />
+ 
 
         @*render all real control charts (have real control limits)*@
         @foreach (EqUiWebUi.Areas.Alert.Models.l_controlLimits limit in ViewBag.controlLimits)

@@ -6,6 +6,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -120,7 +121,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             //set db timeout to 10 seconds
             db.Database.CommandTimeout = 10;
             //Query to get value data
-            ChartData = db.Database.SqlQuery<ControlchartResult>(c_Trigger.controlChartSqlStatement,
+            ChartData =  db.Database.SqlQuery<ControlchartResult>(c_Trigger.controlChartSqlStatement,
                                 new SqlParameter("@c_trigger_id", chartSettings.c_trigger_id),
                                 new SqlParameter("@alarmobject", chartSettings.alarmobject),
                                 new SqlParameter("@optDatanum", chartSettings.optDatanum)

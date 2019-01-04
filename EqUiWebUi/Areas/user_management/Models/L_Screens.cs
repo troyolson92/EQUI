@@ -22,6 +22,7 @@ namespace EqUiWebUi.Areas.user_management.Models
         public Nullable<System.DateTime> StartDisplayTime { get; set; }
         public Nullable<System.DateTime> StopDisplayTime { get; set; }
         public Nullable<int> ResetRate { get; set; }
+        public Nullable<double> ZoomLevel { get; set; }
     
         public virtual users L_users { get; set; }
     }

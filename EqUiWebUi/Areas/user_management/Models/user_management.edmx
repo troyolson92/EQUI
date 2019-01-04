@@ -59,6 +59,7 @@
           <Property Name="StartDisplayTime" Type="datetime" />
           <Property Name="StopDisplayTime" Type="datetime" />
           <Property Name="ResetRate" Type="int" />
+          <Property Name="ZoomLevel" Type="float" />
         </EntityType>
         <EntityType Name="L_users">
           <Key>
@@ -265,6 +266,7 @@
           <Property Name="StopDisplayTime" Type="DateTime" Precision="3" />
           <NavigationProperty Name="L_users" Relationship="GADATAModel.FK_L_Screens_L_users" FromRole="L_Screens" ToRole="users" />
           <Property Name="ResetRate" Type="Int32" />
+          <Property Name="ZoomLevel" Type="Double" />
         </EntityType>
         <Association Name="FK_L_Screens_L_users">
           <End Type="GADATAModel.users" Role="users" Multiplicity="1" />
@@ -348,6 +350,7 @@
           <EntitySetMapping Name="L_Screens">
             <EntityTypeMapping TypeName="GADATAModel.L_Screens">
               <MappingFragment StoreEntitySet="L_Screens">
+                <ScalarProperty Name="ZoomLevel" ColumnName="ZoomLevel" />
                 <ScalarProperty Name="ResetRate" ColumnName="ResetRate" />
                 <ScalarProperty Name="StopDisplayTime" ColumnName="StopDisplayTime" />
                 <ScalarProperty Name="StartDisplayTime" ColumnName="StartDisplayTime" />
