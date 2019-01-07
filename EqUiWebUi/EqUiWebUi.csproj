@@ -2274,10 +2274,10 @@
     <Content Include="App_Code\TiplifeHtmlHelpers.cshtml" />
     <Content Include="Areas\Tiplife\Views\Electrode\Index.cshtml" />
     <Content Include="Areas\Tiplife\Views\Electrode\_Legend.cshtml" />
+    <None Include="Properties\PublishProfiles\chasvw1203_PRODUCTION_VCCH.pubxml" />
     <None Include="Properties\PublishProfiles\gensvw1178-DEV-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gotsvw11292-PRODUCTION-VCTA.pubxml" />
-    <None Include="Properties\PublishProfiles\VCC22700-Testing.pubxml" />
     <Content Include="Scripts\Codemirror\codemirror.js" />
     <Content Include="Scripts\Codemirror\mode\sql.js" />
     <Content Include="Scripts\d3\Chart.bundle.js" />
@@ -2399,14 +2399,16 @@
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
-    <None Include="Web.DEV_GA.config">
+    <None Include="Web.DEV_VCG.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
-    <None Include="Web.Rel_GA.config">
+    <None Include="Web.Rel_VCCH.config">
       <DependentUpon>Web.config</DependentUpon>
-      <SubType>Designer</SubType>
     </None>
-    <None Include="Web.Rel_TA.config">
+    <None Include="Web.Rel_VCG.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Rel_VCT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
@@ -2465,7 +2467,7 @@
     <TypeScriptMapRoot />
     <TypeScriptSourceRoot />
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Rel_TA|AnyCPU'">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Rel_VCT|AnyCPU' ">
     <OutputPath>bin\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
@@ -2474,10 +2476,15 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Rel_GA|AnyCPU'">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Rel_VCG|AnyCPU' ">
     <OutputPath>bin\</OutputPath>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DEV_GA|AnyCPU'">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DEV_VCG|AnyCPU' ">
+    <OutputPath>bin\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Rel_VCCH|AnyCPU' ">
     <OutputPath>bin\</OutputPath>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
