@@ -7,7 +7,10 @@
     [StartDisplayTime] DATETIME      NULL,
     [StopDisplayTime]  DATETIME      NULL,
     [ResetRate]        INT           NULL,
+    [ZoomLevel]        FLOAT (53)    NULL,
     CONSTRAINT [PK_L_Screens] PRIMARY KEY CLUSTERED ([id] ASC),
     CONSTRAINT [FK_L_Screens_L_users] FOREIGN KEY ([User_id]) REFERENCES [Volvo].[L_users] ([id])
 );
+
+
 

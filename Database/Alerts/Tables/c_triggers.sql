@@ -25,6 +25,7 @@
     [isDebugmode]              BIT           NOT NULL,
     [c_datasource_id]          INT           NOT NULL,
     [controlChartYlabel]       VARCHAR (MAX) NULL,
+    [ValueLabels]              VARCHAR (MAX) NULL,
     [OptValueLabels]           VARCHAR (MAX) NULL,
     CONSTRAINT [PK_c_triggers] PRIMARY KEY CLUSTERED ([id] ASC),
     CONSTRAINT [FK_c_triggers_c_datasource] FOREIGN KEY ([c_datasource_id]) REFERENCES [EqUi].[c_datasource] ([Id]),
@@ -32,6 +33,8 @@
     CONSTRAINT [FK_c_triggers_c_smsSystem] FOREIGN KEY ([smsSystem]) REFERENCES [Alerts].[c_smsSystem] ([id]),
     CONSTRAINT [FK_c_triggers_c_state] FOREIGN KEY ([initial_state]) REFERENCES [Alerts].[c_state] ([id])
 );
+
+
 
 
 

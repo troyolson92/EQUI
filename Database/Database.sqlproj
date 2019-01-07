@@ -110,7 +110,6 @@
     <Build Include="Alerts\Tables\h_alert.sql" />
     <Build Include="HangFire\Tables\State.sql" />
     <Build Include="Alerts\Tables\l_controlLimits.sql" />
-    <Build Include="Alerts\Tables\l_dummyControlchartResult.sql" />
     <Build Include="HangFire\Tables\JobParameter.sql" />
     <Build Include="Alerts\Tables\l_variants.sql" />
     <Build Include="HangFire\Tables\JobQueue.sql" />
