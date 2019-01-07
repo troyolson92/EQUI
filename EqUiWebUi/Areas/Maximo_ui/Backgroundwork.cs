@@ -202,7 +202,11 @@ workorder.changedate >= sysdate - 100
 
             cmds.Add("exec NGAC.[sp_LinkAssets]");
             cmds.Add("exec EQUI.[sp_LinkAssets]");
-            cmds.Add("exec WELDING2.[sp_LinkAssets]");
+
+            if (EqUiWebUi.MyBooleanExtensions.IsAreaEnabled("Welding"))
+            {
+                cmds.Add("exec WELDING2.[sp_LinkAssets]");
+            }
 
             foreach (string cmd in cmds)
             {

@@ -75,28 +75,36 @@ namespace EqUiWebUi.Areas.Supervision
     {
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-            public void configHangfireJobs()
-            {
-                if (EqUiWebUi.MyBooleanExtensions.IsAreaEnabled("Supervision"))
-                {
-                    BackgroundWork backgroundwork = new BackgroundWork();
-                    //set job to refresh every minute
-                    RecurringJob.AddOrUpdate("BT_Supervis", () => backgroundwork.UpdateSupervisie(null), Cron.Minutely);
-                    //**********************************normalize***************************************************
-                    //set job to refresh every minute
-                    RecurringJob.AddOrUpdate("norm_C3G", () => backgroundwork.norm_c3g(null), Cron.Minutely);
-                    RecurringJob.AddOrUpdate("norm_C4G", () => backgroundwork.norm_c4g(null), Cron.Minutely);
-                    RecurringJob.AddOrUpdate("norm_NGAC", () => backgroundwork.norm_NGAC(null), Cron.Minutely);
-                }
-                else
-                {
-                    log.Warn("Supervision area is disabled removing hangfire jobs");
-                    RecurringJob.RemoveIfExists("BT_Supervis");
-                    RecurringJob.RemoveIfExists("norm_C3G");
-                    RecurringJob.RemoveIfExists("norm_C4G");
-                    RecurringJob.RemoveIfExists("norm_NGAC");
-                }
-            }
+    public void configHangfireJobs()
+    {
+        BackgroundWork backgroundwork = new BackgroundWork();
+       //default setup. (VASC ABB robot)
+        if (EqUiWebUi.MyBooleanExtensions.IsAreaEnabled("Supervision"))
+            { 
+                RecurringJob.AddOrUpdate("BT_Supervis", () => backgroundwork.UpdateSupervisie(null), Cron.Minutely);
+                RecurringJob.AddOrUpdate("norm_NGAC", () => backgroundwork.norm_NGAC(null), Cron.Minutely);
+        }
+        else
+        {
+            log.Warn("Supervision area is disabled removing hangfire jobs");
+            RecurringJob.RemoveIfExists("BT_Supervis");
+
+            RecurringJob.RemoveIfExists("norm_NGAC");
+        }
+
+        //incase of Ghent (VCSC comau robots)
+        if (EqUiWebUi.MyBooleanExtensions.IsAreaEnabled("VCSC"))
+        {
+            RecurringJob.AddOrUpdate("norm_C3G", () => backgroundwork.norm_c3g(null), Cron.Minutely);
+            RecurringJob.AddOrUpdate("norm_C4G", () => backgroundwork.norm_c4g(null), Cron.Minutely);
+        }
+        else
+        {
+            log.Warn("VCSC area is disabled removing hangfire jobs");
+            RecurringJob.RemoveIfExists("norm_C3G");
+            RecurringJob.RemoveIfExists("norm_C4G");
+        }
+    }
 
     //update the local datatable with supervisie called every minute #hangfire
     [Queue("gadata")]
