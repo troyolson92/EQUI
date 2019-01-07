@@ -46,6 +46,18 @@ namespace EqUiWebUi.Areas.VASC.Models
         public string ResponsibleTechnicianTeam { get; set; }
         public string ResponsibleProductionTeam { get; set; }
         public bool hasSpotweld { get; set; }
+        public Nullable<bool> hasTipchanger { get; set; }
+        public Nullable<int> Asset_x { get; set; }
+        public Nullable<int> Asset_y { get; set; }
+        public string Asset_png { get; set; }
+        public Nullable<int> Station_x { get; set; }
+        public Nullable<int> Station_y { get; set; }
+        public string Station_png { get; set; }
+        public Nullable<int> Line_x { get; set; }
+        public Nullable<int> Line_y { get; set; }
+        public string Line_png { get; set; }
+        public string Station { get; set; }
+        public string Line { get; set; }
     
         public virtual c_controller_class c_controller_class { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

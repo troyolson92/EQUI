@@ -25,6 +25,18 @@
           <Property Name="CLassificationId" Type="varchar(max)" />
           <Property Name="hasRackidAsBodynum" Type="bit" Nullable="false" />
           <Property Name="hasSpotweld" Type="bit" Nullable="false" />
+          <Property Name="hasTipchanger" Type="bit" />
+          <Property Name="Asset_x" Type="int" />
+          <Property Name="Asset_y" Type="int" />
+          <Property Name="Asset_png" Type="varchar" MaxLength="50" />
+          <Property Name="Station_x" Type="int" />
+          <Property Name="Station_y" Type="int" />
+          <Property Name="Station_png" Type="varchar" MaxLength="50" />
+          <Property Name="Line_x" Type="int" />
+          <Property Name="Line_y" Type="int" />
+          <Property Name="Line_png" Type="varchar" MaxLength="50" />
+          <Property Name="Station" Type="varchar" MaxLength="50" />
+          <Property Name="Line" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="c_controller_class">
           <Key>
@@ -423,10 +435,6 @@
           <Property Name="isEvent" Type="bit" />
           <Property Name="abbDateTime" Type="datetime" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'GADATA.NGAC.Bodytracking' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'GADATA.NGAC.NGAC_Supervisie' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <Association Name="FK_c_controller_c_controller_class">
           <End Role="c_controller_class" Type="Self.c_controller_class" Multiplicity="1" />
           <End Role="c_controller" Type="Self.c_controller" Multiplicity="*" />
@@ -1119,6 +1127,18 @@ warning 6002: The table/view 'GADATA.NGAC.NGAC_Supervisie' does not have a prima
           <Property Name="ResponsibleTechnicianTeam" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ResponsibleProductionTeam" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="hasSpotweld" Type="Boolean" Nullable="false" />
+          <Property Name="hasTipchanger" Type="Boolean" />
+          <Property Name="Asset_x" Type="Int32" />
+          <Property Name="Asset_y" Type="Int32" />
+          <Property Name="Asset_png" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Station_x" Type="Int32" />
+          <Property Name="Station_y" Type="Int32" />
+          <Property Name="Station_png" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Line_x" Type="Int32" />
+          <Property Name="Line_y" Type="Int32" />
+          <Property Name="Line_png" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Station" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Line" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="c_controller_class">
           <Key>
@@ -1880,6 +1900,18 @@ warning 6002: The table/view 'GADATA.NGAC.NGAC_Supervisie' does not have a prima
           <EntitySetMapping Name="c_controller">
             <EntityTypeMapping TypeName="GADATAModelVASC.c_controller">
               <MappingFragment StoreEntitySet="c_controller">
+                <ScalarProperty Name="Line" ColumnName="Line" />
+                <ScalarProperty Name="Station" ColumnName="Station" />
+                <ScalarProperty Name="Line_png" ColumnName="Line_png" />
+                <ScalarProperty Name="Line_y" ColumnName="Line_y" />
+                <ScalarProperty Name="Line_x" ColumnName="Line_x" />
+                <ScalarProperty Name="Station_png" ColumnName="Station_png" />
+                <ScalarProperty Name="Station_y" ColumnName="Station_y" />
+                <ScalarProperty Name="Station_x" ColumnName="Station_x" />
+                <ScalarProperty Name="Asset_png" ColumnName="Asset_png" />
+                <ScalarProperty Name="Asset_y" ColumnName="Asset_y" />
+                <ScalarProperty Name="Asset_x" ColumnName="Asset_x" />
+                <ScalarProperty Name="hasTipchanger" ColumnName="hasTipchanger" />
                 <ScalarProperty Name="hasSpotweld" ColumnName="hasSpotweld" />
                 <ScalarProperty Name="ResponsibleProductionTeam" ColumnName="ResponsibleProductionTeam" />
                 <ScalarProperty Name="ResponsibleTechnicianTeam" ColumnName="ResponsibleTechnicianTeam" />
