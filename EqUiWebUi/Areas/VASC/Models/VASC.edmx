@@ -25,7 +25,7 @@
           <Property Name="CLassificationId" Type="varchar(max)" />
           <Property Name="hasRackidAsBodynum" Type="bit" Nullable="false" />
           <Property Name="hasSpotweld" Type="bit" Nullable="false" />
-          <Property Name="hasTipchanger" Type="bit" />
+          <Property Name="hasTipchanger" Type="bit" Nullable="false" />
           <Property Name="Asset_x" Type="int" />
           <Property Name="Asset_y" Type="int" />
           <Property Name="Asset_png" Type="varchar" MaxLength="50" />
@@ -1127,7 +1127,7 @@
           <Property Name="ResponsibleTechnicianTeam" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ResponsibleProductionTeam" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="hasSpotweld" Type="Boolean" Nullable="false" />
-          <Property Name="hasTipchanger" Type="Boolean" />
+          <Property Name="hasTipchanger" Type="Boolean" Nullable="false" />
           <Property Name="Asset_x" Type="Int32" />
           <Property Name="Asset_y" Type="Int32" />
           <Property Name="Asset_png" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />

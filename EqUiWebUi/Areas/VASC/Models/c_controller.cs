@@ -46,7 +46,7 @@ namespace EqUiWebUi.Areas.VASC.Models
         public string ResponsibleTechnicianTeam { get; set; }
         public string ResponsibleProductionTeam { get; set; }
         public bool hasSpotweld { get; set; }
-        public Nullable<bool> hasTipchanger { get; set; }
+        public bool hasTipchanger { get; set; }
         public Nullable<int> Asset_x { get; set; }
         public Nullable<int> Asset_y { get; set; }
         public string Asset_png { get; set; }
