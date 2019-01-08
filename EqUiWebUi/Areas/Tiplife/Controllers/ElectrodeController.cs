@@ -152,7 +152,7 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
             string LocationRoot = CurrentUser.Getuser.LocationRoot;
             if (location != "")//if location is passing only show that one
             {
-                SelectList list = new SelectList(db.c_timer.Where(c => c.Robot.Contains(location)).OrderBy(c => c.Name), "Name", "Robot");
+                SelectList list = new SelectList(db.c_timer.Where(c => c.Robot.Contains(location)).OrderBy(c => c.Name), "Robot", "Robot");
                 ViewBag.Locations = list;
                 //check if we should auto load. (if only one is possible).
                 if (list.Count() == 1 && tool_nr != 0 && ElectrodeNo == 0)
