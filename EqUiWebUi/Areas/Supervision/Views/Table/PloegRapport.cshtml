@@ -62,11 +62,11 @@
             $('#MyModal').removeData('bs.modal');
             $('#MyModal').modal({ show: true });
             $('#MyModal').load('@Url.Action("_Moreinfo", "Table")', {
-                location: encodeURIComponent(data["location"]),
-                errornum: encodeURIComponent(data["logcode"]),
-                refid: encodeURIComponent(data["ref-id"]),
-                logtype: encodeURIComponent(data["logtype"]),
-                logtext: encodeURIComponent(data["logtext"])
+                location: data["location"],
+                errornum: data["logcode"],
+                refid: data["ref-id"],
+                logtype: data["logtype"],
+                logtext: data["logtext"]
             }, function (result) { });
         }
 
