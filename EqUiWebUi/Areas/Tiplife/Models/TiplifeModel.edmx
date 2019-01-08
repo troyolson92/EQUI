@@ -104,6 +104,7 @@ warning 6002: The table/view 'GADATA.NGAC.TipMonitor' does not have a primary ke
             
             
             <PropertyRef Name="id" />
+            
           </Key>
           <Property Name="Robot" Type="varchar" MaxLength="30" Nullable="false" />
           <Property Name="Tool_Nr" Type="smallint" Nullable="false" />
@@ -114,6 +115,7 @@ warning 6002: The table/view 'GADATA.NGAC.TipMonitor' does not have a primary ke
           <Property Name="pWear" Type="float" />
           <Property Name="nRspots" Type="float" />
           <Property Name="nRcars" Type="float" />
+          <Property Name="SortCol" Type="float" />
           <Property Name="TipAge(h)" Type="int" />
           <Property Name="LastTipchange" Type="datetime" />
           <Property Name="Time_DressCycleTime" Type="float" />
@@ -329,6 +331,7 @@ warning 6002: The table/view 'GADATA.NGAC.TipwearLast' does not have a primary k
     [TipMonitor].[pWear] AS [pWear], 
     [TipMonitor].[nRspots] AS [nRspots], 
     [TipMonitor].[nRcars] AS [nRcars], 
+    [TipMonitor].[SortCol] AS [SortCol], 
     [TipMonitor].[TipAge(h)] AS [TipAge(h)], 
     [TipMonitor].[LastTipchange] AS [LastTipchange], 
     [TipMonitor].[Time_DressCycleTime] AS [Time_DressCycleTime], 
@@ -667,6 +670,7 @@ warning 6002: The table/view 'GADATA.NGAC.TipwearLast' does not have a primary k
           <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="RobotWear" Type="Double" />
           <Property Name="hasTipchanger" Type="Boolean" Nullable="false" />
+          <Property Name="SortCol" Type="Double" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -870,6 +874,7 @@ warning 6002: The table/view 'GADATA.NGAC.TipwearLast' does not have a primary k
           <EntitySetMapping Name="TipMonitor">
             <EntityTypeMapping TypeName="GADATAModelTiplife.TipMonitor">
               <MappingFragment StoreEntitySet="TipMonitor">
+                <ScalarProperty Name="SortCol" ColumnName="SortCol" />
                 <ScalarProperty Name="hasTipchanger" ColumnName="hasTipchanger" />
                 <ScalarProperty Name="RobotWear" ColumnName="RobotWear" />
                 <ScalarProperty Name="Status" ColumnName="Status" />

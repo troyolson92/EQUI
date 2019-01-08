@@ -2,13 +2,14 @@
 
 @Html.Grid(Model).Named("TipStatusGrid").Build(columns =>
 {
+    columns.Add(c => c.SortCol).Titled("SortCol").InitialSort(GridSortOrder.Asc).Css("d-none");
     columns.Add(c => c.Robot).Titled("Robot").Filterable(true);
     columns.Add(c => c.Date_time).Titled("Laatst gefreest").Formatted("{0:dd-MM-yyyy HH:mm}");
     columns.Add(c => c.nDress).Titled("#gefreest");
     columns.Add(c => c.WearRatio).Titled("%WearRatio").Css("d-none d-lg-table-cell");
     columns.Add(c => c.pWear).Titled("%wear").Filterable(true);
     columns.Add(c => c.nRspots).Titled("#R Spots").Css("d-none d-lg-table-cell");
-    columns.Add(c => c.nRcars).Titled("#R Stukken").InitialSort(GridSortOrder.Asc).Css("d-none d-lg-table-cell");
+    columns.Add(c => c.nRcars).Titled("#R Stukken").Css("d-none d-lg-table-cell");
     columns.Add(c => c.TipAge_h_).Titled("leeftijd (h)");
     columns.Add(c => c.RobotWear).Titled("Wear(mm)").Css("d-none d-lg-table-cell");
     columns.Add(c => c.Time_DressCycleTime).Titled("Ct (s)").Css("d-none d-lg-table-cell");
@@ -16,17 +17,17 @@
     columns.Add(c => c.Tool_Nr).Filterable(true).Css("d-none");
     //RenderStatusIcon
     columns.Add()
-                 .Titled("Status")
-                 .Encoded(false)
-                 .Filterable(false)
-                 .Sortable(false)
-                 .RenderedAs(c => TiplifeHtmlHelpers.TipMonitorIcon(c.Status, c.RobotWear, c.hasTipchanger));
+            .Titled("Status")
+            .Encoded(false)
+            .Filterable(false)
+            .Sortable(false)
+            .RenderedAs(c => TiplifeHtmlHelpers.TipMonitorIcon(c.Status, c.RobotWear, c.hasTipchanger));
     //launch sbcu tool
     columns.Add()
-                     .Encoded(false)
-                     .Filterable(false)
-                     .Sortable(false)
-                     .RenderedAs(c => MyHtmlHelpers.IconActionLink(Url.Action("WeldgunTool", new {location = c.Robot, tool_nr = c.Tool_Nr }), "fas fa-chart-line", "", "Launch WeldgunTool").ToHtmlString());
+            .Encoded(false)
+            .Filterable(false)
+            .Sortable(false)
+            .RenderedAs(c => MyHtmlHelpers.IconActionLink(Url.Action("WeldgunTool", new {location = c.Robot, tool_nr = c.Tool_Nr }), "fas fa-chart-line", "", "Launch WeldgunTool").ToHtmlString());
 }).Sortable().Pageable(pager =>
 {
     pager.RowsPerPage = 20;

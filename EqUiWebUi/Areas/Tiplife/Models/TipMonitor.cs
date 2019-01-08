@@ -32,5 +32,6 @@ namespace EqUiWebUi.Areas.Tiplife.Models
         public string Status { get; set; }
         public Nullable<double> RobotWear { get; set; }
         public bool hasTipchanger { get; set; }
+        public Nullable<double> SortCol { get; set; }
     }
 }

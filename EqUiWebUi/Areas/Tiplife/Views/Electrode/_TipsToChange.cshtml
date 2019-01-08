@@ -12,7 +12,7 @@
                          .Filterable(false)
                          .Sortable(false)
                          .RenderedAs(c => TiplifeHtmlHelpers.TipMonitorIcon(c.Status, c.RobotWear, c.hasTipchanger));
-}).Empty("Did not find anything").Css("table-hover")
+}).Sortable().Empty("Did not find anything").Css("table-hover")
 
 @*subscrible this table to events*@
 <script>

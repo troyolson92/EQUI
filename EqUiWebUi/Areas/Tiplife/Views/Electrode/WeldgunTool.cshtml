@@ -19,6 +19,10 @@ ElectrodeNo: @Html.DropDownList("ElectrodeNo", null, htmlAttributes: new { @clas
 <div id="welgunToolPlaceholder"></div>
 <!--WeldgunToolScripts-->
 <script>
+        //full with screen
+    $("#allcontent").removeClass("body-content");
+    $("#allcontent").removeClass("container");
+
     $('.selectpicker').selectpicker();
     $('#btn_getData').click(function () {
         $('#welgunToolPlaceholder').load('@Url.Action("_WeldgunTool")',
