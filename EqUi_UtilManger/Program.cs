@@ -56,6 +56,7 @@ namespace EqUi_UtilManger
                     switch (col["Tool"])
                     {
                         case "SBCUstats":
+                             MessageBox.Show("Deze tool wordt NIET meer ondersteund gelieve de nieuwe te gebruiken!");
                             if (col["target"] != null)
                             {
                                 Application.Run(new SBCUStats(col["target"]));
