@@ -5,13 +5,23 @@ namespace EqUiWebUi.Areas.Tiplife
     public static class TiplifeHelpers
     {
         //returns a Css style based on value (used in tiplife)
-        public static string getRowStyleByWearValue(double? pWear, int? nDress, double? nRparts, string Status)
+        public static string getRowStyleByWearValue(double? pWear, int? nDress, double? nRparts, string Status, bool hasTipchanger)
         {
-            if (pWear.GetValueOrDefault(0) > 98 || nDress.GetValueOrDefault(0) > 210) //severe tiplife
-            {     
-                return "ani_PulseRedFast";
+            //only in case of no tip changer animate on % wear and cars
+            if (!hasTipchanger)
+            {
+                if (pWear.GetValueOrDefault(0) > 98 || nDress.GetValueOrDefault(0) > 210) //severe tiplife
+                {
+                    return "ani_PulseRedFast";
+                }
+                else if (pWear.GetValueOrDefault(0) > 90 || nDress.GetValueOrDefault(0) > 200) //mild tiplife
+                {
+                    return "ani_PulseRed";
+                }
             }
-            else if (pWear.GetValueOrDefault(0) > 90 || nDress.GetValueOrDefault(0) > 200) //mild tiplife
+
+            //handle status error animation
+            if (Status == "Tipchanger")
             {
                 return "ani_PulseRed";
             }
@@ -19,9 +29,9 @@ namespace EqUiWebUi.Areas.Tiplife
             {
                 return "ani_PulseBlueRepeat";
             }
-            else
+            else //OK
             {
-                return "";
+              return ""; 
             }
         }
 

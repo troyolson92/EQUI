@@ -2,7 +2,7 @@
 <div class="badge">Aantal:@Model.Count()</div>
 @Html.Grid(Model).Named("TipsToChangeTable").Build(columns =>
 {
-    columns.Add(c => c.Robot).Titled("Robot");
+    columns.Add(c => c.Robot).Titled("Robot").InitialSort(GridSortOrder.Asc);
     columns.Add(c => c.nRcars).Titled("#R Stukken");
     columns.Add(c => c.pWear).Titled("%wear");
     columns.Add(c => c.nDress).Titled("#gefreest");
@@ -11,7 +11,7 @@
                          .Encoded(false)
                          .Filterable(false)
                          .Sortable(false)
-                         .RenderedAs(c => TiplifeHtmlHelpers.TipMonitorIcon(c.Status, c.RobotWear));
+                         .RenderedAs(c => TiplifeHtmlHelpers.TipMonitorIcon(c.Status, c.RobotWear, c.hasTipchanger));
 }).Empty("Did not find anything").Css("table-hover")
 
 @*subscrible this table to events*@

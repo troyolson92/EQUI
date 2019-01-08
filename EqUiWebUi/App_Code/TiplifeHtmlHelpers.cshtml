@@ -1,39 +1,39 @@
 ﻿@*helper to create info icon for tipmonitor*@
-@helper TipMonitorIcon(string Status, double? RobotWear)
+@helper TipMonitorIcon(string Status, double? RobotWear, bool hasTipchanger)
 {
 string icon = "";
 string linkText = "";
 string tooltip = "";
 
 //no data from robot for last 2 days
-if (Status == "ND")
+if (Status == "NO DATA")
 {
     icon = "far fa-eye";
     linkText = "No data";
     tooltip = "No data from robot for 48hours check electrode by hand!";
 }
 //no tip change detected alert but wait to change until more than 1 mm wear
-else if (Status == "NTCD" && RobotWear < 1)
+else if (Status == "NotChanged" && RobotWear < 1)
 {
     icon = "fas fa-exclamation-triangle";
     linkText = "Wait for re-change";
     tooltip = "No change detected but wait to re-change electrode!";
 }
 //no tip change detected alert and can be changed
-else if (Status == "NTCD")
+else if (Status == "NotChanged")
 {
     icon = "fas fa-retweet";
     linkText = "Re-change";
     tooltip = "No change detected you can now try to change the electrode again";
 }
 //
-else if (Status == "NWIC")
+else if (Status == "NO PREDICTION")
 {
     icon = "fas fa-thumbs-down";
     linkText = "No wear in calculation";
     tooltip = "Tips are changed to fast I can not calculate the remaining parts";
 }
-else if (Status == "TMEPTY")
+else if (Status == "Tipchanger")
 {
     icon = "fas fa-battery-empty";
     linkText = "Tipchange magazine empty";

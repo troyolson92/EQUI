@@ -104,7 +104,6 @@ warning 6002: The table/view 'GADATA.NGAC.TipMonitor' does not have a primary ke
             
             
             <PropertyRef Name="id" />
-            
           </Key>
           <Property Name="Robot" Type="varchar" MaxLength="30" Nullable="false" />
           <Property Name="Tool_Nr" Type="smallint" Nullable="false" />
@@ -120,8 +119,9 @@ warning 6002: The table/view 'GADATA.NGAC.TipMonitor' does not have a primary ke
           <Property Name="Time_DressCycleTime" Type="float" />
           <Property Name="id" Type="int" Nullable="false" />
           <Property Name="LocationTree" Type="varchar(max)" />
+          <Property Name="hasTipchanger" Type="bit" Nullable="false" />
           <Property Name="MagicFiXedWear" Type="float" />
-          <Property Name="Status" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="Status" Type="varchar" MaxLength="50" />
           <Property Name="RobotWear" Type="float" />
         </EntityType>
         <!--Errors Found During Generation:
@@ -234,8 +234,6 @@ warning 6002: The table/view 'GADATA.NGAC.TipwearLast' does not have a primary k
           <Property Name="Last%FixedWearBeforeChange" Type="float" />
           <Property Name="Last%MovWearBeforeChange" Type="float" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'GADATA.Volvo.Robots' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityContainer Name="GADATAModelTiplifeStoreContainer">
           <EntitySet Name="TipDressLogFile" EntityType="Self.TipDressLogFile" store:Type="Views" store:Schema="NGAC">
             <DefiningQuery>SELECT 
@@ -336,6 +334,7 @@ warning 6002: The table/view 'GADATA.Volvo.Robots' does not have a primary key d
     [TipMonitor].[Time_DressCycleTime] AS [Time_DressCycleTime], 
     [TipMonitor].[id] AS [id], 
     [TipMonitor].[LocationTree] AS [LocationTree], 
+    [TipMonitor].[hasTipchanger] AS [hasTipchanger], 
     [TipMonitor].[MagicFiXedWear] AS [MagicFiXedWear], 
     [TipMonitor].[Status] AS [Status], 
     [TipMonitor].[RobotWear] AS [RobotWear]
@@ -665,8 +664,9 @@ warning 6002: The table/view 'GADATA.Volvo.Robots' does not have a primary key d
           <Property Name="id" Type="Int32" Nullable="false" />
           <Property Name="LocationTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="MagicFiXedWear" Type="Double" />
-          <Property Name="Status" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="RobotWear" Type="Double" />
+          <Property Name="hasTipchanger" Type="Boolean" Nullable="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -870,6 +870,7 @@ warning 6002: The table/view 'GADATA.Volvo.Robots' does not have a primary key d
           <EntitySetMapping Name="TipMonitor">
             <EntityTypeMapping TypeName="GADATAModelTiplife.TipMonitor">
               <MappingFragment StoreEntitySet="TipMonitor">
+                <ScalarProperty Name="hasTipchanger" ColumnName="hasTipchanger" />
                 <ScalarProperty Name="RobotWear" ColumnName="RobotWear" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="MagicFiXedWear" ColumnName="MagicFiXedWear" />

@@ -9,17 +9,17 @@
         </tr>
         <tr>
             <td>mild warning</td>
-            <td class="@EqUiWebUi.Areas.Tiplife.TiplifeHelpers.getRowStyleByWearValue(pWear:91, nDress:0, nRparts:0, Status:"")"></td>
-            <td>Wear > 90% Or Dresses > 200</td>
+            <td class="@EqUiWebUi.Areas.Tiplife.TiplifeHelpers.getRowStyleByWearValue(pWear:91, nDress:0, nRparts:0, Status:"", hasTipchanger: false)"></td>
+            <td>Wear > 90% Or Dresses > 200 and NOT tip changer Or in case of tip changer is empty</td>
         </tr>
         <tr>
             <td>severe warning</td>
-            <td class="@EqUiWebUi.Areas.Tiplife.TiplifeHelpers.getRowStyleByWearValue(pWear:99, nDress:0, nRparts:0, Status:"")"></td>
-            <td>Wear > 98% Or Dresses > 210</td>
+            <td class="@EqUiWebUi.Areas.Tiplife.TiplifeHelpers.getRowStyleByWearValue(pWear:99, nDress:0, nRparts:0, Status:"", hasTipchanger: false)"></td>
+            <td>Wear > 98% Or Dresses > 210 and NOT tip changer</td>
         </tr>
         <tr>
             <td>check status</td>
-            <td class="@EqUiWebUi.Areas.Tiplife.TiplifeHelpers.getRowStyleByWearValue(pWear:0, nDress:0, nRparts:0, Status:"XXX")"></td>
+            <td class="@EqUiWebUi.Areas.Tiplife.TiplifeHelpers.getRowStyleByWearValue(pWear:0, nDress:0, nRparts:0, Status:"SOMETHING", hasTipchanger: false)"></td>
             <td>Status check or data fault check "Status icon" bellow</td>
         </tr>
     </table>
@@ -32,19 +32,23 @@
             <th>Description</th>
         </tr>
         <tr>
-            <td>@TiplifeHtmlHelpers.TipMonitorIcon("ND", 0)</td>
+            <td>@TiplifeHtmlHelpers.TipMonitorIcon("NO DATA", 0, false)</td>
             <td>No data from robot for 48hours check electrode by hand!</td>
         </tr>
         <tr>
-            <td>@TiplifeHtmlHelpers.TipMonitorIcon("NTCD", 0)</td>
+            <td>@TiplifeHtmlHelpers.TipMonitorIcon("NotChanged", 0, false)</td>
             <td>No change detected but wait to re-change electrode! (wait for wear > 1mm)</td>
         </tr>
         <tr>
-            <td>@TiplifeHtmlHelpers.TipMonitorIcon("NTCD", 1)</td>
+            <td>@TiplifeHtmlHelpers.TipMonitorIcon("NotChanged", 1, false)</td>
             <td>No change detected you can now try to change the electrode again</td>
         </tr>
         <tr>
-            <td>@TiplifeHtmlHelpers.TipMonitorIcon("", 0)</td>
+            <td>@TiplifeHtmlHelpers.TipMonitorIcon("Tipchanger", 1, false)</td>
+            <td>Tip changer is empty</td>
+        </tr>
+        <tr>
+            <td>@TiplifeHtmlHelpers.TipMonitorIcon("", 0 ,false)</td>
             <td>Everything is OK</td>
         </tr>
     </table>

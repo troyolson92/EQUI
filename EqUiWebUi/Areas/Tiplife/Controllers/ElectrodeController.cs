@@ -96,22 +96,36 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
         /// <param name="minWear"></param>
         /// <param name="minParts"></param>
         /// <param name="maxDress"></param>
+        /// <param name="Tipchanger">if this is true all wear parms above are ignored</param>
         /// <returns></returns>
-        public ActionResult _TipsToChange(string locationFilter, int minWear = 0, int minParts = 0, int maxDress = 1000)
+        public ActionResult _TipsToChange(string locationFilter, int minWear = 0, int minParts = 0, int maxDress = 1000, bool Tipchanger = false)
         {
             GADATAEntitiesTiplife gADATAEntities = new GADATAEntitiesTiplife();
             string LocationRoot = CurrentUser.Getuser.LocationRoot;
-            IEnumerable<TipMonitor> data = from tipMonitor in DataBuffer.Tipstatus
-                                           where
-                                           (tipMonitor.pWear > minWear
-                                            || tipMonitor.nRcars.GetValueOrDefault(1000) < minParts //if no Rcars value available ignore! 
-                                            || tipMonitor.nDress > maxDress
-                                            || (tipMonitor.Status != "" && tipMonitor.Status != "NWIC")  //do not push for no wear in clac 
-                                           )
-                                           && tipMonitor.LocationTree.Contains(locationFilter) //apply dropdown filter
-                                           && tipMonitor.LocationTree.Contains(LocationRoot) //apply user filter
-                                           orderby tipMonitor.nRcars ascending
-                                           select tipMonitor;
+            IEnumerable<TipMonitor> data;
+            if (!Tipchanger)
+            {
+               data = from tipMonitor in DataBuffer.Tipstatus
+                    where
+                    (tipMonitor.pWear > minWear
+                    || tipMonitor.nRcars.GetValueOrDefault(1000) < minParts //if no Rcars value available ignore! 
+                    || tipMonitor.nDress > maxDress
+                    || (tipMonitor.Status != "" && tipMonitor.Status != "NO PREDICTION")  //do not push for no wear in clac 
+                    )
+                    && tipMonitor.LocationTree.Contains(locationFilter) //apply dropdown filter
+                    && tipMonitor.LocationTree.Contains(LocationRoot) //apply user filter
+                    select tipMonitor;
+            }
+            else
+            {
+                data = from tipMonitor in DataBuffer.Tipstatus
+                    where
+                    (tipMonitor.Status != "" && tipMonitor.Status != "NO PREDICTION")  //do not push for no wear in clac 
+                    && tipMonitor.LocationTree.Contains(locationFilter) //apply dropdown filter
+                    && tipMonitor.LocationTree.Contains(LocationRoot) //apply user filter
+                    select tipMonitor;
+            }
+
             log.Info($"Plantipchange for: {locationFilter} Filters: minwear: {minWear} minparts: {minParts} maxDress: {maxDress}  |resultCount: {data.Count()}");
             //debug added to store result in log and see if they follow the plan.
             List<TipMonitor> results = data.ToList();
