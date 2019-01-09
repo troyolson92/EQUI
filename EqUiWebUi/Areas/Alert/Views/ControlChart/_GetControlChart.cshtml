@@ -44,6 +44,14 @@
     <input type="hidden" name="ControlchartoptDatanum" value="">
 </div>
 
+<style>
+    .scatter-legend-marker {
+        width: 14px;
+        height: 14px;
+        display: inline-block;
+    }
+</style>
+
 <!--ControlChartScripts-->
 @*https://dima117.github.io/Chart.Scatter/*@
 <script src="~/Scripts/Chart.Core.js"></script>
@@ -104,7 +112,7 @@
          $('#ChartID@(Model.c_trigger_id)').find("#WikiPopover").popover({
             html: true,
             content: function () {
-                return $.ajax({
+                return "<h6>Chart legend</h6>" +  ControlChart.generateLegend() + "<\hr>" + $.ajax({
                     url: '@Url.Action("_Wiki","c_triggers",new {c_trigger_id = Model.c_trigger_id })',
                     dataType: 'html',
                     async: false
@@ -182,17 +190,17 @@
                 {
                     label: dataPayload[0].ValueLabel,
                     strokeColor: '#007ACC',
-                    pointColor: '#007ACC',
-                    pointStrokeColor: '#fff',
+                   // pointColor: '#007ACC',
+                   // pointStrokeColor: '#fff',
                     data: dataPayload[1]
                 },
                 {
-                    label: 'UCL',
+                    label: 'UCL (upper control limit)',
                     strokeColor: '#F16220',
                     data: dataPayload[2]
                 },
                 {
-                    label: 'LCL',
+                    label: 'LCL (lower control limit)',
                     strokeColor: '#F16220',
                     data: dataPayload[3]
                 }

@@ -48,13 +48,26 @@ namespace EqUiWebUi.Areas.Tiplife
                 }
                 DataBuffer._isRunningUpdateTipstatus = true;
 
-                // Logic...
-                context.WriteLine("Get gADATAEntities.TipMonitor");
-                GADATAEntitiesTiplife gADATAEntities = new GADATAEntitiesTiplife();
-                gADATAEntities.Database.CommandTimeout = 45; // default 30 
-                List<TipMonitor> data = (from tipstatus in gADATAEntities.TipMonitor
-                                            select tipstatus).ToList();
+                            
+                GADATAEntitiesTiplife db = new GADATAEntitiesTiplife();
+                db.Database.CommandTimeout = 45; // default 30 
 
+                //get data for NGAC  
+                context.WriteLine("Get gADATAEntities.TipMonitor (NGAC)");
+                List<TipMonitor> data = db.TipMonitor.ToList();
+
+                //ADD comau data if area is enabled
+                if (EqUiWebUi.MyBooleanExtensions.IsAreaEnabled("Welding"))
+                {
+                    context.WriteLine("Get gADATAEntities.TipMonitor (VWSC)");
+                    List<VWSC_TipMonitor> VWSC_data = db.TipMonitor1.ToList();
+                    if (VWSC_data.Count != 0)
+                    {
+                   //     data.AddRange(VWSC_data);
+                    }
+                }
+
+                //check data valid and update if needed
                 if (data.Count != 0)
                 {
                     DataBuffer.Tipstatus = data;
@@ -81,8 +94,8 @@ namespace EqUiWebUi.Areas.Tiplife
                 if (DataBuffer.TipWearbeforechangeCounter >= TipWearbeforechangeInterval)
                 {
                     context.WriteLine("TipWearbeforechange update START");
-                    gADATAEntities.Database.CommandTimeout = 120;
-                    gADATAEntities.Database.ExecuteSqlCommand("exec [NGAC].[sp_CalcTipWearBeforeChange]");
+                    db.Database.CommandTimeout = 120;
+                    db.Database.ExecuteSqlCommand("exec [NGAC].[sp_CalcTipWearBeforeChange]");
                     DataBuffer.TipWearbeforechangeCounter = 0;
                     context.WriteLine("Done");
                 }

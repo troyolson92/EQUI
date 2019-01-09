@@ -31,5 +31,6 @@ namespace EqUiWebUi.Areas.Tiplife.Models
         public virtual DbSet<TipLifeExpectations> TipLifeExpectations { get; set; }
         public virtual DbSet<TipMonitor> TipMonitor { get; set; }
         public virtual DbSet<TCP_LOG> TCP_LOG { get; set; }
+        public virtual DbSet<VWSC_TipMonitor> TipMonitor1 { get; set; }
     }
 }

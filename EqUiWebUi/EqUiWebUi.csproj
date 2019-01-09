@@ -414,6 +414,9 @@
     <Compile Include="Areas\Tiplife\Models\TipwearLast.cs">
       <DependentUpon>TiplifeModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Areas\Tiplife\Models\VWSC_TipMonitor.cs">
+      <DependentUpon>TiplifeModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Areas\Tiplife\TiplifeAreaRegistration.cs" />
     <Compile Include="Areas\Tiplife\TiplifeHelpers.cs" />
     <Compile Include="Areas\user_management\Controllers\AreaFiltersController.cs" />

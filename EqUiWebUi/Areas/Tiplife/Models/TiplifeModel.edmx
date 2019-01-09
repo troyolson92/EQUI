@@ -271,6 +271,34 @@ warning 6002: The table/view 'GADATA.NGAC.TipwearLast' does not have a primary k
           <Property Name="Last%FixedWearBeforeChange" Type="float" />
           <Property Name="Last%MovWearBeforeChange" Type="float" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.WELDING2.TipMonitor' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="TipMonitor1">
+          <Key>
+            <PropertyRef Name="Date time" />
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="Robot" Type="nchar" MaxLength="10" />
+          <Property Name="Tool_Nr" Type="int" Nullable="false" />
+          <Property Name="Date time" Type="datetime" Nullable="false" />
+          <Property Name="nDress" Type="int" />
+          <Property Name="nWelds" Type="int" />
+          <Property Name="WearRatio" Type="int" />
+          <Property Name="pWear" Type="int" />
+          <Property Name="nRspots" Type="int" />
+          <Property Name="nRcars" Type="int" />
+          <Property Name="MaxBodyEndOfLife" Type="int" />
+          <Property Name="SortCol" Type="int" />
+          <Property Name="TipAge(h)" Type="int" />
+          <Property Name="LastTipchange" Type="int" />
+          <Property Name="Time_DressCycleTime" Type="int" />
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="LocationTree" Type="varchar(max)" />
+          <Property Name="hasTipchanger" Type="int" />
+          <Property Name="MagicFiXedWear" Type="int" />
+          <Property Name="Status" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="RobotWear" Type="int" />
+        </EntityType>
         <EntityContainer Name="GADATAModelTiplifeStoreContainer">
           <EntitySet Name="TCP_LOG" EntityType="Self.TCP_LOG" store:Type="Views" store:Schema="NGAC">
             <DefiningQuery>SELECT 
@@ -512,6 +540,30 @@ warning 6002: The table/view 'GADATA.NGAC.TipwearLast' does not have a primary k
     [TipwearLast].[Last%MovWearBeforeChange] AS [Last%MovWearBeforeChange]
     FROM [NGAC].[TipwearLast] AS [TipwearLast]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="TipMonitor1" EntityType="Self.TipMonitor1" store:Type="Views" store:Schema="WELDING2" store:Name="TipMonitor">
+            <DefiningQuery>SELECT 
+    [TipMonitor1].[Robot] AS [Robot], 
+    [TipMonitor1].[Tool_Nr] AS [Tool_Nr], 
+    [TipMonitor1].[Date time] AS [Date time], 
+    [TipMonitor1].[nDress] AS [nDress], 
+    [TipMonitor1].[nWelds] AS [nWelds], 
+    [TipMonitor1].[WearRatio] AS [WearRatio], 
+    [TipMonitor1].[pWear] AS [pWear], 
+    [TipMonitor1].[nRspots] AS [nRspots], 
+    [TipMonitor1].[nRcars] AS [nRcars], 
+    [TipMonitor1].[MaxBodyEndOfLife] AS [MaxBodyEndOfLife], 
+    [TipMonitor1].[SortCol] AS [SortCol], 
+    [TipMonitor1].[TipAge(h)] AS [TipAge(h)], 
+    [TipMonitor1].[LastTipchange] AS [LastTipchange], 
+    [TipMonitor1].[Time_DressCycleTime] AS [Time_DressCycleTime], 
+    [TipMonitor1].[id] AS [id], 
+    [TipMonitor1].[LocationTree] AS [LocationTree], 
+    [TipMonitor1].[hasTipchanger] AS [hasTipchanger], 
+    [TipMonitor1].[MagicFiXedWear] AS [MagicFiXedWear], 
+    [TipMonitor1].[Status] AS [Status], 
+    [TipMonitor1].[RobotWear] AS [RobotWear]
+    FROM [WELDING2].[TipMonitor] AS [TipMonitor1]</DefiningQuery>
+          </EntitySet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -693,6 +745,7 @@ warning 6002: The table/view 'GADATA.NGAC.TipwearLast' does not have a primary k
           <EntitySet Name="TipLifeExpectations" EntityType="GADATAModelTiplife.TipLifeExpectations" />
           <EntitySet Name="TipMonitor" EntityType="GADATAModelTiplife.TipMonitor" />
           <EntitySet Name="TCP_LOG" EntityType="GADATAModelTiplife.TCP_LOG" />
+          <EntitySet Name="TipMonitor1" EntityType="GADATAModelTiplife.VWSC_TipMonitor" />
         </EntityContainer>
         <EntityType Name="TipLifeExpectations">
           <Key>
@@ -772,6 +825,32 @@ warning 6002: The table/view 'GADATA.NGAC.TipwearLast' does not have a primary k
           <Property Name="SetupTCP_Y" Type="Double" />
           <Property Name="SetupTCP_Z" Type="Double" />
           <Property Name="DeltaRef" Type="Double" />
+        </EntityType>
+        <EntityType Name="VWSC_TipMonitor">
+          <Key>
+            <PropertyRef Name="Date_time" />
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="Robot" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Tool_Nr" Type="Int32" Nullable="false" />
+          <Property Name="Date_time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="nDress" Type="Int32" />
+          <Property Name="nWelds" Type="Int32" />
+          <Property Name="WearRatio" Type="Int32" />
+          <Property Name="pWear" Type="Int32" />
+          <Property Name="nRspots" Type="Int32" />
+          <Property Name="nRcars" Type="Int32" />
+          <Property Name="MaxBodyEndOfLife" Type="Int32" />
+          <Property Name="SortCol" Type="Int32" />
+          <Property Name="TipAge_h_" Type="Int32" />
+          <Property Name="LastTipchange" Type="Int32" />
+          <Property Name="Time_DressCycleTime" Type="Int32" />
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="LocationTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="hasTipchanger" Type="Int32" />
+          <Property Name="MagicFiXedWear" Type="Int32" />
+          <Property Name="Status" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="RobotWear" Type="Int32" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1028,6 +1107,32 @@ warning 6002: The table/view 'GADATA.NGAC.TipwearLast' does not have a primary k
                 <ScalarProperty Name="ClassificationTree" ColumnName="ClassificationTree" />
                 <ScalarProperty Name="LocationTree" ColumnName="LocationTree" />
                 <ScalarProperty Name="controller_name" ColumnName="controller_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipMonitor1">
+            <EntityTypeMapping TypeName="GADATAModelTiplife.VWSC_TipMonitor">
+              <MappingFragment StoreEntitySet="TipMonitor1">
+                <ScalarProperty Name="RobotWear" ColumnName="RobotWear" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="MagicFiXedWear" ColumnName="MagicFiXedWear" />
+                <ScalarProperty Name="hasTipchanger" ColumnName="hasTipchanger" />
+                <ScalarProperty Name="LocationTree" ColumnName="LocationTree" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Time_DressCycleTime" ColumnName="Time_DressCycleTime" />
+                <ScalarProperty Name="LastTipchange" ColumnName="LastTipchange" />
+                <ScalarProperty Name="TipAge_h_" ColumnName="TipAge(h)" />
+                <ScalarProperty Name="SortCol" ColumnName="SortCol" />
+                <ScalarProperty Name="MaxBodyEndOfLife" ColumnName="MaxBodyEndOfLife" />
+                <ScalarProperty Name="nRcars" ColumnName="nRcars" />
+                <ScalarProperty Name="nRspots" ColumnName="nRspots" />
+                <ScalarProperty Name="pWear" ColumnName="pWear" />
+                <ScalarProperty Name="WearRatio" ColumnName="WearRatio" />
+                <ScalarProperty Name="nWelds" ColumnName="nWelds" />
+                <ScalarProperty Name="nDress" ColumnName="nDress" />
+                <ScalarProperty Name="Date_time" ColumnName="Date time" />
+                <ScalarProperty Name="Tool_Nr" ColumnName="Tool_Nr" />
+                <ScalarProperty Name="Robot" ColumnName="Robot" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

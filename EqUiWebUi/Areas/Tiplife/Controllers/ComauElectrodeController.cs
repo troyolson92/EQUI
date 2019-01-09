@@ -16,5 +16,6 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
         {
             return View();
         }
+
     }
 }

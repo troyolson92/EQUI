@@ -11,6 +11,7 @@
         <EntityTypeShape EntityType="GADATAModelTiplife.TipLifeExpectations" Width="1.5" PointX="8.875" PointY="0.75" />
         <EntityTypeShape EntityType="GADATAModelTiplife.TipMonitor" Width="1.5" PointX="2.875" PointY="0.75" />
         <EntityTypeShape EntityType="GADATAModelTiplife.TCP_LOG" Width="1.5" PointX="11" PointY="0.75" />
+        <EntityTypeShape EntityType="GADATAModelTiplife.VWSC_TipMonitor" Width="1.5" PointX="14.625" PointY="0.75" FillColor="192, 0, 0" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
