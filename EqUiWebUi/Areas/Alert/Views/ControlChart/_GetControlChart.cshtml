@@ -4,12 +4,12 @@
     <div class="card">
         <div class="card-header bg-light">
             <h6 class="card-title">
-                <a class="fas fa-sync-alt text-black-50 ControlChartRefresh" href="#"></a>
+                <a class="fas fa-sync-alt text-black-50 ControlChartRefresh"></a>
                 <strong>@Model.chartname</strong> Control chart for alarmobject:
                 <strong>@Model.alarmobject.Trim()</strong>
-                <a class="fas fa-info-circle text-black-50" id="WikiPopover" href="#" data-container="body" data-toggle="popover" data-placement="bottom"></a>
-                <a class="fas fa-wrench text-black-50 ControlChartOptionsPopover" href="#" data-toggle="popover" data-placement="bottom"></a>
-                <a class="far fa-calendar-alt text-black-50 ControlChartDatepicker" href="#"></a>
+                <a class="fas fa-info-circle text-black-50" id="WikiPopover" data-container="body" data-toggle="popover" data-placement="bottom"></a>
+                <a class="fas fa-wrench text-black-50 ControlChartOptionsPopover" data-toggle="popover" data-placement="bottom"></a>
+                <a class="far fa-calendar-alt text-black-50 ControlChartDatepicker"></a>
                 <span class="clickable float-right text-black-50"><i class="fas fa-chevron-circle-up fa-1"></i></span>
             </h6>
         </div>
@@ -44,6 +44,7 @@
     <input type="hidden" name="ControlchartoptDatanum" value="">
 </div>
 
+<!--for chart legend-->
 <style>
     .scatter-legend-marker {
         width: 14px;
