@@ -162,11 +162,11 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
             }
             else if (LocationRoot != "") //else if user has profile filter apply it
             {
-                ViewBag.Locations = new SelectList(db.c_timer.Where(c => (c.LocationTree ?? "").Contains(LocationRoot)).OrderBy(c => c.Name), "Robot", "Robot");
+                ViewBag.Locations = new SelectList(db.c_timer.Where(c => c.enable_bit != -1 &&  (c.LocationTree ?? "").Contains(LocationRoot)).OrderBy(c => c.Name), "Robot", "Robot");
             }
-            else //show all 
+            else //show all (enabled timers)
             {
-                ViewBag.Locations = new SelectList(db.c_timer.OrderBy(c => c.Name), "Robot", "Robot");
+                ViewBag.Locations = new SelectList(db.c_timer.Where( c => c.enable_bit != -1).OrderBy(c => c.Name), "Robot", "Robot");
             }
 
             //pass tool_nr select list 
