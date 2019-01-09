@@ -1,0 +1,31 @@
+﻿@model IQueryable<EqUiWebUi.Areas.Tiplife.Models.TCP_LOG>
+
+@*set title*@
+@{
+    ViewBag.Title = "TCP_LOG";
+}
+
+<div class="card">
+    <div class="card-header bg-primary">
+        <h4>TCP_LOG</h4>
+    </div>
+
+    <div class="card-body">
+        <div id="TCP_LOGGrid" class="mvc-grid"></div>
+    </div>
+
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        //full with screen
+        $("#allcontent").removeClass("body-content");
+        $("#allcontent").removeClass("container");
+        $('#TCP_LOGGrid').html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
+        $('#TCP_LOGGrid').mvcgrid({
+            sourceUrl: '@Url.Action("_Tcp_logGrid")', // Grid source url string
+            requestType: 'get', // Ajax grid request type
+            reload: true // Grid reload indicator
+        });
+    </script>
+}

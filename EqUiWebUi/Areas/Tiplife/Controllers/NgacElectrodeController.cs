@@ -122,6 +122,33 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
             return PartialView(data);
         }
 
+        /// <summary>
+        /// Page show Tcp_log for each tool
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult Tcp_log()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// Partial view that is loaded in Tcp_log contains grid 
+        /// </summary>
+        /// <param name="location"></param>
+        /// <param name="Setup_no"></param>
+        /// <returns></returns>
+        public ActionResult _Tcp_logGrid(string location = "", int Setup_no = 1)
+        {
+            GADATAEntitiesTiplife gADATAEntities = new GADATAEntitiesTiplife();
+            string LocationRoot = CurrentUser.Getuser.LocationRoot;
+            IQueryable<TCP_LOG> data = from t in gADATAEntities.TCP_LOG
+                                                   where (t.LocationTree ?? "").Contains(LocationRoot)
+                                                   && (t.controller_name.Contains(location) && t.SetUp_No == Setup_no)
+                                                   select t;
+            return PartialView(data);
+        }
+
 
     }
 }

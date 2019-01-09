@@ -6,6 +6,41 @@
     <edmx:StorageModels>
     <Schema Namespace="GADATAModelTiplife.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.NGAC.TCP_LOG' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="TCP_LOG">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="controller_name" Type="varchar" MaxLength="30" />
+          <Property Name="LocationTree" Type="varchar(max)" />
+          <Property Name="ClassificationTree" Type="varchar(max)" />
+          <Property Name="Toolname" Type="varchar(max)" />
+          <Property Name="alarmobject" Type="varchar(max)" />
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="rt_csv_file_id" Type="int" />
+          <Property Name="Date Time" Type="datetime" />
+          <Property Name="Tool Name" Type="varchar(max)" />
+          <Property Name="SetUp No" Type="int" />
+          <Property Name="Tool Diff X" Type="float" />
+          <Property Name="Tool Diff Y" Type="float" />
+          <Property Name="Tool Diff Z" Type="float" />
+          <Property Name="Tool Tol X" Type="float" />
+          <Property Name="Tool Tol Y" Type="float" />
+          <Property Name="Tool Tol Z" Type="float" />
+          <Property Name="Old TCP X" Type="float" />
+          <Property Name="Old TCP Y" Type="float" />
+          <Property Name="Old TCP Z" Type="float" />
+          <Property Name="New TCP X" Type="float" />
+          <Property Name="New TCP Y" Type="float" />
+          <Property Name="New TCP Z" Type="float" />
+          <Property Name="Action" Type="varchar(max)" />
+          <Property Name="_timestamp" Type="datetime" />
+          <Property Name="SetupTCP_X" Type="float" />
+          <Property Name="SetupTCP_Y" Type="float" />
+          <Property Name="SetupTCP_Z" Type="float" />
+          <Property Name="DeltaRef" Type="float" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'GADATA.NGAC.TipDressLogFile' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="TipDressLogFile">
           <Key>
@@ -237,6 +272,38 @@ warning 6002: The table/view 'GADATA.NGAC.TipwearLast' does not have a primary k
           <Property Name="Last%MovWearBeforeChange" Type="float" />
         </EntityType>
         <EntityContainer Name="GADATAModelTiplifeStoreContainer">
+          <EntitySet Name="TCP_LOG" EntityType="Self.TCP_LOG" store:Type="Views" store:Schema="NGAC">
+            <DefiningQuery>SELECT 
+    [TCP_LOG].[controller_name] AS [controller_name], 
+    [TCP_LOG].[LocationTree] AS [LocationTree], 
+    [TCP_LOG].[ClassificationTree] AS [ClassificationTree], 
+    [TCP_LOG].[Toolname] AS [Toolname], 
+    [TCP_LOG].[alarmobject] AS [alarmobject], 
+    [TCP_LOG].[id] AS [id], 
+    [TCP_LOG].[rt_csv_file_id] AS [rt_csv_file_id], 
+    [TCP_LOG].[Date Time] AS [Date Time], 
+    [TCP_LOG].[Tool Name] AS [Tool Name], 
+    [TCP_LOG].[SetUp No] AS [SetUp No], 
+    [TCP_LOG].[Tool Diff X] AS [Tool Diff X], 
+    [TCP_LOG].[Tool Diff Y] AS [Tool Diff Y], 
+    [TCP_LOG].[Tool Diff Z] AS [Tool Diff Z], 
+    [TCP_LOG].[Tool Tol X] AS [Tool Tol X], 
+    [TCP_LOG].[Tool Tol Y] AS [Tool Tol Y], 
+    [TCP_LOG].[Tool Tol Z] AS [Tool Tol Z], 
+    [TCP_LOG].[Old TCP X] AS [Old TCP X], 
+    [TCP_LOG].[Old TCP Y] AS [Old TCP Y], 
+    [TCP_LOG].[Old TCP Z] AS [Old TCP Z], 
+    [TCP_LOG].[New TCP X] AS [New TCP X], 
+    [TCP_LOG].[New TCP Y] AS [New TCP Y], 
+    [TCP_LOG].[New TCP Z] AS [New TCP Z], 
+    [TCP_LOG].[Action] AS [Action], 
+    [TCP_LOG].[_timestamp] AS [_timestamp], 
+    [TCP_LOG].[SetupTCP_X] AS [SetupTCP_X], 
+    [TCP_LOG].[SetupTCP_Y] AS [SetupTCP_Y], 
+    [TCP_LOG].[SetupTCP_Z] AS [SetupTCP_Z], 
+    [TCP_LOG].[DeltaRef] AS [DeltaRef]
+    FROM [NGAC].[TCP_LOG] AS [TCP_LOG]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="TipDressLogFile" EntityType="Self.TipDressLogFile" store:Type="Views" store:Schema="NGAC">
             <DefiningQuery>SELECT 
     [TipDressLogFile].[controller_name] AS [controller_name], 
@@ -625,6 +692,7 @@ warning 6002: The table/view 'GADATA.NGAC.TipwearLast' does not have a primary k
           <EntitySet Name="TipwearLast" EntityType="Self.TipwearLast" />
           <EntitySet Name="TipLifeExpectations" EntityType="GADATAModelTiplife.TipLifeExpectations" />
           <EntitySet Name="TipMonitor" EntityType="GADATAModelTiplife.TipMonitor" />
+          <EntitySet Name="TCP_LOG" EntityType="GADATAModelTiplife.TCP_LOG" />
         </EntityContainer>
         <EntityType Name="TipLifeExpectations">
           <Key>
@@ -671,6 +739,39 @@ warning 6002: The table/view 'GADATA.NGAC.TipwearLast' does not have a primary k
           <Property Name="RobotWear" Type="Double" />
           <Property Name="hasTipchanger" Type="Boolean" Nullable="false" />
           <Property Name="SortCol" Type="Double" />
+        </EntityType>
+        <EntityType Name="TCP_LOG">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="controller_name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="LocationTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ClassificationTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Toolname" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="alarmobject" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="rt_csv_file_id" Type="Int32" />
+          <Property Name="Date_Time" Type="DateTime" Precision="3" />
+          <Property Name="Tool_Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="SetUp_No" Type="Int32" />
+          <Property Name="Tool_Diff_X" Type="Double" />
+          <Property Name="Tool_Diff_Y" Type="Double" />
+          <Property Name="Tool_Diff_Z" Type="Double" />
+          <Property Name="Tool_Tol_X" Type="Double" />
+          <Property Name="Tool_Tol_Y" Type="Double" />
+          <Property Name="Tool_Tol_Z" Type="Double" />
+          <Property Name="Old_TCP_X" Type="Double" />
+          <Property Name="Old_TCP_Y" Type="Double" />
+          <Property Name="Old_TCP_Z" Type="Double" />
+          <Property Name="New_TCP_X" Type="Double" />
+          <Property Name="New_TCP_Y" Type="Double" />
+          <Property Name="New_TCP_Z" Type="Double" />
+          <Property Name="Action" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="C_timestamp" Type="DateTime" Precision="3" />
+          <Property Name="SetupTCP_X" Type="Double" />
+          <Property Name="SetupTCP_Y" Type="Double" />
+          <Property Name="SetupTCP_Z" Type="Double" />
+          <Property Name="DeltaRef" Type="Double" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -893,6 +994,40 @@ warning 6002: The table/view 'GADATA.NGAC.TipwearLast' does not have a primary k
                 <ScalarProperty Name="Date_time" ColumnName="Date time" />
                 <ScalarProperty Name="Tool_Nr" ColumnName="Tool_Nr" />
                 <ScalarProperty Name="Robot" ColumnName="Robot" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TCP_LOG">
+            <EntityTypeMapping TypeName="GADATAModelTiplife.TCP_LOG">
+              <MappingFragment StoreEntitySet="TCP_LOG">
+                <ScalarProperty Name="DeltaRef" ColumnName="DeltaRef" />
+                <ScalarProperty Name="SetupTCP_Z" ColumnName="SetupTCP_Z" />
+                <ScalarProperty Name="SetupTCP_Y" ColumnName="SetupTCP_Y" />
+                <ScalarProperty Name="SetupTCP_X" ColumnName="SetupTCP_X" />
+                <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
+                <ScalarProperty Name="Action" ColumnName="Action" />
+                <ScalarProperty Name="New_TCP_Z" ColumnName="New TCP Z" />
+                <ScalarProperty Name="New_TCP_Y" ColumnName="New TCP Y" />
+                <ScalarProperty Name="New_TCP_X" ColumnName="New TCP X" />
+                <ScalarProperty Name="Old_TCP_Z" ColumnName="Old TCP Z" />
+                <ScalarProperty Name="Old_TCP_Y" ColumnName="Old TCP Y" />
+                <ScalarProperty Name="Old_TCP_X" ColumnName="Old TCP X" />
+                <ScalarProperty Name="Tool_Tol_Z" ColumnName="Tool Tol Z" />
+                <ScalarProperty Name="Tool_Tol_Y" ColumnName="Tool Tol Y" />
+                <ScalarProperty Name="Tool_Tol_X" ColumnName="Tool Tol X" />
+                <ScalarProperty Name="Tool_Diff_Z" ColumnName="Tool Diff Z" />
+                <ScalarProperty Name="Tool_Diff_Y" ColumnName="Tool Diff Y" />
+                <ScalarProperty Name="Tool_Diff_X" ColumnName="Tool Diff X" />
+                <ScalarProperty Name="SetUp_No" ColumnName="SetUp No" />
+                <ScalarProperty Name="Tool_Name" ColumnName="Tool Name" />
+                <ScalarProperty Name="Date_Time" ColumnName="Date Time" />
+                <ScalarProperty Name="rt_csv_file_id" ColumnName="rt_csv_file_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="alarmobject" ColumnName="alarmobject" />
+                <ScalarProperty Name="Toolname" ColumnName="Toolname" />
+                <ScalarProperty Name="ClassificationTree" ColumnName="ClassificationTree" />
+                <ScalarProperty Name="LocationTree" ColumnName="LocationTree" />
+                <ScalarProperty Name="controller_name" ColumnName="controller_name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

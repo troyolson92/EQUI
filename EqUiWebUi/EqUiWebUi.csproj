@@ -381,6 +381,9 @@
     <Compile Include="Areas\Tiplife\Controllers\ComauElectrodeController.cs" />
     <Compile Include="Areas\Tiplife\Controllers\ElectrodeController.cs" />
     <Compile Include="Areas\Tiplife\Controllers\NgacElectrodeController.cs" />
+    <Compile Include="Areas\Tiplife\Models\TCP_LOG.cs">
+      <DependentUpon>TiplifeModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Areas\Tiplife\Models\TipDressLogFile.cs">
       <DependentUpon>TiplifeModel.tt</DependentUpon>
     </Compile>
@@ -2275,6 +2278,8 @@
     <Content Include="Areas\Tiplife\Views\Electrode\Index.cshtml" />
     <Content Include="Areas\Tiplife\Views\Electrode\_Legend.cshtml" />
     <Content Include="Areas\Alert\Views\c_triggers\_Wiki.cshtml" />
+    <Content Include="Areas\Tiplife\Views\NgacElectrode\Tcp_log.cshtml" />
+    <Content Include="Areas\Tiplife\Views\NgacElectrode\_Tcp_logGrid.cshtml" />
     <None Include="Properties\PublishProfiles\chasvw1203_PRODUCTION_VCCH.pubxml" />
     <None Include="Properties\PublishProfiles\gensvw1178-DEV-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION-VCG.pubxml" />

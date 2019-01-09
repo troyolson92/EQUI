@@ -61,6 +61,19 @@
             </div>
 
         </div>
+
+        <hr />
+
+        <div class="card">
+            <div class="card-header bg-dark">
+                <h4 class="card-title text-white">TCPlogfile (SBCU)</h4>
+            </div>
+
+            <div class="card-body">
+                <div data-name="TCP_LOGGrid" class="mvc-grid"></div>
+            </div>
+
+        </div>
     </div>
 
 <!--sctips for Tipinfo-->
@@ -131,6 +144,18 @@
             reloadFailed: function (result) {
                 console.log(result);
                 $('[data-name= "TipDressDataGrid"]').html($("#Error", result.responseText).html());
+            }
+        });
+
+        //load TCP_LOGGrid data grid
+        $('[data-name= "TCP_LOGGrid"]').html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
+        $('[data-name= "TCP_LOGGrid"]').mvcgrid({
+            sourceUrl: '@Url.Action("_Tcp_logGrid", new { location = ViewBag.location, Setup_no = ViewBag.tool_nr })', // Grid source url string
+            requestType: 'get', // Ajax grid request type
+            reload: true, // Grid reload indicator
+            reloadFailed: function (result) {
+                console.log(result);
+                $('[data-name= "TCP_LOGGrid"]').html($("#Error", result.responseText).html());
             }
         });
 
