@@ -51,6 +51,7 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="enabled" Type="bit" Nullable="false" />
           <Property Name="discription" Type="varchar(max)" Nullable="false" />
+          <Property Name="wiki" Type="varchar(max)" />
           <Property Name="RunAgainst" Type="int" Nullable="false" />
           <Property Name="sqlStatement" Type="varchar(max)" />
           <Property Name="smsSystem" Type="int" />
@@ -695,6 +696,7 @@
           <Property Name="continueOnJobFailure" Type="Boolean" Nullable="false" />
           <Property Name="alertGroup" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ValueLabels" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="wiki" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_c_triggers_c_smsSystem">
           <End Type="AlertModel.c_smsSystem" Role="c_smsSystem" Multiplicity="0..1" />
@@ -1007,6 +1009,7 @@
           <EntitySetMapping Name="c_triggers">
             <EntityTypeMapping TypeName="AlertModel.c_triggers">
               <MappingFragment StoreEntitySet="c_triggers">
+                <ScalarProperty Name="wiki" ColumnName="wiki" />
                 <ScalarProperty Name="ValueLabels" ColumnName="ValueLabels" />
                 <ScalarProperty Name="alertGroup" ColumnName="alertGroup" />
                 <ScalarProperty Name="continueOnJobFailure" ColumnName="continueOnJobFailure" />

@@ -32,7 +32,7 @@ else
             </div>
             <div class="card-body">
                 <div class="form-group">
-                    @Html.LabelFor(model => model.enabled, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.enabled, htmlAttributes: new { @class = "control-label col-md-4" })
                     <div class="col-md-10">
                         <div class="checkbox">
                             @Html.EditorFor(model => model.enabled)
@@ -43,7 +43,7 @@ else
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.discription, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.discription, htmlAttributes: new { @class = "control-label col-md-4" })
                     <div class="col-md-10">
                         @Html.EditorFor(model => model.discription, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.discription, "", new { @class = "text-danger" })
@@ -52,7 +52,15 @@ else
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.alertGroup, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.wiki, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-12">
+                        <textarea id="wiki" name="wiki">@Model.wiki</textarea>
+                        @Html.ValidationMessageFor(model => model.wiki, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.alertGroup, htmlAttributes: new { @class = "control-label col-md-4" })
                     <div class="col-md-10">
                         @Html.EditorFor(model => model.alertGroup, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.alertGroup, "", new { @class = "text-danger" })
@@ -61,7 +69,7 @@ else
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.alertType, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.alertType, htmlAttributes: new { @class = "control-label col-md-4" })
                     <div class="col-md-10">
                         @Html.EditorFor(model => model.alertType, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.alertType, "", new { @class = "text-danger" })
@@ -79,7 +87,7 @@ else
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.sqlStatement, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.sqlStatement, htmlAttributes: new { @class = "control-label col-md-4" })
                     <div class="col-md-12">
                         <div class="panel" style="border:ridge">
                             <textarea id="sqlStatement" name="sqlStatement">@Model.sqlStatement</textarea>
@@ -96,7 +104,7 @@ else
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.initial_state, "initial_state", htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.initial_state, "initial_state", htmlAttributes: new { @class = "control-label col-md-4" })
                     <div class="col-md-10">
                         @Html.DropDownList("initial_state", null, htmlAttributes: new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.initial_state, "", new { @class = "text-danger" })
@@ -105,7 +113,7 @@ else
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Animation, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.Animation, htmlAttributes: new { @class = "control-label col-md-4" })
                     <div class="col-md-10">
                         @Html.DropDownList("Animation", null, htmlAttributes: new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.Animation, "", new { @class = "text-danger" })
@@ -114,7 +122,7 @@ else
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.c_schedule_id, "c_schedule_id", htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.c_schedule_id, "c_schedule_id", htmlAttributes: new { @class = "control-label col-md-4" })
                     <div class="col-md-10">
                         @Html.DropDownList("c_schedule_id", null, htmlAttributes: new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.c_schedule_id, "", new { @class = "text-danger" })
@@ -122,7 +130,7 @@ else
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.ordinal, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.ordinal, htmlAttributes: new { @class = "control-label col-md-4" })
                     <div class="col-md-10">
                         @Html.EditorFor(model => model.ordinal, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.ordinal, "", new { @class = "text-danger" })
@@ -130,7 +138,7 @@ else
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.interval, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.interval, htmlAttributes: new { @class = "control-label col-md-4" })
                     <div class="col-md-10">
                         @Html.EditorFor(model => model.interval, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.interval, "", new { @class = "text-danger" })
@@ -160,7 +168,7 @@ else
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.isDowntime, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.isDowntime, htmlAttributes: new { @class = "control-label col-md-4" })
                     <div class="col-md-10">
                         <div class="checkbox">
                             @Html.EditorFor(model => model.isDowntime)
@@ -171,7 +179,7 @@ else
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.isInReport, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.isInReport, htmlAttributes: new { @class = "control-label col-md-4" })
                     <div class="col-md-10">
                         <div class="checkbox">
                             @Html.EditorFor(model => model.isInReport)
@@ -182,7 +190,7 @@ else
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.isDebugmode, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.isDebugmode, htmlAttributes: new { @class = "control-label col-md-4" })
                     <div class="col-md-10">
                         <div class="checkbox">
                             @Html.EditorFor(model => model.isDebugmode)
@@ -207,7 +215,7 @@ else
             <div class="card-body" style="display:none">
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.enableSMS, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.enableSMS, htmlAttributes: new { @class = "control-label col-md-4" })
                     <div class="col-md-10">
                         <div class="checkbox">
                             @Html.EditorFor(model => model.enableSMS)
@@ -218,7 +226,7 @@ else
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.smsSystem, "smsSystem", htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.smsSystem, "smsSystem", htmlAttributes: new { @class = "control-label col-md-4" })
                     <div class="col-md-10">
                         @Html.DropDownList("smsSystem", null, htmlAttributes: new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.smsSystem, "", new { @class = "text-danger" })
@@ -227,7 +235,7 @@ else
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.smsOnRetrigger, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.smsOnRetrigger, htmlAttributes: new { @class = "control-label col-md-4" })
                     <div class="col-md-10">
                         <div class="checkbox">
                             @Html.EditorFor(model => model.smsOnRetrigger)
@@ -255,7 +263,7 @@ else
             <div class="card-body" style="display:block">
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.hasControlLimits, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.hasControlLimits, htmlAttributes: new { @class = "control-label col-md-4" })
                     <div class="col-md-10">
                         <div class="checkbox">
                             @Html.EditorFor(model => model.hasControlLimits)
@@ -294,7 +302,7 @@ else
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.controlChartYlabel, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.controlChartYlabel, htmlAttributes: new { @class = "control-label col-md-4" })
                     <div class="col-md-10">
                         @Html.EditorFor(model => model.controlChartYlabel, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.controlChartYlabel, "", new { @class = "text-danger" })
@@ -303,7 +311,7 @@ else
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.ValueLabels, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.ValueLabels, htmlAttributes: new { @class = "control-label col-md-4" })
                     <div class="col-md-10">
                         @Html.EditorFor(model => model.ValueLabels, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.ValueLabels, "", new { @class = "text-danger" })
@@ -312,7 +320,7 @@ else
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.OptValueLabels, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.OptValueLabels, htmlAttributes: new { @class = "control-label col-md-4" })
                     <div class="col-md-10">
                         @Html.EditorFor(model => model.OptValueLabels, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.OptValueLabels, "", new { @class = "text-danger" })
@@ -340,7 +348,7 @@ else
 @*render popuover modal*@
 <div id="MyModal" class="modal" style="padding: 20px;" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class='card-body'>
-         <i class='fa fa-spinner fa-pulse fa-4x fa-fw text-white'></i><span class='sr-only'>Loading...</span>
+        <i class='fa fa-spinner fa-pulse fa-4x fa-fw text-white'></i><span class='sr-only'>Loading...</span>
     </div>
 </div>
 
@@ -351,6 +359,9 @@ else
     <link href="~/Content/codemirror/codemirror.css" rel="stylesheet" />
     <link href="~/Content/codemirror/neat.css" rel="stylesheet" />
     <script src="~/Scripts/Codemirror/mode/sql.js"></script>
+    @*https://summernote.org/getting-started/*@
+    <link href="~/Content/summernote-bs4.css" rel="stylesheet" />
+    <script src="~/Scripts/summernote-bs4.js"></script>
 
     <script>
         //for code mirror editor
@@ -371,6 +382,14 @@ else
             lineNumbers: true,
             mode: "sql",
             theme: "neat"
+        });
+
+        //for wiki
+        $('#wiki').summernote({
+            //  height: 100,                 // set editor height
+            minHeight: null,             // set minimum height of editor
+            maxHeight: null,             // set maximum height of editor
+            focus: false                  // set focus to editable area after initializing summernote
         });
 
         //for check statement
@@ -405,7 +424,7 @@ else
         //subscribe to change event
         $('#Animation').on('change', function () {
             $('#Animation').removeClass(); //clear all classes
-            $('#Animation').addClass('form-control'); 
+            $('#Animation').addClass('form-control');
             $('#Animation').addClass($('#Animation').val()); //add selected animation class
         });
         //set at startup

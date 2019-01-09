@@ -6,8 +6,8 @@
             <h6 class="card-title">
                 <a class="fas fa-sync-alt text-black-50 ControlChartRefresh" href="#"></a>
                 <strong>@Model.chartname</strong> Control chart for alarmobject:
-                <strong>@Model.alarmobject.Trim()</strong> c_trigger_id:
-                <strong>@Model.c_trigger_id</strong>
+                <strong>@Model.alarmobject.Trim()</strong>
+                <a class="fas fa-info-circle text-black-50" id="WikiPopover" href="#" data-container="body" data-toggle="popover" data-placement="bottom"></a>
                 <a class="fas fa-wrench text-black-50 ControlChartOptionsPopover" href="#" data-toggle="popover" data-placement="bottom"></a>
                 <a class="far fa-calendar-alt text-black-50 ControlChartDatepicker" href="#"></a>
                 <span class="clickable float-right text-black-50"><i class="fas fa-chevron-circle-up fa-1"></i></span>
@@ -97,6 +97,19 @@
                 $('#ChartID@(Model.c_trigger_id)').find("input[name=ControlchartoptDatanum]").val(this.value);
                 getcontrolchartData();
             };
+        });
+
+                
+        //enable popover for wiki
+        $("#WikiPopover").popover({
+            html: true,
+            content: function () {
+                return $.ajax({
+                    url: '@Url.Action("_Wiki","c_triggers",new {c_trigger_id = Model.c_trigger_id })',
+                    dataType: 'html',
+                    async: false
+                }).responseText;
+            }
         });
 
         //listen to refresh click event

@@ -48,6 +48,17 @@ namespace EqUiWebUi.Areas.Alert.Controllers
             return PartialView(triggers);
         }
 
+        /// <summary>
+        /// Wiki partial view for alert trigger
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult _Wiki(int c_trigger_id)
+        {
+
+            c_triggers trigger = db.c_triggers.Where(c => c.id == c_trigger_id).First();
+            return PartialView(trigger);
+        }
+
         //run the alert trigger in debug mode (manual triggered no hang-fire)
         [Authorize(Roles = "Administrator, AlertMaster, AlertPowerUser")]
         public void RunAlertTrigger(int triggerID)

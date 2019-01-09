@@ -2274,6 +2274,7 @@
     <Content Include="App_Code\TiplifeHtmlHelpers.cshtml" />
     <Content Include="Areas\Tiplife\Views\Electrode\Index.cshtml" />
     <Content Include="Areas\Tiplife\Views\Electrode\_Legend.cshtml" />
+    <Content Include="Areas\Alert\Views\c_triggers\_Wiki.cshtml" />
     <None Include="Properties\PublishProfiles\chasvw1203_PRODUCTION_VCCH.pubxml" />
     <None Include="Properties\PublishProfiles\gensvw1178-DEV-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION-VCG.pubxml" />
