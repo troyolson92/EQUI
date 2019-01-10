@@ -13,8 +13,12 @@
     <div class="card-body">
 
         <div class="card">
-            <div class="card-header bg-dark">
-                <h4 class="card-title text-white">TipLifeExpectations</h4>
+            <div class="card-header bg-light">
+                <h6 class="card-title">
+                    TipLifeExpectations
+                    <a class="far fa-window-restore text-black-50" href="@Url.Action("TipLifeExpectations")" data-toggle="popover" data-placement="bottom" title="Open grid in new page"></a>
+                    <span class= "float-right text-black-50"><i class="clickable fas fa-chevron-circle-up fa-1"></i></span>
+                </h6>
             </div>
 
             <div class="card-body">
@@ -26,8 +30,12 @@
         <hr />
 
         <div class="card">
-            <div class="card-header bg-dark">
-                <h4 class="card-title text-white">TipwearBeforeChange</h4>
+            <div class="card-header bg-light">
+                <h6 class="card-title">
+                    TipwearBeforeChange
+                    <a class="far fa-window-restore text-black-50" href="@Url.Action("TipwearBeforeChange")" data-toggle="popover" data-placement="bottom" title="Open grid in new page"></a>
+                    <span class="float-right text-black-50"><i class="clickable fas fa-chevron-circle-up fa-1"></i></span>
+                </h6>
             </div>
 
             <div class="card-body">
@@ -39,8 +47,11 @@
         <hr />
 
         <div class="card">
-            <div class="card-header bg-dark">
-                <h4 class="card-title text-white">Control limits</h4>
+            <div class="card-header bg-light">
+                <h6 class="card-title">
+                    Control limits
+                    <span class="float-right text-black-50"><i class="clickable fas fa-chevron-circle-up fa-1"></i></span>
+                </h6>
             </div>
 
             <div class="card-body">
@@ -52,8 +63,12 @@
         <hr />
 
         <div class="card">
-            <div class="card-header bg-dark">
-                <h4 class="card-title text-white">TipDresslogfile</h4>
+            <div class="card-header bg-light">
+                <h6 class="card-title">
+                    TipDressData
+                    <a class="far fa-window-restore text-black-50" href="@Url.Action("TipDressData")" data-toggle="popover" data-placement="bottom" title="Open grid in new page"></a>
+                    <span class="float-right text-black-50"><i class="clickable fas fa-chevron-circle-up fa-1"></i></span>
+                </h6>
             </div>
 
             <div class="card-body">
@@ -65,8 +80,12 @@
         <hr />
 
         <div class="card">
-            <div class="card-header bg-dark">
-                <h4 class="card-title text-white">TCPlogfile (SBCU)</h4>
+            <div class="card-header bg-light">
+                <h6 class="card-title">
+                    TCPlogfile (SBCU)
+                    <a class="far fa-window-restore text-black-50" href="@Url.Action("Tcp_log")" data-toggle="popover" data-placement="bottom" title="Open grid in new page"></a>
+                    <span class="float-right text-black-50"><i class="clickable fas fa-chevron-circle-up fa-1"></i></span>
+                </h6>
             </div>
 
             <div class="card-body">
@@ -84,35 +103,6 @@
             sourceUrl: '@Url.Action("_TipLifeExpectationsGrid", new { location = ViewBag.location, tool_nr = ViewBag.tool_nr })', // Grid source url string
             requestType: 'get', // Ajax grid request type
             reload: true, // Grid reload indicator
-            rowClicked: function (row, data, e) {
-                //ignore clicks not on td
-                if (e.target.tagName.toUpperCase() != 'TD') {
-                    return;
-                }
-                //if row already has this clase close the modal
-                if ($(row).hasClass("bg-info")) {
-                    $("#placeholder").remove();
-                    $(row).removeClass("bg-info");
-                    return;
-                }
-                //clear selected rows for this table
-                $('tr').removeClass('bg-info'); //THIS IS WRONG
-                $(row).addClass("bg-info");
-                $("#placeholder").remove(); //clear placeholder is exists
-                //add new placeholder afhter selected row
-                $(row).after('<tr id="placeholder"><td colspan="1000"><div class="card border-info"><div data-name="TipwearBeforeChangeGrid" class="mvc-grid card-body"></div></div></td></tr>');
-                //animation
-                $('[data-name= "TipwearBeforeChangeGrid"]').html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
-                $('[data-name= "TipwearBeforeChangeGrid"]').mvcgrid({
-                        sourceUrl: '@Url.Action("_TipwearBeforeChangeGrid", new { location = ViewBag.location, tool_nr = ViewBag.tool_nr })', // Grid source url string
-                        requestType: 'get', // Ajax grid request type
-                        reload: true, // Grid reload indicator
-                        reloadFailed: function (result) {
-                            console.log(result);
-                            $('[data-name= "TipwearBeforeChangeGrid"]').html($("#Error", result.responseText).html());
-                        }
-                });
-            },
             reloadFailed: function (result) {
                 console.log(result);
                 $('[data-name= "TipLifeExpectationsGrid"]').html($("#Error", result.responseText).html());
@@ -158,5 +148,8 @@
                 $('[data-name= "TCP_LOGGrid"]').html($("#Error", result.responseText).html());
             }
         });
+
+        //enable tooltips
+        $('[data-toggle="popover"]').tooltip();
 
     </script>
