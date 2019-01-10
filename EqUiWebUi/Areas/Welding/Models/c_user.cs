@@ -25,6 +25,7 @@ namespace EqUiWebUi.Areas.Welding.Models
         public Nullable<int> enable_bit { get; set; }
         public string username { get; set; }
         public Nullable<System.DateTime> C_timestamp { get; set; }
+        public string role { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<rt_datachangeprot> rt_datachangeprot { get; set; }

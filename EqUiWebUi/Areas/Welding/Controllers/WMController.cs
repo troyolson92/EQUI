@@ -85,17 +85,7 @@ namespace EqUiWebUi.Areas.Welding.Controllers
             return View();
 
         }
-        public ActionResult _WeldFaultCount()
-        {
-            IQueryable<WeldfaultCount> data = db.WeldfaultCount.AsQueryable();
-
-            var query1 = from x in db.WeldfaultCount
-                         orderby x.countofTimerFaults descending
-
-                         select x;
-
-            return PartialView(data);
-        }
+ 
 
         /// <param name="bShowUnfinishedJobs"></param>
         /// <returns></returns>

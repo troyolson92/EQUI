@@ -294,8 +294,6 @@ warning 6002: The table/view 'GADATA.UL.ULplan_end' does not have a primary key 
           <Property Name="BuildBody" Type="int" />
           <Property Name="starttimePlan" Type="datetime" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'GADATA.UL.ULplan_start' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="ULplan_start">
           <Key>
             <PropertyRef Name="id" />
@@ -387,6 +385,7 @@ warning 6002: The table/view 'GADATA.UL.ULplan_start' does not have a primary ke
           <Property Name="enable_bit" Type="int" />
           <Property Name="username" Type="varchar" MaxLength="256" />
           <Property Name="_timestamp" Type="datetime" />
+          <Property Name="role" Type="nchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="h_Midair">
           <Key>
@@ -534,6 +533,7 @@ warning 6002: The table/view 'GADATA.WELDING2.h_Nut_Bolt_Measure' does not have 
           <Property Name="errorCode2_txt" Type="varchar" MaxLength="64" />
           <Property Name="isError" Type="bit" />
           <Property Name="isError_txt" Type="varchar" MaxLength="64" />
+          <Property Name="comment" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="rt_communication_state">
           <Key>
@@ -587,6 +587,7 @@ warning 6002: The table/view 'GADATA.WELDING2.h_Nut_Bolt_Measure' does not have 
           <Property Name="rt_weldfaultprot_count" Type="int" />
           <Property Name="rt_breakdown_count" Type="int" />
           <Property Name="rt_weldmeasureprotddw_distinct" Type="int" />
+          <Property Name="rt_midair_count" Type="int" />
         </EntityType>
         <EntityType Name="rt_job_breakdown">
           <Key>
@@ -844,12 +845,11 @@ warning 6002: The table/view 'GADATA.LAUNCH.BosProgramAvailable' does not have a
 warning 6002: The table/view 'GADATA.LAUNCH.CheckDubbelPrograms' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="CheckDubbelPrograms">
           <Key>
-            <PropertyRef Name="SpotName" />
-            <PropertyRef Name="WeldProgram" />
+            <PropertyRef Name="weldProgNo" />
           </Key>
           <Property Name="Name" Type="nchar" MaxLength="15" />
-          <Property Name="SpotName" Type="int" Nullable="false" />
-          <Property Name="WeldProgram" Type="smallint" Nullable="false" />
+          <Property Name="SpotName" Type="varchar" MaxLength="50" />
+          <Property Name="weldProgNo" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'GADATA.LAUNCH.ComparePitchV316' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -1133,37 +1133,8 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'GADATA.WELDING2.WeldfaultCount' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="WeldfaultCount">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" Nullable="false" />
-          <Property Name="location" Type="varchar" MaxLength="256" />
-          <Property Name="NPT" Type="nchar" MaxLength="15" />
-          <Property Name="Timer" Type="nchar" MaxLength="15" />
-          <Property Name="countofTimerFaults" Type="bigint" />
-          <Property Name="WMComment" Type="varchar" MaxLength="100" />
-        </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="WeldFaultProtocol">
-          <Key>
-            <PropertyRef Name="CDSID" />
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="NPT" Type="nchar" MaxLength="15" />
-          <Property Name="Name" Type="nchar" MaxLength="15" />
-          <Property Name="FaultStart" Type="datetime" />
-          <Property Name="FaultEnd" Type="datetime" />
-          <Property Name="breakdownTime" Type="int" />
-          <Property Name="errorCode1_txt" Type="varchar" MaxLength="64" />
-          <Property Name="errorCode2_txt" Type="varchar" MaxLength="64" />
-          <Property Name="CountFaultsInJob" Type="int" />
-          <Property Name="CDSID" Type="nchar" MaxLength="10" Nullable="false" />
-          <Property Name="progNo" Type="int" />
-          <Property Name="WMComment" Type="varchar" MaxLength="100" />
-          <Property Name="id" Type="int" Nullable="false" />
-        </EntityType>
         <Association Name="FK__ToDoList___TodoI__32F76870">
           <End Role="ToDoList" Type="Self.ToDoList" Multiplicity="1" />
           <End Role="ToDoList_Remark" Type="Self.ToDoList_Remark" Multiplicity="*" />
@@ -1565,6 +1536,7 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
           <EntitySet Name="StoringName" EntityType="Self.StoringName" Schema="UL" store:Type="Tables" />
           <EntitySet Name="StoringsCause" EntityType="Self.StoringsCause" Schema="UL" store:Type="Tables" />
           <EntitySet Name="StoringsIngave_new" EntityType="Self.StoringsIngave_new" Schema="UL" store:Type="Tables" />
+          <EntitySet Name="ULplan_start" EntityType="Self.ULplan_start" Schema="UL" store:Type="Tables" />
           <EntitySet Name="c_bosch_param" EntityType="Self.c_bosch_param" Schema="WELDING2" store:Type="Tables" />
           <EntitySet Name="c_error" EntityType="Self.c_error" Schema="WELDING2" store:Type="Tables" />
           <EntitySet Name="c_NPT" EntityType="Self.c_NPT" Schema="WELDING2" store:Type="Tables" />
@@ -1665,20 +1637,6 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
     [ULplan_end].[starttimePlan] AS [starttimePlan]
     FROM [UL].[ULplan_end] AS [ULplan_end]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="ULplan_start" EntityType="Self.ULplan_start" store:Type="Tables" store:Schema="UL">
-            <DefiningQuery>SELECT 
-    [ULplan_start].[id] AS [id], 
-    [ULplan_start].[planid] AS [planid], 
-    [ULplan_start].[lastplannumber] AS [lastplannumber], 
-    [ULplan_start].[Startinspectiontime] AS [Startinspectiontime], 
-    [ULplan_start].[planlenght] AS [planlenght], 
-    [ULplan_start].[inspectorid] AS [inspectorid], 
-    [ULplan_start].[StationId] AS [StationId], 
-    [ULplan_start].[Worklocation] AS [Worklocation], 
-    [ULplan_start].[bodynr] AS [bodynr], 
-    [ULplan_start].[plancounter] AS [plancounter]
-    FROM [UL].[ULplan_start] AS [ULplan_start]</DefiningQuery>
-          </EntitySet>
           <EntitySet Name="h_Nut_Bolt_Measure" EntityType="Self.h_Nut_Bolt_Measure" store:Type="Tables" store:Schema="WELDING2">
             <DefiningQuery>SELECT 
     [h_Nut_Bolt_Measure].[ID] AS [ID], 
@@ -1761,7 +1719,7 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
             <DefiningQuery>SELECT 
     [CheckDubbelPrograms].[Name] AS [Name], 
     [CheckDubbelPrograms].[SpotName] AS [SpotName], 
-    [CheckDubbelPrograms].[WeldProgram] AS [WeldProgram]
+    [CheckDubbelPrograms].[weldProgNo] AS [weldProgNo]
     FROM [LAUNCH].[CheckDubbelPrograms] AS [CheckDubbelPrograms]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="ComparePitchV316" EntityType="Self.ComparePitchV316" store:Type="Views" store:Schema="LAUNCH">
@@ -1980,32 +1938,6 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
     [TimerBreakdowns_busy].[id] AS [id]
     FROM [WELDING2].[TimerBreakdowns_busy] AS [TimerBreakdowns_busy]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="WeldfaultCount" EntityType="Self.WeldfaultCount" store:Type="Views" store:Schema="WELDING2">
-            <DefiningQuery>SELECT 
-    [WeldfaultCount].[id] AS [id], 
-    [WeldfaultCount].[location] AS [location], 
-    [WeldfaultCount].[NPT] AS [NPT], 
-    [WeldfaultCount].[Timer] AS [Timer], 
-    [WeldfaultCount].[countofTimerFaults] AS [countofTimerFaults], 
-    [WeldfaultCount].[WMComment] AS [WMComment]
-    FROM [WELDING2].[WeldfaultCount] AS [WeldfaultCount]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="WeldFaultProtocol" EntityType="Self.WeldFaultProtocol" store:Type="Views" store:Schema="WELDING2">
-            <DefiningQuery>SELECT 
-    [WeldFaultProtocol].[NPT] AS [NPT], 
-    [WeldFaultProtocol].[Name] AS [Name], 
-    [WeldFaultProtocol].[FaultStart] AS [FaultStart], 
-    [WeldFaultProtocol].[FaultEnd] AS [FaultEnd], 
-    [WeldFaultProtocol].[breakdownTime] AS [breakdownTime], 
-    [WeldFaultProtocol].[errorCode1_txt] AS [errorCode1_txt], 
-    [WeldFaultProtocol].[errorCode2_txt] AS [errorCode2_txt], 
-    [WeldFaultProtocol].[CountFaultsInJob] AS [CountFaultsInJob], 
-    [WeldFaultProtocol].[CDSID] AS [CDSID], 
-    [WeldFaultProtocol].[progNo] AS [progNo], 
-    [WeldFaultProtocol].[WMComment] AS [WMComment], 
-    [WeldFaultProtocol].[id] AS [id]
-    FROM [WELDING2].[WeldFaultProtocol] AS [WeldFaultProtocol]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="FK__ToDoList___TodoI__32F76870" Association="Self.FK__ToDoList___TodoI__32F76870">
             <End Role="ToDoList" EntitySet="ToDoList" />
             <End Role="ToDoList_Remark" EntitySet="ToDoList_Remark" />
@@ -2142,7 +2074,6 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
         <EntityContainer Name="GADATAEntitiesWelding" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="rt_AutoWorkFlowULPlans" EntityType="GADATAModelWelding.rt_AutoWorkFlowULPlans" />
           <EntitySet Name="ULRapporterings" EntityType="GADATAModelWelding.ULRapportering" />
-          <EntitySet Name="CheckDubbelPrograms" EntityType="GADATAModelWelding.CheckDubbelPrograms" />
           <EntitySet Name="BosProgramAvailable" EntityType="GADATAModelWelding.BosProgramAvailable" />
           <EntitySet Name="dressrequired" EntityType="GADATAModelWelding.dressrequired" />
           <EntitySet Name="WeldtimeSpotsSetup" EntityType="GADATAModelWelding.WeldtimeSpotsSetup" />
@@ -2162,8 +2093,6 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
             <End Role="ToDoList" EntitySet="ToDoList" />
             <End Role="ToDoList_Remark" EntitySet="ToDoList_Remark" />
           </AssociationSet>
-          <EntitySet Name="WeldFaultProtocol" EntityType="GADATAModelWelding.WeldFaultProtocol" />
-          <EntitySet Name="WeldfaultCount" EntityType="GADATAModelWelding.WeldfaultCount" />
           <EntitySet Name="AutomaticPlanControleWeldBolt" EntityType="GADATAModelWelding.AutomaticPlanControleWeldBolt" />
           <EntitySet Name="c_faultcode" EntityType="GADATAModelWelding.c_faultcode" />
           <EntitySet Name="c_Job" EntityType="GADATAModelWelding.c_Job" />
@@ -2309,7 +2238,6 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
             <End Role="UltralogStations" EntitySet="UltralogStations" />
             <End Role="UltralogInspections" EntitySet="UltralogInspections" />
           </AssociationSet>
-          <EntitySet Name="ULplan_start" EntityType="GADATAModelWelding.ULplan_start" />
           <EntitySet Name="Users" EntityType="GADATAModelWelding.Users" />
           <AssociationSet Name="FK_UltralogInspections_Users" Association="GADATAModelWelding.FK_UltralogInspections_Users">
             <End Role="Users" EntitySet="Users" />
@@ -2338,6 +2266,8 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
             <End Role="WeldingGunVariant" EntitySet="WeldingGunVariant" />
             <End Role="WeldingGun" EntitySet="WeldingGun" />
           </AssociationSet>
+          <EntitySet Name="CheckDubbelPrograms" EntityType="GADATAModelWelding.CheckDubbelPrograms" />
+          <EntitySet Name="ULplan_start" EntityType="GADATAModelWelding.ULplan_start" />
           </EntityContainer>
         <EntityType Name="rt_AutoWorkFlowULPlans">
           <Key>
@@ -2379,15 +2309,6 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
           <Property Name="Shift" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
           <Property Name="spot" Type="Int32" />
           <Property Name="loose_" Type="Boolean" />
-        </EntityType>
-        <EntityType Name="CheckDubbelPrograms">
-          <Key>
-            <PropertyRef Name="SpotName" />
-            <PropertyRef Name="WeldProgram" />
-          </Key>
-          <Property Name="Name" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
-          <Property Name="SpotName" Type="Int32" Nullable="false" />
-          <Property Name="WeldProgram" Type="Int16" Nullable="false" />
         </EntityType>
         <EntityType Name="BosProgramAvailable">
           <Key>
@@ -2550,35 +2471,6 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="WeldFaultProtocol">
-          <Key>
-            <PropertyRef Name="CDSID" />
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="NPT" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
-          <Property Name="Name" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
-          <Property Name="FaultStart" Type="DateTime" Precision="3" />
-          <Property Name="FaultEnd" Type="DateTime" Precision="3" />
-          <Property Name="breakdownTime" Type="Int32" />
-          <Property Name="errorCode1_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="errorCode2_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="CountFaultsInJob" Type="Int32" />
-          <Property Name="progNo" Type="Int32" />
-          <Property Name="CDSID" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="WMComment" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="id" Type="Int32" Nullable="false" />
-        </EntityType>
-        <EntityType Name="WeldfaultCount">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" />
-          <Property Name="location" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
-          <Property Name="NPT" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
-          <Property Name="Timer" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
-          <Property Name="countofTimerFaults" Type="Int64" />
-          <Property Name="WMComment" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityType Name="AutomaticPlanControleWeldBolt">
           <Key>
             <PropertyRef Name="ID" />
@@ -2938,6 +2830,7 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
           <Property Name="C_timestamp" Type="DateTime" Precision="3" />
           <NavigationProperty Name="rt_datachangeprot" Relationship="GADATAModelWelding.FK_rt_datachangeprot_c_user" FromRole="c_user" ToRole="rt_datachangeprot" />
           <NavigationProperty Name="rt_user" Relationship="GADATAModelWelding.FK_rt_user_c_user" FromRole="c_user" ToRole="rt_user" />
+          <Property Name="role" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
         </EntityType>
         <EntityType Name="h_Midair">
           <Key>
@@ -3065,6 +2958,7 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
           <Property Name="isError_txt" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="c_timer" Relationship="GADATAModelWelding.FK_rt_alarm_c_timer" FromRole="rt_alarm" ToRole="c_timer" />
           <NavigationProperty Name="rt_job_breakdown" Relationship="GADATAModelWelding.FK_rt_job_breakdown_rt_alarm" FromRole="rt_alarm" ToRole="rt_job_breakdown" />
+          <Property Name="comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="rt_communication_state">
           <Key>
@@ -3123,6 +3017,7 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
           <Property Name="rt_weldmeasureprotddw_distinct" Type="Int32" />
           <NavigationProperty Name="c_timer" Relationship="GADATAModelWelding.FK_rt_job_c_timer" FromRole="rt_job11" ToRole="c_timer" />
           <NavigationProperty Name="rt_job_breakdown" Relationship="GADATAModelWelding.FK_rt_job_breakdown_rt_job" FromRole="rt_job11" ToRole="rt_job_breakdown" />
+          <Property Name="rt_midair_count" Type="Int32" />
         </EntityType>
         <EntityType Name="rt_job_breakdown1">
           <Key>
@@ -3679,21 +3574,6 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="ULplan_start">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="planid" Type="Int32" />
-          <Property Name="lastplannumber" Type="Int32" />
-          <Property Name="Startinspectiontime" Type="DateTime" Precision="3" />
-          <Property Name="planlenght" Type="Int32" />
-          <Property Name="inspectorid" Type="Int32" />
-          <Property Name="StationId" Type="Int32" />
-          <Property Name="Worklocation" Type="Int32" />
-          <Property Name="bodynr" Type="Int32" />
-          <Property Name="plancounter" Type="Int32" />
-        </EntityType>
         <EntityType Name="Users">
           <Key>
             <PropertyRef Name="ID" />
@@ -3902,6 +3782,29 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="CheckDubbelPrograms">
+          <Key>
+            <PropertyRef Name="weldProgNo" />
+          </Key>
+          <Property Name="Name" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="SpotName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="weldProgNo" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ULplan_start">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="planid" Type="Int32" />
+          <Property Name="lastplannumber" Type="Int32" />
+          <Property Name="Startinspectiontime" Type="DateTime" Precision="3" />
+          <Property Name="planlenght" Type="Int32" />
+          <Property Name="inspectorid" Type="Int32" />
+          <Property Name="StationId" Type="Int32" />
+          <Property Name="Worklocation" Type="Int32" />
+          <Property Name="bodynr" Type="Int32" />
+          <Property Name="plancounter" Type="Int32" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3948,15 +3851,6 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
                 <ScalarProperty Name="EndTimePlan" ColumnName="EndTimePlan" />
                 <ScalarProperty Name="starttimePlan" ColumnName="starttimePlan" />
                 <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="CheckDubbelPrograms">
-            <EntityTypeMapping TypeName="GADATAModelWelding.CheckDubbelPrograms">
-              <MappingFragment StoreEntitySet="CheckDubbelPrograms">
-                <ScalarProperty Name="WeldProgram" ColumnName="WeldProgram" />
-                <ScalarProperty Name="SpotName" ColumnName="SpotName" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -4091,36 +3985,6 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
                 <ScalarProperty Name="Remark" ColumnName="Remark" />
                 <ScalarProperty Name="Timestamp" ColumnName="Timestamp" />
                 <ScalarProperty Name="TodoID" ColumnName="TodoID" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="WeldFaultProtocol">
-            <EntityTypeMapping TypeName="GADATAModelWelding.WeldFaultProtocol">
-              <MappingFragment StoreEntitySet="WeldFaultProtocol">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="WMComment" ColumnName="WMComment" />
-                <ScalarProperty Name="CDSID" ColumnName="CDSID" />
-                <ScalarProperty Name="progNo" ColumnName="progNo" />
-                <ScalarProperty Name="CountFaultsInJob" ColumnName="CountFaultsInJob" />
-                <ScalarProperty Name="errorCode2_txt" ColumnName="errorCode2_txt" />
-                <ScalarProperty Name="errorCode1_txt" ColumnName="errorCode1_txt" />
-                <ScalarProperty Name="breakdownTime" ColumnName="breakdownTime" />
-                <ScalarProperty Name="FaultEnd" ColumnName="FaultEnd" />
-                <ScalarProperty Name="FaultStart" ColumnName="FaultStart" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="NPT" ColumnName="NPT" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="WeldfaultCount">
-            <EntityTypeMapping TypeName="GADATAModelWelding.WeldfaultCount">
-              <MappingFragment StoreEntitySet="WeldfaultCount">
-                <ScalarProperty Name="WMComment" ColumnName="WMComment" />
-                <ScalarProperty Name="countofTimerFaults" ColumnName="countofTimerFaults" />
-                <ScalarProperty Name="Timer" ColumnName="Timer" />
-                <ScalarProperty Name="NPT" ColumnName="NPT" />
-                <ScalarProperty Name="location" ColumnName="location" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -4378,6 +4242,7 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
           <EntitySetMapping Name="c_user">
             <EntityTypeMapping TypeName="GADATAModelWelding.c_user">
               <MappingFragment StoreEntitySet="c_user">
+                <ScalarProperty Name="role" ColumnName="role" />
                 <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
                 <ScalarProperty Name="username" ColumnName="username" />
                 <ScalarProperty Name="enable_bit" ColumnName="enable_bit" />
@@ -4499,6 +4364,7 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
           <EntitySetMapping Name="rt_alarm">
             <EntityTypeMapping TypeName="GADATAModelWelding.rt_alarm">
               <MappingFragment StoreEntitySet="rt_alarm">
+                <ScalarProperty Name="comment" ColumnName="comment" />
                 <ScalarProperty Name="isError_txt" ColumnName="isError_txt" />
                 <ScalarProperty Name="isError" ColumnName="isError" />
                 <ScalarProperty Name="errorCode2_txt" ColumnName="errorCode2_txt" />
@@ -4550,6 +4416,7 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
           <EntitySetMapping Name="rt_job11">
             <EntityTypeMapping TypeName="GADATAModelWelding.rt_job11">
               <MappingFragment StoreEntitySet="rt_job1">
+                <ScalarProperty Name="rt_midair_count" ColumnName="rt_midair_count" />
                 <ScalarProperty Name="rt_weldmeasureprotddw_distinct" ColumnName="rt_weldmeasureprotddw_distinct" />
                 <ScalarProperty Name="rt_breakdown_count" ColumnName="rt_breakdown_count" />
                 <ScalarProperty Name="rt_weldfaultprot_count" ColumnName="rt_weldfaultprot_count" />
@@ -4867,22 +4734,6 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ULplan_start">
-            <EntityTypeMapping TypeName="GADATAModelWelding.ULplan_start">
-              <MappingFragment StoreEntitySet="ULplan_start">
-                <ScalarProperty Name="plancounter" ColumnName="plancounter" />
-                <ScalarProperty Name="bodynr" ColumnName="bodynr" />
-                <ScalarProperty Name="Worklocation" ColumnName="Worklocation" />
-                <ScalarProperty Name="StationId" ColumnName="StationId" />
-                <ScalarProperty Name="inspectorid" ColumnName="inspectorid" />
-                <ScalarProperty Name="planlenght" ColumnName="planlenght" />
-                <ScalarProperty Name="Startinspectiontime" ColumnName="Startinspectiontime" />
-                <ScalarProperty Name="lastplannumber" ColumnName="lastplannumber" />
-                <ScalarProperty Name="planid" ColumnName="planid" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="GADATAModelWelding.Users">
               <MappingFragment StoreEntitySet="Users">
@@ -5018,6 +4869,31 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
                 <ScalarProperty Name="X" ColumnName="X" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CheckDubbelPrograms">
+            <EntityTypeMapping TypeName="GADATAModelWelding.CheckDubbelPrograms">
+              <MappingFragment StoreEntitySet="CheckDubbelPrograms">
+                <ScalarProperty Name="weldProgNo" ColumnName="weldProgNo" />
+                <ScalarProperty Name="SpotName" ColumnName="SpotName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ULplan_start">
+            <EntityTypeMapping TypeName="GADATAModelWelding.ULplan_start">
+              <MappingFragment StoreEntitySet="ULplan_start">
+                <ScalarProperty Name="plancounter" ColumnName="plancounter" />
+                <ScalarProperty Name="bodynr" ColumnName="bodynr" />
+                <ScalarProperty Name="Worklocation" ColumnName="Worklocation" />
+                <ScalarProperty Name="StationId" ColumnName="StationId" />
+                <ScalarProperty Name="inspectorid" ColumnName="inspectorid" />
+                <ScalarProperty Name="planlenght" ColumnName="planlenght" />
+                <ScalarProperty Name="Startinspectiontime" ColumnName="Startinspectiontime" />
+                <ScalarProperty Name="lastplannumber" ColumnName="lastplannumber" />
+                <ScalarProperty Name="planid" ColumnName="planid" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

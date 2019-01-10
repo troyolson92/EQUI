@@ -862,12 +862,6 @@
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Welding\Models\UltralogData.cs" />
-    <Compile Include="Areas\Welding\Models\WeldfaultCount.cs">
-      <DependentUpon>WeldingModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\Welding\Models\WeldFaultProtocol.cs">
-      <DependentUpon>WeldingModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Areas\Welding\Models\WeldingGun.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
@@ -2120,7 +2114,6 @@
     <Content Include="Areas\VWSC\Views\vwsc\_weldFault.cshtml" />
     <Content Include="Areas\VWSC\Views\vwsc\_jobBreakdown.cshtml" />
     <Content Include="Areas\Welding\Views\Launch\BosProgramAvailable.cshtml" />
-    <Content Include="Areas\Welding\Views\Launch\CheckDubbelPrograms.cshtml" />
     <Content Include="Areas\Welding\Views\Launch\dressrequired.cshtml" />
     <Content Include="Areas\Welding\Views\Launch\Index.cshtml" />
     <Content Include="Areas\Welding\Views\Launch\StabilityInDicationV316.cshtml" />
@@ -2132,7 +2125,6 @@
     <Content Include="Areas\Welding\Views\WM\Index.cshtml" />
     <Content Include="Areas\Welding\Views\WM\Launch.cshtml" />
     <Content Include="Areas\Welding\Views\Launch\Index.cshtml" />
-    <Content Include="Areas\Welding\Views\Launch\CheckDubbelPrograms.cshtml" />
     <Content Include="Areas\Welding\Views\Launch\BosProgramAvailable.cshtml" />
     <Content Include="Areas\Welding\Views\Launch\dressrequired.cshtml" />
     <Content Include="Areas\Welding\Views\Launch\WeldtimeSpotsSetup.cshtml" />
@@ -2181,7 +2173,6 @@
     <Content Include="Areas\VASC\Views\Breakdown\GetJobs.cshtml" />
     <Content Include="Areas\VASC\Views\Breakdown\_getJobs.cshtml" />
     <Content Include="Areas\Welding\Views\WM\_rt_alarm.cshtml" />
-    <Content Include="Areas\Welding\Views\WM\_WeldFaultCount.cshtml" />
     <Content Include="Areas\Welding\Views\WM\WeldfaultIndex.cshtml" />
     <Content Include="Areas\Welding\Views\TeardownTeam\_startTeardown.cshtml" />
     <Content Include="Areas\Welding\Views\Qteam\_WeldBoltPlans.cshtml" />
@@ -2191,8 +2182,6 @@
     <Content Include="Areas\Welding\Views\WM\_alarmdetails.cshtml" />
     <Content Include="Areas\Welding\Views\WM\_jobBreakdown1.cshtml" />
     <Content Include="Areas\Welding\Views\WM\_jobdetails1.cshtml" />
-    <Content Include="Areas\Welding\Views\WM\_weldFault1.cshtml" />
-    <Content Include="Areas\Welding\Views\WM\_weldMeasure1.cshtml" />
     <Content Include="Areas\Welding\Views\WM\_rt_job1.cshtml" />
     <Content Include="Areas\Welding\Views\Welding\_alertsAASPOT.cshtml" />
     <Content Include="Areas\Welding\Views\Welding\_AlertsUserRapport.cshtml" />
@@ -2289,6 +2278,7 @@
     <Content Include="Areas\Welding\Views\WeldingGuns\Details.cshtml" />
     <Content Include="Areas\Welding\Views\WeldingGuns\Edit.cshtml" />
     <Content Include="Areas\Welding\Views\WeldingGuns\Index.cshtml" />
+    <Content Include="Areas\Welding\Views\Launch\CheckDubbelPrograms.cshtml" />
     <None Include="Properties\PublishProfiles\gensvw1178-DEV-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gotsvw11292-PRODUCTION-VCTA.pubxml" />
