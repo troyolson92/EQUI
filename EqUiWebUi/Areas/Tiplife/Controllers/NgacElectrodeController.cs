@@ -30,7 +30,7 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
         /// <returns></returns>
         public ActionResult _Tipinfo(string location, int tool_nr)
         {
-            ViewBag.location = location;
+            ViewBag.location = location.Trim();
             ViewBag.tool_nr = tool_nr;
             return PartialView();
         }
