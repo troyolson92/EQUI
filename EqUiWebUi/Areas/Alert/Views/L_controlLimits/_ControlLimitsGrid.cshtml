@@ -11,7 +11,7 @@
     columns.Add(c => c.UpperLimit - c.LowerLimit).Titled("Delta").Filterable(true);
     columns.Add(c => c.l_variants.variantGroup).Titled("variantGroup").Css("d-none");
     columns.Add(c => c.Comment).Titled("Comment");
-    columns.Add(c => c.isdead).Titled("isdead");
+    columns.Add(c => c.isdead).Titled("isdead").Css("d-none");
     //add edit button
     columns.Add(c => c)
                 .Titled("")
