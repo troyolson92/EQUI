@@ -129,16 +129,20 @@ namespace EqUiWebUi.Areas.Alert.Controllers
 
             //main chart value 
             object ValueData = from e in ChartData
+                               where e.value != null
+                               orderby e.timestamp
                                select new
                               {
                                 x = ((e.timestamp - UnixEpoch).Ticks / TimeSpan.TicksPerMillisecond),
-                                y = Math.Round(e.value,3),
+                                y = Math.Round(e.value.GetValueOrDefault(),3),
                                 r = SetPointSize(e)
                               };
 
             //main chart REF value 
             object RefValueData = from e in ChartData
-                               select new
+                                  where e.RefValue != null
+                                  orderby e.timestamp
+                                  select new
                                {
                                    x = ((e.timestamp - UnixEpoch).Ticks / TimeSpan.TicksPerMillisecond),
                                    y = Math.Round(e.RefValue.GetValueOrDefault(), 3),
@@ -147,6 +151,8 @@ namespace EqUiWebUi.Areas.Alert.Controllers
 
             //get optional datasets (this gets rendered in an extra chart below the main one
             object OptValueData = from e in ChartData
+                                  where e.OptValue != null
+                                  orderby e.timestamp
                                   select new
                                {
                                    x = ((e.timestamp - UnixEpoch).Ticks / TimeSpan.TicksPerMillisecond),
