@@ -1,6 +1,14 @@
 ﻿@model EqUiWebUi.Areas.Alert.Models.c_triggers
 <div>
-    <h6>Wiki for: @Model.alertType</h6>
-    <small>@Model.discription</small>
-    <div class="card-body">@Html.Raw(Model.wiki)</div>
+    <h6>@Model.alertType (<small>@Model.discription</small>)</h6>
+
+    @if (Model.wiki != null)
+    {
+        <div class="card-body">@Html.Raw(Model.wiki)</div>
+    }else
+    {
+        <div>
+            <div class="badge badge-warning">No wiki has been written for this alert</div>
+        </div>
+    }
 </div>
