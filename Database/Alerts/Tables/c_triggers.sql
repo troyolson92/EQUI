@@ -2,6 +2,7 @@
     [id]                       INT           IDENTITY (1, 1) NOT NULL,
     [enabled]                  BIT           NOT NULL,
     [discription]              VARCHAR (MAX) NOT NULL,
+    [wiki]                     VARCHAR (MAX) NULL,
     [RunAgainst]               INT           NOT NULL,
     [sqlStatement]             VARCHAR (MAX) NULL,
     [smsSystem]                INT           NULL,
@@ -33,6 +34,8 @@
     CONSTRAINT [FK_c_triggers_c_smsSystem] FOREIGN KEY ([smsSystem]) REFERENCES [Alerts].[c_smsSystem] ([id]),
     CONSTRAINT [FK_c_triggers_c_state] FOREIGN KEY ([initial_state]) REFERENCES [Alerts].[c_state] ([id])
 );
+
+
 
 
 

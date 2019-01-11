@@ -24,12 +24,10 @@
     [isDead]                  INT            NULL,
     CONSTRAINT [PK_welding2_spot] PRIMARY KEY CLUSTERED ([ID] ASC),
     CONSTRAINT [FK_rt_spottable_c_timer] FOREIGN KEY ([timerId]) REFERENCES [WELDING2].[c_timer] ([ID]),
-    CONSTRAINT [FK_Spot_PlateCombinations] FOREIGN KEY ([PlateCombinationtId]) REFERENCES [dbo].[PlateCombinations] ([ID])
 );
 
 
 GO
-ALTER TABLE [WELDING2].[rt_spottable] NOCHECK CONSTRAINT [FK_Spot_PlateCombinations];
 
 
 

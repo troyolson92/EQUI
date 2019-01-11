@@ -15,6 +15,7 @@
     [CLassificationId]          VARCHAR (MAX) NULL,
     [hasRackidAsBodynum]        BIT           NOT NULL,
     [hasSpotweld]               BIT           NOT NULL,
+    [hasTipchanger]             BIT           NOT NULL,
     [Asset_x]                   INT           NULL,
     [Asset_y]                   INT           NULL,
     [Asset_png]                 VARCHAR (50)  NULL,
@@ -29,6 +30,8 @@
     CONSTRAINT [PK_c_controller_1] PRIMARY KEY CLUSTERED ([id] ASC),
     CONSTRAINT [FK_c_controller_c_controller_class] FOREIGN KEY ([class_id]) REFERENCES [NGAC].[c_controller_class] ([id])
 );
+
+
 
 
 
