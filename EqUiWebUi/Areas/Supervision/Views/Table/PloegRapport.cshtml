@@ -6,8 +6,8 @@
     <div class="card-header bg-dark text-white">
         <h4>
             PloegRapport
-            <a class="fas fa-wrench text-white" id="OptionsPopover" data-toggle="popover" data-placement="bottom"></a>
-            <a class="fas fa-info-circle text-white" id="LegendPopover"  data-container="body" data-toggle="popover"  data-placement="bottom"></a>
+            <a class="fas fa-wrench text-white clickable" id="OptionsPopover" data-toggle="popover" data-placement="bottom" title="Show options"></a>
+            <a class="fas fa-info-circle text-white clickable" id="LegendPopover" data-container="body" data-toggle="popover" data-placement="bottom" title="Show Legend "></a>
         </h4>
     </div>
     <div id="PloegRapportGridSpincontainer" style="position:relative">
@@ -135,6 +135,9 @@
                 return $('#OptionsPopoverContent').html();
             }
         });
+
+        //enable tooltips
+        $('[data-toggle="popover"]').tooltip();
 
         //listen to click on option buttons
         $(document).on("click", ".Optionsbtn", function () {

@@ -253,7 +253,7 @@ namespace EqUiWebUi
 
 
     //****************************************************************
-    //class to acces the session vars for the current user
+    //class to access the session vars for the current user
     //***************************************************************
     public static class CurrentUser
     {
@@ -268,9 +268,9 @@ namespace EqUiWebUi
                     user = new users();
                     HttpContext.Current.Session["user"] = user;
                 }
-                //fix for whitespaces at begin or start of roots
-                user.AssetRoot = user.AssetRoot.Trim();
-                user.LocationRoot = user.LocationRoot.Trim();
+                //fix for null string and whitespaces at begin or start of roots
+                user.AssetRoot = (user.AssetRoot ?? string.Empty).Trim();
+                user.LocationRoot = (user.LocationRoot ?? string.Empty).Trim();
                 return user;
             }
 

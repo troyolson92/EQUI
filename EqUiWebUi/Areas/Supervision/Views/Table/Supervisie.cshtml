@@ -5,7 +5,7 @@
     <div class="card-header bg-dark text-white">
         <h4>
             Supervisie
-            <a class="fas fa-info-circle text-white" id="LegendPopover" data-container="body" data-toggle="popover" data-placement="bottom"></a>
+            <a class="fas fa-info-circle text-white clickable" id="LegendPopover" data-container="body" data-toggle="popover" data-placement="bottom" title="Show Legend "></a>
         </h4>
     </div>
     <div id="SupervisieGridSpincontainer" style="position:relative">
@@ -66,6 +66,8 @@
             }
         });
 
+        //enable tooltips
+        $('[data-toggle="popover"]').tooltip();
 
         //full with screen
         $("#allcontent").removeClass("body-content");

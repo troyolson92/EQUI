@@ -25,15 +25,22 @@
             @Html.DisplayNameFor(model => model.LocationRoot)
         </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.LocationRoot)
-        </dd>
+        @if (Model.LocationRoot == null)
+        {
+            <dd>No filter</dd>
+        }
+        else
+        {
+            <dd>
+                @Html.DisplayFor(model => model.LocationRoot)
+            </dd>
+        }
 
         <dt>
             @Html.DisplayNameFor(model => model.AssetRoot)
         </dt>
 
-        @if (Model.AssetRoot == " ")
+        @if (Model.AssetRoot == null)
         {
             <dd>No filter</dd>
         }
@@ -48,18 +55,25 @@
             @Html.DisplayNameFor(model => model.ResponsibleArea)
         </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.ResponsibleAreaOptGroup) -> @Html.DisplayFor(model => model.ResponsibleArea)
-            @if (Model.ResponsibleAreaLocations != null)
-            {
-                <ul class="text-muted">
-                    @foreach (string item in Model.ResponsibleAreaLocations)
-                    {
-                        <li>@item</li>
-                    }
-                </ul>
-            }
-        </dd>
+        @if (Model.ResponsibleArea == null)
+        {
+            <dd>No filter</dd>
+        }
+        else
+        {
+            <dd>
+                @Html.DisplayFor(model => model.ResponsibleAreaOptGroup) -> @Html.DisplayFor(model => model.ResponsibleArea)
+                @if (Model.ResponsibleAreaLocations != null)
+                {
+                    <ul class="text-muted">
+                        @foreach (string item in Model.ResponsibleAreaLocations)
+                        {
+                            <li>@item</li>
+                        }
+                    </ul>
+                }
+            </dd>
+        }
 
         <dt>
             @Html.DisplayNameFor(model => model.Culture)
