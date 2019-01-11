@@ -237,8 +237,12 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
             {
                 ViewBag.NgacDummyAlarmobject = $"{location.Trim()}_gun{tool_nr}";
                 ViewBag.NgacDummyTriggerId = 43;
+                ViewBag.isNgac = true; //used to pick more info modal (ngac or comau)
             }
-
+            else
+            {
+                ViewBag.isNgac = false;
+            }
             //Add midair scatter chart always (all weld gun tools should have a midair)
             ViewBag.MidAirDummyAlarmobject = $"{location.Trim()}_ElecNo{ElectrodeNo}";
             ViewBag.MidAircDummyTriggerId = 44;

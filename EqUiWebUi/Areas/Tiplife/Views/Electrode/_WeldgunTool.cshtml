@@ -83,9 +83,14 @@
 
     //enable modal for wiki
     $("#Wiki").click(function () {
-          $('#MyModal').removeData('bs.modal');
-          $('#MyModal').modal({ show: true });
-          $('#MyModal').load('@Url.Action("_Tipinfo","NgacElectrode")', { location: '@ViewBag.location', tool_nr : @ViewBag.tool_nr}, function (result) { });
+        $('#MyModal').removeData('bs.modal');
+        $('#MyModal').modal({ show: true });
+        if (@ViewBag.isNgac.ToString().ToLower()){
+             $('#MyModal').load('@Url.Action("_Tipinfo", "NgacElectrode")', { location: '@ViewBag.location', tool_nr: @ViewBag.tool_nr}, function(result) { });
+        }
+        else {
+             $('#MyModal').load('@Url.Action("_Tipinfo", "ComauElectrode")', { location: '@ViewBag.location', tool_nr: @ViewBag.tool_nr}, function(result) { });
+        }         
     });
 
     //on modal close

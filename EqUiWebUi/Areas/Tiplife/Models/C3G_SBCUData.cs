@@ -38,5 +38,6 @@ namespace EqUiWebUi.Areas.Tiplife.Models
         public Nullable<int> RefSS { get; set; }
         public int ID { get; set; }
         public Nullable<byte> gunnum { get; set; }
+        public string LocationTree { get; set; }
     }
 }

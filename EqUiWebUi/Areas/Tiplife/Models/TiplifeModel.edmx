@@ -13,6 +13,7 @@ warning 6002: The table/view 'GADATA.C3G.SBCUData' does not have a primary key d
           </Key>
           <Property Name="tool_timestamp" Type="datetime" />
           <Property Name="RobotName" Type="varchar" MaxLength="50" />
+          <Property Name="LocationTree" Type="varchar(max)" />
           <Property Name="tool_id" Type="varchar" MaxLength="21" />
           <Property Name="Dmeas" Type="float" />
           <Property Name="Dsetup" Type="float" />
@@ -337,6 +338,7 @@ warning 6002: The table/view 'GADATA.WELDING2.TipMonitor' does not have a primar
             <DefiningQuery>SELECT 
     [SBCUData].[tool_timestamp] AS [tool_timestamp], 
     [SBCUData].[RobotName] AS [RobotName], 
+    [SBCUData].[LocationTree] AS [LocationTree], 
     [SBCUData].[tool_id] AS [tool_id], 
     [SBCUData].[Dmeas] AS [Dmeas], 
     [SBCUData].[Dsetup] AS [Dsetup], 
@@ -942,6 +944,7 @@ warning 6002: The table/view 'GADATA.WELDING2.TipMonitor' does not have a primar
           <Property Name="RefSS" Type="Int32" />
           <Property Name="ID" Type="Int32" Nullable="false" />
           <Property Name="gunnum" Type="Byte" />
+          <Property Name="LocationTree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1230,6 +1233,7 @@ warning 6002: The table/view 'GADATA.WELDING2.TipMonitor' does not have a primar
           <EntitySetMapping Name="SBCUData">
             <EntityTypeMapping TypeName="GADATAModelTiplife.C3G_SBCUData">
               <MappingFragment StoreEntitySet="SBCUData">
+                <ScalarProperty Name="LocationTree" ColumnName="LocationTree" />
                 <ScalarProperty Name="gunnum" ColumnName="gunnum" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="RefSS" ColumnName="RefSS" />

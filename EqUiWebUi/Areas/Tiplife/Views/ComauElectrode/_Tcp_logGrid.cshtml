@@ -1,0 +1,26 @@
+﻿@model IQueryable<EqUiWebUi.Areas.Tiplife.Models.C3G_SBCUData>
+
+@Html.Grid(Model).Named("TCP_LOGGrid").Build(columns =>
+{
+    columns.Add(c => c.RobotName).Titled("Robot").Filterable(true);
+    columns.Add(c => c.gunnum).Titled("Nr");
+    columns.Add(c => c.tool_timestamp).Titled("Date_Time").Formatted("{0:dd-MM-yyyy HH:mm}").InitialSort(GridSortOrder.Desc);
+    columns.Add(c => c.tool_id).Titled("Toolname").Css("d-none d-lg-table-cell");
+
+    columns.Add(c => c.ToolX).Titled("ToolX");
+    columns.Add(c => c.ToolY).Titled("ToolY");
+    columns.Add(c => c.ToolZ).Titled("ToolZ");
+    columns.Add(c => c.Longcheck).Titled("Longcheck");
+    columns.Add(c => c.TcpUpdate).Titled("TcpUpdate");
+
+    columns.Add(c => c.Toola).Titled("Toola").Css("d-none d-lg-table-cell");
+    columns.Add(c => c.Toole).Titled("Toole").Css("d-none d-lg-table-cell");
+    columns.Add(c => c.Toolr).Titled("Toolr").Css("d-none d-lg-table-cell");
+
+
+}).Sortable().Filterable().Pageable(pager =>
+{
+    pager.RowsPerPage = 20;
+    pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 20, "20" }, { 40, "40" }, { 80, "80" }, { 100, "100" } };
+    pager.ShowPageSizes = true;
+}).Empty("No data found").Css("table-hover")

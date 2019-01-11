@@ -182,7 +182,6 @@
     <Folder Include="Areas\STW040\Models\" />
     <Folder Include="Areas\STW040\Views\Shared\" />
     <Folder Include="Areas\Supervision\Views\Shared\" />
-    <Folder Include="Areas\Tiplife\Views\ComauElectrode\" />
     <Folder Include="Areas\VASC\Views\Shared\" />
     <Folder Include="Areas\VCSC\Controllers\" />
     <Folder Include="Areas\VCSC\Models\" />
@@ -2286,6 +2285,9 @@
     <Content Include="Areas\Alert\Views\c_triggers\_Wiki.cshtml" />
     <Content Include="Areas\Tiplife\Views\NgacElectrode\Tcp_log.cshtml" />
     <Content Include="Areas\Tiplife\Views\NgacElectrode\_Tcp_logGrid.cshtml" />
+    <Content Include="Areas\Tiplife\Views\ComauElectrode\_Tcp_logGrid.cshtml" />
+    <Content Include="Areas\Tiplife\Views\ComauElectrode\Tcp_log.cshtml" />
+    <Content Include="Areas\Tiplife\Views\ComauElectrode\_Tipinfo.cshtml" />
     <None Include="Properties\PublishProfiles\chasvw1203_PRODUCTION_VCCH.pubxml" />
     <None Include="Properties\PublishProfiles\gensvw1178-DEV-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION-VCG.pubxml" />
