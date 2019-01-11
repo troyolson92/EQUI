@@ -12,7 +12,7 @@ namespace EqUiWebUi.Areas.Tiplife.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class TipwearBeforeChange
+    public partial class NGAC_TipwearBeforeChange
     {
         public string controller_name { get; set; }
         public Nullable<int> controller_id { get; set; }

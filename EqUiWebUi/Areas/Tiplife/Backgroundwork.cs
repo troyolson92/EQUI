@@ -13,7 +13,7 @@ namespace EqUiWebUi.Areas.Tiplife
     public static class DataBuffer
     {
         //
-        public static List<TipMonitor> Tipstatus { get; set; }
+        public static List<NGAC_TipMonitor> Tipstatus { get; set; }
         public static DateTime TipstatusLastDt { get; set; }
         public static bool _isRunningUpdateTipstatus;
         public static int TipWearbeforechangeCounter { get; set; }
@@ -54,7 +54,7 @@ namespace EqUiWebUi.Areas.Tiplife
 
                 //get data for NGAC  
                 context.WriteLine("Get gADATAEntities.TipMonitor (NGAC)");
-                List<TipMonitor> data = db.TipMonitor.ToList();
+                List<NGAC_TipMonitor> data = db.TipMonitor.ToList();
 
                 //ADD comau data if area is enabled
                 if (EqUiWebUi.MyBooleanExtensions.IsAreaEnabled("Welding"))

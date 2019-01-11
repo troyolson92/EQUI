@@ -6,6 +6,37 @@
     <edmx:StorageModels>
     <Schema Namespace="GADATAModelTiplife.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.C3G.SBCUData' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="SBCUData">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="tool_timestamp" Type="datetime" />
+          <Property Name="RobotName" Type="varchar" MaxLength="50" />
+          <Property Name="tool_id" Type="varchar" MaxLength="21" />
+          <Property Name="Dmeas" Type="float" />
+          <Property Name="Dsetup" Type="float" />
+          <Property Name="ToolX" Type="float" />
+          <Property Name="ToolY" Type="float" />
+          <Property Name="ToolZ" Type="float" />
+          <Property Name="Toola" Type="float" />
+          <Property Name="Toole" Type="float" />
+          <Property Name="Toolr" Type="float" />
+          <Property Name="Longcheck" Type="bit" />
+          <Property Name="TcpUpdate" Type="bit" />
+          <Property Name="Vyear" Type="int" />
+          <Property Name="Vweek" Type="int" />
+          <Property Name="Vday" Type="int" />
+          <Property Name="RefAVG" Type="int" />
+          <Property Name="RefSTDEC" Type="int" />
+          <Property Name="LCL" Type="float" />
+          <Property Name="UCL" Type="float" />
+          <Property Name="RefDp" Type="int" />
+          <Property Name="RefSS" Type="int" />
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="gunnum" Type="tinyint" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'GADATA.NGAC.TCP_LOG' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="TCP_LOG">
           <Key>
@@ -275,8 +306,10 @@ warning 6002: The table/view 'GADATA.NGAC.TipwearLast' does not have a primary k
 warning 6002: The table/view 'GADATA.WELDING2.TipMonitor' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="TipMonitor1">
           <Key>
+            
             <PropertyRef Name="Date time" />
             <PropertyRef Name="id" />
+            
           </Key>
           <Property Name="Robot" Type="nchar" MaxLength="10" />
           <Property Name="Tool_Nr" Type="int" Nullable="false" />
@@ -300,6 +333,34 @@ warning 6002: The table/view 'GADATA.WELDING2.TipMonitor' does not have a primar
           <Property Name="RobotWear" Type="int" />
         </EntityType>
         <EntityContainer Name="GADATAModelTiplifeStoreContainer">
+          <EntitySet Name="SBCUData" EntityType="Self.SBCUData" store:Type="Views" store:Schema="C3G">
+            <DefiningQuery>SELECT 
+    [SBCUData].[tool_timestamp] AS [tool_timestamp], 
+    [SBCUData].[RobotName] AS [RobotName], 
+    [SBCUData].[tool_id] AS [tool_id], 
+    [SBCUData].[Dmeas] AS [Dmeas], 
+    [SBCUData].[Dsetup] AS [Dsetup], 
+    [SBCUData].[ToolX] AS [ToolX], 
+    [SBCUData].[ToolY] AS [ToolY], 
+    [SBCUData].[ToolZ] AS [ToolZ], 
+    [SBCUData].[Toola] AS [Toola], 
+    [SBCUData].[Toole] AS [Toole], 
+    [SBCUData].[Toolr] AS [Toolr], 
+    [SBCUData].[Longcheck] AS [Longcheck], 
+    [SBCUData].[TcpUpdate] AS [TcpUpdate], 
+    [SBCUData].[Vyear] AS [Vyear], 
+    [SBCUData].[Vweek] AS [Vweek], 
+    [SBCUData].[Vday] AS [Vday], 
+    [SBCUData].[RefAVG] AS [RefAVG], 
+    [SBCUData].[RefSTDEC] AS [RefSTDEC], 
+    [SBCUData].[LCL] AS [LCL], 
+    [SBCUData].[UCL] AS [UCL], 
+    [SBCUData].[RefDp] AS [RefDp], 
+    [SBCUData].[RefSS] AS [RefSS], 
+    [SBCUData].[ID] AS [ID], 
+    [SBCUData].[gunnum] AS [gunnum]
+    FROM [C3G].[SBCUData] AS [SBCUData]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="TCP_LOG" EntityType="Self.TCP_LOG" store:Type="Views" store:Schema="NGAC">
             <DefiningQuery>SELECT 
     [TCP_LOG].[controller_name] AS [controller_name], 
@@ -569,7 +630,7 @@ warning 6002: The table/view 'GADATA.WELDING2.TipMonitor' does not have a primar
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="GADATAModelTiplife" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="TipDressLogFile">
+        <EntityType Name="NGAC_TipDressLogFile">
           <Key>
             <PropertyRef Name="id" />
             <PropertyRef Name="Tool_Nr" />
@@ -633,7 +694,7 @@ warning 6002: The table/view 'GADATA.WELDING2.TipMonitor' does not have a primar
           <Property Name="C_timestamp" Type="DateTime" Precision="3" />
           <Property Name="c_controller_id" Type="Int32" />
         </EntityType>
-        <EntityType Name="TipwearBeforeChange">
+        <EntityType Name="NGAC_TipwearBeforeChange">
           <Key>
             <PropertyRef Name="tipDressID" />
             <PropertyRef Name="Tool_Nr" />
@@ -659,7 +720,7 @@ warning 6002: The table/view 'GADATA.WELDING2.TipMonitor' does not have a primar
           <Property Name="tipchangeindex" Type="Int64" />
           <Property Name="refid" Type="Int32" />
         </EntityType>
-        <EntityType Name="TipwearLast">
+        <EntityType Name="NGAC_TipwearLast">
           <Key>
             <PropertyRef Name="id" />
           </Key>
@@ -739,15 +800,16 @@ warning 6002: The table/view 'GADATA.WELDING2.TipMonitor' does not have a primar
           <Property Name="PrevDress_Num" Type="Int16" />
         </EntityType>
         <EntityContainer Name="GADATAEntitiesTiplife" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="TipDressLogFile" EntityType="Self.TipDressLogFile" />
-          <EntitySet Name="TipwearBeforeChange" EntityType="Self.TipwearBeforeChange" />
-          <EntitySet Name="TipwearLast" EntityType="Self.TipwearLast" />
-          <EntitySet Name="TipLifeExpectations" EntityType="GADATAModelTiplife.TipLifeExpectations" />
-          <EntitySet Name="TipMonitor" EntityType="GADATAModelTiplife.TipMonitor" />
-          <EntitySet Name="TCP_LOG" EntityType="GADATAModelTiplife.TCP_LOG" />
+          <EntitySet Name="TipDressLogFile" EntityType="GADATAModelTiplife.NGAC_TipDressLogFile" />
+          <EntitySet Name="TipwearBeforeChange" EntityType="GADATAModelTiplife.NGAC_TipwearBeforeChange" />
+          <EntitySet Name="TipwearLast" EntityType="GADATAModelTiplife.NGAC_TipwearLast" />
+          <EntitySet Name="TipLifeExpectations" EntityType="GADATAModelTiplife.NGAC_TipLifeExpectations" />
+          <EntitySet Name="TipMonitor" EntityType="GADATAModelTiplife.NGAC_TipMonitor" />
+          <EntitySet Name="TCP_LOG" EntityType="GADATAModelTiplife.NGAC_TCP_LOG" />
           <EntitySet Name="TipMonitor1" EntityType="GADATAModelTiplife.VWSC_TipMonitor" />
+          <EntitySet Name="SBCUData" EntityType="GADATAModelTiplife.C3G_SBCUData" />
         </EntityContainer>
-        <EntityType Name="TipLifeExpectations">
+        <EntityType Name="NGAC_TipLifeExpectations">
           <Key>
             <PropertyRef Name="refid" />
           </Key>
@@ -769,7 +831,7 @@ warning 6002: The table/view 'GADATA.WELDING2.TipMonitor' does not have a primar
           <Property Name="avgPartsMoveBefore100" Type="Double" />
           <Property Name="refid" Type="Int32" Nullable="false" />
         </EntityType>
-        <EntityType Name="TipMonitor">
+        <EntityType Name="NGAC_TipMonitor">
           <Key>
             <PropertyRef Name="id" />
           </Key>
@@ -793,7 +855,7 @@ warning 6002: The table/view 'GADATA.WELDING2.TipMonitor' does not have a primar
           <Property Name="hasTipchanger" Type="Boolean" Nullable="false" />
           <Property Name="SortCol" Type="Double" />
         </EntityType>
-        <EntityType Name="TCP_LOG">
+        <EntityType Name="NGAC_TCP_LOG">
           <Key>
             <PropertyRef Name="id" />
           </Key>
@@ -852,6 +914,35 @@ warning 6002: The table/view 'GADATA.WELDING2.TipMonitor' does not have a primar
           <Property Name="Status" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="RobotWear" Type="Int32" />
         </EntityType>
+        <EntityType Name="C3G_SBCUData">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="tool_timestamp" Type="DateTime" Precision="3" />
+          <Property Name="RobotName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="tool_id" Type="String" MaxLength="21" FixedLength="false" Unicode="false" />
+          <Property Name="Dmeas" Type="Double" />
+          <Property Name="Dsetup" Type="Double" />
+          <Property Name="ToolX" Type="Double" />
+          <Property Name="ToolY" Type="Double" />
+          <Property Name="ToolZ" Type="Double" />
+          <Property Name="Toola" Type="Double" />
+          <Property Name="Toole" Type="Double" />
+          <Property Name="Toolr" Type="Double" />
+          <Property Name="Longcheck" Type="Boolean" />
+          <Property Name="TcpUpdate" Type="Boolean" />
+          <Property Name="Vyear" Type="Int32" />
+          <Property Name="Vweek" Type="Int32" />
+          <Property Name="Vday" Type="Int32" />
+          <Property Name="RefAVG" Type="Int32" />
+          <Property Name="RefSTDEC" Type="Int32" />
+          <Property Name="LCL" Type="Double" />
+          <Property Name="UCL" Type="Double" />
+          <Property Name="RefDp" Type="Int32" />
+          <Property Name="RefSS" Type="Int32" />
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="gunnum" Type="Byte" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -859,7 +950,7 @@ warning 6002: The table/view 'GADATA.WELDING2.TipMonitor' does not have a primar
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="GADATAModelTiplifeStoreContainer" CdmEntityContainer="GADATAEntitiesTiplife">
           <EntitySetMapping Name="TipDressLogFile">
-            <EntityTypeMapping TypeName="GADATAModelTiplife.TipDressLogFile">
+            <EntityTypeMapping TypeName="GADATAModelTiplife.NGAC_TipDressLogFile">
               <MappingFragment StoreEntitySet="TipDressLogFile">
                 <ScalarProperty Name="c_controller_id" ColumnName="c_controller_id" />
                 <ScalarProperty Name="controller_name" ColumnName="controller_name" />
@@ -923,7 +1014,7 @@ warning 6002: The table/view 'GADATA.WELDING2.TipMonitor' does not have a primar
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TipwearBeforeChange">
-            <EntityTypeMapping TypeName="GADATAModelTiplife.TipwearBeforeChange">
+            <EntityTypeMapping TypeName="GADATAModelTiplife.NGAC_TipwearBeforeChange">
               <MappingFragment StoreEntitySet="TipwearBeforeChange">
                 <ScalarProperty Name="refid" ColumnName="refid" />
                 <ScalarProperty Name="tipchangeindex" ColumnName="tipchangeindex" />
@@ -949,7 +1040,7 @@ warning 6002: The table/view 'GADATA.WELDING2.TipMonitor' does not have a primar
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TipwearLast">
-            <EntityTypeMapping TypeName="GADATAModelTiplife.TipwearLast">
+            <EntityTypeMapping TypeName="GADATAModelTiplife.NGAC_TipwearLast">
               <MappingFragment StoreEntitySet="TipwearLast">
                 <ScalarProperty Name="PrevDress_Num" ColumnName="PrevDress_Num" />
                 <ScalarProperty Name="c_controller_id" ColumnName="c_controller_id" />
@@ -1029,7 +1120,7 @@ warning 6002: The table/view 'GADATA.WELDING2.TipMonitor' does not have a primar
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TipLifeExpectations">
-            <EntityTypeMapping TypeName="GADATAModelTiplife.TipLifeExpectations">
+            <EntityTypeMapping TypeName="GADATAModelTiplife.NGAC_TipLifeExpectations">
               <MappingFragment StoreEntitySet="TipLifeExpectations">
                 <ScalarProperty Name="refid" ColumnName="refid" />
                 <ScalarProperty Name="avgPartsMoveBefore100" ColumnName="avgPartsMoveBefore100" />
@@ -1052,7 +1143,7 @@ warning 6002: The table/view 'GADATA.WELDING2.TipMonitor' does not have a primar
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TipMonitor">
-            <EntityTypeMapping TypeName="GADATAModelTiplife.TipMonitor">
+            <EntityTypeMapping TypeName="GADATAModelTiplife.NGAC_TipMonitor">
               <MappingFragment StoreEntitySet="TipMonitor">
                 <ScalarProperty Name="SortCol" ColumnName="SortCol" />
                 <ScalarProperty Name="hasTipchanger" ColumnName="hasTipchanger" />
@@ -1077,7 +1168,7 @@ warning 6002: The table/view 'GADATA.WELDING2.TipMonitor' does not have a primar
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TCP_LOG">
-            <EntityTypeMapping TypeName="GADATAModelTiplife.TCP_LOG">
+            <EntityTypeMapping TypeName="GADATAModelTiplife.NGAC_TCP_LOG">
               <MappingFragment StoreEntitySet="TCP_LOG">
                 <ScalarProperty Name="DeltaRef" ColumnName="DeltaRef" />
                 <ScalarProperty Name="SetupTCP_Z" ColumnName="SetupTCP_Z" />
@@ -1133,6 +1224,36 @@ warning 6002: The table/view 'GADATA.WELDING2.TipMonitor' does not have a primar
                 <ScalarProperty Name="Date_time" ColumnName="Date time" />
                 <ScalarProperty Name="Tool_Nr" ColumnName="Tool_Nr" />
                 <ScalarProperty Name="Robot" ColumnName="Robot" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SBCUData">
+            <EntityTypeMapping TypeName="GADATAModelTiplife.C3G_SBCUData">
+              <MappingFragment StoreEntitySet="SBCUData">
+                <ScalarProperty Name="gunnum" ColumnName="gunnum" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="RefSS" ColumnName="RefSS" />
+                <ScalarProperty Name="RefDp" ColumnName="RefDp" />
+                <ScalarProperty Name="UCL" ColumnName="UCL" />
+                <ScalarProperty Name="LCL" ColumnName="LCL" />
+                <ScalarProperty Name="RefSTDEC" ColumnName="RefSTDEC" />
+                <ScalarProperty Name="RefAVG" ColumnName="RefAVG" />
+                <ScalarProperty Name="Vday" ColumnName="Vday" />
+                <ScalarProperty Name="Vweek" ColumnName="Vweek" />
+                <ScalarProperty Name="Vyear" ColumnName="Vyear" />
+                <ScalarProperty Name="TcpUpdate" ColumnName="TcpUpdate" />
+                <ScalarProperty Name="Longcheck" ColumnName="Longcheck" />
+                <ScalarProperty Name="Toolr" ColumnName="Toolr" />
+                <ScalarProperty Name="Toole" ColumnName="Toole" />
+                <ScalarProperty Name="Toola" ColumnName="Toola" />
+                <ScalarProperty Name="ToolZ" ColumnName="ToolZ" />
+                <ScalarProperty Name="ToolY" ColumnName="ToolY" />
+                <ScalarProperty Name="ToolX" ColumnName="ToolX" />
+                <ScalarProperty Name="Dsetup" ColumnName="Dsetup" />
+                <ScalarProperty Name="Dmeas" ColumnName="Dmeas" />
+                <ScalarProperty Name="tool_id" ColumnName="tool_id" />
+                <ScalarProperty Name="RobotName" ColumnName="RobotName" />
+                <ScalarProperty Name="tool_timestamp" ColumnName="tool_timestamp" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

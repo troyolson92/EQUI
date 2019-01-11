@@ -12,7 +12,7 @@ namespace EqUiWebUi.Areas.Tiplife.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class TipMonitor
+    public partial class NGAC_TipMonitor
     {
         public string Robot { get; set; }
         public short Tool_Nr { get; set; }

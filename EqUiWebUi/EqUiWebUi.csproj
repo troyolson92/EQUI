@@ -381,13 +381,25 @@
     <Compile Include="Areas\Tiplife\Controllers\ComauElectrodeController.cs" />
     <Compile Include="Areas\Tiplife\Controllers\ElectrodeController.cs" />
     <Compile Include="Areas\Tiplife\Controllers\NgacElectrodeController.cs" />
-    <Compile Include="Areas\Tiplife\Models\TCP_LOG.cs">
+    <Compile Include="Areas\Tiplife\Models\C3G_SBCUData.cs">
       <DependentUpon>TiplifeModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Areas\Tiplife\Models\TipDressLogFile.cs">
+    <Compile Include="Areas\Tiplife\Models\NGAC_TCP_LOG.cs">
       <DependentUpon>TiplifeModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Areas\Tiplife\Models\TipLifeExpectations.cs">
+    <Compile Include="Areas\Tiplife\Models\NGAC_TipDressLogFile.cs">
+      <DependentUpon>TiplifeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Tiplife\Models\NGAC_TipLifeExpectations.cs">
+      <DependentUpon>TiplifeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Tiplife\Models\NGAC_TipMonitor.cs">
+      <DependentUpon>TiplifeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Tiplife\Models\NGAC_TipwearBeforeChange.cs">
+      <DependentUpon>TiplifeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Tiplife\Models\NGAC_TipwearLast.cs">
       <DependentUpon>TiplifeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Tiplife\Models\TiplifeModel.Context.cs">
@@ -404,15 +416,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>TiplifeModel.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\Tiplife\Models\TipMonitor.cs">
-      <DependentUpon>TiplifeModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\Tiplife\Models\TipwearBeforeChange.cs">
-      <DependentUpon>TiplifeModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\Tiplife\Models\TipwearLast.cs">
-      <DependentUpon>TiplifeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Tiplife\Models\VWSC_TipMonitor.cs">
       <DependentUpon>TiplifeModel.tt</DependentUpon>

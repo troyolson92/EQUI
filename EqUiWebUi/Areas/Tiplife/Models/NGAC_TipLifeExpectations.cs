@@ -12,7 +12,7 @@ namespace EqUiWebUi.Areas.Tiplife.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class TipLifeExpectations
+    public partial class NGAC_TipLifeExpectations
     {
         public string controller_name { get; set; }
         public string LocationTree { get; set; }

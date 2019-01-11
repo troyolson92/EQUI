@@ -12,7 +12,7 @@ namespace EqUiWebUi.Areas.Tiplife.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class TCP_LOG
+    public partial class NGAC_TCP_LOG
     {
         public string controller_name { get; set; }
         public string LocationTree { get; set; }

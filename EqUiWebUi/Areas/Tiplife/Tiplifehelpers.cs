@@ -37,7 +37,7 @@ namespace EqUiWebUi.Areas.Tiplife
 
         //tip life tool WTF is this function doing here SAM?  has nothing to do with rowstyling
         //to calculate the wear
-        public static double getPwear(EqUiWebUi.Areas.Tiplife.Models.TipDressLogFile tipDressLogFile)
+        public static double getPwear(EqUiWebUi.Areas.Tiplife.Models.NGAC_TipDressLogFile tipDressLogFile)
         {
             if (tipDressLogFile.Wear_Fixed >= tipDressLogFile.Wear_Move)
             {

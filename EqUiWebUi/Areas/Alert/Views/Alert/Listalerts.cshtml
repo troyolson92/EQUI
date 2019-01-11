@@ -9,7 +9,7 @@
     <div class="card-header bg-dark text-white row">
         <h4 class="col-8">
             Alerts
-            <a class="fas fa-info-circle text-white clickable" id="LegendPopover" data-container="body" data-toggle="popover" data-placement="bottom"></a>
+            <a class="fas fa-info-circle text-white clickable" id="LegendPopover" data-container="body" data-toggle="popover" data-placement="bottom" title="Show Legend "></a>
             @if (ViewBag.alertGroup != "")
             {
                 <span class="badge badge-pill badge-warning">Filter on alert group: @ViewBag.alertGroup</span>
@@ -90,6 +90,9 @@
                 $("#placeholderPartial").html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
                 //load url in placeholder
                 $("#placeholderPartial").load('@Url.Action("_Details")', { AddTrendChart: true, id: data["id"]});
+            },
+            reloadEnded: function () {
+                $('[data-toggle="popover"]').tooltip();
             }
         });
 
@@ -109,6 +112,9 @@
                 }).responseText;
             }
         });
+
+        //enable tooltips
+        $('[data-toggle="popover"]').tooltip();
 
         //handle in-line set state
         $('.setalertState').editable('@Url.Action("SetState")', {

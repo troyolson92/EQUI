@@ -43,7 +43,7 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
             //in case still null trow error return empty result 
             if (data == null)
             {
-                data = new List<TipMonitor>();
+                data = new List<NGAC_TipMonitor>();
                 if (Debugger.IsAttached)
                 {
                     log.Warn("Loading tip status in method (debug mode)");
@@ -102,7 +102,7 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
         {
             GADATAEntitiesTiplife gADATAEntities = new GADATAEntitiesTiplife();
             string LocationRoot = CurrentUser.Getuser.LocationRoot;
-            IEnumerable<TipMonitor> data;
+            IEnumerable<NGAC_TipMonitor> data;
             if (!Tipchanger)
             {
                data = from tipMonitor in DataBuffer.Tipstatus
@@ -128,8 +128,8 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
 
             log.Info($"Plantipchange for: {locationFilter} Filters: minwear: {minWear} minparts: {minParts} maxDress: {maxDress}  |resultCount: {data.Count()}");
             //debug added to store result in log and see if they follow the plan.
-            List<TipMonitor> results = data.ToList();
-            foreach (TipMonitor result in results)
+            List<NGAC_TipMonitor> results = data.ToList();
+            foreach (NGAC_TipMonitor result in results)
             {
                 log.Info($"PlantipchangeResult for: {result.Robot} wear: {result.pWear} parts: {result.nRcars} dresses: {result.nDress} status: {result.Status}");
             }

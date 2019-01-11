@@ -12,7 +12,7 @@ namespace EqUiWebUi.Areas.Tiplife.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class TipDressLogFile
+    public partial class NGAC_TipDressLogFile
     {
         public string controller_name { get; set; }
         public string LocationTree { get; set; }
