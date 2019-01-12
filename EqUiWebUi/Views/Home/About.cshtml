@@ -30,37 +30,18 @@
 
 <hr />
 
-<div class="card">
-    <div class="card-header bg-dark text-white">
-        <h3 class="card-text">What is Equi</h3>
-    </div>
-    <div class="card-body">
-        <div>
-            <h4>EqUi stands for Equipment User interface</h4> 
-            <div>It is a data visualization, processing and data management toolkit.</div>
-            The website. (called equi)
-                Supervision
-                Shift report
-                Maximo UI
-                Alerts
-                Electrode manager
-            External tools
-                PJV (process joining verification.)
-                VSTO (Visual studio tools for office)
-                Tableau. (3td party data visualisation software.)
-
-        </div>
-    </div>
-</div>
+@Html.Action("_getWiki", "Wiki", new { id = "WhatisEqui" })
 
 <hr />
 
+@Html.Action("_getWiki", "Wiki", new { id = "DataSources" })
 
-<div class="card card-body">
-    <div>
-        <h2>Learn</h2>
-        <h6>An older pdf manual</h6>
-        @MyHtmlHelpers.EquiLink("file://gnlsnm0101.gen.volvocars.net/PROJ/6308-SHR-VCC22700/Equi_TheDataStory.pdf", "fas fa-power-off", "Equi_TheDataStory", helperText: "A good place to start.")
-    </div>
-</div>
+<hr />
 
+@Html.Action("_getWiki", "Wiki", new { id = "how you look at data" })
+
+<hr />
+
+@Html.Action("_getWiki", "Wiki", new { id = "ASSET MANAGMENT SYSTEM" })
+
+<hr />

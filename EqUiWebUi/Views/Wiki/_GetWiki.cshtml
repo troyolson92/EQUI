@@ -1,0 +1,17 @@
+﻿@model EqUiWebUi.Models.Wiki
+<div class="card">
+    <div class="card-header card-title bg-dark text-white">
+        <h3>@Model.Title</h3>
+    </div>
+    <div class="card-body">
+        @if (Model.Body != null)
+        {
+            @Html.Raw(Model.Body)
+        }
+        else
+        {
+            <div class="alert alert-warning">This wiki has no content.</div>
+        }
+    </div>
+    @MyHtmlHelpers.IconActionLink(Url.Action("Edit", "Wiki", new { Area = "", id = Model.Name }), "fas fa-pencil-alt", "", "Edit this wiki", OpenNewWindow: true)
+</div>

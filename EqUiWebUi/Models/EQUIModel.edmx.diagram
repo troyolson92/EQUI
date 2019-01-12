@@ -30,7 +30,7 @@
         <AssociationConnector Association="GADATAModelEQUI.FK_c_housekeeping_c_datasource" />
         <AssociationConnector Association="GADATAModelEQUI.FK_c_housekeeping_c_schedule" />
         <AssociationConnector Association="GADATAModelEQUI.FK_L_housekeeping_c_housekeeping" />
-        <EntityTypeShape EntityType="GADATAModelEQUI.Wiki" Width="1.5" PointX="15.5" PointY="1.125" />
+        <EntityTypeShape EntityType="GADATAModelEQUI.Wiki" Width="1.5" PointX="15.875" PointY="1" />
         </Diagram>
       <Diagram DiagramId="e951f762f729496390f1ab74d6241e77" Name="Frontend" >
       </Diagram>

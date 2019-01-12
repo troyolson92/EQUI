@@ -169,14 +169,12 @@
           </Key>
           <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Title" Type="varchar" MaxLength="50" />
-          <Property Name="Description" Type="varchar" MaxLength="50" />
-          <Property Name="Culture" Type="varchar" MaxLength="50" />
-          <Property Name="wiki" Type="varchar(max)" />
-          <Property Name="searchtags" Type="varchar(max)" />
+          <Property Name="Body" Type="varchar(max)" />
           <Property Name="Comments" Type="varchar(max)" />
-          <Property Name="isDead" Type="bit" Nullable="false" />
           <Property Name="createDate" Type="datetime" Nullable="false" />
           <Property Name="l_user_id" Type="int" Nullable="false" />
+          <Property Name="ChangeDate" Type="datetime" />
+          <Property Name="l_change_user_id" Type="int" />
         </EntityType>
         <EntityType Name="c_Classification">
           <Key>
@@ -818,14 +816,12 @@
           </Key>
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Culture" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="wiki1" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="searchtags" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Body" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Comments" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="isDead" Type="Boolean" Nullable="false" />
           <Property Name="createDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="l_user_id" Type="Int32" Nullable="false" />
+          <Property Name="ChangeDate" Type="DateTime" Precision="3" />
+          <Property Name="l_change_user_id" Type="Int32" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -1023,14 +1019,12 @@
           <EntitySetMapping Name="Wiki">
             <EntityTypeMapping TypeName="GADATAModelEQUI.Wiki">
               <MappingFragment StoreEntitySet="Wiki">
+                <ScalarProperty Name="l_change_user_id" ColumnName="l_change_user_id" />
+                <ScalarProperty Name="ChangeDate" ColumnName="ChangeDate" />
                 <ScalarProperty Name="l_user_id" ColumnName="l_user_id" />
                 <ScalarProperty Name="createDate" ColumnName="createDate" />
-                <ScalarProperty Name="isDead" ColumnName="isDead" />
                 <ScalarProperty Name="Comments" ColumnName="Comments" />
-                <ScalarProperty Name="searchtags" ColumnName="searchtags" />
-                <ScalarProperty Name="wiki1" ColumnName="wiki" />
-                <ScalarProperty Name="Culture" ColumnName="Culture" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Body" ColumnName="Body" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
               </MappingFragment>

@@ -2406,7 +2406,8 @@
     <Content Include="Views\c_Housekeeping\Details.cshtml" />
     <Content Include="Views\c_Housekeeping\_List.cshtml" />
     <Content Include="Views\Wiki\Edit.cshtml" />
-    <Content Include="Views\Wiki\Index.cshtml" />
+    <Content Include="Views\Wiki\_GetWiki.cshtml" />
+    <Content Include="Views\Wiki\Getwiki.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

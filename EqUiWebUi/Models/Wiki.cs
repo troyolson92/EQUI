@@ -16,13 +16,11 @@ namespace EqUiWebUi.Models
     {
         public string Name { get; set; }
         public string Title { get; set; }
-        public string Description { get; set; }
-        public string Culture { get; set; }
-        public string wiki1 { get; set; }
-        public string searchtags { get; set; }
+        public string Body { get; set; }
         public string Comments { get; set; }
-        public bool isDead { get; set; }
         public System.DateTime createDate { get; set; }
         public int l_user_id { get; set; }
+        public Nullable<System.DateTime> ChangeDate { get; set; }
+        public Nullable<int> l_change_user_id { get; set; }
     }
 }

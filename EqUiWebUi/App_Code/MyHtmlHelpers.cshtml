@@ -57,11 +57,11 @@
 }
 
 @*helper to create action link with an icon*@
-@helper IconActionLink(string url, string icon, string linkText, string helperText, string classes = "", bool enabeld = true)
+@helper IconActionLink(string url, string icon, string linkText, string helperText, string classes = "", bool OpenNewWindow = false)
 {
-    if (enabeld)
+    if (!OpenNewWindow)
     {
-        <a href="@url" class="@classes" data-toggle="tooltip" title="@helperText">
+        <a href="@url" class="@classes clickable" data-toggle="tooltip" title="@helperText">
             <i class="@icon"></i>
             <span>
                 <strong>@linkText</strong>
@@ -70,7 +70,12 @@
     }
     else
     {
-        <div></div>
+        <a class="@classes clickable" data-toggle="tooltip" title="@helperText" onclick="window.open('@url', 'EQUI', 'window settings')">
+            <i class="@icon"></i>
+            <span>
+                <strong>@linkText</strong>
+            </span>
+        </a>
     }
 }
 

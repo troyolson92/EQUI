@@ -170,7 +170,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [ValidateInput(false)] //to alow posting of raw html data
+        [ValidateInput(false)] //to allow posting of raw html data
         public async Task<ActionResult> Edit(h_alert _alert, string returnURL = "Listalerts")
         {
             //get original alert (this insures when multible users edit at the same time nothing should get lost)

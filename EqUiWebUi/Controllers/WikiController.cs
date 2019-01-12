@@ -10,17 +10,18 @@ using EqUiWebUi.Models;
 
 namespace EqUiWebUi.Controllers
 {
+    [Authorize(Roles = "Administrator")]
     public class WikiController : Controller
     {
         private GADATAEntitiesEQUI db = new GADATAEntitiesEQUI();
-
-        // GET: Wiki
-        public ActionResult Index()
+       
+        public ActionResult Getwiki(string id)
         {
-            return View(db.Wiki.ToList());
+            ViewBag.id = id;
+            return View();
         }
 
-        public ActionResult GetWiki(string id)
+        public ActionResult _GetWiki(string id)
         {
             if (id == null)
             {
@@ -30,10 +31,11 @@ namespace EqUiWebUi.Controllers
             if (wiki == null)
             {
                 Wiki newWiki = new Wiki();
+                newWiki.Name = id;
                 newWiki.createDate = System.DateTime.Now;
                 newWiki.l_user_id = EqUiWebUi.CurrentUser.Getuser.id;
-                newWiki.wiki1 = "New page";
-                newWiki.isDead = false;
+                newWiki.Title = $"New page: {id}";
+                newWiki.Body = null;
                 db.Wiki.Add(newWiki);
                 db.SaveChanges();
                 wiki = newWiki;
@@ -61,15 +63,16 @@ namespace EqUiWebUi.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ValidateInput(false)] //to allow posting of raw html data
         public ActionResult Edit(Wiki wiki)
         {
             if (ModelState.IsValid)
             {
-                //make a new wiki mark the old one as dead 
-
+                wiki.ChangeDate = System.DateTime.Now;
+                wiki.l_change_user_id = EqUiWebUi.CurrentUser.Getuser.id;
                 db.Entry(wiki).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Close","Home",new {Area = "" });
             }
             return View(wiki);
         }
