@@ -25,6 +25,5 @@ namespace EqUiWebUi.Models
         public string helptext { get; set; }
     
         public virtual L_pannel L_pannel { get; set; }
-        public virtual Wiki Wiki { get; set; }
     }
 }

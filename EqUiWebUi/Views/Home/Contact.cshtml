@@ -1,7 +1,7 @@
 ﻿@{
-/**/
+    /**/
 
-ViewBag.Title = "Contact";
+    ViewBag.Title = "Contact";
 }
 <div class="">
     <h1>@ViewBag.Title</h1>
@@ -13,47 +13,71 @@ ViewBag.Title = "Contact";
 
     <h3>Volvo Cars Charleston (VCCH)</h3>
     <hr />
+    <strong>Site manager</strong>
     <address>
         Olson, Troy<br />
         <i class="fas fa-phone"></i>
         +18439348395
-        <i class="fas fa-envelope"></i> <strong>system manager</strong>   <a href="mailto:troy.olson@volvocars.com">troy.olson@volvocars.com</a><br />
+        <i class="fas fa-envelope"></i> <a href="mailto:troy.olson@volvocars.com">troy.olson@volvocars.com</a><br />
     </address>
 </div>
 
     <hr />
- }
+}
 
-    <div class="card card-body">
+<div class="card card-body">
 
-        <h3>Volvo Cars Gent (VCG)</h3>
-        <hr />
-        <address>
-            Van volsem II, Alain (AVV)<br />
-            <i class="fas fa-phone"></i>
-            +32-9-2502725
-            <i class="fas fa-envelope"></i> <strong>system manager</strong>   <a href="mailto:alain.van.volsem.ii@volvocars.com">alain.van.volsem.ii@volvocars.com</a><br />
-        </address>
+    <h3>Volvo Cars Gent (VCG)</h3>
+    <hr />
+    <strong>Site manager</strong>
+    <address>
+        Van volsem II, Alain (AVV)<br />
+        <i class="fas fa-phone"></i>
+        +32-9-2502725
+        <i class="fas fa-envelope"></i> <a href="mailto:alain.van.volsem.ii@volvocars.com">alain.van.volsem.ii@volvocars.com</a><br />
+    </address>
 
-        <address>
-            De beul, Sam (S.)<br />
-            <i class="fas fa-phone"></i>
-            +329 250 30 69
-            <i class="fas fa-envelope"></i> <strong>system development</strong>   <a href="mailto:sam.de.beul@volvocars.com">sam.de.beul@volvocars.com</a><br />
-        </address>
+    <strong>System developer</strong>
+    <address>
+        De beul, Sam (S.)<br />
+        <i class="fas fa-phone"></i>
+        +329 250 30 69
+        <i class="fas fa-envelope"></i> <a href="mailto:sam.de.beul@volvocars.com">sam.de.beul@volvocars.com</a><br />
+    </address>
 
-        <address>
-            Coppejans, Jens (J.)<br />
-            <i class="fas fa-phone"></i>
-            +3292507242
-            <i class="fas fa-envelope"></i> <strong>system development</strong>   <a href="mailto:jens.coppejans@volvocars.com">jens.coppejans@volvocars.com</a><br />
-        </address>
+    <address>
+        Coppejans, Jens (J.)<br />
+        <i class="fas fa-phone"></i>
+        +3292507242
+        <i class="fas fa-envelope"></i> <a href="mailto:jens.coppejans@volvocars.com">jens.coppejans@volvocars.com</a><br />
+    </address>
+</div>
 
-        <hr />
-        @MyHtmlHelpers.EquiLink("https://sharepoint.volvocars.net/sites/maintenance_a_shop/Lists/EQdbDevelopment/AllItems.aspx", "fas fa-bug", "IssueTracking", iconClasses: "bg-warning", helperText: "Report bugs or request features", OpenNewWindow: true)
-        <hr />
-        @MyHtmlHelpers.EquiLink("https://github.com/SDEBEUL/EQUI/graphs/commit-activity", "fab fa-github", "Github", helperText: "No secrets, every line of code is on github", OpenNewWindow: true)
+<hr />
 
-    </div>
+<div class="card card-body">
+    <h3>Manufacturing Software Consultancy (MSC)</h3>
+    <hr />
+    <strong>System developer</strong>
+    <address>
+        Graham Morris<br />
+        <i class="fas fa-phone"></i>
+        +44 7802 705287
+        <i class="fas fa-envelope"></i> <a href="mailto:graham.morris@manusoft.co.uk">graham.morris@manusoft.co.uk</a><br />
+    </address>
+</div>
 
+<hr />
+@MyHtmlHelpers.EquiLink("https://sharepoint.volvocars.net/sites/maintenance_a_shop/Lists/EQdbDevelopment/AllItems.aspx", "fas fa-bug", "IssueTracking", iconClasses: "bg-warning", helperText: "Report bugs or request features", OpenNewWindow: true)
 
+<hr />
+@MyHtmlHelpers.EquiLink("https://github.com/SDEBEUL/EQUI/graphs/commit-activity", "fab fa-github", "Github", helperText: "No secrets, every line of code is on github", OpenNewWindow: true)
+<hr />
+
+<div class="card card-body">
+    <h3>About this site</h3>
+    <hr />
+    IIS host <strong>@ViewBag.hostname</strong>
+    SQL host <strong>@ViewBag.sqlserver</strong>
+    Build  <strong>@ViewBag.build</strong>
+</div>

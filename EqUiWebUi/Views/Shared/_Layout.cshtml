@@ -38,11 +38,12 @@
                             <p>@MyHtmlHelpers.EquiLink("https://chrome.google.com/webstore/detail/clickonce-for-google-chro/kekahkplibinaibelipdcikofmedafmb", "fab fa-chrome", "ClickOnce for Google Chrome", helperText: "Needed to launch click once tools in the chrome browser.")</p>
                         </li>
                         <li class="dropdown-divider"></li>
+                        <li class="dropdown-item"><h3>Available tools</h3> </li>
                         <li class="dropdown-item">
-                            @MyHtmlHelpers.EquiLink(@Url.Action("WeldgunTool", "Electrode", new { area = "Tiplife"}, null), "fab fa-chrome", "WeldgunTool", helperText: "View data and control charts")
+                            @MyHtmlHelpers.EquiLink(@Url.Action("WeldgunTool", "Electrode", new { area = "Tiplife" }, null), "fab fa-chrome", "WeldgunTool", helperText: "View data and control charts")
                         </li>
                         <li class="dropdown-item">
-                            @MyHtmlHelpers.EquiLink("http://gensvw1178.gen.volvocars.net/EqUi_DigibordLauncher/EqUiDigibordLauncher.application", "fab fa-chrome", "DigiboardLauncher", helperText: "Startup tool for kiosks",helpurl: @Url.Action("ShowWiki", "Wikis", new { area = "", id = 4 }, null))
+                            @MyHtmlHelpers.EquiLink("http://gensvw1178.gen.volvocars.net/EqUi_DigibordLauncher/EqUiDigibordLauncher.application", "fab fa-chrome", "DigiboardLauncher", helperText: "Startup tool for kiosks", helpurl: @Url.Action("ShowWiki", "Wikis", new { area = "", id = 4 }, null))
                         </li>
                         <li class="dropdown-item">
                             @MyHtmlHelpers.EquiLink("file:////gnlsnm0101.gen.volvocars.net/proj/6308-SHR-VCC22700/VSTO/DEPLOYMENTBASE/ExcelAddInEquipmentDatabase.vsto", "fab fa-chrome", "VSTO Excel (install)", helperText: "Excel ribbon plugin to acces the database (installation file)")

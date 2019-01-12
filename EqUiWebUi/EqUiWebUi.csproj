@@ -907,7 +907,7 @@
     <Compile Include="Controllers\EQUISetupController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\TableauController.cs" />
-    <Compile Include="Controllers\WikisController.cs" />
+    <Compile Include="Controllers\WikiController.cs" />
     <Compile Include="HouseKeepingengine.cs" />
     <Compile Include="Models\ASSETS.cs">
       <DependentUpon>EQUIModel.tt</DependentUpon>
@@ -2381,11 +2381,6 @@
     <Content Include="Views\c_LogClassSystem\Index.cshtml" />
     <Content Include="Views\Home\Close.cshtml" />
     <Content Include="Views\Home\TestPage.cshtml" />
-    <Content Include="Views\Wikis\Delete.cshtml" />
-    <Content Include="Views\Wikis\Details.cshtml" />
-    <Content Include="Views\Wikis\Edit.cshtml" />
-    <Content Include="Views\Wikis\Index.cshtml" />
-    <Content Include="Views\Wikis\ShowWiki.cshtml" />
     <Content Include="Views\Tableau\TestTicket.cshtml" />
     <Content Include="Views\Tableau\GetTicket.cshtml" />
     <Content Include="Views\c_Classification\Create.cshtml" />
@@ -2410,6 +2405,8 @@
     <Content Include="Views\c_Housekeeping\_L_housekeeping.cshtml" />
     <Content Include="Views\c_Housekeeping\Details.cshtml" />
     <Content Include="Views\c_Housekeeping\_List.cshtml" />
+    <Content Include="Views\Wiki\Edit.cshtml" />
+    <Content Include="Views\Wiki\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -2480,6 +2477,10 @@
     <TypeScriptSourceMap>True</TypeScriptSourceMap>
     <TypeScriptMapRoot />
     <TypeScriptSourceRoot />
+    <PublishDatabaseSettings>
+      <Objects>
+      </Objects>
+    </PublishDatabaseSettings>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Rel_VCT|AnyCPU' ">
     <OutputPath>bin\</OutputPath>
@@ -2502,6 +2503,9 @@
     <OutputPath>bin\</OutputPath>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />

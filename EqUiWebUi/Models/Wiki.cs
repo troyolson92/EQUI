@@ -14,21 +14,15 @@ namespace EqUiWebUi.Models
     
     public partial class Wiki
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Wiki()
-        {
-            this.L_link = new HashSet<L_link>();
-        }
-    
-        public int id { get; set; }
+        public string Name { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public string Culture { get; set; }
         public string wiki1 { get; set; }
         public string searchtags { get; set; }
         public string Comments { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<L_link> L_link { get; set; }
+        public bool isDead { get; set; }
+        public System.DateTime createDate { get; set; }
+        public int l_user_id { get; set; }
     }
 }

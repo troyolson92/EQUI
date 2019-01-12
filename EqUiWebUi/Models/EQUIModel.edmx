@@ -165,15 +165,18 @@
         </EntityType>
         <EntityType Name="Wiki">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="Name" />
           </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Title" Type="varchar" MaxLength="50" />
           <Property Name="Description" Type="varchar" MaxLength="50" />
           <Property Name="Culture" Type="varchar" MaxLength="50" />
           <Property Name="wiki" Type="varchar(max)" />
           <Property Name="searchtags" Type="varchar(max)" />
           <Property Name="Comments" Type="varchar(max)" />
+          <Property Name="isDead" Type="bit" Nullable="false" />
+          <Property Name="createDate" Type="datetime" Nullable="false" />
+          <Property Name="l_user_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="c_Classification">
           <Key>
@@ -335,18 +338,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_L_link_Wiki">
-          <End Role="Wiki" Type="Self.Wiki" Multiplicity="0..1" />
-          <End Role="L_link" Type="Self.L_link" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Wiki">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="L_link">
-              <PropertyRef Name="Wiki_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="GADATAModelEQUIStoreContainer">
           <EntitySet Name="ASSETS" EntityType="Self.ASSETS" Schema="EqUi" store:Type="Tables" />
           <EntitySet Name="c_datasource" EntityType="Self.c_datasource" Schema="EqUi" store:Type="Tables" />
@@ -410,10 +401,6 @@
             <End Role="L_pannel" EntitySet="L_pannel" />
             <End Role="L_link" EntitySet="L_link" />
           </AssociationSet>
-          <AssociationSet Name="FK_L_link_Wiki" Association="Self.FK_L_link_Wiki">
-            <End Role="Wiki" EntitySet="Wiki" />
-            <End Role="L_link" EntitySet="L_link" />
-          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -450,16 +437,11 @@
             <End Role="c_Subgroup" EntitySet="c_Subgroup" />
             <End Role="l_dummyLogClassResult" EntitySet="l_dummyLogClassResult" />
           </AssociationSet>
-          <EntitySet Name="Wiki" EntityType="GADATAModelEQUI.Wiki" />
           <EntitySet Name="ASSETS" EntityType="GADATAModelEQUI.ASSETS" />
           <EntitySet Name="L_link" EntityType="GADATAModelEQUI.L_link" />
           <EntitySet Name="L_pannel" EntityType="GADATAModelEQUI.L_pannel" />
           <AssociationSet Name="FK_L_link_L_pannel" Association="GADATAModelEQUI.FK_L_link_L_pannel">
             <End Role="L_pannel" EntitySet="L_pannel" />
-            <End Role="L_link" EntitySet="L_link" />
-          </AssociationSet>
-          <AssociationSet Name="FK_L_link_Wiki" Association="GADATAModelEQUI.FK_L_link_Wiki">
-            <End Role="Wiki" EntitySet="Wiki" />
             <End Role="L_link" EntitySet="L_link" />
           </AssociationSet>
           <EntitySet Name="c_job" EntityType="GADATAModelEQUI.c_job" />
@@ -486,6 +468,7 @@
             <End Role="c_housekeeping" EntitySet="c_housekeeping" />
             <End Role="L_housekeeping" EntitySet="L_housekeeping" />
           </AssociationSet>
+          <EntitySet Name="Wiki" EntityType="GADATAModelEQUI.Wiki" />
           </EntityContainer>
         <EntityType Name="c_datasource">
           <Key>
@@ -637,19 +620,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="Wiki">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Culture" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="wiki1" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="searchtags" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="L_link" Relationship="GADATAModelEQUI.FK_L_link_Wiki" FromRole="Wiki" ToRole="L_link" />
-          <Property Name="Comments" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityType Name="ASSETS">
           <Key>
             <PropertyRef Name="id" />
@@ -686,7 +656,6 @@
           <Property Name="icon" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Wiki_id" Type="Int32" />
           <NavigationProperty Name="L_pannel" Relationship="GADATAModelEQUI.FK_L_link_L_pannel" FromRole="L_link" ToRole="L_pannel" />
-          <NavigationProperty Name="Wiki" Relationship="GADATAModelEQUI.FK_L_link_Wiki" FromRole="L_link" ToRole="Wiki" />
           <Property Name="url" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="helptext" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
@@ -710,18 +679,6 @@
             </Principal>
             <Dependent Role="L_link">
               <PropertyRef Name="L_pannel_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_L_link_Wiki">
-          <End Type="GADATAModelEQUI.Wiki" Role="Wiki" Multiplicity="0..1" />
-          <End Type="GADATAModelEQUI.L_link" Role="L_link" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Wiki">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="L_link">
-              <PropertyRef Name="Wiki_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -855,6 +812,21 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Wiki">
+          <Key>
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Culture" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="wiki1" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="searchtags" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Comments" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="isDead" Type="Boolean" Nullable="false" />
+          <Property Name="createDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="l_user_id" Type="Int32" Nullable="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -927,19 +899,6 @@
                 <ScalarProperty Name="c_Classification_id" ColumnName="c_Classification_id" />
                 <ScalarProperty Name="c_logcClassRules_id" ColumnName="c_logcClassRules_id" />
                 <ScalarProperty Name="text" ColumnName="text" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Wiki">
-            <EntityTypeMapping TypeName="GADATAModelEQUI.Wiki">
-              <MappingFragment StoreEntitySet="Wiki">
-                <ScalarProperty Name="Comments" ColumnName="Comments" />
-                <ScalarProperty Name="searchtags" ColumnName="searchtags" />
-                <ScalarProperty Name="wiki1" ColumnName="wiki" />
-                <ScalarProperty Name="Culture" ColumnName="Culture" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1058,6 +1017,22 @@
                 <ScalarProperty Name="c_datasource_id" ColumnName="c_datasource_id" />
                 <ScalarProperty Name="c_schedule_id" ColumnName="c_schedule_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Wiki">
+            <EntityTypeMapping TypeName="GADATAModelEQUI.Wiki">
+              <MappingFragment StoreEntitySet="Wiki">
+                <ScalarProperty Name="l_user_id" ColumnName="l_user_id" />
+                <ScalarProperty Name="createDate" ColumnName="createDate" />
+                <ScalarProperty Name="isDead" ColumnName="isDead" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="searchtags" ColumnName="searchtags" />
+                <ScalarProperty Name="wiki1" ColumnName="wiki" />
+                <ScalarProperty Name="Culture" ColumnName="Culture" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -1,22 +1,66 @@
 ﻿@{
     ViewBag.Title = "About";
 }
-<div class="">
-    <h1>@ViewBag.Title</h1>
+<div class="jumbotron">
+    <h1>About Equi</h1>
+    <h3>
+        An industry 4.0 project, build by the costumer for the costumer.
+    </h3>
 </div>
 
-<div class="card card-body">
-    <div>
-        <h2>Learn</h2>
-        @MyHtmlHelpers.EquiLink("file://gnlsnm0101.gen.volvocars.net/PROJ/6308-SHR-VCC22700/Equi_TheDataStory.pdf", "fas fa-power-off", "Equi_TheDataStory", helperText: "A good place to start.")
+<div class="card">
+    <div class="card-header bg-dark text-white">
+        <h3 class="card-text">First things first</h3>
+    </div>
+    <div class="card-body">
+        <div>
+            <div class="alert alert-warning">
+                <h2>Please use a modern browser!</h2>
+            </div>
+            Any modern browser will do Edge / Chrome / Firefox / Opera  <strong>*Just not Internet explorer.</strong>
+            <br />
+            <h3>We work best with Chrome</h3>
+            <div>
+                @MyHtmlHelpers.EquiLink("https://www.google.com/chrome/browser/desktop/index.html", "fab fa-chrome", "Chromeinstal", helperText: "Use this link to install chrome.")
+            </div>
+
+        </div>
     </div>
 </div>
 
 <hr />
 
-<div class="card card-body">
-    <h2>We work best with Chrome!</h2>
-    <div>
-        @MyHtmlHelpers.EquiLink("https://www.google.com/chrome/browser/desktop/index.html", "fab fa-chrome", "Chromeinstal", helperText: "Use this link to instal chrome.")
+<div class="card">
+    <div class="card-header bg-dark text-white">
+        <h3 class="card-text">What is Equi</h3>
+    </div>
+    <div class="card-body">
+        <div>
+            <h4>EqUi stands for Equipment User interface</h4> 
+            <div>It is a data visualization, processing and data management toolkit.</div>
+            The website. (called equi)
+                Supervision
+                Shift report
+                Maximo UI
+                Alerts
+                Electrode manager
+            External tools
+                PJV (process joining verification.)
+                VSTO (Visual studio tools for office)
+                Tableau. (3td party data visualisation software.)
+
+        </div>
     </div>
 </div>
+
+<hr />
+
+
+<div class="card card-body">
+    <div>
+        <h2>Learn</h2>
+        <h6>An older pdf manual</h6>
+        @MyHtmlHelpers.EquiLink("file://gnlsnm0101.gen.volvocars.net/PROJ/6308-SHR-VCC22700/Equi_TheDataStory.pdf", "fas fa-power-off", "Equi_TheDataStory", helperText: "A good place to start.")
+    </div>
+</div>
+

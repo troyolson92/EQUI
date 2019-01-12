@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="d5dc149468964a6aa4c17e0f7b3d2d84" Name="Backend" ZoomLevel="111">
+      <Diagram DiagramId="d5dc149468964a6aa4c17e0f7b3d2d84" Name="Backend" ZoomLevel="71">
         <EntityTypeShape EntityType="GADATAModelEQUI.c_datasource" Width="1.5" PointX="0.75" PointY="1" FillColor="255, 128, 0" />
         <EntityTypeShape EntityType="GADATAModelEQUI.c_LogClassRules" Width="1.5" PointX="5.25" PointY="1" />
         <EntityTypeShape EntityType="GADATAModelEQUI.c_logClassSystem" Width="1.5" PointX="3" PointY="1" />
@@ -17,12 +17,10 @@
         <EntityTypeShape EntityType="GADATAModelEQUI.l_dummyLogClassResult" Width="1.5" PointX="7.75" PointY="1" />
         <AssociationConnector Association="GADATAModelEQUI.FK_l_dummyLogClassResult_c_Classification" />
         <AssociationConnector Association="GADATAModelEQUI.FK_l_dummyLogClassResult_c_Subgroup" />
-        <EntityTypeShape EntityType="GADATAModelEQUI.Wiki" Width="1.5" PointX="12.5" PointY="1" FillColor="255, 255, 128" />
         <EntityTypeShape EntityType="GADATAModelEQUI.ASSETS" Width="1.5" PointX="12.5" PointY="4.875" FillColor="Navy" />
         <EntityTypeShape EntityType="GADATAModelEQUI.L_link" Width="1.5" PointX="18.5" PointY="1" />
-        <EntityTypeShape EntityType="GADATAModelEQUI.L_pannel" Width="1.5" PointX="16.125" PointY="4" />
+        <EntityTypeShape EntityType="GADATAModelEQUI.L_pannel" Width="1.5" PointX="18.625" PointY="4.5" />
         <AssociationConnector Association="GADATAModelEQUI.FK_L_link_L_pannel" />
-        <AssociationConnector Association="GADATAModelEQUI.FK_L_link_Wiki" />
         <EntityTypeShape EntityType="GADATAModelEQUI.c_job" Width="1.5" PointX="1.5" PointY="4.75" FillColor="Fuchsia" />
         <EntityTypeShape EntityType="GADATAModelEQUI.c_schedule" Width="1.5" PointX="1.5" PointY="9.75" FillColor="Fuchsia" />
         <AssociationConnector Association="GADATAModelEQUI.FK_c_job_c_datasource" />
@@ -32,6 +30,7 @@
         <AssociationConnector Association="GADATAModelEQUI.FK_c_housekeeping_c_datasource" />
         <AssociationConnector Association="GADATAModelEQUI.FK_c_housekeeping_c_schedule" />
         <AssociationConnector Association="GADATAModelEQUI.FK_L_housekeeping_c_housekeeping" />
+        <EntityTypeShape EntityType="GADATAModelEQUI.Wiki" Width="1.5" PointX="15.5" PointY="1.125" />
         </Diagram>
       <Diagram DiagramId="e951f762f729496390f1ab74d6241e77" Name="Frontend" >
       </Diagram>
