@@ -6,18 +6,22 @@ function initInterface() {
     $("#allcontent").animate({ "margin-top": "60px" }, "fast");
     $("#navbar").autoHidingNavbar();
 
-    //for user popover
-    $(".userhelp").popover({
-        placement: "left",
+    //initpopovers
+    $(".MyPopovers").click(function (e) {
+        e.preventDefault();
+        return false;
+    });
+    $(".MyPopovers").popover({
         html: true,
         content: function () {
-                return $.ajax({
-                    url: '/user_management/user/_Details',
-                    dataType: 'html',
-                    async: false
-                }).responseText;
+            return $.ajax({
+                url: $(this).attr('href'),
+                dataType: 'html',
+                async: false
+            }).responseText;
         }
     });
+
     //hide popovers on body click
     $('body').on('click', function (e) {
         $('[data-toggle="popover"]').each(function () {
@@ -27,6 +31,22 @@ function initInterface() {
                 $(this).popover('hide');
             }
         });
+    });
+
+    //for new window option
+    $('.OpenNewWindow').click(function (e) {
+        e.preventDefault();
+        console.log("Opening new window");
+        window.open($(this).attr('href'), 'EQUI', 'window settings');
+        return false;
+    });
+
+    //for toaster
+    $.toaster({
+        settings: {
+            'timeout': 5000, //set autodismis timeout to 5 seconds
+            'donotdismiss': ['danger'] //disble autodismis for these types
+        }
     });
 
     //for fullscreen mode
@@ -78,9 +98,6 @@ function initInterface() {
 
     EnablePannelCollaps();
     EnableJQresultTriggerBtn();
-    initToaster();
-    initUrlNewWindow();
-    initWikiPopover();
 }
 
 //script for subscribing to pannel colaps
@@ -135,42 +152,3 @@ function qs(key) {
     var match = location.search.match(new RegExp("[?&]" + key + "=([^&]+)(&|$)"));
     return match && decodeURIComponent(match[1].replace(/\+/g, " "));
 }
-
-//set default settings for toaster
-function initToaster() {
-    $.toaster({
-        settings: {
-            'timeout': 5000, //set autodismis timeout to 5 seconds
-            'donotdismiss': ['danger'] //disble autodismis for these types
-        }
-    });
-}
-
-//if click link has this class open it in a new window
-function initUrlNewWindow() {
-    $('.OpenNewWindow').click(function (e) {
-        e.preventDefault();
-        console.log("Opening new window");
-        window.open($(this).attr('href'), 'EQUI', 'window settings');
-        return false;
-    });   
-}
-
-//for wiki popovers
-function initWikiPopover() {
-    $(".MyPopovers").click(function (e) {
-        e.preventDefault();
-        return false;
-    }); 
-    $(".MyPopovers").popover({
-        html: true,
-        content: function () {
-            return $.ajax({
-                url: $(this).attr('href'),
-                dataType: 'html',
-                async: false
-            }).responseText;
-        }
-    });
-}
-
