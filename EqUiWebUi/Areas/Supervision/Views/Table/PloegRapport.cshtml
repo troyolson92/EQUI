@@ -7,7 +7,7 @@
         <h4>
             PloegRapport
             <a class="fas fa-wrench text-white clickable" id="OptionsPopover" data-toggle="popover" data-placement="bottom" title="Show options"></a>
-            <a class="fas fa-info-circle text-white clickable" id="LegendPopover" data-container="body" data-toggle="popover" data-placement="bottom" title="Show Legend "></a>
+            <a class="fas fa-info-circle text-white clickable MyPopovers" data-container="body" data-toggle="popover" data-placement="bottom" title="Show Legend" href="@Url.Action("_legend")"></a>
         </h4>
     </div>
     <div id="PloegRapportGridSpincontainer" style="position:relative">
@@ -151,18 +151,6 @@
                         ApplyResponsibleArea: @ViewBag.ApplyResponsibleArea.ToString().ToLower()
                 }
             });
-        });
-
-        //enable popover for legend
-        $("#LegendPopover").popover({
-            html: true,
-            content: function () {
-                return $.ajax({
-                    url: '@Url.Action("_legend")',
-                    dataType: 'html',
-                    async: false
-                }).responseText;
-            }
         });
 
         //full with screen

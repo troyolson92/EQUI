@@ -80,6 +80,7 @@ function initInterface() {
     EnableJQresultTriggerBtn();
     initToaster();
     initUrlNewWindow();
+    initWikiPopover();
 }
 
 //script for subscribing to pannel colaps
@@ -147,10 +148,29 @@ function initToaster() {
 
 //if click link has this class open it in a new window
 function initUrlNewWindow() {
-    $('.OpenNewWindow').click(function () {
+    $('.OpenNewWindow').click(function (e) {
+        e.preventDefault();
         console.log("Opening new window");
         window.open($(this).attr('href'), 'EQUI', 'window settings');
         return false;
-    });
-    
+    });   
 }
+
+//for wiki popovers
+function initWikiPopover() {
+    $(".MyPopovers").click(function (e) {
+        e.preventDefault();
+        return false;
+    }); 
+    $(".MyPopovers").popover({
+        html: true,
+        content: function () {
+            return $.ajax({
+                url: $(this).attr('href'),
+                dataType: 'html',
+                async: false
+            }).responseText;
+        }
+    });
+}
+

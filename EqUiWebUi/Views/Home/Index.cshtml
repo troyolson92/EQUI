@@ -103,7 +103,7 @@
         </h5>
     </div>
     <div class="card-body" style="display:none">
-        @MyHtmlHelpers.EquiLink("/VASC/Breakdown/GetJobs?PromptBodynum=true", "fas fa-vial", "Track cars by bodynum", helperText: "weldbolt line only")
+        @MyHtmlHelpers.EquiLink("/VASC/Breakdown/GetJobs?PromptBodynum=true", "fas fa-vial", "Track cars by bodynum", helperText: "weldbolt line only", OpenNewWindow: true, helpurl: @Url.Action("_Getwiki", "Wiki", new { area = "", id = "BodyTrack" }, null))
     </div>
 </div>
 
