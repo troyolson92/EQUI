@@ -1,31 +1,26 @@
 ﻿@{
     ViewBag.Title = @TempData["error"];
 }
-<div class="jumbotron">
-    <h1>@TempData["error"]</h1>
-</div>
-
-<p></p>
-
 <div class="card">
-    <h4>Sorry</h4>
-    <div class="card-body">
-        <p>
-            <div class="">
-                <i class="fas fa-lock fa-10x text-danger"></i>
-                <h1>Looks like you don't have the power to go here.</h1>
+    <h4>@TempData["error"]</h4>
+    <div class="card-body" id="Error">
+        <div class="card-body">
+            <h3><i class="fas fa-lock fa-5 text-danger"></i>Looks like you don't have the power to go here.</h3>
+            <div class="alert alert-warning">
+                <div class="alert-heading">
+                    <h5>
+                        Exception
+                        @*<span><small>(Controller: <strong>@Model.ControllerName</strong>  Action: <strong>@Model.ActionName)</strong></span></small>*@
+                    </h5>
+                </div>
             </div>
-        </p>
-
-        <p>
-            <button class="btn btn-primary btn-danger" onclick="goback()" type="button"><<< Back</button>
-
-        </p>
-        <p><a href="~/user_management/user/LoginPrompt" class="btn btn-warning btn-sm float-right">SwitchUser &raquo;</a></p>
+        </div>
     </div>
 </div>
-<p></p>
 
+<p>
+    <button class="btn btn-primary btn-danger" onclick="goback()" type="button"><<< Back</button>
+</p>
 
 <script>
     function goback() {
