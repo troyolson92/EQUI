@@ -1,11 +1,11 @@
 ﻿@model EqUiWebUi.Models.Wiki
 <div class="card">
     <div class="card-header card-title bg-dark text-white">
-        <h3>
-            <a class="clickable far fa-window-restore text-white" href="@Url.Action("GetWiki","Wiki",new {Area ="", id = Model.Name })"></a>
+        <h5>
+            <a class="clickable far fa-window-restore text-white" title="fullscreen" href="@Url.Action("GetWiki","Wiki",new {Area ="", id = Model.Name })"></a>
             @Model.Title
-            <a class="far fa-window-close clickable float-right" data-dismiss="popover"></a>
-        </h3>
+            <a class="far fa-window-close clickable float-right" data-dismiss="popover" title="close"></a>
+        </h5>
     </div>
     <div class="card-body">
         @if (Model.Body != null)

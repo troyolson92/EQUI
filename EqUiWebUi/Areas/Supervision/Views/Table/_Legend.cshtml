@@ -1,7 +1,7 @@
 ﻿<div>
-    <h4>Legend for supervision system</h4>
+    <h2>Legend for supervision system</h2>
     <hr />
-    <h6>Primairy styles</h6>
+    <h3>Primairy styles</h3>
     <table style="width:100%">
         <tr>
             <th>Logtype</th>
@@ -37,5 +37,45 @@
 
     <hr />
     @*Get list with animation types for alerts*@
-    @Html.Action("_Legend", "c_triggers", new {Area ="Alert" })
+    @Html.Action("_Legend", "c_triggers", new { Area = "Alert" })
+    <hr />
+    @Html.Action("_getWiki", "Wiki", new { area = "", id = "Breakdown" })
+    <hr />
+    <h3>This system will buffer data for a limited time.</h3>
+    <p>DatabufferNumShifts: <strong>@System.Configuration.ConfigurationManager.AppSettings["DatabufferNumShifts"]</strong> </p>
+    <p>DatabufferNumDefaultHours: <strong>@System.Configuration.ConfigurationManager.AppSettings["DatabufferNumDefaultHours"]</strong>(used in case of timeline failure)</p>
+    <table>
+        <tr>
+            <th>Buffer</th>
+            <th>datacount</th>
+        </tr>
+        @if (EqUiWebUi.MyBooleanExtensions.IsAreaEnabled("VCSC"))
+        {
+        <tr>
+            <td>dataC3G</td>
+            <td>@EqUiWebUi.Areas.Supervision.DataBuffer.dataC3G.Count()</td>
+        </tr>
+        <tr>
+            <td>dataC4G</td>
+            <td>@EqUiWebUi.Areas.Supervision.DataBuffer.dataC4G.Count()</td>
+        </tr>
+        <tr>
+            <td>dataS4C</td>
+            <td>@EqUiWebUi.Areas.Supervision.DataBuffer.dataS4C.Count()</td>
+        </tr>
+        <tr>
+            <td>dataSTO</td>
+            <td>@EqUiWebUi.Areas.Supervision.DataBuffer.dataSTO.Count()</td>
+        </tr>
+        }
+        <tr>
+            <td>dataVASC</td>
+            <td>@EqUiWebUi.Areas.Supervision.DataBuffer.dataVASC.Count()</td>
+        </tr>
+        <tr>
+            <td>dataALERT</td>
+            <td>@EqUiWebUi.Areas.Supervision.DataBuffer.dataALERT.Count()</td>
+        </tr>
+    </table>
+    <hr />
 </div>
