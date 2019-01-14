@@ -161,10 +161,8 @@ namespace EQUICommunictionLib
                 db = DefaultDatabase();
             }
 
-            //temp debug
             if (dbID == 1)
             {
-                log.Error("BUG BUG BUG");
                 db = DefaultDatabase();
             }
 
@@ -236,7 +234,7 @@ namespace EQUICommunictionLib
             InfoMessage(e.Message);
             foreach (SqlError err in e.Errors)
             {
-                log.Error(err.Message);
+                log.Debug(err.Message);
                 InfoMessage(err.Message);
             }
         }
