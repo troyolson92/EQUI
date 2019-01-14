@@ -4,6 +4,7 @@
         <h3>
             <a class="clickable far fa-window-restore text-white" href="@Url.Action("GetWiki","Wiki",new {Area ="", id = Model.Name })"></a>
             @Model.Title
+            <a class="far fa-window-close clickable float-right" data-dismiss="popover"></a>
         </h3>
     </div>
     <div class="card-body">
@@ -19,6 +20,4 @@
     @MyHtmlHelpers.IconActionLink(Url.Action("Edit", "Wiki", new { Area = "", id = Model.Name }), "fas fa-pencil-alt", "", "Edit this wiki", OpenNewWindow: true)
 </div>
 
-<script>
-    initInterface();
-</script>
+
