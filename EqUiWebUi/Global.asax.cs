@@ -214,7 +214,7 @@ namespace EqUiWebUi
             }
             catch (Exception ex)
             {
-                log.Error("TEMP session state not available", ex);
+                log.Debug("TEMP session state not available", ex);
             }
 
         }

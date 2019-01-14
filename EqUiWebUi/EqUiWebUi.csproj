@@ -178,7 +178,6 @@
     <Folder Include="Areas\HangfireArea\Models\" />
     <Folder Include="Areas\Maximo_ui\Views\Shared\" />
     <Folder Include="Areas\PJV\Views\Shared\" />
-    <Folder Include="Areas\PlcSupervisie\Models\" />
     <Folder Include="Areas\STW040\Models\" />
     <Folder Include="Areas\STW040\Views\Shared\" />
     <Folder Include="Areas\Supervision\Views\Shared\" />
@@ -331,6 +330,7 @@
     <Compile Include="Areas\PJV\PJVAreaRegistration.cs" />
     <Compile Include="Areas\PlcSupervisie\Backgroundwork.cs" />
     <Compile Include="Areas\PlcSupervisie\Controllers\ScreenshotController.cs" />
+    <Compile Include="Areas\PlcSupervisie\Models\PlcSupervisieMetadata.cs" />
     <Compile Include="Areas\PlcSupervisie\PlcSupervisieAreaRegistration.cs" />
     <Compile Include="Areas\STW040\BackgroundWork.cs" />
     <Compile Include="Areas\STW040\Controllers\STW040Controller.cs" />
@@ -2288,6 +2288,7 @@
     <Content Include="Areas\Tiplife\Views\ComauElectrode\_Tcp_logGrid.cshtml" />
     <Content Include="Areas\Tiplife\Views\ComauElectrode\Tcp_log.cshtml" />
     <Content Include="Areas\Tiplife\Views\ComauElectrode\_Tipinfo.cshtml" />
+    <Content Include="Areas\PlcSupervisie\Views\Screenshot\Screenshots.cshtml" />
     <None Include="Properties\PublishProfiles\chasvw1203_PRODUCTION_VCCH.pubxml" />
     <None Include="Properties\PublishProfiles\gensvw1178-DEV-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION-VCG.pubxml" />

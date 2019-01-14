@@ -1,5 +1,5 @@
 ﻿@*helper to create info icon for tipmonitor*@
-@helper TipMonitorIcon(string Status, double? RobotWear, bool hasTipchanger)
+@helper TipMonitorIcon(string Status, double? RobotWear, double? WearRatio)
 {
 string icon = "";
 string linkText = "";
@@ -35,9 +35,18 @@ else if (Status == "NO PREDICTION")
 }
 else if (Status == "Tipchanger")
 {
-    icon = "fas fa-battery-empty";
-    linkText = "Tipchange magazine empty";
-    tooltip = "Looks like the tipchanger magzine is empty";
+    if (WearRatio.HasValue) //robotmounted
+    {
+        icon = "fas fa-battery-empty";
+        linkText = "Tipchange magazine empty";
+        tooltip = "Looks like the tipchanger magzine is empty";
+    }
+    else //floormounted
+    {
+        icon = "fas fa-battery-empty text-warning";
+        linkText = "Tipchange magazine empty (on gripper)";
+        tooltip = "Looks like the tipchanger magzine is empty (on gripper)";
+    }
 }
 //all is good.
 else

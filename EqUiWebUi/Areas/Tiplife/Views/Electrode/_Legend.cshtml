@@ -32,23 +32,27 @@
             <th>Description</th>
         </tr>
         <tr>
-            <td>@TiplifeHtmlHelpers.TipMonitorIcon("NO DATA", 0, false)</td>
+            <td>@TiplifeHtmlHelpers.TipMonitorIcon("NO DATA", 0, 0)</td>
             <td>No data from robot for 48hours check electrode by hand!</td>
         </tr>
         <tr>
-            <td>@TiplifeHtmlHelpers.TipMonitorIcon("NotChanged", 0, false)</td>
+            <td>@TiplifeHtmlHelpers.TipMonitorIcon("NotChanged", 0, 0)</td>
             <td>No change detected but wait to re-change electrode! (wait for wear > 1mm)</td>
         </tr>
         <tr>
-            <td>@TiplifeHtmlHelpers.TipMonitorIcon("NotChanged", 1, false)</td>
+            <td>@TiplifeHtmlHelpers.TipMonitorIcon("NotChanged", 1, 0)</td>
             <td>No change detected you can now try to change the electrode again</td>
         </tr>
         <tr>
-            <td>@TiplifeHtmlHelpers.TipMonitorIcon("Tipchanger", 1, false)</td>
+            <td>@TiplifeHtmlHelpers.TipMonitorIcon("Tipchanger", 1, 0)</td>
             <td>Tip changer is empty</td>
         </tr>
         <tr>
-            <td>@TiplifeHtmlHelpers.TipMonitorIcon("", 0 ,false)</td>
+            <td>@TiplifeHtmlHelpers.TipMonitorIcon("Tipchanger", 1, null)</td>
+            <td>Tip changer is empty (on gripper)</td>
+        </tr>
+        <tr>
+            <td>@TiplifeHtmlHelpers.TipMonitorIcon("", 0, 0)</td>
             <td>Everything is OK</td>
         </tr>
     </table>

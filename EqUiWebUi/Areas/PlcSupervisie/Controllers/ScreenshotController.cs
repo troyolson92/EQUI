@@ -47,5 +47,27 @@ namespace EqUiWebUi.Areas.PlcSupervisie.Controllers
             ViewBag.url = url;
             return View();
         }
+
+        public ActionResult Screenshots()
+        {
+            List<PlcSupervisie.Models.PlcScreenshot> data = new List<Models.PlcScreenshot> { 
+                new Models.PlcScreenshot{Name="A LIJN331 / A LIJN34",LocationTree="VCG -> A -> A GA1.0 -> A LIJN 33",url="http://webapps.gen.volvocars.net/applications/eng/equipment/SuperVisieCma/VCG_CMA40_GA3SUPERVNCW01__01_UnderBody_1.Pd_.jpg"},
+                new Models.PlcScreenshot{Name="A LIJN336 / A LIJN338 / A LIJN339",LocationTree="VCG -> A -> A GA1.0 -> A LIJN 33",url="http://webapps.gen.volvocars.net/applications/eng/equipment/SuperVisieCma/VCG_CMA40_GA3SUPERVNCW01__02_UnderBody_2.Pd_.jpg"},
+                new Models.PlcScreenshot{Name="UB12 BackPanel",LocationTree="VCG -> A -> A GA1.0 -> A LIJN 33",url="http://webapps.gen.volvocars.net/applications/eng/equipment/SuperVisieCma/VCG_CMA40_GA3SUPERVNCW01__03_UnderBody_3.Pd_.jpg"},
+                new Models.PlcScreenshot{Name="",LocationTree="",url="http://webapps.gen.volvocars.net/applications/eng/equipment/SuperVisieCma/VCG_CMA40_GA3SUPERVNCW01__04_Conveyors.Pd_.jpg"},
+                new Models.PlcScreenshot{Name="A LIJN35*",LocationTree="VCG -> A -> A GA1.0 -> A LIJN 35",url="http://webapps.gen.volvocars.net/applications/eng/equipment/SuperVisieCma/VCG_CMA40_GA3SUPERVNCW01__05_SideLine.Pd_.jpg"},
+                new Models.PlcScreenshot{Name="A GA4.0",LocationTree="VCG -> A -> A GA4.0",url="http://webapps.gen.volvocars.net/applications/eng/equipment/SuperVisieCma/VCG_CMA40_GA3SUPERVNCW01__06_SubAssemblies.Pd_.jpg"},
+                new Models.PlcScreenshot{Name="A LIJN33*",LocationTree="VCG -> A -> A GA1.0 -> A LIJN 33",url="http://webapps.gen.volvocars.net/applications/eng/equipment/SuperVisieCma/VCG_CMA40_GA3SUPERVNCW01__00_Overview_UnderBody_CMA.Pd_.jpg"},
+                new Models.PlcScreenshot{Name="A LIJN939",LocationTree="VCG -> A -> A GA1.0 -> A LIJN 33",url="http://webapps.gen.volvocars.net/applications/eng/equipment/SuperVisieCma/VCG_CMA40_GA3SUPERVNCW01__07_Conveyors.Pd_.jpg"}
+            };
+
+            //apply user filter
+            string LocationRoot = CurrentUser.Getuser.LocationRoot;
+            data = (from d in data
+                    where d.LocationTree.Contains(LocationRoot) 
+                    select d).ToList();
+
+            return View(data);
+        }
     }
 }

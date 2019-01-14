@@ -21,7 +21,7 @@
             .Encoded(false)
             .Filterable(false)
             .Sortable(false)
-            .RenderedAs(c => TiplifeHtmlHelpers.TipMonitorIcon(c.Status, c.RobotWear, c.hasTipchanger));
+            .RenderedAs(c => TiplifeHtmlHelpers.TipMonitorIcon(c.Status, c.RobotWear, c.WearRatio));
     //launch sbcu tool
     columns.Add()
             .Encoded(false)
