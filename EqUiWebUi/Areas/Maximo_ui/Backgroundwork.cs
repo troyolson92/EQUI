@@ -166,7 +166,22 @@ workorder.changedate >= sysdate - 100
             DataTable tableFromMx7 = new DataTable();
             ConnectionManager connectionManager = new ConnectionManager();
             context.WriteLine("GetdataFromMaximo start");
-            tableFromMx7 = connectionManager.RunQuery(strSqlGetFromMaximo, dbName: "MAXIMO7rep", enblExeptions: true, maxEXECtime: 300);
+            try
+            {
+                //try realtime connection
+                context.WriteLine("Get locations from maximo started (useing: MAXIMOrt)");
+                tableFromMx7 = connectionManager.RunQuery(strSqlGetFromMaximo, dbName: "MAXIMOrt", enblExeptions: true, maxEXECtime: 300);
+                context.WriteLine("Done");
+            }
+            catch (Exception ex)
+            {
+                context.WriteLine("FAILURE for MAXIMOrt connection! " + ex.Message);
+                log.Error("FAILURE for MAXIMOrt connection", ex);
+                //if fails try reporting dbEQUI
+                context.WriteLine("giving it another try using MAXIMO7rep");
+                tableFromMx7 = connectionManager.RunQuery(strSqlGetFromMaximo, dbName: "MAXIMO7rep", enblExeptions: true, maxEXECtime: 300);
+                context.WriteLine("Done (used MAXIMO7rep)");
+            }
             context.WriteLine("GetdataFromMaximo Rowcount: " + tableFromMx7.Rows.Count);
             //clear destination table  in GADATA
             string CmdDeleteTableData = @"DELETE FROM [Equi].[ASSETS_fromMX7] FROM [Equi].[ASSETS_fromMX7]";
@@ -189,6 +204,9 @@ workorder.changedate >= sysdate - 100
 
             List<string> cmds = new List<string>(); 
 
+            cmds.Add("exec NGAC.[sp_LinkAssets]");
+            cmds.Add("exec EQUI.[sp_LinkAssets]");
+
             if (EqUiWebUi.MyBooleanExtensions.IsAreaEnabled("VCSC"))
             {
                 cmds.Add("exec C3G.[sp_LinkAssets]");
@@ -199,9 +217,6 @@ workorder.changedate >= sysdate - 100
             {
                 cmds.Add("exec STO.[sp_LinkAssets]");
             }
-
-            cmds.Add("exec NGAC.[sp_LinkAssets]");
-            cmds.Add("exec EQUI.[sp_LinkAssets]");
 
             if (EqUiWebUi.MyBooleanExtensions.IsAreaEnabled("Welding"))
             {
