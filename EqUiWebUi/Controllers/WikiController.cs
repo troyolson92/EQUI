@@ -10,7 +10,6 @@ using EqUiWebUi.Models;
 
 namespace EqUiWebUi.Controllers
 {
-    [Authorize(Roles = "Administrator")]
     public class WikiController : Controller
     {
         private GADATAEntitiesEQUI db = new GADATAEntitiesEQUI();
@@ -44,6 +43,7 @@ namespace EqUiWebUi.Controllers
         }
 
         // GET: Wiki/Edit/5
+        [Authorize(Roles = "Administrator, PowerUser")]
         public ActionResult Edit(string id)
         {
             if (id == null)
@@ -61,6 +61,7 @@ namespace EqUiWebUi.Controllers
         // POST: Wiki/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Administrator, PowerUser")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateInput(false)] //to allow posting of raw html data

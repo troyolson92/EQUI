@@ -1,12 +1,12 @@
 ﻿@{
-    ViewBag.Title = ViewBag.sheet;
+    ViewBag.Title = ViewBag.workbook;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="card">
     <div class="card-header bg-dark text-white">
         <h4>
-            Tableau: <strong>@ViewBag.sheet</strong>
-            <a class="fas fa-info-circle text-white" id="LegendPopover" href="#" data-container="body" data-toggle="popover" data-placement="bottom"></a>
+            Tableau workbook: <strong>@ViewBag.workbook</strong>
+            <a class="fas fa-info-circle text-white MyPopovers" data-container="body" data-toggle="popover" data-placement="bottom" href="@Url.Action("_Getwiki", "Wiki", new { area = "", id = ViewBag.workbook}, null)"></a>
         </h4>
     </div>
     @*render the viz*@
@@ -109,18 +109,6 @@
          * Hook into the window resize event to resize when the user resizes the screen.
          */
         $(window).resize(resize);
-
-        //enable popover for legend
-        $("#LegendPopover").popover({
-            html: true,
-            content: function () {
-                return $.ajax({
-                    url: '@Url.Action("_legend")',
-                    dataType: 'html',
-                    async: false
-                }).responseText;
-            }
-        });
 
         //full with screen
         $("#allcontent").removeClass("body-content");

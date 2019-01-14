@@ -89,7 +89,12 @@
                 //animation
                 $("#placeholderPartial").html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
                 //load url in placeholder
-                $("#placeholderPartial").load('@Url.Action("_Details")', { AddTrendChart: true, id: data["id"]});
+                $("#placeholderPartial").load('@Url.Action("_Details")', { AddTrendChart: true, id: data["id"] },
+                    function (responseText, textStatus, req) {
+                        if (textStatus == "error") {
+                            $("#placeholderPartial").html($("#Error", responseText).html());
+                        }
+                    });
             },
             reloadEnded: function () {
                 $('[data-toggle="popover"]').tooltip();

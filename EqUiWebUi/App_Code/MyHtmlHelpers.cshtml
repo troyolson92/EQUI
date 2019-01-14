@@ -28,7 +28,9 @@
 }
 
 @*helper to create action link with an icon*@
-@helper IconActionLink(string url, string icon, string linkText, string helperText, string classes = "", bool OpenNewWindow = false)
+@helper IconActionLink(string url, string icon, string linkText, string helperText, string classes = "", bool enabeld = true, bool OpenNewWindow = false)
+{
+if (enabeld)
 {
     <a href="@url" class="@classes clickable @(OpenNewWindow ? "OpenNewWindow" : "")" data-toggle="tooltip" title="@helperText">
         <i class="@icon"></i>
@@ -36,6 +38,11 @@
             <strong>@linkText</strong>
         </span>
     </a>
+}
+else
+{
+<a></a>
+}
 }
 
 @*help to render a link panel from the database*@

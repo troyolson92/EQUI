@@ -7,10 +7,13 @@ function initInterface() {
     $("#navbar").autoHidingNavbar();
 
     //initpopovers
+    //on click ignore default action
     $(".MyPopovers").click(function (e) {
         e.preventDefault();
         return false;
     });
+
+    //get content using ajax call
     $(".MyPopovers").popover({
         html: true,
         content: function () {
