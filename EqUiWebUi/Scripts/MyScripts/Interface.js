@@ -80,6 +80,18 @@ function initInterface() {
         });
     });
 
+    //script for subscribing to panel colaps
+    $(document).on('click', '.card-header span.clickable', function (e) {
+        var $this = $(this);
+        if ($this.closest('.card').find('.card-body').css('display') === 'block') {
+            $this.addClass('fa-rotate-180');
+            $this.closest('.card').find('.card-body').slideUp();
+        } else {
+            $this.removeClass('fa-rotate-180');
+            $this.closest('.card').find('.card-body').slideDown();
+        }
+    });
+
     EnableInterfaceEvents();
 }
 
@@ -102,18 +114,6 @@ function EnableInterfaceEvents() {
         settings: {
             'timeout': 5000, //set autodismis timeout to 5 seconds
             'donotdismiss': ['danger'] //disble autodismis for these types
-        }
-    });
-
-    //script for subscribing to pannel colaps
-    $(document).on('click', '.card-header span.clickable', function (e) {
-        var $this = $(this);
-        if ($this.closest('.card').find('.card-body').css('display') === 'block') {
-            $this.addClass('fa-rotate-180');
-            $this.closest('.card').find('.card-body').slideUp();
-        } else {
-            $this.removeClass('fa-rotate-180');
-            $this.closest('.card').find('.card-body').slideDown();
         }
     });
 
