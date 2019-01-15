@@ -95,7 +95,7 @@
         <EntityTypeShape EntityType="GADATAModelWelding.ULplan_end" Width="1.5" PointX="0.5" PointY="2.625" FillColor="255, 192, 128" />
         <AssociationConnector Association="GADATAModelWelding.FK_UltralogInspections_Inspectionplan" />
         <AssociationConnector Association="GADATAModelWelding.FK_UltralogInspections_UltralogStations" />
-        <EntityTypeShape EntityType="GADATAModelWelding.Users" Width="1.5" PointX="10" PointY="5.5" />
+        <EntityTypeShape EntityType="GADATAModelWelding.Users" Width="1.5" PointX="10.75" PointY="5.375" />
         <AssociationConnector Association="GADATAModelWelding.FK_UltralogInspections_Users" />
         <EntityTypeShape EntityType="GADATAModelWelding.StoringName" Width="1.5" PointX="13.375" PointY="4.75" FillColor="255, 192, 128" />
         <EntityTypeShape EntityType="GADATAModelWelding.StoringsCause" Width="1.5" PointX="13.375" PointY="2.5" FillColor="255, 192, 128" />

@@ -1,0 +1,67 @@
+﻿@model EqUiWebUi.Areas.Welding.Models.rt_spottable
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>rt_spottable</h4>
+    <hr />
+    <dl class="dl-horizontal">
+       
+        <dt>
+            @Html.DisplayNameFor(model => model.SpotName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SpotName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HiddenSpot)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HiddenSpot)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GeoSpot)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GeoSpot)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SpotLeft)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SpotLeft)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SpotRight)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SpotRight)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.c_timer.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.c_timer.Name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

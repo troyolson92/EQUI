@@ -149,6 +149,9 @@ namespace EqUiWebUi.Areas.Welding.Controllers
         }
 
 
+
+
+
         //test met proc oproepen zonder view 
         public JsonResult TestProc(int id)
         {

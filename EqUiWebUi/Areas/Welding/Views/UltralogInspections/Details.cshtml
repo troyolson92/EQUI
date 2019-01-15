@@ -1,0 +1,82 @@
+﻿@model EqUiWebUi.Areas.Welding.Models.UltralogInspections
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>UltralogInspections</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.InspectorComment)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.InspectorComment)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MeasuredThickness)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MeasuredThickness)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MinIdentation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MinIdentation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalThickness)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalThickness)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PlanLenght)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PlanLenght)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Inspectionplan.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Inspectionplan.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UltralogStations.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UltralogStations.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Users.CDSID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Users.CDSID)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

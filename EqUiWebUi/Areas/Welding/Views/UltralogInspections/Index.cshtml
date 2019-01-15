@@ -1,0 +1,82 @@
+﻿@model IEnumerable<EqUiWebUi.Areas.Welding.Models.UltralogInspections>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.InspectionTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.InspectorComment)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MeasuredThickness)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IndexOfTestSeq)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TotalThickness)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PlanLenght)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Inspectionplan.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UltralogStations.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Users.CDSID)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.InspectionTime)
+        </th>
+        <th>
+        <td>
+            @Html.DisplayFor(modelItem => item.InspectorComment)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MeasuredThickness)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IndexOfTestSeq)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TotalThickness)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PlanLenght)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Inspectionplan.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UltralogStations.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Users.CDSID)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>

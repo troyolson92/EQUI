@@ -661,8 +661,10 @@
     <Compile Include="Areas\VWSC\Models\winService.cs" />
     <Compile Include="Areas\VWSC\VWSCAreaRegistration.cs" />
     <Compile Include="Areas\Welding\Controllers\AROController.cs" />
+    <Compile Include="Areas\Welding\Controllers\DMLControllers\HiddenSpotController.cs" />
     <Compile Include="Areas\Welding\Controllers\DMLControllers\StoringsIngaveController.cs" />
     <Compile Include="Areas\Welding\Controllers\DMLControllers\ULplan_startController.cs" />
+    <Compile Include="Areas\Welding\Controllers\DMLControllers\UltralogInspectionsController.cs" />
     <Compile Include="Areas\Welding\Controllers\DMLControllers\WeldingGunsController.cs" />
     <Compile Include="Areas\Welding\Controllers\LaunchController.cs" />
     <Compile Include="Areas\Welding\Controllers\QteamController.cs" />
@@ -673,7 +675,6 @@
     <Compile Include="Areas\Welding\Controllers\UltralogController.cs" />
     <Compile Include="Areas\Welding\Controllers\UpdateController.cs" />
     <Compile Include="Areas\Welding\Controllers\WMController.cs" />
-    <Compile Include="Areas\Welding\Controllers\DMLControllers\editController.cs" />
     <Compile Include="Areas\Welding\Controllers\DMLControllers\InspectionplansController.cs" />
     <Compile Include="Areas\Welding\Models\ActualSpatter_.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
@@ -2279,6 +2280,14 @@
     <Content Include="Areas\Welding\Views\WeldingGuns\Edit.cshtml" />
     <Content Include="Areas\Welding\Views\WeldingGuns\Index.cshtml" />
     <Content Include="Areas\Welding\Views\Launch\CheckDubbelPrograms.cshtml" />
+    <Content Include="Areas\Welding\Views\UltralogInspections\Create.cshtml" />
+    <Content Include="Areas\Welding\Views\UltralogInspections\Delete.cshtml" />
+    <Content Include="Areas\Welding\Views\UltralogInspections\Details.cshtml" />
+    <Content Include="Areas\Welding\Views\UltralogInspections\Edit.cshtml" />
+    <Content Include="Areas\Welding\Views\UltralogInspections\Index.cshtml" />
+    <Content Include="Areas\Welding\Views\HiddenSpot\Details.cshtml" />
+    <Content Include="Areas\Welding\Views\HiddenSpot\Edit.cshtml" />
+    <Content Include="Areas\Welding\Views\HiddenSpot\Index.cshtml" />
     <None Include="Properties\PublishProfiles\gensvw1178-DEV-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gotsvw11292-PRODUCTION-VCTA.pubxml" />
