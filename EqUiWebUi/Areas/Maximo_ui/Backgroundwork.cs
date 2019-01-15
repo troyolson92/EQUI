@@ -37,10 +37,6 @@ namespace EqUiWebUi.Areas.Maximo_ui
         {
             //delete data in now in maximo.
             ConnectionManager connectionManager = new ConnectionManager();
-            context.WriteLine("Delete workorders started");
-            connectionManager.RunCommand("DELETE [MAXIMO].[WORKORDERS] FROM [MAXIMO].[WORKORDERS]", enblExeptions:true);
-            context.WriteLine("Done");
-
             //get new records from STO
             string MaximoQry = string.Format(@"
 select 
@@ -73,7 +69,7 @@ workorder.changedate >= sysdate - 100
             try
             {
                 //try realtime connection
-                context.WriteLine("Get workorders from maximo started (useing: MAXIMOrt)");
+                context.WriteLine("Get workorders from maximo started using MAXIMOrt");
                 newMaximoDt = connectionManager.RunQuery(MaximoQry, dbName: "MAXIMOrt", maxEXECtime: 120, enblExeptions: true);
                 context.WriteLine("Done");
             }
@@ -86,10 +82,22 @@ workorder.changedate >= sysdate - 100
                 newMaximoDt = connectionManager.RunQuery(MaximoQry, dbName: "MAXIMO7rep", maxEXECtime: 120, enblExeptions: true);
                 context.WriteLine("Done (used MAXIMO7rep)");
             }
-            //push to gadata
-            context.WriteLine(string.Format("BulkCopy started (rowcount:{0})", newMaximoDt.Rows.Count));
-            connectionManager.BulkCopy(newMaximoDt, "[MAXIMO].[WORKORDERS]",enblExeptions:true);
-            context.WriteLine("Done");
+
+            if (newMaximoDt.Rows.Count != 0)
+            {
+                //delete old workorders
+                context.WriteLine("Delete workorders started");
+                connectionManager.RunCommand("DELETE [MAXIMO].[WORKORDERS] FROM [MAXIMO].[WORKORDERS]", enblExeptions: true);
+                context.WriteLine("Done");
+                //push to gadata
+                context.WriteLine(string.Format("BulkCopy started (rowcount:{0})", newMaximoDt.Rows.Count));
+                connectionManager.BulkCopy(newMaximoDt, "[MAXIMO].[WORKORDERS]", enblExeptions: true);
+                context.WriteLine("Done");
+            }
+            else
+            {
+                context.WriteLine("No data from maximo so stopped");
+            }
         }
 
         //update asset table on GADATA from maximo called every sunday #hangfire

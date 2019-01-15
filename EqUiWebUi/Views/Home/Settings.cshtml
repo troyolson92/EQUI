@@ -38,7 +38,7 @@
                     $("#EQUISetup").html($("#Error", responseText).html());
                 }
             });
-        $("#job").load('@Url..Action("_settings", "job", new { area = "HangfireArea" })',
+        $("#job").load('@Url.Action("_settings", "job", new { area = "HangfireArea" })',
             function (responseText, textStatus, req) {
                 if (textStatus == "error") {
                     $("#job").html($("#Error", responseText).html());

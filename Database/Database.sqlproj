@@ -290,6 +290,7 @@
     <None Include="NGAC\Data\c_variable_search.sql" />
     <None Include="TADATAprod.publish.xml" />
     <None Include="TestDb.publish.xml" />
+    <None Include="Database.publish.xml" />
   </ItemGroup>
   <ItemGroup>
     <SqlCmdVariable Include="DB_C_NAME">
