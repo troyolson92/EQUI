@@ -1130,7 +1130,6 @@
     <Content Include="Areas\Maximo_ui\Views\Workorder\ExampleCall_workordersOnLocation.cshtml" />
     <Content Include="Areas\PlcSupervisie\Views\web.config" />
     <Content Include="Areas\PlcSupervisie\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\PlcSupervisie\Views\Screenshot\Carousel.cshtml" />
     <Content Include="Areas\user_management\Views\UserScreens\Create.cshtml" />
     <Content Include="Areas\user_management\Views\UserScreens\Delete.cshtml" />
     <Content Include="Areas\user_management\Views\UserScreens\Details.cshtml" />
@@ -2047,7 +2046,6 @@
     <Content Include="Areas\Welding\Models\WeldingModel.edmx.diagram">
       <DependentUpon>WeldingModel.edmx</DependentUpon>
     </Content>
-    <Content Include="Areas\PlcSupervisie\Views\Screenshot\CarouselBF.cshtml" />
     <Content Include="Areas\user_management\Views\user\ForbiddenMethod.cshtml" />
     <Content Include="Areas\user_management\Views\user\LoginPrompt.cshtml" />
     <EntityDeploy Include="Models\EQUIModel.edmx">

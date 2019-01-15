@@ -51,61 +51,33 @@
     <div class="card">
         <div class="card-header bg-dark">
             <h5 class="card-title text-white">
-                Greenfield Only
+                Ghent only tools
                 <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
             </h5>
         </div>
         <div class="card-body">
             @MyHtmlHelpers.EquiLink("http://gensvw2107.gen.volvocars.net/CMACTAPP/", "fas fa-stopwatch", "cmaCTapp", helperText: "Tool van IE om Cycle times te bekijken")
-            @MyHtmlHelpers.EquiLink("/PlcSupervisie/Screenshot/Carousel", "far fa-object-group", "Supervisie (UB12)", helperText: "Plc Supervisie voor UB12 (mobile friendly)")
-            @MyHtmlHelpers.EquiLink("/PlcSupervisie/Screenshot/Screenshots", "far fa-object-group", "Supervisie", helperText: "Plc Supervisie GA (in test)")
-            @MyHtmlHelpers.EquiLink("/Home/Rendersite?url=" + @Uri.EscapeDataString("http://webapps.gen.volvocars.net/applications/eng/equipment/SuperVisieCma/"), "far fa-object-group", "Supervisie (Greenfield)", helperText: "Tia supervisie schermen")
+            @MyHtmlHelpers.EquiLink("/PlcSupervisie/Screenshot/Screenshots", "far fa-object-group", "Supervisie", helperText: "Plc Supervisie GA")
+            @MyHtmlHelpers.EquiLink("/Home/Rendersite?url=" + @Uri.EscapeDataString("http://webapps.gen.volvocars.net/applications/eng/equipment/supervisiep1/intranet"), "far fa-object-group", "Supervisie (brownfield)", helperText: "Sattline supervisie schermen")
+          
         </div>
     </div>
 
 <p></p>
 
-
 <div class="card">
     <div class="card-header bg-dark">
         <h5 class="card-title text-white">
-            Brownfield Only
-            <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
-        </h5>
-    </div>
-    <div class="card-body">
-        @MyHtmlHelpers.EquiLink("/Home/Rendersite?url=" + @Uri.EscapeDataString("http://webapps.gen.volvocars.net/applications/eng/equipment/supervisiep1/intranet"), "far fa-object-group", "Supervisie (brownfield)", helperText: "Sattline supervisie schermen")
-    </div>
-</div>
-
-<p></p>
-
-<div class="card">
-    <div class="card-header bg-dark">
-        <h5 class="card-title text-white">
-            AASPOT (in beta)
+            AASPOT
             <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
         </h5>
     </div>
     <div class="card-body">
         @MyHtmlHelpers.EquiLink("/Welding/Welding/index", "fas fa-bolt", "AASPOT homepage", helperText: "Nieuwe website voor AASPOT (jens)")
         @MyHtmlHelpers.EquiLink("/PJV/pjv/index", "fas fa-vial", "PJV", helperText: "Track changed and modifications on robot process points")
-    </div>
-</div>
-
-<p></p>
-}
-
-<div class="card">
-    <div class="card-header bg-danger">
-        <h5 class="card-title text-white">
-            Beta area (tools  in development)
-            <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-rotate-180 fa-1"></i></span>
-        </h5>
-    </div>
-    <div class="card-body" style="display:none">
         @MyHtmlHelpers.EquiLink("/VASC/Breakdown/GetJobs?PromptBodynum=true", "fas fa-vial", "Track cars by bodynum", helperText: "weldbolt line only", OpenNewWindow: true, helpurl: @Url.Action("_Getwiki", "Wiki", new { area = "", id = "BodyTrack" }, null))
     </div>
 </div>
 
 <p></p>
+}
