@@ -87,6 +87,7 @@ function initInterface() {
 function EnableInterfaceEvents() {
     //enable tooltips everywhere
     $('[data-toggle="tooltip"]').tooltip();
+    $('[data-toggle="popover"]').tooltip();
 
     //for new window option
     $('.OpenNewWindow').click(function (e) {
