@@ -27,8 +27,8 @@
             "&wonum=@Url.Encode(Model.wonum)" +
             "&status=@Url.Encode(Model.status)" +
             "&ownergroup=@Url.Encode(Model.ownergroup)" +
-            "&startdate=@Model.startdate.ToString("yyyy-MM-dd HH:mm:ss")" +
-            "&enddate=@Model.enddate.ToString("yyyy-MM-dd HH:mm:ss")" 
+            "&startdate=@Model.startdate.GetValueOrDefault().ToString("yyyy-MM-dd HH:mm:ss")" +
+            "&enddate=@Model.enddate.GetValueOrDefault().ToString("yyyy-MM-dd HH:mm:ss")" 
         return result;
     }
 // set url to link back to main workorder view
