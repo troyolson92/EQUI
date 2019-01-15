@@ -90,13 +90,9 @@
         <EntityTypeShape EntityType="GADATAModelWelding.AlertsQteam" Width="1.5" PointX="2.25" PointY="0.5" FillColor="255, 192, 128" />
         <EntityTypeShape EntityType="GADATAModelWelding.Inspectionplan" Width="1.5" PointX="10.375" PointY="0.625" />
         <EntityTypeShape EntityType="GADATAModelWelding.UltralogStations" Width="1.5" PointX="5" PointY="2.5" />
-        <EntityTypeShape EntityType="GADATAModelWelding.UltralogInspections" Width="1.5" PointX="7.625" PointY="0.75" />
         <EntityTypeShape EntityType="GADATAModelWelding.SpotIdentMeasurements" Width="1.5" PointX="2.25" PointY="3.25" FillColor="255, 192, 128" />
         <EntityTypeShape EntityType="GADATAModelWelding.ULplan_end" Width="1.5" PointX="0.5" PointY="2.625" FillColor="255, 192, 128" />
-        <AssociationConnector Association="GADATAModelWelding.FK_UltralogInspections_Inspectionplan" />
-        <AssociationConnector Association="GADATAModelWelding.FK_UltralogInspections_UltralogStations" />
         <EntityTypeShape EntityType="GADATAModelWelding.Users" Width="1.5" PointX="10.75" PointY="5.375" />
-        <AssociationConnector Association="GADATAModelWelding.FK_UltralogInspections_Users" />
         <EntityTypeShape EntityType="GADATAModelWelding.StoringName" Width="1.5" PointX="13.375" PointY="4.75" FillColor="255, 192, 128" />
         <EntityTypeShape EntityType="GADATAModelWelding.StoringsCause" Width="1.5" PointX="13.375" PointY="2.5" FillColor="255, 192, 128" />
         <EntityTypeShape EntityType="GADATAModelWelding.StoringsIngave_new" Width="1.5" PointX="15.375" PointY="0.5" FillColor="255, 192, 128" />
@@ -104,6 +100,10 @@
         <AssociationConnector Association="GADATAModelWelding.FK_StoringsIngave_new_StoringName" />
         <AssociationConnector Association="GADATAModelWelding.FK_StoringsIngave_new_StoringsCause" />
         <EntityTypeShape EntityType="GADATAModelWelding.ULplan_start" Width="1.5" PointX="2.25" PointY="4.875" FillColor="255, 192, 128" />
+        <EntityTypeShape EntityType="GADATAModelWelding.UltralogInspections" Width="1.5" PointX="7.625" PointY="1" />
+        <AssociationConnector Association="GADATAModelWelding.FK_UltralogInspections_Inspectionplan" />
+        <AssociationConnector Association="GADATAModelWelding.FK_UltralogInspections_UltralogStations" />
+        <AssociationConnector Association="GADATAModelWelding.FK_UltralogInspections_Users" />
       </Diagram>
       <Diagram DiagramId="5c217cc0d8d547d184a2bc344a71c663" Name="ARO" >
         <EntityTypeShape EntityType="GADATAModelWelding.WeldingGun" Width="1.5" PointX="0.5" PointY="0.5" FillColor="Red" />

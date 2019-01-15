@@ -2,66 +2,46 @@
 
 @{
     ViewBag.Title = "Index";
-    
+
+
 }
 
 <h2>Configure the spotlist from database</h2>
 
+@Html.Grid(Model).Named("rt_spottable").Build(columns =>
+{
+    columns.Add(c => c.ID).Titled("id").Css("bolded");
+    columns.Add(c => c.c_timer.Name).Titled("TimerName").Css("bolded").InitialSort(GridSortOrder.Desc); ;
+    columns.Add(c => c.SpotName).Titled("spotname");
+    columns.Add(c => c.SpotLeft).Titled("spotleft");
+    columns.Add(c => c.SpotRight).Titled("spotright");
+    columns.Add(c => c.HiddenSpot).Titled("hiddenspot");
+    columns.Add(c => c.GeoSpot).Titled("Geospot");
+    //tools
+    columns.Add(c => c)
+                        .Titled("")
+                        .Encoded(false)
+                        .RenderedAs(c =>
 
-  
-</p>
-<table class="table">
-    <tr>
+                        MyHtmlHelpers.IconActionLink(Url.Action("Edit", new { id = c.ID }), "fas fa-pencil-alt", "", "Edit this spot").ToHtmlString()
 
-       
-        <th>
-            @Html.DisplayNameFor(model => model.SpotName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.HiddenSpot)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.GeoSpot)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SpotLeft)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SpotRight)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.c_timer.Name)
-        </th>
-        <th></th>
-    </tr>
+                        ).Filterable(false);
 
-@foreach (var item in Model) {
-    <tr>
- 
-        <td>
-            @Html.DisplayFor(modelItem => item.SpotName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.HiddenSpot)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.GeoSpot)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SpotLeft)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SpotRight)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.c_timer.Name)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-           
-        </td>
-    </tr>
+
+
+}).Filterable().Pageable(pager =>
+{
+    pager.RowsPerPage = 20;
+
+}
+        ).Sortable().Css("table-hover")
+
+@section scripts{
+    <script>
+            //full with screen
+            $("#allcontent").removeClass("body-content");
+            $("#allcontent").removeClass("container");
+    </script>
 }
 
-</table>
+

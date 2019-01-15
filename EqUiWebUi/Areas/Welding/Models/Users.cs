@@ -17,8 +17,8 @@ namespace EqUiWebUi.Areas.Welding.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Users()
         {
-            this.UltralogInspections = new HashSet<UltralogInspections>();
             this.StoringsIngave_new = new HashSet<StoringsIngave_new>();
+            this.UltralogInspections = new HashSet<UltralogInspections>();
         }
     
         public int ID { get; set; }
@@ -28,8 +28,8 @@ namespace EqUiWebUi.Areas.Welding.Models
         public string @object { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UltralogInspections> UltralogInspections { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StoringsIngave_new> StoringsIngave_new { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UltralogInspections> UltralogInspections { get; set; }
     }
 }

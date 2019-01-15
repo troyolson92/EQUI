@@ -2280,9 +2280,7 @@
     <Content Include="Areas\Welding\Views\WeldingGuns\Edit.cshtml" />
     <Content Include="Areas\Welding\Views\WeldingGuns\Index.cshtml" />
     <Content Include="Areas\Welding\Views\Launch\CheckDubbelPrograms.cshtml" />
-    <Content Include="Areas\Welding\Views\UltralogInspections\Create.cshtml" />
     <Content Include="Areas\Welding\Views\UltralogInspections\Delete.cshtml" />
-    <Content Include="Areas\Welding\Views\UltralogInspections\Details.cshtml" />
     <Content Include="Areas\Welding\Views\UltralogInspections\Edit.cshtml" />
     <Content Include="Areas\Welding\Views\UltralogInspections\Index.cshtml" />
     <Content Include="Areas\Welding\Views\HiddenSpot\Details.cshtml" />

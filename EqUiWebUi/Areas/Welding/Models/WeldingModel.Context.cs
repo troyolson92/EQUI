@@ -78,7 +78,6 @@ namespace EqUiWebUi.Areas.Welding.Models
         public virtual DbSet<ComparePitchV316> ComparePitchV316 { get; set; }
         public virtual DbSet<Inspectionplan> Inspectionplan { get; set; }
         public virtual DbSet<UltralogStations> UltralogStations { get; set; }
-        public virtual DbSet<UltralogInspections> UltralogInspections { get; set; }
         public virtual DbSet<SpotIdentMeasurements> SpotIdentMeasurements { get; set; }
         public virtual DbSet<ULplan_end> ULplan_end { get; set; }
         public virtual DbSet<Users> Users { get; set; }
@@ -91,6 +90,7 @@ namespace EqUiWebUi.Areas.Welding.Models
         public virtual DbSet<WeldingGunVariant> WeldingGunVariant { get; set; }
         public virtual DbSet<CheckDubbelPrograms> CheckDubbelPrograms { get; set; }
         public virtual DbSet<ULplan_start> ULplan_start { get; set; }
+        public virtual DbSet<UltralogInspections> UltralogInspections { get; set; }
     
         public virtual ObjectResult<Lastwelds_Result> Lastwelds(string timer, Nullable<int> spot)
         {

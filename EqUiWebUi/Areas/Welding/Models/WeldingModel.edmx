@@ -22,23 +22,9 @@
           <Property Name="SpotBefore" Type="int" />
           <Property Name="SpotAfter" Type="int" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'GADATA.dbo.UltralogInspections' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="UltralogInspections">
           <Key>
             <PropertyRef Name="ID" />
-            <PropertyRef Name="InspectionPlanID" />
-            <PropertyRef Name="SpotID" />
-            <PropertyRef Name="BodyNbr" />
-            <PropertyRef Name="InspectorID" />
-            <PropertyRef Name="InspectionTime" />
-            <PropertyRef Name="IndexOfTestSeq" />
-            <PropertyRef Name="Loose" />
-            <PropertyRef Name="OK" />
-            <PropertyRef Name="SmallNugget" />
-            <PropertyRef Name="StickWeld" />
-            <PropertyRef Name="BadTroughWeld" />
-            <PropertyRef Name="StationID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="InspectionPlanID" Type="int" Nullable="false" />
@@ -639,6 +625,7 @@ warning 6002: The table/view 'GADATA.WELDING2.h_Nut_Bolt_Measure' does not have 
           <Property Name="SpotLeft" Type="int" />
           <Property Name="SpotRight" Type="int" />
           <Property Name="isDead" Type="int" />
+          <Property Name="isDuplicate" Type="int" />
         </EntityType>
         <EntityType Name="rt_user">
           <Key>
@@ -1131,10 +1118,6 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
           <Property Name="BreakdownTime" Type="int" />
           <Property Name="id" Type="int" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'GADATA.WELDING2.WeldfaultCount' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <Association Name="FK__ToDoList___TodoI__32F76870">
           <End Role="ToDoList" Type="Self.ToDoList" Multiplicity="1" />
           <End Role="ToDoList_Remark" Type="Self.ToDoList_Remark" Multiplicity="*" />
@@ -1521,6 +1504,7 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
         </Association>
         <EntityContainer Name="GADATAModelWeldingStoreContainer">
           <EntitySet Name="Inspectionplan" EntityType="Self.Inspectionplan" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UltralogInspections" EntityType="Self.UltralogInspections" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UltralogStations" EntityType="Self.UltralogStations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WeldingGun" EntityType="Self.WeldingGun" Schema="dbo" store:Type="Tables" />
@@ -1557,28 +1541,6 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
           <EntitySet Name="rt_user" EntityType="Self.rt_user" Schema="WELDING2" store:Type="Tables" />
           <EntitySet Name="rt_weldfault" EntityType="Self.rt_weldfault" Schema="WELDING2" store:Type="Tables" />
           <EntitySet Name="rt_weldmeasureprotddw" EntityType="Self.rt_weldmeasureprotddw" Schema="WELDING2" store:Type="Tables" />
-          <EntitySet Name="UltralogInspections" EntityType="Self.UltralogInspections" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [UltralogInspections].[ID] AS [ID], 
-    [UltralogInspections].[InspectionPlanID] AS [InspectionPlanID], 
-    [UltralogInspections].[SpotID] AS [SpotID], 
-    [UltralogInspections].[InspectorComment] AS [InspectorComment], 
-    [UltralogInspections].[BodyNbr] AS [BodyNbr], 
-    [UltralogInspections].[InspectorID] AS [InspectorID], 
-    [UltralogInspections].[InspectionTime] AS [InspectionTime], 
-    [UltralogInspections].[IndexOfTestSeq] AS [IndexOfTestSeq], 
-    [UltralogInspections].[Loose] AS [Loose], 
-    [UltralogInspections].[OK] AS [OK], 
-    [UltralogInspections].[SmallNugget] AS [SmallNugget], 
-    [UltralogInspections].[StickWeld] AS [StickWeld], 
-    [UltralogInspections].[BadTroughWeld] AS [BadTroughWeld], 
-    [UltralogInspections].[StationID] AS [StationID], 
-    [UltralogInspections].[MeasuredThickness] AS [MeasuredThickness], 
-    [UltralogInspections].[MinIdentation] AS [MinIdentation], 
-    [UltralogInspections].[TotalThickness] AS [TotalThickness], 
-    [UltralogInspections].[PlanLenght] AS [PlanLenght]
-    FROM [dbo].[UltralogInspections] AS [UltralogInspections]</DefiningQuery>
-          </EntitySet>
           <EntitySet Name="rt_AutoWorkFlowULPlans" EntityType="Self.rt_AutoWorkFlowULPlans" store:Type="Tables" store:Schema="UL">
             <DefiningQuery>SELECT 
     [rt_AutoWorkFlowULPlans].[ID] AS [ID], 
@@ -2227,22 +2189,9 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
           <EntitySet Name="ComparePitchV316" EntityType="GADATAModelWelding.ComparePitchV316" />
           <EntitySet Name="Inspectionplan" EntityType="GADATAModelWelding.Inspectionplan" />
           <EntitySet Name="UltralogStations" EntityType="GADATAModelWelding.UltralogStations" />
-          <EntitySet Name="UltralogInspections" EntityType="GADATAModelWelding.UltralogInspections" />
           <EntitySet Name="SpotIdentMeasurements" EntityType="GADATAModelWelding.SpotIdentMeasurements" />
           <EntitySet Name="ULplan_end" EntityType="GADATAModelWelding.ULplan_end" />
-          <AssociationSet Name="FK_UltralogInspections_Inspectionplan" Association="GADATAModelWelding.FK_UltralogInspections_Inspectionplan">
-            <End Role="Inspectionplan" EntitySet="Inspectionplan" />
-            <End Role="UltralogInspections" EntitySet="UltralogInspections" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UltralogInspections_UltralogStations" Association="GADATAModelWelding.FK_UltralogInspections_UltralogStations">
-            <End Role="UltralogStations" EntitySet="UltralogStations" />
-            <End Role="UltralogInspections" EntitySet="UltralogInspections" />
-          </AssociationSet>
           <EntitySet Name="Users" EntityType="GADATAModelWelding.Users" />
-          <AssociationSet Name="FK_UltralogInspections_Users" Association="GADATAModelWelding.FK_UltralogInspections_Users">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="UltralogInspections" EntitySet="UltralogInspections" />
-          </AssociationSet>
           <EntitySet Name="StoringName" EntityType="GADATAModelWelding.StoringName" />
           <EntitySet Name="StoringsCause" EntityType="GADATAModelWelding.StoringsCause" />
           <EntitySet Name="StoringsIngave_new" EntityType="GADATAModelWelding.StoringsIngave_new" />
@@ -2268,6 +2217,19 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
           </AssociationSet>
           <EntitySet Name="CheckDubbelPrograms" EntityType="GADATAModelWelding.CheckDubbelPrograms" />
           <EntitySet Name="ULplan_start" EntityType="GADATAModelWelding.ULplan_start" />
+          <EntitySet Name="UltralogInspections" EntityType="GADATAModelWelding.UltralogInspections" />
+          <AssociationSet Name="FK_UltralogInspections_Inspectionplan" Association="GADATAModelWelding.FK_UltralogInspections_Inspectionplan">
+            <End Role="Inspectionplan" EntitySet="Inspectionplan" />
+            <End Role="UltralogInspections" EntitySet="UltralogInspections" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UltralogInspections_UltralogStations" Association="GADATAModelWelding.FK_UltralogInspections_UltralogStations">
+            <End Role="UltralogStations" EntitySet="UltralogStations" />
+            <End Role="UltralogInspections" EntitySet="UltralogInspections" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UltralogInspections_Users" Association="GADATAModelWelding.FK_UltralogInspections_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UltralogInspections" EntitySet="UltralogInspections" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="rt_AutoWorkFlowULPlans">
           <Key>
@@ -3074,6 +3036,7 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
           <Property Name="SpotRight" Type="Int32" />
           <Property Name="isDead" Type="Int32" />
           <NavigationProperty Name="c_timer" Relationship="GADATAModelWelding.FK_rt_spottable_c_timer" FromRole="rt_spottable" ToRole="c_timer" />
+          <Property Name="isDuplicate" Type="Int32" />
         </EntityType>
         <EntityType Name="rt_user">
           <Key>
@@ -3488,44 +3451,6 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
           <NavigationProperty Name="UltralogInspections" Relationship="GADATAModelWelding.FK_UltralogInspections_UltralogStations" FromRole="UltralogStations" ToRole="UltralogInspections" />
         </EntityType>
-        <EntityType Name="UltralogInspections">
-          <Key>
-            <PropertyRef Name="ID" />
-            <PropertyRef Name="InspectionPlanID" />
-            <PropertyRef Name="SpotID" />
-            <PropertyRef Name="BodyNbr" />
-            <PropertyRef Name="InspectorID" />
-            <PropertyRef Name="InspectionTime" />
-            <PropertyRef Name="IndexOfTestSeq" />
-            <PropertyRef Name="Loose" />
-            <PropertyRef Name="OK" />
-            <PropertyRef Name="SmallNugget" />
-            <PropertyRef Name="StickWeld" />
-            <PropertyRef Name="BadTroughWeld" />
-            <PropertyRef Name="StationID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="InspectionPlanID" Type="Int32" Nullable="false" />
-          <Property Name="SpotID" Type="Int32" Nullable="false" />
-          <Property Name="InspectorComment" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
-          <Property Name="BodyNbr" Type="Int32" Nullable="false" />
-          <Property Name="InspectorID" Type="Int32" Nullable="false" />
-          <Property Name="InspectionTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="IndexOfTestSeq" Type="Int32" Nullable="false" />
-          <Property Name="Loose" Type="Boolean" Nullable="false" />
-          <Property Name="OK" Type="Boolean" Nullable="false" />
-          <Property Name="SmallNugget" Type="Boolean" Nullable="false" />
-          <Property Name="StickWeld" Type="Boolean" Nullable="false" />
-          <Property Name="BadTroughWeld" Type="Boolean" Nullable="false" />
-          <Property Name="StationID" Type="Int32" Nullable="false" />
-          <Property Name="MeasuredThickness" Type="Double" />
-          <Property Name="MinIdentation" Type="Double" />
-          <Property Name="TotalThickness" Type="Double" />
-          <Property Name="PlanLenght" Type="Int32" />
-          <NavigationProperty Name="Inspectionplan" Relationship="GADATAModelWelding.FK_UltralogInspections_Inspectionplan" FromRole="UltralogInspections" ToRole="Inspectionplan" />
-          <NavigationProperty Name="UltralogStations" Relationship="GADATAModelWelding.FK_UltralogInspections_UltralogStations" FromRole="UltralogInspections" ToRole="UltralogStations" />
-          <NavigationProperty Name="Users" Relationship="GADATAModelWelding.FK_UltralogInspections_Users" FromRole="UltralogInspections" ToRole="Users" />
-        </EntityType>
         <EntityType Name="SpotIdentMeasurements">
           <Key>
             <PropertyRef Name="timestamp" />
@@ -3550,30 +3475,6 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
           <Property Name="BuildBody" Type="Int32" />
           <Property Name="starttimePlan" Type="DateTime" Precision="3" />
         </EntityType>
-        <Association Name="FK_UltralogInspections_Inspectionplan">
-          <End Type="GADATAModelWelding.Inspectionplan" Role="Inspectionplan" Multiplicity="1" />
-          <End Type="GADATAModelWelding.UltralogInspections" Role="UltralogInspections" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Inspectionplan">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="UltralogInspections">
-              <PropertyRef Name="InspectionPlanID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UltralogInspections_UltralogStations">
-          <End Type="GADATAModelWelding.UltralogStations" Role="UltralogStations" Multiplicity="1" />
-          <End Type="GADATAModelWelding.UltralogInspections" Role="UltralogInspections" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UltralogStations">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="UltralogInspections">
-              <PropertyRef Name="StationID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="Users">
           <Key>
             <PropertyRef Name="ID" />
@@ -3583,21 +3484,9 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
           <Property Name="Voornaam" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
           <Property Name="Achternaam" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
           <Property Name="object" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <NavigationProperty Name="UltralogInspections" Relationship="GADATAModelWelding.FK_UltralogInspections_Users" FromRole="Users" ToRole="UltralogInspections" />
           <NavigationProperty Name="StoringsIngave_new" Relationship="GADATAModelWelding.FK_StoringsIngave_new_Users1" FromRole="Users" ToRole="StoringsIngave_new" />
+          <NavigationProperty Name="UltralogInspections" Relationship="GADATAModelWelding.FK_UltralogInspections_Users" FromRole="Users" ToRole="UltralogInspections" />
         </EntityType>
-        <Association Name="FK_UltralogInspections_Users">
-          <End Type="GADATAModelWelding.Users" Role="Users" Multiplicity="1" />
-          <End Type="GADATAModelWelding.UltralogInspections" Role="UltralogInspections" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="UltralogInspections">
-              <PropertyRef Name="InspectorID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="StoringName">
           <Key>
             <PropertyRef Name="id" />
@@ -3805,6 +3694,68 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
           <Property Name="bodynr" Type="Int32" />
           <Property Name="plancounter" Type="Int32" />
         </EntityType>
+        <EntityType Name="UltralogInspections">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="InspectionPlanID" Type="Int32" Nullable="false" />
+          <Property Name="SpotID" Type="Int32" Nullable="false" />
+          <Property Name="InspectorComment" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="BodyNbr" Type="Int32" Nullable="false" />
+          <Property Name="InspectorID" Type="Int32" Nullable="false" />
+          <Property Name="InspectionTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IndexOfTestSeq" Type="Int32" Nullable="false" />
+          <Property Name="Loose" Type="Boolean" Nullable="false" />
+          <Property Name="OK" Type="Boolean" Nullable="false" />
+          <Property Name="SmallNugget" Type="Boolean" Nullable="false" />
+          <Property Name="StickWeld" Type="Boolean" Nullable="false" />
+          <Property Name="BadTroughWeld" Type="Boolean" Nullable="false" />
+          <Property Name="StationID" Type="Int32" Nullable="false" />
+          <Property Name="MeasuredThickness" Type="Double" />
+          <Property Name="MinIdentation" Type="Double" />
+          <Property Name="TotalThickness" Type="Double" />
+          <Property Name="PlanLenght" Type="Int32" />
+          <NavigationProperty Name="Inspectionplan" Relationship="GADATAModelWelding.FK_UltralogInspections_Inspectionplan" FromRole="UltralogInspections" ToRole="Inspectionplan" />
+          <NavigationProperty Name="UltralogStations" Relationship="GADATAModelWelding.FK_UltralogInspections_UltralogStations" FromRole="UltralogInspections" ToRole="UltralogStations" />
+          <NavigationProperty Name="Users" Relationship="GADATAModelWelding.FK_UltralogInspections_Users" FromRole="UltralogInspections" ToRole="Users" />
+        </EntityType>
+        <Association Name="FK_UltralogInspections_Inspectionplan">
+          <End Type="GADATAModelWelding.Inspectionplan" Role="Inspectionplan" Multiplicity="1" />
+          <End Type="GADATAModelWelding.UltralogInspections" Role="UltralogInspections" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Inspectionplan">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UltralogInspections">
+              <PropertyRef Name="InspectionPlanID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UltralogInspections_UltralogStations">
+          <End Type="GADATAModelWelding.UltralogStations" Role="UltralogStations" Multiplicity="1" />
+          <End Type="GADATAModelWelding.UltralogInspections" Role="UltralogInspections" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UltralogStations">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UltralogInspections">
+              <PropertyRef Name="StationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UltralogInspections_Users">
+          <End Type="GADATAModelWelding.Users" Role="Users" Multiplicity="1" />
+          <End Type="GADATAModelWelding.UltralogInspections" Role="UltralogInspections" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UltralogInspections">
+              <PropertyRef Name="InspectorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4464,6 +4415,7 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
           <EntitySetMapping Name="rt_spottable">
             <EntityTypeMapping TypeName="GADATAModelWelding.rt_spottable">
               <MappingFragment StoreEntitySet="rt_spottable">
+                <ScalarProperty Name="isDuplicate" ColumnName="isDuplicate" />
                 <ScalarProperty Name="isDead" ColumnName="isDead" />
                 <ScalarProperty Name="SpotRight" ColumnName="SpotRight" />
                 <ScalarProperty Name="SpotLeft" ColumnName="SpotLeft" />
@@ -4685,30 +4637,6 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="UltralogInspections">
-            <EntityTypeMapping TypeName="GADATAModelWelding.UltralogInspections">
-              <MappingFragment StoreEntitySet="UltralogInspections">
-                <ScalarProperty Name="PlanLenght" ColumnName="PlanLenght" />
-                <ScalarProperty Name="TotalThickness" ColumnName="TotalThickness" />
-                <ScalarProperty Name="MinIdentation" ColumnName="MinIdentation" />
-                <ScalarProperty Name="MeasuredThickness" ColumnName="MeasuredThickness" />
-                <ScalarProperty Name="StationID" ColumnName="StationID" />
-                <ScalarProperty Name="BadTroughWeld" ColumnName="BadTroughWeld" />
-                <ScalarProperty Name="StickWeld" ColumnName="StickWeld" />
-                <ScalarProperty Name="SmallNugget" ColumnName="SmallNugget" />
-                <ScalarProperty Name="OK" ColumnName="OK" />
-                <ScalarProperty Name="Loose" ColumnName="Loose" />
-                <ScalarProperty Name="IndexOfTestSeq" ColumnName="IndexOfTestSeq" />
-                <ScalarProperty Name="InspectionTime" ColumnName="InspectionTime" />
-                <ScalarProperty Name="InspectorID" ColumnName="InspectorID" />
-                <ScalarProperty Name="BodyNbr" ColumnName="BodyNbr" />
-                <ScalarProperty Name="InspectorComment" ColumnName="InspectorComment" />
-                <ScalarProperty Name="SpotID" ColumnName="SpotID" />
-                <ScalarProperty Name="InspectionPlanID" ColumnName="InspectionPlanID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="SpotIdentMeasurements">
             <EntityTypeMapping TypeName="GADATAModelWelding.SpotIdentMeasurements">
               <MappingFragment StoreEntitySet="SpotIdentMeasurements">
@@ -4894,6 +4822,30 @@ warning 6002: The table/view 'GADATA.WELDING2.WeldFaultProtocol' does not have a
                 <ScalarProperty Name="lastplannumber" ColumnName="lastplannumber" />
                 <ScalarProperty Name="planid" ColumnName="planid" />
                 <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UltralogInspections">
+            <EntityTypeMapping TypeName="GADATAModelWelding.UltralogInspections">
+              <MappingFragment StoreEntitySet="UltralogInspections">
+                <ScalarProperty Name="PlanLenght" ColumnName="PlanLenght" />
+                <ScalarProperty Name="TotalThickness" ColumnName="TotalThickness" />
+                <ScalarProperty Name="MinIdentation" ColumnName="MinIdentation" />
+                <ScalarProperty Name="MeasuredThickness" ColumnName="MeasuredThickness" />
+                <ScalarProperty Name="StationID" ColumnName="StationID" />
+                <ScalarProperty Name="BadTroughWeld" ColumnName="BadTroughWeld" />
+                <ScalarProperty Name="StickWeld" ColumnName="StickWeld" />
+                <ScalarProperty Name="SmallNugget" ColumnName="SmallNugget" />
+                <ScalarProperty Name="OK" ColumnName="OK" />
+                <ScalarProperty Name="Loose" ColumnName="Loose" />
+                <ScalarProperty Name="IndexOfTestSeq" ColumnName="IndexOfTestSeq" />
+                <ScalarProperty Name="InspectionTime" ColumnName="InspectionTime" />
+                <ScalarProperty Name="InspectorID" ColumnName="InspectorID" />
+                <ScalarProperty Name="BodyNbr" ColumnName="BodyNbr" />
+                <ScalarProperty Name="InspectorComment" ColumnName="InspectorComment" />
+                <ScalarProperty Name="SpotID" ColumnName="SpotID" />
+                <ScalarProperty Name="InspectionPlanID" ColumnName="InspectionPlanID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

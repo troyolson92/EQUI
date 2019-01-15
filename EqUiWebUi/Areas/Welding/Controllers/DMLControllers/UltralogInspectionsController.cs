@@ -25,49 +25,6 @@ namespace EqUiWebUi.Areas.Welding.Controllers.DMLControllers
             return View(ultralogInspections);
         }
 
-        // GET: Welding/UltralogInspections/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            UltralogInspections ultralogInspections = db.UltralogInspections.Find(id);
-            if (ultralogInspections == null)
-            {
-                return HttpNotFound();
-            }
-            return View(ultralogInspections);
-        }
-
-        // GET: Welding/UltralogInspections/Create
-        public ActionResult Create()
-        {
-            ViewBag.InspectionPlanID = new SelectList(db.Inspectionplan, "ID", "Name");
-            ViewBag.StationID = new SelectList(db.UltralogStations, "ID", "Name");
-            ViewBag.InspectorID = new SelectList(db.Users, "ID", "CDSID");
-            return View();
-        }
-
-        // POST: Welding/UltralogInspections/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,InspectionPlanID,SpotID,InspectorComment,BodyNbr,InspectorID,InspectionTime,IndexOfTestSeq,Loose,OK,SmallNugget,StickWeld,BadTroughWeld,StationID,MeasuredThickness,MinIdentation,TotalThickness,PlanLenght")] UltralogInspections ultralogInspections)
-        {
-            if (ModelState.IsValid)
-            {
-                db.UltralogInspections.Add(ultralogInspections);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            ViewBag.InspectionPlanID = new SelectList(db.Inspectionplan, "ID", "Name", ultralogInspections.InspectionPlanID);
-            ViewBag.StationID = new SelectList(db.UltralogStations, "ID", "Name", ultralogInspections.StationID);
-            ViewBag.InspectorID = new SelectList(db.Users, "ID", "CDSID", ultralogInspections.InspectorID);
-            return View(ultralogInspections);
-        }
 
         // GET: Welding/UltralogInspections/Edit/5
         public ActionResult Edit(int? id)

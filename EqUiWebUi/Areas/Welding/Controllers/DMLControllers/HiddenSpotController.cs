@@ -17,7 +17,8 @@ namespace EqUiWebUi.Areas.Welding.Controllers.DMLControllers
         // GET: Welding/HiddenSpot
         public ActionResult Index()
         {
-            var rt_spottable = db.rt_spottable.Include(r => r.c_timer).Where(r => r.c_timer.enable_bit != -1 && r.weldProgNo < 237);
+            var rt_spottable = db.rt_spottable.Include(r => r.c_timer).Where(r => r.c_timer.enable_bit != -1 && r.weldProgNo < 237 && r.c_timer.Name != "dummy" &&
+            r.c_timer.Name != "test" && r.c_timer.Name != "DannyBoy");
             return View(rt_spottable.ToList());
         }
 
