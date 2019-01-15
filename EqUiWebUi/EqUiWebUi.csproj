@@ -1127,7 +1127,6 @@
     <Content Include="Areas\Maximo_ui\Views\WorkorderDetails\_woDetails.cshtml" />
     <Content Include="Areas\Maximo_ui\Views\WorkorderDetails\Index.cshtml" />
     <Content Include="Areas\Maximo_ui\Views\Maximo\Index.cshtml" />
-    <Content Include="Areas\Maximo_ui\Views\Workorder\ExampleCall_workordersOnLocation.cshtml" />
     <Content Include="Areas\PlcSupervisie\Views\web.config" />
     <Content Include="Areas\PlcSupervisie\Views\_ViewStart.cshtml" />
     <Content Include="Areas\user_management\Views\UserScreens\Create.cshtml" />

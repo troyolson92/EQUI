@@ -63,8 +63,6 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
             ViewBag.loadOnInit = loadOnInit;
             //if this is set we hide navbar and render in full screen mode
             ViewBag.fullscreen = fullscreen;
-            //if this is set we run on the production server.
-            workorderSelectOptions.realtimeConn = RealtimeConn;
             //
             return View(workorderSelectOptions);
         }
@@ -72,7 +70,7 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
         //can be called to be renders as partial in model or something like that...
         [HttpGet]
         public ActionResult _workordersOnLocation(string location, string locancestor, bool? b_ciblings, bool? b_preventive, string jpnum, string worktype, string wonum, string status, string ownergroup
-            , DateTime? startdate, DateTime? enddate, bool RealtimeConn = true)
+            , DateTime? startdate, DateTime? enddate)
         {
             Models.WorkorderSelectOptions workorderSelectOptions = new WorkorderSelectOptions();
             //set models to parms
@@ -87,7 +85,6 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
             workorderSelectOptions.ownergroup = ownergroup;
             workorderSelectOptions.startdate = startdate.GetValueOrDefault(System.DateTime.Now.AddDays(MaximoWorkordersDaysback));
             workorderSelectOptions.enddate = enddate.GetValueOrDefault(System.DateTime.Now);
-            workorderSelectOptions.realtimeConn = RealtimeConn;
             //
             return PartialView(workorderSelectOptions);
         }
@@ -99,27 +96,14 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
             return PartialView(workorderSelectOptions);
         }
 
-        //Test render _workordersOnLocation (example of how to call it as a partial)
-        [HttpGet]
-        public ActionResult ExampleCall_workordersOnLocation()
-        {
-            return View();
-        }
-
         //gets called by AJAX to render the workorder grid
         [HttpGet]
         public async Task<ActionResult> _workordersOnLocationGrid(string location, string locancestor, bool? b_ciblings, bool? b_preventive, string jpnum, string worktype, string wonum, string status, string ownergroup
-            , DateTime? startdate, DateTime? enddate, bool RealtimeConn = false)
+            , DateTime? startdate, DateTime? enddate)
         {
             //check if user is allowed to user realtimeConn
-            string MaximoDbName = "MAXIMO7rep";
+            string MaximoDbName = "MAXIMOrt";
             int CommandTimeout = 30;
-            if (RealtimeConn)
-            {
-                MaximoDbName = "MAXIMOrt";
-                CommandTimeout = 5;
-            }
-
             //build query
             StringBuilder sbqry = new StringBuilder();
             sbqry.AppendLine(string.Format(@"
@@ -210,7 +194,6 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
                 workorders.Add(workorder);
             }
             //
-            ViewBag.RealtimeConn = RealtimeConn;
             return PartialView(workorders);
         }
 
