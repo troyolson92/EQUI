@@ -2,93 +2,47 @@
 
 @{
     ViewBag.Title = "Index";
- 
+
 }
 
+<h2>change plan busy data</h2>
 
-<!DOCTYPE html>
+@Html.Grid(Model).Named("ULplan_start").Build(columns =>
+{
+    columns.Add(c => c.id).Titled("id").Css("bolded");
+    columns.Add(c => c.Startinspectiontime).Titled("inspectionplan").Css("bolded").InitialSort(GridSortOrder.Desc); ;
+    columns.Add(c => c.planid).Titled("planid");
+    columns.Add(c => c.lastplannumber).Titled("lastplannumber");
+    columns.Add(c => c.planlenght).Titled("planlenght");
+    columns.Add(c => c.Worklocation).Titled("worklocation");
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
-</head>
-<body>
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.planid)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.lastplannumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Startinspectiontime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.planlenght)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.inspectorid)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StationId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Worklocation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.bodynr)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.plancounter)
-            </th>
-            <th></th>
-        </tr>
+    //tools
+    columns.Add(c => c)
+                        .Titled("")
+                        .Encoded(false)
+                        .RenderedAs(c =>
 
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.planid)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.lastplannumber)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Startinspectiontime)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.planlenght)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.inspectorid)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.StationId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Worklocation)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.bodynr)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.plancounter)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.id })
-                </td>
-            </tr>
-        }
+                        MyHtmlHelpers.IconActionLink(Url.Action("Edit", new { id = c.id }), "fas fa-pencil-alt", "", "Edit this spot").ToHtmlString() +
+                        MyHtmlHelpers.IconActionLink(Url.Action("Delete", new { id = c.id }), "fas fa-trash-alt text-danger", "", "Delete").ToHtmlString() 
+                            
 
-    </table>
-</body>
+                        ).Filterable(false);
 
 
-</html>
+
+}).Filterable().Pageable(pager =>
+{
+    pager.RowsPerPage = 20;
+
+}
+        ).Sortable().Css("table-hover")
+
+@section scripts{
+    <script>
+        //full with screen
+        $("#allcontent").removeClass("body-content");
+        $("#allcontent").removeClass("container");
+    </script>
+
+}
+

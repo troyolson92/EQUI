@@ -31,6 +31,7 @@ namespace EqUiWebUi.Areas.Welding.Models
         public string errorCode2_txt { get; set; }
         public Nullable<bool> isError { get; set; }
         public string isError_txt { get; set; }
+        public string comment { get; set; }
     
         public virtual c_timer c_timer { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -1,0 +1,52 @@
+﻿@model IEnumerable<EqUiWebUi.Areas.Welding.Models.UltralogInspections>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>change ultralogData if needed from the last 24 hours</h2>
+
+@Html.Grid(Model).Named("UltralogInspections").Build(columns =>
+{
+    columns.Add(c => c.ID).Titled("id");
+    columns.Add(c => c.InspectionTime).Titled("inspectiontime").Css("bolded").InitialSort(GridSortOrder.Desc); 
+    columns.Add(c => c.Inspectionplan.Name).Titled("plan");
+    columns.Add(c => c.IndexOfTestSeq).Titled("plannumber");
+    columns.Add(c => c.PlanLenght).Titled("planlenght");
+    columns.Add(c => c.Users.CDSID).Titled("inspector");
+    columns.Add(c => c.InspectorComment).Titled("comment");
+    columns.Add(c => c.OK).Titled("okspot");
+    columns.Add(c => c.Loose).Titled("loose");
+    columns.Add(c => c.SmallNugget).Titled("smallnugget");
+    columns.Add(c => c.StickWeld).Titled("stickweld");
+    columns.Add(c => c.BadTroughWeld).Titled("BadTroughWeld");
+
+    //tools
+    columns.Add(c => c)
+                        .Titled("")
+                        .Encoded(false)
+                        .RenderedAs(c =>
+
+                        MyHtmlHelpers.IconActionLink(Url.Action("Edit", new { id = c.ID }), "fas fa-pencil-alt", "", "Edit this spot").ToHtmlString() +
+                        MyHtmlHelpers.IconActionLink(Url.Action("Delete", new { id = c.ID }), "fas fa-trash-alt text-danger", "", "Delete").ToHtmlString()
+
+
+                        ).Filterable(false);
+
+
+
+}).Filterable().Pageable(pager =>
+{
+    pager.RowsPerPage = 20;
+
+}
+        ).Sortable().Css("table-hover")
+
+@section scripts{
+    <script>
+        //full with screen
+        $("#allcontent").removeClass("body-content");
+        $("#allcontent").removeClass("container");
+    </script>
+
+}

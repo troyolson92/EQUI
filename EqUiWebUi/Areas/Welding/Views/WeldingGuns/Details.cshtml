@@ -1,0 +1,58 @@
+﻿@model EqUiWebUi.Areas.Welding.Models.WeldingGun
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>WeldingGun</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ElectrodeNbr)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ElectrodeNbr)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TimerID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TimerID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RobotType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RobotType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.WeldingGunVariant.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WeldingGunVariant.Name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

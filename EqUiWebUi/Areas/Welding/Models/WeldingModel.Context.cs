@@ -29,7 +29,6 @@ namespace EqUiWebUi.Areas.Welding.Models
     
         public virtual DbSet<rt_AutoWorkFlowULPlans> rt_AutoWorkFlowULPlans { get; set; }
         public virtual DbSet<ULRapportering> ULRapporterings { get; set; }
-        public virtual DbSet<CheckDubbelPrograms> CheckDubbelPrograms { get; set; }
         public virtual DbSet<BosProgramAvailable> BosProgramAvailable { get; set; }
         public virtual DbSet<dressrequired> dressrequired { get; set; }
         public virtual DbSet<WeldtimeSpotsSetup> WeldtimeSpotsSetup { get; set; }
@@ -41,8 +40,6 @@ namespace EqUiWebUi.Areas.Welding.Models
         public virtual DbSet<TDTResults> TDTResults { get; set; }
         public virtual DbSet<ToDoList> ToDoList { get; set; }
         public virtual DbSet<ToDoList_Remark> ToDoList_Remark { get; set; }
-        public virtual DbSet<WeldFaultProtocol> WeldFaultProtocol { get; set; }
-        public virtual DbSet<WeldfaultCount> WeldfaultCount { get; set; }
         public virtual DbSet<AutomaticPlanControleWeldBolt> AutomaticPlanControleWeldBolt { get; set; }
         public virtual DbSet<c_faultcode> c_faultcode { get; set; }
         public virtual DbSet<c_Job> c_Job { get; set; }
@@ -81,16 +78,19 @@ namespace EqUiWebUi.Areas.Welding.Models
         public virtual DbSet<ComparePitchV316> ComparePitchV316 { get; set; }
         public virtual DbSet<Inspectionplan> Inspectionplan { get; set; }
         public virtual DbSet<UltralogStations> UltralogStations { get; set; }
-        public virtual DbSet<UltralogInspections> UltralogInspections { get; set; }
         public virtual DbSet<SpotIdentMeasurements> SpotIdentMeasurements { get; set; }
         public virtual DbSet<ULplan_end> ULplan_end { get; set; }
-        public virtual DbSet<ULplan_start> ULplan_start { get; set; }
         public virtual DbSet<Users> Users { get; set; }
         public virtual DbSet<StoringName> StoringName { get; set; }
         public virtual DbSet<StoringsCause> StoringsCause { get; set; }
         public virtual DbSet<StoringsIngave_new> StoringsIngave_new { get; set; }
         public virtual DbSet<TimerBreakdowns_WMActions> TimerBreakdowns_WMActions { get; set; }
         public virtual DbSet<ParameterOptimalisation> ParameterOptimalisation { get; set; }
+        public virtual DbSet<WeldingGun> WeldingGun { get; set; }
+        public virtual DbSet<WeldingGunVariant> WeldingGunVariant { get; set; }
+        public virtual DbSet<CheckDubbelPrograms> CheckDubbelPrograms { get; set; }
+        public virtual DbSet<ULplan_start> ULplan_start { get; set; }
+        public virtual DbSet<UltralogInspections> UltralogInspections { get; set; }
     
         public virtual ObjectResult<Lastwelds_Result> Lastwelds(string timer, Nullable<int> spot)
         {
