@@ -45,7 +45,7 @@
                 $('#MyModal').load('@Url.Action("_Tipinfo","NgacElectrode")', { location: encodeURIComponent(data["robot"]), tool_nr : encodeURIComponent(data["tool_-nr"])}, function (result) { });
             },
             reloadEnded: function () {
-                $('[data-toggle="popover"]').tooltip();
+                 EnableInterfaceEvents();
             },
             reloadFailed: function (result) {
                 $('[data-name="TipStatusGrid"]').html($("#Error", result.responseText).html());
@@ -63,9 +63,6 @@
                 }).responseText;
             }
         });
-
-        //enable tooltips
-        $('[data-toggle="popover"]').tooltip();
 
         //on modal close
         $('#MyModal').on('hidden.bs.modal', function (e) {

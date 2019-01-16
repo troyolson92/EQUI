@@ -26,6 +26,9 @@ namespace EqUiWebUi
                          "~/Scripts/MyScripts/Interface.js",
 
                          "~/Scripts/MvcGrid/mvc-grid.js", //https://github.com/NonFactors/MVC5.Grid
+                         "~/node_modules/tablesaw/dist/tablesaw.jquery.js", //https://github.com/filamentgroup/tablesaw
+                         "~/node_modules/tablesaw/dist/tablesaw-init.js",
+
                          "~/Scripts/printThis.js", //https://github.com/jasonday/printThis
                          "~/Scripts/jquery.toaster.js" //https://github.com/scottoffen/jquery.toaster/wiki
             ));
@@ -41,6 +44,8 @@ namespace EqUiWebUi
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/Bootstrap.css",
                       "~/Content/MvcGrid/mvc-grid.css", //style for mvc grids
+                      "~/node_modules/tablesaw/dist/tablesaw.css", //for tablesaw
+
                       "~/node_modules/daterangepicker/daterangepicker.css", //style for date range pickers
                       "~/Content/fontawesome-all.css",  //for or icons https://fontawesome.com
 

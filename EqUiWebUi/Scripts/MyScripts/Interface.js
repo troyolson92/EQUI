@@ -146,8 +146,21 @@ function EnableInterfaceEvents() {
         });
     });
 
-    //subscrible renderd grids to events
+    //table event init
     $('.mvc-grid').mvcgrid();
+    //add table saw
+    console.log('init');
+    //enable overflow
+    $('.mvc-grid').addClass("tablesaw-overflow");
+    //enable select box and minimap
+    $('.mvc-grid > table').attr("data-tablesaw-mode", "columntoggle");
+    $('.mvc-grid > table').attr("data-tablesaw-minimap", "");
+    //this must be on all table thead 
+    $('.mvc-grid > table > thead > tr > th').attr("scope", "col");
+    //set all by default to prio 1 (must be done to make tool populate)
+    $('.mvc-grid > table > thead > tr > th').attr("data-tablesaw-priority", "1"); //i think we can not just set all to 1 we need unique id's
+    //init
+    Tablesaw.init();
 }
 
 

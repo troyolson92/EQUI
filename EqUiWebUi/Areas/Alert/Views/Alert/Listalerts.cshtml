@@ -31,10 +31,9 @@
             <h6>This location has @ViewBag.AlertCount alerts in his history</h6>
         </div>
     }
-
     @Html.Grid(Model).Named("h_alert").Build(columns =>
     {
-        columns.Add(c => c.id).Titled("id").Css("d-none");
+        columns.Add(c => c.id).Titled("id").Css("tablesaw-toggle-cellhidden"); //do not use d-none to hide by default but this 
         columns.Add(c => c.c_triggers.alertGroup).Titled("Group").Filterable(true);
         columns.Add(c => c.c_triggers.alertType).Titled("Type").Filterable(true);
         columns.Add(c => c.location).Titled("location").Filterable(true).MultiFilterable(true);
@@ -45,7 +44,7 @@
         columns.Add(c => "<p id=" + c.id + " class='setalertState btn btn-primary'>" + c.c_state.state).Encoded(false).Titled("State").Filterable(true);
         //tools
         columns.Add(c => c)
-                            .Titled("")
+                            .Titled("Tools")
                             .Encoded(false)
                             .RenderedAs(c =>
                             MyHtmlHelpers.IconActionLink(Url.Action("Listalerts", new { Location = c.location }), "fas fa-filter", "", "Filter alerts for this location").ToHtmlString() +     //add filterbutton
@@ -58,6 +57,7 @@
         pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 20, "20" }, { 40, "40" }, { 80, "80" }, { 100, "100" } };
         pager.ShowPageSizes = true;
     }).Empty("Did not find anything").Css("table-hover").RowCss(row => EqUiWebUi.Areas.Alert.AlertHelpers.getRowStyleStatus(row.c_state.state))
+
 </div>
 
 @section scripts{
@@ -97,17 +97,20 @@
                     });
             },
             reloadEnded: function () {
-                $('[data-toggle="popover"]').tooltip();
+                EnableInterfaceEvents();
             }
         });
+
+
+
+        //test to make a col persist table saw table!
+        $('[data-name="h_alert"] > table > thead > tr > th:contains("timestamp")').attr("data-tablesaw-priority", "persist");
+        $('[data-name="h_alert"] > table > thead > tr > th:contains("location")').attr("data-tablesaw-priority", "persist");
 
         //simulate click on first row so that the details load automatic IF ROWCOUNT == 1
         if ($('[data-name="h_alert"]>table>tbody>tr').length == 1) {
             $('[data-name="h_alert"]>table>tbody>tr>td:first').trigger('click');
         }
-
-        //enable tooltips
-        $('[data-toggle="popover"]').tooltip();
 
         //handle in-line set state
         $('.setalertState').editable('@Url.Action("SetState")', {

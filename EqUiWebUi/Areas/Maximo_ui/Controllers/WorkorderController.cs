@@ -33,7 +33,7 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
 
 
         //form post work Workoders main view.
-        [HttpPost]
+      
         public ActionResult _workordersOnLocation(Models.WorkorderSelectOptions workorderSelectOptions)
         {
             return PartialView(workorderSelectOptions);
