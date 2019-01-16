@@ -40,7 +40,7 @@ namespace EqUiWebUi.Areas.user_management.Controllers
         [Authorize(Roles = "Administrator")]
         public ActionResult Create()
         {
-            return View();
+            return View(new c_areas());
         }
 
         // POST: user_management/AreaFilters/Create

@@ -166,7 +166,7 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
             }
             else //show all (enabled timers)
             {
-                ViewBag.Locations = new SelectList(db.c_timer.Where( c => c.enable_bit != -1).OrderBy(c => c.Name), "Robot", "Robot");
+                ViewBag.Locations = new SelectList(db.c_timer.Where( c => c.enable_bit != -1 && c.Robot != "unknown").OrderBy(c => c.Name), "Robot", "Robot");
             }
 
             //pass tool_nr select list 
