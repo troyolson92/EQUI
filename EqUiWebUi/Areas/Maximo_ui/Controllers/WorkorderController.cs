@@ -103,7 +103,7 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
             }
 
             //add sort 
-            sbqry.Append("ORDER BY WORKORDER.STATUSDATE DESC");
+            sbqry.Append("ORDER BY WORKORDER.REPORTDATE DESC");
             //****************************************************************************************************************
             string TEST = sbqry.ToString();
             ViewBag.Qry = sbqry.ToString();
