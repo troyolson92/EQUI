@@ -85,17 +85,7 @@ namespace EqUiWebUi.Areas.Welding.Controllers
             return View();
 
         }
-        public ActionResult _WeldFaultCount()
-        {
-            IQueryable<WeldfaultCount> data = db.WeldfaultCount.AsQueryable();
-
-            var query1 = from x in db.WeldfaultCount
-                         orderby x.countofTimerFaults descending
-
-                         select x;
-
-            return PartialView(data);
-        }
+ 
 
         /// <param name="bShowUnfinishedJobs"></param>
         /// <returns></returns>
@@ -150,6 +140,17 @@ namespace EqUiWebUi.Areas.Welding.Controllers
             IQueryable<rt_datachangeprot> data = db.rt_datachangeprot.Where(c => c.c_user.id == c.c_user_id && c.timerId == c.c_timer.ID).AsQueryable();
             return View(data);
         }
+
+        public ActionResult _Parameters()
+        {
+
+            IQueryable<ParameterOptimalisation> data = db.ParameterOptimalisation.AsQueryable();
+            return View(data);
+        }
+
+
+
+
 
         //test met proc oproepen zonder view 
         public JsonResult TestProc(int id)

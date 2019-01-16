@@ -23,5 +23,8 @@ namespace EqUiWebUi.Areas.Welding.Models
         public Nullable<short> EnergyActual { get; set; }
         public Nullable<short> WeldTimeActual { get; set; }
         public Nullable<float> Iactual2 { get; set; }
+        public Nullable<float> UpperTolBand { get; set; }
+        public Nullable<float> LowerTolBand { get; set; }
+        public Nullable<float> LowerCondBand { get; set; }
     }
 }

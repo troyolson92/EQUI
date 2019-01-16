@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
@@ -186,7 +186,6 @@
     <Folder Include="Areas\VCSC\Models\" />
     <Folder Include="Areas\VCSC\Views\Shared\" />
     <Folder Include="Areas\VWSC\Views\Shared\" />
-    <Folder Include="Areas\Welding\Views\ARO\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -670,8 +669,11 @@
     <Compile Include="Areas\VWSC\Models\winService.cs" />
     <Compile Include="Areas\VWSC\VWSCAreaRegistration.cs" />
     <Compile Include="Areas\Welding\Controllers\AROController.cs" />
+    <Compile Include="Areas\Welding\Controllers\DMLControllers\HiddenSpotController.cs" />
     <Compile Include="Areas\Welding\Controllers\DMLControllers\StoringsIngaveController.cs" />
     <Compile Include="Areas\Welding\Controllers\DMLControllers\ULplan_startController.cs" />
+    <Compile Include="Areas\Welding\Controllers\DMLControllers\UltralogInspectionsController.cs" />
+    <Compile Include="Areas\Welding\Controllers\DMLControllers\WeldingGunsController.cs" />
     <Compile Include="Areas\Welding\Controllers\LaunchController.cs" />
     <Compile Include="Areas\Welding\Controllers\QteamController.cs" />
     <Compile Include="Areas\Welding\Controllers\SpatterController.cs" />
@@ -681,7 +683,6 @@
     <Compile Include="Areas\Welding\Controllers\UltralogController.cs" />
     <Compile Include="Areas\Welding\Controllers\UpdateController.cs" />
     <Compile Include="Areas\Welding\Controllers\WMController.cs" />
-    <Compile Include="Areas\Welding\Controllers\DMLControllers\editController.cs" />
     <Compile Include="Areas\Welding\Controllers\DMLControllers\InspectionplansController.cs" />
     <Compile Include="Areas\Welding\Models\ActualSpatter_.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
@@ -765,6 +766,9 @@
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Welding\Models\L_operation.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Welding\Models\ParameterOptimalisation.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Welding\Models\QISViewer.cs">
@@ -867,10 +871,10 @@
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Welding\Models\UltralogData.cs" />
-    <Compile Include="Areas\Welding\Models\WeldfaultCount.cs">
+    <Compile Include="Areas\Welding\Models\WeldingGun.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Areas\Welding\Models\WeldFaultProtocol.cs">
+    <Compile Include="Areas\Welding\Models\WeldingGunVariant.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Welding\Models\WeldingModel.Context.cs">
@@ -2116,7 +2120,6 @@
     <Content Include="Areas\VWSC\Views\vwsc\_weldFault.cshtml" />
     <Content Include="Areas\VWSC\Views\vwsc\_jobBreakdown.cshtml" />
     <Content Include="Areas\Welding\Views\Launch\BosProgramAvailable.cshtml" />
-    <Content Include="Areas\Welding\Views\Launch\CheckDubbelPrograms.cshtml" />
     <Content Include="Areas\Welding\Views\Launch\dressrequired.cshtml" />
     <Content Include="Areas\Welding\Views\Launch\Index.cshtml" />
     <Content Include="Areas\Welding\Views\Launch\StabilityInDicationV316.cshtml" />
@@ -2128,7 +2131,6 @@
     <Content Include="Areas\Welding\Views\WM\Index.cshtml" />
     <Content Include="Areas\Welding\Views\WM\Launch.cshtml" />
     <Content Include="Areas\Welding\Views\Launch\Index.cshtml" />
-    <Content Include="Areas\Welding\Views\Launch\CheckDubbelPrograms.cshtml" />
     <Content Include="Areas\Welding\Views\Launch\BosProgramAvailable.cshtml" />
     <Content Include="Areas\Welding\Views\Launch\dressrequired.cshtml" />
     <Content Include="Areas\Welding\Views\Launch\WeldtimeSpotsSetup.cshtml" />
@@ -2177,7 +2179,6 @@
     <Content Include="Areas\VASC\Views\Breakdown\GetJobs.cshtml" />
     <Content Include="Areas\VASC\Views\Breakdown\_getJobs.cshtml" />
     <Content Include="Areas\Welding\Views\WM\_rt_alarm.cshtml" />
-    <Content Include="Areas\Welding\Views\WM\_WeldFaultCount.cshtml" />
     <Content Include="Areas\Welding\Views\WM\WeldfaultIndex.cshtml" />
     <Content Include="Areas\Welding\Views\TeardownTeam\_startTeardown.cshtml" />
     <Content Include="Areas\Welding\Views\Qteam\_WeldBoltPlans.cshtml" />
@@ -2187,12 +2188,9 @@
     <Content Include="Areas\Welding\Views\WM\_alarmdetails.cshtml" />
     <Content Include="Areas\Welding\Views\WM\_jobBreakdown1.cshtml" />
     <Content Include="Areas\Welding\Views\WM\_jobdetails1.cshtml" />
-    <Content Include="Areas\Welding\Views\WM\_weldFault1.cshtml" />
-    <Content Include="Areas\Welding\Views\WM\_weldMeasure1.cshtml" />
     <Content Include="Areas\Welding\Views\WM\_rt_job1.cshtml" />
     <Content Include="Areas\Welding\Views\Welding\_alertsAASPOT.cshtml" />
     <Content Include="Areas\Welding\Views\Welding\_AlertsUserRapport.cshtml" />
-    <Content Include="Areas\Welding\Views\spatters\Index.cshtml" />
     <Content Include="Areas\Welding\Views\Spatter\Index.cshtml" />
     <Content Include="Areas\Welding\Views\Spatter\_SpikesV316.cshtml" />
     <Content Include="Areas\Welding\Views\WM\_TimerIpAdresses.cshtml" />
@@ -2279,6 +2277,7 @@
     <Content Include="App_Code\TiplifeHtmlHelpers.cshtml" />
     <Content Include="Areas\Tiplife\Views\Electrode\Index.cshtml" />
     <Content Include="Areas\Tiplife\Views\Electrode\_Legend.cshtml" />
+
     <Content Include="Areas\Alert\Views\c_triggers\_Wiki.cshtml" />
     <Content Include="Areas\Tiplife\Views\NgacElectrode\Tcp_log.cshtml" />
     <Content Include="Areas\Tiplife\Views\NgacElectrode\_Tcp_logGrid.cshtml" />
@@ -2288,6 +2287,22 @@
     <Content Include="Areas\PlcSupervisie\Views\Screenshot\Screenshots.cshtml" />
     <None Include="Properties\PublishProfiles\chasvw1203_DEV_VCCH.pubxml" />
     <None Include="Properties\PublishProfiles\chasvw1203_PRODUCTION_VCCH.pubxml" />
+
+    <Content Include="Areas\Welding\Views\WM\_Parameters.cshtml" />
+    <Content Include="Areas\Welding\Views\ARO\Index.cshtml" />
+    <Content Include="Areas\Welding\Views\WeldingGuns\Create.cshtml" />
+    <Content Include="Areas\Welding\Views\WeldingGuns\Delete.cshtml" />
+    <Content Include="Areas\Welding\Views\WeldingGuns\Details.cshtml" />
+    <Content Include="Areas\Welding\Views\WeldingGuns\Edit.cshtml" />
+    <Content Include="Areas\Welding\Views\WeldingGuns\Index.cshtml" />
+    <Content Include="Areas\Welding\Views\Launch\CheckDubbelPrograms.cshtml" />
+    <Content Include="Areas\Welding\Views\UltralogInspections\Delete.cshtml" />
+    <Content Include="Areas\Welding\Views\UltralogInspections\Edit.cshtml" />
+    <Content Include="Areas\Welding\Views\UltralogInspections\Index.cshtml" />
+    <Content Include="Areas\Welding\Views\HiddenSpot\Details.cshtml" />
+    <Content Include="Areas\Welding\Views\HiddenSpot\Edit.cshtml" />
+    <Content Include="Areas\Welding\Views\HiddenSpot\Index.cshtml" />
+
     <None Include="Properties\PublishProfiles\gensvw1178-DEV-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gotsvw11292-PRODUCTION-VCTA.pubxml" />
@@ -2428,12 +2443,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EQUICommunictionLib\EQUICommunictionLib.csproj">
-      <Project>{090979a1-2c7b-4c89-a921-f36a936412f2}</Project>
-      <Name>EQUICommunictionLib</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -2455,6 +2464,12 @@
       <LastGenOutput>defaultArea.Designer.cs</LastGenOutput>
       <CustomToolNamespace>EqUiWebUi</CustomToolNamespace>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EQUICommunictionLib\EQUICommunictionLib.csproj">
+      <Project>{090979a1-2c7b-4c89-a921-f36a936412f2}</Project>
+      <Name>EQUICommunictionLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

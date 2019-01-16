@@ -6,87 +6,41 @@
 
 }
 
+<h2>Configuatie UL plans</h2>
 
-<h2>Config UL plans</h2>
+@Html.Grid(Model).Named("Inspectionplan").Build(columns =>
+{
+    columns.Add(c => c.ID).Titled("id").Css("bolded");
+    columns.Add(c => c.Name).Titled("inspectionplan").Css("bolded").InitialSort(GridSortOrder.Desc); ;
+    columns.Add(c => c.PlanActive).Titled("planactive");
+    columns.Add(c => c.SpotIdent).Titled("spotIdent");
+    columns.Add(c => c.SpotBefore).Titled("spoBefore");
+    columns.Add(c => c.SpotAfter).Titled("spotAfter");
+    columns.Add(c => c.WorkLocation).Titled("Worklocation");
+    columns.Add(c => c.WorkGroup).Titled("WorkGroup");
+    //tools
+    columns.Add(c => c)
+                        .Titled("")
+                        .Encoded(false)
+                        .RenderedAs(c =>
+
+                        MyHtmlHelpers.IconActionLink(Url.Action("Edit", new { id = c.ID }), "fas fa-pencil-alt", "", "Edit this spot").ToHtmlString()
+                        
+                        ).Filterable(false);
 
 
-    <p>
-        @Html.ActionLink("Create New Plan", "Create")
-    </p>
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
 
-            <th>
-                @Html.DisplayNameFor(model => model.PlanActive)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SpotIdent)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.WorkTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.WorkGroup)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.WorkLocation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SpotBefore)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SpotAfter)
-            </th>
-            <th></th>
-        </tr>
+}).Filterable().Pageable(pager =>
+{
+    pager.RowsPerPage = 20;
 
-        @foreach (var item in Model)
-        {
-            <tr>
+}
+        ).Sortable().Css("table-hover")
 
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-
-                <td>
-                    @Html.DisplayFor(modelItem => item.PlanActive)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.SpotIdent)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.WorkTime)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.WorkGroup)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.WorkLocation)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.SpotBefore)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.SpotAfter)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })
-                </td>
-            </tr>
-        }
-        @section scripts{
-            <script>
+@section scripts{
+    <script>
         //full with screen
         $("#allcontent").removeClass("body-content");
         $("#allcontent").removeClass("container");
-            </script>
-        }
-
-    </table>
-</body>
-</html>
+    </script>
+}

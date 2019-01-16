@@ -12,24 +12,23 @@ namespace EqUiWebUi.Areas.Welding.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Users
+    public partial class WeldingGunVariant
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Users()
+        public WeldingGunVariant()
         {
-            this.StoringsIngave_new = new HashSet<StoringsIngave_new>();
-            this.UltralogInspections = new HashSet<UltralogInspections>();
+            this.WeldingGun = new HashSet<WeldingGun>();
         }
     
         public int ID { get; set; }
-        public string CDSID { get; set; }
-        public string Voornaam { get; set; }
-        public string Achternaam { get; set; }
-        public string @object { get; set; }
+        public string Name { get; set; }
+        public Nullable<float> X { get; set; }
+        public Nullable<float> Y { get; set; }
+        public Nullable<float> Z { get; set; }
+        public string Remark1 { get; set; }
+        public string Remark2 { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<StoringsIngave_new> StoringsIngave_new { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UltralogInspections> UltralogInspections { get; set; }
+        public virtual ICollection<WeldingGun> WeldingGun { get; set; }
     }
 }

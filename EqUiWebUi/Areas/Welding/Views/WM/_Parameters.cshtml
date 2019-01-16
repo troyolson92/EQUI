@@ -1,0 +1,62 @@
+﻿
+
+@model IQueryable<EqUiWebUi.Areas.Welding.Models.ParameterOptimalisation>
+@{
+    ViewBag.Title = "_Parameters";
+}
+<h2>Spot Optimalisation Data Tool</h2>
+@Html.Grid(Model).Named("ParameterOptimalisation").Build(columns =>
+{
+    columns.Add(c => c.plateID).Titled("PlateId").InitialSort(GridSortOrder.Desc);
+    columns.Add(c => c.UpdateTime).Titled("UpdateTimer");
+    columns.Add(c => c.NPT).Titled("npt");
+    columns.Add(c => c.TimerName).Titled("TimerName");
+    columns.Add(c => c.spotname).Titled("spotname");
+    columns.Add(c => c.Program).Titled("program");
+    columns.Add(c => c.pressure).Titled("pressure");
+    columns.Add(c => c.Squeeze).Titled("squeeze");
+    columns.Add(c => c.KA1).Titled("ka1");
+    columns.Add(c => c.Weld1).Titled("weld1");
+    columns.Add(c => c.Cool_1).Titled("cool1");
+    columns.Add(c => c.KA2).Titled("ka2");
+    columns.Add(c => c.Weld2).Titled("weld2");
+    columns.Add(c => c.Cool_2).Titled("cool2");
+    columns.Add(c => c.KA3).Titled("ka3");
+    columns.Add(c => c.Weld3).Titled("weld3");
+    columns.Add(c => c.Hold).Titled("hold");
+    columns.Add(c => c.pressureProfile_).Titled("pressureProfile?");
+    columns.Add(c => c.Plateinfo).Titled("plateinfo =>>");
+    columns.Add(c => c.thicknessplate1).Titled("thicknessplate1");
+    columns.Add(c => c.Materialplate1).Titled("Materialplate1");
+    columns.Add(c => c.CoatingPlate1).Titled("CoatingPlate1)");
+    columns.Add(c => c.thicknessplate2).Titled("thicknessplate2");
+    columns.Add(c => c.Materialplate2).Titled("Materialplate2");
+    columns.Add(c => c.CoatingPlate2).Titled("CoatingPlate2");
+    columns.Add(c => c.thicknessplate3).Titled("thicknessplate3");
+    columns.Add(c => c.Materialplate3).Titled("Materialplate3");
+    columns.Add(c => c.CoatingPlate3).Titled("CoatingPlate3");
+    columns.Add(c => c.thicknessplate4).Titled("thicknessplate4");
+    columns.Add(c => c.Materialplate4).Titled("Materialplate4");
+    columns.Add(c => c.CoatingPlate4).Titled("CoatingPlate4");
+    columns.Add(c => c.totalThicknessDB).Titled("TotalThicknessDB");
+    columns.Add(c => c.ULinfo).Titled("Ultraloginfo=>>");
+    columns.Add(c => c.avgMeasuredThickness).Titled("avgMeasuredThickness");
+    columns.Add(c => c.TotalThicknessUL).Titled("TotalThicknessUL");
+    columns.Add(c => c.WeldDatainfo).Titled("WeldDatainfo=>>");
+    columns.Add(c => c.lastWeldShift).Titled("lastWeldShift");
+    columns.Add(c => c.nbrWelds).Titled("nbrWelds");
+    columns.Add(c => c.SpatterCount).Titled("spatterCount");
+    columns.Add(c => c.ReweldCount).Titled("reweldcount");
+    columns.Add(c => c.AVGpsf).Titled("AVGpsf");
+    columns.Add(c => c.Avg_resistance).Titled("Avg_resistance");
+
+
+}).Filterable().Pageable(pager =>
+{
+    pager.RowsPerPage = 20;
+
+}
+        ).Sortable().Css("table-hover");
+
+
+

@@ -12,13 +12,15 @@ namespace EqUiWebUi.Areas.Welding.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class WeldfaultCount
+    public partial class WeldingGun
     {
-        public int id { get; set; }
-        public string location { get; set; }
-        public string NPT { get; set; }
-        public string Timer { get; set; }
-        public Nullable<long> countofTimerFaults { get; set; }
-        public string WMComment { get; set; }
+        public int ID { get; set; }
+        public string Name { get; set; }
+        public Nullable<byte> ElectrodeNbr { get; set; }
+        public Nullable<int> VariantID { get; set; }
+        public Nullable<int> TimerID { get; set; }
+        public string RobotType { get; set; }
+    
+        public virtual WeldingGunVariant WeldingGunVariant { get; set; }
     }
 }
