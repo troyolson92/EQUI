@@ -14,8 +14,8 @@ namespace EqUiWebUi.Areas.Welding.Models
     
     public partial class BosProgramAvailable
     {
+        public int id { get; set; }
         public string Name { get; set; }
         public int bosprogram { get; set; }
-        public Nullable<byte> Program_Available { get; set; }
     }
 }

@@ -11,7 +11,7 @@
 @Html.Grid(Model).Named("Inspectionplan").Build(columns =>
 {
     columns.Add(c => c.ID).Titled("id").Css("bolded");
-    columns.Add(c => c.Name).Titled("inspectionplan").Css("bolded").InitialSort(GridSortOrder.Desc); ;
+    columns.Add(c => c.Name).Titled("inspectionplan").Css("bolded").InitialSort(GridSortOrder.Desc); 
     columns.Add(c => c.PlanActive).Titled("planactive");
     columns.Add(c => c.SpotIdent).Titled("spotIdent");
     columns.Add(c => c.SpotBefore).Titled("spoBefore");
