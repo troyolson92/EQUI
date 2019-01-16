@@ -25,42 +25,54 @@
                     </div>
 
                     <hr />
+                    <h3>Op basis van wear</h3>
 
                     <div class="row">
                         <div class="col-md-5">
-                            <label class="control-label col-md-8" for="minwear">waar de wear groter is dan</label>
+                            <label class="control-label col-md-8" for="minwear">wear groter is dan</label>
                             <div class="col-md-4">
                                 <input class="form-control input-sm" type="number" min="0" max="100" step="5" value="80" id="minwear" />
                             </div>
                         </div>
-                        
+
                         <div class="col-md-7">
-                            <label class="control-label col-md-8" for="minparts">minimum resterende stukken kleiner dan</label>
+                            <label class="control-label col-md-8" for="minparts">resterende stukken kleiner dan</label>
                             <div class="col-md-4">
-                                <input class="form-control input-sm" type="number" min="0"  step="10" value="200" id="minparts"  />
+                                <input class="form-control input-sm" type="number" min="0" step="10" value="215" id="minparts" />
                             </div>
                         </div>
 
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label class="control-label col-md-8" for="maxdress">aantal keer gefreesd groter dan</label>
+                            <div class="col-md-2">
+                                <input class="form-control input-sm" type="number" min="0" max="200" step="10" value="180" id="maxdress" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr />
+                    <h4>Op basis van tip changer</h4>
+
+                    <div class="row">
+                        <div class="col-md-5">
+                            <label class="control-label col-md-8" for="Tipchanger"></label>
+                            <div class="col-md-4">
+                                <input class="form-control input-sm" type="checkbox" id="Tipchanger" />
+                            </div>
+                        </div>
                     </div>
 
                     <hr />
 
-                    <div class="row">
-                        <div class="col-md-5">
-                            <label class="control-label col-md-8" for="maxdress">aantal keer gefreesd groter dan</label>
-                            <div class="col-md-4">
-                                <input class="form-control input-sm" type="number" min="0" max="200" step="10" value="180" id="maxdress" />
-                            </div>
-                        </div>
-
-                        <div class="col-md-7"></div>
-                    </div>
+                    <div class="btn btn-primary" id="loadLocations">Zoek</div>
                 </div>
 
-                <div class="panel-footer">
-                    <button class="btn-sm btn-primary" id="loadLocations">Zoek</button>
-                </div>
             </div>
+
+            <hr />
 
             <div class="card" id="tipsToChangeContainer" style="display:none">
 
@@ -71,15 +83,11 @@
                 </div>
 
                 <div class="card-body" id="tipsToChangecontainer" style="position:relative">
-                    <div id="tipsToChange" style="display:none">result wil be here</div>
+                    <div id="tipsToChange"></div>
+                    <div class="btn btn-primary" id="printTipsToChange">Print</div>
                 </div>
 
-                <div class="panel-footer">
-                    <button class="btn-sm btn-success" id="printTipsToChange" style="float:right">Print &raquo;</button>
-                </div>
             </div>
-
-
     </div>
 
 
@@ -99,7 +107,8 @@
                 locationFilter: $('#location').val(),
                 minWear: $('#minwear').val(),
                 minParts: $('#minparts').val(),
-                maxDress: $('#maxdress').val()
+                maxDress: $('#maxdress').val(),
+                Tipchanger: $('#Tipchanger').is(':checked'),
             },
             //this runs when load done
             function () {
@@ -111,6 +120,19 @@
             }
         );
     })
+
+    ///disable option in case of tipchanger
+    $('#Tipchanger').click(function () {
+        if ($('#Tipchanger').is(':checked')) {
+            $('#minwear').prop('disabled', true);
+            $('#minparts').prop('disabled', true);
+            $('#maxdress').prop('disabled', true);
+        } else {
+            $('#minwear').prop('disabled', false);
+            $('#minparts').prop('disabled', false);
+            $('#maxdress').prop('disabled', false);
+        }
+    });
 
     ///enable printing
     $('#printTipsToChange').click(function () {

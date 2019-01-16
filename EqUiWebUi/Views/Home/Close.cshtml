@@ -1,11 +1,12 @@
 ﻿@{
     ViewBag.Title = "Close";
 }
-<i class="far fa-check-circle fa-10x text-success"></i>
+<i class="far fa-check-circle fa-10x text-success">Auto close in 2 seconds</i>
+
 
 <script>
     setTimeout(
         function () {
             window.close();
-        }, 5000);
+        }, 2000);
 </script>

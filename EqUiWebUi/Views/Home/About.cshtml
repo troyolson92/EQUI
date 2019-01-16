@@ -1,25 +1,52 @@
 ﻿@{
     ViewBag.Title = "About";
 }
+<div class="jumbotron">
+    <h1>About Equi</h1>
+    <h3>
+        An industry 4.0 project, build by the costumer for the costumer.
+    </h3>
+</div>
 
-<div class="card card-body">
-    <div>
-        <h2>Learn</h2>
-        @MyHtmlHelpers.EquiLink("file://gnlsnm0101.gen.volvocars.net/PROJ/6308-SHR-VCC22700/Equi_TheDataStory.pdf", "fas fa-power-off", "Equi_TheDataStory", helperText: "A good place to start.", OpenNewWindow: true)
+<div class="card">
+    <div class="card-header bg-dark text-white">
+        <h3 class="card-text">First things first</h3>
+    </div>
+    <div class="card-body">
+        <div>
+            <div class="alert alert-warning">
+                <h2>Please use a modern browser!</h2>
+            </div>
+            Any modern browser will do Edge / Chrome / Firefox / Opera  <strong>*Just not Internet explorer.</strong>
+            <br />
+            <h3>We work best with Chrome</h3>
+            <div class="row">
+                <div class="col-6">
+                    @MyHtmlHelpers.EquiLink("https://www.google.com/chrome/browser/desktop/index.html", "fab fa-chrome", "Chromeinstal", helperText: "Use this link to install chrome using click once")
+                </div>
+                <div class="col-6">
+                    @MyHtmlHelpers.EquiLink("https://volvocars.service-now.com/sp?id=sc_cat_item&sys_id=7aa8d7d1db605b00c3235487dc961947", "fab fa-chrome", "Chromeinstal", helperText: "Use this link to install chrome using snow (official it request)")
+                </div>       
+            </div>
+
+        </div>
     </div>
 </div>
 
 <hr />
 
-<div class="card card-body">
-    <h2>We work best with Chrome!</h2>
-    <div>
+@Html.Action("_getWiki", "Wiki", new { id = "WhatisEqui" })
 
-        @MyHtmlHelpers.EquiLink("https://www.google.com/chrome/browser/desktop/index.html", "fab fa-chrome", "Chromeinstal", helperText: "Use this link to instal chrome.")
+<hr />
 
-        <hr />
+@Html.Action("_getWiki", "Wiki", new { id = "DataSources" })
 
-        <h4>For optimal use you should install this chrome extension.</h4>
-        @MyHtmlHelpers.EquiLink("https://chrome.google.com/webstore/detail/clickonce-for-google-chro/kekahkplibinaibelipdcikofmedafmb", "fab fa-chrome", "ClickOnce for Google Chrome", helperText: "Needed to launch the VSTO click once tools in the chrome browser.")
-    </div>
-</div>
+<hr />
+
+@Html.Action("_getWiki", "Wiki", new { id = "how you look at data" })
+
+<hr />
+
+@Html.Action("_getWiki", "Wiki", new { id = "ASSET MANAGMENT SYSTEM" })
+
+<hr />

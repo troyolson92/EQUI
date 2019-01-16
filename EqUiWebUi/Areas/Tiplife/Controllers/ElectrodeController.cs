@@ -43,7 +43,7 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
             //in case still null trow error return empty result 
             if (data == null)
             {
-                data = new List<TipMonitor>();
+                data = new List<NGAC_TipMonitor>();
                 if (Debugger.IsAttached)
                 {
                     log.Warn("Loading tip status in method (debug mode)");
@@ -96,26 +96,40 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
         /// <param name="minWear"></param>
         /// <param name="minParts"></param>
         /// <param name="maxDress"></param>
+        /// <param name="Tipchanger">if this is true all wear parms above are ignored</param>
         /// <returns></returns>
-        public ActionResult _TipsToChange(string locationFilter, int minWear = 0, int minParts = 0, int maxDress = 1000)
+        public ActionResult _TipsToChange(string locationFilter, int minWear = 0, int minParts = 0, int maxDress = 1000, bool Tipchanger = false)
         {
             GADATAEntitiesTiplife gADATAEntities = new GADATAEntitiesTiplife();
             string LocationRoot = CurrentUser.Getuser.LocationRoot;
-            IEnumerable<TipMonitor> data = from tipMonitor in DataBuffer.Tipstatus
-                                           where
-                                           (tipMonitor.pWear > minWear
-                                            || tipMonitor.nRcars.GetValueOrDefault(1000) < minParts //if no Rcars value available ignore! 
-                                            || tipMonitor.nDress > maxDress
-                                            || (tipMonitor.Status != "" && tipMonitor.Status != "NWIC")  //do not push for no wear in clac 
-                                           )
-                                           && tipMonitor.LocationTree.Contains(locationFilter) //apply dropdown filter
-                                           && tipMonitor.LocationTree.Contains(LocationRoot) //apply user filter
-                                           orderby tipMonitor.nRcars ascending
-                                           select tipMonitor;
+            IEnumerable<NGAC_TipMonitor> data;
+            if (!Tipchanger)
+            {
+               data = from tipMonitor in DataBuffer.Tipstatus
+                    where
+                    (tipMonitor.pWear > minWear
+                    || tipMonitor.nRcars.GetValueOrDefault(1000) < minParts //if no Rcars value available ignore! 
+                    || tipMonitor.nDress > maxDress
+                    || (tipMonitor.Status != "" && tipMonitor.Status != "NO PREDICTION")  //do not push for no wear in clac 
+                    )
+                    && tipMonitor.LocationTree.Contains(locationFilter) //apply dropdown filter
+                    && tipMonitor.LocationTree.Contains(LocationRoot) //apply user filter
+                    select tipMonitor;
+            }
+            else
+            {
+                data = from tipMonitor in DataBuffer.Tipstatus
+                    where
+                    (tipMonitor.Status != "" && tipMonitor.Status != "NO PREDICTION")  //do not push for no wear in clac 
+                    && tipMonitor.LocationTree.Contains(locationFilter) //apply dropdown filter
+                    && tipMonitor.LocationTree.Contains(LocationRoot) //apply user filter
+                    select tipMonitor;
+            }
+
             log.Info($"Plantipchange for: {locationFilter} Filters: minwear: {minWear} minparts: {minParts} maxDress: {maxDress}  |resultCount: {data.Count()}");
             //debug added to store result in log and see if they follow the plan.
-            List<TipMonitor> results = data.ToList();
-            foreach (TipMonitor result in results)
+            List<NGAC_TipMonitor> results = data.ToList();
+            foreach (NGAC_TipMonitor result in results)
             {
                 log.Info($"PlantipchangeResult for: {result.Robot} wear: {result.pWear} parts: {result.nRcars} dresses: {result.nDress} status: {result.Status}");
             }
@@ -127,39 +141,41 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
         /// Main interface page for welgunTool (allows user to select a location and tool number)
         /// </summary>
         /// <param name="location"></param>
-        /// <param name="tool_nr"></param>
+        /// <param name="tool_nr">From robot</param>
+        /// <param name="ElectrodeNo">From timer If set to 0 this means tool_nr = ElectrodeNo</param>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult WeldgunTool(string location = "", int tool_nr = 0)
+        public ActionResult WeldgunTool(string location = "", int tool_nr = 0, int ElectrodeNo = 0)
         {
             //get location valid for user profile
             Areas.Welding.Models.GADATAEntitiesWelding db = new Areas.Welding.Models.GADATAEntitiesWelding();
             string LocationRoot = CurrentUser.Getuser.LocationRoot;
             if (location != "")//if location is passing only show that one
             {
-                SelectList list = new SelectList(db.c_timer.Where(c => c.Robot.Contains(location)).OrderBy(c => c.Name), "Name", "Robot");
+                SelectList list = new SelectList(db.c_timer.Where(c => c.Robot.Contains(location)).OrderBy(c => c.Name), "Robot", "Robot");
                 ViewBag.Locations = list;
                 //check if we should auto load. (if only one is possible).
-                if (list.Count() == 1 && tool_nr != 0)
+                if (list.Count() == 1 && tool_nr != 0 && ElectrodeNo == 0)
                 {
                     ViewBag.autoload = true;
                 }
             }
             else if (LocationRoot != "") //else if user has profile filter apply it
             {
-                ViewBag.Locations = new SelectList(db.c_timer.Where(c => (c.LocationTree ?? "").Contains(LocationRoot)).OrderBy(c => c.Name), "Name", "Robot");
+                ViewBag.Locations = new SelectList(db.c_timer.Where(c => c.enable_bit != -1 &&  (c.LocationTree ?? "").Contains(LocationRoot)).OrderBy(c => c.Name), "Robot", "Robot");
             }
-            else //show all 
+            else //show all (enabled timers)
             {
-                ViewBag.Locations = new SelectList(db.c_timer.OrderBy(c => c.Name), "Name", "Robot");
+                ViewBag.Locations = new SelectList(db.c_timer.Where( c => c.enable_bit != -1 && c.Robot != "unknown").OrderBy(c => c.Name), "Robot", "Robot");
             }
-            //pass tool number select list 
+
+            //pass tool_nr select list 
             if (tool_nr != 0)
             {
                 ViewBag.tool_nr = new SelectList(new List<SelectListItem>
                                         {
                                             new SelectListItem { Selected = true,  Text = $"Tool{tool_nr.ToString()}", Value = tool_nr.ToString()},
-                                        }, "Text", "Value");
+                                        }, "Value", "Text");
             }
             else //pass all options
             {
@@ -169,8 +185,29 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
                                             new SelectListItem { Selected = false, Text = "Tool2", Value = "2"},
                                             new SelectListItem { Selected = false, Text = "Tool3", Value = "3"},
                                             new SelectListItem { Selected = false, Text = "Tool4", Value = "4"},
-                                            new SelectListItem { Selected = false, Text = "Tool5", Value = "5"},
-                                        }, "Text", "Value");
+                                            new SelectListItem { Selected = false, Text = "Tool5", Value = "5"}
+                                        }, "Value", "Text");
+            }
+
+            //pass ElectrodeNo select list 
+            if (ElectrodeNo != 0)
+            {
+                ViewBag.ElectrodeNo = new SelectList(new List<SelectListItem>
+                                        {
+                                            new SelectListItem { Selected = false,  Text = $"ElectrodeNo{ElectrodeNo.ToString()}", Value = ElectrodeNo.ToString()}
+                                        }, "Value", "Text");
+            }
+            else //pass all options
+            {
+                ViewBag.ElectrodeNo = new SelectList(new List<SelectListItem>
+                                        {
+                                            new SelectListItem { Selected = true,  Text = "ElectrodeNo = tool_nr", Value = 0.ToString()},
+                                            new SelectListItem { Selected = false, Text = "ElectrodeNo1", Value = "1"},
+                                            new SelectListItem { Selected = false, Text = "ElectrodeNo2", Value = "2"},
+                                            new SelectListItem { Selected = false, Text = "ElectrodeNo3", Value = "3"},
+                                            new SelectListItem { Selected = false, Text = "ElectrodeNo4", Value = "4"},
+                                            new SelectListItem { Selected = false, Text = "ElectrodeNo5", Value = "5"}
+                                        }, "Value", "Text");
             }
             //
             return View();
@@ -180,12 +217,18 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
         /// Partial view that gets loading into WeldgunTool (all chars are rendered in this page)
         /// </summary>
         /// <param name="location"></param>
-        /// <param name="tool_nr"></param>
+        /// <param name="tool_nr">From robot</param>
+        /// <param name="ElectrodeNo">From timer If set to 0 this means tool_nr = ElectrodeNo</param>
         /// <returns></returns>
-        public ActionResult _WeldgunTool(string location, int tool_nr)
+        public ActionResult _WeldgunTool(string location, int tool_nr, int ElectrodeNo)
         {
             ViewBag.location = location;
             ViewBag.tool_nr = tool_nr;
+            if (ElectrodeNo == 0)
+            {
+                ElectrodeNo = tool_nr;
+            }
+            ViewBag.ElectrodeNo = ElectrodeNo;
             ViewBag.daysback = System.DateTime.Now.AddDays(-30);
             //IF NGAC location add 'real wear VS measured wear scatter chart' ID:43
             //This is a hack on the control chart system. Need to look if I can implement this in a clean way.
@@ -194,8 +237,15 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
             {
                 ViewBag.NgacDummyAlarmobject = $"{location.Trim()}_gun{tool_nr}";
                 ViewBag.NgacDummyTriggerId = 43;
+                ViewBag.isNgac = true; //used to pick more info modal (ngac or comau)
+            }
+            else
+            {
+                ViewBag.isNgac = false;
             }
             //Add midair scatter chart always (all weld gun tools should have a midair)
+            ViewBag.MidAirDummyAlarmobject = $"{location.Trim()}_ElecNo{ElectrodeNo}";
+            ViewBag.MidAircDummyTriggerId = 44;
 
             //get a list of all control charts that need to be rendered to this location / tool_nr combination
             //Make the match on start with location and EndsWith tool_nr. This is a leap of fate and all has to do with how the users sets up the alerts.

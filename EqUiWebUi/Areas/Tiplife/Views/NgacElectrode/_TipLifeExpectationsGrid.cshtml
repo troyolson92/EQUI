@@ -1,4 +1,4 @@
-﻿@model IQueryable<EqUiWebUi.Areas.Tiplife.Models.TipLifeExpectations>
+﻿@model IQueryable<EqUiWebUi.Areas.Tiplife.Models.NGAC_TipLifeExpectations>
 
 @Html.Grid(Model).Named("TipLifeExpectationsGrid").Build(columns =>
 {
@@ -18,5 +18,7 @@
     columns.Add(c => c.TotWearComponent).Titled("WearComp").Css("d-none d-lg-table-cell");
 }).Sortable().Filterable().Pageable(pager =>
 {
-pager.RowsPerPage = 20;
+    pager.RowsPerPage = 20;
+    pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 20, "20" }, { 40, "40" }, { 80, "80" }, { 100, "100" } };
+    pager.ShowPageSizes = true;
 }).Empty("No data found").Css("table-hover")

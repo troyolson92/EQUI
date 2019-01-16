@@ -1,5 +1,4 @@
-﻿@model EqUiWebUi.WebGridHelpers.DefaultModel
-@{
+﻿@{
     ViewBag.Title = "WoDetails";
 }
 <div class="card">
@@ -18,7 +17,11 @@
     @*run on doc ready *@
     $(document).ready(function () {
         $("#woDetailsPartial").html("<div class='card-body'><i class='fa fa-spinner fa-pulse fa-2x fa-fw'></i><span class='sr-only'></span>Loading....</div>");
-        var url = "@Url.Action("_woDetails", "WorkorderDetails")?wonum=" + @ViewBag.wonum + "&RealtimeConn=" + @ViewBag.RealtimeConn.ToString().ToLower();
-        $("#woDetailsPartial").load(url);
-    })
+        $("#woDetailsPartial").load("@Url.Action("_woDetails", "WorkorderDetails", new { wonum = ViewBag.wonum })",
+            function (responseText, textStatus, req) {
+                if (textStatus == "error") {
+                    $("#placeholderPartial").html($("#Error", responseText).html());
+                }
+            })
+        })
 </script>

@@ -3,29 +3,26 @@
     <div class="card-header">
 
         <div class="alert alert-info">
-            <h4>Tipinfo</h4>
-            <div class="row">
-                <div class="col-sm-11">
-                   <strong>location:</strong>@ViewBag.location (tool_nr: @ViewBag.tool_nr)
-                </div>
-
-                <div class="col-sm-1">
-                    <a class="far fa-window-close fa-3x clickable text-black-50" data-dismiss="modal"></a>
-                </div>
-
-            </div>
+            <h4>
+                Tipinfo for location: <strong>@ViewBag.location</strong> tool_nr:  <strong>@ViewBag.tool_nr</strong> (NGAC)
+                <a class="far fa-window-close fa-2x clickable text-black-50 float-right" data-dismiss="modal"></a>
+            </h4>
         </div>
     </div>
 
     <div class="card-body">
 
         <div class="card">
-            <div class="card-header bg-primary">
-                <h4>TipLifeExpectations</h4>
+            <div class="card-header bg-light">
+                <h6 class="card-title">
+                    TipLifeExpectations
+                    <a class="far fa-window-restore text-black-50" href="@Url.Action("TipLifeExpectations")" data-toggle="popover" data-placement="bottom" title="Open grid in new page"></a>
+                    <span class= "float-right text-black-50"><i class="clickable fas fa-chevron-circle-up fa-1"></i></span>
+                </h6>
             </div>
 
             <div class="card-body">
-                <div id="TipLifeExpectationsGrid" class="mvc-grid"></div>
+                <div data-name="TipLifeExpectationsGrid" class="mvc-grid"></div>
             </div>
 
         </div>
@@ -33,12 +30,16 @@
         <hr />
 
         <div class="card">
-            <div class="card-header bg-primary">
-                <h4>Control limits</h4>
+            <div class="card-header bg-light">
+                <h6 class="card-title">
+                    TipwearBeforeChange
+                    <a class="far fa-window-restore text-black-50" href="@Url.Action("TipwearBeforeChange")" data-toggle="popover" data-placement="bottom" title="Open grid in new page"></a>
+                    <span class="float-right text-black-50"><i class="clickable fas fa-chevron-circle-up fa-1"></i></span>
+                </h6>
             </div>
 
             <div class="card-body">
-                <div id="controllimitPlaceholder"></div>
+                <div data-name="TipwearBeforeChangeGrid" class="mvc-grid"></div>
             </div>
 
         </div>
@@ -46,12 +47,33 @@
         <hr />
 
         <div class="card">
-            <div class="card-header bg-primary">
-                <h4>TipDresslogfile</h4>
+            <div class="card-header bg-light">
+                <h6 class="card-title">
+                    TipDressData
+                    <a class="far fa-window-restore text-black-50" href="@Url.Action("TipDressData")" data-toggle="popover" data-placement="bottom" title="Open grid in new page"></a>
+                    <span class="float-right text-black-50"><i class="clickable fas fa-chevron-circle-up fa-1"></i></span>
+                </h6>
             </div>
 
             <div class="card-body">
-                <div id="TipDressDataGrid" class="mvc-grid"></div>
+                <div data-name="TipDressDataGrid" class="mvc-grid"></div>
+            </div>
+
+        </div>
+
+        <hr />
+
+        <div class="card">
+            <div class="card-header bg-light">
+                <h6 class="card-title">
+                    TCPlogfile (SBCU)
+                    <a class="far fa-window-restore text-black-50" href="@Url.Action("Tcp_log")" data-toggle="popover" data-placement="bottom" title="Open grid in new page"></a>
+                    <span class="float-right text-black-50"><i class="clickable fas fa-chevron-circle-up fa-1"></i></span>
+                </h6>
+            </div>
+
+            <div class="card-body">
+                <div data-name="TCP_LOGGrid" class="mvc-grid"></div>
             </div>
 
         </div>
@@ -60,61 +82,54 @@
 <!--sctips for Tipinfo-->
     <script type="text/javascript">
         //load tiplifeexpectations
-        $('#TipLifeExpectationsGrid').html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
-        $('#TipLifeExpectationsGrid').mvcgrid({
+        $('[data-name= "TipLifeExpectationsGrid"]').html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
+        $('[data-name= "TipLifeExpectationsGrid"]').mvcgrid({
             sourceUrl: '@Url.Action("_TipLifeExpectationsGrid", new { location = ViewBag.location, tool_nr = ViewBag.tool_nr })', // Grid source url string
             requestType: 'get', // Ajax grid request type
             reload: true, // Grid reload indicator
-            rowClicked: function (row, data, e) {
-                //ignore clicks not on td
-                if (e.target.tagName.toUpperCase() != 'TD') {
-                    return;
-                }
-                //if row already has this clase close the modal
-                if ($(row).hasClass("bg-info")) {
-                    $("#placeholder").remove();
-                    $(row).removeClass("bg-info");
-                    return;
-                }
-                //clear selected rows for this table
-                $('tr').removeClass('bg-info'); //THIS IS WRONG
-                $(row).addClass("bg-info");
-                $("#placeholder").remove(); //clear placeholder is exists
-                //add new placeholder afhter selected row
-                $(row).after('<tr id="placeholder"><td colspan="1000"><div class="card bg-info"><div id="TipwearBeforeChangeGrid" class="mvc-grid card-body"></div></div></td></tr>');
-                //animation
-                $("#TipwearBeforeChangeGrid").html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
-                    //load supervisiegird in placeholder
-                $('#TipwearBeforeChangeGrid').mvcgrid({
-                        sourceUrl: '@Url.Action("_TipwearBeforeChangeGrid", new { location = ViewBag.location, tool_nr = ViewBag.tool_nr })', // Grid source url string
-                        requestType: 'get', // Ajax grid request type
-                        reload: true, // Grid reload indicator
-                        reloadFailed: function (result) {
-                            console.log(result);
-                            $("#TipwearBeforeChangeGrid").html($("#Error", result.responseText).html());
-                        }
-                });
-            },
             reloadFailed: function (result) {
                 console.log(result);
-                $("#TipLifeExpectationsGrid").html($("#Error", result.responseText).html());
+                $('[data-name= "TipLifeExpectationsGrid"]').html($("#Error", result.responseText).html());
             }
         });
 
-        //load all control limits for this object
-        $('#controllimitPlaceholder').html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
-        $("#controllimitPlaceholder").load("@Url.Action("_List", "L_controlLimits", new {Area = "Alert", alarmobject = ViewBag.location + "_tool" + ViewBag.tool_nr,  showIsDead = ViewBag.showIsDead })");
+        //load tipdress data grid 
+        $('[data-name= "TipwearBeforeChangeGrid"]').html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
+        $('[data-name= "TipwearBeforeChangeGrid"]').mvcgrid({
+            sourceUrl: '@Url.Action("_TipwearBeforeChangeGrid", new { location = ViewBag.location, tool_nr = ViewBag.tool_nr })', // Grid source url string
+            requestType: 'get', // Ajax grid request type
+            reload: true, // Grid reload indicator
+            reloadFailed: function (result) {
+                console.log(result);
+                $('[data-name= "TipwearBeforeChangeGrid"]').html($("#Error", result.responseText).html());
+            }
+        });
 
         //load tipdress data grid 
-        $('#TipDressDataGrid').html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
-        $('#TipDressDataGrid').mvcgrid({
+        $('[data-name= "TipDressDataGrid"]').html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
+        $('[data-name= "TipDressDataGrid"]').mvcgrid({
             sourceUrl: '@Url.Action("_TipDressDataGrid", new { location = ViewBag.location, tool_nr = ViewBag.tool_nr })', // Grid source url string
             requestType: 'get', // Ajax grid request type
             reload: true, // Grid reload indicator
             reloadFailed: function (result) {
                 console.log(result);
-                $("#TipDressDataGrid").html($("#Error", result.responseText).html());
+                $('[data-name= "TipDressDataGrid"]').html($("#Error", result.responseText).html());
             }
         });
+
+        //load TCP_LOGGrid data grid
+        $('[data-name= "TCP_LOGGrid"]').html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
+        $('[data-name= "TCP_LOGGrid"]').mvcgrid({
+            sourceUrl: '@Url.Action("_Tcp_logGrid", new { location = ViewBag.location, Setup_no = ViewBag.tool_nr })', // Grid source url string
+            requestType: 'get', // Ajax grid request type
+            reload: true, // Grid reload indicator
+            reloadFailed: function (result) {
+                console.log(result);
+                $('[data-name= "TCP_LOGGrid"]').html($("#Error", result.responseText).html());
+            }
+        });
+
+        //enable tooltips
+        $('[data-toggle="popover"]').tooltip();
 
     </script>

@@ -1,26 +1,91 @@
 ﻿@{
+    /**/
+
     ViewBag.Title = "Contact";
+}
+<div class="">
+    <h1>@ViewBag.Title</h1>
+</div>
+
+@if (System.Configuration.ConfigurationManager.AppSettings["Maximo_SiteID"].ToString() == "VCCH")
+{
+<div class="card card-body">
+
+    <h3>Volvo Cars Charleston (VCCH)</h3>
+    <hr />
+    <strong>Site manager</strong>
+    <address>
+        Olson, Troy<br />
+        <i class="fas fa-phone"></i>
+        +18439348395
+        <i class="fas fa-envelope"></i> <a href="mailto:troy.olson@volvocars.com">troy.olson@volvocars.com</a><br />
+    </address>
+</div>
+
+    <hr />
 }
 
 <div class="card card-body">
-    <h2>@ViewBag.Title.</h2>
-    <h3>@ViewBag.Message</h3>
 
+    <h3>Volvo Cars Gent (VCG)</h3>
+    <hr />
+    <strong>Site manager</strong>
     <address>
-        Volvo Cars Gent<br />
+        Van volsem II, Alain (AVV)<br />
         <i class="fas fa-phone"></i>
-        09 250 30 69
+        +32-9-2502725
+        <i class="fas fa-envelope"></i> <a href="mailto:alain.van.volsem.ii@volvocars.com">alain.van.volsem.ii@volvocars.com</a><br />
+    </address>
+
+    <strong>System developer</strong>
+    <address>
+        De beul, Sam (S.)<br />
+        <i class="fas fa-phone"></i>
+        +329 250 30 69
+        <i class="fas fa-envelope"></i> <a href="mailto:sam.de.beul@volvocars.com">sam.de.beul@volvocars.com</a><br />
     </address>
 
     <address>
-        <i class="fas fa-envelope"></i> <strong> Support:</strong>   <a href="mailto:sam.de.beul@volvocars.com">sam.de.beul@volvocars.com</a><br />
+        Coppejans, Jens (J.)<br />
+        <i class="fas fa-phone"></i>
+        +3292507242
+        <i class="fas fa-envelope"></i> <a href="mailto:jens.coppejans@volvocars.com">jens.coppejans@volvocars.com</a><br />
     </address>
-    <div>
-        @MyHtmlHelpers.EquiLink("https://sharepoint.volvocars.net/sites/maintenance_a_shop/Lists/EQdbDevelopment/AllItems.aspx", "fas fa-bug", "IssueTracking", iconClasses: "bg-warning", helperText: "Report bugs or request features", OpenNewWindow: true)
-       <hr />
-        @MyHtmlHelpers.EquiLink("https://github.com/SDEBEUL/EQUI/graphs/commit-activity", "fab fa-github", "Github", helperText: "No secrets, every line of code is on github", OpenNewWindow: true)
-    </div>
-
 </div>
 
+<hr />
 
+<div class="card card-body">
+    <h3>Manufacturing Software Consultancy (MSC)</h3>
+    <hr />
+    <strong>System developer</strong>
+    <address>
+        Graham Morris<br />
+        <i class="fas fa-phone"></i>
+        +44 7802 705287
+        <i class="fas fa-envelope"></i> <a href="mailto:graham.morris@manusoft.co.uk">graham.morris@manusoft.co.uk</a><br />
+    </address>
+</div>
+
+<hr />
+@MyHtmlHelpers.EquiLink("https://sharepoint.volvocars.net/sites/maintenance_a_shop/Lists/EQdbDevelopment/AllItems.aspx", "fas fa-bug", "IssueTracking", iconClasses: "bg-warning", helperText: "Report bugs or request features", OpenNewWindow: true)
+
+<hr />
+@MyHtmlHelpers.EquiLink("https://github.com/SDEBEUL/EQUI/graphs/commit-activity", "fab fa-github", "Github", helperText: "No secrets, every line of code is on github", OpenNewWindow: true)
+<hr />
+
+<div class="card card-body">
+    <h3>About this site</h3>
+    <hr />
+    IIS host <strong>@ViewBag.hostname</strong>
+    SQL host <strong>@ViewBag.sqlserver</strong>
+    Build  <strong>@ViewBag.build</strong>
+</div>
+
+<hr />
+<div class="card card-body">
+    <h3>Equi instances</h3>
+    <hr />
+    @MyHtmlHelpers.EquiLink("https://gensvw1178.gen.volvocars.net", "fas fa-flag", "VCG", helperText: "Volvo cars Ghent")
+    @MyHtmlHelpers.EquiLink("http://chasvw1203.cha.volvocars.net", "fas fa-flag", "VCCH", helperText: "Volvo cars Charleston")
+</div>

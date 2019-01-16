@@ -1,4 +1,4 @@
-CREATE TABLE [WELDING2].[rt_paramvalues] (
+﻿CREATE TABLE [WELDING2].[rt_paramvalues] (
     [id]               INT            IDENTITY (1, 1) NOT NULL,
     [timerId]          INT            NULL,
     [_timestamp]       DATETIME       NULL,
@@ -22,8 +22,22 @@ CREATE TABLE [WELDING2].[rt_paramvalues] (
 
 
 
+
+
 GO
 CREATE NONCLUSTERED INDEX [idx_subindex1]
     ON [WELDING2].[rt_paramvalues]([timerId] ASC, [subindex] ASC)
     INCLUDE([value], [c_bosch_param_id]);
+
+
+GO
+CREATE NONCLUSTERED INDEX [idx_paramvalues]
+    ON [WELDING2].[rt_paramvalues]([c_bosch_param_id] ASC)
+    INCLUDE([timerId], [_timestamp], [subindex], [value]);
+
+
+GO
+CREATE NONCLUSTERED INDEX [idx_param]
+    ON [WELDING2].[rt_paramvalues]([subindex] ASC, [c_bosch_param_id] ASC)
+    INCLUDE([timerId], [value]);
 

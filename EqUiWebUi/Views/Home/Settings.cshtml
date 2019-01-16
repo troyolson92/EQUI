@@ -2,33 +2,69 @@
     ViewBag.Title = "Settings";
 }
 
-<p></p>
-@Html.Action("_settings", "EQUISetup", new { area = "" })
-<p></p>
-@Html.Action("_settings", "job", new { area = "HangfireArea" })
-<p></p>
-@Html.Action("_settings", "Users", new { area = "user_management" })
-<p></p>
-@Html.Action("_settings", "UserScreens", new { area = "user_management" })
-<p></p>
-@Html.Action("_settings", "alert", new { area = "alert" })
-<p></p>
+<div id="EQUISetup"></div>
+<hr />
+<div id="job"></div>
+<hr />
+<div id="Users"></div>
+<hr />
+<div id="UserScreens"></div>
+<hr />
+<div id="alert"></div>
+<hr />
 
 @if (System.Configuration.ConfigurationManager.AppSettings["Maximo_SiteID"].ToString() == "VCG")
 {
-<div class="card">
-    <div class="card-header bg-dark">
-        <h5 class="card-title text-white">
-            Tools (VCG)
-            <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
-        </h5>
+    <div class="card">
+        <div class="card-header bg-dark">
+            <h5 class="card-title text-white">
+                Tools (VCG)
+                <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
+            </h5>
+        </div>
+        <div class="card-body">
+            @MyHtmlHelpers.EquiLink("http://gensvw1051:5601/app/kibana#/discover?_g=()", "fas fa-wrench", "Kibana (VIDS)", helperText: "Elastic search tool to search the VIDS database")
+            @MyHtmlHelpers.EquiLink("http://andonscreendumps.gen.volvocars.net/", "fas fa-wrench", "Screen dumps (ANDON)", helperText: "All Andon screen dumps (non x20)")
+            @MyHtmlHelpers.EquiLink("http://gensvw1162/XManagerWeb/", "fas fa-wrench", "Screen dumps (ANDON) X2O", helperText: "All Andon screen dumps (x20) user:reader password:Reader1")
+        </div>
     </div>
-    <div class="card-body">
-        @MyHtmlHelpers.EquiLink("http://gensvw1051:5601/app/kibana#/discover?_g=()", "fas fa-wrench", "Kibana (VIDS)", helperText: "Elastic search tool to search the VIDS database")
-        @MyHtmlHelpers.EquiLink("http://andonscreendumps.gen.volvocars.net/", "fas fa-wrench", "Screen dumps (ANDON)", helperText: "All Andon screen dumps (non x20)")
-        @MyHtmlHelpers.EquiLink("http://gensvw1162/XManagerWeb/", "fas fa-wrench", "Screen dumps (ANDON) X2O", helperText: "All Andon screen dumps (x20) user:reader password:Reader1")
-    </div>
-</div>
 }
+
+@section scripts{
+    <script>
+        $("#EQUISetup").load('@Url.Action("_settings", "EQUISetup", new { area = "" })',
+            function (responseText, textStatus, req) {
+                if (textStatus == "error") {
+                    $("#EQUISetup").html($("#Error", responseText).html());
+                }
+            });
+        $("#job").load('@Url.Action("_settings", "job", new { area = "HangfireArea" })',
+            function (responseText, textStatus, req) {
+                if (textStatus == "error") {
+                    $("#job").html($("#Error", responseText).html());
+                }
+            });
+        $("#Users").load('@Url.Action("_settings", "Users", new { area = "user_management" })',
+            function (responseText, textStatus, req) {
+                if (textStatus == "error") {
+                    $("#Users").html($("#Error", responseText).html());
+                }
+            });
+        $("#UserScreens").load('@Url.Action("_settings", "UserScreens", new { area = "user_management" })',
+            function (responseText, textStatus, req) {
+                if (textStatus == "error") {
+                    $("#UserScreens").html($("#Error", responseText).html());
+                }
+            });
+        $("#alert").load('@Url.Action("_settings", "alert", new { area = "alert" })',
+            function (responseText, textStatus, req) {
+                if (textStatus == "error") {
+                    $("#alert").html($("#Error", responseText).html());
+                }
+            });
+    </script>
+
+}
+
 
 

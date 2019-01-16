@@ -25,15 +25,3 @@
     pager.ShowPageSizes = true;
 }).Empty("No workorders found").Css("table-hover")
 
-
-@*inform user that this is a realtime connection*@
-@if (ViewBag.RealtimeConn)
-{
-    <div class="badge badge-pill badge-warning">
-        RT
-    </div>
-}
-@*  <textarea style="height:200px" class="w-100" id="sqlStatement" name="sqlStatement">@ViewBag.Qry</textarea>*@
-
-
-

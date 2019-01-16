@@ -4,12 +4,14 @@
             WeldgunTool for
             location: <strong>@ViewBag.location</strong>
             Tool_id: <strong>@ViewBag.tool_nr</strong>
-            <a class="far fa-calendar-alt text-black-50" href="#" id="Datepicker"></a>
+            ElectrodeNo: <strong>@ViewBag.ElectrodeNo</strong>
+            <a class="fas fa-info-circle text-black-50 clickable" id="Wiki" data-toggle="popover" data-placement="right" title="Show more info and raw data"></a>
+            <a class="far fa-calendar-alt text-black-50 clickable" id="Datepicker" data-toggle="popover" data-placement="right" title="Set date time range for all charts"></a>
         </h6>
     </div>
 
     <div class="card-body">
-        @*render ngac virtual chart*@
+        @*render ngac Nom/Ref wear virtual chart*@
         @if (ViewBag.NgacDummyAlarmobject != null)
         {
             @Html.Action("_GetControlChart","ControlChart", new { Area = "Alert",
@@ -21,6 +23,16 @@
                })
             <hr />
         }
+
+        @*render midair virtual chart*@
+        @Html.Action("_GetControlChart","ControlChart", new { Area = "Alert",
+                chartname = "Dummyalert",
+                alarmobject = ViewBag.MidAirDummyAlarmobject,
+                c_trigger_id = ViewBag.MidAircDummyTriggerId,
+                startdate = ViewBag.daysback,
+                enddate = System.DateTime.Now
+            })
+        <hr />
 
         @*render all real control charts (have real control limits)*@
         @foreach (EqUiWebUi.Areas.Alert.Models.l_controlLimits limit in ViewBag.controlLimits)
@@ -36,6 +48,13 @@
         }
     </div>
 </div>
+
+
+@*render popuover modal*@
+<div id="MyModal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class='card-body'><i class='fa fa-spinner fa-pulse fa-4x fa-fw text-white'></i><span class='sr-only'>Loading...</span></div>
+</div>
+
 
 <!--WeldgunToolScripts-->
 <script>
@@ -61,4 +80,25 @@
         //trigger refresh on all charts
         $(".ControlChartRefresh").trigger("click");
     });
+
+    //enable modal for wiki
+    $("#Wiki").click(function () {
+        $('#MyModal').removeData('bs.modal');
+        $('#MyModal').modal({ show: true });
+        if (@ViewBag.isNgac.ToString().ToLower()){
+             $('#MyModal').load('@Url.Action("_Tipinfo", "NgacElectrode")', { location: '@ViewBag.location', tool_nr: @ViewBag.tool_nr}, function(result) { });
+        }
+        else {
+             $('#MyModal').load('@Url.Action("_Tipinfo", "ComauElectrode")', { location: '@ViewBag.location', tool_nr: @ViewBag.tool_nr}, function(result) { });
+        }         
+    });
+
+    //on modal close
+    $('#MyModal').on('hidden.bs.modal', function (e) {
+        $('#MyModal').html("<div class='card-body'><i class='fa fa-spinner fa-pulse fa-4x fa-fw text-white' ></i ><span class='sr-only'>Loading...</span></div >");
+    });
+
+    //enable tooltips
+    $('[data-toggle="popover"]').tooltip();
+
 </script>

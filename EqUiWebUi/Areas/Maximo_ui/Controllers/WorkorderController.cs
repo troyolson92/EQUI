@@ -16,9 +16,6 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
     {
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        //default number of days we search back in history
-        int MaximoWorkordersDaysback = -1000;
-
         // GET: Maximo_ui/Workorder
         public ActionResult Index()
         {
@@ -27,70 +24,13 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
 
         //full view can be intitiated by using parms or by model. 
         [HttpGet]
-        public ActionResult Workorders(string location, string locancestor, bool? b_ciblings, bool? b_preventive, string jpnum, string worktype, string wonum, string status, string ownergroup
-            , DateTime? startdate, DateTime? enddate, Models.WorkorderSelectOptions workorderSelectOptions
-            , bool loadOnInit = false, bool fullscreen = false, int fontSize = 12, bool RealtimeConn = true)
+        public ActionResult Workorders(Models.WorkorderSelectOptions workorderSelectOptions, bool loadOnInit = false)
         {
-            //if a parm value is appended set it to the model ELSE MODEL IS BOSS
-            if (location != null) workorderSelectOptions.location = location;
-            if (locancestor != null) workorderSelectOptions.locancestor = locancestor;
-            if (b_ciblings != null) workorderSelectOptions.b_ciblings = b_ciblings.GetValueOrDefault();
-            if (b_preventive != null) workorderSelectOptions.b_preventive = b_preventive.GetValueOrDefault();
-            if (jpnum != null) workorderSelectOptions.jpnum = jpnum;
-            if (worktype != null) workorderSelectOptions.worktype = worktype;
-            if (wonum != null) workorderSelectOptions.wonum = wonum;
-            if (status != null) workorderSelectOptions.status = status;
-            if (ownergroup != null) workorderSelectOptions.ownergroup = ownergroup;
-            if (startdate != null)
-            {
-                workorderSelectOptions.startdate = startdate.GetValueOrDefault(); //if a value is passed (nullcheck)
-            }
-            else
-            {
-                workorderSelectOptions.startdate = System.DateTime.Now.AddDays(MaximoWorkordersDaysback); //default value 
-            }
-            if (enddate != null)
-            {
-                workorderSelectOptions.enddate = enddate.GetValueOrDefault(); //if a value is passed (nullcheck)
-            }
-            else
-            {
-                workorderSelectOptions.enddate = System.DateTime.Now; //default value
-            }
-            //to be able to override fontsize
-            ViewBag.fontSize = fontSize;
             //if this is set we load the workorder directly and fold up the parms pannem
             ViewBag.loadOnInit = loadOnInit;
-            //if this is set we hide navbar and render in full screen mode
-            ViewBag.fullscreen = fullscreen;
-            //if this is set we run on the production server.
-            workorderSelectOptions.realtimeConn = RealtimeConn;
-            //
             return View(workorderSelectOptions);
         }
 
-        //can be called to be renders as partial in model or something like that...
-        [HttpGet]
-        public ActionResult _workordersOnLocation(string location, string locancestor, bool? b_ciblings, bool? b_preventive, string jpnum, string worktype, string wonum, string status, string ownergroup
-            , DateTime? startdate, DateTime? enddate, bool RealtimeConn = true)
-        {
-            Models.WorkorderSelectOptions workorderSelectOptions = new WorkorderSelectOptions();
-            //set models to parms
-            workorderSelectOptions.location = location;
-            workorderSelectOptions.locancestor = locancestor;
-            workorderSelectOptions.b_ciblings = b_ciblings.GetValueOrDefault();
-            workorderSelectOptions.b_preventive = b_preventive.GetValueOrDefault();
-            workorderSelectOptions.jpnum = jpnum;
-            workorderSelectOptions.worktype = worktype;
-            workorderSelectOptions.wonum = wonum;
-            workorderSelectOptions.status = status;
-            workorderSelectOptions.ownergroup = ownergroup;
-            workorderSelectOptions.startdate = startdate.GetValueOrDefault(System.DateTime.Now.AddDays(MaximoWorkordersDaysback));
-            workorderSelectOptions.enddate = enddate.GetValueOrDefault(System.DateTime.Now);
-            workorderSelectOptions.realtimeConn = RealtimeConn;
-            //
-            return PartialView(workorderSelectOptions);
-        }
 
         //form post work Workoders main view.
         [HttpPost]
@@ -99,27 +39,13 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
             return PartialView(workorderSelectOptions);
         }
 
-        //Test render _workordersOnLocation (example of how to call it as a partial)
-        [HttpGet]
-        public ActionResult ExampleCall_workordersOnLocation()
-        {
-            return View();
-        }
-
         //gets called by AJAX to render the workorder grid
         [HttpGet]
-        public async Task<ActionResult> _workordersOnLocationGrid(string location, string locancestor, bool? b_ciblings, bool? b_preventive, string jpnum, string worktype, string wonum, string status, string ownergroup
-            , DateTime? startdate, DateTime? enddate, bool RealtimeConn = false)
+        public async Task<ActionResult> _workordersOnLocationGrid(Models.WorkorderSelectOptions workorderSelectOptions)
         {
             //check if user is allowed to user realtimeConn
-            string MaximoDbName = "MAXIMO7rep";
+            string MaximoDbName = "MAXIMOrt";
             int CommandTimeout = 30;
-            if (RealtimeConn)
-            {
-                MaximoDbName = "MAXIMOrt";
-                CommandTimeout = 5;
-            }
-
             //build query
             StringBuilder sbqry = new StringBuilder();
             sbqry.AppendLine(string.Format(@"
@@ -140,44 +66,40 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
                 , System.Configuration.ConfigurationManager.AppSettings["Maximo_LOCATION_SYSTEMID"].ToString()));
 
             //start where clause
-            sbqry.AppendLine("WHERE ((WORKORDER.woclass = 'WORKORDER' or WORKORDER.woclass = 'ACTIVITY') and WORKORDER.historyflag = 0 and WORKORDER.istask = 0)");
+            sbqry.AppendLine("WHERE ((WORKORDER.woclass = 'WORKORDER' or WORKORDER.woclass = 'ACTIVITY') and WORKORDER.istask = 0)");
             //SDB bugfix case no ancestor 
-            if (string.IsNullOrWhiteSpace(locancestor)) //to prevent dups 
+            if (string.IsNullOrWhiteSpace(workorderSelectOptions.locancestor)) //to prevent dups 
             {
                 sbqry.AppendLine("AND LOCANCESTOR.ANCESTOR = WORKORDER.LOCATION");
             }
             else
             {
                 //handel ancestors.
-                sbqry.AppendLine(handleParm("LOCANCESTOR.ANCESTOR", locancestor));
+                sbqry.AppendLine(handleParm("LOCANCESTOR.ANCESTOR", workorderSelectOptions.locancestor));
             }
             //handle locations.
-            sbqry.AppendLine(handleParm("WORKORDER.LOCATION", location));
+            sbqry.AppendLine(handleParm("WORKORDER.LOCATION", workorderSelectOptions.location));
             //handle preventive
-            b_preventive = b_preventive ?? false; //default no preventive
-            if (b_preventive == false)
+            if (workorderSelectOptions.b_preventive == false)
             {
                 sbqry.AppendLine("AND WORKORDER.WORKTYPE not in ('PP','PCI','WSCH')");
             }
             //hande worktype
-            sbqry.AppendLine(handleParm("WORKORDER.WORKTYPE", worktype));
+            sbqry.AppendLine(handleParm("WORKORDER.WORKTYPE", workorderSelectOptions.worktype));
             //handle JPnum
-            sbqry.AppendLine(handleParm("WORKORDER.JPNUM", jpnum));
+            sbqry.AppendLine(handleParm("WORKORDER.JPNUM", workorderSelectOptions.jpnum));
             //handle wonum
-            sbqry.AppendLine(handleParm("WORKORDER.WONUM", wonum));
+            sbqry.AppendLine(handleParm("WORKORDER.WONUM", workorderSelectOptions.wonum));
             //handle status
-            sbqry.AppendLine(handleParm("WORKORDER.STATUS", status));
+            sbqry.AppendLine(handleParm("WORKORDER.STATUS", workorderSelectOptions.status));
             //hanlde ownergroup
-            sbqry.AppendLine(handleParm("WORKORDER.OWNERGROUP", ownergroup));
+            sbqry.AppendLine(handleParm("WORKORDER.OWNERGROUP", workorderSelectOptions.ownergroup));
 
             //handle timerange
-            if (enddate != null)
+            if (workorderSelectOptions.enddate != workorderSelectOptions.startdate)
             {
-                sbqry.AppendLine(string.Format("AND WORKORDER.CHANGEDATE < TO_TIMESTAMP('{0}', 'YYYY/MM/DD HH24:MI:SS') ",enddate.GetValueOrDefault().ToString("yyyy/MM/dd HH:mm:ss")));
-            }
-            if (startdate != null)
-            {
-                sbqry.AppendLine(string.Format("AND WORKORDER.CHANGEDATE > TO_TIMESTAMP('{0}', 'YYYY/MM/DD HH24:MI:SS') ", startdate.GetValueOrDefault().ToString("yyyy/MM/dd HH:mm:ss")));
+                sbqry.AppendLine(string.Format("AND WORKORDER.CHANGEDATE < TO_TIMESTAMP('{0}', 'YYYY/MM/DD HH24:MI:SS') ", workorderSelectOptions.enddate.GetValueOrDefault().ToString("yyyy/MM/dd HH:mm:ss")));
+                sbqry.AppendLine(string.Format("AND WORKORDER.CHANGEDATE > TO_TIMESTAMP('{0}', 'YYYY/MM/DD HH24:MI:SS') ", workorderSelectOptions.startdate.GetValueOrDefault().ToString("yyyy/MM/dd HH:mm:ss")));
             }
 
             //add sort 
@@ -210,7 +132,6 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
                 workorders.Add(workorder);
             }
             //
-            ViewBag.RealtimeConn = RealtimeConn;
             return PartialView(workorders);
         }
 

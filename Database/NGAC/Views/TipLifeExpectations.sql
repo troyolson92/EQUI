@@ -8,6 +8,7 @@
 
 
 
+
 CREATE VIEW [NGAC].[TipLifeExpectations]
 AS
 SELECT 
@@ -53,10 +54,6 @@ SELECT
    twBc.[%FixedWearBeforeChange] >= 10 --zeker 25% wear gehad hebben voor wissel
    AND 
    twBc.[%MoveWearBeforeChange] >= 10 --zeker 25% wear gehad hebben voor wissel
-   AND
-   twBc.[%FixedWearBeforeChange] < 100 --niet meer dan 100% wear voor wissel
-   AND 
-   twBc.[%MoveWearBeforeChange] < 100 --niet meer dan 100% wear voor wissel
    AND 
    twBc.WeldsBeforeChange > 200 --moet minsten 200 spot gelast hebben voor wissel
   --THIS DESTROYSSSS performance!!!!

@@ -3,68 +3,78 @@
 <div class="card-body pt-0 pb-0" id="placecontainer" style="position:relative">
     <div class="row">
         <div class="col-lg-6 pl-0 pr-2">
-            @*<a href="@Model[0].ScreenUrl"><span class="badge-pill bg-warning text-white">@Model[0].Discription</span></a>*@
             <div class="intrinsic-container intrinsic-container-16x9">
-                <iframe id="frame0" src="@Model[0].ScreenUrl" allowfullscreen frameBorder="0"></iframe>
+                <iframe id="frame0" src="@Model[0].ScreenUrl" allowfullscreen frameBorder="0" class="Zoomlevel0"></iframe>
             </div>
         </div>
 
         <div class="col-lg-6 pl-2 pr-0">
-            @*<a href="@Model[1].ScreenUrl"><span class="badge-pill bg-warning text-white">@Model[1].Discription</span></a>*@
-                    <div class="intrinsic-container intrinsic-container-16x9">
-                        <iframe id="frame1" src="@Model[1].ScreenUrl" allowfullscreen frameBorder="0"></iframe>
-                    </div>
-                </div>
+            <div class="intrinsic-container intrinsic-container-16x9">
+                <iframe id="frame1" src="@Model[1].ScreenUrl" allowfullscreen frameBorder="0" class="Zoomlevel1"></iframe>
             </div>
+        </div>
+    </div>
 
-            <div class="row">
-                <div class="col-lg-6 pl-0 pr-2">
-                    @*<a href="@Model[2].ScreenUrl"><span class="badge-pill bg-warning text-white">@Model[2].Discription</span></a>*@
-                    <div class="intrinsic-container intrinsic-container-16x9">
-                        <iframe id="frame2" src="@Model[2].ScreenUrl" allowfullscreen frameBorder="0"></iframe>
-                    </div>
-                </div>
-
-                <div class="col-lg-6 pl-2 pr-0">
-                    @*<a href="@Model[3].ScreenUrl"><span class="badge-pill bg-warning text-white">@Model[3].Discription</span></a>*@
-                    <div class="intrinsic-container intrinsic-container-16x9">
-                        <iframe id="frame3" src="@Model[3].ScreenUrl" allowfullscreen frameBorder="0"></iframe>
-                    </div>
-                </div>
+    <div class="row">
+        <div class="col-lg-6 pl-0 pr-2">
+            <div class="intrinsic-container intrinsic-container-16x9">
+                <iframe id="frame2" src="@Model[2].ScreenUrl" allowfullscreen frameBorder="0" class="Zoomlevel2"></iframe>
             </div>
-
         </div>
 
-        <style>
-            .intrinsic-container {
-                position: relative;
-                height: 0;
-                overflow: hidden;
-            }
+        <div class="col-lg-6 pl-2 pr-0">
+            <div class="intrinsic-container intrinsic-container-16x9">
+                <iframe id="frame3" src="@Model[3].ScreenUrl" allowfullscreen frameBorder="0" class="Zoomlevel3"></iframe>
+            </div>
+        </div>
+    </div>
 
-            /* 16x9 Aspect Ratio */
-            /*org value 56.26% for 16x9 flow means smaller => value is set so that on a 4X Iiyama screen in fullscreen browser we have NO vertical scroll*/
-            .intrinsic-container-16x9 {
-                padding-bottom: 55%;
-            }
+</div>
 
-            /* 4x3 Aspect Ratio */
-            .intrinsic-container-4x3 {
-                padding-bottom: 75%;
-            }
+<style>
+.intrinsic-container {
+    position: relative;
+    height: 0;
+    overflow: hidden;
+}
 
-            .intrinsic-container iframe {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-            }
+/* 16x9 Aspect Ratio */
+/*org value 56.26% for 16x9 flow means smaller => value is set so that on a 4X Iiyama screen in fullscreen browser we have NO vertical scroll*/
+.intrinsic-container-16x9 {
+    padding-bottom: 55%;
+}
 
-            body {
-                background-color: black;
-            }
-        </style>
+/* 4x3 Aspect Ratio */
+.intrinsic-container-4x3 {
+    padding-bottom: 75%;
+}
+
+.intrinsic-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    background-color: black;
+}
+
+.Zoomlevel0 {
+    -webkit-transform: scale(@Model[0].ZoomLevel.GetValueOrDefault(1));
+}
+.Zoomlevel1 {
+    -webkit-transform: scale(@Model[1].ZoomLevel.GetValueOrDefault(1));
+}
+.Zoomlevel2 {
+    -webkit-transform: scale(@Model[2].ZoomLevel.GetValueOrDefault(1));
+}
+.Zoomlevel3 {
+    -webkit-transform: scale(@Model[3].ZoomLevel.GetValueOrDefault(1));
+}
+
+</style>
 
         @section scripts{
         <script type="text/javascript">

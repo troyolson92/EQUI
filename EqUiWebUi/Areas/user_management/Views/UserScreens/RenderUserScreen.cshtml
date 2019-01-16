@@ -18,17 +18,23 @@
 
     <!--page gets renderd in this iframe-->
     <body style="margin:0px; padding:0px;">
-        <iframe id="@("IframeScreenID" + Model.id)" src="@Model.ScreenUrl" frameborder="0" style="height:100%;width:100%;position:absolute;top:0px;left:0px;right:0px;bottom:0px"></iframe>
+        <iframe id="@("IframeScreenID" + Model.id)" src="@Model.ScreenUrl" frameborder="0" style="height:100%;width:100%;position:absolute;top:0px;left:0px;right:0px;bottom:0px" class="Zoomlevel"></iframe>
     </body>
 
-    <!--Modal for messages-->
-    <div id="RenderUserScreenMessage" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-content">Loading....</div>
-    </div>
+<style>
+    .Zoomlevel {
+        -webkit-transform: scale(@Model.ZoomLevel.GetValueOrDefault(1));
+    }
+</style>
 
-    <div id="RenderUserMessageIframe" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-content">Loading....</div>
-    </div>
+<!--Modal for messages-->
+<div id="RenderUserScreenMessage" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-content">Loading....</div>
+</div>
+
+<div id="RenderUserMessageIframe" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-content">Loading....</div>
+</div>
 
     @section scripts{
         <script src="~/Scripts/jquery.signalR-2.2.2.js"></script>

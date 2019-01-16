@@ -8,6 +8,11 @@
     [EnergyActual]   SMALLINT NULL,
     [WeldTimeActual] SMALLINT NULL,
     [Iactual2]       REAL     NULL,
+    [UpperTolBand]   REAL     NULL,
+    [LowerTolBand]   REAL     NULL,
+    [LowerCondBand]  REAL     NULL,
     CONSTRAINT [PK_h_Midair] PRIMARY KEY CLUSTERED ([ID] ASC)
 );
+
+
 

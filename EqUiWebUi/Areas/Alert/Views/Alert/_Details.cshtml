@@ -3,7 +3,10 @@
 
 <div class="form-horizontal">
     <hr />
-    <h4>Information about this alert (id:@Model.id)</h4>
+    <h4>
+        Information about this alert (id:@Model.id)
+        <a class="fas fa-info-circle text-black-50 clickable" id="WikiPopover" data-container="body" data-toggle="popover" data-placement="bottom" title="show wiki"></a>
+    </h4>
     <div class="form-group">
         @Html.LabelFor(model => model.location, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
@@ -77,3 +80,17 @@
 
     </div>
 </div>
+
+<script>
+       //enable popover for wiki
+        $("#WikiPopover").popover({
+            html: true,
+            content: function () {
+                return $.ajax({
+                    url: '@Url.Action("_Wiki","c_triggers",new {c_trigger_id = Model.c_tirgger_id })',
+                    dataType: 'html',
+                    async: false
+                }).responseText;
+            }
+        });
+</script>

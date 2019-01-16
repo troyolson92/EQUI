@@ -4,10 +4,11 @@
 }
 <div class="card">
     <div class="card-header bg-dark text-white row">        
-        <h4 class="col-8">Current electrode status
-            <a class="fas fa-info-circle text-white" id="LegendPopover" href="#" data-container="body" data-toggle="popover" data-placement="bottom"></a>
+        <h4 class="col-8">
+            Current electrode status
+            <a class="fas fa-info-circle text-white clickable" id="LegendPopover" data-container="body" data-toggle="popover" data-placement="bottom" title="Show Legend "></a>
         </h4>
-        @MyHtmlHelpers.IconActionLink(Url.Action("PlanTipChange"),"fab fa-stack-exchange","Plan electrode change", "Go to electrode change planning tool",classes:"")
+        @MyHtmlHelpers.IconActionLink(Url.Action("PlanTipChange"),"fab fa-stack-exchange","Plan electrode change", "Go to electrode change planning tool",classes:"btn btn-warning")
     </div>
 
     <div class="mvc-grid" data-name="TipStatusGrid"></div>
@@ -43,6 +44,9 @@
                 $('#MyModal').modal({ show: true });
                 $('#MyModal').load('@Url.Action("_Tipinfo","NgacElectrode")', { location: encodeURIComponent(data["robot"]), tool_nr : encodeURIComponent(data["tool_-nr"])}, function (result) { });
             },
+            reloadEnded: function () {
+                $('[data-toggle="popover"]').tooltip();
+            },
             reloadFailed: function (result) {
                 $('[data-name="TipStatusGrid"]').html($("#Error", result.responseText).html());
             }
@@ -59,6 +63,9 @@
                 }).responseText;
             }
         });
+
+        //enable tooltips
+        $('[data-toggle="popover"]').tooltip();
 
         //on modal close
         $('#MyModal').on('hidden.bs.modal', function (e) {

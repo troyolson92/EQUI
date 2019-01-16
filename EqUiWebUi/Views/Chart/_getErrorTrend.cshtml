@@ -4,13 +4,13 @@
     <div class="card">
         <div class="card-header bg-light">
             <h6 class="card-title">
-                <a class="fas fa-sync-alt text-black-50 ErrorTrentChartRefresh" href="#"></a>
+                <a class="fas fa-sync-alt text-black-50 ErrorTrentChartRefresh clickable" data-toggle="popover" data-placement="bottom" title="Refresh chart"></a>
                 Trend for
                 location: <strong>@Model.location.Trim()</strong>
                 logcode: <strong>@Model.errornum</strong>
                 logtext: <strong>@Model.logtext.Trim()</strong>
-                <a class="fas fa-wrench text-black-50 ErrorTrentChartOptionsPopoverChart" href="#" data-toggle="popover" data-placement="bottom"></a>
-                <a class="far fa-calendar-alt text-black-50 ErrorTrentChartDatepicker" href="#"></a>
+                <a class="fas fa-wrench text-black-50 ErrorTrentChartOptionsPopoverChart clickable" data-toggle="popover" data-placement="bottom"  title="Chart options"></a>
+                <a class="far fa-calendar-alt text-black-50 ErrorTrentChartDatepicker clickable" data-toggle="popover" data-placement="bottom"  title="Set date range" ></a>
                 <span class="clickable float-right text-black-50"><i class="fas fa-chevron-circle-up fa-1"></i></span>
             </h6>
         </div>
@@ -29,12 +29,12 @@
                 </div>
 
                 <div class="col-9">
-                    <div class="btn-group" id="btnGrouping" role="group" data-toggle="tooltip" data-placement="bottom" title="Set how the graph groups the data">
-                        <button type="button" class="btn  btn-sm btn-secondary active" id="btnGroupingAuto">auto</button>
-                        <button type="button" class="btn  btn-sm btn-secondary" id="btnGroupingHour">hour</button>
-                        <button type="button" class="btn  btn-sm btn-secondary" id="btnGroupingDay">day</button>
-                        <button type="button" class="btn  btn-sm btn-secondary" id="btnGroupingWeek">week</button>
-                        <button type="button" class="btn  btn-sm btn-secondary" id="btnGroupingMonth">month</button>
+                    <div class="btn-group btnGrouping" role="group" data-toggle="tooltip" data-placement="bottom" title="Set how the graph groups the data">
+                        <button type="button" class="btn  btn-sm btn-secondary active" value="0">auto</button>
+                        <button type="button" class="btn  btn-sm btn-secondary" value="1">hour</button>
+                        <button type="button" class="btn  btn-sm btn-secondary" value="2">day</button>
+                        <button type="button" class="btn  btn-sm btn-secondary" value="3">week</button>
+                        <button type="button" class="btn  btn-sm btn-secondary" value="4">month</button>
                     </div>
                 </div>
             </div>
@@ -90,6 +90,15 @@
             }
         });
 
+        //listen to btn group click events
+        $('#ChartID@(Model.refid)').find(".ErrorTrentChartOptionsPopoverChart").on('shown.bs.popover', function () {
+            $('.btnGrouping > .btn').click(function () {
+                $(this).addClass('active').siblings().removeClass('active');
+                $('#ChartID@(Model.refid)').find("input[name=ErrorTrentChartGroupmode]").val($(this).val());
+                getChartData();
+            });
+        });
+        
         //get chart data
         function getChartData() {
             $('#ChartID@(Model.refid)').find('.gaphContainer').html("<div class='card-body'><i class='fa fa-spinner fa-pulse fa-2x fa-fw'></i><span class='sr-only'></span>Loading....</div>");
@@ -200,45 +209,11 @@
             ErrorTrendChart = new Chart(ctx, config);
         }
 
+        //enable tooltips
+        $('[data-toggle="popover"]').tooltip();
+
         //listen to refresh click event
         $('#ChartID@(Model.refid)').find('.ErrorTrentChartRefresh').click(function () {
-            getChartData();
-        });
-
-
-        //setting up group mode events
-        $(document).on("click", "#btnGroupingAuto", function () {
-            $("#btnGrouping").find(".active").removeClass("active");
-            $("#btnGroupingAuto").addClass("active");
-            groupmode = 0;
-            getChartData();
-        });
-
-        $(document).on("click", "#btnGroupingHour", function () {
-            $("#btnGrouping").find(".active").removeClass("active");
-            $("#btnGroupingHour").addClass("active");
-            groupmode = 1;
-            getChartData();
-        });
-
-        $(document).on("click", "#btnGroupingDay", function () {
-            $("#btnGrouping").find(".active").removeClass("active");
-            $("#btnGroupingDay").addClass("active");
-            groupmode = 2;
-            getChartData();
-        });
-
-        $(document).on("click", "#btnGroupingWeek", function () {
-            $("#btnGrouping").find(".active").removeClass("active");
-            $("#btnGroupingWeek").addClass("active");
-            groupmode = 3;
-            getChartData();
-        });
-
-        $(document).on("click", "#btnGroupingMonth", function () {
-            $("#btnGrouping").find(".active").removeClass("active");
-            $("#btnGroupingMonth").addClass("active");
-            groupmode = 4;
             getChartData();
         });
 

@@ -1,17 +1,19 @@
-﻿@model IQueryable<EqUiWebUi.Areas.Tiplife.Models.TipwearBeforeChange>
+﻿@model IQueryable<EqUiWebUi.Areas.Tiplife.Models.NGAC_TipwearBeforeChange>
 @Html.Grid(Model).Named("TipwearBeforeChangeGrid").Build(columns =>
 {
     columns.Add(c => c.controller_name).Titled("Robot");
     columns.Add(c => c.TipchangeTimestamp).Titled("Tipchangetimestamp").Formatted("{0:dd-MM-yyyy HH:mm}").InitialSort(GridSortOrder.Desc);
-    columns.Add(c => c.WearBeforeChange).Titled("Wear (mm)").Css("XXd-none XXd-md-block"); 
-    columns.Add(c => c.WeldsBeforeChange).Titled("#Welds").Css("XXd-none XXd-md-block"); 
+    columns.Add(c => c.WearBeforeChange).Titled("Wear (mm)").Css("XXd-none XXd-md-block");
+    columns.Add(c => c.WeldsBeforeChange).Titled("#Welds").Css("XXd-none XXd-md-block");
     columns.Add(c => c.DressBeforeChange).Titled("#Dress");
     columns.Add(c => c.C_FixedWearBeforeChange).Titled("%Fixed");
     columns.Add(c => c.C_MoveWearBeforeChange).Titled("%Move");
     columns.Add(c => c.TipAge_h_).Titled("(h)leeftijd");
-    columns.Add(c => c.ESTnSpotsFixedWearBefore100).Titled("ESTnSFix100").Css("XXd-none XXd-md-block"); 
-    columns.Add(c => c.ESTnSpotsMoveWearBefore100).Titled("ESTnSMov100").Css("XXd-none XXd-md-block"); 
+    columns.Add(c => c.ESTnSpotsFixedWearBefore100).Titled("ESTnSFix100").Css("XXd-none XXd-md-block");
+    columns.Add(c => c.ESTnSpotsMoveWearBefore100).Titled("ESTnSMov100").Css("XXd-none XXd-md-block");
 }).Sortable().Filterable().Pageable(pager =>
 {
-   pager.RowsPerPage = 20;
+    pager.RowsPerPage = 20;
+    pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 20, "20" }, { 40, "40" }, { 80, "80" }, { 100, "100" } };
+    pager.ShowPageSizes = true;
 }).Empty("No data found").Css("table-hover")

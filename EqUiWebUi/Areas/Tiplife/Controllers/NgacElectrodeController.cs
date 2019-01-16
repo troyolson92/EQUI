@@ -14,6 +14,7 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
     public class NgacElectrodeController : Controller
     {
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        GADATAEntitiesTiplife db = new GADATAEntitiesTiplife();
 
         // GET: Tiplife/NgacElectrode
         [HttpGet]
@@ -30,7 +31,7 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
         /// <returns></returns>
         public ActionResult _Tipinfo(string location, int tool_nr)
         {
-            ViewBag.location = location;
+            ViewBag.location = location.Trim();
             ViewBag.tool_nr = tool_nr;
             return PartialView();
         }
@@ -55,9 +56,8 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
         public ActionResult _TipDressDataGrid(int daysback = 360, string location = "", int tool_nr = 1)
         {
             var startdate = DateTime.Now.Date.AddDays(daysback * -1);
-            GADATAEntitiesTiplife gADATAEntities = new GADATAEntitiesTiplife();
             string LocationRoot = CurrentUser.Getuser.LocationRoot;
-            IQueryable<TipDressLogFile> data = from t in gADATAEntities.TipDressLogFile
+            IQueryable<NGAC_TipDressLogFile> data = from t in db.TipDressLogFile
                                                where t.Date_Time > startdate
                                                && (t.LocationTree ?? "").Contains(LocationRoot)
                                                && (t.controller_name.Contains(location) && t.Tool_Nr == tool_nr)
@@ -85,10 +85,9 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
         public ActionResult _TipwearBeforeChangeGrid(int daysback = 360, string location = "", int tool_nr = 1)
         {
             var startdate = DateTime.Now.Date.AddDays(daysback * -1);
-            GADATAEntitiesTiplife gADATAEntities = new GADATAEntitiesTiplife();
             string LocationRoot = CurrentUser.Getuser.LocationRoot;
-            IQueryable<TipwearBeforeChange> data = from t in gADATAEntities.TipwearBeforeChange
-                                                   where t.TipchangeTimestamp > startdate
+            IQueryable<NGAC_TipwearBeforeChange> data = from t in db.TipwearBeforeChange
+                                                        where t.TipchangeTimestamp > startdate
                                                    && (t.LocationTree ?? "").Contains(LocationRoot)
                                                    && (t.controller_name.Contains(location) && t.Tool_Nr == tool_nr)
                                                    select t;
@@ -113,11 +112,37 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
         /// <returns></returns>
         public ActionResult _TipLifeExpectationsGrid(string location = "", int tool_nr = 1)
         {
-            GADATAEntitiesTiplife gADATAEntities = new GADATAEntitiesTiplife();
             string LocationRoot = CurrentUser.Getuser.LocationRoot;
-            IQueryable<TipLifeExpectations> data = from t in gADATAEntities.TipLifeExpectations
-                                                   where (t.LocationTree ?? "").Contains(LocationRoot)
+            IQueryable<NGAC_TipLifeExpectations> data = from t in db.TipLifeExpectations
+                                                        where (t.LocationTree ?? "").Contains(LocationRoot)
                                                    && (t.controller_name.Contains(location) && t.Tool_Nr == tool_nr)
+                                                   select t;
+            return PartialView(data);
+        }
+
+        /// <summary>
+        /// Page show Tcp_log for each tool
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult Tcp_log()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// Partial view that is loaded in Tcp_log contains grid 
+        /// </summary>
+        /// <param name="location"></param>
+        /// <param name="Setup_no"></param>
+        /// <returns></returns>
+        public ActionResult _Tcp_logGrid(string location = "", int Setup_no = 1)
+        {
+
+            string LocationRoot = CurrentUser.Getuser.LocationRoot;
+            IQueryable<NGAC_TCP_LOG> data = from t in db.TCP_LOG
+                                                   where (t.LocationTree ?? "").Contains(LocationRoot)
+                                                   && (t.controller_name.Contains(location) && t.SetUp_No == Setup_no)
                                                    select t;
             return PartialView(data);
         }

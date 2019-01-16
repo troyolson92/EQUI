@@ -25,10 +25,13 @@ namespace EqUiWebUi.Areas.Tiplife.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<TipDressLogFile> TipDressLogFile { get; set; }
-        public virtual DbSet<TipwearBeforeChange> TipwearBeforeChange { get; set; }
-        public virtual DbSet<TipwearLast> TipwearLast { get; set; }
-        public virtual DbSet<TipLifeExpectations> TipLifeExpectations { get; set; }
-        public virtual DbSet<TipMonitor> TipMonitor { get; set; }
+        public virtual DbSet<NGAC_TipDressLogFile> TipDressLogFile { get; set; }
+        public virtual DbSet<NGAC_TipwearBeforeChange> TipwearBeforeChange { get; set; }
+        public virtual DbSet<NGAC_TipwearLast> TipwearLast { get; set; }
+        public virtual DbSet<NGAC_TipLifeExpectations> TipLifeExpectations { get; set; }
+        public virtual DbSet<NGAC_TipMonitor> TipMonitor { get; set; }
+        public virtual DbSet<NGAC_TCP_LOG> TCP_LOG { get; set; }
+        public virtual DbSet<VWSC_TipMonitor> TipMonitor1 { get; set; }
+        public virtual DbSet<C3G_SBCUData> SBCUData { get; set; }
     }
 }

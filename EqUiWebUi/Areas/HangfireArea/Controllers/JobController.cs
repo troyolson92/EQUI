@@ -28,7 +28,7 @@ namespace EqUiWebUi.Areas.HangfireArea.Controllers
             //maximo jobs
             Areas.Maximo_ui.Backgroundwork backgroundworkMaximo = new Areas.Maximo_ui.Backgroundwork();
             backgroundworkMaximo.configHangfireJobs();
-            //gadata jobs 
+            //Supervision jobs 
             Areas.Supervision.BackgroundWork backgroundWorkGADATA = new Areas.Supervision.BackgroundWork();
             backgroundWorkGADATA.configHangfireJobs();
             //tiplife jobs 

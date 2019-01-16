@@ -20,24 +20,18 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
 
         //Standard details view about 1 workorder 
         [HttpGet]
-        public ActionResult WoDetails(string wonum, bool RealtimeConn = false)
+        public ActionResult WoDetails(string wonum)
         {
             ViewBag.wonum = wonum;
-            ViewBag.RealtimeConn = RealtimeConn;
             return View();
         }
 
         //standard details partial about 1 work order (long text, failure, labor)
-        public ActionResult _woDetails(string wonum, bool RealtimeConn = false, bool RenderSubwo = true)
+        public ActionResult _woDetails(string wonum, bool RenderSubwo = true)
         {
             //check if user is allowed to user realtimeConn
-            string MaximoDbName = "MAXIMO7rep";
+            string MaximoDbName = "MAXIMOrt";
             int CommandTimeout = 30;
-            if (RealtimeConn)
-            {
-                MaximoDbName = "MAXIMOrt";
-                CommandTimeout = 5;
-            }
      
             if (wonum == null) wonum = "NoWonum";
             if (wonum == "") wonum = "NoWonum";
@@ -136,33 +130,23 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
                 LaborList.Add(labor);
             }
             //
-            ViewBag.RealtimeConn = RealtimeConn;
             return PartialView(LaborList);
         }
 
 
         //details view about all children from given work order
         [HttpGet]
-        public ActionResult SubWoDetails(string parentwonum, bool RealtimeConn = false)
+        public ActionResult SubWoDetails(string parentwonum)
         {
             ViewBag.parentwonum = parentwonum;
-            ViewBag.RealtimeConn = RealtimeConn;
             return View();
         }
 
         //partial that gets details of all the children of the given work order.
-        public ActionResult _SubWoDetails(string parentwonum, bool RealtimeConn = false)
+        public ActionResult _SubWoDetails(string parentwonum)
         {
-            //check if user is allowed to user realtimeConn
-            if (RealtimeConn)
-            {
-                roleProvider roleProvider = new roleProvider();
-                if (!roleProvider.IsUserInRole(System.Web.HttpContext.Current.User.Identity.Name, "MAXIMOrealtime"))
-                {
-                    RealtimeConn = false;
-                }
-            }
-            ViewBag.RealtimeConn = RealtimeConn;
+            string MaximoDbName = "MAXIMOrt";
+            int CommandTimeout = 30;
             //add the parent to the view bag.
             ViewBag.parentwonum = parentwonum;
             //Get a list of all the children WO for this parent
@@ -173,14 +157,7 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
 
             EQUICommunictionLib.ConnectionManager connectionManager = new ConnectionManager();
             DataTable SubWo;
-            if (RealtimeConn)
-            {
-                SubWo = connectionManager.RunQuery(qrySubWO, dbName: "MAXIMOrt", maxEXECtime: 15, enblExeptions: true);
-            }
-            else
-            {
-                SubWo = connectionManager.RunQuery(qrySubWO, dbName: "MAXIMO7rep", maxEXECtime: 15, enblExeptions: true);
-            }
+            SubWo = connectionManager.RunQuery(qrySubWO, dbName: MaximoDbName, maxEXECtime: CommandTimeout, enblExeptions: true);
             //make this into a list object
             List<Models.Workorder> SubWoList = new List<Models.Workorder>();
             foreach (DataRow row in SubWo.Rows)

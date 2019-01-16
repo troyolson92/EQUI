@@ -24,8 +24,12 @@
     [isDead]                  INT            NULL,
     CONSTRAINT [PK_welding2_spot] PRIMARY KEY CLUSTERED ([ID] ASC),
     CONSTRAINT [FK_rt_spottable_c_timer] FOREIGN KEY ([timerId]) REFERENCES [WELDING2].[c_timer] ([ID]),
-
 );
+
+
+GO
+
+
 
 
 GO

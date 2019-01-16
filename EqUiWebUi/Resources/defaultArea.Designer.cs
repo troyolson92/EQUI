@@ -70,7 +70,7 @@ namespace EqUiWebUi {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Custom alert system.
+        ///   Looks up a localized string similar to Alert system (warns user when certain conditions are met).
         /// </summary>
         public static string AlertsDescription {
             get {
@@ -88,7 +88,7 @@ namespace EqUiWebUi {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Contains stops longer than 20minutes combined downtime or more than 3 occurrences.
+        ///   Looks up a localized string similar to An overview of alerts and breakdowns group by shift, logtype and classification.
         /// </summary>
         public static string ShiftReportDescription {
             get {
@@ -106,7 +106,7 @@ namespace EqUiWebUi {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to All items currently stopped and finished breakdowns.
+        ///   Looks up a localized string similar to An overview of alerts and breakdowns (active breakdown and alerts are shown).
         /// </summary>
         public static string SupervisionDescription {
             get {

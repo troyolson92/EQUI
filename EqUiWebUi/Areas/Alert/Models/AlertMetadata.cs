@@ -135,7 +135,7 @@ namespace EqUiWebUi.Areas.Alert.Models
         public int id { get; set; }
         public string alarmobject { get; set; }
         public System.DateTime timestamp { get; set; }
-        public double value { get; set; }
+        public Nullable<double> value { get; set; }
         public Nullable<double> UpperLimit { get; set; }
         public Nullable<double> LowerLimit { get; set; }
         public Nullable<int> l_controlLimits_id { get; set; }

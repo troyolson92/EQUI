@@ -113,13 +113,6 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    @Html.LabelFor(m => m.realtimeConn, new { @class = "control-label col-md-6" })
-                    <div class="col-md-6">
-                        @Html.CheckBoxFor(m => m.realtimeConn, new { @class = "form-control input-md" })
-                    </div>
-                </div>
-
                 <hr />
                 <input type="submit" value="Load workorders" id="WorkorderSelectOptionsSubmit" class="btn btn-success">
             </fieldset>
@@ -154,8 +147,8 @@
             'Last 100 Days': [moment().subtract(100, 'days'), moment()],
             'Last Year': [moment().subtract(365, 'days'), moment()]
         },
-        "startDate": moment('@Model.startdate.ToString("o")'),
-        "endDate": moment('@Model.enddate.ToString("o")'),
+        "startDate": moment('@Model.startdate.GetValueOrDefault().ToString("o")'),
+        "endDate": moment('@Model.enddate.GetValueOrDefault().ToString("o")'),
       //  "opens": "left",
       //  "drops": "up"
     }, function (start, end, label) {
@@ -179,10 +172,5 @@
             $("#WorkorderSelectOptions").trigger("click");
         }
 
-        //check if we need to go full screen mode
-        var fullscreen = @(Json.Encode(ViewBag.fullscreen ?? false));
-        if (fullscreen == true) {
-            $("#fullscreenNav").trigger("click");
-        }
     });
 </script>

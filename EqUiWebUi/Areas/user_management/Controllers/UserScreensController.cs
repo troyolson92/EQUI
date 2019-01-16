@@ -57,7 +57,7 @@ namespace EqUiWebUi.Areas.user_management.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrator, ScreenManager")]
-        public async Task<ActionResult> Create([Bind(Include = "id,Screen_num,Discription,User_id,ScreenUrl,StartDisplayTime,StopDisplayTime,ResetRate")] L_Screens l_Screens)
+        public async Task<ActionResult> Create([Bind(Include = "id,Screen_num,Discription,User_id,ScreenUrl,StartDisplayTime,StopDisplayTime,ResetRate,ZoomLevel")] L_Screens l_Screens)
         {
             if (ModelState.IsValid)
             {
@@ -93,7 +93,7 @@ namespace EqUiWebUi.Areas.user_management.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrator, ScreenManager")]
-        public async Task<ActionResult> Edit([Bind(Include = "id,Screen_num,Discription,User_id,ScreenUrl,StartDisplayTime,StopDisplayTime,ResetRate")] L_Screens l_Screens)
+        public async Task<ActionResult> Edit([Bind(Include = "id,Screen_num,Discription,User_id,ScreenUrl,StartDisplayTime,StopDisplayTime,ResetRate,ZoomLevel")] L_Screens l_Screens)
         {
             if (ModelState.IsValid)
             {
@@ -138,7 +138,7 @@ namespace EqUiWebUi.Areas.user_management.Controllers
 
 
         // GET: Render selected screen in the screen wrapper (single screen)
-        public ActionResult RenderUserScreen(int screenID, float ZoomLevel = 1, int interactivityReset = 20)
+        public ActionResult RenderUserScreen(int screenID, int interactivityReset = 20)
         {
             //Get screen
             L_Screens Screen = db.L_Screens.Where(s => s.id == screenID).First();
@@ -162,9 +162,6 @@ namespace EqUiWebUi.Areas.user_management.Controllers
             {
                 Response.AddHeader("Refresh", Screen.ResetRate.ToString());
             }
-
-            //add ZoomLevel
-            ViewBag.ZoomLevel = ZoomLevel;
 
             //add interactivityReset
             ViewBag.interactivityReset = interactivityReset;

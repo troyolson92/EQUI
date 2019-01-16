@@ -5,8 +5,7 @@
     <div class="card-header bg-light">
         <h6 class="card-title text-black-50">
             Workorders
-            <a class="fas fa-wrench text-black-50" href="#" data-toggle="popover" data-placement="bottom" id="workorderOnLocationPopover"></a>
-            <a class="far fa-window-restore text-black-50" id="goToWorkordersHyperlink" href="#"></a>
+            <a class="clickable far fa-window-restore text-black-50" id="goToWorkordersHyperlink" data-toggle="tooltip" title="direct link to this view"></a>
             <span class="clickable float-right text-black-50"><i class="fas fa-chevron-circle-up fa-1"></i></span>
         </h6>
     </div>
@@ -15,39 +14,8 @@
     </div>
 </div>
 
-
-@*popover content*@
-<div class="d-none" id="workorderOnLocationPopoverContent">
-    <div class="card">
-        <div class="card-body">
-            <div class="form-group">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.b_ciblings, new { @class = "control-label col-6" })
-                    <div class="col-6">
-                        @Html.CheckBoxFor(m => m.b_ciblings, new { @class = "form-control input-md" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(m => m.b_preventive, new { @class = "control-label col-6" })
-                    <div class="col-6">
-                        @Html.CheckBoxFor(m => m.b_preventive, new { @class = "form-control input-md" })
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
     <!--_workorderOnLocation-->
     <script>
-    //enable popover for settings.
-    $("#workorderOnLocationPopover").popover({
-        html: true,
-        content: function () {
-            return $('#workorderOnLocationPopoverContent').html();
-        },
-    });
     //build query string
     function workorderOnLocationGridUrlParms() {
         var result = "&location= @Url.Encode(Model.location)" +
@@ -59,9 +27,8 @@
             "&wonum=@Url.Encode(Model.wonum)" +
             "&status=@Url.Encode(Model.status)" +
             "&ownergroup=@Url.Encode(Model.ownergroup)" +
-            "&startdate=@Model.startdate.ToString("yyyy-MM-dd HH:mm:ss")" +
-            "&enddate=@Model.enddate.ToString("yyyy-MM-dd HH:mm:ss")" +
-            "&RealtimeConn=@Model.realtimeConn"
+            "&startdate=@Model.startdate.GetValueOrDefault().ToString("yyyy-MM-dd HH:mm:ss")" +
+            "&enddate=@Model.enddate.GetValueOrDefault().ToString("yyyy-MM-dd HH:mm:ss")" 
         return result;
     }
 // set url to link back to main workorder view
@@ -94,16 +61,20 @@
                 //animation
                 $("#placeholderPartial").html("<div class='card-body'><i class='fa fa-spinner fa-pulse fa-2x fa-fw'></i><span class='sr-only'></span>Loading....</div>");
                 //load url in placeholder
-                $("#placeholderPartial").load("@Url.Action("_woDetails", "WorkorderDetails")", { RealtimeConn:  @Model.realtimeConn.ToString().ToLower(), wonum: data["w-o-n-u-m"]});
+                $("#placeholderPartial").load("@Url.Action("_woDetails", "WorkorderDetails")", { RealtimeConn:  @Model.realtimeConn.ToString().ToLower(), wonum: data["w-o-n-u-m"] },
+                    function (responseText, textStatus, req) {
+                        if (textStatus == "error") {
+                            $("#placeholderPartial").html($("#Error", responseText).html());
+                        }
+                    });
             },
             reloadEnded: function () {
                 //simulate click on first row so that the details load automatic IF ROWCOUNT == 1
                 if ($('[data-name="Workorders"]>table>tbody>tr').length == 1) {
-
                     $('[data-name="Workorders"]>table>tbody>tr>td:first').trigger('click');
                 }
                 //subscribe to click event (launch external window)
-                initUrlNewWindow();
+                EnableInterfaceEvents();
             },
             reloadFailed: function (result) {
                 console.log(result);
@@ -113,13 +84,4 @@
     }
 //init grid
     loadWorkorderOnLocationGrid();
-    //subscrible to option checkbox click event
-    $('#b_ciblings').click(function () {
-        loadWorkorderOnLocationGrid();
-    });
-
-    $('#b_preventive').click(function () {
-        loadWorkorderOnLocationGrid();
-    });
-
   </script>

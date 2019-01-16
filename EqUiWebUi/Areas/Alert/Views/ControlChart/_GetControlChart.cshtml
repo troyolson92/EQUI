@@ -4,12 +4,12 @@
     <div class="card">
         <div class="card-header bg-light">
             <h6 class="card-title">
-                <a class="fas fa-sync-alt text-black-50 ControlChartRefresh" href="#"></a>
-                <strong>@Model.chartname</strong> Control chart for alarmobject:
-                <strong>@Model.alarmobject.Trim()</strong> c_trigger_id:
-                <strong>@Model.c_trigger_id</strong>
-                <a class="fas fa-wrench text-black-50 ControlChartOptionsPopover" href="#" data-toggle="popover" data-placement="bottom"></a>
-                <a class="far fa-calendar-alt text-black-50 ControlChartDatepicker" href="#"></a>
+                <a class="fas fa-sync-alt text-black-50 ControlChartRefresh clickable" data-toggle="popover" data-placement="bottom" title="Refresh chart"></a>
+                Control chart for <strong>@Model.chartname</strong>
+                alarmobject: <strong>@Model.alarmobject.Trim()</strong>
+                <a class="fas fa-info-circle text-black-50 clickable" id="WikiPopover" data-container="body" data-toggle="popover" data-placement="bottom" title="Show chart legend and wiki page"></a>
+                <a class="fas fa-wrench text-black-50 ControlChartOptionsPopover clickable" data-toggle="popover" data-placement="bottom" title="Set chart options"></a>
+                <a class="far fa-calendar-alt text-black-50 ControlChartDatepicker clickable" data-toggle="popover" data-placement="right" title="Set date time range"></a>
                 <span class="clickable float-right text-black-50"><i class="fas fa-chevron-circle-up fa-1"></i></span>
             </h6>
         </div>
@@ -43,6 +43,15 @@
     <input type="hidden" name="ControlchartstartDate" value="">
     <input type="hidden" name="ControlchartoptDatanum" value="">
 </div>
+
+<!--for chart legend-->
+<style>
+    .scatter-legend-marker {
+        width: 14px;
+        height: 14px;
+        display: inline-block;
+    }
+</style>
 
 <!--ControlChartScripts-->
 @*https://dima117.github.io/Chart.Scatter/*@
@@ -89,7 +98,10 @@
             content: function () {
                 return  $('#ChartID@(Model.c_trigger_id)').find('.ControlChartOptionsPopoverContent').html();
             }
-            });
+        });
+
+        //enable tooltips
+        $('[data-toggle="popover"]').tooltip();
 
         //listen to popover events.
         $(document).on("change", "#ChartID@(Model.c_trigger_id)ControlchartoptDataDropdown", function () {
@@ -97,6 +109,19 @@
                 $('#ChartID@(Model.c_trigger_id)').find("input[name=ControlchartoptDatanum]").val(this.value);
                 getcontrolchartData();
             };
+        });
+
+                
+        //enable popover for wiki
+         $('#ChartID@(Model.c_trigger_id)').find("#WikiPopover").popover({
+            html: true,
+            content: function () {
+                return "<h6>Chart legend</h6>" +  ControlChart.generateLegend() + "<\hr>" + $.ajax({
+                    url: '@Url.Action("_Wiki","c_triggers",new {c_trigger_id = Model.c_trigger_id })',
+                    dataType: 'html',
+                    async: false
+                }).responseText;
+            }
         });
 
         //listen to refresh click event
@@ -169,17 +194,17 @@
                 {
                     label: dataPayload[0].ValueLabel,
                     strokeColor: '#007ACC',
-                    pointColor: '#007ACC',
-                    pointStrokeColor: '#fff',
+                   // pointColor: '#007ACC',
+                   // pointStrokeColor: '#fff',
                     data: dataPayload[1]
                 },
                 {
-                    label: 'UCL',
+                    label: 'UCL (upper control limit)',
                     strokeColor: '#F16220',
                     data: dataPayload[2]
                 },
                 {
-                    label: 'LCL',
+                    label: 'LCL (lower control limit)',
                     strokeColor: '#F16220',
                     data: dataPayload[3]
                 }

@@ -1,30 +1,40 @@
-﻿<div id="main_area">
-    <div class="col-sm-12" id="carousel-bounding-box">
-        <div class="carousel slide" id="myCarousel">
-            <!-- Carousel items -->
-            <div class="carousel-inner">
-                <div class="active item" data-slide-number="0">
-                    <img src="@ViewBag.url" />
+﻿<div class="card">
+    <div class="card-header bg-dark text-white">
+        <h4>
+            PLC overview: <strong></strong>
+            <a class="fas fa-info-circle text-white" id="LegendPopover" data-container="body" data-toggle="popover" data-placement="bottom"></a>
+        </h4>
+    </div>
+
+    <div id="main_area">
+        <div class="col-sm-12" id="carousel-bounding-box">
+            <div class="carousel slide" id="myCarousel">
+                <!-- Carousel items -->
+                <div class="carousel-inner">
+                    <div class="active item" data-slide-number="0">
+                        <img src="@ViewBag.url" />
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
 </div>
 
-<!--carousel script-->
-@section scripts{
-    <script>
-        //full with screen
-        $("#allcontent").removeClass("body-content");
-        $("#allcontent").removeClass("container");
-    </script>
-}
-
-
-<!--carousel style -->
-<style>
-
-    .carousel-inner > .item > img, .carousel-inner > .item > a > img {
-        width: 100%;
+    <!--carousel script-->
+    @section scripts{
+        <script>
+            //full with screen
+            $("#allcontent").removeClass("body-content");
+            $("#allcontent").removeClass("container");
+        </script>
     }
-</style>
+
+
+    <!--carousel style -->
+    <style>
+
+        .carousel-inner > .item > img, .carousel-inner > .item > a > img {
+            width: 100%;
+        }
+    </style>

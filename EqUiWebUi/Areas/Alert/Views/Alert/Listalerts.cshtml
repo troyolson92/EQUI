@@ -9,7 +9,7 @@
     <div class="card-header bg-dark text-white row">
         <h4 class="col-8">
             Alerts
-            <a class="fas fa-info-circle text-white" id="LegendPopover" href="#" data-container="body" data-toggle="popover" data-placement="bottom"></a>
+            <a class="fas fa-info-circle text-white clickable MyPopovers" data-container="body" data-toggle="popover" data-placement="bottom" title="Show Legend" href="@Url.Action("_legend")"></a>
             @if (ViewBag.alertGroup != "")
             {
                 <span class="badge badge-pill badge-warning">Filter on alert group: @ViewBag.alertGroup</span>
@@ -50,7 +50,7 @@
                             .RenderedAs(c =>
                             MyHtmlHelpers.IconActionLink(Url.Action("Listalerts", new { Location = c.location }), "fas fa-filter", "", "Filter alerts for this location").ToHtmlString() +     //add filterbutton
                             MyHtmlHelpers.IconActionLink(Url.Action("Edit", new { id = c.id }), "fas fa-pencil-alt", "", "Edit this alert").ToHtmlString() +    //add edit button
-                            (c.info.Contains("gun") ? MyHtmlHelpers.IconActionLink(Url.Action("WeldgunTool", "NgacElectrode", new {Area= "Tiplife", location = c.location, tool_nr = c.info.Replace(":", "").Substring(c.info.IndexOf("gun"), 5).Replace("gun", "") }), "fas fa-chart-line", "", "Launch WeldgunTool").ToHtmlString() : "")  //launch WeldgunTool tool (if needed)
+                            (c.info.Contains("gun") ? MyHtmlHelpers.IconActionLink(Url.Action("WeldgunTool", "Electrode", new {Area= "Tiplife", location = c.location, tool_nr = c.info.Replace(":", "").Substring(c.info.IndexOf("gun"), 5).Replace("gun", "") }), "fas fa-chart-line", "", "Launch WeldgunTool").ToHtmlString() : "")  //launch WeldgunTool tool (if needed)
                             ).Filterable(false);
     }).Filterable().Sortable().Pageable(pager =>
     {
@@ -89,7 +89,15 @@
                 //animation
                 $("#placeholderPartial").html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
                 //load url in placeholder
-                $("#placeholderPartial").load('@Url.Action("_Details")', { AddTrendChart: true, id: data["id"]});
+                $("#placeholderPartial").load('@Url.Action("_Details")', { AddTrendChart: true, id: data["id"] },
+                    function (responseText, textStatus, req) {
+                        if (textStatus == "error") {
+                            $("#placeholderPartial").html($("#Error", responseText).html());
+                        }
+                    });
+            },
+            reloadEnded: function () {
+                $('[data-toggle="popover"]').tooltip();
             }
         });
 
@@ -98,17 +106,8 @@
             $('[data-name="h_alert"]>table>tbody>tr>td:first').trigger('click');
         }
 
-        //enable popover for legend
-        $("#LegendPopover").popover({
-            html: true,
-            content: function () {
-                return $.ajax({
-                    url: '@Url.Action("_legend")',
-                    dataType: 'html',
-                    async: false
-                }).responseText;
-            }
-        });
+        //enable tooltips
+        $('[data-toggle="popover"]').tooltip();
 
         //handle in-line set state
         $('.setalertState').editable('@Url.Action("SetState")', {

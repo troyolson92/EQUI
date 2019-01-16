@@ -37,10 +37,6 @@ namespace EqUiWebUi.Areas.Maximo_ui
         {
             //delete data in now in maximo.
             ConnectionManager connectionManager = new ConnectionManager();
-            context.WriteLine("Delete workorders started");
-            connectionManager.RunCommand("DELETE [MAXIMO].[WORKORDERS] FROM [MAXIMO].[WORKORDERS]", enblExeptions:true);
-            context.WriteLine("Done");
-
             //get new records from STO
             string MaximoQry = string.Format(@"
 select 
@@ -73,7 +69,7 @@ workorder.changedate >= sysdate - 100
             try
             {
                 //try realtime connection
-                context.WriteLine("Get workorders from maximo started (useing: MAXIMOrt)");
+                context.WriteLine("Get workorders from maximo started using MAXIMOrt");
                 newMaximoDt = connectionManager.RunQuery(MaximoQry, dbName: "MAXIMOrt", maxEXECtime: 120, enblExeptions: true);
                 context.WriteLine("Done");
             }
@@ -86,10 +82,22 @@ workorder.changedate >= sysdate - 100
                 newMaximoDt = connectionManager.RunQuery(MaximoQry, dbName: "MAXIMO7rep", maxEXECtime: 120, enblExeptions: true);
                 context.WriteLine("Done (used MAXIMO7rep)");
             }
-            //push to gadata
-            context.WriteLine(string.Format("BulkCopy started (rowcount:{0})", newMaximoDt.Rows.Count));
-            connectionManager.BulkCopy(newMaximoDt, "[MAXIMO].[WORKORDERS]",enblExeptions:true);
-            context.WriteLine("Done");
+
+            if (newMaximoDt.Rows.Count != 0)
+            {
+                //delete old workorders
+                context.WriteLine("Delete workorders started");
+                connectionManager.RunCommand("DELETE [MAXIMO].[WORKORDERS] FROM [MAXIMO].[WORKORDERS]", enblExeptions: true);
+                context.WriteLine("Done");
+                //push to gadata
+                context.WriteLine(string.Format("BulkCopy started (rowcount:{0})", newMaximoDt.Rows.Count));
+                connectionManager.BulkCopy(newMaximoDt, "[MAXIMO].[WORKORDERS]", enblExeptions: true);
+                context.WriteLine("Done");
+            }
+            else
+            {
+                context.WriteLine("No data from maximo so stopped");
+            }
         }
 
         //update asset table on GADATA from maximo called every sunday #hangfire
@@ -166,7 +174,22 @@ workorder.changedate >= sysdate - 100
             DataTable tableFromMx7 = new DataTable();
             ConnectionManager connectionManager = new ConnectionManager();
             context.WriteLine("GetdataFromMaximo start");
-            tableFromMx7 = connectionManager.RunQuery(strSqlGetFromMaximo, dbName: "MAXIMO7rep", enblExeptions: true, maxEXECtime: 300);
+            try
+            {
+                //try realtime connection
+                context.WriteLine("Get locations from maximo started (useing: MAXIMOrt)");
+                tableFromMx7 = connectionManager.RunQuery(strSqlGetFromMaximo, dbName: "MAXIMOrt", enblExeptions: true, maxEXECtime: 300);
+                context.WriteLine("Done");
+            }
+            catch (Exception ex)
+            {
+                context.WriteLine("FAILURE for MAXIMOrt connection! " + ex.Message);
+                log.Error("FAILURE for MAXIMOrt connection", ex);
+                //if fails try reporting dbEQUI
+                context.WriteLine("giving it another try using MAXIMO7rep");
+                tableFromMx7 = connectionManager.RunQuery(strSqlGetFromMaximo, dbName: "MAXIMO7rep", enblExeptions: true, maxEXECtime: 300);
+                context.WriteLine("Done (used MAXIMO7rep)");
+            }
             context.WriteLine("GetdataFromMaximo Rowcount: " + tableFromMx7.Rows.Count);
             //clear destination table  in GADATA
             string CmdDeleteTableData = @"DELETE FROM [Equi].[ASSETS_fromMX7] FROM [Equi].[ASSETS_fromMX7]";
@@ -189,6 +212,9 @@ workorder.changedate >= sysdate - 100
 
             List<string> cmds = new List<string>(); 
 
+            cmds.Add("exec NGAC.[sp_LinkAssets]");
+            cmds.Add("exec EQUI.[sp_LinkAssets]");
+
             if (EqUiWebUi.MyBooleanExtensions.IsAreaEnabled("VCSC"))
             {
                 cmds.Add("exec C3G.[sp_LinkAssets]");
@@ -200,9 +226,10 @@ workorder.changedate >= sysdate - 100
                 cmds.Add("exec STO.[sp_LinkAssets]");
             }
 
-            cmds.Add("exec NGAC.[sp_LinkAssets]");
-            cmds.Add("exec EQUI.[sp_LinkAssets]");
-            cmds.Add("exec WELDING2.[sp_LinkAssets]");
+            if (EqUiWebUi.MyBooleanExtensions.IsAreaEnabled("Welding"))
+            {
+                cmds.Add("exec WELDING2.[sp_LinkAssets]");
+            }
 
             foreach (string cmd in cmds)
             {

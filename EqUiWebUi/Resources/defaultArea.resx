@@ -121,19 +121,19 @@
     <value>Alerts</value>
   </data>
   <data name="AlertsDescription" xml:space="preserve">
-    <value>Custom alert system</value>
+    <value>Alert system (warns user when certain conditions are met)</value>
   </data>
   <data name="ShiftReport" xml:space="preserve">
     <value>Shiftreport</value>
   </data>
   <data name="ShiftReportDescription" xml:space="preserve">
-    <value>Contains stops longer than 20minutes combined downtime or more than 3 occurrences</value>
+    <value>An overview of alerts and breakdowns group by shift, logtype and classification</value>
   </data>
   <data name="Supervision" xml:space="preserve">
     <value>Supervision</value>
   </data>
   <data name="SupervisionDescription" xml:space="preserve">
-    <value>All items currently stopped and finished breakdowns</value>
+    <value>An overview of alerts and breakdowns (active breakdown and alerts are shown)</value>
   </data>
   <data name="SupervisionHeader" xml:space="preserve">
     <value>A shop supervision tools</value>

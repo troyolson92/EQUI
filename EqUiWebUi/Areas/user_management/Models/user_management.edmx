@@ -59,6 +59,7 @@
           <Property Name="StartDisplayTime" Type="datetime" />
           <Property Name="StopDisplayTime" Type="datetime" />
           <Property Name="ResetRate" Type="int" />
+          <Property Name="ZoomLevel" Type="float" />
         </EntityType>
         <EntityType Name="L_users">
           <Key>
@@ -66,8 +67,8 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="username" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="LocationRoot" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="AssetRoot" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LocationRoot" Type="varchar" MaxLength="50" />
+          <Property Name="AssetRoot" Type="varchar" MaxLength="50" />
           <Property Name="Locked" Type="bit" Nullable="false" />
           <Property Name="Blocked" Type="bit" Nullable="false" />
           <Property Name="SessionId" Type="varchar" MaxLength="200" />
@@ -179,8 +180,8 @@
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="LocationRoot" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="AssetRoot" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LocationRoot" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="true" />
+          <Property Name="AssetRoot" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="true" />
           <Property Name="Locked" Type="Boolean" Nullable="false" />
           <Property Name="Blocked" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="h_usersPermisions" Relationship="Self.FK_h_usersPermisions_L_users" FromRole="L_users" ToRole="h_usersPermisions" />
@@ -265,6 +266,7 @@
           <Property Name="StopDisplayTime" Type="DateTime" Precision="3" />
           <NavigationProperty Name="L_users" Relationship="GADATAModel.FK_L_Screens_L_users" FromRole="L_Screens" ToRole="users" />
           <Property Name="ResetRate" Type="Int32" />
+          <Property Name="ZoomLevel" Type="Double" />
         </EntityType>
         <Association Name="FK_L_Screens_L_users">
           <End Type="GADATAModel.users" Role="users" Multiplicity="1" />
@@ -348,6 +350,7 @@
           <EntitySetMapping Name="L_Screens">
             <EntityTypeMapping TypeName="GADATAModel.L_Screens">
               <MappingFragment StoreEntitySet="L_Screens">
+                <ScalarProperty Name="ZoomLevel" ColumnName="ZoomLevel" />
                 <ScalarProperty Name="ResetRate" ColumnName="ResetRate" />
                 <ScalarProperty Name="StopDisplayTime" ColumnName="StopDisplayTime" />
                 <ScalarProperty Name="StartDisplayTime" ColumnName="StartDisplayTime" />

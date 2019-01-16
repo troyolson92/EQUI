@@ -1,33 +1,8 @@
 ﻿//enable general interface
 function initInterface() {
-    //subscrible renderd grids to events
-    $('.mvc-grid').mvcgrid();
     //navbar
     $("#allcontent").animate({ "margin-top": "60px" }, "fast");
     $("#navbar").autoHidingNavbar();
-
-    //for user popover
-    $(".userhelp").popover({
-        placement: "left",
-        html: true,
-        content: function () {
-                return $.ajax({
-                    url: '/user_management/user/_Details',
-                    dataType: 'html',
-                    async: false
-                }).responseText;
-        }
-    });
-    //hide popovers on body click
-    $('body').on('click', function (e) {
-        $('[data-toggle="popover"]').each(function () {
-            //the 'is' for buttons that trigger popups
-            //the 'has' for icons within a button that triggers a popup
-            if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
-                $(this).popover('hide');
-            }
-        });
-    });
 
     //for fullscreen mode
     $("#fullscreenNav").click(function () {
@@ -60,10 +35,7 @@ function initInterface() {
     if (qs("GoFullScreen")) {
         console.log("auto Full screen");
         $("#fullscreenNav").trigger("click");
-    }
-    else {
-        //$("#navbar").removeClass("d-none")
-    }
+    };
 
     //if zoomlevel request in url do it.
     if (qs("Zoomlevel")) {
@@ -71,19 +43,44 @@ function initInterface() {
         //this works for Chrome, Safari, IE ref:http://jsfiddle.net/q6kebgbh/4/
         $("#allcontent").css('zoom', qs("Zoomlevel"));
     }
-    //enable tooltips everywhere
-    $(function () {
-        $('[data-toggle="tooltip"]').tooltip();
+
+    //initpopovers
+    //on click ignore default action
+    $(".MyPopovers").click(function (e) {
+        e.preventDefault();
+        return false;
     });
 
-    EnablePannelCollaps();
-    EnableJQresultTriggerBtn();
-    initToaster();
-    initUrlNewWindow();
-}
+    //get content using ajax call
+    $(".MyPopovers").popover({
+        html: true,
+        content: function () {
+            return $.ajax({
+                url: $(this).attr('href'),
+                dataType: 'html',
+                async: false
+            }).responseText;
+        }
+    }).on('shown.bs.popover', function () {
+        EnableInterfaceEvents();
+        $('[data-dismiss="popover"]').on('click', function () {
+            $('.popover').popover('hide');
+        });
 
-//script for subscribing to pannel colaps
-function EnablePannelCollaps() {
+    });
+
+    //hide popovers on body click
+    $('body').on('click', function (e) {
+        $('[data-toggle="popover"]').each(function () {
+            //the 'is' for buttons that trigger popups
+            //the 'has' for icons within a button that triggers a popup
+            if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+                $(this).popover('hide');
+            }
+        });
+    });
+
+    //script for subscribing to panel colaps
     $(document).on('click', '.card-header span.clickable', function (e) {
         var $this = $(this);
         if ($this.closest('.card').find('.card-body').css('display') === 'block') {
@@ -94,14 +91,37 @@ function EnablePannelCollaps() {
             $this.closest('.card').find('.card-body').slideDown();
         }
     });
+
+    EnableInterfaceEvents();
 }
 
-//for blind fired buttons with feedback.
-function EnableJQresultTriggerBtn() {
+//script that must be called to enable interface events
+function EnableInterfaceEvents() {
+    //enable tooltips everywhere
+    $('[data-toggle="tooltip"]').tooltip();
+    $('[data-toggle="popover"]').tooltip();
+
+    //for new window option
+    $('.OpenNewWindow').click(function (e) {
+        e.preventDefault();
+        console.log("Opening new window");
+        window.open($(this).attr('href'), 'EQUI', 'window settings');
+        return false;
+    });
+
+    //for toaster
+    $.toaster({
+        settings: {
+            'timeout': 5000, //set autodismis timeout to 5 seconds
+            'donotdismiss': ['danger'] //disble autodismis for these types
+        }
+    });
+
+    //for blind fired buttons with feedback.
     $(".JQresultTriggerBtn").click(function (e) {
         e.preventDefault();
         var caller = this;
-        $.toaster({ title: 'JQTriggerBtn', priority: 'info', message: 'Fired: ' + $(this).attr('href')});
+        $.toaster({ title: 'JQTriggerBtn', priority: 'info', message: 'Fired: ' + $(this).attr('href') });
         $.ajax({
             type: "GET",
             url: $(this).attr('href'),
@@ -125,6 +145,9 @@ function EnableJQresultTriggerBtn() {
             }
         });
     });
+
+    //subscrible renderd grids to events
+    $('.mvc-grid').mvcgrid();
 }
 
 
@@ -133,24 +156,4 @@ function qs(key) {
     key = key.replace(/[*+?^$.\[\]{}()|\\\/]/g, "\\$&"); // escape RegEx meta chars
     var match = location.search.match(new RegExp("[?&]" + key + "=([^&]+)(&|$)"));
     return match && decodeURIComponent(match[1].replace(/\+/g, " "));
-}
-
-//set default settings for toaster
-function initToaster() {
-    $.toaster({
-        settings: {
-            'timeout': 5000, //set autodismis timeout to 5 seconds
-            'donotdismiss': ['danger'] //disble autodismis for these types
-        }
-    });
-}
-
-//if click link has this class open it in a new window
-function initUrlNewWindow() {
-    $('.OpenNewWindow').click(function () {
-        console.log("Opening new window");
-        window.open($(this).attr('href'), 'EQUI', 'window settings');
-        return false;
-    });
-    
 }

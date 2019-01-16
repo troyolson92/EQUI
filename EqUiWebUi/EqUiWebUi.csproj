@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
@@ -178,11 +178,9 @@
     <Folder Include="Areas\HangfireArea\Models\" />
     <Folder Include="Areas\Maximo_ui\Views\Shared\" />
     <Folder Include="Areas\PJV\Views\Shared\" />
-    <Folder Include="Areas\PlcSupervisie\Models\" />
     <Folder Include="Areas\STW040\Models\" />
     <Folder Include="Areas\STW040\Views\Shared\" />
     <Folder Include="Areas\Supervision\Views\Shared\" />
-    <Folder Include="Areas\Tiplife\Views\ComauElectrode\" />
     <Folder Include="Areas\VASC\Views\Shared\" />
     <Folder Include="Areas\VCSC\Controllers\" />
     <Folder Include="Areas\VCSC\Models\" />
@@ -331,6 +329,7 @@
     <Compile Include="Areas\PJV\PJVAreaRegistration.cs" />
     <Compile Include="Areas\PlcSupervisie\Backgroundwork.cs" />
     <Compile Include="Areas\PlcSupervisie\Controllers\ScreenshotController.cs" />
+    <Compile Include="Areas\PlcSupervisie\Models\PlcSupervisieMetadata.cs" />
     <Compile Include="Areas\PlcSupervisie\PlcSupervisieAreaRegistration.cs" />
     <Compile Include="Areas\STW040\BackgroundWork.cs" />
     <Compile Include="Areas\STW040\Controllers\STW040Controller.cs" />
@@ -380,10 +379,25 @@
     <Compile Include="Areas\Tiplife\Controllers\ComauElectrodeController.cs" />
     <Compile Include="Areas\Tiplife\Controllers\ElectrodeController.cs" />
     <Compile Include="Areas\Tiplife\Controllers\NgacElectrodeController.cs" />
-    <Compile Include="Areas\Tiplife\Models\TipDressLogFile.cs">
+    <Compile Include="Areas\Tiplife\Models\C3G_SBCUData.cs">
       <DependentUpon>TiplifeModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Areas\Tiplife\Models\TipLifeExpectations.cs">
+    <Compile Include="Areas\Tiplife\Models\NGAC_TCP_LOG.cs">
+      <DependentUpon>TiplifeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Tiplife\Models\NGAC_TipDressLogFile.cs">
+      <DependentUpon>TiplifeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Tiplife\Models\NGAC_TipLifeExpectations.cs">
+      <DependentUpon>TiplifeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Tiplife\Models\NGAC_TipMonitor.cs">
+      <DependentUpon>TiplifeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Tiplife\Models\NGAC_TipwearBeforeChange.cs">
+      <DependentUpon>TiplifeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Tiplife\Models\NGAC_TipwearLast.cs">
       <DependentUpon>TiplifeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Tiplife\Models\TiplifeModel.Context.cs">
@@ -401,13 +415,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>TiplifeModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Areas\Tiplife\Models\TipMonitor.cs">
-      <DependentUpon>TiplifeModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\Tiplife\Models\TipwearBeforeChange.cs">
-      <DependentUpon>TiplifeModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\Tiplife\Models\TipwearLast.cs">
+    <Compile Include="Areas\Tiplife\Models\VWSC_TipMonitor.cs">
       <DependentUpon>TiplifeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Tiplife\TiplifeAreaRegistration.cs" />
@@ -903,7 +911,7 @@
     <Compile Include="Controllers\EQUISetupController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\TableauController.cs" />
-    <Compile Include="Controllers\WikisController.cs" />
+    <Compile Include="Controllers\WikiController.cs" />
     <Compile Include="HouseKeepingengine.cs" />
     <Compile Include="Models\ASSETS.cs">
       <DependentUpon>EQUIModel.tt</DependentUpon>
@@ -1123,10 +1131,8 @@
     <Content Include="Areas\Maximo_ui\Views\WorkorderDetails\_woDetails.cshtml" />
     <Content Include="Areas\Maximo_ui\Views\WorkorderDetails\Index.cshtml" />
     <Content Include="Areas\Maximo_ui\Views\Maximo\Index.cshtml" />
-    <Content Include="Areas\Maximo_ui\Views\Workorder\ExampleCall_workordersOnLocation.cshtml" />
     <Content Include="Areas\PlcSupervisie\Views\web.config" />
     <Content Include="Areas\PlcSupervisie\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\PlcSupervisie\Views\Screenshot\Carousel.cshtml" />
     <Content Include="Areas\user_management\Views\UserScreens\Create.cshtml" />
     <Content Include="Areas\user_management\Views\UserScreens\Delete.cshtml" />
     <Content Include="Areas\user_management\Views\UserScreens\Details.cshtml" />
@@ -2043,7 +2049,6 @@
     <Content Include="Areas\Welding\Models\WeldingModel.edmx.diagram">
       <DependentUpon>WeldingModel.edmx</DependentUpon>
     </Content>
-    <Content Include="Areas\PlcSupervisie\Views\Screenshot\CarouselBF.cshtml" />
     <Content Include="Areas\user_management\Views\user\ForbiddenMethod.cshtml" />
     <Content Include="Areas\user_management\Views\user\LoginPrompt.cshtml" />
     <EntityDeploy Include="Models\EQUIModel.edmx">
@@ -2272,6 +2277,17 @@
     <Content Include="App_Code\TiplifeHtmlHelpers.cshtml" />
     <Content Include="Areas\Tiplife\Views\Electrode\Index.cshtml" />
     <Content Include="Areas\Tiplife\Views\Electrode\_Legend.cshtml" />
+
+    <Content Include="Areas\Alert\Views\c_triggers\_Wiki.cshtml" />
+    <Content Include="Areas\Tiplife\Views\NgacElectrode\Tcp_log.cshtml" />
+    <Content Include="Areas\Tiplife\Views\NgacElectrode\_Tcp_logGrid.cshtml" />
+    <Content Include="Areas\Tiplife\Views\ComauElectrode\_Tcp_logGrid.cshtml" />
+    <Content Include="Areas\Tiplife\Views\ComauElectrode\Tcp_log.cshtml" />
+    <Content Include="Areas\Tiplife\Views\ComauElectrode\_Tipinfo.cshtml" />
+    <Content Include="Areas\PlcSupervisie\Views\Screenshot\Screenshots.cshtml" />
+    <None Include="Properties\PublishProfiles\chasvw1203_DEV_VCCH.pubxml" />
+    <None Include="Properties\PublishProfiles\chasvw1203_PRODUCTION_VCCH.pubxml" />
+
     <Content Include="Areas\Welding\Views\WM\_Parameters.cshtml" />
     <Content Include="Areas\Welding\Views\ARO\Index.cshtml" />
     <Content Include="Areas\Welding\Views\WeldingGuns\Create.cshtml" />
@@ -2286,10 +2302,10 @@
     <Content Include="Areas\Welding\Views\HiddenSpot\Details.cshtml" />
     <Content Include="Areas\Welding\Views\HiddenSpot\Edit.cshtml" />
     <Content Include="Areas\Welding\Views\HiddenSpot\Index.cshtml" />
+
     <None Include="Properties\PublishProfiles\gensvw1178-DEV-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gensvw1178-PRODUCTION-VCG.pubxml" />
     <None Include="Properties\PublishProfiles\gotsvw11292-PRODUCTION-VCTA.pubxml" />
-    <None Include="Properties\PublishProfiles\VCC22700-Testing.pubxml" />
     <Content Include="Scripts\Codemirror\codemirror.js" />
     <Content Include="Scripts\Codemirror\mode\sql.js" />
     <Content Include="Scripts\d3\Chart.bundle.js" />
@@ -2379,11 +2395,6 @@
     <Content Include="Views\c_LogClassSystem\Index.cshtml" />
     <Content Include="Views\Home\Close.cshtml" />
     <Content Include="Views\Home\TestPage.cshtml" />
-    <Content Include="Views\Wikis\Delete.cshtml" />
-    <Content Include="Views\Wikis\Details.cshtml" />
-    <Content Include="Views\Wikis\Edit.cshtml" />
-    <Content Include="Views\Wikis\Index.cshtml" />
-    <Content Include="Views\Wikis\ShowWiki.cshtml" />
     <Content Include="Views\Tableau\TestTicket.cshtml" />
     <Content Include="Views\Tableau\GetTicket.cshtml" />
     <Content Include="Views\c_Classification\Create.cshtml" />
@@ -2408,17 +2419,26 @@
     <Content Include="Views\c_Housekeeping\_L_housekeeping.cshtml" />
     <Content Include="Views\c_Housekeeping\Details.cshtml" />
     <Content Include="Views\c_Housekeeping\_List.cshtml" />
+    <Content Include="Views\Wiki\Edit.cshtml" />
+    <Content Include="Views\Wiki\_GetWiki.cshtml" />
+    <Content Include="Views\Wiki\Getwiki.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
-    <None Include="Web.DEV_GA.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
-    <None Include="Web.Rel_GA.config">
+    <None Include="Web.DEV_VCCH.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
     </None>
-    <None Include="Web.Rel_TA.config">
+    <None Include="Web.DEV_VCG.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Rel_VCCH.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Rel_VCG.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Rel_VCT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
@@ -2476,8 +2496,12 @@
     <TypeScriptSourceMap>True</TypeScriptSourceMap>
     <TypeScriptMapRoot />
     <TypeScriptSourceRoot />
+    <PublishDatabaseSettings>
+      <Objects>
+      </Objects>
+    </PublishDatabaseSettings>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Rel_TA|AnyCPU'">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Rel_VCT|AnyCPU' ">
     <OutputPath>bin\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
@@ -2486,10 +2510,23 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Rel_GA|AnyCPU'">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Rel_VCG|AnyCPU' ">
     <OutputPath>bin\</OutputPath>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DEV_GA|AnyCPU'">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DEV_VCG|AnyCPU' ">
+    <OutputPath>bin\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Rel_VCCH|AnyCPU' ">
+    <OutputPath>bin\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DEV_VCCH|AnyCPU'">
     <OutputPath>bin\</OutputPath>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>

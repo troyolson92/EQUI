@@ -26,6 +26,7 @@ SET c_controller.LocationTree = g.LocationTree
 	,c_controller.Line_png = g.Line_png
 FROM NGAC.c_controller as C 
 LEFT JOIN EqUi.GeoAssets as g on g.LOCATION = c.controller_name
+WHERE G.LocationTree is not null
 
 
 --*******************************************************************************************************************--

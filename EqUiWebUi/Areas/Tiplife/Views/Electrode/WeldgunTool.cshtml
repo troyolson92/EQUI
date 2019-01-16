@@ -6,22 +6,30 @@
 <h2>WeldgunTool</h2>
 Location: @Html.DropDownList("Locations", null, htmlAttributes: new { @class = "selectpicker", @data_live_search = "true" })
 Tool_nr: @Html.DropDownList("tool_nr", null, htmlAttributes: new { @class = "selectpicker" })
+ElectrodeNo: @Html.DropDownList("ElectrodeNo", null, htmlAttributes: new { @class = "selectpicker" })
 <button class="btn btn-primary btn-sm" id="btn_getData">Load data</button>
+
 <hr />
-<div class="alert alert-warning">
-    Oude tool is nog beschikbaar via "Toolkit" in de taskbar.
+<div class="alert alert-danger">
+    Oude tool is nog beschikbaar via <a href="http://gensvw1178.gen.volvocars.net/EqUi_UtilManager/EqUi_UtilManger.application?Tool=SBCUstats">WeldgunData OLD</a>
     Gelieve deze nieuwe tool te gebruiken oude gaat binnenkort definitief weg.
 </div>
 <hr />
+
 <div id="welgunToolPlaceholder"></div>
 <!--WeldgunToolScripts-->
 <script>
+        //full with screen
+    $("#allcontent").removeClass("body-content");
+    $("#allcontent").removeClass("container");
+
     $('.selectpicker').selectpicker();
     $('#btn_getData').click(function () {
         $('#welgunToolPlaceholder').load('@Url.Action("_WeldgunTool")',
             {
-                location: $('#Locations').find(":selected").text(),
-                tool_nr: $('#tool_nr').find(":selected").text()
+                location: $('#Locations').find(":selected").val(),
+                tool_nr: $('#tool_nr').find(":selected").val(),
+                ElectrodeNo: $('#ElectrodeNo').find(":selected").val()
             },
             function (result) {
                 $('#welgunToolPlaceholder').html($("#Error", result).html());

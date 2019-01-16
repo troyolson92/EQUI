@@ -13,6 +13,10 @@
 
 
 
+
+
+
+
 CREATE VIEW [NGAC].[TipMonitor]
 AS
 SELECT DISTINCT top 10000  c.controller_name as 'Robot'
@@ -23,56 +27,71 @@ SELECT DISTINCT top 10000  c.controller_name as 'Robot'
 						  ,rt.TipWearRatio as 'WearRatio'
 	                      ,CASE 
 						     --tipalert and fixed dominant
-						      WHEN (tipalert.refId is not null) AND rt.[Wear_Fixed] >= rt.[Wear_Move]  THEN ROUND((rt.[Wear_Fixed]  / rt.[Max_Wear_Fixed])*100,0) + isnull(rt.[Last%FixedWearBeforeChange],0)
+						      WHEN (alert.alertType = 'NotChanged') AND rt.[Wear_Fixed] >= rt.[Wear_Move]  THEN ROUND((rt.[Wear_Fixed]  / rt.[Max_Wear_Fixed])*100,0) + isnull(rt.[Last%FixedWearBeforeChange],0)
 			                  --tipalert and mov dominant
-							  WHEN (tipalert.refId is not null) AND rt.[Wear_Fixed] <= rt.[Wear_Move]  THEN ROUND((rt.Wear_Move  / rt.Max_Wear_Move)*100,0) + isnull(rt.[Last%MovWearBeforeChange],0)
+							  WHEN (alert.alertType = 'NotChanged') AND rt.[Wear_Fixed] <= rt.[Wear_Move]  THEN ROUND((rt.Wear_Move  / rt.Max_Wear_Move)*100,0) + isnull(rt.[Last%MovWearBeforeChange],0)
 							  --NO tipalert and fixed dominant
-						      WHEN (tipalert.refId is null) AND rt.[Wear_Fixed] >= rt.[Wear_Move]  THEN ROUND((rt.[Wear_Fixed]  / rt.[Max_Wear_Fixed])*100,0)
+						      WHEN  rt.[Wear_Fixed] >= rt.[Wear_Move]  THEN ROUND((rt.[Wear_Fixed]  / rt.[Max_Wear_Fixed])*100,0)
 			                  --NO tipalert and mov dominant
-							  WHEN (tipalert.refId is null) AND rt.[Wear_Fixed] <= rt.[Wear_Move]  THEN ROUND((rt.Wear_Move  / rt.Max_Wear_Move)*100,0) 
+							  WHEN  rt.[Wear_Fixed] <= rt.[Wear_Move]  THEN ROUND((rt.Wear_Move  / rt.Max_Wear_Move)*100,0) 
 		                      ELSE -1
 		                   END 'pWear' --in case of an alert we combine the previous wear and the current wear
                           ,CASE 
 						     --if tipalert return error on remaining spots
-						      WHEN (tipalert.refId is not null) THEN -1
+						      WHEN (alert.alertType = 'NotChanged') THEN -1
 							--if not tipalert
-	                          WHEN (tipalert.refId is null) AND rt.[ESTremainingspotsFixed] >= rt.[ESTremainingspotsMove] THEN rt.[ESTremainingspotsFixed]
-		                      WHEN (tipalert.refId is null) AND rt.[ESTremainingspotsFixed] <= rt.[ESTremainingspotsMove] THEN rt.[ESTremainingspotsMove]
+	                          WHEN rt.[ESTremainingspotsFixed] >= rt.[ESTremainingspotsMove] THEN rt.[ESTremainingspotsFixed]
+		                      WHEN rt.[ESTremainingspotsFixed] <= rt.[ESTremainingspotsMove] THEN rt.[ESTremainingspotsMove]
 							  ELSE null
 		                   END 'nRspots'
                           ,CASE 
 						     --if tipalert return error on remaining spots
-						      WHEN (tipalert.refId is not null) THEN -1
+						      WHEN (alert.alertType = 'NotChanged') THEN -1
 							  --if not tipalert
-	                          WHEN  (tipalert.refId is null) AND rt.[ESTremainingCarsFixed] >= rt.[ESTremainingsCarsMove] THEN rt.ESTremainingCarsFixed
-							  WHEN  (tipalert.refId is null) AND rt.[ESTremainingCarsFixed] <= rt.[ESTremainingsCarsMove] THEN rt.ESTremainingsCarsMove
+	                          WHEN  rt.[ESTremainingCarsFixed] >= rt.[ESTremainingsCarsMove] THEN rt.ESTremainingCarsFixed
+							  WHEN  rt.[ESTremainingCarsFixed] <= rt.[ESTremainingsCarsMove] THEN rt.ESTremainingsCarsMove
 		                      ELSE null
 		                   END 'nRcars'
+						  ,CASE --dummy collum to help with sorting. (stuff with alerts always on top and then decending sort on nRcars)
+						      WHEN (alert.alertType is not null) THEN -10000
+	                          WHEN  rt.[ESTremainingCarsFixed] >= rt.[ESTremainingsCarsMove] THEN rt.ESTremainingCarsFixed
+							  WHEN  rt.[ESTremainingCarsFixed] <= rt.[ESTremainingsCarsMove] THEN rt.ESTremainingsCarsMove
+		                      ELSE null
+		                   END 'SortCol'
 						 ,DATEDIFF(hour,rt.LastTipchange,getdate()) as 'TipAge(h)'
 						 ,rt.LastTipchange
 						 ,rt.Time_DressCycleTime
 						 ,c.id
 						 ,c.LocationTree
-						 ,ROUND(rt.DeltaNom-rt.[avgDeltaNomAfterchange],2) as 'MagicFiXedWear'
+						 ,c.hasTipchanger
+						 ,ABS(ROUND(rt.DeltaNom-rt.[avgDeltaNomAfterchange],2)) as 'MagicFiXedWear'
 						 ,CASE 
-						     WHEN rt._timestamp is null THEN 'ND' --no data!
-							 WHEN tipalert.refId is not null THEN 'NTCD' --no tipchange deteced
-							 WHEN rt.countWearInCalc is null THEN 'NWIC' --no wear in calc
+						     WHEN rt._timestamp is null THEN 'NO DATA' --no data!
+							 WHEN rt.countWearInCalc is null THEN 'NO PREDICTION' --no wear in calc
+						     WHEN alert.alertType is not null THEN alert.alertType -- pass active alert can be .. NotChanged OR Tipchanger
 							 ELSE ''
 						  END as 'Status'
 						 ,ROUND(rt.Wear_Fixed+rt.Wear_Move,2) as 'RobotWear'
 
+
                       FROM NGAC.c_controller as c with(nolock)
 					  left join [NGAC].[TipwearLast] as rt with(nolock) on rt.controller_name = c.controller_name
 					  --join active tiplife alerts
-					  left join Alerts.Alerts as tipalert with(nolock) on tipalert.LocationTree = rt.LocationTree 
-					  and tipalert.Subgroup like '%TIPLIFE%'
-					  and tipalert.Category = 'WGK'
-					  and tipalert.[timestamp] > getdate()-3  -- limit search window
+					  left join (
+					  select 
+						 c_triggers.alertType
+					    ,h_alert.locationTree 
+						,h_alert.id
+						from Alerts.h_alert with(nolock)
+						left join Alerts.c_triggers with(nolock) on c_triggers.id = h_alert.c_tirgger_id
+						left join Alerts.c_state  with(nolock) on h_alert.[state] = c_state.id
+						where c_triggers.alertGroup = 'TIPLIFE'
+						AND h_alert._timestamp > getdate()-3  -- limit search window
+						AND c_state.[state] = 'WGK'
+					  ) as alert on alert.locationTree = rt.LocationTree
+
                       --add 1 hour for daylight saving time.
 					  where ((rt.[Date Time] < getdate()+'1900-01-01 01:00:00') or rt.[Date Time] is null) AND (c.hasspotweld = 1) --only robots with the bit set will be handed!
-					  --
-                      Order by [pWear] DESC
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 1, @level0type = N'SCHEMA', @level0name = N'NGAC', @level1type = N'VIEW', @level1name = N'TipMonitor';
 

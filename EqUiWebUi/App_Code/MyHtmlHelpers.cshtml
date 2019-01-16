@@ -1,77 +1,48 @@
 ﻿@*helper to create links*@
 @helper EquiLink(string url, string icon, string linkText, string iconClasses = "", string helperText = "", string helpurl = "", bool OpenNewWindow = false)
 {
-    if (!OpenNewWindow)
-    {
-        <div class="col-md-12">
-            <div class="update-nag" onclick="location.href='@url'">
-                <div class="update-split @iconClasses">
-                    <i class="update-icon @icon fa-2x"></i>
-                </div>
-                <div class="update-text">
-                    <div class="title">@linkText</div>
-                    <div class="d-none d-md-block text-muted">
-                        @helperText
-                        @*show helplink only if there is one*@
-                        @if (helpurl != "")
-                        {
-                            <i class="fas fa-question-circle text-primary" onclick="window.open('@helpurl', 'EQUI', 'window settings')"></i>
-                        }
-                    </div>
-                    @*show collapes helper tooltip only if there is helpertext*@
-                    @if (helperText != "")
-                    {
-                        <a class="d-block d-md-none"><i class="fas fa-info-circle" data-toggle="tooltip" data-placement="right" title="@helperText"></i></a>
-                    }
-                </div>
-            </div>
+<div class="col-md-12">
+    <div class="update-nag @(OpenNewWindow ? "OpenNewWindow" : "")" href="@url" onclick="@(OpenNewWindow ? "" : "location.href=$(this).attr('href')")">
+        <div class="update-split @iconClasses">
+            <i class="update-icon @icon fa-2x"></i>
         </div>
-    }
-    else
-    {
-        <div class="col-md-12">
-            <div class="update-nag" onclick="window.open('@url', 'EQUI', 'window settings')">
-                <div class="update-split @iconClasses">
-                    <i class="update-icon @icon fa-2x"></i>
-                </div>
-                <div class="update-text">
-                    <div class="title">@linkText</div>
-                    <div class="d-none d-md-block text-muted">
-                        @helperText
-                        @*show helplink only if there is one*@
-                        @if (helpurl != "")
-                        {
-                            <i class="fas fa-question-circle text-primary" onclick="window.open('@helpurl', 'EQUI', 'window settings')"></i>
-                        }
-                    </div>
-                    @*show collapes helper tooltip only if there is helpertext*@
-                    @if (helperText != "")
-                    {
-                        <a class="d-block d-md-none"><i class="fas fa-info-circle" data-toggle="tooltip" data-placement="right" title="@helperText"></i></a>
-                    }
-                </div>
-            </div>
-        </div>
-    }
+        <div class="update-text">
+            <div class="title">@linkText</div>
+            <div class="d-none d-md-block text-muted">
+                @helperText
 
+            </div>
+            @*show collapes helper tooltip only if there is helpertext*@
+            @if (helperText != "")
+            {
+                <a class="d-block d-md-none"><i class="fas fa-info" data-toggle="tooltip" data-placement="right" title="@helperText"></i></a>
+            }
+        </div>
+    </div>
+    @*show helplink only if there is one*@
+    @if (helpurl != "")
+    {
+        <i class="badge badge-dark text-white fas fa-rotate-270 fa-info-circle clickable MyPopovers" style="font-size: 20px;" href="@helpurl" data-container="body" data-toggle="popover" data-placement="bottom">info</i>
+    }
+</div>
 }
 
 @*helper to create action link with an icon*@
-@helper IconActionLink(string url, string icon, string linkText, string helperText, string classes = "", bool enabeld = true)
+@helper IconActionLink(string url, string icon, string linkText, string helperText, string classes = "", bool enabeld = true, bool OpenNewWindow = false)
 {
-    if (enabeld)
-    {
-        <a href="@url" class="@classes" data-toggle="tooltip" title="@helperText">
-            <i class="@icon"></i>
-            <span>
-                <strong>@linkText</strong>
-            </span>
-        </a>
-    }
-    else
-    {
-        <div></div>
-    }
+if (enabeld)
+{
+    <a href="@url" class="@classes clickable @(OpenNewWindow ? "OpenNewWindow" : "")" data-toggle="tooltip" title="@helperText">
+        <i class="@icon"></i>
+        <span>
+            <strong>@linkText</strong>
+        </span>
+    </a>
+}
+else
+{
+<a></a>
+}
 }
 
 @*help to render a link panel from the database*@

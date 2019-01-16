@@ -11,6 +11,7 @@ using EqUiWebUi.Models;
 
 namespace EqUiWebUi.Controllers
 {
+    [Authorize(Roles = "Administrator")]
     public class c_datasourceController : Controller
     {
         private GADATAEntitiesEQUI db = new GADATAEntitiesEQUI();

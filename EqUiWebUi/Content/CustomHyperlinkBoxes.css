@@ -2,21 +2,21 @@
     display: inline-block;
     font-size: 16px;
     text-align: left;
-    background-color: #fff;
+    background-color: #f3f3f3;
     height: 70px;
     -webkit-box-shadow: 0 1px 1px 0 rgba(0,0,0,.2);
-    box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.11);
     margin-bottom: 10px;
 }
 
     .update-nag:hover {
         cursor: pointer;
         -webkit-box-shadow: 0 1px 1px 0 rgba(0,0,0,.4);
-        box-shadow: 0 1px 1px 0 rgba(0,0,0,.3);
+        box-shadow: 0 1px 1px 0 rgba(25, 25, 25, 1.00);
     }
 
     .update-nag > .update-split {
-        background: #007bff;
+        background: #0092ff;
         width: 40px;
         float: left;
         color: #fff !important;

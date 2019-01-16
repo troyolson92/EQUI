@@ -1,10 +1,10 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="en-us">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - EQUI</title>
-    <!--Styles (pre body)--> 
+    <!--Styles (pre body)-->
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
@@ -32,27 +32,21 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li class="dropdown-item">
-                            <a href="http://gensvw1178.gen.volvocars.net/EqUi_UtilManager/EqUi_UtilManger.application?Tool=SBCUstats">WeldgunData</a>
-                        </li>
-                        <li class="dropdown-item">
-                            <a href="@Url.Action("WeldgunTool", "Electrode", new { area = "Tiplife"}, null)">NEW! WeldgunData</a>
-                        </li>
-                        <li class="dropdown-divider"></li>
-                        <li class="dropdown-item">
-                            <a href="http://gensvw1178.gen.volvocars.net/EqUi_DigibordLauncher/EqUiDigibordLauncher.application">Start DigiboardLauncher</a>
-                            <a href="@Url.Action("ShowWiki", "Wikis", new { area = "", id = 4 }, null)"><i class="fas fa-question-circle text-primary"></i></a>
+                            <div class="badge badge-info">
+                                <h6>The tools use Microsoft Click once deployment!</h6>
+                            </div>
+                            <p>@MyHtmlHelpers.EquiLink("https://chrome.google.com/webstore/detail/clickonce-for-google-chro/kekahkplibinaibelipdcikofmedafmb", "fab fa-chrome", "ClickOnce for Google Chrome", helperText: "Needed to launch click once tools in the chrome browser.")
                         </li>
                         <li class="dropdown-divider"></li>
+                        <li class="dropdown-item"><h3>Available tools</h3> </li>
                         <li class="dropdown-item">
-                            <a href="https://sway.com/csCS9cdjEpcpPhw0?ref=Link">VSTO Excel (Manual)</a>
+                            @MyHtmlHelpers.EquiLink(@Url.Action("WeldgunTool", "Electrode", new { area = "Tiplife" }, null), "fas fa-toolbox", "WeldgunTool", helperText: "View data and control charts")
                         </li>
                         <li class="dropdown-item">
-                            <a href="file:////gnlsnm0101.gen.volvocars.net/proj/6308-SHR-VCC22700/VSTO/DEPLOYMENTBASE/ExcelAddInEquipmentDatabase.vsto">VSTO Excel (install)</a>
-                            <a href="@Url.Action("ShowWiki", "Wikis", new { area = "", id = 5 }, null)"><i class="fas fa-question-circle text-primary"></i></a>
+                            @MyHtmlHelpers.EquiLink("http://gensvw1178.gen.volvocars.net/EqUi_DigibordLauncher/EqUiDigibordLauncher.application", "fas fa-desktop", "DigiboardLauncher", helperText: "Startup tool for kiosks", helpurl: @Url.Action("_Getwiki", "Wiki", new { area = "", id = "DigibordLauncher" }, null))
                         </li>
-                        <li class="dropdown-divider"></li>
                         <li class="dropdown-item">
-                            <a href="https://sway.com/5uelU8Pra3GK1N9i">Tableau Manual</a>
+                            @MyHtmlHelpers.EquiLink("file:////gnlsnm0101.gen.volvocars.net/proj/6308-SHR-VCC22700/VSTO/DEPLOYMENTBASE/ExcelAddInEquipmentDatabase.vsto", "fas fa-file-excel", "VSTO Excel (install)", helperText: "Excel ribbon plugin to acces the database (installation file)", helpurl: @Url.Action("_Getwiki", "Wiki", new { area = "", id = "VSTO" }, null))
                         </li>
                     </ul>
                 </li>
@@ -62,7 +56,7 @@
             <!-- pull right part -->
             <div class="navbar-nav ml-auto">
                 <div class=" nav-item">
-                    <a class="far fa-id-badge fa-2x text-white fa-2x userhelp" data-container="body" data-toggle="popover" data-original-title="@User.Identity.Name"></a>
+                    <a class="far fa-id-badge fa-2x text-white fa-2x clickable MyPopovers" data-container="body" data-toggle="popover" data-original-title="@User.Identity.Name" href="/user_management/user/_Details"></a>
 
                     <a href="#"><span style="padding-left:20px" class=""></span></a>
 
@@ -70,7 +64,7 @@
 
                     <a href="#"><span style="padding-left:20px" class=""></span></a>
 
-                    <a class="fas fa-arrows-alt text-white" id="fullscreenNav" data-toggle="tooltip" data-placement="left" title="Go fullscreen"></a>
+                    <a class="fas fa-arrows-alt text-white clickable" id="fullscreenNav" data-toggle="tooltip" data-placement="left" title="Go fullscreen"></a>
 
                 </div>
             </div>
@@ -89,7 +83,7 @@
     <!--footer-->
     <hr />
     <footer id="footer">
-        <p>VCG GA SDEBEUL Application</p>
+   
     </footer>
     @*when navbar is hidden this is visble*@
     <div class="pull-right">
