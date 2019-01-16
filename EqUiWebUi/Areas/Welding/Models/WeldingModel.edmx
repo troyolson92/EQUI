@@ -626,6 +626,7 @@ warning 6002: The table/view 'GADATA.WELDING2.h_Nut_Bolt_Measure' does not have 
           <Property Name="SpotRight" Type="int" />
           <Property Name="isDead" Type="int" />
           <Property Name="isDuplicate" Type="int" />
+          <Property Name="PolaritySpot" Type="bit" />
         </EntityType>
         <EntityType Name="rt_user">
           <Key>
@@ -963,6 +964,23 @@ warning 6002: The table/view 'GADATA.UL.AutomaticPlanControleWeldBolt' does not 
           <Property Name="WorkGroup" Type="int" />
           <Property Name="WorkLocation" Type="nchar" MaxLength="50" />
           <Property Name="ID" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.UL.searchplanNbr' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="searchplanNbr">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="InspectionTime" />
+            <PropertyRef Name="IndexOfTestSeq" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="InspectionTime" Type="datetime" Nullable="false" />
+          <Property Name="timername" Type="nchar" MaxLength="15" />
+          <Property Name="spotname" Type="varchar" MaxLength="50" />
+          <Property Name="planName" Type="nchar" MaxLength="50" />
+          <Property Name="IndexOfTestSeq" Type="int" Nullable="false" />
+          <Property Name="PlanLenght" Type="int" />
+          <Property Name="rowNbr" Type="bigint" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'GADATA.UL.ULRapportering' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -1776,6 +1794,18 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
     [AutomaticPlanControleWeldBolt].[ID] AS [ID]
     FROM [UL].[AutomaticPlanControleWeldBolt] AS [AutomaticPlanControleWeldBolt]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="searchplanNbr" EntityType="Self.searchplanNbr" store:Type="Views" store:Schema="UL">
+            <DefiningQuery>SELECT 
+    [searchplanNbr].[id] AS [id], 
+    [searchplanNbr].[InspectionTime] AS [InspectionTime], 
+    [searchplanNbr].[timername] AS [timername], 
+    [searchplanNbr].[spotname] AS [spotname], 
+    [searchplanNbr].[planName] AS [planName], 
+    [searchplanNbr].[IndexOfTestSeq] AS [IndexOfTestSeq], 
+    [searchplanNbr].[PlanLenght] AS [PlanLenght], 
+    [searchplanNbr].[rowNbr] AS [rowNbr]
+    FROM [UL].[searchplanNbr] AS [searchplanNbr]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="ULRapportering" EntityType="Self.ULRapportering" store:Type="Views" store:Schema="UL">
             <DefiningQuery>SELECT 
     [ULRapportering].[id] AS [id], 
@@ -2230,6 +2260,7 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
             <End Role="Users" EntitySet="Users" />
             <End Role="UltralogInspections" EntitySet="UltralogInspections" />
           </AssociationSet>
+          <EntitySet Name="searchplanNbr" EntityType="GADATAModelWelding.searchplanNbr" />
           </EntityContainer>
         <EntityType Name="rt_AutoWorkFlowULPlans">
           <Key>
@@ -3037,6 +3068,7 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
           <Property Name="isDead" Type="Int32" />
           <NavigationProperty Name="c_timer" Relationship="GADATAModelWelding.FK_rt_spottable_c_timer" FromRole="rt_spottable" ToRole="c_timer" />
           <Property Name="isDuplicate" Type="Int32" />
+          <Property Name="PolaritySpot" Type="Boolean" />
         </EntityType>
         <EntityType Name="rt_user">
           <Key>
@@ -3756,6 +3788,21 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="searchplanNbr">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="InspectionTime" />
+            <PropertyRef Name="IndexOfTestSeq" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="InspectionTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="timername" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="spotname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="planName" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="IndexOfTestSeq" Type="Int32" Nullable="false" />
+          <Property Name="PlanLenght" Type="Int32" />
+          <Property Name="rowNbr" Type="Int64" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4415,6 +4462,7 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
           <EntitySetMapping Name="rt_spottable">
             <EntityTypeMapping TypeName="GADATAModelWelding.rt_spottable">
               <MappingFragment StoreEntitySet="rt_spottable">
+                <ScalarProperty Name="PolaritySpot" ColumnName="PolaritySpot" />
                 <ScalarProperty Name="isDuplicate" ColumnName="isDuplicate" />
                 <ScalarProperty Name="isDead" ColumnName="isDead" />
                 <ScalarProperty Name="SpotRight" ColumnName="SpotRight" />
@@ -4846,6 +4894,20 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
                 <ScalarProperty Name="SpotID" ColumnName="SpotID" />
                 <ScalarProperty Name="InspectionPlanID" ColumnName="InspectionPlanID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="searchplanNbr">
+            <EntityTypeMapping TypeName="GADATAModelWelding.searchplanNbr">
+              <MappingFragment StoreEntitySet="searchplanNbr">
+                <ScalarProperty Name="rowNbr" ColumnName="rowNbr" />
+                <ScalarProperty Name="PlanLenght" ColumnName="PlanLenght" />
+                <ScalarProperty Name="IndexOfTestSeq" ColumnName="IndexOfTestSeq" />
+                <ScalarProperty Name="planName" ColumnName="planName" />
+                <ScalarProperty Name="spotname" ColumnName="spotname" />
+                <ScalarProperty Name="timername" ColumnName="timername" />
+                <ScalarProperty Name="InspectionTime" ColumnName="InspectionTime" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

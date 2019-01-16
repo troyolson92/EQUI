@@ -68,7 +68,7 @@ namespace EqUiWebUi.Areas.Welding.Controllers.DMLControllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.timerId = new SelectList(db.c_timer, "ID", "Name", rt_spottable.timerId);
+           ViewBag.timerId = new SelectList(db.c_timer, "ID", "Name", rt_spottable.timerId);
             return View(rt_spottable);
         }
 

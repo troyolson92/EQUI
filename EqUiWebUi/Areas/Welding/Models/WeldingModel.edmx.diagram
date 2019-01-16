@@ -85,7 +85,7 @@
         <AssociationConnector Association="GADATAModelWelding.FK_rt_job_breakdown_rt_alarm" />
         <AssociationConnector Association="GADATAModelWelding.FK_rt_job_breakdown_rt_job" />
       </Diagram>
-      <Diagram DiagramId="6c5a0a6f0e3c46ecbc5b4756677dc47e" Name="Ultralog" ZoomLevel="74" >
+      <Diagram DiagramId="6c5a0a6f0e3c46ecbc5b4756677dc47e" Name="Ultralog" ZoomLevel="55" >
         <EntityTypeShape EntityType="GADATAModelWelding.AutomaticPlanControleWeldBolt" Width="1.5" PointX="0.5" PointY="0.5" FillColor="255, 192, 128" />
         <EntityTypeShape EntityType="GADATAModelWelding.AlertsQteam" Width="1.5" PointX="2.25" PointY="0.5" FillColor="255, 192, 128" />
         <EntityTypeShape EntityType="GADATAModelWelding.Inspectionplan" Width="1.5" PointX="10.375" PointY="0.625" />
@@ -104,6 +104,7 @@
         <AssociationConnector Association="GADATAModelWelding.FK_UltralogInspections_Inspectionplan" />
         <AssociationConnector Association="GADATAModelWelding.FK_UltralogInspections_UltralogStations" />
         <AssociationConnector Association="GADATAModelWelding.FK_UltralogInspections_Users" />
+        <EntityTypeShape EntityType="GADATAModelWelding.searchplanNbr" Width="1.5" PointX="0.5" PointY="6.125" FillColor="255, 192, 128" />
       </Diagram>
       <Diagram DiagramId="5c217cc0d8d547d184a2bc344a71c663" Name="ARO" >
         <EntityTypeShape EntityType="GADATAModelWelding.WeldingGun" Width="1.5" PointX="0.5" PointY="0.5" FillColor="Red" />

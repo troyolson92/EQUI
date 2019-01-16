@@ -91,6 +91,7 @@ namespace EqUiWebUi.Areas.Welding.Models
         public virtual DbSet<CheckDubbelPrograms> CheckDubbelPrograms { get; set; }
         public virtual DbSet<ULplan_start> ULplan_start { get; set; }
         public virtual DbSet<UltralogInspections> UltralogInspections { get; set; }
+        public virtual DbSet<searchplanNbr> searchplanNbr { get; set; }
     
         public virtual ObjectResult<Lastwelds_Result> Lastwelds(string timer, Nullable<int> spot)
         {
