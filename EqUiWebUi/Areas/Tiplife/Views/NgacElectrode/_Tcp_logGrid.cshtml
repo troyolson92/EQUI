@@ -2,10 +2,10 @@
 
 @Html.Grid(Model).Named("TCP_LOGGrid").Build(columns =>
 {
-    columns.Add(c => c.controller_name).Titled("Robot").Filterable(true);
+    columns.Add(c => c.controller_name).Titled("Robot").Filterable(true).Css("tablesaw-priority-persist");
     columns.Add(c => c.SetUp_No).Titled("Nr");
     columns.Add(c => c.Date_Time).Titled("Date_Time").Formatted("{0:dd-MM-yyyy HH:mm}").InitialSort(GridSortOrder.Desc);
-    columns.Add(c => c.Toolname).Titled("Toolname").Css("d-none d-lg-table-cell");
+    columns.Add(c => c.Toolname).Titled("Toolname").Css("tablesaw-priority-6");
 
     columns.Add(c => c.New_TCP_X).Titled("New_TCP_X");
     columns.Add(c => c.New_TCP_Y).Titled("New_TCP_Y");
@@ -13,21 +13,21 @@
     columns.Add(c => c.Action).Titled("Action");
     columns.Add(c => c.DeltaRef).Titled("DeltaRef");
 
-    columns.Add(c => c.Tool_Diff_X).Titled("Tool_Diff_X").Css("d-none d-lg-table-cell");
-    columns.Add(c => c.Tool_Diff_Y).Titled("Tool_Diff_Y").Css("d-none d-lg-table-cell");
-    columns.Add(c => c.Tool_Diff_Z).Titled("Tool_Diff_Z").Css("d-none d-lg-table-cell");
+    columns.Add(c => c.Tool_Diff_X).Titled("Tool_Diff_X").Css("tablesaw-priority-0");
+    columns.Add(c => c.Tool_Diff_Y).Titled("Tool_Diff_Y").Css("tablesaw-priority-0");
+    columns.Add(c => c.Tool_Diff_Z).Titled("Tool_Diff_Z").Css("tablesaw-priority-0");
 
-    columns.Add(c => c.Old_TCP_X).Titled("Old_TCP_X").Css("d-none d-lg-table-cell");
-    columns.Add(c => c.Old_TCP_Y).Titled("Old_TCP_Y").Css("d-none d-lg-table-cell");
-    columns.Add(c => c.Old_TCP_Z).Titled("Old_TCP_Z").Css("d-none d-lg-table-cell");
+    columns.Add(c => c.Old_TCP_X).Titled("Old_TCP_X").Css("tablesaw-priority-0");
+    columns.Add(c => c.Old_TCP_Y).Titled("Old_TCP_Y").Css("tablesaw-priority-0");
+    columns.Add(c => c.Old_TCP_Z).Titled("Old_TCP_Z").Css("tablesaw-priority-0");
 
-    columns.Add(c => c.SetupTCP_X).Titled("SetupTCP_X").Css("d-none d-lg-table-cell");
-    columns.Add(c => c.SetupTCP_Y).Titled("SetupTCP_Y").Css("d-none d-lg-table-cell");
-    columns.Add(c => c.SetupTCP_Z).Titled("SetupTCP_Z").Css("d-none d-lg-table-cell");
+    columns.Add(c => c.SetupTCP_X).Titled("SetupTCP_X").Css("tablesaw-priority-0");
+    columns.Add(c => c.SetupTCP_Y).Titled("SetupTCP_Y").Css("tablesaw-priority-0");
+    columns.Add(c => c.SetupTCP_Z).Titled("SetupTCP_Z").Css("tablesaw-priority-0");
 
 }).Sortable().Filterable().Pageable(pager =>
 {
     pager.RowsPerPage = 20;
     pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 20, "20" }, { 40, "40" }, { 80, "80" }, { 100, "100" } };
     pager.ShowPageSizes = true;
-}).Empty("No data found").Css("table-hover")
+}).Empty("No data found").Css("table-hover tablesaw-on")

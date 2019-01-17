@@ -148,8 +148,6 @@ function EnableInterfaceEvents() {
 
     //table event init
     $('.mvc-grid').mvcgrid();
-    //enable overflow
-    $('.mvc-grid').addClass("tablesaw-overflow");
     //enable select box mode switch and minimap
     $('.tablesaw-on').attr("data-tablesaw-mode-switch", "");
     $('.tablesaw-on').attr("data-tablesaw-mode-exclude", "stack");
