@@ -10,8 +10,10 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-md py-0 bg-dark navbar-dark fixed-top" id="navbar">
+        <!--back button-->
+        <a class="far fa-arrow-alt-circle-left fa-2x text-white py-0" data-toggle="tooltip" title="Go back" onclick="window.history.back();"></a>
         <!-- Brand -->
-        <a class="navbar-brand py-0" href='@Url.Action("Index", "Home", new { area = "" }, null)'>
+        <a class="navbar-brand py-0" href='@Url.Action("Index", "Home", new { area = "" }, null)' data-toggle="tooltip" title="Homepage">
             <img src="~/Content/images/volvo-50.png" />
         </a>
 
