@@ -34,16 +34,3 @@ body {
     margin-bottom: .5rem;
     font-weight: bold;
 }
-
-/*move tablesaw minimap and buttons below table*/
-/*
-.tablesaw-bar {
-    clear: both;
-    position: absolute;
-    bottom: 20px;
-    margin-left: auto;
-    left: 0;
-    right: 0;
-    width: 210px;
-}
-    */

@@ -47,6 +47,7 @@ function initInterface() {
     //initpopovers
     //on click ignore default action
     $(".MyPopovers").click(function (e) {
+        console.log('default action prevented (.Mypopovers)');
         e.preventDefault();
         return false;
     });
@@ -80,18 +81,9 @@ function initInterface() {
         });
     });
 
-    //script for subscribing to panel colaps
-    $(document).on('click', '.card-header span.clickable', function (e) {
-        var $this = $(this);
-        if ($this.closest('.card').find('.card-body').css('display') === 'block') {
-            $this.addClass('fa-rotate-180');
-            $this.closest('.card').find('.card-body').slideUp();
-        } else {
-            $this.removeClass('fa-rotate-180');
-            $this.closest('.card').find('.card-body').slideDown();
-        }
-    });
-
+    //table event for grid that gets loaded without ajax
+    $('.mvc-grid').mvcgrid();
+    //enable events like tooltips ...
     EnableInterfaceEvents();
 }
 
@@ -101,8 +93,20 @@ function EnableInterfaceEvents() {
     $('[data-toggle="tooltip"]').tooltip();
     $('[data-toggle="popover"]').tooltip();
 
+    //script for subscribing to panel colaps
+    $(document).on('click', '.card-header span.clickable', function (e) {
+        if ($(this).closest('.card').find('.card-body').css('display') === 'block') {
+            $(this).addClass('fa-rotate-180');
+            $(this).closest('.card').find('.card-body').slideUp();
+        } else {
+            $(this).removeClass('fa-rotate-180');
+            $(this).closest('.card').find('.card-body').slideDown();
+        }
+    });
+
     //for new window option
     $('.OpenNewWindow').click(function (e) {
+        console.log('default action prevented (.OpenNewWindow)');
         e.preventDefault();
         console.log("Opening new window");
         window.open($(this).attr('href'), 'EQUI', 'window settings');
@@ -119,6 +123,7 @@ function EnableInterfaceEvents() {
 
     //for blind fired buttons with feedback.
     $(".JQresultTriggerBtn").click(function (e) {
+        console.log('default action prevented (.JQresultTriggerBtn)');
         e.preventDefault();
         var caller = this;
         $.toaster({ title: 'JQTriggerBtn', priority: 'info', message: 'Fired: ' + $(this).attr('href') });
@@ -146,8 +151,7 @@ function EnableInterfaceEvents() {
         });
     });
 
-    //table event init
-    $('.mvc-grid').mvcgrid();
+    //tablesaw
     //enable select box mode switch and minimap
     $('.tablesaw-on').attr("data-tablesaw-mode-switch", "");
     $('.tablesaw-on').attr("data-tablesaw-mode-exclude", "stack");
