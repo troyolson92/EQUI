@@ -6,37 +6,53 @@
 
 <h2>VASC</h2>
 
-
 <div class="card">
-    <div class="card-header bg-danger">
+    <div class="card-header bg-dark">
         <h5 class="card-title text-white">
             VASC MAIN settings
             <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
         </h5>
     </div>
     <div class="card-body">
-        <div class="alert alert-danger">
-            <strong>Add/Edit service setup</strong>
-            <p>*Here we can setup/view different sessions of vasc</p>
-            <p>*View L_operation log for a session </p>
-            <p>*Change session settings</p>
+        <div class="row">
+            <div class="col-5">
+                @MyHtmlHelpers.EquiLink("/vasc/c_service_setup/index", "", "c_service_setup", helperText: "Add/Edit service setup")
+            </div>
+            <div class="alert alert-danger col-7">
+                *Here we can setup/view different sessions of vasc<br />
+                *View L_operation log for a session <br />
+                *Change session settings<br />
+            </div>
         </div>
-        <p><a href="~/vasc/c_service_setup/index" class="btn btn-danger btn-sm">c_service_setup &raquo;</a></p>
-        <div class="alert alert-danger">
-            <strong>Add/Edit controller class</strong>
-            <p>*A controller class set what is done for a certain 'type' of robots</p>
-            <p>*You can only add something that is defined in one of the vasc subsystems</p>
-        </div>
-        <p><a href="~/vasc/c_controller_class/index" class="btn btn-danger btn-sm">c_controller_class &raquo;</a></p>
 
-        <div class="alert alert-success">
-            <strong>Add/Edit robots</strong>
-            <p>*set the controller class for a robots connected to VASC</p>
-            <p>*Set the what VASC SESSION controls the robot</p>
+        <hr />
+
+        <div class="row">
+            <div class="col-5">
+                @MyHtmlHelpers.EquiLink("/vasc/c_controller_class/index", "", "c_controller_class", helperText: "Add/Edit controller class")
+            </div>
+            <div class="alert alert-danger col-7">
+                *A controller class set what is done for a certain 'type' of robots<br />
+                *You can only add something that is defined in one of the vasc subsystems<br />
+            </div>
         </div>
-        <p><a href="~/vasc/c_controller/index" class="btn btn-danger btn-sm">c_controller &raquo;</a></p>
-        <p><a href="~/vasc/rt_active_info/index" class="btn btn-success btn-sm">rt_active_info &raquo;</a>See current connection status for a controller</p>
-        <p><a href="~/vasc/rt_active_info/index?ShowNOKonly=true" class="btn btn-success btn-sm">NOK only &raquo;</a>See controllers that are not connected now</p>
+
+        <hr />
+
+        <div class="row">
+            <div class="col-5">
+                @MyHtmlHelpers.EquiLink("/vasc/c_controller/index", "", "c_controller", helperText: "Add/Edit robots")
+            </div>
+            <div class="alert alert-danger col-7">
+                *set the controller class for a robots connected to VASC<br />
+                *Set the what VASC SESSION controls the robot<br />
+            </div>
+        </div>
+
+        <hr />
+        @MyHtmlHelpers.EquiLink("/vasc/rt_active_info/index", "", "rt_active_info", helperText: "Current connection status for a controller")
+        @MyHtmlHelpers.EquiLink("/vasc/rt_active_info/index?ShowNOKonly=true", "", "NOK robots only", helperText: "Controllers that are not connected no")
+
     </div>
 </div>
 
@@ -93,7 +109,7 @@
     </div>
 
     <div class="card-body">
-        @MyHtmlHelpers.EquiLink("/VASC/Breakdown/GetJobs", "fas fa-vial", "Rtjobs", helperText: "")
-        @MyHtmlHelpers.EquiLink("/VASC/Breakdown/GetJobs?hasBreakdowns=true", "fas fa-vial", "RtjobBreakdown", helperText: "")
+        @MyHtmlHelpers.EquiLink("/VASC/Breakdown/GetJobs", "fas fa-vial", "Rtjobs", helperText: "List of ALL working cycles")
+        @MyHtmlHelpers.EquiLink("/VASC/Breakdown/GetJobs?hasBreakdowns=true", "fas fa-vial", "RtjobBreakdown", helperText: "List of working cycles with a breakdown")
     </div>
 </div>

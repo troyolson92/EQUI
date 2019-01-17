@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EqUiWebUi.Areas.VASC.Models;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -6,9 +7,7 @@ using System.Linq;
 using System.Management;
 using System.Net;
 using System.ServiceProcess;
-using System.Web;
 using System.Web.Mvc;
-using EqUiWebUi.Areas.VASC.Models;
 
 namespace EqUiWebUi.Areas.VASC.Controllers
 {
@@ -21,10 +20,16 @@ namespace EqUiWebUi.Areas.VASC.Controllers
 
         // GET: VASC/c_service_setup
         //show a list of session configured join the controller enable mask.
+
+            //this all works when i run it on my laptop. (laptop account must of coarse have admin on server)
+            //can even start and stop session. But when run on sever (with bbp account that has admin) it fails.... FUCK THIS 
+
         public ActionResult Index()
         {
             List<c_service_setup> sessions = db.c_service_setup.Where(c => c.name == "SESSION_NAME").ToList();
-            List<Models.winService> servicesOnServer = GetServices();
+            string vaschost = db.c_service_setup.Where(c => c.name == "COMPUTERNAME").First().value ?? "localhost";
+            log.Info($"vaschost:{vaschost} user:{System.Security.Principal.WindowsIdentity.GetCurrent().Name}");
+            List <Models.winService> servicesOnServer = GetServices(vaschost);
             List<Models.winService> result = new List<winService>();
             foreach (c_service_setup session in sessions)
             {
@@ -47,41 +52,48 @@ namespace EqUiWebUi.Areas.VASC.Controllers
         }
 
         //get list of running services
-        public List<Models.winService> GetServices()
+        public List<Models.winService> GetServices(string hostname)
         {
             ServiceController[] scServices;
             List<Models.winService> list = new List<Models.winService>();
             try
             {
-                scServices = ServiceController.GetServices();
+                scServices = ServiceController.GetServices(hostname);
 
                 try
                 {
-
                     foreach (ServiceController scTemp in scServices)
                     {
+                        try
+                        {
+                            Models.winService winService = new Models.winService();
+                            winService.ServiceName = scTemp.ServiceName;
+                            winService.ServiceDisplayName = scTemp.DisplayName;
+                            winService.ServiceStatus = scTemp.Status.ToString() ?? "null";
+
+                            // Query WMI for additional information about this service.
                             try
                             {
-                                Models.winService winService = new Models.winService();
-                                winService.ServiceName = scTemp.ServiceName;
-                                winService.ServiceDisplayName = scTemp.DisplayName;
-                                winService.ServiceStatus = scTemp.Status.ToString() ?? "null";
-
-                                // Query WMI for additional information about this service.
                                 ManagementObject wmiService;
                                 wmiService = new ManagementObject("Win32_Service.Name='" + scTemp.ServiceName + "'");
                                 wmiService.Get();
                                 winService.ServiceStartName = wmiService["StartName"].ToString() ?? "null";
                                 winService.ServiceDescription = wmiService["Description"].ToString() ?? "null";
-                                //
-                                list.Add(winService);
                             }
                             catch (Exception ex)
                             {
-                                log.Error("Fail to process: " + scTemp.ServiceName, ex);
+                                winService.ServiceStartName = "Failed to query WMI";
+                                winService.ServiceDescription = "Failed to query WMI";
+                                log.Error("Fail to Query WMI : " + scTemp.ServiceName, ex);
                             }
+                            //
+                            list.Add(winService);
                         }
-
+                        catch (Exception ex)
+                        {
+                            log.Error("Fail to process: " + scTemp.ServiceName, ex);
+                        }
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -99,9 +111,11 @@ namespace EqUiWebUi.Areas.VASC.Controllers
         public JsonResult SetServiceState(string ServiceName, int State)
         {
             //IIS user must have acces to start and stop services!
-            //need to test if this works! 
+            //need to test if this works!
             //https://social.technet.microsoft.com/wiki/contents/articles/5752.how-to-grant-users-rights-to-manage-services-start-stop-etc.aspx
-            ServiceController controller = new ServiceController(ServiceName);
+            string vaschost = db.c_service_setup.Where(c => c.name == "COMPUTERNAME").First().value ?? "localhost";
+            log.Info($"vaschost:{vaschost}");
+            ServiceController controller = new ServiceController(ServiceName, vaschost);
             try
             {
                 switch (State)
@@ -133,7 +147,6 @@ namespace EqUiWebUi.Areas.VASC.Controllers
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 Response.StatusDescription = ex.Message;
                 return Json(null, JsonRequestBehavior.AllowGet);
-
             }
         }
 
@@ -158,14 +171,13 @@ namespace EqUiWebUi.Areas.VASC.Controllers
 
                 foreach (int setbit in setbits)
                 {
-                    list.AddRange(db.c_service_setup.Where(c => c.bit_id == setbit+1 && c.bit_id != 0).ToList());
+                    list.AddRange(db.c_service_setup.Where(c => c.bit_id == setbit + 1 && c.bit_id != 0).ToList());
                 }
                 //also add everything with bit_id set to -1 because these are global parameters for all sessions.
                 list.AddRange(db.c_service_setup.Where(c => c.bit_id == -1).ToList());
             }
             return PartialView(list);
         }
-
 
         // GET: VASC/c_service_setup/_sessionSetup
         public ActionResult _sessionDetails(string sessionName)
@@ -196,7 +208,7 @@ namespace EqUiWebUi.Areas.VASC.Controllers
         }
 
         // POST: VASC/c_service_setup/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -228,7 +240,7 @@ namespace EqUiWebUi.Areas.VASC.Controllers
         }
 
         // POST: VASC/c_service_setup/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]

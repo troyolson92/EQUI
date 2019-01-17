@@ -19,28 +19,14 @@ namespace EqUiWebUi.Areas.VASC.Controllers
         {
             if (ShowNOKonly)
             {
-                return View(db.rt_active_info.Where(c => c.vasc_state != (int)VASCState.STATE_CONNECTED).Include(r => r.c_controller));
+                return View(db.rt_active_info.Where(c => c.vasc_state != (int)VASCState.STATE_CONNECTED).Include(r => r.c_controller).ToList());
             }
             else
             {
-                return View(db.rt_active_info.Include(r => r.c_controller));
+                return View(db.rt_active_info.Include(r => r.c_controller).ToList());
             }
         }
 
-        // GET: VASC/rt_active_info/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            rt_active_info rt_active_info = db.rt_active_info.Find(id);
-            if (rt_active_info == null)
-            {
-                return HttpNotFound();
-            }
-            return View(rt_active_info);
-        }
 
         protected override void Dispose(bool disposing)
         {

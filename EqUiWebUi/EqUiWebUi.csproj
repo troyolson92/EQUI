@@ -1237,7 +1237,6 @@
     <Content Include="Areas\VASC\Views\c_controller\Delete.cshtml" />
     <Content Include="Areas\VASC\Views\c_controller\Edit.cshtml" />
     <Content Include="Areas\VASC\Views\c_controller\Index.cshtml" />
-    <Content Include="Areas\VASC\Views\rt_active_info\Details.cshtml" />
     <Content Include="Areas\VASC\Views\rt_active_info\Index.cshtml" />
     <Content Include="Areas\VASC\Views\c_service_setup\Create.cshtml" />
     <Content Include="Areas\VASC\Views\c_service_setup\Delete.cshtml" />
