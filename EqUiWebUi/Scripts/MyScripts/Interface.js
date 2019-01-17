@@ -81,6 +81,17 @@ function initInterface() {
         });
     });
 
+    //script for subscribing to panel colaps
+    $(document).on('click', '.card-header span.clickable', function (e) {
+        if ($(this).closest('.card').find('.card-body').css('display') === 'block') {
+            $(this).addClass('fa-rotate-180');
+            $(this).closest('.card').find('.card-body').slideUp();
+        } else {
+            $(this).removeClass('fa-rotate-180');
+            $(this).closest('.card').find('.card-body').slideDown();
+        }
+    });
+
     //table event for grid that gets loaded without ajax
     $('.mvc-grid').mvcgrid();
     //enable events like tooltips ...
@@ -92,17 +103,6 @@ function EnableInterfaceEvents() {
     //enable tooltips everywhere
     $('[data-toggle="tooltip"]').tooltip();
     $('[data-toggle="popover"]').tooltip();
-
-    //script for subscribing to panel colaps
-    $(document).on('click', '.card-header span.clickable', function (e) {
-        if ($(this).closest('.card').find('.card-body').css('display') === 'block') {
-            $(this).addClass('fa-rotate-180');
-            $(this).closest('.card').find('.card-body').slideUp();
-        } else {
-            $(this).removeClass('fa-rotate-180');
-            $(this).closest('.card').find('.card-body').slideDown();
-        }
-    });
 
     //for new window option
     $('.OpenNewWindow').click(function (e) {
