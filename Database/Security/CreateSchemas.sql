@@ -1,21 +1,6 @@
 ﻿CREATE SCHEMA [Alerts]
     AUTHORIZATION [dbo];
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 GO;
 CREATE SCHEMA [EqUi]
     AUTHORIZATION [dbo];
