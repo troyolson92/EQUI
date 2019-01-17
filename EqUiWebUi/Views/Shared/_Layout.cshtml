@@ -11,9 +11,9 @@
 <body>
     <nav class="navbar navbar-expand-md py-0 bg-dark navbar-dark fixed-top" id="navbar">
         <!--back button-->
-        <a class="far fa-arrow-alt-circle-left fa-2x text-white py-0" data-toggle="tooltip" title="Go back" onclick="window.history.back();"></a>
+        <a class="far fa-arrow-alt-circle-left fa-2x text-white py-0 clickable" data-toggle="tooltip" title="Go back" onclick="window.history.back();"></a>
         <!-- Brand -->
-        <a class="navbar-brand py-0" href='@Url.Action("Index", "Home", new { area = "" }, null)' data-toggle="tooltip" title="Homepage">
+        <a class="navbar-brand py-0 clickable" href='@Url.Action("Index", "Home", new { area = "" }, null)' data-toggle="tooltip" title="Homepage">
             <img src="~/Content/images/volvo-50.png" />
         </a>
 
@@ -62,7 +62,7 @@
 
                     <a href="#"><span style="padding-left:20px" class=""></span></a>
 
-                    <a class="fas fa-cog fa-2x text-danger" href='@Url.Action("Settings", "Home", new { area = "" }, null)' data-toggle="tooltip" title="admin area"></a>
+                    <a class="fas fa-cog fa-2x text-danger clickable" href='@Url.Action("Settings", "Home", new { area = "" }, null)' data-toggle="tooltip" title="admin area"></a>
 
                     <a href="#"><span style="padding-left:20px" class=""></span></a>
 

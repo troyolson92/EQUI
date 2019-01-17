@@ -22,7 +22,6 @@ namespace EqUiWebUi
 
             //loads after content
             bundles.Add(new ScriptBundle("~/bundles/MyScripts").Include(
-                         "~/Scripts/MyScripts/tablehelper.js",
                          "~/Scripts/MyScripts/Interface.js",
 
                          "~/Scripts/MvcGrid/mvc-grid.js", //https://github.com/NonFactors/MVC5.Grid

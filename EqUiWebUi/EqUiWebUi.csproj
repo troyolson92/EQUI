@@ -2916,7 +2916,6 @@
     <Content Include="Scripts\MyScripts\Interface.js" />
     <Content Include="Scripts\jquery.bootstrap-autohidingnavbar.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Scripts\MyScripts\tablehelper.js" />
     <Content Include="Scripts\printThis.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
