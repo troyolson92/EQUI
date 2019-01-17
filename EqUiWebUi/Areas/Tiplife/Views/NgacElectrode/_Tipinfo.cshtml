@@ -114,6 +114,9 @@
             reloadFailed: function (result) {
                 console.log(result);
                 $('[data-name= "TipDressDataGrid"]').html($("#Error", result.responseText).html());
+            },
+            reloadEnded: function () {
+                EnableInterfaceEvents();
             }
         });
 

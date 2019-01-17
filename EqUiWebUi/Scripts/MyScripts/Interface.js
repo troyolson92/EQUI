@@ -148,21 +148,30 @@ function EnableInterfaceEvents() {
 
     //table event init
     $('.mvc-grid').mvcgrid();
-    //add table saw
-    console.log('init');
     //enable overflow
     $('.mvc-grid').addClass("tablesaw-overflow");
-    //enable select box and minimap
-    $('.mvc-grid > table').attr("data-tablesaw-mode", "columntoggle");
-    $('.mvc-grid > table').attr("data-tablesaw-minimap", "");
+    //enable select box mode switch and minimap
+    $('.tablesaw-on').attr("data-tablesaw-mode-switch", "");
+    $('.tablesaw-on').attr("data-tablesaw-mode-exclude", "stack");
+    $('.tablesaw-on').attr("data-tablesaw-mode", "columntoggle");
+    $('.tablesaw-on').attr("data-tablesaw-minimap", "");
     //this must be on all table thead 
-    $('.mvc-grid > table > thead > tr > th').attr("scope", "col");
+    $('.tablesaw-on > thead > tr > th').attr("scope", "col");
     //set all by default to prio 1 (must be done to make tool populate)
-    $('.mvc-grid > table > thead > tr > th').attr("data-tablesaw-priority", "1"); //i think we can not just set all to 1 we need unique id's
-    //init
+    $('.tablesaw-on > thead > tr > th').attr("data-tablesaw-priority", "1"); //value from 1 to 6 depending on viewport
+    //normally attributes are added to the table headers to set prio to the table.
+    //because gid-mvc does not support attr in constuctor we add the CSS class in the gird-mvc constructor.
+    //then we check here if it has that class and add the attr. 
+    $('.tablesaw-on > thead > tr > .tablesaw-priority-persist').attr("data-tablesaw-priority", "persist");
+    $('.tablesaw-on > thead > tr > .tablesaw-priority-0').attr("data-tablesaw-priority", "0");
+    $('.tablesaw-on > thead > tr > .tablesaw-priority-1').attr("data-tablesaw-priority", "1");
+    $('.tablesaw-on > thead > tr > .tablesaw-priority-2').attr("data-tablesaw-priority", "2");
+    $('.tablesaw-on > thead > tr > .tablesaw-priority-3').attr("data-tablesaw-priority", "3");
+    $('.tablesaw-on > thead > tr > .tablesaw-priority-4').attr("data-tablesaw-priority", "4");
+    $('.tablesaw-on > thead > tr > .tablesaw-priority-5').attr("data-tablesaw-priority", "5");
+    $('.tablesaw-on > thead > tr > .tablesaw-priority-6').attr("data-tablesaw-priority", "6");
     Tablesaw.init();
 }
-
 
 //get part from querystring
 function qs(key) {

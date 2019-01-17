@@ -2,18 +2,30 @@
 
 @Html.Grid(Model).Named("TipDressLogFileGrid").Build(columns =>
 {
-    columns.Add(c => c.controller_name).Titled("Robot").Filterable(true);
+    columns.Add(c => c.controller_name).Titled("Robot").Filterable(true).Css("tablesaw-priority-persist");
     columns.Add(c => c.Date_Time).Titled("Time_Robot").Formatted("{0:dd-MM-yyyy HH:mm}").InitialSort(GridSortOrder.Desc);
-    columns.Add(c => c.C_timestamp).Titled("Time_db").Formatted("{0:dd-MM-yyyy HH:mm}").Css("d-none d-lg-table-cell");
-    columns.Add(c => c.Weld_Counter).Titled("Weld_Counter").Css("d-none d-lg-table-cell");
+    columns.Add(c => c.C_timestamp).Titled("Time_db").Formatted("{0:dd-MM-yyyy HH:mm}").Css("tablesaw-priority-0");
+    columns.Add(c => c.Weld_Counter).Titled("Weld_Counter").Css("tablesaw-priority-6");
     columns.Add(c => c.Dress_Num).Titled("#Dress");
     columns.Add(c => c.Wear_Fixed).Titled("(mm)Wear_Fixed");
     columns.Add(c => c.Wear_Move).Titled("(mm)Wear_Move");
     columns.Add().Titled("Pwear").RenderedAs(c => EqUiWebUi.Areas.Tiplife.TiplifeHelpers.getPwear(c));
     columns.Add(c => c.ErrorType).Titled("Error");
+    columns.Add(c => c.ExtraInfo).Titled("ExtraInfo");
+
+    columns.Add(c => c.Dress_Time1).Titled("Dress_Time1").Css("tablesaw-priority-0");
+    columns.Add(c => c.Dress_Pressure1).Titled("Dress_Pressure1").Css("tablesaw-priority-0");
+    columns.Add(c => c.Dress_Time2).Titled("Dress_Time2").Css("tablesaw-priority-0");
+    columns.Add(c => c.Dress_Pressure2).Titled("Dress_Pressure2").Css("tablesaw-priority-0");
+    columns.Add(c => c.CleanDress_Time).Titled("CleanDress_Time").Css("tablesaw-priority-0");
+    columns.Add(c => c.CleanDress_Pressure).Titled("CleanDress_Pressure").Css("tablesaw-priority-0");
+    columns.Add(c => c.Time_DressCycleTime).Titled("Time_DressCycleTime").Css("tablesaw-priority-0");
+
+
 }).Sortable().Filterable().Pageable(pager =>
 {
     pager.RowsPerPage = 20;
     pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 20, "20" }, { 40, "40" }, { 80, "80" }, { 100, "100" } };
     pager.ShowPageSizes = true;
-}).Empty("No data found").Css("table-hover")
+}).Empty("No data found").Css("table-hover tablesaw-on")
+

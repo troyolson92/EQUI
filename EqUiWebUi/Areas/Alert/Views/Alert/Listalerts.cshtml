@@ -101,12 +101,6 @@
             }
         });
 
-
-
-        //test to make a col persist table saw table!
-        $('[data-name="h_alert"] > table > thead > tr > th:contains("timestamp")').attr("data-tablesaw-priority", "persist");
-        $('[data-name="h_alert"] > table > thead > tr > th:contains("location")').attr("data-tablesaw-priority", "persist");
-
         //simulate click on first row so that the details load automatic IF ROWCOUNT == 1
         if ($('[data-name="h_alert"]>table>tbody>tr').length == 1) {
             $('[data-name="h_alert"]>table>tbody>tr>td:first').trigger('click');

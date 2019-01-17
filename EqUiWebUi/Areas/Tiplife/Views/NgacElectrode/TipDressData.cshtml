@@ -27,6 +27,9 @@
             reloadFailed: function (result) {
                 console.log(result);
                 $("#TipDressDataGrid").html($("#Error", result.responseText).html());
+            },
+            reloadEnded: function () {
+                EnableInterfaceEvents();
             }
         });
     </script>
