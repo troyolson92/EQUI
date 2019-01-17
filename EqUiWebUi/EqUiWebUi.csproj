@@ -2119,7 +2119,6 @@
     <Content Include="Areas\Welding\Views\Qteam\ULRapportering.cshtml" />
     <Content Include="Areas\Welding\Views\WM\Index.cshtml" />
     <Content Include="Areas\Welding\Views\WM\Launch.cshtml" />
-    <Content Include="Areas\Welding\Views\Launch\WeldtimeSpotsSetup.cshtml" />
     <Content Include="Areas\Welding\Views\WM\TV.cshtml" />
     <Content Include="Areas\Welding\Views\WM\_ConnectionState.cshtml" />
     <Content Include="Areas\Welding\Views\WM\_QISvieuwer.cshtml" />
@@ -2271,6 +2270,7 @@
     <Content Include="Areas\Welding\Views\Qteam\_SearchplanNbr.cshtml" />
     <Content Include="Areas\Welding\Views\Launch\Index.cshtml" />
     <Content Include="Areas\Welding\Views\Launch\BosProgramAvailable.cshtml" />
+    <Content Include="Areas\Welding\Views\Launch\WeldtimeSpotsSetup.cshtml" />
     <None Include="Properties\PublishProfiles\chasvw1203_DEV_VCCH.pubxml" />
     <None Include="Properties\PublishProfiles\chasvw1203_PRODUCTION_VCCH.pubxml" />
     <Content Include="Areas\Welding\Views\WM\_Parameters.cshtml" />

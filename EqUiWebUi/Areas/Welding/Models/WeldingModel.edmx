@@ -815,9 +815,9 @@ warning 6002: The table/view 'GADATA.dbo.WeldtimeSpotsSetup' does not have a pri
           </Key>
           <Property Name="NPT" Type="nchar" MaxLength="15" />
           <Property Name="Timer" Type="nchar" MaxLength="15" />
-          <Property Name="Number" Type="int" />
-          <Property Name="WeldTime" Type="float" />
+          <Property Name="spotname" Type="int" />
           <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Expr1" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'GADATA.LAUNCH.BosProgramAvailable' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -1635,9 +1635,9 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
             <DefiningQuery>SELECT 
     [WeldtimeSpotsSetup].[NPT] AS [NPT], 
     [WeldtimeSpotsSetup].[Timer] AS [Timer], 
-    [WeldtimeSpotsSetup].[Number] AS [Number], 
-    [WeldtimeSpotsSetup].[WeldTime] AS [WeldTime], 
-    [WeldtimeSpotsSetup].[ID] AS [ID]
+    [WeldtimeSpotsSetup].[spotname] AS [spotname], 
+    [WeldtimeSpotsSetup].[ID] AS [ID], 
+    [WeldtimeSpotsSetup].[Expr1] AS [Expr1]
     FROM [dbo].[WeldtimeSpotsSetup] AS [WeldtimeSpotsSetup]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="BosProgramAvailable" EntityType="Self.BosProgramAvailable" store:Type="Views" store:Schema="LAUNCH">
@@ -1982,7 +1982,6 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
         <EntityContainer Name="GADATAEntitiesWelding" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="rt_AutoWorkFlowULPlans" EntityType="GADATAModelWelding.rt_AutoWorkFlowULPlans" />
           <EntitySet Name="ULRapporterings" EntityType="GADATAModelWelding.ULRapportering" />
-          <EntitySet Name="WeldtimeSpotsSetup" EntityType="GADATAModelWelding.WeldtimeSpotsSetup" />
           <EntitySet Name="ConnectionState" EntityType="GADATAModelWelding.ConnectionState" />
           <FunctionImport Name="Lastwelds" ReturnType="Collection(GADATAModelWelding.Lastwelds_Result)">
             <Parameter Name="Timer" Mode="In" Type="String" />
@@ -2174,6 +2173,7 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
           <EntitySet Name="searchplanNbr" EntityType="GADATAModelWelding.searchplanNbr" />
           <EntitySet Name="BosProgramAvailable" EntityType="GADATAModelWelding.BosProgramAvailable" />
           <EntitySet Name="CheckDubbelPrograms" EntityType="GADATAModelWelding.CheckDubbelPrograms" />
+          <EntitySet Name="WeldtimeSpotsSetup" EntityType="GADATAModelWelding.WeldtimeSpotsSetup" />
           </EntityContainer>
         <EntityType Name="rt_AutoWorkFlowULPlans">
           <Key>
@@ -2215,16 +2215,6 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
           <Property Name="Shift" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
           <Property Name="spot" Type="Int32" />
           <Property Name="loose_" Type="Boolean" />
-        </EntityType>
-        <EntityType Name="WeldtimeSpotsSetup">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="NPT" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
-          <Property Name="Timer" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
-          <Property Name="Number" Type="Int32" />
-          <Property Name="WeldTime" Type="Double" />
-          <Property Name="ID" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="ConnectionState">
           <Key>
@@ -3674,6 +3664,16 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
           <Property Name="SpotName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="weldProgNo" Type="Int32" Nullable="false" />
         </EntityType>
+        <EntityType Name="WeldtimeSpotsSetup">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="NPT" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="Timer" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="spotname" Type="Int32" />
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Expr1" Type="Int32" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3720,17 +3720,6 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
                 <ScalarProperty Name="EndTimePlan" ColumnName="EndTimePlan" />
                 <ScalarProperty Name="starttimePlan" ColumnName="starttimePlan" />
                 <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="WeldtimeSpotsSetup">
-            <EntityTypeMapping TypeName="GADATAModelWelding.WeldtimeSpotsSetup">
-              <MappingFragment StoreEntitySet="WeldtimeSpotsSetup">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="WeldTime" ColumnName="WeldTime" />
-                <ScalarProperty Name="Number" ColumnName="Number" />
-                <ScalarProperty Name="Timer" ColumnName="Timer" />
-                <ScalarProperty Name="NPT" ColumnName="NPT" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -4737,6 +4726,17 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
                 <ScalarProperty Name="SpotName" ColumnName="SpotName" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WeldtimeSpotsSetup">
+            <EntityTypeMapping TypeName="GADATAModelWelding.WeldtimeSpotsSetup">
+              <MappingFragment StoreEntitySet="WeldtimeSpotsSetup">
+                <ScalarProperty Name="Expr1" ColumnName="Expr1" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="spotname" ColumnName="spotname" />
+                <ScalarProperty Name="Timer" ColumnName="Timer" />
+                <ScalarProperty Name="NPT" ColumnName="NPT" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
