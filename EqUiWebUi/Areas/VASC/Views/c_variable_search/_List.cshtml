@@ -3,28 +3,22 @@
 @Html.Grid(Model).Named("c_variable_search").Build(columns =>
 {
     columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Asc);
-    columns.Add(c => c._Enable_bit).Titled("enable_bit");
+    columns.Add(c => c._Enable_bit).Titled("enable_bit").Css("tablesaw-priority-6");
     columns.Add(c => c.variable).Titled("variable");
-    columns.Add(c => c._Poll_Rate).Titled("_Poll_Rate").Css("d-none d-lg-table-cell");
-    columns.Add(c => c._Insert_update).Titled("_Insert_update").Css("d-none d-lg-table-cell");
+    columns.Add(c => c._Poll_Rate).Titled("_Poll_Rate").Css("tablesaw-priority-6");
+    columns.Add(c => c._Insert_update).Titled("_Insert_update").Css("tablesaw-priority-6");
     columns.Add(c => c.rt_table).Titled("rt_table");
-    columns.Add(c => c._SymbolTypes).Titled("_SymbolTypes").Css("d-none d-lg-table-cell"); //must check doc to make this enum
-    columns.Add(c => c.datatype).Titled("datatype").Css("d-none d-lg-table-cell"); //idem
+    columns.Add(c => c._SymbolTypes).Titled("_SymbolTypes").Css("tablesaw-priority-6");
+    columns.Add(c => c.datatype).Titled("datatype").Css("tablesaw-priority-6");
     columns.Add(c => c)
-                    .Titled("")
+                    .Titled("Tools")
                     .Encoded(false)
-                    .RenderedAs(c => @Html.ActionLink("Edit", "Edit", new { id = c.id })
+                    .RenderedAs(c => MyHtmlHelpers.IconActionLink(Url.Action("Edit", new { id = c.id }), "fas fa-pencil-alt", "", "Edit", OpenNewWindow: true).ToHtmlString() +
+                     MyHtmlHelpers.IconActionLink(Url.Action("GetVariableData", new { c_variable_search_id = c.id, controller_id = ViewBag.controller_id }), "fas fa-file", "", "GetVariableData", OpenNewWindow: true).ToHtmlString()
                     ).Filterable(false);
-    columns.Add(c => c)
-            .Titled("")
-            .Encoded(false)
-            .RenderedAs(c => @Html.ActionLink("Show", "GetVariableData", new { c_variable_search_id = c.id, controller_id = ViewBag.controller_id })
-            ).Filterable(false);
 }).Filterable().Sortable().Pageable(pager =>
 {
     pager.RowsPerPage = 10;
     pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 10, "10" }, { 20, "20" }, { 40, "40" }, { 80, "80" }, { 100, "100" } };
     pager.ShowPageSizes = true;
-}).Empty("Did not find anything").Css("table-hover")
-
-<div class="badge">Count: @Model.Count()</div>
+}).Empty("Did not find anything").Css("table-hover  tablesaw-on")

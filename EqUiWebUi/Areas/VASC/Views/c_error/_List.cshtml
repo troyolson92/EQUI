@@ -3,25 +3,23 @@
 @Html.Grid(Model).Named("c_errorGrid").Build(columns =>
 {
     columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Asc);
-    columns.Add(c => c._Enable_bit).Titled("enable_bit");
-    columns.Add(c => c.flags).Titled("flags").Css("d-none d-lg-table-cell");
-    columns.Add(c => c.ordinal).Titled("ordinal").Css("d-none d-lg-table-cell");
-    columns.Add(c => c.error_category).Titled("catId").Css("d-none d-lg-table-cell");
-    columns.Add(c => c._ErrorCategory).Titled("ErrorCategory").Css("d-none d-lg-table-cell");
+    columns.Add(c => c._Enable_bit).Titled("enable_bit").Css("tablesaw-priority-6");
+    columns.Add(c => c.flags).Titled("flags").Css("tablesaw-priority-6");
+    columns.Add(c => c.ordinal).Titled("ordinal").Css("tablesaw-priority-6");
+    columns.Add(c => c.error_category).Titled("catId").Css("tablesaw-priority-6");
+    columns.Add(c => c._ErrorCategory).Titled("ErrorCategory").Css("tablesaw-priority-6");
     columns.Add(c => c.error_number).Titled("error_number");
     columns.Add(c => c._Operator).Titled("Operator");
     columns.Add(c => c.Ignore).Titled("Logtext");
     columns.Add(c => c.UserComment).Titled("UserComment").Css("d-none d-lg-table-cell");
     columns.Add(c => c)
-                    .Titled("")
+                    .Titled("Tools")
                     .Encoded(false)
-                    .RenderedAs(c => @Html.ActionLink("Edit", "Edit", new { id = c.id })
+                    .RenderedAs(c => MyHtmlHelpers.IconActionLink(Url.Action("Edit", new { id = c.id }), "fas fa-pencil-alt", "", "Edit", OpenNewWindow: true).ToHtmlString()
                     ).Filterable(false);
 }).Filterable().Sortable().Pageable(pager =>
 {
     pager.RowsPerPage = 10;
     pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 10, "10" }, { 20, "20" }, { 40, "40" }, { 80, "80" }, { 100, "100" } };
     pager.ShowPageSizes = true;
-}).Empty("Did not find anything").Css("table-hover")
-
-<div class="badge">Count: @Model.Count()</div>
+}).Empty("Did not find anything").Css("table-hover  tablesaw-on")

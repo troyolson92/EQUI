@@ -17,7 +17,9 @@
     columns.Add(c => c.lastFileSize).Titled("lastFileSize");
 }).Filterable().Sortable().Pageable(pager =>
 {
-    pager.RowsPerPage = 30;
+    pager.RowsPerPage = 20;
+    pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 10, "10" }, { 20, "20" }, { 40, "40" }, { 80, "80" }, { 100, "100" } };
+    pager.ShowPageSizes = true;
 }).Empty("Did not find anything").Css("table-hover")
 
 @section scripts{
