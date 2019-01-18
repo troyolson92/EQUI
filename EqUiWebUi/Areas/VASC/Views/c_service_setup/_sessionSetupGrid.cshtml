@@ -8,9 +8,9 @@
     columns.Add(c => c.value).Titled("value");
     columns.Add(c => c.description).Titled("description");
     columns.Add(c => c)
-                    .Titled("")
+                    .Titled("Tools")
                     .Encoded(false)
-                    .RenderedAs(c => @Html.ActionLink("Edit", "Edit", new { id = c.id })
+                    .RenderedAs(c => MyHtmlHelpers.IconActionLink(Url.Action("Edit", new { id = c.id }), "fas fa-pencil-alt", "", "Edit", OpenNewWindow:true)
                     ).Filterable(false);
 }).Filterable().Sortable().Pageable(pager =>
 {
@@ -18,5 +18,5 @@
     pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 10, "10" }, { 20, "20" }, { 40, "40" }, { 80, "80" }, { 100, "100" } };
     pager.ShowPageSizes = true;
 }).Empty("Did not find anything").Css("table-hover")
-<div class="badge">Count: @Model.Count()</div>
+
 

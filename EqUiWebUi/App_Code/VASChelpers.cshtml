@@ -3,17 +3,17 @@
     {
         <div class="dropdown">
             <button class="btn btn-xs btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-                @currentState <span class="caret"></span>
+                @(currentState ?? "not found") <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
-                <li>
-                    <a class="JQresultTriggerBtn" href="/VASC/c_service_setup/SetServiceState?ServiceName=@ServiceName&State=1">Start</a>
+                <li class="dropdown-item">
+                    <p>@MyHtmlHelpers.IconActionLink("/VASC/c_service_setup/SetServiceState?ServiceName=@ServiceName&State=1", "", "Start", "Start session", classes: "JQresultTriggerBtn btn btn-danger")</p>
                 </li>
-                <li>
-                    <a class="JQresultTriggerBtn" href="/VASC/c_service_setup/SetServiceState?ServiceName=@ServiceName&State=2">Stop</a>
+                <li class="dropdown-item">
+                    <p>@MyHtmlHelpers.IconActionLink("/VASC/c_service_setup/SetServiceState?ServiceName=@ServiceName&State=2", "", "Stop", "Stop session", classes: "JQresultTriggerBtn btn btn-danger")</p>
                 </li>
-                <li>
-                    <a class="JQresultTriggerBtn" href="/VASC/c_service_setup/SetServiceState?ServiceName=@ServiceName&State=3">Restart</a>
+                <li class="dropdown-item">
+                    <p>@MyHtmlHelpers.IconActionLink("/VASC/c_service_setup/SetServiceState?ServiceName=@ServiceName&State=3", "", "Restart", "Restart session", classes: "JQresultTriggerBtn btn btn-danger")</p>
                 </li>
             </ul>
         </div>

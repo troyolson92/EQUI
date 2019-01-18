@@ -29,6 +29,7 @@ namespace EqUiWebUi.Areas.VASC.Controllers
             List<c_service_setup> sessions = db.c_service_setup.Where(c => c.name == "SESSION_NAME").ToList();
             string vaschost = db.c_service_setup.Where(c => c.name == "COMPUTERNAME").First().value ?? "localhost";
             log.Info($"vaschost:{vaschost} user:{System.Security.Principal.WindowsIdentity.GetCurrent().Name}");
+            ViewBag.vaschost = vaschost;
             List <Models.winService> servicesOnServer = GetServices(vaschost);
             List<Models.winService> result = new List<winService>();
             foreach (c_service_setup session in sessions)
@@ -218,7 +219,7 @@ namespace EqUiWebUi.Areas.VASC.Controllers
             {
                 db.c_service_setup.Add(c_service_setup);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Close", "Home", new { area = "" });
             }
 
             return View(c_service_setup);
@@ -250,7 +251,7 @@ namespace EqUiWebUi.Areas.VASC.Controllers
             {
                 db.Entry(c_service_setup).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Close","Home",new { area ="" });
             }
             return View(c_service_setup);
         }

@@ -1,13 +1,10 @@
 ﻿<div class="card">
     <div class="card-header">
-        <h5 class="card-title text">l operation</h5>
-        <div class="text-muted">
-            (log records in table l_operation for this session)
-            @Html.ActionLink("l_operation_index", "Index", "l_operation")
-        </div>
-        <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
-    </div>
-    <div class="alert-info">
+        <h5 class="card-title">
+            <a class="clickable far fa-window-restore text-black-50" href="@Url.Action("Index", "l_operation")" data-toggle="tooltip" title="Direct link to this view"></a>
+             Records in table l_operation for this session          
+            <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
+        </h5>
     </div>
     <div class="card-body">
         <div class="mvc-grid"  data-name="L_operationGrid"></div>
@@ -16,12 +13,16 @@
 
 
 <script>
-   // $('[data-name="L_operationGrid"]').html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
+    $('[data-name="L_operationGrid"]').html('@MyHtmlHelpers.Loading("L_operationGrid")');
     $('[data-name="L_operationGrid"]').mvcgrid({
-        sourceUrl: '@Html.Raw(@Url.Action("_List", "l_operation",new { sessionName = ViewBag.sessionName }))',
+        sourceUrl: '@Url.Action("_List", "l_operation",new { sessionName = ViewBag.sessionName })',
+        reload: true,
         requestType: 'get', // Ajax grid request type
         reloadFailed: function (result) {
             $('[data-name="L_operationGrids"]').html($("#Error", result.responseText).html());
+        },
+        reloadEnded: function () {
+           EnableInterfaceEvents();
         }
     });
 </script>

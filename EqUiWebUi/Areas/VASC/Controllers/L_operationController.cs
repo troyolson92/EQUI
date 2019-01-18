@@ -30,18 +30,18 @@ namespace EqUiWebUi.Areas.VASC.Controllers
                 if (sessionName is null)
                 {
                     //all 
-                    return PartialView(db.L_operation);
+                    return PartialView(db.L_operation.ToList());
                 }
                 else
                 {
                     //for a session
-                    return PartialView(db.L_operation.Where(c => c.Vasc_name.Contains(sessionName)));
+                    return PartialView(db.L_operation.Where(c => c.Vasc_name.Contains(sessionName)).ToList());
                 }
             }
             else
             {
                 //for a controller
-                return PartialView(db.L_operation.Where(c => (c.controller_id == controller_id && c.Vasc_name.Contains(sessionName)) || (c.controller_id == null && c.Vasc_name.Contains(sessionName))));
+                return PartialView(db.L_operation.Where(c => (c.controller_id == controller_id && c.Vasc_name.Contains(sessionName)) || (c.controller_id == null && c.Vasc_name.Contains(sessionName))).ToList());
             }
 
         }

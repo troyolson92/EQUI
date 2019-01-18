@@ -7,30 +7,29 @@
 
 @if (ViewBag.controller_id != null)
 {
-    <h3>Filtered on controllerID: @ViewBag.controller_id</h3>
+    <div class="badge badge-info">Filtered on controllerID: @ViewBag.controller_id</div>
 }
 
-<div class="container">
-    <h2>Index L_operation</h2>
-    <div class="alert alert-info">
-        <h4>
-            L_operation
-        </h4>
-
-        <div class="text-muted">
-        </div>
-    </div>
-</div>
-
-@Html.AjaxGrid(Url.Action("_List", new { controller_id = ViewBag.controller_id, sessionName = ViewBag.sessionName }))
-
-<hr />
-
+<h2>Index L_operation</h2>
+<div class="mvc-grid" data-name="L_operationGrid"></div>
 @section scripts{
     <script>
         //full with screen
         $("#allcontent").removeClass("body-content");
         $("#allcontent").removeClass("container");
+
+    $('[data-name="L_operationGrid"]').html('@MyHtmlHelpers.Loading("L_operationGrid")');
+    $('[data-name="L_operationGrid"]').mvcgrid({
+        sourceUrl: '@Url.Action("_List", "l_operation",new { sessionName = ViewBag.sessionName })',
+        reload: true,
+        requestType: 'get', // Ajax grid request type
+        reloadFailed: function (result) {
+            $('[data-name="L_operationGrids"]').html($("#Error", result.responseText).html());
+        },
+        reloadEnded: function () {
+           EnableInterfaceEvents();
+        }
+    });
     </script>
 }
 

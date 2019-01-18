@@ -18,8 +18,8 @@
             <div class="col-5">
                 @MyHtmlHelpers.EquiLink("/vasc/c_service_setup/index", "", "c_service_setup", helperText: "Add/Edit service setup")
             </div>
-            <div class="alert alert-danger col-7">
-                *Here we can setup/view different sessions of vasc<br />
+            <div class="alert alert-info col-7 text-secondary">
+                *Here we can setup/view different sessions of VASC<br />
                 *View L_operation log for a session <br />
                 *Change session settings<br />
             </div>
@@ -31,9 +31,10 @@
             <div class="col-5">
                 @MyHtmlHelpers.EquiLink("/vasc/c_controller_class/index", "", "c_controller_class", helperText: "Add/Edit controller class")
             </div>
-            <div class="alert alert-danger col-7">
-                *A controller class set what is done for a certain 'type' of robots<br />
-                *You can only add something that is defined in one of the vasc subsystems<br />
+            <div class="alert alert-info col-7 text-secondary">
+                *A controller class sets what is done for a certain 'type' of robot<br />
+                *You can add groups of items that are defined in one of the VASC subsystems<br />
+                *a subsystem is ie: variable logs, csv file, device info<br />
             </div>
         </div>
 
@@ -43,8 +44,8 @@
             <div class="col-5">
                 @MyHtmlHelpers.EquiLink("/vasc/c_controller/index", "", "c_controller", helperText: "Add/Edit robots")
             </div>
-            <div class="alert alert-danger col-7">
-                *set the controller class for a robots connected to VASC<br />
+            <div class="alert alert-info col-7 text-secondary">
+                *set the controller CLASS for robots connected to VASC<br />
                 *Set the what VASC SESSION controls the robot<br />
             </div>
         </div>
@@ -59,14 +60,14 @@
 <hr />
 
 <div class="card">
-    <div class="card-header bg-danger">
+    <div class="card-header bg-dark">
         <h5 class="card-title text-white">
             VASC subsystems
-            <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
+            <span class="clickable float-right fa-rotate-180"><i class="fas fa-chevron-circle-up fa-1"></i></span>
         </h5>
     </div>
 
-    <div class="card-body">
+    <div class="card-body" style="display:none">
         <div class="alert alert-info">
             <strong>Add/Edit csv files to be logged</strong>
         </div>
@@ -103,7 +104,7 @@
 <div class="card">
     <div class="card-header bg-dark">
         <h5 class="card-title text-white">
-            VASC Front
+            VASC Front end data
             <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
         </h5>
     </div>

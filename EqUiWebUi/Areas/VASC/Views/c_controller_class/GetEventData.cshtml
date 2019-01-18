@@ -5,23 +5,32 @@
 }
 
 <h2>GetEventdata</h2>
-COUNT:@Model.Count()
+@if (ViewBag.controller_id != null)
+{
+    <div class="badge badge-info">Filtered on controllerID: @ViewBag.controller_id</div>
+}
+<div class="badge badge-dark">
+    COUNT:@Model.Count()
+</div>
+
 
 @Html.Grid(Model).Named("rt_event").Build(columns =>
 {
-    columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Desc);
-    columns.Add(c => c.c_controller.controller_name).Titled("controller_name");
+    columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Desc).Css("tablesaw-priority-0");
+    columns.Add(c => c.c_controller.controller_name).Titled("controller_name").Css("tablesaw-priority-persist");
     columns.Add(c => c.C_timestamp).Titled("_timestamp");
-    columns.Add(c => c.abbDateTime).Titled("abbDateTime");
-    columns.Add(c => c.event_enum).Titled("event_enum");
+    columns.Add(c => c.abbDateTime).Titled("abbDateTime").Css("tablesaw-priority-0");
+    columns.Add(c => c.event_enum).Titled("event_enum").Css("tablesaw-priority-0");
     columns.Add(c => c._Event_code).Titled("_Event_code");
     columns.Add(c => c.description).Titled("description");
     columns.Add(c => c.event_value).Titled("event_value");
-    columns.Add(c => c.isEvent).Titled("isEvent");
+    columns.Add(c => c.isEvent).Titled("isEvent").Css("tablesaw-priority-6");
 }).Filterable().Sortable().Pageable(pager =>
 {
-    pager.RowsPerPage = 30;
-}).Empty("Did not find anything").Css("table-hover")
+    pager.RowsPerPage = 10;
+    pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 10, "10" }, { 20, "20" }, { 40, "40" }, { 80, "80" }, { 100, "100" } };
+    pager.ShowPageSizes = true;
+}).Empty("Did not find anything").Css("table-hover tablesaw-on")
 
 @section scripts{
     <script>

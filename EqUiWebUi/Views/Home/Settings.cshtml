@@ -2,15 +2,15 @@
     ViewBag.Title = "Settings";
 }
 
-<div id="EQUISetup"></div>
+<div id="EQUISetup">@MyHtmlHelpers.Loading("EQUI settings")</div>
 <hr />
-<div id="job"></div>
+<div id="job">@MyHtmlHelpers.Loading("Job settings")</div>
 <hr />
-<div id="Users"></div>
+<div id="Users">@MyHtmlHelpers.Loading("User settings")</div>
 <hr />
-<div id="UserScreens"></div>
+<div id="UserScreens">@MyHtmlHelpers.Loading("Kiosk settings")</div>
 <hr />
-<div id="alert"></div>
+<div id="alert">@MyHtmlHelpers.Loading("Alert settings")</div>
 <hr />
 
 @if (System.Configuration.ConfigurationManager.AppSettings["Maximo_SiteID"].ToString() == "VCG")

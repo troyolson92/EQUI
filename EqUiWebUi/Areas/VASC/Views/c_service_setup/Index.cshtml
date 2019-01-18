@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>List of all VASC sessions</h2>
+<h2>List of all VASC sessions in database checked against host <strong>@ViewBag.vaschost</strong></h2>
 
 @Html.Grid(Model).Named("c_service_setupSessionsGrid").Build(columns =>
 {
@@ -13,37 +13,33 @@
     columns.Add(c => c._Enable_bit).Titled("enable_mask");
     columns.Add(c => c.bit_id).Titled("bit_id").Css("d-none");
     columns.Add(c => c.SessionName).Titled("SessionName");
-//columns.Add(c => c.description).Titled("description");
-columns.Add(c => c.ServiceName).Titled("ServiceName");
+    //columns.Add(c => c.description).Titled("description");
+    columns.Add(c => c.ServiceName).Titled("ServiceName");
     columns.Add(c => c.ServiceDisplayName).Titled("ServiceDisplayName");
     columns.Add(c => c)
        .Titled("ServiceStatus")
        .Encoded(false)
        .Filterable(true)
        .RenderedAs(c => VASChelpers.SetServiceState(c.ServiceName, c.ServiceStatus));
-//columns.Add(c => c.ServiceStartName).Titled("StartName");
+    //columns.Add(c => c.ServiceStartName).Titled("StartName");
 columns.Add(c => c.ServiceDescription).Titled("ServiceDescription");
 }).Filterable().Sortable().Empty("Did not find anything").Css("table-hover")
 
 <hr />
 
-<div class="modal-body">
-    <div class="modal-content">
-        <div class="alert alert-warning">More options for selected session</div>
-        <div id="sessiondetails"></div>
+<div class="card card-body">
+    <div id="sessiondetails"></div>
+</div>
+
+<hr />
+
+<div class="card">
+    <div class="alert alert-danger col-6">
+        <strong>WARNING!</strong>
+        if the option has a sessiondatabit set to -1 this means its for
+        <strong>ALL SESSIONS</strong>
     </div>
-</div>
-
-
-<div class="alert alert-danger">
-    <strong>WARNING!</strong>
-    if the option has a sessiondatabit set to -1 this means its for
-    <strong>ALL SESSIONS</strong>
-</div>
-
-<div class="modal-body">
-    <div class="modal-content">
-        <div class="alert alert-info">settings for the selected session</div>
+    <div class="card-body">
         <div id="c_service_setupDetails"></div>
     </div>
 </div>
@@ -54,19 +50,37 @@ columns.Add(c => c.ServiceDescription).Titled("ServiceDescription");
         //full with screen
         $("#allcontent").removeClass("body-content");
         $("#allcontent").removeClass("container");
+
         //render details when they click on it.
         $('[data-name="c_service_setupSessionsGrid"]').mvcgrid({
         rowClicked: function (row, data, e) {
-                var url1 = '@Url.Action("_sessionDetails")?sessionName=' + data["session-name"]
-                $("#sessiondetails").load(url1);
+                if (e.target.tagName.toUpperCase() != 'TD') {
+                    return;
+                }
+                $('tr').removeClass('bg-info'); 
+                $(row).addClass("bg-info");
 
-                var url2 = '@Url.Action("_sessionSetup")?enable_mask=' + data["bit_id"]
-                $("#c_service_setupDetails").load(url2);
+                $("#sessiondetails").html('@MyHtmlHelpers.Loading("sessiondetails")');
+                $("#sessiondetails").load('@Url.Action("_sessionDetails")',{ sessionName : data["session-name"]},
+                    function (responseText, textStatus, req) {
+                        if (textStatus == "error") {
+                            $("#sessiondetails").html($("#Error", responseText).html());
+                        }
+                    });
+
+                $("#c_service_setupDetails").html('@MyHtmlHelpers.Loading("c_service_setupDetails")');
+                $("#c_service_setupDetails").load( '@Url.Action("_sessionSetup")',{ enable_mask : data["bit_id"]},
+                    function (responseText, textStatus, req) {
+                        if (textStatus == "error") {
+                            $("#c_service_setupDetails").html($("#Error", responseText).html());
+                        }
+                    });
+
             }
         });
 
         //sim click on first row.
-        $('[data-name="c_service_setupSessionsGrid"]>table>tbody>tr:first').trigger('click');
+        $('[data-name="c_service_setupSessionsGrid"]>table>tbody>tr>td:first').trigger('click');
     </script>
 }
 
