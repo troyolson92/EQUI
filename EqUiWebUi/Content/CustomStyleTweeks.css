@@ -11,6 +11,7 @@ body {
 }
 
 /*for grid filter popups to make them on top of modals.*/
+
 .mvc-grid-popup {
     z-index: 2000;
 }
@@ -25,7 +26,7 @@ body {
 
 /*max with for popovers*/
 .popover {
-    max-width: 100%; /* Max Width of the popover (depending on the container!) */
+    max-width: 90%; /* Max Width of the popover (depending on the container!) */
 }
 
 /*when moved to bootstrap 4 "Label" class is gone. This is used in the scaffolded forms so adding it again*/

@@ -15,7 +15,7 @@ namespace EqUiWebUi
                          "~/Scripts/bootstrap.min.js", //bootstrap
                          "~/Scripts/respond.js",
                          "~/Scripts/jquery.bootstrap-autohidingnavbar.js", //https://github.com/istvan-ujjmeszaros/bootstrap-autohidingnavbar 
-                         "~/Scripts/moment.js", //https://github.com/moment/moment/
+                         "~/node_modules/moment/moment.js", //https://github.com/moment/moment/
                          "~/node_modules/daterangepicker/daterangepicker.js", //https://github.com/dangrossman/bootstrap-daterangepicker
                          "~/node_modules/bootstrap-select/dist/js/bootstrap-select.js" //https://developer.snapappointments.com/bootstrap-select/
                             ));
@@ -25,10 +25,11 @@ namespace EqUiWebUi
                          "~/Scripts/MyScripts/Interface.js",
 
                          "~/Scripts/MvcGrid/mvc-grid.js", //https://github.com/NonFactors/MVC5.Grid
+
                          "~/node_modules/tablesaw/dist/tablesaw.jquery.js", //https://github.com/filamentgroup/tablesaw
                          "~/node_modules/tablesaw/dist/tablesaw-init.js",
 
-                         "~/Scripts/printThis.js", //https://github.com/jasonday/printThis
+                         "~/node_modules/print-this/printThis.js", //https://github.com/jasonday/printThis
                          "~/Scripts/jquery.toaster.js" //https://github.com/scottoffen/jquery.toaster/wiki
             ));
 

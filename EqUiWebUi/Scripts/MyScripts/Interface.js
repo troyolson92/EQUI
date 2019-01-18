@@ -125,7 +125,6 @@ function EnableInterfaceEvents() {
     $(".JQresultTriggerBtn").click(function (e) {
         console.log('default action prevented (.JQresultTriggerBtn)');
         e.preventDefault();
-        var caller = this;
         $.toaster({ title: 'JQTriggerBtn', priority: 'info', message: 'Fired: ' + $(this).attr('href') });
         $.ajax({
             type: "GET",
