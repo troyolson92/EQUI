@@ -104,6 +104,9 @@ function EnableInterfaceEvents() {
     $('[data-toggle="tooltip"]').tooltip();
     $('[data-toggle="popover"]').tooltip();
 
+    //select dropdowns
+    $('select').selectpicker();
+
     //for new window option
     $('.OpenNewWindow').click(function (e) {
         console.log('default action prevented (.OpenNewWindow)');

@@ -28,7 +28,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.flags, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.ListBoxFor(model => model._ErrorFlags, EqUiWebUi.Areas.VASC.Models.VASCenums.ErrorFlags_SelectList, new { @class = "form-control bsMultiselect", multiple = "multiple" })
+            @Html.ListBoxFor(model => model._ErrorFlags, EqUiWebUi.Areas.VASC.Models.VASCenums.ErrorFlags_SelectList, new { @class = "form-control", multiple = "multiple" })
             @Html.ValidationMessageFor(model => model.flags, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -110,15 +110,3 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
-
-<!--Edit script-->
-@section scripts{
-    @*http://davidstutz.de/bootstrap-multiselect/*@
-    <script src="~/Scripts/bootstrap-multiselect.js"></script>
-    <link href="~/Content/bootstrap-multiselect.css" rel="stylesheet" />
-    <script>
-                //Enable multiselect
-                //https://forums.asp.net/t/2121112.aspx?Html+Dropdown+with+multiple+selections
-                $('.bsMultiselect').multiselect();
-    </script>
-}

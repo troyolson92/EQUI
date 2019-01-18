@@ -15,18 +15,19 @@
     columns.Add(c => c.c_controller._Enable_bit).Titled("enable_bit");
     columns.Add(c => c.vasc_session).Titled("vasc_session");
     columns.Add(c => c.c_controller.controller_name).Titled("controller_name").Css("tablesaw-priority-persist");
-    columns.Add(c => c.controller_state).Titled("controller_state");
+    columns.Add(c => c.controller_state).Titled("controller_state").Css("tablesaw-priority-0");
     columns.Add(c => c._VASCState).Titled("vasc_state");
+    columns.Add(c => c.C_timestamp).Titled("_timestamp").Css("tablesaw-priority-6");
     //rt_active_info optional 
     columns.Add(c => c.h_alarm_id).Titled("h_alarm_id").Css("tablesaw-priority-0");
     columns.Add(c => c.rt_alarm_id).Titled("rt_alarm_id").Css("tablesaw-priority-0");
-    columns.Add(c => c.rt_job_id).Titled("rt_job_id").Css("tablesaw-priority-0");
+    columns.Add(c => c.rt_job_id).Titled("rt_job_id").Css("tablesaw-priority-6");
     columns.Add(c => c.program_number).Titled("program_number").Css("tablesaw-priority-0");
     columns.Add(c => c.body_number).Titled("body_number").Css("tablesaw-priority-0");
     columns.Add(c => c.application_error).Titled("application_error").Css("tablesaw-priority-0");
     columns.Add(c => c.operating_mode).Titled("operating_mode").Css("tablesaw-priority-0");
     columns.Add(c => c.execution_status).Titled("execution_status").Css("tablesaw-priority-0");
-    columns.Add(c => c.master_state).Titled("master_state");
+    columns.Add(c => c.master_state).Titled("master_state").Css("tablesaw-priority-0");
     columns.Add(c => c.at_home).Titled("at_home");
     columns.Add(c => c.task_execution_status).Titled("task_execution_status").Css("tablesaw-priority-0");
     columns.Add(c => c.ts_breakDownAck).Titled("ts_breakDownAck").Css("tablesaw-priority-0");
