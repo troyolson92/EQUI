@@ -122,12 +122,12 @@ namespace EqUiWebUi.Areas.user_management.Controllers
             List<SelectListItem> selectList = new List<SelectListItem>();
             List<c_areas> areaFilters = db.c_areas.ToList();
 
-            List<string> plants = areaFilters.GroupBy(list => list.Plant).Select(grp => grp.First().Plant).ToList();
+            List<string> plants = areaFilters.OrderBy(x => x.Ordinal).GroupBy(x => x.Plant).Select(grp => grp.First().Plant).ToList();
             foreach(string plant in plants)
             {
                 //do we need an option to group by plant?
 
-                List<string> optgroups = areaFilters.Where(x => x.Plant == plant).GroupBy(x => x.Optgroup).Select(grp => grp.First().Optgroup).ToList();
+                List<string> optgroups = areaFilters.OrderBy(x => x.Ordinal).Where(x => x.Plant == plant).GroupBy(x => x.Optgroup).Select(grp => grp.First().Optgroup).ToList();
                 foreach(string optgroup in optgroups)
                 {
                     SelectListGroup selectListGroup =  new SelectListGroup() { Name = optgroup, Disabled = false };
