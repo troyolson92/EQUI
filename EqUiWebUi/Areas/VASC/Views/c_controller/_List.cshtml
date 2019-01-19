@@ -13,7 +13,9 @@
                     .Titled("Tools")
                     .Encoded(false)
                     .RenderedAs(c => MyHtmlHelpers.IconActionLink(Url.Action("Edit", new { id = c.id }), "fas fa-pencil-alt", "", "Edit", OpenNewWindow: true).ToHtmlString() +
-                     MyHtmlHelpers.IconActionLink(Url.Action("index","c_controller_class", new { controller_id = c.id }), "fas fa-file", "", "c_controller_class").ToHtmlString()
+                     MyHtmlHelpers.IconActionLink(Url.Action("index","c_controller_class", new { controller_id = c.id }), "fas fa-file", "", "c_controller_class").ToHtmlString() +
+                     MyHtmlHelpers.IconActionLink(Url.Action("GetJobs", "Breakdown", new { controller_id = c.id }), "fas fa-vial", "", "get jobs", OpenNewWindow: true).ToHtmlString() +
+                     MyHtmlHelpers.IconActionLink(Url.Action("GetJobs", "Breakdown", new { controller_id = c.id, hasBreakdowns = true }), "fas fa-vial text-warning", "", "get breakdowns", OpenNewWindow: true).ToHtmlString()
                     ).Filterable(false);
 }).Filterable().Sortable().Pageable(pager =>
 {

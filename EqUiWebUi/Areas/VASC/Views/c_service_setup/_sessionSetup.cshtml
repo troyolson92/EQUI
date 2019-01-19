@@ -1,7 +1,7 @@
 ﻿<div class="card">
     <div class="card-header">
         <h5 class="card-title text">
-            <a class="clickable far fa-window-restore text-black-50" href="#" data-toggle="tooltip" title="Direct link to this view"></a>
+            <a class="clickable far fa-window-restore text-black-50" href="@Url.Action("sessionSetup",new { enable_mask = ViewBag.enable_mask })" data-toggle="tooltip" title="Direct link to this view"></a>
             Service settings
             @MyHtmlHelpers.IconActionLink(Url.Action("Create"), "fas fa-pencil-alt", "Create", "Create new parameter", OpenNewWindow: true)
             <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
@@ -12,16 +12,15 @@
     </div>
 </div>
 
-
-<script>
+    <script>
     $('#sessionSetupGridContainer').mvcgrid({
         sourceUrl: '@Url.Action("_sessionSetupGrid",new { enable_mask = ViewBag.enable_mask })',
         requestType: 'get', // Ajax grid request type
         reloadFailed: function (result) {
             $("#sessionSetupGridContainer").html($("#Error", result.responseText).html());
-        },        
+        },
         reloadEnded: function () {
            EnableInterfaceEvents();
         }
     });
-</script>
+    </script>

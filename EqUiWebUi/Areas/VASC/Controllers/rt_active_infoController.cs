@@ -19,7 +19,7 @@ namespace EqUiWebUi.Areas.VASC.Controllers
         {
             if (ShowNOKonly)
             {
-                return View(db.rt_active_info.Where(c => c.vasc_state != (int)VASCState.STATE_CONNECTED).Include(r => r.c_controller).ToList());
+                return View(db.rt_active_info.Where(c => c.vasc_state != (int)VASCState.STATE_CONNECTED && c.c_controller.enable_bit != (int)Enable_bit.Disabled).Include(r => r.c_controller).ToList());
             }
             else
             {

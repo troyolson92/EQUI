@@ -51,9 +51,15 @@
         </div>
 
         <hr />
-        @MyHtmlHelpers.EquiLink("/vasc/rt_active_info/index", "", "rt_active_info", helperText: "Current connection status for a controller")
-        @MyHtmlHelpers.EquiLink("/vasc/rt_active_info/index?ShowNOKonly=true", "", "NOK robots only", helperText: "Controllers that are not connected no")
 
+        <div class="row">
+            <div class="col-6">
+                @MyHtmlHelpers.EquiLink("/vasc/rt_active_info/index", "", "rt_active_info", helperText: "Current connection status for a controller")
+            </div>
+            <div class="col-6">
+                @MyHtmlHelpers.EquiLink("/vasc/rt_active_info/index?ShowNOKonly=true", "", "NOK robots only", helperText: "Controllers that are not connected now", iconClasses: "bg-warning")
+            </div>
+        </div>
     </div>
 </div>
 
@@ -110,7 +116,15 @@
     </div>
 
     <div class="card-body">
-        @MyHtmlHelpers.EquiLink("/VASC/Breakdown/GetJobs", "fas fa-vial", "Rtjobs", helperText: "List of ALL working cycles")
-        @MyHtmlHelpers.EquiLink("/VASC/Breakdown/GetJobs?hasBreakdowns=true", "fas fa-vial", "RtjobBreakdown", helperText: "List of working cycles with a breakdown")
+        <div class="row">
+            <div class="col-6">
+                @MyHtmlHelpers.EquiLink("/vasc/rt_active_info/index", "", "rt_active_info", helperText: "Current connection status for a controller")
+            </div>
+            <div class="col-6">
+                @MyHtmlHelpers.EquiLink("/VASC/Breakdown/GetJobs?hasBreakdowns=true", "fas fa-vial", "RtjobBreakdown", helperText: "List of working cycles with a breakdown", iconClasses: "bg-warning")
+            </div>
+        </div>
+
+
     </div>
 </div>

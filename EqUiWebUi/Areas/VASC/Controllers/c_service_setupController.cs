@@ -21,14 +21,17 @@ namespace EqUiWebUi.Areas.VASC.Controllers
         // GET: VASC/c_service_setup
         //show a list of session configured join the controller enable mask.
 
-            //this all works when i run it on my laptop. (laptop account must of coarse have admin on server)
-            //can even start and stop session. But when run on sever (with bbp account that has admin) it fails.... FUCK THIS 
+/// <summary>
+/// TO BE ABLE to control the services the BPPaccaunt running the application pool must of coarse have access AND
+/// in the advanced application pool settings Load user profile must be set TRUE !!!!
+/// </summary>
+/// <returns></returns>
 
         public ActionResult Index()
         {
             List<c_service_setup> sessions = db.c_service_setup.Where(c => c.name == "SESSION_NAME").ToList();
             string vaschost = db.c_service_setup.Where(c => c.name == "COMPUTERNAME").First().value ?? "localhost";
-            log.Info($"vaschost:{vaschost} user:{System.Security.Principal.WindowsIdentity.GetCurrent().Name}");
+            log.Info($"vaschost:{vaschost} execution user:{System.Security.Principal.WindowsIdentity.GetCurrent().Name}");
             ViewBag.vaschost = vaschost;
             List <Models.winService> servicesOnServer = GetServices(vaschost);
             List<Models.winService> result = new List<winService>();
@@ -37,7 +40,7 @@ namespace EqUiWebUi.Areas.VASC.Controllers
                 Models.winService service = servicesOnServer.Where(s => s.ServiceName == session.value).FirstOrDefault();
                 if (service == null)
                 {
-                    log.Warn("vasc session: " + session.name + " not found on server");
+                    log.Warn("vasc session: " + session.value + " not found on server");
                     service = new winService();
                     service.ServiceName = "NOT FOUND";
                     service.ServiceDescription = "no service found named " + session.value;
@@ -85,7 +88,7 @@ namespace EqUiWebUi.Areas.VASC.Controllers
                             {
                                 winService.ServiceStartName = "Failed to query WMI";
                                 winService.ServiceDescription = "Failed to query WMI";
-                                log.Error("Fail to Query WMI : " + scTemp.ServiceName, ex);
+                              //  log.Error("Fail to Query WMI : " + scTemp.ServiceName, ex);
                             }
                             //
                             list.Add(winService);
@@ -109,13 +112,14 @@ namespace EqUiWebUi.Areas.VASC.Controllers
         }
 
         //change services state
+        [Authorize(Roles = "Administrator")]
         public JsonResult SetServiceState(string ServiceName, int State)
         {
             //IIS user must have acces to start and stop services!
             //need to test if this works!
             //https://social.technet.microsoft.com/wiki/contents/articles/5752.how-to-grant-users-rights-to-manage-services-start-stop-etc.aspx
             string vaschost = db.c_service_setup.Where(c => c.name == "COMPUTERNAME").First().value ?? "localhost";
-            log.Info($"vaschost:{vaschost}");
+            log.Warn($"Servicestate request for {ServiceName} on {vaschost} to state {State} by user {EqUiWebUi.CurrentUser.Getuser.username}");
             ServiceController controller = new ServiceController(ServiceName, vaschost);
             try
             {
@@ -152,6 +156,12 @@ namespace EqUiWebUi.Areas.VASC.Controllers
         }
 
         //
+        public ActionResult sessionSetup(int? enable_mask)
+        {
+            ViewBag.enable_mask = enable_mask;
+            return View();
+        }
+
         public ActionResult _sessionSetup(int? enable_mask)
         {
             ViewBag.enable_mask = enable_mask;

@@ -4,6 +4,10 @@
 }
 
 <h2>Index getJobs</h2>
+@if (ViewBag.controller_id != null)
+{
+    <div class="badge badge-info">Filtered on controllerID: @ViewBag.controller_id</div>
+}
 
 @if (ViewBag.PromptBodynum)
 {
@@ -29,6 +33,7 @@
             $('[data-name= "rtjobGrid"]').mvcgrid({
                 sourceUrl: '@Url.Action("_getJobs")', // Grid source url string
                     data: {
+                        controller_id : @ViewBag.controller_id,
                         bodyNo: $('#bodynum').val(),
                         hasBreakdowns: @ViewBag.hasBreakdowns.ToString().ToLower()
                     },
@@ -36,6 +41,7 @@
                 reload: true, // Grid reload indicator
                 reloadEnded: function () {
                    $('#btnGet').removeClass('disabled');
+                    EnableInterfaceEvents();
                 },
                 reloadFailed: function (result) {
                     console.log(result);

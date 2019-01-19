@@ -5,7 +5,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>List of all VASC sessions in database checked against host <strong>@ViewBag.vaschost</strong></h2>
+<h2>
+    <a class="fas fa-sync-alt text-black-50  clickable" data-toggle="popover" id="refresh" data-placement="bottom" title="Refresh"></a>
+    List of all VASC sessions configured in database checked against host <strong>@ViewBag.vaschost</strong>
+</h2>
 
 @Html.Grid(Model).Named("c_service_setupSessionsGrid").Build(columns =>
 {
@@ -36,7 +39,7 @@
 <div class="card">
     <div class="alert alert-danger col-6">
         <strong>WARNING!</strong>
-        if the option has a session databit set to -1 this means its for
+        if the option has a session _bit_MASK set to all(-1) this means its for
         <strong>ALL SESSIONS</strong>
     </div>
     <div class="card-body">
@@ -77,6 +80,11 @@
                     });
 
             }
+        });
+
+        //add event to refresh button on grid
+        $('#refresh').click(function () {
+         $('[data-name="c_service_setupSessionsGrid"]').mvcgrid({reload: true});
         });
 
         //sim click on first row.
