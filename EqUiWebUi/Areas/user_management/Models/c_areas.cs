@@ -19,9 +19,7 @@ namespace EqUiWebUi.Areas.user_management.Models
         public string Optgroup { get; set; }
         public string Area { get; set; }
         public string LocationTreeFilter1 { get; set; }
-        public string LocationTreeFilter2 { get; set; }
-        public string LocationTreeFilter3 { get; set; }
-        public string LocationTreeFilter4 { get; set; }
+        public int Ordinal { get; set; }
         public string UserComment { get; set; }
     }
 }

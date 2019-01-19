@@ -1277,7 +1277,6 @@
     <Content Include="Areas\STW040\Views\STW040\Index.cshtml" />
     <Content Include="Areas\user_management\Views\AreaFilters\Create.cshtml" />
     <Content Include="Areas\user_management\Views\AreaFilters\Delete.cshtml" />
-    <Content Include="Areas\user_management\Views\AreaFilters\Details.cshtml" />
     <Content Include="Areas\user_management\Views\AreaFilters\Edit.cshtml" />
     <Content Include="Areas\user_management\Views\AreaFilters\Index.cshtml" />
     <Content Include="Areas\Tiplife\Views\NgacElectrode\TipLifeExpectations.cshtml" />
