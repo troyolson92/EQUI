@@ -4,9 +4,9 @@
 {
     columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Asc);
     columns.Add(c => c._Enable_bit).Titled("enable_bit").Css("tablesaw-priority-6");
-    columns.Add(c => c.flags).Titled("flags").Css("tablesaw-priority-6");
+    columns.Add(c => EqUiWebUi.Areas.VASC.Models.VASCenums.intArrayTostring(c._ErrorFlags)).Titled("ErrorFlags").Filterable(true).Css("tablesaw-priority-6");
     columns.Add(c => c.ordinal).Titled("ordinal").Css("tablesaw-priority-6");
-    columns.Add(c => c.error_category).Titled("catId").Css("tablesaw-priority-6");
+    columns.Add(c => c.error_category).Titled("catId").Css("tablesaw-priority-0");
     columns.Add(c => c._ErrorCategory).Titled("ErrorCategory").Css("tablesaw-priority-6");
     columns.Add(c => c.error_number).Titled("error_number");
     columns.Add(c => c._Operator).Titled("Operator");
@@ -20,6 +20,7 @@
 }).Filterable().Sortable().Pageable(pager =>
 {
     pager.RowsPerPage = 10;
-    pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 10, "10" }, { 20, "20" }, { 40, "40" }, { 80, "80" }, { 100, "100" } };
+    pager.PageSizes = new Dictionary<Int32, String>
+    { { 0, "All" }, { 10, "10" }, { 20, "20" }, { 40, "40" }, { 80, "80" }, { 100, "100" } };
     pager.ShowPageSizes = true;
 }).Empty("Did not find anything").Css("table-hover  tablesaw-on")

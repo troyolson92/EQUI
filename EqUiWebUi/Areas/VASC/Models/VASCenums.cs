@@ -94,9 +94,42 @@ namespace EqUiWebUi.Areas.VASC.Models
             }
             return listValue.ToArray();
         }
+
+        //helper from array of int to bitmask returns -1 if all 16 bits are set
+        public static int IntArrayToIntMask(int[] inputArray)
+        {
+            if (inputArray.Count() >= 16)
+            {
+                return -1; 
+            }
+            else
+            {
+                return inputArray.Sum();
+            }
+        }
+
+        //helper to convert array int to string.
+        public static string intArrayTostring(int[] inputArray)
+        {
+            if (inputArray.Count() == 0)
+            {
+                return "disabled";
+            }
+            else if (inputArray.Count() == 1)
+            {
+                return $"bit{String.Join(",", inputArray.Select(p => p.ToString()).ToArray())}";
+            }
+            else if (inputArray.Count() >= 16)
+            {
+                return "all(-1)";
+            }
+            else
+            {
+                return $"bits({String.Join(",", inputArray.Select(p => p.ToString()).ToArray())})";
+            }
+        }
+
     }
-
-
 
     //graham his bitmasks
     public enum Poll_rate
@@ -131,50 +164,50 @@ namespace EqUiWebUi.Areas.VASC.Models
     {
         Disabled = 0,
 
-        Enablebit1 = 1,
-        Enablebit2 = 2,
-        Enablebit3 = 3,
-        Enablebit4 = 4,
+        bit1 = 1,
+        bit2 = 2,
+        bit3 = 3,
+        bit4 = 4,
 
-        Enablebit5 = 5,
-        Enablebit6 = 6,
-        Enablebit7 = 7,
-        Enablebit8 = 8,
+        bit5 = 5,
+        bit6 = 6,
+        bit7 = 7,
+        bit8 = 8,
 
-        Enablebit9 = 9,
-        Enablebit10 = 10,
-        Enablebit11 = 11,
-        Enablebit12 = 12,
+        bit9 = 9,
+        bit10 = 10,
+        bit11 = 11,
+        bit12 = 12,
 
-        Enablebit13 = 13,
-        Enablebit14 = 14,
-        Enablebit15 = 15,
-        Enablebit16 = 16
+        bit13 = 13,
+        bit14 = 14,
+        bit15 = 15,
+        bit16 = 16
     }
 
     public enum Enable_bit_MASK
     {
         Disabled = 0,
 
-        Enablebit1 = 0x01,
-        Enablebit2 = 0x02,
-        Enablebit3 = 0x04,
-        Enablebit4 = 0x08,
+        bit1 = 0x01,
+        bit2 = 0x02,
+        bit3 = 0x04,
+        bit4 = 0x08,
 
-        Enablebit5 = 0x10,
-        Enablebit6 = 0x20,
-        Enablebit7 = 0x40,
-        Enablebit8 = 0x80,
+        bit5 = 0x10,
+        bit6 = 0x20,
+        bit7 = 0x40,
+        bit8 = 0x80,
 
-        Enablebit9 = 0x100,
-        Enablebit10 = 0x200,
-        Enablebit11 = 0x400,
-        Enablebit12 = 0x800,
+        bit9 = 0x100,
+        bit10 = 0x200,
+        bit11 = 0x400,
+        bit12 = 0x800,
 
-        Enablebit13 = 0x1000,
-        Enablebit14 = 0x2000,
-        Enablebit15 = 0x4000,
-        Enablebit16 = 0x8000
+        bit13 = 0x1000,
+        bit14 = 0x2000,
+        bit15 = 0x4000,
+        bit16 = 0x8000
     }
 
     public enum Csv_log_Flags

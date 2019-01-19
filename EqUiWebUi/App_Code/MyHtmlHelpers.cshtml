@@ -1,7 +1,7 @@
 ﻿@*helper to create links*@
 @helper EquiLink(string url, string icon, string linkText, string iconClasses = "", string helperText = "", string helpurl = "", bool OpenNewWindow = false)
 {
-                    /**/
+    /**/
     <div class="col-md-12">
         <div class="update-nag @(OpenNewWindow ? "OpenNewWindow" : "")" href="@url" onclick="@(OpenNewWindow ? "" : "location.href=$(this).attr('href')")">
             <div class="update-split @iconClasses">
@@ -31,62 +31,66 @@
 @*helper to create action link with an icon*@
 @helper IconActionLink(string url, string icon, string linkText, string helperText, string classes = "", bool enabeld = true, bool OpenNewWindow = false)
 {
-                    /**/
+    /**/
 
-                    if (enabeld)
-                    {
-                        <a href="@url" class="@classes clickable @(OpenNewWindow ? "OpenNewWindow" : "")" style="margin-left: 10px; margin-right: 10px;" data-toggle="tooltip" title="@helperText">
-                            <i class="@icon"></i>
-                            <span>
-                                <strong>@linkText</strong>
-                            </span>
-                        </a>
-                    }
-                    else
-                    {
-                        <a style="margin-left: 10px; margin-right: 10px;"></a>
-                    }
+    if (enabeld)
+    {
+        <a href="@url" class="@classes clickable @(OpenNewWindow ? "OpenNewWindow" : "")" style="margin-left: 5px; margin-right: 5px;" data-toggle="tooltip" title="@helperText">
+            <i class="@icon"></i>
+            <span>
+                <strong>@linkText</strong>
+            </span>
+        </a>
+    }
+    else
+    {
+        <a style="margin-left: 10px; margin-right: 10px;"></a>
+    }
 }
 
 @*help to render a link panel from the database*@
 @helper EquiRenderPanel(string pannelName)
 {
-                    /**/
+    /**/
 
-                    EqUiWebUi.Models.GADATAEntitiesEQUI db = new EqUiWebUi.Models.GADATAEntitiesEQUI();
-                    EqUiWebUi.Models.L_pannel pannel = db.L_pannel.Where(p => p.name == pannelName).FirstOrDefault();
-                    if (pannel == null)
-                    {
-                        <div class="alert alert-warning">did not find pannel in db: @pannelName</div>
-                        return;
-                    }
+    EqUiWebUi.Models.GADATAEntitiesEQUI db = new EqUiWebUi.Models.GADATAEntitiesEQUI();
+    EqUiWebUi.Models.L_pannel pannel = db.L_pannel.Where(p => p.name == pannelName).FirstOrDefault();
+    if (pannel == null)
+    {
+        <div class="alert alert-warning">did not find pannel in db: @pannelName</div>
+        return;
+    }
 
-                    List<EqUiWebUi.Models.L_link> links = db.L_link.Where(l => l.L_pannel_id == pannel.id).ToList();
+    List<EqUiWebUi.Models.L_link> links = db.L_link.Where(l => l.L_pannel_id == pannel.id).ToList();
 
-                    <div class="card">
-                        <div class="card-header @(pannel.HeaderCss ?? "bg-dark")">
-                            <h5 class="card-title text-white">
-                                <strong>@pannel.name:</strong>  @pannel.description
-                                <span class="clickable float-right"><i class="fas fa-chevron-circle-up  @(pannel.collapsed ? "fa-rotate-180" : "")  fa-1"></i></span>
-                            </h5>
-                        </div>
-                        <div class="card-body">
-                            @if (links.Count == 0)
-                            {
-                                <div class="alert alert-warning">no links to render in this pannel</div>
-                            }
-                            else
-                            {
-                                foreach (EqUiWebUi.Models.L_link link in links)
-                                {
-                                    EquiLink(link.url, link.icon, link.name, iconClasses: link.iconcss, helperText: link.helptext, helpurl: "");
-                                }
-                            }
-                        </div>
-                    </div>
+    <div class="card">
+        <div class="card-header @(pannel.HeaderCss ?? "bg-dark")">
+            <h5 class="card-title text-white">
+                <strong>@pannel.name:</strong>  @pannel.description
+                <span class="clickable float-right"><i class="fas fa-chevron-circle-up  @(pannel.collapsed ? "fa-rotate-180" : "")  fa-1"></i></span>
+            </h5>
+        </div>
+        <div class="card-body">
+            @if (links.Count == 0)
+            {
+                <div class="alert alert-warning">no links to render in this pannel</div>
+            }
+            else
+            {
+                foreach (EqUiWebUi.Models.L_link link in links)
+                {
+                    EquiLink(link.url, link.icon, link.name, iconClasses: link.iconcss, helperText: link.helptext, helpurl: "");
+                }
+            }
+        </div>
+    </div>
 
 }
 
 @*display loading alert KEEP ALL ON ONE LINE! NO BR's BECAUSE I USE IT IN JS*@
 @helper Loading(string name)
 {<div class="alert alert-info"><i class="fas fa-spinner fa-spin fa-2x"></i><strong>@name</strong> loading....</div>}
+
+@*Helpertext*@
+@helper Helpertext(string text)
+{<div class="alert alert-info">@text</div>}

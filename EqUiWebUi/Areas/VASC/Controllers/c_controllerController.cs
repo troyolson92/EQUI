@@ -104,7 +104,7 @@ namespace EqUiWebUi.Areas.VASC.Controllers
                     db.Entry(c_controller).State = EntityState.Modified;
                 }
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Close", "Home", new { area = "" });
             }
             ViewBag.class_id = new SelectList(db.c_controller_class, "id", "name", c_controller.class_id);
             return View(c_controller);

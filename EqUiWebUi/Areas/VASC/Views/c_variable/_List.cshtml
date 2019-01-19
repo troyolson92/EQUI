@@ -7,7 +7,8 @@
     columns.Add(c => c.variable).Titled("variable");
     columns.Add(c => c._Poll_Rate).Titled("_Poll_Rate").Css("tablesaw-priority-6");
     columns.Add(c => c._Event_code).Titled("_Event_code").Css("tablesaw-priority-6");
-    columns.Add(c => c.sql_action).Titled("_SQL_Action").Css("tablesaw-priority-6");
+    columns.Add(c => c.sql_action).Titled("sql_action").Css("tablesaw-priority-0");
+    columns.Add(c => EqUiWebUi.Areas.VASC.Models.VASCenums.intArrayTostring(c._SQL_Action)).Titled("_SQL_ActionMASK").Filterable(true).Css("tablesaw-priority-6");
     columns.Add(c => c.rt_table).Titled("rt_table");
     columns.Add(c => c)
                     .Titled("Tools")

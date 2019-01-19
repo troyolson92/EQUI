@@ -19,7 +19,7 @@
 </div>
 
 <p>
-    @Html.ActionLink("ADD CSV file", "Edit", new { id = -1 })
+    @MyHtmlHelpers.IconActionLink(Url.Action("Edit", "c_csv_log", new { id = -1 }), "fas fa-pencil-alt", "Create", "add a csv file to log", OpenNewWindow: true)
 </p>
 
 @Html.AjaxGrid(Url.Action("_List"))

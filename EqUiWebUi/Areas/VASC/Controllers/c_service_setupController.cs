@@ -213,7 +213,7 @@ namespace EqUiWebUi.Areas.VASC.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,bit_id,name,value,description")] c_service_setup c_service_setup)
+        public ActionResult Create( c_service_setup c_service_setup)
         {
             if (ModelState.IsValid)
             {
@@ -245,7 +245,7 @@ namespace EqUiWebUi.Areas.VASC.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,bit_id,name,value,description")] c_service_setup c_service_setup)
+        public ActionResult Edit(c_service_setup c_service_setup)
         {
             if (ModelState.IsValid)
             {
@@ -279,7 +279,7 @@ namespace EqUiWebUi.Areas.VASC.Controllers
             c_service_setup c_service_setup = db.c_service_setup.Find(id);
             db.c_service_setup.Remove(c_service_setup);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Close", "Home", new { area = "" });
         }
 
         protected override void Dispose(bool disposing)

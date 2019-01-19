@@ -32,31 +32,32 @@
 
     <div>
         @Html.Grid(Model).Named("c_controller_class").Build(columns =>
-        {
-            columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Asc).Css("tablesaw-priority-1");
-            columns.Add(c => c.name).Titled("name").Css("tablesaw-priority-persist");
-            columns.Add(c => c.doConnect).Titled("doConnect").Css("tablesaw-priority-0");
-            columns.Add(c => c.cVariableMask).Titled("cVariableMask").Css("tablesaw-priority-6");
-            columns.Add(c => c.cVariableSearchMask).Titled("cVariableSearchMask").Css("tablesaw-priority-6");
-            columns.Add(c => c.cErrorMask).Titled("cErrorMask").Css("tablesaw-priority-6");
-            columns.Add(c => c.cCSVLogMask).Titled("cCSVLogMask").Css("tablesaw-priority-6");
-            columns.Add(c => c.cDeviceInfoMask).Titled("cDeviceInfoMask").Css("tablesaw-priority-6");
-            columns.Add(c => c.cJobMask).Titled("cJobMask").Css("tablesaw-priority-6");
-            columns.Add(c => c.logCategoryMask).Titled("logCategoryMask").Css("tablesaw-priority-6");
-            columns.Add(c => c.handleHSocket).Titled("handleHSocket").Css("tablesaw-priority-0");
-            columns.Add(c => c.Username).Titled("Username").Css("tablesaw-priority-0");
-            columns.Add(c => c.Password).Titled("Password").Css("tablesaw-priority-0");
-            columns.Add(c => c.setClock).Titled("setClock").Css("tablesaw-priority-0");
-            columns.Add(c => c.cPJVEventMask).Titled("cPJVEventMask").Css("tablesaw-priority-0");
-            columns.Add(c => c.cPJVActionMask).Titled("cPJVActionMask").Css("tablesaw-priority-0");
-            columns.Add(c => c.cErrorMask).Titled("cErrorMask").Css("tablesaw-priority-0");
-            columns.Add(c => c)
-                    .Titled("Tools")
-                    .Encoded(false)
-                    .RenderedAs(c => MyHtmlHelpers.IconActionLink(Url.Action("Edit", new { id = c.id }), "fas fa-pencil-alt", "", "Edit", OpenNewWindow: true).ToHtmlString() +
-                                     MyHtmlHelpers.IconActionLink(Url.Action("GetEventData", new { controller_id = ViewBag.controller_id }), "fas fa-file", "", "Controller_events", OpenNewWindow: true).ToHtmlString()
-                        ).Filterable(false).Css("tablesaw-priority-1");
-        }).Filterable().Sortable().Empty("Did not find anything").Css("table-hover tablesaw-on")
+   {
+       columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Asc).Css("tablesaw-priority-1");
+       columns.Add(c => c.name).Titled("name").Css("tablesaw-priority-persist");
+       columns.Add(c => c.doConnect).Titled("doConnect").Css("tablesaw-priority-0");
+       columns.Add(c => EqUiWebUi.Areas.VASC.Models.VASCenums.intArrayTostring(c._cVariableMask)).Titled("cVariableMask").Filterable(true).Css("tablesaw-priority-6");
+       columns.Add(c => EqUiWebUi.Areas.VASC.Models.VASCenums.intArrayTostring(c._cVariableSearchMask)).Titled("_cVariableSearchMask").Filterable(true).Css("tablesaw-priority-6");
+       columns.Add(c => EqUiWebUi.Areas.VASC.Models.VASCenums.intArrayTostring(c._cDeviceInfoMask)).Titled("_cDeviceInfoMask").Filterable(true).Css("tablesaw-priority-6");
+       columns.Add(c => EqUiWebUi.Areas.VASC.Models.VASCenums.intArrayTostring(c._cCSVLogMask)).Titled("_cCSVLogMask").Filterable(true).Css("tablesaw-priority-6");
+       columns.Add(c => EqUiWebUi.Areas.VASC.Models.VASCenums.intArrayTostring(c._cJobMask)).Titled("_cJobMask").Filterable(true).Css("tablesaw-priority-6");
+       columns.Add(c => EqUiWebUi.Areas.VASC.Models.VASCenums.intArrayTostring(c._logCategoryMask)).Titled("_logCategoryMask").Filterable(true).Css("tablesaw-priority-6");
+       columns.Add(c => EqUiWebUi.Areas.VASC.Models.VASCenums.intArrayTostring(c._cErrorMask)).Titled("_cErrorMask").Filterable(true).Css("tablesaw-priority-6");
+       columns.Add(c => EqUiWebUi.Areas.VASC.Models.VASCenums.intArrayTostring(c._cPJVEventMask)).Titled("_cPJVEventMask").Filterable(true).Css("tablesaw-priority-0");
+       columns.Add(c => EqUiWebUi.Areas.VASC.Models.VASCenums.intArrayTostring(c._cPJVActionMask)).Titled("_cPJVActionMask").Filterable(true).Css("tablesaw-priority-0");
+
+       columns.Add(c => c.handleHSocket).Titled("handleHSocket").Css("tablesaw-priority-0");
+       columns.Add(c => c.Username).Titled("Username").Css("tablesaw-priority-0");
+       columns.Add(c => c.Password).Titled("Password").Css("tablesaw-priority-0");
+       columns.Add(c => c.setClock).Titled("setClock").Css("tablesaw-priority-0");
+
+       columns.Add(c => c)
+               .Titled("Tools")
+               .Encoded(false)
+               .RenderedAs(c => MyHtmlHelpers.IconActionLink(Url.Action("Edit", new { id = c.id }), "fas fa-pencil-alt", "", "Edit", OpenNewWindow: true).ToHtmlString() +
+                                MyHtmlHelpers.IconActionLink(Url.Action("GetEventData", new { controller_id = ViewBag.controller_id }), "fas fa-file", "", "Controller_events", OpenNewWindow: true).ToHtmlString()
+                   ).Filterable(false).Css("tablesaw-priority-1");
+   }).Filterable().Sortable().Empty("Did not find anything").Css("table-hover tablesaw-on")
     </div>
 
 <hr />

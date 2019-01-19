@@ -35,7 +35,7 @@ namespace EqUiWebUi.Areas.VASC.Models
             }
             set
             {
-                this.bit_id = value.Sum();
+                this.bit_id = VASCenums.IntArrayToIntMask(value);
             }
         }
 

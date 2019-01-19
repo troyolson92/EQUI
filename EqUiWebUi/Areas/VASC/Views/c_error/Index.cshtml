@@ -29,7 +29,7 @@
 </div>
 
 <p>
-    @Html.ActionLink("ADD record", "Edit", new { id = -1 })
+    @MyHtmlHelpers.IconActionLink(Url.Action("Edit", "c_error", new { id = -1 }), "fas fa-pencil-alt", "Create", "add a rule to ignore log messages", OpenNewWindow: true)
 </p>
 
 

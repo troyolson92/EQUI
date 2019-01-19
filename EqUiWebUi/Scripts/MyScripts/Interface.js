@@ -104,8 +104,8 @@ function EnableInterfaceEvents() {
     $('[data-toggle="tooltip"]').tooltip();
     $('[data-toggle="popover"]').tooltip();
 
-    //select dropdowns
-    $('select').selectpicker();
+    //select drop downs that are form control and make this use bootstrap select. (don't just do on all select this will break things like mvc gird pager)
+    $('select.form-control').selectpicker();
 
     //for new window option
     $('.OpenNewWindow').click(function (e) {
