@@ -28,16 +28,16 @@ namespace EqUiWebUi.Areas.VASC.Controllers
         {
             if (controller_id != null)
             {
-                return PartialView(db.c_controller.Where(c => c.id == controller_id));
+                return PartialView(db.c_controller.Where(c => c.id == controller_id).ToList());
             }
 
             if (controllerclass is null)
             {
-                return PartialView(db.c_controller);
+                return PartialView(db.c_controller.ToList());
             }
             else
             {
-                return PartialView(db.c_controller.Where(c => c.class_id == controllerclass));
+                return PartialView(db.c_controller.Where(c => c.class_id == controllerclass).ToList());
             }
         }
 
