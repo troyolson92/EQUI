@@ -1,0 +1,22 @@
+﻿@model IQueryable<EqUiWebUi.Areas.VASC.Models.h_alarm>
+@Html.Grid(Model).Named("rtEventGrid").Build(columns =>
+{
+    columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Desc).Css("tablesaw-priority-0");
+    columns.Add(c => c.controller_id).Titled("controller_id").Css("tablesaw-priority-0");
+    columns.Add(c => c.c_controller.controller_name).Titled("controller_name").Css("tablesaw-priority-0");
+    columns.Add(c => c.error_timestamp).Titled("error_timestamp").Formatted("{0:dd-MM-yyyy HH:mm:ss}");
+
+    columns.Add(c => c.L_error.Number).Titled("Number").Css("tablesaw-priority-0");
+    columns.Add(c => c.L_error.CategoryId).Titled("CategoryId").Css("tablesaw-priority-0");
+    columns.Add(c => c.L_error.Title).Titled("Title").Css("tablesaw-priority-0");
+    columns.Add(c => c.L_error.CleanTitle).Titled("CleanTitle");
+
+    columns.Add(c => c.L_error.L_description.Description).Titled("Description").Css("tablesaw-priority-0");
+    columns.Add(c => c.L_error.L_description.CleanDescription).Titled("CleanDescription");
+
+}).Filterable().Sortable().Pageable(pager =>
+{
+    pager.RowsPerPage = 20;
+    pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 20, "20" }, { 40, "40" }, { 80, "80" }, { 100, "100" } };
+    pager.ShowPageSizes = true;
+}).Empty("Did not find anything").Css("table-hover  tablesaw-on")

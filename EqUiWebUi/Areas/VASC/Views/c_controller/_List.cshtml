@@ -11,10 +11,12 @@
     columns.Add(c => c)
                     .Titled("Tools")
                     .Encoded(false)
-                    .RenderedAs(c => MyHtmlHelpers.IconActionLink(Url.Action("Edit", new { id = c.id }), "fas fa-pencil-alt", "", "Edit", OpenNewWindow: true).ToHtmlString() +
-                     MyHtmlHelpers.IconActionLink(Url.Action("index","c_controller_class", new { controller_id = c.id }), "fas fa-file", "", "c_controller_class").ToHtmlString() +
-                     MyHtmlHelpers.IconActionLink(Url.Action("GetJobs", "Breakdown", new { controller_id = c.id }), "fas fa-vial", "", "get jobs", OpenNewWindow: true).ToHtmlString() +
-                     MyHtmlHelpers.IconActionLink(Url.Action("GetJobs", "Breakdown", new { controller_id = c.id, hasBreakdowns = true }), "fas fa-vial text-warning", "", "get breakdowns", OpenNewWindow: true).ToHtmlString()
+                    .RenderedAs(c => MyHtmlHelpers.IconActionLink(Url.Action("Edit", new { id = c.id }), "fas fa-pencil-alt", "", "Open edit c_controller", OpenNewWindow: true).ToHtmlString() +
+                     MyHtmlHelpers.IconActionLink(Url.Action("index","c_controller_class", new { controller_id = c.id }), "fas fa-file", "", "Goto c_controller_class for this controller").ToHtmlString() +
+                     MyHtmlHelpers.IconActionLink(Url.Action("GetJobs", "Breakdown", new { controller_id = c.id }), "fas fa-vial", "", "Open get jobs", OpenNewWindow: true).ToHtmlString() +
+                     MyHtmlHelpers.IconActionLink(Url.Action("GetJobs", "Breakdown", new { controller_id = c.id, hasBreakdowns = true }), "fas fa-vial text-warning", "", "Open breakdowns", OpenNewWindow: true).ToHtmlString() +
+                     MyHtmlHelpers.IconActionLink(Url.Action("GetEvents", "Eventlog", new { controller_id = c.id}), "fas fa-vial", "", "Open controller h_alarm", OpenNewWindow: true).ToHtmlString() +
+                     MyHtmlHelpers.IconActionLink(Url.Action("Index", "l_operation", new { controller_id = c.id }, null), "fas fa-file", "", "Open operation log", OpenNewWindow:true).ToHtmlString() 
                     ).Filterable(false);
 }).Filterable().Sortable().Pageable(pager =>
 {

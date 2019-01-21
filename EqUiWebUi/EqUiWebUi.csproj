@@ -473,6 +473,7 @@
     <Compile Include="Areas\VASC\Controllers\c_service_setupController.cs" />
     <Compile Include="Areas\VASC\Controllers\c_variableController.cs" />
     <Compile Include="Areas\VASC\Controllers\c_variable_searchController.cs" />
+    <Compile Include="Areas\VASC\Controllers\EventlogController.cs" />
     <Compile Include="Areas\VASC\Controllers\L_operationController.cs" />
     <Compile Include="Areas\VASC\Controllers\rt_active_infoController.cs" />
     <Compile Include="Areas\VASC\Controllers\vascController.cs" />
@@ -2623,7 +2624,6 @@
     <Content Include="App_Code\MyHtmlHelpers.cshtml" />
     <Content Include="Areas\VASC\Views\c_service_setup\_sessionSetupGrid.cshtml" />
     <Content Include="Areas\VCSC\Views\web.config" />
-    <Content Include="App_Code\VASChelpers.cshtml" />
     <Content Include="Areas\VWSC\Views\web.config" />
     <Content Include="Areas\VWSC\Views\_ViewStart.cshtml" />
     <Content Include="Areas\VWSC\Views\vwsc\Index.cshtml" />
@@ -2881,6 +2881,8 @@
     <Content Include="Content\bootstrap.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Areas\VASC\Views\c_service_setup\sessionSetup.cshtml" />
+    <Content Include="Areas\VASC\Views\Eventlog\GetEvents.cshtml" />
+    <Content Include="Areas\VASC\Views\Eventlog\_getEvents.cshtml" />
     <None Include="Properties\PublishProfiles\chasvw1203_DEV_VCCH.pubxml" />
     <None Include="Properties\PublishProfiles\chasvw1203_PRODUCTION_VCCH.pubxml" />
     <Content Include="Areas\Welding\Views\WM\_Parameters.cshtml" />

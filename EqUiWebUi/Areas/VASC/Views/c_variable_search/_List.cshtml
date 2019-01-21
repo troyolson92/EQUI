@@ -13,8 +13,8 @@
     columns.Add(c => c)
                     .Titled("Tools")
                     .Encoded(false)
-                    .RenderedAs(c => MyHtmlHelpers.IconActionLink(Url.Action("Edit", new { id = c.id }), "fas fa-pencil-alt", "", "Edit", OpenNewWindow: true).ToHtmlString() +
-                     MyHtmlHelpers.IconActionLink(Url.Action("GetVariableData", new { c_variable_search_id = c.id, controller_id = ViewBag.controller_id }), "fas fa-file", "", "GetVariableData", OpenNewWindow: true).ToHtmlString()
+                    .RenderedAs(c => MyHtmlHelpers.IconActionLink(Url.Action("Edit", new { id = c.id }), "fas fa-pencil-alt", "", "Open edit", OpenNewWindow: true).ToHtmlString() +
+                     MyHtmlHelpers.IconActionLink(Url.Action("GetVariableData", new { c_variable_search_id = c.id, controller_id = ViewBag.controller_id }), "fas fa-file", "", "Open getVariableData", OpenNewWindow: true).ToHtmlString()
                     ).Filterable(false);
 }).Filterable().Sortable().Pageable(pager =>
 {

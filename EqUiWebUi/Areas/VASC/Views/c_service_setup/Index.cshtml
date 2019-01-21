@@ -12,20 +12,22 @@
 
 @Html.Grid(Model).Named("c_service_setupSessionsGrid").Build(columns =>
 {
-    columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Asc);
     columns.Add(c => EqUiWebUi.Areas.VASC.Models.VASCenums.intArrayTostring(c._Enable_mask)).Titled("_Enable_mask").Filterable(true);
     //columns.Add(c => c.bit_id).Titled("bit_id");
-    columns.Add(c => c.SessionName).Titled("SessionName");
+    columns.Add(c => c.SessionName).Titled("SessionName").InitialSort(GridSortOrder.Asc);
     //columns.Add(c => c.description).Titled("description");
     columns.Add(c => c.ServiceName).Titled("ServiceName");
     columns.Add(c => c.ServiceDisplayName).Titled("ServiceDisplayName");
-    columns.Add(c => c)
-       .Titled("ServiceStatus")
-       .Encoded(false)
-       .Filterable(true)
-       .RenderedAs(c => VASChelpers.SetServiceState(c.ServiceName, c.ServiceStatus));
+    columns.Add(c => c.ServiceStatus).Titled("ServiceStatus");
     //columns.Add(c => c.ServiceStartName).Titled("StartName");
     columns.Add(c => c.ServiceDescription).Titled("ServiceDescription");
+    columns.Add(c => c)
+       .Titled("Tools")
+       .Encoded(false)
+       .Filterable(false)
+       .RenderedAs(c => (c.ServiceStatus != "Running") ? MyHtmlHelpers.IconActionLink(Url.Action("SetServiceState", "c_service_setup", new { ServiceName = c.ServiceName, State = 1}), "far fa-play-circle", "", "Start service",classes: "JQresultTriggerBtn").ToHtmlString() : 
+                        MyHtmlHelpers.IconActionLink(Url.Action("SetServiceState", "c_service_setup", new { ServiceName = c.ServiceName, State = 2 }), "far fa-stop-circle", "", "Stop service", classes: "text-danger JQresultTriggerBtn").ToHtmlString() 
+       );
 }).Filterable().Sortable().Empty("Did not find anything").Css("table-hover")
 
 <hr />
