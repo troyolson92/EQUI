@@ -9,26 +9,24 @@
 
 @Html.Grid(Model).Named("BosProgramAvailable").Build(columns =>
 {
-    columns.Add(c => c.Name).Titled("TimerName");
-    columns.Add(c => c.bosprogram).Titled("ActiveProgram");
-    columns.Add(c => c.Program_Available).Titled("AvailableProgram");
+    columns.Add(c => c.Name).Titled("TimerName").InitialSort(GridSortOrder.Asc); ;
+
+    columns.Add(c => c.bosprogram).Titled("AvailableProgram");
+
 
 
 
 }).Css("css-classes").AppendCss("table-hover").Filterable().Pageable(pager =>
 {
-    pager.RowsPerPage = 20;
-    pager.PageSizes = new Dictionary<Int32, String>
-    { { 0, "All" } };
-    //{ 20, "20" }, { 40, "40" }, { 80, "80" }, { 100, "100" } };
-    pager.ShowPageSizes = true;
-    }
-    ).Sortable();
+    pager.RowsPerPage = 30;
+
+}
+    ).Sortable().Css("table-hover");
 
 @section scripts{
     <script>
-            //full with screen
-            $("#allcontent").removeClass("body-content");
-            $("#allcontent").removeClass("container");
+        //full with screen
+        $("#allcontent").removeClass("body-content");
+        $("#allcontent").removeClass("container");
     </script>
 }

@@ -19,116 +19,94 @@
 
     <p></p>
     @MyHtmlHelpers.EquiLink("/Welding/WM/TV", "far fa-file-alt", "TV", helperText: "Qis system, live weldfaults factory, online timers")
-    <p></p>
-    @MyHtmlHelpers.EquiLink("/Welding/WM/", "far fa-file-alt", "Welding Master Interventions ---underconstruction---", helperText: "List up a intervention")
-
-    <p></p>
+ 
+  
     @MyHtmlHelpers.EquiLink("/Alert/Alert/Listalerts?h_alert-c_state.state-not-equals=TECHCOMP&h_alert-info-contains=QSTOP%20warning&h_alert-rows=20", "far fa-file-alt", "QstopWarnings", helperText: "Pro Actief Qstops vermijden ")
-    <p></p>
+
     @MyHtmlHelpers.EquiLink("/Welding/Spatter/Index", "far fa-file-alt", "SpatterPage ", helperText: "Spatters and spikes follow up ")
-    <p></p>
+
     @MyHtmlHelpers.EquiLink("/Alert/Alert/Listalerts?h_alert-c_triggers.alert-group-contains=Dalert", "far fa-file-alt", " All D alerts ", helperText: "Follow up all D alerts")
-    <p></p>
+ 
     @MyHtmlHelpers.EquiLink("/Alert/Alert/Listalerts?h_alert-c_triggers.alert-group-contains=Qalert", "far fa-file-alt", " All Q Alerts ", helperText: "Follow up all Q alerts ")
 
-
-    @*voorbeeld interne link*@
     <p>
-    <p>
-        <a href="~/Welding/WM/_rt_job1" class="btn btn-primary btn-sm">WeldData Job &raquo;</a>
-        WeldData Job Analyser
-    <p>
-    <p>
-
-        <a href="~/Welding/WM/_TimerBreakdownDatachange" class="btn btn-primary btn-sm">TimerBreakdownDatachange &raquo;</a>
-        All TimerBreakDowns with datachange WM
-    </p>
-
 </div>
 <p></p>
 
 <div class="card">
     <div class="card-header bg-dark">
         <h5 class="card-title text-white">
-            Data Tools ---under construction---
-            <span class="clickable float-right"><i class="fas fa-chevron-circle-up  fa-rotate-180 fa-1"></i></span>
+            Data Tools
+            <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
         </h5>
     </div>
-    <div class="card-body" style="display:none">
 
-        <p></p>
 
-        @MyHtmlHelpers.EquiLink("/Welding/Launch", "far fa-file-alt", "Tools for Launch activity", helperText: "launch data")
-        <p>
-        <p>
-            <a href="~//Welding/WM/" class="btn btn-primary btn-sm">WeldingTool &raquo;</a>
-            All info about a WeldSpot
-        </p>
-        <p>
-        <p>
-            <a href="~//Welding/WM/" class="btn btn-primary btn-sm">LastWeld &raquo;</a>
-            Search the last weld of a Weldspot
-        <p>
-        <p>
-            <a href="~//Welding/WM/_Parameters" class="btn btn-primary btn-sm">Optimalisation Tool &raquo;</a>
-            all data needed for spot optimalisation
-        <p>
-        <p>
-            <a href="~//Welding/WM/" class="btn btn-primary btn-sm">Dress Tool &raquo;</a>
-            Analyse ABB Dress Data
-        <p>
-        <p>
-            <a href="~//Welding/WM/_datachange" class="btn btn-primary btn-sm">Data change Weldtimers &raquo;</a>
-            Analyse WeldTimer Data Change only
-        <p>
-        <p>
-            <a href="~//Welding/WM/_TimerIpAdresses" class="btn btn-primary btn-sm">All Timer Ip Adresses &raquo;</a>
-            Look Up IP Adresses
+    <p>
+    <p>
+        <a href="~//Welding/Launch" class="btn btn-primary btn-sm">Tools for Launch activity &raquo;</a>
+        Webpage Launch
 
-        <p></p>
-    </div>
+
+    <p>
+        <a href="~//Welding/WM/_datachange" class="btn btn-primary btn-sm">Data change Weldtimers &raquo;</a>
+        Analyse WeldTimer Data Change only
+    <p>
+
+        <a href="~//Welding/WM/_TimerIpAdresses" class="btn btn-primary btn-sm">All Timer Ip Adresses &raquo;</a>
+        Look Up IP Adresses
+    <p>
+
+        <a href="~/Welding/WM/_rt_job1" class="btn btn-primary btn-sm">WeldData Job &raquo;</a>
+        WeldData Job Analyser
+    <p>
+
+        <a href="~/Welding/WM/_TimerBreakdownDatachange" class="btn btn-primary btn-sm">TimerBreakdownDatachange &raquo;</a>
+        All TimerBreakDowns with datachange WM
+    </p>
+    <p></p>
+</div>
     <p></p>
 
     <div class="card">
         <div class="card-header bg-dark">
             <h5 class="card-title text-white">
-                Welding Master Responsibility Area ---under construction---
-                <span class="clickable float-right"><i class="fas fa-chevron-circle-up  fa-rotate-180 fa-1"></i></span>
+                Welding Master Responsibility Area
+                <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
             </h5>
         </div>
-        <div class="card-body" style="display:none">
-            <p>
-            <p>
-                <a href="~//Welding/WM/" class="btn btn-primary btn-sm">WeldFault Top3 &raquo;</a>
-                Analyse your Top3 WeldFault
-            <p>
-            <p>
-                <a href="~//Welding/WM/" class="btn btn-primary btn-sm">Qstop Warning Top3 &raquo;</a>
-                Analyse your Top3 QstopWarning
-            <p>
-            <p>
-                <a href="~//Welding/WM/" class="btn btn-primary btn-sm">spatter Alerts &raquo;</a>
-                Analyse your Responsibility Spatter Zone
-            <p>
-            <p>
-                <a href="~//Welding/WM/" class="btn btn-primary btn-sm">Rewelds Top &raquo;</a>
-                analyse your prio spots Reweld
-            <p>
-            <p>
-                <a href="~//Welding/WM/" class="btn btn-primary btn-sm">Process Stability&raquo;</a>
-                Analyse your prio spots descending Process Stability
-            <p>
-            <p>
-                <a href="~/Alert/Alert/Listalerts?h_alert-c_triggers.alert-type-contains=WM_D&h_alert-rows=20" class="btn btn-primary btn-sm">D Alerts&raquo;</a>
-                Analyse your D Alerts
-            <p>
-            <p>
-                <a href="~/Alert/Alert/Listalerts?h_alert-c_triggers.alert-type-contains=WM_Q&h_alert-rows=20" class="btn btn-primary btn-sm">Q Alerts&raquo;</a>
-                Analyse your Q Alerts
-            <p></p>
+        <p>
+        <p>
+            <a href="~//Welding/WM/" class="btn btn-primary btn-sm">WeldFault Top3 &raquo;</a>
+            Analyse your Top3 WeldFault
+        <p>
+
+            <a href="~//Welding/WM/" class="btn btn-primary btn-sm">Qstop Warning Top3 &raquo;</a>
+            Analyse your Top3 QstopWarning
+        <p>
+
+            <a href="~//Welding/WM/" class="btn btn-primary btn-sm">spatter Alerts &raquo;</a>
+            Analyse your Responsibility Spatter Zone
+        <p>
+
+            <a href="~//Welding/WM/" class="btn btn-primary btn-sm">Rewelds Top &raquo;</a>
+            analyse your prio spots Reweld
+        <p>
+
+            <a href="~//Welding/WM/" class="btn btn-primary btn-sm">Process Stability&raquo;</a>
+            Analyse your prio spots descending Process Stability
+        <p>
+
+            <a href="~/Alert/Alert/Listalerts?h_alert-c_triggers.alert-type-contains=WM_D&h_alert-rows=20" class="btn btn-primary btn-sm">D Alerts&raquo;</a>
+            Analyse your D Alerts
+        <p>
+
+            <a href="~/Alert/Alert/Listalerts?h_alert-c_triggers.alert-type-contains=WM_Q&h_alert-rows=20" class="btn btn-primary btn-sm">Q Alerts&raquo;</a>
+            Analyse your Q Alerts
+        <p></p>
 
 
-        </div>
+    </div>
         <p></p>
 
 

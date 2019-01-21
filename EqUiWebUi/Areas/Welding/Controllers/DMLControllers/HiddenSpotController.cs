@@ -37,8 +37,6 @@ namespace EqUiWebUi.Areas.Welding.Controllers.DMLControllers
             return View(rt_spottable);
         }
 
-       
-
         // GET: Welding/HiddenSpot/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -51,7 +49,7 @@ namespace EqUiWebUi.Areas.Welding.Controllers.DMLControllers
             {
                 return HttpNotFound();
             }
-            ViewBag.timerId = new SelectList(db.c_timer, "ID", "Name", rt_spottable.timerId);
+            ViewBag.id = new SelectList(db.c_timer, "ID", "Name", rt_spottable.timerId);
             return View(rt_spottable);
         }
 
@@ -68,11 +66,9 @@ namespace EqUiWebUi.Areas.Welding.Controllers.DMLControllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.timerId = new SelectList(db.c_timer, "ID", "Name", rt_spottable.timerId);
+           ViewBag.timerId = new SelectList(db.c_timer, "ID", "Name", rt_spottable.timerId);
             return View(rt_spottable);
         }
-
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)

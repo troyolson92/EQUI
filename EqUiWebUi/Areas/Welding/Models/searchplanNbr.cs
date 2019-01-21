@@ -12,13 +12,15 @@ namespace EqUiWebUi.Areas.Welding.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class StabilityInDicationV316
+    public partial class searchplanNbr
     {
-        public string NPT { get; set; }
-        public string Timer { get; set; }
-        public byte Program { get; set; }
-        public Nullable<int> Number { get; set; }
-        public Nullable<short> nbrWelds { get; set; }
-        public Nullable<float> StabiliteitsIni { get; set; }
+        public int id { get; set; }
+        public System.DateTime InspectionTime { get; set; }
+        public string timername { get; set; }
+        public string spotname { get; set; }
+        public string planName { get; set; }
+        public int IndexOfTestSeq { get; set; }
+        public Nullable<int> PlanLenght { get; set; }
+        public Nullable<long> rowNbr { get; set; }
     }
 }
