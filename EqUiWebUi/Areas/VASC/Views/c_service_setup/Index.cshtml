@@ -12,13 +12,13 @@
 @Html.Grid(Model).Named("c_service_setupSessionsGrid").Build(columns =>
 {
     columns.Add(c => EqUiWebUi.Areas.VASC.Models.VASCenums.intArrayTostring(c._Enable_mask)).Titled("_Enable_mask").Css("tablesaw-priority-0").Filterable(true);
-    //columns.Add(c => c.bit_id).Titled("bit_id");
+    columns.Add(c => c.bit_id).Titled("bit_id").Css("tablesaw-priority-0");
     columns.Add(c => c.SessionName).Titled("SessionName").InitialSort(GridSortOrder.Asc).Css("tablesaw-priority-persist");
-    //columns.Add(c => c.description).Titled("description");
+    columns.Add(c => c.description).Titled("description").Css("tablesaw-priority-0");
     columns.Add(c => c.ServiceName).Titled("ServiceName").Css("tablesaw-priority-6");
     columns.Add(c => c.ServiceDisplayName).Titled("ServiceDisplayName").Css("tablesaw-priority-0");
     columns.Add(c => c.ServiceStatus).Titled("ServiceStatus");
-    //columns.Add(c => c.ServiceStartName).Titled("StartName");
+    columns.Add(c => c.ServiceStartName).Titled("StartName").Css("tablesaw-priority-0");
     columns.Add(c =>  c.OKcontrollerCount.ToString() + "/" + c.controllerCount.ToString()).Titled("Connected");
     columns.Add(c => c.ServiceDescription).Titled("ServiceDescription").Css("tablesaw-priority-6");
     columns.Add(c => c)
