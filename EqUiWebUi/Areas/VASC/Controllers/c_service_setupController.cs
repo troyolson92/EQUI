@@ -200,20 +200,6 @@ namespace EqUiWebUi.Areas.VASC.Controllers
             return PartialView();
         }
 
-        // GET: VASC/c_service_setup/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            c_service_setup c_service_setup = db.c_service_setup.Find(id);
-            if (c_service_setup == null)
-            {
-                return HttpNotFound();
-            }
-            return View(c_service_setup);
-        }
 
         // GET: VASC/c_service_setup/Create
         public ActionResult Create()

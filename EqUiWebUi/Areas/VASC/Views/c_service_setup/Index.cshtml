@@ -25,10 +25,14 @@
        .Titled("Tools")
        .Encoded(false)
        .Filterable(false)
-       .RenderedAs(c => ((c.ServiceStatus != "Running") ? MyHtmlHelpers.IconActionLink(Url.Action("SetServiceState", "c_service_setup", new { ServiceName = c.ServiceName, State = 1}), "far fa-play-circle", "", "Start service",classes: "JQresultTriggerBtn").ToHtmlString() :
-                        MyHtmlHelpers.IconActionLink(Url.Action("SetServiceState", "c_service_setup", new { ServiceName = c.ServiceName, State = 2 }), "far fa-stop-circle", "", "Stop service", classes: "text-danger JQresultTriggerBtn").ToHtmlString()) +
-                        MyHtmlHelpers.IconActionLink(Url.Action("Index", "rt_active_info", new { sessionName = c.SessionName }), "fas fa-file", "", "Open rt_active info for session", OpenNewWindow:true).ToHtmlString()
-       );
+       .RenderedAs(c => MyHtmlHelpers.IconActionLink(Url.Action("Index", "rt_active_info", new { sessionName = c.SessionName }), "fas fa-file", "", "Open rt_active info for session", OpenNewWindow: true).ToHtmlString() +
+                        ((c.ServiceName != "NOT FOUND") ? (
+                        (c.ServiceStatus != "Running") ? MyHtmlHelpers.IconActionLink(Url.Action("SetServiceState", "c_service_setup", new { ServiceName = c.ServiceName, State = 1}), "far fa-play-circle", "", "Start service",classes: "JQresultTriggerBtn").ToHtmlString() :
+                        MyHtmlHelpers.IconActionLink(Url.Action("SetServiceState", "c_service_setup", new { ServiceName = c.ServiceName, State = 2 }), "far fa-stop-circle", "", "Stop service", classes: "text-danger JQresultTriggerBtn").ToHtmlString()
+                        ) : "") 
+    
+
+           );
 }).Filterable().Sortable().Empty("Did not find anything").Css("table-hover tablesaw-on")
 
 <hr />
