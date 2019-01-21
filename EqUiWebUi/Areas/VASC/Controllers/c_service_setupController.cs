@@ -49,6 +49,9 @@ namespace EqUiWebUi.Areas.VASC.Controllers
                 service.bit_id = session.bit_id;
                 service.SessionName = session.value;
                 service.description = session.description;
+                //count number of controllers in rt_active_info
+                service.controllerCount = db.rt_active_info.Where(c => c.vasc_session.Contains(service.SessionName)).Count();
+                service.OKcontrollerCount = db.rt_active_info.Where(c => c.vasc_session.Contains(service.SessionName) && c.vasc_state == (int)VASCState.STATE_CONNECTED).Count();
                 result.Add(service);
             }
 

@@ -30,5 +30,8 @@ namespace EqUiWebUi.Areas.VASC.Models
         public string ServiceStatus { get; set; }
         public string ServiceStartName { get; set; }
         public string ServiceDescription { get; set; }
+        //for controller count
+        public int controllerCount { get; set; }
+        public int OKcontrollerCount { get; set; }
     }
 }

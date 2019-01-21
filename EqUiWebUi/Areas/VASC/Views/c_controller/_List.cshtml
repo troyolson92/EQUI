@@ -17,7 +17,7 @@
                      MyHtmlHelpers.IconActionLink(Url.Action("GetJobs", "Breakdown", new { controller_id = c.id, hasBreakdowns = true }), "fas fa-vial text-warning", "", "Open breakdowns", OpenNewWindow: true).ToHtmlString() +
                      MyHtmlHelpers.IconActionLink(Url.Action("Get_h_alarm", "Eventlog", new { controller_id = c.id}), "fas fa-vial", "", "Open controller h_alarm", OpenNewWindow: true).ToHtmlString() +
                      MyHtmlHelpers.IconActionLink(Url.Action("Get_rt_alarm", "Eventlog", new { controller_id = c.id }), "fas fa-vial", "", "Open controller rt_alarm (junk)", OpenNewWindow: true).ToHtmlString() +
-                     MyHtmlHelpers.IconActionLink(Url.Action("Index", "l_operation", new { controller_id = c.id }, null), "fas fa-file", "", "Open operation log", OpenNewWindow:true).ToHtmlString()
+                     MyHtmlHelpers.IconActionLink(Url.Action("Index", "l_operation", new { controller_id = c.id }, null), "fas fa-file", "", "Open operation log (for this controller)", OpenNewWindow:true).ToHtmlString()
                     ).Filterable(false);
 }).Filterable().Sortable().Pageable(pager =>
 {

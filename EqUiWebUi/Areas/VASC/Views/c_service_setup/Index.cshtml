@@ -9,26 +9,27 @@
     <a class="fas fa-sync-alt text-black-50  clickable" data-toggle="popover" id="refresh" data-placement="bottom" title="Refresh"></a>
     List of all VASC sessions configured in database checked against host <strong>@ViewBag.vaschost</strong>
 </h2>
-
 @Html.Grid(Model).Named("c_service_setupSessionsGrid").Build(columns =>
 {
-    columns.Add(c => EqUiWebUi.Areas.VASC.Models.VASCenums.intArrayTostring(c._Enable_mask)).Titled("_Enable_mask").Filterable(true);
+    columns.Add(c => EqUiWebUi.Areas.VASC.Models.VASCenums.intArrayTostring(c._Enable_mask)).Titled("_Enable_mask").Css("tablesaw-priority-0").Filterable(true);
     //columns.Add(c => c.bit_id).Titled("bit_id");
-    columns.Add(c => c.SessionName).Titled("SessionName").InitialSort(GridSortOrder.Asc);
+    columns.Add(c => c.SessionName).Titled("SessionName").InitialSort(GridSortOrder.Asc).Css("tablesaw-priority-persist");
     //columns.Add(c => c.description).Titled("description");
-    columns.Add(c => c.ServiceName).Titled("ServiceName");
-    columns.Add(c => c.ServiceDisplayName).Titled("ServiceDisplayName");
+    columns.Add(c => c.ServiceName).Titled("ServiceName").Css("tablesaw-priority-6");
+    columns.Add(c => c.ServiceDisplayName).Titled("ServiceDisplayName").Css("tablesaw-priority-0");
     columns.Add(c => c.ServiceStatus).Titled("ServiceStatus");
     //columns.Add(c => c.ServiceStartName).Titled("StartName");
-    columns.Add(c => c.ServiceDescription).Titled("ServiceDescription");
+    columns.Add(c =>  c.OKcontrollerCount.ToString() + "/" + c.controllerCount.ToString()).Titled("Connected");
+    columns.Add(c => c.ServiceDescription).Titled("ServiceDescription").Css("tablesaw-priority-6");
     columns.Add(c => c)
        .Titled("Tools")
        .Encoded(false)
        .Filterable(false)
-       .RenderedAs(c => (c.ServiceStatus != "Running") ? MyHtmlHelpers.IconActionLink(Url.Action("SetServiceState", "c_service_setup", new { ServiceName = c.ServiceName, State = 1}), "far fa-play-circle", "", "Start service",classes: "JQresultTriggerBtn").ToHtmlString() : 
-                        MyHtmlHelpers.IconActionLink(Url.Action("SetServiceState", "c_service_setup", new { ServiceName = c.ServiceName, State = 2 }), "far fa-stop-circle", "", "Stop service", classes: "text-danger JQresultTriggerBtn").ToHtmlString() 
+       .RenderedAs(c => ((c.ServiceStatus != "Running") ? MyHtmlHelpers.IconActionLink(Url.Action("SetServiceState", "c_service_setup", new { ServiceName = c.ServiceName, State = 1}), "far fa-play-circle", "", "Start service",classes: "JQresultTriggerBtn").ToHtmlString() :
+                        MyHtmlHelpers.IconActionLink(Url.Action("SetServiceState", "c_service_setup", new { ServiceName = c.ServiceName, State = 2 }), "far fa-stop-circle", "", "Stop service", classes: "text-danger JQresultTriggerBtn").ToHtmlString()) +
+                        MyHtmlHelpers.IconActionLink(Url.Action("Index", "rt_active_info", new { sessionName = c.SessionName }), "fas fa-file", "", "Open rt_active info for session", OpenNewWindow:true).ToHtmlString()
        );
-}).Filterable().Sortable().Empty("Did not find anything").Css("table-hover")
+}).Filterable().Sortable().Empty("Did not find anything").Css("table-hover tablesaw-on")
 
 <hr />
 
@@ -39,7 +40,7 @@
 <hr />
 
 <div class="card">
-    <div class="alert alert-danger col-6">
+    <div class="alert alert-danger col-md-6">
         <strong>WARNING!</strong>
         if the option has a session _bit_MASK set to all(-1) this means its for
         <strong>ALL SESSIONS</strong>
@@ -62,7 +63,7 @@
                 if (e.target.tagName.toUpperCase() != 'TD') {
                     return;
                 }
-                $('tr').removeClass('bg-info'); 
+                $('tr').removeClass('bg-info');
                 $(row).addClass("bg-info");
 
                 $("#sessiondetails").html('@MyHtmlHelpers.Loading("sessiondetails")');
