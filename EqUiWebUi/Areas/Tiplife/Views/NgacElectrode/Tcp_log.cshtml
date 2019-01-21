@@ -23,7 +23,14 @@
         $('#TCP_LOGGrid').mvcgrid({
             sourceUrl: '@Url.Action("_Tcp_logGrid")', // Grid source url string
             requestType: 'get', // Ajax grid request type
-            reload: true // Grid reload indicator
+            reload: true, // Grid reload indicator
+            reloadFailed: function (result) {
+                console.log(result);
+                $('[data-name= "TCP_LOGGrid"]').html($("#Error", result.responseText).html());
+            },
+            reloadEnded: function () {
+                EnableInterfaceEvents();
+            }
         });
     </script>
 }

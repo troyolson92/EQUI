@@ -92,7 +92,7 @@ namespace EqUiWebUi.Areas.VASC.Controllers
                     db.Entry(c_csv_log).State = EntityState.Modified;
                 }
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Close", "Home", new { area = "" });
             }
             return View(c_csv_log);
         }

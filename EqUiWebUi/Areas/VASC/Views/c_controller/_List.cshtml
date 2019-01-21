@@ -1,30 +1,28 @@
-﻿@model IQueryable<EqUiWebUi.Areas.VASC.Models.c_controller>
+﻿@model List<EqUiWebUi.Areas.VASC.Models.c_controller>
 
 @Html.Grid(Model).Named("c_controllerGrid").Build(columns =>
 {
     columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Asc);
     columns.Add(c => c._Enable_bit).Titled("enable_bit");
-    columns.Add(c => c.enable_bit).Titled("eb");
     columns.Add(c => c.controller_name).Titled("controller_name");
-    columns.Add(c => c.systemId).Titled("systemId").Css("d-none d-lg-table-cell");
-    columns.Add(c => c.ip).Titled("ip").Css("d-none d-lg-table-cell");
+    columns.Add(c => c.systemId).Titled("systemId").Css("tablesaw-priority-6");
+    columns.Add(c => c.ip).Titled("ip").Css("tablesaw-priority-6");
     columns.Add(c => c._ControllerFlags).Titled("flags");
     columns.Add(c => c)
-                    .Titled("")
+                    .Titled("Tools")
                     .Encoded(false)
-                    .RenderedAs(c => @Html.ActionLink("Edit", "Edit", new { id = c.id })
+                    .RenderedAs(c => MyHtmlHelpers.IconActionLink(Url.Action("Edit", new { id = c.id }), "fas fa-pencil-alt", "", "Open edit c_controller", OpenNewWindow: true).ToHtmlString() +
+                     MyHtmlHelpers.IconActionLink(Url.Action("index","c_controller_class", new { controller_id = c.id }), "fas fa-file", "", "Goto c_controller_class for this controller").ToHtmlString() +
+                     MyHtmlHelpers.IconActionLink(Url.Action("GetJobs", "Breakdown", new { controller_id = c.id }), "fas fa-vial", "", "Open get jobs", OpenNewWindow: true).ToHtmlString() +
+                     MyHtmlHelpers.IconActionLink(Url.Action("GetJobs", "Breakdown", new { controller_id = c.id, hasBreakdowns = true }), "fas fa-vial text-warning", "", "Open breakdowns", OpenNewWindow: true).ToHtmlString() +
+                     MyHtmlHelpers.IconActionLink(Url.Action("GetEvents", "Eventlog", new { controller_id = c.id}), "fas fa-vial", "", "Open controller h_alarm", OpenNewWindow: true).ToHtmlString() +
+                     MyHtmlHelpers.IconActionLink(Url.Action("Index", "l_operation", new { controller_id = c.id }, null), "fas fa-file", "", "Open operation log", OpenNewWindow:true).ToHtmlString() 
                     ).Filterable(false);
-    columns.Add(c => c)
-        .Titled("")
-        .Encoded(false)
-        .RenderedAs(c => @Html.ActionLink("Show", "Index", "c_controller_class", new { controller_id = c.id }, null)
-        ).Filterable(false);
 }).Filterable().Sortable().Pageable(pager =>
 {
     pager.RowsPerPage = 10;
     pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 10, "10" }, { 20, "20" }, { 40, "40" }, { 80, "80" }, { 100, "100" } };
     pager.ShowPageSizes = true;
-}).Empty("Did not find anything").Css("table-hover")
+}).Empty("Did not find anything").Css("table-hover tablesaw-on")
 
-<div class="badge">Count: @Model.Count()</div>
 

@@ -1,20 +1,23 @@
-﻿@model IQueryable<EqUiWebUi.Areas.VASC.Models.L_operation>
+﻿@model List<EqUiWebUi.Areas.VASC.Models.L_operation>
 
-    @Html.Grid(Model).Named("L_operationGrid").Build(columns =>
+@Html.Grid(Model).Named("L_operationGrid").Build(columns =>
 {
-    columns.Add(c => c.ID).Titled("id").InitialSort(GridSortOrder.Desc).Css("d-none d-lg-table-cell");
-    columns.Add(c => c.C_timestamp).Titled("_timestamp");
-    columns.Add(c => c.code).Titled("code");
-    columns.Add(c => c._L_operationCode).Titled("Operation").Css("d-none d-lg-table-cell");
-    columns.Add(c => c.Vasc_name).Titled("Vasc_name").Css("d-none d-lg-table-cell");
-    columns.Add(c => c.controller_id).Titled("controller_id").Css("d-none d-lg-table-cell");
-    columns.Add(c => c.c_controller.controller_name).Titled("controller_name");
-    columns.Add(c => c.Description).Titled("Desciption");
+    columns.Add(c => c.ID).Titled("id").InitialSort(GridSortOrder.Desc).Css("tablesaw-priority-0");
+    columns.Add(c => c.C_timestamp).Titled("_timestamp").Css("tablesaw-priority-6");
+    columns.Add(c => c.code).Titled("code").Css("tablesaw-priority-0");
+    columns.Add(c => c._L_operationCode).Titled("Operation").Css("tablesaw-priority-persist");
+    columns.Add(c => c.Vasc_name).Titled("Vasc_name");
+    columns.Add(c => c.controller_id).Titled("controller_id").Css("tablesaw-priority-0");
+    columns.Add(c => c.c_controller.controller_name).Titled("controller_name").Css("tablesaw-priority-persist");
+    columns.Add(c => c.Description).Titled("Description").Css("tablesaw-priority-1");
+    columns.Add(c => c)
+                .Titled("Tools")
+                .Encoded(false)
+                .RenderedAs(c => c.controller_id.HasValue ? MyHtmlHelpers.IconActionLink(Url.Action("index", "c_controller_class", new { controller_id = c.controller_id }), "fas fa-file", "", "Goto c_controller_class for this controller").ToHtmlString() : ""
+                ).Filterable(false);
 }).Filterable().Sortable().Pageable(pager =>
 {
     pager.RowsPerPage = 10;
     pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 10, "10" }, { 20, "20" }, { 40, "40" }, { 80, "80" }, { 100, "100" } };
     pager.ShowPageSizes = true;
-}).Empty("Did not find anything").Css("table-hover")
-
-<div class="badge">Count: @Model.Count()</div>
+}).Empty("Did not find anything").Css("table-hover tablesaw-on")

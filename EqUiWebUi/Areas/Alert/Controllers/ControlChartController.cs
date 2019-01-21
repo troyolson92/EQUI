@@ -82,172 +82,174 @@ namespace EqUiWebUi.Areas.Alert.Controllers
         set @optDatanum = 0
         */
         [HttpGet]
-        public JsonResult _getData(ChartSettings chartSettings)
+        public Task<JsonResult> _getData(ChartSettings chartSettings)
         {
-            ConnectionManager connectionManager = new ConnectionManager();
-            c_triggers c_Trigger = db.c_triggers.Where(c => c.id == chartSettings.c_trigger_id).First();
+            return Task.Run(() => {
+                ConnectionManager connectionManager = new ConnectionManager();
+                c_triggers c_Trigger = db.c_triggers.Where(c => c.id == chartSettings.c_trigger_id).First();
 
-            //update chart settings with the Y scale label 
-            if (c_Trigger.controlChartYlabel != null)
-            {
-                chartSettings.scaleLabel = c_Trigger.controlChartYlabel; 
-            }
-            else
-            {
-                chartSettings.scaleLabel = "<%=value%>";
-            }
-            //update chart settings with data labels
-            if(c_Trigger.ValueLabels != null)
-            {
-                //if ValueLabels contains ; this is means there is an RefValue dataset that needs to be handled
-                if(c_Trigger.ValueLabels.Contains(';'))
+                //update chart settings with the Y scale label 
+                if (c_Trigger.controlChartYlabel != null)
                 {
-                    chartSettings.ValueLabel = c_Trigger.ValueLabels.Split(';')[0];
-                    chartSettings.RefValueLabel = c_Trigger.ValueLabels.Split(';')[1];
+                    chartSettings.scaleLabel = c_Trigger.controlChartYlabel; 
                 }
                 else
                 {
-                    chartSettings.ValueLabel = c_Trigger.ValueLabels;
-                    chartSettings.RefValueLabel = null; //don't plot data!
+                    chartSettings.scaleLabel = "<%=value%>";
                 }
-            }
-            else
-            {
-                chartSettings.ValueLabel = "Value";
-            }
+                //update chart settings with data labels
+                if(c_Trigger.ValueLabels != null)
+                {
+                    //if ValueLabels contains ; this is means there is an RefValue dataset that needs to be handled
+                    if(c_Trigger.ValueLabels.Contains(';'))
+                    {
+                        chartSettings.ValueLabel = c_Trigger.ValueLabels.Split(';')[0];
+                        chartSettings.RefValueLabel = c_Trigger.ValueLabels.Split(';')[1];
+                    }
+                    else
+                    {
+                        chartSettings.ValueLabel = c_Trigger.ValueLabels;
+                        chartSettings.RefValueLabel = null; //don't plot data!
+                    }
+                }
+                else
+                {
+                    chartSettings.ValueLabel = "Value";
+                }
 
-            //get data
-            List<ControlchartResult> ChartData = new List<ControlchartResult>();
-            //set db timeout to 10 seconds
-            db.Database.CommandTimeout = 15;
-            //Query to get value data
-            ChartData =  db.Database.SqlQuery<ControlchartResult>(c_Trigger.controlChartSqlStatement,
-                                new SqlParameter("@c_trigger_id", chartSettings.c_trigger_id),
-                                new SqlParameter("@alarmobject", chartSettings.alarmobject),
-                                new SqlParameter("@optDatanum", chartSettings.optDatanum)
-                                ).Where(l => l.timestamp > chartSettings.startdate && l.timestamp < chartSettings.enddate).ToList();
+                //get data
+                List<ControlchartResult> ChartData = new List<ControlchartResult>();
+                //set db timeout to 10 seconds
+                db.Database.CommandTimeout = 15;
+                //Query to get value data
+                ChartData =  db.Database.SqlQuery<ControlchartResult>(c_Trigger.controlChartSqlStatement,
+                                    new SqlParameter("@c_trigger_id", chartSettings.c_trigger_id),
+                                    new SqlParameter("@alarmobject", chartSettings.alarmobject),
+                                    new SqlParameter("@optDatanum", chartSettings.optDatanum)
+                                    ).Where(l => l.timestamp > chartSettings.startdate && l.timestamp < chartSettings.enddate).ToList();
 
-            //main chart value 
-            object ValueData = from e in ChartData
-                               where e.value != null
-                               orderby e.timestamp
-                               select new
-                              {
-                                x = ((e.timestamp - UnixEpoch).Ticks / TimeSpan.TicksPerMillisecond),
-                                y = Math.Round(e.value.GetValueOrDefault(),3),
-                                r = SetPointSize(e)
-                              };
+                //main chart value 
+                object ValueData = from e in ChartData
+                                   where e.value != null
+                                   orderby e.timestamp
+                                   select new
+                                  {
+                                    x = ((e.timestamp - UnixEpoch).Ticks / TimeSpan.TicksPerMillisecond),
+                                    y = Math.Round(e.value.GetValueOrDefault(),3),
+                                    r = SetPointSize(e)
+                                  };
 
-            //main chart REF value 
-            object RefValueData = from e in ChartData
-                                  where e.RefValue != null
-                                  orderby e.timestamp
-                                  select new
-                               {
-                                   x = ((e.timestamp - UnixEpoch).Ticks / TimeSpan.TicksPerMillisecond),
-                                   y = Math.Round(e.RefValue.GetValueOrDefault(), 3),
-                                   r = 0.7
-                               };
+                //main chart REF value 
+                object RefValueData = from e in ChartData
+                                      where e.RefValue != null
+                                      orderby e.timestamp
+                                      select new
+                                   {
+                                       x = ((e.timestamp - UnixEpoch).Ticks / TimeSpan.TicksPerMillisecond),
+                                       y = Math.Round(e.RefValue.GetValueOrDefault(), 3),
+                                       r = 0.7
+                                   };
 
-            //get optional datasets (this gets rendered in an extra chart below the main one
-            object OptValueData = from e in ChartData
-                                  where e.OptValue != null
-                                  orderby e.timestamp
-                                  select new
-                               {
-                                   x = ((e.timestamp - UnixEpoch).Ticks / TimeSpan.TicksPerMillisecond),
-                                   y = Math.Round(e.OptValue.GetValueOrDefault(), 3),
-                                   r = 0.7
-                               };
+                //get optional datasets (this gets rendered in an extra chart below the main one
+                object OptValueData = from e in ChartData
+                                      where e.OptValue != null
+                                      orderby e.timestamp
+                                      select new
+                                   {
+                                       x = ((e.timestamp - UnixEpoch).Ticks / TimeSpan.TicksPerMillisecond),
+                                       y = Math.Round(e.OptValue.GetValueOrDefault(), 3),
+                                       r = 0.7
+                                   };
   
 
-            //get the control limits separate. (else a point is returned for each record and the rendering looks bad.
-            double controllimitPointSize = 0.6;
+                //get the control limits separate. (else a point is returned for each record and the rendering looks bad.
+                double controllimitPointSize = 0.6;
 
-            List<l_controlLimits> limits = db.l_controlLimits.Where(l =>
-                    l.c_trigger_id == chartSettings.c_trigger_id
-                    && l.alarmobject == chartSettings.alarmobject
-                    &&
-                    (
-                    (l.CreateDate > chartSettings.startdate && l.CreateDate < chartSettings.enddate) //allows control limits CREATEd in the date range to be in.
-                    || (l.ChangeDate > chartSettings.startdate && l.ChangeDate < chartSettings.enddate) //allows control limits CLOSED in the date range to be in.
-                    || l.isdead == false//allows the active control limit to always in 
-                    )
-                    ).ToList();
+                List<l_controlLimits> limits = db.l_controlLimits.Where(l =>
+                        l.c_trigger_id == chartSettings.c_trigger_id
+                        && l.alarmobject == chartSettings.alarmobject
+                        &&
+                        (
+                        (l.CreateDate > chartSettings.startdate && l.CreateDate < chartSettings.enddate) //allows control limits CREATEd in the date range to be in.
+                        || (l.ChangeDate > chartSettings.startdate && l.ChangeDate < chartSettings.enddate) //allows control limits CLOSED in the date range to be in.
+                        || l.isdead == false//allows the active control limit to always in 
+                        )
+                        ).ToList();
 
-            //adjust the dead control limits to fit in the 'view' window.
-            List<l_controlLimits> oldLimits = limits.Where(l => l.isdead == true).ToList();
-            foreach (l_controlLimits oldlimit in oldLimits)
-            {
-                if (oldlimit.CreateDate < chartSettings.startdate) //if created before view windows set start date to start of window.
+                //adjust the dead control limits to fit in the 'view' window.
+                List<l_controlLimits> oldLimits = limits.Where(l => l.isdead == true).ToList();
+                foreach (l_controlLimits oldlimit in oldLimits)
                 {
-                    oldlimit.CreateDate = chartSettings.startdate;
+                    if (oldlimit.CreateDate < chartSettings.startdate) //if created before view windows set start date to start of window.
+                    {
+                        oldlimit.CreateDate = chartSettings.startdate;
+                    }
                 }
-            }
 
-            //adjust the active control limit to fit in the 'View' window
-            l_controlLimits activeLimit = limits.Where(l => l.isdead == false).FirstOrDefault();
-            if (activeLimit == null) //no active limit. (removed system)
-            {
-               //do nothing.
-            }
-            else if (activeLimit.CreateDate > chartSettings.enddate)//if the active limit is newer than the date range. => Drop it.
-            {
-                limits.Remove(activeLimit);
-            }
-            else if (activeLimit.CreateDate < chartSettings.startdate) //active limit was created before the data range. => Set create date to start of date range and set the change date to the end of the date range.
-            {
-                activeLimit.CreateDate = chartSettings.startdate;
-                activeLimit.ChangeDate = chartSettings.enddate;
-            }
-            else //active limit was created in the date range. => set the change date to the end of the date range.
-            {
-                activeLimit.ChangeDate = chartSettings.enddate;
-            }
+                //adjust the active control limit to fit in the 'View' window
+                l_controlLimits activeLimit = limits.Where(l => l.isdead == false).FirstOrDefault();
+                if (activeLimit == null) //no active limit. (removed system)
+                {
+                   //do nothing.
+                }
+                else if (activeLimit.CreateDate > chartSettings.enddate)//if the active limit is newer than the date range. => Drop it.
+                {
+                    limits.Remove(activeLimit);
+                }
+                else if (activeLimit.CreateDate < chartSettings.startdate) //active limit was created before the data range. => Set create date to start of date range and set the change date to the end of the date range.
+                {
+                    activeLimit.CreateDate = chartSettings.startdate;
+                    activeLimit.ChangeDate = chartSettings.enddate;
+                }
+                else //active limit was created in the date range. => set the change date to the end of the date range.
+                {
+                    activeLimit.ChangeDate = chartSettings.enddate;
+                }
 
-            //build the control limit data objects.
-            object UCLData = (from e in limits
-                              select new //start points
-                              {
-                                  x = ((e.CreateDate.AddSeconds(300) - UnixEpoch).Ticks / TimeSpan.TicksPerMillisecond),
-                                  y = Math.Round(e.UpperLimit.GetValueOrDefault(), 3),
-                                  LCL = Math.Round(e.LowerLimit.GetValueOrDefault(), 3),
-                                  r = controllimitPointSize
+                //build the control limit data objects.
+                object UCLData = (from e in limits
+                                  select new //start points
+                                  {
+                                      x = ((e.CreateDate.AddSeconds(300) - UnixEpoch).Ticks / TimeSpan.TicksPerMillisecond),
+                                      y = Math.Round(e.UpperLimit.GetValueOrDefault(), 3),
+                                      LCL = Math.Round(e.LowerLimit.GetValueOrDefault(), 3),
+                                      r = controllimitPointSize
 
-                              }).Union((from e in limits
-                                        select new //endpoints
-                                        {
-                                            x = ((e.ChangeDate.GetValueOrDefault(chartSettings.enddate) - UnixEpoch).Ticks / TimeSpan.TicksPerMillisecond),
-                                            y = Math.Round(e.UpperLimit.GetValueOrDefault(), 3),
-                                            LCL = Math.Round(e.LowerLimit.GetValueOrDefault(), 3),
-                                            r = controllimitPointSize
-                                        })).OrderBy(e => e.x);
+                                  }).Union((from e in limits
+                                            select new //endpoints
+                                            {
+                                                x = ((e.ChangeDate.GetValueOrDefault(chartSettings.enddate) - UnixEpoch).Ticks / TimeSpan.TicksPerMillisecond),
+                                                y = Math.Round(e.UpperLimit.GetValueOrDefault(), 3),
+                                                LCL = Math.Round(e.LowerLimit.GetValueOrDefault(), 3),
+                                                r = controllimitPointSize
+                                            })).OrderBy(e => e.x);
 
-            object LCLData = (from e in limits
-                              select new //start points
-                              {
-                                  x = ((e.CreateDate.AddSeconds(300) - UnixEpoch).Ticks / TimeSpan.TicksPerMillisecond),
-                                  y = Math.Round(e.LowerLimit.GetValueOrDefault(), 3),
-                                  r = controllimitPointSize
+                object LCLData = (from e in limits
+                                  select new //start points
+                                  {
+                                      x = ((e.CreateDate.AddSeconds(300) - UnixEpoch).Ticks / TimeSpan.TicksPerMillisecond),
+                                      y = Math.Round(e.LowerLimit.GetValueOrDefault(), 3),
+                                      r = controllimitPointSize
 
-                              }).Union((from e in limits
-                                        select new //endpoints
-                                        {
-                                            x = ((e.ChangeDate.GetValueOrDefault(chartSettings.enddate) - UnixEpoch).Ticks / TimeSpan.TicksPerMillisecond),
-                                            y = Math.Round(e.LowerLimit.GetValueOrDefault(), 3),
-                                            r = controllimitPointSize
-                                        })).OrderBy(e => e.x);
+                                  }).Union((from e in limits
+                                            select new //endpoints
+                                            {
+                                                x = ((e.ChangeDate.GetValueOrDefault(chartSettings.enddate) - UnixEpoch).Ticks / TimeSpan.TicksPerMillisecond),
+                                                y = Math.Round(e.LowerLimit.GetValueOrDefault(), 3),
+                                                r = controllimitPointSize
+                                            })).OrderBy(e => e.x);
 
-            //combine all data in 1 list object
-            List<object> data = new List<object>();
-            data.Add(chartSettings);
-            data.Add(ValueData);
-            data.Add(UCLData);
-            data.Add(LCLData);
-            data.Add(RefValueData);
-            data.Add(OptValueData);
-            //
-            return Json(data, JsonRequestBehavior.AllowGet);
+                //combine all data in 1 list object
+                List<object> data = new List<object>();
+                data.Add(chartSettings);
+                data.Add(ValueData);
+                data.Add(UCLData);
+                data.Add(LCLData);
+                data.Add(RefValueData);
+                data.Add(OptValueData);
+                //
+                return Json(data, JsonRequestBehavior.AllowGet);
+            });
         }
     }
 }

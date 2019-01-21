@@ -70,7 +70,7 @@ namespace EqUiWebUi.Areas.VASC.Controllers
             {
                 db.Entry(c_device_info).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Close", "Home", new { area = "" });
             }
             return View(c_device_info);
         }

@@ -4,24 +4,18 @@
 {
     columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Asc);
     columns.Add(c => c._Enable_bit).Titled("enable_bit");
-    columns.Add(c => c._Poll_Rate).Titled("Poll_Rate").Css("d-none d-lg-table-cell");
-    columns.Add(c => c._Insert_update).Titled("Insert_update").Css("d-none d-lg-table-cell");
+    columns.Add(c => c._Poll_Rate).Titled("Poll_Rate").Css("tablesaw-priority-6");
+    columns.Add(c => c._Insert_update).Titled("Insert_update").Css("tablesaw-priority-6");
     columns.Add(c => c.name).Titled("name");
     columns.Add(c => c)
                         .Titled("")
                         .Encoded(false)
-                        .RenderedAs(c => @Html.ActionLink("Edit", "Edit", new { id = c.id })
+                    .RenderedAs(c => MyHtmlHelpers.IconActionLink(Url.Action("Edit", new { id = c.id }), "fas fa-pencil-alt", "", "Open edit", OpenNewWindow: true).ToHtmlString() +
+                     MyHtmlHelpers.IconActionLink(Url.Action("GetDeviceInfoData", new { c_device_info_id = c.id, controller_id = ViewBag.controller_id }), "fas fa-file", "", "Open GetDeviceInfoData", OpenNewWindow: true).ToHtmlString()
                         ).Filterable(false);
-    columns.Add(c => c)
-                    .Titled("")
-                    .Encoded(false)
-                    .RenderedAs(c => @Html.ActionLink("Show", "GetDeviceInfoData", new { c_device_info_id = c.id, controller_id = ViewBag.controller_id })
-                    ).Filterable(false);
 }).Filterable().Sortable().Pageable(pager =>
 {
     pager.RowsPerPage = 10;
     pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 10, "10" }, { 20, "20" }, { 40, "40" }, { 80, "80" }, { 100, "100" } };
     pager.ShowPageSizes = true;
-}).Empty("Did not find anything").Css("table-hover")
-
-<div class="badge">Count: @Model.Count()</div>
+}).Empty("Did not find anything").Css("table-hover  tablesaw-on")

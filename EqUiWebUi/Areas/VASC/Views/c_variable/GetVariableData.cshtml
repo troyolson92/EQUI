@@ -5,7 +5,6 @@
 }
 
 <h2>GetVariableData</h2>
-<div class="badge">Count: @Model.Count()</div>
 <div class="badge">SourceTable: @ViewBag.SourceTable</div>
 
 @Html.Grid(Model).Named("rt_valueGrid").Build(columns =>
@@ -20,7 +19,9 @@
     columns.Add(c => c.isEvent).Titled("isEvent");
 }).Filterable().Sortable().Pageable(pager =>
 {
-    pager.RowsPerPage = 30;
+    pager.RowsPerPage = 20;
+    pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 10, "10" }, { 20, "20" }, { 40, "40" }, { 80, "80" }, { 100, "100" } };
+    pager.ShowPageSizes = true;
 }).Empty("Did not find anything").Css("table-hover")
 
 @section scripts{

@@ -38,7 +38,7 @@ namespace EqUiWebUi.Areas.VASC.Controllers
         }
 
         // GET: VASC/c_controller_class/Edit/5
-        // We will handle the creation of a new trigger also in EDIT. (to make code simplere) to create a new trigger pass ID = -1
+        // We will handle the creation of a new trigger also in EDIT. (to make code simpler) to create a new trigger pass ID = -1
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -84,7 +84,7 @@ namespace EqUiWebUi.Areas.VASC.Controllers
                     db.Entry(c_controller_class).State = EntityState.Modified;
                 }
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Close", "Home", new { area = "" });
             }
             return View(c_controller_class);
         }
@@ -120,6 +120,7 @@ namespace EqUiWebUi.Areas.VASC.Controllers
         {
             if (controller_id != null)
             {
+                ViewBag.controller_id = controller_id;
                 return View(db.rt_event.Where(c => c.c_controller_id == controller_id));
             }
             else

@@ -95,7 +95,7 @@ namespace EqUiWebUi.Areas.VASC.Controllers
                     db.Entry(c_variable_search).State = EntityState.Modified;
                 }
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Close", "Home", new { area = "" });
             }
             return View(c_variable_search);
         }

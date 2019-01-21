@@ -98,6 +98,7 @@
     <Folder Include="WELDING2\" />
     <Folder Include="WELDING2\Tables\" />
     <Folder Include="EqUi\Functions\" />
+    <Folder Include="Snapshots" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Alerts\Tables\c_CPT600.sql" />

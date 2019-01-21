@@ -84,8 +84,32 @@
 
 <hr />
 <div class="card card-body">
-    <h3>Equi instances</h3>
+    <h3>Equi instances around the world</h3>
     <hr />
-    @MyHtmlHelpers.EquiLink("https://gensvw1178.gen.volvocars.net", "fas fa-flag", "VCG", helperText: "Volvo cars Ghent")
-    @MyHtmlHelpers.EquiLink("http://chasvw1203.cha.volvocars.net", "fas fa-flag", "VCCH", helperText: "Volvo cars Charleston")
+    <div class="row">
+        <div class="col-6">
+            @MyHtmlHelpers.EquiLink("https://gensvw1178.gen.volvocars.net", "fas fa-flag", "VCG", helperText: "Volvo cars Ghent (production)")
+        </div>
+        <div class="col-6">
+            @MyHtmlHelpers.EquiLink("http://gensvw1178.gen.volvocars.net:666", "fas fa-flag", "VCG", helperText: "Volvo cars Ghent (development)")
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            @MyHtmlHelpers.EquiLink("http://chasvw1203.cha.volvocars.net", "fas fa-flag", "VCCH", helperText: "Volvo cars Charleston (production)")
+        </div>
+        <div class="col-6">
+            @MyHtmlHelpers.EquiLink("http://chasvw1203.cha.volvocars.net:666", "fas fa-flag", "VCCH", helperText: "Volvo cars Charleston (development)")
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            @MyHtmlHelpers.EquiLink("http://gotsvw11292.got.volvocars.net", "fas fa-flag", "VCT", helperText: "Volvo cars Torslanda (inactive)")
+        </div>
+        <div class="col-6">
+          
+        </div>
+    </div>
+
+
 </div>

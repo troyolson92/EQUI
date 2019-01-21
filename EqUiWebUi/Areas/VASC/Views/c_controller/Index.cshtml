@@ -8,15 +8,31 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Add a new controller", "Edit", new { id = -1 })
+    @MyHtmlHelpers.IconActionLink(Url.Action("Edit", "c_controller", new { id = -1 }), "fas fa-pencil-alt", "Create", "add a controller", OpenNewWindow: true)
 </p>
 
-@Html.AjaxGrid(Url.Action("_List"))
+
+<div class="card card-body">
+    <div id="c_controllerGrid" class="mvc-grid"></div>
+</div>
 
 @section scripts{
     <script>
         //full with screen
         $("#allcontent").removeClass("body-content");
         $("#allcontent").removeClass("container");
+
+    $('#c_controllerGrid').html('@MyHtmlHelpers.Loading("c_controllerGrid")');
+    $('#c_controllerGrid').mvcgrid({
+        sourceUrl: '@Url.Action("_List")',
+        reload: true,
+        requestType: 'get', // Ajax grid request type
+        reloadFailed: function (result) {
+            $("#c_controllerGrid").html($("#Error", result.responseText).html());
+        },
+        reloadEnded: function () {
+            EnableInterfaceEvents();
+        }
+    });
     </script>
 }

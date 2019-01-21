@@ -1,56 +1,53 @@
 ﻿@model EqUiWebUi.Models.LogInfo
 
-<div class="card-header">
-
-    <div class="alert alert-info">
-        <h4>Information about <a class="far fa-window-restore text-black-50" href='@Url.Action("MoreInfo","Table",Model)'></a></h4>
-        <div class="row">
-
-            <div class="col-sm-11">
-                Logtype: <strong>@Model.logtype</strong> for location: <strong>@Model.location</strong>
-                <div class="text-muted">
-                    Logcode: <strong>@Model.errornum</strong> Logtext: <strong>@Model.logtext.Trim()</strong>
-                </div>
-            </div>
-
-            <div class="col-sm-1">
-                <a class="far fa-window-close fa-3x clickable text-black-50" data-dismiss="modal"></a>
-            </div>
+<div id="moreinfo">
+    <div class="card-header">
+        <div class="alert alert-info">
+            <h6>
+                <a class="far fa-window-restore fa-3x text-black-50 clickable" href='@Url.Action("MoreInfo","Table",Model)' data-toggle="tooltip" title="link to this page"></a>
+                <a class="clickable fas fa-print fa-3x text-black-50" id="printmoreinfo" data-toggle="tooltip" title="print"></a>
+                Information about
+                Logtype: <strong>@Model.logtype</strong> 
+                for location: <strong>@Model.location</strong>
+                Logcode: <strong>@Model.errornum</strong> 
+                Logtext: <strong>@Model.logtext.Trim()</strong>
+                <a class="far fa-window-close fa-3x clickable text-black-50 float-right" data-dismiss="modal"></a>
+            </h6>
         </div>
     </div>
-</div>
 
-<div class="card-body">
-    @*Render error trend chart*@
-    @Html.Action("_getErrorTrend","Chart", new { area = "", Model })
+    <div class="card-body">
+        @*Render error trend chart*@
+        @Html.Action("_getErrorTrend", "Chart", new { area = "", Model })
 
-    <hr />
+        <hr />
 
-    @*if the log type is an alert it is redirected to the alert area. all other log types are run via equi.GetErrorInfoData*@
-    @if (Model.logtype == "ALERT")
-    {
-        <div class="card">
-            <div class="card-header bg-warning">
-                <h6 class="card-title">
-                    Details for Alert: <strong>@Model.refid</strong> Info: <strong>@Model.logtext.Trim()</strong>
-                    @MyHtmlHelpers.IconActionLink(Url.Action("Edit", "Alert", new { area = "Alert", id = Model.refid }), "far fa-edit text-black-50", "", "Edit this alert")
-                    <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1 text-black-50"></i></span>
-                </h6>
+        @*if the log type is an alert it is redirected to the alert area. all other log types are run via equi.GetErrorInfoData*@
+        @if (Model.logtype == "ALERT")
+        {
+            <div class="card">
+                <div class="card-header bg-warning">
+                    <h6 class="card-title">
+                        Details for Alert: <strong>@Model.refid</strong> Info: <strong>@Model.logtext.Trim()</strong>
+                        @MyHtmlHelpers.IconActionLink(Url.Action("Edit", "Alert", new { area = "Alert", id = Model.refid }), "far fa-edit text-black-50", "", "Edit this alert")
+                        <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1 text-black-50"></i></span>
+                    </h6>
+                </div>
+                <div class="card-body">
+                    @Html.Action("_Details", "Alert", new { area = "Alert", id = Model.refid })
+                </div>
             </div>
-            <div class="card-body">
-                @Html.Action("_Details", "Alert", new { area = "Alert", id = Model.refid })
-            </div>
-        </div>
-    }
-    else
-    {
-        @Html.Action("_loginfo", Model)
-    }
+        }
+        else
+        {
+            @Html.Action("_loginfo", Model)
+        }
 
-    <hr />
+        <hr />
 
-    @*Render maximo workorders on location*@
-    @Html.Action("_workordersOnLocation", "Workorder", new { area = "Maximo_ui", location = Model.location })
+        @*Render maximo workorders on location*@
+        @Html.Action("_workordersOnLocation", "Workorder", new { area = "Maximo_ui", location = Model.location })
+    </div>
 </div>
 
 <div class="card-footer">
@@ -59,3 +56,13 @@
         @Html.ActionLink("JobDetails", "rtJob", "Breakdown", new { area = "VASC", jobID = Model.refid }, new { @class = "btn btn-primary btn-sm" })
     }
 </div>
+
+<script>
+    ///enable printing
+    $('#printmoreinfo').click(function () {
+        console.log("print started");
+        $('#moreinfo').printThis({
+            canvas: true
+        });
+    });
+</script>

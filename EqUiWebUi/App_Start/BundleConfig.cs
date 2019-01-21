@@ -15,18 +15,21 @@ namespace EqUiWebUi
                          "~/Scripts/bootstrap.min.js", //bootstrap
                          "~/Scripts/respond.js",
                          "~/Scripts/jquery.bootstrap-autohidingnavbar.js", //https://github.com/istvan-ujjmeszaros/bootstrap-autohidingnavbar 
-                         "~/Scripts/moment.js", //https://github.com/moment/moment/
+                         "~/node_modules/moment/moment.js", //https://github.com/moment/moment/
                          "~/node_modules/daterangepicker/daterangepicker.js", //https://github.com/dangrossman/bootstrap-daterangepicker
                          "~/node_modules/bootstrap-select/dist/js/bootstrap-select.js" //https://developer.snapappointments.com/bootstrap-select/
                             ));
 
             //loads after content
             bundles.Add(new ScriptBundle("~/bundles/MyScripts").Include(
-                         "~/Scripts/MyScripts/tablehelper.js",
                          "~/Scripts/MyScripts/Interface.js",
 
                          "~/Scripts/MvcGrid/mvc-grid.js", //https://github.com/NonFactors/MVC5.Grid
-                         "~/Scripts/printThis.js", //https://github.com/jasonday/printThis
+
+                         "~/node_modules/tablesaw/dist/tablesaw.jquery.js", //https://github.com/filamentgroup/tablesaw
+                         "~/node_modules/tablesaw/dist/tablesaw-init.js",
+
+                         "~/node_modules/print-this/printThis.js", //https://github.com/jasonday/printThis
                          "~/Scripts/jquery.toaster.js" //https://github.com/scottoffen/jquery.toaster/wiki
             ));
 
@@ -41,6 +44,8 @@ namespace EqUiWebUi
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/Bootstrap.css",
                       "~/Content/MvcGrid/mvc-grid.css", //style for mvc grids
+                      "~/node_modules/tablesaw/dist/tablesaw.css", //for tablesaw
+
                       "~/node_modules/daterangepicker/daterangepicker.css", //style for date range pickers
                       "~/Content/fontawesome-all.css",  //for or icons https://fontawesome.com
 

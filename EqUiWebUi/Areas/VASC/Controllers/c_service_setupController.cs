@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EqUiWebUi.Areas.VASC.Models;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -6,9 +7,7 @@ using System.Linq;
 using System.Management;
 using System.Net;
 using System.ServiceProcess;
-using System.Web;
 using System.Web.Mvc;
-using EqUiWebUi.Areas.VASC.Models;
 
 namespace EqUiWebUi.Areas.VASC.Controllers
 {
@@ -21,17 +20,27 @@ namespace EqUiWebUi.Areas.VASC.Controllers
 
         // GET: VASC/c_service_setup
         //show a list of session configured join the controller enable mask.
+
+/// <summary>
+/// TO BE ABLE to control the services the BPPaccaunt running the application pool must of coarse have access AND
+/// in the advanced application pool settings Load user profile must be set TRUE !!!!
+/// </summary>
+/// <returns></returns>
+
         public ActionResult Index()
         {
             List<c_service_setup> sessions = db.c_service_setup.Where(c => c.name == "SESSION_NAME").ToList();
-            List<Models.winService> servicesOnServer = GetServices();
+            string vaschost = db.c_service_setup.Where(c => c.name == "COMPUTERNAME").First().value ?? "localhost";
+            log.Info($"vaschost:{vaschost} execution user:{System.Security.Principal.WindowsIdentity.GetCurrent().Name}");
+            ViewBag.vaschost = vaschost;
+            List <Models.winService> servicesOnServer = GetServices(vaschost);
             List<Models.winService> result = new List<winService>();
             foreach (c_service_setup session in sessions)
             {
                 Models.winService service = servicesOnServer.Where(s => s.ServiceName == session.value).FirstOrDefault();
                 if (service == null)
                 {
-                    log.Warn("vasc session: " + session.name + " not found on server");
+                    log.Warn("vasc session: " + session.value + " not found on server");
                     service = new winService();
                     service.ServiceName = "NOT FOUND";
                     service.ServiceDescription = "no service found named " + session.value;
@@ -47,41 +56,48 @@ namespace EqUiWebUi.Areas.VASC.Controllers
         }
 
         //get list of running services
-        public List<Models.winService> GetServices()
+        public List<Models.winService> GetServices(string hostname)
         {
             ServiceController[] scServices;
             List<Models.winService> list = new List<Models.winService>();
             try
             {
-                scServices = ServiceController.GetServices();
+                scServices = ServiceController.GetServices(hostname);
 
                 try
                 {
-
                     foreach (ServiceController scTemp in scServices)
                     {
+                        try
+                        {
+                            Models.winService winService = new Models.winService();
+                            winService.ServiceName = scTemp.ServiceName;
+                            winService.ServiceDisplayName = scTemp.DisplayName;
+                            winService.ServiceStatus = scTemp.Status.ToString() ?? "null";
+
+                            // Query WMI for additional information about this service.
                             try
                             {
-                                Models.winService winService = new Models.winService();
-                                winService.ServiceName = scTemp.ServiceName;
-                                winService.ServiceDisplayName = scTemp.DisplayName;
-                                winService.ServiceStatus = scTemp.Status.ToString() ?? "null";
-
-                                // Query WMI for additional information about this service.
                                 ManagementObject wmiService;
                                 wmiService = new ManagementObject("Win32_Service.Name='" + scTemp.ServiceName + "'");
                                 wmiService.Get();
                                 winService.ServiceStartName = wmiService["StartName"].ToString() ?? "null";
                                 winService.ServiceDescription = wmiService["Description"].ToString() ?? "null";
-                                //
-                                list.Add(winService);
                             }
                             catch (Exception ex)
                             {
-                                log.Error("Fail to process: " + scTemp.ServiceName, ex);
+                                winService.ServiceStartName = "Failed to query WMI";
+                                winService.ServiceDescription = "Failed to query WMI";
+                              //  log.Error("Fail to Query WMI : " + scTemp.ServiceName, ex);
                             }
+                            //
+                            list.Add(winService);
                         }
-
+                        catch (Exception ex)
+                        {
+                            log.Error("Fail to process: " + scTemp.ServiceName, ex);
+                        }
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -96,12 +112,15 @@ namespace EqUiWebUi.Areas.VASC.Controllers
         }
 
         //change services state
+        [Authorize(Roles = "Administrator")]
         public JsonResult SetServiceState(string ServiceName, int State)
         {
             //IIS user must have acces to start and stop services!
-            //need to test if this works! 
+            //need to test if this works!
             //https://social.technet.microsoft.com/wiki/contents/articles/5752.how-to-grant-users-rights-to-manage-services-start-stop-etc.aspx
-            ServiceController controller = new ServiceController(ServiceName);
+            string vaschost = db.c_service_setup.Where(c => c.name == "COMPUTERNAME").First().value ?? "localhost";
+            log.Warn($"Servicestate request for {ServiceName} on {vaschost} to state {State} by user {EqUiWebUi.CurrentUser.Getuser.username}");
+            ServiceController controller = new ServiceController(ServiceName, vaschost);
             try
             {
                 switch (State)
@@ -133,11 +152,16 @@ namespace EqUiWebUi.Areas.VASC.Controllers
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 Response.StatusDescription = ex.Message;
                 return Json(null, JsonRequestBehavior.AllowGet);
-
             }
         }
 
         //
+        public ActionResult sessionSetup(int? enable_mask)
+        {
+            ViewBag.enable_mask = enable_mask;
+            return View();
+        }
+
         public ActionResult _sessionSetup(int? enable_mask)
         {
             ViewBag.enable_mask = enable_mask;
@@ -158,14 +182,13 @@ namespace EqUiWebUi.Areas.VASC.Controllers
 
                 foreach (int setbit in setbits)
                 {
-                    list.AddRange(db.c_service_setup.Where(c => c.bit_id == setbit+1 && c.bit_id != 0).ToList());
+                    list.AddRange(db.c_service_setup.Where(c => c.bit_id == setbit + 1 && c.bit_id != 0).ToList());
                 }
                 //also add everything with bit_id set to -1 because these are global parameters for all sessions.
                 list.AddRange(db.c_service_setup.Where(c => c.bit_id == -1).ToList());
             }
             return PartialView(list);
         }
-
 
         // GET: VASC/c_service_setup/_sessionSetup
         public ActionResult _sessionDetails(string sessionName)
@@ -196,17 +219,17 @@ namespace EqUiWebUi.Areas.VASC.Controllers
         }
 
         // POST: VASC/c_service_setup/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,bit_id,name,value,description")] c_service_setup c_service_setup)
+        public ActionResult Create( c_service_setup c_service_setup)
         {
             if (ModelState.IsValid)
             {
                 db.c_service_setup.Add(c_service_setup);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Close", "Home", new { area = "" });
             }
 
             return View(c_service_setup);
@@ -228,17 +251,17 @@ namespace EqUiWebUi.Areas.VASC.Controllers
         }
 
         // POST: VASC/c_service_setup/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,bit_id,name,value,description")] c_service_setup c_service_setup)
+        public ActionResult Edit(c_service_setup c_service_setup)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(c_service_setup).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Close","Home",new { area ="" });
             }
             return View(c_service_setup);
         }
@@ -266,7 +289,7 @@ namespace EqUiWebUi.Areas.VASC.Controllers
             c_service_setup c_service_setup = db.c_service_setup.Find(id);
             db.c_service_setup.Remove(c_service_setup);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Close", "Home", new { area = "" });
         }
 
         protected override void Dispose(bool disposing)

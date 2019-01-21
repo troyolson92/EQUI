@@ -47,6 +47,7 @@ function initInterface() {
     //initpopovers
     //on click ignore default action
     $(".MyPopovers").click(function (e) {
+        console.log('default action prevented (.Mypopovers)');
         e.preventDefault();
         return false;
     });
@@ -82,16 +83,18 @@ function initInterface() {
 
     //script for subscribing to panel colaps
     $(document).on('click', '.card-header span.clickable', function (e) {
-        var $this = $(this);
-        if ($this.closest('.card').find('.card-body').css('display') === 'block') {
-            $this.addClass('fa-rotate-180');
-            $this.closest('.card').find('.card-body').slideUp();
+        if ($(this).closest('.card').find('.card-body').css('display') === 'block') {
+            $(this).addClass('fa-rotate-180');
+            $(this).closest('.card').find('.card-body').slideUp();
         } else {
-            $this.removeClass('fa-rotate-180');
-            $this.closest('.card').find('.card-body').slideDown();
+            $(this).removeClass('fa-rotate-180');
+            $(this).closest('.card').find('.card-body').slideDown();
         }
     });
 
+    //table event for grid that gets loaded without ajax
+    $('.mvc-grid').mvcgrid();
+    //enable events like tooltips ...
     EnableInterfaceEvents();
 }
 
@@ -101,8 +104,12 @@ function EnableInterfaceEvents() {
     $('[data-toggle="tooltip"]').tooltip();
     $('[data-toggle="popover"]').tooltip();
 
+    //select drop downs that are form control and make this use bootstrap select. (don't just do on all select this will break things like mvc gird pager)
+    $('select.form-control').selectpicker();
+
     //for new window option
     $('.OpenNewWindow').click(function (e) {
+        console.log('default action prevented (.OpenNewWindow)');
         e.preventDefault();
         console.log("Opening new window");
         window.open($(this).attr('href'), 'EQUI', 'window settings');
@@ -119,8 +126,8 @@ function EnableInterfaceEvents() {
 
     //for blind fired buttons with feedback.
     $(".JQresultTriggerBtn").click(function (e) {
+        console.log('default action prevented (.JQresultTriggerBtn)');
         e.preventDefault();
-        var caller = this;
         $.toaster({ title: 'JQTriggerBtn', priority: 'info', message: 'Fired: ' + $(this).attr('href') });
         $.ajax({
             type: "GET",
@@ -146,10 +153,29 @@ function EnableInterfaceEvents() {
         });
     });
 
-    //subscrible renderd grids to events
-    $('.mvc-grid').mvcgrid();
+    //tablesaw
+    //enable select box mode switch and minimap
+    $('.tablesaw-on').attr("data-tablesaw-mode-switch", "");
+    $('.tablesaw-on').attr("data-tablesaw-mode-exclude", "stack");
+    $('.tablesaw-on').attr("data-tablesaw-mode", "columntoggle");
+    $('.tablesaw-on').attr("data-tablesaw-minimap", "");
+    //this must be on all table thead 
+    $('.tablesaw-on > thead > tr > th').attr("scope", "col");
+    //set all by default to prio 1 (must be done to make tool populate)
+    $('.tablesaw-on > thead > tr > th').attr("data-tablesaw-priority", "1"); //value from 1 to 6 depending on viewport
+    //normally attributes are added to the table headers to set prio to the table.
+    //because gid-mvc does not support attr in constuctor we add the CSS class in the gird-mvc constructor.
+    //then we check here if it has that class and add the attr. 
+    $('.tablesaw-on > thead > tr > .tablesaw-priority-persist').attr("data-tablesaw-priority", "persist");
+    $('.tablesaw-on > thead > tr > .tablesaw-priority-0').attr("data-tablesaw-priority", "0");
+    $('.tablesaw-on > thead > tr > .tablesaw-priority-1').attr("data-tablesaw-priority", "1");
+    $('.tablesaw-on > thead > tr > .tablesaw-priority-2').attr("data-tablesaw-priority", "2");
+    $('.tablesaw-on > thead > tr > .tablesaw-priority-3').attr("data-tablesaw-priority", "3");
+    $('.tablesaw-on > thead > tr > .tablesaw-priority-4').attr("data-tablesaw-priority", "4");
+    $('.tablesaw-on > thead > tr > .tablesaw-priority-5').attr("data-tablesaw-priority", "5");
+    $('.tablesaw-on > thead > tr > .tablesaw-priority-6').attr("data-tablesaw-priority", "6");
+    Tablesaw.init();
 }
-
 
 //get part from querystring
 function qs(key) {

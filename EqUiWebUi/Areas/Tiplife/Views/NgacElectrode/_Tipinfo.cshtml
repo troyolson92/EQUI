@@ -1,6 +1,4 @@
-﻿
-
-    <div class="card-header">
+﻿    <div class="card-header">
 
         <div class="alert alert-info">
             <h4>
@@ -90,6 +88,9 @@
             reloadFailed: function (result) {
                 console.log(result);
                 $('[data-name= "TipLifeExpectationsGrid"]').html($("#Error", result.responseText).html());
+            },
+            reloadEnded: function () {
+                EnableInterfaceEvents();
             }
         });
 
@@ -102,6 +103,9 @@
             reloadFailed: function (result) {
                 console.log(result);
                 $('[data-name= "TipwearBeforeChangeGrid"]').html($("#Error", result.responseText).html());
+            },
+            reloadEnded: function () {
+                EnableInterfaceEvents();
             }
         });
 
@@ -114,6 +118,9 @@
             reloadFailed: function (result) {
                 console.log(result);
                 $('[data-name= "TipDressDataGrid"]').html($("#Error", result.responseText).html());
+            },
+            reloadEnded: function () {
+                EnableInterfaceEvents();
             }
         });
 
@@ -126,10 +133,11 @@
             reloadFailed: function (result) {
                 console.log(result);
                 $('[data-name= "TCP_LOGGrid"]').html($("#Error", result.responseText).html());
+            },
+            reloadEnded: function () {
+                EnableInterfaceEvents();
             }
         });
 
-        //enable tooltips
-        $('[data-toggle="popover"]').tooltip();
-
+        EnableInterfaceEvents();
     </script>

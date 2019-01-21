@@ -21,21 +21,6 @@ namespace EqUiWebUi.Areas.user_management.Controllers
             return View(db.c_areas.ToList());
         }
 
-        // GET: user_management/AreaFilters/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            c_areas areaFilters = db.c_areas.Find(id);
-            if (areaFilters == null)
-            {
-                return HttpNotFound();
-            }
-            return View(areaFilters);
-        }
-
         // GET: user_management/AreaFilters/Create
         [Authorize(Roles = "Administrator")]
         public ActionResult Create()
@@ -137,18 +122,19 @@ namespace EqUiWebUi.Areas.user_management.Controllers
             List<SelectListItem> selectList = new List<SelectListItem>();
             List<c_areas> areaFilters = db.c_areas.ToList();
 
-            List<string> plants = areaFilters.GroupBy(list => list.Plant).Select(grp => grp.First().Plant).ToList();
+            List<string> plants = areaFilters.OrderBy(x => x.Ordinal).GroupBy(x => x.Plant).Select(grp => grp.First().Plant).ToList();
             foreach(string plant in plants)
             {
                 //do we need an option to group by plant?
 
-                List<string> optgroups = areaFilters.Where(list => list.Plant == plant).GroupBy(list => list.Optgroup).Select(grp => grp.First().Optgroup).ToList();
+                List<string> optgroups = areaFilters.OrderBy(x => x.Ordinal).Where(x => x.Plant == plant).GroupBy(x => x.Optgroup).Select(grp => grp.First().Optgroup).ToList();
                 foreach(string optgroup in optgroups)
                 {
                     SelectListGroup selectListGroup =  new SelectListGroup() { Name = optgroup, Disabled = false };
-                    List<SelectListItem> optgroupItems = areaFilters.Where(list => list.Plant == plant && list.Optgroup == optgroup 
-                            && (list.LocationTreeFilter1.Contains(UserLocationRoot) || UserLocationRoot == "")
-                                            ).Select(list => new SelectListItem
+                    List<SelectListItem> optgroupItems = areaFilters.Where(x => 
+                            x.Plant == plant && x.Optgroup == optgroup 
+                            && (x.LocationTreeFilter1.Contains(UserLocationRoot) || UserLocationRoot == "")
+                                            ).OrderBy(x => x.Ordinal).Select(list => new SelectListItem
                                             {
                                                 Value = list.LocationTreeFilter1,
                                                 Text = list.Area,
@@ -157,9 +143,9 @@ namespace EqUiWebUi.Areas.user_management.Controllers
                                             }).ToList();
                     selectList.AddRange(optgroupItems);
                 }
-
+                
             }
-            return new SelectList(selectList, "Value","Text","Group.Name"); 
+            return new SelectList(selectList, "Value","Text", "Group.Name", null,null); 
         }
     }
 }

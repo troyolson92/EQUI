@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="13109bf0c8b04f4e9dba006e3bff02de" Name="VASCsystem" ZoomLevel="63" ShowGrid="true" DisplayType="false">
+      <Diagram DiagramId="13109bf0c8b04f4e9dba006e3bff02de" Name="VASCsystem" ZoomLevel="85" ShowGrid="true" DisplayType="false">
         <EntityTypeShape EntityType="GADATAModelVASC.c_service_setup" Width="1.5" PointX="0.5" PointY="1.125" IsExpanded="true" />
         <EntityTypeShape EntityType="GADATAModelVASC.c_device_info" Width="1.5" PointX="22.25" PointY="2.875" IsExpanded="true" FillColor="Red" />
         <EntityTypeShape EntityType="GADATAModelVASC.c_job" Width="1.5" PointX="22.125" PointY="14.125" IsExpanded="true" FillColor="192, 0, 192" />

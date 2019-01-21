@@ -23,7 +23,14 @@
         $('#TipLifeExpectationsGrid').mvcgrid({
             sourceUrl: '@Url.Action("_TipLifeExpectationsGrid")', // Grid source url string
             requestType: 'get', // Ajax grid request type
-            reload: true // Grid reload indicator
+            reload: true, // Grid reload indicator
+            reloadFailed: function (result) {
+                console.log(result);
+                $('[data-name= "TipLifeExpectationsGrid"]').html($("#Error", result.responseText).html());
+            },
+            reloadEnded: function () {
+                EnableInterfaceEvents();
+            }
         });
     </script>
 }

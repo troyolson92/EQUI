@@ -1,13 +1,17 @@
 ﻿CREATE TABLE [EqUi].[Wiki] (
-    [id]          INT           IDENTITY (1, 1) NOT NULL,
-    [Title]       VARCHAR (50)  NULL,
-    [Description] VARCHAR (50)  NULL,
-    [Culture]     VARCHAR (50)  NULL,
-    [wiki]        VARCHAR (MAX) NULL,
-    [searchtags]  VARCHAR (MAX) NULL,
-    [Comments]    VARCHAR (MAX) NULL,
-    CONSTRAINT [PK_Wiki] PRIMARY KEY CLUSTERED ([id] ASC)
+    [Name]             VARCHAR (50)  NOT NULL,
+    [Title]            VARCHAR (50)  NULL,
+    [Body]             VARCHAR (MAX) NULL,
+    [Comments]         VARCHAR (MAX) NULL,
+    [createDate]       DATETIME2 (7) NOT NULL,
+    [l_user_id]        INT           NOT NULL,
+    [ChangeDate]       DATETIME2 (7) NULL,
+    [l_change_user_id] INT           NULL,
+    CONSTRAINT [PK_Wiki] PRIMARY KEY CLUSTERED ([Name] ASC),
+    CONSTRAINT [FK_Wiki_L_users] FOREIGN KEY ([l_user_id]) REFERENCES [Volvo].[L_users] ([id])
 );
+
+
 
 
 

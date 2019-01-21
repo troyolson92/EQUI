@@ -6,24 +6,18 @@
     columns.Add(c => c._Enable_bit).Titled("enable_bit");
     columns.Add(c => c.csv_filename).Titled("csv_filename");
     columns.Add(c => c.rt_table).Titled("rt_table");
-    columns.Add(c => c._Poll_Rate).Titled("Poll_Rate").Css("d-none d-lg-table-cell");
-    columns.Add(c => c._Csv_log_Flags).Titled("flags").Css("d-none d-lg-table-cell");
-    columns.Add(c => c.comment).Titled("comment").Css("d-none d-lg-table-cell");
+    columns.Add(c => c._Poll_Rate).Titled("Poll_Rate").Css("tablesaw-priority-6");
+    columns.Add(c => c._Csv_log_Flags).Titled("flags").Css("tablesaw-priority-6");
+    columns.Add(c => c.comment).Titled("comment").Css("tablesaw-priority-6");
     columns.Add(c => c)
                     .Titled("")
                     .Encoded(false)
-                    .RenderedAs(c => @Html.ActionLink("Edit", "Edit", new { id = c.id })
-                    ).Filterable(false);
-    columns.Add(c => c)
-                    .Titled("")
-                    .Encoded(false)
-                    .RenderedAs(c => @Html.ActionLink("Show", "GetCsvFileData", new { c_csv_log_id = c.id, controller_id = ViewBag.controller_id })
+                    .RenderedAs(c => MyHtmlHelpers.IconActionLink(Url.Action("Edit", new { id = c.id }), "fas fa-pencil-alt", "", "Open edit", OpenNewWindow: true).ToHtmlString() +
+                     MyHtmlHelpers.IconActionLink(Url.Action("GetCsvFileData", new { c_csv_log_id = c.id, controller_id = ViewBag.controller_id }), "fas fa-file", "", "Open GetCsvFileData", OpenNewWindow: true).ToHtmlString()
                     ).Filterable(false);
 }).Filterable().Sortable().Pageable(pager =>
 {
     pager.RowsPerPage = 10;
     pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 10, "10" }, { 20, "20" }, { 40, "40" }, { 80, "80" }, { 100, "100" } };
     pager.ShowPageSizes = true;
-}).Empty("Did not find anything").Css("table-hover")
-
-<div class="badge">Count: @Model.Count()</div>
+}).Empty("Did not find anything").Css("table-hover  tablesaw-on")

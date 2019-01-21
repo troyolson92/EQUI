@@ -20,7 +20,7 @@
 </div>
 
 <p>
-    @Html.ActionLink("ADD new variable (search) to log", "Edit", new { id = -1 })
+    @MyHtmlHelpers.IconActionLink(Url.Action("Edit", "c_variable_search", new { id = -1 }), "fas fa-pencil-alt", "Create", "add a variable to search and log", OpenNewWindow: true)
 </p>
 
 

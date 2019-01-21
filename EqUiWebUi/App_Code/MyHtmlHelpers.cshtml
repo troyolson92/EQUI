@@ -1,53 +1,58 @@
 ﻿@*helper to create links*@
 @helper EquiLink(string url, string icon, string linkText, string iconClasses = "", string helperText = "", string helpurl = "", bool OpenNewWindow = false)
 {
-<div class="col-md-12">
-    <div class="update-nag @(OpenNewWindow ? "OpenNewWindow" : "")" href="@url" onclick="@(OpenNewWindow ? "" : "location.href=$(this).attr('href')")">
-        <div class="update-split @iconClasses">
-            <i class="update-icon @icon fa-2x"></i>
-        </div>
-        <div class="update-text">
-            <div class="title">@linkText</div>
-            <div class="d-none d-md-block text-muted">
-                @helperText
-
+    /**/
+    <div class="col-md-12">
+        <div class="update-nag @(OpenNewWindow ? "OpenNewWindow" : "")" href="@url" onclick="@(OpenNewWindow ? "" : "location.href=$(this).attr('href')")">
+            <div class="update-split @iconClasses">
+                <i class="update-icon @icon fa-2x"></i>
             </div>
-            @*show collapes helper tooltip only if there is helpertext*@
-            @if (helperText != "")
-            {
-                <a class="d-block d-md-none"><i class="fas fa-info" data-toggle="tooltip" data-placement="right" title="@helperText"></i></a>
-            }
+            <div class="update-text">
+                <div class="title">@linkText</div>
+                <div class="d-none d-md-block text-muted">
+                    @helperText
+
+                </div>
+                @*show collapes helper tooltip only if there is helpertext*@
+                @if (helperText != "")
+                {
+                    <a class="d-block d-md-none"><i class="fas fa-info" data-toggle="tooltip" data-placement="right" title="@helperText"></i></a>
+                }
+            </div>
         </div>
+        @*show helplink only if there is one*@
+        @if (helpurl != "")
+        {
+            <i class="badge badge-dark text-white fas fa-rotate-270 fa-info-circle clickable MyPopovers" style="font-size: 20px;" href="@helpurl" data-container="body" data-toggle="popover" data-placement="bottom">info</i>
+        }
     </div>
-    @*show helplink only if there is one*@
-    @if (helpurl != "")
-    {
-        <i class="badge badge-dark text-white fas fa-rotate-270 fa-info-circle clickable MyPopovers" style="font-size: 20px;" href="@helpurl" data-container="body" data-toggle="popover" data-placement="bottom">info</i>
-    }
-</div>
 }
 
 @*helper to create action link with an icon*@
 @helper IconActionLink(string url, string icon, string linkText, string helperText, string classes = "", bool enabeld = true, bool OpenNewWindow = false)
 {
-if (enabeld)
-{
-    <a href="@url" class="@classes clickable @(OpenNewWindow ? "OpenNewWindow" : "")" data-toggle="tooltip" title="@helperText">
-        <i class="@icon"></i>
-        <span>
-            <strong>@linkText</strong>
-        </span>
-    </a>
-}
-else
-{
-<a></a>
-}
+    /**/
+
+    if (enabeld)
+    {
+        <a href="@url" class="@classes clickable @(OpenNewWindow ? "OpenNewWindow" : "")" style="margin-left: 5px; margin-right: 5px;" data-toggle="tooltip" title="@helperText">
+            <i class="@icon"></i>
+            <span>
+                <strong>@linkText</strong>
+            </span>
+        </a>
+    }
+    else
+    {
+        <a style="margin-left: 10px; margin-right: 10px;"></a>
+    }
 }
 
 @*help to render a link panel from the database*@
 @helper EquiRenderPanel(string pannelName)
 {
+    /**/
+
     EqUiWebUi.Models.GADATAEntitiesEQUI db = new EqUiWebUi.Models.GADATAEntitiesEQUI();
     EqUiWebUi.Models.L_pannel pannel = db.L_pannel.Where(p => p.name == pannelName).FirstOrDefault();
     if (pannel == null)
@@ -81,3 +86,11 @@ else
     </div>
 
 }
+
+@*display loading alert KEEP ALL ON ONE LINE! NO BR's BECAUSE I USE IT IN JS*@
+@helper Loading(string name)
+{<div class="alert alert-info"><i class="fas fa-spinner fa-spin fa-2x"></i><strong>@name</strong> loading....</div>}
+
+@*Helpertext*@
+@helper Helpertext(string text)
+{<div class="alert alert-info">@text</div>}

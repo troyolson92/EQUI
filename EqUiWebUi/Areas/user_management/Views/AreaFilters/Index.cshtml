@@ -22,14 +22,15 @@
                 .Titled("")
                 .Encoded(false)
                 .RenderedAs(c => @Html.ActionLink("Edit", "Edit", new { id = c.id }) + " | " +
-                                 @Html.ActionLink("Details", "Details", new { id = c.id }) + " | " +
                                  @Html.ActionLink("Delete", "Delete", new { id = c.id })
 
                 ).InitialSort(GridSortOrder.Asc).Filterable(false).Css("d-none d-lg-table-cell");
-}).Filterable().Sortable().Pageable(pager =>
+}).Sortable().Filterable().Pageable(pager =>
 {
-    pager.RowsPerPage = 15;
-}).Empty("Did not find anything").Css("table-hover")
+    pager.RowsPerPage = 10;
+    pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 10, "10" }, { 20, "20" }, { 40, "40" }, { 80, "80" }, { 100, "100" } };
+    pager.ShowPageSizes = true;
+}).Empty("No workorders found").Css("table-hover")
 <hr />
 <div class="alert alert-info">
     <h4>Tip</h4>

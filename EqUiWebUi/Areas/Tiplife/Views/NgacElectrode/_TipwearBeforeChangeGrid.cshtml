@@ -3,14 +3,14 @@
 {
     columns.Add(c => c.controller_name).Titled("Robot");
     columns.Add(c => c.TipchangeTimestamp).Titled("Tipchangetimestamp").Formatted("{0:dd-MM-yyyy HH:mm}").InitialSort(GridSortOrder.Desc);
-    columns.Add(c => c.WearBeforeChange).Titled("Wear (mm)").Css("XXd-none XXd-md-block");
-    columns.Add(c => c.WeldsBeforeChange).Titled("#Welds").Css("XXd-none XXd-md-block");
+    columns.Add(c => c.WearBeforeChange).Titled("Wear (mm)");
+    columns.Add(c => c.WeldsBeforeChange).Titled("#Welds");
     columns.Add(c => c.DressBeforeChange).Titled("#Dress");
     columns.Add(c => c.C_FixedWearBeforeChange).Titled("%Fixed");
     columns.Add(c => c.C_MoveWearBeforeChange).Titled("%Move");
     columns.Add(c => c.TipAge_h_).Titled("(h)leeftijd");
-    columns.Add(c => c.ESTnSpotsFixedWearBefore100).Titled("ESTnSFix100").Css("XXd-none XXd-md-block");
-    columns.Add(c => c.ESTnSpotsMoveWearBefore100).Titled("ESTnSMov100").Css("XXd-none XXd-md-block");
+    columns.Add(c => c.ESTnSpotsFixedWearBefore100).Titled("ESTnSFix100");
+    columns.Add(c => c.ESTnSpotsMoveWearBefore100).Titled("ESTnSMov100");
 }).Sortable().Filterable().Pageable(pager =>
 {
     pager.RowsPerPage = 20;

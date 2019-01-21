@@ -33,7 +33,7 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
 
 
         //form post work Workoders main view.
-        [HttpPost]
+      
         public ActionResult _workordersOnLocation(Models.WorkorderSelectOptions workorderSelectOptions)
         {
             return PartialView(workorderSelectOptions);
@@ -103,7 +103,7 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
             }
 
             //add sort 
-            sbqry.Append("ORDER BY WORKORDER.STATUSDATE DESC");
+            sbqry.Append("ORDER BY WORKORDER.REPORTDATE DESC");
             //****************************************************************************************************************
             string TEST = sbqry.ToString();
             ViewBag.Qry = sbqry.ToString();

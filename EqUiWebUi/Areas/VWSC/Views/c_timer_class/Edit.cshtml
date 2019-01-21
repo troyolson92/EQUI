@@ -35,7 +35,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.cBoschViewMask, htmlAttributes: new { @class = "control-label col-md-4" })
                 <div class="col-md-8">
-                    @Html.ListBoxFor(model => model.cBoschViewMask, EqUiWebUi.Areas.VWSC.Models.VWSCenums.Enable_bit_MASK_SelectList, new { @class = "form-control bsMultiselect", multiple = "multiple" })
+                    @Html.ListBoxFor(model => model.cBoschViewMask, EqUiWebUi.Areas.VWSC.Models.VWSCenums.Enable_bit_MASK_SelectList, new { @class = "form-control", multiple = "multiple" })
                     @Html.ValidationMessageFor(model => model.cBoschViewMask, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -43,7 +43,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.cErrorMask, htmlAttributes: new { @class = "control-label col-md-4" })
                 <div class="col-md-8">
-                    @Html.ListBoxFor(model => model.cErrorMask, EqUiWebUi.Areas.VWSC.Models.VWSCenums.Enable_bit_MASK_SelectList, new { @class = "form-control bsMultiselect", multiple = "multiple" })
+                    @Html.ListBoxFor(model => model.cErrorMask, EqUiWebUi.Areas.VWSC.Models.VWSCenums.Enable_bit_MASK_SelectList, new { @class = "form-control", multiple = "multiple" })
                     @Html.ValidationMessageFor(model => model.cErrorMask, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -51,7 +51,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.cSeverityMask, htmlAttributes: new { @class = "control-label col-md-4" })
                 <div class="col-md-8">
-                    @Html.ListBoxFor(model => model.cSeverityMask, EqUiWebUi.Areas.VWSC.Models.VWSCenums.Enable_bit_MASK_SelectList, new { @class = "form-control bsMultiselect", multiple = "multiple" })
+                    @Html.ListBoxFor(model => model.cSeverityMask, EqUiWebUi.Areas.VWSC.Models.VWSCenums.Enable_bit_MASK_SelectList, new { @class = "form-control", multiple = "multiple" })
                     @Html.ValidationMessageFor(model => model.cSeverityMask, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -76,14 +76,3 @@
             @Html.ActionLink("Back to List", "Index")
         </div>
 
-        <!--Edit script-->
-        @section scripts{
-            @*http://davidstutz.de/bootstrap-multiselect/*@
-            <script src="~/Scripts/bootstrap-multiselect.js"></script>
-            <link href="~/Content/bootstrap-multiselect.css" rel="stylesheet" />
-            <script>
-                //Enable multiselect
-                //https://forums.asp.net/t/2121112.aspx?Html+Dropdown+with+multiple+selections
-                $('.bsMultiselect').multiselect();
-            </script>
-        }

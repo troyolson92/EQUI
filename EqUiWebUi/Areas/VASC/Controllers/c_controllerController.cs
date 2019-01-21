@@ -28,34 +28,18 @@ namespace EqUiWebUi.Areas.VASC.Controllers
         {
             if (controller_id != null)
             {
-                return PartialView(db.c_controller.Where(c => c.id == controller_id));
+                return PartialView(db.c_controller.Where(c => c.id == controller_id).ToList());
             }
 
             if (controllerclass is null)
             {
-                return PartialView(db.c_controller);
+                return PartialView(db.c_controller.ToList());
             }
             else
             {
-                return PartialView(db.c_controller.Where(c => c.class_id == controllerclass));
+                return PartialView(db.c_controller.Where(c => c.class_id == controllerclass).ToList());
             }
         }
-
-        // GET: VASC/c_controller/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            c_controller c_controller = db.c_controller.Find(id);
-            if (c_controller == null)
-            {
-                return HttpNotFound();
-            }
-            return View(c_controller);
-        }
-
 
         // GET: VASC/c_controller/Edit/5
         // We will handle the creation of a new trigger also in EDIT. (to make code simplere) to create a new trigger pass ID = -1
@@ -104,7 +88,7 @@ namespace EqUiWebUi.Areas.VASC.Controllers
                     db.Entry(c_controller).State = EntityState.Modified;
                 }
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Close", "Home", new { area = "" });
             }
             ViewBag.class_id = new SelectList(db.c_controller_class, "id", "name", c_controller.class_id);
             return View(c_controller);

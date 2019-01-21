@@ -14,9 +14,7 @@
           <Property Name="Optgroup" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Area" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="LocationTreeFilter1" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="LocationTreeFilter2" Type="varchar" MaxLength="100" />
-          <Property Name="LocationTreeFilter3" Type="varchar" MaxLength="100" />
-          <Property Name="LocationTreeFilter4" Type="varchar" MaxLength="100" />
+          <Property Name="Ordinal" Type="int" Nullable="false" />
           <Property Name="UserComment" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="c_ownership">
@@ -250,8 +248,8 @@
             <End Role="users" EntitySet="L_users" />
             <End Role="L_Screens" EntitySet="L_Screens" />
           </AssociationSet>
-          <EntitySet Name="c_areas" EntityType="GADATAModel.c_areas" />
           <EntitySet Name="c_ownership" EntityType="GADATAModel.c_ownership" />
+          <EntitySet Name="c_areas" EntityType="GADATAModel.c_areas" />
         </EntityContainer>
         <EntityType Name="L_Screens">
           <Key>
@@ -280,20 +278,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="c_areas">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Plant" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Optgroup" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Area" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="LocationTreeFilter1" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="LocationTreeFilter2" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="LocationTreeFilter3" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="LocationTreeFilter4" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="UserComment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityType Name="c_ownership">
           <Key>
             <PropertyRef Name="id" />
@@ -303,6 +287,18 @@
           <Property Name="Optgroup" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Ownership" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="LocationTree" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="UserComment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="c_areas">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Plant" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Optgroup" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Area" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LocationTreeFilter1" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Ordinal" Type="Int32" Nullable="false" />
           <Property Name="UserComment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
@@ -362,27 +358,25 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="c_areas">
-            <EntityTypeMapping TypeName="GADATAModel.c_areas">
-              <MappingFragment StoreEntitySet="c_areas">
-                <ScalarProperty Name="UserComment" ColumnName="UserComment" />
-                <ScalarProperty Name="LocationTreeFilter4" ColumnName="LocationTreeFilter4" />
-                <ScalarProperty Name="LocationTreeFilter3" ColumnName="LocationTreeFilter3" />
-                <ScalarProperty Name="LocationTreeFilter2" ColumnName="LocationTreeFilter2" />
-                <ScalarProperty Name="LocationTreeFilter1" ColumnName="LocationTreeFilter1" />
-                <ScalarProperty Name="Area" ColumnName="Area" />
-                <ScalarProperty Name="Optgroup" ColumnName="Optgroup" />
-                <ScalarProperty Name="Plant" ColumnName="Plant" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="c_ownership">
             <EntityTypeMapping TypeName="GADATAModel.c_ownership">
               <MappingFragment StoreEntitySet="c_ownership">
                 <ScalarProperty Name="UserComment" ColumnName="UserComment" />
                 <ScalarProperty Name="LocationTree" ColumnName="LocationTree" />
                 <ScalarProperty Name="Ownership" ColumnName="Ownership" />
+                <ScalarProperty Name="Optgroup" ColumnName="Optgroup" />
+                <ScalarProperty Name="Plant" ColumnName="Plant" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="c_areas">
+            <EntityTypeMapping TypeName="GADATAModel.c_areas">
+              <MappingFragment StoreEntitySet="c_areas">
+                <ScalarProperty Name="UserComment" ColumnName="UserComment" />
+                <ScalarProperty Name="Ordinal" ColumnName="Ordinal" />
+                <ScalarProperty Name="LocationTreeFilter1" ColumnName="LocationTreeFilter1" />
+                <ScalarProperty Name="Area" ColumnName="Area" />
                 <ScalarProperty Name="Optgroup" ColumnName="Optgroup" />
                 <ScalarProperty Name="Plant" ColumnName="Plant" />
                 <ScalarProperty Name="id" ColumnName="id" />

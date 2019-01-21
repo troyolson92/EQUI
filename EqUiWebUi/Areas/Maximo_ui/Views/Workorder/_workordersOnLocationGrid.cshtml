@@ -2,17 +2,19 @@
 
 @Html.Grid(Model).Named("Workorders").Build(columns =>
 {
-    columns.Add(c => c.WONUM).Titled("WONUM");
-    columns.Add(c => c.OWNERGROUP).Titled("GROUP").Css("d-none d-lg-table-cell");
-    columns.Add(c => c.WORKTYPE).Titled("TYPE").Css("d-none d-lg-table-cell");
-    columns.Add(c => c.LOCATION).Titled("LOCATION").Filterable(true);
-    columns.Add(c => c.STATUS).Titled("STATUS").Filterable(true);
-    columns.Add(c => c.STATUSDATE).Titled("STATUSDATE").Css("d-none d-lg-table-cell");
-    columns.Add(c => c.DESCRIPTION).Titled("DESCRIPTION").Sortable(false).Filterable(true);
-
+    columns.Add(c => c.WONUM).Titled("WONUM").Css("tablesaw-priority-persist");
+    columns.Add(c => c.OWNERGROUP).Titled("GROUP").Css("tablesaw-priority-0");
+    columns.Add(c => c.WORKTYPE).Titled("TYPE").Css("tablesaw-priority-6");
+    columns.Add(c => c.LOCATION).Titled("LOCATION");
+    columns.Add(c => c.STATUS).Titled("STATUS");
+    columns.Add(c => c.STATUSDATE).Titled("STATUSDATE").Css("tablesaw-priority-6");
+    columns.Add(c => c.DESCRIPTION).Titled("DESCRIPTION");
+    columns.Add(c => c.REPORTEDBY).Titled("REPORTEDBY").Css("tablesaw-priority-0");
+    columns.Add(c => c.REPORTDATE).Titled("REPORTDATE").Css("tablesaw-priority-0");
+    columns.Add(c => c.ANCESTOR).Titled("ANCESTOR").Css("tablesaw-priority-0");
     //add edit button
     columns.Add(c => c)
-    .Titled("")
+    .Titled("Tools")
     .Encoded(false)
     .RenderedAs(c => MyHtmlHelpers.IconActionLink("http://maximoui.volvocars.biz/maximo/ui/maximo.jsp?event=loadapp&value=wotrack&additionalevent=useqbe&additionaleventvalue=wonum=" + c.WONUM, "fas fa-pencil-alt", "", "Edit this workorder in maximo", classes: "OpenNewWindow")
     ).Filterable(false);
@@ -23,5 +25,5 @@
     pager.RowsPerPage = 10;
     pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 10, "10" }, { 20, "20" }, { 40, "40" }, { 80, "80" }, { 100, "100" } };
     pager.ShowPageSizes = true;
-}).Empty("No workorders found").Css("table-hover")
+}).Empty("No workorders found").Css("table-hover tablesaw-on")
 

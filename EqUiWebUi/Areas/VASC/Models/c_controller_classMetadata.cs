@@ -192,7 +192,7 @@ namespace EqUiWebUi.Areas.VASC.Models
             }
             set
             {
-                this.cVariableMask = value.Sum();
+                this.cVariableMask = VASCenums.IntArrayToIntMask(value);
             }
         }
 
@@ -204,7 +204,7 @@ namespace EqUiWebUi.Areas.VASC.Models
             }
             set
             {
-                this.cVariableSearchMask = value.Sum();
+                this.cVariableSearchMask = VASCenums.IntArrayToIntMask(value);
             }
         }
 
@@ -216,7 +216,7 @@ namespace EqUiWebUi.Areas.VASC.Models
             }
             set
             {
-                this.cDeviceInfoMask = value.Sum();
+                this.cDeviceInfoMask = VASCenums.IntArrayToIntMask(value);
             }
         }
 
@@ -228,7 +228,7 @@ namespace EqUiWebUi.Areas.VASC.Models
             }
             set
             {
-                this.cCSVLogMask = value.Sum();
+                this.cCSVLogMask = VASCenums.IntArrayToIntMask(value);
             }
         }
 
@@ -240,7 +240,19 @@ namespace EqUiWebUi.Areas.VASC.Models
             }
             set
             {
-                this.cJobMask = value.Sum();
+                this.cJobMask = VASCenums.IntArrayToIntMask(value);
+            }
+        }
+
+        public int[] _logCategoryMask
+        {
+            get
+            {
+                return VASCenums.IntMaskToIntArray(this.logCategoryMask, Enum.GetNames(typeof(Enable_bit_MASK)).Length);
+            }
+            set
+            {
+                this.logCategoryMask = VASCenums.IntArrayToIntMask(value);
             }
         }
 
@@ -252,7 +264,7 @@ namespace EqUiWebUi.Areas.VASC.Models
             }
             set
             {
-                this.cErrorMask = value.Sum();
+                this.cErrorMask = VASCenums.IntArrayToIntMask(value);
             }
         }
 
@@ -264,7 +276,19 @@ namespace EqUiWebUi.Areas.VASC.Models
             }
             set
             {
-                this.cPJVEventMask = value.Sum();
+                this.cPJVEventMask = VASCenums.IntArrayToIntMask(value);
+            }
+        }
+
+        public int[] _cPJVActionMask
+        {
+            get
+            {
+                return VASCenums.IntMaskToIntArray(this.cPJVActionMask, Enum.GetNames(typeof(Enable_bit_MASK)).Length);
+            }
+            set
+            {
+                this.cPJVActionMask = VASCenums.IntArrayToIntMask(value);
             }
         }
 
