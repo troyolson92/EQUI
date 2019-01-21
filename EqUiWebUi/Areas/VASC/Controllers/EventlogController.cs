@@ -17,18 +17,44 @@ namespace EqUiWebUi.Areas.VASC.Controllers
             return View();
         }
 
-        // Get list of all events
-        public ActionResult GetEvents(int? controller_id)
+        // Get list of all events (h_alarm)
+        public ActionResult Get_h_alarm(int? controller_id)
         {
             ViewBag.controller_id = controller_id;
             return View();
         }
 
-        // Get list of all events (grid)
-        public ActionResult _getEvents(int? controller_id)
+        // Get list of all events  (h_alarm) (grid)
+        public ActionResult _get_h_alarm(int? controller_id)
         {
             db.Database.CommandTimeout = 60;
             IQueryable<h_alarm> data = db.h_alarm;
+
+            string LocationRoot = CurrentUser.Getuser.LocationRoot;
+            if (controller_id.HasValue)
+            {
+                data = data.Where(c => c.c_controller.id == controller_id);
+            }
+            else if (LocationRoot != "")
+            {
+                data = data.Where(c => (c.c_controller.LocationTree ?? "").Contains(LocationRoot));
+            }
+
+            return PartialView(data);
+        }
+
+        // Get list of all events (rt_alarm)
+        public ActionResult Get_rt_alarm(int? controller_id)
+        {
+            ViewBag.controller_id = controller_id;
+            return View();
+        }
+
+        // Get list of all events  (rt_alarm) (grid)
+        public ActionResult _get_rt_alarm(int? controller_id)
+        {
+            db.Database.CommandTimeout = 60;
+            IQueryable<rt_alarm> data = db.rt_alarm;
 
             string LocationRoot = CurrentUser.Getuser.LocationRoot;
             if (controller_id.HasValue)

@@ -1,9 +1,13 @@
 ﻿
 @{
-    ViewBag.Title = "GetEvents";
+    ViewBag.Title = "Get_rt_alarm";
 }
 
-<h2>GetEvents (h_alarm)</h2>
+<h2>Get_rt_alarm</h2>
+<div class="alert alert-info">
+    Alarms go into this table due to the configuration of c_error. <br />
+    This is done for alarms that are considerer 'operational' (not imported enough to store in h_alarm).
+</div>
 
 @if (ViewBag.controller_id != null)
 {
@@ -11,7 +15,7 @@
 }
 
 
-<div data-name="rtEventGrid" class="mvc-grid"></div>
+<div data-name="rt_alarmGrid" class="mvc-grid"></div>
 
 @section scripts{
     <script>
@@ -19,9 +23,9 @@
         $("#allcontent").removeClass("body-content");
         $("#allcontent").removeClass("container");
 
-        $('[data-name= "rtEventGrid"]').html("<i class='fa fa-spinner fa-pulse fa-4x fa-fw'></i>");
-        $('[data-name= "rtEventGrid"]').mvcgrid({
-            sourceUrl: '@Url.Action("_getEvents")', // Grid source url string
+        $('[data-name= "rt_alarmGrid"]').html("<i class='fa fa-spinner fa-pulse fa-4x fa-fw'></i>");
+        $('[data-name= "rt_alarmGrid"]').mvcgrid({
+            sourceUrl: '@Url.Action("_get_rt_alarm")', // Grid source url string
                 data: {
                     controller_id : @ViewBag.controller_id
                 },
@@ -32,7 +36,7 @@
             },
             reloadFailed: function (result) {
                 console.log(result);
-                $('[data-name="rtEventGrid"]').html($("#Error", result.responseText).html());
+                $('[data-name="rt_alarmGrid"]').html($("#Error", result.responseText).html());
             }
             });
     </script>

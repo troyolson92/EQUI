@@ -1,10 +1,15 @@
 ﻿@model IQueryable<EqUiWebUi.Areas.VASC.Models.h_alarm>
-@Html.Grid(Model).Named("rtEventGrid").Build(columns =>
+@Html.Grid(Model).Named("h_alarmGrid").Build(columns =>
 {
     columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Desc).Css("tablesaw-priority-0");
     columns.Add(c => c.controller_id).Titled("controller_id").Css("tablesaw-priority-0");
     columns.Add(c => c.c_controller.controller_name).Titled("controller_name").Css("tablesaw-priority-0");
     columns.Add(c => c.error_timestamp).Titled("error_timestamp").Formatted("{0:dd-MM-yyyy HH:mm:ss}");
+
+    columns.Add(c => c.L_error.c_ClassificationId).Titled("c_ClassificationId").Css("tablesaw-priority-0");
+    columns.Add(c => c.L_error.c_SubgroupId).Titled("c_SubgroupId").Css("tablesaw-priority-0");
+    columns.Add(c => c.L_error.c_RuleId).Titled("c_RuleId").Css("tablesaw-priority-0");
+
 
     columns.Add(c => c.L_error.Number).Titled("Number").Css("tablesaw-priority-0");
     columns.Add(c => c.L_error.CategoryId).Titled("CategoryId").Css("tablesaw-priority-0");
@@ -13,6 +18,12 @@
 
     columns.Add(c => c.L_error.L_description.Description).Titled("Description").Css("tablesaw-priority-0");
     columns.Add(c => c.L_error.L_description.CleanDescription).Titled("CleanDescription");
+
+    columns.Add(c => c.L_error.L_causes.Causes).Titled("Causes").Css("tablesaw-priority-0");
+    columns.Add(c => c.L_error.L_actions.Actions).Titled("Actions").Css("tablesaw-priority-0");
+    columns.Add(c => c.L_error.L_consequences.Consequences).Titled("Consequences").Css("tablesaw-priority-0");
+    columns.Add(c => c.L_error.L_type.Type).Titled("Type").Css("tablesaw-priority-0");
+
 
 }).Filterable().Sortable().Pageable(pager =>
 {

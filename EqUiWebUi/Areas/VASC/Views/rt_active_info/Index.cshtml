@@ -57,7 +57,8 @@
             MyHtmlHelpers.IconActionLink(Url.Action("Index", "l_operation", new { controller_id = c.c_controller_id, sessionName = c.vasc_session }, null), "fas fa-file", "", "Open operation log", OpenNewWindow:true).ToHtmlString() +
             MyHtmlHelpers.IconActionLink(Url.Action("GetJobs", "Breakdown", new { controller_id = c.c_controller_id }), "fas fa-vial", "", "Open get jobs", OpenNewWindow: true).ToHtmlString() +
             MyHtmlHelpers.IconActionLink(Url.Action("GetJobs", "Breakdown", new { controller_id = c.c_controller_id, hasBreakdowns = true }), "fas fa-vial text-warning", "", "Open breakdowns", OpenNewWindow: true).ToHtmlString() +
-            MyHtmlHelpers.IconActionLink(Url.Action("GetEvents", "Eventlog", new { controller_id = c.c_controller_id }), "fas fa-vial", "", "Open controller h_alarm", OpenNewWindow: true).ToHtmlString()
+            MyHtmlHelpers.IconActionLink(Url.Action("Get_h_alarm", "Eventlog", new { controller_id = c.c_controller_id }), "fas fa-vial", "", "Open controller h_alarm", OpenNewWindow: true).ToHtmlString() +
+            MyHtmlHelpers.IconActionLink(Url.Action("Get_rt_alarm", "Eventlog", new { controller_id = c.c_controller_id }), "fas fa-vial", "", "Open controller rt_alarm (junk)", OpenNewWindow: true).ToHtmlString() 
             ).Filterable(false);
 }).Filterable().Sortable().Pageable(pager =>
 {

@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewBag.Title = "Get_h_alarm";
+}
+
+<h2>Get_h_alarm</h2>
+
+@if (ViewBag.controller_id != null)
+{
+    <div class="badge badge-info">Filtered on controllerID: @ViewBag.controller_id</div>
+}
+
+
+<div data-name="h_alarmGrid" class="mvc-grid"></div>
+
+@section scripts{
+    <script>
+        //full with screen
+        $("#allcontent").removeClass("body-content");
+        $("#allcontent").removeClass("container");
+
+        $('[data-name= "h_alarmGrid"]').html("<i class='fa fa-spinner fa-pulse fa-4x fa-fw'></i>");
+        $('[data-name= "h_alarmGrid"]').mvcgrid({
+            sourceUrl: '@Url.Action("_get_h_alarm")', // Grid source url string
+                data: {
+                    controller_id : @ViewBag.controller_id
+                },
+            requestType: 'get', // Ajax grid request type
+            reload: true, // Grid reload indicator
+            reloadEnded: function () {
+                EnableInterfaceEvents();
+            },
+            reloadFailed: function (result) {
+                console.log(result);
+                $('[data-name="h_alarmGrid"]').html($("#Error", result.responseText).html());
+            }
+            });
+    </script>
+}

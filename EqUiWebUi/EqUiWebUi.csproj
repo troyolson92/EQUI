@@ -2870,6 +2870,10 @@
     <Content Include="Areas\Welding\Views\Launch\Index.cshtml" />
     <Content Include="Areas\Welding\Views\Launch\BosProgramAvailable.cshtml" />
     <Content Include="Areas\Welding\Views\Launch\WeldtimeSpotsSetup.cshtml" />
+    <Content Include="Areas\VASC\Views\Eventlog\Get_h_alarm.cshtml" />
+    <Content Include="Areas\VASC\Views\Eventlog\_get_h_alarm.cshtml" />
+    <Content Include="Areas\VASC\Views\Eventlog\Get_rt_alarm.cshtml" />
+    <Content Include="Areas\VASC\Views\Eventlog\_get_rt_alarm.cshtml" />
     <None Include="Properties\PublishProfiles\chasvw1203_DEV_VCCH.pubxml" />
     <None Include="Properties\PublishProfiles\chasvw1203_PRODUCTION_VCCH.pubxml" />
     <Content Include="Areas\Welding\Views\WM\_Parameters.cshtml" />
