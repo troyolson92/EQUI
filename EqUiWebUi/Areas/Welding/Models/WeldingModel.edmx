@@ -626,6 +626,7 @@ warning 6002: The table/view 'GADATA.WELDING2.h_Nut_Bolt_Measure' does not have 
           <Property Name="SpotRight" Type="int" />
           <Property Name="isDead" Type="int" />
           <Property Name="isDuplicate" Type="int" />
+          <Property Name="PolaritySpot" Type="bit" />
         </EntityType>
         <EntityType Name="rt_user">
           <Key>
@@ -814,26 +815,29 @@ warning 6002: The table/view 'GADATA.dbo.WeldtimeSpotsSetup' does not have a pri
           </Key>
           <Property Name="NPT" Type="nchar" MaxLength="15" />
           <Property Name="Timer" Type="nchar" MaxLength="15" />
-          <Property Name="Number" Type="int" />
-          <Property Name="WeldTime" Type="float" />
+          <Property Name="spotname" Type="int" />
           <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Expr1" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'GADATA.LAUNCH.BosProgramAvailable' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="BosProgramAvailable">
           <Key>
+            <PropertyRef Name="id" />
             <PropertyRef Name="bosprogram" />
           </Key>
+          <Property Name="id" Type="int" Nullable="false" />
           <Property Name="Name" Type="nchar" MaxLength="15" />
           <Property Name="bosprogram" Type="int" Nullable="false" />
-          <Property Name="Program_Available" Type="tinyint" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'GADATA.LAUNCH.CheckDubbelPrograms' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="CheckDubbelPrograms">
           <Key>
+            <PropertyRef Name="id" />
             <PropertyRef Name="weldProgNo" />
           </Key>
+          <Property Name="id" Type="int" Nullable="false" />
           <Property Name="Name" Type="nchar" MaxLength="15" />
           <Property Name="SpotName" Type="varchar" MaxLength="50" />
           <Property Name="weldProgNo" Type="int" Nullable="false" />
@@ -868,57 +872,6 @@ warning 6002: The table/view 'GADATA.LAUNCH.DoubleSpotCheck' does not have a pri
           <Property Name="weldProgNo" Type="int" Nullable="false" />
           <Property Name="Name" Type="nchar" MaxLength="15" />
           <Property Name="ID" Type="int" Nullable="false" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'GADATA.LAUNCH.dressrequired' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="dressrequired">
-          <Key>
-            <PropertyRef Name="DateTime" />
-            <PropertyRef Name="ErrorText" />
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="Name" Type="nchar" MaxLength="15" />
-          <Property Name="DateTime" Type="datetime" Nullable="false" />
-          <Property Name="ErrorText" Type="nchar" MaxLength="255" Nullable="false" />
-          <Property Name="ID" Type="int" Nullable="false" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'GADATA.LAUNCH.LastWelds' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="LastWelds">
-          <Key>
-            <PropertyRef Name="Program" />
-            <PropertyRef Name="Date" />
-            <PropertyRef Name="Shift" />
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="Expr1" Type="nchar" MaxLength="15" />
-          <Property Name="Name" Type="nchar" MaxLength="15" />
-          <Property Name="Number" Type="int" />
-          <Property Name="Program" Type="tinyint" Nullable="false" />
-          <Property Name="Date" Type="datetime" Nullable="false" />
-          <Property Name="Shift" Type="char" MaxLength="1" Nullable="false" />
-          <Property Name="NbrSplash" Type="smallint" />
-          <Property Name="NbrWeld" Type="smallint" />
-          <Property Name="NbrReweld" Type="smallint" />
-          <Property Name="AvgEnergy" Type="real" />
-          <Property Name="AvgPSF" Type="real" />
-          <Property Name="AvgOhm" Type="real" />
-          <Property Name="AvgUIP" Type="real" />
-          <Property Name="AvgWeldTIme" Type="real" />
-          <Property Name="ID" Type="int" Nullable="false" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'GADATA.LAUNCH.StabilityInDicationV316' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="StabilityInDicationV316">
-          <Key>
-            <PropertyRef Name="Program" />
-          </Key>
-          <Property Name="NPT" Type="nchar" MaxLength="15" />
-          <Property Name="Timer" Type="nchar" MaxLength="15" />
-          <Property Name="Program" Type="tinyint" Nullable="false" />
-          <Property Name="Number" Type="int" />
-          <Property Name="nbrWelds" Type="smallint" />
-          <Property Name="StabiliteitsIni" Type="real" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'GADATA.LAUNCH.TDTResults' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -963,6 +916,23 @@ warning 6002: The table/view 'GADATA.UL.AutomaticPlanControleWeldBolt' does not 
           <Property Name="WorkGroup" Type="int" />
           <Property Name="WorkLocation" Type="nchar" MaxLength="50" />
           <Property Name="ID" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'GADATA.UL.searchplanNbr' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="searchplanNbr">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="InspectionTime" />
+            <PropertyRef Name="IndexOfTestSeq" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="InspectionTime" Type="datetime" Nullable="false" />
+          <Property Name="timername" Type="nchar" MaxLength="15" />
+          <Property Name="spotname" Type="varchar" MaxLength="50" />
+          <Property Name="planName" Type="nchar" MaxLength="50" />
+          <Property Name="IndexOfTestSeq" Type="int" Nullable="false" />
+          <Property Name="PlanLenght" Type="int" />
+          <Property Name="rowNbr" Type="bigint" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'GADATA.UL.ULRapportering' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -1665,20 +1635,21 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
             <DefiningQuery>SELECT 
     [WeldtimeSpotsSetup].[NPT] AS [NPT], 
     [WeldtimeSpotsSetup].[Timer] AS [Timer], 
-    [WeldtimeSpotsSetup].[Number] AS [Number], 
-    [WeldtimeSpotsSetup].[WeldTime] AS [WeldTime], 
-    [WeldtimeSpotsSetup].[ID] AS [ID]
+    [WeldtimeSpotsSetup].[spotname] AS [spotname], 
+    [WeldtimeSpotsSetup].[ID] AS [ID], 
+    [WeldtimeSpotsSetup].[Expr1] AS [Expr1]
     FROM [dbo].[WeldtimeSpotsSetup] AS [WeldtimeSpotsSetup]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="BosProgramAvailable" EntityType="Self.BosProgramAvailable" store:Type="Views" store:Schema="LAUNCH">
             <DefiningQuery>SELECT 
+    [BosProgramAvailable].[id] AS [id], 
     [BosProgramAvailable].[Name] AS [Name], 
-    [BosProgramAvailable].[bosprogram] AS [bosprogram], 
-    [BosProgramAvailable].[Program_Available] AS [Program_Available]
+    [BosProgramAvailable].[bosprogram] AS [bosprogram]
     FROM [LAUNCH].[BosProgramAvailable] AS [BosProgramAvailable]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="CheckDubbelPrograms" EntityType="Self.CheckDubbelPrograms" store:Type="Views" store:Schema="LAUNCH">
             <DefiningQuery>SELECT 
+    [CheckDubbelPrograms].[id] AS [id], 
     [CheckDubbelPrograms].[Name] AS [Name], 
     [CheckDubbelPrograms].[SpotName] AS [SpotName], 
     [CheckDubbelPrograms].[weldProgNo] AS [weldProgNo]
@@ -1705,43 +1676,6 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
     [DoubleSpotCheck].[Name] AS [Name], 
     [DoubleSpotCheck].[ID] AS [ID]
     FROM [LAUNCH].[DoubleSpotCheck] AS [DoubleSpotCheck]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="dressrequired" EntityType="Self.dressrequired" store:Type="Views" store:Schema="LAUNCH">
-            <DefiningQuery>SELECT 
-    [dressrequired].[Name] AS [Name], 
-    [dressrequired].[DateTime] AS [DateTime], 
-    [dressrequired].[ErrorText] AS [ErrorText], 
-    [dressrequired].[ID] AS [ID]
-    FROM [LAUNCH].[dressrequired] AS [dressrequired]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="LastWelds" EntityType="Self.LastWelds" store:Type="Views" store:Schema="LAUNCH">
-            <DefiningQuery>SELECT 
-    [LastWelds].[Expr1] AS [Expr1], 
-    [LastWelds].[Name] AS [Name], 
-    [LastWelds].[Number] AS [Number], 
-    [LastWelds].[Program] AS [Program], 
-    [LastWelds].[Date] AS [Date], 
-    [LastWelds].[Shift] AS [Shift], 
-    [LastWelds].[NbrSplash] AS [NbrSplash], 
-    [LastWelds].[NbrWeld] AS [NbrWeld], 
-    [LastWelds].[NbrReweld] AS [NbrReweld], 
-    [LastWelds].[AvgEnergy] AS [AvgEnergy], 
-    [LastWelds].[AvgPSF] AS [AvgPSF], 
-    [LastWelds].[AvgOhm] AS [AvgOhm], 
-    [LastWelds].[AvgUIP] AS [AvgUIP], 
-    [LastWelds].[AvgWeldTIme] AS [AvgWeldTIme], 
-    [LastWelds].[ID] AS [ID]
-    FROM [LAUNCH].[LastWelds] AS [LastWelds]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="StabilityInDicationV316" EntityType="Self.StabilityInDicationV316" store:Type="Views" store:Schema="LAUNCH">
-            <DefiningQuery>SELECT 
-    [StabilityInDicationV316].[NPT] AS [NPT], 
-    [StabilityInDicationV316].[Timer] AS [Timer], 
-    [StabilityInDicationV316].[Program] AS [Program], 
-    [StabilityInDicationV316].[Number] AS [Number], 
-    [StabilityInDicationV316].[nbrWelds] AS [nbrWelds], 
-    [StabilityInDicationV316].[StabiliteitsIni] AS [StabiliteitsIni]
-    FROM [LAUNCH].[StabilityInDicationV316] AS [StabilityInDicationV316]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="TDTResults" EntityType="Self.TDTResults" store:Type="Views" store:Schema="LAUNCH">
             <DefiningQuery>SELECT 
@@ -1775,6 +1709,18 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
     [AutomaticPlanControleWeldBolt].[WorkLocation] AS [WorkLocation], 
     [AutomaticPlanControleWeldBolt].[ID] AS [ID]
     FROM [UL].[AutomaticPlanControleWeldBolt] AS [AutomaticPlanControleWeldBolt]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="searchplanNbr" EntityType="Self.searchplanNbr" store:Type="Views" store:Schema="UL">
+            <DefiningQuery>SELECT 
+    [searchplanNbr].[id] AS [id], 
+    [searchplanNbr].[InspectionTime] AS [InspectionTime], 
+    [searchplanNbr].[timername] AS [timername], 
+    [searchplanNbr].[spotname] AS [spotname], 
+    [searchplanNbr].[planName] AS [planName], 
+    [searchplanNbr].[IndexOfTestSeq] AS [IndexOfTestSeq], 
+    [searchplanNbr].[PlanLenght] AS [PlanLenght], 
+    [searchplanNbr].[rowNbr] AS [rowNbr]
+    FROM [UL].[searchplanNbr] AS [searchplanNbr]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="ULRapportering" EntityType="Self.ULRapportering" store:Type="Views" store:Schema="UL">
             <DefiningQuery>SELECT 
@@ -2036,16 +1982,11 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
         <EntityContainer Name="GADATAEntitiesWelding" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="rt_AutoWorkFlowULPlans" EntityType="GADATAModelWelding.rt_AutoWorkFlowULPlans" />
           <EntitySet Name="ULRapporterings" EntityType="GADATAModelWelding.ULRapportering" />
-          <EntitySet Name="BosProgramAvailable" EntityType="GADATAModelWelding.BosProgramAvailable" />
-          <EntitySet Name="dressrequired" EntityType="GADATAModelWelding.dressrequired" />
-          <EntitySet Name="WeldtimeSpotsSetup" EntityType="GADATAModelWelding.WeldtimeSpotsSetup" />
-          <EntitySet Name="StabilityInDicationV316" EntityType="GADATAModelWelding.StabilityInDicationV316" />
           <EntitySet Name="ConnectionState" EntityType="GADATAModelWelding.ConnectionState" />
           <FunctionImport Name="Lastwelds" ReturnType="Collection(GADATAModelWelding.Lastwelds_Result)">
             <Parameter Name="Timer" Mode="In" Type="String" />
             <Parameter Name="spot" Mode="In" Type="Int32" />
           </FunctionImport>
-          <EntitySet Name="LastWelds" EntityType="GADATAModelWelding.LastWelds" />
           <EntitySet Name="QISViewer" EntityType="GADATAModelWelding.QISViewer" />
           <EntitySet Name="TimerBreakdowns_busy" EntityType="GADATAModelWelding.TimerBreakdowns_busy" />
           <EntitySet Name="TDTResults" EntityType="GADATAModelWelding.TDTResults" />
@@ -2215,7 +2156,6 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
             <End Role="WeldingGunVariant" EntitySet="WeldingGunVariant" />
             <End Role="WeldingGun" EntitySet="WeldingGun" />
           </AssociationSet>
-          <EntitySet Name="CheckDubbelPrograms" EntityType="GADATAModelWelding.CheckDubbelPrograms" />
           <EntitySet Name="ULplan_start" EntityType="GADATAModelWelding.ULplan_start" />
           <EntitySet Name="UltralogInspections" EntityType="GADATAModelWelding.UltralogInspections" />
           <AssociationSet Name="FK_UltralogInspections_Inspectionplan" Association="GADATAModelWelding.FK_UltralogInspections_Inspectionplan">
@@ -2230,6 +2170,10 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
             <End Role="Users" EntitySet="Users" />
             <End Role="UltralogInspections" EntitySet="UltralogInspections" />
           </AssociationSet>
+          <EntitySet Name="searchplanNbr" EntityType="GADATAModelWelding.searchplanNbr" />
+          <EntitySet Name="BosProgramAvailable" EntityType="GADATAModelWelding.BosProgramAvailable" />
+          <EntitySet Name="CheckDubbelPrograms" EntityType="GADATAModelWelding.CheckDubbelPrograms" />
+          <EntitySet Name="WeldtimeSpotsSetup" EntityType="GADATAModelWelding.WeldtimeSpotsSetup" />
           </EntityContainer>
         <EntityType Name="rt_AutoWorkFlowULPlans">
           <Key>
@@ -2272,46 +2216,6 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
           <Property Name="spot" Type="Int32" />
           <Property Name="loose_" Type="Boolean" />
         </EntityType>
-        <EntityType Name="BosProgramAvailable">
-          <Key>
-            <PropertyRef Name="bosprogram" />
-          </Key>
-          <Property Name="Name" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
-          <Property Name="bosprogram" Type="Int32" Nullable="false" />
-          <Property Name="Program_Available" Type="Byte" />
-        </EntityType>
-        <EntityType Name="dressrequired">
-          <Key>
-            <PropertyRef Name="DateTime" />
-            <PropertyRef Name="ErrorText" />
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="Name" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
-          <Property Name="DateTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ErrorText" Type="String" Nullable="false" MaxLength="255" FixedLength="true" Unicode="true" />
-          <Property Name="ID" Type="Int32" Nullable="false" />
-        </EntityType>
-        <EntityType Name="WeldtimeSpotsSetup">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="NPT" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
-          <Property Name="Timer" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
-          <Property Name="Number" Type="Int32" />
-          <Property Name="WeldTime" Type="Double" />
-          <Property Name="ID" Type="Int32" Nullable="false" />
-        </EntityType>
-        <EntityType Name="StabilityInDicationV316">
-          <Key>
-            <PropertyRef Name="Program" />
-          </Key>
-          <Property Name="NPT" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
-          <Property Name="Timer" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
-          <Property Name="Program" Type="Byte" Nullable="false" />
-          <Property Name="Number" Type="Int32" />
-          <Property Name="nbrWelds" Type="Int16" />
-          <Property Name="StabiliteitsIni" Type="Single" />
-        </EntityType>
         <EntityType Name="ConnectionState">
           <Key>
             <PropertyRef Name="NoConnection" />
@@ -2337,29 +2241,6 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
           <Property Type="Single" Name="AvgUIP" Nullable="true" />
           <Property Type="Single" Name="AvgWeldTIme" Nullable="true" />
         </ComplexType>
-        <EntityType Name="LastWelds">
-          <Key>
-            <PropertyRef Name="Program" />
-            <PropertyRef Name="Date" />
-            <PropertyRef Name="Shift" />
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="Expr1" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
-          <Property Name="Name" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
-          <Property Name="Number" Type="Int32" />
-          <Property Name="Program" Type="Byte" Nullable="false" />
-          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Shift" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="NbrSplash" Type="Int16" />
-          <Property Name="NbrWeld" Type="Int16" />
-          <Property Name="NbrReweld" Type="Int16" />
-          <Property Name="AvgEnergy" Type="Single" />
-          <Property Name="AvgPSF" Type="Single" />
-          <Property Name="AvgOhm" Type="Single" />
-          <Property Name="AvgUIP" Type="Single" />
-          <Property Name="AvgWeldTIme" Type="Single" />
-          <Property Name="ID" Type="Int32" Nullable="false" />
-        </EntityType>
         <EntityType Name="QISViewer">
           <Key>
             <PropertyRef Name="id" />
@@ -3037,6 +2918,7 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
           <Property Name="isDead" Type="Int32" />
           <NavigationProperty Name="c_timer" Relationship="GADATAModelWelding.FK_rt_spottable_c_timer" FromRole="rt_spottable" ToRole="c_timer" />
           <Property Name="isDuplicate" Type="Int32" />
+          <Property Name="PolaritySpot" Type="Boolean" />
         </EntityType>
         <EntityType Name="rt_user">
           <Key>
@@ -3671,14 +3553,6 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="CheckDubbelPrograms">
-          <Key>
-            <PropertyRef Name="weldProgNo" />
-          </Key>
-          <Property Name="Name" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
-          <Property Name="SpotName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="weldProgNo" Type="Int32" Nullable="false" />
-        </EntityType>
         <EntityType Name="ULplan_start">
           <Key>
             <PropertyRef Name="id" />
@@ -3756,6 +3630,50 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="searchplanNbr">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="InspectionTime" />
+            <PropertyRef Name="IndexOfTestSeq" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="InspectionTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="timername" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="spotname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="planName" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="IndexOfTestSeq" Type="Int32" Nullable="false" />
+          <Property Name="PlanLenght" Type="Int32" />
+          <Property Name="rowNbr" Type="Int64" />
+        </EntityType>
+        <EntityType Name="BosProgramAvailable">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="bosprogram" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="bosprogram" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CheckDubbelPrograms">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="weldProgNo" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="SpotName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="weldProgNo" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WeldtimeSpotsSetup">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="NPT" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="Timer" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="spotname" Type="Int32" />
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Expr1" Type="Int32" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3805,48 +3723,6 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="BosProgramAvailable">
-            <EntityTypeMapping TypeName="GADATAModelWelding.BosProgramAvailable">
-              <MappingFragment StoreEntitySet="BosProgramAvailable">
-                <ScalarProperty Name="Program_Available" ColumnName="Program_Available" />
-                <ScalarProperty Name="bosprogram" ColumnName="bosprogram" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="dressrequired">
-            <EntityTypeMapping TypeName="GADATAModelWelding.dressrequired">
-              <MappingFragment StoreEntitySet="dressrequired">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="ErrorText" ColumnName="ErrorText" />
-                <ScalarProperty Name="DateTime" ColumnName="DateTime" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="WeldtimeSpotsSetup">
-            <EntityTypeMapping TypeName="GADATAModelWelding.WeldtimeSpotsSetup">
-              <MappingFragment StoreEntitySet="WeldtimeSpotsSetup">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="WeldTime" ColumnName="WeldTime" />
-                <ScalarProperty Name="Number" ColumnName="Number" />
-                <ScalarProperty Name="Timer" ColumnName="Timer" />
-                <ScalarProperty Name="NPT" ColumnName="NPT" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="StabilityInDicationV316">
-            <EntityTypeMapping TypeName="GADATAModelWelding.StabilityInDicationV316">
-              <MappingFragment StoreEntitySet="StabilityInDicationV316">
-                <ScalarProperty Name="StabiliteitsIni" ColumnName="StabiliteitsIni" />
-                <ScalarProperty Name="nbrWelds" ColumnName="nbrWelds" />
-                <ScalarProperty Name="Number" ColumnName="Number" />
-                <ScalarProperty Name="Program" ColumnName="Program" />
-                <ScalarProperty Name="Timer" ColumnName="Timer" />
-                <ScalarProperty Name="NPT" ColumnName="NPT" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="ConnectionState">
             <EntityTypeMapping TypeName="GADATAModelWelding.ConnectionState">
               <MappingFragment StoreEntitySet="ConnectionState">
@@ -3854,27 +3730,6 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
                 <ScalarProperty Name="C_timestamp" ColumnName="_timestamp" />
                 <ScalarProperty Name="TimerName" ColumnName="TimerName" />
                 <ScalarProperty Name="NoConnection" ColumnName="NoConnection" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="LastWelds">
-            <EntityTypeMapping TypeName="GADATAModelWelding.LastWelds">
-              <MappingFragment StoreEntitySet="LastWelds">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="AvgWeldTIme" ColumnName="AvgWeldTIme" />
-                <ScalarProperty Name="AvgUIP" ColumnName="AvgUIP" />
-                <ScalarProperty Name="AvgOhm" ColumnName="AvgOhm" />
-                <ScalarProperty Name="AvgPSF" ColumnName="AvgPSF" />
-                <ScalarProperty Name="AvgEnergy" ColumnName="AvgEnergy" />
-                <ScalarProperty Name="NbrReweld" ColumnName="NbrReweld" />
-                <ScalarProperty Name="NbrWeld" ColumnName="NbrWeld" />
-                <ScalarProperty Name="NbrSplash" ColumnName="NbrSplash" />
-                <ScalarProperty Name="Shift" ColumnName="Shift" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="Program" ColumnName="Program" />
-                <ScalarProperty Name="Number" ColumnName="Number" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Expr1" ColumnName="Expr1" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -4415,6 +4270,7 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
           <EntitySetMapping Name="rt_spottable">
             <EntityTypeMapping TypeName="GADATAModelWelding.rt_spottable">
               <MappingFragment StoreEntitySet="rt_spottable">
+                <ScalarProperty Name="PolaritySpot" ColumnName="PolaritySpot" />
                 <ScalarProperty Name="isDuplicate" ColumnName="isDuplicate" />
                 <ScalarProperty Name="isDead" ColumnName="isDead" />
                 <ScalarProperty Name="SpotRight" ColumnName="SpotRight" />
@@ -4800,15 +4656,6 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="CheckDubbelPrograms">
-            <EntityTypeMapping TypeName="GADATAModelWelding.CheckDubbelPrograms">
-              <MappingFragment StoreEntitySet="CheckDubbelPrograms">
-                <ScalarProperty Name="weldProgNo" ColumnName="weldProgNo" />
-                <ScalarProperty Name="SpotName" ColumnName="SpotName" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="ULplan_start">
             <EntityTypeMapping TypeName="GADATAModelWelding.ULplan_start">
               <MappingFragment StoreEntitySet="ULplan_start">
@@ -4846,6 +4693,50 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
                 <ScalarProperty Name="SpotID" ColumnName="SpotID" />
                 <ScalarProperty Name="InspectionPlanID" ColumnName="InspectionPlanID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="searchplanNbr">
+            <EntityTypeMapping TypeName="GADATAModelWelding.searchplanNbr">
+              <MappingFragment StoreEntitySet="searchplanNbr">
+                <ScalarProperty Name="rowNbr" ColumnName="rowNbr" />
+                <ScalarProperty Name="PlanLenght" ColumnName="PlanLenght" />
+                <ScalarProperty Name="IndexOfTestSeq" ColumnName="IndexOfTestSeq" />
+                <ScalarProperty Name="planName" ColumnName="planName" />
+                <ScalarProperty Name="spotname" ColumnName="spotname" />
+                <ScalarProperty Name="timername" ColumnName="timername" />
+                <ScalarProperty Name="InspectionTime" ColumnName="InspectionTime" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BosProgramAvailable">
+            <EntityTypeMapping TypeName="GADATAModelWelding.BosProgramAvailable">
+              <MappingFragment StoreEntitySet="BosProgramAvailable">
+                <ScalarProperty Name="bosprogram" ColumnName="bosprogram" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CheckDubbelPrograms">
+            <EntityTypeMapping TypeName="GADATAModelWelding.CheckDubbelPrograms">
+              <MappingFragment StoreEntitySet="CheckDubbelPrograms">
+                <ScalarProperty Name="weldProgNo" ColumnName="weldProgNo" />
+                <ScalarProperty Name="SpotName" ColumnName="SpotName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WeldtimeSpotsSetup">
+            <EntityTypeMapping TypeName="GADATAModelWelding.WeldtimeSpotsSetup">
+              <MappingFragment StoreEntitySet="WeldtimeSpotsSetup">
+                <ScalarProperty Name="Expr1" ColumnName="Expr1" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="spotname" ColumnName="spotname" />
+                <ScalarProperty Name="Timer" ColumnName="Timer" />
+                <ScalarProperty Name="NPT" ColumnName="NPT" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

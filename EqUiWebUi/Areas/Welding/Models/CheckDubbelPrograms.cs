@@ -14,6 +14,7 @@ namespace EqUiWebUi.Areas.Welding.Models
     
     public partial class CheckDubbelPrograms
     {
+        public int id { get; set; }
         public string Name { get; set; }
         public string SpotName { get; set; }
         public int weldProgNo { get; set; }

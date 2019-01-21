@@ -9,27 +9,26 @@
 
 @Html.Grid(Model).Named("WeldtimeSpotsSetup").Build(columns =>
 {
-    columns.Add(c => c.NPT).Titled("NPT");
+    columns.Add(c => c.NPT).Titled("NPT").InitialSort(GridSortOrder.Desc);
     columns.Add(c => c.Timer).Titled("TimerName");
-    columns.Add(c => c.Number).Titled("SpotNumber");
-    columns.Add(c => c.WeldTime).Titled("TotalWeldTime");
+    columns.Add(c => c.spotname).Titled("Spotname");
+    columns.Add(c => c.Expr1).Titled("TotalWeldtime");
 
 
 
 }).Css("css-classes").AppendCss("table-hover").Filterable().Pageable(pager =>
 {
     pager.RowsPerPage = 20;
-    pager.PageSizes = new Dictionary<Int32, String>
-    { { 0, "All" } };
-    //{ 20, "20" }, { 40, "40" }, { 80, "80" }, { 100, "100" } };
-    pager.ShowPageSizes = true;
+
 }
-    ).Sortable();
+    ).Sortable().Css("table-hover");
 
 @section scripts{
     <script>
-            //full with screen
-            $("#allcontent").removeClass("body-content");
-            $("#allcontent").removeClass("container");
+        //full with screen
+        $("#allcontent").removeClass("body-content");
+        $("#allcontent").removeClass("container");
     </script>
 }
+
+

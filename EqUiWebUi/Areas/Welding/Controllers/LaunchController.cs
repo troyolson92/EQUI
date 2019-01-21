@@ -36,22 +36,13 @@ namespace EqUiWebUi.Areas.Welding.Controllers
         IQueryable<BosProgramAvailable> data = db.BosProgramAvailable.AsQueryable();
         return View(data);
     }
-        public ActionResult dressrequired()
-        {
-            IQueryable<dressrequired> data = db.dressrequired.AsQueryable();
-            return View(data);
-        }
+        
         public ActionResult WeldtimeSpotsSetup()
         {
             IQueryable<WeldtimeSpotsSetup> data = db.WeldtimeSpotsSetup.AsQueryable();
             return View(data);
         }
-
-        public ActionResult StabilityInDicationV316()
-        {
-            IQueryable<StabilityInDicationV316> data = db.StabilityInDicationV316.AsQueryable();
-            return View(data);
-        }
+        
         public ActionResult ComparePitchV316()
         {
             IQueryable<ComparePitchV316> data = db.ComparePitchV316.AsQueryable();

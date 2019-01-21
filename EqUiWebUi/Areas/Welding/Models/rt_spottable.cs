@@ -38,6 +38,7 @@ namespace EqUiWebUi.Areas.Welding.Models
         public Nullable<int> SpotRight { get; set; }
         public Nullable<int> isDead { get; set; }
         public Nullable<int> isDuplicate { get; set; }
+        public Nullable<bool> PolaritySpot { get; set; }
     
         public virtual c_timer c_timer { get; set; }
     }

@@ -1,0 +1,33 @@
+﻿
+
+@model IQueryable<EqUiWebUi.Areas.Welding.Models.searchplanNbr>
+@{
+    ViewBag.Title = "_SearchplanNbr";
+}
+
+<h2>_SearchplanNbr</h2>
+@Html.Grid(Model).Named("searchplanNbr").Build(columns =>
+{
+    columns.Add(c => c.planName).Titled("planame").InitialSort(GridSortOrder.Desc);
+    columns.Add(c => c.timername).Titled("Timername");
+    columns.Add(c => c.spotname).Titled("spotname");
+    columns.Add(c => c.IndexOfTestSeq).Titled("planNummer");
+    columns.Add(c => c.PlanLenght).Titled("PlanLenght");
+
+
+}).Filterable().Pageable(pager =>
+{
+    pager.RowsPerPage = 40;
+
+}
+).Sortable()
+
+@section scripts{
+    <script>
+        //full with screen
+        $("#allcontent").removeClass("body-content");
+        $("#allcontent").removeClass("container");
+    </script>
+
+}
+
