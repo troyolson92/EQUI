@@ -50,7 +50,13 @@ namespace EqUiWebUi.Areas.Welding.Controllers
             return View(data);
         }
 
-   
+        public ActionResult _SearchplanNbr()
+        {
+            IQueryable<searchplanNbr> data = db.searchplanNbr.AsQueryable();
+            return View(data);
+        }
+
+
 
     }
 }

@@ -745,9 +745,6 @@
     <Compile Include="Areas\Welding\Models\DoubleSpotCheck.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Areas\Welding\Models\dressrequired.cs">
-      <DependentUpon>WeldingModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Areas\Welding\Models\h_Midair.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
@@ -758,9 +755,6 @@
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Welding\Models\Inspectionplan.cs">
-      <DependentUpon>WeldingModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\Welding\Models\LastWelds.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Welding\Models\Lastwelds_Result.cs">
@@ -820,10 +814,10 @@
     <Compile Include="Areas\Welding\Models\rt_weldmeasureprotddw.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Areas\Welding\Models\SpotIdentMeasurements.cs">
+    <Compile Include="Areas\Welding\Models\searchplanNbr.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Areas\Welding\Models\StabilityInDicationV316.cs">
+    <Compile Include="Areas\Welding\Models\SpotIdentMeasurements.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Welding\Models\StoringName.cs">
@@ -2675,22 +2669,12 @@
     <Content Include="Areas\VWSC\Views\vwsc\_jobdetails.cshtml" />
     <Content Include="Areas\VWSC\Views\vwsc\_weldFault.cshtml" />
     <Content Include="Areas\VWSC\Views\vwsc\_jobBreakdown.cshtml" />
-    <Content Include="Areas\Welding\Views\Launch\BosProgramAvailable.cshtml" />
-    <Content Include="Areas\Welding\Views\Launch\dressrequired.cshtml" />
-    <Content Include="Areas\Welding\Views\Launch\Index.cshtml" />
-    <Content Include="Areas\Welding\Views\Launch\StabilityInDicationV316.cshtml" />
-    <Content Include="Areas\Welding\Views\Launch\WeldtimeSpotsSetup.cshtml" />
     <Content Include="Areas\Welding\Views\Qteam\Index.cshtml" />
     <Content Include="Areas\Welding\Views\Qteam\rt_AutoWorkFlowULPlans.cshtml" />
     <Content Include="Areas\Welding\Views\Qteam\rt_ExtraControles.cshtml" />
     <Content Include="Areas\Welding\Views\Qteam\ULRapportering.cshtml" />
     <Content Include="Areas\Welding\Views\WM\Index.cshtml" />
     <Content Include="Areas\Welding\Views\WM\Launch.cshtml" />
-    <Content Include="Areas\Welding\Views\Launch\Index.cshtml" />
-    <Content Include="Areas\Welding\Views\Launch\BosProgramAvailable.cshtml" />
-    <Content Include="Areas\Welding\Views\Launch\dressrequired.cshtml" />
-    <Content Include="Areas\Welding\Views\Launch\WeldtimeSpotsSetup.cshtml" />
-    <Content Include="Areas\Welding\Views\Launch\StabilityInDicationV316.cshtml" />
     <Content Include="Areas\Welding\Views\WM\TV.cshtml" />
     <Content Include="Areas\Welding\Views\WM\_ConnectionState.cshtml" />
     <Content Include="Areas\Welding\Views\WM\_QISvieuwer.cshtml" />
@@ -2698,7 +2682,6 @@
     <Content Include="Areas\Welding\Views\WM\_TimerBreakdownDatachange.cshtml" />
     <Content Include="Areas\Welding\Views\TeardownTeam\Index.cshtml" />
     <Content Include="Areas\Welding\Views\TeardownTeam\_TDTResults.cshtml" />
-    <Content Include="Areas\Welding\Views\Launch\_ToDoLaunch.cshtml" />
     <Content Include="Areas\Welding\Views\ToDoList_Remark\Create.cshtml" />
     <Content Include="Areas\Welding\Views\ToDoList_Remark\Delete.cshtml" />
     <Content Include="Areas\Welding\Views\ToDoList_Remark\Details.cshtml" />
@@ -2881,6 +2864,12 @@
     <Content Include="Content\bootstrap.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Areas\VASC\Views\c_service_setup\sessionSetup.cshtml" />
+    <Content Include="Areas\VASC\Views\Eventlog\GetEvents.cshtml" />
+    <Content Include="Areas\VASC\Views\Eventlog\_getEvents.cshtml" />
+    <Content Include="Areas\Welding\Views\Qteam\_SearchplanNbr.cshtml" />
+    <Content Include="Areas\Welding\Views\Launch\Index.cshtml" />
+    <Content Include="Areas\Welding\Views\Launch\BosProgramAvailable.cshtml" />
+    <Content Include="Areas\Welding\Views\Launch\WeldtimeSpotsSetup.cshtml" />
     <Content Include="Areas\VASC\Views\Eventlog\Get_h_alarm.cshtml" />
     <Content Include="Areas\VASC\Views\Eventlog\_get_h_alarm.cshtml" />
     <Content Include="Areas\VASC\Views\Eventlog\Get_rt_alarm.cshtml" />

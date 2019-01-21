@@ -16,8 +16,8 @@ namespace EqUiWebUi.Areas.Welding.Models
     {
         public string NPT { get; set; }
         public string Timer { get; set; }
-        public Nullable<int> Number { get; set; }
-        public Nullable<double> WeldTime { get; set; }
+        public Nullable<int> spotname { get; set; }
         public int ID { get; set; }
+        public Nullable<int> Expr1 { get; set; }
     }
 }

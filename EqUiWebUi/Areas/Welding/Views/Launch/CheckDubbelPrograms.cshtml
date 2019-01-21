@@ -8,7 +8,9 @@
 <h2>Check for double programs used</h2>
 
 @Html.Grid(Model).Named("CheckDubbelPrograms").Build(columns =>
+
 {
+    columns.Add(c => c.id).Titled("id");
     columns.Add(c => c.Name).Titled("TimerName").InitialSort(GridSortOrder.Asc);
     columns.Add(c => c.SpotName).Titled("spotName");
     columns.Add(c => c.weldProgNo).Titled("ProgramNbr");
