@@ -5,7 +5,7 @@ function initInterface() {
     $("#navbar").autoHidingNavbar();
 
     //for fullscreen mode
-    $("#fullscreenNav").click(function () {
+    $("#fullscreenNav").unbind().click(function () {
         $("#allcontent").removeClass("body-content");
         $("#allcontent").removeClass("container");
 
@@ -17,7 +17,7 @@ function initInterface() {
         $("#footer").addClass("d-none");
     });
     //out of full screen mode
-    $("#fullscreenBody").click(function () {
+    $("#fullscreenBody").unbind().click(function () {
 
         $("#allcontent").addClass("body-content");
         $("#allcontent").addClass("container");
@@ -46,7 +46,7 @@ function initInterface() {
 
     //initpopovers
     //on click ignore default action
-    $(".MyPopovers").click(function (e) {
+    $(".MyPopovers").unbind().click(function (e) {
         console.log('default action prevented (.Mypopovers)');
         e.preventDefault();
         return false;
@@ -108,7 +108,7 @@ function EnableInterfaceEvents() {
     $('select.form-control').selectpicker();
 
     //for new window option
-    $('.OpenNewWindow').click(function (e) {
+    $('.OpenNewWindow').unbind().click(function (e) {
         console.log('default action prevented (.OpenNewWindow)');
         e.preventDefault();
         console.log("Opening new window");
@@ -124,8 +124,8 @@ function EnableInterfaceEvents() {
         }
     });
 
-    //for blind fired buttons with feedback.
-    $(".JQresultTriggerBtn").click(function (e) {
+    //for blind fired buttons with feedback. the unbind cancels any active event on this object
+    $(".JQresultTriggerBtn").unbind().click(function (e) {
         console.log('default action prevented (.JQresultTriggerBtn)');
         e.preventDefault();
         $.toaster({ title: 'JQTriggerBtn', priority: 'info', message: 'Fired: ' + $(this).attr('href') });

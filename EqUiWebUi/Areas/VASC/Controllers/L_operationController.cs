@@ -34,13 +34,13 @@ namespace EqUiWebUi.Areas.VASC.Controllers
                 else
                 {
                     //for a session
-                    return PartialView(db.L_operation.Where(c => c.Vasc_name.Contains(sessionName)).ToList());
+                    return PartialView(db.L_operation.Where(c => c.Vasc_name.Contains(sessionName)));
                 }
             }
             else
             {
                 //for a controller
-                return PartialView(db.L_operation.Where(c => (c.controller_id == controller_id && c.Vasc_name.Contains(sessionName)) || (c.controller_id == null && c.Vasc_name.Contains(sessionName))).ToList());
+                return PartialView(db.L_operation.Where(c => (c.controller_id == controller_id && c.Vasc_name.Contains(sessionName)) || (c.controller_id == null && c.Vasc_name.Contains(sessionName))));
             }
 
         }

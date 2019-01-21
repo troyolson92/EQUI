@@ -1,11 +1,12 @@
-﻿@model List<EqUiWebUi.Areas.VASC.Models.L_operation>
+﻿@model IQueryable<EqUiWebUi.Areas.VASC.Models.L_operation>
 
 @Html.Grid(Model).Named("L_operationGrid").Build(columns =>
 {
     columns.Add(c => c.ID).Titled("id").InitialSort(GridSortOrder.Desc).Css("tablesaw-priority-0");
     columns.Add(c => c.C_timestamp).Titled("_timestamp").Css("tablesaw-priority-6");
     columns.Add(c => c.code).Titled("code").Css("tablesaw-priority-0");
-    columns.Add(c => c._L_operationCode).Titled("Operation").Css("tablesaw-priority-persist");
+    columns.Add(c => c._L_operationCode).Titled("Operation").Css("tablesaw-priority-persist").Filterable(false);
+    columns.Add(c => c.code).Titled("code"); ;
     columns.Add(c => c.Vasc_name).Titled("Vasc_name").Css("tablesaw-priority-6");
     columns.Add(c => c.controller_id).Titled("controller_id").Css("tablesaw-priority-0");
     columns.Add(c => c.c_controller.controller_name).Titled("controller_name").Css("tablesaw-priority-persist");
