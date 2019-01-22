@@ -5,6 +5,8 @@
 
 
 
+
+
 GO;
 CREATE SCHEMA [EqUi]
     AUTHORIZATION [dbo];
@@ -20,9 +22,13 @@ CREATE SCHEMA [EqUi]
 
 
 
+
+
 GO;
 CREATE SCHEMA [HangFire]
     AUTHORIZATION [dbo];
+
+
 
 
 
@@ -66,9 +72,13 @@ CREATE SCHEMA [MAXIMO]
 
 
 
+
+
 GO;
 CREATE SCHEMA [NGAC]
     AUTHORIZATION [dbo];
+
+
 
 
 
@@ -112,6 +122,8 @@ CREATE SCHEMA [PJV]
 
 
 
+
+
 GO;
 CREATE SCHEMA [Volvo]
     AUTHORIZATION [dbo];
@@ -135,9 +147,13 @@ CREATE SCHEMA [Volvo]
 
 
 
+
+
 GO;
 CREATE SCHEMA [WELDING2]
     AUTHORIZATION [dbo];
+
+
 
 
 
