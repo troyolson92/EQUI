@@ -470,6 +470,7 @@
     <Compile Include="Areas\VASC\Controllers\c_csv_logController.cs" />
     <Compile Include="Areas\VASC\Controllers\c_device_infoController.cs" />
     <Compile Include="Areas\VASC\Controllers\c_errorController.cs" />
+    <Compile Include="Areas\VASC\Controllers\c_jobController.cs" />
     <Compile Include="Areas\VASC\Controllers\c_service_setupController.cs" />
     <Compile Include="Areas\VASC\Controllers\c_variableController.cs" />
     <Compile Include="Areas\VASC\Controllers\c_variable_searchController.cs" />
@@ -501,6 +502,7 @@
     <Compile Include="Areas\VASC\Models\c_job.cs">
       <DependentUpon>VASC.tt</DependentUpon>
     </Compile>
+    <Compile Include="Areas\VASC\Models\c_jobMetadata.cs" />
     <Compile Include="Areas\VASC\Models\c_service_setup.cs">
       <DependentUpon>VASC.tt</DependentUpon>
     </Compile>
@@ -2871,6 +2873,10 @@
     <Content Include="Areas\VASC\Views\Eventlog\_get_h_alarm.cshtml" />
     <Content Include="Areas\VASC\Views\Eventlog\Get_rt_alarm.cshtml" />
     <Content Include="Areas\VASC\Views\Eventlog\_get_rt_alarm.cshtml" />
+    <Content Include="Areas\VASC\Views\c_job\Delete.cshtml" />
+    <Content Include="Areas\VASC\Views\c_job\Edit.cshtml" />
+    <Content Include="Areas\VASC\Views\c_job\Index.cshtml" />
+    <Content Include="Areas\VASC\Views\c_job\_List.cshtml" />
     <None Include="Properties\PublishProfiles\chasvw1203_DEV_VCCH.pubxml" />
     <None Include="Properties\PublishProfiles\chasvw1203_PRODUCTION_VCCH.pubxml" />
     <Content Include="Areas\Welding\Views\WM\_Parameters.cshtml" />
