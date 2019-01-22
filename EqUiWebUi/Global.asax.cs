@@ -78,7 +78,7 @@ namespace EqUiWebUi
             }
             catch(Exception ex)
             {
-                log.Error("failed to update web.config CHECK IF IIS_IUSRS has RW acces to site root folder!!", ex);
+                log.Fatal("failed to update web.config CHECK IF IIS_IUSRS has RW access to site root folder!!", ex);
             }
            
             //default mvc web registration
