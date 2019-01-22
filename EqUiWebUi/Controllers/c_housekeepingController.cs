@@ -11,6 +11,23 @@ namespace EqUiWebUi.Controllers
     [Authorize(Roles = "Administrator")]
     public class c_housekeepingController : Controller
     {
+
+        /*check for tables with no housekeeping.
+         * SELECT 
+            t.TABLE_SCHEMA
+            ,t.TABLE_NAME
+            ,c.id
+            ,c.nDaysKeepHistory
+            FROM INFORMATION_SCHEMA.TABLES as t
+            left join equi.c_housekeeping as c on t.TABLE_NAME = c.TableName and t.TABLE_SCHEMA = c.SchemaName 
+            WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_CATALOG='GADATA' 
+            AND
+            (
+            t.TABLE_NAME like 'h%' OR t.TABLE_NAME like 'rt%'
+         
+             */
+
+
         private GADATAEntitiesEQUI db = new GADATAEntitiesEQUI();
 
         // GET: c_housekeeping
@@ -66,7 +83,7 @@ namespace EqUiWebUi.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,c_schedule_id,c_datasource_id,Ordinal,Name,Description,SchemaName,TableName,nDaysKeepHistory,nDeleteBatchSize,nMaxRunTime,IdColName,DateTimeColName")] c_housekeeping c_housekeeping)
+        public ActionResult Create(c_housekeeping c_housekeeping)
         {
             if (ModelState.IsValid)
             {
@@ -102,7 +119,7 @@ namespace EqUiWebUi.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,c_schedule_id,c_datasource_id,Ordinal,Name,Description,SchemaName,TableName,nDaysKeepHistory,nDeleteBatchSize,nMaxRunTime,IdColName,DateTimeColName")] c_housekeeping c_housekeeping)
+        public ActionResult Edit( c_housekeeping c_housekeeping)
         {
             if (ModelState.IsValid)
             {

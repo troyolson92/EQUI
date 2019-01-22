@@ -33,6 +33,7 @@ namespace EqUiWebUi.Models
         public int nMaxRunTime { get; set; }
         public string IdColName { get; set; }
         public string DateTimeColName { get; set; }
+        public bool NoHousekeeping { get; set; }
     
         public virtual c_datasource c_datasource { get; set; }
         public virtual c_schedule c_schedule { get; set; }

@@ -35,8 +35,8 @@ namespace EqUiWebUi
 @SchemaName = '{housekeeping.SchemaName.Trim()}',
 @TableName  = '{housekeeping.TableName.Trim()}',
 @IdColName  = '{housekeeping.IdColName}',
-@DateTimeColName  = '{housekeeping.DateTimeColName}'
-
+@DateTimeColName  = '{housekeeping.DateTimeColName}',
+@NoHousekeeping = {((housekeeping.NoHousekeeping == true) ? 1 : 0)}
             ";
                 context.WriteLine(cmd);
                 result = connectionManager.RunQuery(cmd, enblExeptions: true, maxEXECtime: housekeeping.nMaxRunTime,subscribeToMessages:true);
