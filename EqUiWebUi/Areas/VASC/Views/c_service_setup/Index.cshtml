@@ -19,7 +19,7 @@
     columns.Add(c => c.ServiceDisplayName).Titled("ServiceDisplayName").Css("tablesaw-priority-0");
     columns.Add(c => c.ServiceStatus).Titled("ServiceStatus");
     columns.Add(c => c.ServiceStartName).Titled("StartName").Css("tablesaw-priority-0");
-    columns.Add(c =>  c.OKcontrollerCount.ToString() + "/" + c.controllerCount.ToString()).Titled("Connected");
+    columns.Add(c => c.OKcontrollerCount.ToString() + "/" + c.controllerCount.ToString()).Titled("Connected");
     columns.Add(c => c.ServiceDescription).Titled("ServiceDescription").Css("tablesaw-priority-6");
     columns.Add(c => c)
        .Titled("Tools")
@@ -27,13 +27,11 @@
        .Filterable(false)
        .RenderedAs(c => MyHtmlHelpers.IconActionLink(Url.Action("Index", "rt_active_info", new { sessionName = c.SessionName }), "fas fa-file", "", "Open rt_active info for session", OpenNewWindow: true).ToHtmlString() +
                         ((c.ServiceName != "NOT FOUND") ? (
-                        (c.ServiceStatus != "Running") ? MyHtmlHelpers.IconActionLink(Url.Action("SetServiceState", "c_service_setup", new { ServiceName = c.ServiceName, State = 1}), "far fa-play-circle", "", "Start service",classes: "JQresultTriggerBtn").ToHtmlString() :
+                        (c.ServiceStatus != "Running") ? MyHtmlHelpers.IconActionLink(Url.Action("SetServiceState", "c_service_setup", new { ServiceName = c.ServiceName, State = 1 }), "far fa-play-circle", "", "Start service", classes: "JQresultTriggerBtn").ToHtmlString() :
                         MyHtmlHelpers.IconActionLink(Url.Action("SetServiceState", "c_service_setup", new { ServiceName = c.ServiceName, State = 2 }), "far fa-stop-circle", "", "Stop service", classes: "text-danger JQresultTriggerBtn").ToHtmlString()
-                        ) : "") 
-    
-
+                        ) : "")
            );
-}).Filterable().Sortable().Empty("Did not find anything").Css("table-hover tablesaw-on")
+}).Filterable().Sortable().Empty("Did not find anything").Css("table-hover tablesaw-on").RowCss(row => (row.ServiceStatus == "Running" && row.OKcontrollerCount != row.controllerCount) ? "ani_BlinkPink" : "");
 
 <hr />
 
@@ -88,6 +86,8 @@
 
             }
         });
+
+        EnableInterfaceEvents();
 
         //add event to refresh button on grid
         $('#refresh').click(function () {
