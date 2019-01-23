@@ -3009,9 +3009,6 @@
     <Content Include="Views\Wiki\Edit.cshtml" />
     <Content Include="Views\Wiki\_GetWiki.cshtml" />
     <Content Include="Views\Wiki\Getwiki.cshtml" />
-    <None Include="Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
     <None Include="Web.DEV_VCCH.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

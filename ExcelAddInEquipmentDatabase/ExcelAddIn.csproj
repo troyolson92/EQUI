@@ -357,6 +357,21 @@
     <Content Include="Drivers\SqlServer\sqlsrv32.rll.mui">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="app.DEV_VCCH.config">
+      <DependentUpon>app.config</DependentUpon>
+    </None>
+    <None Include="app.DEV_VCG.config">
+      <DependentUpon>app.config</DependentUpon>
+    </None>
+    <None Include="app.Rel_VCG.config">
+      <DependentUpon>app.config</DependentUpon>
+    </None>
+    <None Include="app.Rel_VCH.config">
+      <DependentUpon>app.config</DependentUpon>
+    </None>
+    <None Include="app.Rel_VCT.config">
+      <DependentUpon>app.config</DependentUpon>
+    </None>
     <None Include="EquiModel.edmx.diagram">
       <DependentUpon>EquiModel.edmx</DependentUpon>
     </None>
@@ -421,7 +436,7 @@
   <PropertyGroup>
     <ManifestCertificateThumbprint>E337AEEF915011D152B1E3F9642AA54DAB4E1FBB</ManifestCertificateThumbprint>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Rel_TA|AnyCPU'">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Rel_VCT|AnyCPU' ">
     <OutputPath>bin\Rel_TA\</OutputPath>
     <DefineConstants>VSTO40;TRACE</DefineConstants>
     <Optimize>true</Optimize>
@@ -429,10 +444,10 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Rel_GA|AnyCPU'">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Rel_VCG|AnyCPU' ">
     <OutputPath>bin\Rel_GA\</OutputPath>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DEV_GA|AnyCPU'">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DEV_VCG|AnyCPU' ">
     <OutputPath>bin\DEV_GA\</OutputPath>
     <DefineConstants>VSTO40</DefineConstants>
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -465,4 +480,23 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <Target Name="app_config_AfterCompile" AfterTargets="AfterCompile" Condition="Exists('app.$(Configuration).config')">
+    <!--Generate transformed app config in the intermediate directory-->
+    <TransformXml Source="app.config" Destination="$(IntermediateOutputPath)$(TargetFileName).config" Transform="app.$(Configuration).config" />
+    <!--Force build process to use the transformed configuration file from now on.-->
+    <ItemGroup>
+      <AppConfigWithTargetPath Remove="App.config" />
+      <AppConfigWithTargetPath Include="$(IntermediateOutputPath)$(TargetFileName).config">
+        <TargetPath>$(TargetFileName).config</TargetPath>
+      </AppConfigWithTargetPath>
+    </ItemGroup>
+  </Target>
+  <Target Name="app_config_AfterPublish" AfterTargets="AfterPublish" Condition="Exists('app.$(Configuration).config')">
+    <PropertyGroup>
+      <DeployedConfig>$(_DeploymentApplicationDir)$(TargetName)$(TargetExt).config$(_DeploymentFileMappingExtension)</DeployedConfig>
+    </PropertyGroup>
+    <!--Publish copies the untransformed App.config to deployment directory so overwrite it-->
+    <Copy Condition="Exists('$(DeployedConfig)')" SourceFiles="$(IntermediateOutputPath)$(TargetFileName).config" DestinationFiles="$(DeployedConfig)" />
+  </Target>
+  <UsingTask TaskName="TransformXml" AssemblyFile="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Web\Microsoft.Web.Publishing.Tasks.dll" />
 </Project>
