@@ -31,7 +31,7 @@
                         MyHtmlHelpers.IconActionLink(Url.Action("SetServiceState", "c_service_setup", new { ServiceName = c.ServiceName, State = 2 }), "far fa-stop-circle", "", "Stop service", classes: "text-danger JQresultTriggerBtn").ToHtmlString()
                         ) : "")
            );
-}).Filterable().Sortable().Empty("Did not find anything").Css("table-hover tablesaw-on").RowCss(row => (row.ServiceStatus == "Running" && row.OKcontrollerCount != row.controllerCount) ? "ani_BlinkPink" : "");
+}).Filterable().Sortable().Empty("Did not find anything").Css("table-hover tablesaw-on").RowCss(row => (row.ServiceStatus == "Running" && row.OKcontrollerCount != row.controllerCount) ? "ani_BlinkPink" : "")
 
 <hr />
 

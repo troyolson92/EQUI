@@ -64,8 +64,8 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="username" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="LocationRoot" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="AssetRoot" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LocationRoot" Type="varchar" MaxLength="50" />
+          <Property Name="AssetRoot" Type="varchar" MaxLength="50" />
           <Property Name="Locked" Type="bit" Nullable="false" />
           <Property Name="Blocked" Type="bit" Nullable="false" />
           <Property Name="SessionId" Type="varchar" MaxLength="200" />
@@ -172,8 +172,8 @@
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="LocationRoot" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="AssetRoot" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LocationRoot" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AssetRoot" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Locked" Type="Boolean" Nullable="false" />
           <Property Name="Blocked" Type="Boolean" Nullable="false" />
           <Property Name="SessionId" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
