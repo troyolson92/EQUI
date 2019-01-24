@@ -9,16 +9,18 @@ Tool_nr: @Html.DropDownList("tool_nr", null, htmlAttributes: new { @class = "sel
 ElectrodeNo: @Html.DropDownList("ElectrodeNo", null, htmlAttributes: new { @class = "selectpicker" })
 <button class="btn btn-primary btn-sm" id="btn_getData">Load data</button>
 
-<hr />
-<div class="alert alert-danger">
-    Oude tool is nog beschikbaar via <a href="http://gensvw1178.gen.volvocars.net/EqUi_UtilManager/EqUi_UtilManger.application?Tool=SBCUstats">WeldgunData OLD</a>
-    Gelieve deze nieuwe tool te gebruiken oude gaat binnenkort definitief weg.
-</div>
-<hr />
-
-<div id="welgunToolPlaceholder"></div>
-<!--WeldgunToolScripts-->
-<script>
+@if (System.Configuration.ConfigurationManager.AppSettings["Maximo_SiteID"].ToString() == "VCG")
+{
+    <hr />
+    <div class="alert alert-danger">
+        Oude tool is nog beschikbaar via <a href="http://gensvw1178.gen.volvocars.net/EqUi_UtilManager/EqUi_UtilManger.application?Tool=SBCUstats">WeldgunData OLD</a>
+        Gelieve deze nieuwe tool te gebruiken oude gaat binnenkort definitief weg.
+    </div>
+    <hr />
+}
+    <div id="welgunToolPlaceholder"></div>
+    <!--WeldgunToolScripts-->
+    <script>
         //full with screen
     $("#allcontent").removeClass("body-content");
     $("#allcontent").removeClass("container");
@@ -36,11 +38,11 @@ ElectrodeNo: @Html.DropDownList("ElectrodeNo", null, htmlAttributes: new { @clas
             });
     });
 
-</script>
-
-@if (ViewBag.autoload == true)
-{
-    <script>
-        $('#btn_getData').click()
     </script>
-}
+
+    @if (ViewBag.autoload == true)
+    {
+        <script>
+        $('#btn_getData').click()
+        </script>
+    }

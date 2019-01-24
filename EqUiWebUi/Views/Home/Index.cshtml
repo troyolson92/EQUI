@@ -31,7 +31,7 @@
         @MyHtmlHelpers.EquiLink("/Supervision/Table/PloegRapport", "far fa-list-alt", EqUiWebUi.defaultArea.ShiftReport, helperText: EqUiWebUi.defaultArea.ShiftReportDescription)
         @MyHtmlHelpers.EquiLink("/Supervision/Table/Supervisie", "far fa-list-alt", EqUiWebUi.defaultArea.Supervision, helperText: EqUiWebUi.defaultArea.SupervisionDescription)
         @MyHtmlHelpers.EquiLink("/Alert/Alert/Listalerts", "fas fa-bell", EqUiWebUi.defaultArea.Alerts, helperText: EqUiWebUi.defaultArea.AlertsDescription, iconClasses: "bg-warning")
-        @MyHtmlHelpers.EquiLink("https://volvocars.plantview.se/?v=ps&t=p:default,c:projectselector,m:t&ps=ps1&ps1=q:vcg", "fas fa-industry", "Plantview", helperText: "3d scans of all volvo plants")
+        @MyHtmlHelpers.EquiLink("https://volvocars.plantview.se/?v=ps&t=p:default,c:projectselector,m:t&ps=ps1&ps1=q:" + System.Configuration.ConfigurationManager.AppSettings["Maximo_SiteID"].ToString(), "fas fa-industry", "Plantview", helperText: "3d scans of all volvo plants")
         @if (EqUiWebUi.MyBooleanExtensions.IsAreaEnabled("Maximo_ui"))
         {
             @MyHtmlHelpers.EquiLink("/Maximo_ui/Workorder/Workorders", "fas fa-briefcase", "Maximo_ui", helperText: "Fast and simple Maximo interface")

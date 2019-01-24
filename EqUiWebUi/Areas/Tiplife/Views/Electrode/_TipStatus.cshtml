@@ -14,7 +14,7 @@
     columns.Add(c => c.RobotWear).Titled("Wear(mm)").Css("d-none d-lg-table-cell");
     columns.Add(c => c.Time_DressCycleTime).Titled("Ct (s)").Css("d-none d-lg-table-cell");
     columns.Add(c => c.LocationTree).Filterable(true).Css("d-none"); //used for filtering
-    columns.Add(c => c.Tool_Nr).Filterable(true).Css("d-none");
+    columns.Add(c => c.Tool_Nr).Titled("Tool").Filterable(true);
     //RenderStatusIcon
     columns.Add()
             .Titled("Status")

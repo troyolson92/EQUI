@@ -39,10 +39,10 @@
     <TargetFrameworkProfile />
     <BootstrapperEnabled>false</BootstrapperEnabled>
     <BootstrapperComponentsLocation>Relative</BootstrapperComponentsLocation>
-    <PublishUrl>\\gnlsnm0101.gen.volvocars.net\proj\6308-SHR-VCC22700\VSTO\BETABASE\</PublishUrl>
-    <InstallUrl />
+    <PublishUrl>\\Chasvw1203.cha.volvocars.net\chasvw1203_e\IIS\EqUiWebUi\ExcelAddIn\</PublishUrl>
+    <InstallUrl>\\Chasvw1203.cha.volvocars.net\chasvw1203_e\IIS\EqUiWebUi\ExcelAddIn\</InstallUrl>
     <TargetCulture>en</TargetCulture>
-    <ApplicationVersion>3.0.2.87</ApplicationVersion>
+    <ApplicationVersion>3.0.2.90</ApplicationVersion>
     <AutoIncrementApplicationRevision>true</AutoIncrementApplicationRevision>
     <UpdateEnabled>true</UpdateEnabled>
     <UpdateInterval>0</UpdateInterval>
