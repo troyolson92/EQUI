@@ -36,6 +36,7 @@ namespace EqUiWebUi.Areas.Maximo_ui.Models
         public string WORKTYPE { get; set; }
         public string DESCRIPTION { get; set; }
         public string LOCATION { get; set; }
+        public string ASSETNUM { get; set; }
         public string REPORTEDBY { get; set; }
         public Nullable<System.DateTime> REPORTDATE { get; set; }
         public string ANCESTOR { get; set; }

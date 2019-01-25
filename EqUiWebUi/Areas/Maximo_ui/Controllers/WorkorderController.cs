@@ -56,6 +56,7 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
                 ,WORKORDER.WORKTYPE
                 ,WORKORDER.DESCRIPTION
                 ,WORKORDER.LOCATION
+                ,WORKORDER.ASSETNUM 
                 ,WORKORDER.REPORTEDBY
                 ,WORKORDER.REPORTDATE
                 ,WORKORDER.CHANGEDATE
@@ -124,6 +125,7 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
                 workorder.WORKTYPE = row.Field<string>("WORKTYPE");
                 workorder.DESCRIPTION = row.Field<string>("DESCRIPTION");
                 workorder.LOCATION = row.Field<string>("LOCATION");
+                workorder.ASSETNUM = row.Field<string>("ASSETNUM");
                 workorder.REPORTEDBY = row.Field<string>("REPORTEDBY");
                 workorder.REPORTDATE = row.Field<DateTime>("REPORTDATE");
                 workorder.ANCESTOR = row.Field<string>("ANCESTOR");
