@@ -8,13 +8,14 @@ namespace ExcelAddInEquipmentDatabase
     {
 
        // var connection = ConnectionFactory.GetConnection(ConfigurationManager.ConnectionStrings["EQUIConnectionString"].ConnectionString, DataBaseProvider);
-        private EquiEntities db = new EquiEntities();
+
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public string[] GetRolesForUser(string username)
         {
             try
             {
+                EquiEntities db = new EquiEntities();
                 return db.h_usersPermisions.Where(c => c.L_users.username == username).Select(c => c.Role).ToArray();
             }
             catch (Exception ex)
@@ -28,6 +29,7 @@ namespace ExcelAddInEquipmentDatabase
         {
             try
             {
+                EquiEntities db = new EquiEntities();
                 var roles =  db.h_usersPermisions.Where(c => c.L_users.username == username).Select(c => c.Role).ToArray();
                 if (roles != null)
                     return roles.Any(r => r.Equals(roleName, StringComparison.CurrentCultureIgnoreCase));
