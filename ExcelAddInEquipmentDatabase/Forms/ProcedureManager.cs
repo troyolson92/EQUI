@@ -112,7 +112,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
                 QUERYS Qyr = db.QUERYS.Where(c => c.NAME == activeconnection && c.SYSTEM == DsnNames.DsnMX7).First();
                 MX7_ActiveConnectionToProcMngr(Qyr.OracleQueryParms, Qyr.QueryBody);
             }
-            else if (lActConn.ODBCconnString.Contains(DsnNames.DsnGADATA)) //existing GADATAconnections
+            else if (lActConn.ODBCconnString.Contains(DsnNames.DsnEqui)) //existing GADATAconnections
             {
                 assets.Name = "@assets";
                 lochierarchy.Name = "@lochierarchy";
@@ -121,7 +121,7 @@ namespace ExcelAddInEquipmentDatabase.Forms
                 endDate.Name = "@EndDate";
                 daysBack.Name = "@daysBack";
                 //
-                lActConn.System = DsnNames.DsnGADATA;
+                lActConn.System = DsnNames.DsnEqui;
                 lActConn.ProcedureName = lActConn.get_storedProcedureFromQuery(lActConn.Query);
                 GADATA_ActiveConnectionToProcMngr(connectionManager.GetSpParms(lActConn.ProcedureName), lActConn.Query);
             }

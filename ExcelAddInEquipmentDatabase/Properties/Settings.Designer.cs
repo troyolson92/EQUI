@@ -59,5 +59,14 @@ namespace ExcelAddInEquipmentDatabase.Properties {
                 return ((string)(this["TemplateShema"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("debug")]
+        public string SiteName {
+            get {
+                return ((string)(this["SiteName"]));
+            }
+        }
     }
 }

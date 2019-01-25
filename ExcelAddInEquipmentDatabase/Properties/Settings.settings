@@ -14,5 +14,8 @@
     <Setting Name="TemplateShema" Type="System.String" Scope="Application">
       <Value Profile="(Default)">Equi</Value>
     </Setting>
+    <Setting Name="SiteName" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">debug</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -9,29 +9,37 @@ namespace ExcelAddInEquipmentDatabase
 
        // var connection = ConnectionFactory.GetConnection(ConfigurationManager.ConnectionStrings["EQUIConnectionString"].ConnectionString, DataBaseProvider);
         private EquiEntities db = new EquiEntities();
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public string[] GetRolesForUser(string username)
         {
-            var roles = from perm in db.h_usersPermisions
-                        where perm.L_users.username == username
-                        select perm.Role;
-
-            if (roles != null)
-                return roles.ToArray();
-            else
+            try
+            {
+                return db.h_usersPermisions.Where(c => c.L_users.username == username).Select(c => c.Role).ToArray();
+            }
+            catch (Exception ex)
+            {
+                log.Error("Failed to get user roles", ex);
                 return new string[] { };
+            }        
         }
 
         public bool IsUserInRole(string username, string roleName)
         {
-            var roles = from perm in db.h_usersPermisions
-                        where perm.L_users.username == username
-                        select perm.Role;
-
-            if (roles != null)
-                return roles.Any(r => r.Equals(roleName, StringComparison.CurrentCultureIgnoreCase));
-            else
+            try
+            {
+                var roles =  db.h_usersPermisions.Where(c => c.L_users.username == username).Select(c => c.Role).ToArray();
+                if (roles != null)
+                    return roles.Any(r => r.Equals(roleName, StringComparison.CurrentCultureIgnoreCase));
+                else
+                    return false;
+            }
+            catch (Exception ex)
+            {
+                log.Error("Failed to get user roles", ex);
                 return false;
+            }
+
         }
     }
 }

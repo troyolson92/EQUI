@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 
@@ -52,6 +53,11 @@ namespace ExcelAddInEquipmentDatabase
     public static class DsnNames
     {
         public static string DsnMX7 { get { return "MX7"; } }
-        public static string DsnGADATA { get { return "GADATA"; } }
+        public static string DsnEqui {
+            get {
+                System.Data.SqlClient.SqlConnectionStringBuilder sqlconnection = new System.Data.SqlClient.SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["EQUIConnectionString"].ConnectionString);
+                return sqlconnection.InitialCatalog;
+            }
+        }
     }
 }
