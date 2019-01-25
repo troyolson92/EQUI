@@ -17,7 +17,7 @@
                 @Html.Action("_GetControlChart","ControlChart", new { Area = "Alert",
                        chartname = "Dummyalert",
                        alarmobject = ViewBag.NgacDummyAlarmobject,
-                       c_trigger_id = ViewBag.NgacDummyTriggerId,
+                       alertType = ViewBag.NgacDummyAlertType,
                        startdate = ViewBag.daysback,
                        enddate = System.DateTime.Now
                    })
@@ -32,7 +32,7 @@
                         Area = "Alert",
                         chartname = "Dummyalert",
                         alarmobject = ViewBag.MidAirDummyAlarmobject,
-                        c_trigger_id = ViewBag.MidAircDummyTriggerId,
+                        alertType = ViewBag.MidAircDummyAlertType,
                         startdate = ViewBag.daysback,
                         enddate = System.DateTime.Now
                     })

@@ -243,7 +243,7 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
             if (gADATAEntitiesVASC.c_controller.Where(c => c.controller_name == location).Count() != 0)
             {
                 ViewBag.NgacDummyAlarmobject = $"{location.Trim()}_gun{tool_nr}";
-                ViewBag.NgacDummyTriggerId = 43;
+                ViewBag.NgacDummyAlertType = "Delta Nom/Ref";
                 ViewBag.isNgac = true; //used to pick more info modal (ngac or comau)
             }
             else
@@ -255,7 +255,7 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
             {
                 //Add midair scatter chart always (all weld gun tools should have a midair)
                 ViewBag.MidAirDummyAlarmobject = $"{location.Trim()}_ElecNo{ElectrodeNo}";
-                ViewBag.MidAircDummyTriggerId = 44;
+                ViewBag.MidAircDummyAlertType = "MidAir";
             }
 
 

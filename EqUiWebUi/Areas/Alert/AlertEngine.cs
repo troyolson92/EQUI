@@ -116,7 +116,7 @@ namespace EqUiWebUi.Areas.Alert
                     {
                         c_tirgger_id = c_triggerID
                     };
-                    if (trigger.c_datasource.Name == "GADATA") //for gata the locationtree an location MUSt be in the query result
+                    if (trigger.c_datasource.Name == "GADATA" || trigger.c_datasource.Name == "CHADATA") //for gata the locationtree an location MUSt be in the query result
                     {
                         //we already have the location tree and location
                         newAlert.locationTree = ActiveAlert.LocationTree;
@@ -132,7 +132,7 @@ namespace EqUiWebUi.Areas.Alert
                     {
                         //ask gadata for location tree and location
                         string qry =
-                            @"select top 1 LocationTree, Location from GADATA.EqUi.ASSETS as a
+                            @"select top 1 LocationTree, Location from EqUi.ASSETS as a
                             where REPLACE('{0}','ZM','ZS') LIKE a.[LOCATION] + '%'
                             order by a.LocationTree desc ";
                         DataTable result = connectionManager.RunQuery(string.Format(qry, ActiveAlert.alarmobject));
@@ -148,11 +148,11 @@ namespace EqUiWebUi.Areas.Alert
                             newAlert.location = ActiveAlert.alarmobject;
                         }
                     }
-                    else if (trigger.c_datasource.Name == "MAXIMO7rep" || trigger.c_datasource.Name == "MAXIMOrt") //for macimo get the location tree from GADATA (direct match on location)
+                    else if (trigger.c_datasource.Name == "MAXIMO7rep" || trigger.c_datasource.Name == "MAXIMOrt") //for maximo get the location tree from GADATA (direct match on location)
                     {
                         //ask gadata for location tree and location
                         string qry =
-                            @"select top 1 LocationTree, Location from GADATA.EqUi.ASSETS as a
+                            @"select top 1 LocationTree, Location from EqUi.ASSETS as a
                             where '{0}' LIKE a.[LOCATION] + '%'";
                         DataTable result = connectionManager.RunQuery(string.Format(qry, ActiveAlert.alarmobject));
                         if (result.Rows.Count == 1)

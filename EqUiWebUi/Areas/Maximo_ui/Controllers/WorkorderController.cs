@@ -66,7 +66,7 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
                 , System.Configuration.ConfigurationManager.AppSettings["Maximo_LOCATION_SYSTEMID"].ToString()));
 
             //start where clause
-            sbqry.AppendLine("WHERE ((WORKORDER.woclass = 'WORKORDER' or WORKORDER.woclass = 'ACTIVITY') and WORKORDER.istask = 0)");
+            sbqry.AppendLine($"WHERE ((WORKORDER.woclass = 'WORKORDER' or WORKORDER.woclass = 'ACTIVITY') and WORKORDER.istask = 0) and WORKORDER.SiteID = '{System.Configuration.ConfigurationManager.AppSettings["Maximo_SiteID"].ToString()}'");
             //SDB bugfix case no ancestor 
             if (string.IsNullOrWhiteSpace(workorderSelectOptions.locancestor)) //to prevent dups 
             {

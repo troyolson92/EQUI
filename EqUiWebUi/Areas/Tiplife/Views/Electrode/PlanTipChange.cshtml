@@ -11,13 +11,13 @@
 
             <div class="card">
                 <div class="card-header bg-dark">
-                    <h4 class="text-white">Plan het onderhoud</h4>
+                    <h4 class="text-white">Plan the electrode change</h4>
                 </div>
                 <div class="card-body">
 
                     <div class="row">
                         <div class="col-md-5">
-                            <label class="control-label col-md-4" for="location">Op locatie</label>
+                            <label class="control-label col-md-4" for="location">On location</label>
                             <div class="col-md-8">
                                 @Html.DropDownList("location", (SelectList)ViewBag.selectlist, htmlAttributes: new { @class = "form-control" }, optionLabel: "--Select a location--")
                             </div>
@@ -25,18 +25,18 @@
                     </div>
 
                     <hr />
-                    <h3>Op basis van wear</h3>
+                    <h3>On bassis of wear</h3>
 
                     <div class="row">
                         <div class="col-md-5">
-                            <label class="control-label col-md-8" for="minwear">wear groter is dan</label>
+                            <label class="control-label col-md-8" for="minwear">wear bigger than</label>
                             <div class="col-md-4">
                                 <input class="form-control input-sm" type="number" min="0" max="100" step="5" value="80" id="minwear" />
                             </div>
                         </div>
 
                         <div class="col-md-7">
-                            <label class="control-label col-md-8" for="minparts">resterende stukken kleiner dan</label>
+                            <label class="control-label col-md-8" for="minparts">remaining parts lower than</label>
                             <div class="col-md-4">
                                 <input class="form-control input-sm" type="number" min="0" step="10" value="215" id="minparts" />
                             </div>
@@ -46,7 +46,7 @@
 
                     <div class="row">
                         <div class="col-md-12">
-                            <label class="control-label col-md-8" for="maxdress">aantal keer gefreesd groter dan</label>
+                            <label class="control-label col-md-8" for="maxdress">number of dresses bigger than</label>
                             <div class="col-md-2">
                                 <input class="form-control input-sm" type="number" min="0" max="200" step="10" value="180" id="maxdress" />
                             </div>
@@ -54,7 +54,7 @@
                     </div>
 
                     <hr />
-                    <h4>Op basis van tip changer</h4>
+                    <h4>On basis of automatic electrode changer</h4>
 
                     <div class="row">
                         <div class="col-md-5">
@@ -67,7 +67,7 @@
 
                     <hr />
 
-                    <div class="btn btn-primary" id="loadLocations">Zoek</div>
+                    <div class="btn btn-primary" id="loadLocations">Find</div>
                 </div>
 
             </div>
@@ -78,7 +78,7 @@
 
                 <div class="card-header bg-dark">
                     <div class="row">
-                        <h4 class="col-md-6 text-white">Deze robots moeten gewisseld worden.</h4>
+                        <h4 class="col-md-6 text-white">These electrodes must be changed.</h4>
                     </div>
                 </div>
 

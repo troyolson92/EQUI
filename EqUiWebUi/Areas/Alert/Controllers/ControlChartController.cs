@@ -39,8 +39,15 @@ namespace EqUiWebUi.Areas.Alert.Controllers
         /// <returns></returns>
         public ActionResult _GetControlChart(ChartSettings chartSettings)
         {
-            //get opt data labels 
-            c_triggers trigger = db.c_triggers.Find(chartSettings.c_trigger_id);
+            c_triggers trigger = new c_triggers();
+            if (chartSettings.c_trigger_id != 0)
+            {
+                 trigger = db.c_triggers.Find(chartSettings.c_trigger_id);
+            }
+            else if(chartSettings.alertType != null)
+            {
+                 trigger = db.c_triggers.Where(c => c.alertType == chartSettings.alertType).First();
+            }
             chartSettings.chartname = trigger.alertType;
             if (trigger.OptValueLabels != null)
             {
