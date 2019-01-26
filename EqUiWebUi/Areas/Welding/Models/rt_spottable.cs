@@ -14,6 +14,12 @@ namespace EqUiWebUi.Areas.Welding.Models
     
     public partial class rt_spottable
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public rt_spottable()
+        {
+            this.h_production_issues = new HashSet<h_production_issues>();
+        }
+    
         public int ID { get; set; }
         public Nullable<System.DateTime> C_timestamp { get; set; }
         public int timerId { get; set; }
@@ -41,5 +47,7 @@ namespace EqUiWebUi.Areas.Welding.Models
         public Nullable<bool> PolaritySpot { get; set; }
     
         public virtual c_timer c_timer { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<h_production_issues> h_production_issues { get; set; }
     }
 }

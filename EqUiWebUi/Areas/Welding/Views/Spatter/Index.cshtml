@@ -4,11 +4,11 @@
     ViewBag.Title = "Index";
 }
 <div class="jumbotron">
-    <h1>Spatters and Spikes Page</h1>
+    <h1>Spatter Page</h1>
 </div>
 
 <p></p>@{
-    ViewBag.Title = "Spatters and Spikes Page";
+    ViewBag.Title = "Spatter Page";
 }
 <div class="jumbotron">
 
@@ -16,16 +16,17 @@
     <div class="card">
         <div class="card-header bg-dark">
             <h5 class="card-title text-white">
-                insert new issue
+                Report a problem
                 <span class="clickable float-right"><i class="far fa-edit"></i></span>
             </h5>
         </div>
         <div class="card-body">
             <p>
-                @MyHtmlHelpers.EquiLink("/Welding/Spatter/Index", "far fa-file-alt", "Insert new issue", helperText: "inserting production issue spatters & spikes")
-
+                @MyHtmlHelpers.EquiLink("/Welding/Spatter/Index", "far fa-file-alt", "Insert new issue", helperText: "maak hier melding van een spat/spike/braam probleem")
             <p>
-
+            <p>
+                @MyHtmlHelpers.EquiLink("/Welding/Spatter/Index", "far fa-file-alt", "follow up status reported issues", helperText: "Volg hier de status van de gemelde problemen")
+            <p>
 
         </div>
     </div>
@@ -35,34 +36,19 @@
     <div class="card">
         <div class="card-header bg-dark">
             <h5 class="card-title text-white">
-                V316 Follow Up
+                Analyses
                 <span class="clickable float-right"><i class="far fa-edit"></i></span>
             </h5>
         </div>
         <div class="card-body">
             <p>
-            @MyHtmlHelpers.EquiLink("/Welding/Spatter/_SpikesV316", "far fa-file-alt", "Spikes spots V316", helperText: "Follow up Spike sensitive spots")
+            @MyHtmlHelpers.EquiLink("/Welding/Spatter/_SpikesV316", "far fa-file-alt", "Analyse reported problems", helperText: "Analyse van de gemelde problemen")
             <p></p>
-            @MyHtmlHelpers.EquiLink("/Welding/Spatter/Index", "far fa-file-alt", "Spatter spots V316", helperText: "Follow up Spatter sensitive spots")
-            <p>
-
-
+        
         </div>
     </div>
 
-    <div class="card">
-        <div class="card-header bg-dark">
-            <h5 class="card-title text-white">
-                Y555 Follow Up
-                <span class="clickable float-right"><i class="far fa-edit"></i></span>
-            </h5>
-        </div>
-        <div class="card-body">
-            <p>
-            @MyHtmlHelpers.EquiLink("/Welding/Spatter/Index", "far fa-file-alt", "Spikes spots Y555", helperText: "Follow up Spike sensitive spots")
-            <p></p>
-            @MyHtmlHelpers.EquiLink("/Welding/Spatter/Index", "far fa-file-alt", "Spatter spots Y555", helperText: "Follow up Spatter sensitive spots")
-            <p>
+
 
 
         </div>
