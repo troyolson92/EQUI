@@ -42,7 +42,7 @@
     <PublishUrl>\\gnlsnm0101.gen.volvocars.net\PROJ\6308-SHR-VCC22700\VSTO\DEPLOYMENTBASE_VCCH\</PublishUrl>
     <InstallUrl>\\gnlsnm0101.gen.volvocars.net\PROJ\6308-SHR-VCC22700\VSTO\DEPLOYMENTBASE_VCCH\</InstallUrl>
     <TargetCulture>en</TargetCulture>
-    <ApplicationVersion>3.0.2.94</ApplicationVersion>
+    <ApplicationVersion>3.0.2.97</ApplicationVersion>
     <AutoIncrementApplicationRevision>true</AutoIncrementApplicationRevision>
     <UpdateEnabled>true</UpdateEnabled>
     <UpdateInterval>0</UpdateInterval>
@@ -368,6 +368,7 @@
     </None>
     <None Include="app.Rel_VCH.config">
       <DependentUpon>app.config</DependentUpon>
+      <SubType>Designer</SubType>
     </None>
     <None Include="app.Rel_VCT.config">
       <DependentUpon>app.config</DependentUpon>

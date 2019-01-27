@@ -14,6 +14,7 @@ namespace EqUiWebUi.Areas.Alert.Controllers
 {
     public class ControlChartController : Controller
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private GADATA_AlertModel db = new GADATA_AlertModel();
 
         // GET: Alert/ControlChart
@@ -40,14 +41,24 @@ namespace EqUiWebUi.Areas.Alert.Controllers
         public ActionResult _GetControlChart(ChartSettings chartSettings)
         {
             c_triggers trigger = new c_triggers();
-            if (chartSettings.c_trigger_id != 0)
+            if (chartSettings.c_trigger_id != 0) //set by trigger ID
             {
                  trigger = db.c_triggers.Find(chartSettings.c_trigger_id);
             }
-            else if(chartSettings.alertType != null)
+            else if(chartSettings.alertType != null) //set by alert type (used in welding tool)
             {
-                 trigger = db.c_triggers.Where(c => c.alertType == chartSettings.alertType).First();
+                try
+                {
+                    trigger = db.c_triggers.Where(c => c.alertType.Contains(chartSettings.alertType)).First();
+                }
+                catch(Exception ex)
+                {
+                    log.Error($"Failed to find alter type:{chartSettings.alertType}", ex);
+                    throw ex;
+                }
+                 chartSettings.c_trigger_id = trigger.id;
             }
+
             chartSettings.chartname = trigger.alertType;
             if (trigger.OptValueLabels != null)
             {

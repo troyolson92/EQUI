@@ -38,9 +38,10 @@
                             @MyHtmlHelpers.EquiLink(@Url.Action("WeldgunTool", "Electrode", new { area = "Tiplife" }, null), "fas fa-toolbox", "WeldgunTool", helperText: "View data and control charts")
                         </li>
 
+                        <li class="dropdown-divider"></li>
                         <li class="dropdown-item">
                             <div class="badge badge-info">
-                                <h6>The tools use Microsoft Click once deployment!</h6>
+                                <h6>Following tools use Microsoft Click once deployment!</h6>
                             </div>
                             <p>@MyHtmlHelpers.EquiLink("https://chrome.google.com/webstore/detail/clickonce-for-google-chro/kekahkplibinaibelipdcikofmedafmb", "fab fa-chrome", "ClickOnce for Google Chrome", helperText: "Needed to launch click once tools in the chrome browser.")
                         </li>
@@ -52,13 +53,13 @@
                             </li>
 
                             <li class="dropdown-item">
-                                @MyHtmlHelpers.EquiLink("file:////gnlsnm0101.gen.volvocars.net/proj/6308-SHR-VCC22700/VSTO/DEPLOYMENTBASE/ExcelAddInEquipmentDatabase.vsto", "fas fa-file-excel", "VSTO Excel (install)", helperText: "Excel ribbon plugin to acces the database (installation file)", helpurl: @Url.Action("_Getwiki", "Wiki", new { area = "", id = "VSTO" }, null))
+                                @MyHtmlHelpers.EquiLink("file:////gnlsnm0101.gen.volvocars.net/proj/6308-SHR-VCC22700/VSTO/DEPLOYMENTBASE/ExcelAddInEquipmentDatabase.vsto", "fas fa-file-excel", "VSTO Excel (install)", helperText: "Excel ribbon plug-in to access the database (installation file)", helpurl: @Url.Action("_Getwiki", "Wiki", new { area = "", id = "VSTO" }, null))
                             </li>
                         }
                         @if (System.Configuration.ConfigurationManager.AppSettings["Maximo_SiteID"].ToString() == "VCCH")
                         {
                             <li class="dropdown-item">
-                                @MyHtmlHelpers.EquiLink("file:////gnlsnm0101.gen.volvocars.net/proj/6308-SHR-VCC22700/VSTO/DEPLOYMENTBASE_VCCH/ExcelAddInEquipmentDatabase.vsto", "fas fa-file-excel", "VSTO Excel (install)", helperText: "Excel ribbon plugin to acces the database (installation file)", helpurl: @Url.Action("_Getwiki", "Wiki", new { area = "", id = "VSTO" }, null))
+                                @MyHtmlHelpers.EquiLink("file:////gnlsnm0101.gen.volvocars.net/proj/6308-SHR-VCC22700/VSTO/DEPLOYMENTBASE_VCCH/ExcelAddInEquipmentDatabase.vsto", "fas fa-file-excel", "VSTO Excel (install)", helperText: "Excel plug-in to access the database *Download can be slow package is hosted in Ghent", helpurl: @Url.Action("_Getwiki", "Wiki", new { area = "", id = "VSTO" }, null))
                             </li>
                         }
                     </ul>
