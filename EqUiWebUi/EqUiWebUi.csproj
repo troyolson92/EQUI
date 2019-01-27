@@ -164,6 +164,10 @@
     <Reference Include="TrackerEnabledDbContext.Common, Version=3.7.0.0, Culture=neutral, PublicKeyToken=4f92af0b908c4a0a, processorArchitecture=MSIL">
       <HintPath>..\packages\TrackerEnabledDbContext.Common.3.7\lib\net45\TrackerEnabledDbContext.Common.dll</HintPath>
     </Reference>
+    <Reference Include="VASCDll, Version=1.0.6964.31546, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\VASCDll.dll</HintPath>
+    </Reference>
     <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
       <HintPath>..\packages\WebActivatorEx.2.2.0\lib\net40\WebActivatorEx.dll</HintPath>
     </Reference>
@@ -465,6 +469,7 @@
     <Compile Include="Areas\user_management\SreenHub.cs" />
     <Compile Include="Areas\user_management\user_managementAreaRegistration.cs" />
     <Compile Include="Areas\VASC\Controllers\BreakdownController.cs" />
+    <Compile Include="Areas\VASC\Controllers\ClientController.cs" />
     <Compile Include="Areas\VASC\Controllers\c_controllerController.cs" />
     <Compile Include="Areas\VASC\Controllers\c_controller_classController.cs" />
     <Compile Include="Areas\VASC\Controllers\c_csv_logController.cs" />
@@ -2877,6 +2882,8 @@
     <Content Include="Areas\VASC\Views\c_job\Edit.cshtml" />
     <Content Include="Areas\VASC\Views\c_job\Index.cshtml" />
     <Content Include="Areas\VASC\Views\c_job\_List.cshtml" />
+    <Content Include="Areas\VASC\Views\Client\GetControlerStats.cshtml" />
+    <Content Include="Areas\VASC\Views\Client\Index.cshtml" />
     <None Include="Properties\PublishProfiles\chasvw1203_DEV_VCCH.pubxml" />
     <None Include="Properties\PublishProfiles\chasvw1203_PRODUCTION_VCCH.pubxml" />
     <Content Include="Areas\Welding\Views\WM\_Parameters.cshtml" />
