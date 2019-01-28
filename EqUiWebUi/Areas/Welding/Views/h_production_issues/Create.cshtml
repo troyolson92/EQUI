@@ -4,31 +4,45 @@
     ViewBag.Title = "Create";
 }
 
+<link rel="stylesheet" type="text/css" href="jquery.datetimepicker.css" />
 
-
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <h4>Doe hier een nieuwe melding</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.spotid, "spotnaam", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-auto">
+            @Html.DropDownList("spotid", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.spotid, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-3" for="startdate">report date</label>
+        <div class="col-md-9">
+            <input class="form-control input-md" id="startdate" name="startdate" type="text">
+        </div>
+    </div>
+
     
-    <div class="form-horizontal">
-        <h4>Doe hier een nieuwe melding</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
         <div class="form-group">
-            @Html.LabelFor(model => model.spotid, "spotnaam", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-auto">
-                @Html.DropDownList("spotid", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.spotid, "", new { @class = "text-danger" })
+            @Html.LabelFor(m => m.startdate, new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.TextBoxFor(m => m.startdate, new { @class = "form-control input-md" })
+                @Html.ValidationMessageFor(m => m.startdate, "date start problem", new { @class = "text-danger" })
+
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.reportDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-auto">
-                @Html.EditorFor(model => model.reportDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.reportDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
+
 
         <div class="form-group">
             @Html.LabelFor(model => model.reporterId, "wie?", htmlAttributes: new { @class = "control-label col-md-2" })
@@ -50,7 +64,7 @@
             @Html.LabelFor(model => model.quantity, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.quantity, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.quantity, "Geef hier het aantal problemen in van het afgelopen uur", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.quantity, "Geef hier het aantal problemen in voor de geselecteerde datum range", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -58,7 +72,7 @@
             @Html.LabelFor(model => model.lastBodyNbr, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.lastBodyNbr, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.lastBodyNbr, "laaste bodynummer met het probleem", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.lastBodyNbr, "laatste bodynummer met het probleem", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -76,9 +90,13 @@
             </div>
         </div>
     </div>
-}
+    }
 
-<div>
-    @Html.ActionLink("Keer terug naar lijst", "Index")
-</div>
+    <div>
+        @Html.ActionLink("Keer terug naar lijst", "Index")
+    </div>
+
+
+
+
 

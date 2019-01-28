@@ -677,6 +677,7 @@
     <Compile Include="Areas\Welding\Controllers\DMLControllers\UltralogInspectionsController.cs" />
     <Compile Include="Areas\Welding\Controllers\DMLControllers\WeldingGunsController.cs" />
     <Compile Include="Areas\Welding\Controllers\LaunchController.cs" />
+    <Compile Include="Areas\Welding\Controllers\QteamConfigController.cs" />
     <Compile Include="Areas\Welding\Controllers\QteamController.cs" />
     <Compile Include="Areas\Welding\Controllers\SpatterController.cs" />
     <Compile Include="Areas\Welding\Controllers\TeardownTeam.cs" />
@@ -2888,6 +2889,7 @@
     <Content Include="Areas\Welding\Views\h_production_issues\Details.cshtml" />
     <Content Include="Areas\Welding\Views\h_production_issues\Edit.cshtml" />
     <Content Include="Areas\Welding\Views\h_production_issues\Index.cshtml" />
+    <Content Include="Areas\Welding\Views\QteamConfig\Config.cshtml" />
     <None Include="Properties\PublishProfiles\chasvw1203_DEV_VCCH.pubxml" />
     <None Include="Properties\PublishProfiles\chasvw1203_PRODUCTION_VCCH.pubxml" />
     <Content Include="Areas\Welding\Views\WM\_Parameters.cshtml" />

@@ -435,7 +435,8 @@ warning 6002: The table/view 'GADATA.WELDING2.h_Nut_Bolt_Measure' does not have 
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="spotid" Type="int" Nullable="false" />
-          <Property Name="reportDate" Type="datetime" Nullable="false" />
+          <Property Name="startdate" Type="datetime" Nullable="false" />
+          <Property Name="enddate" Type="datetime" Nullable="false" />
           <Property Name="reporterId" Type="int" Nullable="false" />
           <Property Name="issueId" Type="int" Nullable="false" />
           <Property Name="quantity" Type="int" />
@@ -3792,7 +3793,8 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="spotid" Type="Int32" Nullable="false" />
-          <Property Name="reportDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="startdate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="enddate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="reporterId" Type="Int32" Nullable="false" />
           <Property Name="issueId" Type="Int32" Nullable="false" />
           <Property Name="quantity" Type="Int32" />
@@ -4929,7 +4931,8 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
                 <ScalarProperty Name="quantity" ColumnName="quantity" />
                 <ScalarProperty Name="issueId" ColumnName="issueId" />
                 <ScalarProperty Name="reporterId" ColumnName="reporterId" />
-                <ScalarProperty Name="reportDate" ColumnName="reportDate" />
+                <ScalarProperty Name="enddate" ColumnName="enddate" />
+                <ScalarProperty Name="startdate" ColumnName="startdate" />
                 <ScalarProperty Name="spotid" ColumnName="spotid" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>

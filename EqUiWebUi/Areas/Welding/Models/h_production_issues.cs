@@ -16,7 +16,8 @@ namespace EqUiWebUi.Areas.Welding.Models
     {
         public int id { get; set; }
         public int spotid { get; set; }
-        public System.DateTime reportDate { get; set; }
+        public System.DateTime startdate { get; set; }
+        public System.DateTime enddate { get; set; }
         public int reporterId { get; set; }
         public int issueId { get; set; }
         public Nullable<int> quantity { get; set; }

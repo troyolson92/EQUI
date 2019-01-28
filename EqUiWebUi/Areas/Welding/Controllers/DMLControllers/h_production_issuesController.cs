@@ -17,7 +17,7 @@ namespace EqUiWebUi.Areas.Welding.Controllers.DMLControllers
         // GET: Welding/h_production_issues
         public ActionResult Index()
         {
-            var h_production_issues = db.h_production_issues.Include(h => h.c_production_issue).Include(h => h.c_reporter).Include(h => h.rt_spottable);
+            var h_production_issues = db.h_production_issues.Include(h => h.c_production_issue).Include(h => h.c_reporter).Include(h => h.rt_spottable).Where(h => h.rt_spottable.weldProgNo > 80 && h.rt_spottable.weldProgNo < 237);
             return View(h_production_issues.ToList());
         }
 
@@ -41,7 +41,7 @@ namespace EqUiWebUi.Areas.Welding.Controllers.DMLControllers
         {
             ViewBag.issueId = new SelectList(db.c_production_issue, "id", "issue");
             ViewBag.reporterId = new SelectList(db.c_reporter, "id", "reporterName");
-            ViewBag.spotid = new SelectList(db.rt_spottable, "ID", "SpotName");
+            ViewBag.spotid = new SelectList(db.rt_spottable.Where(c => c.weldProgNo > 80 && c.weldProgNo < 237 && c.Model == "V316").OrderBy(c => c.SpotName), "ID", "SpotName");
             return View();
         }
 
@@ -50,7 +50,7 @@ namespace EqUiWebUi.Areas.Welding.Controllers.DMLControllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,spotname,reportDate,reporterId,issueId,quantity,lastBodyNbr,remarks")] h_production_issues h_production_issues)
+        public ActionResult Create([Bind(Include = "id,spotname,startdate,enddate,reporterId,issueId,quantity,lastBodyNbr,remarks")] h_production_issues h_production_issues)
         {
             if (ModelState.IsValid)
             {
@@ -61,7 +61,7 @@ namespace EqUiWebUi.Areas.Welding.Controllers.DMLControllers
 
             ViewBag.issueId = new SelectList(db.c_production_issue, "id", "issue", h_production_issues.issueId);
             ViewBag.reporterId = new SelectList(db.c_reporter, "id", "reporterName", h_production_issues.reporterId);
-            ViewBag.spotid = new SelectList(db.rt_spottable, "spotname", "SpotName", h_production_issues.spotid);
+            ViewBag.spotid = new SelectList(db.rt_spottable.Where(c => c.weldProgNo > 80 && c.weldProgNo < 237 && c.Model == "V316").OrderBy(c => c.SpotName), "ID", "SpotName");
             return View(h_production_issues);
         }
 
@@ -88,7 +88,7 @@ namespace EqUiWebUi.Areas.Welding.Controllers.DMLControllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,spotid,reportDate,reporterId,issueId,quantity,lastBodyNbr,remarks")] h_production_issues h_production_issues)
+        public ActionResult Edit([Bind(Include = "id,spotid,startdate,enddate,reporterId,issueId,quantity,lastBodyNbr,remarks")] h_production_issues h_production_issues)
         {
             if (ModelState.IsValid)
             {

@@ -15,7 +15,8 @@
 {
     //columns.Add(c => c.id).Titled("id");
     columns.Add(c => c.rt_spottable.SpotName).Titled("spotname").Css("bolded");
-    columns.Add(c => c.reportDate).Titled("reportDate").InitialSort(GridSortOrder.Desc);
+    columns.Add(c => c.startdate).Titled("startdate").InitialSort(GridSortOrder.Desc);
+    columns.Add(c => c.enddate).Titled("enddate");
     columns.Add(c => c.c_reporter.reporterName).Titled("ReporterName");
     columns.Add(c => c.c_production_issue.issue).Titled("Issue");
     columns.Add(c => c.quantity).Titled("quantity");

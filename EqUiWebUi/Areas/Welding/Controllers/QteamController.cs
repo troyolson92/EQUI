@@ -56,8 +56,6 @@ namespace EqUiWebUi.Areas.Welding.Controllers
             return View(data);
         }
 
-
-
     }
 }
 
