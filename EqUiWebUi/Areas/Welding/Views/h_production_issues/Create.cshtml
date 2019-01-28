@@ -23,72 +23,76 @@
             @Html.ValidationMessageFor(model => model.spotid, "", new { @class = "text-danger" })
         </div>
     </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3" for="startdate">Daterange</label>
+                    <div class="col-md-9">
+                        <input class="form-control input-md" id="daterange" name="daterange" type="text">
+                    </div>
+                </div>
 
-    <div class="form-group">
-        <label class="control-label col-md-3" for="startdate">report date</label>
-        <div class="col-md-9">
-            <input class="form-control input-md" id="startdate" name="startdate" type="text">
-        </div>
-    </div>
+                <div class="form-group d-none">
+                    @Html.LabelFor(m => m.enddate, new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.TextBoxFor(m => m.enddate, new { @class = "form-control input-md" })
+                        @Html.ValidationMessageFor(m => m.enddate, "", new { @class = "text-danger" })
+                        <span class="help-block">changedate < than </span>
+                    </div>
+                </div>
 
-    
+                <div class="form-group d-none">
+                    @Html.LabelFor(m => m.startdate, new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.TextBoxFor(m => m.startdate, new { @class = "form-control input-md" })
+                        @Html.ValidationMessageFor(m => m.startdate, "", new { @class = "text-danger" })
+                        <span class="help-block">changedate > than</span>
+                    </div>
+                </div>
 
-        <div class="form-group">
-            @Html.LabelFor(m => m.startdate, new { @class = "control-label col-md-3" })
-            <div class="col-md-9">
-                @Html.TextBoxFor(m => m.startdate, new { @class = "form-control input-md" })
-                @Html.ValidationMessageFor(m => m.startdate, "date start problem", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.reporterId, "wie?", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-auto">
+                        @Html.DropDownList("reporterId", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.reporterId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
 
-            </div>
-        </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.issueId, "probleem?", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-auto">
+                        @Html.DropDownList("issueId", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.issueId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
 
+                <div class="form-group">
+                    @Html.LabelFor(model => model.quantity, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.quantity, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.quantity, "Geef hier het aantal problemen in voor de geselecteerde datum range", new { @class = "text-danger" })
+                    </div>
+                </div>
 
+                <div class="form-group">
+                    @Html.LabelFor(model => model.lastBodyNbr, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.lastBodyNbr, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.lastBodyNbr, "laatste bodynummer met het probleem", new { @class = "text-danger" })
+                    </div>
+                </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.reporterId, "wie?", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-auto">
-                @Html.DropDownList("reporterId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.reporterId, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.remarks, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.remarks, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.remarks, "Geef een nauwkeurige uitleg aan het probleem", new { @class = "text-danger" })
+                    </div>
+                </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.issueId, "probleem?", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-auto">
-                @Html.DropDownList("issueId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.issueId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.quantity, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.quantity, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.quantity, "Geef hier het aantal problemen in voor de geselecteerde datum range", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.lastBodyNbr, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.lastBodyNbr, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.lastBodyNbr, "laatste bodynummer met het probleem", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.remarks, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.remarks, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.remarks, "Geef een nauwkeurige uitleg aan het probleem", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Maak aan" class="btn btn-default" />
-            </div>
-        </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Maak aan" class="btn btn-default" />
+                    </div>
+                </div>
     </div>
     }
 
@@ -96,7 +100,36 @@
         @Html.ActionLink("Keer terug naar lijst", "Index")
     </div>
 
-
+    <script>
+    //setting up datetimePicker
+    $('#daterange').daterangepicker({
+        "locale": {
+            "format": "YYYY-MM-DD HH:mm"
+        },
+        "timePicker": true,
+        "timePicker24Hour": true,
+        "showWeekNumbers": true,
+        "showISOWeekNumbers": true,
+        "ranges": {
+            'Yesterday': [moment().subtract(2, 'days'), moment().subtract(1,'days')],
+            'Last 48 Hours': [moment().subtract(2, 'days'), moment()],
+            'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+            'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+            'Last 100 Days': [moment().subtract(100, 'days'), moment()],
+            'Last Year': [moment().subtract(365, 'days'), moment()]
+        },
+       // "startDate": moment(//Model.startdate.GetValueOrDefault().ToString("o")'),
+        //"endDate": moment(//Model.enddate.GetValueOrDefault().ToString("o")'),
+      //  "opens": "left",
+      //  "drops": "up"
+    }, function (start, end, label) {
+        console.log("New date range selected: " + moment(end).toISOString() + " to " + moment(start).toISOString() + " (predefined range: " + label + ")");
+        //feed to hidden fields from model so I can post back with form.
+        $("#enddate").val(moment(end).format('YYYY-MM-DD HH:mm:ss'));
+        $("#startdate").val(moment(start).format('YYYY-MM-DD HH:mm:ss'));
+    });
+    </script>
+    
 
 
 

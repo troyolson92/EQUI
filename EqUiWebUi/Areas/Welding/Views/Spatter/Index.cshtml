@@ -4,8 +4,8 @@
     ViewBag.Title = "Index";
 }
 <div class="jumbotron">
-    <h1>Spatter Page</h1>
-</div>
+    <Center><h1>Spatter Page</h1></Center>
+
 
 <p></p>@{
     ViewBag.Title = "Spatter Page";
@@ -22,10 +22,10 @@
         </div>
         <div class="card-body">
             <p>
-                @MyHtmlHelpers.EquiLink("/Welding/Spatter/Index", "far fa-file-alt", "Insert new issue", helperText: "maak hier melding van een spat/spike/braam probleem")
+                @MyHtmlHelpers.EquiLink("/Welding/h_production_issues/Index", "far fa-flag", "Insert new issue", helperText: "maak hier melding van een spat/spike/braam probleem")
             <p>
             <p>
-                @MyHtmlHelpers.EquiLink("/Welding/Spatter/Index", "far fa-file-alt", "follow up status reported issues", helperText: "Volg hier de status van de gemelde problemen")
+                @MyHtmlHelpers.EquiLink("/Welding/Spatter/Index", "fab fa-searchengin", "follow up status reported issues", helperText: "Volg hier de status van de gemelde problemen")
             <p>
 
         </div>
@@ -42,7 +42,7 @@
         </div>
         <div class="card-body">
             <p>
-            @MyHtmlHelpers.EquiLink("/Welding/Spatter/_SpikesV316", "far fa-file-alt", "Analyse reported problems", helperText: "Analyse van de gemelde problemen")
+            @MyHtmlHelpers.EquiLink("/Welding/Spatter/_SpikesV316", "fas fa-chart-bar", "Analyse reported problems", helperText: "Analyse van de gemelde problemen")
             <p></p>
         
         </div>

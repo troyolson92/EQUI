@@ -50,7 +50,7 @@ namespace EqUiWebUi.Areas.Welding.Controllers.DMLControllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,spotname,startdate,enddate,reporterId,issueId,quantity,lastBodyNbr,remarks")] h_production_issues h_production_issues)
+        public ActionResult Create([Bind(Include = "id,spotid,startdate,enddate,reporterId,issueId,quantity,lastBodyNbr,remarks")] h_production_issues h_production_issues)
         {
             if (ModelState.IsValid)
             {

@@ -1,14 +1,14 @@
-﻿
-
-<p>
+﻿<p>
     @Html.ActionLink("Click Here to insert a new spatter Issue", "Create")
 </p>
+
+
+
 @model IEnumerable<EqUiWebUi.Areas.Welding.Models.h_production_issues>
 
 @{
     ViewBag.Title = "Index";
 }
-
 <h2>Reported Spatter Issues</h2>
 
 @Html.Grid(Model).Named("h_production_issues").Build(columns =>
@@ -22,8 +22,6 @@
     columns.Add(c => c.quantity).Titled("quantity");
     columns.Add(c => c.lastBodyNbr).Titled("lastBodyNbr");
     columns.Add(c => c.remarks).Titled("remarks");
-
-
     //tools
     columns.Add(c => c)
                         .Titled("")
@@ -33,23 +31,16 @@
                         MyHtmlHelpers.IconActionLink(Url.Action("Edit", new { id = c.id }), "fas fa-pencil-alt", "", "Edit this reported issue").ToHtmlString() +
                         MyHtmlHelpers.IconActionLink(Url.Action("Delete", new { id = c.id }), "fas fa-trash-alt text-danger", "", "Delete this issue").ToHtmlString()
 
-
-                        ).Filterable(false);
-
-
-
+                       ).Filterable(false);
 }).Filterable().Pageable(pager =>
 {
     pager.RowsPerPage = 5;
-
 }
         ).Sortable().Css("table-hover")
-
 @section scripts{
     <script>
         //full with screen
         $("#allcontent").removeClass("body-content");
         $("#allcontent").removeClass("container");
     </script>
-
 }
