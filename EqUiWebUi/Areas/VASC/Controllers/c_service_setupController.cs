@@ -34,10 +34,15 @@ namespace EqUiWebUi.Areas.VASC.Controllers
             log.Info($"vaschost:{vaschost} execution user:{System.Security.Principal.WindowsIdentity.GetCurrent().Name}");
             ViewBag.vaschost = vaschost;
             List <Models.winService> servicesOnServer = GetServices(vaschost);
+            foreach(winService service in servicesOnServer)
+            {
+                log.Info($"servicename: {service.ServiceName}, displayname: {service.ServiceDisplayName}");
+            }
+
             List<Models.winService> result = new List<winService>();
             foreach (c_service_setup session in sessions)
             {
-                Models.winService service = servicesOnServer.Where(s => s.ServiceName == session.value).FirstOrDefault();
+                Models.winService service = servicesOnServer.Where(s => s.ServiceName.Contains(session.value) || s.ServiceDisplayName.Contains(session.value)).FirstOrDefault();
                 if (service == null)
                 {
                     log.Warn("vasc session: " + session.value + " not found on server");

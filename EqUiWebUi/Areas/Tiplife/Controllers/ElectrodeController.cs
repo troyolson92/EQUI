@@ -114,8 +114,8 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
                     || tipMonitor.nDress > maxDress
                     || (tipMonitor.Status != "" && tipMonitor.Status != "NO PREDICTION")  //do not push for no wear in clac 
                     )
-                    && tipMonitor.LocationTree.Contains(locationFilter) //apply dropdown filter
-                    && tipMonitor.LocationTree.Contains(LocationRoot) //apply user filter
+                    && (tipMonitor.LocationTree ?? "").Contains(locationFilter) //apply dropdown filter
+                    && (tipMonitor.LocationTree ?? "").Contains(LocationRoot) //apply user filter
                     select tipMonitor;
             }
             else
@@ -123,9 +123,9 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
                 data = from tipMonitor in DataBuffer.Tipstatus
                     where
                     (tipMonitor.Status != "" && tipMonitor.Status != "NO PREDICTION")  //do not push for no wear in clac 
-                    && tipMonitor.LocationTree.Contains(locationFilter) //apply dropdown filter
-                    && tipMonitor.LocationTree.Contains(LocationRoot) //apply user filter
-                    select tipMonitor;
+                    && (tipMonitor.LocationTree ?? "").Contains(locationFilter) //apply dropdown filter
+                    && (tipMonitor.LocationTree ?? "").Contains(LocationRoot) //apply user filter
+                     select tipMonitor;
             }
 
             log.Info($"Plantipchange for: {locationFilter} Filters: minwear: {minWear} minparts: {minParts} maxDress: {maxDress}  |resultCount: {data.Count()}");

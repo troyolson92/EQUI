@@ -2,7 +2,7 @@
 
 @Html.Grid(Model).Named("TipStatusGrid").Build(columns =>
 {
-    columns.Add(c => c.SortCol).Titled("SortCol").InitialSort(GridSortOrder.Asc).Css("d-none");
+    columns.Add(c => c.SortCol).Titled("SortCol").InitialSort(GridSortOrder.Desc).Css("d-none");
     columns.Add(c => c.Robot).Titled("Robot").Filterable(true);
     columns.Add(c => c.Tool_Nr).Titled("Tool").Filterable(true);
     columns.Add(c => c.Date_time).Titled("Last dress").Formatted("{0:dd-MM-yyyy HH:mm}");

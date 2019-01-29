@@ -34,10 +34,12 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li class="dropdown-item"><h3>Available tools</h3> </li>
-                        <li class="dropdown-item">
-                            @MyHtmlHelpers.EquiLink(@Url.Action("WeldgunTool", "Electrode", new { area = "Tiplife" }, null), "fas fa-toolbox", "WeldgunTool", helperText: "View data and control charts")
-                        </li>
-
+                        @if (System.Configuration.ConfigurationManager.AppSettings["Maximo_SiteID"].ToString() == "VCG")
+                        {
+                            <li class="dropdown-item">
+                                @MyHtmlHelpers.EquiLink(@Url.Action("WeldgunTool", "Electrode", new { area = "Tiplife" }, null), "fas fa-toolbox", "WeldgunTool", helperText: "View data and control charts")
+                            </li>
+                        }
                         <li class="dropdown-divider"></li>
                         <li class="dropdown-item">
                             <div class="badge badge-info">
@@ -60,6 +62,9 @@
                         {
                             <li class="dropdown-item">
                                 @MyHtmlHelpers.EquiLink("file:////gnlsnm0101.gen.volvocars.net/proj/6308-SHR-VCC22700/VSTO/DEPLOYMENTBASE_VCCH/ExcelAddInEquipmentDatabase.vsto", "fas fa-file-excel", "VSTO Excel (install)", helperText: "Excel plug-in to access the database *Download can be slow package is hosted in Ghent", helpurl: @Url.Action("_Getwiki", "Wiki", new { area = "", id = "VSTO" }, null))
+                            </li>
+                            <li class="dropdown-item">
+                                <p>\\gnlsnm0101.gen.volvocars.net\PROJ\6308-SHR-VCC22700\VSTO\DEPLOYMENTBASE_VCCH</p>
                             </li>
                         }
                     </ul>
