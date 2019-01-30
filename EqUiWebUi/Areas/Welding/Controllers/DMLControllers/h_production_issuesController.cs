@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -13,6 +15,7 @@ namespace EqUiWebUi.Areas.Welding.Controllers.DMLControllers
     public class h_production_issuesController : Controller
     {
         private GADATAEntitiesWelding db = new GADATAEntitiesWelding();
+        private object model;
 
         // GET: Welding/h_production_issues
         public ActionResult Index()
@@ -136,5 +139,39 @@ namespace EqUiWebUi.Areas.Welding.Controllers.DMLControllers
             }
             base.Dispose(disposing);
         }
+
+        public ActionResult SpatterPicture()
+        {
+       
+var item = (from d in db.c_picture1
+            select d).ToList();
+
+            return View(item);
+        }
+        public ActionResult AddSpatterPicture()
+        {
+            c_picture1 c1 = new c_picture1();
+
+            return View(c1);
+        }
+        [HttpPost]
+        public ActionResult AddSpatterPicture(c_picture1 model,HttpPostedFileBase file)
+        {
+            var db = new GADATAEntitiesWelding();
+           if (file != null)
+            {
+                model.image = new byte[file.ContentLength];
+                file.InputStream.Read(model.image, 0, file.ContentLength);
+                
+            }
+            db.c_picture1.Add(model);
+            db.SaveChanges();
+
+            return View(model);
+        }
+
+
     }
-}
+
+    }
+

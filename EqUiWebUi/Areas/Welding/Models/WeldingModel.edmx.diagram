@@ -87,6 +87,7 @@
         <AssociationConnector Association="GADATAModelWelding.FK_h_production_issues_c_production_issue" />
         <AssociationConnector Association="GADATAModelWelding.FK_h_production_issues_c_reporter" />
         <AssociationConnector Association="GADATAModelWelding.FK_h_production_issues_rt_spottable" />
+        <EntityTypeShape EntityType="GADATAModelWelding.c_picture1" Width="1.5" PointX="0.5" PointY="0.625" />
         </Diagram>
       <Diagram DiagramId="6c5a0a6f0e3c46ecbc5b4756677dc47e" Name="Ultralog" ZoomLevel="55" >
         <EntityTypeShape EntityType="GADATAModelWelding.AutomaticPlanControleWeldBolt" Width="1.5" PointX="0.5" PointY="0.5" FillColor="255, 192, 128" />

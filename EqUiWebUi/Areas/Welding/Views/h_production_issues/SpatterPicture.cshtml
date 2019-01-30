@@ -1,0 +1,49 @@
+﻿
+
+
+<head>
+</head>
+<body>
+
+    <div id="container">
+        <img class="slides" src="~/Content/images/deuropeningLinksV316.png" height="500" width="750" />
+       
+        <button class="btn" onclick="plusIndex(-1)" id="btn1">&#10094;</button>
+        <button class="btn" onclick="plusIndex(1)" id="btn2">&#10095;</button>
+    </div>
+
+
+</body>
+<script>
+    var index = 1;
+    function plusIndex(n) {
+        index = index + n;
+        ShowImage(index);
+    }
+    ShowImage(1);
+    function showImage(n) {
+        var i;
+        var x = document.getElementsByClassName("slides");
+        if (n > x.lenght) { index = 1 };
+        if (n < 1) { index = x.lenght };
+        for (i = 0; i < x.lenght; i++) {
+            x[i].style.display = "none";
+        }
+        x[index - 1].style.display = "block";
+    }
+
+</script>
+
+@section scripts{
+    <script>
+        //full with screen
+        $("#allcontent").removeClass("body-content");
+        $("#allcontent").removeClass("container");
+    </script>
+}
+
+
+
+
+
+

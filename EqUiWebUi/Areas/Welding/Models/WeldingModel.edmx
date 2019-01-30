@@ -336,6 +336,13 @@ warning 6002: The table/view 'GADATA.UL.ULplan_end' does not have a primary key 
           <Property Name="active" Type="bit" />
           <Property Name="enable_bit" Type="int" />
         </EntityType>
+        <EntityType Name="c_picture1">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="image" Type="varbinary(max)" />
+        </EntityType>
         <EntityType Name="c_production_issue">
           <Key>
             <PropertyRef Name="id" />
@@ -1559,6 +1566,7 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
           <EntitySet Name="c_bosch_param" EntityType="Self.c_bosch_param" Schema="WELDING2" store:Type="Tables" />
           <EntitySet Name="c_error" EntityType="Self.c_error" Schema="WELDING2" store:Type="Tables" />
           <EntitySet Name="c_NPT" EntityType="Self.c_NPT" Schema="WELDING2" store:Type="Tables" />
+          <EntitySet Name="c_picture1" EntityType="Self.c_picture1" Schema="WELDING2" Table="c_picture" store:Type="Tables" />
           <EntitySet Name="c_production_issue" EntityType="Self.c_production_issue" Schema="WELDING2" store:Type="Tables" />
           <EntitySet Name="c_reporter" EntityType="Self.c_reporter" Schema="WELDING2" store:Type="Tables" />
           <EntitySet Name="c_timer" EntityType="Self.c_timer" Schema="WELDING2" store:Type="Tables" />
@@ -2269,6 +2277,7 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
             <End Role="rt_spottable" EntitySet="rt_spottable" />
             <End Role="h_production_issues" EntitySet="h_production_issues" />
           </AssociationSet>
+          <EntitySet Name="c_picture1" EntityType="GADATAModelWelding.c_picture1" />
           </EntityContainer>
         <EntityType Name="rt_AutoWorkFlowULPlans">
           <Key>
@@ -3840,6 +3849,13 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="c_picture1">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="image" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4934,6 +4950,14 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
                 <ScalarProperty Name="enddate" ColumnName="enddate" />
                 <ScalarProperty Name="startdate" ColumnName="startdate" />
                 <ScalarProperty Name="spotid" ColumnName="spotid" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="c_picture1">
+            <EntityTypeMapping TypeName="GADATAModelWelding.c_picture1">
+              <MappingFragment StoreEntitySet="c_picture1">
+                <ScalarProperty Name="image" ColumnName="image" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
