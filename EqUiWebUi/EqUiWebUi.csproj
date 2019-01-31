@@ -1093,6 +1093,7 @@
     <Content Include="Content\fontawesome-all.css" />
     <Content Include="Content\images\deuropeningLinksV316.png" />
     <Content Include="Content\images\volvo-50.png" />
+    <Content Include="Content\images\vooruitkaderLinks.PNG" />
     <Content Include="Content\jquery-cron.css" />
     <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\MvcGrid\mvc-grid.css" />
@@ -2896,6 +2897,7 @@
     <Content Include="Areas\Welding\Views\QteamConfig\Config.cshtml" />
     <Content Include="Areas\Welding\Views\h_production_issues\SpatterPicture.cshtml" />
     <Content Include="Areas\Welding\Views\h_production_issues\AddSpatterPicture.cshtml" />
+    <Content Include="Areas\Welding\Views\h_production_issues\_spatterPage.cshtml" />
     <None Include="Properties\PublishProfiles\chasvw1203_DEV_VCCH.pubxml" />
     <None Include="Properties\PublishProfiles\chasvw1203_PRODUCTION_VCCH.pubxml" />
     <Content Include="Areas\Welding\Views\WM\_Parameters.cshtml" />

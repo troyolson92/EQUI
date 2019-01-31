@@ -142,11 +142,11 @@ namespace EqUiWebUi.Areas.Welding.Controllers.DMLControllers
 
         public ActionResult SpatterPicture()
         {
-       
-var item = (from d in db.c_picture1
-            select d).ToList();
 
-            return View(item);
+            var item = (from d in db.c_picture1
+                        select d).ToList();
+
+            return PartialView(item);
         }
         public ActionResult AddSpatterPicture()
         {
@@ -155,20 +155,26 @@ var item = (from d in db.c_picture1
             return View(c1);
         }
         [HttpPost]
-        public ActionResult AddSpatterPicture(c_picture1 model,HttpPostedFileBase file)
+        public ActionResult AddSpatterPicture(c_picture1 model, HttpPostedFileBase file)
         {
             var db = new GADATAEntitiesWelding();
-           if (file != null)
+            if (file != null)
             {
                 model.image = new byte[file.ContentLength];
                 file.InputStream.Read(model.image, 0, file.ContentLength);
-                
+
             }
             db.c_picture1.Add(model);
             db.SaveChanges();
 
             return View(model);
         }
+
+        public ActionResult _spatterPage()
+        {
+            return View();
+        }
+
 
 
     }
