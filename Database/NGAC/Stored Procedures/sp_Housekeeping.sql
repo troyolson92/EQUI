@@ -86,33 +86,33 @@ print @@rowcount
 Print 'check for unused records in L_*'
 --******************************************************************--
 --select count(*) as 'L_actions'
-DELETE GADATA.NGAC.L_actions
-FROM GADATA.NGAC.L_actions as l with(nolock)
-left join GADATA.NGAC.L_error as le on le.l_actions_id = l.id
+DELETE NGAC.L_actions
+FROM NGAC.L_actions as l with(nolock)
+left join NGAC.L_error as le on le.l_actions_id = l.id
 where le._id is null
 print @@rowcount
 --select count(*) as 'L_causes'
-DELETE GADATA.NGAC.L_causes
-FROM GADATA.NGAC.L_causes as l with(nolock)
-left join GADATA.NGAC.L_error as le on le.l_causes_id = l.id
+DELETE NGAC.L_causes
+FROM NGAC.L_causes as l with(nolock)
+left join NGAC.L_error as le on le.l_causes_id = l.id
 where le._id is null
 print @@rowcount
 --select count(*) as 'L_consequences'
-DELETE GADATA.NGAC.L_consequences
-FROM GADATA.NGAC.L_consequences as l with(nolock)
-left join GADATA.NGAC.L_error as le on le.l_consequences_id = l.id
+DELETE NGAC.L_consequences
+FROM NGAC.L_consequences as l with(nolock)
+left join NGAC.L_error as le on le.l_consequences_id = l.id
 where le._id is null
 print @@rowcount
 --select count(*) as 'L_description'
-DELETE GADATA.NGAC.L_description
-FROM GADATA.NGAC.L_description as l with(nolock)
-left join GADATA.NGAC.L_error as le with(nolock) on le.l_description_id = l.id
+DELETE NGAC.L_description
+FROM NGAC.L_description as l with(nolock)
+left join NGAC.L_error as le with(nolock) on le.l_description_id = l.id
 where le._id is null
 print @@rowcount
 --select count(*) as 'L_error'
-DELETE GADATA.NGAC.L_error
-FROM GADATA.NGAC.L_error as l with(nolock)
-left join GADATA.NGAC.h_alarm as h with(nolock) on l._id = h.L_error_id
+DELETE NGAC.L_error
+FROM NGAC.L_error as l with(nolock)
+left join NGAC.h_alarm as h with(nolock) on l._id = h.L_error_id
 where h.L_error_id  is null
 print @@rowcount
 

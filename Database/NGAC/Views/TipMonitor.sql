@@ -17,6 +17,9 @@
 
 
 
+
+
+
 CREATE VIEW [NGAC].[TipMonitor]
 AS
 SELECT DISTINCT top 10000  c.controller_name as 'Robot'
@@ -53,9 +56,9 @@ SELECT DISTINCT top 10000  c.controller_name as 'Robot'
 		                      ELSE null
 		                   END 'nRcars'
 						  ,CASE --dummy collum to help with sorting. (stuff with alerts always on top and then decending sort on nRcars)
-						      WHEN (alert.alertType is not null) THEN -10000
-	                          WHEN  rt.[ESTremainingCarsFixed] >= rt.[ESTremainingsCarsMove] THEN rt.ESTremainingCarsFixed
-							  WHEN  rt.[ESTremainingCarsFixed] <= rt.[ESTremainingsCarsMove] THEN rt.ESTremainingsCarsMove
+						      WHEN (alert.alertType is not null) THEN 10000
+						      WHEN  rt.[Wear_Fixed] >= rt.[Wear_Move]  THEN ROUND((rt.[Wear_Fixed]  / rt.[Max_Wear_Fixed])*100,0)
+							  WHEN  rt.[Wear_Fixed] <= rt.[Wear_Move]  THEN ROUND((rt.Wear_Move  / rt.Max_Wear_Move)*100,0) 
 		                      ELSE null
 		                   END 'SortCol'
 						 ,DATEDIFF(hour,rt.LastTipchange,getdate()) as 'TipAge(h)'
@@ -86,6 +89,7 @@ SELECT DISTINCT top 10000  c.controller_name as 'Robot'
 						left join Alerts.c_triggers with(nolock) on c_triggers.id = h_alert.c_tirgger_id
 						left join Alerts.c_state  with(nolock) on h_alert.[state] = c_state.id
 						where c_triggers.alertGroup = 'TIPLIFE'
+						AND c_triggers.enabled = 1
 						AND h_alert._timestamp > getdate()-3  -- limit search window
 						AND c_state.[state] = 'WGK'
 					  ) as alert on alert.locationTree = rt.LocationTree
