@@ -35,14 +35,14 @@
     </UpgradeBackupLocation>
     <OldToolsVersion>4.0</OldToolsVersion>
     <VSTO_TrustAssembliesLocation>true</VSTO_TrustAssembliesLocation>
-    <IsWebBootstrapper>False</IsWebBootstrapper>
+    <IsWebBootstrapper>True</IsWebBootstrapper>
     <TargetFrameworkProfile />
     <BootstrapperEnabled>false</BootstrapperEnabled>
     <BootstrapperComponentsLocation>Relative</BootstrapperComponentsLocation>
-    <PublishUrl>\\gnlsnm0101.gen.volvocars.net\PROJ\6308-SHR-VCC22700\VSTO\DEPLOYMENTBASE_VCCH\</PublishUrl>
-    <InstallUrl>\\gnlsnm0101.gen.volvocars.net\PROJ\6308-SHR-VCC22700\VSTO\DEPLOYMENTBASE_VCCH\</InstallUrl>
+    <PublishUrl>\\GENSVW1178.gen.volvocars.net\gensvw1178_D\IIS\EqUiWebui\VSTO\</PublishUrl>
+    <InstallUrl>https://gensvw1178.gen.volvocars.net/VSTO/</InstallUrl>
     <TargetCulture>en</TargetCulture>
-    <ApplicationVersion>3.0.2.97</ApplicationVersion>
+    <ApplicationVersion>3.0.2.105</ApplicationVersion>
     <AutoIncrementApplicationRevision>true</AutoIncrementApplicationRevision>
     <UpdateEnabled>true</UpdateEnabled>
     <UpdateInterval>0</UpdateInterval>

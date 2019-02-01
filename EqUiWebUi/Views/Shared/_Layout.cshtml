@@ -51,22 +51,12 @@
                         @if (System.Configuration.ConfigurationManager.AppSettings["Maximo_SiteID"].ToString() == "VCG")
                         {
                             <li class="dropdown-item">
-                                @MyHtmlHelpers.EquiLink("http://gensvw1178.gen.volvocars.net/EqUi_DigibordLauncher/EqUiDigibordLauncher.application", "fas fa-desktop", "DigiboardLauncher", helperText: "Startup tool for kiosks", helpurl: @Url.Action("_Getwiki", "Wiki", new { area = "", id = "DigibordLauncher" }, null))
-                            </li>
-
-                            <li class="dropdown-item">
-                                @MyHtmlHelpers.EquiLink("file:////gnlsnm0101.gen.volvocars.net/proj/6308-SHR-VCC22700/VSTO/DEPLOYMENTBASE/ExcelAddInEquipmentDatabase.vsto", "fas fa-file-excel", "VSTO Excel (install)", helperText: "Excel ribbon plug-in to access the database (installation file)", helpurl: @Url.Action("_Getwiki", "Wiki", new { area = "", id = "VSTO" }, null))
+                                @MyHtmlHelpers.EquiLink(@Url.Action("EqUiDigibordLauncher.application", "EqUi_DigibordLauncher", new { area = "" }, null), "fas fa-desktop", "DigiboardLauncher", helperText: "Startup tool for kiosks", helpurl: @Url.Action("_Getwiki", "Wiki", new { area = "", id = "DigibordLauncher" }, null))
                             </li>
                         }
-                        @if (System.Configuration.ConfigurationManager.AppSettings["Maximo_SiteID"].ToString() == "VCCH")
-                        {
-                            <li class="dropdown-item">
-                                @MyHtmlHelpers.EquiLink("file:////gnlsnm0101.gen.volvocars.net/proj/6308-SHR-VCC22700/VSTO/DEPLOYMENTBASE_VCCH/ExcelAddInEquipmentDatabase.vsto", "fas fa-file-excel", "VSTO Excel (install)", helperText: "Excel plug-in to access the database *Download can be slow package is hosted in Ghent", helpurl: @Url.Action("_Getwiki", "Wiki", new { area = "", id = "VSTO" }, null))
-                            </li>
-                            <li class="dropdown-item">
-                                <p>\\gnlsnm0101.gen.volvocars.net\PROJ\6308-SHR-VCC22700\VSTO\DEPLOYMENTBASE_VCCH</p>
-                            </li>
-                        }
+                        <li class="dropdown-item">
+                            @MyHtmlHelpers.EquiLink(@Url.Action("ExcelAddInEquipmentDatabase.VSTO", "VSTO", new { area = "" }, null), "fas fa-file-excel", "VSTO Excel (install)", helperText: "Excel plug-in to access the database *Download can be slow package is hosted in Ghent", helpurl: @Url.Action("_Getwiki", "Wiki", new { area = "", id = "VSTO" }, null))
+                        </li>
                     </ul>
                 </li>
 

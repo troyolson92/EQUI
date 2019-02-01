@@ -190,6 +190,7 @@
     <Folder Include="Areas\VCSC\Models\" />
     <Folder Include="Areas\VCSC\Views\Shared\" />
     <Folder Include="Areas\VWSC\Views\Shared\" />
+    <Folder Include="Resources\VSTO\TEMPLATES\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />

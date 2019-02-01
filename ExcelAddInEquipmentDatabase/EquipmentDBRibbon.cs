@@ -68,7 +68,7 @@ namespace ExcelAddInEquipmentDatabase
                     if (!file.Name.Contains('$'))
                     {
                         RibbonDropDownItem galleryItem = Globals.Factory.GetRibbonFactory().CreateRibbonDropDownItem();
-                        galleryItem.Tag = file.FullName;
+                        galleryItem.Tag = $"{Properties.Settings.Default.EquiBasepath}\\Resources\\VSTO\\TEMPLATES\\{file.Name}";
                         galleryItem.Label = file.Name;
                         galleryItem.ScreenTip = "These templates will get you started.";
                         gall_templates.Items.Add(galleryItem);
