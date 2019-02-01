@@ -89,7 +89,7 @@
 
             </div>
     </div>
-
+     </div>
 
 
 <script type="text/javascript">
@@ -110,16 +110,17 @@
                 maxDress: $('#maxdress').val(),
                 Tipchanger: $('#Tipchanger').is(':checked'),
             },
-            //this runs when load done
-            function () {
+            function (responseText, textStatus, req) {
+                if (textStatus == "error") {
+                    $("#tipsToChange").html($("#Error", responseText).html());
+                }
                 //fade in the result table
-                $('#tipsToChange').fadeIn(1000,function () {
-                });
+                $('#tipsToChange').fadeIn(1000, function () {});
                 //enable button
                 $('#loadLocations').removeAttr("disabled");
-            }
+            });
         );
-    })
+    });
 
     ///disable option in case of tipchanger
     $('#Tipchanger').click(function () {
