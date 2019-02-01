@@ -100,13 +100,6 @@ function initInterface() {
 
 //script that must be called to enable interface events
 function EnableInterfaceEvents() {
-    //enable tooltips everywhere
-    $('[data-toggle="tooltip"]').tooltip();
-    $('[data-toggle="popover"]').tooltip();
-
-    //select drop downs that are form control and make this use bootstrap select. (don't just do on all select this will break things like mvc gird pager)
-    $('select.form-control').selectpicker();
-
     //for new window option
     $('.OpenNewWindow').unbind().click(function (e) {
         console.log('default action prevented (.OpenNewWindow)');
@@ -114,14 +107,6 @@ function EnableInterfaceEvents() {
         console.log("Opening new window");
         window.open($(this).attr('href'), 'EQUI', 'window settings');
         return false;
-    });
-
-    //for toaster
-    $.toaster({
-        settings: {
-            'timeout': 5000, //set autodismis timeout to 5 seconds
-            'donotdismiss': ['danger'] //disble autodismis for these types
-        }
     });
 
     //for blind fired buttons with feedback. the unbind cancels any active event on this object
@@ -152,6 +137,24 @@ function EnableInterfaceEvents() {
             }
         });
     });
+
+//above here we used UNBIND! on both so be aware that normal stuff that creates events should go below them.
+
+    //for toaster
+    $.toaster({
+        settings: {
+            'timeout': 5000, //set autodismis timeout to 5 seconds
+            'donotdismiss': ['danger'] //disble autodismis for these types
+        }
+    });
+
+    //enable tooltips everywhere
+    $('[data-toggle="tooltip"]').tooltip();
+    $('[data-toggle="popover"]').tooltip();
+
+    //select drop downs that are form control and make this use bootstrap select. (don't just do on all select this will break things like mvc gird pager)
+    $('select.form-control').selectpicker();
+
 
     //tablesaw
     //enable select box mode switch and minimap
