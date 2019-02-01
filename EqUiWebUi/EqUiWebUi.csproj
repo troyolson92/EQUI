@@ -735,6 +735,9 @@
     <Compile Include="Areas\Welding\Models\c_picture1.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Areas\Welding\Models\c_pictureName.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Areas\Welding\Models\c_production_issue.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>

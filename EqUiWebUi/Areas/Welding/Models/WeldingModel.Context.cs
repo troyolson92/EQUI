@@ -93,6 +93,7 @@ namespace EqUiWebUi.Areas.Welding.Models
         public virtual DbSet<c_reporter> c_reporter { get; set; }
         public virtual DbSet<h_production_issues> h_production_issues { get; set; }
         public virtual DbSet<c_picture1> c_picture1 { get; set; }
+        public virtual DbSet<c_pictureName> c_pictureName { get; set; }
     
         public virtual ObjectResult<Lastwelds_Result> Lastwelds(string timer, Nullable<int> spot)
         {

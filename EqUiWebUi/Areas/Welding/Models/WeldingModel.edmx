@@ -136,6 +136,16 @@
           <Property Name="Description" Type="varchar" MaxLength="50" />
           <Property Name="timestamp" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="c_pictureName">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="pictureName" Type="nchar" MaxLength="100" Nullable="false" />
+          <Property Name="Description" Type="nchar" MaxLength="100" />
+          <Property Name="timestamp" Type="datetime" Nullable="false" />
+          <Property Name="Isdead" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="c_Teardown">
           <Key>
             <PropertyRef Name="Id" />
@@ -1136,6 +1146,18 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_c_Picture_c_pictureName">
+          <End Role="c_pictureName" Type="Self.c_pictureName" Multiplicity="1" />
+          <End Role="c_Picture" Type="Self.c_Picture" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_pictureName">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="c_Picture">
+              <PropertyRef Name="picturename_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_c_Teardown_c_Job">
           <End Role="c_Job" Type="Self.c_Job" Multiplicity="0..1" />
           <End Role="c_Teardown" Type="Self.c_Teardown" Multiplicity="*" />
@@ -1556,6 +1578,7 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
           <EntitySet Name="c_faultcode" EntityType="Self.c_faultcode" Schema="TDT" store:Type="Tables" />
           <EntitySet Name="c_Job" EntityType="Self.c_Job" Schema="TDT" store:Type="Tables" />
           <EntitySet Name="c_Picture" EntityType="Self.c_Picture" Schema="TDT" store:Type="Tables" />
+          <EntitySet Name="c_pictureName" EntityType="Self.c_pictureName" Schema="TDT" store:Type="Tables" />
           <EntitySet Name="c_Teardown" EntityType="Self.c_Teardown" Schema="TDT" store:Type="Tables" />
           <EntitySet Name="rt_Job" EntityType="Self.rt_Job" Schema="TDT" store:Type="Tables" />
           <EntitySet Name="rt_Teardown" EntityType="Self.rt_Teardown" Schema="TDT" store:Type="Tables" />
@@ -1926,6 +1949,10 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
             <End Role="ToDoList" EntitySet="ToDoList" />
             <End Role="ToDoList_Remark" EntitySet="ToDoList_Remark" />
           </AssociationSet>
+          <AssociationSet Name="FK_c_Picture_c_pictureName" Association="Self.FK_c_Picture_c_pictureName">
+            <End Role="c_pictureName" EntitySet="c_pictureName" />
+            <End Role="c_Picture" EntitySet="c_Picture" />
+          </AssociationSet>
           <AssociationSet Name="FK_c_Teardown_c_Job" Association="Self.FK_c_Teardown_c_Job">
             <End Role="c_Job" EntitySet="c_Job" />
             <End Role="c_Teardown" EntitySet="c_Teardown" />
@@ -2278,6 +2305,11 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
             <End Role="h_production_issues" EntitySet="h_production_issues" />
           </AssociationSet>
           <EntitySet Name="c_picture1" EntityType="GADATAModelWelding.c_picture1" />
+          <EntitySet Name="c_pictureName" EntityType="GADATAModelWelding.c_pictureName" />
+          <AssociationSet Name="FK_c_Picture_c_pictureName" Association="GADATAModelWelding.FK_c_Picture_c_pictureName">
+            <End Role="c_pictureName" EntitySet="c_pictureName" />
+            <End Role="c_Picture" EntitySet="c_Picture" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="rt_AutoWorkFlowULPlans">
           <Key>
@@ -2462,6 +2494,7 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
           <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="timestamp" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="c_Teardown" Relationship="GADATAModelWelding.FK_c_Teardown_c_Picture" FromRole="c_Picture" ToRole="c_Teardown" />
+          <NavigationProperty Name="c_pictureName" Relationship="GADATAModelWelding.FK_c_Picture_c_pictureName" FromRole="c_Picture" ToRole="c_pictureName" />
         </EntityType>
         <EntityType Name="c_Teardown">
           <Key>
@@ -3856,6 +3889,29 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="image" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
+        <EntityType Name="c_pictureName">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="pictureName" Type="String" Nullable="false" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="timestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Isdead" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="c_Picture" Relationship="GADATAModelWelding.FK_c_Picture_c_pictureName" FromRole="c_pictureName" ToRole="c_Picture" />
+        </EntityType>
+        <Association Name="FK_c_Picture_c_pictureName">
+          <End Type="GADATAModelWelding.c_pictureName" Role="c_pictureName" Multiplicity="1" />
+          <End Type="GADATAModelWelding.c_Picture" Role="c_Picture" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_pictureName">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="c_Picture">
+              <PropertyRef Name="picturename_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4958,6 +5014,17 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
             <EntityTypeMapping TypeName="GADATAModelWelding.c_picture1">
               <MappingFragment StoreEntitySet="c_picture1">
                 <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="c_pictureName">
+            <EntityTypeMapping TypeName="GADATAModelWelding.c_pictureName">
+              <MappingFragment StoreEntitySet="c_pictureName">
+                <ScalarProperty Name="Isdead" ColumnName="Isdead" />
+                <ScalarProperty Name="timestamp" ColumnName="timestamp" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="pictureName" ColumnName="pictureName" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
