@@ -12,6 +12,8 @@ using System.IO;
 using EQUICommunictionLib;
 using log4net.Appender;
 using System.Configuration;
+using System.Web;
+using System.Net;
 
 namespace ExcelAddInEquipmentDatabase
 {
@@ -62,13 +64,14 @@ namespace ExcelAddInEquipmentDatabase
             gall_templates.Items.Clear();
             try
             {
+
                 DirectoryInfo d = new DirectoryInfo(Properties.Settings.Default.TemplateBasepath);//Assuming Test is your Folder
                 foreach (FileInfo file in d.GetFiles("*.xls*"))
                 {
                     if (!file.Name.Contains('$'))
                     {
                         RibbonDropDownItem galleryItem = Globals.Factory.GetRibbonFactory().CreateRibbonDropDownItem();
-                        galleryItem.Tag = $"{Properties.Settings.Default.EquiBasepath}\\Resources\\VSTO\\TEMPLATES\\{file.Name}";
+                        galleryItem.Tag = file.FullName;
                         galleryItem.Label = file.Name;
                         galleryItem.ScreenTip = "These templates will get you started.";
                         gall_templates.Items.Add(galleryItem);

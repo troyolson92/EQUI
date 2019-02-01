@@ -39,10 +39,10 @@
     <TargetFrameworkProfile />
     <BootstrapperEnabled>false</BootstrapperEnabled>
     <BootstrapperComponentsLocation>Relative</BootstrapperComponentsLocation>
-    <PublishUrl>\\GENSVW1178.gen.volvocars.net\gensvw1178_D\IIS\EqUiWebui\VSTO\</PublishUrl>
-    <InstallUrl>https://gensvw1178.gen.volvocars.net/VSTO/</InstallUrl>
+    <PublishUrl>\\Chasvw1203.cha.volvocars.net\chasvw1203_e\IIS\EqUiWebUi\VSTO\</PublishUrl>
+    <InstallUrl>https://chasvw1203.cha.volvocars.net/VSTO/</InstallUrl>
     <TargetCulture>en</TargetCulture>
-    <ApplicationVersion>3.0.2.105</ApplicationVersion>
+    <ApplicationVersion>3.0.2.107</ApplicationVersion>
     <AutoIncrementApplicationRevision>true</AutoIncrementApplicationRevision>
     <UpdateEnabled>true</UpdateEnabled>
     <UpdateInterval>0</UpdateInterval>
@@ -193,6 +193,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml" />

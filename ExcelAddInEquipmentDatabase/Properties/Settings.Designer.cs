@@ -34,25 +34,6 @@ namespace ExcelAddInEquipmentDatabase.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("http:\\\\gensvw1178.gen.volvocars.net")]
-        public string EquiBasepath {
-            get {
-                return ((string)(this["EquiBasepath"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("\\\\gnlsnm0101.gen.volvocars.net\\PROJ\\6308-SHR-VCC22700\\VSTO\\DEPLOYMENTBASE\\Templat" +
-            "es")]
-        public string TemplateBasepath {
-            get {
-                return ((string)(this["TemplateBasepath"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Equi")]
         public string TemplateShema {
             get {
@@ -66,6 +47,24 @@ namespace ExcelAddInEquipmentDatabase.Properties {
         public string SiteName {
             get {
                 return ((string)(this["SiteName"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("https:\\\\gensvw1178.gen.volvocars.net")]
+        public string EquiBasepath {
+            get {
+                return ((string)(this["EquiBasepath"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("\\\\gnlsnm0101.gen.volvocars.net\\PROJ\\6308-SHR-VCC22700\\VSTO\\VCCH")]
+        public string TemplateBasepath {
+            get {
+                return ((string)(this["TemplateBasepath"]));
             }
         }
     }
