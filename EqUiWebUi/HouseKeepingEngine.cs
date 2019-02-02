@@ -15,7 +15,7 @@ namespace EqUiWebUi
         private PerformContext MainContext;
 
         [Queue("jobengine")]
-        [AutomaticRetry(Attempts = 0)] //no hangfire retry 
+        [AutomaticRetry(Attempts = 5)] 
         public void Run_houseKeeping(string name, int id, PerformContext context)
         {
             c_housekeeping housekeeping = dbEQUI.c_housekeeping.Find(id);
