@@ -2377,6 +2377,15 @@
     <Content Include="node_modules\moment\src\locale\zh-hk.js" />
     <Content Include="node_modules\moment\src\locale\zh-tw.js" />
     <Content Include="node_modules\moment\src\moment.js" />
+    <Content Include="node_modules\powerbi-client\dist\powerbi.js" />
+    <Content Include="node_modules\powerbi-client\dist\powerbi.min.js" />
+    <Content Include="node_modules\powerbi-client\LICENSE.txt" />
+    <Content Include="node_modules\powerbi-client\NOTICE.txt" />
+    <Content Include="node_modules\powerbi-models\dist\models.js" />
+    <Content Include="node_modules\powerbi-models\dist\models.min.js" />
+    <Content Include="node_modules\powerbi-models\LICENSE.txt" />
+    <Content Include="node_modules\powerbi-router\dist\router.js" />
+    <Content Include="node_modules\powerbi-router\dist\router.min.js" />
     <Content Include="node_modules\print-this\assets\css\normalize.css" />
     <Content Include="node_modules\print-this\assets\css\skeleton.css" />
     <Content Include="node_modules\print-this\assets\images\cat1.jpg" />
@@ -2940,6 +2949,18 @@
     <Content Include="node_modules\window-post-message-proxy\LICENSE" />
     <Content Include="node_modules\window-post-message-proxy\package.json" />
     <Content Include="node_modules\window-post-message-proxy\README.md" />
+    <Content Include="libman.json" />
+    <Content Include="node_modules\powerbi-client\CHANGELOG.md" />
+    <Content Include="node_modules\powerbi-client\dist\powerbi.js.map" />
+    <Content Include="node_modules\powerbi-client\package.json" />
+    <Content Include="node_modules\powerbi-client\README.md" />
+    <Content Include="node_modules\powerbi-models\dist\models.js.map" />
+    <Content Include="node_modules\powerbi-models\package.json" />
+    <Content Include="node_modules\powerbi-models\README.md" />
+    <Content Include="node_modules\powerbi-router\dist\router.js.map" />
+    <Content Include="node_modules\powerbi-router\LICENSE" />
+    <Content Include="node_modules\powerbi-router\package.json" />
+    <Content Include="node_modules\powerbi-router\README.md" />
     <None Include="Properties\PublishProfiles\chasvw1203_DEV_VCCH.pubxml" />
     <None Include="Properties\PublishProfiles\chasvw1203_PRODUCTION_VCCH.pubxml" />
     <Content Include="Areas\Welding\Views\WM\_Parameters.cshtml" />
@@ -3073,6 +3094,7 @@
     <Content Include="Views\Wiki\_GetWiki.cshtml" />
     <Content Include="Views\Wiki\Getwiki.cshtml" />
     <Content Include="Views\PowerBi\EmbeddedDesktop.cshtml" />
+    <Content Include="Views\PowerBi\EmbeddedDesktop2.cshtml" />
     <None Include="Web.DEV_VCCH.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -3103,6 +3125,11 @@
     <TypeScriptCompile Include="node_modules\http-post-message\dist\httpPostMessage-noexports.d.ts" />
     <TypeScriptCompile Include="node_modules\http-post-message\dist\httpPostMessage.d.ts" />
     <TypeScriptCompile Include="node_modules\moment\moment.d.ts" />
+    <None Include="node_modules\powerbi-client\dist\powerbi-client.d.ts" />
+    <TypeScriptCompile Include="node_modules\powerbi-models\dist\models-noexports.d.ts" />
+    <TypeScriptCompile Include="node_modules\powerbi-models\dist\models.d.ts" />
+    <None Include="node_modules\powerbi-router\dist\router-noexports.d.ts" />
+    <TypeScriptCompile Include="node_modules\powerbi-router\dist\router.d.ts" />
     <TypeScriptCompile Include="node_modules\window-post-message-proxy\dist\windowPostMessageProxy-noexports.d.ts" />
     <TypeScriptCompile Include="node_modules\window-post-message-proxy\dist\windowPostMessageProxy.d.ts" />
     <TypeScriptCompile Include="Scripts\index.d.ts" />
@@ -3137,9 +3164,9 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <TypeScriptTarget>ES5</TypeScriptTarget>
+    <TypeScriptTarget>ES2015</TypeScriptTarget>
     <TypeScriptJSXEmit>None</TypeScriptJSXEmit>
-    <TypeScriptModuleKind />
+    <TypeScriptModuleKind>ES6</TypeScriptModuleKind>
     <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
     <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
     <TypeScriptRemoveComments>False</TypeScriptRemoveComments>

@@ -19,7 +19,18 @@ namespace EqUiWebUi.Controllers
         //Sample render 
         //https://app.powerbi.com/reportEmbed?reportId=48a95708-6371-4546-ad10-4687dec61149&autoAuth=true
 
+        //test with Iframe no api 
         public ActionResult EmbeddedDesktop(string RepportID = "48a95708-6371-4546-ad10-4687dec61149")
+        {
+            ViewBag.workbook = "testworkbook";
+            ViewBag.sheet = "testsheet";
+            ViewBag.RepportID = RepportID;
+            return View();
+        }
+
+        //test with  api 
+        https://docs.microsoft.com/en-us/power-bi/developer/embed-sample-for-customers
+        public ActionResult EmbeddedDesktop2(string RepportID = "48a95708-6371-4546-ad10-4687dec61149")
         {
             ViewBag.workbook = "testworkbook";
             ViewBag.sheet = "testsheet";
