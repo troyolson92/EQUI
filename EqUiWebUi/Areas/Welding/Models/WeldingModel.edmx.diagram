@@ -40,7 +40,7 @@
         <AssociationConnector Association="GADATAModelWelding.FK_c_Teardown_c_Picture" />
         <AssociationConnector Association="GADATAModelWelding.FK_rt_Teardown_c_Teardown" />
         <AssociationConnector Association="GADATAModelWelding.FK_rt_Teardown_rt_Job" />
-        <EntityTypeShape EntityType="GADATAModelWelding.c_pictureName" Width="1.5" PointX="0.625" PointY="0.875" />
+        <EntityTypeShape EntityType="GADATAModelWelding.c_pictureName" Width="1.5" PointX="0.875" PointY="0.5" />
         <AssociationConnector Association="GADATAModelWelding.FK_c_Picture_c_pictureName" />
       </Diagram>
       <Diagram DiagramId="9b71ac1a974c46738162e87a262b9de1" Name="Welding2" ZoomLevel="44" >

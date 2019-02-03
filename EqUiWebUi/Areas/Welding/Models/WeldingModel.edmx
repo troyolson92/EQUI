@@ -210,6 +210,7 @@ warning 6002: The table/view 'GADATA.UL.rt_AutoWorkFlowULPlans' does not have a 
           <Property Name="LastnumberFromPlanBusy" Type="int" />
           <Property Name="Planlenght" Type="int" />
           <Property Name="PreviousPlace" Type="int" />
+          <Property Name="SpotsinExtraControleList" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'GADATA.UL.rt_ExtraControles' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -1625,7 +1626,8 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
     [rt_AutoWorkFlowULPlans].[onderhoudswerken] AS [onderhoudswerken], 
     [rt_AutoWorkFlowULPlans].[LastnumberFromPlanBusy] AS [LastnumberFromPlanBusy], 
     [rt_AutoWorkFlowULPlans].[Planlenght] AS [Planlenght], 
-    [rt_AutoWorkFlowULPlans].[PreviousPlace] AS [PreviousPlace]
+    [rt_AutoWorkFlowULPlans].[PreviousPlace] AS [PreviousPlace], 
+    [rt_AutoWorkFlowULPlans].[SpotsinExtraControleList] AS [SpotsinExtraControleList]
     FROM [UL].[rt_AutoWorkFlowULPlans] AS [rt_AutoWorkFlowULPlans]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="rt_ExtraControles" EntityType="Self.rt_ExtraControles" store:Type="Tables" store:Schema="UL">
@@ -2329,6 +2331,7 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
           <Property Name="LastnumberFromPlanBusy" Type="Int32" />
           <Property Name="Planlenght" Type="Int32" />
           <Property Name="PreviousPlace" Type="Int32" />
+          <Property Name="SpotsinExtraControleList" Type="Int32" />
         </EntityType>
         <EntityType Name="ULRapportering">
           <Key>
@@ -3921,6 +3924,7 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
           <EntitySetMapping Name="rt_AutoWorkFlowULPlans">
             <EntityTypeMapping TypeName="GADATAModelWelding.rt_AutoWorkFlowULPlans">
               <MappingFragment StoreEntitySet="rt_AutoWorkFlowULPlans">
+                <ScalarProperty Name="SpotsinExtraControleList" ColumnName="SpotsinExtraControleList" />
                 <ScalarProperty Name="PreviousPlace" ColumnName="PreviousPlace" />
                 <ScalarProperty Name="Planlenght" ColumnName="Planlenght" />
                 <ScalarProperty Name="LastnumberFromPlanBusy" ColumnName="LastnumberFromPlanBusy" />

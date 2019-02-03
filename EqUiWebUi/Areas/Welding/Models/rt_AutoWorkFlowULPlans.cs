@@ -28,5 +28,6 @@ namespace EqUiWebUi.Areas.Welding.Models
         public Nullable<int> LastnumberFromPlanBusy { get; set; }
         public Nullable<int> Planlenght { get; set; }
         public Nullable<int> PreviousPlace { get; set; }
+        public Nullable<int> SpotsinExtraControleList { get; set; }
     }
 }
