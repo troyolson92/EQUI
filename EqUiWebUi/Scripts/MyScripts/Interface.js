@@ -178,6 +178,31 @@ function EnableInterfaceEvents() {
     $('.tablesaw-on > thead > tr > .tablesaw-priority-5').attr("data-tablesaw-priority", "5");
     $('.tablesaw-on > thead > tr > .tablesaw-priority-6').attr("data-tablesaw-priority", "6");
     Tablesaw.init();
+
+    //need todo this before reload
+/*
+    //SDB store checkbox value based on checkbox label
+    localStorage['tablesaw#' + e.target.labels[0].innerText] = e.target.checked;
+
+    //SDB restore checkbox state
+    $.each(localStorage, function (key, value) {
+        key = key.replace("tablesaw#", "");
+        // find label with innerText = value
+        var label = $("label:contains(" + key + ")");
+        if (label.length) {
+            var columnCheckbox = $(label).children();
+            if (value === "true") {
+             
+                $(columnCheckbox).attr("checked", true);
+            } else {
+                $(columnCheckbox).attr("checked", false);
+            }
+            //
+            $(columnCheckbox).trigger("click");
+        }
+    });
+    */
+
 }
 
 //get part from querystring

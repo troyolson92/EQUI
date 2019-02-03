@@ -912,6 +912,7 @@
     <Compile Include="Controllers\DynamicController.cs" />
     <Compile Include="Controllers\EQUISetupController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\PowerBiController.cs" />
     <Compile Include="Controllers\TableauController.cs" />
     <Compile Include="Controllers\WikiController.cs" />
     <Compile Include="HouseKeepingengine.cs" />
@@ -1842,6 +1843,22 @@
     <Content Include="node_modules\daterangepicker\website\index.html" />
     <Content Include="node_modules\daterangepicker\website\website.css" />
     <Content Include="node_modules\daterangepicker\website\website.js" />
+    <Content Include="node_modules\es6-promise\dist\es6-promise.js" />
+    <Content Include="node_modules\es6-promise\dist\es6-promise.min.js" />
+    <Content Include="node_modules\es6-promise\lib\es6-promise.js" />
+    <Content Include="node_modules\es6-promise\lib\es6-promise\-internal.js" />
+    <Content Include="node_modules\es6-promise\lib\es6-promise\asap.js" />
+    <Content Include="node_modules\es6-promise\lib\es6-promise\enumerator.js" />
+    <Content Include="node_modules\es6-promise\lib\es6-promise\polyfill.js" />
+    <Content Include="node_modules\es6-promise\lib\es6-promise\promise.js" />
+    <Content Include="node_modules\es6-promise\lib\es6-promise\promise\all.js" />
+    <Content Include="node_modules\es6-promise\lib\es6-promise\promise\race.js" />
+    <Content Include="node_modules\es6-promise\lib\es6-promise\promise\reject.js" />
+    <Content Include="node_modules\es6-promise\lib\es6-promise\promise\resolve.js" />
+    <Content Include="node_modules\es6-promise\lib\es6-promise\then.js" />
+    <Content Include="node_modules\es6-promise\lib\es6-promise\utils.js" />
+    <Content Include="node_modules\http-post-message\dist\httpPostMessage.js" />
+    <Content Include="node_modules\http-post-message\dist\httpPostMessage.min.js" />
     <Content Include="node_modules\javascript-natural-sort\.gitattributes" />
     <Content Include="node_modules\javascript-natural-sort\.idea\encodings.xml" />
     <Content Include="node_modules\javascript-natural-sort\.idea\misc.xml" />
@@ -2372,6 +2389,19 @@
     <Content Include="node_modules\print-this\dist\print-this.umd.js" />
     <Content Include="node_modules\print-this\index.html" />
     <Content Include="node_modules\print-this\printThis.js" />
+    <Content Include="node_modules\route-recognizer\bench\benches\add.js" />
+    <Content Include="node_modules\route-recognizer\bench\benches\end-to-end.js" />
+    <Content Include="node_modules\route-recognizer\bench\benches\generate.js" />
+    <Content Include="node_modules\route-recognizer\bench\benches\handlers-for.js" />
+    <Content Include="node_modules\route-recognizer\bench\benches\recognize.js" />
+    <Content Include="node_modules\route-recognizer\bench\index.js" />
+    <Content Include="node_modules\route-recognizer\Brocfile.js" />
+    <Content Include="node_modules\route-recognizer\dist\es6\route-recognizer.js" />
+    <Content Include="node_modules\route-recognizer\dist\es6\route-recognizer\dsl.js" />
+    <Content Include="node_modules\route-recognizer\dist\route-recognizer.js" />
+    <Content Include="node_modules\route-recognizer\lib\route-recognizer.js" />
+    <Content Include="node_modules\route-recognizer\lib\route-recognizer.umd.js" />
+    <Content Include="node_modules\route-recognizer\lib\route-recognizer\dsl.js" />
     <Content Include="node_modules\shoestring\build\config\development.js" />
     <Content Include="node_modules\shoestring\build\config\production.js" />
     <Content Include="node_modules\shoestring\build\development.js" />
@@ -2550,6 +2580,8 @@
     <Content Include="node_modules\tablesaw\test\helpers\setup-browser-env.js" />
     <Content Include="node_modules\tablesaw\test\main.test.js" />
     <Content Include="node_modules\tablesaw\test\tablesaw.html" />
+    <Content Include="node_modules\window-post-message-proxy\dist\windowPostMessageProxy.js" />
+    <Content Include="node_modules\window-post-message-proxy\dist\windowPostMessageProxy.min.js" />
     <Content Include="package.json" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -2884,6 +2916,30 @@
     <Content Include="Areas\VASC\Views\c_job\_List.cshtml" />
     <Content Include="Areas\VASC\Views\Client\GetControlerStats.cshtml" />
     <Content Include="Areas\VASC\Views\Client\Index.cshtml" />
+    <Content Include="node_modules\es6-promise\CHANGELOG.md" />
+    <Content Include="node_modules\es6-promise\dist\es6-promise.map" />
+    <Content Include="node_modules\es6-promise\dist\es6-promise.min.map" />
+    <Content Include="node_modules\es6-promise\LICENSE" />
+    <Content Include="node_modules\es6-promise\package.json" />
+    <Content Include="node_modules\es6-promise\README.md" />
+    <Content Include="node_modules\http-post-message\dist\httpPostMessage.js.map" />
+    <Content Include="node_modules\http-post-message\LICENSE" />
+    <Content Include="node_modules\http-post-message\package.json" />
+    <Content Include="node_modules\http-post-message\README.md" />
+    <Content Include="node_modules\route-recognizer\.jshintrc" />
+    <Content Include="node_modules\route-recognizer\.npmignore" />
+    <Content Include="node_modules\route-recognizer\.travis.yml" />
+    <Content Include="node_modules\route-recognizer\.vscode\launch.json" />
+    <Content Include="node_modules\route-recognizer\bower.json" />
+    <Content Include="node_modules\route-recognizer\dist\route-recognizer.js.map" />
+    <Content Include="node_modules\route-recognizer\LICENSE" />
+    <Content Include="node_modules\route-recognizer\package.json" />
+    <Content Include="node_modules\route-recognizer\README.md" />
+    <Content Include="node_modules\route-recognizer\testem.json" />
+    <Content Include="node_modules\window-post-message-proxy\dist\windowPostMessageProxy.js.map" />
+    <Content Include="node_modules\window-post-message-proxy\LICENSE" />
+    <Content Include="node_modules\window-post-message-proxy\package.json" />
+    <Content Include="node_modules\window-post-message-proxy\README.md" />
     <None Include="Properties\PublishProfiles\chasvw1203_DEV_VCCH.pubxml" />
     <None Include="Properties\PublishProfiles\chasvw1203_PRODUCTION_VCCH.pubxml" />
     <Content Include="Areas\Welding\Views\WM\_Parameters.cshtml" />
@@ -3016,6 +3072,7 @@
     <Content Include="Views\Wiki\Edit.cshtml" />
     <Content Include="Views\Wiki\_GetWiki.cshtml" />
     <Content Include="Views\Wiki\Getwiki.cshtml" />
+    <Content Include="Views\PowerBi\EmbeddedDesktop.cshtml" />
     <None Include="Web.DEV_VCCH.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -3042,7 +3099,12 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="node_modules\es6-promise\es6-promise.d.ts" />
+    <TypeScriptCompile Include="node_modules\http-post-message\dist\httpPostMessage-noexports.d.ts" />
+    <TypeScriptCompile Include="node_modules\http-post-message\dist\httpPostMessage.d.ts" />
     <TypeScriptCompile Include="node_modules\moment\moment.d.ts" />
+    <TypeScriptCompile Include="node_modules\window-post-message-proxy\dist\windowPostMessageProxy-noexports.d.ts" />
+    <TypeScriptCompile Include="node_modules\window-post-message-proxy\dist\windowPostMessageProxy.d.ts" />
     <TypeScriptCompile Include="Scripts\index.d.ts" />
   </ItemGroup>
   <ItemGroup>
