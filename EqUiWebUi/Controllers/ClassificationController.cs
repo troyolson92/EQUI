@@ -43,11 +43,11 @@ namespace EqUiWebUi.Controllers
         }
 
 
-        //return a partial view gird based on how the user filterd.
+        //return a partial view gird based on how the user filtered.
         //we use a dummy logclassRules object to pass the data
         //we need to handle 2 modes. 
-        //1 user searches by locode range or text
-        //2 users searches for all revord in class / subgroup 
+        //1 user searches by log code range or text
+        //2 users searches for all record in class / subgroup 
         [HttpGet]
         public ActionResult _logSearchResult(c_LogClassRules c_LogClassRule, bool SearchByClassification = false)
         {
@@ -55,8 +55,14 @@ namespace EqUiWebUi.Controllers
             c_logClassSystem c_LogClassSystem = db.c_logClassSystem.Where(c => c.id == c_LogClassRule.c_logClassSystem_id).First();
             if (c_LogClassSystem == null)
             {
-                //in case we doent get a result back
+                //in case we doesn't get a result back
                 throw new NotSupportedException();
+            }
+
+            //if no text search set to wild card
+            if (c_LogClassRule.textSearch == null)
+            {
+                c_LogClassRule.textSearch = "%";
             }
 
             //we need to make a dummy object to query. look at how we did the variable data in vasc 
@@ -64,7 +70,7 @@ namespace EqUiWebUi.Controllers
             {
 
                 IQueryable<l_dummyLogClassResult> result = db.l_dummyLogClassResult.SqlQuery(c_LogClassSystem.SelectStatement).Where(c =>
-                                    c.text.Like(c_LogClassRule.textSearch) //hanlde text like statement
+                                    c.text.Like(c_LogClassRule.textSearch) //handle text like statement
                                     && (c.code >= c_LogClassRule.coderangeStart.GetValueOrDefault(0) && c.code <= c_LogClassRule.coderangeEnd.GetValueOrDefault(int.MaxValue)) //handle range search
                                     ).AsQueryable();
                 return PartialView(result);
