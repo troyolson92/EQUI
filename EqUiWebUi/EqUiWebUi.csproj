@@ -1086,6 +1086,7 @@
     <Content Include="Content\CustomStyleTweeks.css" />
     <Content Include="Content\fontawesome-all.css" />
     <Content Include="Content\images\volvo-50.png" />
+    <Content Include="Content\images\Volvo-USA.png" />
     <Content Include="Content\jquery-cron.css" />
     <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\MvcGrid\mvc-grid.css" />
@@ -2961,6 +2962,7 @@
     <Content Include="node_modules\powerbi-router\LICENSE" />
     <Content Include="node_modules\powerbi-router\package.json" />
     <Content Include="node_modules\powerbi-router\README.md" />
+    <Content Include="Content\images\USA.xcf" />
     <None Include="Properties\PublishProfiles\chasvw1203_DEV_VCCH.pubxml" />
     <None Include="Properties\PublishProfiles\chasvw1203_PRODUCTION_VCCH.pubxml" />
     <Content Include="Areas\Welding\Views\WM\_Parameters.cshtml" />

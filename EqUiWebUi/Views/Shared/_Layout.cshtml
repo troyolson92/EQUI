@@ -13,9 +13,19 @@
         <!--back button-->
         <a class="far fa-arrow-alt-circle-left fa-2x text-white py-0 clickable" data-toggle="tooltip" title="Go back" onclick="window.history.back();"></a>
         <!-- Brand -->
-        <a class="navbar-brand py-0 clickable" href='@Url.Action("Index", "Home", new { area = "" }, null)' data-toggle="tooltip" title="Homepage">
-            <img src="~/Content/images/volvo-50.png" />
-        </a>
+
+        @if (System.Configuration.ConfigurationManager.AppSettings["Maximo_SiteID"].ToString() == "VCCH")
+        {
+            <a class="navbar-brand py-0 clickable" style="padding-left: 50px; padding-right:100px;" href='@Url.Action("Index", "Home", new { area = "" }, null)' data-toggle="tooltip" title="Homepage">
+                <img height="50" width="50" src="~/Content/images/volvo-USA.png" />
+            </a>
+        }
+        else
+        {
+            <a class="navbar-brand py-0 clickable" href='@Url.Action("Index", "Home", new { area = "" }, null)' data-toggle="tooltip" title="Homepage">
+                <img src="~/Content/images/volvo-50.png" />
+            </a>
+        }
 
         <!-- Toggler/collapsibe Button -->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
