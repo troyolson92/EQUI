@@ -3095,6 +3095,7 @@
     <Content Include="Views\Wiki\Getwiki.cshtml" />
     <Content Include="Views\PowerBi\EmbeddedDesktop.cshtml" />
     <Content Include="Views\PowerBi\EmbeddedDesktop2.cshtml" />
+    <Content Include="Views\PowerBi\Index.cshtml" />
     <None Include="Web.DEV_VCCH.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

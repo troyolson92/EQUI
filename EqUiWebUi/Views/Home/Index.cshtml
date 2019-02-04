@@ -40,6 +40,10 @@
         {
             @MyHtmlHelpers.EquiLink("/Tableau/index", "fas fa-chart-line", "Tableau", helperText: "Dashboards done right")
         }
+        @if (System.Configuration.ConfigurationManager.AppSettings["Maximo_SiteID"].ToString() == "VCCH")
+        {
+            @MyHtmlHelpers.EquiLink("/PowerBi/index", "fas fa-chart-line", "Power bi", helperText: "Power bi dashboards")
+        }
         @MyHtmlHelpers.EquiLink("/Tiplife/Electrode/CurrentTipstatus", "fas fa-industry", "Electrode", helperText: "Everything about electrodes")
     </div>
 </div>
