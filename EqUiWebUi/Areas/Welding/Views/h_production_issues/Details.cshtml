@@ -1,0 +1,74 @@
+﻿@model EqUiWebUi.Areas.Welding.Models.h_production_issues
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>h_production_issues</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.reportDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.reportDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.quantity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.quantity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.lastBodyNbr)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.lastBodyNbr)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.remarks)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.remarks)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.c_production_issue.issue)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.c_production_issue.issue)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.c_reporter.reporterName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.c_reporter.reporterName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.rt_spottable.SpotName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.rt_spottable.SpotName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

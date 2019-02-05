@@ -10,82 +10,83 @@
 {
     @Html.AntiForgeryToken()
     
-    <div class="form-horizontal">
-        <h4>UltralogInspections</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.ID)
+<div class="form-horizontal">
+    <h4>UltralogInspections</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.ID)
 
-        @Html.HiddenFor(model => model.InspectionPlanID)
+    @Html.HiddenFor(model => model.InspectionPlanID)
 
-        @Html.HiddenFor(model => model.SpotID)
+    @Html.HiddenFor(model => model.SpotID)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.InspectorComment, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.InspectorComment, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.InspectorComment, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        @Html.HiddenFor(model => model.BodyNbr)
-
-        @Html.HiddenFor(model => model.InspectorID)
-
-        @Html.HiddenFor(model => model.InspectionTime)
-
-        @Html.HiddenFor(model => model.IndexOfTestSeq)
-
-        @Html.HiddenFor(model => model.Loose)
-
-        @Html.HiddenFor(model => model.OK)
-
-        @Html.HiddenFor(model => model.SmallNugget)
-
-        @Html.HiddenFor(model => model.StickWeld)
-
-        @Html.HiddenFor(model => model.BadTroughWeld)
-
-        @Html.HiddenFor(model => model.StationID)
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.MeasuredThickness, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.MeasuredThickness, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.MeasuredThickness, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.MinIdentation, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.MinIdentation, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.MinIdentation, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.TotalThickness, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.TotalThickness, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.TotalThickness, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.PlanLenght, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.PlanLenght, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.PlanLenght, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.InspectorComment, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.InspectorComment, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.InspectorComment, "", new { @class = "text-danger" })
         </div>
     </div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.IndexOfTestSeq, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.IndexOfTestSeq, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.IndexOfTestSeq, "The actual planNbr", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Loose, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Loose, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Loose, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.OK, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.OK, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.OK, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    @Html.HiddenFor(model => model.BodyNbr)
+
+    @Html.HiddenFor(model => model.InspectorID)
+
+    @Html.HiddenFor(model => model.InspectionTime)
+
+    @Html.HiddenFor(model => model.IndexOfTestSeq)
+
+    @Html.HiddenFor(model => model.Loose)
+
+    @Html.HiddenFor(model => model.OK)
+
+    @Html.HiddenFor(model => model.SmallNugget)
+
+    @Html.HiddenFor(model => model.StickWeld)
+
+    @Html.HiddenFor(model => model.BadTroughWeld)
+
+    @Html.HiddenFor(model => model.StationID)
+
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.PlanLenght, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.PlanLenght, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.PlanLenght, "only information, no edit possible", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-default" />
+        </div>
+    </div>
+</div>
 }
 
 <div>

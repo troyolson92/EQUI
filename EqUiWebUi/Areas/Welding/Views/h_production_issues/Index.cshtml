@@ -1,0 +1,142 @@
+﻿
+<div style="text-align:center">
+
+    <p>Klik op de foto om te vergroten:</p>
+</div>
+
+<!-- The four columns -->
+<div class="row">
+    <div class="column">
+        <img src="~/Content/images/deuropeningLinksV316.png" alt="V316 Links" style="width:60%" onclick="myFunction(this);">
+    </div>
+    <div class="column">
+        <img src="~/Content/images/vooruitkaderLinks.PNG" alt="Voorruit" style="width:70%" onclick="myFunction(this);">
+    </div>
+</div>
+
+<div class="container">
+    <span onclick="this.parentElement.style.display= 'none';" class="closebtn">&times;</span>
+    <img id="expandedImg" style="width:100%">
+    <div id="imgtext"></div>
+</div>
+
+<p>
+    @Html.ActionLink("Click Here to insert a new spatter Issue", "Create")
+</p>
+
+@model IEnumerable<EqUiWebUi.Areas.Welding.Models.h_production_issues>
+
+@{
+    ViewBag.Title = "Index";
+}
+<h2>Reported Spatter Issues</h2>
+
+@Html.Grid(Model).Named("h_production_issues").Build(columns =>
+{
+    //columns.Add(c => c.id).Titled("id");
+    columns.Add(c => c.rt_spottable.SpotName).Titled("spotname").Css("bolded");
+    columns.Add(c => c.startdate).Titled("startdate").InitialSort(GridSortOrder.Desc);
+    columns.Add(c => c.enddate).Titled("enddate");
+    columns.Add(c => c.c_reporter.reporterName).Titled("ReporterName");
+    columns.Add(c => c.c_production_issue.issue).Titled("Issue");
+    columns.Add(c => c.quantity).Titled("quantity");
+    columns.Add(c => c.lastBodyNbr).Titled("lastBodyNbr");
+    columns.Add(c => c.remarks).Titled("remarks");
+    //tools
+    columns.Add(c => c)
+                        .Titled("")
+                        .Encoded(false)
+                        .RenderedAs(c =>
+
+                        MyHtmlHelpers.IconActionLink(Url.Action("Edit", new { id = c.id }), "fas fa-pencil-alt", "", "Edit this reported issue").ToHtmlString() +
+                        MyHtmlHelpers.IconActionLink(Url.Action("Delete", new { id = c.id }), "fas fa-trash-alt text-danger", "", "Delete this issue").ToHtmlString()
+
+                       ).Filterable(false);
+}).Filterable().Pageable(pager =>
+{
+    pager.RowsPerPage = 5;
+}
+        ).Sortable().Css("table-hover")
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        font-family: Arial;
+    }
+
+    /* The grid: Four equal columns that floats next to each other */
+    .column {
+        float: left;
+        width: 20%;
+        padding: 10px;
+    }
+
+        /* Style the images inside the grid */
+        .column img {
+            opacity: 0.8;
+            cursor: pointer;
+        }
+
+            .column img:hover {
+                opacity: 1;
+            }
+
+    /* Clear floats after the columns */
+    .row:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+    /* The expanding image container */
+    .container {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        left: 250px;
+        top: 20%;
+        z-index: 10;
+    }
+
+    /* Expanding image text */
+    #imgtext {
+        position: absolute;
+        bottom: 10px;
+        left: 15px;
+        color: white;
+        font-size: 30px;
+    }
+
+    /* Closable button inside the expanded image */
+    .closebtn {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        color: yellow;
+        font-size: 45px;
+        cursor: pointer;
+    }
+</style>
+
+@section scripts{
+    <script>
+        //full with screen
+        $("#allcontent").removeClass("body-content");
+        $("#allcontent").removeClass("container");
+    </script>
+}
+
+<script>
+    function myFunction(imgs) {
+        var expandImg = document.getElementById("expandedImg");
+        var imgText = document.getElementById("imgtext");
+        expandImg.src = imgs.src;
+        imgText.innerHTML = imgs.alt;
+        expandImg.parentElement.style.display = "block";
+    }
+</script>
+

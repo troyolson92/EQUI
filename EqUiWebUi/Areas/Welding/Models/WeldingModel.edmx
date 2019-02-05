@@ -136,6 +136,16 @@
           <Property Name="Description" Type="varchar" MaxLength="50" />
           <Property Name="timestamp" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="c_pictureName">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="pictureName" Type="nchar" MaxLength="100" Nullable="false" />
+          <Property Name="Description" Type="nchar" MaxLength="100" />
+          <Property Name="timestamp" Type="datetime" Nullable="false" />
+          <Property Name="Isdead" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="c_Teardown">
           <Key>
             <PropertyRef Name="Id" />
@@ -336,6 +346,28 @@ warning 6002: The table/view 'GADATA.UL.ULplan_end' does not have a primary key 
           <Property Name="active" Type="bit" />
           <Property Name="enable_bit" Type="int" />
         </EntityType>
+        <EntityType Name="c_picture1">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="image" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="c_production_issue">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="issue" Type="nchar" MaxLength="50" Nullable="false" />
+          <Property Name="zone" Type="nchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="c_reporter">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="reporterName" Type="nchar" MaxLength="25" Nullable="false" />
+        </EntityType>
         <EntityType Name="c_timer">
           <Key>
             <PropertyRef Name="ID" />
@@ -413,6 +445,20 @@ warning 6002: The table/view 'GADATA.WELDING2.h_Nut_Bolt_Measure' does not have 
           <Property Name="ResistanceActual" Type="int" />
           <Property Name="ResistanceRef" Type="int" />
           <Property Name="ExpulsionTime" Type="int" />
+        </EntityType>
+        <EntityType Name="h_production_issues">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="spotid" Type="int" Nullable="false" />
+          <Property Name="startdate" Type="datetime" Nullable="false" />
+          <Property Name="enddate" Type="datetime" Nullable="false" />
+          <Property Name="reporterId" Type="int" Nullable="false" />
+          <Property Name="issueId" Type="int" Nullable="false" />
+          <Property Name="quantity" Type="int" />
+          <Property Name="lastBodyNbr" Type="nchar" MaxLength="25" />
+          <Property Name="remarks" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="h_weldmeasure">
           <Key>
@@ -1100,6 +1146,18 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_c_Picture_c_pictureName">
+          <End Role="c_pictureName" Type="Self.c_pictureName" Multiplicity="1" />
+          <End Role="c_Picture" Type="Self.c_Picture" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_pictureName">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="c_Picture">
+              <PropertyRef Name="picturename_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_c_Teardown_c_Job">
           <End Role="c_Job" Type="Self.c_Job" Multiplicity="0..1" />
           <End Role="c_Teardown" Type="Self.c_Teardown" Multiplicity="*" />
@@ -1145,6 +1203,42 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
             </Principal>
             <Dependent Role="c_timer">
               <PropertyRef Name="c_timer_class_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_h_production_issues_c_production_issue">
+          <End Role="c_production_issue" Type="Self.c_production_issue" Multiplicity="1" />
+          <End Role="h_production_issues" Type="Self.h_production_issues" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_production_issue">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="h_production_issues">
+              <PropertyRef Name="issueId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_h_production_issues_c_reporter">
+          <End Role="c_reporter" Type="Self.c_reporter" Multiplicity="1" />
+          <End Role="h_production_issues" Type="Self.h_production_issues" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_reporter">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="h_production_issues">
+              <PropertyRef Name="reporterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_h_production_issues_rt_spottable">
+          <End Role="rt_spottable" Type="Self.rt_spottable" Multiplicity="1" />
+          <End Role="h_production_issues" Type="Self.h_production_issues" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="rt_spottable">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="h_production_issues">
+              <PropertyRef Name="spotid" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1484,6 +1578,7 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
           <EntitySet Name="c_faultcode" EntityType="Self.c_faultcode" Schema="TDT" store:Type="Tables" />
           <EntitySet Name="c_Job" EntityType="Self.c_Job" Schema="TDT" store:Type="Tables" />
           <EntitySet Name="c_Picture" EntityType="Self.c_Picture" Schema="TDT" store:Type="Tables" />
+          <EntitySet Name="c_pictureName" EntityType="Self.c_pictureName" Schema="TDT" store:Type="Tables" />
           <EntitySet Name="c_Teardown" EntityType="Self.c_Teardown" Schema="TDT" store:Type="Tables" />
           <EntitySet Name="rt_Job" EntityType="Self.rt_Job" Schema="TDT" store:Type="Tables" />
           <EntitySet Name="rt_Teardown" EntityType="Self.rt_Teardown" Schema="TDT" store:Type="Tables" />
@@ -1494,10 +1589,14 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
           <EntitySet Name="c_bosch_param" EntityType="Self.c_bosch_param" Schema="WELDING2" store:Type="Tables" />
           <EntitySet Name="c_error" EntityType="Self.c_error" Schema="WELDING2" store:Type="Tables" />
           <EntitySet Name="c_NPT" EntityType="Self.c_NPT" Schema="WELDING2" store:Type="Tables" />
+          <EntitySet Name="c_picture1" EntityType="Self.c_picture1" Schema="WELDING2" Table="c_picture" store:Type="Tables" />
+          <EntitySet Name="c_production_issue" EntityType="Self.c_production_issue" Schema="WELDING2" store:Type="Tables" />
+          <EntitySet Name="c_reporter" EntityType="Self.c_reporter" Schema="WELDING2" store:Type="Tables" />
           <EntitySet Name="c_timer" EntityType="Self.c_timer" Schema="WELDING2" store:Type="Tables" />
           <EntitySet Name="c_timer_class" EntityType="Self.c_timer_class" Schema="WELDING2" store:Type="Tables" />
           <EntitySet Name="c_user" EntityType="Self.c_user" Schema="WELDING2" store:Type="Tables" />
           <EntitySet Name="h_Midair" EntityType="Self.h_Midair" Schema="WELDING2" store:Type="Tables" />
+          <EntitySet Name="h_production_issues" EntityType="Self.h_production_issues" Schema="WELDING2" store:Type="Tables" />
           <EntitySet Name="h_weldmeasure" EntityType="Self.h_weldmeasure" Schema="WELDING2" store:Type="Tables" />
           <EntitySet Name="L_operation" EntityType="Self.L_operation" Schema="WELDING2" store:Type="Tables" />
           <EntitySet Name="rt_active_info" EntityType="Self.rt_active_info" Schema="WELDING2" store:Type="Tables" />
@@ -1850,6 +1949,10 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
             <End Role="ToDoList" EntitySet="ToDoList" />
             <End Role="ToDoList_Remark" EntitySet="ToDoList_Remark" />
           </AssociationSet>
+          <AssociationSet Name="FK_c_Picture_c_pictureName" Association="Self.FK_c_Picture_c_pictureName">
+            <End Role="c_pictureName" EntitySet="c_pictureName" />
+            <End Role="c_Picture" EntitySet="c_Picture" />
+          </AssociationSet>
           <AssociationSet Name="FK_c_Teardown_c_Job" Association="Self.FK_c_Teardown_c_Job">
             <End Role="c_Job" EntitySet="c_Job" />
             <End Role="c_Teardown" EntitySet="c_Teardown" />
@@ -1865,6 +1968,18 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
           <AssociationSet Name="FK_c_Timer_c_timer_class" Association="Self.FK_c_Timer_c_timer_class">
             <End Role="c_timer_class" EntitySet="c_timer_class" />
             <End Role="c_timer" EntitySet="c_timer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_h_production_issues_c_production_issue" Association="Self.FK_h_production_issues_c_production_issue">
+            <End Role="c_production_issue" EntitySet="c_production_issue" />
+            <End Role="h_production_issues" EntitySet="h_production_issues" />
+          </AssociationSet>
+          <AssociationSet Name="FK_h_production_issues_c_reporter" Association="Self.FK_h_production_issues_c_reporter">
+            <End Role="c_reporter" EntitySet="c_reporter" />
+            <End Role="h_production_issues" EntitySet="h_production_issues" />
+          </AssociationSet>
+          <AssociationSet Name="FK_h_production_issues_rt_spottable" Association="Self.FK_h_production_issues_rt_spottable">
+            <End Role="rt_spottable" EntitySet="rt_spottable" />
+            <End Role="h_production_issues" EntitySet="h_production_issues" />
           </AssociationSet>
           <AssociationSet Name="FK_L_operation_c_timer" Association="Self.FK_L_operation_c_timer">
             <End Role="c_timer" EntitySet="c_timer" />
@@ -2174,6 +2289,27 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
           <EntitySet Name="BosProgramAvailable" EntityType="GADATAModelWelding.BosProgramAvailable" />
           <EntitySet Name="CheckDubbelPrograms" EntityType="GADATAModelWelding.CheckDubbelPrograms" />
           <EntitySet Name="WeldtimeSpotsSetup" EntityType="GADATAModelWelding.WeldtimeSpotsSetup" />
+          <EntitySet Name="c_production_issue" EntityType="GADATAModelWelding.c_production_issue" />
+          <EntitySet Name="c_reporter" EntityType="GADATAModelWelding.c_reporter" />
+          <EntitySet Name="h_production_issues" EntityType="GADATAModelWelding.h_production_issues" />
+          <AssociationSet Name="FK_h_production_issues_c_production_issue" Association="GADATAModelWelding.FK_h_production_issues_c_production_issue">
+            <End Role="c_production_issue" EntitySet="c_production_issue" />
+            <End Role="h_production_issues" EntitySet="h_production_issues" />
+          </AssociationSet>
+          <AssociationSet Name="FK_h_production_issues_c_reporter" Association="GADATAModelWelding.FK_h_production_issues_c_reporter">
+            <End Role="c_reporter" EntitySet="c_reporter" />
+            <End Role="h_production_issues" EntitySet="h_production_issues" />
+          </AssociationSet>
+          <AssociationSet Name="FK_h_production_issues_rt_spottable" Association="GADATAModelWelding.FK_h_production_issues_rt_spottable">
+            <End Role="rt_spottable" EntitySet="rt_spottable" />
+            <End Role="h_production_issues" EntitySet="h_production_issues" />
+          </AssociationSet>
+          <EntitySet Name="c_picture1" EntityType="GADATAModelWelding.c_picture1" />
+          <EntitySet Name="c_pictureName" EntityType="GADATAModelWelding.c_pictureName" />
+          <AssociationSet Name="FK_c_Picture_c_pictureName" Association="GADATAModelWelding.FK_c_Picture_c_pictureName">
+            <End Role="c_pictureName" EntitySet="c_pictureName" />
+            <End Role="c_Picture" EntitySet="c_Picture" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="rt_AutoWorkFlowULPlans">
           <Key>
@@ -2358,6 +2494,7 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
           <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="timestamp" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="c_Teardown" Relationship="GADATAModelWelding.FK_c_Teardown_c_Picture" FromRole="c_Picture" ToRole="c_Teardown" />
+          <NavigationProperty Name="c_pictureName" Relationship="GADATAModelWelding.FK_c_Picture_c_pictureName" FromRole="c_Picture" ToRole="c_pictureName" />
         </EntityType>
         <EntityType Name="c_Teardown">
           <Key>
@@ -2919,6 +3056,7 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
           <NavigationProperty Name="c_timer" Relationship="GADATAModelWelding.FK_rt_spottable_c_timer" FromRole="rt_spottable" ToRole="c_timer" />
           <Property Name="isDuplicate" Type="Int32" />
           <Property Name="PolaritySpot" Type="Boolean" />
+          <NavigationProperty Name="h_production_issues" Relationship="GADATAModelWelding.FK_h_production_issues_rt_spottable" FromRole="rt_spottable" ToRole="h_production_issues" />
         </EntityType>
         <EntityType Name="rt_user">
           <Key>
@@ -3674,6 +3812,106 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
           <Property Name="ID" Type="Int32" Nullable="false" />
           <Property Name="Expr1" Type="Int32" />
         </EntityType>
+        <EntityType Name="c_production_issue">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="issue" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="zone" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="h_production_issues" Relationship="GADATAModelWelding.FK_h_production_issues_c_production_issue" FromRole="c_production_issue" ToRole="h_production_issues" />
+        </EntityType>
+        <EntityType Name="c_reporter">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="reporterName" Type="String" Nullable="false" MaxLength="25" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="h_production_issues" Relationship="GADATAModelWelding.FK_h_production_issues_c_reporter" FromRole="c_reporter" ToRole="h_production_issues" />
+        </EntityType>
+        <EntityType Name="h_production_issues">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="spotid" Type="Int32" Nullable="false" />
+          <Property Name="startdate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="enddate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="reporterId" Type="Int32" Nullable="false" />
+          <Property Name="issueId" Type="Int32" Nullable="false" />
+          <Property Name="quantity" Type="Int32" />
+          <Property Name="lastBodyNbr" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
+          <Property Name="remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="c_production_issue" Relationship="GADATAModelWelding.FK_h_production_issues_c_production_issue" FromRole="h_production_issues" ToRole="c_production_issue" />
+          <NavigationProperty Name="c_reporter" Relationship="GADATAModelWelding.FK_h_production_issues_c_reporter" FromRole="h_production_issues" ToRole="c_reporter" />
+          <NavigationProperty Name="rt_spottable" Relationship="GADATAModelWelding.FK_h_production_issues_rt_spottable" FromRole="h_production_issues" ToRole="rt_spottable" />
+        </EntityType>
+        <Association Name="FK_h_production_issues_c_production_issue">
+          <End Type="GADATAModelWelding.c_production_issue" Role="c_production_issue" Multiplicity="1" />
+          <End Type="GADATAModelWelding.h_production_issues" Role="h_production_issues" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_production_issue">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="h_production_issues">
+              <PropertyRef Name="issueId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_h_production_issues_c_reporter">
+          <End Type="GADATAModelWelding.c_reporter" Role="c_reporter" Multiplicity="1" />
+          <End Type="GADATAModelWelding.h_production_issues" Role="h_production_issues" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_reporter">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="h_production_issues">
+              <PropertyRef Name="reporterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_h_production_issues_rt_spottable">
+          <End Type="GADATAModelWelding.rt_spottable" Role="rt_spottable" Multiplicity="1" />
+          <End Type="GADATAModelWelding.h_production_issues" Role="h_production_issues" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="rt_spottable">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="h_production_issues">
+              <PropertyRef Name="spotid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="c_picture1">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="image" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="c_pictureName">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="pictureName" Type="String" Nullable="false" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="timestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Isdead" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="c_Picture" Relationship="GADATAModelWelding.FK_c_Picture_c_pictureName" FromRole="c_pictureName" ToRole="c_Picture" />
+        </EntityType>
+        <Association Name="FK_c_Picture_c_pictureName">
+          <End Type="GADATAModelWelding.c_pictureName" Role="c_pictureName" Multiplicity="1" />
+          <End Type="GADATAModelWelding.c_Picture" Role="c_Picture" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="c_pictureName">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="c_Picture">
+              <PropertyRef Name="picturename_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4737,6 +4975,57 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
                 <ScalarProperty Name="spotname" ColumnName="spotname" />
                 <ScalarProperty Name="Timer" ColumnName="Timer" />
                 <ScalarProperty Name="NPT" ColumnName="NPT" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="c_production_issue">
+            <EntityTypeMapping TypeName="GADATAModelWelding.c_production_issue">
+              <MappingFragment StoreEntitySet="c_production_issue">
+                <ScalarProperty Name="zone" ColumnName="zone" />
+                <ScalarProperty Name="issue" ColumnName="issue" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="c_reporter">
+            <EntityTypeMapping TypeName="GADATAModelWelding.c_reporter">
+              <MappingFragment StoreEntitySet="c_reporter">
+                <ScalarProperty Name="reporterName" ColumnName="reporterName" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="h_production_issues">
+            <EntityTypeMapping TypeName="GADATAModelWelding.h_production_issues">
+              <MappingFragment StoreEntitySet="h_production_issues">
+                <ScalarProperty Name="remarks" ColumnName="remarks" />
+                <ScalarProperty Name="lastBodyNbr" ColumnName="lastBodyNbr" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="issueId" ColumnName="issueId" />
+                <ScalarProperty Name="reporterId" ColumnName="reporterId" />
+                <ScalarProperty Name="enddate" ColumnName="enddate" />
+                <ScalarProperty Name="startdate" ColumnName="startdate" />
+                <ScalarProperty Name="spotid" ColumnName="spotid" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="c_picture1">
+            <EntityTypeMapping TypeName="GADATAModelWelding.c_picture1">
+              <MappingFragment StoreEntitySet="c_picture1">
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="c_pictureName">
+            <EntityTypeMapping TypeName="GADATAModelWelding.c_pictureName">
+              <MappingFragment StoreEntitySet="c_pictureName">
+                <ScalarProperty Name="Isdead" ColumnName="Isdead" />
+                <ScalarProperty Name="timestamp" ColumnName="timestamp" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="pictureName" ColumnName="pictureName" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

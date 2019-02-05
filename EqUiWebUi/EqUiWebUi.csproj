@@ -678,11 +678,13 @@
     <Compile Include="Areas\VWSC\VWSCAreaRegistration.cs" />
     <Compile Include="Areas\Welding\Controllers\AROController.cs" />
     <Compile Include="Areas\Welding\Controllers\DMLControllers\HiddenSpotController.cs" />
+    <Compile Include="Areas\Welding\Controllers\DMLControllers\h_production_issuesController.cs" />
     <Compile Include="Areas\Welding\Controllers\DMLControllers\StoringsIngaveController.cs" />
     <Compile Include="Areas\Welding\Controllers\DMLControllers\ULplan_startController.cs" />
     <Compile Include="Areas\Welding\Controllers\DMLControllers\UltralogInspectionsController.cs" />
     <Compile Include="Areas\Welding\Controllers\DMLControllers\WeldingGunsController.cs" />
     <Compile Include="Areas\Welding\Controllers\LaunchController.cs" />
+    <Compile Include="Areas\Welding\Controllers\QteamConfigController.cs" />
     <Compile Include="Areas\Welding\Controllers\QteamController.cs" />
     <Compile Include="Areas\Welding\Controllers\SpatterController.cs" />
     <Compile Include="Areas\Welding\Controllers\TeardownTeam.cs" />
@@ -737,6 +739,18 @@
     <Compile Include="Areas\Welding\Models\c_Picture.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Areas\Welding\Models\c_picture1.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Welding\Models\c_pictureName.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Welding\Models\c_production_issue.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Welding\Models\c_reporter.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Areas\Welding\Models\c_Teardown.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
@@ -756,6 +770,9 @@
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Welding\Models\h_Nut_Bolt_Measure.cs">
+      <DependentUpon>WeldingModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Welding\Models\h_production_issues.cs">
       <DependentUpon>WeldingModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Welding\Models\h_weldmeasure.cs">
@@ -1085,9 +1102,14 @@
     <Content Include="Content\CustomHyperlinkBoxes.css" />
     <Content Include="Content\CustomStyleTweeks.css" />
     <Content Include="Content\fontawesome-all.css" />
+    <Content Include="Content\images\deuropeningLinksV316.png" />
     <Content Include="Content\images\volvo-50.png" />
+
+    <Content Include="Content\images\vooruitkaderLinks.PNG" />
+
     <Content Include="Content\images\volvo-BE.png" />
     <Content Include="Content\images\Volvo-USA.png" />
+
     <Content Include="Content\jquery-cron.css" />
     <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\MvcGrid\mvc-grid.css" />
@@ -2921,6 +2943,16 @@
     <Content Include="Areas\VASC\Views\Eventlog\_get_h_alarm.cshtml" />
     <Content Include="Areas\VASC\Views\Eventlog\Get_rt_alarm.cshtml" />
     <Content Include="Areas\VASC\Views\Eventlog\_get_rt_alarm.cshtml" />
+    <Content Include="Areas\Welding\Views\Welding\ppmreweld.cshtml" />
+    <Content Include="Areas\Welding\Views\h_production_issues\Create.cshtml" />
+    <Content Include="Areas\Welding\Views\h_production_issues\Delete.cshtml" />
+    <Content Include="Areas\Welding\Views\h_production_issues\Details.cshtml" />
+    <Content Include="Areas\Welding\Views\h_production_issues\Edit.cshtml" />
+    <Content Include="Areas\Welding\Views\h_production_issues\Index.cshtml" />
+    <Content Include="Areas\Welding\Views\QteamConfig\Config.cshtml" />
+    <Content Include="Areas\Welding\Views\h_production_issues\SpatterPicture.cshtml" />
+    <Content Include="Areas\Welding\Views\h_production_issues\AddSpatterPicture.cshtml" />
+    <Content Include="Areas\Welding\Views\h_production_issues\_spatterPage.cshtml" />
     <Content Include="Areas\VASC\Views\c_job\Delete.cshtml" />
     <Content Include="Areas\VASC\Views\c_job\Edit.cshtml" />
     <Content Include="Areas\VASC\Views\c_job\Index.cshtml" />

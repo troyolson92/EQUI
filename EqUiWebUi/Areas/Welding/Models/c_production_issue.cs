@@ -12,24 +12,19 @@ namespace EqUiWebUi.Areas.Welding.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class c_Picture
+    public partial class c_production_issue
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public c_Picture()
+        public c_production_issue()
         {
-            this.c_Teardown = new HashSet<c_Teardown>();
+            this.h_production_issues = new HashSet<h_production_issues>();
         }
     
         public int id { get; set; }
-        public int picturenbr { get; set; }
-        public int picturename_id { get; set; }
-        public bool idead { get; set; }
-        public string Comment { get; set; }
-        public string Description { get; set; }
-        public System.DateTime timestamp { get; set; }
+        public string issue { get; set; }
+        public string zone { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<c_Teardown> c_Teardown { get; set; }
-        public virtual c_pictureName c_pictureName { get; set; }
+        public virtual ICollection<h_production_issues> h_production_issues { get; set; }
     }
 }

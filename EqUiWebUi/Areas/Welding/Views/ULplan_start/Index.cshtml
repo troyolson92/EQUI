@@ -10,7 +10,7 @@
 @Html.Grid(Model).Named("ULplan_start").Build(columns =>
 {
     columns.Add(c => c.id).Titled("id").Css("bolded");
-    columns.Add(c => c.Startinspectiontime).Titled("inspectionplan").Css("bolded").InitialSort(GridSortOrder.Desc); ;
+    columns.Add(c => c.Startinspectiontime).Titled("inspectiontime").Css("bolded").InitialSort(GridSortOrder.Desc); ;
     columns.Add(c => c.planid).Titled("planid");
     columns.Add(c => c.lastplannumber).Titled("lastplannumber");
     columns.Add(c => c.planlenght).Titled("planlenght");

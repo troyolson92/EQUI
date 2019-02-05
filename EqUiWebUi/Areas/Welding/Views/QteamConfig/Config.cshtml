@@ -1,0 +1,79 @@
+﻿
+@{
+
+    ViewBag.Title = "Config";
+}
+<div class="jumbotron">
+    <center><h2>Qteam Config Page</h2></center>
+
+
+    <p></p>@{
+        ViewBag.Title = "Config";
+    }
+    <div class="jumbotron">
+
+        <div class="card">
+            <div class="card-header bg-danger">
+                <h5 class="card-title text-white">
+                   Beheer plannen
+                    <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
+                </h5>
+            </div>
+
+            <p></p>
+            @MyHtmlHelpers.EquiLink("/Welding/Inspectionplans/Index", "fas fa-check-circle", "Config Ul plannen ", helperText: " Beheer van de DB plannen")
+        </div>
+        <p></p>
+
+        <div class="card">
+            <div class="card-header bg-danger">
+                <h5 class="card-title text-white">
+                    Beheer Plan Busy
+                    <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
+                </h5>
+            </div>
+
+            <p></p>
+
+            @MyHtmlHelpers.EquiLink("/Welding/ULplan_start/Index", "fas fa-check-circle", "Plan Busy ", helperText: "Beheer van de DB plan busy list")
+
+        </div>
+        <p></p>
+
+        <div class="card">
+            <div class="card-header bg-danger">
+                <h5 class="card-title text-white">
+                    Beheer Spots
+                    <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
+                </h5>
+            </div>
+
+            <p></p>
+
+            @MyHtmlHelpers.EquiLink("/Welding/HiddenSpot/Index", "fas fa-check-circle", "spot config", helperText: "  Beheer van de Hidden Spots, geoSpots, left / right spots")
+
+        </div>
+        <p></p>
+
+        <div class="card">
+            <div class="card-header bg-danger">
+                <h5 class="card-title text-white">
+                    Beheer UL measurements
+                    <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
+                </h5>
+            </div>
+
+            <p></p>
+
+            @MyHtmlHelpers.EquiLink("/Welding/UltralogInspections/Index", "fas fa-check-circle", "Change last ultralogmeasure", helperText: "Beheer de laatste ultralogmetingen van de afgelopen 24 uur")
+
+        </div>
+
+    </div>
+
+
+
+</div>
+</div>
+<p></p>
+

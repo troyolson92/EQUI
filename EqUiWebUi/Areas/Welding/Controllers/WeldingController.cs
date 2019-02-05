@@ -34,10 +34,9 @@ namespace EqUiWebUi.Areas.Welding.Controllers
 
 
 
-        public ActionResult Pagina1()
+        public ActionResult ppmreweld()
         {
-            ViewBag.data1 = "Dit is een string";
-            ViewBag.data2 = 10;
+         
             return View();
         }
 
