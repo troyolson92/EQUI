@@ -123,11 +123,11 @@ namespace EqUiWebUi.Areas.Alert
                     //option 1 location is given try and resolve location tree
                     if (ActiveAlert.Location != null)
                     {
-                        result = connectionManager.RunQuery(string.Format(qry, ActiveAlert.Location));
+                        result = connectionManager.RunQuery(string.Format(qry, ActiveAlert.Location.Trim()));
                     }
                     else //option 2 no location is given try and match on alarm object
                     {
-                        result = connectionManager.RunQuery(string.Format(qry, ActiveAlert.alarmobject));
+                        result = connectionManager.RunQuery(string.Format(qry, ActiveAlert.alarmobject.Trim()));
                     }
 
                     if (result.Rows.Count == 1)
@@ -137,7 +137,7 @@ namespace EqUiWebUi.Areas.Alert
                     }
                     else //handle if we don't get a response
                     {
-                        string msg = $"did not get a valid location tree from db Location: <{ActiveAlert.Location.ToString()}> Alarm object: <{ActiveAlert.alarmobject}>";
+                        string msg = $"did not get a valid location tree from db Location: <{ActiveAlert.Location.Trim()}> Alarm object: <{ActiveAlert.alarmobject.Trim()}>";
                         context.WriteLine(msg);
                         log.Warn(msg);
                         newAlert.locationTree = ActiveAlert.alarmobject;

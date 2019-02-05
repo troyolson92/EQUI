@@ -42,21 +42,21 @@
     columns.Add(c => c.ts_breakDownStart).Titled("ts_breakDownStart").Css("tablesaw-priority-0");
     columns.Add(c => c.part_data_count).Titled("part_data_count").Css("tablesaw-priority-0");
     //rt_controller optional
-    columns.Add(c => c.c_controller.rt_controller.First().Availability).Titled("Availability").Css("tablesaw-priority-0");
-    columns.Add(c => c.c_controller.rt_controller.First().BaseDirectory).Titled("BaseDirectory").Css("tablesaw-priority-0");
-    columns.Add(c => c.c_controller.rt_controller.First().ControllerName).Titled("ControllerName").Css("tablesaw-priority-0");
-    columns.Add(c => c.c_controller.rt_controller.First().HostName).Titled("HostName").Css("tablesaw-priority-0");
-    columns.Add(c => c.c_controller.rt_controller.First().Controller_Id).Titled("Controller_Id").Css("tablesaw-priority-0");
-    columns.Add(c => c.c_controller.rt_controller.First().IPaddress).Titled("IPaddress").Css("tablesaw-priority-0");
-    columns.Add(c => c.c_controller.rt_controller.First().IsVirtual).Titled("IsVirtual").Css("tablesaw-priority-0");
-    columns.Add(c => c.c_controller.rt_controller.First().MacAddress).Titled("MacAddress").Css("tablesaw-priority-0");
-    columns.Add(c => c.c_controller.rt_controller.First().Name).Titled("Name").Css("tablesaw-priority-0");
-    columns.Add(c => c.c_controller.rt_controller.First().RunLevel).Titled("RunLevel").Css("tablesaw-priority-0");
-    columns.Add(c => c.c_controller.rt_controller.First().SystemId).Titled("SystemId").Css("tablesaw-priority-0");
-    columns.Add(c => c.c_controller.rt_controller.First().SystemName).Titled("SystemName").Css("tablesaw-priority-0");
-    columns.Add(c => c.c_controller.rt_controller.First().Version).Titled("Version").Css("tablesaw-priority-0");
-    columns.Add(c => c.c_controller.rt_controller.First().VersionName).Titled("VersionName").Css("tablesaw-priority-0");
-    columns.Add(c => c.c_controller.rt_controller.First().WebServicesPort).Titled("WebServicesPort").Css("tablesaw-priority-0");
+    columns.Add(c => c.c_controller.rt_controller.FirstOrDefault().Availability).Titled("Availability").Css("tablesaw-priority-0");
+    columns.Add(c => c.c_controller.rt_controller.FirstOrDefault().BaseDirectory).Titled("BaseDirectory").Css("tablesaw-priority-0");
+    columns.Add(c => c.c_controller.rt_controller.FirstOrDefault().ControllerName).Titled("ControllerName").Css("tablesaw-priority-0");
+    columns.Add(c => c.c_controller.rt_controller.FirstOrDefault().HostName).Titled("HostName").Css("tablesaw-priority-0");
+    columns.Add(c => c.c_controller.rt_controller.FirstOrDefault().Controller_Id).Titled("Controller_Id").Css("tablesaw-priority-0");
+    columns.Add(c => c.c_controller.rt_controller.FirstOrDefault().IPaddress).Titled("IPaddress").Css("tablesaw-priority-0");
+    columns.Add(c => c.c_controller.rt_controller.FirstOrDefault().IsVirtual).Titled("IsVirtual").Css("tablesaw-priority-0");
+    columns.Add(c => c.c_controller.rt_controller.FirstOrDefault().MacAddress).Titled("MacAddress").Css("tablesaw-priority-0");
+    columns.Add(c => c.c_controller.rt_controller.FirstOrDefault().Name).Titled("Name").Css("tablesaw-priority-0");
+    columns.Add(c => c.c_controller.rt_controller.FirstOrDefault().RunLevel).Titled("RunLevel").Css("tablesaw-priority-0");
+    columns.Add(c => c.c_controller.rt_controller.FirstOrDefault().SystemId).Titled("SystemId").Css("tablesaw-priority-0");
+    columns.Add(c => c.c_controller.rt_controller.FirstOrDefault().SystemName).Titled("SystemName").Css("tablesaw-priority-0");
+    columns.Add(c => c.c_controller.rt_controller.FirstOrDefault().Version).Titled("Version").Css("tablesaw-priority-0");
+    columns.Add(c => c.c_controller.rt_controller.FirstOrDefault().VersionName).Titled("VersionName").Css("tablesaw-priority-0");
+    columns.Add(c => c.c_controller.rt_controller.FirstOrDefault().WebServicesPort).Titled("WebServicesPort").Css("tablesaw-priority-0");
 
     columns.Add(c => c)
             .Titled("Tools")
