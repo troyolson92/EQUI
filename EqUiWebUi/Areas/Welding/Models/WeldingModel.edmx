@@ -145,6 +145,9 @@
           <Property Name="Description" Type="nchar" MaxLength="100" />
           <Property Name="timestamp" Type="datetime" Nullable="false" />
           <Property Name="Isdead" Type="bit" Nullable="false" />
+          <Property Name="picture" Type="varbinary(max)" />
+          <Property Name="path" Type="varchar(max)" />
+          <Property Name="fileName" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="c_Teardown">
           <Key>
@@ -3902,6 +3905,9 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
           <Property Name="timestamp" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Isdead" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="c_Picture" Relationship="GADATAModelWelding.FK_c_Picture_c_pictureName" FromRole="c_pictureName" ToRole="c_Picture" />
+          <Property Name="picture" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="path" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="fileName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_c_Picture_c_pictureName">
           <End Type="GADATAModelWelding.c_pictureName" Role="c_pictureName" Multiplicity="1" />
@@ -5025,6 +5031,9 @@ warning 6002: The table/view 'GADATA.WELDING2.TimerBreakdowns_busy' does not hav
           <EntitySetMapping Name="c_pictureName">
             <EntityTypeMapping TypeName="GADATAModelWelding.c_pictureName">
               <MappingFragment StoreEntitySet="c_pictureName">
+                <ScalarProperty Name="fileName" ColumnName="fileName" />
+                <ScalarProperty Name="path" ColumnName="path" />
+                <ScalarProperty Name="picture" ColumnName="picture" />
                 <ScalarProperty Name="Isdead" ColumnName="Isdead" />
                 <ScalarProperty Name="timestamp" ColumnName="timestamp" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
