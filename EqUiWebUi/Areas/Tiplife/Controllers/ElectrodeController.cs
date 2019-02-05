@@ -1,10 +1,12 @@
 ﻿using EqUiWebUi.Areas.Tiplife.Models;
+using EqUiWebUi.Areas.Welding.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 
 namespace EqUiWebUi.Areas.Tiplife.Controllers
 {
@@ -112,8 +114,8 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
                     || tipMonitor.nDress > maxDress
                     || (tipMonitor.Status != "" && tipMonitor.Status != "NO PREDICTION")  //do not push for no wear in clac 
                     )
-                    && tipMonitor.LocationTree.Contains(locationFilter) //apply dropdown filter
-                    && tipMonitor.LocationTree.Contains(LocationRoot) //apply user filter
+                    && (tipMonitor.LocationTree ?? "").Contains(locationFilter) //apply dropdown filter
+                    && (tipMonitor.LocationTree ?? "").Contains(LocationRoot) //apply user filter
                     select tipMonitor;
             }
             else
@@ -121,9 +123,9 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
                 data = from tipMonitor in DataBuffer.Tipstatus
                     where
                     (tipMonitor.Status != "" && tipMonitor.Status != "NO PREDICTION")  //do not push for no wear in clac 
-                    && tipMonitor.LocationTree.Contains(locationFilter) //apply dropdown filter
-                    && tipMonitor.LocationTree.Contains(LocationRoot) //apply user filter
-                    select tipMonitor;
+                    && (tipMonitor.LocationTree ?? "").Contains(locationFilter) //apply dropdown filter
+                    && (tipMonitor.LocationTree ?? "").Contains(LocationRoot) //apply user filter
+                     select tipMonitor;
             }
 
             log.Info($"Plantipchange for: {locationFilter} Filters: minwear: {minWear} minparts: {minParts} maxDress: {maxDress}  |resultCount: {data.Count()}");
@@ -153,6 +155,11 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
             if (location != "")//if location is passing only show that one
             {
                 SelectList list = new SelectList(db.c_timer.Where(c => c.Robot.Contains(location)).OrderBy(c => c.Name), "Robot", "Robot");
+                if (list.Count() == 0)
+                {
+                    log.Warn($"location: {location} was not found in c_timer! added by default");
+                    list = new SelectList(new List<SelectListItem>{new SelectListItem { Selected = true, Text = location, Value = location}}, "Text", "Value");
+                }
                 ViewBag.Locations = list;
                 //check if we should auto load. (if only one is possible).
                 if (list.Count() == 1 && tool_nr != 0 && ElectrodeNo == 0)
@@ -236,16 +243,21 @@ namespace EqUiWebUi.Areas.Tiplife.Controllers
             if (gADATAEntitiesVASC.c_controller.Where(c => c.controller_name == location).Count() != 0)
             {
                 ViewBag.NgacDummyAlarmobject = $"{location.Trim()}_gun{tool_nr}";
-                ViewBag.NgacDummyTriggerId = 43;
+                ViewBag.NgacDummyAlertType = "Delta Nom/Ref";
                 ViewBag.isNgac = true; //used to pick more info modal (ngac or comau)
             }
             else
             {
                 ViewBag.isNgac = false;
             }
-            //Add midair scatter chart always (all weld gun tools should have a midair)
-            ViewBag.MidAirDummyAlarmobject = $"{location.Trim()}_ElecNo{ElectrodeNo}";
-            ViewBag.MidAircDummyTriggerId = 44;
+
+            if (EqUiWebUi.MyBooleanExtensions.IsAreaEnabled("Welding"))
+            {
+                //Add midair scatter chart always (all weld gun tools should have a midair)
+                ViewBag.MidAirDummyAlarmobject = $"{location.Trim()}_ElecNo{ElectrodeNo}";
+                ViewBag.MidAircDummyAlertType = "MidAir";
+            }
+
 
             //get a list of all control charts that need to be rendered to this location / tool_nr combination
             //Make the match on start with location and EndsWith tool_nr. This is a leap of fate and all has to do with how the users sets up the alerts.

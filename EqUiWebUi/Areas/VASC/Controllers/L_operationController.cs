@@ -24,10 +24,9 @@ namespace EqUiWebUi.Areas.VASC.Controllers
         //Will return partial view with a list of the L_operation.
         public ActionResult _List(int? controller_id, string sessionName)
         {
-            ViewBag.controller_id = controller_id;
             if (controller_id is null)
             {
-                if (sessionName is null)
+                if (sessionName is null || sessionName == "")
                 {
                     //all 
                     return PartialView(db.L_operation.ToList());
@@ -35,13 +34,13 @@ namespace EqUiWebUi.Areas.VASC.Controllers
                 else
                 {
                     //for a session
-                    return PartialView(db.L_operation.Where(c => c.Vasc_name.Contains(sessionName)).ToList());
+                    return PartialView(db.L_operation.Where(c => c.Vasc_name.Contains(sessionName)));
                 }
             }
             else
             {
                 //for a controller
-                return PartialView(db.L_operation.Where(c => (c.controller_id == controller_id && c.Vasc_name.Contains(sessionName)) || (c.controller_id == null && c.Vasc_name.Contains(sessionName))).ToList());
+                return PartialView(db.L_operation.Where(c => (c.controller_id == controller_id && c.Vasc_name.Contains(sessionName)) || (c.controller_id == null && c.Vasc_name.Contains(sessionName))));
             }
 
         }

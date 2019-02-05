@@ -15,7 +15,7 @@ namespace EqUiWebUi
         private PerformContext MainContext;
 
         [Queue("jobengine")]
-        [AutomaticRetry(Attempts = 0)] //no hangfire retry 
+        [AutomaticRetry(Attempts = 5)] 
         public void Run_houseKeeping(string name, int id, PerformContext context)
         {
             c_housekeeping housekeeping = dbEQUI.c_housekeeping.Find(id);
@@ -35,8 +35,8 @@ namespace EqUiWebUi
 @SchemaName = '{housekeeping.SchemaName.Trim()}',
 @TableName  = '{housekeeping.TableName.Trim()}',
 @IdColName  = '{housekeeping.IdColName}',
-@DateTimeColName  = '{housekeeping.DateTimeColName}'
-
+@DateTimeColName  = '{housekeeping.DateTimeColName}',
+@NoHousekeeping = {((housekeeping.NoHousekeeping == true) ? 1 : 0)}
             ";
                 context.WriteLine(cmd);
                 result = connectionManager.RunQuery(cmd, enblExeptions: true, maxEXECtime: housekeeping.nMaxRunTime,subscribeToMessages:true);

@@ -1,4 +1,6 @@
 ﻿
+
+
 CREATE PROCEDURE [NGAC].[sp_CalcTipWearBeforeChange]
   @daysBack as int = 40 --must be this high because some tips are on the robot a LONG time
 AS
@@ -88,7 +90,8 @@ This must be excluded. Can be detected by Dress_reason = "" o
 */
 WHERE len(rt.Dress_Reason) > 1
 --limit date range for Query performance
-AND rt._timestamp between GETDATE()-@daysBack and GETDATE()
+--used to be timestamp but is an issue on a new system
+AND rt.[Date Time] between GETDATE()-@daysBack and GETDATE()
 ) AS Y
 
 

@@ -14,6 +14,8 @@
         <div class="carousel-inner" role="listbox">
             @foreach (EqUiWebUi.Areas.PlcSupervisie.Models.PlcScreenshot item in Model)
             {
+                @*need to get index of while loop here and add attry in carousel-item to changes item in js *@
+
                 <div class="carousel-item">
                     <img class="d-block img-fluid" src="@item.url" alt="@item.Name" title="@item.Name"  style="width: 80%; height: 100%;">
                 </div>
@@ -30,6 +32,12 @@
     </div>
 </div>
 
+<!--center image in carousel-->
+<style>
+    .carousel-inner > .carousel-item > img {
+        margin: 0 auto;
+    }
+</style>
 
 <!--carousel script-->
 <script>

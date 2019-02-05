@@ -77,7 +77,7 @@
             this.rib2.Groups.Add(this.group2);
             this.rib2.Groups.Add(this.AssetManager);
             this.rib2.Groups.Add(this.g_config);
-            this.rib2.Label = "EQDATABASE";
+            this.rib2.Label = "EQUI";
             this.rib2.Name = "rib2";
             // 
             // group2

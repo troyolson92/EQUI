@@ -1,0 +1,16 @@
+﻿@model List<VASCClientService.ServiceReference1.VASCControllerGeneralStats>
+@{
+    ViewBag.Title = "GetControlerStats";
+}
+
+<h2>GetControlerStats</h2>
+
+@Html.Grid(Model).Named("GetControlerStatsGrid").Build(columns =>
+{
+    columns.Add(c => c.name).Titled("name").InitialSort(GridSortOrder.Asc).Css("tablesaw-priority-persist");
+    columns.Add(c => c.isConnected).Titled("isConnected");
+    columns.Add(c => c.lastExcMessage).Titled("lastExcMessage");
+    columns.Add(c => c.iteration).Titled("iteration");
+    columns.Add(c => c.lastAlarmSeqNo).Titled("lastAlarmSeqNo");
+
+}).Filterable().Sortable().Empty("Did not find anything").Css("table-hover tablesaw-on")

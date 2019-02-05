@@ -7,6 +7,7 @@
     "daterangepicker": "^3.0.3",
     "jquery-jeditable": "^2.0.6",
     "moment": "^2.23.0",
+    "powerbi-client": "^2.6.7",
     "print-this": "^1.14.1",
     "tablesaw": "^3.1.0"
   }

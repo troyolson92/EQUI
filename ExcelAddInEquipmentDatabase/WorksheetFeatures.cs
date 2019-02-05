@@ -94,24 +94,32 @@ namespace ExcelAddInEquipmentDatabase
             }
 
             // add button controls where as needed
+            int pos = 1;
             if (wonum != "")
             {
-                btn = AddButtonToTableMenuItem("Maximo WorkorderDetails", 1, 487); //if we have a wonum enable wo details
+                btn = AddButtonToTableMenuItem("Maximo WorkorderDetails", pos, 487); //if we have a wonum enable wo details
                 btn.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(WorkorderDetailsMenuItemClick);
+                pos += 1;
             }
+
+            if (location != "")
+            {
+                btn = AddButtonToTableMenuItem("Maximo location history", pos, 0025); //if we have a log code enable error details
+                btn.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(btnShowWorkorderHistoryClick);
+                pos += 1;
+            }
+
             if (errornum != "" && (Logtype == "BREAKDOWN" || Logtype == "ERROR" || Logtype == "WARNING" || Logtype == "ALERT"
                 || Logtype == "ControllerEvent" || Logtype == "ErrDispLog" || Logtype == "SHIFTBOOK" || Logtype == "STOerror"))
             {
-                btn = AddButtonToTableMenuItem("Equi LogDetails", 1, 463); //if we have a log code enable error details
+                btn = AddButtonToTableMenuItem("Equi LogDetails", pos, 0017); //if we have a log code enable error details
                 btn.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(ErrorDetailsMenuItemClick);
+                pos += 1;
             }
-            if (location != "")
-            {
-                btn = AddButtonToTableMenuItem("Maximo location history", 1, 463); //if we have a log code enable error details
-                btn.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(btnShowWorkorderHistoryClick);
-            }
-            btn = AddButtonToTableMenuItem("Apply default formatting", 1, 463); //if we have a log code enable error details
+
+            btn = AddButtonToTableMenuItem("Apply default formatting", pos, 463); //if we have a log code enable error details
             btn.Click += new Microsoft.Office.Core._CommandBarButtonEvents_ClickEventHandler(ApplyRobotFromattingClick);
+            pos += 1;
         }
 
         //get command bar for Table property
