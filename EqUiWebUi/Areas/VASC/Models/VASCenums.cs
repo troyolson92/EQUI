@@ -79,7 +79,12 @@ namespace EqUiWebUi.Areas.VASC.Models
             }
         }
 
-        //helper from int to array of int
+        /// <summary>
+        /// helper to  from int to an array of the bits set in that int
+        /// </summary>
+        /// <param name="inputValue">int value to check</param>
+        /// <param name="enumLength">number of bits to check</param>
+        /// <returns>array with decimal value of set bits</returns>
         public static int[] IntMaskToIntArray(int? inputValue, int enumLength)
         {
             //GHM 
@@ -95,7 +100,11 @@ namespace EqUiWebUi.Areas.VASC.Models
             return listValue.ToArray();
         }
 
-        //helper from array of int to bitmask returns -1 if all 16 bits are set
+        /// <summary>
+        /// helper from array of int to bitmask 
+        /// </summary>
+        /// <param name="inputArray">array containing decimal value of set bits</param>
+        /// <returns>returns -1 if all 16 bits are set else returns decimal sum of the set bits</returns>
         public static int IntArrayToIntMask(int[] inputArray)
         {
             if (inputArray.Count() >= 16)
@@ -108,25 +117,63 @@ namespace EqUiWebUi.Areas.VASC.Models
             }
         }
 
-        //helper to convert array int to string.
+        /// <summary>
+        /// Return a representation of the values in the array
+        /// </summary>
+        /// <param name="inputArray">Array of integer values</param>
+        /// <returns>String representation</returns>
         public static string intArrayTostring(int[] inputArray)
         {
-            if (inputArray.Count() == 0)
+            if (inputArray.Length == 0)
             {
                 return "disabled";
             }
-            else if (inputArray.Count() == 1)
-            {
-                return $"bit{String.Join(",", inputArray.Select(p => p.ToString()).ToArray())}";
-            }
-            else if (inputArray.Count() >= 16)
+            if (inputArray.Length >= 16)
             {
                 return "all(-1)";
             }
-            else
+            System.Text.StringBuilder sb = new System.Text.StringBuilder(inputArray.Length > 1 ? "bits(" : "bit(");
+            foreach (int value in inputArray)
             {
-                return $"bits({String.Join(",", inputArray.Select(p => p.ToString()).ToArray())})";
+                // Assume only one bit set per integer value
+                for (int mask = 0; mask < 32; mask++)
+                {
+                    if ((value & (1 << mask)) != 0)
+                    {
+                        sb.Append("" + (mask + 1));
+                        sb.Append(",");
+                        break;
+                    }
+                }
             }
+            sb[sb.Length - 1] = ')';
+            return sb.ToString();
+        }
+
+        /// <summary>
+        /// Return a string listing the bits set
+        /// </summary>
+        /// <param name="intValue">Integer value</param>
+        /// <returns>String representation</returns>
+        public static string intTostring(int inputValue, int enumLength)
+        {
+            if (inputValue == 0)
+            {
+                return "disabled";
+            }
+            if (inputValue == -1)
+                return "all";
+            System.Text.StringBuilder sb = new System.Text.StringBuilder(((inputValue & (inputValue - 1)) != 0) ? "bits(" : "bit(");
+            for (int lcv = 0; lcv < enumLength; lcv++)
+            {
+                if ((inputValue & (1 << lcv)) != 0)
+                {
+                    sb.Append("" + (lcv + 1));
+                    sb.Append(",");
+                }
+            }
+            sb[sb.Length - 1] = ')';
+            return sb.ToString();
         }
 
     }

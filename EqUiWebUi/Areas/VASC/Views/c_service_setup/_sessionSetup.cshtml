@@ -12,15 +12,16 @@
     </div>
 </div>
 
-    <script>
-    $('#sessionSetupGridContainer').mvcgrid({
-        sourceUrl: '@Url.Action("_sessionSetupGrid",new { enable_mask = ViewBag.enable_mask })',
-        requestType: 'get', // Ajax grid request type
-        reloadFailed: function (result) {
-            $("#sessionSetupGridContainer").html($("#Error", result.responseText).html());
-        },
-        reloadEnded: function () {
-           EnableInterfaceEvents();
-        }
-    });
-    </script>
+
+<script>
+$('#sessionSetupGridContainer').mvcgrid({
+    sourceUrl: '@Url.Action("_sessionSetupGrid",new { enable_mask = ViewBag.enable_mask })',
+    requestType: 'get', // Ajax grid request type
+    reloadFailed: function (result) {
+        $("#sessionSetupGridContainer").html($("#Error", result.responseText).html());
+    },
+    reloadEnded: function () {
+        EnableInterfaceEvents();
+    }
+});
+</script>

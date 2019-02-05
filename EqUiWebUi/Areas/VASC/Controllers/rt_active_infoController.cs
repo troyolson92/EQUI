@@ -15,15 +15,31 @@ namespace EqUiWebUi.Areas.VASC.Controllers
         private GADATAEntitiesVASC db = new GADATAEntitiesVASC();
 
         // GET: VASC/rt_active_info
-        public ActionResult Index(bool ShowNOKonly = false)
+        public ActionResult Index(string sessionName, bool ShowNOKonly = false)
         {
+            ViewBag.sessionName = sessionName;
+            ViewBag.ShowNOKonly = ShowNOKonly;
             if (ShowNOKonly)
             {
-                return View(db.rt_active_info.Where(c => c.vasc_state != (int)VASCState.STATE_CONNECTED && c.c_controller.enable_bit != (int)Enable_bit.Disabled).Include(r => r.c_controller).ToList());
+                if (sessionName is null)
+                {
+                    return View(db.rt_active_info.Where(c => c.vasc_state != (int)VASCState.STATE_CONNECTED && c.c_controller.enable_bit != (int)Enable_bit.Disabled).Include(r => r.c_controller).ToList());
+                }
+                else
+                {
+                    return View(db.rt_active_info.Where(c => c.vasc_state != (int)VASCState.STATE_CONNECTED && c.c_controller.enable_bit != (int)Enable_bit.Disabled && c.vasc_session.Contains(sessionName)).Include(r => r.c_controller).ToList());
+                }
             }
             else
             {
-                return View(db.rt_active_info.Include(r => r.c_controller).ToList());
+                if (sessionName is null)
+                {
+                    return View(db.rt_active_info.Include(r => r.c_controller).ToList());
+                }
+                else
+                {
+                    return View(db.rt_active_info.Where(r => r.vasc_session.Contains(sessionName)).Include(r => r.c_controller).ToList());
+                }
             }
         }
 

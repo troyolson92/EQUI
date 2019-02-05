@@ -259,9 +259,15 @@ namespace EqUiWebUi.Areas.Supervision.Controllers
         {
             //query all instances of the log type via equi.getErrorInfoData 
             ConnectionManager connectionManager = new ConnectionManager();
-            string qry = string.Format(
-            @"EXEC [EqUi].[GetErrorInfoData] @Location  = '{0}' ,@ERRORNUM = '{1}' ,@Refid = {2} ,@logtype ='{3}'"
-            , logInfo.location, logInfo.errornum, logInfo.refid, logInfo.logtype);
+            string qry;
+            if (System.Configuration.ConfigurationManager.AppSettings["Maximo_SiteID"].ToString() == "VCG")
+            {
+                qry = $"EXEC [EqUi].[GetErrorInfoData] @Location  = '{logInfo.location}' ,@ERRORNUM = '{logInfo.errornum}' ,@Refid = {logInfo.refid} ,@logtype ='{logInfo.logtype}'";
+            }
+            else
+            {
+                qry = $"EXEC [EqUi].[VCCHGetErrorInfoData] @Location  = '{logInfo.location}' ,@ERRORNUM = '{logInfo.errornum}' ,@Refid = {logInfo.refid} ,@logtype ='{logInfo.logtype}'";
+            }
             DataTable dt = connectionManager.RunQuery(qry);
             //build an html response with the log info.
             StringBuilder sb = new StringBuilder();

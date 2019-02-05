@@ -102,6 +102,21 @@
     </div>
 </div>
 
+<hr />
+<div class="card">
+    <div class="card-header bg-light">
+        <h5 class="card-title text-black-50">
+            <a class="clickable far fa-window-restore text-black-50" href="@Url.Action("Index", "c_job")" data-toggle="tooltip" title="Direct link to this view"></a>
+            <strong>c_job</strong>
+            (setup what jobs are logged into rt_job)
+            <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
+        </h5>
+    </div>
+    <div class="card-body">
+        <div id="c_jobGrid" class="mvc-grid"></div>
+    </div>
+</div>
+
 
 <script>
     //load girds
@@ -174,6 +189,19 @@
         requestType: 'get', // Ajax grid request type
         reloadFailed: function (result) {
             $("#c_controllerGrid").html($("#Error", result.responseText).html());
+        },
+        reloadEnded: function () {
+            EnableInterfaceEvents();
+        }
+    });
+
+    $('#c_jobGrid').html('@MyHtmlHelpers.Loading("c_jobGrid")');
+    $('#c_jobGrid').mvcgrid({
+        sourceUrl: '@Html.Raw(@Url.Action("_List", "c_job", new { enable_mask = Model.cJobMask }))',
+        reload: true,
+        requestType: 'get', // Ajax grid request type
+        reloadFailed: function (result) {
+            $("#c_jobGrid").html($("#Error", result.responseText).html());
         },
         reloadEnded: function () {
             EnableInterfaceEvents();

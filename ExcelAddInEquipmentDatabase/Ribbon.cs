@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Text;
 using Office = Microsoft.Office.Core;
 
 // TODO:  Follow these steps to enable the Ribbon (XML) item:
@@ -21,10 +18,9 @@ using Office = Microsoft.Office.Core;
 //    move your code from the event handlers to the callback methods and modify the code to work with the
 //    Ribbon extensibility (RibbonX) programming model.
 
-// 3. Assign attributes to the control tags in the Ribbon XML file to identify the appropriate callback methods in your code.  
+// 3. Assign attributes to the control tags in the Ribbon XML file to identify the appropriate callback methods in your code.
 
 // For more information, see the Ribbon XML documentation in the Visual Studio Tools for Office Help.
-
 
 namespace ExcelAddInEquipmentDatabase
 {
@@ -39,14 +35,15 @@ namespace ExcelAddInEquipmentDatabase
 
         #region IRibbonExtensibility Members
 
-        public string GetCustomUI(string ribbonID)
+        public string GetCustomUI(string RibbonID)
         {
             return GetResourceText("ExcelAddInEquipmentDatabase.Ribbon.xml");
         }
 
-        #endregion
+        #endregion IRibbonExtensibility Members
 
         #region Ribbon Callbacks
+
         //Create callback methods here. For more information about adding callback methods, visit http://go.microsoft.com/fwlink/?LinkID=271226
 
         public void Ribbon_Load(Office.IRibbonUI ribbonUI)
@@ -54,7 +51,7 @@ namespace ExcelAddInEquipmentDatabase
             this.ribbon = ribbonUI;
         }
 
-        #endregion
+        #endregion Ribbon Callbacks
 
         #region Helpers
 
@@ -78,6 +75,6 @@ namespace ExcelAddInEquipmentDatabase
             return null;
         }
 
-        #endregion
+        #endregion Helpers
     }
 }

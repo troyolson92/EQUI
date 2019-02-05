@@ -48,13 +48,13 @@ and c.LocationTree like '%'+c_ownership.LocationTree+'%'
 --*******************************************************************************************************************--
 --update hasspotweld bit for ngac
 --*******************************************************************************************************************--
-/*update  NGAC.c_controller
+update  NGAC.c_controller
  set hasspotweld = case
-                  when x.controller_id is not null  then 1
+                  when x.c_controller_id is not null  then 1
                   else 0
                  end
-from  NGAC.c_controller
-left join (select distinct controller_id from  NGAC.h_TipWearBeforeChange) as x on x.controller_id = c_controller.id*/
+from  NGAC.c_controller as c
+left join (select distinct c_controller_id from  NGAC.[TipwearLast]) as x on x.c_controller_id = c.id
 --*******************************************************************************************************************--
 
 

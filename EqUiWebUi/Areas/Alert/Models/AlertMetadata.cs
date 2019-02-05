@@ -126,6 +126,7 @@ namespace EqUiWebUi.Areas.Alert.Models
         public DateTime enddate { get; set; }
         public string alarmobject { get; set; }
         public int c_trigger_id { get; set; }
+        public string alertType { get; set; }
         public int optDatanum { get; set; } //from 0-5 0=no opt data 1-5 op data set 
         public List<string> optDataLabels { get; set; }
     }

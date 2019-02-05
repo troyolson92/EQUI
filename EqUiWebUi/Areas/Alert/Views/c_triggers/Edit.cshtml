@@ -400,8 +400,11 @@ else
                 $('#MyModal').modal({ show: true });
                 $('#MyModal').load('@Url.Action("_dynamicWebgridRunQueryAgainstDB", "Dynamic", new { area = "" })'
                     , { qry: sqlStatementCodeMirror.getValue(), db: $('#c_datasource_id').val() }
-                    , function (result) { }
-                );
+                    ,function (responseText, textStatus, req) {
+                        if (textStatus == "error") {
+                           $('#MyModal').html($("#Error", responseText).html());
+                        }
+                    });
         });
 
          //on Runstatement show the user the result from the alert sql statement
@@ -411,8 +414,11 @@ else
                 $('#MyModal').modal({ show: true });
                 $('#MyModal').load('@Url.Action("_dynamicWebgridRunQueryAgainstDB", "Dynamic", new { area = "" })'
                     , { qry: controllimitSqlStatementCodeMirror.getValue(), db: $('#c_datasource_id').val() }
-                    , function (result) { }
-                );
+                    ,function (responseText, textStatus, req) {
+                        if (textStatus == "error") {
+                           $('#MyModal').html($("#Error", responseText).html());
+                        }
+                    });
         });
 
        //clear modal on close

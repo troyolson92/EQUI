@@ -1,0 +1,87 @@
+﻿@{
+    ViewBag.Title = ViewBag.workbook;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="card">
+    <div class="card-header bg-dark text-white">
+        <h4>
+            PowerBi app: <strong>@ViewBag.workbook</strong>
+            <a class="fas fa-info-circle text-white MyPopovers" data-container="body" data-toggle="popover" data-placement="bottom" href="@Url.Action("_Getwiki", "Wiki", new { area = "", id = ViewBag.workbook}, null)"></a>
+        </h4>
+    </div>
+    @*render the viz*@
+    <div id="viz" class="viz">
+        <iframe  frameborder="0" allowFullScreen="true"></iframe>
+    </div>
+</div>
+
+
+@section scripts{
+
+    <script>
+        $(function () {
+            var url = 'https://app.powerbi.com/reportEmbed?reportId='.concat('@ViewBag.RepportID').concat('&autoAuth=true');
+            $('#viz iframe').attr("src", url);
+            resize();
+        });
+
+        /**
+         * Finds the correct size of the dashboard in this screen.
+        https://en.wikipedia.org/wiki/Display_resolution#/media/File:Vector_Video_Standards8.svg
+         */
+        function findDashboardSize() {
+            var minHeight = 600;
+            var maxHeight =  1452;
+            var minWidth = 800;
+            var maxWidth = 1920;
+
+            // The minus 100px leaves us room for the header/footer. Adjust as needed.
+            var height = window.innerHeight - 130;
+
+            if (height < minHeight) {
+                height = minHeight;
+            }
+            if (height > maxHeight) {
+                height = maxHeight;
+            }
+
+            // var width = Math.round(height / (minHeight / minWidth));
+            var width = window.innerWidth - 20;
+            if (width < minWidth) {
+                width = minWidth;
+            }
+            if (width > maxWidth) {
+                width = maxWidth;
+            }
+
+            //console.log("Resize: Body:", window.innerHeight, "x", window.innerWidth, " viz:", height, " x", width);
+
+            return {
+                'width': width,
+                'height': height
+            }
+        }
+
+        /**
+         * Resizes our viz.
+         */
+        function resize() {
+            var size = findDashboardSize();
+            $('#viz').width(size.width);
+            $('#viz').height(size.height);
+            $('#viz iframe').attr("scrolling", "no");
+            $('#viz iframe').css('overflow', 'hidden');
+            $('#viz iframe').width(size.width);
+            $('#viz iframe').height(size.height + 20);
+        }
+
+        /**
+         * Hook into the window resize event to resize when the user resizes the screen.
+         */
+        $(window).resize(resize);
+
+        //full with screen
+        $("#allcontent").removeClass("body-content");
+        $("#allcontent").removeClass("container");
+    </script>
+}

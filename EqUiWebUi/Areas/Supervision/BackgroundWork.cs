@@ -265,7 +265,7 @@ namespace EqUiWebUi.Areas.Supervision
 
         //run C3G normalisation steps.
         [Queue("gadata")]
-        [AutomaticRetry(OnAttemptsExceeded = AttemptsExceededAction.Delete)]
+        [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Delete)]
         public void norm_c3g(PerformContext context)
         {
             //
@@ -319,7 +319,7 @@ namespace EqUiWebUi.Areas.Supervision
 
         //run c4g normalisation steps.
         [Queue("gadata")]
-        [AutomaticRetry(OnAttemptsExceeded = AttemptsExceededAction.Delete)]
+        [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Delete)]
         public void norm_c4g(PerformContext context)
         {
             //
@@ -374,7 +374,7 @@ namespace EqUiWebUi.Areas.Supervision
 
         //run NGAC normalisation steps.
         [Queue("gadata")]
-        [AutomaticRetry(OnAttemptsExceeded = AttemptsExceededAction.Delete)]
+        [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Delete)]
         public void norm_NGAC(PerformContext context)
         {
             try
@@ -432,11 +432,7 @@ namespace EqUiWebUi.Areas.Supervision
                 //fire and forget TIPLIFE
                 Areas.Tiplife.Backgroundwork backgroundworkTiplife = new Tiplife.Backgroundwork();
                 var tiplifeJobID = BackgroundJob.Enqueue(() => backgroundworkTiplife.UpdateTipstatus(null));
-                context.WriteLine($"Fired Tiplife norm (job:http://equi/hangfire/jobs/details/{tiplifeJobID})");
-            }
-            catch(Exception ex)
-            {
-                log.Error("NGAC supervision job failed", ex);
+                context.WriteLine(System.Configuration.ConfigurationManager.AppSettings["HangfireDetailsBasepath"].ToString() + tiplifeJobID);
             }
             finally
             {

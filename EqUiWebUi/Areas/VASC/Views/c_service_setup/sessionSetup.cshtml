@@ -4,5 +4,22 @@
 }
 
 <h2>sessionSetup</h2>
-@Html.Action("_sessionSetup",new { enable_mask = ViewBag.enable_mask })
+
+<div id="_sessionSetup">
+</div>
+@section scripts{
+<script>
+        //full with screen
+    $("#allcontent").removeClass("body-content");
+    $("#allcontent").removeClass("container");
+
+    $("#_sessionSetup").html('@MyHtmlHelpers.Loading("_sessionSetup")');
+    $("#_sessionSetup").load( '@Url.Action("_sessionSetup")',{ enable_mask : '@ViewBag.enable_mask'},
+        function (responseText, textStatus, req) {
+            if (textStatus == "error") {
+                $("#_sessionSetup").html($("#Error", responseText).html());
+            }
+        });
+</script>
+}
 

@@ -12,6 +12,8 @@ using System.IO;
 using EQUICommunictionLib;
 using log4net.Appender;
 using System.Configuration;
+using System.Web;
+using System.Net;
 
 namespace ExcelAddInEquipmentDatabase
 {
@@ -39,16 +41,18 @@ namespace ExcelAddInEquipmentDatabase
         private void EquipmentDBRibbon_Load(object sender, RibbonUIEventArgs e)
         {
             log4net.Config.XmlConfigurator.Configure();
-            log.Info("VstoEquiLoaded");
-
+            log.Info($"Loaded EQUI_{ Properties.Settings.Default.SiteName}");
             //set build version
             g_config.Label = $"V:{FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).ProductVersion}";
+            //set ribbon label
+            rib2.Label = $"EQUI_{Properties.Settings.Default.SiteName}";
 
             //check if user is power user
             RoleProvider roleProvider = new RoleProvider();
             string[] userRoles = roleProvider.GetRolesForUser(Environment.UserDomainName + "\\" + Environment.UserName);
-            if (userRoles.Contains("VSTOpoweruser"))
+            if (userRoles.Contains("VSTOpoweruser") || userRoles.Contains("Administrator"))
             {
+                log.Info("VSTOpoweruser enabled");
                 btn_ConnectionManager.Enabled = true;
             }
             else
@@ -58,17 +62,25 @@ namespace ExcelAddInEquipmentDatabase
 
             //fill with templates
             gall_templates.Items.Clear();
-            DirectoryInfo d = new DirectoryInfo(Properties.Settings.Default.TemplateBasepath);//Assuming Test is your Folder
-            foreach (FileInfo file in d.GetFiles("*.xls*"))
+            try
             {
-                if (!file.Name.Contains('$'))
+
+                DirectoryInfo d = new DirectoryInfo(Properties.Settings.Default.TemplateBasepath);//Assuming Test is your Folder
+                foreach (FileInfo file in d.GetFiles("*.xls*"))
                 {
-                    RibbonDropDownItem galleryItem = Globals.Factory.GetRibbonFactory().CreateRibbonDropDownItem();
-                    galleryItem.Tag = file.FullName;
-                    galleryItem.Label = file.Name;
-                    galleryItem.ScreenTip = "These templates will get you started.";
-                    gall_templates.Items.Add(galleryItem);
+                    if (!file.Name.Contains('$'))
+                    {
+                        RibbonDropDownItem galleryItem = Globals.Factory.GetRibbonFactory().CreateRibbonDropDownItem();
+                        galleryItem.Tag = file.FullName;
+                        galleryItem.Label = file.Name;
+                        galleryItem.ScreenTip = "These templates will get you started.";
+                        gall_templates.Items.Add(galleryItem);
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                log.Error("Error in getting templates", ex);
             }
 
             //subscribe to workbook open event
@@ -80,16 +92,21 @@ namespace ExcelAddInEquipmentDatabase
             //subscribe to before right click for context menus.
             Globals.ThisAddIn.Application.SheetBeforeRightClick += lWorksheetFeatures.Application_SheetBeforeRightClick;
 
-            //force the DSN connection to the host system
-            System.Data.SqlClient.SqlConnectionStringBuilder sqlconnection = new System.Data.SqlClient.SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["EQUIConnectionString"].ConnectionString);
-            ODBCManager.CreateDSN(DsnNames.DsnGADATA, "Equi database", sqlconnection["Server"].ToString(), "SQL Server", AppDomain.CurrentDomain.BaseDirectory + @"\Drivers\SqlServer\SQLSRV32.dll", false, DsnNames.DsnGADATA);
+            try
+            {
+                //force the DSN connection to the host system
+                System.Data.SqlClient.SqlConnectionStringBuilder sqlconnection = new System.Data.SqlClient.SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["EQUIConnectionString"].ConnectionString);
+                ODBCManager.CreateDSN(DsnNames.DsnEqui, "Equi database", sqlconnection["Server"].ToString(), "SQL Server", AppDomain.CurrentDomain.BaseDirectory + @"\Drivers\SqlServer\SQLSRV32.dll", false, DsnNames.DsnEqui);
+                log.Info("Equi DSN set");
 
-
-      //There is an issue with deploying the oracle driver. 
-
-
-            //    ODBCManager.CreateDSN("MAXIMO", "MAXIMO reporting database", "dpmxarct", "ODBC for oracle", AppDomain.CurrentDomain.BaseDirectory + @"\Drivers\Oracle\msorcl32.dll", false, "MAXIMO");
-            ODBCManager.CreateDSN(DsnNames.DsnMX7, "MAXIMO reporting database", "dpmxarct", "ODBC for oracle", @"C:\Windows\System32\msorcl32.dll", false, DsnNames.DsnMX7);
+                //There is an issue with deploying the oracle driver. 
+                //ODBCManager.CreateDSN("MAXIMO", "MAXIMO reporting database", "dpmxarct", "ODBC for oracle", AppDomain.CurrentDomain.BaseDirectory + @"\Drivers\Oracle\msorcl32.dll", false, "MAXIMO");
+                ODBCManager.CreateDSN(DsnNames.DsnMX7, "MAXIMO reporting database", "dpmxarct", "ODBC for oracle", @"C:\Windows\System32\msorcl32.dll", false, DsnNames.DsnMX7);
+            }
+            catch (Exception ex)
+            {
+                log.Error("Error setting up DSN", ex);
+            }
             //find connections in wb
             dd_connections_update();
         }
@@ -226,7 +243,7 @@ namespace ExcelAddInEquipmentDatabase
                 }
                 catch (Exception ex)
                 {
-                    log.Error(ex);
+                    log.Error("Failed to update connections",ex);
                 }
             }
         }
@@ -301,7 +318,7 @@ namespace ExcelAddInEquipmentDatabase
                             ProcMngr.MX7_ProcMngrToActiveConnection(db.QUERYS.Where(c => c.NAME == connection.Name && c.SYSTEM == DsnNames.DsnMX7).First().QUERY);
                             connection.Refresh();
                         }
-                        else if (ProcMngr.activeSystem == DsnNames.DsnGADATA) //GADATAconnections
+                        else if (ProcMngr.activeSystem == DsnNames.DsnEqui) //GADATAconnections
                         {
                             ProcMngr.GADATA_ProcMngrToActiveConnection();
                             connection.Refresh();

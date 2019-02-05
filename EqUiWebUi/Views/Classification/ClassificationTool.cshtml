@@ -13,7 +13,7 @@
     <div class="card-body">
         <div class="form-horizontal">
             <div class="card">
-                <div class="card-header bg-primary">
+                <div class="card-header bg-dark">
                     <h5 class="card-title text-white">
                         Search in log lib
                         <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-1"></i></span>
@@ -80,7 +80,7 @@
                         <div class="form-group">
                             @Html.LabelFor(model => model.c_ClassificationId, "c_ClassificationId", htmlAttributes: new { @class = "control-label col-md-4" })
                             <div class="col-md-8">
-                                @Html.DropDownList("c_ClassificationId", null, htmlAttributes: new { @class = "form-control c_ClassificationId" }, optionLabel: "--Select class--")
+                                @Html.DropDownList("c_ClassificationId", null, htmlAttributes: new { @class = "form-control c_ClassificationId", @data_live_search = "true" }, optionLabel: "--Select class--")
                             </div>
                         </div>
                     </div>
@@ -88,7 +88,7 @@
                         <div class="form-group">
                             @Html.LabelFor(model => model.c_SubgroupId, "c_SubgroupId", htmlAttributes: new { @class = "control-label col-md-4" })
                             <div class="col-md-8">
-                                @Html.DropDownList("c_SubgroupId", null, htmlAttributes: new { @class = "form-control c_SubgroupId" }, optionLabel: "--Select subgroup--")
+                                @Html.DropDownList("c_SubgroupId", null, htmlAttributes: new { @class = "form-control c_SubgroupId", @data_live_search = "true" }, optionLabel: "--Select subgroup--")
                             </div>
                         </div>
                     </div>
@@ -133,7 +133,7 @@
         <hr />
 
         <div class="card">
-            <div class="card-header bg-primary">
+            <div class="card-header bg-dark">
                 <h5 class="card-title text-white">
                     Result
                     <i class="fas fa-sync-alt clickable" id="BtnRefreshResult"></i>
@@ -148,7 +148,7 @@
         <hr />
 
         <div class="card">
-            <div class="card-header bg-primary">
+            <div class="card-header bg-dark">
                 <h5 class="card-title text-white">
                     Classifcation rules
                     <i class="fas fa-sync-alt clickable" id="BtnRefreshRules"></i>
@@ -173,7 +173,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.c_ClassificationId, "c_ClassificationId", htmlAttributes: new { @class = "control-label col-md-4" })
                     <div class="col-md-8">
-                        @Html.DropDownList("c_ClassificationId", null, htmlAttributes: new { @class = "form-control c_ClassificationId" }, optionLabel: "--Select class--")
+                        @Html.DropDownList("c_ClassificationId", null, htmlAttributes: new { @class = "form-control c_ClassificationId", @data_live_search = "true" }, optionLabel: "--Select class--")
                     </div>
                 </div>
             </div>
@@ -181,7 +181,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.c_SubgroupId, "c_SubgroupId", htmlAttributes: new { @class = "control-label col-md-4" })
                     <div class="col-md-8">
-                        @Html.DropDownList("c_SubgroupId", null, htmlAttributes: new { @class = "form-control c_SubgroupId" }, optionLabel: "--Select subgroup--")
+                        @Html.DropDownList("c_SubgroupId", null, htmlAttributes: new { @class = "form-control c_SubgroupId", @data_live_search = "true" }, optionLabel: "--Select subgroup--")
                     </div>
                 </div>
             </div>
@@ -373,7 +373,7 @@
                     GetGridSearch(false);
                 },
                 error: function (result) {
-                    console.log(result);
+                    console.log($(result.responseText).fin('#Error').html());
                     $.toaster({ title: 'SetClass', priority: 'danger', message: result.statusText});
                     //reload the grid
                     GetGridSearch(false);
@@ -399,7 +399,7 @@
                     GetGridSearch(false);
                 },
                 error: function (result) {
-                    console.log(result);
+                    console.log($(result.responseText).fin('#Error').html());
                     $.toaster({ title: 'SetClass', priority: 'danger', message: result.statusText });
                     //reload the grid
                     GetGridSearch(false);
@@ -427,7 +427,7 @@
                 GetRules();
             },
             error: function (result) {
-                console.log(result);
+                console.log($(result.responseText).fin('#Error').html());
                 $.toaster({ title: 'SetClass', priority: 'danger', message: result.statusText });
                 //reload the grid
                 GetRules();
@@ -472,7 +472,6 @@
     });
     //make a new rule
     $('#btnMakerule').click(function () {
-        console.log('hit');
         MakeRule();
     });
 //at end of script run the grids (init)

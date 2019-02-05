@@ -1,0 +1,33 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <h2>Index of c_job</h2>
+    <div class="alert alert-info">
+        <h4>
+            <strong>jobs configured here will be log into rt_job.</strong>
+        </h4>
+
+        <strong>A combination of these flags is allowed</strong>
+        *IAlwaysInsertRt_job (always insert into the rt_job. if not set only insert into rt_job if a breakdown.)<br />
+        *WriteOutBreakdownDetails(write out detailed information on the breakdown)<br />
+        *WriteoutToFile (write the date to an ascii file)<br />
+    </div>
+</div>
+
+<p>
+    @MyHtmlHelpers.IconActionLink(Url.Action("Edit", "c_job", new { id = -1 }), "fas fa-pencil-alt", "Create", "add a job to be logged", OpenNewWindow: true)
+</p>
+
+
+@Html.AjaxGrid(Url.Action("_List"))
+
+@section scripts{
+    <script>
+        //full with screen
+        $("#allcontent").removeClass("body-content");
+        $("#allcontent").removeClass("container");
+    </script>
+}

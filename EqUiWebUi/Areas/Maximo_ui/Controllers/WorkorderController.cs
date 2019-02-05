@@ -56,6 +56,7 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
                 ,WORKORDER.WORKTYPE
                 ,WORKORDER.DESCRIPTION
                 ,WORKORDER.LOCATION
+                ,WORKORDER.ASSETNUM 
                 ,WORKORDER.REPORTEDBY
                 ,WORKORDER.REPORTDATE
                 ,WORKORDER.CHANGEDATE
@@ -66,7 +67,7 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
                 , System.Configuration.ConfigurationManager.AppSettings["Maximo_LOCATION_SYSTEMID"].ToString()));
 
             //start where clause
-            sbqry.AppendLine("WHERE ((WORKORDER.woclass = 'WORKORDER' or WORKORDER.woclass = 'ACTIVITY') and WORKORDER.istask = 0)");
+            sbqry.AppendLine($"WHERE ((WORKORDER.woclass = 'WORKORDER' or WORKORDER.woclass = 'ACTIVITY') and WORKORDER.istask = 0) and WORKORDER.SiteID = '{System.Configuration.ConfigurationManager.AppSettings["Maximo_SiteID"].ToString()}'");
             //SDB bugfix case no ancestor 
             if (string.IsNullOrWhiteSpace(workorderSelectOptions.locancestor)) //to prevent dups 
             {
@@ -124,6 +125,7 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
                 workorder.WORKTYPE = row.Field<string>("WORKTYPE");
                 workorder.DESCRIPTION = row.Field<string>("DESCRIPTION");
                 workorder.LOCATION = row.Field<string>("LOCATION");
+                workorder.ASSETNUM = row.Field<string>("ASSETNUM");
                 workorder.REPORTEDBY = row.Field<string>("REPORTEDBY");
                 workorder.REPORTDATE = row.Field<DateTime>("REPORTDATE");
                 workorder.ANCESTOR = row.Field<string>("ANCESTOR");

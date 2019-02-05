@@ -11,42 +11,47 @@
     </div>
 
     <div class="card-body">
-        @*render ngac Nom/Ref wear virtual chart*@
-        @if (ViewBag.NgacDummyAlarmobject != null)
-        {
-            @Html.Action("_GetControlChart","ControlChart", new { Area = "Alert",
-                   chartname = "Dummyalert",
-                   alarmobject = ViewBag.NgacDummyAlarmobject,
-                   c_trigger_id = ViewBag.NgacDummyTriggerId,
+            @*render ngac Nom/Ref wear virtual chart*@
+            @if (ViewBag.NgacDummyAlarmobject != null)
+            {
+                @Html.Action("_GetControlChart","ControlChart", new { Area = "Alert",
+                       chartname = "Dummyalert",
+                       alarmobject = ViewBag.NgacDummyAlarmobject,
+                       alertType = ViewBag.NgacDummyAlertType,
+                       startdate = ViewBag.daysback,
+                       enddate = System.DateTime.Now
+                   })
+                <hr />
+            }
+
+            @if (ViewBag.MidAirDummyAlarmobject != null)
+            {
+                @*render midair virtual chart*@
+                @Html.Action("_GetControlChart", "ControlChart", new
+                    {
+                        Area = "Alert",
+                        chartname = "Dummyalert",
+                        alarmobject = ViewBag.MidAirDummyAlarmobject,
+                        alertType = ViewBag.MidAircDummyAlertType,
+                        startdate = ViewBag.daysback,
+                        enddate = System.DateTime.Now
+                    })
+                <hr />
+            }
+
+            @*render all real control charts (have real control limits)*@
+            @foreach (EqUiWebUi.Areas.Alert.Models.l_controlLimits limit in ViewBag.controlLimits)
+            {
+                @Html.Action("_GetControlChart","ControlChart", new { Area = "Alert",
+                   chartname = "RealAlert",
+                   alarmobject = limit.alarmobject,
+                   c_trigger_id = limit.c_trigger_id,
                    startdate = ViewBag.daysback,
                    enddate = System.DateTime.Now
                })
-            <hr />
-        }
-
-        @*render midair virtual chart*@
-        @Html.Action("_GetControlChart","ControlChart", new { Area = "Alert",
-                chartname = "Dummyalert",
-                alarmobject = ViewBag.MidAirDummyAlarmobject,
-                c_trigger_id = ViewBag.MidAircDummyTriggerId,
-                startdate = ViewBag.daysback,
-                enddate = System.DateTime.Now
-            })
-        <hr />
-
-        @*render all real control charts (have real control limits)*@
-        @foreach (EqUiWebUi.Areas.Alert.Models.l_controlLimits limit in ViewBag.controlLimits)
-        {
-            @Html.Action("_GetControlChart","ControlChart", new { Area = "Alert",
-               chartname = "RealAlert",
-               alarmobject = limit.alarmobject,
-               c_trigger_id = limit.c_trigger_id,
-               startdate = ViewBag.daysback,
-               enddate = System.DateTime.Now
-           })
-            <hr />
-        }
-    </div>
+                <hr />
+            }
+        </div>
 </div>
 
 

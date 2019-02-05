@@ -34,10 +34,15 @@ namespace EqUiWebUi.Areas.VASC.Controllers
             log.Info($"vaschost:{vaschost} execution user:{System.Security.Principal.WindowsIdentity.GetCurrent().Name}");
             ViewBag.vaschost = vaschost;
             List <Models.winService> servicesOnServer = GetServices(vaschost);
+            foreach(winService service in servicesOnServer)
+            {
+                log.Info($"servicename: {service.ServiceName}, displayname: {service.ServiceDisplayName}");
+            }
+
             List<Models.winService> result = new List<winService>();
             foreach (c_service_setup session in sessions)
             {
-                Models.winService service = servicesOnServer.Where(s => s.ServiceName == session.value).FirstOrDefault();
+                Models.winService service = servicesOnServer.Where(s => s.ServiceName.Contains(session.value) || s.ServiceDisplayName.Contains(session.value)).FirstOrDefault();
                 if (service == null)
                 {
                     log.Warn("vasc session: " + session.value + " not found on server");
@@ -49,6 +54,9 @@ namespace EqUiWebUi.Areas.VASC.Controllers
                 service.bit_id = session.bit_id;
                 service.SessionName = session.value;
                 service.description = session.description;
+                //count number of controllers in rt_active_info
+                service.controllerCount = db.rt_active_info.Where(c => c.vasc_session.Contains(service.SessionName)).Count();
+                service.OKcontrollerCount = db.rt_active_info.Where(c => c.vasc_session.Contains(service.SessionName) && c.vasc_state == (int)VASCState.STATE_CONNECTED).Count();
                 result.Add(service);
             }
 
@@ -197,20 +205,6 @@ namespace EqUiWebUi.Areas.VASC.Controllers
             return PartialView();
         }
 
-        // GET: VASC/c_service_setup/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            c_service_setup c_service_setup = db.c_service_setup.Find(id);
-            if (c_service_setup == null)
-            {
-                return HttpNotFound();
-            }
-            return View(c_service_setup);
-        }
 
         // GET: VASC/c_service_setup/Create
         public ActionResult Create()

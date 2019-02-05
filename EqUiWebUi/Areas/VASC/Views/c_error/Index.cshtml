@@ -1,6 +1,4 @@
-﻿@model IEnumerable<EqUiWebUi.Areas.VASC.Models.c_error>
-
-@{
+﻿@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -13,13 +11,13 @@
         </h4>
 
         <strong>A combination of these flags is allowed</strong>
-        <p>*Insert into h_alarm</p>
-        <p>*Insert into rt_alarm (junk table)</p>
-        <p>*Allow this type to be used in breakdown calculation.</p>
+        *Insert into h_alarm<br />
+        *Insert into rt_alarm (junk table)<br />
+        *Allow this type to be used in breakdown calculation.<br />
 
         <strong>Know that</strong>
-        <p>*setting an error_number to 0 the complete errorCategory will be matched</p>
-        <p>*for mach on error_numnber only set  operator to OR and leave Logtext empty</p>
+        *setting an error_number to 0 the complete errorCategory will be matched<br />
+        *for mach on error_numnber only set  operator to OR and leave Logtext empty<br />
 
 
         <div class="text-muted">
