@@ -1,6 +1,4 @@
-﻿@model IEnumerable<EqUiWebUi.Areas.VASC.Models.L_operation>
-
-@{
+﻿@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -8,6 +6,10 @@
 @if (ViewBag.controller_id != null)
 {
     <div class="badge badge-info">Filtered on controllerID: @ViewBag.controller_id</div>
+}
+@if (ViewBag.sessionName != null)
+{
+    <div class="badge badge-info">Filtered on sessionName: @ViewBag.sessionName</div>
 }
 
 <h2>Index L_operation</h2>
@@ -20,7 +22,11 @@
 
     $('[data-name="L_operationGrid"]').html('@MyHtmlHelpers.Loading("L_operationGrid")');
     $('[data-name="L_operationGrid"]').mvcgrid({
-        sourceUrl: '@Url.Action("_List", "l_operation",new { sessionName = ViewBag.sessionName })',
+        sourceUrl: '@Url.Action("_List", "l_operation")',
+        data: {
+            controller_id: '@ViewBag.controller_id',
+            sessionName: '@ViewBag.sessionName'
+        },
         reload: true,
         requestType: 'get', // Ajax grid request type
         reloadFailed: function (result) {

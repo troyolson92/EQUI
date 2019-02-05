@@ -5,7 +5,7 @@ function initInterface() {
     $("#navbar").autoHidingNavbar();
 
     //for fullscreen mode
-    $("#fullscreenNav").click(function () {
+    $("#fullscreenNav").unbind().click(function () {
         $("#allcontent").removeClass("body-content");
         $("#allcontent").removeClass("container");
 
@@ -17,7 +17,7 @@ function initInterface() {
         $("#footer").addClass("d-none");
     });
     //out of full screen mode
-    $("#fullscreenBody").click(function () {
+    $("#fullscreenBody").unbind().click(function () {
 
         $("#allcontent").addClass("body-content");
         $("#allcontent").addClass("container");
@@ -46,7 +46,7 @@ function initInterface() {
 
     //initpopovers
     //on click ignore default action
-    $(".MyPopovers").click(function (e) {
+    $(".MyPopovers").unbind().click(function (e) {
         console.log('default action prevented (.Mypopovers)');
         e.preventDefault();
         return false;
@@ -100,15 +100,8 @@ function initInterface() {
 
 //script that must be called to enable interface events
 function EnableInterfaceEvents() {
-    //enable tooltips everywhere
-    $('[data-toggle="tooltip"]').tooltip();
-    $('[data-toggle="popover"]').tooltip();
-
-    //select drop downs that are form control and make this use bootstrap select. (don't just do on all select this will break things like mvc gird pager)
-    $('select.form-control').selectpicker();
-
     //for new window option
-    $('.OpenNewWindow').click(function (e) {
+    $('.OpenNewWindow').unbind().click(function (e) {
         console.log('default action prevented (.OpenNewWindow)');
         e.preventDefault();
         console.log("Opening new window");
@@ -116,16 +109,8 @@ function EnableInterfaceEvents() {
         return false;
     });
 
-    //for toaster
-    $.toaster({
-        settings: {
-            'timeout': 5000, //set autodismis timeout to 5 seconds
-            'donotdismiss': ['danger'] //disble autodismis for these types
-        }
-    });
-
-    //for blind fired buttons with feedback.
-    $(".JQresultTriggerBtn").click(function (e) {
+    //for blind fired buttons with feedback. the unbind cancels any active event on this object
+    $(".JQresultTriggerBtn").unbind().click(function (e) {
         console.log('default action prevented (.JQresultTriggerBtn)');
         e.preventDefault();
         $.toaster({ title: 'JQTriggerBtn', priority: 'info', message: 'Fired: ' + $(this).attr('href') });
@@ -153,6 +138,24 @@ function EnableInterfaceEvents() {
         });
     });
 
+//above here we used UNBIND! on both so be aware that normal stuff that creates events should go below them.
+
+    //for toaster
+    $.toaster({
+        settings: {
+            'timeout': 5000, //set autodismis timeout to 5 seconds
+            'donotdismiss': ['danger'] //disble autodismis for these types
+        }
+    });
+
+    //enable tooltips everywhere
+    $('[data-toggle="tooltip"]').tooltip();
+    $('[data-toggle="popover"]').tooltip();
+
+    //select drop downs that are form control and make this use bootstrap select. (don't just do on all select this will break things like mvc gird pager)
+    $('select.form-control').selectpicker();
+
+
     //tablesaw
     //enable select box mode switch and minimap
     $('.tablesaw-on').attr("data-tablesaw-mode-switch", "");
@@ -175,6 +178,31 @@ function EnableInterfaceEvents() {
     $('.tablesaw-on > thead > tr > .tablesaw-priority-5').attr("data-tablesaw-priority", "5");
     $('.tablesaw-on > thead > tr > .tablesaw-priority-6').attr("data-tablesaw-priority", "6");
     Tablesaw.init();
+
+    //need todo this before reload
+/*
+    //SDB store checkbox value based on checkbox label
+    localStorage['tablesaw#' + e.target.labels[0].innerText] = e.target.checked;
+
+    //SDB restore checkbox state
+    $.each(localStorage, function (key, value) {
+        key = key.replace("tablesaw#", "");
+        // find label with innerText = value
+        var label = $("label:contains(" + key + ")");
+        if (label.length) {
+            var columnCheckbox = $(label).children();
+            if (value === "true") {
+             
+                $(columnCheckbox).attr("checked", true);
+            } else {
+                $(columnCheckbox).attr("checked", false);
+            }
+            //
+            $(columnCheckbox).trigger("click");
+        }
+    });
+    */
+
 }
 
 //get part from querystring

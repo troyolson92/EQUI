@@ -93,17 +93,17 @@ namespace EqUiWebUi.Areas.Alert
                     //allow continue ?
                 }
 
-                //in 1 AlertRun we can have multible results for the same alarmobject.
-                //We only whant to handle the alert ONCE!
-                //if already handeld jup to next item.
+                //in 1 AlertRun we can have multiple results for the same alarm object.
+                //We only want to handle the alert ONCE!
+                //if already handeld jump to next item.
                 if (ActiveAlert.handeld)
                 {
-                    context.WriteLine("This alert was already handeld skipping");
+                    context.WriteLine("This alert was already handled skipping");
                     continue;
                 }
                 else
                 {
-                    //update all records for this alarmobject as handeld
+                    //update all records for this alarm object as handled
                     alertResults.Where(c => c.alarmobject == ActiveAlert.alarmobject).Select(c => { c.handeld = true; return c; }).ToList();
                 }
 
@@ -116,62 +116,34 @@ namespace EqUiWebUi.Areas.Alert
                     {
                         c_tirgger_id = c_triggerID
                     };
-                    if (trigger.c_datasource.Name == "GADATA") //for gata the locationtree an location MUSt be in the query result
+
+                    //ask db for location tree and location
+                    string qry = @"select top 1 LocationTree, Location from EqUi.ASSETS as a where REPLACE('{0}','ZM','ZS') LIKE a.[LOCATION] + '%' order by a.LocationTree desc ";
+                    DataTable result;
+                    //option 1 location is given try and resolve location tree
+                    if (ActiveAlert.Location != null)
                     {
-                        //we already have the location tree and location
-                        newAlert.locationTree = ActiveAlert.LocationTree;
-                        newAlert.location = ActiveAlert.Location;
+                        result = connectionManager.RunQuery(string.Format(qry, ActiveAlert.Location.Trim()));
                     }
-                    else if (trigger.c_datasource.Name == "DBI") //for DBI the locationtree and location MUST be in the query result
+                    else //option 2 no location is given try and match on alarm object
                     {
-                        //we already have the location tree and location
-                        newAlert.locationTree = ActiveAlert.LocationTree;
-                        newAlert.location = ActiveAlert.Location;
+                        result = connectionManager.RunQuery(string.Format(qry, ActiveAlert.alarmobject.Trim()));
                     }
-                    else if (trigger.c_datasource.Name == "DST") //for STO qet the location tree from GADATA (manipulate object from ZM to ZS (Zone mode does not exist in asset list)
+
+                    if (result.Rows.Count == 1)
                     {
-                        //ask gadata for location tree and location
-                        string qry =
-                            @"select top 1 LocationTree, Location from GADATA.EqUi.ASSETS as a
-                            where REPLACE('{0}','ZM','ZS') LIKE a.[LOCATION] + '%'
-                            order by a.LocationTree desc ";
-                        DataTable result = connectionManager.RunQuery(string.Format(qry, ActiveAlert.alarmobject));
-                        if (result.Rows.Count == 1)
-                        {
-                            newAlert.locationTree = result.Rows[0].Field<string>("LocationTree");
-                            newAlert.location = result.Rows[0].Field<string>("Location");
-                        }
-                        else //handle if we don't get a response from gadata
-                        {
-                            context.WriteLine("did not get a valid location tree from gadata");
-                            newAlert.locationTree = ActiveAlert.alarmobject;
-                            newAlert.location = ActiveAlert.alarmobject;
-                        }
+                        newAlert.locationTree = result.Rows[0].Field<string>("LocationTree");
+                        newAlert.location = result.Rows[0].Field<string>("Location");
                     }
-                    else if (trigger.c_datasource.Name == "MAXIMO7rep" || trigger.c_datasource.Name == "MAXIMOrt") //for macimo get the location tree from GADATA (direct match on location)
+                    else //handle if we don't get a response
                     {
-                        //ask gadata for location tree and location
-                        string qry =
-                            @"select top 1 LocationTree, Location from GADATA.EqUi.ASSETS as a
-                            where '{0}' LIKE a.[LOCATION] + '%'";
-                        DataTable result = connectionManager.RunQuery(string.Format(qry, ActiveAlert.alarmobject));
-                        if (result.Rows.Count == 1)
-                        {
-                            newAlert.locationTree = result.Rows[0].Field<string>("LocationTree");
-                            newAlert.location = result.Rows[0].Field<string>("Location");
-                        }
-                        else //handle if we don't get a response from gadata
-                        {
-                            context.WriteLine("did not get a valid location tree from gadata");
-                            newAlert.locationTree = ActiveAlert.alarmobject;
-                            newAlert.location = ActiveAlert.alarmobject;
-                        }
+                        string msg = $"did not get a valid location tree from db Location: <{ActiveAlert.Location.Trim()}> Alarm object: <{ActiveAlert.alarmobject.Trim()}>";
+                        context.WriteLine(msg);
+                        log.Warn(msg);
+                        newAlert.locationTree = ActiveAlert.alarmobject;
+                        newAlert.location = ActiveAlert.alarmobject;
                     }
-                    else
-                    {
-                        //if we hit this tis means there is no match for getting the location data... QUIT
-                        throw new NotSupportedException();
-                    }
+
                     //
                     newAlert.alarmobject = ActiveAlert.alarmobject;
                     newAlert.Classification = ActiveAlert.ClassTree;

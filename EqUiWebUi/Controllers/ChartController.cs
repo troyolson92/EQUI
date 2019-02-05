@@ -63,7 +63,18 @@ namespace EqUiWebUi.Controllers
             }
 
             //get the data
-            string qry = $"EXEC [EqUi].[GetErrorTrentData] @Location = '{logInfo.location}' ,@ERRORNUM = '{logInfo.errornum}' ,@Logtext = '{logInfo.logtext}' ,@logType = '{logInfo.logtype}' ,@refID={logInfo.refid}";
+            //added temporary switch to get vcch up 
+           string qry;
+           if(System.Configuration.ConfigurationManager.AppSettings["Maximo_SiteID"].ToString() == "VCG")
+           {
+                 qry = $"EXEC [EqUi].[GetErrorTrentData] @Location = '{logInfo.location}' ,@ERRORNUM = '{logInfo.errornum}' ,@Logtext = '{logInfo.logtext}' ,@logType = '{logInfo.logtype}' ,@refID={logInfo.refid}";
+           }
+           else
+           {
+                 qry = $"EXEC [EqUi].[VCCHGetErrorTrentData] @Location = '{logInfo.location}' ,@ERRORNUM = '{logInfo.errornum}' ,@Logtext = '{logInfo.logtext}' ,@logType = '{logInfo.logtype}' ,@refID={logInfo.refid}";
+           }
+
+                
             DataTable dt = connectionManager.RunQuery(qry);
 
             //if group mode auto (0) find out best grouping mode based on set timespan.

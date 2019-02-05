@@ -9,6 +9,14 @@
 <div class="badge badge-info">
     COUNT: @Model.Count()
 </div>
+@if (ViewBag.sessionName != null)
+{
+    <div class="badge badge-info">Filtered on sessionName: @ViewBag.sessionName</div>
+}
+@if (ViewBag.ShowNOKonly == true)
+{
+    <div class="badge badge-info">Only NOT connected controllers are shown</div>
+}
 @Html.Grid(Model).Named("rt_active_info").Build(columns =>
 {
     columns.Add(c => c.c_controller_id).Titled("c_controller_id").InitialSort(GridSortOrder.Asc);
@@ -18,7 +26,7 @@
     columns.Add(c => c.controller_state).Titled("controller_state").Css("tablesaw-priority-0");
     columns.Add(c => c._VASCState).Titled("vasc_state");
     columns.Add(c => c.C_timestamp).Titled("_timestamp").Css("tablesaw-priority-6");
-    //rt_active_info optional 
+    //rt_active_info optional
     columns.Add(c => c.h_alarm_id).Titled("h_alarm_id").Css("tablesaw-priority-0");
     columns.Add(c => c.rt_alarm_id).Titled("rt_alarm_id").Css("tablesaw-priority-0");
     columns.Add(c => c.rt_job_id).Titled("rt_job_id").Css("tablesaw-priority-6");
@@ -33,32 +41,32 @@
     columns.Add(c => c.ts_breakDownAck).Titled("ts_breakDownAck").Css("tablesaw-priority-0");
     columns.Add(c => c.ts_breakDownStart).Titled("ts_breakDownStart").Css("tablesaw-priority-0");
     columns.Add(c => c.part_data_count).Titled("part_data_count").Css("tablesaw-priority-0");
-    //rt_controller optional  
-    columns.Add(c => c.c_controller.rt_controller.First().Availability).Titled("Availability").Css("tablesaw-priority-0");
-    columns.Add(c => c.c_controller.rt_controller.First().BaseDirectory).Titled("BaseDirectory").Css("tablesaw-priority-0");
-    columns.Add(c => c.c_controller.rt_controller.First().ControllerName).Titled("ControllerName").Css("tablesaw-priority-0");
-    columns.Add(c => c.c_controller.rt_controller.First().HostName).Titled("HostName").Css("tablesaw-priority-0");
-    columns.Add(c => c.c_controller.rt_controller.First().Controller_Id).Titled("Controller_Id").Css("tablesaw-priority-0");
-    columns.Add(c => c.c_controller.rt_controller.First().IPaddress).Titled("IPaddress").Css("tablesaw-priority-0");
-    columns.Add(c => c.c_controller.rt_controller.First().IsVirtual).Titled("IsVirtual").Css("tablesaw-priority-0");
-    columns.Add(c => c.c_controller.rt_controller.First().MacAddress).Titled("MacAddress").Css("tablesaw-priority-0");
-    columns.Add(c => c.c_controller.rt_controller.First().Name).Titled("Name").Css("tablesaw-priority-0");
-    columns.Add(c => c.c_controller.rt_controller.First().RunLevel).Titled("RunLevel").Css("tablesaw-priority-0");
-    columns.Add(c => c.c_controller.rt_controller.First().SystemId).Titled("SystemId").Css("tablesaw-priority-0");
-    columns.Add(c => c.c_controller.rt_controller.First().SystemName).Titled("SystemName").Css("tablesaw-priority-0");
-    columns.Add(c => c.c_controller.rt_controller.First().Version).Titled("Version").Css("tablesaw-priority-0");
-    columns.Add(c => c.c_controller.rt_controller.First().VersionName).Titled("VersionName").Css("tablesaw-priority-0");
-    columns.Add(c => c.c_controller.rt_controller.First().WebServicesPort).Titled("WebServicesPort").Css("tablesaw-priority-0");
+    //rt_controller optional
+    columns.Add(c => c.c_controller.rt_controller.FirstOrDefault().Availability).Titled("Availability").Css("tablesaw-priority-0");
+    columns.Add(c => c.c_controller.rt_controller.FirstOrDefault().BaseDirectory).Titled("BaseDirectory").Css("tablesaw-priority-0");
+    columns.Add(c => c.c_controller.rt_controller.FirstOrDefault().ControllerName).Titled("ControllerName").Css("tablesaw-priority-0");
+    columns.Add(c => c.c_controller.rt_controller.FirstOrDefault().HostName).Titled("HostName").Css("tablesaw-priority-0");
+    columns.Add(c => c.c_controller.rt_controller.FirstOrDefault().Controller_Id).Titled("Controller_Id").Css("tablesaw-priority-0");
+    columns.Add(c => c.c_controller.rt_controller.FirstOrDefault().IPaddress).Titled("IPaddress").Css("tablesaw-priority-0");
+    columns.Add(c => c.c_controller.rt_controller.FirstOrDefault().IsVirtual).Titled("IsVirtual").Css("tablesaw-priority-0");
+    columns.Add(c => c.c_controller.rt_controller.FirstOrDefault().MacAddress).Titled("MacAddress").Css("tablesaw-priority-0");
+    columns.Add(c => c.c_controller.rt_controller.FirstOrDefault().Name).Titled("Name").Css("tablesaw-priority-0");
+    columns.Add(c => c.c_controller.rt_controller.FirstOrDefault().RunLevel).Titled("RunLevel").Css("tablesaw-priority-0");
+    columns.Add(c => c.c_controller.rt_controller.FirstOrDefault().SystemId).Titled("SystemId").Css("tablesaw-priority-0");
+    columns.Add(c => c.c_controller.rt_controller.FirstOrDefault().SystemName).Titled("SystemName").Css("tablesaw-priority-0");
+    columns.Add(c => c.c_controller.rt_controller.FirstOrDefault().Version).Titled("Version").Css("tablesaw-priority-0");
+    columns.Add(c => c.c_controller.rt_controller.FirstOrDefault().VersionName).Titled("VersionName").Css("tablesaw-priority-0");
+    columns.Add(c => c.c_controller.rt_controller.FirstOrDefault().WebServicesPort).Titled("WebServicesPort").Css("tablesaw-priority-0");
 
     columns.Add(c => c)
             .Titled("Tools")
             .Encoded(false)
             .RenderedAs(c => MyHtmlHelpers.IconActionLink(Url.Action("Index", "c_controller_class", new { controller_id = c.c_controller_id },null), "fas fa-pencil-alt", "", "Goto controller_class for this controller").ToHtmlString() +
-            MyHtmlHelpers.IconActionLink(Url.Action("Index", "l_operation", new { controller_id = c.c_controller_id, sessionName = c.vasc_session }, null), "fas fa-file", "", "Open operation log", OpenNewWindow:true).ToHtmlString() +
+            MyHtmlHelpers.IconActionLink(Url.Action("Index", "l_operation", new { controller_id = c.c_controller_id, sessionName = c.vasc_session }, null), "fas fa-file", "", "Open operation log (for this controller and his VASC session)", OpenNewWindow:true).ToHtmlString() +
             MyHtmlHelpers.IconActionLink(Url.Action("GetJobs", "Breakdown", new { controller_id = c.c_controller_id }), "fas fa-vial", "", "Open get jobs", OpenNewWindow: true).ToHtmlString() +
             MyHtmlHelpers.IconActionLink(Url.Action("GetJobs", "Breakdown", new { controller_id = c.c_controller_id, hasBreakdowns = true }), "fas fa-vial text-warning", "", "Open breakdowns", OpenNewWindow: true).ToHtmlString() +
             MyHtmlHelpers.IconActionLink(Url.Action("Get_h_alarm", "Eventlog", new { controller_id = c.c_controller_id }), "fas fa-vial", "", "Open controller h_alarm", OpenNewWindow: true).ToHtmlString() +
-            MyHtmlHelpers.IconActionLink(Url.Action("Get_rt_alarm", "Eventlog", new { controller_id = c.c_controller_id }), "fas fa-vial", "", "Open controller rt_alarm (junk)", OpenNewWindow: true).ToHtmlString() 
+            MyHtmlHelpers.IconActionLink(Url.Action("Get_rt_alarm", "Eventlog", new { controller_id = c.c_controller_id }), "fas fa-vial", "", "Open controller rt_alarm (junk)", OpenNewWindow: true).ToHtmlString()
             ).Filterable(false);
 }).Filterable().Sortable().Pageable(pager =>
 {
@@ -68,7 +76,7 @@
 }).Empty("Did not find anything").Css("table-hover tablesaw-on")
 
 <script>
-     //full with screen
+    //full with screen
     $("#allcontent").removeClass("body-content");
     $("#allcontent").removeClass("container");
 </script>

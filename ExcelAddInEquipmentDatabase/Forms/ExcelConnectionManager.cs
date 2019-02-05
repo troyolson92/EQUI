@@ -29,7 +29,7 @@ namespace ExcelAddInEquipmentDatabase
         {
             get {
                 System.Data.SqlClient.SqlConnectionStringBuilder sqlconnection = new System.Data.SqlClient.SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["EQUIConnectionString"].ConnectionString);
-                return $"ODBC;DSN={DsnNames.DsnGADATA}; UID={sqlconnection.UserID}; PWD={sqlconnection.Password}";
+                return $"ODBC;DSN={DsnNames.DsnEqui}; UID={sqlconnection.UserID}; PWD={sqlconnection.Password}";
             }
         }
         public string MX7ODBCconnectionString
@@ -40,6 +40,7 @@ namespace ExcelAddInEquipmentDatabase
         public ExcelConnectionManager()
         {
             InitializeComponent();
+            tabcontainer.TabPages[1].Text = DsnNames.DsnEqui;
             lv_GADATA_procParms.Columns.Add("ParmName", -2, HorizontalAlignment.Left);
             lv_GADATA_procParms.Columns.Add("DefaultValue", -2, HorizontalAlignment.Left);
             lv_MX7_procParms.Columns.Add("ParmName", -2, HorizontalAlignment.Left);

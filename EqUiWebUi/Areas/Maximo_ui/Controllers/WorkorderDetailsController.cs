@@ -31,6 +31,7 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
         {
             //check if user is allowed to user realtimeConn
             string MaximoDbName = "MAXIMOrt";
+            string siteID = System.Configuration.ConfigurationManager.AppSettings["Maximo_SiteID"].ToString();
             int CommandTimeout = 30;
      
             if (wonum == null) wonum = "NoWonum";
@@ -38,27 +39,27 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
             ViewBag.wonum = wonum;
             ViewBag.RenderSubwo = RenderSubwo;
             #region querys
-            string cmdWORKORDER = "select * from MAXIMO.WORKORDER WORKORDER WHERE WORKORDER.WONUM = '{0}'";
-            cmdWORKORDER = string.Format(cmdWORKORDER, wonum);
+            string cmdWORKORDER = "select * from MAXIMO.WORKORDER WORKORDER WHERE WORKORDER.WONUM = '{0}' AND WORKORDER.SITEID = '{1}'";
+            cmdWORKORDER = string.Format(cmdWORKORDER, wonum, siteID);
 
-            string cmdFAILUREREMARKdescription = "select * from MAXIMO.FAILUREREMARK FAILUREREMARK WHERE FAILUREREMARK.WONUM = '{0}'";
-            cmdFAILUREREMARKdescription = string.Format(cmdFAILUREREMARKdescription, wonum);
+            string cmdFAILUREREMARKdescription = "select * from MAXIMO.FAILUREREMARK FAILUREREMARK WHERE FAILUREREMARK.WONUM = '{0}' AND FAILUREREMARK.SITEID = '{1}'";
+            cmdFAILUREREMARKdescription = string.Format(cmdFAILUREREMARKdescription, wonum, siteID);
 
             string cmdFAILUREREMARK = (@"
                 select  NVL2(LD.LDTEXT, LD.LDTEXT, '') LDTEXT
                 from MAXIMO.FAILUREREMARK FM 
                 left join MAXIMO.LONGDESCRIPTION LD on LD.LDKEY = FM.FAILUREREMARKID AND LD.LDOWNERTABLE = 'FAILUREREMARK'
-                where fm.wonum = '{0}'
+                where fm.wonum = '{0}' AND FAILUREREMARK.SITEID = '{1}'
             ");
-            cmdFAILUREREMARK = string.Format(cmdFAILUREREMARK, wonum);
+            cmdFAILUREREMARK = string.Format(cmdFAILUREREMARK, wonum, siteID);
             //
             string cmdLONGDESCRIPTION = (@"
                 select NVL2(LD.LDTEXT, LD.LDTEXT, '') LDTEXT
                 from MAXIMO.WORKORDER WO 
                 left join MAXIMO.LONGDESCRIPTION LD on LD.LDKEY = WO.WORKORDERID AND LD.LDOWNERTABLE = 'WORKORDER'
-                where WO.wonum = '{0}'
+                where WO.wonum = '{0}' AND WORKORDER.SITEID = '{1}'
             ");
-            cmdLONGDESCRIPTION = string.Format(cmdLONGDESCRIPTION, wonum);
+            cmdLONGDESCRIPTION = string.Format(cmdLONGDESCRIPTION, wonum, siteID);
             //
             string cmdLabor = (@"
             select 
@@ -69,9 +70,9 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
             ,ROUND(REGULARHRS,2) REGULARHRS
             from MAXIMO.LABTRANS  LABTRANS 
             left join MAXIMO.PERSON ON PERSON.PERSONID = LABTRANS.LABORCODE
-            where LABTRANS.REFWO  = '{0}'
+            where LABTRANS.REFWO  = '{0}' AND LABTRANS.SITEID = '{1}'
             ");
-            cmdLabor = string.Format(cmdLabor, wonum);
+            cmdLabor = string.Format(cmdLabor, wonum, siteID);
             //
             string cmdWorkLog = (@"
             select 
@@ -87,9 +88,9 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
             AND  ld.ldownercol = 'DESCRIPTION'
             AND  ld.LDKEY = wl.WORKLOGID
             where
-            wl.RECORDKEY = '{0}'
+            wl.RECORDKEY = '{0}' AND wl.SITEID = '{1}'
             ");
-            cmdWorkLog = string.Format(cmdWorkLog, wonum);
+            cmdWorkLog = string.Format(cmdWorkLog, wonum, siteID);
             #endregion
             //
             EQUICommunictionLib.ConnectionManager connectionManager = new ConnectionManager();
@@ -104,7 +105,7 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
             LONGDESCRIPTION = connectionManager.GetCLOB(cmdLONGDESCRIPTION, dbName: MaximoDbName, enblExeptions: true);
             FAILUREREMARK = connectionManager.GetCLOB(cmdFAILUREREMARK, dbName: MaximoDbName, enblExeptions: true);
             LABOR = connectionManager.RunQuery(cmdLabor, dbName: MaximoDbName, maxEXECtime: CommandTimeout, enblExeptions: true);
-            //   DataTable WORKLOG = maximoComm.oracle_runQuery(cmdWorkLog, RealtimeConn:RealtimeConn);
+            DataTable WORKLOG = connectionManager.RunQuery(cmdWorkLog, dbName: MaximoDbName, maxEXECtime: CommandTimeout, enblExeptions: true);
             if (WORKORDER.Rows.Count != 0)
             {
                 ViewBag.DESCRIPTION = WORKORDER.Rows[0].Field<string>("DESCRIPTION");
@@ -129,7 +130,11 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
                 labor.REGULARHRS = row.Field<decimal>("REGULARHRS");
                 LaborList.Add(labor);
             }
-            //
+            //handle worklog 
+            if (WORKLOG.Rows.Count != 0)
+            {
+                log.Error("Worklog has data but not handeld in UI");
+            }
             return PartialView(LaborList);
         }
 

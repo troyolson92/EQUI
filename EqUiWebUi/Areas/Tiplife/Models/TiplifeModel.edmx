@@ -171,6 +171,7 @@ warning 6002: The table/view 'GADATA.NGAC.TipMonitor' does not have a primary ke
             
             
             <PropertyRef Name="id" />
+            <PropertyRef Name="Tool_Nr" />
             
           </Key>
           <Property Name="Robot" Type="varchar" MaxLength="30" Nullable="false" />
@@ -836,6 +837,7 @@ warning 6002: The table/view 'GADATA.WELDING2.TipMonitor' does not have a primar
         <EntityType Name="NGAC_TipMonitor">
           <Key>
             <PropertyRef Name="id" />
+            <PropertyRef Name="Tool_Nr" />
           </Key>
           <Property Name="Robot" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Tool_Nr" Type="Int16" Nullable="false" />

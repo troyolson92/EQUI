@@ -21,6 +21,10 @@
         //subscribe to row clicked events
         $('[data-name="c_housekeepingGrid"]').mvcgrid({
             rowClicked: function (row, data, e) {
+                //ignore clicks not on td
+                if (e.target.tagName.toUpperCase() != 'TD') {
+                    return;
+                }
                 //if row already has this clase close the modal
                 if ($(row).hasClass("bg-info")) {
                     $("#placeholder").remove();

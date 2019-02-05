@@ -276,6 +276,14 @@
     <Build Include="EqUi\Functions\RTrimX.sql" />
     <Build Include="EqUi\Functions\TrimEmptylines.sql" />
     <None Include="EqUi\Data\c_schedule.sql" />
+    <Build Include="NGAC\Stored Procedures\sp_Housekeeping.sql" />
+    <Build Include="NGAC\Stored Procedures\sp_DropRobot.sql" />
+    <Build Include="EqUi\Stored Procedures\sp_runHouseKeepingOnTable.sql" />
+    <Build Include="NGAC\Tables\L_BeamSetUpLog.sql" />
+    <Build Include="NGAC\Views\TCP_LOG.sql" />
+    <Build Include="NGAC\Stored Procedures\sp_nom_BeamSetUpLog.sql" />
+    <Build Include="EqUi\Stored Procedures\GetTipDressData.sql" />
+    <Build Include="Security\BI.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="GADATAprod.publish.xml" />

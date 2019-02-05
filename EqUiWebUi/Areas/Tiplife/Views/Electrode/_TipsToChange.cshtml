@@ -1,13 +1,14 @@
 ﻿@model IEnumerable<EqUiWebUi.Areas.Tiplife.Models.NGAC_TipMonitor>
-<div class="badge">Aantal:@Model.Count()</div>
+<div class="badge">Count:@Model.Count()</div>
 @Html.Grid(Model).Named("TipsToChangeTable").Build(columns =>
 {
     columns.Add(c => c.Robot).Titled("Robot").InitialSort(GridSortOrder.Asc);
-    columns.Add(c => c.nRcars).Titled("#R Stukken");
+    columns.Add(c => c.Tool_Nr).Titled("Tool");
+    columns.Add(c => c.nRcars).Titled("#R Parts");
     columns.Add(c => c.pWear).Titled("%wear");
-    columns.Add(c => c.nDress).Titled("#gefreest");
+    columns.Add(c => c.nDress).Titled("#Dresses");
     columns.Add()
-                         .Titled("Status")
+                         .Titled("State")
                          .Encoded(false)
                          .Filterable(false)
                          .Sortable(false)

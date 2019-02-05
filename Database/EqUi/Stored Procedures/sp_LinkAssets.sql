@@ -158,10 +158,11 @@ END
                   REPLACE(assets.LOCATION,'JB','R') LIKE ra.controller_name+'%'
                   )
 --**********************************************only join for GA GB********************************************************--
+/*
                 where 
 			    (assets.LocationTree like 'VCG -> A%')
                 OR
-                (assets.LocationTree like 'VCG -> B%' AND assets.ASSETNUM like 'U%')
+                (assets.LocationTree like 'VCG -> B%' AND assets.ASSETNUM like 'U%')*/
              
 
 --*******************************************************************************************************************--

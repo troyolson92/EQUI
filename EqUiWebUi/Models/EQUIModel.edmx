@@ -58,6 +58,7 @@
           <Property Name="nMaxRunTime" Type="int" Nullable="false" />
           <Property Name="IdColName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="DateTimeColName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="NoHousekeeping" Type="bit" />
         </EntityType>
         <EntityType Name="c_job">
           <Key>
@@ -171,9 +172,9 @@
           <Property Name="Title" Type="varchar" MaxLength="50" />
           <Property Name="Body" Type="varchar(max)" />
           <Property Name="Comments" Type="varchar(max)" />
-          <Property Name="createDate" Type="datetime" Nullable="false" />
+          <Property Name="createDate" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="l_user_id" Type="int" Nullable="false" />
-          <Property Name="ChangeDate" Type="datetime" />
+          <Property Name="ChangeDate" Type="datetime2" Precision="7" />
           <Property Name="l_change_user_id" Type="int" />
         </EntityType>
         <EntityType Name="c_Classification">
@@ -773,6 +774,7 @@
           <NavigationProperty Name="c_datasource" Relationship="GADATAModelEQUI.FK_c_housekeeping_c_datasource" FromRole="c_housekeeping" ToRole="c_datasource" />
           <NavigationProperty Name="c_schedule" Relationship="GADATAModelEQUI.FK_c_housekeeping_c_schedule" FromRole="c_housekeeping" ToRole="c_schedule" />
           <NavigationProperty Name="L_housekeeping" Relationship="GADATAModelEQUI.FK_L_housekeeping_c_housekeeping" FromRole="c_housekeeping" ToRole="L_housekeeping" />
+          <Property Name="NoHousekeeping" Type="Boolean" Nullable="false" />
         </EntityType>
         <Association Name="FK_c_housekeeping_c_datasource">
           <End Type="GADATAModelEQUI.c_datasource" Role="c_datasource" Multiplicity="0..1" />
@@ -818,9 +820,9 @@
           <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Body" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Comments" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="createDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="createDate" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="l_user_id" Type="Int32" Nullable="false" />
-          <Property Name="ChangeDate" Type="DateTime" Precision="3" />
+          <Property Name="ChangeDate" Type="DateTime" Precision="7" />
           <Property Name="l_change_user_id" Type="Int32" />
         </EntityType>
         </Schema>
@@ -1000,6 +1002,7 @@
           <EntitySetMapping Name="c_housekeeping">
             <EntityTypeMapping TypeName="GADATAModelEQUI.c_housekeeping">
               <MappingFragment StoreEntitySet="c_housekeeping">
+                <ScalarProperty Name="NoHousekeeping" ColumnName="NoHousekeeping" />
                 <ScalarProperty Name="DateTimeColName" ColumnName="DateTimeColName" />
                 <ScalarProperty Name="IdColName" ColumnName="IdColName" />
                 <ScalarProperty Name="nMaxRunTime" ColumnName="nMaxRunTime" />

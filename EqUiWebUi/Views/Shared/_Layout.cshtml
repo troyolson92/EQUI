@@ -13,9 +13,25 @@
         <!--back button-->
         <a class="far fa-arrow-alt-circle-left fa-2x text-white py-0 clickable" data-toggle="tooltip" title="Go back" onclick="window.history.back();"></a>
         <!-- Brand -->
-        <a class="navbar-brand py-0 clickable" href='@Url.Action("Index", "Home", new { area = "" }, null)' data-toggle="tooltip" title="Homepage">
-            <img src="~/Content/images/volvo-50.png" />
-        </a>
+
+        @if (System.Configuration.ConfigurationManager.AppSettings["Maximo_SiteID"].ToString() == "VCCH")
+        {
+            <a class="navbar-brand py-0 clickable" style="padding-left: 80px; padding-right:70px;" href='@Url.Action("Index", "Home", new { area = "" }, null)' data-toggle="tooltip" title="Homepage">
+                <img height="50" width="50" src="~/Content/images/volvo-USA.png" />
+            </a>
+        }
+        else if (System.Configuration.ConfigurationManager.AppSettings["Maximo_SiteID"].ToString() == "VCG")
+        {
+            <a class="navbar-brand py-0 clickable" style="padding-left: 80px; padding-right:70px;" href='@Url.Action("Index", "Home", new { area = "" }, null)' data-toggle="tooltip" title="Homepage">
+                <img height="50" width="50" src="~/Content/images/volvo-BE.png" />
+            </a>
+        }
+        else //default
+        {
+            <a class="navbar-brand py-0 clickable" href='@Url.Action("Index", "Home", new { area = "" }, null)' data-toggle="tooltip" title="Homepage">
+                <img src="~/Content/images/volvo-50.png" />
+            </a>
+        }
 
         <!-- Toggler/collapsibe Button -->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -33,22 +49,29 @@
                         Toolkit
                     </a>
                     <ul class="dropdown-menu">
+                        <li class="dropdown-item"><h3>Available tools</h3> </li>
+                        @if (System.Configuration.ConfigurationManager.AppSettings["Maximo_SiteID"].ToString() == "VCG")
+                        {
+                            <li class="dropdown-item">
+                                @MyHtmlHelpers.EquiLink(@Url.Action("WeldgunTool", "Electrode", new { area = "Tiplife" }, null), "fas fa-toolbox", "WeldgunTool", helperText: "View data and control charts")
+                            </li>
+                        }
+                        <li class="dropdown-divider"></li>
                         <li class="dropdown-item">
                             <div class="badge badge-info">
-                                <h6>The tools use Microsoft Click once deployment!</h6>
+                                <h6>Following tools use Microsoft Click once deployment!</h6>
                             </div>
                             <p>@MyHtmlHelpers.EquiLink("https://chrome.google.com/webstore/detail/clickonce-for-google-chro/kekahkplibinaibelipdcikofmedafmb", "fab fa-chrome", "ClickOnce for Google Chrome", helperText: "Needed to launch click once tools in the chrome browser.")
                         </li>
                         <li class="dropdown-divider"></li>
-                        <li class="dropdown-item"><h3>Available tools</h3> </li>
+                        @if (System.Configuration.ConfigurationManager.AppSettings["Maximo_SiteID"].ToString() == "VCG")
+                        {
+                            <li class="dropdown-item">
+                                @MyHtmlHelpers.EquiLink(@Url.Action("EqUiDigibordLauncher.application", "EqUi_DigibordLauncher", new { area = "" }, null), "fas fa-desktop", "DigiboardLauncher", helperText: "Startup tool for kiosks", helpurl: @Url.Action("_Getwiki", "Wiki", new { area = "", id = "DigibordLauncher" }, null))
+                            </li>
+                        }
                         <li class="dropdown-item">
-                            @MyHtmlHelpers.EquiLink(@Url.Action("WeldgunTool", "Electrode", new { area = "Tiplife" }, null), "fas fa-toolbox", "WeldgunTool", helperText: "View data and control charts")
-                        </li>
-                        <li class="dropdown-item">
-                            @MyHtmlHelpers.EquiLink("http://gensvw1178.gen.volvocars.net/EqUi_DigibordLauncher/EqUiDigibordLauncher.application", "fas fa-desktop", "DigiboardLauncher", helperText: "Startup tool for kiosks", helpurl: @Url.Action("_Getwiki", "Wiki", new { area = "", id = "DigibordLauncher" }, null))
-                        </li>
-                        <li class="dropdown-item">
-                            @MyHtmlHelpers.EquiLink("file:////gnlsnm0101.gen.volvocars.net/proj/6308-SHR-VCC22700/VSTO/DEPLOYMENTBASE/ExcelAddInEquipmentDatabase.vsto", "fas fa-file-excel", "VSTO Excel (install)", helperText: "Excel ribbon plugin to acces the database (installation file)", helpurl: @Url.Action("_Getwiki", "Wiki", new { area = "", id = "VSTO" }, null))
+                            @MyHtmlHelpers.EquiLink(@Url.Action("ExcelAddInEquipmentDatabase.VSTO", "VSTO", new { area = "" }, null), "fas fa-file-excel", "VSTO Excel (install)", helperText: "Excel plug-in to access the database *Download can be slow package is hosted in Ghent", helpurl: @Url.Action("_Getwiki", "Wiki", new { area = "", id = "VSTO" }, null))
                         </li>
                     </ul>
                 </li>

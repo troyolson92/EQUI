@@ -2,12 +2,12 @@
 
 @Html.Grid(Model).Named("c_service_setup").Build(columns =>
 {
-    columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Asc);
+    columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Asc).Css("tablesaw-priority-0");
     // columns.Add(c => c.bit_id).Titled("bit_id"); 
-    columns.Add(c => EqUiWebUi.Areas.VASC.Models.VASCenums.intArrayTostring(c._Enable_bit_MASK)).Titled("_bit_MASK").Filterable(true);
-    columns.Add(c => c.name).Titled("name");
+    columns.Add(c => EqUiWebUi.Areas.VASC.Models.VASCenums.intArrayTostring(c._Enable_bit_MASK)).Titled("_bit_MASK").Filterable(true).Css("tablesaw-priority-6");
+    columns.Add(c => c.name).Titled("name").Css("tablesaw-priority-persist");
     columns.Add(c => c.value).Titled("value");
-    columns.Add(c => c.description).Titled("description");
+    columns.Add(c => c.description).Titled("description").Css("tablesaw-priority-6");
     columns.Add(c => c)
                     .Titled("Tools")
                     .Encoded(false)
@@ -19,6 +19,6 @@
     pager.RowsPerPage = 10;
     pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 10, "10" }, { 20, "20" }, { 40, "40" }, { 80, "80" }, { 100, "100" } };
     pager.ShowPageSizes = true;
-}).Empty("Did not find anything").Css("table-hover")
+}).Empty("Did not find anything").Css("table-hover tablesaw-on")
 
 
