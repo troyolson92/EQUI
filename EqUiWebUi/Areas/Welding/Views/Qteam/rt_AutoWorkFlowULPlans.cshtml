@@ -16,7 +16,8 @@
     columns.Add(c => c.Planlenght).Titled("Planlenght");
     columns.Add(c => c.Last30min_productionStatus).Titled("Last30min_productionStatus").Css("bolded");
     columns.Add(c => c.BuildBody).Titled("BuildBodys").InitialSort(GridSortOrder.Desc);
-    columns.Add(c => c.PreviousPlace).Titled("PreviousPlace");
+    //columns.Add(c => c.PreviousPlace).Titled("PreviousPlace");
+    columns.Add(c => c.SpotsinExtraControleList).Titled("SpotsinExtraControleList");
 
 
 }).Filterable().Pageable(pager =>
@@ -27,8 +28,6 @@
         ).Sortable().Css("table-hover").RowCss(model => model.LastnumberFromPlanBusy > 0 ? "ani_PulseBlueRepeat" : "");
 
 
-
-
         @section scripts{
             <script>
                 //full with screen
@@ -37,7 +36,7 @@
                 //  $actualRow.css('background-color', '#0094ff');
                 // $("#allcontent").html("<i class='fas fa-spinner fa-spin fa-2x'></i>")
 
-
+               
                 //function to refresh grid
                function refreshGrid() {
                     console.log('function is being called')
@@ -57,9 +56,9 @@
                     });
                 }
 
-                setInterval(function () {
-                    refreshGrid()
-                }, 1000 * 120)
+              setInterval(function () {
+                   refreshGrid()
+                }, 1000 * 1)
 
 
             </script>

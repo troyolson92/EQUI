@@ -18,7 +18,7 @@
 
 
 }).Filterable(
-).Sortable().RowCss(c => (c.lastinspectiontime.GetValueOrDefault() < System.DateTime.Now.AddHours(-4)) ? "ani_PulseRed" : "")
+).Sortable().RowCss(c => (c.lastinspectiontime.GetValueOrDefault() < System.DateTime.Now.AddHours(-4)) ? "red" : "")
 
 
 
@@ -54,3 +54,10 @@
         }, 1000 * 600)
     </script>
 }
+<style>
+    .red{
+        background-color: #fb9c9c
+
+        
+    }
+</style>
