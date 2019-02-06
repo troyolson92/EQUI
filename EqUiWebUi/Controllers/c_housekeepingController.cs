@@ -153,6 +153,10 @@ namespace EqUiWebUi.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             c_housekeeping c_housekeeping = db.c_housekeeping.Find(id);
+            //remove linked logs
+            var l_Housekeeping = db.L_housekeeping.Where(c => c.c_housekeeping_id == id);
+            db.L_housekeeping.RemoveRange(l_Housekeeping);
+            //remove config
             db.c_housekeeping.Remove(c_housekeeping);
             db.SaveChanges();
             return RedirectToAction("Index");
