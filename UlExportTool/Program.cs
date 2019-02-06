@@ -1,213 +1,94 @@
-﻿//V1.0.0.0 : first production ready program
-//V1.0.1.0 : added : check if already running in process.
-
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 using System.IO;
 using System.Data;
 using System.Diagnostics;
-using System.Reflection;
 using System.Net;
 using System.Data.OleDb;
-using System.Timers;
 using System.Data.SqlClient;
 using System.Runtime.InteropServices;
 
+[assembly: log4net.Config.XmlConfigurator(Watch = true)]
+
 namespace UlExportTool
 {
-
-    static class Buffer
+    /// <summary>
+    /// Main
+    /// </summary>
+    class Program
     {
-        static List<string> _Logbuffer; // Static List instance
-        static Buffer() { _Logbuffer = new List<string>(); }
-        public static void Record(string value) { _Logbuffer.Add(value); }
-        public static void Delete(string value) { _Logbuffer.Remove(value); }
-        public static Int32 Count() { return _Logbuffer.Count(); }
-        public static List<string> getbuffer() { return _Logbuffer; }
-        public static void Display()
+        [DllImport("kernel32.dll", SetLastError = true, ExactSpelling = true)]
+        static extern bool FreeConsole();
+        static void Main(string[] args)
         {
-            foreach (var value in _Logbuffer)
+            if (Properties.Settings.Default.HideConsole)
             {
-                //Console.WriteLine(value);
+                FreeConsole(); // closes the console
             }
-        }
-        public static bool Contains(string file) { if (_Logbuffer.Contains(file)) { return true; } else { return false; } }
-    }
-
-    static class DebugLocal
-    {
-        public static void Init()
-        {
-            if (System.IO.File.Exists("C:\\USLT\\UlExport_Debug.log"))
-            {
-                try
-                {
-                    System.IO.File.Move("C:\\USLT\\UlExport_Debug.log", "C:\\USLT\\" + DateTime.Now.ToString("dd_MM_yyyy_HH_mm_ss") + " UlExport_Debug.log");
-                }
-                catch
-                {
-
-                }
-            }
-            Trace.Listeners.Add(new TextWriterTraceListener("C:\\USLT\\UlExport_Debug.log"));
-            //Trace.Listeners.Add(new TextWriterTraceListener("C:\\USLT\\" + DateTime.Now.ToString("dd_MM_yyyy_HH_mm_ss") + " UlExport_Debug.log"));
-            Trace.AutoFlush = true;
-            /*Trace.Indent();
-            Trace.Unindent();
-            Trace.Flush();*/
-        }
-        public static void Restart()
-        {
-            //Console.WriteLine("System will restart in 10 seconds");
-            System.Threading.Thread.Sleep(10000);
-            var fileName = Assembly.GetExecutingAssembly().Location;
-            System.Diagnostics.Process.Start(fileName);
-            Environment.Exit(0);
-        }
-        public static void Message(string ls_part, string ls_message)
-        {
-            Trace.WriteLine("DT: " + DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss,ffff") + " P: " + ls_part + " M: " + ls_message);
-            //Console.WriteLine("DT: " + DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss,ffff") + " P: " + ls_part + " M: " + ls_message);
-            /*using (EventLog eventlog = new EventLog("Application"))
-            {
-                eventlog.Source = "Application";
-                eventlog.WriteEntry(ls_message, EventLogEntryType.Information, 101, 1);
-            }*/
+            RunProgram Program = new RunProgram();
+            Program.Start();
         }
     }
 
-    public class ConsoleSpiner
-    {
-        //int counter;
-        public ConsoleSpiner()
-        {
-            //counter = 0;
-        }
-        public void Turn()
-        {
-            //counter++;
-            //switch (counter % 3)
-            //{
-            //    case 0: Console.Write("/"); break;
-            //    case 1: Console.Write("-"); break;
-            //    case 2: Console.Write("\\"); break;
-            //    default: Console.Write("-"); break;
-            //}
-            //Console.Write(DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss"));
-            //Console.SetCursorPosition(Console.CursorLeft - 19, Console.CursorTop);
-        }
-    }
-
+    /// <summary>
+    /// Import UL data
+    /// </summary>
     public class RunProgram
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         DataTable ULdata = new DataTable();
         DateTime lastUlDate;
         double lastUldateDbl, tmp_lastUldateDbl;
-        bool Isbusy = true;
         int UlDataRowCount;
+        string ConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["EQUIConnectionString"].ConnectionString;
 
-        string ConnectionString = "user id = AASPOT_a; password = AASPOT_a; server = SQLA001.gen.volvocars.net; Trusted_Connection = no; database = gadata; connection timeout = 10";
-        String LocalUlDB = "C:\\USLT\\ULtraLog\\Ultralog.mdb";
-        string hostName;
-
+        /// <summary>
+        /// Start processing data
+        /// </summary>
         public void Start()
         {
             try
             {
+                log.Info("Program starting");
                 CheckProgramRunning();
-                DebugLocal.Init();
-                DebugLocal.Message("INFO", "START PROGRAM");
-                hostName = Dns.GetHostName();
-                Timer TriggerTimer = new System.Timers.Timer(5000); //run every 1 second
-
-                TriggerTimer.Start();
-                TriggerTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
-
-                //Console.Title = "Volvo  UlExportTool version: 18W29D1";
-                //Console.BufferHeight = 100;//Int16.MaxValue - 1;
-                //Console.WindowWidth = 100;
-                //DebugLocal.Init();
-                DebugLocal.Message("INFO", "System restarted");
-                DebugLocal.Message("INFO", "Hostname : " + hostName);
-                ConsoleSpiner spin = new ConsoleSpiner();
 
                 //get last ULMeasurement date and time
-                lastUlDate = GetLastUlDateData(hostName, ConnectionString);
-                lastUldateDbl = lastUlDate.ToOADate();// convert datetime to double
-                DebugLocal.Message("INFO", "Last data in GADATA: " + lastUlDate.ToString());
-                //DebugLocal.Message("INFO", "Last dataDBL in GADATA: " + lastUlDate.ToOADate());
-
-                // if no connection ( date = 2 ), retryuntil connection
-                while (lastUldateDbl == 2)
-                {
-                    DebugLocal.Message("INFO", "NO connection with SQL GADATA");
-                    lastUlDate = GetLastUlDateData(hostName, ConnectionString);
-                    lastUldateDbl = lastUlDate.ToOADate();// convert datetime to double
-                    System.Threading.Thread.Sleep(10000);
-                }
-
-                DebugLocal.Message("INFO", "connection GADATA OK");
-
-                if (CheckAndGetUlData(LocalUlDB, hostName, lastUldateDbl))
-                { // get new data succes
-                    UlDataRowCount = ULdata.Rows.Count;
-                    if (UlDataRowCount > 0)
-                    {
-                        //get maxdatetime in table
-                        tmp_lastUldateDbl = GetMaxDatetime(ULdata);
-
-                        //export datat to GADATA
-                        if (ExportDatabase(ULdata, "UltralogData_RAW", ConnectionString))
-                        {
-                            //if upload ok, lastuploaddatetime is updated
-                            lastUldateDbl = tmp_lastUldateDbl;
-                        }
-                    }//if uldata containt new data
-                    else
-                    {
-                        DebugLocal.Message("INFO", "No new local data");
-                    }
-                }
-
-                Isbusy = false;
+                lastUlDate = GetLastUlDateData(Dns.GetHostName(), ConnectionString);
+                lastUldateDbl = lastUlDate.ToOADate();// convert date time to double
+                log.Info($"System started host: { Dns.GetHostName()} Last data on server: {lastUlDate.ToString()}");
 
                 while (true)
                 {
-                    System.Threading.Thread.Sleep(100);
-                    spin.Turn();
-                    //if (CheckAndGetUlData(LocalUlDB, hostName, lastUldateDbl))
-                    //{ // get new data succes
-                    //    UlDataRowCount = ULdata.Rows.Count;
-                    //    if (UlDataRowCount > 0)
-                    //    {
-                    //        //get maxdatetime in table
-                    //        tmp_lastUldateDbl = GetMaxDatetime(ULdata);
-
-                    //        //export datat to GADATA
-                    //        if (ExportDatabase(ULdata, "UltralogData_RAW", ConnectionString))
-                    //        {
-                    //            //if upload ok, lastuploaddatetime is updated
-                    //            lastUldateDbl = tmp_lastUldateDbl;
-                    //        }
-                    //    }//if uldata containt new data
-                    //    else
-                    //    {
-                    //        DebugLocal.Message("INFO", "No new local data");
-                    //    }
-                    //}
-
+                    if (CheckAndGetUlData(Properties.Settings.Default.LocalUlDB, Dns.GetHostName(), lastUldateDbl))
+                    { // get new data success
+                        UlDataRowCount = ULdata.Rows.Count;
+                        if (UlDataRowCount > 0)
+                        {
+                            //get maxdatetime in table
+                            tmp_lastUldateDbl = GetMaxDatetime(ULdata);
+                            //export datat to GADATA
+                            if (ExportDatabase(ULdata, "UltralogData_RAW", ConnectionString))
+                            {
+                                //if upload ok, lastuploaddatetime is updated
+                                lastUldateDbl = tmp_lastUldateDbl;
+                            }
+                        }//if uldata contains new data
+                        else
+                        {
+                            log.Debug("No new local data");
+                        }
+                    }
+                    System.Threading.Thread.Sleep(5000);
                 }
-            }//try
-            catch (SqlException exy)
+            }
+            catch (SqlException ex)
             {
-                DebugLocal.Message("ERROR", "CheckRunProgram FAILED");
-                DebugLocal.Message("ERROR", exy.Message);
+                log.Error("MAIN error", ex);
             }
         }
 
-        //check program already running V1.0.1.0
+        /// <summary>
+        /// check program already running kill it if it is
+        /// </summary>
         void CheckProgramRunning()
         {
             Process[] processlist = Process.GetProcesses();
@@ -221,61 +102,30 @@ namespace UlExportTool
 
                     if (string.Equals(theprocess.ProcessName, "ulexporttool", StringComparison.CurrentCultureIgnoreCase))
                     {
+                        log.Info("Program instance already running");
                         process_ID = theprocess.Id;
                         if (process_ID != Process.GetCurrentProcess().Id)
                         {
                             Process p = Process.GetProcessById(process_ID);
                             p.Kill();
-                            DebugLocal.Message("INFO", "processID " + process_ID + "killed");
+                            log.Info("Program instance killed");
                         }
                         //end check program already running V1.0.1.0
                     }
                 }
-
-            }//try
+            }
             catch (SqlException ex)
             {
-                DebugLocal.Message("ERROR", "CheckRunProgram FAILED");
-                DebugLocal.Message("ERROR", ex.Message);
+                log.Error("Failed to kill program", ex);
             }
         }
 
-        void OnTimedEvent(object source, ElapsedEventArgs e)
-        {
-            if (Isbusy)
-            {
-
-            }//Is busy
-            else
-            {
-                Isbusy = true;
-                if (CheckAndGetUlData(LocalUlDB, hostName, lastUldateDbl))
-                { // get new data succes
-                    UlDataRowCount = ULdata.Rows.Count;
-                    if (UlDataRowCount > 0)
-                    {
-                        //get maxdatetime in table
-                        tmp_lastUldateDbl = GetMaxDatetime(ULdata);
-
-                        //export datat to GADATA
-                        if (ExportDatabase(ULdata, "UltralogData_RAW", ConnectionString))
-                        {
-                            //if upload ok, lastuploaddatetime is updated
-                            lastUldateDbl = tmp_lastUldateDbl;
-                        }
-                    }//if uldata containt new data
-                    else
-                    {
-                        DebugLocal.Message("INFO", "No new local data");
-                    }
-                }
-                else
-                {// get new data failed
-
-                }
-                Isbusy = false;
-            }// not busy
-        }
+        /// <summary>
+        /// Get last UL date on server for specific client
+        /// </summary>
+        /// <param name="as_ComputerName"></param>
+        /// <param name="as_connectionstring"></param>
+        /// <returns>date time</returns>
         DateTime GetLastUlDateData(string as_ComputerName, string as_connectionstring)
         {
             int retries = 3;
@@ -291,7 +141,7 @@ namespace UlExportTool
                     SqlParameter param1;
                     DataSet ds = new DataSet();
 
-                    DebugLocal.Message("INFO", "start connecting using GetLastUlDateData");
+                    log.Info("start connecting using GetLastUlDateData");
 
                     connection = new SqlConnection(as_connectionstring);
 
@@ -322,14 +172,21 @@ namespace UlExportTool
                 } //try
                 catch (SqlException ex)
                 {
-                    DebugLocal.Message("ERROR", "GetLastUlDateData ; retries left " + (retries - 1));
-                    DebugLocal.Message("ERROR", ex.Message);
+                    log.Error($"GetLastUlDateData failure retries left: {retries - 1}", ex);
                     retries--;
                     System.Threading.Thread.Sleep(10000); //wait until retry
                 }//catch
             }//while
             return new DateTime(1900, 01, 01);
         }//void
+
+        /// <summary>
+        /// Get all new data from local UL database
+        /// </summary>
+        /// <param name="as_localDB"></param>
+        /// <param name="as_HostName"></param>
+        /// <param name="as_starttimedbl"></param>
+        /// <returns></returns>
         bool CheckAndGetUlData(string as_localDB, string as_HostName, double as_starttimedbl)
         {
             if (File.Exists(as_localDB))
@@ -339,29 +196,59 @@ namespace UlExportTool
                 {
                     try
                     {
-                        //string hostName = Dns.GetHostName();
-                        //string myIP = Dns.GetHostByName(hostName).AddressList[0].ToString();
                         string connectionString = @"Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + as_localDB;
-                        //string strSQL = "SELECT T_PointsList.Name AS spotname, T_InspectedPoints.ClassName AS EvaluationClass, T_InspectedPoints.Comments, T_USResult.Comment,T_Parts.Name AS Partname, T_PlansList.Name AS Planname, T_USResult.Thickness AS measuredThickness, T_Joint.Diameter, CDate(CDbl([T_InspectedPoints.Date])+CDbl([T_InspectedPoints.Time])) as UlDateTime,  T_InspectedPoints.Date, T_InspectedPoints.Time, T_Parts.Points AS Planlenght, T_USResult.BWECount AS bwe, T_USResult.FECount AS flawecho, T_USResult.GPCount AS gasporeecho, T_PlanPoints.Sequence AS IndexOfTestSequence, T_Joint.ThresholdFE AS MinIndentation, T_Joint.Tolerance AS MinIndentationMM, T_InspectedPoints.Operator AS inspector, T_TestingStations.Name AS testStation, T_PlatesList.Name AS namePlate1, T_PlatesList.Material AS MaterialPlate1, T_PlatesList.Thickness AS ThicknessPlate1, T_PlatesList_1.Name AS namePlate2, T_PlatesList_1.Material AS MaterialPlate2, T_PlatesList_1.Thickness AS ThicknessPlate2, T_PlatesList_2.Name AS namePlate3, T_PlatesList_2.Material AS MaterialPlate3, T_PlatesList_2.Thickness AS ThicknessPlate3,  T_InspectedPoints.ExportToCentralDatastore, '" + as_HostName + "' AS computername FROM T_TestingStations INNER JOIN(T_PlatesList AS T_PlatesList_2 RIGHT JOIN (T_Parts INNER JOIN (((T_PlansList INNER JOIN T_Joint ON T_PlansList.PlanID = T_Joint.PlanID) INNER JOIN((T_PlatesList AS T_PlatesList_1 INNER JOIN (T_PlatesList INNER JOIN T_PointsList ON T_PlatesList.PlateID = T_PointsList.Plate1) ON T_PlatesList_1.PlateID = T_PointsList.Plate2) INNER JOIN T_PlanPoints ON T_PointsList.PointID = T_PlanPoints.PointID) ON(T_PlansList.PlanID = T_PlanPoints.PlanID) AND(T_Joint.JointID = T_PlanPoints.JointID)) INNER JOIN(T_InspectedPoints INNER JOIN T_USResult ON T_InspectedPoints.IDInspection = T_USResult.IDInspection) ON T_PlanPoints.PlanPointID = T_InspectedPoints.PlanPointID) ON(T_PlansList.PlanID = T_Parts.PlanID) AND(T_Parts.PartID = T_InspectedPoints.PartID)) ON T_PlatesList_2.PlateID = T_PointsList.Plate3) ON(T_TestingStations.StationID = T_PlanPoints.TestingStationID) AND(T_TestingStations.StationID = T_InspectedPoints.StationID) ";
-                        string strSQL = "SELECT T_PointsList.Name AS spotname, T_InspectedPoints.ClassName AS EvaluationClass, T_InspectedPoints.Comments, T_USResult.Comment, T_Parts.Name AS Partname, T_PlansList.Name AS Planname, T_USResult.Thickness AS measuredThickness, T_Joint.Diameter, CDate(CDbl([T_InspectedPoints.Date]) + CDbl([T_InspectedPoints.Time])) AS UlDateTime, T_InspectedPoints.Date, T_InspectedPoints.Time, T_Parts.Points AS Planlenght, T_USResult.BWECount AS bwe, T_USResult.FECount AS flawecho, T_USResult.GPCount AS gasporeecho, T_PlanPoints.Sequence AS IndexOfTestSequence, T_Joint.ThresholdFE AS MinIndentation, T_Joint.Tolerance AS MinIndentationMM, T_InspectedPoints.Operator AS inspector, T_TestingStations.Name AS testStation, T_PlatesList.Name AS namePlate1, T_PlatesList.Material AS MaterialPlate1, T_PlatesList.Thickness AS ThicknessPlate1, T_PlatesList_1.Name AS namePlate2, T_PlatesList_1.Material AS MaterialPlate2, T_PlatesList_1.Thickness AS ThicknessPlate2, T_PlatesList_2.Name AS namePlate3, T_PlatesList_2.Material AS MaterialPlate3, T_PlatesList_2.Thickness AS ThicknessPlate3, '" + as_HostName + "' AS computername,(CDbl([T_InspectedPoints.Date]) + CDbl([T_InspectedPoints.Time])) AS ULDateTimeDbl FROM T_TestingStations INNER JOIN(T_PlatesList AS T_PlatesList_2 RIGHT JOIN (T_Parts INNER JOIN (((T_PlansList INNER JOIN T_Joint ON T_PlansList.PlanID = T_Joint.PlanID) INNER JOIN((T_PlatesList AS T_PlatesList_1 INNER JOIN (T_PlatesList INNER JOIN T_PointsList ON T_PlatesList.PlateID = T_PointsList.Plate1) ON T_PlatesList_1.PlateID = T_PointsList.Plate2) INNER JOIN T_PlanPoints ON T_PointsList.PointID = T_PlanPoints.PointID) ON(T_PlansList.PlanID = T_PlanPoints.PlanID) AND(T_Joint.JointID = T_PlanPoints.JointID)) INNER JOIN(T_InspectedPoints INNER JOIN T_USResult ON T_InspectedPoints.IDInspection = T_USResult.IDInspection) ON T_PlanPoints.PlanPointID = T_InspectedPoints.PlanPointID) ON(T_PlansList.PlanID = T_Parts.PlanID) AND(T_Parts.PartID = T_InspectedPoints.PartID)) ON T_PlatesList_2.PlateID = T_PointsList.Plate3) ON(T_TestingStations.StationID = T_PlanPoints.TestingStationID) AND(T_TestingStations.StationID = T_InspectedPoints.StationID) WHERE(((CDbl([T_InspectedPoints.Date]) + CDbl([T_InspectedPoints.Time])) > " + as_starttimedbl.ToString().Replace(',', '.') + ")) ";
+                        string strSQL = @"SELECT T_PointsList.Name AS spotname
+,T_InspectedPoints.ClassName AS EvaluationClass
+, T_InspectedPoints.Comments
+, T_USResult.Comment
+, T_Parts.Name AS Partname
+, T_PlansList.Name AS Planname
+, T_USResult.Thickness AS measuredThickness
+, T_Joint.Diameter
+, CDate(CDbl([T_InspectedPoints.Date]) + CDbl([T_InspectedPoints.Time])) AS UlDateTime
+, T_InspectedPoints.Date, T_InspectedPoints.Time
+, T_Parts.Points AS Planlenght
+, T_USResult.BWECount AS bwe
+, T_USResult.FECount AS flawecho
+, T_USResult.GPCount AS gasporeecho
+, T_PlanPoints.Sequence AS IndexOfTestSequence
+, T_Joint.ThresholdFE AS MinIndentation
+, T_Joint.Tolerance AS MinIndentationMM
+, T_InspectedPoints.Operator AS inspector
+, T_TestingStations.Name AS testStation
+, T_PlatesList.Name AS namePlate1
+, T_PlatesList.Material AS MaterialPlate1
+, T_PlatesList.Thickness AS ThicknessPlate1
+, T_PlatesList_1.Name AS namePlate2
+, T_PlatesList_1.Material AS MaterialPlate2
+, T_PlatesList_1.Thickness AS ThicknessPlate2
+, T_PlatesList_2.Name AS namePlate3
+, T_PlatesList_2.Material AS MaterialPlate3
+, T_PlatesList_2.Thickness AS ThicknessPlate3
+, '" + as_HostName + @"' AS computername
+,(CDbl([T_InspectedPoints.Date]) + CDbl([T_InspectedPoints.Time])) AS ULDateTimeDbl 
+FROM T_TestingStations 
+INNER JOIN(T_PlatesList AS T_PlatesList_2 
+RIGHT JOIN (T_Parts INNER JOIN (((T_PlansList INNER JOIN T_Joint ON T_PlansList.PlanID = T_Joint.PlanID) 
+INNER JOIN((T_PlatesList AS T_PlatesList_1 
+INNER JOIN (T_PlatesList INNER JOIN T_PointsList ON T_PlatesList.PlateID = T_PointsList.Plate1) ON T_PlatesList_1.PlateID = T_PointsList.Plate2) 
+INNER JOIN T_PlanPoints ON T_PointsList.PointID = T_PlanPoints.PointID) ON(T_PlansList.PlanID = T_PlanPoints.PlanID) AND(T_Joint.JointID = T_PlanPoints.JointID)) 
+INNER JOIN(T_InspectedPoints INNER JOIN T_USResult ON T_InspectedPoints.IDInspection = T_USResult.IDInspection) ON T_PlanPoints.PlanPointID = T_InspectedPoints.PlanPointID) ON(T_PlansList.PlanID = T_Parts.PlanID) AND(T_Parts.PartID = T_InspectedPoints.PartID)) ON T_PlatesList_2.PlateID = T_PointsList.Plate3) ON(T_TestingStations.StationID = T_PlanPoints.TestingStationID) AND(T_TestingStations.StationID = T_InspectedPoints.StationID) WHERE(((CDbl([T_InspectedPoints.Date]) + CDbl([T_InspectedPoints.Time])) > " + as_starttimedbl.ToString().Replace(',', '.') + ")) ";
 
-                        DebugLocal.Message("INFO", "start query to local UltralogDB");
-
+                        log.Info("start query to local UltralogDB");
                         OleDbConnection connection = new OleDbConnection(connectionString);
                         connection.Open();
                         OleDbCommand command = new OleDbCommand(strSQL, connection);
                         OleDbDataReader reader = command.ExecuteReader();
                         ULdata.Load(reader);
                         int rowCount = ULdata.Rows.Count;
-                        DebugLocal.Message("INFO", "System polled, records : " + rowCount);
-
+                        log.Info($"System polled, records : {rowCount}");
                         retries = 0; // break loop if everything ok
                         return true;
                     } //try
                     catch (SqlException ex)
                     {
-                        DebugLocal.Message("ERROR", "CheckAndUploadUlData ; retries left " + (retries - 1));
-                        DebugLocal.Message("ERROR", ex.Message);
+                        log.Error($"CheckAndUploadUlData failure retries left: {retries - 1}",ex);
                         retries--;
                         System.Threading.Thread.Sleep(10000); //wait until retry
                     }//catch
@@ -370,22 +257,27 @@ namespace UlExportTool
             }
             else
             {
-                DebugLocal.Message("ERROR", "local Database not found");
+                log.Fatal("local Database not found");
                 return false;
             }
 
         }
+
+        /// <summary>
+        /// Export data from data table to table on remote server
+        /// </summary>
+        /// <param name="adt_table">local data table</param>
+        /// <param name="as_destination">destination on server</param>
+        /// <param name="as_connectionstring">connection to server</param>
+        /// <returns></returns>
         bool ExportDatabase(DataTable adt_table, string as_destination, string as_connectionstring)
         {
-
-            DebugLocal.Message("INFO", "Start upload to database");
+            log.Info("Start upload to database");
             int retries = 3;
             while (retries > 0)
             {
                 try
                 {
-
-                    //string connectionString = "user id=AASPOT_a; password=AASPOT_a; server=SQLA001.gen.volvocars.net; Trusted_Connection=no; database=gadata; connection timeout=30";
                     using (SqlConnection connection = new SqlConnection(as_connectionstring))
                     {
                         connection.Open();
@@ -402,22 +294,17 @@ namespace UlExportTool
                             {
                                 // Write from the source to the destination.
                                 bulkCopy.WriteToServer(adt_table);
-
-                                //see how many rows were added. 
-                                long countEnd = System.Convert.ToInt32(
-                                commandRowCount.ExecuteScalar());
+                                long countEnd = System.Convert.ToInt32(commandRowCount.ExecuteScalar());
                                 connection.Close();
                                 connection.Dispose();
-                                DebugLocal.Message("INFO", "Detected: " + adt_table.Rows.Count + "/" + (countEnd - countStart) + " new rows were added to " + as_destination);
-                                DebugLocal.Message("INFO", "Upload to database complete");
+                                log.Debug($"Detected: {adt_table.Rows.Count}/{(countEnd - countStart)} new rows were added to: { as_destination}");
                                 ULdata.Clear(); // clear list if upload succes
                                 retries = 0; // break loop if everything ok
                                 return true;
                             }
                             catch (Exception ex)
                             {
-                                DebugLocal.Message("Bukcopy", ex.Message);
-                                DebugLocal.Message("INFO", ex.HelpLink);
+                                log.Error("bulkcopy", ex);
                             }//catch
                         }//using
 
@@ -426,14 +313,19 @@ namespace UlExportTool
                 }//try
                 catch (SqlException ex)
                 {
-                    DebugLocal.Message("ERROR", "ExportDatabase ; retries left " + (retries - 1));
-                    DebugLocal.Message("ERROR", ex.Message);
+                    log.Error($"exporting data  retries left: {(retries - 1)}", ex);
                     retries--;
                     System.Threading.Thread.Sleep(10000); //wait until retry
                 }//catch
             }//while
             return false;
         }
+
+        /// <summary>
+        /// Get max date from data table
+        /// </summary>
+        /// <param name="adt_table"></param>
+        /// <returns>double</returns>
         double GetMaxDatetime(DataTable adt_table)
         {
             double tmp_maxdatetime;
@@ -446,36 +338,6 @@ namespace UlExportTool
                 }
             }
             return tmp_maxdatetime;
-        }
-    }
-
-    class Program
-    {
-        [DllImport("kernel32.dll", SetLastError = true, ExactSpelling = true)]
-        static extern bool FreeConsole();
-
-        static void Main(string[] args)
-        {
-            FreeConsole(); // closes the console
-            RunProgram Program = new RunProgram();
-            Program.Start();
-        }
-
-        static void releaseObject(object obj)
-        {
-            try
-            {
-                System.Runtime.InteropServices.Marshal.ReleaseComObject(obj);
-                obj = null;
-            }
-            catch (Exception ex)
-            {
-                obj = null;
-            }
-            finally
-            {
-                GC.Collect();
-            }
         }
     }
 }
