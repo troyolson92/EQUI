@@ -13,12 +13,14 @@ namespace UlExportTool
 
         public void UpdateUltralogConfig()
         {
+            log.Debug("Starting new config update session");
             UpdateUltraLogConfigTable("T_Picture");
             UpdateUltraLogConfigTable("T_PicturePoints");
             UpdateUltraLogConfigTable("T_PlanPoints");
             UpdateUltraLogConfigTable("T_PlansList");
             UpdateUltraLogConfigTable("T_PlatesList");
             UpdateUltraLogConfigTable("T_PointsList");
+            log.Debug("Update complete press any key to exit");
         }
 
         public void UpdateUltraLogConfigTable(string tablename)
