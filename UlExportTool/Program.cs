@@ -7,6 +7,7 @@ using System.Data.OleDb;
 using System.Data.SqlClient;
 using System.Runtime.InteropServices;
 using EQUICommunictionLib;
+using System.Linq;
 
 [assembly: log4net.Config.XmlConfigurator(Watch = true)]
 
@@ -17,6 +18,7 @@ namespace UlExportTool
     /// </summary>
     class Program
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         [DllImport("kernel32.dll", SetLastError = true, ExactSpelling = true)]
         static extern bool FreeConsole();
         static void Main(string[] args)
@@ -25,8 +27,18 @@ namespace UlExportTool
             {
                 FreeConsole(); // closes the console
             }
-            RunProgram Program = new RunProgram();
-            Program.Start();
+            restart:
+                try
+                {
+                    RunProgram Program = new RunProgram();
+                    Program.Start();
+                }
+                catch (Exception ex)
+                {
+                    log.Error("Something went wrong", ex);
+                    System.Threading.Thread.Sleep(5000);
+                    goto restart;
+                }
         }
     }
 
@@ -36,54 +48,29 @@ namespace UlExportTool
     public class RunProgram
     {
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        string ConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["EQUIConnectionString"].ConnectionString;
         ConnectionManager connectionManager = new ConnectionManager();
         DataTable ULdata = new DataTable();
-        DateTime lastUlDate;
-        double lastUldateDbl, tmp_lastUldateDbl;
-        int UlDataRowCount;
-        string ConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["EQUIConnectionString"].ConnectionString;
+        double? lastrecord;
 
         /// <summary>
         /// Start processing data
         /// </summary>
         public void Start()
         {
-            try
+            log.Info("Program starting");
+            CheckProgramRunning();
+            while (true)
             {
-                log.Info("Program starting");
-                CheckProgramRunning();
-
-                //get last ULMeasurement date and time
-                lastUldateDbl = GetLastUlDateData().ToOADate();
-                log.Info($"System started host: { Dns.GetHostName()} Last data on server: {lastUlDate.ToString()}");
-
-                while (true)
+                Update_rt_active_info();
+                if (CheckAndGetUlData())
                 {
-                    if (CheckAndGetUlData(Properties.Settings.Default.LocalUlDB, Dns.GetHostName(), lastUldateDbl))
-                    { // get new data success
-                        UlDataRowCount = ULdata.Rows.Count;
-                        if (UlDataRowCount > 0)
-                        {
-                            //get maxdatetime in table
-                            tmp_lastUldateDbl = GetMaxDatetime(ULdata);
-                            //export datat to GADATA
-                            if (ExportDatabase(ULdata))
-                            {
-                                //if upload ok, lastuploaddatetime is updated
-                                lastUldateDbl = tmp_lastUldateDbl;
-                            }
-                        }//if uldata contains new data
-                        else
-                        {
-                            log.Debug("No new local data");
-                        }
+                    if (ULdata.Rows.Count > 0)
+                    {
+                        ExportDatabase();
                     }
-                    System.Threading.Thread.Sleep(5000);
-                }
-            }
-            catch (SqlException ex)
-            {
-                log.Error("MAIN error", ex);
+                }       
+                System.Threading.Thread.Sleep(5000);
             }
         }
 
@@ -93,25 +80,19 @@ namespace UlExportTool
         void CheckProgramRunning()
         {
             Process[] processlist = Process.GetProcesses();
-            int process_ID;
-            string test;
             try
             {
                 foreach (Process theprocess in processlist)
                 {
-                    test = theprocess.ProcessName;
-
-                    if (string.Equals(theprocess.ProcessName, "ulexporttool", StringComparison.CurrentCultureIgnoreCase))
+                    if (string.Equals(theprocess.ProcessName, System.Reflection.Assembly.GetExecutingAssembly().GetName().Name, StringComparison.CurrentCultureIgnoreCase))
                     {
-                        log.Info("Program instance already running");
-                        process_ID = theprocess.Id;
-                        if (process_ID != Process.GetCurrentProcess().Id)
+                        if (theprocess.Id != Process.GetCurrentProcess().Id)
                         {
-                            Process p = Process.GetProcessById(process_ID);
+                            log.Info("Program instance already running");
+                            Process p = Process.GetProcessById(theprocess.Id);
                             p.Kill();
                             log.Info("Program instance killed");
                         }
-                        //end check program already running V1.0.1.0
                     }
                 }
             }
@@ -122,50 +103,78 @@ namespace UlExportTool
         }
 
         /// <summary>
-        /// Get last UL date on server for specific client
+        /// handle the rt_active_info table 
+        /// add new Inspection laptop if needed.
+        /// handle multiple laptops 
+        /// update rt_active info if data available
         /// </summary>
-        /// <returns>date time</returns>
-        DateTime GetLastUlDateData()
+        void Update_rt_active_info()
         {
-            int retries = 3;
-            while (retries > 0)
+            DataTable dt = connectionManager.RunQuery($"SELECT * from [Ul].[rt_active_info] where [InspectionLaptop] = '{Dns.GetHostName()}'", enblExeptions: true);
+            //new InspectionLaptop
+            if (dt.Rows.Count == 0)
             {
-                try
+                string qry = $@"INSERT INTO [UL].[rt_active_info]
+                               ([InspectionLaptop]
+                               ,[Heartbeat])
+                            VALUES
+                               ('{Dns.GetHostName()}'
+                               ,getdate())";
+                connectionManager.RunCommand(qry,enblExeptions:true);
+                log.Info($"New inspection laptop added: {Dns.GetHostName()}");
+            }else if (dt.Rows.Count != 1) // more than 1 row in rt active info
+            {
+                string qry = $"DELETE [Ul].[rt_active_info] from [Ul].[rt_active_info] where [InspectionLaptop] = '{Dns.GetHostName()}'";
+                connectionManager.RunCommand(qry, enblExeptions: true);
+                log.Warn($"Inspection laptop was multiple times in rt_active_info!: {Dns.GetHostName()}");
+            }
+            else
+            {
+                if (ULdata.Rows.Count != 0)
                 {
-                    DataTable dt = connectionManager.RunQuery($"SELECT TOP 1  MAX(InspectionTime) FROM[UL].[UltralogData_RAW] where InspectionLaptop = '{Dns.GetHostName()}'", enblExeptions: true);
-                    retries = 0; // break loop if everything ok
-                    log.Debug($"GetLastUlDateData: {Convert.ToDateTime(dt.Rows[0][0])}");
-                    return Convert.ToDateTime(dt.Rows[0][0]);
-                } //try
-                catch (SqlException ex)
+                    lastrecord = ULdata.Rows[ULdata.Rows.Count - 1].Field<double?>("ULDateTimeDbl");
+                    string qry = $@"UPDATE [UL].[rt_active_info]
+                               SET [Partname] = '{ULdata.Rows[ULdata.Rows.Count - 1].Field<string>("Partname")}'
+                                  ,[InspectionPlanname] = '{ULdata.Rows[ULdata.Rows.Count - 1].Field<string>("Planname")}'
+                                  ,[PlanLenght] = '{ULdata.Rows[ULdata.Rows.Count - 1].Field<int?>("PlanLenght")}'
+                                  ,[IndexOfTestsequence] = '{ULdata.Rows[ULdata.Rows.Count - 1].Field<int?>("IndexOfTestsequence")}'
+                                  ,[Inspector] = '{ULdata.Rows[ULdata.Rows.Count - 1].Field<string>("Inspector")}'
+                                  ,[teststation] = '{ULdata.Rows[ULdata.Rows.Count - 1].Field<string>("teststation")}'
+                                  ,[ULDateTimeDbl] = '{ULdata.Rows[ULdata.Rows.Count - 1].Field<double?>("ULDateTimeDbl").ToString().Replace(',','.')}'
+                                  ,[Heartbeat] = getdate()
+                             WHERE InspectionLaptop = '{Dns.GetHostName()}'";
+                    connectionManager.RunCommand(qry, enblExeptions: true);
+                    log.Debug("rt_active_info updated");
+                }
+                else
                 {
-                    log.Error($"GetLastUlDateData failure retries left: {retries - 1}", ex);
-                    retries--;
-                    System.Threading.Thread.Sleep(10000); //wait until retry
-                }//catch
-            }//while
-            log.Fatal("Failed to get GetLastUlDateData return default");
-            return new DateTime(1900, 01, 01);
-        }//void
+                    string qry = $@"UPDATE [UL].[rt_active_info]
+                               SET [Heartbeat] = getdate()
+                             WHERE InspectionLaptop = '{Dns.GetHostName()}'";
+                    connectionManager.RunCommand(qry, enblExeptions: true);
+                    log.Debug("rt_active_info Heartbeat updated");
+                }
+            }
+        }
 
         /// <summary>
         /// Get all new data from local UL database
         /// </summary>
-        /// <param name="as_localDB"></param>
-        /// <param name="as_HostName"></param>
-        /// <param name="as_starttimedbl"></param>
-        /// <returns></returns>
-        bool CheckAndGetUlData(string as_localDB, string as_HostName, double as_starttimedbl)
+        bool CheckAndGetUlData()
         {
-            if (File.Exists(as_localDB))
+            if (File.Exists(Properties.Settings.Default.LocalUlDB))
             {
                 int retries = 3;
                 while (retries > 0)
                 {
                     try
                     {
-                        string connectionString = @"Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + as_localDB;
-                        string strSQL = @"SELECT T_PointsList.Name AS spotname
+                        string connectionString = $"Provider=Microsoft.Jet.OLEDB.4.0;Data Source={Properties.Settings.Default.LocalUlDB}";
+                        if (Properties.Settings.Default.LocalUlDB.EndsWith(".accdb")) connectionString = $"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={Properties.Settings.Default.LocalUlDB}";
+                        #region sqlRegion    
+                        string sql = $@"
+SELECT 
+  T_PointsList.Name AS spotname
 , T_InspectedPoints.ClassName AS EvaluationClass
 , T_InspectedPoints.Comments
 , T_USResult.Comment
@@ -193,51 +202,50 @@ namespace UlExportTool
 , T_PlatesList_2.Name AS namePlate3
 , T_PlatesList_2.Material AS MaterialPlate3
 , T_PlatesList_2.Thickness AS ThicknessPlate3
-, '{0}' AS computername
+, '{Dns.GetHostName()}' AS computername
 ,(CDbl([T_InspectedPoints.Date]) + CDbl([T_InspectedPoints.Time])) AS ULDateTimeDbl 
 FROM T_TestingStations 
-INNER JOIN(T_PlatesList AS T_PlatesList_2 
+INNER JOIN (T_PlatesList AS T_PlatesList_2 
 RIGHT JOIN (T_Parts INNER JOIN (((T_PlansList INNER JOIN T_Joint ON T_PlansList.PlanID = T_Joint.PlanID) 
-INNER JOIN((T_PlatesList AS T_PlatesList_1 
+INNER JOIN (
+(T_PlatesList AS T_PlatesList_1 
 INNER JOIN (T_PlatesList INNER JOIN T_PointsList ON T_PlatesList.PlateID = T_PointsList.Plate1) ON T_PlatesList_1.PlateID = T_PointsList.Plate2) 
-INNER JOIN T_PlanPoints ON T_PointsList.PointID = T_PlanPoints.PointID) ON(T_PlansList.PlanID = T_PlanPoints.PlanID) AND(T_Joint.JointID = T_PlanPoints.JointID)) 
-INNER JOIN(T_InspectedPoints INNER JOIN T_USResult ON T_InspectedPoints.IDInspection = T_USResult.IDInspection) ON T_PlanPoints.PlanPointID = T_InspectedPoints.PlanPointID) ON(T_PlansList.PlanID = T_Parts.PlanID) AND(T_Parts.PartID = T_InspectedPoints.PartID)) ON T_PlatesList_2.PlateID = T_PointsList.Plate3) ON(T_TestingStations.StationID = T_PlanPoints.TestingStationID) AND(T_TestingStations.StationID = T_InspectedPoints.StationID) WHERE(((CDbl([T_InspectedPoints.Date]) + CDbl([T_InspectedPoints.Time])) > " + as_starttimedbl.ToString().Replace(',', '.') + ")) ";
-
+INNER JOIN T_PlanPoints ON T_PointsList.PointID = T_PlanPoints.PointID) ON(T_PlansList.PlanID = T_PlanPoints.PlanID) AND(T_Joint.JointID = T_PlanPoints.JointID)
+) 
+INNER JOIN(T_InspectedPoints INNER JOIN T_USResult ON T_InspectedPoints.IDInspection = T_USResult.IDInspection) ON T_PlanPoints.PlanPointID = T_InspectedPoints.PlanPointID) ON(T_PlansList.PlanID = T_Parts.PlanID) AND(T_Parts.PartID = T_InspectedPoints.PartID)) ON T_PlatesList_2.PlateID = T_PointsList.Plate3) ON(T_TestingStations.StationID = T_PlanPoints.TestingStationID) AND(T_TestingStations.StationID = T_InspectedPoints.StationID) 
+WHERE(((CDbl([T_InspectedPoints.Date]) + CDbl([T_InspectedPoints.Time])) > '{lastrecord.GetValueOrDefault(0).ToString()}'))";
+                        #endregion
                         OleDbConnection connection = new OleDbConnection(connectionString);
                         connection.Open();
-                        OleDbCommand command = new OleDbCommand(string.Format(strSQL,as_HostName), connection);
+                        OleDbCommand command = new OleDbCommand(sql, connection);
                         OleDbDataReader reader = command.ExecuteReader();
+                        ULdata.Clear(); 
                         ULdata.Load(reader);
-                        int rowCount = ULdata.Rows.Count;
-                        log.Debug($"System polled, records : {rowCount}");
-                        retries = 0; // break loop if everything ok
+                        log.Debug($"System polled, records : {ULdata.Rows.Count}");
                         return true;
                     } //try
                     catch (SqlException ex)
                     {
                         log.Error($"CheckAndUploadUlData failure retries left: {retries - 1}",ex);
                         retries--;
-                        System.Threading.Thread.Sleep(10000); //wait until retry
+                        System.Threading.Thread.Sleep(5000); //wait until retry
                     }//catch
                 }//while
                 return false;
             }
             else
             {
-                log.Fatal("local Database not found");
+                log.Fatal("local ultralog database not found");
                 return false;
             }
-
         }
 
         /// <summary>
         /// Export data from data table to table on remote server
         /// </summary>
-        /// <param name="adt_table">local data table</param>
-        /// <returns></returns>
-        bool ExportDatabase(DataTable adt_table)
+        void ExportDatabase()
         {
-            log.Info("Start upload to database");
+            log.Debug("Start upload to database");
             int retries = 3;
             while (retries > 0)
             {
@@ -245,30 +253,25 @@ INNER JOIN(T_InspectedPoints INNER JOIN T_USResult ON T_InspectedPoints.IDInspec
                 {
                     using (SqlConnection connection = new SqlConnection(ConnectionString))
                     {
-                        connection.Open();
-                        // Note that the column positions in the source DataTable  
-                        // match the column positions in the destination table so  
-                        // there is no need to map columns.  
+                        connection.Open(); 
                         using (SqlBulkCopy bulkCopy = new SqlBulkCopy(connection))
                         {
-                            bulkCopy.DestinationTableName = "[UL].[UltralogData_RAW]";
+                            bulkCopy.DestinationTableName = "[UL].[rt_UltralogData]";
                             try
                             {
                                 // Write from the source to the destination.
-                                bulkCopy.WriteToServer(adt_table);
+                                bulkCopy.WriteToServer(ULdata);
                                 connection.Close();
                                 connection.Dispose();
-                                ULdata.Clear(); // clear list if upload succes
-                                retries = 0; // break loop if everything ok
-                                return true;
+                                log.Debug("upload to database completed");
+                                return;
                             }
                             catch (Exception ex)
                             {
                                 log.Error("bulkcopy", ex);
-                            }//catch
-                        }//using
-
-                    }//using
+                            }
+                        }
+                    }
 
                 }//try
                 catch (SqlException ex)
@@ -279,26 +282,6 @@ INNER JOIN(T_InspectedPoints INNER JOIN T_USResult ON T_InspectedPoints.IDInspec
                 }//catch
             }//while
             log.Fatal("Failed to export data to server");
-            return false;
-        }
-
-        /// <summary>
-        /// Get max date from data table
-        /// </summary>
-        /// <param name="adt_table"></param>
-        /// <returns>double</returns>
-        double GetMaxDatetime(DataTable adt_table)
-        {
-            double tmp_maxdatetime;
-            tmp_maxdatetime = Convert.ToDouble(ULdata.Rows[0].ItemArray[30]);
-            for (int i = 0; i < ULdata.Rows.Count; i++)
-            {
-                if (Convert.ToDouble(ULdata.Rows[i].ItemArray[30]) > tmp_maxdatetime)
-                {
-                    tmp_maxdatetime = Convert.ToDouble(ULdata.Rows[i].ItemArray[30]);
-                }
-            }
-            return tmp_maxdatetime;
         }
     }
 }
