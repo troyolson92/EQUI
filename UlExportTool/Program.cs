@@ -130,6 +130,12 @@ namespace UlExportTool
             }
             else
             {
+                if (lastrecord == null)
+                {
+                    lastrecord = dt.Rows[0].Field<double?>("ULDateTimeDbl");
+                    log.Info("Startup mode ULDateTimeDbl from rt_active_info");
+                }
+
                 if (ULdata.Rows.Count != 0)
                 {
                     lastrecord = ULdata.Rows[ULdata.Rows.Count - 1].Field<double?>("ULDateTimeDbl");
@@ -164,17 +170,14 @@ namespace UlExportTool
         {
             if (File.Exists(Properties.Settings.Default.LocalUlDB))
             {
-                int retries = 3;
-                while (retries > 0)
+                try
                 {
-                    try
-                    {
-                        string connectionString = $"Provider=Microsoft.Jet.OLEDB.4.0;Data Source={Properties.Settings.Default.LocalUlDB}";
-                        if (Properties.Settings.Default.LocalUlDB.EndsWith(".accdb")) connectionString = $"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={Properties.Settings.Default.LocalUlDB}";
-                        #region sqlRegion    
-                        string sql = $@"
+                    string connectionString = $"Provider=Microsoft.Jet.OLEDB.4.0;Data Source={Properties.Settings.Default.LocalUlDB}";
+                    if (Properties.Settings.Default.LocalUlDB.EndsWith(".accdb")) connectionString = $"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={Properties.Settings.Default.LocalUlDB}";
+                    #region sqlRegion    
+                    string sql = $@"
 SELECT 
-  T_PointsList.Name AS spotname
+T_PointsList.Name AS spotname
 , T_InspectedPoints.ClassName AS EvaluationClass
 , T_InspectedPoints.Comments
 , T_USResult.Comment
@@ -214,24 +217,21 @@ INNER JOIN T_PlanPoints ON T_PointsList.PointID = T_PlanPoints.PointID) ON(T_Pla
 ) 
 INNER JOIN(T_InspectedPoints INNER JOIN T_USResult ON T_InspectedPoints.IDInspection = T_USResult.IDInspection) ON T_PlanPoints.PlanPointID = T_InspectedPoints.PlanPointID) ON(T_PlansList.PlanID = T_Parts.PlanID) AND(T_Parts.PartID = T_InspectedPoints.PartID)) ON T_PlatesList_2.PlateID = T_PointsList.Plate3) ON(T_TestingStations.StationID = T_PlanPoints.TestingStationID) AND(T_TestingStations.StationID = T_InspectedPoints.StationID) 
 WHERE(((CDbl([T_InspectedPoints.Date]) + CDbl([T_InspectedPoints.Time])) > '{lastrecord.GetValueOrDefault(0).ToString()}'))";
-                        #endregion
-                        OleDbConnection connection = new OleDbConnection(connectionString);
-                        connection.Open();
-                        OleDbCommand command = new OleDbCommand(sql, connection);
-                        OleDbDataReader reader = command.ExecuteReader();
-                        ULdata.Clear(); 
-                        ULdata.Load(reader);
-                        log.Debug($"System polled, records : {ULdata.Rows.Count}");
-                        return true;
-                    } //try
-                    catch (SqlException ex)
-                    {
-                        log.Error($"CheckAndUploadUlData failure retries left: {retries - 1}",ex);
-                        retries--;
-                        System.Threading.Thread.Sleep(5000); //wait until retry
-                    }//catch
-                }//while
-                return false;
+                    #endregion
+                    OleDbConnection connection = new OleDbConnection(connectionString);
+                    connection.Open();
+                    OleDbCommand command = new OleDbCommand(sql, connection);
+                    OleDbDataReader reader = command.ExecuteReader();
+                    ULdata.Clear(); 
+                    ULdata.Load(reader);
+                    log.Debug($"Ultralog polled, new records : {ULdata.Rows.Count}");
+                    return true;
+                }
+                catch (SqlException ex)
+                {
+                    log.Error($"CheckAndUploadUlData failure",ex);
+                 return false;
+                }
             }
             else
             {
@@ -246,9 +246,6 @@ WHERE(((CDbl([T_InspectedPoints.Date]) + CDbl([T_InspectedPoints.Time])) > '{las
         void ExportDatabase()
         {
             log.Debug("Start upload to database");
-            int retries = 3;
-            while (retries > 0)
-            {
                 try
                 {
                     using (SqlConnection connection = new SqlConnection(ConnectionString))
@@ -276,11 +273,8 @@ WHERE(((CDbl([T_InspectedPoints.Date]) + CDbl([T_InspectedPoints.Time])) > '{las
                 }//try
                 catch (SqlException ex)
                 {
-                    log.Error($"exporting data  retries left: {(retries - 1)}", ex);
-                    retries--;
-                    System.Threading.Thread.Sleep(10000); //wait until retry
+                    log.Error("exporting data", ex);
                 }//catch
-            }//while
             log.Fatal("Failed to export data to server");
         }
     }
