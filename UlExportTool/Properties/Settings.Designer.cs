@@ -25,18 +25,6 @@ namespace UlExportTool.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\\\USLT\\\\ULtraLog\\\\Ultralog.mdb")]
-        public string LocalUlDB {
-            get {
-                return ((string)(this["LocalUlDB"]));
-            }
-            set {
-                this["LocalUlDB"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool HideConsole {
             get {
@@ -44,6 +32,18 @@ namespace UlExportTool.Properties {
             }
             set {
                 this["HideConsole"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\USLT\\Ultralog\\Ultralog.mdb")]
+        public string LocalUlDB {
+            get {
+                return ((string)(this["LocalUlDB"]));
+            }
+            set {
+                this["LocalUlDB"] = value;
             }
         }
     }

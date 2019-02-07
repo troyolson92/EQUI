@@ -10,6 +10,7 @@
 
 
 
+
 CREATE VIEW [NGAC].[ErrDispLog]
 AS
 select 
@@ -17,7 +18,7 @@ select
 , c.CLassificationId     AS 'AssetID' 
 , 'ErrDispLog'	   AS 'Logtype'
 , rt.[Date Time]        AS 'timestamp'
-, rt.[AlarmNo]     AS 'Logcode'
+, CAST(rt.AlarmNo as varchar(max))      AS 'Logcode'
 , CASE 
      WHEN rt.[Txt 1] like  '%ERROR%' THEN 3
 	 WHEN rt.[Txt 1] like '%WARNING%' THEN 2
