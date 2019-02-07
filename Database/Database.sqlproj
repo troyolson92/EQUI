@@ -99,6 +99,8 @@
     <Folder Include="WELDING2\Tables\" />
     <Folder Include="EqUi\Functions\" />
     <Folder Include="Snapshots" />
+    <Folder Include="UL" />
+    <Folder Include="UL\Tables" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Alerts\Tables\c_CPT600.sql" />
@@ -283,7 +285,14 @@
     <Build Include="NGAC\Views\TCP_LOG.sql" />
     <Build Include="NGAC\Stored Procedures\sp_nom_BeamSetUpLog.sql" />
     <Build Include="EqUi\Stored Procedures\GetTipDressData.sql" />
-    <Build Include="Security\BI.sql" />
+    <Build Include="UL\Tables\T_PointsList.sql" />
+    <Build Include="UL\Tables\T_PlatesList.sql" />
+    <Build Include="UL\Tables\T_PlansList.sql" />
+    <Build Include="UL\Tables\T_PlanPoints.sql" />
+    <Build Include="UL\Tables\T_PicturePoints.sql" />
+    <Build Include="UL\Tables\T_Picture.sql" />
+    <Build Include="UL\Tables\rt_UltralogData.sql" />
+    <Build Include="UL\Tables\rt_active_info.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="GADATAprod.publish.xml" />

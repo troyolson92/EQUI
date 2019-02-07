@@ -7,9 +7,46 @@
 
 
 
+
+
+GO;
+CREATE SCHEMA [BI]
+    AUTHORIZATION [dbo];
+
+
+
+
+
+
+
+
+
 GO;
 CREATE SCHEMA [EqUi]
     AUTHORIZATION [dbo];
+
+
+
+
+
+
+
+
+
+
+
+
+
+GO;
+
+
+CREATE SCHEMA [UL]
+    AUTHORIZATION [dbo];
+
+
+
+
+GO;
 
 
 
@@ -51,9 +88,37 @@ CREATE SCHEMA [HangFire]
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 GO;
 CREATE SCHEMA [MAXIMO]
     AUTHORIZATION [dbo];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -103,9 +168,37 @@ CREATE SCHEMA [NGAC]
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 GO;
 CREATE SCHEMA [PJV]
     AUTHORIZATION [dbo];
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -155,9 +248,33 @@ CREATE SCHEMA [Volvo]
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 GO;
 CREATE SCHEMA [WELDING2]
     AUTHORIZATION [dbo];
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
