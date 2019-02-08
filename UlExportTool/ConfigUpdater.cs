@@ -13,6 +13,7 @@ namespace UlExportTool
 
         public void UpdateUltralogConfig()
         {
+            log.Info($"Program starting host:{ConnectionString}");
             log.Debug("Starting new config update session");
             UpdateUltraLogConfigTable("T_Picture");
             UpdateUltraLogConfigTable("T_PicturePoints");

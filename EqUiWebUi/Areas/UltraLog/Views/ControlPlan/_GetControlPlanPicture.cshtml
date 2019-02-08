@@ -67,7 +67,7 @@
     //make ajax request to get data
     $.ajax({
         type: 'GET',
-        url: '/Ultralog/_GetControlPlanPictureData',
+        url: '@Url.Action("_GetControlPlanPictureData")',
         data: {
             Id: @ViewBag.ControlPlanPicture
         },
@@ -88,6 +88,8 @@
         },
         error: function (result) {
             //error in getting data
+              $("#ControlPicturePlaceHolder").html($("#Error", result.responseText).html());
+            console.log(result);
         }
     });
 

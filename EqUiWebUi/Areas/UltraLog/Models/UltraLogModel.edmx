@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="UltraLogModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'GADATA.UL.rt_active_info' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="rt_active_info">
+          <Property Name="Partname" Type="char" MaxLength="50" />
+          <Property Name="InspectionPlanname" Type="char" MaxLength="50" />
+          <Property Name="PlanLenght" Type="int" />
+          <Property Name="IndexOfTestsequence" Type="int" />
+          <Property Name="Inspector" Type="nchar" MaxLength="25" />
+          <Property Name="teststation" Type="char" MaxLength="50" />
+          <Property Name="InspectionLaptop" Type="varchar" MaxLength="255" />
+          <Property Name="ULDateTimeDbl" Type="float" />
+          <Property Name="Heartbeat" Type="datetime" />
+        </EntityType>-->
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'GADATA.UL.rt_UltralogData' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="rt_UltralogData">
+          <Property Name="Spotname" Type="char" MaxLength="50" />
+          <Property Name="EvaluationClass" Type="char" MaxLength="50" />
+          <Property Name="Autocomment" Type="char" MaxLength="30" />
+          <Property Name="InspectorComment" Type="char" MaxLength="50" />
+          <Property Name="Partname" Type="char" MaxLength="50" />
+          <Property Name="InspectionPlanname" Type="char" MaxLength="50" />
+          <Property Name="measuredThickness" Type="float" />
+          <Property Name="NominalDiameter" Type="float" />
+          <Property Name="ULDateTime" Type="datetime" />
+          <Property Name="InspectionDate" Type="varchar" MaxLength="255" />
+          <Property Name="InspectionTime" Type="varchar" MaxLength="255" />
+          <Property Name="PlanLenght" Type="int" />
+          <Property Name="BackWallEchos" Type="int" />
+          <Property Name="FlawEchos" Type="int" />
+          <Property Name="GasporeEchos" Type="int" />
+          <Property Name="IndexOfTestsequence" Type="int" />
+          <Property Name="MinimumIndentation" Type="int" />
+          <Property Name="MinimumIndentationMM" Type="float" />
+          <Property Name="Inspector" Type="nchar" MaxLength="25" />
+          <Property Name="teststation" Type="char" MaxLength="50" />
+          <Property Name="NamePlate1" Type="char" MaxLength="50" />
+          <Property Name="MaterialPlate1" Type="char" MaxLength="50" />
+          <Property Name="ThicknessPlate1" Type="float" />
+          <Property Name="NamePlate2" Type="char" MaxLength="50" />
+          <Property Name="MaterialPlate2" Type="char" MaxLength="50" />
+          <Property Name="ThicknessPlate2" Type="float" />
+          <Property Name="NamePlate3" Type="char" MaxLength="50" />
+          <Property Name="MaterialPlate3" Type="char" MaxLength="50" />
+          <Property Name="ThicknessPlate3" Type="float" />
+          <Property Name="InspectionLaptop" Type="varchar" MaxLength="255" />
+          <Property Name="ULDateTimeDbl" Type="float" />
+          <Property Name="ExportToUltralogInspections" Type="datetime" />
+        </EntityType>-->
+        <EntityContainer Name="UltraLogModelStoreContainer" />
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="UltraLogModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="UltraLogEntities" annotation:LazyLoadingEnabled="true" />
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="UltraLogModelStoreContainer" CdmEntityContainer="UltraLogEntities" />
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

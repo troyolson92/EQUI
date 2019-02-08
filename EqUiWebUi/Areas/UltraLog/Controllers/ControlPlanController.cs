@@ -7,12 +7,12 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
-namespace EqUiWebUi.Areas.Welding.Controllers
+namespace EqUiWebUi.Areas.UltraLog.Controllers
 {
-    public class UltralogController : Controller
+    public class ControlPlanController : Controller
     {
 
-        Models.GADATAEntitiesWelding db = new Models.GADATAEntitiesWelding();
+        Models.UltraLogEntities db = new Models.UltraLogEntities();
 
         // GET: Welding/Ultralog
         public ActionResult Index()
