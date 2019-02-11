@@ -1,4 +1,5 @@
 ﻿CREATE TABLE [UL].[T_PointsList] (
+    [DBname]    NVARCHAR (50) NULL,
     [PointID]   INT           NOT NULL,
     [FatherID]  INT           NOT NULL,
     [Name]      NVARCHAR (50) NOT NULL,
@@ -12,4 +13,6 @@
     [Plate2]    INT           NOT NULL,
     [Plate3]    INT           NULL
 );
+
+
 

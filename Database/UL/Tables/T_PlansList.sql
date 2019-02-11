@@ -1,4 +1,5 @@
 ﻿CREATE TABLE [UL].[T_PlansList] (
+    [DBname]                   NVARCHAR (50) NULL,
     [PlanID]                   INT           NOT NULL,
     [FatherID]                 INT           NOT NULL,
     [Name]                     NVARCHAR (50) NOT NULL,
@@ -13,4 +14,6 @@
     [ToleranceZinkNIOClass]    BIT           NOT NULL,
     [ToleranceGasporeNIOClass] BIT           NOT NULL
 );
+
+
 

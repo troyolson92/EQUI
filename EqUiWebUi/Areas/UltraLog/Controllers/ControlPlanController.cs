@@ -58,17 +58,17 @@ namespace EqUiWebUi.Areas.UltraLog.Controllers
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
-        public ActionResult GetControlPlan(string PlanName = "V316_331060_LHD")
+        public ActionResult GetControlPlan(string PlanName = "V316_331060_LHD", string DBname = "Test")
         {
             ViewBag.PlanName = PlanName;
-            string qry = @"SELECT distinct T_Picture.PictureID
+            string qry = $@"SELECT distinct T_Picture.PictureID
                             FROM [UL].[T_PlansList]
-                            Left join UL.T_PlanPoints on T_PlanPoints.PlanID = T_PlansList.PlanID
-                            Left join UL.T_PicturePoints on T_PicturePoints.PlanPointID = T_PlanPoints.PlanPointID
-                            Left join UL.T_Picture on T_Picture.PictureID = T_PicturePoints.PictureID
-                            where T_Picture.PictureID is not null AND T_PlansList.[Name] = '{0}'
+                            Left join UL.T_PlanPoints on T_PlanPoints.PlanID = T_PlansList.PlanID  and T_PlanPoints.DBname = T_PlansList.DBname
+                            Left join UL.T_PicturePoints on T_PicturePoints.PlanPointID = T_PlanPoints.PlanPointID and T_PicturePoints.DBname = T_PlanPoints.DBname
+                            Left join UL.T_Picture on T_Picture.PictureID = T_PicturePoints.PictureID and T_Picture.DBname = T_PicturePoints.DBname
+                            where T_Picture.PictureID is not null AND T_PlansList.[Name] = '{PlanName}' and T_PlansList.Dbname = '{DBname}'
                             order by T_Picture.PictureID asc";
-            ViewBag.PictureList = db.Database.SqlQuery<int>(string.Format(qry, PlanName)).ToList();
+            ViewBag.PictureList = db.Database.SqlQuery<int>(qry).ToList();
             return View();
         }
 
@@ -100,22 +100,23 @@ namespace EqUiWebUi.Areas.UltraLog.Controllers
         /// <param name="Id"></param>
         /// <returns></returns>
         [HttpGet]
-        public JsonResult _GetControlPlanPictureData(int Id)
+        public JsonResult _GetControlPlanPictureData(int Id, string DBname = "Test")
         {
             try { 
                 //make test data set 
                 Models.UltralogControlPicture ultralogControlPicture = new Models.UltralogControlPicture();
                 ultralogControlPicture.Id = Id;
-                ultralogControlPicture.Picture = db.Database.SqlQuery<string>($"select(select Picture as '*' for xml path('')) from UL.T_Picture where PictureID = {Id}").First(); ;
-                ultralogControlPicture.picturePoints = db.Database.SqlQuery<Models.PicturePoint>($"select PictureID as 'ID' , PlanPointID, Xpos, Ypos from UL.T_PicturePoints where PictureID = {Id}").ToList();
-
-                //to order we have col sequenece in t_planpoints 
-
-                //t_nodelist uploaden voor boom van plannen.
-
-                //moet verschillende ultralog databases kunnen uploaden. dus in elke tabel een extra collom met db ID 
-
-
+                ultralogControlPicture.Picture = db.Database.SqlQuery<string>($"select(select Picture as '*' for xml path('')) from UL.T_Picture where PictureID = {Id} and DBname = '{DBname}'").First(); 
+                ultralogControlPicture.picturePoints = db.Database.SqlQuery<Models.PicturePoint>($@"
+select 
+  T_PicturePoints.PictureID as 'ID' 
+, T_PicturePoints.PlanPointID
+, T_PicturePoints.Xpos
+, T_PicturePoints.Ypos 
+from UL.T_PicturePoints
+left join UL.T_PlanPoints on T_PlanPoints.PlanPointID = T_PicturePoints.PlanPointID  and T_PlanPoints.DBname = T_PicturePoints.DBname
+where T_PicturePoints.PictureID = {Id} and T_PicturePoints.DBname = '{DBname}'
+order by T_PlanPoints.[Sequence] asc ").ToList();
                 //get image size
                 byte[] image = Convert.FromBase64String(ultralogControlPicture.Picture);
                 using (var ms = new MemoryStream(image))

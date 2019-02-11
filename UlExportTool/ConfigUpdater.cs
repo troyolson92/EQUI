@@ -21,10 +21,11 @@ namespace UlExportTool
             UpdateUltraLogConfigTable("T_PlansList");
             UpdateUltraLogConfigTable("T_PlatesList");
             UpdateUltraLogConfigTable("T_PointsList");
+            UpdateUltraLogConfigTable("T_NodesList");
             log.Debug("Update complete press any key to exit");
         }
 
-        public void UpdateUltraLogConfigTable(string tablename)
+        public void UpdateUltraLogConfigTable(string tablename, string DBname = "test")
         {
             DataTable dt = new DataTable();
             if (!File.Exists(Properties.Settings.Default.LocalUlDB))
@@ -37,14 +38,14 @@ namespace UlExportTool
             if (Properties.Settings.Default.LocalUlDB.EndsWith(".accdb")) connectionString = $"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={Properties.Settings.Default.LocalUlDB}"; 
             OleDbConnection connection = new OleDbConnection(connectionString);
             connection.Open();
-            OleDbCommand command = new OleDbCommand($"SELECT * FROM [{tablename}]", connection);
+            OleDbCommand command = new OleDbCommand($"SELECT '{DBname}' as DBname, * FROM [{tablename}]", connection);
             log.Debug($"Get data from ultralog table: {tablename}");
             OleDbDataReader reader = command.ExecuteReader();
             dt.Load(reader);
             log.Debug($"Done records: {dt.Rows.Count}");
             //clear table on db
             log.Debug("clearing table on server");
-            connectionManager.RunCommand($"DELETE [UL].[{tablename}] FROM [UL].[{tablename}]", enblExeptions: true);
+            connectionManager.RunCommand($"DELETE [UL].[{tablename}] FROM [UL].[{tablename}] where DBname = '{DBname}'", enblExeptions: true);
             log.Debug("Done");
             //upload new data to db
             log.Debug("Copy new data to server");

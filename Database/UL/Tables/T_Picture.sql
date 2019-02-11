@@ -1,4 +1,5 @@
 ﻿CREATE TABLE [UL].[T_Picture] (
+    [DBname]           NVARCHAR (50)  NULL,
     [PictureID]        INT            NULL,
     [PictureName]      NVARCHAR (50)  NULL,
     [FatherID]         INT            NULL,
@@ -6,4 +7,6 @@
     [Picture]          IMAGE          NULL,
     [OriginalFileName] NVARCHAR (50)  NULL
 );
+
+
 
