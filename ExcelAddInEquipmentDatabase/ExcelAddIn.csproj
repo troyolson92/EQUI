@@ -358,18 +358,23 @@
     <Content Include="Drivers\SqlServer\sqlsrv32.rll.mui">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="app.Debug.config">
+      <DependentUpon>app.config</DependentUpon>
+    </None>
     <None Include="app.DEV_VCCH.config">
       <DependentUpon>app.config</DependentUpon>
     </None>
     <None Include="app.DEV_VCG.config">
       <DependentUpon>app.config</DependentUpon>
     </None>
-    <None Include="app.Rel_VCG.config">
+    <None Include="app.Release.config">
       <DependentUpon>app.config</DependentUpon>
     </None>
-    <None Include="app.Rel_VCH.config">
+    <None Include="app.Rel_VCCH.config">
       <DependentUpon>app.config</DependentUpon>
-      <SubType>Designer</SubType>
+    </None>
+    <None Include="app.Rel_VCG.config">
+      <DependentUpon>app.config</DependentUpon>
     </None>
     <None Include="app.Rel_VCT.config">
       <DependentUpon>app.config</DependentUpon>
@@ -455,7 +460,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Rel_VCH|AnyCPU'">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Rel_VCCH|AnyCPU' ">
     <OutputPath>bin\Rel_VCH\</OutputPath>
     <DefineConstants>VSTO40</DefineConstants>
     <PlatformTarget>AnyCPU</PlatformTarget>
