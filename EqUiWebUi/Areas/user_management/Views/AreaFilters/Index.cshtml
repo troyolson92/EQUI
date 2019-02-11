@@ -12,23 +12,24 @@
 
 @Html.Grid(Model).Named("AreaFilters").Build(columns =>
 {
-    columns.Add(c => c.id).Titled("id").InitialSort(GridSortOrder.Asc).Css("d-none d-lg-table-cell");
+    columns.Add(c => c.id).Titled("id").Css("d-none");
+    columns.Add(c => c.Ordinal).Titled("Ordinal").InitialSort(GridSortOrder.Asc).Css("d-none d-lg-table-cell");
     columns.Add(c => c.Plant).Titled("Plant").Css("d-none d-lg-table-cell");
     columns.Add(c => c.Optgroup).Titled("Optgroup").Css("d-none d-lg-table-cell");
-    columns.Add(c => c.LocationTreeFilter1).Titled("LocationTreeFilter1");
     columns.Add(c => c.Area).Titled("Area");
-    columns.Add(c => c.UserComment).Titled("UserComment").Css("d-none d-lg-table-cell");
-    columns.Add(c => c.Ordinal).Titled("Ordinal").Css("d-none d-lg-table-cell");
-    columns.Add(c => c.id)
-                .Titled("")
-                .Encoded(false)
-                .RenderedAs(c => @Html.ActionLink("Edit", "Edit", new { id = c.id }) + " | " +
-                                 @Html.ActionLink("Delete", "Delete", new { id = c.id })
+    columns.Add(c => c.LocationTreeFilter1).Titled("LocationTreeFilter");
+    // columns.Add(c => c.UserComment).Titled("UserComment").Css("d-none d-lg-table-cell");
 
-                ).InitialSort(GridSortOrder.Asc).Filterable(false).Css("d-none d-lg-table-cell");
+    columns.Add(c => c)
+                        .Titled("Tools")
+                        .Encoded(false)
+                        .RenderedAs(c =>
+                        MyHtmlHelpers.IconActionLink(Url.Action("Edit", new { id = c.id }), "fas fa-pencil-alt", "", "Edit this").ToHtmlString() +
+                        MyHtmlHelpers.IconActionLink(Url.Action("Delete", new { id = c.id }), "fas fa-trash-alt text-danger", "", "Delete this").ToHtmlString()
+                        ).Filterable(false);
 }).Sortable().Filterable().Pageable(pager =>
 {
-    pager.RowsPerPage = 10;
+    pager.RowsPerPage = 20;
     pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 10, "10" }, { 20, "20" }, { 40, "40" }, { 80, "80" }, { 100, "100" } };
     pager.ShowPageSizes = true;
 }).Empty("No workorders found").Css("table-hover")
