@@ -166,7 +166,7 @@
     </Reference>
     <Reference Include="VASCDll, Version=1.0.6964.31546, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\VASCDll.dll</HintPath>
+      <HintPath>Resources\VASCDll.dll</HintPath>
     </Reference>
     <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
       <HintPath>..\packages\WebActivatorEx.2.2.0\lib\net40\WebActivatorEx.dll</HintPath>
@@ -2640,6 +2640,7 @@
     <Content Include="node_modules\window-post-message-proxy\dist\windowPostMessageProxy.js" />
     <Content Include="node_modules\window-post-message-proxy\dist\windowPostMessageProxy.min.js" />
     <Content Include="package.json" />
+    <Content Include="Resources\VASCDll.dll" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
