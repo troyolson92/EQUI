@@ -7,13 +7,12 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
-namespace EqUiWebUi.Areas.Welding.Controllers
+namespace EqUiWebUi.Areas.UltraLog.Controllers
 {
-    public class UltralogController : Controller
+    public class ControlPlanController : Controller
     {
 
-        Models.GADATAEntitiesWelding db = new Models.GADATAEntitiesWelding();
-
+        Models.UltraLogEntities db = new Models.UltraLogEntities();
         // GET: Welding/Ultralog
         public ActionResult Index()
         {
@@ -109,6 +108,13 @@ namespace EqUiWebUi.Areas.Welding.Controllers
                 ultralogControlPicture.Id = Id;
                 ultralogControlPicture.Picture = db.Database.SqlQuery<string>($"select(select Picture as '*' for xml path('')) from UL.T_Picture where PictureID = {Id}").First(); ;
                 ultralogControlPicture.picturePoints = db.Database.SqlQuery<Models.PicturePoint>($"select PictureID as 'ID' , PlanPointID, Xpos, Ypos from UL.T_PicturePoints where PictureID = {Id}").ToList();
+
+                //to order we have col sequenece in t_planpoints 
+
+                //t_nodelist uploaden voor boom van plannen.
+
+                //moet verschillende ultralog databases kunnen uploaden. dus in elke tabel een extra collom met db ID 
+
 
                 //get image size
                 byte[] image = Convert.FromBase64String(ultralogControlPicture.Picture);

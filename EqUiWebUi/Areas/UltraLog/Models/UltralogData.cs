@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace EqUiWebUi.Areas.Welding.Models
+namespace EqUiWebUi.Areas.UltraLog.Models
 {
     public class UltralogData
     {

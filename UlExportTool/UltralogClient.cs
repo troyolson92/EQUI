@@ -25,7 +25,7 @@ namespace UlExportTool
         /// </summary>
         public void Start()
         {
-            log.Info("Program starting");
+            log.Info($"Program starting host:{ConnectionString}");
             CheckProgramRunning();
             while (true)
             {
