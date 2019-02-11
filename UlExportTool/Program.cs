@@ -18,6 +18,7 @@ namespace UlExportTool
         {
             //parse args
             var ConfigUpdate = args.SingleOrDefault(arg => arg.StartsWith("ConfigUpdate"));
+            var ClearAll = args.SingleOrDefault(arg => arg.StartsWith("ClearAll"));
             var ShowConsole = args.SingleOrDefault(arg => arg.StartsWith("ShowConsole"));
 
             //config update mode
@@ -25,8 +26,10 @@ namespace UlExportTool
             {
                 try
                 {
+                    bool bClearAll = false;
+                    if (ClearAll != null) bClearAll = true;
                     ConfigUpdater ConfigUpdater = new ConfigUpdater();
-                    ConfigUpdater.UpdateUltralogConfig();
+                    ConfigUpdater.UpdateUltralogConfig(DBname: "default", ClearAll: bClearAll);
                 }
                 catch(Exception ex)
                 {

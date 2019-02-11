@@ -23,9 +23,9 @@ namespace EqUiWebUi.Areas.UltraLog.Controllers
         /// Get list of all control plans.
         /// </summary>
         /// <returns></returns>
-        public ActionResult ListControlPlans()
+        public ActionResult ListControlPlans(string DBname = "default")
         {
-            List<string> plans = db.Database.SqlQuery<string>("SELECT [T_PlansList].[Name] FROM [UL].[T_PlansList]").ToList();
+            List<string> plans = db.Database.SqlQuery<string>($"SELECT [T_PlansList].[Name] FROM [UL].[T_PlansList] where DBname = '{DBname}'").ToList();
             return View(plans);
         }
 
@@ -58,7 +58,7 @@ namespace EqUiWebUi.Areas.UltraLog.Controllers
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
-        public ActionResult GetControlPlan(string PlanName = "V316_331060_LHD", string DBname = "Test")
+        public ActionResult GetControlPlan(string PlanName = "V316_331060_LHD", string DBname = "default")
         {
             ViewBag.PlanName = PlanName;
             string qry = $@"SELECT distinct T_Picture.PictureID
@@ -100,7 +100,7 @@ namespace EqUiWebUi.Areas.UltraLog.Controllers
         /// <param name="Id"></param>
         /// <returns></returns>
         [HttpGet]
-        public JsonResult _GetControlPlanPictureData(int Id, string DBname = "Test")
+        public JsonResult _GetControlPlanPictureData(int Id, string DBname = "default")
         {
             try { 
                 //make test data set 

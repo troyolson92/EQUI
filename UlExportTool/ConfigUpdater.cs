@@ -11,21 +11,21 @@ namespace UlExportTool
         string ConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["EQUIConnectionString"].ConnectionString;
         ConnectionManager connectionManager = new ConnectionManager();
 
-        public void UpdateUltralogConfig()
+        public void UpdateUltralogConfig(string DBname = "default", bool ClearAll = false)
         {
             log.Info($"Program starting host:{ConnectionString}");
-            log.Debug("Starting new config update session");
-            UpdateUltraLogConfigTable("T_Picture");
-            UpdateUltraLogConfigTable("T_PicturePoints");
-            UpdateUltraLogConfigTable("T_PlanPoints");
-            UpdateUltraLogConfigTable("T_PlansList");
-            UpdateUltraLogConfigTable("T_PlatesList");
-            UpdateUltraLogConfigTable("T_PointsList");
-            UpdateUltraLogConfigTable("T_NodesList");
+            log.Debug($"Starting new config update session DBname:<{DBname}> ClearAll:{ClearAll}");
+            UpdateUltraLogConfigTable("T_Picture",DBname: DBname, ClearAll: ClearAll);
+            UpdateUltraLogConfigTable("T_PicturePoints", DBname: DBname, ClearAll: ClearAll);
+            UpdateUltraLogConfigTable("T_PlanPoints", DBname: DBname, ClearAll: ClearAll);
+            UpdateUltraLogConfigTable("T_PlansList", DBname: DBname, ClearAll: ClearAll);
+            UpdateUltraLogConfigTable("T_PlatesList", DBname: DBname, ClearAll: ClearAll);
+            UpdateUltraLogConfigTable("T_PointsList", DBname: DBname, ClearAll: ClearAll);
+            UpdateUltraLogConfigTable("T_NodesList", DBname: DBname, ClearAll: ClearAll);
             log.Debug("Update complete press any key to exit");
         }
 
-        public void UpdateUltraLogConfigTable(string tablename, string DBname = "test")
+        public void UpdateUltraLogConfigTable(string tablename, string DBname, bool ClearAll = false)
         {
             DataTable dt = new DataTable();
             if (!File.Exists(Properties.Settings.Default.LocalUlDB))
@@ -39,14 +39,23 @@ namespace UlExportTool
             OleDbConnection connection = new OleDbConnection(connectionString);
             connection.Open();
             OleDbCommand command = new OleDbCommand($"SELECT '{DBname}' as DBname, * FROM [{tablename}]", connection);
-            log.Debug($"Get data from ultralog table: {tablename}");
+            log.Debug($"Get data from ultralog table:<{tablename}>");
             OleDbDataReader reader = command.ExecuteReader();
             dt.Load(reader);
-            log.Debug($"Done records: {dt.Rows.Count}");
+            log.Debug($"Done record count: {dt.Rows.Count}");
             //clear table on db
-            log.Debug("clearing table on server");
-            connectionManager.RunCommand($"DELETE [UL].[{tablename}] FROM [UL].[{tablename}] where DBname = '{DBname}'", enblExeptions: true);
-            log.Debug("Done");
+            if (!ClearAll)
+            {
+                log.Debug($"clearing table data on server table:<{tablename}> DBname:<{DBname}>");
+                connectionManager.RunCommand($"DELETE [UL].[{tablename}] FROM [UL].[{tablename}] where DBname = '{DBname}'", enblExeptions: true);
+                log.Debug("Done");
+            }
+            else
+            {
+                log.Debug($"clearing table data on server table:<{tablename}> DBname:<ALL INSTANCES>");
+                connectionManager.RunCommand($"DELETE [UL].[{tablename}] FROM [UL].[{tablename}]", enblExeptions: true);
+                log.Debug("Done");
+            }
             //upload new data to db
             log.Debug("Copy new data to server");
             connectionManager.BulkCopy(dt, $"[UL].[{tablename}]", enblExeptions: true);
