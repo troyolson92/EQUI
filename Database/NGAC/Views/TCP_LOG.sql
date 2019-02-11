@@ -154,3 +154,7 @@ Begin DesignProperties =
 End
 ', @level0type = N'SCHEMA', @level0name = N'NGAC', @level1type = N'VIEW', @level1name = N'TCP_LOG';
 
+
+
+
+

@@ -16,7 +16,7 @@
     columns.Add(c => c.Count).Css("d-none");
 }).Sortable().Filterable().Pageable(pager =>
 {
-    pager.RowsPerPage = 20;
+    pager.RowsPerPage = 40;
     pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 20, "20" }, { 40, "40" }, { 80, "80" }, { 100, "100" } };
     pager.ShowPageSizes = true;
 }).Empty("No data found").Css("table-hover").RowCss(row => EqUiWebUi.Areas.Supervision.SupervisionHelpers.getRowStyleLogtype(row.animation))
