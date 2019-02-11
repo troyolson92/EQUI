@@ -177,7 +177,7 @@ set @overrideManualSet = 0
 set @Clear = 0
 set @UPDATE = 0
 
-         the c_rule ID can have multible meanings.
+         the c_rule ID can have multiple meanings.
         --c_RuleID -1 = manual set
         --c_RuleID 0 = processed by auto rule engine
         --c_RuleID NULL = rule engine has not run
@@ -231,15 +231,14 @@ set @UPDATE = 0
 */
         public JsonResult RunRule(c_LogClassRules c_LogClassRule, bool overrideManualSet = false, bool Clear = false, bool UPDATE = true)
         {
-        c_logClassSystem c_LogClassSystem = db.c_logClassSystem.Where(c => c.id == c_LogClassRule.c_logClassSystem_id).First();
-
-        db.Database.ExecuteSqlCommand(c_LogClassSystem.RunRuleStatement,
-                new SqlParameter("@logClassSystem_id", c_LogClassRule.c_logClassSystem_id),
-                new SqlParameter("@ruleID", c_LogClassRule.id),
-                new SqlParameter("@overrideManualSet", overrideManualSet),
-                new SqlParameter("@Clear", Clear),
-                new SqlParameter("@UPDATE", UPDATE)
-            );
+            c_logClassSystem c_LogClassSystem = db.c_logClassSystem.Where(c => c.id == c_LogClassRule.c_logClassSystem_id).First();
+            db.Database.ExecuteSqlCommand(c_LogClassSystem.RunRuleStatement,
+                    new SqlParameter("@logClassSystem_id", c_LogClassRule.c_logClassSystem_id),
+                    new SqlParameter("@ruleID", c_LogClassRule.id),
+                    new SqlParameter("@overrideManualSet", overrideManualSet),
+                    new SqlParameter("@Clear", Clear),
+                    new SqlParameter("@UPDATE", UPDATE)
+                );
             string debugmsg = string.Format("System: {4}(id{5}) Ruleid: {0}, override: {1}, clear: {2} Update: {3}", c_LogClassRule.id, overrideManualSet, Clear, UPDATE, c_LogClassSystem.Name, c_LogClassSystem.id);
             log.Debug(debugmsg);
             return Json(new { Msg = debugmsg }, JsonRequestBehavior.AllowGet);
