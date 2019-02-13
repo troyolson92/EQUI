@@ -25,5 +25,9 @@ namespace EqUiWebUi.Areas.UltraLog.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<h_CompletedPlans> h_CompletedPlans { get; set; }
+        public virtual DbSet<h_measurementRemarks> h_measurementRemarks { get; set; }
+        public virtual DbSet<rt_active_info> rt_active_info { get; set; }
+        public virtual DbSet<rt_UltralogData> rt_UltralogData { get; set; }
     }
 }

@@ -4,7 +4,13 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="cdda8a8401fd4be786468de05ef39a23" Name="Diagram1" />
+      <Diagram DiagramId="cdda8a8401fd4be786468de05ef39a23" Name="Diagram1" >
+        <EntityTypeShape EntityType="UltraLogModel.h_CompletedPlans" Width="1.5" PointX="9.5" PointY="0.75" />
+        <EntityTypeShape EntityType="UltraLogModel.h_measurementRemarks" Width="1.5" PointX="11.625" PointY="0.75" />
+        <AssociationConnector Association="UltraLogModel.FK_h_measurementRemarks_h_CompletedPlans" />
+        <EntityTypeShape EntityType="UltraLogModel.rt_active_info" Width="1.5" PointX="5.75" PointY="0.75" />
+        <EntityTypeShape EntityType="UltraLogModel.rt_UltralogData" Width="1.5" PointX="7.625" PointY="0.75" />
+      </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

@@ -1,0 +1,20 @@
+﻿<h6>Measurement remarks</h6>
+<div class="mvc-grid" data-name="h_measurementRemarksGrid"></div>
+
+<script>
+    $('[data-name="h_measurementRemarksGrid"]').html('@MyHtmlHelpers.Loading("h_measurementRemarksGrid")');
+    $('[data-name="h_measurementRemarksGrid"]').mvcgrid({
+        sourceUrl: '@Url.Action("_measurementRemarksGird")',
+        data:{
+            planId : '@ViewBag.planId'
+        },
+        reload: true,
+        requestType: 'get', 
+        reloadFailed: function (result) {
+            $('[data-name="h_measurementRemarksGrid"]').html($("#Error", result.responseText).html());
+        },
+        reloadEnded: function () {
+            EnableInterfaceEvents();
+        }
+    });
+</script>

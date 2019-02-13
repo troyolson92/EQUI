@@ -1,0 +1,79 @@
+﻿
+@{
+    ViewBag.Title = "rt_active_infoGrid";
+}
+
+<h2>ControlPlanViewer</h2>
+<h6>Active control plans</h6>
+<div class="mvc-grid" data-name="rt_active_infoGrid"></div>
+
+<hr />
+<h6>Completed plans</h6>
+<div class="mvc-grid" data-name="h_CompletedPlansGrid"></div>
+
+@section scripts{
+<script>
+    //full with screen
+    $("#allcontent").removeClass("body-content");
+    $("#allcontent").removeClass("container");
+
+    $('[data-name="rt_active_infoGrid"]').html('@MyHtmlHelpers.Loading("rt_active_infoGrid")');
+    $('[data-name="rt_active_infoGrid"]').mvcgrid({
+        sourceUrl: '@Url.Action("_activeControlPlanGrid")',
+        reload: true,
+        requestType: 'get', 
+        reloadFailed: function (result) {
+            $('[data-name="rt_active_infoGrid"]').html($("#Error", result.responseText).html());
+        },
+        reloadEnded: function () {
+            EnableInterfaceEvents();
+        }
+    });
+
+
+    $('[data-name="h_CompletedPlansGrid"]').html('@MyHtmlHelpers.Loading("h_CompletedPlansGrid")');
+    $('[data-name="h_CompletedPlansGrid"]').mvcgrid({
+        sourceUrl: '@Url.Action("_CompletedPlansGrid")',
+        reload: true,
+        requestType: 'get', 
+        reloadFailed: function (result) {
+            $('[data-name="h_CompletedPlansGrid"]').html($("#Error", result.responseText).html());
+        },
+        reloadEnded: function () {
+            EnableInterfaceEvents();
+        },
+        rowClicked: function (row, data, e) {
+                //ignore clicks not on td
+                if (e.target.tagName.toUpperCase() != 'TD') {
+                    return;
+                }
+                //if row already has this class close the modal
+                if ($(row).hasClass("bg-info")) {
+                    $("#placeholder").remove();
+                    $(row).removeClass("bg-info");
+                    return;
+                }
+                //clear selected rows for this table
+                $('tr').removeClass('bg-info'); //THIS IS WRONG
+                $(row).addClass("bg-info");
+                $("#placeholder").remove(); //clear placeholder is exists
+                //add new placeholder afhter selected row
+                $(row).after('<tr id="placeholder"><td colspan="1000"><div class="card border-info"><div class="card-body" id ="placeholderPartial"></div></div></td></tr>');
+                //animation
+                $("#placeholderPartial").html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
+                //load url in placeholder
+                $("#placeholderPartial").load('@Url.Action("_measurementRemarks")', { planId: data["id"] },
+                    function (responseText, textStatus, req) {
+                        if (textStatus == "error") {
+                            $("#placeholderPartial").html($("#Error", responseText).html());
+                        }
+                    });
+            }
+    });
+
+
+    setInterval(function() {
+        $('[data-name="rt_active_infoGrid"]').mvcgrid({reload: true});
+    }, 1000*10);
+</script>
+}

@@ -1,0 +1,12 @@
+﻿@model IQueryable<EqUiWebUi.Areas.UltraLog.Models.h_measurementRemarks>
+
+@Html.Grid(Model).Named("h_measurementRemarksGrid").Build(columns =>
+{
+    columns.Add(c => c.id).Titled("id").Css("d-none");
+    columns.Add(c => c.InspectionPlanname).Titled("Plan").Filterable(true);
+    columns.Add(c => c.EvaluationClass).Titled("EvaluationClass").Filterable(true);
+    columns.Add(c => c.spotname).Titled("spotname").Filterable(true);
+    columns.Add(c => c.measuredThickness).Titled("measuredThickness").Filterable(true);
+    columns.Add(c => c.ULDateTime).Titled("ULDateTime").Filterable(true);
+
+}).Sortable().Empty("No data found").Css("table-hover")

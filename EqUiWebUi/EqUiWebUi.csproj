@@ -425,6 +425,19 @@
     </Compile>
     <Compile Include="Areas\Tiplife\TiplifeAreaRegistration.cs" />
     <Compile Include="Areas\Tiplife\TiplifeHelpers.cs" />
+    <Compile Include="Areas\UltraLog\Controllers\UltralogController.cs" />
+    <Compile Include="Areas\UltraLog\Models\h_CompletedPlans.cs">
+      <DependentUpon>UltraLogModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\UltraLog\Models\h_measurementRemarks.cs">
+      <DependentUpon>UltraLogModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\UltraLog\Models\rt_active_info.cs">
+      <DependentUpon>UltraLogModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\UltraLog\Models\rt_UltralogData.cs">
+      <DependentUpon>UltraLogModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Areas\UltraLog\Models\UltraLogModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -3031,6 +3044,11 @@
     <Content Include="Areas\UltraLog\Models\UltraLogModel.edmx.diagram">
       <DependentUpon>UltraLogModel.edmx</DependentUpon>
     </Content>
+    <Content Include="Areas\UltraLog\Views\Ultralog\_activeControlPlanGrid.cshtml" />
+    <Content Include="Areas\UltraLog\Views\Ultralog\ControlPlanViewer.cshtml" />
+    <Content Include="Areas\UltraLog\Views\Ultralog\_CompletedPlansGrid.cshtml" />
+    <Content Include="Areas\UltraLog\Views\Ultralog\_measurementRemarksGird.cshtml" />
+    <Content Include="Areas\UltraLog\Views\Ultralog\_measurementRemarks.cshtml" />
     <None Include="Properties\PublishProfiles\chasvw1203_DEV_VCCH.pubxml" />
     <None Include="Properties\PublishProfiles\chasvw1203_PRODUCTION_VCCH.pubxml" />
     <Content Include="Areas\Welding\Views\WM\_Parameters.cshtml" />

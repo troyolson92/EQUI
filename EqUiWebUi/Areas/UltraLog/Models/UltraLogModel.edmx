@@ -4,23 +4,60 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="UltraLogModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'GADATA.UL.rt_active_info' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+    <Schema Namespace="UltraLogModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="h_CompletedPlans">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="InspectionPlanname" Type="char" MaxLength="50" />
+          <Property Name="planStartDT" Type="datetime" />
+          <Property Name="planEndDT" Type="datetime" />
+          <Property Name="Inspector" Type="nchar" MaxLength="25" />
+          <Property Name="InspectionLaptop" Type="varchar" MaxLength="255" />
+          <Property Name="PlanLenght" Type="int" />
+          <Property Name="TotalMeasurements" Type="int" />
+          <Property Name="UniqueMeasurePoints" Type="int" />
+          <Property Name="Remarks" Type="int" />
+        </EntityType>
+        <EntityType Name="h_measurementRemarks">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CompletedPlans_id" Type="int" />
+          <Property Name="spotname" Type="char" MaxLength="50" />
+          <Property Name="EvaluationClass" Type="char" MaxLength="50" />
+          <Property Name="Autocomment" Type="char" MaxLength="30" />
+          <Property Name="InspectorComment" Type="char" MaxLength="50" />
+          <Property Name="Partname" Type="char" MaxLength="50" />
+          <Property Name="measuredThickness" Type="float" />
+          <Property Name="NominalDiameter" Type="float" />
+          <Property Name="ULDateTime" Type="datetime" />
+          <Property Name="InspectionPlanname" Type="char" MaxLength="50" />
+          <Property Name="InspectionLaptop" Type="varchar" MaxLength="255" />
+          <Property Name="Inspector" Type="nchar" MaxLength="25" />
+        </EntityType>
         <EntityType Name="rt_active_info">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Partname" Type="char" MaxLength="50" />
           <Property Name="InspectionPlanname" Type="char" MaxLength="50" />
-          <Property Name="PlanLenght" Type="int" />
+          <Property Name="Planlength" Type="int" />
           <Property Name="IndexOfTestsequence" Type="int" />
           <Property Name="Inspector" Type="nchar" MaxLength="25" />
           <Property Name="teststation" Type="char" MaxLength="50" />
           <Property Name="InspectionLaptop" Type="varchar" MaxLength="255" />
-          <Property Name="ULDateTimeDbl" Type="float" />
+          <Property Name="ULDateTime" Type="datetime" />
           <Property Name="Heartbeat" Type="datetime" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'GADATA.UL.rt_UltralogData' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        </EntityType>
         <EntityType Name="rt_UltralogData">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Spotname" Type="char" MaxLength="50" />
           <Property Name="EvaluationClass" Type="char" MaxLength="50" />
           <Property Name="Autocomment" Type="char" MaxLength="30" />
@@ -30,9 +67,7 @@ warning 6013: The table/view 'GADATA.UL.rt_UltralogData' does not have a primary
           <Property Name="measuredThickness" Type="float" />
           <Property Name="NominalDiameter" Type="float" />
           <Property Name="ULDateTime" Type="datetime" />
-          <Property Name="InspectionDate" Type="varchar" MaxLength="255" />
-          <Property Name="InspectionTime" Type="varchar" MaxLength="255" />
-          <Property Name="PlanLenght" Type="int" />
+          <Property Name="Planlength" Type="int" />
           <Property Name="BackWallEchos" Type="int" />
           <Property Name="FlawEchos" Type="int" />
           <Property Name="GasporeEchos" Type="int" />
@@ -51,22 +86,232 @@ warning 6013: The table/view 'GADATA.UL.rt_UltralogData' does not have a primary
           <Property Name="MaterialPlate3" Type="char" MaxLength="50" />
           <Property Name="ThicknessPlate3" Type="float" />
           <Property Name="InspectionLaptop" Type="varchar" MaxLength="255" />
-          <Property Name="ULDateTimeDbl" Type="float" />
-          <Property Name="ExportToUltralogInspections" Type="datetime" />
-        </EntityType>-->
-        <EntityContainer Name="UltraLogModelStoreContainer" />
-      </Schema>
-    </edmx:StorageModels>
+        </EntityType>
+        <Association Name="FK_h_measurementRemarks_h_CompletedPlans">
+          <End Role="h_CompletedPlans" Type="Self.h_CompletedPlans" Multiplicity="0..1" />
+          <End Role="h_measurementRemarks" Type="Self.h_measurementRemarks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="h_CompletedPlans">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="h_measurementRemarks">
+              <PropertyRef Name="CompletedPlans_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="UltraLogModelStoreContainer">
+          <EntitySet Name="h_CompletedPlans" EntityType="Self.h_CompletedPlans" Schema="UL" store:Type="Tables" />
+          <EntitySet Name="h_measurementRemarks" EntityType="Self.h_measurementRemarks" Schema="UL" store:Type="Tables" />
+          <EntitySet Name="rt_active_info" EntityType="Self.rt_active_info" Schema="UL" store:Type="Tables" />
+          <EntitySet Name="rt_UltralogData" EntityType="Self.rt_UltralogData" Schema="UL" store:Type="Tables" />
+          <AssociationSet Name="FK_h_measurementRemarks_h_CompletedPlans" Association="Self.FK_h_measurementRemarks_h_CompletedPlans">
+            <End Role="h_CompletedPlans" EntitySet="h_CompletedPlans" />
+            <End Role="h_measurementRemarks" EntitySet="h_measurementRemarks" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="UltraLogModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="UltraLogEntities" annotation:LazyLoadingEnabled="true" />
+        <EntityContainer Name="UltraLogEntities" annotation:LazyLoadingEnabled="true" >
+          <EntitySet Name="h_CompletedPlans" EntityType="UltraLogModel.h_CompletedPlans" />
+          <EntitySet Name="h_measurementRemarks" EntityType="UltraLogModel.h_measurementRemarks" />
+          <AssociationSet Name="FK_h_measurementRemarks_h_CompletedPlans" Association="UltraLogModel.FK_h_measurementRemarks_h_CompletedPlans">
+            <End Role="h_CompletedPlans" EntitySet="h_CompletedPlans" />
+            <End Role="h_measurementRemarks" EntitySet="h_measurementRemarks" />
+          </AssociationSet>
+          <EntitySet Name="rt_active_info" EntityType="UltraLogModel.rt_active_info" />
+          <EntitySet Name="rt_UltralogData" EntityType="UltraLogModel.rt_UltralogData" />
+        </EntityContainer>
+        <EntityType Name="h_CompletedPlans">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="InspectionPlanname" Type="String" MaxLength="50" FixedLength="true" Unicode="false" />
+          <Property Name="planStartDT" Type="DateTime" Precision="3" />
+          <Property Name="planEndDT" Type="DateTime" Precision="3" />
+          <Property Name="Inspector" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
+          <Property Name="InspectionLaptop" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="PlanLenght" Type="Int32" />
+          <Property Name="TotalMeasurements" Type="Int32" />
+          <Property Name="UniqueMeasurePoints" Type="Int32" />
+          <Property Name="Remarks" Type="Int32" />
+          <NavigationProperty Name="h_measurementRemarks" Relationship="UltraLogModel.FK_h_measurementRemarks_h_CompletedPlans" FromRole="h_CompletedPlans" ToRole="h_measurementRemarks" />
+        </EntityType>
+        <EntityType Name="h_measurementRemarks">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CompletedPlans_id" Type="Int32" />
+          <Property Name="spotname" Type="String" MaxLength="50" FixedLength="true" Unicode="false" />
+          <Property Name="EvaluationClass" Type="String" MaxLength="50" FixedLength="true" Unicode="false" />
+          <Property Name="Autocomment" Type="String" MaxLength="30" FixedLength="true" Unicode="false" />
+          <Property Name="InspectorComment" Type="String" MaxLength="50" FixedLength="true" Unicode="false" />
+          <Property Name="Partname" Type="String" MaxLength="50" FixedLength="true" Unicode="false" />
+          <Property Name="measuredThickness" Type="Double" />
+          <Property Name="NominalDiameter" Type="Double" />
+          <Property Name="ULDateTime" Type="DateTime" Precision="3" />
+          <Property Name="InspectionPlanname" Type="String" MaxLength="50" FixedLength="true" Unicode="false" />
+          <Property Name="InspectionLaptop" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Inspector" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="h_CompletedPlans" Relationship="UltraLogModel.FK_h_measurementRemarks_h_CompletedPlans" FromRole="h_measurementRemarks" ToRole="h_CompletedPlans" />
+        </EntityType>
+        <Association Name="FK_h_measurementRemarks_h_CompletedPlans">
+          <End Type="UltraLogModel.h_CompletedPlans" Role="h_CompletedPlans" Multiplicity="0..1" />
+          <End Type="UltraLogModel.h_measurementRemarks" Role="h_measurementRemarks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="h_CompletedPlans">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="h_measurementRemarks">
+              <PropertyRef Name="CompletedPlans_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="rt_active_info">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Partname" Type="String" MaxLength="50" FixedLength="true" Unicode="false" />
+          <Property Name="InspectionPlanname" Type="String" MaxLength="50" FixedLength="true" Unicode="false" />
+          <Property Name="Planlength" Type="Int32" />
+          <Property Name="IndexOfTestsequence" Type="Int32" />
+          <Property Name="Inspector" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
+          <Property Name="teststation" Type="String" MaxLength="50" FixedLength="true" Unicode="false" />
+          <Property Name="InspectionLaptop" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="ULDateTime" Type="DateTime" Precision="3" />
+          <Property Name="Heartbeat" Type="DateTime" Precision="3" Nullable="false" />
+        </EntityType>
+        <EntityType Name="rt_UltralogData">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Spotname" Type="String" MaxLength="50" FixedLength="true" Unicode="false" />
+          <Property Name="EvaluationClass" Type="String" MaxLength="50" FixedLength="true" Unicode="false" />
+          <Property Name="Autocomment" Type="String" MaxLength="30" FixedLength="true" Unicode="false" />
+          <Property Name="InspectorComment" Type="String" MaxLength="50" FixedLength="true" Unicode="false" />
+          <Property Name="Partname" Type="String" MaxLength="50" FixedLength="true" Unicode="false" />
+          <Property Name="InspectionPlanname" Type="String" MaxLength="50" FixedLength="true" Unicode="false" />
+          <Property Name="measuredThickness" Type="Double" />
+          <Property Name="NominalDiameter" Type="Double" />
+          <Property Name="ULDateTime" Type="DateTime" Precision="3" />
+          <Property Name="Planlength" Type="Int32" />
+          <Property Name="BackWallEchos" Type="Int32" />
+          <Property Name="FlawEchos" Type="Int32" />
+          <Property Name="GasporeEchos" Type="Int32" />
+          <Property Name="IndexOfTestsequence" Type="Int32" />
+          <Property Name="MinimumIndentation" Type="Int32" />
+          <Property Name="MinimumIndentationMM" Type="Double" />
+          <Property Name="Inspector" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
+          <Property Name="teststation" Type="String" MaxLength="50" FixedLength="true" Unicode="false" />
+          <Property Name="NamePlate1" Type="String" MaxLength="50" FixedLength="true" Unicode="false" />
+          <Property Name="MaterialPlate1" Type="String" MaxLength="50" FixedLength="true" Unicode="false" />
+          <Property Name="ThicknessPlate1" Type="Double" />
+          <Property Name="NamePlate2" Type="String" MaxLength="50" FixedLength="true" Unicode="false" />
+          <Property Name="MaterialPlate2" Type="String" MaxLength="50" FixedLength="true" Unicode="false" />
+          <Property Name="ThicknessPlate2" Type="Double" />
+          <Property Name="NamePlate3" Type="String" MaxLength="50" FixedLength="true" Unicode="false" />
+          <Property Name="MaterialPlate3" Type="String" MaxLength="50" FixedLength="true" Unicode="false" />
+          <Property Name="ThicknessPlate3" Type="Double" />
+          <Property Name="InspectionLaptop" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="UltraLogModelStoreContainer" CdmEntityContainer="UltraLogEntities" />
+        <EntityContainerMapping StorageEntityContainer="UltraLogModelStoreContainer" CdmEntityContainer="UltraLogEntities" >
+          <EntitySetMapping Name="h_CompletedPlans">
+            <EntityTypeMapping TypeName="UltraLogModel.h_CompletedPlans">
+              <MappingFragment StoreEntitySet="h_CompletedPlans">
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="UniqueMeasurePoints" ColumnName="UniqueMeasurePoints" />
+                <ScalarProperty Name="TotalMeasurements" ColumnName="TotalMeasurements" />
+                <ScalarProperty Name="PlanLenght" ColumnName="PlanLenght" />
+                <ScalarProperty Name="InspectionLaptop" ColumnName="InspectionLaptop" />
+                <ScalarProperty Name="Inspector" ColumnName="Inspector" />
+                <ScalarProperty Name="planEndDT" ColumnName="planEndDT" />
+                <ScalarProperty Name="planStartDT" ColumnName="planStartDT" />
+                <ScalarProperty Name="InspectionPlanname" ColumnName="InspectionPlanname" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="h_measurementRemarks">
+            <EntityTypeMapping TypeName="UltraLogModel.h_measurementRemarks">
+              <MappingFragment StoreEntitySet="h_measurementRemarks">
+                <ScalarProperty Name="Inspector" ColumnName="Inspector" />
+                <ScalarProperty Name="InspectionLaptop" ColumnName="InspectionLaptop" />
+                <ScalarProperty Name="InspectionPlanname" ColumnName="InspectionPlanname" />
+                <ScalarProperty Name="ULDateTime" ColumnName="ULDateTime" />
+                <ScalarProperty Name="NominalDiameter" ColumnName="NominalDiameter" />
+                <ScalarProperty Name="measuredThickness" ColumnName="measuredThickness" />
+                <ScalarProperty Name="Partname" ColumnName="Partname" />
+                <ScalarProperty Name="InspectorComment" ColumnName="InspectorComment" />
+                <ScalarProperty Name="Autocomment" ColumnName="Autocomment" />
+                <ScalarProperty Name="EvaluationClass" ColumnName="EvaluationClass" />
+                <ScalarProperty Name="spotname" ColumnName="spotname" />
+                <ScalarProperty Name="CompletedPlans_id" ColumnName="CompletedPlans_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="rt_active_info">
+            <EntityTypeMapping TypeName="UltraLogModel.rt_active_info">
+              <MappingFragment StoreEntitySet="rt_active_info">
+                <ScalarProperty Name="Heartbeat" ColumnName="Heartbeat" />
+                <ScalarProperty Name="ULDateTime" ColumnName="ULDateTime" />
+                <ScalarProperty Name="InspectionLaptop" ColumnName="InspectionLaptop" />
+                <ScalarProperty Name="teststation" ColumnName="teststation" />
+                <ScalarProperty Name="Inspector" ColumnName="Inspector" />
+                <ScalarProperty Name="IndexOfTestsequence" ColumnName="IndexOfTestsequence" />
+                <ScalarProperty Name="Planlength" ColumnName="Planlength" />
+                <ScalarProperty Name="InspectionPlanname" ColumnName="InspectionPlanname" />
+                <ScalarProperty Name="Partname" ColumnName="Partname" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="rt_UltralogData">
+            <EntityTypeMapping TypeName="UltraLogModel.rt_UltralogData">
+              <MappingFragment StoreEntitySet="rt_UltralogData">
+                <ScalarProperty Name="InspectionLaptop" ColumnName="InspectionLaptop" />
+                <ScalarProperty Name="ThicknessPlate3" ColumnName="ThicknessPlate3" />
+                <ScalarProperty Name="MaterialPlate3" ColumnName="MaterialPlate3" />
+                <ScalarProperty Name="NamePlate3" ColumnName="NamePlate3" />
+                <ScalarProperty Name="ThicknessPlate2" ColumnName="ThicknessPlate2" />
+                <ScalarProperty Name="MaterialPlate2" ColumnName="MaterialPlate2" />
+                <ScalarProperty Name="NamePlate2" ColumnName="NamePlate2" />
+                <ScalarProperty Name="ThicknessPlate1" ColumnName="ThicknessPlate1" />
+                <ScalarProperty Name="MaterialPlate1" ColumnName="MaterialPlate1" />
+                <ScalarProperty Name="NamePlate1" ColumnName="NamePlate1" />
+                <ScalarProperty Name="teststation" ColumnName="teststation" />
+                <ScalarProperty Name="Inspector" ColumnName="Inspector" />
+                <ScalarProperty Name="MinimumIndentationMM" ColumnName="MinimumIndentationMM" />
+                <ScalarProperty Name="MinimumIndentation" ColumnName="MinimumIndentation" />
+                <ScalarProperty Name="IndexOfTestsequence" ColumnName="IndexOfTestsequence" />
+                <ScalarProperty Name="GasporeEchos" ColumnName="GasporeEchos" />
+                <ScalarProperty Name="FlawEchos" ColumnName="FlawEchos" />
+                <ScalarProperty Name="BackWallEchos" ColumnName="BackWallEchos" />
+                <ScalarProperty Name="Planlength" ColumnName="Planlength" />
+                <ScalarProperty Name="ULDateTime" ColumnName="ULDateTime" />
+                <ScalarProperty Name="NominalDiameter" ColumnName="NominalDiameter" />
+                <ScalarProperty Name="measuredThickness" ColumnName="measuredThickness" />
+                <ScalarProperty Name="InspectionPlanname" ColumnName="InspectionPlanname" />
+                <ScalarProperty Name="Partname" ColumnName="Partname" />
+                <ScalarProperty Name="InspectorComment" ColumnName="InspectorComment" />
+                <ScalarProperty Name="Autocomment" ColumnName="Autocomment" />
+                <ScalarProperty Name="EvaluationClass" ColumnName="EvaluationClass" />
+                <ScalarProperty Name="Spotname" ColumnName="Spotname" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

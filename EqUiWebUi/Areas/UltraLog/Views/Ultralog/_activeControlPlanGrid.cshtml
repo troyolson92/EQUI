@@ -1,0 +1,12 @@
+﻿@model IQueryable<EqUiWebUi.Areas.UltraLog.Models.rt_active_info>
+
+@Html.Grid(Model).Named("rt_active_infoGrid").Build(columns =>
+{
+    columns.Add(c => c.InspectionPlanname).Titled("Plan").Filterable(true);
+    columns.Add(c => c.Partname).Titled("Partname").Filterable(true);
+    columns.Add(c => c.Inspector).Titled("Inspector").Filterable(true);
+    columns.Add(c => c.InspectionLaptop).Titled("Laptop").Filterable(true);
+    columns.Add(c => c.ULDateTime).Titled("ULDateTime").Filterable(true);
+    columns.Add(c => c.Heartbeat).Titled("Heartbeat").Filterable(true);
+    columns.Add(c => c.IndexOfTestsequence.ToString() + "/" + c.Planlength.ToString()).Titled("Step").Filterable(true);
+}).Sortable().Empty("No data found").Css("table-hover")
