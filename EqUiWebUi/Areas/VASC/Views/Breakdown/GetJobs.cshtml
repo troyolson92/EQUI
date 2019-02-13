@@ -33,7 +33,7 @@
             $('[data-name= "rtjobGrid"]').mvcgrid({
                 sourceUrl: '@Url.Action("_getJobs")', // Grid source url string
                     data: {
-                        controller_id : @ViewBag.controller_id,
+                        controller_id : '@ViewBag.controller_id',
                         bodyNo: $('#bodynum').val(),
                         hasBreakdowns: @ViewBag.hasBreakdowns.ToString().ToLower()
                     },

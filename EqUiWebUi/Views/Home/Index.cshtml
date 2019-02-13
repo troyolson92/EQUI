@@ -79,7 +79,7 @@
     <div class="card-body">
         @MyHtmlHelpers.EquiLink("/Welding/Welding/index", "fas fa-bolt", "AASPOT homepage", helperText: "Nieuwe website voor AASPOT (jens)")
         @MyHtmlHelpers.EquiLink("/PJV/pjv/index", "fas fa-vial", "PJV", helperText: "Track changed and modifications on robot process points")
-        @MyHtmlHelpers.EquiLink("/VASC/Breakdown/GetJobs?PromptBodynum=true", "fas fa-vial", "Track cars by bodynum", helperText: "weldbolt line only", OpenNewWindow: true, helpurl: @Url.Action("_Getwiki", "Wiki", new { area = "", id = "BodyTrack" }, null))
+        @MyHtmlHelpers.EquiLink("/VASC/Breakdown/GetJobs?PromptBodynum=true", "fas fa-vial", "Track cars by bodynum", helperText: "weldbolt line only", helpurl: @Url.Action("_Getwiki", "Wiki", new { area = "", id = "BodyTrack" }, null))
     </div>
 </div>
 

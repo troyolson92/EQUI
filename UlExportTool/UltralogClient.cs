@@ -18,7 +18,7 @@ namespace UlExportTool
         string ConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["EQUIConnectionString"].ConnectionString;
         ConnectionManager connectionManager = new ConnectionManager();
         DataTable ULdata = new DataTable();
-        double? lastrecord;
+        DateTime lastrecord;
 
         /// <summary>
         /// Start processing data
@@ -100,25 +100,25 @@ namespace UlExportTool
             {
                 if (lastrecord == null)
                 {
-                    lastrecord = dt.Rows[0].Field<double?>("ULDateTimeDbl");
-                    log.Info("Startup mode ULDateTimeDbl from rt_active_info");
+                    lastrecord = dt.Rows[0].Field<DateTime>("ULDateTime");
+                    log.Info($"Startup mode ULDateTimeDbl from rt_active_info last record:<{lastrecord}>");
                 }
 
                 if (ULdata.Rows.Count != 0)
                 {
-                    lastrecord = ULdata.Rows[ULdata.Rows.Count - 1].Field<double?>("ULDateTimeDbl");
+                    lastrecord = ULdata.Rows[ULdata.Rows.Count - 1].Field<DateTime>("ULDateTime");
                     string qry = $@"UPDATE [UL].[rt_active_info]
                                SET [Partname] = '{ULdata.Rows[ULdata.Rows.Count - 1].Field<string>("Partname")}'
                                   ,[InspectionPlanname] = '{ULdata.Rows[ULdata.Rows.Count - 1].Field<string>("Planname")}'
-                                  ,[PlanLenght] = '{ULdata.Rows[ULdata.Rows.Count - 1].Field<int?>("PlanLenght")}'
+                                  ,[Planlength] = '{ULdata.Rows[ULdata.Rows.Count - 1].Field<int?>("Planlength")}'
                                   ,[IndexOfTestsequence] = '{ULdata.Rows[ULdata.Rows.Count - 1].Field<int?>("IndexOfTestsequence")}'
                                   ,[Inspector] = '{ULdata.Rows[ULdata.Rows.Count - 1].Field<string>("Inspector")}'
                                   ,[teststation] = '{ULdata.Rows[ULdata.Rows.Count - 1].Field<string>("teststation")}'
-                                  ,[ULDateTimeDbl] = '{ULdata.Rows[ULdata.Rows.Count - 1].Field<double?>("ULDateTimeDbl").ToString().Replace(',', '.')}'
+                                  ,[ULDateTime] = '{ULdata.Rows[ULdata.Rows.Count - 1].Field<DateTime>("ULDateTime")}'
                                   ,[Heartbeat] = getdate()
                              WHERE InspectionLaptop = '{Dns.GetHostName()}'";
                     connectionManager.RunCommand(qry, enblExeptions: true);
-                    log.Debug("rt_active_info updated");
+                    log.Debug($"rt_active_info updated last record:<{lastrecord}>");
                 }
                 else
                 {
@@ -145,7 +145,7 @@ namespace UlExportTool
                     #region sqlRegion    
                     string sql = $@"
 SELECT 
-T_PointsList.Name AS spotname
+  T_PointsList.Name AS spotname
 , T_InspectedPoints.ClassName AS EvaluationClass
 , T_InspectedPoints.Comments
 , T_USResult.Comment
@@ -153,9 +153,8 @@ T_PointsList.Name AS spotname
 , T_PlansList.Name AS Planname
 , T_USResult.Thickness AS measuredThickness
 , T_Joint.Diameter
-, CDate(CDbl([T_InspectedPoints.Date]) + CDbl([T_InspectedPoints.Time])) AS UlDateTime
-, T_InspectedPoints.Date, T_InspectedPoints.Time
-, T_Parts.Points AS Planlenght
+, CDate(CDbl([T_InspectedPoints.Date]) + CDbl([T_InspectedPoints.Time])) AS ULDateTime
+, T_Parts.Points AS Planlength
 , T_USResult.BWECount AS bwe
 , T_USResult.FECount AS flawecho
 , T_USResult.GPCount AS gasporeecho
@@ -174,7 +173,6 @@ T_PointsList.Name AS spotname
 , T_PlatesList_2.Material AS MaterialPlate3
 , T_PlatesList_2.Thickness AS ThicknessPlate3
 , '{Dns.GetHostName()}' AS computername
-,(CDbl([T_InspectedPoints.Date]) + CDbl([T_InspectedPoints.Time])) AS ULDateTimeDbl 
 FROM T_TestingStations 
 INNER JOIN (T_PlatesList AS T_PlatesList_2 
 RIGHT JOIN (T_Parts INNER JOIN (((T_PlansList INNER JOIN T_Joint ON T_PlansList.PlanID = T_Joint.PlanID) 
@@ -184,7 +182,7 @@ INNER JOIN (T_PlatesList INNER JOIN T_PointsList ON T_PlatesList.PlateID = T_Poi
 INNER JOIN T_PlanPoints ON T_PointsList.PointID = T_PlanPoints.PointID) ON(T_PlansList.PlanID = T_PlanPoints.PlanID) AND(T_Joint.JointID = T_PlanPoints.JointID)
 ) 
 INNER JOIN(T_InspectedPoints INNER JOIN T_USResult ON T_InspectedPoints.IDInspection = T_USResult.IDInspection) ON T_PlanPoints.PlanPointID = T_InspectedPoints.PlanPointID) ON(T_PlansList.PlanID = T_Parts.PlanID) AND(T_Parts.PartID = T_InspectedPoints.PartID)) ON T_PlatesList_2.PlateID = T_PointsList.Plate3) ON(T_TestingStations.StationID = T_PlanPoints.TestingStationID) AND(T_TestingStations.StationID = T_InspectedPoints.StationID) 
-WHERE(((CDbl([T_InspectedPoints.Date]) + CDbl([T_InspectedPoints.Time])) > '{lastrecord.GetValueOrDefault(0).ToString()}'))";
+WHERE(((CDbl([T_InspectedPoints.Date]) + CDbl([T_InspectedPoints.Time])) > {lastrecord.ToOADate().ToString().Replace(',','.')}))";
                     #endregion
                     OleDbConnection connection = new OleDbConnection(connectionString);
                     connection.Open();
@@ -192,12 +190,12 @@ WHERE(((CDbl([T_InspectedPoints.Date]) + CDbl([T_InspectedPoints.Time])) > '{las
                     OleDbDataReader reader = command.ExecuteReader();
                     ULdata.Clear();
                     ULdata.Load(reader);
-                    log.Debug($"Ultralog polled, new records : {ULdata.Rows.Count}");
+                    log.Debug($"Ultralog new records > last record<{lastrecord}>, count: {ULdata.Rows.Count}");
                     return true;
                 }
                 catch (SqlException ex)
                 {
-                    log.Error($"CheckAndUploadUlData failure", ex);
+                    log.Error("CheckAndUploadUlData failure", ex);
                     return false;
                 }
             }
