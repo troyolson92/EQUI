@@ -98,7 +98,6 @@
     <Folder Include="WELDING2\" />
     <Folder Include="WELDING2\Tables\" />
     <Folder Include="EqUi\Functions\" />
-    <Folder Include="Snapshots" />
     <Folder Include="UL" />
     <Folder Include="UL\Tables" />
     <Folder Include="UL\Stored Procedures\" />

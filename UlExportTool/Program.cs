@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Runtime.InteropServices;
 
 [assembly: log4net.Config.XmlConfigurator(Watch = true)]
 
@@ -12,18 +11,21 @@ namespace UlExportTool
     class Program
     {
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-        [DllImport("kernel32.dll", SetLastError = true, ExactSpelling = true)]
-        static extern bool FreeConsole();
+
         static int Main(string[] args)
         {
+            log.Info("Application startup");
             //parse args
             var ConfigUpdate = args.SingleOrDefault(arg => arg.StartsWith("ConfigUpdate"));
             var ClearAll = args.SingleOrDefault(arg => arg.StartsWith("ClearAll"));
-            var ShowConsole = args.SingleOrDefault(arg => arg.StartsWith("ShowConsole"));
+
+            //start system try
+            SystemTray systemTray = new SystemTray(System.Reflection.Assembly.GetExecutingAssembly().GetName().Name);
 
             //config update mode
             if (ConfigUpdate != null)
             {
+                log.Info("ConfigUpdate startup");
                 try
                 {
                     bool bClearAll = false;
@@ -40,13 +42,10 @@ namespace UlExportTool
             }
 
             //client mode
-            if (Properties.Settings.Default.HideConsole && ShowConsole == null)
-            {
-                FreeConsole(); // closes the console
-            }
             restart:
                 try
                 {
+                    log.Info("UltralogClient startup");
                     UltralogClient client = new UltralogClient();
                     client.Start();
                 }

@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("UlExportTool")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Tool to export data from GE ultralogsoftware to database")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft")]
+[assembly: AssemblyCompany("Volvo car Gent")]
 [assembly: AssemblyProduct("UlExportTool")]
-[assembly: AssemblyCopyright("Copyright © Microsoft 2018")]
+[assembly: AssemblyCopyright("SDEBEUL@volvocars.com")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

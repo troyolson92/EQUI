@@ -124,5 +124,6 @@ rt.InspectionPlanname = h.InspectionPlanname
 and rt.InspectionLaptop = h.InspectionLaptop
 and rt.ULDateTime = h.ULDateTime
 where h.id IS NULL --only add new records
+and rt.CompletedPlans_id is not null --only remarks made in a full plan
 and rt.ULDateTime between getdate()-@daysback and getdate() --limit search window on rt table
 END

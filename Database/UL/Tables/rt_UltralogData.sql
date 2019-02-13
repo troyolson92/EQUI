@@ -1,4 +1,5 @@
 ﻿CREATE TABLE [UL].[rt_UltralogData] (
+    [id]                   INT           IDENTITY (1, 1) NOT NULL,
     [Spotname]             CHAR (50)     NULL,
     [EvaluationClass]      CHAR (50)     NULL,
     [Autocomment]          CHAR (30)     NULL,
@@ -26,8 +27,11 @@
     [NamePlate3]           CHAR (50)     NULL,
     [MaterialPlate3]       CHAR (50)     NULL,
     [ThicknessPlate3]      FLOAT (53)    NULL,
-    [InspectionLaptop]     VARCHAR (255) NULL
+    [InspectionLaptop]     VARCHAR (255) NULL,
+    CONSTRAINT [PK_rt_UltralogData] PRIMARY KEY CLUSTERED ([id] ASC)
 );
+
+
 
 
 

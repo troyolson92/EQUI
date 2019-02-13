@@ -1,0 +1,10 @@
+﻿
+@{
+    ViewBag.Title = "Ultralog";
+}
+
+<h2>Ultralog</h2>
+
+@MyHtmlHelpers.EquiLink(@Url.Action("UlExportTool.application", "ULExportTool", new { area = "" }, null), "fas fa-file-excel", "ULExportTool (run)", helperText: "Start the ultra log data export tool")
+
+@MyHtmlHelpers.EquiLink(@Url.Action("ControlPlanViewer"), "fas fa-file-excel", "ControlPlanViewer", helperText: "Show active and complete control plans")
