@@ -31,7 +31,12 @@
         $("#lbl_PictureCount").html(PictureList.indexOf(ActivePictureId) + ' / ' + Object.keys(PictureList).length);
         //load control plan picute partial
         $("#ControlPlanPicturePartial").html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
-        $("#ControlPlanPicturePartial").load("@Url.Action("_GetControlPlanPicture")?Id=" + ActivePictureId);
+        $("#ControlPlanPicturePartial").load("@Url.Action("_GetControlPlanPicture")", { Id: ActivePictureId},
+            function (responseText, textStatus, req) {
+                if (textStatus == "error") {
+                    $("#ControlPlanPicturePartial").html($("#Error", responseText).html());
+                }
+            });
         //change btn if last picture
         if (PictureList[PictureList.indexOf(ActivePictureId) + 1] == PictureList[0]) {
             $("#btn_nextPicture").remove();

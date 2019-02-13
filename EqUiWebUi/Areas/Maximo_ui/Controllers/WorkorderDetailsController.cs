@@ -49,7 +49,7 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
                 select  NVL2(LD.LDTEXT, LD.LDTEXT, '') LDTEXT
                 from MAXIMO.FAILUREREMARK FM 
                 left join MAXIMO.LONGDESCRIPTION LD on LD.LDKEY = FM.FAILUREREMARKID AND LD.LDOWNERTABLE = 'FAILUREREMARK'
-                where fm.wonum = '{0}' AND FAILUREREMARK.SITEID = '{1}'
+                where fm.wonum = '{0}' AND FM.SITEID = '{1}'
             ");
             cmdFAILUREREMARK = string.Format(cmdFAILUREREMARK, wonum, siteID);
             //
@@ -57,7 +57,7 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
                 select NVL2(LD.LDTEXT, LD.LDTEXT, '') LDTEXT
                 from MAXIMO.WORKORDER WO 
                 left join MAXIMO.LONGDESCRIPTION LD on LD.LDKEY = WO.WORKORDERID AND LD.LDOWNERTABLE = 'WORKORDER'
-                where WO.wonum = '{0}' AND WORKORDER.SITEID = '{1}'
+                where WO.wonum = '{0}' AND WO.SITEID = '{1}'
             ");
             cmdLONGDESCRIPTION = string.Format(cmdLONGDESCRIPTION, wonum, siteID);
             //

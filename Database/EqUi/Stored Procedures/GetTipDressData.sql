@@ -6,7 +6,8 @@ CREATE PROCEDURE [EqUi].[GetTipDressData]
 	   @EndDate as DATETIME = null,
 	   @daysBack as int = null,
 	   @locations as varchar(20) = '%',
-       @Tool as varchar(25) = '%'
+       @Tool as varchar(25) = '%',
+	   @Tipchangedatamode as bit = 0
 AS
 BEGIN
 
@@ -36,10 +37,27 @@ SET @EndDate = GETDATE()
 END 
 ---------------------------------------------------------------------------------------
 
+--mode to get all tipdressdata 
+if (@Tipchangedatamode = 0)
+BEGIN
 
 SELECT *
   FROM [NGAC].[TipDressLogFile] with (nolock)
   where controller_name like @locations and Tool_Nr like '%'+@Tool+'%'
   and [Date Time] between @startdate and @enddate
  
+END
+
+--mode to get all tipchange data 
+if (@Tipchangedatamode = 1)
+BEGIN
+
+SELECT *
+  FROM [NGAC].TipwearBeforeChange with (nolock)
+  where controller_name like @locations and Tool_Nr like '%'+@Tool+'%'
+  and TipchangeTimestamp between @startdate and @enddate
+ 
+END
+
+
 END
