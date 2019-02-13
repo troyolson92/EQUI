@@ -6,18 +6,25 @@
 
 <p></p>
 <div data-name="AutomaticPlanControleWeldBolt" class="mvc-grid"></div>
+<body onload="startpage()">
+  
 
-<hr />
+    <hr />
 
-@section scripts{
-    <script>
+
+    @section scripts{
+        <script>
         //full with screen
         $("#allcontent").removeClass("body-content");
         $("#allcontent").removeClass("container");
 
+            function startpage() {
+                $('[data-name="rt_AutoWorkFlowULPlans"]').html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
+               
+            }
+  
 
-
-       function refreshGrid() {
+      function refreshGrid() {
        // $('[data-name="rt_AutoWorkFlowULPlans"]').html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
             $('[data-name="rt_AutoWorkFlowULPlans"]').mvcgrid({
             sourceUrl: '@Url.Action("rt_AutoWorkFlowULPlans")', // Grid source url string
@@ -26,23 +33,24 @@
 
         });
 
-          //  $('[data-name="AutomaticPlanControleWeldBolt"]').html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
+         //  $('[data-name="AutomaticPlanControleWeldBolt"]').html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
             $('[data-name="AutomaticPlanControleWeldBolt"]').mvcgrid({
                 sourceUrl: '@Url.Action("_WeldBoltPlans")', // Grid source url string
                 requestType: 'get', // Ajax grid request type
                 reload: true
 
             });
-        
+
   }
-      
+
 
         setInterval(function () {
+
             refreshGrid()
         }, 1000 * 5)
 
-    </script>
+        </script>
 
 
-}
-
+    }
+</body>

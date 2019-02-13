@@ -3,36 +3,23 @@
    
 }
 <div class="jumbotron">
-    <h1>WELCOME in het Welding Team</h1>
+    <center><h1>Welcome in Team81 - welding group</h1></center>
 </div>
 
 <div class="card" style="background-color:#efeaea">
     <div class="card-header bg-dark">
         <h5 class="card-title text-white">
-            Home Page WeldingTeam
+            WeldingTeam general
             <span class="clickable float-right"><i class="fas fa-chevron-circle-up fa-rotate-180 fa-1"></i></span>
         </h5>
     </div>
     <div class="card-body">
-        @*voorbeeld externe link*@
-        @{
-            string urlIntranetSupervis = @Uri.EscapeDataString("Z:\\OBJECTBEHEER GA\\Spot Welding\\Rapportering\\Teambord\\electronisch teambord uitgebreid\\index.html");
-            <p>
-                <a href="~/Home/Rendersite?url=@urlIntranetSupervis" class="btn btn-primary btn-sm">Supervisie Intranet P1 &raquo;</a>
-                Supervisie (intranet)
-            </p>
-        }
-        @*voorbeeld interne link*@
         <p>
-            <a href="~/Alert/Alert/AASPOTIndex" class="btn btn-primary btn-sm">Aro Technician Alerts &raquo;</a>
-            Cylinder/SBCU data triggers
-        </p>
-
-        <a href="~/Welding/Welding/_alertsAASPOT" class="btn btn-primary btn-sm">WeldingT Alerts &raquo;</a>
-        WeldingTeam Supervision Alerts
+            <a href="~/Welding/Welding/_alertsAASPOT" class="btn btn-primary btn-sm">Welding Alerts</a>
+            WeldingTeam Supervision Alerts
         </p>
         <p>
-            <a href="~/Welding/Welding/ppmreweld" class="btn btn-primary btn-sm">kpi rewelds &raquo;</a>
+            <a href="~/Welding/Welding/ppmreweld" class="btn btn-primary btn-sm">kpi tableau</a>
             kpi rewelds process stability
         </p>
 
@@ -50,7 +37,7 @@
     <div class="card-body">
 
         <p>
-            @MyHtmlHelpers.EquiLink("/Welding/ARO/Index", "far fa-file-alt", "ARO Technician", helperText: "startpagina van het ARO team")
+            @MyHtmlHelpers.EquiLink("/Welding/ARO/Index", "fas fa-industry", "ARO Technician", helperText: "startpagina van het ARO team")
     </div>
 </div>
 <p></p>
@@ -64,7 +51,7 @@
     <div class="card-body">
 
         <p>
-            @MyHtmlHelpers.EquiLink("/Welding/WM/Index", "far fa-file-alt", "Welding Masters", helperText: "startpagina van de weldingMasters")
+            @MyHtmlHelpers.EquiLink("/Welding/WM/Index", "fas fa-user-circle", "Welding Masters", helperText: "startpagina van de weldingMasters")
     </div>
 </div>
 <p></p>
@@ -78,7 +65,7 @@
     <div class="card-body">
 
         <p>
-            @MyHtmlHelpers.EquiLink("/Welding/Qteam/Index", "far fa-file-alt", "Qteam", helperText: "startpagina van het Qteam")
+            @MyHtmlHelpers.EquiLink("/Welding/Qteam/Index", "fab fa-quora", "Qteam", helperText: "startpagina van het Qteam")
     </div>
 </div>
 
@@ -95,7 +82,7 @@
     <div class="card-body">
 
         <p>
-            @MyHtmlHelpers.EquiLink("/Welding/TeardownTeam/Index", "far fa-file-alt", "TeardownTeam", helperText: "startpagina van het TeardownTeam")
+            @MyHtmlHelpers.EquiLink("/Welding/TeardownTeam/Index", "fab fa-tumblr", "TeardownTeam", helperText: "startpagina van het TeardownTeam")
     </div>
 </div>
 

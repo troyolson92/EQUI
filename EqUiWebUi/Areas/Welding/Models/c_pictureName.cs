@@ -25,6 +25,9 @@ namespace EqUiWebUi.Areas.Welding.Models
         public string Description { get; set; }
         public System.DateTime timestamp { get; set; }
         public bool Isdead { get; set; }
+        public byte[] picture { get; set; }
+        public string path { get; set; }
+        public string fileName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<c_Picture> c_Picture { get; set; }
