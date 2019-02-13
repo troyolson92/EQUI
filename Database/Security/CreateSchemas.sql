@@ -25,9 +25,13 @@ CREATE SCHEMA [BI]
 
 
 
+
+
 GO;
 CREATE SCHEMA [EqUi]
     AUTHORIZATION [dbo];
+
+
 
 
 
@@ -50,6 +54,10 @@ GO;
 
 CREATE SCHEMA [UL]
     AUTHORIZATION [dbo];
+
+
+
+
 
 
 
@@ -119,6 +127,8 @@ CREATE SCHEMA [HangFire]
 GO;
 CREATE SCHEMA [MAXIMO]
     AUTHORIZATION [dbo];
+
+
 
 
 

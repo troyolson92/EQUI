@@ -98,9 +98,9 @@ namespace UlExportTool
             }
             else
             {
-                if (lastrecord == null)
+                if (lastrecord == DateTime.MinValue)
                 {
-                    lastrecord = dt.Rows[0].Field<DateTime>("ULDateTime");
+                    lastrecord = dt.Rows[0].Field<DateTime?>("ULDateTime").GetValueOrDefault(DateTime.MinValue);
                     log.Info($"Startup mode ULDateTimeDbl from rt_active_info last record:<{lastrecord}>");
                 }
 

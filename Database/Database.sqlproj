@@ -101,6 +101,7 @@
     <Folder Include="Snapshots" />
     <Folder Include="UL" />
     <Folder Include="UL\Tables" />
+    <Folder Include="UL\Stored Procedures\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Alerts\Tables\c_CPT600.sql" />
@@ -294,6 +295,9 @@
     <Build Include="UL\Tables\rt_UltralogData.sql" />
     <Build Include="UL\Tables\rt_active_info.sql" />
     <Build Include="UL\Tables\T_NodesList.sql" />
+    <Build Include="UL\Tables\h_measurementRemarks.sql" />
+    <Build Include="UL\Tables\h_CompletedPlans.sql" />
+    <Build Include="UL\Stored Procedures\sp_norm_InspectionPlans.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="GADATAprod.publish.xml" />
