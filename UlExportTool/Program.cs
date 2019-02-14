@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 
 [assembly: log4net.Config.XmlConfigurator(Watch = true)]
 
@@ -15,31 +16,12 @@ namespace UltralogExportTool
         static int Main(string[] args)
         {
             log.Info("Application startup");
-            //parse args
-            var ConfigUpdate = args.SingleOrDefault(arg => arg.StartsWith("ConfigUpdate"));
-            var ClearAll = args.SingleOrDefault(arg => arg.StartsWith("ClearAll"));
-
-            //start system try
-            SystemTray systemTray = new SystemTray(System.Reflection.Assembly.GetExecutingAssembly().GetName().Name);
-
-            //config update mode
-            if (ConfigUpdate != null)
+            //start system tray in his own threath
+            new Thread(() =>
             {
-                log.Info("ConfigUpdate startup");
-                try
-                {
-                    bool bClearAll = false;
-                    if (ClearAll != null) bClearAll = true;
-                    ConfigUpdater ConfigUpdater = new ConfigUpdater();
-                    ConfigUpdater.UpdateUltralogConfig(DBname: "default", ClearAll: bClearAll);
-                }
-                catch(Exception ex)
-                {
-                    log.Error(ex);
-                }
-                Console.ReadLine();
-                return 0;
-            }
+                Thread.CurrentThread.IsBackground = true;
+                SystemTray systemTray = new SystemTray(System.Reflection.Assembly.GetExecutingAssembly().GetName().Name);
+            }).Start();
 
             //client mode
             restart:

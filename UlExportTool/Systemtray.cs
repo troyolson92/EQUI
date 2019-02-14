@@ -10,7 +10,7 @@ namespace UltralogExportTool
 {
     public class SystemTray
     {
-        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+         log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         //system tray
         private readonly string _systemDisplayName;
@@ -28,19 +28,17 @@ namespace UltralogExportTool
         {
             _systemTray = new NotifyIcon();
             _systemDisplayName = systemDisplayName;
-            InitializeSystemTray();
-
-            if (!System.Diagnostics.Debugger.IsAttached)
+            InitializeSystemTray();       
+            if (!Debugger.IsAttached) 
             {
-                Application.Run(); // when this runs the console appender stops strange...
+                ShowWindow(GetConsoleWindow(), SW_HIDE);
             }
-
-            if (Properties.Settings.Default.HideConsole)
-            {
-                ShowWindow(GetConsoleWindow(), SW_HIDE); // closes the console
-            }
+            Application.Run();
         }
 
+        /// <summary>
+        /// systemtray startup
+        /// </summary>
         private void InitializeSystemTray()
         {
             _systemTray.Icon = new Icon(SystemIcons.Hand, 40, 40);
@@ -50,16 +48,21 @@ namespace UltralogExportTool
 
             ContextMenu clickMenu = new ContextMenu();
 
+            clickMenu.MenuItems.Add("ConfigUpdate", configUpate_Click);
             clickMenu.MenuItems.Add("HideConsole", (s, e) => ShowWindow(GetConsoleWindow(), SW_HIDE));
             clickMenu.MenuItems.Add("ShowConsole", (s, e) => ShowWindow(GetConsoleWindow(), SW_SHOW));
             clickMenu.MenuItems.Add("OpenLog", logfile_Click);
-            clickMenu.MenuItems.Add("Exit", (s, e) => Application.Exit());
+            //clickMenu.MenuItems.Add("Exit", (s, e) => Application.Exit()); //this only stops the tray need to check 
 
             _systemTray.ContextMenu = clickMenu;
             _systemTray.ShowBalloonTip(1000);
         }
 
-
+        /// <summary>
+        /// show current log4net logfile
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void logfile_Click(object sender, EventArgs e)
         {
             string logfile = log4net.LogManager.GetRepository()
@@ -80,6 +83,27 @@ namespace UltralogExportTool
                 log.Error(ex);
             }
 
+        }
+
+        /// <summary>
+        /// run a configuration update with current ultralog db 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void configUpate_Click(object sender, EventArgs e)
+        {
+            log.Info("ConfigUpdate startup");
+            try
+            {
+                bool bClearAll = false;
+                ConfigUpdater ConfigUpdater = new ConfigUpdater();
+                ConfigUpdater.UpdateUltralogConfig(DBname: "default", ClearAll: bClearAll);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+            }
+            Console.ReadLine();
         }
     }
 

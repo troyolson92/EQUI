@@ -14,7 +14,7 @@ namespace UltralogExportTool
     /// </summary>
     public class UltralogClient
     {
-        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         string ConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["EQUIConnectionString"].ConnectionString;
         ConnectionManager connectionManager = new ConnectionManager();
         DataTable ULdata = new DataTable();
