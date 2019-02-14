@@ -36,7 +36,7 @@
             //animation
             $("#placeholderPartial2").html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
             //load url in placeholder
-            $("#placeholderPartial2").load('@Url.Action("_GetControlPlanPicture")', { Id: data["id"] },
+            $("#placeholderPartial2").load('@Url.Action("_GetControlPlanPicture", "ControlPlan")', { Spotname: data["spotname"] },
                 function (responseText, textStatus, req) {
                     if (textStatus == "error") {
                         $("#placeholderPartial2").html($("#Error", responseText).html());

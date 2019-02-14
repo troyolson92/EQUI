@@ -86,37 +86,63 @@ namespace EqUiWebUi.Areas.UltraLog.Controllers
         /// <summary>
         /// Partial view to render control plan picture
         /// </summary>
-        /// <param name="Id"></param>
+        /// <param name="Id">id of picture</param>
+        /// <param name="Spotname">get picture by a specific spotname</param>
         /// <returns></returns>
-        public ActionResult _GetControlPlanPicture(int Id)
+        public ActionResult _GetControlPlanPicture(int? Id, string Spotname)
         {
             ViewBag.ControlPlanPicture = Id;
+            ViewBag.Spotname = Spotname;
             return PartialView();
         }
 
         /// <summary>
         /// Json request to get control plan picture data
         /// </summary>
-        /// <param name="Id"></param>
+        /// <param name="Id">id of picture</param>
+        /// <param name="Spotname">get picture by a specific spotname</param>
         /// <returns></returns>
         [HttpGet]
-        public JsonResult _GetControlPlanPictureData(int Id, string DBname = "default")
+        public JsonResult _GetControlPlanPictureData(int? Id, string Spotname, string DBname = "default")
         {
             try { 
-                //make test data set 
                 Models.UltralogControlPicture ultralogControlPicture = new Models.UltralogControlPicture();
-                ultralogControlPicture.Id = Id;
-                ultralogControlPicture.Picture = db.Database.SqlQuery<string>($"select(select Picture as '*' for xml path('')) from UL.T_Picture where PictureID = {Id} and DBname = '{DBname}'").First(); 
+
+                if (!Id.HasValue && Spotname != "") //get picture id for specific spotname
+                {
+                    string qry = $@"
+                        select distinct T_PicturePoints.PictureID from ul.T_PointsList 
+                        left join ul.T_PlanPoints on T_PlanPoints.PointID = T_PointsList.PointID
+                        left join UL.T_PicturePoints on T_PicturePoints.PlanPointID = T_PlanPoints.PlanPointID
+                        where T_PointsList.[name] = '{Spotname.Trim()}'";
+                    ultralogControlPicture.Id = db.Database.SqlQuery<int>(qry).First();
+                }
+                else if (Id.HasValue && Spotname == "") //default mode get picture by id
+                {
+                    ultralogControlPicture.Id = Id.GetValueOrDefault();
+                }
+                else if (!Id.HasValue && Spotname == "")
+                {
+                    throw new InvalidOperationException("No valid input parameters");
+                }
+                else if (Id.HasValue && Spotname != "")
+                {
+                    throw new InvalidOperationException("Input parameters invalid both spotname and Id are set");
+                }
+
+                ultralogControlPicture.Picture = db.Database.SqlQuery<string>($@"select(select Picture as '*' for xml path('')) 
+                                                                                    from UL.T_Picture where PictureID = {Id} and DBname = '{DBname}'").First(); 
                 ultralogControlPicture.picturePoints = db.Database.SqlQuery<Models.PicturePoint>($@"
-select 
-  T_PicturePoints.PictureID as 'ID' 
-, T_PicturePoints.PlanPointID
-, T_PicturePoints.Xpos
-, T_PicturePoints.Ypos 
-from UL.T_PicturePoints
-left join UL.T_PlanPoints on T_PlanPoints.PlanPointID = T_PicturePoints.PlanPointID  and T_PlanPoints.DBname = T_PicturePoints.DBname
-where T_PicturePoints.PictureID = {Id} and T_PicturePoints.DBname = '{DBname}'
-order by T_PlanPoints.[Sequence] asc ").ToList();
+                                                                        select 
+                                                                          T_PicturePoints.PictureID as 'ID' 
+                                                                        , T_PicturePoints.PlanPointID
+                                                                        , T_PicturePoints.Xpos
+                                                                        , T_PicturePoints.Ypos 
+                                                                        from UL.T_PicturePoints
+                                                                        left join UL.T_PlanPoints on T_PlanPoints.PlanPointID = T_PicturePoints.PlanPointID  
+                                                                        and T_PlanPoints.DBname = T_PicturePoints.DBname
+                                                                        where T_PicturePoints.PictureID = {Id} and T_PicturePoints.DBname = '{DBname}'
+                                                                        order by T_PlanPoints.[Sequence] asc ").ToList();
                 //get image size
                 byte[] image = Convert.FromBase64String(ultralogControlPicture.Picture);
                 using (var ms = new MemoryStream(image))
@@ -143,7 +169,6 @@ order by T_PlanPoints.[Sequence] asc ").ToList();
             }
             catch (Exception ex)
             {
-                Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 Response.StatusDescription = ex.Message;
                 return Json(null, JsonRequestBehavior.AllowGet);
             }

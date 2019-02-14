@@ -69,7 +69,8 @@
         type: 'GET',
         url: '@Url.Action("_GetControlPlanPictureData")',
         data: {
-            Id: @ViewBag.ControlPlanPicture
+            Id: '@ViewBag.ControlPlanPicture',
+            Spotname: '@ViewBag.Spotname'
         },
         success: function (returnValue) {
             //store payload as global var
@@ -88,7 +89,8 @@
         },
         error: function (result) {
             //error in getting data
-              $("#ControlPicturePlaceHolder").html($("#Error", result.responseText).html());
+            $("#ControlPicturePlaceHolder").html(result.statusText);
+            console.log("ERROR: " + result.statusText);
             console.log(result);
         }
     });

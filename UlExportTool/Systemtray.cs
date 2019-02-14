@@ -100,7 +100,13 @@ namespace UltralogExportTool
             log.Info("ConfigUpdate startup");
             try
             {
+                log.Info("Press any key to start update");
+                string feedback = Console.ReadLine();
                 bool bClearAll = false;
+                if (feedback.Trim() == "CLEARALL")
+                {
+                    bClearAll = true;
+                }
                 ConfigUpdater ConfigUpdater = new ConfigUpdater();
                 ConfigUpdater.UpdateUltralogConfig(DBname: "default", ClearAll: bClearAll);
             }
