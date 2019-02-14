@@ -5,9 +5,8 @@
     columns.Add(c => c.id).Titled("id").Css("d-none");
     columns.Add(c => c.InspectionPlanname).Titled("Plan").Filterable(true);
     columns.Add(c => c.planStartDT).Titled("planStartDT").Filterable(true);
-    columns.Add(c => c.planEndDT).Titled("planEndDT").Filterable(true);
+    columns.Add(c => c.planEndDT).Titled("planEndDT").InitialSort(GridSortOrder.Desc).Filterable(true);
     columns.Add(c => c.InspectionLaptop).Titled("Laptop").Filterable(true);
     columns.Add(c => c.Remarks).Titled("Remarks").Filterable(true);
     columns.Add(c => c.UniqueMeasurePoints.ToString() + "/" + c.PlanLenght.ToString()).Titled("Step").Filterable(true);
-
 }).Sortable().Empty("No data found").Css("table-hover")

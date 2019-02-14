@@ -15,6 +15,33 @@
         },
         reloadEnded: function () {
             EnableInterfaceEvents();
+        },
+        rowClicked: function (row, data, e) {
+            //ignore clicks not on td
+            if (e.target.tagName.toUpperCase() != 'TD') {
+                return;
+            }
+            //if row already has this class close the modal
+            if ($(row).hasClass("bg-info")) {
+                $("#placeholder").remove();
+                $(row).removeClass("bg-info");
+                return;
+            }
+            //clear selected rows for this table
+            $('tr').removeClass('bg-info'); //THIS IS WRONG
+            $(row).addClass("bg-info");
+            $("#placeholder2").remove(); //clear placeholder is exists
+            //add new placeholder afhter selected row
+            $(row).after('<tr id="placeholder2"><td colspan="1000"><div class="card border-info"><div class="card-body" id ="placeholderPartial2"></div></div></td></tr>');
+            //animation
+            $("#placeholderPartial2").html("<i class='fas fa-spinner fa-spin fa-2x'></i>");
+            //load url in placeholder
+            $("#placeholderPartial2").load('@Url.Action("_GetControlPlanPicture")', { Id: data["id"] },
+                function (responseText, textStatus, req) {
+                    if (textStatus == "error") {
+                        $("#placeholderPartial2").html($("#Error", responseText).html());
+                    }
+                });
         }
     });
 </script>

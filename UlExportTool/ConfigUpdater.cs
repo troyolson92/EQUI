@@ -22,7 +22,6 @@ namespace UltralogExportTool
             UpdateUltraLogConfigTable("T_PlatesList", DBname: DBname, ClearAll: ClearAll);
             UpdateUltraLogConfigTable("T_PointsList", DBname: DBname, ClearAll: ClearAll);
             UpdateUltraLogConfigTable("T_NodesList", DBname: DBname, ClearAll: ClearAll);
-            log.Debug("Update complete press any key to exit");
         }
 
         public void UpdateUltraLogConfigTable(string tablename, string DBname, bool ClearAll = false)

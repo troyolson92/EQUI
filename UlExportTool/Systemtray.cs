@@ -24,6 +24,10 @@ namespace UltralogExportTool
         const int SW_HIDE = 0;
         const int SW_SHOW = 5;
 
+        /// <summary>
+        /// init systemtray
+        /// </summary>
+        /// <param name="systemDisplayName"></param>
         public SystemTray(string systemDisplayName)
         {
             _systemTray = new NotifyIcon();
@@ -92,6 +96,7 @@ namespace UltralogExportTool
         /// <param name="e"></param>
         private void configUpate_Click(object sender, EventArgs e)
         {
+            ShowWindow(GetConsoleWindow(), SW_SHOW);
             log.Info("ConfigUpdate startup");
             try
             {
@@ -103,7 +108,9 @@ namespace UltralogExportTool
             {
                 log.Error(ex);
             }
+            log.Info("ConfigUpdate done press any key to close");
             Console.ReadLine();
+            ShowWindow(GetConsoleWindow(), SW_HIDE);
         }
     }
 

@@ -12,7 +12,7 @@
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
     <IsWebBootstrapper>true</IsWebBootstrapper>
-    <PublishUrl>\\Chasvw1203.cha.volvocars.net\chasvw1203_e\IIS\EqUiWebUi\UltralogExportTool\</PublishUrl>
+    <PublishUrl>\\GENSVW1178.gen.volvocars.net\gensvw1178_D\IIS\EqUiWebUi\UltralogExportTool\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -22,11 +22,11 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <InstallUrl>https://Chasvw1203.cha.volvocars.net/UltralogExportTool/</InstallUrl>
+    <InstallUrl>https://gensvw1178.gen.volvocars.net/UltralogExportTool/</InstallUrl>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>25</ApplicationRevision>
+    <ApplicationRevision>28</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>

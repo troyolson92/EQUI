@@ -150,16 +150,31 @@ namespace EqUiWebUi.Areas.Maximo_ui.Controllers
         //partial that gets details of all the children of the given work order.
         public ActionResult _SubWoDetails(string parentwonum)
         {
+            //check if user is allowed to user realtimeConn
             string MaximoDbName = "MAXIMOrt";
+            string siteID = System.Configuration.ConfigurationManager.AppSettings["Maximo_SiteID"].ToString();
             int CommandTimeout = 30;
             //add the parent to the view bag.
             ViewBag.parentwonum = parentwonum;
             //Get a list of all the children WO for this parent
             if (parentwonum == null) parentwonum = "NoWonum";
             if (parentwonum == "") parentwonum = "NoWonum";
-            string qrySubWO = "SELECT * FROM MAXIMO.WORKORDER WORKORDER WHERE WORKORDER.PARENT = '{0}' ORDER BY WORKORDER.LOCATION";
-            qrySubWO = string.Format(qrySubWO, parentwonum);
-
+            string qrySubWO = $@"
+ SELECT 
+ WORKORDER.WONUM
+,WORKORDER.LOCATION
+,WORKORDER.STATUS
+,WORKORDER.OWNERGROUP
+FROM MAXIMO.WORKORDER WORKORDER WHERE WORKORDER.PARENT = '{parentwonum}' AND WORKORDER.SITEID = '{siteID}'
+UNION 
+SELECT 
+ WORKORDER.WONUM
+,WORKORDER.LOCATION
+,WORKORDER.STATUS
+,WORKORDER.OWNERGROUP
+FROM MAXIMO.RELATEDRECORD RELATEDRECORD
+LEFT JOIN MAXIMO.WORKORDER WORKORDER on RELATEDRECORD.RELATEDRECKEY = WORKORDER.WONUM and RELATEDRECORD.SITEID = WORKORDER.SITEID
+where RELATEDRECORD.RECORDKEY = '{parentwonum}' AND RELATEDRECORD.SITEID = '{siteID}'";
             EQUICommunictionLib.ConnectionManager connectionManager = new ConnectionManager();
             DataTable SubWo;
             SubWo = connectionManager.RunQuery(qrySubWO, dbName: MaximoDbName, maxEXECtime: CommandTimeout, enblExeptions: true);
