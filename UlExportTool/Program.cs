@@ -3,7 +3,7 @@ using System.Linq;
 
 [assembly: log4net.Config.XmlConfigurator(Watch = true)]
 
-namespace UlExportTool
+namespace UltralogExportTool
 {
     /// <summary>
     /// Main

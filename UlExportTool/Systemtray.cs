@@ -6,7 +6,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-namespace UlExportTool
+namespace UltralogExportTool
 {
     public class SystemTray
     {
@@ -30,7 +30,10 @@ namespace UlExportTool
             _systemDisplayName = systemDisplayName;
             InitializeSystemTray();
 
-            Application.Run(); // when this runs the console appender stops strange...
+            if (!System.Diagnostics.Debugger.IsAttached)
+            {
+                Application.Run(); // when this runs the console appender stops strange...
+            }
 
             if (Properties.Settings.Default.HideConsole)
             {

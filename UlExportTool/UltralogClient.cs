@@ -7,7 +7,7 @@ using System.Data.OleDb;
 using System.Data.SqlClient;
 using EQUICommunictionLib;
 
-namespace UlExportTool
+namespace UltralogExportTool
 {
     /// <summary>
     /// Import UL data
@@ -144,8 +144,9 @@ namespace UlExportTool
                     if (Properties.Settings.Default.LocalUlDB.EndsWith(".accdb")) connectionString = $"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={Properties.Settings.Default.LocalUlDB}";
                     #region sqlRegion    
                     string sql = $@"
-SELECT 
-  T_PointsList.Name AS spotname
+SELECT
+  NULL AS id
+, T_PointsList.Name AS spotname
 , T_InspectedPoints.ClassName AS EvaluationClass
 , T_InspectedPoints.Comments
 , T_USResult.Comment

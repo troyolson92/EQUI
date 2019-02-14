@@ -3,7 +3,7 @@ using System.Data.OleDb;
 using System.IO;
 using System.Data;
 
-namespace UlExportTool
+namespace UltralogExportTool
 {
     class ConfigUpdater
     {
