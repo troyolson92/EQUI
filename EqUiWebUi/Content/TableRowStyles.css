@@ -30,7 +30,16 @@
 .TableStatusPurple {
     background-color: #d606ff;
 }
+}
 
+.TableStatusGrey {
+    background-color: rgba(208, 208, 208, 1);
+}
+}
+
+.TableStatusLightGrey {
+    background-color: rgba(240,240,240,1);
+}
 /*animations (Alerts)*/
 .ani_BlinkPink {
     background-color: #d851ff; /*set the background color in here so if the browser does not support animation we still have style*/
