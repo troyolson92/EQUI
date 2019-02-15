@@ -1,0 +1,22 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<h6>Get list of control plans</h6>
+
+@MyHtmlHelpers.EquiLink(@Url.Action("ListControlPlans", "ControlPlan"), "fas fa-file-excel", "ControlPlans", helperText: "Show control plan list")
+
+<h6>Control Plans (multiple pictures)</h6>
+
+@MyHtmlHelpers.EquiLink(@Url.Action("GetControlPlan", "ControlPlan", new { PlanName = "V316_331060_LHD" }), "fas fa-file-excel", "ControlPlans", helperText: "Get control plan by plan name")
+
+@MyHtmlHelpers.EquiLink(@Url.Action("GetControlPlan", "ControlPlan", new { RobotName = "338071R02" }), "fas fa-file-excel", "ControlPlans", helperText: "Get control plan by robot name using pjv")
+
+<h6>ControlPlanpicture (single picture)</h6>
+
+@MyHtmlHelpers.EquiLink(@Url.Action("GetControlPlanPicture", "ControlPlan", new { Id = 3477 }), "fas fa-file-excel", "ControlPlans", helperText: "Get control plan picture by picture ID")
+
+@MyHtmlHelpers.EquiLink(@Url.Action("GetControlPlanPicture", "ControlPlan", new { Spotname = "4403753" }), "fas fa-file-excel", "ControlPlans", helperText: "Get control plan picture by Spotname")

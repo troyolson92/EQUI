@@ -70,7 +70,8 @@
         url: '@Url.Action("_GetControlPlanPictureData")',
         data: {
             Id: '@ViewBag.ControlPlanPicture',
-            Spotname: '@ViewBag.Spotname'
+            Spotname: '@ViewBag.Spotname',
+            RobotName: '@ViewBag.RobotName'
         },
         success: function (returnValue) {
             //store payload as global var
@@ -103,6 +104,11 @@
             //try and go to next picture
             $("#btn_nextPicture").click();
         }
+        //remove button if plan only has 1 point (used in mode to show a single spotname)
+        if (dataPayload[1].length == 1) {
+            $("#btn_next").remove();
+        }
+        //move the red dot
         ControlPlanChart.data.datasets[0].data[0] = dataPayload[1][ActiveItem];
         ControlPlanChart.update();
         ActiveItem += 1;

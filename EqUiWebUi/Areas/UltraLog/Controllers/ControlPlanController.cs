@@ -29,46 +29,54 @@ namespace EqUiWebUi.Areas.UltraLog.Controllers
             return View(plans);
         }
 
-        /// <summary>
-        /// Make a control plan to check a single robot or timer
-        /// </summary>
-        /// <param name="Timername"></param>
-        /// <returns></returns>
-        public ActionResult MakeControlPlan(string Timername)
-        {
-            string qry = @"
-                 SELECT
-                 [T_PlansList].[Name]
-                ,T_PlanPoints.PlanID
-                ,T_PointsList.[Name] as 'SpotName'
-                ,T_PointsList.[Sequence]
-                ,T_PointsList.Diameter
-                ,c_timer.[Name] as 'Timername'
-                FROM[UL].[T_PlansList]
-                Left join UL.T_PlanPoints on T_PlanPoints.PlanID = T_PlansList.PlanID
-                Left join UL.T_PointsList on T_PointsList.PointID = T_PlanPoints.PointID
-                Left join WELDING2.rt_spottable on rt_spottable.SpotName = T_PointsList.[Name] and rt_spottable.isDead = 0
-                Left join WELDING2.c_timer on c_timer.id = rt_spottable.[timerId]
-                WHERE T_PlansList.[Name] = 'V316_331060_LHD'";
-            return View(qry);
-        }
 
         /// <summary>
         /// Get control plan and run to all the control plan pictures
         /// </summary>
-        /// <param name="Id"></param>
+        /// <param name="PlanName">planname to be renderd</param>
+        /// <param name="RobotName">if RobotName is set build a plan for that robot</param>
+        /// <param name="DBname">name of ultralog database to use</param>
         /// <returns></returns>
-        public ActionResult GetControlPlan(string PlanName = "V316_331060_LHD", string DBname = "default")
+        public ActionResult GetControlPlan(string PlanName = "", string RobotName = "", string DBname = "default")
         {
-            ViewBag.PlanName = PlanName;
-            string qry = $@"SELECT distinct T_Picture.PictureID
+            if (PlanName!= "" && RobotName == "") //default get plan by planname
+            {
+                string qry = $@"SELECT distinct T_Picture.PictureID
                             FROM [UL].[T_PlansList]
                             Left join UL.T_PlanPoints on T_PlanPoints.PlanID = T_PlansList.PlanID  and T_PlanPoints.DBname = T_PlansList.DBname
                             Left join UL.T_PicturePoints on T_PicturePoints.PlanPointID = T_PlanPoints.PlanPointID and T_PicturePoints.DBname = T_PlanPoints.DBname
                             Left join UL.T_Picture on T_Picture.PictureID = T_PicturePoints.PictureID and T_Picture.DBname = T_PicturePoints.DBname
                             where T_Picture.PictureID is not null AND T_PlansList.[Name] = '{PlanName}' and T_PlansList.Dbname = '{DBname}'
                             order by T_Picture.PictureID asc";
-            ViewBag.PictureList = db.Database.SqlQuery<int>(qry).ToList();
+                ViewBag.PictureList = db.Database.SqlQuery<int>(qry).ToList();
+            }
+            else if (PlanName == "" && RobotName != "") //build a plan by robotname (use PJV)
+            {
+                string qry = $@"SELECT distinct T_Picture.PictureID
+			                --Ul part
+                            From Ul.T_PointsList
+                            Left join UL.T_PlanPoints on T_PlanPoints.PlanPointID = T_PointsList.PointID  and T_PlanPoints.DBname = T_PointsList.DBname
+                            Left join UL.T_PicturePoints on T_PicturePoints.PlanPointID = T_PlanPoints.PlanPointID and T_PicturePoints.DBname = T_PlanPoints.DBname
+                            Left join UL.T_Picture on T_Picture.PictureID = T_PicturePoints.PictureID and T_Picture.DBname = T_PicturePoints.DBname
+			                --pjv part 
+			                left join pjv.RobotPoint on RobotPoint.processValue1 = T_PointsList.[Name]
+			                left join pjv.RobotRoutine on RobotRoutine.id = RobotPoint.robotRoutineId
+			                left join pjv.RobotProgram on RobotProgram.id = RobotRoutine.RobotProgramId
+			                left join pjv.RobotDetail on RobotDetail.id = RobotProgram.robotDetailId
+
+                            where T_Picture.PictureID is not null and T_PointsList.Dbname = '{DBname}'
+			                and RobotDetail.[name] = '{RobotName}'
+			                and RobotPoint.isDead = 0 --only active points
+                            order by T_Picture.PictureID asc";
+                ViewBag.PictureList = db.Database.SqlQuery<int>(qry).ToList();
+            }
+            else 
+            {
+                throw new Exception("invalid input parameters");
+            }
+
+            ViewBag.PlanName = PlanName;
+            ViewBag.RobotName = RobotName;
             return View();
         }
 
@@ -76,10 +84,12 @@ namespace EqUiWebUi.Areas.UltraLog.Controllers
         /// Test view to render single control plan picture
         /// </summary>
         /// <param name="Id"></param>
+        /// <param name="Spotname">get picture by a specific spotname</param>
         /// <returns></returns>
-        public ActionResult GetControlPlanPicture(int Id = 3477)
+        public ActionResult GetControlPlanPicture(int? Id, string Spotname)
         {
             ViewBag.ControlPlanPicture = Id;
+            ViewBag.Spotname = Spotname;
             return View();
         }
 
@@ -88,11 +98,13 @@ namespace EqUiWebUi.Areas.UltraLog.Controllers
         /// </summary>
         /// <param name="Id">id of picture</param>
         /// <param name="Spotname">get picture by a specific spotname</param>
+        /// <param name="RobotName">if RobotName is set build a plan for that robot</param>
         /// <returns></returns>
-        public ActionResult _GetControlPlanPicture(int? Id, string Spotname)
+        public ActionResult _GetControlPlanPicture(int? Id, string Spotname, string RobotName)
         {
             ViewBag.ControlPlanPicture = Id;
             ViewBag.Spotname = Spotname;
+            ViewBag.RobotName = RobotName;
             return PartialView();
         }
 
@@ -101,48 +113,75 @@ namespace EqUiWebUi.Areas.UltraLog.Controllers
         /// </summary>
         /// <param name="Id">id of picture</param>
         /// <param name="Spotname">get picture by a specific spotname</param>
+        /// <param name="RobotName">if RobotName is set build a plan for that robot</param>
         /// <returns></returns>
         [HttpGet]
-        public JsonResult _GetControlPlanPictureData(int? Id, string Spotname, string DBname = "default")
+        public JsonResult _GetControlPlanPictureData(int? Id, string Spotname, string RobotName, string DBname = "default")
         {
             try { 
                 Models.UltralogControlPicture ultralogControlPicture = new Models.UltralogControlPicture();
 
-                if (!Id.HasValue && Spotname != "") //get picture id for specific spotname
-                {
-                    string qry = $@"
-                        select distinct T_PicturePoints.PictureID from ul.T_PointsList 
-                        left join ul.T_PlanPoints on T_PlanPoints.PointID = T_PointsList.PointID
-                        left join UL.T_PicturePoints on T_PicturePoints.PlanPointID = T_PlanPoints.PlanPointID
-                        where T_PointsList.[name] = '{Spotname.Trim()}'";
-                    ultralogControlPicture.Id = db.Database.SqlQuery<int>(qry).First();
-                }
-                else if (Id.HasValue && Spotname == "") //default mode get picture by id
+
+                if (Id.HasValue && Spotname == "") //default mode get picture by id
                 {
                     ultralogControlPicture.Id = Id.GetValueOrDefault();
                 }
-                else if (!Id.HasValue && Spotname == "")
+                else if (!Id.HasValue && Spotname != "" && RobotName == "") //get picture id for specific spotname
                 {
-                    throw new InvalidOperationException("No valid input parameters");
+                    string qry = $@"
+                        select distinct T_PicturePoints.PictureID from ul.T_PointsList 
+                        left join ul.T_PlanPoints on T_PlanPoints.PointID = T_PointsList.PointID and T_PlanPoints.DBname = T_PointsList.DBname
+                        left join UL.T_PicturePoints on T_PicturePoints.PlanPointID = T_PlanPoints.PlanPointID and T_PicturePoints.DBname = T_PlanPoints.DBname
+                        where T_PointsList.[name] = '{Spotname.Trim()}' and T_PointsList.DBname = '{DBname}'";
+                    ultralogControlPicture.Id = db.Database.SqlQuery<int>(qry).First();
                 }
-                else if (Id.HasValue && Spotname != "")
+                else 
                 {
-                    throw new InvalidOperationException("Input parameters invalid both spotname and Id are set");
+                    throw new Exception("No valid input parameters");
                 }
 
                 ultralogControlPicture.Picture = db.Database.SqlQuery<string>($@"select(select Picture as '*' for xml path('')) 
-                                                                                    from UL.T_Picture where PictureID = {Id} and DBname = '{DBname}'").First(); 
-                ultralogControlPicture.picturePoints = db.Database.SqlQuery<Models.PicturePoint>($@"
+                                                                                    from UL.T_Picture where PictureID = {ultralogControlPicture.Id} and DBname = '{DBname}'").First();
+
+                if (RobotName == "") //default mode get by picture ID and or spotname 
+                {
+                    ultralogControlPicture.picturePoints = db.Database.SqlQuery<Models.PicturePoint>($@"
                                                                         select 
-                                                                          T_PicturePoints.PictureID as 'ID' 
-                                                                        , T_PicturePoints.PlanPointID
-                                                                        , T_PicturePoints.Xpos
-                                                                        , T_PicturePoints.Ypos 
-                                                                        from UL.T_PicturePoints
-                                                                        left join UL.T_PlanPoints on T_PlanPoints.PlanPointID = T_PicturePoints.PlanPointID  
-                                                                        and T_PlanPoints.DBname = T_PicturePoints.DBname
-                                                                        where T_PicturePoints.PictureID = {Id} and T_PicturePoints.DBname = '{DBname}'
-                                                                        order by T_PlanPoints.[Sequence] asc ").ToList();
+                                                                              T_PicturePoints.PictureID as 'ID' 
+                                                                            , T_PicturePoints.PlanPointID
+                                                                            , T_PicturePoints.Xpos
+                                                                            , T_PicturePoints.Ypos 
+                                                                            from UL.T_PicturePoints
+                                                                            left join UL.T_PlanPoints on T_PlanPoints.PlanPointID = T_PicturePoints.PlanPointID  
+                                                                            and T_PlanPoints.DBname = T_PicturePoints.DBname
+	                                                                        left join ul.T_PointsList on T_PlanPoints.PointID = T_PointsList.PointID
+	                                                                        and T_PointsList.DBname = T_PlanPoints.DBname
+                                                                            where T_PicturePoints.PictureID = {ultralogControlPicture.Id} and T_PicturePoints.DBname = '{DBname}'
+	                                                                        and (T_PointsList.[Name] = '{Spotname}' OR '{Spotname}' = '')
+                                                                            order by T_PlanPoints.[Sequence] asc").ToList();
+                }
+                else //get plan points by robotname use PJV
+                {
+                    ultralogControlPicture.picturePoints = db.Database.SqlQuery<Models.PicturePoint>($@"
+                                             select 
+                                                  T_PicturePoints.PictureID as 'ID' 
+                                                , T_PicturePoints.PlanPointID
+                                                , T_PicturePoints.Xpos
+                                                , T_PicturePoints.Ypos 
+                                                from UL.T_PicturePoints
+                                                left join UL.T_PlanPoints on T_PlanPoints.PlanPointID = T_PicturePoints.PlanPointID  
+                                                and T_PlanPoints.DBname = T_PicturePoints.DBname
+	                                            left join ul.T_PointsList on T_PlanPoints.PointID = T_PointsList.PointID
+	                                            and T_PointsList.DBname = T_PlanPoints.DBname
+                                              --pjv part 
+	                                            left join pjv.RobotPoint on RobotPoint.processValue1 = T_PointsList.[Name]
+	                                            left join pjv.RobotRoutine on RobotRoutine.id = RobotPoint.robotRoutineId
+	                                            left join pjv.RobotProgram on RobotProgram.id = RobotRoutine.RobotProgramId
+	                                            left join pjv.RobotDetail on RobotDetail.id = RobotProgram.robotDetailId
+                                                where T_PicturePoints.PictureID = {ultralogControlPicture.Id} and T_PicturePoints.DBname = '{DBname}'
+	                                            and RobotDetail.[name] = '{RobotName}'
+                                                order by T_PlanPoints.[Sequence] asc").ToList();
+                }
                 //get image size
                 byte[] image = Convert.FromBase64String(ultralogControlPicture.Picture);
                 using (var ms = new MemoryStream(image))

@@ -12,27 +12,18 @@ namespace EqUiWebUi.Areas.UltraLog.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class h_CompletedPlans
+    public partial class L_InspectionPlans
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public h_CompletedPlans()
+        public L_InspectionPlans()
         {
-            this.h_measurementRemarks = new HashSet<h_measurementRemarks>();
+            this.h_CompletedPlans = new HashSet<h_CompletedPlans>();
         }
     
         public int id { get; set; }
-        public Nullable<System.DateTime> planStartDT { get; set; }
-        public Nullable<System.DateTime> planEndDT { get; set; }
-        public string Inspector { get; set; }
-        public string InspectionLaptop { get; set; }
-        public Nullable<int> PlanLenght { get; set; }
-        public Nullable<int> TotalMeasurements { get; set; }
-        public Nullable<int> UniqueMeasurePoints { get; set; }
-        public Nullable<int> Remarks { get; set; }
-        public int InspectionPlan_id { get; set; }
+        public string InspectionPlanname { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<h_measurementRemarks> h_measurementRemarks { get; set; }
-        public virtual L_InspectionPlans L_InspectionPlans { get; set; }
+        public virtual ICollection<h_CompletedPlans> h_CompletedPlans { get; set; }
     }
 }

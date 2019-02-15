@@ -23,6 +23,6 @@ namespace EqUiWebUi.Areas.UltraLog.Models
         public string teststation { get; set; }
         public string InspectionLaptop { get; set; }
         public Nullable<System.DateTime> ULDateTime { get; set; }
-        public System.DateTime Heartbeat { get; set; }
+        public Nullable<System.DateTime> Heartbeat { get; set; }
     }
 }

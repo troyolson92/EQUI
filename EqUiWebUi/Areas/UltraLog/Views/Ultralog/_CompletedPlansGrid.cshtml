@@ -3,10 +3,15 @@
 @Html.Grid(Model).Named("h_CompletedPlansGrid").Build(columns =>
 {
     columns.Add(c => c.id).Titled("id").Css("d-none");
-    columns.Add(c => c.InspectionPlanname).Titled("Plan").Filterable(true);
-    columns.Add(c => c.planStartDT).Titled("planStartDT").Filterable(true);
-    columns.Add(c => c.planEndDT).Titled("planEndDT").InitialSort(GridSortOrder.Desc).Filterable(true);
-    columns.Add(c => c.InspectionLaptop).Titled("Laptop").Filterable(true);
-    columns.Add(c => c.Remarks).Titled("Remarks").Filterable(true);
-    columns.Add(c => c.UniqueMeasurePoints.ToString() + "/" + c.PlanLenght.ToString()).Titled("Step").Filterable(true);
-}).Sortable().Empty("No data found").Css("table-hover")
+    columns.Add(c => c.L_InspectionPlans.InspectionPlanname).Titled("Plan");
+    columns.Add(c => c.planStartDT).Titled("planStartDT");
+    columns.Add(c => c.planEndDT).Titled("planEndDT").InitialSort(GridSortOrder.Desc);
+    columns.Add(c => c.InspectionLaptop).Titled("Laptop");
+    columns.Add(c => c.Remarks).Titled("Remarks");
+    columns.Add(c => c.UniqueMeasurePoints.ToString() + "/" + c.PlanLenght.ToString()).Titled("Step");
+}).Sortable().Filterable().Pageable(pager =>
+{
+    pager.RowsPerPage = 40;
+    pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 20, "20" }, { 40, "40" }, { 80, "80" }, { 100, "100" } };
+    pager.ShowPageSizes = true;
+}).Empty("No data found").Css("table-hover")

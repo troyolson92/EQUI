@@ -7,7 +7,14 @@
 
 <div class="card">
     <div class="card-header">
-        <h2>ControlPlan: @ViewBag.PlanName</h2>
+        @if (ViewBag.PlanName != "")
+        {
+            <h2>ControlPlan: @ViewBag.PlanName</h2>
+        }
+        @if (ViewBag.Robotname != "")
+        {
+            <h2>ControlPlan: @ViewBag.Robotname (Generated from pjv)</h2>
+        }
         <h6>Active picture id: <span class="badge badge-info" id="lbl_ActivePictureId"></span> Picture: <span class="badge badge-info" id="lbl_PictureCount"></span></h6>
     </div>
     <div class="card-body">

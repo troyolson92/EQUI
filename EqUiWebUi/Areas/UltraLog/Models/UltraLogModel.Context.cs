@@ -29,5 +29,6 @@ namespace EqUiWebUi.Areas.UltraLog.Models
         public virtual DbSet<h_measurementRemarks> h_measurementRemarks { get; set; }
         public virtual DbSet<rt_active_info> rt_active_info { get; set; }
         public virtual DbSet<rt_UltralogData> rt_UltralogData { get; set; }
+        public virtual DbSet<L_InspectionPlans> L_InspectionPlans { get; set; }
     }
 }

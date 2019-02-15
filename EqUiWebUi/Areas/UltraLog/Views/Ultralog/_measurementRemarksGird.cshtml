@@ -3,10 +3,12 @@
 @Html.Grid(Model).Named("h_measurementRemarksGrid").Build(columns =>
 {
     columns.Add(c => c.id).Titled("id").Css("d-none");
-    columns.Add(c => c.InspectionPlanname).Titled("Plan").Filterable(true);
-    columns.Add(c => c.EvaluationClass).Titled("EvaluationClass").Filterable(true);
-    columns.Add(c => c.spotname).Titled("spotname").Filterable(true);
-    columns.Add(c => c.measuredThickness).Titled("measuredThickness").Filterable(true);
-    columns.Add(c => c.ULDateTime).Titled("ULDateTime").Filterable(true);
+    columns.Add(c => c.InspectionPlanname).Titled("Plan");
+    columns.Add(c => c.spotname).Titled("spotname");
+    columns.Add(c => c.measuredThickness).Titled("measuredThickness");
+    columns.Add(c => c.EvaluationClass).Titled("EvaluationClass");
+    columns.Add(c => c.Autocomment).Titled("Autocomment");
+    columns.Add(c => c.InspectorComment).Titled("InspectorComment");
+    columns.Add(c => c.ULDateTime).Titled("ULDateTime");
 
-}).Sortable().Empty("No data found").Css("table-hover")
+}).Sortable().Filterable().Empty("No data found").Css("table-hover")

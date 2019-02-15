@@ -432,6 +432,9 @@
     <Compile Include="Areas\UltraLog\Models\h_measurementRemarks.cs">
       <DependentUpon>UltraLogModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Areas\UltraLog\Models\L_InspectionPlans.cs">
+      <DependentUpon>UltraLogModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Areas\UltraLog\Models\rt_active_info.cs">
       <DependentUpon>UltraLogModel.tt</DependentUpon>
     </Compile>
@@ -3050,6 +3053,7 @@
     <Content Include="Areas\UltraLog\Views\Ultralog\_measurementRemarksGird.cshtml" />
     <Content Include="Areas\UltraLog\Views\Ultralog\_measurementRemarks.cshtml" />
     <Content Include="Areas\UltraLog\Views\Ultralog\Index.cshtml" />
+    <Content Include="Areas\UltraLog\Views\ControlPlan\Index.cshtml" />
     <None Include="Properties\PublishProfiles\chasvw1203_DEV_VCCH.pubxml" />
     <None Include="Properties\PublishProfiles\chasvw1203_PRODUCTION_VCCH.pubxml" />
     <Content Include="Areas\Welding\Views\WM\_Parameters.cshtml" />

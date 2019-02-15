@@ -1,15 +1,27 @@
 ﻿
 
 CREATE PROCEDURE [UL].[sp_norm_InspectionPlans]
-  @Daysback as int = 30 --limit the search window on the rt table
+  @DaysbackCompletedPlans as int = 30, --limit the search window on the rt table
+  @DaysbackLaptopAlive as int = 7
 AS
 BEGIN
+
+---------------------------------------------------------------------------------------
+Print'--check for new inspectionplans and add to UL.[L_InspectionPlans]'
+---------------------------------------------------------------------------------------
+INSERT INTO UL.L_InspectionPlans (InspectionPlanname)             
+SELECT DISTINCT rt_UltralogData.inspectionplanname 
+FROM   ul.rt_UltralogData 
+LEFT JOIN UL.L_InspectionPlans
+ON rt_UltralogData.inspectionplanname = L_InspectionPlans.InspectionPlanname
+WHERE L_InspectionPlans.InspectionPlanname is null
+
 ---------------------------------------------------------------------------------------
 Print'--add new completed plans to ul.h_CompletedPlans'
 ---------------------------------------------------------------------------------------
 INSERT INTO ul.h_CompletedPlans
 select 
- rt.[InspectionPlanname]
+ L_InspectionPlans.id as 'InspectionPlan_id'
 ,rt.[planStartDT]
 ,rt.[planEndDT]
 ,rt.[Inspector]
@@ -63,15 +75,16 @@ where planend.IndexOfTestsequence = planend.Planlength
 where planStartEnd.rnDesc = 1
 --**************************---
 ) as rt
+Left join ul.L_InspectionPlans on L_InspectionPlans.InspectionPlanname = rt.InspectionPlanname
 --**************************---
 --join historian to prevent dupplicat inserts
 --**************************---
 Left join ul.h_CompletedPlans as h on 
-rt.InspectionPlanname = h.InspectionPlanname 
+rt.InspectionPlanname = L_InspectionPlans.InspectionPlanname
 and rt.InspectionLaptop = h.InspectionLaptop
 and rt.planStartDT = h.planStartDT
 where h.id IS NULL --only add new records
-and rt.planStartDT between getdate()-@daysback and getdate() --limit search window on rt table
+and rt.planStartDT between getdate()-@DaysbackCompletedPlans and getdate() --limit search window on rt table
 
 
 ---------------------------------------------------------------------------------------
@@ -109,11 +122,12 @@ select
 ,measurements.InspectionLaptop
 ,measurements.Inspector
 from Ul.rt_UltralogData as measurements
+left join ul.L_InspectionPlans on L_InspectionPlans.InspectionPlanname = measurements.InspectionPlanname
 left join ul.h_CompletedPlans as CompletedPlans on 
-measurements.InspectionPlanname = CompletedPlans.InspectionPlanname 
+L_InspectionPlans.id = CompletedPlans.InspectionPlan_id 
 and measurements.InspectionLaptop = CompletedPlans.InspectionLaptop
 and measurements.ULDateTime between CompletedPlans.planStartDT and CompletedPlans.planEndDT
-where (measurements.EvaluationClass not in ('OK') or measurements.Autocomment != '' or measurements.InspectorComment != '')
+where (measurements.EvaluationClass not in ('OK') or measurements.Autocomment not in ('') or measurements.InspectorComment not in (''))
 --**************************---
 ) as rt
 --**************************---
@@ -125,5 +139,11 @@ and rt.InspectionLaptop = h.InspectionLaptop
 and rt.ULDateTime = h.ULDateTime
 where h.id IS NULL --only add new records
 and rt.CompletedPlans_id is not null --only remarks made in a full plan
-and rt.ULDateTime between getdate()-@daysback and getdate() --limit search window on rt table
+and rt.ULDateTime between getdate()-@DaysbackCompletedPlans and getdate() --limit search window on rt table
+
+---------------------------------------------------------------------------------------
+Print'--cleanup Rt_active_info'
+---------------------------------------------------------------------------------------
+delete ul.rt_active_info from ul.rt_active_info where rt_active_info.Heartbeat < getdate()-@DaysbackLaptopAlive --remove laptops that have been death for 7 days
+
 END

@@ -10,7 +10,7 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="InspectionPlanname" Type="char" MaxLength="50" />
+          <Property Name="InspectionPlan_id" Type="int" Nullable="false" />
           <Property Name="planStartDT" Type="datetime" />
           <Property Name="planEndDT" Type="datetime" />
           <Property Name="Inspector" Type="nchar" MaxLength="25" />
@@ -37,6 +37,13 @@
           <Property Name="InspectionPlanname" Type="char" MaxLength="50" />
           <Property Name="InspectionLaptop" Type="varchar" MaxLength="255" />
           <Property Name="Inspector" Type="nchar" MaxLength="25" />
+        </EntityType>
+        <EntityType Name="L_InspectionPlans">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="InspectionPlanname" Type="char" MaxLength="50" />
         </EntityType>
         <EntityType Name="rt_active_info">
           <Key>
@@ -87,6 +94,18 @@
           <Property Name="ThicknessPlate3" Type="float" />
           <Property Name="InspectionLaptop" Type="varchar" MaxLength="255" />
         </EntityType>
+        <Association Name="FK_h_CompletedPlans_L_InspectionPlans">
+          <End Role="L_InspectionPlans" Type="Self.L_InspectionPlans" Multiplicity="1" />
+          <End Role="h_CompletedPlans" Type="Self.h_CompletedPlans" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="L_InspectionPlans">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="h_CompletedPlans">
+              <PropertyRef Name="InspectionPlan_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_h_measurementRemarks_h_CompletedPlans">
           <End Role="h_CompletedPlans" Type="Self.h_CompletedPlans" Multiplicity="0..1" />
           <End Role="h_measurementRemarks" Type="Self.h_measurementRemarks" Multiplicity="*" />
@@ -102,8 +121,13 @@
         <EntityContainer Name="UltraLogModelStoreContainer">
           <EntitySet Name="h_CompletedPlans" EntityType="Self.h_CompletedPlans" Schema="UL" store:Type="Tables" />
           <EntitySet Name="h_measurementRemarks" EntityType="Self.h_measurementRemarks" Schema="UL" store:Type="Tables" />
+          <EntitySet Name="L_InspectionPlans" EntityType="Self.L_InspectionPlans" Schema="UL" store:Type="Tables" />
           <EntitySet Name="rt_active_info" EntityType="Self.rt_active_info" Schema="UL" store:Type="Tables" />
           <EntitySet Name="rt_UltralogData" EntityType="Self.rt_UltralogData" Schema="UL" store:Type="Tables" />
+          <AssociationSet Name="FK_h_CompletedPlans_L_InspectionPlans" Association="Self.FK_h_CompletedPlans_L_InspectionPlans">
+            <End Role="L_InspectionPlans" EntitySet="L_InspectionPlans" />
+            <End Role="h_CompletedPlans" EntitySet="h_CompletedPlans" />
+          </AssociationSet>
           <AssociationSet Name="FK_h_measurementRemarks_h_CompletedPlans" Association="Self.FK_h_measurementRemarks_h_CompletedPlans">
             <End Role="h_CompletedPlans" EntitySet="h_CompletedPlans" />
             <End Role="h_measurementRemarks" EntitySet="h_measurementRemarks" />
@@ -122,13 +146,17 @@
           </AssociationSet>
           <EntitySet Name="rt_active_info" EntityType="UltraLogModel.rt_active_info" />
           <EntitySet Name="rt_UltralogData" EntityType="UltraLogModel.rt_UltralogData" />
+          <EntitySet Name="L_InspectionPlans" EntityType="UltraLogModel.L_InspectionPlans" />
+          <AssociationSet Name="FK_h_CompletedPlans_L_InspectionPlans" Association="UltraLogModel.FK_h_CompletedPlans_L_InspectionPlans">
+            <End Role="L_InspectionPlans" EntitySet="L_InspectionPlans" />
+            <End Role="h_CompletedPlans" EntitySet="h_CompletedPlans" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="h_CompletedPlans">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="InspectionPlanname" Type="String" MaxLength="50" FixedLength="true" Unicode="false" />
           <Property Name="planStartDT" Type="DateTime" Precision="3" />
           <Property Name="planEndDT" Type="DateTime" Precision="3" />
           <Property Name="Inspector" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
@@ -138,6 +166,8 @@
           <Property Name="UniqueMeasurePoints" Type="Int32" />
           <Property Name="Remarks" Type="Int32" />
           <NavigationProperty Name="h_measurementRemarks" Relationship="UltraLogModel.FK_h_measurementRemarks_h_CompletedPlans" FromRole="h_CompletedPlans" ToRole="h_measurementRemarks" />
+          <Property Name="InspectionPlan_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="L_InspectionPlans" Relationship="UltraLogModel.FK_h_CompletedPlans_L_InspectionPlans" FromRole="h_CompletedPlans" ToRole="L_InspectionPlans" />
         </EntityType>
         <EntityType Name="h_measurementRemarks">
           <Key>
@@ -183,7 +213,7 @@
           <Property Name="teststation" Type="String" MaxLength="50" FixedLength="true" Unicode="false" />
           <Property Name="InspectionLaptop" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="ULDateTime" Type="DateTime" Precision="3" />
-          <Property Name="Heartbeat" Type="DateTime" Precision="3" Nullable="false" />
+          <Property Name="Heartbeat" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="rt_UltralogData">
           <Key>
@@ -219,6 +249,26 @@
           <Property Name="ThicknessPlate3" Type="Double" />
           <Property Name="InspectionLaptop" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="L_InspectionPlans">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="InspectionPlanname" Type="String" MaxLength="50" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="h_CompletedPlans" Relationship="UltraLogModel.FK_h_CompletedPlans_L_InspectionPlans" FromRole="L_InspectionPlans" ToRole="h_CompletedPlans" />
+        </EntityType>
+        <Association Name="FK_h_CompletedPlans_L_InspectionPlans">
+          <End Type="UltraLogModel.L_InspectionPlans" Role="L_InspectionPlans" Multiplicity="1" />
+          <End Type="UltraLogModel.h_CompletedPlans" Role="h_CompletedPlans" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="L_InspectionPlans">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="h_CompletedPlans">
+              <PropertyRef Name="InspectionPlan_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -228,6 +278,7 @@
           <EntitySetMapping Name="h_CompletedPlans">
             <EntityTypeMapping TypeName="UltraLogModel.h_CompletedPlans">
               <MappingFragment StoreEntitySet="h_CompletedPlans">
+                <ScalarProperty Name="InspectionPlan_id" ColumnName="InspectionPlan_id" />
                 <ScalarProperty Name="Remarks" ColumnName="Remarks" />
                 <ScalarProperty Name="UniqueMeasurePoints" ColumnName="UniqueMeasurePoints" />
                 <ScalarProperty Name="TotalMeasurements" ColumnName="TotalMeasurements" />
@@ -236,7 +287,6 @@
                 <ScalarProperty Name="Inspector" ColumnName="Inspector" />
                 <ScalarProperty Name="planEndDT" ColumnName="planEndDT" />
                 <ScalarProperty Name="planStartDT" ColumnName="planStartDT" />
-                <ScalarProperty Name="InspectionPlanname" ColumnName="InspectionPlanname" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -307,6 +357,14 @@
                 <ScalarProperty Name="Autocomment" ColumnName="Autocomment" />
                 <ScalarProperty Name="EvaluationClass" ColumnName="EvaluationClass" />
                 <ScalarProperty Name="Spotname" ColumnName="Spotname" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="L_InspectionPlans">
+            <EntityTypeMapping TypeName="UltraLogModel.L_InspectionPlans">
+              <MappingFragment StoreEntitySet="L_InspectionPlans">
+                <ScalarProperty Name="InspectionPlanname" ColumnName="InspectionPlanname" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

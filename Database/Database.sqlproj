@@ -297,6 +297,7 @@
     <Build Include="UL\Tables\h_measurementRemarks.sql" />
     <Build Include="UL\Tables\h_CompletedPlans.sql" />
     <Build Include="UL\Stored Procedures\sp_norm_InspectionPlans.sql" />
+    <Build Include="UL\Tables\L_InspectionPlans.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="GADATAprod.publish.xml" />

@@ -1,6 +1,16 @@
 ﻿@{
     ViewBag.Title = "GetControlPlanPicture";
 }
-<h5>GetControlPlanPicture for id:<@ViewBag.ControlPlanPicture></h5>
 
-@Html.Action("_GetControlPlanPicture", new {Id = @ViewBag.ControlPlanPicture })
+@if (ViewBag.ControlPlanPicture != null)
+{
+    <h5>GetControlPlanPicture for id:<@ViewBag.ControlPlanPicture></h5>
+}
+
+@if (ViewBag.Spotname != null)
+{
+    <h5>GetControlPlanPicture for Spotname:<@ViewBag.Spotname></h5>
+}
+
+
+@Html.Action("_GetControlPlanPicture", new { Id = ViewBag.ControlPlanPicture, Spotname = ViewBag.Spotname })
